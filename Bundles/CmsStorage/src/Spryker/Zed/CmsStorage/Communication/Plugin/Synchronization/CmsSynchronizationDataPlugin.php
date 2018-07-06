@@ -52,7 +52,7 @@ class CmsSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorageQuery
      */
@@ -101,7 +101,7 @@ class CmsSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getCmsPageSynchronizationPoolName();
     }

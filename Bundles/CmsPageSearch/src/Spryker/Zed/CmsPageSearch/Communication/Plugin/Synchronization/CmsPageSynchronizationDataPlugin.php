@@ -52,7 +52,7 @@ class CmsPageSynchronizationDataPlugin extends AbstractPlugin implements Synchro
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearchQuery
      */
@@ -101,7 +101,7 @@ class CmsPageSynchronizationDataPlugin extends AbstractPlugin implements Synchro
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getCmsPageSynchronizationPoolName();
     }

@@ -52,7 +52,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery
      */
@@ -95,7 +95,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getCategoryTreeSynchronizationPoolName();
     }

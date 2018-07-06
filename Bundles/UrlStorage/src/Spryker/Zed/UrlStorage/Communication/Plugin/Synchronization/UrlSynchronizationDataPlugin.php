@@ -52,7 +52,7 @@ class UrlSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorageQuery
      */
@@ -101,7 +101,7 @@ class UrlSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getUrlSynchronizationPoolName();
     }

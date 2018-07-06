@@ -52,7 +52,7 @@ class ProductCategoryFilterSynchronizationDataPlugin extends AbstractPlugin impl
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return $this|\Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorageQuery
      */
@@ -101,7 +101,7 @@ class ProductCategoryFilterSynchronizationDataPlugin extends AbstractPlugin impl
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getProductCategoryFilterSynchronizationPoolName();
     }

@@ -52,7 +52,7 @@ class ProductPageSynchronizationDataPlugin extends AbstractPlugin implements Syn
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery
      */
@@ -101,7 +101,7 @@ class ProductPageSynchronizationDataPlugin extends AbstractPlugin implements Syn
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getProductPageSynchronizationPoolName();
     }

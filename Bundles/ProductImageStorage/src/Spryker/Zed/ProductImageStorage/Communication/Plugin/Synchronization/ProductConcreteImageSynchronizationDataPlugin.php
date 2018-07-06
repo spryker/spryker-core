@@ -52,7 +52,7 @@ class ProductConcreteImageSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorageQuery
      */

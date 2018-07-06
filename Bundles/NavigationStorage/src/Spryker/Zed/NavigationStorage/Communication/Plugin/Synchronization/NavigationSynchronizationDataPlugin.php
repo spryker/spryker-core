@@ -52,7 +52,7 @@ class NavigationSynchronizationDataPlugin extends AbstractPlugin implements Sync
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Orm\Zed\NavigationStorage\Persistence\SpyNavigationStorageQuery
      */
@@ -101,7 +101,7 @@ class NavigationSynchronizationDataPlugin extends AbstractPlugin implements Sync
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getNavigationSynchronizationPoolName();
     }

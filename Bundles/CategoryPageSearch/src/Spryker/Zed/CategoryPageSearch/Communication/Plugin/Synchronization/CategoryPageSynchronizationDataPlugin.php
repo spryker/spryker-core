@@ -52,7 +52,7 @@ class CategoryPageSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery
      */
@@ -101,7 +101,7 @@ class CategoryPageSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getCategoryPageSynchronizationPoolName();
     }

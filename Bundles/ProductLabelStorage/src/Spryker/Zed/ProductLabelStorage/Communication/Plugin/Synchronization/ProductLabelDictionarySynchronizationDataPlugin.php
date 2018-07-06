@@ -52,7 +52,7 @@ class ProductLabelDictionarySynchronizationDataPlugin extends AbstractPlugin imp
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuery
      */
@@ -97,7 +97,7 @@ class ProductLabelDictionarySynchronizationDataPlugin extends AbstractPlugin imp
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getProductLabelDictionarySynchronizationPoolName();
     }

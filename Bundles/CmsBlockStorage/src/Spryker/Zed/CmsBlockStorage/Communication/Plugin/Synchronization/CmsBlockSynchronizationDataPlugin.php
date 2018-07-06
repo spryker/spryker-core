@@ -52,7 +52,7 @@ class CmsBlockSynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery
      */
@@ -101,7 +101,7 @@ class CmsBlockSynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getCmsBlockSynchronizationPoolName();
     }

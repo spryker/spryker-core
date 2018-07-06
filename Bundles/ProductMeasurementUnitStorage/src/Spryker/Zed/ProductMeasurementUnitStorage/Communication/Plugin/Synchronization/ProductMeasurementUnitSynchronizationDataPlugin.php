@@ -52,7 +52,7 @@ class ProductMeasurementUnitSynchronizationDataPlugin extends AbstractPlugin imp
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
      */
@@ -109,7 +109,7 @@ class ProductMeasurementUnitSynchronizationDataPlugin extends AbstractPlugin imp
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getProductMeasurementUnitSynchronizationPoolName();
     }

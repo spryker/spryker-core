@@ -52,7 +52,7 @@ class GlossarySynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorageQuery
      */
@@ -101,7 +101,7 @@ class GlossarySynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getGlossarySynchronizationPoolName();
     }

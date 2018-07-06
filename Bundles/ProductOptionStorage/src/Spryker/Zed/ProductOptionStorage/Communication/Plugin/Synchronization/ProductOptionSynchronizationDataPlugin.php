@@ -52,7 +52,7 @@ class ProductOptionSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorageQuery
      */
@@ -101,7 +101,7 @@ class ProductOptionSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getProductAbstractOptionSynchronizationPoolName();
     }
