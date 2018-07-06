@@ -17,7 +17,6 @@ use Spryker\Zed\Availability\AvailabilityConfig;
 class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
 {
     protected const CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY = 'product.unavailable';
-    protected const CHECKOUT_PRODUCT_UNAVAILABLE_PARAMETER_SKU = '%sku%';
 
     /**
      * @var \Spryker\Zed\Availability\Business\Model\SellableInterface
@@ -120,7 +119,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
             ->setMessage(static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY)
             ->setErrorType(AvailabilityConstants::ERROR_TYPE_AVAILABILITY)
             ->setParameters([
-                static::CHECKOUT_PRODUCT_UNAVAILABLE_PARAMETER_SKU => $sku,
+                AvailabilityConstants::CHECKOUT_PRODUCT_UNAVAILABLE_PARAMETER_SKU => $sku,
             ]);
 
         $checkoutResponse
