@@ -207,6 +207,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $cartChange = (new CartChangeTransfer())
             ->addItem(
                 (new ItemTransfer())
+                    ->setId($boxProductConcreteTransfer->getIdProductConcrete())
                     ->setSku($boxProductConcreteTransfer->getSku())
                     ->setQuantity(static::ITEM_QUANTITY)
                     ->setAmount(static::PACKAGE_AMOUNT)
@@ -225,14 +226,12 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testPreCheckCartAvailability(): void
     {
-        $cartChange = (new CartChangeTransfer())
+        $cartChangeTransfer = (new CartChangeTransfer())
             ->setQuote($this->createTestQuoteTransfer())
             ->addItem($this->createTestPackagingUnitItemTransfer());
 
-        $this->getFacade()->expandCartChangeWithQuantityPackagingUnit($cartChange);
-
         // Action
-        $cartPreCheckResponseTransfer = $this->getFacade()->preCheckCartAvailability($cartChange);
+        $cartPreCheckResponseTransfer = $this->getFacade()->preCheckCartAvailability($cartChangeTransfer);
         $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
     }
 
@@ -395,11 +394,12 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
         return (new ItemTransfer())
             ->setQuantity(static::ITEM_QUANTITY)
+            ->setId($boxProductConcreteTransfer->getIdProductConcrete())
             ->setSku($boxProductConcreteTransfer->getSku())
             ->setAmount(static::PACKAGE_AMOUNT)
             ->setAmountLeadProduct(
                 (new ProductPackagingLeadProductTransfer())
-                    ->setSkuProduct($boxProductConcreteTransfer->getSku())
+                    ->setSku($boxProductConcreteTransfer->getSku())
             );
     }
 

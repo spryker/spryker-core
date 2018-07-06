@@ -61,7 +61,7 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
      */
     public function updateProductPackagingUnitLeadProductAvailability(string $sku): void
     {
-        $productPackagingUnitTransfer = $this->findProductPackagingUnitEntityBySku($sku);
+        $productPackagingUnitTransfer = $this->findProductPackagingUnitBySku($sku);
 
         if (!$productPackagingUnitTransfer || !$productPackagingUnitTransfer->getHasLeadProduct()) {
             return;
@@ -72,7 +72,7 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
             return;
         }
 
-        $this->updateStockForLeadProduct($productPackagingLeadProductTransfer->getSkuProduct());
+        $this->updateStockForLeadProduct($productPackagingLeadProductTransfer->getSku());
     }
 
     /**
@@ -101,10 +101,11 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
      */
-    protected function findProductPackagingUnitEntityBySku(string $productPackagingUnitSku): ?ProductPackagingUnitTransfer
-    {
+    protected function findProductPackagingUnitBySku(
+        string $productPackagingUnitSku
+    ): ?ProductPackagingUnitTransfer {
         return $this->packagingUnitReader
-            ->getProductPackagingUnitBySku($productPackagingUnitSku);
+            ->findProductPackagingUnitByProductSku($productPackagingUnitSku);
     }
 
     /**
@@ -115,6 +116,6 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
     protected function findProductPackagingLeadProductByProductPackagingSku(string $productPackagingUnitSku): ?ProductPackagingLeadProductTransfer
     {
         return $this->packagingUnitReader
-            ->getProductPackagingLeadProductByProductPackagingSku($productPackagingUnitSku);
+            ->findProductPackagingLeadProductByProductPackagingSku($productPackagingUnitSku);
     }
 }

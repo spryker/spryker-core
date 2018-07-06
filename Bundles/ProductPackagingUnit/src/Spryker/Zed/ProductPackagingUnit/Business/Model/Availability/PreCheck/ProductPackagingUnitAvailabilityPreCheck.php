@@ -41,7 +41,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
             ->requireAmount();
 
         $itemTransfer->getAmountLeadProduct()
-            ->requireSkuProduct();
+            ->requireSku();
     }
 
     /**
@@ -53,7 +53,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
      */
     protected function isPackagingUnitLeadProductSellable(ItemTransfer $itemTransfer, Traversable $items, StoreTransfer $storeTransfer): bool
     {
-        $leadProductSku = $itemTransfer->getAmountLeadProduct()->getSkuProduct();
+        $leadProductSku = $itemTransfer->getAmountLeadProduct()->getSku();
         $leadProductQuantity = $itemTransfer->getAmount() +
             $this->getAccumaltedQuantityForLeadProduct($items, $leadProductSku, $itemTransfer);
 
@@ -87,7 +87,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
             $productPacakgingLeadProduct = $itemTransfer->getAmountLeadProduct();
             if ($productPacakgingLeadProduct && // Other items in cart are also a pacakging unit
                 // Lead product is a lead product of another item in cart
-                $productPacakgingLeadProduct->getSkuProduct() === $itemTransfer->getSku()) {
+                $productPacakgingLeadProduct->getSku() === $itemTransfer->getSku()) {
                 $quantity += $itemTransfer->getAmount();
             }
         }

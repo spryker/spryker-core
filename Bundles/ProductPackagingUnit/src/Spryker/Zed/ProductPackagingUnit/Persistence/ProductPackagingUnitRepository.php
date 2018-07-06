@@ -223,6 +223,36 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
+     * @uses Product
+     *
+     * @param string $productPackagingUnitSku
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
+     */
+    public function findProductPackagingUnitByProductSku(
+        string $productPackagingUnitSku
+    ): ?ProductPackagingUnitTransfer {
+        $productPackagingUnitEntity = $this->getProductPackagingUnitCriteria()
+            ->useProductQuery()
+                ->filterBySku($productPackagingUnitSku)
+            ->endUse()
+            ->findOne();
+
+        if (!$productPackagingUnitEntity) {
+            return null;
+        }
+
+        $productPackagingUnitTransfer = $this->getFactory()
+            ->createProductPackagingUnitMapper()
+            ->mapProductPackagingUnitTransfer(
+                $productPackagingUnitEntity,
+                new ProductPackagingUnitTransfer()
+            );
+
+        return $productPackagingUnitTransfer;
+    }
+
+    /**
      * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery
      */
     protected function getProductPackagingUnitCriteria(): SpyProductPackagingUnitQuery
