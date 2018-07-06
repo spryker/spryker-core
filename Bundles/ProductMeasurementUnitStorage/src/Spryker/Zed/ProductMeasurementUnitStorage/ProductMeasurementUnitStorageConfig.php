@@ -14,7 +14,7 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
     /**
      * @return null| string
      */
-    public function getProductMeasurementUnitSynchronizationPoolName()
+    public function getProductMeasurementUnitSynchronizationPoolName(): ?string
     {
         return null;
     }

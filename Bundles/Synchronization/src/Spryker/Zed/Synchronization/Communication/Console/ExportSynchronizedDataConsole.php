@@ -24,7 +24,7 @@ class ExportSynchronizedDataConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->addArgument(static::RESOURCE, InputArgument::OPTIONAL, 'Defines which resource(s) should be exported, if there is more than one, use comma to separate them. 
         If not, full export will be executed.');
@@ -39,7 +39,7 @@ class ExportSynchronizedDataConsole extends Console
      *
      * @return void
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $resources = [];
         if ($input && $input->getArgument(static::RESOURCE)) {

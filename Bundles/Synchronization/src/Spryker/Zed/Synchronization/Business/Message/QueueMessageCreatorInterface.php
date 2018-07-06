@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Synchronization\Business\Message;
 
+use Generated\Shared\Transfer\QueueSendMessageTransfer;
 use Generated\Shared\Transfer\SynchronizationQueueMessageTransfer;
 
 interface QueueMessageCreatorInterface
@@ -16,7 +17,7 @@ interface QueueMessageCreatorInterface
      * @param string|null $store
      * @param string|null $queuePoolName
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\QueueSendMessageTransfer
      */
-    public function createQueueMessage(SynchronizationQueueMessageTransfer $synchronizationQueueMessageTransfer, $store = null, $queuePoolName = null);
+    public function createQueueMessage(SynchronizationQueueMessageTransfer $synchronizationQueueMessageTransfer, $store = null, $queuePoolName = null): QueueSendMessageTransfer;
 }

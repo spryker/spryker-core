@@ -15,5 +15,5 @@ interface SynchronizationToQueueClientInterface
      *
      * @return void
      */
-    public function sendMessages($queueName, array $queueSendMessageTransfers);
+    public function sendMessages($queueName, array $queueSendMessageTransfers): void;
 }

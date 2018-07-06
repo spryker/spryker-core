@@ -28,7 +28,7 @@ class SynchronizationToQueueClientBridge implements SynchronizationToQueueClient
      *
      * @return void
      */
-    public function sendMessages($queueName, array $queueSendMessageTransfers)
+    public function sendMessages($queueName, array $queueSendMessageTransfers): void
     {
         $this->queueClient->sendMessages($queueName, $queueSendMessageTransfers);
     }
