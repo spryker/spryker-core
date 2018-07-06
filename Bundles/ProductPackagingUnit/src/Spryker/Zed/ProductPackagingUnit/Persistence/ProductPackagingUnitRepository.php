@@ -232,6 +232,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     public function findProductPackagingUnitByProductSku(
         string $productPackagingUnitSku
     ): ?ProductPackagingUnitTransfer {
+        /** @var \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit $productPackagingUnitEntity */
         $productPackagingUnitEntity = $this->getProductPackagingUnitCriteria()
             ->useProductQuery()
                 ->filterBySku($productPackagingUnitSku)

@@ -64,26 +64,22 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
     }
 
     /**
+     * @uses State
+     *
      * @param string $sku
-     * @param bool $returnTest
      *
      * @return int
      */
-    protected function sumLeadProductAmountsForAllSalesOrderItemsBySku(string $sku, bool $returnTest = true): int
+    protected function sumLeadProductAmountsForAllSalesOrderItemsBySku(string $sku): int
     {
-        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderItemQuery */
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $salesOrderItemQuery */
         $salesOrderItemQuery = $this->salesQueryContainer
             ->querySalesOrderItem()
-            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_AMOUNT . ')', static::COL_SUM)
+            ->filterByAmountSku($sku)
             ->useStateQuery()
                 ->filterByName($this->getReservedStateNames(), Criteria::IN)
             ->endUse()
-            ->_if($returnTest === false)
-                ->useOrderQuery()
-                    ->filterByIsTest(false)
-                ->endUse()
-            ->_endif()
-            ->filterByAmountSku($sku)
+            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_AMOUNT . ')', static::COL_SUM)
             ->select([static::COL_SUM]);
 
         return (int)$salesOrderItemQuery->findOne();
