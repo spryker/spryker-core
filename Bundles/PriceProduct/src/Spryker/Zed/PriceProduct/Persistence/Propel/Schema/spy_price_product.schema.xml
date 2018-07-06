@@ -52,7 +52,7 @@
     </table>
 
     <table name="spy_price_product_store">
-        <column name="id_price_product_store" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="id_price_product_store" type="BIGINT" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="fk_price_product" type="INTEGER" required="true"/>
         <column name="fk_currency" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" />
@@ -83,6 +83,25 @@
         </foreign-key>
 
         <id-method-parameter value="spy_price_product_store_pk_seq"/>
+    </table>
+
+    <table name="spy_price_product_default">
+        <column name="id_price_product_default" type="BIGINT" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_price_product_store" type="BIGINT" required="true"/>
+
+        <index name="spy_price_product_default-index-fk_price_product_store">
+            <index-column name="fk_price_product_store" />
+        </index>
+
+        <foreign-key name="spy_price_product_default-fk_price_product_store" foreignTable="spy_price_product_store" onDelete="CASCADE" phpName="PriceProductStore" refPhpName="PriceProductDefault">
+            <reference local="fk_price_product_store" foreign="id_price_product_store"/>
+        </foreign-key>
+
+        <unique name="spy_prs_prod_default-unique-price_product_store">
+            <unique-column name="fk_price_product_store" />
+        </unique>
+
+        <id-method-parameter value="spy_price_product_default_pk_seq"/>
     </table>
 
 </database>
