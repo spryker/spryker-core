@@ -31,7 +31,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     const META_TRANSFER_ERROR =
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
     const INVALID_HOST_NAME_ERROR =
-        'Failed request by following ZED host: %s. ';
+        'Failed request to following ZED host: %s. ';
 
     const HEADER_USER_AGENT = 'User-Agent';
     const HEADER_HOST_YVES = 'X-Yves-Host';
