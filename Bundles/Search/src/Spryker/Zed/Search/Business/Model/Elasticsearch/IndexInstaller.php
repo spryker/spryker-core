@@ -18,7 +18,7 @@ use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 
 class IndexInstaller implements SearchInstallerInterface
 {
-    protected const BLACKLIST_DELIMITER = '.';
+    protected const SETTING_PATH_DELIMITER = '.';
 
     /**
      * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
@@ -38,24 +38,24 @@ class IndexInstaller implements SearchInstallerInterface
     /**
      * @var string[]
      */
-    protected $blacklistedSettings;
+    protected $indexDefinitionBlacklistedSettings;
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface $indexDefinitionLoader
      * @param \Elastica\Client $elasticaClient
      * @param \Psr\Log\LoggerInterface $messenger
-     * @param string[] $blacklistedSettings
+     * @param string[] $indexDefinitionBlacklistedSettings
      */
     public function __construct(
         IndexDefinitionLoaderInterface $indexDefinitionLoader,
         Client $elasticaClient,
         LoggerInterface $messenger,
-        array $blacklistedSettings = []
+        array $indexDefinitionBlacklistedSettings = []
     ) {
         $this->indexDefinitionLoader = $indexDefinitionLoader;
         $this->elasticaClient = $elasticaClient;
         $this->messenger = $messenger;
-        $this->blacklistedSettings = $blacklistedSettings;
+        $this->indexDefinitionBlacklistedSettings = $indexDefinitionBlacklistedSettings;
     }
 
     /**
@@ -189,7 +189,7 @@ class IndexInstaller implements SearchInstallerInterface
         $settings = $indexDefinitionTransfer->getSettings();
         if ($settings) {
             $settings = $this->removeBlacklistedSettings($settings);
-            $index->setSettings($settings);
+            $index->setSettings($settings); // dfdf
         }
     }
 
@@ -200,8 +200,8 @@ class IndexInstaller implements SearchInstallerInterface
      */
     protected function removeBlacklistedSettings(array $settings): array
     {
-        foreach ($this->blacklistedSettings as $settingPath) {
-            $settings = $this->removeSetting($settings, $settingPath);
+        foreach ($this->indexDefinitionBlacklistedSettings as $blacklistedSettingPath) {
+            $settings = $this->removeSettingPath($settings, $blacklistedSettingPath);
         }
 
         return $settings;
@@ -209,27 +209,38 @@ class IndexInstaller implements SearchInstallerInterface
 
     /**
      * @param array $settings
-     * @param string $settingPath
+     * @param string $removeSettingPath
      *
      * @return array
      */
-    protected function removeSetting(array $settings, string $settingPath): array
+    protected function removeSettingPath(array $settings, string $removeSettingPath): array
     {
         $settingsElement = &$settings;
-        $settingPathArray = explode(static::BLACKLIST_DELIMITER, $settingPath);
+        $settingPathArray = explode(static::SETTING_PATH_DELIMITER, $removeSettingPath);
+        $lastPathNumber = $this->getLastPathNumber($settingPathArray);
 
-        foreach ($settingPathArray as $pathNumber => $step) {
-            if (!isset($settingsElement[$step])) {
-                break;
+        foreach ($settingPathArray as $pathNumber => $settingElementKey) {
+            if (!isset($settingsElement[$settingElementKey])) {
+                return $settings;
             }
 
-            if ($pathNumber === count($settingPathArray) - 1) {
-                unset($settingsElement[$step]);
-                continue;
+            if ($pathNumber === $lastPathNumber) {
+                unset($settingsElement[$settingElementKey]);
+
+                return $settings;
             }
-            $settingsElement = &$settingsElement[$step];
+            $settingsElement = &$settingsElement[$settingElementKey];
         }
+    }
 
-        return $settings;
+    /**
+     * @param array $settingPathArray
+     *
+     * @return int
+     */
+    protected function getLastPathNumber(array $settingPathArray): int
+    {
+        end($settingPathArray);
+        return key($settingPathArray);
     }
 }

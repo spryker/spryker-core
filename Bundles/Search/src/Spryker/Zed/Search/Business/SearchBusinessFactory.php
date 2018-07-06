@@ -95,7 +95,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
             $this->createJsonIndexDefinitionLoader(),
             $this->getElasticsearchClient(),
             $messenger,
-            $this->getConfig()->getBlacklistedSettings()
+            $this->getConfig()->getIndexDefinitionBlacklistedSettings()
         );
     }
 

@@ -51,14 +51,18 @@ class IndexInstallerTest extends Unit
         $installer = new IndexInstaller(
             $this->createIndexDefinitionLoaderMock($indexDefinitions),
             $this->createElasticaClientMock($indexMock),
-            $this->getBlacklist(),
-            $this->createMessengerMock()
+            $this->createMessengerMock(),
+            $this->getIndexDefinitionBlacklistedSettings()
         );
 
         $installer->install();
     }
 
     /**
+     * @uses \Elastica\Index::exists()
+     * @uses \Elastica\Index::create()
+     * @uses \Elastica\Index::setSettings()
+     *
      * @return void
      */
     public function testIndexInstallerDoesNotCreatesIndexesIfTheyExist()
@@ -85,7 +89,7 @@ class IndexInstallerTest extends Unit
             $this->createIndexDefinitionLoaderMock($indexDefinitions),
             $this->createElasticaClientMock($indexMock),
             $this->createMessengerMock(),
-            $this->getBlacklist()
+            $this->getIndexDefinitionBlacklistedSettings()
         );
 
         $installer->install();
@@ -94,7 +98,7 @@ class IndexInstallerTest extends Unit
     /**
      * @return string[]
      */
-    protected function getBlacklist()
+    protected function getIndexDefinitionBlacklistedSettings()
     {
         return [
             'index.number_of_shards',

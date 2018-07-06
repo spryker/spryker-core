@@ -16,16 +16,16 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchOpenIndexConsole extends Console
 {
-    const COMMAND_NAME = 'search:index:open';
-    const DESCRIPTION = 'This command will open an index.';
+    protected const COMMAND_NAME = 'search:index:open';
+    protected const DESCRIPTION = 'This command will open an index.';
 
     /**
      * @return void
      */
     protected function configure(): void
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
 
         parent::configure();
     }
