@@ -20,7 +20,7 @@ class ProductDiscontinuedAddItemPreCheckPlugin extends AbstractPlugin implements
 {
     /**
      * Specification:
-     *  - Check if wishlist item product is not discontinued.
+     *  - Checks if wishlist item product is not discontinued.
      *
      * @api
      *

@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/wishlist-extension.svg)](https://travis-ci.org/spryker/wishlist-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/wishlist-extension/badge.svg)](https://coveralls.io/github/spryker/wishlist-extension)
 
-{{ADD DESCRIPTION HERE}}
+The module provides plugin interfaces for extending shipping list module functionality.
 
 ## Installation
 
