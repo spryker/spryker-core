@@ -19,8 +19,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInt
 class ProductDiscontinuedAddItemPreCheckPlugin extends AbstractPlugin implements AddItemPreCheckPluginInterface
 {
     /**
-     * Specification:
-     *  - Checks if shopping list item product is not discontinued.
+     * {@inheritdoc}
      *
      * @api
      *
