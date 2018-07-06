@@ -80,7 +80,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    protected function createSalesUnitTransfer(int $idSalesUnit)
+    protected function createSalesUnitTransfer(int $idSalesUnit): ProductMeasurementSalesUnitTransfer
     {
         return (new ProductMeasurementSalesUnitTransfer())
             ->setIdProductMeasurementSalesUnit($idSalesUnit);
@@ -94,15 +94,11 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      */
     protected function getPackagingUnitAmount(array $params, string $sku): ?int
     {
-        if (empty($params[static::PARAM_AMOUNT])) {
+        if (empty($params[static::PARAM_AMOUNT][$sku])) {
             return null;
         }
 
-        if (!empty($params[static::PARAM_AMOUNT][$sku])) {
-            return (int)$params[static::PARAM_AMOUNT][$sku];
-        }
-
-        return (int)$params[static::PARAM_AMOUNT];
+        return (int)$params[static::PARAM_AMOUNT][$sku];
     }
 
     /**
