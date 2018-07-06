@@ -28,7 +28,7 @@ class SearchRestApiToCatalogClientBridge implements SearchRestApiToCatalogClient
      *
      * @return array
      */
-    public function catalogSearch($searchString, array $requestParameters = []): array
+    public function catalogSearch(string $searchString, array $requestParameters = []): array
     {
         return $this->catalogClient->catalogSearch($searchString, $requestParameters);
     }
@@ -39,7 +39,7 @@ class SearchRestApiToCatalogClientBridge implements SearchRestApiToCatalogClient
      *
      * @return array
      */
-    public function catalogSuggestSearch($searchString, array $requestParameters = []): array
+    public function catalogSuggestSearch(string $searchString, array $requestParameters = []): array
     {
         return $this->catalogClient->catalogSuggestSearch($searchString, $requestParameters);
     }

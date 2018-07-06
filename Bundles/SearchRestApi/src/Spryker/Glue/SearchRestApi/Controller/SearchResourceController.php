@@ -6,7 +6,6 @@
 
 namespace Spryker\Glue\SearchRestApi\Controller;
 
-use Generated\Shared\Transfer\RestSearchRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Controller\AbstractRestController;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -16,12 +15,12 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 class SearchResourceController extends AbstractRestController
 {
     /**
-     * @param \Generated\Shared\Transfer\RestSearchRequestAttributesTransfer $restSearchRequestAttributesTransfer
-     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getAction(RestSearchRequestAttributesTransfer $restSearchRequestAttributesTransfer): RestResponseInterface
+    public function getAction(): RestResponseInterface
     {
-        return $this->getFactory()->createCatalogReader()->catalogSearch($restSearchRequestAttributesTransfer);
+        $restRequest = $this->getRestRequest();
+
+        return $this->getFactory()->createCatalogReader()->catalogSearch($restRequest);
     }
 }

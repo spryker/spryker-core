@@ -6,9 +6,9 @@
 
 namespace Spryker\Glue\SearchRestApi\Processor\Catalog;
 
-use Generated\Shared\Transfer\RestSearchRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToCatalogClientInterface;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapperInterface;
 
@@ -45,16 +45,16 @@ class CatalogReader implements CatalogReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestSearchRequestAttributesTransfer $restSearchRequestAttributesTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function catalogSearch(RestSearchRequestAttributesTransfer $restSearchRequestAttributesTransfer): RestResponseInterface
+    public function catalogSearch(RestRequestInterface $restRequest): RestResponseInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $searchString = $this->searchResourceMapper->mapRestSearchRequestAttributesTransferToSearchString($restSearchRequestAttributesTransfer);
-        $requestParameters = $this->searchResourceMapper->mapRestSearchRequestAttributesTransferToSearchRequestParameters($restSearchRequestAttributesTransfer);
+        $searchString = $this->searchResourceMapper->mapRestSearchRequestAttributesTransferToSearchString($restRequest);
+        $requestParameters = $this->searchResourceMapper->mapRestSearchRequestAttributesTransferToSearchRequestParameters($restRequest);
         $restSearchResponseAttributesTransfer = $this->catalogClient->catalogSearch($searchString, $requestParameters);
 
         $restResource = $this->searchResourceMapper->mapSearchResponseAttributesTransferToRestResponse($restSearchResponseAttributesTransfer);
