@@ -11,7 +11,7 @@
     "spryker/messenger": "^3.0.0",
     "spryker/persistent-cart-extension": "^1.0.0",
     "spryker/price": "^5.0.0",
-    "spryker/price-product": "^1.0.0",
+    "spryker/price-product": "^1.0.0 || ^2.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-image": "^3.3.0",
     "spryker/propel-orm": "^1.0.0",
