@@ -1,0 +1,39 @@
+{
+  "name": "spryker/price-product-merchant-relationship",
+  "description": "PriceProductMerchantRelationship module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/cart": "^5.1.0",
+    "spryker/kernel": "^3.21.0",
+    "spryker/merchant-relationship": "^1.1.0",
+    "spryker/price-product": "^2.0.0",
+    "spryker/price-product-extension": "^1.0.0",
+    "spryker/product": "^6.1.0",
+    "spryker/propel-orm": "^1.6.2",
+    "spryker/symfony": "^3.1.5"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/customer": "If you want to use prices per customer functionality"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
