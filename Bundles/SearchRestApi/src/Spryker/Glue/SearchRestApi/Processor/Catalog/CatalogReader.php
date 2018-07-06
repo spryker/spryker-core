@@ -4,20 +4,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\SearchRestApi\Processor\Search;
+namespace Spryker\Glue\SearchRestApi\Processor\Catalog;
 
 use Generated\Shared\Transfer\RestSearchRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToSearchClientInterface;
+use Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToCatalogClientInterface;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapperInterface;
 
-class SearchReader implements SearchReaderInterface
+class CatalogReader implements CatalogReaderInterface
 {
     /**
-     * @var \Spryker\Glue\SearchRestApi\Dependency\Client\
+     * @var \Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToCatalogClientInterface
      */
-    protected $searchClient;
+    protected $catalogClient;
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -30,16 +30,16 @@ class SearchReader implements SearchReaderInterface
     protected $searchResourceMapper;
 
     /**
-     * @param \Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToSearchClientInterface $searchClient
+     * @param \Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToCatalogClientInterface $catalogClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapperInterface $searchResourceMapper
      */
     public function __construct(
-        SearchRestApiToSearchClientInterface $searchClient,
+        SearchRestApiToCatalogClientInterface $catalogClient,
         RestResourceBuilderInterface $restResourceBuilder,
         SearchResourceMapperInterface $searchResourceMapper
     ) {
-        $this->searchClient = $searchClient;
+        $this->catalogClient = $catalogClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->searchResourceMapper = $searchResourceMapper;
     }
@@ -49,7 +49,16 @@ class SearchReader implements SearchReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function search(RestSearchRequestAttributesTransfer $restSearchRequestAttributesTransfer): RestResponseInterface
+    public function catalogSearch(RestSearchRequestAttributesTransfer $restSearchRequestAttributesTransfer): RestResponseInterface
     {
+        $response = $this->restResourceBuilder->createRestResponse();
+
+        $searchString = $this->searchResourceMapper->mapRestSearchRequestAttributesTransferToSearchString($restSearchRequestAttributesTransfer);
+        $requestParameters = $this->searchResourceMapper->mapRestSearchRequestAttributesTransferToSearchRequestParameters($restSearchRequestAttributesTransfer);
+        $restSearchResponseAttributesTransfer = $this->catalogClient->catalogSearch($searchString, $requestParameters);
+
+        $restResource = $this->searchResourceMapper->mapSearchResponseAttributesTransferToRestResponse($restSearchResponseAttributesTransfer);
+
+        return $response->addResource($restResource);
     }
 }

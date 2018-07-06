@@ -6,6 +6,7 @@
 
 namespace Spryker\Glue\SearchRestApi\Plugin;
 
+use Generated\Shared\Transfer\RestSearchRequestAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
@@ -25,7 +26,6 @@ class SearchResourceRoutePlugin extends AbstractPlugin implements ResourceRouteP
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-
         $resourceRouteCollection
             ->addGet('get');
 
