@@ -22,7 +22,7 @@ class CmsPageSearchConfig extends AbstractBundleConfig
     /**
      * @return null|string
      */
-    public function getCmsPageSynchronizationPoolName()
+    public function getCmsPageSynchronizationPoolName(): ?string
     {
         return null;
     }

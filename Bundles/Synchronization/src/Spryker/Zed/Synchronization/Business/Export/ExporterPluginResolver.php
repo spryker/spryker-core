@@ -50,7 +50,7 @@ class ExporterPluginResolver
      *
      * @return void
      */
-    public function executeResolvedPluginsBySources(array $resources)
+    public function executeResolvedPluginsBySources(array $resources): void
     {
         $pluginsPerExporter = $this->getResolvedPluginsByResources($resources);
         $this->queryContainerExporter->exportSynchronizedData($pluginsPerExporter[ExporterPluginResolver::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS]);
@@ -62,7 +62,7 @@ class ExporterPluginResolver
      *
      * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]
      */
-    protected function getResolvedPluginsByResources(array $resources)
+    protected function getResolvedPluginsByResources(array $resources): array
     {
         $this->mapPluginsByResourceName();
         $effectivePlugins = $this->getEffectivePlugins($resources);
@@ -88,7 +88,7 @@ class ExporterPluginResolver
      *
      * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface[]
      */
-    protected function getEffectivePlugins(array $resources)
+    protected function getEffectivePlugins(array $resources): array
     {
         $effectivePlugins = [];
         if (empty($resources)) {
@@ -107,7 +107,7 @@ class ExporterPluginResolver
     /**
      * @return void
      */
-    protected function mapPluginsByResourceName()
+    protected function mapPluginsByResourceName(): void
     {
         $mappedDataPlugins = [];
         foreach ($this->synchronizationDataPlugins as $plugin) {

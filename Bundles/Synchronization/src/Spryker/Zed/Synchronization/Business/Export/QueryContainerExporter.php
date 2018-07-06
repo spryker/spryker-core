@@ -57,7 +57,7 @@ class QueryContainerExporter implements ExporterInterface
      *
      * @return void
      */
-    public function exportSynchronizedData(array $plugins, array $ids = [])
+    public function exportSynchronizedData(array $plugins, array $ids = []): void
     {
         foreach ($plugins as $plugin) {
             $this->exportData($ids, $plugin);
@@ -70,7 +70,7 @@ class QueryContainerExporter implements ExporterInterface
      *
      * @return void
      */
-    protected function exportData(array $ids, SynchronizationDataQueryContainerPluginInterface $plugin)
+    protected function exportData(array $ids, SynchronizationDataQueryContainerPluginInterface $plugin): void
     {
         $query = $plugin->queryData($ids);
         $count = $query->count();
@@ -95,7 +95,7 @@ class QueryContainerExporter implements ExporterInterface
      *
      * @return void
      */
-    protected function syncData(SynchronizationDataPluginInterface $plugin, array $synchronizationEntities)
+    protected function syncData(SynchronizationDataPluginInterface $plugin, array $synchronizationEntities): void
     {
         $queueSendTransfers = [];
         foreach ($synchronizationEntities as $synchronizedEntity) {
@@ -118,7 +118,7 @@ class QueryContainerExporter implements ExporterInterface
      *
      * @return string|null
      */
-    protected function getStore(bool $hasStore, ActiveRecordInterface $entity)
+    protected function getStore(bool $hasStore, ActiveRecordInterface $entity): ?string
     {
         if ($hasStore) {
             return $entity->getStore();

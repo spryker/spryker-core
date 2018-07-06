@@ -22,7 +22,7 @@ class PriceProductStorageConfig extends AbstractBundleConfig
     /**
      * @return string|null
      */
-    public function getPriceProductAbstractSynchronizationPoolName()
+    public function getPriceProductAbstractSynchronizationPoolName(): ?string
     {
         return null;
     }
@@ -30,7 +30,7 @@ class PriceProductStorageConfig extends AbstractBundleConfig
     /**
      * @return string|null
      */
-    public function getPriceProductConcreteSynchronizationPoolName()
+    public function getPriceProductConcreteSynchronizationPoolName(): ?string
     {
         return null;
     }

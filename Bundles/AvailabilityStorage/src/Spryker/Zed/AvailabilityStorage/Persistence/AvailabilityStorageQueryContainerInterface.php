@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityStorage\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface AvailabilityStorageQueryContainerInterface extends QueryContainerInterface
@@ -61,5 +62,5 @@ interface AvailabilityStorageQueryContainerInterface extends QueryContainerInter
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductAbstract();
+    public function queryProductAbstract(): SpyProductAbstractQuery;
 }

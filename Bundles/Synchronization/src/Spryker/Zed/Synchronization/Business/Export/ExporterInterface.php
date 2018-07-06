@@ -15,5 +15,5 @@ interface ExporterInterface
      *
      * @return void
      */
-    public function exportSynchronizedData(array $resources, array $ids = []);
+    public function exportSynchronizedData(array $resources, array $ids = []): void;
 }

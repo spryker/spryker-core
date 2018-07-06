@@ -22,7 +22,7 @@ class QueueMessageCreator implements QueueMessageCreatorInterface
      *
      * @return \Generated\Shared\Transfer\QueueSendMessageTransfer
      */
-    public function createQueueMessage(SynchronizationQueueMessageTransfer $synchronizationQueueMessageTransfer, $store = null, $queuePoolName = null)
+    public function createQueueMessage(SynchronizationQueueMessageTransfer $synchronizationQueueMessageTransfer, $store = null, $queuePoolName = null): QueueSendMessageTransfer
     {
         $message = [];
         $message[static::WRITE] = $synchronizationQueueMessageTransfer->toArray();
@@ -39,7 +39,7 @@ class QueueMessageCreator implements QueueMessageCreatorInterface
      *
      * @return \Generated\Shared\Transfer\QueueSendMessageTransfer
      */
-    protected function createQueueSendMessageTransfer(array $message, $store = null, $queuePoolName = null)
+    protected function createQueueSendMessageTransfer(array $message, $store = null, $queuePoolName = null): QueueSendMessageTransfer
     {
         $queueSendTransfer = new QueueSendMessageTransfer();
         $queueSendTransfer->setBody(json_encode($message));
