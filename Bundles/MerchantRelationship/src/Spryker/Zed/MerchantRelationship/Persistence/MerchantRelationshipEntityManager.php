@@ -28,10 +28,21 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
      */
     public function deleteMerchantRelationshipById(int $idMerchantRelationship): void
     {
-        $this->getFactory()
+        $merchantRelationshipEntity = $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->filterByIdMerchantRelationship($idMerchantRelationship)
-            ->delete();
+            ->findOne();
+
+        if ($merchantRelationshipEntity) {
+            $assignedCompanyBusinessUnitIds = [];
+            foreach ($merchantRelationshipEntity->getSpyMerchantRelationshipToCompanyBusinessUnits() as $merchantRelationshipToCompanyBusinessUnit) {
+                $assignedCompanyBusinessUnitIds[] = $merchantRelationshipToCompanyBusinessUnit->getFkCompanyBusinessUnit();
+            }
+
+            $this->removeAssignedCompanyBusinessUnits($assignedCompanyBusinessUnitIds, $merchantRelationshipEntity->getPrimaryKey());
+
+            $merchantRelationshipEntity->delete();
+        }
     }
 
     /**
@@ -101,10 +112,14 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
             return;
         }
 
-        $this->getFactory()
+        $entities = $this->getFactory()
             ->createMerchantRelationshipToCompanyBusinessUnitQuery()
             ->filterByFkMerchantRelationship($idMerchantRelationship)
             ->filterByFkCompanyBusinessUnit_In($assignedCompanyBusinessUnitIds)
-            ->delete();
+            ->find();
+
+        foreach ($entities as $entity) {
+            $entity->delete();
+        }
     }
 }
