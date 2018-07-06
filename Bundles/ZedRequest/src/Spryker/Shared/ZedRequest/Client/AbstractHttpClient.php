@@ -31,7 +31,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     const META_TRANSFER_ERROR =
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
     const INVALID_HOST_NAME_ERROR =
-        'Failed request to following ZED host: %s. ';
+        "Failed request to following ZED host: %s. [Error]: %s.";
 
     const HEADER_USER_AGENT = 'User-Agent';
     const HEADER_HOST_YVES = 'X-Yves-Host';
@@ -155,7 +155,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
             $response = $this->sendRequest($request, $requestTransfer, $requestOptions);
         } catch (GuzzleRequestException $e) {
             $host = $request->getUri()->getHost();
-            $message = sprintf(static::INVALID_HOST_NAME_ERROR, $host) . $e->getMessage();
+            $message = sprintf(static::INVALID_HOST_NAME_ERROR, $host, $e->getMessage());
             $response = $e->getResponse();
             if ($response) {
                 $message .= PHP_EOL . PHP_EOL . $response->getBody();
