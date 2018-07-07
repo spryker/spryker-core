@@ -28,3 +28,4 @@ suites:
                 - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitHelper
                 - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingLeadProductHelper
                 - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitTypeHelper
+                - \SprykerTest\Shared\ProductMeasurementUnit\Helper\ProductMeasurementUnitDataHelper

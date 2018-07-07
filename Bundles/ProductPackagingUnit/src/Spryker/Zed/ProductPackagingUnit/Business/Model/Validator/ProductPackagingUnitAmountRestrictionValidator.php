@@ -94,17 +94,15 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer[].
      */
-    protected function getProductAmountTransferMap(array $items): array
+    protected function getProductAmountTransferMap(array $itemTransfers): array
     {
-        $skus = $this->getChangedSkuMap($items);
+        $skus = $this->getChangedSkuMap($itemTransfers);
 
-        $productPackagingUnitTransfers = $this->productPackagingUnitReader->findProductPackagingUnitBySkus($skus);
-
-        $productPackagingUnitAmountTransferMap = $this->mapProductPackagingUnitAmountTransfersBySku($productPackagingUnitTransfers);
+        $productPackagingUnitAmountTransferMap = $this->mapProductPackagingUnitAmountTransfersBySku($itemTransfers);
         $productPackagingUnitAmountTransferMap = $this->replaceMissingSkus($productPackagingUnitAmountTransferMap, $skus);
 
         return $productPackagingUnitAmountTransferMap;
@@ -140,16 +138,17 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductPackagingUnitTransfer[] $productPackagingUnitTransfers
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer[]
      */
-    protected function mapProductPackagingUnitAmountTransfersBySku(array $productPackagingUnitTransfers): array
+    protected function mapProductPackagingUnitAmountTransfersBySku(array $itemTransfers): array
     {
         $productPackagingUnitAmountTransferMap = [];
 
-        foreach ($productPackagingUnitTransfers as $productPackagingUnitTransfer) {
-            $productPackagingUnitAmountTransferMap[$productPackagingUnitTransfer->getIdProductPackagingUnit()] = $productPackagingUnitTransfer->getProductPackagingUnitAmount();
+        foreach ($itemTransfers as $itemTransfer) {
+            $productPackagingUnitTransfer = $this->productPackagingUnitReader->findProductPackagingUnitBySku($itemTransfer->getSku());
+            $productPackagingUnitAmountTransferMap[$itemTransfer->getSku()] = $productPackagingUnitTransfer->getProductPackagingUnitAmount();
         }
 
         return $productPackagingUnitAmountTransferMap;
@@ -202,15 +201,15 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return string[]
      */
-    protected function getChangedSkuMap(array $items): array
+    protected function getChangedSkuMap(array $itemTransfers): array
     {
         $skuMap = [];
 
-        foreach ($items as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             $skuMap[$itemTransfer->getGroupKey()] = $itemTransfer->getSku();
         }
 
@@ -218,17 +217,17 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return int[]
      */
-    protected function getItemAddCartAmountMap(array $items, CartChangeTransfer $cartChangeTransfer): array
+    protected function getItemAddCartAmountMap(array $itemTransfers, CartChangeTransfer $cartChangeTransfer): array
     {
         $quoteAmountMapByGroupKey = $this->getQuoteAmountMap($cartChangeTransfer);
         $cartAmountMap = [];
 
-        foreach ($items as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             $productGroupKey = $itemTransfer->getGroupKey();
             $cartAmountMap[$productGroupKey] = $itemTransfer->getAmount();
 

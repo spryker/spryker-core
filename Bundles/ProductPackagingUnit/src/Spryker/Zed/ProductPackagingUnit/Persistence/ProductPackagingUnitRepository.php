@@ -209,11 +209,11 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
-     * @param array $skus
+     * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer[]
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer
      */
-    public function findProductPackagingUnitBySkus(array $skus): array
+    public function findProductPackagingUnitBySku(string $sku): ProductPackagingUnitTransfer
     {
         $productPackagingUnitQuery = $this->getFactory()->createProductPackagingUnitQuery();
 
@@ -221,21 +221,17 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->leftJoinSpyProductPackagingUnitAmount()
             ->innerJoinProduct()
                 ->useProductQuery()
-                    ->filterBySku_In($skus)
+                    ->filterBySku($sku)
                 ->endUse();
 
-        $productPackagingUnitEntities = $productPackagingUnitQuery->find();
+        $productPackagingUnitEntity = $productPackagingUnitQuery->findOne();
 
-        $productPackagingUnitTransfers = [];
-
-        foreach ($productPackagingUnitEntities as $productPackagingUnitEntity) {
-            $productPackagingUnitTransfers[] = $this->getFactory()
-                ->createProductPackagingUnitMapper()
-                ->mapProductPackagingUnitTransfer(
-                    $productPackagingUnitEntity,
-                    new ProductPackagingUnitTransfer()
-                );
-        }
+        $productPackagingUnitTransfers = $this->getFactory()
+            ->createProductPackagingUnitMapper()
+            ->mapProductPackagingUnitTransfer(
+                $productPackagingUnitEntity,
+                new ProductPackagingUnitTransfer()
+            );
 
         return $productPackagingUnitTransfers;
     }

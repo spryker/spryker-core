@@ -7,7 +7,13 @@
 
 namespace SprykerTest\Zed\ProductPackagingUnit;
 
+use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Inherited Methods
@@ -29,6 +35,123 @@ class ProductPackagingUnitBusinessTester extends Actor
     use _generated\ProductPackagingUnitBusinessTesterActions;
 
     /**
-     * Define custom actions here
+     * @param int $amount
+     * @param float $conversion
+     * @param int $precision
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
+    public function createQuoteTransferForValueCalculation(int $amount, float $conversion, int $precision): QuoteTransfer
+    {
+        return (new QuoteTransfer())
+            ->addItem((new ItemTransfer())
+                ->setAmount($amount)
+                ->setAmountSalesUnit(
+                    (new ProductMeasurementSalesUnitTransfer())
+                        ->setConversion($conversion)
+                        ->setPrecision($precision)
+                ));
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function createEmptyCartChangeTransfer(): CartChangeTransfer
+    {
+        return (new CartChangeTransfer())
+            ->setQuote(
+                (new QuoteTransfer())
+                    ->setItems(new ArrayObject([]))
+            )
+            ->setItems(new ArrayObject([]));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     * @param int $quoteAmount
+     * @param int $quantity
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function createCartChangeTransferForProductPackagingUnitValidation(
+        ProductConcreteTransfer $boxProductConcreteTransfer,
+        ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer,
+        int $quoteAmount,
+        int $quantity
+    ): CartChangeTransfer {
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->setQuote(
+                (new QuoteTransfer())
+                    ->addItem(
+                        (new ItemTransfer())
+                            ->setSku($boxProductConcreteTransfer->getSku())
+                            ->setGroupKey(uniqid())
+                    )
+            )
+            ->addItem(
+                (new ItemTransfer())
+                    ->setSku($boxProductConcreteTransfer->getSku())
+                    ->setQuantity($quantity)
+                    ->setAmount($quoteAmount)
+                    ->setAmountSalesUnit($productMeasurementSalesUnitTransfer)
+                    ->setGroupKey(uniqid())
+            );
+
+        return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param string $sku
+     * @param int $amount
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function addSkuToCartChangeTransfer(CartChangeTransfer $cartChangeTransfer, string $sku, int $amount): CartChangeTransfer
+    {
+        $cartChangeTransfer->addItem(
+            (new ItemTransfer())
+                ->setSku($sku)
+                ->setAmount($amount)
+        );
+
+        return $cartChangeTransfer;
+    }
+
+    /**
+     * @param string $dummyGroupKey
+     * @param int $dummyAmount
+     * @param int $dummySalesUnitId
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function createCartChangeTransferWithountAmountSalesUnitForGroupKeyGeneration(string $dummyGroupKey, int $dummyAmount): CartChangeTransfer
+    {
+        return (new CartChangeTransfer())
+            ->addItem(
+                (new ItemTransfer())
+                    ->setAmountSalesUnit(null)
+                    ->setAmount($dummyAmount)
+                    ->setGroupKey($dummyGroupKey)
+            );
+    }
+
+    /**
+     * @param string $dummyGroupKey
+     * @param int $dummyAmount
+     * @param int $dummySalesUnitId
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function createCartChangeTransferWithAmountSalesUnitForGroupKeyGeneration(string $dummyGroupKey, int $dummyAmount, int $dummySalesUnitId): CartChangeTransfer
+    {
+        return (new CartChangeTransfer())
+            ->addItem(
+                (new ItemTransfer())
+                    ->setAmountSalesUnit((new ProductMeasurementSalesUnitTransfer())->setIdProductMeasurementSalesUnit($dummySalesUnitId))
+                    ->setAmount($dummyAmount)
+                    ->setGroupKey($dummyGroupKey)
+            );
+    }
 }

@@ -75,9 +75,9 @@ interface ProductPackagingUnitRepositoryInterface
     ): ?ProductPackagingUnitTransfer;
 
     /**
-     * @param array $skus
+     * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer[]
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer
      */
-    public function findProductPackagingUnitBySkus(array $skus): array;
+    public function findProductPackagingUnitBySku(string $sku): ProductPackagingUnitTransfer;
 }
