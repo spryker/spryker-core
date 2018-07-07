@@ -121,7 +121,7 @@ class ProductPackagingUnitTypeFormType extends AbstractType
      */
     protected function isNew(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): bool
     {
-        return $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType() === null;
+        return $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType() == null;
     }
 
     /**
@@ -131,7 +131,7 @@ class ProductPackagingUnitTypeFormType extends AbstractType
      */
     protected function isInfrastructuralType(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): bool
     {
-        if ($productPackagingUnitTypeTransfer->getName() !== null &&
+        if ($productPackagingUnitTypeTransfer->getName() != null &&
             in_array($productPackagingUnitTypeTransfer->getName(), $this->getFactory()
                 ->getProductPackagingUnitFacade()
                 ->getInfrastructuralPackagingUnitTypeNames())

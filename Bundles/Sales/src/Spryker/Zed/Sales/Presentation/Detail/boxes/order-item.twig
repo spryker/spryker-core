@@ -36,6 +36,11 @@
       {% endif %}
     </div>
   {% endif %}
+  {% embed '@Sales/Detail/boxes/item-packaging-unit.twig' with {orderItem: orderItem} %}{% endembed %}
+</td>
+<td>
+  {{ orderItem.quantity }}
+  {% embed '@Sales/Detail/boxes/item-measurement-unit.twig' with {orderItem: orderItem} %}{% endembed %}
 </td>
 <td>
     <div>

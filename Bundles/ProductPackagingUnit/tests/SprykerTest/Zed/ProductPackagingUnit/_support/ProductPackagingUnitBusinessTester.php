@@ -67,8 +67,8 @@ class ProductPackagingUnitBusinessTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $boxProductConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
      * @param int $quoteAmount
      * @param int $quantity
      *
@@ -122,7 +122,6 @@ class ProductPackagingUnitBusinessTester extends Actor
     /**
      * @param string $dummyGroupKey
      * @param int $dummyAmount
-     * @param int $dummySalesUnitId
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */

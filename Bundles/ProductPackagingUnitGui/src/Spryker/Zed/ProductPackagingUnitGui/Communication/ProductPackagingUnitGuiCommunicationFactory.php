@@ -9,13 +9,17 @@ namespace Spryker\Zed\ProductPackagingUnitGui\Communication;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Form\Constraint\UniqueProductPackagingUnitTypeNameConstraint;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Form\DataProvider\ProductPackagingUnitTypeDataProvider;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Form\DataProvider\ProductPackagingUnitTypeDataProviderInterface;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Form\ProductPackagingUnitTypeFormType;
+use Spryker\Zed\ProductPackagingUnitGui\Communication\Hydrator\OrderHydrator;
+use Spryker\Zed\ProductPackagingUnitGui\Communication\Hydrator\OrderHydratorInterface;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Table\ProductPackagingUnitTypeTable;
 use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeInterface;
+use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductFacadeInterface;
 use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface;
 use Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
@@ -26,11 +30,30 @@ use Symfony\Component\Form\FormInterface;
 class ProductPackagingUnitGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @return \Spryker\Zed\ProductPackagingUnitGui\Communication\Hydrator\OrderHydratorInterface
+     */
+    public function createOrderHydrator(): OrderHydratorInterface
+    {
+        return new OrderHydrator(
+            $this->getSalesOrderItemPropelQuery(),
+            $this->getProductFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
      */
     public function getProductPackagingUnitFacade(): ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
     {
         return $this->getProvidedDependency(ProductPackagingUnitGuiDependencyProvider::FACADE_PRODUCT_PACKAGING_UNIT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductFacadeInterface
+     */
+    public function getProductFacade(): ProductPackagingUnitGuiToProductFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitGuiDependencyProvider::FACADE_PRODUCT);
     }
 
     /**
@@ -50,6 +73,14 @@ class ProductPackagingUnitGuiCommunicationFactory extends AbstractCommunicationF
     public function getLocaleFacade(): ProductPackagingUnitGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(ProductPackagingUnitGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function getSalesOrderItemPropelQuery(): SpySalesOrderItemQuery
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitGuiDependencyProvider::PROPEL_QUERY_SLAES_ORDER_ITEM);
     }
 
     /**

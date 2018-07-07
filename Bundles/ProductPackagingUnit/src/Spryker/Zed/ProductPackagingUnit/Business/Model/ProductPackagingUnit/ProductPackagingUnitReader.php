@@ -17,7 +17,7 @@ use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryI
 class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
 {
     /**
-     * default values for packaging unit storage values.
+     * Default values for undefined packaging units.
      */
     protected const PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES = [
         ProductPackagingUnitAmountTransfer::DEFAULT_AMOUNT => 1,
@@ -71,6 +71,27 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
     public function findProductPackagingLeadProductByProductPackagingSku(string $productPackagingUnitSku): ?ProductPackagingLeadProductTransfer
     {
         return $this->repository->findProductPackagingLeadProductByProductPackagingSku($productPackagingUnitSku);
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
+     */
+    public function findProductPackagingUnitByProductId(int $idProduct): ?ProductPackagingUnitTransfer
+    {
+        return $this->repository->findProductPackagingUnitByProductId($idProduct);
+    }
+
+    /**
+     * @param string $productPackagingUnitSku
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
+     */
+    public function findProductPackagingUnitByProductSku(
+        string $productPackagingUnitSku
+    ): ?ProductPackagingUnitTransfer {
+        return $this->repository->findProductPackagingUnitByProductSku($productPackagingUnitSku);
     }
 
     /**

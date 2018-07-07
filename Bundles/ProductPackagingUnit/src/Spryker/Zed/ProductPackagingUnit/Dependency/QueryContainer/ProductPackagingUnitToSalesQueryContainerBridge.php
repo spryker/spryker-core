@@ -33,4 +33,12 @@ class ProductPackagingUnitToSalesQueryContainerBridge implements ProductPackagin
     {
         return $this->salesQueryContainer->querySalesOrderItemsByIdSalesOrder($idSalesOrder);
     }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItem(): SpySalesOrderItemQuery
+    {
+        return $this->salesQueryContainer->querySalesOrderItem();
+    }
 }

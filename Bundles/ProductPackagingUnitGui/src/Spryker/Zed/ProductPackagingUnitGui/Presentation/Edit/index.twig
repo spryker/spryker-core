@@ -5,19 +5,6 @@
 
 {% block action %}
     {{ backActionButton('/product-packaging-unit-gui', 'Back to Packaging Types' | trans) }}
-    {{ removeActionButton(
-        url(
-            '/product-packaging-unit-gui/delete',
-            {
-                'id-product-packaging-unit-type': productPackagingUnitTypeTransfer.getIdProductPackagingUnitType(),
-                'redirect-url': url(
-                    '/product-packaging-unit-gui/edit/',
-                    {'id-product-packaging-unit-type': productPackagingUnitTypeTransfer.getIdProductPackagingUnitType()}
-                )
-            }
-        ),
-        'Delete' | trans
-    ) }}
 {% endblock %}
 
 {% block content %}
