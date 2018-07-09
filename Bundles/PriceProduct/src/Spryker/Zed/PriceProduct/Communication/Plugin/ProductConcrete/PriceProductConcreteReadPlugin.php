@@ -7,7 +7,10 @@
 namespace Spryker\Zed\PriceProduct\Communication\Plugin\ProductConcrete;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 
@@ -28,9 +31,14 @@ class PriceProductConcreteReadPlugin extends AbstractPlugin implements ProductCo
      */
     public function read(ProductConcreteTransfer $productConcreteTransfer)
     {
+        $priceProductCriteria = (new PriceProductCriteriaTransfer())->setPriceDimension(
+            (new PriceProductDimensionTransfer())
+                ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT)
+        );
         $priceProductTransfers = $this->getFacade()->findProductConcretePrices(
             $productConcreteTransfer->getIdProductConcrete(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
+            $priceProductCriteria
         );
         if ($priceProductTransfers) {
             $productConcreteTransfer->setPrices(new ArrayObject($priceProductTransfers));
