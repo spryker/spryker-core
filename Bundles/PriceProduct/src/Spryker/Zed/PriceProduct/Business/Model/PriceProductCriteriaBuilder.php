@@ -8,11 +8,13 @@
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
+use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterface
 {
@@ -37,21 +39,29 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     protected $priceProductTypeReader;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\PriceProductConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface $priceFacade
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceProductTypeReader
+     * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
      */
     public function __construct(
         PriceProductToCurrencyFacadeInterface $currencyFacade,
         PriceProductToPriceFacadeInterface $priceFacade,
         PriceProductToStoreFacadeInterface $storeFacade,
-        PriceProductTypeReaderInterface $priceProductTypeReader
+        PriceProductTypeReaderInterface $priceProductTypeReader,
+        PriceProductConfig $config
     ) {
         $this->currencyFacade = $currencyFacade;
         $this->priceFacade = $priceFacade;
         $this->storeFacade = $storeFacade;
         $this->priceProductTypeReader = $priceProductTypeReader;
+        $this->config = $config;
     }
 
     /**
@@ -59,9 +69,18 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
-    public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer)
+    public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductCriteriaTransfer
     {
-        return (new PriceProductCriteriaTransfer())
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+            ->fromArray($priceProductFilterTransfer->toArray(), true);
+
+        return $priceProductCriteriaTransfer
+            ->setPriceDimension(
+                $priceProductFilterTransfer->getPriceDimension()
+            )
+            ->setQuote(
+                $priceProductFilterTransfer->getQuote()
+            )
             ->setIdCurrency(
                 $this->getCurrencyFromFilter($priceProductFilterTransfer)->getIdCurrency()
             )->setIdStore(
@@ -78,7 +97,7 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
-    public function buildCriteriaWithDefaultValues($priceTypeName = null)
+    public function buildCriteriaWithDefaultValues($priceTypeName = null): PriceProductCriteriaTransfer
     {
         return (new PriceProductCriteriaTransfer())
         ->setPriceMode(
@@ -92,6 +111,9 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
         )
         ->setPriceType(
             $this->priceProductTypeReader->handleDefaultPriceType($priceTypeName)
+        )
+        ->setPriceDimension(
+            (new PriceProductDimensionTransfer())->setType($this->config->getPriceDimensionDefault())
         );
     }
 
@@ -100,12 +122,13 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
      *
      * @return string
      */
-    protected function getPriceModeFromFilter(PriceProductFilterTransfer $priceFilterTransfer)
+    protected function getPriceModeFromFilter(PriceProductFilterTransfer $priceFilterTransfer): string
     {
         $priceMode = $priceFilterTransfer->getPriceMode();
         if (!$priceMode) {
-            $priceMode = $this->priceFacade->getDefaultPriceMode();
+            return $this->priceFacade->getDefaultPriceMode();
         }
+
         return $priceMode;
     }
 
