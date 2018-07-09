@@ -39,6 +39,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     const HEADER_HOST_YVES = 'X-Yves-Host';
     const HEADER_INTERNAL_REQUEST = 'X-Internal-Request';
     const HEADER_HOST_ZED = 'X-Zed-Host';
+    protected const SERVER_HTTP_HOST = 'HTTP_HOST';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
@@ -157,7 +158,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
             $response = $this->sendRequest($request, $requestTransfer, $requestOptions);
         } catch (GuzzleRequestException $e) {
             $symfonyRequest = SymfonyRequest::createFromGlobals();
-            $hostName = $symfonyRequest->server->get('HTTP_HOST');
+            $hostName = $symfonyRequest->server->get(static::SERVER_HTTP_HOST);
             $configuredHostName = $request->getUri()->getHost();
             $message = sprintf(static::INVALID_HOST_NAME_ERROR, $hostName, $configuredHostName, Store::getInstance()->getStoreName());
             $response = $e->getResponse();
