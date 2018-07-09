@@ -428,7 +428,7 @@ interface DiscountFacadeInterface
      *
      * @param string[] $voucherCodes
      *
-     * @return bool
+     * @return int
      */
     public function releaseUsedVoucherCodes(array $voucherCodes);
 
@@ -441,7 +441,7 @@ interface DiscountFacadeInterface
      *
      * @param string[] $voucherCodes
      *
-     * @return bool
+     * @return int
      */
     public function useVoucherCodes(array $voucherCodes);
 

@@ -17,7 +17,7 @@ class UniqueProductLabelNameConstraintValidator extends ConstraintValidator
 {
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $value
-     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\UniqueProductLabelNameConstraint $constraint
+     * @param \Spryker\Zed\ProductLabelGui\Communication\Form\Constraint\UniqueProductLabelNameConstraint $constraint
      *
      * @return void
      */
