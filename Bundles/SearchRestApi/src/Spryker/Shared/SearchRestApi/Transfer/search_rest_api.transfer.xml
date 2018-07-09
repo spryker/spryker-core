@@ -8,7 +8,11 @@
     </transfer>
 
     <transfer name="RestSearchResponseAttributesTransfer">
-        <property name="result" type="string"/>
+        <property name="facets" type="array"/>
+        <property name="sort" type="array"/>
+        <property name="pagination" type="array"/>
+        <property name="products" type="array"/>
+        <property name="spellingSuggestion" type="string"/>
     </transfer>
 
 </transfers>
