@@ -72,7 +72,6 @@ class DiscountAmountAggregator implements CalculatorInterface
     protected function setItemTransferUnitDiscountAmountAggregation(ItemTransfer $itemTransfer)
     {
         // BC: When ItemTransfer is populated from Persistence, sum price is accurate and populated, unit price is derived
-        //$derivedUnitPrice = (int)round($itemTransfer->getSumPrice() / $itemTransfer->getQuantity());
         $derivedUnitPrice = $itemTransfer->getUnitPrice();
 
         $itemTransfer->setUnitDiscountAmountAggregation(
@@ -112,7 +111,6 @@ class DiscountAmountAggregator implements CalculatorInterface
     protected function setExpenseTransferUnitDiscountAmountAggregation(ExpenseTransfer $expenseTransfer)
     {
         // BC: When ExpenseTransfer is populated from Persistence, sum price is accurate and populated, unit price is derived
-        //$derivedUnitPrice = (int)round($expenseTransfer->getSumPrice() / $expenseTransfer->getQuantity());
         $derivedUnitPrice = $expenseTransfer->getUnitPrice();
 
         $expenseTransfer->setUnitDiscountAmountAggregation(
@@ -165,7 +163,6 @@ class DiscountAmountAggregator implements CalculatorInterface
     protected function setProductOptionTransferUnitDiscountAmountAggregation(ProductOptionTransfer $productOptionTransfer)
     {
         // BC: When ProductOptionTransfer is populated from Persistence, sum price is accurate and populated, unit price is derived
-        //$derivedUnitPrice = (int)round($productOptionTransfer->getSumPrice() / $productOptionTransfer->getQuantity());
         $derivedUnitPrice = $productOptionTransfer->getUnitPrice();
 
         $productOptionTransfer->setUnitDiscountAmountAggregation(
@@ -221,7 +218,6 @@ class DiscountAmountAggregator implements CalculatorInterface
             }
 
             // BC: When discounts are populated from Persistence, sum price is accurate and populated, unit price is derived
-            //$derivedDiscountAmount = (int)round($calculatedDiscountTransfer->getSumAmount() / $calculatedDiscountTransfer->getQuantity());
             $derivedDiscountAmount = $calculatedDiscountTransfer->getUnitAmount();
 
             $itemUnitDiscountAmountAggregation += $derivedDiscountAmount;
