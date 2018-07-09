@@ -45,8 +45,9 @@ class CategoryLocalizedAttributeType extends AbstractType
     {
         parent::configureOptions($resolver);
 
-        $resolver->setDefaults(['data_class' => CategoryLocalizedAttributesTransfer::class])
-            ->setRequired(static::OPTION_CATEGORY_QUERY_CONTAINER);
+        $resolver->setDefaults([
+            'data_class' => CategoryLocalizedAttributesTransfer::class,
+        ])->setRequired(static::OPTION_CATEGORY_QUERY_CONTAINER);
     }
 
     /**
