@@ -7,22 +7,26 @@
 
 namespace Spryker\Zed\PriceProductStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+
 interface PriceProductStorageToPriceProductFacadeInterface
 {
     /**
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPrices($idProductAbstract);
+    public function findProductAbstractPrices($idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null);
 
     /**
      * @param int $idProductConcrete
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
+    public function findProductConcretePrices($idProductConcrete, $idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null);
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
