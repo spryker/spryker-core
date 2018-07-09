@@ -23,7 +23,7 @@ class AssignDefaultBusinessUnitToCompanyUserPlugin extends AbstractPlugin implem
      *
      * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function preSave(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {

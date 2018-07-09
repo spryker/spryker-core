@@ -10,7 +10,7 @@ namespace Spryker\Zed\CustomerGroup\Dependency\Service;
 interface CustomerGroupToUtilEncodingInterface
 {
     /**
-     * @param string $value
+     * @param array $value
      * @param int|null $options
      * @param int|null $depth
      *
