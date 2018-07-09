@@ -1,13 +1,14 @@
-namespace: SprykerTest
+namespace: FileManager
+actor: Tester
 
 include:
     - tests/SprykerTest/Zed/FileManager
 
 paths:
     tests: tests
-    support: .
     log: tests/_output
     data: tests/_data
+    support: tests/_support
     envs: tests/_envs
 
 settings:
