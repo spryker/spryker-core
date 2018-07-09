@@ -26,7 +26,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CategoryLocalizedAttributeType extends AbstractType
 {
-    const OPTION_CATEGORY_QUERY_CONTAINER = 'category query container';
+    public const OPTION_CATEGORY_QUERY_CONTAINER = 'OPTION_CATEGORY_QUERY_CONTAINER';
 
     const FIELD_NAME = 'name';
     const FIELD_FK_LOCALE = 'fk_locale';
@@ -45,8 +45,7 @@ class CategoryLocalizedAttributeType extends AbstractType
     {
         parent::configureOptions($resolver);
 
-        $resolver
-            ->setDefaults(['data_class' => CategoryLocalizedAttributesTransfer::class])
+        $resolver->setDefaults(['data_class' => CategoryLocalizedAttributesTransfer::class])
             ->setRequired(static::OPTION_CATEGORY_QUERY_CONTAINER);
     }
 
@@ -126,7 +125,7 @@ class CategoryLocalizedAttributeType extends AbstractType
                                         $data->getParentCategoryNode()->getIdCategoryNode(),
                                         $key
                                     )
-                                    ->count() > 0;
+                                    ->exists();
                             }
 
                             if ($exists) {
