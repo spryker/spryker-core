@@ -13,4 +13,8 @@
         <property name="assigneeCompanyBusinessUnits" type="CompanyBusinessUnitCollection" />
     </transfer>
 
+    <transfer name="CompanyBusinessUnit">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship" />
+    </transfer>
+
 </transfers>
