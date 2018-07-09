@@ -245,8 +245,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $this->getFacade()->expandCartChangeWithAmountLeadProduct($cartChange);
 
         foreach ($cartChange->getItems() as $itemTransfer) {
-            $this->assertNotNull($itemTransfer->getAmountLeadProduct());
-            $this->assertNotNull($itemTransfer->getAmountLeadProduct()->getSku());
+            $this->assertInstanceOf(ProductPackagingLeadProductTransfer::class, $itemTransfer->getAmountLeadProduct());
             $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getAmountLeadProduct()->getSku());
         }
     }
@@ -674,22 +673,25 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     /**
      * @return void
      */
-    public function hydrateOrderWithAmountSalesUnit(): void
+    public function testHydrateOrderWithAmountSalesUnitAndLeadProduct(): void
     {
         // Assign
         $salesOrderEntity = $this->tester->create();
         $orderTransfer = (new OrderTransfer())->fromArray($salesOrderEntity->toArray(), true);
 
-        $salesOrderItemEntities = $salesOrderEntity->getItems();
-        foreach ($salesOrderItemEntities as $salesOrderItem) {
+        foreach ($salesOrderEntity->getItems() as $salesOrderItem) {
             $itemTransfer = (new ItemTransfer())->fromArray($salesOrderItem->toArray(), true);
             $orderTransfer->addItem($itemTransfer);
         }
 
         //Act
-        $orderTransfer = $this->getFacade()->hydrateOrderWithAmountSalesUnit($orderTransfer);
+        $orderTransfer = $this->getFacade()->hydrateOrderWithAmountSalesUnitAndLeadProduct($orderTransfer);
 
         //Assert
         $this->assertInstanceOf(OrderTransfer::class, $orderTransfer);
+
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            $this->assertInstanceOf(ProductMeasurementSalesUnitTransfer::class, $itemTransfer->getAmountSalesUnit());
+        }
     }
 }

@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade;
+namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-class ProductPackagingUnitGuiToProductFacadeBridge implements ProductPackagingUnitGuiToProductFacadeInterface
+class ProductPackagingUnitToProductFacadeBridge implements ProductPackagingUnitToProductFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface

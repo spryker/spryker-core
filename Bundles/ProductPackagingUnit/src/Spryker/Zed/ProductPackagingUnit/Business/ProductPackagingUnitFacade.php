@@ -338,11 +338,11 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateOrderWithAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer
+    public function hydrateOrderWithAmountSalesUnitAndLeadProduct(OrderTransfer $orderTransfer): OrderTransfer
     {
         return $this->getFactory()
-            ->createAmountSalesUnitOrderHydrator()
-            ->hydrateOrderWithAmountSalesUnit($orderTransfer);
+            ->createProductPackagingUnitOrderHydrator()
+            ->hydrateOrderWithAmountSalesUnitAndLeadProduct($orderTransfer);
     }
 
     /**

@@ -13,6 +13,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAva
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeBridge;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeBridge;
@@ -27,6 +28,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_OMS = 'FACADE_OMS';
     public const FACADE_STOCK = 'FACADE_STOCK';
     public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
@@ -44,6 +46,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addOmsFacade($container);
         $container = $this->addStockFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addProductFacade($container);
 
         $container = $this->addSalesQueryContainer($container);
 
@@ -156,6 +159,22 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container[static::FACADE_STORE] = function (Container $container) {
             return new ProductPackagingUnitToStoreFacadeBridge(
                 $container->getLocator()->store()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
+            return new ProductPackagingUnitToProductFacadeBridge(
+                $container->getLocator()->product()->facade()
             );
         };
 
