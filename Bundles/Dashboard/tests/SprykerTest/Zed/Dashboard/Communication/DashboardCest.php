@@ -26,7 +26,7 @@ class DashboardCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(DashboardCommunicationTester $i)
+    public function isVisibleBreadcrumb(DashboardCommunicationTester $i)
     {
         $i->amOnPage(DashboardPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Dashboard');
@@ -37,7 +37,7 @@ class DashboardCest
      *
      * @return void
      */
-    public function titleIsVisible(DashboardCommunicationTester $i)
+    public function isVisibleTitle(DashboardCommunicationTester $i)
     {
         $i->amOnPage(DashboardPage::URL);
         $i->canSee(DashboardPage::TITLE, 'h2');

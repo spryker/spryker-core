@@ -17,6 +17,6 @@ class DashboardCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getDateFormatterService(): array
     {
-        return $this->getProvidedDependency(DashboardDependencyProvider::PLUGIN_RENDER_DASHBOARD);
+        return $this->getProvidedDependency(DashboardDependencyProvider::PLUGIN_RENDER_DASHBOARDS);
     }
 }
