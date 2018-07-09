@@ -1,13 +1,13 @@
 # SalesStatistics Module
-[![Build Status](https://travis-ci.org/spryker/chart-order.svg)](https://travis-ci.org/spryker/chart-order)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/chart-order/badge.svg)](https://coveralls.io/github/spryker/chart-order)
+[![Build Status](https://travis-ci.org/spryker/sales-statistics.svg)](https://travis-ci.org/spryker/sales-statistics)
+[![Coverage Status](https://coveralls.io/repos/github/spryker/sales-statistics/badge.svg)](https://coveralls.io/github/spryker/sales-statistics)
 
 Module for sales statistic
 
 ## Installation
 
 ```
-composer require spryker/chart-order
+composer require spryker/sales-statistics
 ```
 
 ## Documentation

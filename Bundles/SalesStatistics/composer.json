@@ -1,5 +1,5 @@
 {
-  "name": "spryker/chart-order",
+  "name": "spryker/sales-statistics",
   "description": "SalesStatistics module",
   "license": "proprietary",
   "require": {
