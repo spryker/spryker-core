@@ -40,6 +40,7 @@ interface ProductPackagingUnitReaderInterface
     public function getProductMeasurementSalesUnitTransfer(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer;
 
     /**
+     *
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
@@ -62,4 +63,3 @@ interface ProductPackagingUnitReaderInterface
      */
     public function getProductMeasurementSalesUnitTransfer(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer;
 }
-
