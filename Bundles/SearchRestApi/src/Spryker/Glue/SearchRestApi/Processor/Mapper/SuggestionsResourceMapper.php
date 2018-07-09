@@ -14,6 +14,8 @@ use Spryker\Glue\SearchRestApi\SearchRestApiConfig;
 
 class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
 {
+    protected const SUGGESTIONS_GET_PARAMETER_NAME = 'q';
+
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
@@ -36,7 +38,7 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
      */
     public function mapRestSuggestionsRequestAttributesTransferToSuggestionsString(RestRequestInterface $restRequest): string
     {
-        return $restRequest->getResource()->getId() ?? '';
+        return $restRequest->getHttpRequest()->query->get(static::SUGGESTIONS_GET_PARAMETER_NAME, '');
     }
 
     /**
@@ -46,12 +48,7 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
      */
     public function mapRestSuggestionsRequestAttributesTransferToSuggestionsRequestParameters(RestRequestInterface $restRequest): array
     {
-        $attributes = $restRequest->getResource()->getAttributes();
-        if ($attributes) {
-            return $attributes->toArray();
-        }
-
-        return [];
+        return $restRequest->getHttpRequest()->query->all();
     }
 
     /**
@@ -61,10 +58,12 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
      */
     public function mapSuggestionsResponseAttributesTransferToRestResponse(array $restSearchResponse): RestResourceInterface
     {
-        $restSuggestionsAttributesTransfer = (new RestSuggestionsResponseAttributesTransfer())->fromArray($restSearchResponse, true);
+        $restSuggestionsAttributesTransfer = new RestSuggestionsResponseAttributesTransfer();
+        $restSuggestionsAttributesTransfer->fromArray($restSearchResponse, true);
+
         return $this->restResourceBuilder->createRestResource(
             SearchRestApiConfig::RESOURCE_SUGGESTIONS,
-            '0',
+            null,
             $restSuggestionsAttributesTransfer
         );
     }
