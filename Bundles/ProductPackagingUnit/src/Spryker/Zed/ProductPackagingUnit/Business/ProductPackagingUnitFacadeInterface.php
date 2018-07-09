@@ -181,7 +181,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateOrderWithAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
+    public function hydrateOrderWithAmountSalesUnitAndLeadProduct(OrderTransfer $orderTransfer): OrderTransfer;
 
     /**
      * Specification:

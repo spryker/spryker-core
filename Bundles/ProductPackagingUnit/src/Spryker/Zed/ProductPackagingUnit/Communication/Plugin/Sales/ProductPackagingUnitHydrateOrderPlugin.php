@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Hydrator;
+namespace Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Sales;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -15,7 +15,7 @@ use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
  */
-class AmountSalesUnitHydrateOrderPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
+class ProductPackagingUnitHydrateOrderPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -28,6 +28,6 @@ class AmountSalesUnitHydrateOrderPlugin extends AbstractPlugin implements Hydrat
      */
     public function hydrate(OrderTransfer $orderTransfer): OrderTransfer
     {
-        return $this->getFacade()->hydrateOrderWithAmountSalesUnit($orderTransfer);
+        return $this->getFacade()->hydrateOrderWithAmountSalesUnitAndLeadProduct($orderTransfer);
     }
 }
