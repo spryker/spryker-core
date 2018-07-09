@@ -7,13 +7,15 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Oms;
 
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+
 use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
  */
-class ProductPackagingUnitReservationHandlerPlugin implements ReservationHandlerPluginInterface
+class ProductPackagingUnitReservationHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface
 {
     /**
      * @api
@@ -22,7 +24,7 @@ class ProductPackagingUnitReservationHandlerPlugin implements ReservationHandler
      *
      * @return void
      */
-    public function handle($sku)
+    public function handle($sku): void
     {
         $this->getFacade()->updateProductPackagingUnitLeadProductAvailability($sku);
     }
