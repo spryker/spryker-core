@@ -25,7 +25,7 @@ class SalesStatisticsMapper implements SalesStatisticsMapperInterface
         if ($statistic) {
             foreach ($statistic as $statisticItem) {
                 $chartDataTraceTransfer->addLabels($statisticItem[SalesStatisticsRepository::DATE]);
-                $chartDataTraceTransfer->addValues((int) $statisticItem[SalesStatisticsRepository::COUNT]);
+                $chartDataTraceTransfer->addValues((int)$statisticItem[SalesStatisticsRepository::COUNT]);
             }
         }
 
@@ -61,7 +61,7 @@ class SalesStatisticsMapper implements SalesStatisticsMapperInterface
         if ($statistic) {
             foreach ($statistic as $statisticItem) {
                 $chartDataTraceTransfer->addLabels($statisticItem[SalesStatisticsRepository::ITEM_NAME]);
-                $chartDataTraceTransfer->addValues((int) $statisticItem[SalesStatisticsRepository::COUNT]);
+                $chartDataTraceTransfer->addValues((int)$statisticItem[SalesStatisticsRepository::COUNT]);
             }
         }
 
