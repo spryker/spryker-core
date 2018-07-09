@@ -74,7 +74,7 @@ class ErrorHandlerFactory
     /**
      * @return bool
      */
-    protected function  isGlueApplication()
+    protected function isGlueApplication()
     {
         return $this->application === self::APPLICATION_GLUE;
     }
