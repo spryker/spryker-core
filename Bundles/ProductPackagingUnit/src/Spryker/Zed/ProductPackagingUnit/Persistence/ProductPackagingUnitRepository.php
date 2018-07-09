@@ -282,13 +282,13 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
 
         $productPackagingUnitEntity = $productPackagingUnitQuery->findOne();
 
-        $productPackagingUnitTransfers = $this->getFactory()
+        $productPackagingUnitTransfer = $this->getFactory()
             ->createProductPackagingUnitMapper()
             ->mapProductPackagingUnitTransfer(
                 $productPackagingUnitEntity,
                 new ProductPackagingUnitTransfer()
             );
 
-        return $productPackagingUnitTransfers;
+        return $productPackagingUnitTransfer;
     }
 }
