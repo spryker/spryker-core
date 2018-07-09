@@ -285,9 +285,9 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-       /**
-        * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitAmountSalesUnitValueInterface
-        */
+   /**
+    * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitAmountSalesUnitValueInterface
+    */
     public function createProductPackagingUnitAmountSalesUnitValue(): ProductPackagingUnitAmountSalesUnitValueInterface
     {
         return new ProductPackagingUnitAmountSalesUnitValue();

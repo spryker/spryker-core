@@ -23,7 +23,7 @@ class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroup
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setGroupKey(
-                $this->expandItemWithGroupKey($itemTransfer)
+                $this->getItemWithGroupKey($itemTransfer)
             );
         }
 
@@ -31,21 +31,21 @@ class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroup
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return string
      */
-    protected function expandItemWithGroupKey(ItemTransfer $item): string
+    protected function getItemWithGroupKey(ItemTransfer $itemTransfer): string
     {
-        if (!$item->getAmountSalesUnit()) {
-            return $item->getGroupKey();
+        if (!$itemTransfer->getAmountSalesUnit()) {
+            return $itemTransfer->getGroupKey();
         }
 
         return sprintf(
             static::AMOUNT_GROUP_KEY_FORMAT,
-            $item->getGroupKey(),
-            $item->getAmount(),
-            $item->getAmountSalesUnit()->getIdProductMeasurementSalesUnit()
+            $itemTransfer->getGroupKey(),
+            $itemTransfer->getAmount(),
+            $itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit()
         );
     }
 }

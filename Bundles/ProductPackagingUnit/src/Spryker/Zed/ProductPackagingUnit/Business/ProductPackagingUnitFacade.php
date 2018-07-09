@@ -253,7 +253,6 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function validateItemAddAmountRestrictions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
