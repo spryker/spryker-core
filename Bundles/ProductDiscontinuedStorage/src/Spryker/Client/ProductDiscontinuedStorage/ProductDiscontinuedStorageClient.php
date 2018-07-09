@@ -43,7 +43,7 @@ class ProductDiscontinuedStorageClient extends AbstractClient implements Product
      *
      * @return bool
      */
-    public function isProductDiscontinuedStorage(string $concreteSku, string $locale): bool
+    public function isProductDiscontinued(string $concreteSku, string $locale): bool
     {
         return (bool)$this->getFactory()
             ->createProductDiscontinuedStorageReader()
