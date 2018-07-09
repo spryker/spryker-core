@@ -48,7 +48,6 @@ class ProductAbstractPackagingStorageListener extends AbstractPlugin implements 
     protected function getUnpublishEvents(): array
     {
         return [
-            ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_PUBLISH,
             ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_UNPUBLISH,
         ];
     }
