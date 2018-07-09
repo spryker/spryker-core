@@ -222,7 +222,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createCartChangeExpander(): CartChangeExpanderInterface
     {
         return new CartChangeExpander(
-            $this->createProductPackagingUnitReader()
+            $this->createProductPackagingUnitReader(),
+            $this->createProductPackagingUnitGroupKeyGenerator()
         );
     }
 

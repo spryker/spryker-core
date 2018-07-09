@@ -242,8 +242,8 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     public function expandCartChangeGroupKeyWithAmount(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         return $this->getFactory()
-            ->createProductPackagingUnitGroupKeyGenerator()
-            ->expandCartChangeGroupKeyWithAmount($cartChangeTransfer);
+            ->createCartChangeExpander()
+            ->expandWithAmountGroupKey($cartChangeTransfer);
     }
 
     /**
