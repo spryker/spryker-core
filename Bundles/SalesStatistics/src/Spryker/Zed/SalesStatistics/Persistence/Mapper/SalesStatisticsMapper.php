@@ -24,8 +24,8 @@ class SalesStatisticsMapper implements SalesStatisticsMapperInterface
         $chartDataTraceTransfer = new SalesStatisticTransfer();
         if ($statistic) {
             foreach ($statistic as $statisticItem) {
-                $chartDataTraceTransfer->addLabels($statisticItem[SalesStatisticsRepository::DATE]);
-                $chartDataTraceTransfer->addValues((int)$statisticItem[SalesStatisticsRepository::COUNT]);
+                $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::DATE]);
+                $chartDataTraceTransfer->addValue((int)$statisticItem[SalesStatisticsRepository::COUNT]);
             }
         }
 
@@ -42,8 +42,8 @@ class SalesStatisticsMapper implements SalesStatisticsMapperInterface
         $chartDataTraceTransfer = new SalesStatisticTransfer();
         if ($statistic) {
             foreach ($statistic as $statisticItem) {
-                $chartDataTraceTransfer->addLabels($statisticItem[SalesStatisticsRepository::STATUS_NAME]);
-                $chartDataTraceTransfer->addValues($statisticItem[SalesStatisticsRepository::TOTAL] / static::DECIMAL);
+                $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::STATUS_NAME]);
+                $chartDataTraceTransfer->addValue((float)$statisticItem[SalesStatisticsRepository::TOTAL] / static::DECIMAL);
             }
         }
 
@@ -60,8 +60,8 @@ class SalesStatisticsMapper implements SalesStatisticsMapperInterface
         $chartDataTraceTransfer = new SalesStatisticTransfer();
         if ($statistic) {
             foreach ($statistic as $statisticItem) {
-                $chartDataTraceTransfer->addLabels($statisticItem[SalesStatisticsRepository::ITEM_NAME]);
-                $chartDataTraceTransfer->addValues((int)$statisticItem[SalesStatisticsRepository::COUNT]);
+                $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::ITEM_NAME]);
+                $chartDataTraceTransfer->addValue((int)$statisticItem[SalesStatisticsRepository::COUNT]);
             }
         }
 
