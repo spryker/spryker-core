@@ -41,7 +41,6 @@
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
         <property name="amount" type="int"/>
         <property name="productPackagingUnit" type="ProductPackagingUnit"/>
-        <property name="skuProduct" type="string"/>
     </transfer>
 
 </transfers>

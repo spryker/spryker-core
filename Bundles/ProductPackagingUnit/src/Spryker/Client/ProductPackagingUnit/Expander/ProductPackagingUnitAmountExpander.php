@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductPackagingUnit\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 
@@ -31,12 +32,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
                 $itemTransfer->setAmount($packagingUnitAmount);
             }
 
-            $amountSalesUnitId = $this->getAmountSalesUnit($params);
-
-            if ($amountSalesUnitId) {
-                $amountSalesUnitTransfer = $this->createSalesUnitTransfer($amountSalesUnitId);
-                $itemTransfer->setAmountSalesUnit($amountSalesUnitTransfer);
-            }
+            $this->updateItemTransferWithAmountSalesUnit($itemTransfer, $params);
         }
 
         return $persistentCartChangeTransfer;
@@ -57,15 +53,26 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
                 $itemTransfer->setAmount($packagingUnitAmount);
             }
 
-            $amountSalesUnitId = $this->getAmountSalesUnit($params);
-
-            if ($amountSalesUnitId) {
-                $amountSalesUnitTransfer = $this->createSalesUnitTransfer($amountSalesUnitId);
-                $itemTransfer->setAmountSalesUnit($amountSalesUnitTransfer);
-            }
+            $this->updateItemTransferWithAmountSalesUnit($itemTransfer, $params);
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $params
+     *
+     * @return void
+     */
+    protected function updateItemTransferWithAmountSalesUnit(ItemTransfer $itemTransfer, array $params): void
+    {
+        $amountSalesUnitId = $this->getAmountSalesUnit($params);
+
+        if ($amountSalesUnitId) {
+            $amountSalesUnitTransfer = $this->createSalesUnitTransfer($amountSalesUnitId);
+            $itemTransfer->setAmountSalesUnit($amountSalesUnitTransfer);
+        }
     }
 
     /**
@@ -73,7 +80,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    protected function createSalesUnitTransfer($idSalesUnit)
+    protected function createSalesUnitTransfer(int $idSalesUnit): ProductMeasurementSalesUnitTransfer
     {
         return (new ProductMeasurementSalesUnitTransfer())
             ->setIdProductMeasurementSalesUnit($idSalesUnit);

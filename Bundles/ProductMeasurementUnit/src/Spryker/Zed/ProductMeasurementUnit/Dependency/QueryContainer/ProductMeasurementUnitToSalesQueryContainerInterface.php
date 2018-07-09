@@ -16,5 +16,5 @@ interface ProductMeasurementUnitToSalesQueryContainerInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function querySalesOrderItemsByIdSalesOrder($idSalesOrder): SpySalesOrderItemQuery;
+    public function querySalesOrderItemsByIdSalesOrder(int $idSalesOrder): SpySalesOrderItemQuery;
 }

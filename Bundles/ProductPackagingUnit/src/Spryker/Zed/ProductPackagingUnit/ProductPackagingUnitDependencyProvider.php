@@ -40,11 +40,12 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addLocaleFacade($container);
         $container = $this->addGlossaryFacade($container);
         $container = $this->addProductMeasurementUnitFacade($container);
-        $container = $this->addSalesQueryContainer($container);
         $container = $this->addAvailabilityFacade($container);
         $container = $this->addOmsFacade($container);
         $container = $this->addStockFacade($container);
         $container = $this->addStoreFacade($container);
+
+        $container = $this->addSalesQueryContainer($container);
 
         return $container;
     }
@@ -91,22 +92,6 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container[static::FACADE_PRODUCT_MEASUREMENT_UNIT] = function (Container $container) {
             return new ProductPackagingUnitToProductMeasurementUnitFacadeBridge(
                 $container->getLocator()->productMeasurementUnit()->facade()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addSalesQueryContainer(Container $container): Container
-    {
-        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
-            return new ProductPackagingUnitToSalesQueryContainerBridge(
-                $container->getLocator()->sales()->queryContainer()
             );
         };
 
@@ -171,6 +156,22 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container[static::FACADE_STORE] = function (Container $container) {
             return new ProductPackagingUnitToStoreFacadeBridge(
                 $container->getLocator()->store()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesQueryContainer(Container $container): Container
+    {
+        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
+            return new ProductPackagingUnitToSalesQueryContainerBridge(
+                $container->getLocator()->sales()->queryContainer()
             );
         };
 

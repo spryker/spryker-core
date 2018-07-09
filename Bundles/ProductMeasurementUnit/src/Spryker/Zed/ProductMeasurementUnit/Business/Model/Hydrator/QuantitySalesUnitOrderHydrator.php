@@ -38,9 +38,9 @@ class QuantitySalesUnitOrderHydrator implements QuantitySalesUnitOrderHydratorIn
     public function hydrateOrderWithQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer
     {
         $salesOrderQuery = $this->salesQueryContainer->querySalesOrderItemsByIdSalesOrder($orderTransfer->getIdSalesOrder());
-        $salesOrderItems = $salesOrderQuery->find();
+        $salesOrderItemEntities = $salesOrderQuery->find();
 
-        foreach ($salesOrderItems as $salesOrderItemEntity) {
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
             $itemTransfer = $this->findItemTransferQuantitySalesUnitsBelongTo(
                 $orderTransfer,
                 $salesOrderItemEntity->getIdSalesOrderItem()
@@ -82,7 +82,7 @@ class QuantitySalesUnitOrderHydrator implements QuantitySalesUnitOrderHydratorIn
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
      */
-    protected function createProductMeasurementUnitTransfer(?string $productMeasurementUnitName): ProductMeasurementUnitTransfer
+    protected function createProductMeasurementUnitTransfer(?string $productMeasurementUnitName = null): ProductMeasurementUnitTransfer
     {
         $productMeasurementUnitTransfer = new ProductMeasurementUnitTransfer();
         $productMeasurementUnitTransfer->setName($productMeasurementUnitName);
@@ -111,7 +111,7 @@ class QuantitySalesUnitOrderHydrator implements QuantitySalesUnitOrderHydratorIn
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    protected function findItemTransferQuantitySalesUnitsBelongTo(OrderTransfer $orderTransfer, $idSalesOrderItem): ?ItemTransfer
+    protected function findItemTransferQuantitySalesUnitsBelongTo(OrderTransfer $orderTransfer, int $idSalesOrderItem): ?ItemTransfer
     {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getIdSalesOrderItem() === $idSalesOrderItem) {

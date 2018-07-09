@@ -29,3 +29,6 @@ suites:
                 - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingLeadProductHelper
                 - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitTypeHelper
                 - \SprykerTest\Shared\ProductMeasurementUnit\Helper\ProductMeasurementUnitDataHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Zed\Sales\Helper\BusinessHelper

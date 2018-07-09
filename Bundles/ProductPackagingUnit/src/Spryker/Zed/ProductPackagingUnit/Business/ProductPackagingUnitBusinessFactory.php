@@ -22,6 +22,8 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUn
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstallerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculator;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculatorInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemExpander;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpander;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitAmountSalesUnitValue;
@@ -215,6 +217,16 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpanderInterface
+     */
+    public function createCartChangeExpander(): CartChangeExpanderInterface
+    {
+        return new CartChangeExpander(
+            $this->createProductPackagingUnitReader()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
      */
     public function createProductPackagingUnitReader(): ProductPackagingUnitReaderInterface
@@ -222,16 +234,6 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new ProductPackagingUnitReader(
             $this->getRepository(),
             $this->getProductMeasurementUnitFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpanderInterface
-     */
-    public function createCartChangeExpander(): CartChangeExpanderInterface
-    {
-        return new CartChangeExpander(
-            $this->createProductPackagingUnitReader()
         );
     }
 
@@ -254,6 +256,36 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemExpanderInterface
+     */
+    public function createAmountSalesUnitOrderItemExpander(): OrderItemExpanderInterface
+    {
+        return new OrderItemExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculatorInterface
+     */
+    public function createLeadProductReservationCalculator(): LeadProductReservationCalculatorInterface
+    {
+        return new LeadProductReservationCalculator(
+            $this->getOmsFacade(),
+            $this->getStockFacade(),
+            $this->getSalesQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpanderInterface
+     */
+    public function createPriceChangeExpander(): PriceChangeExpanderInterface
+    {
+        return new PriceChangeExpander(
+            $this->createProductPackagingUnitReader()
+        );
+    }
+
+       /**
      * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitAmountSalesUnitValueInterface
      */
     public function createProductPackagingUnitAmountSalesUnitValue(): ProductPackagingUnitAmountSalesUnitValueInterface
@@ -275,28 +307,6 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitAmountRestrictionValidator(): ProductPackagingUnitAmountRestrictionValidatorInterface
     {
         return new ProductPackagingUnitAmountRestrictionValidator(
-            $this->createProductPackagingUnitReader()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculatorInterface
-     */
-    public function createLeadProductReservationCalculator(): LeadProductReservationCalculatorInterface
-    {
-        return new LeadProductReservationCalculator(
-            $this->getOmsFacade(),
-            $this->getStockFacade(),
-            $this->getSalesQueryContainer()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpanderInterface
-     */
-    public function createPriceChangeExpander(): PriceChangeExpanderInterface
-    {
-        return new PriceChangeExpander(
             $this->createProductPackagingUnitReader()
         );
     }

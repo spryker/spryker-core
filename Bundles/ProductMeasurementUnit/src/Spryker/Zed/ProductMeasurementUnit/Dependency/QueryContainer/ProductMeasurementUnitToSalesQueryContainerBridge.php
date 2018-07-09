@@ -29,7 +29,7 @@ class ProductMeasurementUnitToSalesQueryContainerBridge implements ProductMeasur
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function querySalesOrderItemsByIdSalesOrder($idSalesOrder): SpySalesOrderItemQuery
+    public function querySalesOrderItemsByIdSalesOrder(int $idSalesOrder): SpySalesOrderItemQuery
     {
         return $this->salesQueryContainer->querySalesOrderItemsByIdSalesOrder($idSalesOrder);
     }

@@ -38,9 +38,10 @@ class AmountSalesUnitOrderHydrator implements AmountSalesUnitOrderHydratorInterf
     public function hydrateOrderWithAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer
     {
         $salesOrderQuery = $this->salesQueryContainer->querySalesOrderItemsByIdSalesOrder($orderTransfer->getIdSalesOrder());
-        $salesOrderItems = $salesOrderQuery->find();
 
-        foreach ($salesOrderItems as $salesOrderItemEntity) {
+        $salesOrderItemEntities = $salesOrderQuery->find();
+
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
             $itemTransfer = $this->findItemTransferAmountSalesUnitsBelongTo(
                 $orderTransfer,
                 $salesOrderItemEntity->getIdSalesOrderItem()
@@ -83,7 +84,7 @@ class AmountSalesUnitOrderHydrator implements AmountSalesUnitOrderHydratorInterf
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
      */
-    protected function createProductMeasurementUnitTransfer(?string $productMeasurementUnitName): ProductMeasurementUnitTransfer
+    protected function createProductMeasurementUnitTransfer(?string $productMeasurementUnitName = null): ProductMeasurementUnitTransfer
     {
         $productMeasurementUnitTransfer = new ProductMeasurementUnitTransfer();
         $productMeasurementUnitTransfer->setName($productMeasurementUnitName);

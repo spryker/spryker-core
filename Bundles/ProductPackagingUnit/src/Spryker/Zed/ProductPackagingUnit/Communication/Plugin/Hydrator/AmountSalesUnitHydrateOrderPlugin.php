@@ -9,12 +9,13 @@ namespace Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Hydrator;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
  */
-class AmountSalesUnitOrderHydratorPlugin extends AbstractPlugin implements AmountSalesUnitOrderHydratorPluginInterface
+class AmountSalesUnitHydrateOrderPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -27,6 +28,6 @@ class AmountSalesUnitOrderHydratorPlugin extends AbstractPlugin implements Amoun
      */
     public function hydrate(OrderTransfer $orderTransfer): OrderTransfer
     {
-        return $this->getFacade()->hydrateAmountSalesUnit($orderTransfer);
+        return $this->getFacade()->hydrateOrderWithAmountSalesUnit($orderTransfer);
     }
 }
