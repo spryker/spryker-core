@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductDiscontinued\Business;
 
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductDiscontinued\Business\CartChangePreCheck\CartChangePreCheck;
+use Spryker\Zed\ProductDiscontinued\Business\CartChangePreCheck\CartChangePreCheckInterface;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutor;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutorInterface;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedReader;
@@ -72,8 +74,17 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->getProductFacade(),
+            $this->createProductDiscontinuedPluginExecutor(),
             $logger
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinued\Business\CartChangePreCheck\CartChangePreCheckInterface
+     */
+    public function createCartChangePreCheck(): CartChangePreCheckInterface
+    {
+        return new CartChangePreCheck($this->getRepository());
     }
 
     /**
