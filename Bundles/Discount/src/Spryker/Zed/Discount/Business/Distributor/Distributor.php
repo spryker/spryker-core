@@ -91,6 +91,8 @@ class Distributor implements DistributorInterface
             return;
         }
 
+        // TODO: remove exception, call default behaviour from here, remove default plugin, adjust dependency provider
+
         throw new MissingDiscountableItemTransformerStrategyPluginException(
             sprintf(
                 'Missing instance of %s! You need to configure Distributor ' .

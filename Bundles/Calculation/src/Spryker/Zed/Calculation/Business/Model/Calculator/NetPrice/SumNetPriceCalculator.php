@@ -16,6 +16,8 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 class SumNetPriceCalculator implements CalculatorInterface
 {
     /**
+     * Populated sum prices are acting as source of truth.
+     *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
@@ -34,7 +36,6 @@ class SumNetPriceCalculator implements CalculatorInterface
     protected function calculateSumGrossPriceForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
-            // BC: When ExpenseTransfer is populated from Persistence, sum price is accurate and populated, unit price is derived
             if ($expenseTransfer->getSumNetPrice()) {
                 continue;
             }
@@ -52,7 +53,6 @@ class SumNetPriceCalculator implements CalculatorInterface
     {
         $this->assertItemRequirements($itemTransfer);
 
-        // BC: When ItemTransfer is populated from Persistence, sum price is accurate and populated, unit price is derived
         if ($itemTransfer->getSumNetPrice()) {
             return;
         }
@@ -92,7 +92,6 @@ class SumNetPriceCalculator implements CalculatorInterface
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 $this->assertProductOptionPriceCalculationRequirements($productOptionTransfer);
 
-                // BC: When ProductOptionTransfer is populated from Persistence, sum price is accurate and populated, unit price is derived
                 if ($productOptionTransfer->getSumNetPrice()) {
                     continue;
                 }

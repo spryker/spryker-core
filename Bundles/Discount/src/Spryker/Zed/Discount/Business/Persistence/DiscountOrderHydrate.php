@@ -174,14 +174,13 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
      */
     protected function hydrateCalculatedDiscountTransfer(SpySalesDiscount $salesOrderDiscountEntity)
     {
-        $quantity = $this->getCalculatedDiscountQuantity($salesOrderDiscountEntity);
-
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount($salesOrderDiscountEntity->getIdSalesDiscount());
         $calculatedDiscountTransfer->fromArray($salesOrderDiscountEntity->toArray(), true);
         $calculatedDiscountTransfer->setSumAmount($salesOrderDiscountEntity->getAmount());
-        $calculatedDiscountTransfer->setQuantity($quantity);
-        $calculatedDiscountTransfer->setUnitAmount((int)round($salesOrderDiscountEntity->getAmount() / $quantity));
+        $calculatedDiscountTransfer->setQuantity($this->getCalculatedDiscountQuantity($salesOrderDiscountEntity));
+
+        $this->deriveUnitAmount($calculatedDiscountTransfer, $salesOrderDiscountEntity);
 
         foreach ($salesOrderDiscountEntity->getDiscountCodes() as $discountCodeEntity) {
             $calculatedDiscountTransfer->setVoucherCode($discountCodeEntity->getCode());
@@ -191,6 +190,22 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesOrderDiscountEntity
+     *
+     * @return void
+     */
+    protected function deriveUnitAmount(CalculatedDiscountTransfer $calculatedDiscountTransfer, SpySalesDiscount $salesOrderDiscountEntity): void
+    {
+        $quantity = $this->getCalculatedDiscountQuantity($salesOrderDiscountEntity);
+
+        $calculatedDiscountTransfer->setUnitAmount((int)round($salesOrderDiscountEntity->getAmount() / $quantity));
+    }
+
+    /**
+     * Discount assigned to expense or sales order has a quantity of 1.
+     * Discount assigned to a sales order item has the same quantity as the item.
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesOrderDiscountEntity
      *
      * @return int

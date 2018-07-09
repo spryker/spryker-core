@@ -50,16 +50,18 @@ class OrderItemTransformer implements OrderItemTransformerInterface
      */
     protected function resetSumPrices(ItemTransfer $itemTransfer): ItemTransfer
     {
-        $itemTransfer->setSumDiscountAmountAggregation(null);
-        $itemTransfer->setSumDiscountAmountFullAggregation(null);
-        $itemTransfer->setSumNetPrice(null);
-        $itemTransfer->setSumGrossPrice(null);
-        $itemTransfer->setSumPrice(null);
-        $itemTransfer->setSumPriceToPayAggregation(null);
-        $itemTransfer->setSumExpensePriceAggregation(null);
-        $itemTransfer->setSumProductOptionPriceAggregation(null);
-        $itemTransfer->setSumSubtotalAggregation(null);
-        $itemTransfer->setSumTaxAmountFullAggregation(null);
+        // TODO: we need a ItemTransferCleaner: too complex
+        $itemTransfer
+            ->setSumDiscountAmountAggregation(null)
+            ->setSumDiscountAmountFullAggregation(null)
+            ->setSumNetPrice(null)
+            ->setSumGrossPrice(null)
+            ->setSumPrice(null)
+            ->setSumPriceToPayAggregation(null)
+            ->setSumExpensePriceAggregation(null)
+            ->setSumProductOptionPriceAggregation(null)
+            ->setSumSubtotalAggregation(null)
+            ->setSumTaxAmountFullAggregation(null);
 
         // feature check
         if (defined($itemTransfer::SUM_TAX_AMOUNT)) {
@@ -78,13 +80,15 @@ class OrderItemTransformer implements OrderItemTransformerInterface
     {
         $transformedProductOptionTransfer = new ProductOptionTransfer();
         $transformedProductOptionTransfer->fromArray($productOptionTransfer->toArray(), true);
-        $transformedProductOptionTransfer->setQuantity(1);
-        $transformedProductOptionTransfer->setSumPrice($transformedProductOptionTransfer->getUnitPrice());
-        $transformedProductOptionTransfer->setSumGrossPrice($transformedProductOptionTransfer->getUnitGrossPrice());
-        $transformedProductOptionTransfer->setSumNetPrice($transformedProductOptionTransfer->getUnitNetPrice());
-        $transformedProductOptionTransfer->setSumDiscountAmountAggregation($transformedProductOptionTransfer->getUnitDiscountAmountAggregation());
-        $transformedProductOptionTransfer->setSumTaxAmount($transformedProductOptionTransfer->getUnitTaxAmount());
-        $transformedProductOptionTransfer->setIdProductOptionValue(null);
+
+        $transformedProductOptionTransfer
+            ->setQuantity(1)
+            ->setSumPrice($transformedProductOptionTransfer->getUnitPrice())
+            ->setSumGrossPrice($transformedProductOptionTransfer->getUnitGrossPrice())
+            ->setSumNetPrice($transformedProductOptionTransfer->getUnitNetPrice())
+            ->setSumDiscountAmountAggregation($transformedProductOptionTransfer->getUnitDiscountAmountAggregation())
+            ->setSumTaxAmount($transformedProductOptionTransfer->getUnitTaxAmount())
+            ->setIdProductOptionValue(null);
 
         return $transformedProductOptionTransfer;
     }

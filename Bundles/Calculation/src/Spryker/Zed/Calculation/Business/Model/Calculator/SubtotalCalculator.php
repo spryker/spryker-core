@@ -34,12 +34,11 @@ class SubtotalCalculator implements CalculatorInterface
     protected function calculateTotalItemSumAggregation(ArrayObject $items)
     {
         $subtotal = 0;
-
         foreach ($items as $itemTransfer) {
             $itemTransfer->requireSumSubtotalAggregation();
+
             $subtotal += $itemTransfer->getSumSubtotalAggregation();
         }
-
         return $subtotal;
     }
 }

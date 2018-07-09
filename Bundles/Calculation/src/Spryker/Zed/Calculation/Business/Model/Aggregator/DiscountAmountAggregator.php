@@ -10,9 +10,7 @@ namespace Spryker\Zed\Calculation\Business\Model\Aggregator;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
-use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class DiscountAmountAggregator implements CalculatorInterface
@@ -28,6 +26,8 @@ class DiscountAmountAggregator implements CalculatorInterface
     protected $cartRuleDiscountTotals = [];
 
     /**
+     * Unit prices are populated for presentation purposes only. For further calculations use sum prices are properly populated unit prices.
+     *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
@@ -50,8 +50,12 @@ class DiscountAmountAggregator implements CalculatorInterface
         foreach ($items as $itemTransfer) {
             $this->calculateDiscountAmountForProductOptions($itemTransfer);
 
-            // BC: Unit price is populated for BC reasons only
-            $this->setItemTransferUnitDiscountAmountAggregation($itemTransfer);
+            $itemTransfer->setUnitDiscountAmountAggregation(
+                $this->calculateUnitDiscountAmountAggregation(
+                    $itemTransfer->getCalculatedDiscounts(),
+                    $itemTransfer->getUnitPrice()
+                )
+            );
 
             $itemTransfer->setSumDiscountAmountAggregation(
                 $this->calculateSumDiscountAmountAggregation(
@@ -63,26 +67,6 @@ class DiscountAmountAggregator implements CalculatorInterface
     }
 
     /**
-     * @deprecated Uses derived unit price which is accurate for quantity = 1 only
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function setItemTransferUnitDiscountAmountAggregation(ItemTransfer $itemTransfer)
-    {
-        // BC: When ItemTransfer is populated from Persistence, sum price is accurate and populated, unit price is derived
-        $derivedUnitPrice = $itemTransfer->getUnitPrice();
-
-        $itemTransfer->setUnitDiscountAmountAggregation(
-            $this->calculateUnitDiscountAmountAggregation(
-                $itemTransfer->getCalculatedDiscounts(),
-                $derivedUnitPrice
-            )
-        );
-    }
-
-    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
      *
      * @return void
@@ -90,8 +74,12 @@ class DiscountAmountAggregator implements CalculatorInterface
     protected function calculateDiscountAmountAggregationForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
-            // BC: Unit price is populated for BC reasons only
-            $this->setExpenseTransferUnitDiscountAmountAggregation($expenseTransfer);
+            $expenseTransfer->setUnitDiscountAmountAggregation(
+                $this->calculateUnitDiscountAmountAggregation(
+                    $expenseTransfer->getCalculatedDiscounts(),
+                    $expenseTransfer->getUnitPrice()
+                )
+            );
 
             $sumDiscountAmountAggregation = $this->calculateSumDiscountAmountAggregation(
                 $expenseTransfer->getCalculatedDiscounts(),
@@ -102,38 +90,6 @@ class DiscountAmountAggregator implements CalculatorInterface
     }
 
     /**
-     * @deprecated Uses derived unit price which is accurate for quantity = 1 only
-     *
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     *
-     * @return void
-     */
-    protected function setExpenseTransferUnitDiscountAmountAggregation(ExpenseTransfer $expenseTransfer)
-    {
-        // BC: When ExpenseTransfer is populated from Persistence, sum price is accurate and populated, unit price is derived
-        $derivedUnitPrice = $expenseTransfer->getUnitPrice();
-
-        $expenseTransfer->setUnitDiscountAmountAggregation(
-            $this->calculateUnitDiscountAmountAggregation(
-                $expenseTransfer->getCalculatedDiscounts(),
-                $derivedUnitPrice
-            )
-        );
-    }
-
-    /**
-     * @deprecated Uses derived unit price which is accurate for quantity = 1 only
-     *
-     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
-     *
-     * @return void
-     */
-    protected function setCalculatedDiscountTransferUnitPrices(CalculatedDiscountTransfer $calculatedDiscountTransfer)
-    {
-        $calculatedDiscountTransfer->setUnitAmount((int)round($calculatedDiscountTransfer->getSumAmount() / $calculatedDiscountTransfer->getQuantity()));
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
@@ -141,8 +97,12 @@ class DiscountAmountAggregator implements CalculatorInterface
     protected function calculateDiscountAmountForProductOptions(ItemTransfer $itemTransfer)
     {
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            // BC: Unit price is populated for BC reasons only
-            $this->setProductOptionTransferUnitDiscountAmountAggregation($productOptionTransfer);
+            $productOptionTransfer->setUnitDiscountAmountAggregation(
+                $this->calculateUnitDiscountAmountAggregation(
+                    $productOptionTransfer->getCalculatedDiscounts(),
+                    $productOptionTransfer->getUnitPrice()
+                )
+            );
 
             $productOptionTransfer->setSumDiscountAmountAggregation(
                 $this->calculateSumDiscountAmountAggregation(
@@ -151,26 +111,6 @@ class DiscountAmountAggregator implements CalculatorInterface
                 )
             );
         }
-    }
-
-    /**
-     * @deprecated Uses derived unit price which is accurate for quantity = 1 only
-     *
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
-     *
-     * @return void
-     */
-    protected function setProductOptionTransferUnitDiscountAmountAggregation(ProductOptionTransfer $productOptionTransfer)
-    {
-        // BC: When ProductOptionTransfer is populated from Persistence, sum price is accurate and populated, unit price is derived
-        $derivedUnitPrice = $productOptionTransfer->getUnitPrice();
-
-        $productOptionTransfer->setUnitDiscountAmountAggregation(
-            $this->calculateUnitDiscountAmountAggregation(
-                $productOptionTransfer->getCalculatedDiscounts(),
-                $derivedUnitPrice
-            )
-        );
     }
 
     /**
@@ -183,8 +123,6 @@ class DiscountAmountAggregator implements CalculatorInterface
     {
         $itemSumDiscountAmountAggregation = 0;
         foreach ($calculateDiscounts as $calculatedDiscountTransfer) {
-            // BC: When discounts are populated from Persistence, sum price is accurate and populated, unit price is derived
-            $this->setCalculatedDiscountTransferUnitPrices($calculatedDiscountTransfer);
             $this->setCalculatedDiscounts($calculatedDiscountTransfer);
 
             $discountAmount = $calculatedDiscountTransfer->getSumAmount();
@@ -200,8 +138,6 @@ class DiscountAmountAggregator implements CalculatorInterface
     }
 
     /**
-     * @deprecated Uses derived unit amount which is accurate for quantity = 1 only
-     *
      * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculateDiscounts
      * @param int $maxAmount
      *
@@ -212,15 +148,16 @@ class DiscountAmountAggregator implements CalculatorInterface
         $itemUnitDiscountAmountAggregation = 0;
         $appliedDiscounts = [];
         foreach ($calculateDiscounts as $calculatedDiscountTransfer) {
+            $this->deriveUnitAmount($calculatedDiscountTransfer);
+
             $idDiscount = $calculatedDiscountTransfer->getIdDiscount();
             if (isset($appliedDiscounts[$idDiscount])) {
                 continue;
             }
 
-            // BC: When discounts are populated from Persistence, sum price is accurate and populated, unit price is derived
-            $derivedDiscountAmount = $calculatedDiscountTransfer->getUnitAmount();
+            $derivedUnitAmount = $calculatedDiscountTransfer->getUnitAmount();
 
-            $itemUnitDiscountAmountAggregation += $derivedDiscountAmount;
+            $itemUnitDiscountAmountAggregation += $derivedUnitAmount;
             $appliedDiscounts[$idDiscount] = true;
         }
 
@@ -229,6 +166,16 @@ class DiscountAmountAggregator implements CalculatorInterface
         }
 
         return $itemUnitDiscountAmountAggregation;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
+     *
+     * @return void
+     */
+    protected function deriveUnitAmount(CalculatedDiscountTransfer $calculatedDiscountTransfer)
+    {
+        $calculatedDiscountTransfer->setUnitAmount((int)round($calculatedDiscountTransfer->getSumAmount() / $calculatedDiscountTransfer->getQuantity()));
     }
 
     /**

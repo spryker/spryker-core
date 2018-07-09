@@ -113,8 +113,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
         $productOptionsTransfer->setSumTaxAmount($orderItemOptionEntity->getTaxAmount());
         $productOptionsTransfer->fromArray($orderItemOptionEntity->toArray(), true);
 
-        // BC: Unit prices are populated for BC reasons only
-        $this->setProductOptionTransferUnitPrices($productOptionsTransfer);
+        $this->deriveUnitPrices($productOptionsTransfer);
 
         $idProductOptionsValue = $this->getIdProductOptionValue($orderItemOptionEntity);
         if ($idProductOptionsValue) {
@@ -125,13 +124,13 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
     }
 
     /**
-     * @deprecated Derives unit prices using sum prices which is accurate for quantity = 1 only
+     * Unit prices are populated for presentation purposes only. For further calculations use sum prices are properly populated unit prices.
      *
      * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
      *
      * @return void
      */
-    protected function setProductOptionTransferUnitPrices(ProductOptionTransfer $productOptionTransfer)
+    protected function deriveUnitPrices(ProductOptionTransfer $productOptionTransfer)
     {
         $productOptionTransfer->setUnitPrice((int)round($productOptionTransfer->getSumPrice() / $productOptionTransfer->getQuantity()));
         $productOptionTransfer->setUnitGrossPrice((int)round($productOptionTransfer->getSumGrossPrice() / $productOptionTransfer->getQuantity()));

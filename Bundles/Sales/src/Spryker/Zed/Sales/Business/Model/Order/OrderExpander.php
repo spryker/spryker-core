@@ -84,6 +84,7 @@ class OrderExpander implements OrderExpanderInterface
             }
         }
 
+        // TODO: this should also not default plugin
         return (new ItemCollectionTransfer())->addItem($itemTransfer);
     }
 

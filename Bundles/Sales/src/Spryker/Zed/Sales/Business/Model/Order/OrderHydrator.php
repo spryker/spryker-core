@@ -229,8 +229,7 @@ class OrderHydrator implements OrderHydratorInterface
         $itemTransfer->setSumTaxAmountFullAggregation($orderItemEntity->getTaxAmountFullAggregation());
         $itemTransfer->setSumPriceToPayAggregation($orderItemEntity->getPriceToPayAggregation());
 
-        // BC: Unit prices are populated for BC reasons only
-        $this->hydrateOrderItemTransferUnitPrices($itemTransfer);
+        $this->deriveOrderItemTransferUnitPrices($itemTransfer);
 
         $this->hydrateStateHistory($orderItemEntity, $itemTransfer);
         $this->hydrateCurrentSalesOrderItemState($orderItemEntity, $itemTransfer);
@@ -239,13 +238,13 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
-     * @deprecated Uses derived unit price which is accurate for quantity = 1 only
+     * Unit prices are populated for presentation purposes only. For further calculations use sum prices are properly populated unit prices.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
-    protected function hydrateOrderItemTransferUnitPrices(ItemTransfer $itemTransfer)
+    protected function deriveOrderItemTransferUnitPrices(ItemTransfer $itemTransfer)
     {
         $itemTransfer->setUnitGrossPrice((int)round($itemTransfer->getSumGrossPrice() / $itemTransfer->getQuantity()));
         $itemTransfer->setUnitNetPrice((int)round($itemTransfer->getSumNetPrice() / $itemTransfer->getQuantity()));
@@ -327,21 +326,20 @@ class OrderHydrator implements OrderHydratorInterface
             $expenseTransfer->setSumPriceToPayAggregation($expenseEntity->getPriceToPayAggregation());
             $expenseTransfer->setSumTaxAmount($expenseEntity->getTaxAmount());
 
-            // BC: Unit prices are populated for BC reasons only
-            $this->hydrateExpenseTransferUnitPrices($expenseTransfer);
+            $this->deriveExpenseTransferUnitPrices($expenseTransfer);
 
             $orderTransfer->addExpense($expenseTransfer);
         }
     }
 
     /**
-     * @deprecated Uses derived unit price which is accurate for quantity = 1 only
+     * Unit prices are populated for presentation purposes only. For further calculations use sum prices are properly populated unit prices.
      *
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      *
      * @return void
      */
-    protected function hydrateExpenseTransferUnitPrices(ExpenseTransfer $expenseTransfer)
+    protected function deriveExpenseTransferUnitPrices(ExpenseTransfer $expenseTransfer)
     {
         $expenseTransfer->setUnitGrossPrice((int)round($expenseTransfer->getSumGrossPrice() / $expenseTransfer->getQuantity()));
         $expenseTransfer->setUnitNetPrice((int)round($expenseTransfer->getSumNetPrice() / $expenseTransfer->getQuantity()));
