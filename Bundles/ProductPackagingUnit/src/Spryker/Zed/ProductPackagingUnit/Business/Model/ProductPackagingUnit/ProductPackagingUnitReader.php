@@ -128,4 +128,14 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
     {
         return $this->productMeasurementUnitFacade->getProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
     }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer
+     */
+    public function findProductPackagingUnitBySku(string $sku): ProductPackagingUnitTransfer
+    {
+        return $this->repository->findProductPackagingUnitBySku($sku);
+    }
 }

@@ -17,4 +17,11 @@ interface CartChangeExpanderInterface
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandWithAmountLeadProduct(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandWithAmountGroupKey(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }
