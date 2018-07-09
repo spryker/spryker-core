@@ -304,7 +304,9 @@ class Calculator implements CalculatorInterface
     {
         $oldCartRulesIds = $this->getCartRulesDiscountIds($oldCartRuleDiscountTransferCollection);
         foreach ($collectedDiscountTransferCollection as $discountTransfer) {
-            if (!in_array($discountTransfer->getDiscount()->getIdDiscount(), $oldCartRulesIds)) {
+            if (!in_array($discountTransfer->getDiscount()->getIdDiscount(), $oldCartRulesIds)
+             || $this->isDiscountAmountBeenChanged($discountTransfer->getDiscount(), $oldCartRuleDiscountTransferCollection)
+            ) {
                 $this->setSuccessfulDiscountAddMessage($discountTransfer->getDiscount());
             }
         }
@@ -319,11 +321,26 @@ class Calculator implements CalculatorInterface
     {
         $cartRulesIds = [];
         foreach ($cartRuleDiscountTransferCollection as $discountTransfer) {
-            if ($discountTransfer->getAmount() !== 0) {
-                $cartRulesIds[] = $discountTransfer->getIdDiscount();
-            }
+            $cartRulesIds[] = $discountTransfer->getIdDiscount();
         }
 
         return $cartRulesIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \ArrayObject $oldCartRuleDiscountTransferCollection
+     *
+     * @return bool
+     */
+    protected function isDiscountAmountBeenChanged(DiscountTransfer $discountTransfer, ArrayObject $oldCartRuleDiscountTransferCollection): bool
+    {
+        foreach ($oldCartRuleDiscountTransferCollection as $oldDiscountTransfer) {
+            if ($oldDiscountTransfer->getAmount() !== $discountTransfer->getAmount() && $oldDiscountTransfer->getIdDiscount() === $discountTransfer->getIdDiscount()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
