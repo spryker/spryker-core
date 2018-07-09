@@ -27,11 +27,14 @@ class PriceProductMapper implements PriceProductMapperInterface
      */
     public function mapPriceProductStorageTransferToPriceProductTransfers(PriceProductStorageTransfer $priceProductStorageTransfer): array
     {
+        $extractedPrices = [];
         $priceProductTransfers = [];
 
         foreach ($priceProductStorageTransfer->getPrices() as $currencyCode => $prices) {
             foreach ($prices as $priceMode => $priceTypes) {
                 if ($priceMode === PriceProductConstants::PRICE_DATA) {
+                    $extractedPrices = array_merge($extractedPrices, $this->extractPricesFromPriceData($currencyCode, $prices[PriceProductConstants::PRICE_DATA]));
+
                     continue;
                 }
 
@@ -40,6 +43,7 @@ class PriceProductMapper implements PriceProductMapperInterface
 
                     if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
                         $priceProductTransfer->getMoneyValue()->setGrossAmount($priceValue);
+
                         $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductConstants::PRICE_DATA]);
                         continue;
                     }
@@ -50,7 +54,7 @@ class PriceProductMapper implements PriceProductMapperInterface
             }
         }
 
-        return array_values($priceProductTransfers);
+        return array_merge(array_values($priceProductTransfers), $extractedPrices);
     }
 
     /**
@@ -81,5 +85,34 @@ class PriceProductMapper implements PriceProductMapperInterface
         }
 
         return $priceProductTransfers[$index];
+    }
+
+    protected function extractPricesFromPriceData(string $currencyCode, ?string $priceData)
+    {
+        if ($priceData == null) {
+            return [];
+        }
+
+        //todo: move to plugin stack
+        $result = [];
+        $priceData = json_decode($priceData, true);
+        foreach ($priceData['volume_prices'] as $volumePrice) {
+            $volumePriceTransfer = new PriceProductTransfer();
+            $volumePriceTransfer->setPriceDimension(
+                (new PriceProductDimensionTransfer())
+                    ->setType(PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT)
+            );
+            $volumePriceTransfer->setMoneyValue((new MoneyValueTransfer())
+                ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
+                ->setGrossAmount($volumePrice['gross_price'])
+                ->setNetAmount($volumePrice['net_price'])
+            );
+            $volumePriceTransfer->setQuantityToApply($volumePrice['quantity']);
+            $volumePriceTransfer->setPriceTypeName('volume_prices');
+
+            $result[] = $volumePriceTransfer;
+        }
+
+        return $result;
     }
 }

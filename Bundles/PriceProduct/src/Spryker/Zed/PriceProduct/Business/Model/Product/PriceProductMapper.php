@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper\PriceProductMapperPluginExecutorInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
@@ -51,21 +52,29 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected $config;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper\PriceProductMapperPluginExecutorInterface
+     */
+    protected $pluginExecutor;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface $priceProductTypeMapper
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface $priceFacade
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
+     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper\PriceProductMapperPluginExecutorInterface $pluginExecutor
      */
     public function __construct(
         PriceProductToCurrencyFacadeInterface $currencyFacade,
         ProductPriceTypeMapperInterface $priceProductTypeMapper,
         PriceProductToPriceFacadeInterface $priceFacade,
-        PriceProductConfig $config
+        PriceProductConfig $config,
+        PriceProductMapperPluginExecutorInterface $pluginExecutor
     ) {
         $this->currencyFacade = $currencyFacade;
         $this->priceProductTypeMapper = $priceProductTypeMapper;
         $this->priceFacade = $priceFacade;
         $this->config = $config;
+        $this->pluginExecutor = $pluginExecutor;
     }
 
     /**
@@ -143,12 +152,26 @@ class PriceProductMapper implements PriceProductMapperInterface
     ): array {
         $productPriceCollection = [];
         foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
-            $productPriceCollection[] = $this->mapPriceProductStoreEntityToTransfer(
+            $priceProductTransfer = $this->mapPriceProductStoreEntityToTransfer(
                 $priceProductStoreEntity
             );
+            $productPriceCollection[] = $priceProductTransfer;
+            $productPriceCollection = array_merge($productPriceCollection, $this->extractPriceProducts(
+                $priceProductTransfer
+            ));
         }
 
         return $productPriceCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function extractPriceProducts(PriceProductTransfer $priceProductTransfer): array
+    {
+        return $this->pluginExecutor->executePriceExtractorPlugins($priceProductTransfer);
     }
 
     /**

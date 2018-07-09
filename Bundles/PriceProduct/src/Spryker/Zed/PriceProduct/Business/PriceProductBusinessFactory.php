@@ -53,6 +53,9 @@ use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterfac
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper\PriceProductMapperPluginExecutor;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper\PriceProductMapperPluginExecutorInterface;
+use Spryker\Zed\VolumePriceProduct\Plugin\PriceProductExtension\VolumePriceProductExtractorPlugin;
 
 /**
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
@@ -135,7 +138,18 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getCurrencyFacade(),
             $this->createPriceTypeMapper(),
             $this->getPriceFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createPriceProductMapperPluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper\PriceProductMapperPluginExecutorInterface
+     */
+    public function createPriceProductMapperPluginExecutor(): PriceProductMapperPluginExecutorInterface
+    {
+        return new PriceProductMapperPluginExecutor(
+            $this->getPriceProductPricesExtractorPlugins()
         );
     }
 
@@ -367,5 +381,13 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function getPriceProductDimensionExpanderStrategyPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductMapperPricesExtractorPluginInterface[]
+     */
+    public function getPriceProductPricesExtractorPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR);
     }
 }
