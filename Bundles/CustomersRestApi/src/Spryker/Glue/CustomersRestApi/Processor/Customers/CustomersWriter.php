@@ -7,6 +7,7 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
 use Exception;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestRegisterCustomerAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
@@ -64,13 +65,7 @@ class CustomersWriter implements CustomersWriterInterface
             $customerResponseTransfer = $this->customerClient->registerCustomer($customerTransfer);
 
             if (!$customerResponseTransfer->getIsSuccess()) {
-                foreach ($customerResponseTransfer->getErrors() as $error) {
-                    if ($error->getMessage() === CustomersWriter::ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED) {
-                        return $response->addError($this->createErrorCustomerAlreadyExists());
-                    }
-                    $response->addError($this->createErrorCustomerCantRegisterCustomerMessage($error->getMessage()));
-                }
-                return $response;
+                return $this->createErrorResponse($customerResponseTransfer, $response);
             }
         } catch (Exception $ex) {
             //TODO detect specific exception
@@ -113,5 +108,22 @@ class CustomersWriter implements CustomersWriterInterface
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER)
             ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
             ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_CANT_REGISTER_CUSTOMER);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createErrorResponse(CustomerResponseTransfer $customerResponseTransfer, RestResponseInterface $response)
+    {
+        foreach ($customerResponseTransfer->getErrors() as $error) {
+            if ($error->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED) {
+                return $response->addError($this->createErrorCustomerAlreadyExists());
+            }
+            $response->addError($this->createErrorCustomerCantRegisterCustomerMessage($error->getMessage()));
+        }
+        return $response;
     }
 }
