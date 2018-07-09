@@ -78,7 +78,7 @@ class CustomersWriter implements CustomersWriterInterface
     /**
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
-    protected function createErrorCustomerAlreadyExists()
+    protected function createErrorCustomerAlreadyExists(): RestErrorMessageTransfer
     {
         return (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_EXISTS)
@@ -91,7 +91,7 @@ class CustomersWriter implements CustomersWriterInterface
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
-    protected function createErrorCustomerCantRegisterCustomerMessage(string $errorMessage)
+    protected function createErrorCustomerCantRegisterCustomerMessage(string $errorMessage): RestErrorMessageTransfer
     {
         return (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER)
@@ -102,7 +102,7 @@ class CustomersWriter implements CustomersWriterInterface
     /**
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
-    protected function createErrorCustomerCantRegisterCustomer()
+    protected function createErrorCustomerCantRegisterCustomer(): RestErrorMessageTransfer
     {
         return (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER)
@@ -116,7 +116,7 @@ class CustomersWriter implements CustomersWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createErrorResponse(CustomerResponseTransfer $customerResponseTransfer, RestResponseInterface $response)
+    protected function createErrorResponse(CustomerResponseTransfer $customerResponseTransfer, RestResponseInterface $response): RestResponseInterface
     {
         foreach ($customerResponseTransfer->getErrors() as $error) {
             if ($error->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED) {
