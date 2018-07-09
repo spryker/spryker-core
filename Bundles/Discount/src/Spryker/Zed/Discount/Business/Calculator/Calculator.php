@@ -173,7 +173,7 @@ class Calculator implements CalculatorInterface
      */
     protected function setSuccessfulDiscountAddMessage(DiscountTransfer $discountTransfer)
     {
-        if (!empty($discountTransfer->getVoucherCode())) {
+        if (!empty($discountTransfer->getVoucherCode()) || $discountTransfer->getAmount() === 0) {
             return;
         }
 
@@ -319,7 +319,9 @@ class Calculator implements CalculatorInterface
     {
         $cartRulesIds = [];
         foreach ($cartRuleDiscountTransferCollection as $discountTransfer) {
-            $cartRulesIds[] = $discountTransfer->getIdDiscount();
+            if ($discountTransfer->getAmount() !== 0) {
+                $cartRulesIds[] = $discountTransfer->getIdDiscount();
+            }
         }
 
         return $cartRulesIds;
