@@ -58,7 +58,7 @@ class ErrorHandlerFactory
      */
     protected function createErrorRenderer()
     {
-        if ($this->application === static::APPLICATION_GLUE) {
+        if ($this->isGlueApplication()) {
             return $this->createApiRenderer();
         }
 
@@ -69,6 +69,14 @@ class ErrorHandlerFactory
         $errorRendererClassName = Config::get(ErrorHandlerConstants::ERROR_RENDERER, WebHtmlErrorRenderer::class);
 
         return $this->createWebErrorRenderer($errorRendererClassName);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function  isGlueApplication()
+    {
+        return $this->application === self::APPLICATION_GLUE;
     }
 
     /**

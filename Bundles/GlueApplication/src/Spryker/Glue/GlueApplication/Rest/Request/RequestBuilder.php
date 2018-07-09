@@ -152,7 +152,7 @@ class RequestBuilder implements RequestBuilderInterface
      */
     public function addParentResource(RestResourceInterface $restResource): RequestBuilderInterface
     {
-        $this->parentResources[] = $restResource;
+        $this->parentResources[$restResource->getType()] = $restResource;
 
         return $this;
     }

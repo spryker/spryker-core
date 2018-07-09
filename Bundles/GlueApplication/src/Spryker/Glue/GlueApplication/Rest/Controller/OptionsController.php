@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\GlueApplication\Controller;
+namespace Spryker\Glue\GlueApplication\Rest\Controller;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -21,6 +21,6 @@ class OptionsController extends AbstractRestController
         $restRequest = $this->getRestRequest();
         $restResponse = $this->getFactory()->getResourceBuilder()->createRestResponse();
 
-        return $this->getFactory()->createCorsResponse()->addCorsHeaders($restRequest, $restResponse);
+        return $this->getFactory()->createRestCorsResponse()->addCorsHeaders($restRequest, $restResponse);
     }
 }

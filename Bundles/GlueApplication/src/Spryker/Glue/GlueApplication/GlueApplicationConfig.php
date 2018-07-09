@@ -23,7 +23,7 @@ class GlueApplicationConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function getIsRestDebug(): bool
+    public function getIsRestDebugEnabled(): bool
     {
         return $this->get(GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG, false);
     }

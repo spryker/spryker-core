@@ -5,14 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\GlueApplication\Controller;
+namespace Spryker\Glue\GlueApplication\Rest\Controller;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\GlueApplication\Controller\ErrorControllerInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponse;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class ErrorController extends AbstractRestController
+class ErrorRestController extends AbstractRestController implements ErrorControllerInterface
 {
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

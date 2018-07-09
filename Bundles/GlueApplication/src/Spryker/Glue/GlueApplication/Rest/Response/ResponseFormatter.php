@@ -10,8 +10,8 @@ namespace Spryker\Glue\GlueApplication\Rest\Response;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\GlueApplication\Rest\Serialize\Encoder\EncoderInterface;
 use Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcherInterface;
+use Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -94,7 +94,7 @@ class ResponseFormatter implements ResponseFormatterInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     * @param \Spryker\Glue\GlueApplication\Rest\Serialize\Encoder\EncoderInterface $encoder
+     * @param \Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface $encoder
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

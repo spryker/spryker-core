@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\GlueApplication\Rest\Serialize\Encoder;
+namespace Spryker\Glue\GlueApplication\Serialize\Decoder;
 
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceInterface;
 
-class JsonEncoder implements EncoderInterface
+class JsonDecoder implements DecoderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceInterface
@@ -25,16 +25,12 @@ class JsonEncoder implements EncoderInterface
     }
 
     /**
-     * @param array $data
+     * @param string $data
      *
-     * @return string
+     * @return array
      */
-    public function encode(array $data): string
+    public function decode($data): array
     {
-        if (!$data) {
-            return '';
-        }
-
-        return (string)$this->utilEncodingService->encodeJson($data);
+        return $this->utilEncodingService->decodeJson($data, true);
     }
 }

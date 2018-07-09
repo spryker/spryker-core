@@ -6,18 +6,16 @@
 
 namespace Spryker\Glue\GlueApplication\Rest;
 
-use Spryker\Glue\GlueApplication\Controller\AbstractRestController;
+use Spryker\Glue\GlueApplication\Rest\Controller\AbstractRestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 interface ControllerFilterInterface
 {
     /**
-     * @param \Spryker\Glue\GlueApplication\Controller\AbstractRestController $controller
+     * @param \Spryker\Glue\GlueApplication\Rest\Controller\AbstractRestController $controller
      * @param string $action
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
-     *
-     * @throws \Exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

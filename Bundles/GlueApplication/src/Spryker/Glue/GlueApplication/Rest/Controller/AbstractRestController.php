@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\GlueApplication\Controller;
+namespace Spryker\Glue\GlueApplication\Rest\Controller;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -32,13 +32,7 @@ abstract class AbstractRestController extends AbstractController
      */
     protected function findParentResource(string $type): ?RestResourceInterface
     {
-        foreach ($this->restRequest->getParentResources() as $restResource) {
-            if ($restResource->getType() === $type) {
-                return $restResource;
-            }
-        }
-
-        return null;
+        return $this->restRequest->findParentResourceByType($type);
     }
 
     /**

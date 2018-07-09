@@ -7,7 +7,7 @@
 namespace SprykerTest\Glue\GlueApplication\Stub;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\GlueApplication\Controller\AbstractRestController;
+use Spryker\Glue\GlueApplication\Rest\Controller\AbstractRestController;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;

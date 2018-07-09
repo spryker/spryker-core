@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\GlueApplication\Rest\Serialize\Encoder;
+namespace Spryker\Glue\GlueApplication\Serialize\Encoder;
 
 interface EncoderInterface
 {
