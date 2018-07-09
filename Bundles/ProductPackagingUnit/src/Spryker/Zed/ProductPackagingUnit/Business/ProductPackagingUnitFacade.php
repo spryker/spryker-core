@@ -219,22 +219,6 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function hydrateAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer
-    {
-        return $this->getFactory()
-            ->createAmountSalesUnitOrderHydrator()
-            ->hydrateOrderWithAmountSalesUnit($orderTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -268,6 +252,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */

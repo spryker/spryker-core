@@ -73,18 +73,18 @@ class AmountSalesUnitOrderHydrator implements AmountSalesUnitOrderHydratorInterf
         $productMeasurementBaseUnitTransfer = $this->createProductMeasurementBaseUnitTransfer($spySalesOrderItemEntity);
         $productMeasurementSalesUnitTransfer->setProductMeasurementBaseUnit($productMeasurementBaseUnitTransfer);
 
-        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($spySalesOrderItemEntity->getAmountMeasurementUnitName());
+        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($spySalesOrderItemEntity->getAmountMeasurementUnitName() ?? '');
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 
         return $productMeasurementSalesUnitTransfer;
     }
 
     /**
-     * @param string|null $productMeasurementUnitName
+     * @param string $productMeasurementUnitName
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
      */
-    protected function createProductMeasurementUnitTransfer(?string $productMeasurementUnitName = null): ProductMeasurementUnitTransfer
+    protected function createProductMeasurementUnitTransfer(string $productMeasurementUnitName): ProductMeasurementUnitTransfer
     {
         $productMeasurementUnitTransfer = new ProductMeasurementUnitTransfer();
         $productMeasurementUnitTransfer->setName($productMeasurementUnitName);
@@ -95,12 +95,13 @@ class AmountSalesUnitOrderHydrator implements AmountSalesUnitOrderHydratorInterf
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItemEntity
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     * @return \Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer
      */
     protected function createProductMeasurementBaseUnitTransfer(SpySalesOrderItem $spySalesOrderItemEntity): ProductMeasurementBaseUnitTransfer
     {
         $productMeasurementBaseUnitTransfer = new ProductMeasurementBaseUnitTransfer();
-        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($spySalesOrderItemEntity->getAmountBaseMeasurementUnitName());
+        $amountBaseMeasurementUnitName = $spySalesOrderItemEntity->getAmountBaseMeasurementUnitName() ?? '';
+        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($amountBaseMeasurementUnitName);
         $productMeasurementBaseUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 
         return $productMeasurementBaseUnitTransfer;

@@ -181,7 +181,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
+    public function hydrateOrderWithAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
 
     /**
      * Specification:
@@ -220,10 +220,6 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function validateItemAddAmountRestrictions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
-
-    /**
-     * Specification:
-    public function hydrateOrderWithAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
 
     /**
      * Specification:
