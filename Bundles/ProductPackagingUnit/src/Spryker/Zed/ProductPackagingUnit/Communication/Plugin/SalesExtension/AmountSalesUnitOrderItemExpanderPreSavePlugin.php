@@ -17,7 +17,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginI
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
  */
-class PackagingUnitOrderItemExpanderPreSavePlugin extends AbstractPlugin implements OrderItemExpanderPreSavePluginInterface
+class AmountSalesUnitOrderItemExpanderPreSavePlugin extends AbstractPlugin implements OrderItemExpanderPreSavePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -32,6 +32,6 @@ class PackagingUnitOrderItemExpanderPreSavePlugin extends AbstractPlugin impleme
      */
     public function expandOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
     {
-        return $this->getFacade()->expandSalesOrderItemWithAmountAndAmountSku($itemTransfer, $salesOrderItemEntity);
+        return $this->getFacade()->expandSalesOrderItemWithAmountSalesUnit($itemTransfer, $salesOrderItemEntity);
     }
 }

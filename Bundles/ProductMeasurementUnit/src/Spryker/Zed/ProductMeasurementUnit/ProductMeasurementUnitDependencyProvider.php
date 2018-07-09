@@ -10,12 +10,15 @@ namespace Spryker\Zed\ProductMeasurementUnit;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeBridge;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\QueryContainer\ProductMeasurementUnitToSalesQueryContainerBridge;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceBridge;
 
 class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION = 'SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION';
     public const FACADE_EVENT = 'FACADE_EVENT';
+
+    public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -28,6 +31,7 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
 
         $container = $this->addUtilMeasurementUnitConversionService($container);
         $container = $this->addEventFacade($container);
+        $container = $this->addSalesQueryContainer($container);
 
         return $container;
     }
@@ -67,6 +71,22 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
     {
         $container[static::SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION] = function (Container $container) {
             return new ProductMeasurementUnitToUtilMeasurementUnitConversionServiceBridge($container->getLocator()->utilMeasurementUnitConversion()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesQueryContainer(Container $container): Container
+    {
+        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
+            return new ProductMeasurementUnitToSalesQueryContainerBridge(
+                $container->getLocator()->sales()->queryContainer()
+            );
         };
 
         return $container;

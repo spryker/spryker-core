@@ -8,11 +8,14 @@
 namespace Spryker\Client\ProductPackagingUnit\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 
 class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountExpanderInterface
 {
-    protected const PARAM_AMOUNT = 'base-unit-amount';
+    protected const PARAM_AMOUNT = 'amount-packaging-unit';
+    protected const PARAM_LEAD_SALES_UNIT = 'id-lead-product-measurement-sales-unit';
 
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
@@ -28,6 +31,8 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
             if ($packagingUnitAmount) {
                 $itemTransfer->setAmount($packagingUnitAmount);
             }
+
+            $this->updateItemTransferWithAmountSalesUnit($itemTransfer, $params);
         }
 
         return $persistentCartChangeTransfer;
@@ -47,9 +52,38 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
             if ($packagingUnitAmount) {
                 $itemTransfer->setAmount($packagingUnitAmount);
             }
+
+            $this->updateItemTransferWithAmountSalesUnit($itemTransfer, $params);
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $params
+     *
+     * @return void
+     */
+    protected function updateItemTransferWithAmountSalesUnit(ItemTransfer $itemTransfer, array $params): void
+    {
+        $amountSalesUnitId = $this->getAmountSalesUnit($params);
+
+        if ($amountSalesUnitId) {
+            $amountSalesUnitTransfer = $this->createSalesUnitTransfer($amountSalesUnitId);
+            $itemTransfer->setAmountSalesUnit($amountSalesUnitTransfer);
+        }
+    }
+
+    /**
+     * @param int $idSalesUnit
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     */
+    protected function createSalesUnitTransfer(int $idSalesUnit): ProductMeasurementSalesUnitTransfer
+    {
+        return (new ProductMeasurementSalesUnitTransfer())
+            ->setIdProductMeasurementSalesUnit($idSalesUnit);
     }
 
     /**
@@ -60,14 +94,24 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      */
     protected function getPackagingUnitAmount(array $params, string $sku): ?int
     {
-        if (empty($params[static::PARAM_AMOUNT])) {
+        if (empty($params[static::PARAM_AMOUNT][$sku])) {
             return null;
         }
 
-        if (!empty($params[static::PARAM_AMOUNT][$sku])) {
-            return (int)$params[static::PARAM_AMOUNT][$sku];
+        return (int)$params[static::PARAM_AMOUNT][$sku];
+    }
+
+    /**
+     * @param array $params
+     *
+     * @return int|null
+     */
+    protected function getAmountSalesUnit(array $params): ?int
+    {
+        if (empty($params[static::PARAM_LEAD_SALES_UNIT])) {
+            return null;
         }
 
-        return (int)$params[static::PARAM_AMOUNT];
+        return (int)$params[static::PARAM_LEAD_SALES_UNIT];
     }
 }

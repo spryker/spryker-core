@@ -13,6 +13,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAva
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeBridge;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerBridge;
@@ -21,6 +22,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    public const FACADE_PRODUCT_MEASUREMENT_UNIT = 'FACADE_PRODUCT_MEASUREMENT_UNIT';
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
     public const FACADE_OMS = 'FACADE_OMS';
     public const FACADE_STOCK = 'FACADE_STOCK';
@@ -37,6 +39,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     {
         $container = $this->addLocaleFacade($container);
         $container = $this->addGlossaryFacade($container);
+        $container = $this->addProductMeasurementUnitFacade($container);
         $container = $this->addAvailabilityFacade($container);
         $container = $this->addOmsFacade($container);
         $container = $this->addStockFacade($container);
@@ -73,6 +76,22 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container[static::FACADE_GLOSSARY] = function (Container $container) {
             return new ProductPackagingUnitToGlossaryFacadeBridge(
                 $container->getLocator()->glossary()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductMeasurementUnitFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRODUCT_MEASUREMENT_UNIT] = function (Container $container) {
+            return new ProductPackagingUnitToProductMeasurementUnitFacadeBridge(
+                $container->getLocator()->productMeasurementUnit()->facade()
             );
         };
 

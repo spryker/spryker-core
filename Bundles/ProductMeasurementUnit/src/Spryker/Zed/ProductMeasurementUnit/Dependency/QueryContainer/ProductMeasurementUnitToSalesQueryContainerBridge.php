@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer;
+namespace Spryker\Zed\ProductMeasurementUnit\Dependency\QueryContainer;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 
-class ProductPackagingUnitToSalesQueryContainerBridge implements ProductPackagingUnitToSalesQueryContainerInterface
+class ProductMeasurementUnitToSalesQueryContainerBridge implements ProductMeasurementUnitToSalesQueryContainerInterface
 {
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
@@ -32,13 +32,5 @@ class ProductPackagingUnitToSalesQueryContainerBridge implements ProductPackagin
     public function querySalesOrderItemsByIdSalesOrder(int $idSalesOrder): SpySalesOrderItemQuery
     {
         return $this->salesQueryContainer->querySalesOrderItemsByIdSalesOrder($idSalesOrder);
-    }
-
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function querySalesOrderItem(): SpySalesOrderItemQuery
-    {
-        return $this->salesQueryContainer->querySalesOrderItem();
     }
 }

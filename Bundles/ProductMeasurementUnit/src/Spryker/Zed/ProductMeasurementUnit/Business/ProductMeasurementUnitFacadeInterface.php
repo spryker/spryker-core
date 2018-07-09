@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductMeasurementUnitFacadeInterface
@@ -76,6 +78,18 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves product measurement sales unit transfer by the provided id of Product Measurement Sales Unit.
+     *
+     * @api
+     *
+     * @param int $idProductMeasurementSalesUnit
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     */
+    public function getProductMeasurementSalesUnitTransfer(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer;
+
+    /**
+     * Specification:
      * - Calculates quantity normalized sales unit value.
      * - Updates quote item transfers
      *
@@ -96,4 +110,16 @@ interface ProductMeasurementUnitFacadeInterface
      * @return void
      */
     public function installProductMeasurementUnit(): void;
+
+    /**
+     * Specification:
+     * - Hydrates order transfer with additional packaging unit quantity fields from sales_order_item table.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateOrderWithQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
 }

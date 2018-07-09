@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit;
 
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
@@ -28,12 +30,20 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
     protected $repository;
 
     /**
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface
+     */
+    protected $productMeasurementUnitFacade;
+
+    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $repository
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade
      */
     public function __construct(
-        ProductPackagingUnitRepositoryInterface $repository
+        ProductPackagingUnitRepositoryInterface $repository,
+        ProductPackagingUnitToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade
     ) {
         $this->repository = $repository;
+        $this->productMeasurementUnitFacade = $productMeasurementUnitFacade;
     }
 
     /**
@@ -107,5 +117,15 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
             ->fromArray(
                 static::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES
             );
+    }
+
+    /**
+     * @param int $idProductMeasurementSalesUnit
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     */
+    public function getProductMeasurementSalesUnitTransfer(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer
+    {
+        return $this->productMeasurementUnitFacade->getProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
     }
 }

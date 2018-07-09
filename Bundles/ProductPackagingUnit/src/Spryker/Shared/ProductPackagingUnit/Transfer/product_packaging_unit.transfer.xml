@@ -42,4 +42,5 @@
         <property name="amount" type="int"/>
         <property name="productPackagingUnit" type="ProductPackagingUnit"/>
     </transfer>
+
 </transfers>
