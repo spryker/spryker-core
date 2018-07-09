@@ -21,7 +21,7 @@ class PriceProductMerchantRelationshipRepository extends AbstractRepository impl
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
-    public function buildMerchantRelationshipPriceDimensionCriteria(
+    public function buildMerchantRelationshipPriceDimensionQueryCriteria(
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?QueryCriteriaTransfer {
 
@@ -33,7 +33,7 @@ class PriceProductMerchantRelationshipRepository extends AbstractRepository impl
     /**
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
-    public function buildUnconditionalMerchantRelationshipPriceDimensionCriteria(): QueryCriteriaTransfer
+    public function buildUnconditionalMerchantRelationshipPriceDimensionQueryCriteria(): QueryCriteriaTransfer
     {
         return $this->getFactory()
             ->createMerchantRelationshipPriceQueryExpander()

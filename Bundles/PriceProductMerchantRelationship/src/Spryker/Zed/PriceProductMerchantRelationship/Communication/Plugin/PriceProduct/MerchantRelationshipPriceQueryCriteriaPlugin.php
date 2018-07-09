@@ -32,7 +32,7 @@ class MerchantRelationshipPriceQueryCriteriaPlugin extends AbstractPlugin implem
      */
     public function buildPriceDimensionQueryCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer
     {
-        return $this->getRepository()->buildMerchantRelationshipPriceDimensionCriteria($priceProductCriteriaTransfer);
+        return $this->getRepository()->buildMerchantRelationshipPriceDimensionQueryCriteria($priceProductCriteriaTransfer);
     }
 
     /**
@@ -44,7 +44,7 @@ class MerchantRelationshipPriceQueryCriteriaPlugin extends AbstractPlugin implem
      */
     public function buildUnconditionalPriceDimensionQueryCriteria(): QueryCriteriaTransfer
     {
-        return $this->getRepository()->buildUnconditionalMerchantRelationshipPriceDimensionCriteria();
+        return $this->getRepository()->buildUnconditionalMerchantRelationshipPriceDimensionQueryCriteria();
     }
 
     /**
