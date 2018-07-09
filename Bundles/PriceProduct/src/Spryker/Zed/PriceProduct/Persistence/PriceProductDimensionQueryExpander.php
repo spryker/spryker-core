@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface;
+use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionUnconditionalQueryCriteriaPluginInterface;
 
 class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryExpanderInterface
 {
@@ -62,6 +63,10 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     ): SpyPriceProductStoreQuery {
 
         foreach ($this->priceProductDimensionQueryCriteriaPlugins as $priceDimensionQueryCriteriaPlugin) {
+            if (!($priceDimensionQueryCriteriaPlugin instanceof PriceDimensionUnconditionalQueryCriteriaPluginInterface)) {
+                continue;
+            }
+
             $queryCriteriaTransfer = $priceDimensionQueryCriteriaPlugin->buildUnconditionalPriceDimensionQueryCriteria();
 
             $this->addJoin($priceProductStoreQuery, $queryCriteriaTransfer);
