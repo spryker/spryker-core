@@ -30,14 +30,6 @@ class ProductDiscontinuedProductLabelConnectorToProductLabelBridge implements Pr
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
-     */
-    public function findAllLabels(): array
-    {
-        return $this->productLabelFacade->findAllLabels();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
      * @return void
@@ -73,7 +65,7 @@ class ProductDiscontinuedProductLabelConnectorToProductLabelBridge implements Pr
      *
      * @return void
      */
-    public function removeProductAbstractRelationsForLabel($idProductLabel, array $idsProductAbstract): void
+    public function removeProductAbstractRelationsForLabel(int $idProductLabel, array $idsProductAbstract): void
     {
         $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, $idsProductAbstract);
     }
@@ -84,8 +76,18 @@ class ProductDiscontinuedProductLabelConnectorToProductLabelBridge implements Pr
      *
      * @return void
      */
-    public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract): void
+    public function addAbstractProductRelationsForLabel(int $idProductLabel, array $idsProductAbstract): void
     {
         $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, $idsProductAbstract);
+    }
+
+    /**
+     * @param int $idsProductAbstract
+     *
+     * @return int[]
+     */
+    public function findActiveLabelIdsByIdProductAbstract(int $idsProductAbstract): array
+    {
+        return $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idsProductAbstract);
     }
 }

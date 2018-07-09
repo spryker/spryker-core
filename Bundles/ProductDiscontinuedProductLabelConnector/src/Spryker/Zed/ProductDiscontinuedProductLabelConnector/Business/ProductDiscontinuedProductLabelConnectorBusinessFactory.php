@@ -10,11 +10,13 @@ namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\Installer\ProductDiscontinuedProductLabelConnectorInstaller;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\Installer\ProductDiscontinuedProductLabelConnectorInstallerInterface;
+use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelReader\ProductAbstractRelationReader;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelWriter\ProductDiscontinuedProductLabelWriter;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorConfig getConfig()
+ * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Persistence\ProductDiscontinuedProductLabelConnectorRepositoryInterface getRepository()
  */
 class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBusinessFactory
 {
@@ -40,6 +42,20 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
             $this->getProductFacade(),
             $this->getProductLabelFacade(),
             $this->getProductDiscontinuedFacade(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelReader\ProductAbstractRelationReaderInterface
+     */
+    public function createProductAbstractRelationReader()
+    {
+        return new ProductAbstractRelationReader(
+            $this->getProductFacade(),
+            $this->getProductLabelFacade(),
+            $this->getProductDiscontinuedFacade(),
+            $this->getRepository(),
             $this->getConfig()
         );
     }

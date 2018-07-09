@@ -27,20 +27,6 @@ class ProductDiscontinuedProductLabelConnectorFacade extends AbstractFacade impl
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return array
-     */
-    public function findAllLabels(): array
-    {
-        return $this->getFactory()
-            ->getProductLabelFacade()
-            ->findAllLabels();
-    }
-
-    /**
      * @api
      *
      * @param int $idProduct
@@ -66,5 +52,15 @@ class ProductDiscontinuedProductLabelConnectorFacade extends AbstractFacade impl
         $this->getFactory()
             ->createProductDiscontinuedProductLabelWriter()
             ->removeProductAbstractRelationsForLabel($idProduct);
+    }
+
+    /**
+     * @return array|\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     */
+    public function findProductLabelProductAbstractRelationChanges(): array
+    {
+        return $this->getFactory()
+            ->createProductAbstractRelationReader()
+            ->findProductLabelProductAbstractRelationChanges();
     }
 }

@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector;
 
+use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToGlossaryFacadeBridge;
@@ -21,19 +23,22 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const PROPEL_QUERY_PRODUCT_DISCONTINUED = 'PROPEL_QUERY_PRODUCT_DISCONTINUED';
+    public const PROPEL_QUERY_PRODUCT_LABEL = 'PROPEL_QUERY_PRODUCT_LABEL';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $this->addProductLabelFacade($container);
-        $this->addProductFacade($container);
-        $this->addProductDiscontinuedFacade($container);
-        $this->addGlossaryFacade($container);
-        $this->addLocaleFacade($container);
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addProductLabelFacade($container);
+        $container = $this->addProductFacade($container);
+        $container = $this->addProductDiscontinuedFacade($container);
+        $container = $this->addGlossaryFacade($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -41,70 +46,122 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductLabelFacade(Container $container): void
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addProductDiscontinuedQuery($container);
+        $container = $this->addProductLabelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductLabelFacade(Container $container): Container
     {
         $container[static::FACADE_PRODUCT_LABEL] = function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToProductLabelBridge(
                 $container->getLocator()->productLabel()->facade()
             );
         };
+
+        return $container;
     }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductFacade(Container $container): void
+    protected function addProductFacade(Container $container): Container
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToProductBridge(
                 $container->getLocator()->product()->facade()
             );
         };
+
+        return $container;
     }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductDiscontinuedFacade(Container $container): void
+    protected function addProductDiscontinuedFacade(Container $container): Container
     {
         $container[static::FACADE_PRODUCT_DISCONTINUED] = function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToProductDiscontinuedFacadeBridge(
                 $container->getLocator()->productDiscontinued()->facade()
             );
         };
+
+        return $container;
     }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addGlossaryFacade(Container $container): void
+    protected function addGlossaryFacade(Container $container): Container
     {
         $container[static::FACADE_GLOSSARY] = function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToGlossaryFacadeBridge(
                 $container->getLocator()->glossary()->facade()
             );
         };
+
+        return $container;
     }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addLocaleFacade(Container $container): void
+    protected function addLocaleFacade(Container $container): Container
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductDiscontinuedQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_PRODUCT_DISCONTINUED] = function () {
+            return SpyProductDiscontinuedQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductLabelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_PRODUCT_LABEL] = function () {
+            return SpyProductLabelQuery::create();
+        };
+
+        return $container;
     }
 }

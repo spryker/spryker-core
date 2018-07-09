@@ -11,10 +11,12 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\Installer\ProductAlternativeProductLabelConnectorInstaller;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\Installer\ProductAlternativeProductLabelConnectorInstallerInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter\ProductAlternativeProductLabelWriter;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelReader\ProductAbstractRelationReader;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig getConfig()
+ * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence\ProductAlternativeProductLabelConnectorRepositoryInterface getRepository()
  */
 class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBusinessFactory
 {
@@ -40,6 +42,20 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
             $this->getProductFacade(),
             $this->getProductLabelFacade(),
             $this->getProductAlternativeFacade(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelReader\ProductAbstractRelationReaderInterface
+     */
+    public function createProductAbstractRelationReader()
+    {
+        return new ProductAbstractRelationReader(
+            $this->getProductFacade(),
+            $this->getProductLabelFacade(),
+            $this->getProductAlternativeFacade(),
+            $this->getRepository(),
             $this->getConfig()
         );
     }

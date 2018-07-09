@@ -66,7 +66,9 @@ class ProductDiscontinuedProductLabelWriter implements ProductDiscontinuedProduc
         )->getIdProductLabel();
 
         if ($this->productDiscontinuedFacade->areAllConcreteProductsDiscontinued($concreteIds)) {
-            $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
+            if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))) {
+                $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
+            }
         } else {
             $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
         }

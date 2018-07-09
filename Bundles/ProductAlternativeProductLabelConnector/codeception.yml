@@ -1,5 +1,7 @@
 namespace: ProductAlternativeProductLabelConnector
 actor: Tester
+include:
+    - tests/SprykerTest/Zed/ProductAlternativeProductLabelConnector
 paths:
     tests: tests
     log: tests/_output

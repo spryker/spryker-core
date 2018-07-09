@@ -52,4 +52,11 @@ interface ProductAlternativeProductLabelConnectorToProductLabelInterface
      * @return void
      */
     public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract): void;
+
+    /**
+     * @param int $idsProductAbstract
+     *
+     * @return int[]
+     */
+    public function findActiveLabelIdsByIdProductAbstract(int $idsProductAbstract): array;
 }

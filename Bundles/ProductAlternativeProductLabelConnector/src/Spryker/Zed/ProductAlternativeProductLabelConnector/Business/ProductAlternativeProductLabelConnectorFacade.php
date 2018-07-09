@@ -67,4 +67,14 @@ class ProductAlternativeProductLabelConnectorFacade extends AbstractFacade imple
             ->createProductAlternativeProductLabelWriter()
             ->removeProductAbstractRelationsForLabel($idProduct);
     }
+
+    /**
+     * @return array|\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     */
+    public function findProductLabelProductAbstractRelationChanges(): array
+    {
+        return $this->getFactory()
+            ->createProductAbstractRelationReader()
+            ->findProductLabelProductAbstractRelationChanges();
+    }
 }

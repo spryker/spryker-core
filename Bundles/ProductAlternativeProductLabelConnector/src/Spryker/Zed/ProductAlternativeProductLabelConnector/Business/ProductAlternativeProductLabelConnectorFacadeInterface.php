@@ -40,4 +40,9 @@ interface ProductAlternativeProductLabelConnectorFacadeInterface
      * @return void
      */
     public function removeProductAbstractRelationsForLabel(int $idProduct): void;
+
+    /**
+     * @return array|\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     */
+    public function findProductLabelProductAbstractRelationChanges(): array;
 }

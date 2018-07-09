@@ -63,18 +63,27 @@ class ProductDiscontinuedProductLabelConnectorInstaller implements ProductDiscon
     public function install(): void
     {
         $this->getTransactionHandler()->handleTransaction(function () {
-            if (!$this->productLabelFacade->findLabelByLabelName($this->config->getProductDiscontinueLabelName())) {
-                $productLabelTransfer = new ProductLabelTransfer();
-                $productLabelTransfer->setName($this->config->getProductDiscontinueLabelName());
-                $this->addDataToProductLabelTransfer($productLabelTransfer);
-                $this->productLabelFacade->createLabel(
-                    $productLabelTransfer
-                );
-            }
-            $productLabelTransfer = $this->productLabelFacade->findLabelByLabelName($this->config->getProductDiscontinueLabelName());
-            $this->addDataToProductLabelTransfer($productLabelTransfer);
-            $this->productLabelFacade->updateLabel($productLabelTransfer);
+            $this->executeInstallTransaction();
         });
+    }
+
+    /**
+     * @return void
+     */
+    protected function executeInstallTransaction(): void
+    {
+        if (!$this->productLabelFacade->findLabelByLabelName($this->config->getProductDiscontinueLabelName())) {
+            $productLabelTransfer = new ProductLabelTransfer();
+            $productLabelTransfer->setName($this->config->getProductDiscontinueLabelName());
+            $this->addDataToProductLabelTransfer($productLabelTransfer);
+            $this->productLabelFacade->createLabel(
+                $productLabelTransfer
+            );
+        }
+
+        $productLabelTransfer = $this->productLabelFacade->findLabelByLabelName($this->config->getProductDiscontinueLabelName());
+        $this->addDataToProductLabelTransfer($productLabelTransfer);
+        $this->productLabelFacade->updateLabel($productLabelTransfer);
     }
 
     /**
@@ -94,9 +103,7 @@ class ProductDiscontinuedProductLabelConnectorInstaller implements ProductDiscon
             $localizedAttributesTransfer->setFkLocale($localeTransfer->getIdLocale());
             $localizedAttributesTransfer->setFkProductLabel($productLabelTransfer->getIdProductLabel());
             $localizedAttributesTransfer->setLocale($localeTransfer);
-            $localizedAttributesTransfer->setName(
-                $this->glossaryFacade->translate($this->config->getProductDiscontinueLabelKey(), [], $localeTransfer)
-            );
+            $localizedAttributesTransfer->setName($this->config->getProductDiscontinueLabelName());
 
             $productLabelTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }

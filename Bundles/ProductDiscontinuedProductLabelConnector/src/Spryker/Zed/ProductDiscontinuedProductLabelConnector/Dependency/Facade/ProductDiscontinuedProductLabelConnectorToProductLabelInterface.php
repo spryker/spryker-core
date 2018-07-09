@@ -11,12 +11,7 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
 
 interface ProductDiscontinuedProductLabelConnectorToProductLabelInterface
 {
-    /**
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
-     */
-    public function findAllLabels(): array;
-
-    /**
+   /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
      * @return void
@@ -43,7 +38,7 @@ interface ProductDiscontinuedProductLabelConnectorToProductLabelInterface
      *
      * @return void
      */
-    public function removeProductAbstractRelationsForLabel($idProductLabel, array $idsProductAbstract): void;
+    public function removeProductAbstractRelationsForLabel(int $idProductLabel, array $idsProductAbstract): void;
 
     /**
      * @param int $idProductLabel
@@ -51,5 +46,12 @@ interface ProductDiscontinuedProductLabelConnectorToProductLabelInterface
      *
      * @return void
      */
-    public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract): void;
+    public function addAbstractProductRelationsForLabel(int $idProductLabel, array $idsProductAbstract): void;
+
+    /**
+     * @param int $idsProductAbstract
+     *
+     * @return int[]
+     */
+    public function findActiveLabelIdsByIdProductAbstract(int $idsProductAbstract): array;
 }

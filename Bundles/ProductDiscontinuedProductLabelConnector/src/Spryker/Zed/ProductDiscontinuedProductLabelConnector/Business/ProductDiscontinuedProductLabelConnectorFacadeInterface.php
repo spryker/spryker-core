@@ -19,13 +19,6 @@ interface ProductDiscontinuedProductLabelConnectorFacadeInterface
     /**
      * @api
      *
-     * @return array
-     */
-    public function findAllLabels(): array;
-
-    /**
-     * @api
-     *
      * @param int $idProduct
      *
      * @return void
@@ -40,4 +33,9 @@ interface ProductDiscontinuedProductLabelConnectorFacadeInterface
      * @return void
      */
     public function removeProductAbstractRelationsForLabel(int $idProduct): void;
+
+    /**
+     * @return array|\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     */
+    public function findProductLabelProductAbstractRelationChanges(): array;
 }

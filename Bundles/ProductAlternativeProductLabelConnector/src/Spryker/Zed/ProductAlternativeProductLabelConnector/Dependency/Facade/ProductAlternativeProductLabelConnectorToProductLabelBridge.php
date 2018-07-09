@@ -88,4 +88,14 @@ class ProductAlternativeProductLabelConnectorToProductLabelBridge implements Pro
     {
         $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, $idsProductAbstract);
     }
+
+    /**
+     * @param int $idsProductAbstract
+     *
+     * @return int[]
+     */
+    public function findActiveLabelIdsByIdProductAbstract(int $idsProductAbstract): array
+    {
+        return $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idsProductAbstract);
+    }
 }
