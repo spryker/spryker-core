@@ -36,8 +36,6 @@ class CustomersWriter implements CustomersWriterInterface
     protected $customersResourceMapper;
 
     /**
-     * CustomersWriter constructor.
-     *
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface $customersResourceMapper

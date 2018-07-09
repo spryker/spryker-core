@@ -5,7 +5,6 @@
 
     <transfer name="RestCustomersAttributesTransfer">
         <property name="salutation" type="string"/>
-        <property name="username" type="string"/>
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
         <property name="email" type="string"/>
@@ -13,7 +12,6 @@
 
     <transfer name="RestRegisterCustomerAttributesTransfer">
         <property name="salutation" type="string"/>
-        <property name="username" type="string"/>
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
         <property name="email" type="string"/>
