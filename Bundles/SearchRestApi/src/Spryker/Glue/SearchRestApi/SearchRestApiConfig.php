@@ -11,4 +11,5 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 class SearchRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_SEARCH = 'search';
+    public const RESOURCE_SUGGESTIONS = 'suggestions';
 }
