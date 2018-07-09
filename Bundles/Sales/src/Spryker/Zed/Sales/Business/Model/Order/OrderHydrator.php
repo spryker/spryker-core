@@ -238,7 +238,7 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
-     * Unit prices are populated for presentation purposes only. For further calculations use sum prices are properly populated unit prices.
+     * Unit prices are populated for presentation purposes only. For further calculations use sum prices or properly populated unit prices.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
@@ -333,7 +333,7 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
-     * Unit prices are populated for presentation purposes only. For further calculations use sum prices are properly populated unit prices.
+     * Unit prices are populated for presentation purposes only. For further calculations use sum prices or properly populated unit prices.
      *
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      *

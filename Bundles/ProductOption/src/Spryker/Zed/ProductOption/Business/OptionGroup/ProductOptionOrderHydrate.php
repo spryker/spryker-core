@@ -53,8 +53,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
 
             $itemTransfer->setSumProductOptionPriceAggregation($salesOrderItemEntity->getProductOptionPriceAggregation());
 
-            // BC: Unit prices are populated for BC reasons only
-            $this->setItemTransferUnitPrices($itemTransfer, $salesOrderItemEntity);
+            $this->deriveItemTransferUnitPrices($itemTransfer, $salesOrderItemEntity);
 
             foreach ($salesOrderItemEntity->getOptions() as $orderItemOptionEntity) {
                 $productOptionsTransfer = $this->hydrateProductOptionTransfer($orderItemOptionEntity, $salesOrderItemEntity->getQuantity());
@@ -66,14 +65,14 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
     }
 
     /**
-     * @deprecated Derives unit prices using sum prices which is accurate for quantity = 1 only
+     * Unit prices are populated for presentation purposes only. For further calculations use sum prices or properly populated unit prices.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
      *
      * @return void
      */
-    protected function setItemTransferUnitPrices(ItemTransfer $itemTransfer, SpySalesOrderItem $salesOrderItemEntity)
+    protected function deriveItemTransferUnitPrices(ItemTransfer $itemTransfer, SpySalesOrderItem $salesOrderItemEntity)
     {
         $itemTransfer->setUnitProductOptionPriceAggregation((int)round($salesOrderItemEntity->getProductOptionPriceAggregation() / $salesOrderItemEntity->getQuantity()));
     }
@@ -124,7 +123,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
     }
 
     /**
-     * Unit prices are populated for presentation purposes only. For further calculations use sum prices are properly populated unit prices.
+     * Unit prices are populated for presentation purposes only. For further calculations use sum prices or properly populated unit prices.
      *
      * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
      *
