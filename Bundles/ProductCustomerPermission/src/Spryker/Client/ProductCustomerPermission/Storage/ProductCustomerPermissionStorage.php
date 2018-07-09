@@ -14,7 +14,7 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 class ProductCustomerPermissionStorage implements ProductCustomerPermissionStorageInterface
 {
     /**
-     * @var \Spryker\Client\Storage\StorageClientInterface
+     * @var \Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPermissionToStorageClientInterface
      */
     protected $storageClient;
 
