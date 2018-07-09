@@ -1,0 +1,15 @@
+{% set chartDivId = chartType ~ '-' ~ data.key %}
+
+{% block chartContent %}
+    {% if data.traces | length > 0 %}
+        <div id="{{ chartDivId }}"></div>
+        <script src="/assets/js/spryker-zed-chart-plotly-main.js"></script>
+        <script>/*<![CDATA[*/
+            var chartLayout = {{ layout.toArray | json_encode | raw }};
+            chartLayout.title = '{{ layout.title | default(data.title) }}';
+            document.addEventListener('DOMContentLoaded', function(event) {
+                ChartPlotly.plot('{{ chartDivId }}', chartData, chartLayout, { displayModeBar: false });
+            });
+        /*]]>*/</script>
+    {% endif %}
+{% endblock %}
