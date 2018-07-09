@@ -13,6 +13,11 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
