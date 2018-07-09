@@ -80,20 +80,6 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer
-     */
-    protected function cloneOption(ProductOptionTransfer $productOptionTransfer)
-    {
-        $expandedProductOptionTransfer = clone $productOptionTransfer;
-        $expandedProductOptionTransfer->setQuantity(1);
-        $expandedProductOptionTransfer->setIdProductOptionValue(null);
-
-        return $expandedProductOptionTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void

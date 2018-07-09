@@ -29,6 +29,8 @@ class OrderItemTransformer implements OrderItemTransformerInterface
             $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
             $transformedItemTransfer->setQuantity(1);
 
+            $transformedItemTransfer = $this->resetSumPrices($transformedItemTransfer);
+
             $transformedProductOptions = new ArrayObject();
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 $transformedProductOptions->append($this->copyProductOptionTransfer($productOptionTransfer));
@@ -39,6 +41,32 @@ class OrderItemTransformer implements OrderItemTransformerInterface
         }
 
         return $transformedItemsCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function resetSumPrices(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        $itemTransfer->setSumDiscountAmountAggregation(null);
+        $itemTransfer->setSumDiscountAmountFullAggregation(null);
+        $itemTransfer->setSumNetPrice(null);
+        $itemTransfer->setSumGrossPrice(null);
+        $itemTransfer->setSumPrice(null);
+        $itemTransfer->setSumPriceToPayAggregation(null);
+        $itemTransfer->setSumExpensePriceAggregation(null);
+        $itemTransfer->setSumProductOptionPriceAggregation(null);
+        $itemTransfer->setSumSubtotalAggregation(null);
+        $itemTransfer->setSumTaxAmountFullAggregation(null);
+
+        // feature check
+        if (defined($itemTransfer::SUM_TAX_AMOUNT)) {
+            $itemTransfer->setSumTaxAmount(null);
+        }
+
+        return $itemTransfer;
     }
 
     /**

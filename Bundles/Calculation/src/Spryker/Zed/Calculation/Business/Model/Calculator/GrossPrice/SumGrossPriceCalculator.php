@@ -52,7 +52,8 @@ class SumGrossPriceCalculator implements CalculatorInterface
     {
         $this->assertItemRequirements($itemTransfer);
 
-        if (!$itemTransfer->getUnitGrossPrice()) {
+        // BC: When ItemTransfer is populated from Persistence, sum price is accurate and populated, unit price is derived
+        if ($itemTransfer->getSumGrossPrice()) {
             return;
         }
 

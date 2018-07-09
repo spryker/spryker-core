@@ -51,10 +51,6 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
 
             $calculatedDiscountTransfer = $groupedDiscounts[$salesOrderDiscountEntity->getDisplayName()];
 
-            $calculatedDiscountTransfer->setSumAmount(
-                $calculatedDiscountTransfer->getSumGrossAmount() + (int)$salesOrderDiscountEntity->getAmount()
-            );
-
             $groupedDiscounts[$salesOrderDiscountEntity->getDisplayName()] = $calculatedDiscountTransfer;
         }
 
@@ -178,11 +174,14 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
      */
     protected function hydrateCalculatedDiscountTransfer(SpySalesDiscount $salesOrderDiscountEntity)
     {
+        $quantity = $this->getCalculatedDiscountQuantity($salesOrderDiscountEntity);
+
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount($salesOrderDiscountEntity->getIdSalesDiscount());
         $calculatedDiscountTransfer->fromArray($salesOrderDiscountEntity->toArray(), true);
         $calculatedDiscountTransfer->setSumAmount($salesOrderDiscountEntity->getAmount());
-        $calculatedDiscountTransfer->setQuantity($this->getCalculatedDiscountQuantity($salesOrderDiscountEntity));
+        $calculatedDiscountTransfer->setQuantity($quantity);
+        $calculatedDiscountTransfer->setUnitAmount((int)round($salesOrderDiscountEntity->getAmount() / $quantity));
 
         foreach ($salesOrderDiscountEntity->getDiscountCodes() as $discountCodeEntity) {
             $calculatedDiscountTransfer->setVoucherCode($discountCodeEntity->getCode());

@@ -52,7 +52,8 @@ class SumNetPriceCalculator implements CalculatorInterface
     {
         $this->assertItemRequirements($itemTransfer);
 
-        if (!$itemTransfer->getUnitNetPrice()) {
+        // BC: When ItemTransfer is populated from Persistence, sum price is accurate and populated, unit price is derived
+        if ($itemTransfer->getSumNetPrice()) {
             return;
         }
 
