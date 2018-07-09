@@ -10,7 +10,6 @@ namespace Spryker\Zed\Sales;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Sales\Communication\Plugin\SalesExtension\SplittableItemTransformerStrategyPlugin;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerBridge;
@@ -339,10 +338,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function getItemTransformerStrategyPlugins(): array
     {
-        // BC default plugin
-        return [
-            new SplittableItemTransformerStrategyPlugin(),
-        ];
+        return [];
     }
 
     /**

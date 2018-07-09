@@ -116,7 +116,10 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createDistributor(): DistributorInterface
     {
-        return new Distributor($this->getDiscountableItemTransformerStrategyPlugins());
+        return new Distributor(
+            $this->createDiscountableItemTransformer(),
+            $this->getDiscountableItemTransformerStrategyPlugins()
+        );
     }
 
     /**

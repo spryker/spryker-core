@@ -7,7 +7,6 @@ namespace Spryker\Zed\Discount\Business;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
-use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
@@ -534,18 +533,4 @@ interface DiscountFacadeInterface
      * @return void
      */
     public function checkDiscountChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void;
-
-    /**
-     * Specification:
-     * - Transforms discountable item according to the splittable item based strategy.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
-     */
-    public function transformSplittableDiscountableItem(
-        DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
-    ): DiscountableItemTransformerTransfer;
 }

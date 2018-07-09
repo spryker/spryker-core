@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\Calculator\Calculator;
+use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformer;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
@@ -30,7 +31,6 @@ use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemBySkuCollectorPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
-use Spryker\Zed\Discount\Communication\Plugin\DiscountExtension\SplittableDiscountableItemTransformerStrategyPlugin;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface;
@@ -262,7 +262,18 @@ class CalculatorTest extends Unit
      */
     protected function createDistributor()
     {
-        return new Distributor($this->createDiscountableItemTransformerStrategyPlugins());
+        return new Distributor(
+            $this->createDiscountableItemTransformer(),
+            $this->createDiscountableItemTransformerStrategyPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface
+     */
+    protected function createDiscountableItemTransformer()
+    {
+        return new DiscountableItemTransformer();
     }
 
     /**
@@ -270,10 +281,7 @@ class CalculatorTest extends Unit
      */
     protected function createDiscountableItemTransformerStrategyPlugins(): array
     {
-        // BC default plugin
-        return [
-            new SplittableDiscountableItemTransformerStrategyPlugin(),
-        ];
+        return [];
     }
 
     /**

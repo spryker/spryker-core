@@ -169,6 +169,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderExpander(
             $this->getCalculationFacade(),
+            $this->createOrderItemTransformer(),
             $this->getItemTransformerStrategyPlugins()
         );
     }
@@ -176,7 +177,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface
      */
-    public function createItemTransformer(): OrderItemTransformerInterface
+    public function createOrderItemTransformer(): OrderItemTransformerInterface
     {
         return new OrderItemTransformer();
     }
