@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Hydrator;
+namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface OrderHydratorInterface
+interface ProductPackagingUnitOrderHydratorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateOrder(OrderTransfer $orderTransfer);
+    public function hydrateOrderWithAmountSalesUnitAndLeadProduct(OrderTransfer $orderTransfer): OrderTransfer;
 }
