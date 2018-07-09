@@ -10,7 +10,7 @@ namespace Spryker\Client\MultiCart\Dependency\Service;
 interface MultiCartToUtilDateTimeServiceInterface
 {
     /**
-     * @param string $date
+     * @param \DateTime|string $date
      *
      * @return string
      */
