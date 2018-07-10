@@ -6,7 +6,7 @@
 
 namespace Spryker\Glue\SearchRestApi\Plugin;
 
-use Generated\Shared\Transfer\RestSearchRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestSearchAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
@@ -59,6 +59,6 @@ class SearchResourceRoutePlugin extends AbstractPlugin implements ResourceRouteP
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestSearchRequestAttributesTransfer::class;
+        return RestSearchAttributesTransfer::class;
     }
 }
