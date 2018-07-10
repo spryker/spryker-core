@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\CompanyGui\Communication\CompanyGuiCommunicationFactory getFactory()
  */
-class AddCompanyController extends AbstractController
+class CreateCompanyController extends AbstractController
 {
     protected const PARAM_REDIRECT_URL = 'redirect-url';
     protected const REDIRECT_URL_DEFAULT = '/company-gui/list-company';
