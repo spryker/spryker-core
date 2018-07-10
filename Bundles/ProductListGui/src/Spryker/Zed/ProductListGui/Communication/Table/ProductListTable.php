@@ -22,8 +22,8 @@ class ProductListTable extends AbstractTable
     protected const COLUMN_TYPE = SpyProductListTableMap::COL_TYPE;
     protected const COLUMN_ACTIONS = 'actions';
 
-    public const URL_PRODUCT_LIST_EDIT = '/product-list-gui/product-list/edit';
-    public const URL_PRODUCT_LIST_DELETE = '/product-list-gui/product-list/delete';
+    public const URL_PRODUCT_LIST_EDIT = ProductListGuiConstants::URL_EDIT;
+    public const URL_PRODUCT_LIST_DELETE = ProductListGuiConstants::URL_DELETE;
 
     /**
      * @var \Orm\Zed\ProductList\Persistence\SpyProductListQuery

@@ -21,7 +21,7 @@ class MerchantRelationshipProductListGuiCommunicationFactory extends AbstractCom
     /**
      * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvider\MerchantRelationshipChoiceFormDataProvider
      */
-    public function createMerchantRelationshipChoiceFormDataProvider()
+    public function createMerchantRelationshipChoiceFormDataProvider(): MerchantRelationshipChoiceFormDataProvider
     {
         return new MerchantRelationshipChoiceFormDataProvider($this->getMerchantRelationshipFacade());
     }
@@ -29,7 +29,7 @@ class MerchantRelationshipProductListGuiCommunicationFactory extends AbstractCom
     /**
      * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Form\MerchantRelationshipChoiceFormType
      */
-    public function createMerchantRelationshipChoiceFormType()
+    public function createMerchantRelationshipChoiceFormType(): MerchantRelationshipChoiceFormType
     {
         return new MerchantRelationshipChoiceFormType();
     }

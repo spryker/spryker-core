@@ -6,6 +6,6 @@
     {{ parent() }}
     {% if idProductList is defined %}
         {{ viewActionButton(url('/product-list-gui/export', {'id-product-list': idProductList}), 'Export' | trans) }}
-        {{ removeActionButton(url('/product-list-gui/product-list/delete', {'id-product-list': idProductList}), 'Remove List' | trans) }}
+        {{ removeActionButton(url('/product-list-gui/delete', {'id-product-list': idProductList}), 'Remove List' | trans) }}
     {% endif %}
 {% endblock %}

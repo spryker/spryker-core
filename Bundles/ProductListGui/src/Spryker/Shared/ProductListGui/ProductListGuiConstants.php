@@ -13,6 +13,9 @@ interface ProductListGuiConstants
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
     public const REDIRECT_URL_DEFAULT = '/product-list-gui';
+    public const URL_CREATE = '/product-list-gui/create';
+    public const URL_EDIT = '/product-list-gui/edit';
+    public const URL_DELETE = '/product-list-gui/delete';
 
     public const MESSAGE_PRODUCT_LIST_CREATE_SUCCESS = 'Product List "%s" has been successfully created.';
     public const MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS = 'Product List "%s" has been successfully updated.';
