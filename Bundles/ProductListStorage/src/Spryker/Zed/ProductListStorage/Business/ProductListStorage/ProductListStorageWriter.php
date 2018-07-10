@@ -88,7 +88,7 @@ class ProductListStorageWriter implements ProductListStorageWriterInterface
      */
     protected function publishAbstractProducts(array $productAbstractIds): void
     {
-        if (!count($productAbstractIds)) {
+        if (empty($productAbstractIds)) {
             return;
         }
         $this->productListProductAbstractStorageWriter->publish($productAbstractIds);
@@ -101,7 +101,7 @@ class ProductListStorageWriter implements ProductListStorageWriterInterface
      */
     protected function publishConcreteProducts(array $productConcreteIds): void
     {
-        if (!count($productConcreteIds)) {
+        if (empty($productConcreteIds)) {
             return;
         }
         $this->productListProductConcreteStorageWriter->publish($productConcreteIds);

@@ -45,8 +45,8 @@ class ProductAbstractRestrictionReader implements ProductAbstractRestrictionRead
         if (!$customer || !$customer->getCustomerProductListCollection()) {
             return false;
         }
-        $customerWhitelistIds = $customer->getCustomerProductListCollection()->getWhitelistIds() ?? [];
-        $customerBlacklistIds = $customer->getCustomerProductListCollection()->getBlacklistIds() ?? [];
+        $customerWhitelistIds = $customer->getCustomerProductListCollection()->getWhitelistIds() ?: [];
+        $customerBlacklistIds = $customer->getCustomerProductListCollection()->getBlacklistIds() ?: [];
 
         return $this->checkIfProductAbstractIsRestricted($idProductAbstract, $customerWhitelistIds, $customerBlacklistIds);
     }

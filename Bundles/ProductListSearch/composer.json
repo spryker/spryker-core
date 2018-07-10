@@ -9,7 +9,7 @@
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-category": "^4.5.0",
     "spryker/product-list": "^1.0.0",
-    "spryker/product-page-search": "^0.1.0 || ^1.0.0"
+    "spryker/product-page-search": "^1.0.0"
   },
   "require-dev": {
     "spryker/category": "*",

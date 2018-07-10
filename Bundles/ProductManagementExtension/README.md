@@ -1,6 +1,6 @@
 # ProductManagementExtension Module
 
-ProductManagementExtension provides interfaces for extensioning ProductManagement module within plugins.
+ProductManagementExtension provides interfaces for extensioning ProductManagement module with plugins.
 
 ## Installation
 

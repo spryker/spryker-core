@@ -38,7 +38,7 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
      *
      * @param array $categoryIds
      *
-     * @return array
+     * @return int[]
      */
     public function findProductAbstractIdsByCategoryIds(array $categoryIds): array
     {
