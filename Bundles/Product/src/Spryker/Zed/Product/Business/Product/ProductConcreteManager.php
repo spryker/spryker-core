@@ -279,25 +279,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @param int $idProductConcrete
-     *
-     * @return null|int
-     */
-    public function getProductAbstractIdByConcreteId($idProductConcrete): ?int
-    {
-        $productConcrete = $this->productQueryContainer
-            ->queryProduct()
-            ->filterByIdProduct($idProductConcrete)
-            ->findOne();
-
-        if (!$productConcrete) {
-            return null;
-        }
-
-        return $productConcrete->getFkProductAbstract();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *

@@ -77,13 +77,6 @@ interface ProductConcreteManagerInterface
     public function getProductAbstractIdByConcreteSku($sku);
 
     /**
-     * @param int $idProductConcrete
-     *
-     * @return null|int
-     */
-    public function getProductAbstractIdByConcreteId($idProductConcrete): ?int;
-
-    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
