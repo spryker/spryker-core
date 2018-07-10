@@ -50,8 +50,8 @@ class SalesStatisticsFacadeTest extends Unit
         $salesStatisticTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getOrderStatisticByCountDay(1);
 
         $this->assertInstanceOf(SalesStatisticTransfer::class, $salesStatisticTransfer);
-        $this->assertSame($salesStatisticTransfer->getValues(), [1]);
-        $this->assertSame($salesStatisticTransfer->getLabels(), [$this->spySalesOrder->getCreatedAt('Y-m-d')]);
+        $this->assertSame($salesStatisticTransfer->getValues()[0], 1);
+        $this->assertSame($salesStatisticTransfer->getLabels()[0], $this->spySalesOrder->getCreatedAt('Y-m-d'));
     }
 
     /**
@@ -67,8 +67,8 @@ class SalesStatisticsFacadeTest extends Unit
         $sum = $sum / 100;
 
         $this->assertInstanceOf(SalesStatisticTransfer::class, $salesStatisticTransfer);
-        $this->assertSame($salesStatisticTransfer->getValues(), [$sum]);
-        $this->assertSame($salesStatisticTransfer->getLabels(), [BusinessHelper::DEFAULT_ITEM_STATE]);
+        $this->assertSame($salesStatisticTransfer->getValues()[0], $sum);
+        $this->assertSame($salesStatisticTransfer->getLabels()[0], BusinessHelper::DEFAULT_ITEM_STATE);
     }
 
     /**
@@ -79,7 +79,7 @@ class SalesStatisticsFacadeTest extends Unit
         $salesStatisticTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getTopOrderStatistic(1);
 
         $this->assertInstanceOf(SalesStatisticTransfer::class, $salesStatisticTransfer);
-        $this->assertSame($salesStatisticTransfer->getValues(), [count($this->spySalesOrder->getItems())]);
-        $this->assertSame($salesStatisticTransfer->getLabels(), [BusinessHelper::DEFAULT_PRODUCT_NAME]);
+        $this->assertSame((int)$salesStatisticTransfer->getValues()[0], count($this->spySalesOrder->getItems()));
+        $this->assertSame($salesStatisticTransfer->getLabels()[0], BusinessHelper::DEFAULT_PRODUCT_NAME);
     }
 }
