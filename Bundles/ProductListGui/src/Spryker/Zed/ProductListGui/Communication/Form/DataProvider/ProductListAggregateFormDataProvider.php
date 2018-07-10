@@ -75,7 +75,7 @@ class ProductListAggregateFormDataProvider
         $aggregateFormTransfer = new ProductListAggregateFormTransfer();
         $aggregateFormTransfer->setProductList($productListTransfer);
         $aggregateFormTransfer->setProductListCategoryRelation($productListCategoryRelation);
-        $aggregateFormTransfer->setAssignedProductIds(implode(',', $assignedProductIds));
+        $aggregateFormTransfer = $this->setAssignedProducts($aggregateFormTransfer, $assignedProductIds);
 
         return $aggregateFormTransfer;
     }
@@ -105,5 +105,20 @@ class ProductListAggregateFormDataProvider
         }
 
         return $options;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListAggregateFormTransfer $aggregateFormTransfer
+     * @param int[] $assignedProductIds
+     *
+     * @return \Generated\Shared\Transfer\ProductListAggregateFormTransfer
+     */
+    protected function setAssignedProducts(
+        ProductListAggregateFormTransfer $aggregateFormTransfer,
+        array $assignedProductIds
+    ): ProductListAggregateFormTransfer {
+        $aggregateFormTransfer->setAssignedProductIds(implode(',', $assignedProductIds));
+
+        return $aggregateFormTransfer;
     }
 }

@@ -71,12 +71,8 @@ class ProductListExporter implements ProductListExporterInterface
     {
         $csvFileTransfer = new CsvFileTransfer();
         $csvFileTransfer->setHeader([static::FILE_HEADER]);
-        $csvFileTransfer->setFileName(
-            sprintf(static::FORMAT_FILE_NAME, $title)
-        );
-        $csvFileTransfer->setData(
-            $data
-        );
+        $csvFileTransfer->setFileName(sprintf(static::FORMAT_FILE_NAME, $title));
+        $csvFileTransfer->setData($data);
 
         return $csvFileTransfer;
     }

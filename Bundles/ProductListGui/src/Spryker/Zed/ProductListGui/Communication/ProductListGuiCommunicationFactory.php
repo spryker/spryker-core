@@ -115,7 +115,8 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
         ?ProductListAggregateFormTransfer $productListAggregateFormTransfer = null,
         array $options = []
     ): FormInterface {
-        return $this->getFormFactory()
+        return $this
+            ->getFormFactory()
             ->create(
                 ProductListAggregateFormType::class,
                 $productListAggregateFormTransfer,
