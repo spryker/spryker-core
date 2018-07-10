@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteFileController extends AbstractController
 {
+    protected const URL_REDIRECT_BASE = '/file-manager-gui';
     protected const URL_PARAM_ID_FILE_INFO = 'id-file-info';
     protected const URL_PARAM_ID_FILE = 'id-file';
     protected const REFERER_PARAM = 'referer';
@@ -26,13 +27,16 @@ class DeleteFileController extends AbstractController
      */
     public function fileInfoAction(Request $request)
     {
+        $idFile = $request->get(static::URL_PARAM_ID_FILE);
         $idFileInfo = $request->get(static::URL_PARAM_ID_FILE_INFO);
 
         $this->getFactory()
             ->getFileManagerFacade()
             ->deleteFileInfo($idFileInfo);
 
-        return $this->redirectBack($request);
+        $redirectUrl = sprintf(static::URL_REDIRECT_BASE . '/edit-file?id-file=%s', $idFile);
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**
@@ -48,20 +52,6 @@ class DeleteFileController extends AbstractController
             ->getFileManagerFacade()
             ->deleteFile($idFile);
 
-        return $this->redirectBack($request);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function redirectBack(Request $request)
-    {
-        $referer = $request
-            ->headers
-            ->get(static::REFERER_PARAM, '/', true);
-
-        return $this->redirectResponse($referer);
+        return $this->redirectResponse(static::URL_REDIRECT_BASE);
     }
 }

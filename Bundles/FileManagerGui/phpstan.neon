@@ -1,6 +1,5 @@
 parameters:
     ignoreErrors:
-        - '#Parameter \#1 \$url of method .+AbstractController::redirectResponse\(\) expects string, array|string given.#'
         - '#Strict comparison using !== between .+FileUploadTransfer and null will always evaluate to true.#'
         - '#Strict comparison using === between .+FileUploadTransfer and null will always evaluate to false.#'
 
