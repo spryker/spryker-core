@@ -84,14 +84,14 @@ abstract class AbstractController
     }
 
     /**
-     * @param $absoluteUrl
+     * @param string|null $absoluteUrl
      * @param int $code
      *
      * @throws \Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function redirectResponseExternal($absoluteUrl, $code = 302)
+    protected function redirectResponseExternal(?string $absoluteUrl, $code = 302)
     {
         if (strpos($absoluteUrl, '/') != 0 && !$this->isUrlWhitelisted($absoluteUrl)) {
             throw new ForbiddenExternalRedirectException("The url is not in the whitelist: $absoluteUrl");
@@ -248,7 +248,12 @@ abstract class AbstractController
         return $this->getApplication()->render($viewPath, $parameters);
     }
 
-    protected function isUrlWhitelisted(string $absoluteUrl)
+    /**
+     * @param string $absoluteUrl
+     *
+     * @return bool
+     */
+    protected function isUrlWhitelisted(string $absoluteUrl): bool
     {
         $absoluteUrl = str_replace(['http://', 'https://'], '', $absoluteUrl);
         $whitelistUrls = Config::getInstance()->get(KernelConstants::URL_WHITELIST);
