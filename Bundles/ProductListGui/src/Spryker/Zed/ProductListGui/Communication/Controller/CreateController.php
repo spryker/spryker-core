@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
-use Spryker\Shared\ProductListGui\ProductListGuiConstants;
+use Spryker\Zed\ProductListGui\ProductListGuiConfig;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends ProductListAbstractController
 {
+    public const MESSAGE_PRODUCT_LIST_CREATE_SUCCESS = 'Product List "%s" has been successfully created.';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -31,11 +33,11 @@ class CreateController extends ProductListAbstractController
 
         if ($productListTransfer) {
             $this->addSuccessMessage(sprintf(
-                ProductListGuiConstants::MESSAGE_PRODUCT_LIST_CREATE_SUCCESS,
+                static::MESSAGE_PRODUCT_LIST_CREATE_SUCCESS,
                 $productListTransfer->getTitle()
             ));
 
-            return $this->redirectResponse(ProductListGuiConstants::REDIRECT_URL_DEFAULT);
+            return $this->redirectResponse(ProductListGuiConfig::REDIRECT_URL_DEFAULT);
         }
 
         return $this->viewResponse($this->executeCreateAction($productListAggregateForm));

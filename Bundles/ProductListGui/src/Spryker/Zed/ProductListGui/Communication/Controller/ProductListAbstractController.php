@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductListGui\Communication\Controller;
 use Generated\Shared\Transfer\ProductListAggregateFormTransfer;
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
-use Spryker\Shared\ProductListGui\ProductListGuiConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListProductConcreteRelationFormType;
 use Symfony\Component\Form\FormInterface;
@@ -21,6 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductListAbstractController extends AbstractController
 {
+    public const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    public const URL_PARAM_ID_PRODUCT_LIST = 'id-product-list';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -28,7 +30,7 @@ class ProductListAbstractController extends AbstractController
      */
     protected function createProductListAggregateForm(Request $request): FormInterface
     {
-        $idProductList = $request->query->getInt(ProductListGuiConstants::URL_PARAM_ID_PRODUCT_LIST, null);
+        $idProductList = $request->query->getInt(static::URL_PARAM_ID_PRODUCT_LIST, null);
         $aggregateFormDataProvider = $this
             ->getFactory()
             ->createProductListAggregateFormDataProvider();

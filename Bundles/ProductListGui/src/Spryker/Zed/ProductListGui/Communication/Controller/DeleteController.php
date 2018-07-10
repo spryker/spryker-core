@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductListTransfer;
-use Spryker\Shared\ProductListGui\ProductListGuiConstants;
+use Spryker\Zed\ProductListGui\ProductListGuiConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends ProductListAbstractController
 {
+    public const MESSAGE_PRODUCT_LIST_DELETE_SUCCESS = 'Product List has been successfully removed.';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -23,7 +25,7 @@ class DeleteController extends ProductListAbstractController
      */
     public function indexAction(Request $request)
     {
-        $idProductList = $this->castId($request->query->get(ProductListGuiConstants::URL_PARAM_ID_PRODUCT_LIST));
+        $idProductList = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_LIST));
 
         return $this->viewResponse([
             'idProductList' => $idProductList,
@@ -38,17 +40,17 @@ class DeleteController extends ProductListAbstractController
     public function confirmAction(Request $request)
     {
         $redirectUrl = $request->query->get(
-            ProductListGuiConstants::URL_PARAM_REDIRECT_URL,
-            ProductListGuiConstants::REDIRECT_URL_DEFAULT
+            static::URL_PARAM_REDIRECT_URL,
+            ProductListGuiConfig::REDIRECT_URL_DEFAULT
         );
-        $idProductList = $this->castId($request->query->get(ProductListGuiConstants::URL_PARAM_ID_PRODUCT_LIST));
+        $idProductList = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_LIST));
         $productListTransfer = (new ProductListTransfer())->setIdProductList($idProductList);
 
         $this->getFactory()
             ->getProductListFacade()
             ->deleteProductList($productListTransfer);
 
-        $this->addSuccessMessage(ProductListGuiConstants::MESSAGE_PRODUCT_LIST_DELETE_SUCCESS);
+        $this->addSuccessMessage(self::MESSAGE_PRODUCT_LIST_DELETE_SUCCESS);
 
         return $this->redirectResponse($redirectUrl);
     }

@@ -22,7 +22,7 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
 {
     protected const COLUMN_MERCHANT_RELATION_ID = 'ID Merchant Relation';
     protected const COLUMN_MERCHANT_NAME = 'Merchant Name';
-    protected const COLUMN_BUSINESS_UNIT_OWNER_NAME = 'Business unit owner Name';
+    protected const COLUMN_BUSINESS_UNIT_OWNER_NAME = 'Business Unit Owner Name';
 
     protected const FK_MERCHANT_RELATIONSHIP = SpyProductListTableMap::COL_FK_MERCHANT_RELATIONSHIP;
 

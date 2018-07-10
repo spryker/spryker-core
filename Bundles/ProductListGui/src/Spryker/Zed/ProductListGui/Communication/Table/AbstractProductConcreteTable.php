@@ -11,9 +11,9 @@ use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\ProductListGui\ProductListGuiConstants;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductListGui\Communication\Controller\ProductListAbstractController;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInterface;
 
 abstract class AbstractProductConcreteTable extends AbstractTable
@@ -94,7 +94,7 @@ abstract class AbstractProductConcreteTable extends AbstractTable
         $tableUrl = ($config->getUrl() === null) ? $this->defaultUrl : $config->getUrl();
 
         if ($this->getIdProductList()) {
-            $tableUrl = Url::generate($tableUrl, [ProductListGuiConstants::URL_PARAM_ID_PRODUCT_LIST => $this->getIdProductList()]);
+            $tableUrl = Url::generate($tableUrl, [ProductListAbstractController::URL_PARAM_ID_PRODUCT_LIST => $this->getIdProductList()]);
         }
 
         return $tableUrl;
@@ -169,7 +169,7 @@ abstract class AbstractProductConcreteTable extends AbstractTable
      */
     protected function getIdProductList(): int
     {
-        return $this->request->query->getInt(ProductListGuiConstants::URL_PARAM_ID_PRODUCT_LIST, 0);
+        return $this->request->query->getInt(ProductListAbstractController::URL_PARAM_ID_PRODUCT_LIST, 0);
     }
 
     /**

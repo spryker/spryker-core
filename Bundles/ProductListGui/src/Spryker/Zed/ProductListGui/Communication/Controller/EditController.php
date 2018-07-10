@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
-use Spryker\Shared\ProductListGui\ProductListGuiConstants;
+use Spryker\Zed\ProductListGui\ProductListGuiConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends ProductListAbstractController
 {
+    public const MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS = 'Product List "%s" has been successfully updated.';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -32,11 +34,11 @@ class EditController extends ProductListAbstractController
 
         if ($productListTransfer) {
             $this->addSuccessMessage(sprintf(
-                ProductListGuiConstants::MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS,
+                static::MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS,
                 $productListTransfer->getTitle()
             ));
 
-            return $this->redirectResponse(ProductListGuiConstants::REDIRECT_URL_DEFAULT);
+            return $this->redirectResponse(ProductListGuiConfig::REDIRECT_URL_DEFAULT);
         }
 
         return $this->viewResponse($this->executeEditAction($request, $productListAggregateForm));
@@ -74,7 +76,7 @@ class EditController extends ProductListAbstractController
      */
     protected function executeEditAction(Request $request, FormInterface $productListAggregateForm)
     {
-        $idProductList = $this->castId($request->get(ProductListGuiConstants::URL_PARAM_ID_PRODUCT_LIST));
+        $idProductList = $this->castId($request->get(static::URL_PARAM_ID_PRODUCT_LIST));
         $data = $this->executeCreateAction($productListAggregateForm);
         $data['idProductList'] = $idProductList;
 

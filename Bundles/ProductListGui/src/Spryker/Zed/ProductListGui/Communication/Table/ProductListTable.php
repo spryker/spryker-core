@@ -10,9 +10,10 @@ namespace Spryker\Zed\ProductListGui\Communication\Table;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\ProductListGui\ProductListGuiConstants;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductListGui\Communication\Controller\ProductListAbstractController;
+use Spryker\Zed\ProductListGui\Communication\Controller\RoutingConstants;
 use Spryker\Zed\ProductListGui\Communication\Table\PluginExecutor\ProductListTablePluginExecutorInterface;
 
 class ProductListTable extends AbstractTable
@@ -22,8 +23,8 @@ class ProductListTable extends AbstractTable
     protected const COLUMN_TYPE = SpyProductListTableMap::COL_TYPE;
     protected const COLUMN_ACTIONS = 'actions';
 
-    public const URL_PRODUCT_LIST_EDIT = ProductListGuiConstants::URL_EDIT;
-    public const URL_PRODUCT_LIST_DELETE = ProductListGuiConstants::URL_DELETE;
+    public const URL_PRODUCT_LIST_EDIT = RoutingConstants::URL_EDIT;
+    public const URL_PRODUCT_LIST_DELETE = RoutingConstants::URL_DELETE;
 
     /**
      * @var \Orm\Zed\ProductList\Persistence\SpyProductListQuery
@@ -154,8 +155,8 @@ class ProductListTable extends AbstractTable
     {
         $buttons = [];
 
-        $editUrl = Url::generate(static::URL_PRODUCT_LIST_EDIT, [ProductListGuiConstants::URL_PARAM_ID_PRODUCT_LIST => $item[SpyProductListTableMap::COL_ID_PRODUCT_LIST]]);
-        $deleteUrl = Url::generate(static::URL_PRODUCT_LIST_DELETE, [ProductListGuiConstants::URL_PARAM_ID_PRODUCT_LIST => $item[SpyProductListTableMap::COL_ID_PRODUCT_LIST]]);
+        $editUrl = Url::generate(static::URL_PRODUCT_LIST_EDIT, [ProductListAbstractController::URL_PARAM_ID_PRODUCT_LIST => $item[SpyProductListTableMap::COL_ID_PRODUCT_LIST]]);
+        $deleteUrl = Url::generate(static::URL_PRODUCT_LIST_DELETE, [ProductListAbstractController::URL_PARAM_ID_PRODUCT_LIST => $item[SpyProductListTableMap::COL_ID_PRODUCT_LIST]]);
 
         $buttons[] = $this->generateEditButton($editUrl, 'Edit List');
         $buttons[] = $this->generateRemoveButton($deleteUrl, 'Remove List');

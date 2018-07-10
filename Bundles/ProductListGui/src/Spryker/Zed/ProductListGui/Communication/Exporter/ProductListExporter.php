@@ -55,7 +55,7 @@ class ProductListExporter implements ProductListExporterInterface
         }
 
         $productSkus = $this->repository->findProductSkuByIdProductConcrete($productIds);
-        $this->prepareDataForExport($productSkus);
+        $productSkus = $this->prepareDataForExport($productSkus);
         $csvFileTransfer = $this->createCsvFileTransfer($productListTransfer->getTitle(), $productSkus);
 
         return $this->csvService->exportFile($csvFileTransfer);
@@ -84,12 +84,15 @@ class ProductListExporter implements ProductListExporterInterface
     /**
      * @param array $skus
      *
-     * @return void
+     * @return array $skus
      */
-    protected function prepareDataForExport(array &$skus): void
+    protected function prepareDataForExport(array $skus): array
     {
-        array_walk($skus, function (&$item) {
-            $item = [$item];
-        });
+        array_map(
+            function ($item) {
+                return [$item];
+            },
+            $skus
+        );
     }
 }
