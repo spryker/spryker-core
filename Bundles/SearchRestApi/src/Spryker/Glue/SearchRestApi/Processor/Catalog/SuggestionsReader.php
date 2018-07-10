@@ -32,8 +32,6 @@ class SuggestionsReader implements SuggestionsReaderInterface
     protected $suggestionsResourceMapper;
 
     /**
-     * SuggestionsReader constructor.
-     *
      * @param \Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToCatalogClientInterface $catalogClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\SearchRestApi\Processor\Mapper\SuggestionsResourceMapperInterface $suggestionsResourceMapper
