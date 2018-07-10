@@ -85,12 +85,15 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
         array $customerBlacklistIds
     ): void {
         $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteSku($item->getSku());
-        $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($item->getSku());
+        if ($this->isProductAbstractRestricted($idProductAbstract, $customerWhitelistIds, $customerBlacklistIds)) {
+            $this->addViolation($item->getSku(), $responseTransfer);
+            return;
+        }
 
-        if ($this->isProductAbstractRestricted($idProductAbstract, $customerWhitelistIds, $customerBlacklistIds)
-            || $this->isProductConcreteRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds)
-        ) {
-            $this->addViolation(static::MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED, $item->getSku(), $responseTransfer);
+        $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($item->getSku());
+        if ($this->isProductConcreteRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds)) {
+            $this->addViolation($item->getSku(), $responseTransfer);
+            return;
         }
     }
 
@@ -142,18 +145,17 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
     }
 
     /**
-     * @param string $message
      * @param string $sku
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
      * @return void
      */
-    protected function addViolation(string $message, string $sku, CartPreCheckResponseTransfer $responseTransfer): void
+    protected function addViolation(string $sku, CartPreCheckResponseTransfer $responseTransfer): void
     {
         $responseTransfer->setIsSuccess(false);
         $responseTransfer->addMessage(
             (new MessageTransfer())
-                ->setValue($message)
+                ->setValue(static::MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED)
                 ->setParameters(['%sku%' => $sku])
         );
     }

@@ -72,8 +72,11 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
      *
      * @return void
      */
-    protected function removeRestrictedItemsFromQuote(QuoteTransfer $quoteTransfer, $customerBlacklistIds, $customerWhitelistIds): void
-    {
+    protected function removeRestrictedItemsFromQuote(
+        QuoteTransfer $quoteTransfer,
+        $customerBlacklistIds,
+        $customerWhitelistIds
+    ): void {
         if (!$customerBlacklistIds && !$customerWhitelistIds) {
             return;
         }
@@ -81,10 +84,21 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
             $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($itemTransfer->getSku());
             $isProductConcreteRestricted = $this->productListRestrictionValidator
                 ->isProductConcreteRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds);
-            $isProductAbstractRestricted = $this->productListRestrictionValidator->isProductAbstractRestricted($itemTransfer->getIdProductAbstract(), $customerWhitelistIds, $customerBlacklistIds);
-            if ($isProductConcreteRestricted || $isProductAbstractRestricted) {
+            if ($isProductConcreteRestricted) {
                 $quoteTransfer->getItems()->offsetUnset($key);
                 $this->addFilterMessage($itemTransfer->getSku());
+                continue;
+            }
+
+            $isProductAbstractRestricted = $this->productListRestrictionValidator->isProductAbstractRestricted(
+                $itemTransfer->getIdProductAbstract(),
+                $customerWhitelistIds,
+                $customerBlacklistIds
+            );
+            if ($isProductAbstractRestricted) {
+                $quoteTransfer->getItems()->offsetUnset($key);
+                $this->addFilterMessage($itemTransfer->getSku());
+                continue;
             }
         }
     }
