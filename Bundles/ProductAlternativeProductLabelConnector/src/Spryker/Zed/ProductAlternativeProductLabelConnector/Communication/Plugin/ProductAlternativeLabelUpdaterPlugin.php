@@ -17,6 +17,12 @@ use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\ProductAlternative
 class ProductAlternativeLabelUpdaterPlugin extends AbstractPlugin implements ProductAlternativeLabelUpdaterPluginInterface
 {
     /**
+     * Specification:
+     * - Returns a list of Product Label - Product Abstract relation to assign and deassign.
+     * - The relation changes are based on presence of alternatives.
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
      */
     public function findProductLabelProductAbstractRelationChanges(): array

@@ -55,7 +55,9 @@ class ProductDiscontinuedProductLabelConnectorFacade extends AbstractFacade impl
     }
 
     /**
-     * @return array|\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
      */
     public function findProductLabelProductAbstractRelationChanges(): array
     {

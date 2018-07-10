@@ -2,7 +2,8 @@
 [![Build Status](https://travis-ci.org/spryker/product-alternative-extension.svg)](https://travis-ci.org/spryker/product-alternative-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-alternative-extension/badge.svg)](https://coveralls.io/github/spryker/product-alternative-extension)
 
-{{ADD DESCRIPTION HERE}}
+Holds all extension points (plugins) of ProductAlternative module
+
 
 ## Installation
 

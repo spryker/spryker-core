@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductAlternativeProductLabelConnector\Business;
 
 use Codeception\Test\Unit;
-use DateTime;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
@@ -66,7 +65,8 @@ class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
 
         // Assert
         $this->assertCount(
-            1, $productLabelProductAbstractRelationTransfers,
+            1,
+            $productLabelProductAbstractRelationTransfers,
             'Result should have been matched expected number of label relation changes.'
         );
         $this->assertCount(

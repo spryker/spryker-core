@@ -18,6 +18,9 @@ use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\DeleteProductAlter
 class DeleteProductAlternativesPlugin extends AbstractPlugin implements DeleteProductAlternativePluginInterface
 {
     /**
+     * Specification:
+     *  - Removes "Alternatives available" label if applicable.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer

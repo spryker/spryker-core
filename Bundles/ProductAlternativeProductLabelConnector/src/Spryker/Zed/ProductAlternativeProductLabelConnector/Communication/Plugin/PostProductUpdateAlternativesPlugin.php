@@ -18,6 +18,9 @@ use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductUpdateA
 class PostProductUpdateAlternativesPlugin extends AbstractPlugin implements PostProductUpdateAlternativesPluginInterface
 {
     /**
+     * Specification:
+     *  - Adds or removes label "Alternatives available" if applicable.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer

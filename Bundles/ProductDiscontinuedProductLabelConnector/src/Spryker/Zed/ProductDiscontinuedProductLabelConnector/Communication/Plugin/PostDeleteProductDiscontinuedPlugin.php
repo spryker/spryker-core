@@ -18,6 +18,9 @@ use Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProduct
 class PostDeleteProductDiscontinuedPlugin extends AbstractPlugin implements PostDeleteProductDiscontinuedPluginInterface
 {
     /**
+     * Specification:
+     *  - Removes "Discontinued" label if applicable.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer

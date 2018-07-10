@@ -11,16 +11,11 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
 
 interface ProductAlternativeProductLabelConnectorToProductLabelInterface
 {
-    /**
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
-     */
-    public function findAllLabels(): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return void
-     */
+  /**
+   * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+   *
+   * @return void
+   */
     public function createLabel(ProductLabelTransfer $productLabelTransfer): void;
 
     /**

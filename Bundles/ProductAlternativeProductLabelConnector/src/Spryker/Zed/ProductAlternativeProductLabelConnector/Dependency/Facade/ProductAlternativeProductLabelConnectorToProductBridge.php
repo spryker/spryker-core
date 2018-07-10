@@ -25,7 +25,7 @@ class ProductAlternativeProductLabelConnectorToProductBridge implements ProductA
     /**
      * @param int $idProduct
      *
-     * @return array
+     * @return int
      */
     public function getProductAbstractIdByConcreteId(int $idProduct): int
     {

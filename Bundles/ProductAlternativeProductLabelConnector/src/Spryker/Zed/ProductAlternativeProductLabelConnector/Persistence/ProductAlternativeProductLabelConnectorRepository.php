@@ -19,7 +19,7 @@ class ProductAlternativeProductLabelConnectorRepository extends AbstractReposito
     /**
      * @param string $labelName
      *
-     * @return null|SpyProductLabel
+     * @return null|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel
      */
     public function findProductLabelByName(string $labelName): ?SpyProductLabel
     {

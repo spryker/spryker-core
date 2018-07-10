@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business;
 interface ProductDiscontinuedProductLabelConnectorFacadeInterface
 {
     /**
+     * Specification:
+     *  - Installs label for discontinued products.
+     *
      * @api
      *
      * @return void
@@ -17,6 +20,9 @@ interface ProductDiscontinuedProductLabelConnectorFacadeInterface
     public function installProductDiscontinuedProductLabelConnector(): void;
 
     /**
+     * Specification:
+     *  - Adds or removes label "Discontinued" if applicable.
+     *
      * @api
      *
      * @param int $idProduct
@@ -26,6 +32,9 @@ interface ProductDiscontinuedProductLabelConnectorFacadeInterface
     public function updateAbstractProductWithDiscontinuedLabel(int $idProduct): void;
 
     /**
+     * Specification:
+     *  - Removes label "Discontinued" if applicable.
+     *
      * @api
      *
      * @param int $idProduct
@@ -35,7 +44,13 @@ interface ProductDiscontinuedProductLabelConnectorFacadeInterface
     public function removeProductAbstractRelationsForLabel(int $idProduct): void;
 
     /**
-     * @return array|\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     * Specification:
+     * - Returns a list of Product Label - Product Abstract relation to assign and deassign.
+     * - The relation changes are based on discontinuation of product.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
      */
     public function findProductLabelProductAbstractRelationChanges(): array;
 }

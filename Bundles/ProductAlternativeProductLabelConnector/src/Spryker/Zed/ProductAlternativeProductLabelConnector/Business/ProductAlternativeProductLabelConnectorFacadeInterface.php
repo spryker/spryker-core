@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Business;
 interface ProductAlternativeProductLabelConnectorFacadeInterface
 {
     /**
+     * Specification:
+     *  - Installs label for alternative products.
+     *
      * @api
      *
      * @return void
@@ -17,13 +20,9 @@ interface ProductAlternativeProductLabelConnectorFacadeInterface
     public function installProductAlternativeProductLabelConnector(): void;
 
     /**
-     * @api
+     * Specification:
+     *  - Adds or removes label "Alternatives available" if applicable.
      *
-     * @return array
-     */
-    public function findAllLabels(): array;
-
-    /**
      * @api
      *
      * @param int $idProduct
@@ -33,6 +32,9 @@ interface ProductAlternativeProductLabelConnectorFacadeInterface
     public function updateAbstractProductWithAlternativesAvailableLabel(int $idProduct): void;
 
     /**
+     * Specification:
+     *  - Removes label "Alternatives available" if applicable.
+     *
      * @api
      *
      * @param int $idProduct
@@ -42,7 +44,13 @@ interface ProductAlternativeProductLabelConnectorFacadeInterface
     public function removeProductAbstractRelationsForLabel(int $idProduct): void;
 
     /**
-     * @return array|\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     * Specification:
+     * - Returns a list of Product Label - Product Abstract relation to assign and deassign.
+     * - The relation changes are based on presence of alternatives.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
      */
     public function findProductLabelProductAbstractRelationChanges(): array;
 }

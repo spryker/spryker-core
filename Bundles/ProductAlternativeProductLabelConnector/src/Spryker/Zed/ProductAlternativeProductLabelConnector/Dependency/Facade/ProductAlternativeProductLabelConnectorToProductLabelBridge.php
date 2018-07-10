@@ -30,14 +30,6 @@ class ProductAlternativeProductLabelConnectorToProductLabelBridge implements Pro
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
-     */
-    public function findAllLabels(): array
-    {
-        return $this->productLabelFacade->findAllLabels();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
      * @return void

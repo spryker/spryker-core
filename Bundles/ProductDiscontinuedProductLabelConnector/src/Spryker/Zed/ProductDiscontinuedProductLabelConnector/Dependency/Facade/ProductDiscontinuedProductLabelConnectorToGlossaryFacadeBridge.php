@@ -32,7 +32,7 @@ class ProductDiscontinuedProductLabelConnectorToGlossaryFacadeBridge implements 
      *
      * @return string
      */
-    public function translate(string $keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string
+    public function translate(string $keyName, array $data = [], ?LocaleTransfer $localeTransfer = null)
     {
         return $this->glossaryFacade->translate($keyName, $data, $localeTransfer);
     }
@@ -42,7 +42,7 @@ class ProductDiscontinuedProductLabelConnectorToGlossaryFacadeBridge implements 
      *
      * @return void
      */
-    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer): void
+    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer)
     {
         $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
     }

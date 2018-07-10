@@ -14,7 +14,7 @@ interface ProductAlternativeProductLabelConnectorRepositoryInterface
     /**
      * @param string $labelName
      *
-     * @return null|SpyProductLabel
+     * @return null|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel
      */
     public function findProductLabelByName(string $labelName): ?SpyProductLabel;
 
@@ -23,4 +23,3 @@ interface ProductAlternativeProductLabelConnectorRepositoryInterface
      */
     public function getProductConcreteIds(): array;
 }
-

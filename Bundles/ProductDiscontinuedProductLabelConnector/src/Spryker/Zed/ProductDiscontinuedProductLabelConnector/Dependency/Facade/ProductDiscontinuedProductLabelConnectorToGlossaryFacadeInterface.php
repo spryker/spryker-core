@@ -19,12 +19,12 @@ interface ProductDiscontinuedProductLabelConnectorToGlossaryFacadeInterface
      *
      * @return string
      */
-    public function translate(string $keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string;
+    public function translate(string $keyName, array $data = [], ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param \Generated\Shared\Transfer\KeyTranslationTransfer $keyTranslationTransfer
      *
      * @return void
      */
-    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer): void;
+    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer);
 }

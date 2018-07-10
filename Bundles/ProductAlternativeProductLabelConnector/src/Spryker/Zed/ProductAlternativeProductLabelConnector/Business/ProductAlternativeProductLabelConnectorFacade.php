@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductAlternativeProductLabelConnectorFacade extends AbstractFacade implements ProductAlternativeProductLabelConnectorFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -31,18 +33,6 @@ class ProductAlternativeProductLabelConnectorFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @return array
-     */
-    public function findAllLabels(): array
-    {
-        return $this->getFactory()
-            ->getProductLabelFacade()
-            ->findAllLabels();
-    }
-
-    /**
-     * @api
-     *
      * @param int $idProduct
      *
      * @return void
@@ -57,6 +47,8 @@ class ProductAlternativeProductLabelConnectorFacade extends AbstractFacade imple
     /**
      * @api
      *
+     * {@inheritdoc}
+     *
      * @param int $idProduct
      *
      * @return void
@@ -69,7 +61,9 @@ class ProductAlternativeProductLabelConnectorFacade extends AbstractFacade imple
     }
 
     /**
-     * @return array|\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
      */
     public function findProductLabelProductAbstractRelationChanges(): array
     {

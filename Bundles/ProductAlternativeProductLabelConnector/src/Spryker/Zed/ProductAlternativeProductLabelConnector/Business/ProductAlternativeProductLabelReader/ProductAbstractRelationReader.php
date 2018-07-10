@@ -55,8 +55,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface $productAlternativeFacade,
         ProductAlternativeProductLabelConnectorRepositoryInterface $productAlternativeProductLabelConnectorRepository,
         ProductAlternativeProductLabelConnectorConfig $config
-    )
-    {
+    ) {
         $this->productFacade = $productFacade;
         $this->productLabelFacade = $productLabelFacade;
         $this->productAlternativeFacade = $productAlternativeFacade;
@@ -135,8 +134,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         int $idProductLabel,
         array $idToAssign,
         array $idsToDeAssign
-    ): ProductLabelProductAbstractRelationsTransfer
-    {
+    ): ProductLabelProductAbstractRelationsTransfer {
         $productLabelProductAbstractRelationsTransfer = new ProductLabelProductAbstractRelationsTransfer();
         $productLabelProductAbstractRelationsTransfer->setIdProductLabel($idProductLabel);
 
