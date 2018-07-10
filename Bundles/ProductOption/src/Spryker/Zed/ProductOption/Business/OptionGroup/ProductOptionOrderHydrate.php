@@ -112,7 +112,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
         $productOptionsTransfer->setSumTaxAmount($orderItemOptionEntity->getTaxAmount());
         $productOptionsTransfer->fromArray($orderItemOptionEntity->toArray(), true);
 
-        $productOptionsTransfer->setIsPersistentSumPrice(true);
+        $productOptionsTransfer->setIsOrdered(true);
 
         $this->deriveUnitPrices($productOptionsTransfer);
 

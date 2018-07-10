@@ -17,7 +17,7 @@
         <property name="refundableAmount" type="int"/>
         <property name="unitTaxAmount" type="int" />
         <property name="sumTaxAmount" type="int" />
-        <property name="isPersistentSumPrice" type="bool" />
+        <property name="isOrdered" type="bool" />
     </transfer>
 
     <transfer name="Item">

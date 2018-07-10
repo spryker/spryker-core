@@ -229,7 +229,7 @@ class OrderHydrator implements OrderHydratorInterface
         $itemTransfer->setSumTaxAmountFullAggregation($orderItemEntity->getTaxAmountFullAggregation());
         $itemTransfer->setSumPriceToPayAggregation($orderItemEntity->getPriceToPayAggregation());
 
-        $itemTransfer->setIsPersistentSumPrice(true);
+        $itemTransfer->setIsOrdered(true);
 
         $this->deriveOrderItemTransferUnitPrices($itemTransfer);
 
@@ -328,7 +328,7 @@ class OrderHydrator implements OrderHydratorInterface
             $expenseTransfer->setSumPriceToPayAggregation($expenseEntity->getPriceToPayAggregation());
             $expenseTransfer->setSumTaxAmount($expenseEntity->getTaxAmount());
 
-            $expenseTransfer->setIsPersistentSumPrice(true);
+            $expenseTransfer->setIsOrdered(true);
 
             $this->deriveExpenseTransferUnitPrices($expenseTransfer);
 

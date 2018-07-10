@@ -36,7 +36,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
     protected function calculateSumGrossPriceForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
-            if ($expenseTransfer->getIsPersistentSumPrice() === true) {
+            if ($expenseTransfer->getIsOrdered() === true) {
                 continue;
             }
 
@@ -53,7 +53,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
     {
         $this->assertItemRequirements($itemTransfer);
 
-        if ($itemTransfer->getIsPersistentSumPrice() === true) {
+        if ($itemTransfer->getIsOrdered() === true) {
             return;
         }
 
@@ -92,7 +92,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 $this->assertProductOptionPriceCalculationRequirements($productOptionTransfer);
 
-                if ($productOptionTransfer->getIsPersistentSumPrice() === true) {
+                if ($productOptionTransfer->getIsOrdered() === true) {
                     continue;
                 }
 
