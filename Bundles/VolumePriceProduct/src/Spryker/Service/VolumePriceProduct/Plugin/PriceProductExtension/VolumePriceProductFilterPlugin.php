@@ -13,9 +13,6 @@ use Spryker\Service\Kernel\AbstractPlugin;
 use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 
-/**
- * @method \Spryker\Service\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig getConfig()
- */
 class VolumePriceProductFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface
 {
     /**
@@ -30,7 +27,7 @@ class VolumePriceProductFilterPlugin extends AbstractPlugin implements PriceProd
     public function filter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
         if ((int)$priceProductFilterTransfer->getQuantity() <= 1) {
-            array_filter($priceProductTransfers, [$this, 'isNotVolumePrice']);
+            $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'isNotVolumePrice']);
 
             return $priceProductTransfers;
         }
@@ -39,23 +36,24 @@ class VolumePriceProductFilterPlugin extends AbstractPlugin implements PriceProd
         $minPriceProductTransfer = null;
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
-
             if (!$priceProductTransfer->getQuantityToApply()) {
                 continue;
             }
 
-            if ($priceProductFilterTransfer->getQuantity() >= $priceProductTransfer->getQuantityToApply()) {
+            if ($priceProductTransfer->getQuantityToApply() <= $priceProductFilterTransfer->getQuantity()) {
                 if ($minPriceProductTransfer == null) {
                     $minPriceProductTransfer = $priceProductTransfer;
 
                     continue;
                 }
 
-                $minPriceProductTransfer = $this->getMinPrice($minPriceProductTransfer, $priceProductTransfer);
+                $minPriceProductTransfer = $this->choosePrice($minPriceProductTransfer, $priceProductTransfer);
             }
         }
 
         if ($minPriceProductTransfer == null) {
+            $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'isNotVolumePrice']);
+
             return $priceProductTransfers;
         }
 
@@ -75,22 +73,27 @@ class VolumePriceProductFilterPlugin extends AbstractPlugin implements PriceProd
     }
 
     /**
-     * @param PriceProductTransfer $minPrice
-     * @param PriceProductTransfer $priceToCompare
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $minPrice
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceToCompare
      *
-     * @return PriceProductTransfer
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function getMinPrice(PriceProductTransfer $minPrice, PriceProductTransfer $priceToCompare): PriceProductTransfer
+    protected function choosePrice(PriceProductTransfer $minPrice, PriceProductTransfer $priceToCompare): PriceProductTransfer
     {
-        if ($minPrice->getQuantityToApply() < $priceToCompare->getQuantityToApply()) {
+        if ($minPrice->getQuantityToApply() > $priceToCompare->getQuantityToApply()) {
             return $minPrice;
         }
 
         return $priceToCompare;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
     protected function isNotVolumePrice(PriceProductTransfer $priceProductTransfer): bool
     {
-        return ((int)$priceProductTransfer->getQuantityToApply() > 0);
+        return $priceProductTransfer->getQuantityToApply() === null;
     }
 }

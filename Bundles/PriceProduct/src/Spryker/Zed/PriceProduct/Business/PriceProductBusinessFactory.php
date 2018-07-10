@@ -38,12 +38,13 @@ use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInt
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpander;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpanderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper\PriceProductMapperPluginExecutor;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper\PriceProductMapperPluginExecutorInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Reader;
 use Spryker\Zed\PriceProduct\Business\Model\ReaderInterface;
-
 use Spryker\Zed\PriceProduct\Business\Model\Writer;
 use Spryker\Zed\PriceProduct\Business\Model\WriterInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
@@ -53,9 +54,6 @@ use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterfac
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
-use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper\PriceProductMapperPluginExecutor;
-use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper\PriceProductMapperPluginExecutorInterface;
-use Spryker\Zed\VolumePriceProduct\Plugin\PriceProductExtension\VolumePriceProductExtractorPlugin;
 
 /**
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()

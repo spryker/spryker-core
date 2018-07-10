@@ -17,9 +17,9 @@ interface PriceProductMapperPricesExtractorPluginInterface
      *
      * @api
      *
-     * @param PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function extractProductPrices(
         PriceProductTransfer $priceProductTransfer

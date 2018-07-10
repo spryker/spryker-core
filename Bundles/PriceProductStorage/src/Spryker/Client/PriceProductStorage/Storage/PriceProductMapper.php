@@ -21,6 +21,19 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected const INDEX_SEPARATOR = '-';
 
     /**
+     * @var \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductMapperPricesExtractorPluginInterface[]
+     */
+    protected $priceProductExtractorPlugins;
+
+    /**
+     * @param \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductMapperPricesExtractorPluginInterface[] $priceProductExtractorPlugins
+     */
+    public function __construct(array $priceProductExtractorPlugins)
+    {
+        $this->priceProductExtractorPlugins = $priceProductExtractorPlugins;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
@@ -29,12 +42,11 @@ class PriceProductMapper implements PriceProductMapperInterface
     {
         $extractedPrices = [];
         $priceProductTransfers = [];
+        $priceProductTransfer = null;
 
         foreach ($priceProductStorageTransfer->getPrices() as $currencyCode => $prices) {
             foreach ($prices as $priceMode => $priceTypes) {
                 if ($priceMode === PriceProductConstants::PRICE_DATA) {
-                    $extractedPrices = array_merge($extractedPrices, $this->extractPricesFromPriceData($currencyCode, $prices[PriceProductConstants::PRICE_DATA]));
-
                     continue;
                 }
 
@@ -52,6 +64,10 @@ class PriceProductMapper implements PriceProductMapperInterface
                     $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductConstants::PRICE_DATA]);
                 }
             }
+            $extractedPrices = array_merge(
+                $extractedPrices,
+                $this->applyPriceProductExtractorPlugins($priceProductTransfer)
+            );
         }
 
         return array_merge(array_values($priceProductTransfers), $extractedPrices);
@@ -87,32 +103,26 @@ class PriceProductMapper implements PriceProductMapperInterface
         return $priceProductTransfers[$index];
     }
 
-    protected function extractPricesFromPriceData(string $currencyCode, ?string $priceData)
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer|null $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function applyPriceProductExtractorPlugins(?PriceProductTransfer $priceProductTransfer = null): array
     {
-        if ($priceData == null) {
+        if (!$priceProductTransfer) {
             return [];
         }
 
-        //todo: move to plugin stack
-        $result = [];
-        $priceData = json_decode($priceData, true);
-        foreach ($priceData['volume_prices'] as $volumePrice) {
-            $volumePriceTransfer = new PriceProductTransfer();
-            $volumePriceTransfer->setPriceDimension(
-                (new PriceProductDimensionTransfer())
-                    ->setType(PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT)
-            );
-            $volumePriceTransfer->setMoneyValue((new MoneyValueTransfer())
-                ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
-                ->setGrossAmount($volumePrice['gross_price'])
-                ->setNetAmount($volumePrice['net_price'])
-            );
-            $volumePriceTransfer->setQuantityToApply($volumePrice['quantity']);
-            $volumePriceTransfer->setPriceTypeName('volume_prices');
+        $priceProducts = [];
 
-            $result[] = $volumePriceTransfer;
+        foreach ($this->priceProductExtractorPlugins as $extractorPlugin) {
+            $priceProducts = array_merge(
+                $priceProducts,
+                $extractorPlugin->extractProductPrices($priceProductTransfer)
+            );
         }
 
-        return $result;
+        return $priceProducts;
     }
 }

@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper;
+namespace Spryker\Zed\VolumePriceProduct\Business\VolumePriceExtractor;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 
-interface PriceProductMapperPluginExecutorInterface
+interface VolumePriceExtractorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function executePriceExtractorPlugins(PriceProductTransfer $priceProductTransfer): array;
+    public function extractVolumePriceProducts(PriceProductTransfer $priceProductTransfer): array;
 }
