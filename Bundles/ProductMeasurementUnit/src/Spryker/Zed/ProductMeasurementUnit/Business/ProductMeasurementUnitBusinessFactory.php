@@ -12,8 +12,8 @@ use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnit
 use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstallerInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpander;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpanderInterface;
-use Spryker\Zed\ProductMeasurementUnit\Business\Model\Hydrator\QuantitySalesUnitOrderHydrator;
-use Spryker\Zed\ProductMeasurementUnit\Business\Model\Hydrator\QuantitySalesUnitOrderHydratorInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderExpander;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitGroupKeyGenerator;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitGroupKeyGeneratorInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitReader;
@@ -98,11 +98,11 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\Hydrator\QuantitySalesUnitOrderHydratorInterface
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderExpanderInterface
      */
-    public function createQuantitySalesUnitOrderHydrator(): QuantitySalesUnitOrderHydratorInterface
+    public function createOrderExpander(): OrderExpanderInterface
     {
-        return new QuantitySalesUnitOrderHydrator(
+        return new OrderExpander(
             $this->getSalesQueryContainer()
         );
     }

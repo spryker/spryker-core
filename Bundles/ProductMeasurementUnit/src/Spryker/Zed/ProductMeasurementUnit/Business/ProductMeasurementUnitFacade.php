@@ -153,10 +153,10 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateOrderWithQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer
+    public function expandOrderWithQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer
     {
         return $this->getFactory()
-            ->createQuantitySalesUnitOrderHydrator()
-            ->hydrateOrderWithQuantitySalesUnit($orderTransfer);
+            ->createOrderExpander()
+            ->expandOrderWithQuantitySalesUnit($orderTransfer);
     }
 }

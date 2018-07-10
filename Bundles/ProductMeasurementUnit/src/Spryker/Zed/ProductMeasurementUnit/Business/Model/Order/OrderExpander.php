@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\Hydrator;
+namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\Order;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\QueryContainer\ProductMeasurementUnitToSalesQueryContainerInterface;
 
-class QuantitySalesUnitOrderHydrator implements QuantitySalesUnitOrderHydratorInterface
+class OrderExpander implements OrderExpanderInterface
 {
     /**
      * @var \Spryker\Zed\ProductMeasurementUnit\Dependency\QueryContainer\ProductMeasurementUnitToSalesQueryContainerInterface
@@ -35,13 +35,13 @@ class QuantitySalesUnitOrderHydrator implements QuantitySalesUnitOrderHydratorIn
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateOrderWithQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer
+    public function expandOrderWithQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer
     {
         $salesOrderQuery = $this->salesQueryContainer->querySalesOrderItemsByIdSalesOrder($orderTransfer->getIdSalesOrder());
         $salesOrderItemEntities = $salesOrderQuery->find();
 
         foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
-            $itemTransfer = $this->findItemTransferQuantitySalesUnitsBelongTo(
+            $itemTransfer = $this->findItemTransferByIdSalesOrderItem(
                 $orderTransfer,
                 $salesOrderItemEntity->getIdSalesOrderItem()
             );
@@ -111,7 +111,7 @@ class QuantitySalesUnitOrderHydrator implements QuantitySalesUnitOrderHydratorIn
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    protected function findItemTransferQuantitySalesUnitsBelongTo(OrderTransfer $orderTransfer, int $idSalesOrderItem): ?ItemTransfer
+    protected function findItemTransferByIdSalesOrderItem(OrderTransfer $orderTransfer, int $idSalesOrderItem): ?ItemTransfer
     {
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getIdSalesOrderItem() === $idSalesOrderItem) {

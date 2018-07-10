@@ -113,7 +113,7 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
-     * - Hydrates order transfer with additional packaging unit quantity fields from sales_order_item table.
+     * - Expands order transfer items with quantity sales unit if applicable.
      *
      * @api
      *
@@ -121,5 +121,5 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateOrderWithQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
+    public function expandOrderWithQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
 }
