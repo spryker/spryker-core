@@ -11,13 +11,11 @@
         <property name="result" type="string"/>
     </transfer>
 
-    <transfer name="RestSuggestionsRequestAttributesTransfer">
-        <property name="query" type="string"/>
-    </transfer>
-
-    <transfer name="RestSuggestionsResponseAttributesTransfer">
-        <property name="completion" type="array"/>
-        <property name="suggestionByType" type="array"/>
+    <transfer name="RestSearchSuggestionsAttributesTransfer">
+        <property name="completion" type="string[]"/>
+        <property name="products" type="array"/>
+        <property name="categories" type="array"/>
+        <property name="cmsPages" type="array"/>
     </transfer>
 
 </transfers>
