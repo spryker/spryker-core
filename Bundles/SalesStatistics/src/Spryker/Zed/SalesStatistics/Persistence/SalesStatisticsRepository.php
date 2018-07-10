@@ -37,7 +37,7 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
         $result = $this->getFactory()->createSalesOrderQuery()
             ->select([static::DATE, static::DATE])
             ->withColumn('COUNT(' . SpySalesOrderTableMap::COL_ID_SALES_ORDER . ')', static::COUNT)
-            ->withColumn('TO_CHAR(' . SpySalesOrderTableMap::COL_CREATED_AT . ', \'yyyy-mm-dd\')', static::DATE)
+            ->withColumn('DATE(' . SpySalesOrderTableMap::COL_CREATED_AT . ')', static::DATE)
             ->where(sprintf("%s>='%s'", SpySalesOrderTableMap::COL_CREATED_AT, $dateInterval))
             ->groupBy(static::DATE)
             ->find()->toArray();
