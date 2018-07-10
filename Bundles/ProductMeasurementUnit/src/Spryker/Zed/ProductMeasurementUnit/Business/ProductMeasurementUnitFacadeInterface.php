@@ -78,7 +78,7 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves product measurement sales unit transfer by the provided id of Product Measurement Sales Unit.
+     * - Retrieves product measurement sales unit transfer by the provided id of product measurement sales unit.
      *
      * @api
      *

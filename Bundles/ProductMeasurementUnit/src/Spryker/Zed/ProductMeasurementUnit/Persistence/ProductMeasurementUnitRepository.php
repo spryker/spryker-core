@@ -26,7 +26,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     protected const COL_CODE = 'code';
 
     /**
-     * @uses SpyStoreQuery
+     * @module Store
      *
      * @param int $idProductMeasurementSalesUnit
      *
@@ -64,7 +64,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @uses SpyStoreQuery
+     * @module Store
      *
      * @param int $idProduct
      *
