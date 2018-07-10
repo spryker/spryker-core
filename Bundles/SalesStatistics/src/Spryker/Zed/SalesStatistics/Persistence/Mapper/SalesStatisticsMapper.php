@@ -43,7 +43,7 @@ class SalesStatisticsMapper implements SalesStatisticsMapperInterface
         if ($statistic) {
             foreach ($statistic as $statisticItem) {
                 $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::STATUS_NAME]);
-                $chartDataTraceTransfer->addValue((float)$statisticItem[SalesStatisticsRepository::TOTAL] / static::DECIMAL);
+                $chartDataTraceTransfer->addValue($statisticItem[SalesStatisticsRepository::TOTAL] / static::DECIMAL);
             }
         }
 
