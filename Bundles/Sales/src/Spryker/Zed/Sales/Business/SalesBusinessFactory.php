@@ -179,7 +179,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderItemTransformer(): OrderItemTransformerInterface
     {
-        return new OrderItemTransformer();
+        return new OrderItemTransformer($this->getCalculationFacade());
     }
 
     /**

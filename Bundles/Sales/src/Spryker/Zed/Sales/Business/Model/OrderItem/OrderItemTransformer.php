@@ -11,9 +11,23 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface;
 
 class OrderItemTransformer implements OrderItemTransformerInterface
 {
+    /**
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface
+     */
+    protected $calculationFacade;
+
+    /**
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface $calculationFacade
+     */
+    public function __construct(SalesToCalculationInterface $calculationFacade)
+    {
+        $this->calculationFacade = $calculationFacade;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
@@ -29,8 +43,6 @@ class OrderItemTransformer implements OrderItemTransformerInterface
             $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
             $transformedItemTransfer->setQuantity(1);
 
-            $transformedItemTransfer = $this->resetSumPrices($transformedItemTransfer);
-
             $transformedProductOptions = new ArrayObject();
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 $transformedProductOptions->append($this->copyProductOptionTransfer($productOptionTransfer));
@@ -40,35 +52,9 @@ class OrderItemTransformer implements OrderItemTransformerInterface
             $transformedItemsCollection->addItem($transformedItemTransfer);
         }
 
+        $transformedItemsCollection = $this->calculationFacade->removeItemTransferSumPrices($transformedItemsCollection);
+
         return $transformedItemsCollection;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function resetSumPrices(ItemTransfer $itemTransfer): ItemTransfer
-    {
-        // TODO: we need a ItemTransferCleaner: too complex
-        $itemTransfer
-            ->setSumDiscountAmountAggregation(null)
-            ->setSumDiscountAmountFullAggregation(null)
-            ->setSumNetPrice(null)
-            ->setSumGrossPrice(null)
-            ->setSumPrice(null)
-            ->setSumPriceToPayAggregation(null)
-            ->setSumExpensePriceAggregation(null)
-            ->setSumProductOptionPriceAggregation(null)
-            ->setSumSubtotalAggregation(null)
-            ->setSumTaxAmountFullAggregation(null);
-
-        // feature check
-        if (defined($itemTransfer::SUM_TAX_AMOUNT)) {
-            $itemTransfer->setSumTaxAmount(null);
-        }
-
-        return $itemTransfer;
     }
 
     /**
@@ -83,11 +69,6 @@ class OrderItemTransformer implements OrderItemTransformerInterface
 
         $transformedProductOptionTransfer
             ->setQuantity(1)
-            ->setSumPrice($transformedProductOptionTransfer->getUnitPrice())
-            ->setSumGrossPrice($transformedProductOptionTransfer->getUnitGrossPrice())
-            ->setSumNetPrice($transformedProductOptionTransfer->getUnitNetPrice())
-            ->setSumDiscountAmountAggregation($transformedProductOptionTransfer->getUnitDiscountAmountAggregation())
-            ->setSumTaxAmount($transformedProductOptionTransfer->getUnitTaxAmount())
             ->setIdProductOptionValue(null);
 
         return $transformedProductOptionTransfer;

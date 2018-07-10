@@ -36,6 +36,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\CheckoutGrandTotalPreCondition;
 use Spryker\Zed\Calculation\Business\Model\Executor\OrderCalculatorExecutor;
 use Spryker\Zed\Calculation\Business\Model\Executor\QuoteCalculatorExecutor;
+use Spryker\Zed\Calculation\Business\Model\Item\ItemSanitizer;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -333,5 +334,13 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     public function getUtilTextService()
     {
         return $this->getProvidedDependency(CalculationDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Calculation\Business\Model\Item\ItemSanitizerInterface
+     */
+    public function createItemSanitizer()
+    {
+        return new ItemSanitizer();
     }
 }
