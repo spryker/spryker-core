@@ -8,7 +8,7 @@
 namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
-use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
@@ -40,9 +40,9 @@ class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin imple
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyAvailabilityAbstractQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryAvailabilityAbstractWithRelationsByIds($ids);
 

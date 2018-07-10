@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
@@ -40,9 +40,9 @@ class CategoryNodeEventResourceQueryContainerPlugin extends AbstractPlugin imple
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyCategoryNodeQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryCategoryNodeByIds($ids);
 

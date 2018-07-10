@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event;
 
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetTableMap;
-use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductSetPageSearch\ProductSetPageSearchConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -40,9 +40,9 @@ class ProductSetEventResourceQueryContainerPlugin extends AbstractPlugin impleme
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyProductSetQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryProductSetByIds($ids);
 

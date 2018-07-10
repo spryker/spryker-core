@@ -8,11 +8,11 @@
 namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
-use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
@@ -40,9 +40,9 @@ class ProductAbstractLabelEventResourceQueryContainerPlugin extends AbstractPlug
      *
      * @param int[] $ids
      *
-     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyProductLabelProductAbstractQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryProductLabelProductAbstractByIds($ids);
 

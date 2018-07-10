@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductCategoryStorage\ProductCategoryStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -40,9 +40,9 @@ class ProductCategoryEventResourceQueryContainerPlugin extends AbstractPlugin im
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyProductCategoryQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryProductCategoryByIds($ids);
 

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\NavigationStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationTableMap;
-use Orm\Zed\Navigation\Persistence\SpyNavigationQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\NavigationStorage\NavigationStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -40,9 +40,9 @@ class NavigationEventResourceQueryContainerPlugin extends AbstractPlugin impleme
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyNavigationQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryNavigation($ids);
 

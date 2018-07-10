@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductGroupStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductGroup\Persistence\Map\SpyProductAbstractGroupTableMap;
-use Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductGroupStorage\ProductGroupStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -40,9 +40,9 @@ class ProductGroupEventResourceQueryContainerPlugin extends AbstractPlugin imple
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyProductAbstractGroupQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryProductAbstractGroupByGroupIds($ids);
 

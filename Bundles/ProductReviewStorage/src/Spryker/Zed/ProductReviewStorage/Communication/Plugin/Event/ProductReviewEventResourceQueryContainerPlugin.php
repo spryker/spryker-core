@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductReviewStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
-use Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductReviewStorage\ProductReviewStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -40,9 +40,9 @@ class ProductReviewEventResourceQueryContainerPlugin extends AbstractPlugin impl
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyProductReviewQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryProductReviewsByIds($ids);
 

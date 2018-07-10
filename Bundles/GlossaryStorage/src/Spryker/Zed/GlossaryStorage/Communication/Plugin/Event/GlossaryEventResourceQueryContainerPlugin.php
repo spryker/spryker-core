@@ -8,7 +8,7 @@
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
@@ -40,9 +40,9 @@ class GlossaryEventResourceQueryContainerPlugin extends AbstractPlugin implement
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyGlossaryKeyQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryGlossaryKeysByIds($ids);
 

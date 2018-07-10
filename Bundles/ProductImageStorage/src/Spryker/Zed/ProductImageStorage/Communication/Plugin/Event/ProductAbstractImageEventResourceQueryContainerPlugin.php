@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetToProductImageTableMap;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -40,9 +40,9 @@ class ProductAbstractImageEventResourceQueryContainerPlugin extends AbstractPlug
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyProductImageSetToProductImageQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryProductImageSetToProductImageByIds($ids);
 

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event;
 
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
-use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\CmsBlockStorage\CmsBlockStorageConstants;
 use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
@@ -40,9 +40,9 @@ class CmsBlockEventResourceQueryContainerPlugin extends AbstractPlugin implement
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyCmsBlockQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryCmsBlockByIds($ids);
 

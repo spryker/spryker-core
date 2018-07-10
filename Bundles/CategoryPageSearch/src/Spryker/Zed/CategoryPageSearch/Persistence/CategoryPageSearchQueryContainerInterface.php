@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Persistence;
 
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterface

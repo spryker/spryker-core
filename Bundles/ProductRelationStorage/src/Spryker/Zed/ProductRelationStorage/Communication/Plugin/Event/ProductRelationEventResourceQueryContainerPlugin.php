@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductRelationStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
-use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -40,9 +40,9 @@ class ProductRelationEventResourceQueryContainerPlugin extends AbstractPlugin im
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyProductRelationQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryProductRelationsByIds($ids);
 

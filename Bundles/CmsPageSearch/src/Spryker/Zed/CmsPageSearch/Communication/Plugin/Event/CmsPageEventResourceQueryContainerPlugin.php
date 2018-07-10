@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsPageSearch\Communication\Plugin\Event;
 
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
-use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\CmsPageSearch\CmsPageSearchConstants;
 use Spryker\Zed\Cms\Dependency\CmsEvents;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
@@ -40,9 +40,9 @@ class CmsPageEventResourceQueryContainerPlugin extends AbstractPlugin implements
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyCmsPageQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryCmsPageVersionByIds($ids);
 

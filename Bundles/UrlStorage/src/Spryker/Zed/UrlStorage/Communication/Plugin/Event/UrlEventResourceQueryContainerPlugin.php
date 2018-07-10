@@ -8,7 +8,7 @@
 namespace Spryker\Zed\UrlStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -40,9 +40,9 @@ class UrlEventResourceQueryContainerPlugin extends AbstractPlugin implements Eve
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyUrlQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryUrls($ids);
 

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\PriceProductStorage\Communication\Plugin\Event;
 
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -40,9 +40,9 @@ class PriceProductAbstractEventResourceQueryContainerPlugin extends AbstractPlug
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyPriceProductQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryAllProductAbstractIdsByPriceProductIds($ids);
 

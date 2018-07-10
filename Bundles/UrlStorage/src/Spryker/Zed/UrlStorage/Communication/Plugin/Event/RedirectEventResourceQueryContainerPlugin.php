@@ -8,7 +8,7 @@
 namespace Spryker\Zed\UrlStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Url\Persistence\Map\SpyUrlRedirectTableMap;
-use Orm\Zed\Url\Persistence\SpyUrlRedirectQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -40,9 +40,9 @@ class RedirectEventResourceQueryContainerPlugin extends AbstractPlugin implement
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = []): SpyUrlRedirectQuery
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryRedirects($ids);
 
