@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodPriceTableMap;
 use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -200,8 +199,8 @@ class MethodTable extends AbstractTable
     protected function getResult($method, $idShipmentMethod)
     {
         $methodPriceCollection = $method->getShipmentMethodPrices();
-        $grossMoneyTransferCollectionsGrouped = $this->getGrossPricesGroupedData(...$methodPriceCollection->getArrayCopy());
-        $netMoneyTransferCollectionsGrouped = $this->getNetPricesGroupedData(...$methodPriceCollection->getArrayCopy());
+        $grossMoneyTransferCollectionsGrouped = $this->getGrossPricesGroupedData($methodPriceCollection->getArrayCopy());
+        $netMoneyTransferCollectionsGrouped = $this->getNetPricesGroupedData($methodPriceCollection->getArrayCopy());
 
         return [
             SpyShipmentMethodTableMap::COL_IS_ACTIVE => '<span class="label '
@@ -254,51 +253,52 @@ class MethodTable extends AbstractTable
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice[] $methodPriceEntities
      *
-     * @return array of \Generated\Shared\Transfer\MoneyTransfer[]
+     * @return \Generated\Shared\Transfer\MoneyTransfer[][]
      */
-    protected function getGrossPricesGroupedData(SpyShipmentMethodPrice ...$methodPriceEntities): array
+    protected function getGrossPricesGroupedData(array $methodPriceEntities): array
     {
         $result = [];
         foreach ($methodPriceEntities as $key => $methodPriceEntity) {
-            $amount = $methodPriceEntity->getDefaultGrossPrice();
-            if (!empty($amount)) {
-                $result[$methodPriceEntity->getFkStore()][] = (new MoneyTransfer())
-                    ->setAmount($amount)
-                    ->setCurrency((new CurrencyTransfer())->fromArray($methodPriceEntity->getCurrency()->toArray(), true));
+            if (!$methodPriceEntity->getDefaultGrossPrice()) {
+                continue;
             }
+            $result[$methodPriceEntity->getFkStore()][] = (new MoneyTransfer())
+                ->setAmount($methodPriceEntity->getDefaultGrossPrice())
+                ->setCurrency((new CurrencyTransfer())->fromArray($methodPriceEntity->getCurrency()->toArray(), true));
         }
+
         return $result;
     }
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice[] $methodPriceEntities
      *
-     * @return array of \Generated\Shared\Transfer\MoneyTransfer[]
+     * @return array of \Generated\Shared\Transfer\MoneyTransfer[][]
      */
-    protected function getNetPricesGroupedData(SpyShipmentMethodPrice ...$methodPriceEntities): array
+    protected function getNetPricesGroupedData(array $methodPriceEntities): array
     {
         $result = [];
         foreach ($methodPriceEntities as $key => $methodPriceEntity) {
-            $amount = $methodPriceEntity->getDefaultNetPrice();
-            if (!empty($amount)) {
-                $result[$methodPriceEntity->getFkStore()][] = (new MoneyTransfer())
-                    ->setAmount($amount)
-                    ->setCurrency((new CurrencyTransfer())->fromArray($methodPriceEntity->getCurrency()->toArray(), true));
+            if (!$methodPriceEntity->getDefaultNetPrice()) {
+                continue;
             }
+            $result[$methodPriceEntity->getFkStore()][] = (new MoneyTransfer())
+                ->setAmount($methodPriceEntity->getDefaultNetPrice())
+                ->setCurrency((new CurrencyTransfer())->fromArray($methodPriceEntity->getCurrency()->toArray(), true));
         }
+
         return $result;
     }
 
     /**
-     * @param array of \Generated\Shared\Transfer\MoneyTransfer[] $groupedMoneyTransferCollections
+     * @param \Generated\Shared\Transfer\MoneyTransfer[][] $groupedMoneyTransferCollections
      *
      * @return string
      */
     protected function getPricesFromGrouped(array $groupedMoneyTransferCollections): string
     {
         $result = '';
-        $allStores = $this->storeFacade->getAllStores();
-        foreach ($allStores as $storeTransfer) {
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
             $result .= sprintf(
                 static::STORE_TAG,
                 $storeTransfer->getName(),
