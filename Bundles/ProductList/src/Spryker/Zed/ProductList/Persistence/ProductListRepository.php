@@ -92,16 +92,10 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      */
     public function getConcreteProductBlacklistIds(int $idProductConcrete): array
     {
-        return $this->getFactory()
-            ->createProductListProductConcreteQuery()
-            ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST)
-            ->filterByFkProduct($idProductConcrete)
-            ->useSpyProductListQuery(null, Criteria::LEFT_JOIN)
-                ->filterByType(SpyProductListTableMap::COL_TYPE_BLACKLIST)
-            ->endUse()
-            ->groupByFkProductList()
-            ->find()
-            ->toArray();
+        return $this->getConcreteProductWhiteOrBlacklistIds(
+            $idProductConcrete,
+            SpyProductListTableMap::COL_TYPE_BLACKLIST
+        );
     }
 
     /**
@@ -111,12 +105,26 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      */
     public function getConcreteProductWhitelistIds(int $idProductConcrete): array
     {
+        return $this->getConcreteProductWhiteOrBlacklistIds(
+            $idProductConcrete,
+            SpyProductListTableMap::COL_TYPE_WHITELIST
+        );
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param string $listType
+     *
+     * @return int[]
+     */
+    protected function getConcreteProductWhiteOrBlacklistIds(int $idProductConcrete, string $listType): array
+    {
         return $this->getFactory()
             ->createProductListProductConcreteQuery()
             ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST)
             ->filterByFkProduct($idProductConcrete)
             ->useSpyProductListQuery(null, Criteria::LEFT_JOIN)
-                ->filterByType(SpyProductListTableMap::COL_TYPE_WHITELIST)
+                ->filterByType($listType)
             ->endUse()
             ->groupByFkProductList()
             ->find()
