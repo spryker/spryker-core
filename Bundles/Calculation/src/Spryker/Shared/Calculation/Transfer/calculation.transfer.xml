@@ -108,10 +108,6 @@
 
     </transfer>
 
-    <transfer name="ItemCollection">
-        <property name="items" type="Item[]" singular="item" />
-    </transfer>
-
     <transfer name="ProductOption">
         <property name="unitGrossPrice" type="int" />
         <property name="sumGrossPrice" type="int" />

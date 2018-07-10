@@ -9,7 +9,6 @@ namespace Spryker\Zed\Calculation\Business;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -421,21 +420,5 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
         $this->getFactory()
             ->createNetTotalCalculator()
             ->recalculate($calculableObjectTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ItemCollectionTransfer $items
-     *
-     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
-     */
-    public function removeItemTransferSumPrices(ItemCollectionTransfer $items)
-    {
-        return $this->getFactory()
-            ->createItemSanitizer()
-            ->removeSumPrices($items);
     }
 }

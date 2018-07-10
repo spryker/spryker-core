@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
-use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
 interface SalesToCalculationInterface
@@ -18,11 +17,4 @@ interface SalesToCalculationInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function recalculateOrder(OrderTransfer $orderTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemCollectionTransfer $items
-     *
-     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
-     */
-    public function removeItemTransferSumPrices(ItemCollectionTransfer $items);
 }

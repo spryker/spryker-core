@@ -7,7 +7,6 @@ namespace Spryker\Zed\Calculation\Business;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -330,17 +329,4 @@ interface CalculationFacadeInterface
      * @return void
      */
     public function calculateDiscountAmountAggregationForGenericAmount(CalculableObjectTransfer $calculableObjectTransfer);
-
-    /**
-     * Specification:
-     *  - Resets sum prices in the provided ItemTransfers to 0.
-     *  - Resets sum prices in the provided ProductOptionTransfers to 0.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ItemCollectionTransfer $items
-     *
-     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
-     */
-    public function removeItemTransferSumPrices(ItemCollectionTransfer $items);
 }
