@@ -1,4 +1,4 @@
-namespace: CatalogProductListConnector
+namespace: CustomerCatalog
 actor: Tester
 paths:
     tests: tests

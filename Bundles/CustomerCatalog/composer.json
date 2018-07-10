@@ -1,6 +1,6 @@
 {
-  "name": "spryker/catalog-product-list-connector",
-  "description": "CatalogProductListConnector module",
+  "name": "spryker/customer-catalog",
+  "description": "CustomerCatalog module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",

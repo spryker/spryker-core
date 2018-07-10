@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CatalogProductListConnector\Dependency\Client;
+namespace Spryker\Client\CustomerCatalog\Dependency\Client;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface CatalogProductListConnectorToCustomerClientInterface
+interface CustomerCatalogToCustomerClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null

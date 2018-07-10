@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CatalogProductListConnector\Plugin;
+namespace Spryker\Client\CustomerCatalog\Plugin;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
@@ -19,7 +19,7 @@ use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
- * @method \Spryker\Client\CatalogProductListConnector\CatalogProductListConnectorFactory getFactory()
+ * @method \Spryker\Client\CustomerCatalog\CustomerCatalogFactory getFactory()
  */
 class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {

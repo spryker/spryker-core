@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CatalogProductListConnector;
+namespace Spryker\Client\CustomerCatalog;
 
-use Spryker\Client\CatalogProductListConnector\Dependency\Client\CatalogProductListConnectorToCustomerClientBridge;
+use Spryker\Client\CustomerCatalog\Dependency\Client\CustomerCatalogToCustomerClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
-class CatalogProductListConnectorDependencyProvider extends AbstractDependencyProvider
+class CustomerCatalogDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
@@ -36,7 +36,7 @@ class CatalogProductListConnectorDependencyProvider extends AbstractDependencyPr
     protected function addCustomerClient(Container $container): Container
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
-            return new CatalogProductListConnectorToCustomerClientBridge($container->getLocator()->customer()->client());
+            return new CustomerCatalogToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;
