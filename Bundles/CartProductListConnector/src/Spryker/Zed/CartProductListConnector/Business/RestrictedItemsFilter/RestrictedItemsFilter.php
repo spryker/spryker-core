@@ -57,8 +57,8 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
     {
         if ($quoteTransfer->getCustomer() && $quoteTransfer->getCustomer()->getCustomerProductListCollection()) {
             $customerProductListCollectionTransfer = $quoteTransfer->getCustomer()->getCustomerProductListCollection();
-            $customerWhitelistIds = $customerProductListCollectionTransfer->getWhitelistIds() ?? [];
-            $customerBlacklistIds = $customerProductListCollectionTransfer->getBlacklistIds() ?? [];
+            $customerWhitelistIds = $customerProductListCollectionTransfer->getWhitelistIds() ?: [];
+            $customerBlacklistIds = $customerProductListCollectionTransfer->getBlacklistIds() ?: [];
             $this->removeRestrictedItemsFromQuote($quoteTransfer, $customerBlacklistIds, $customerWhitelistIds);
         }
 
@@ -79,9 +79,10 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
         }
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
             $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($itemTransfer->getSku());
-            if ($this->productListRestrictionValidator->isProductConcreteRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds)
-                || $this->productListRestrictionValidator->isProductAbstractRestricted($itemTransfer->getIdProductAbstract(), $customerWhitelistIds, $customerBlacklistIds)
-            ) {
+            $isProductConcreteRestricted = $this->productListRestrictionValidator
+                ->isProductConcreteRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds);
+            $isProductAbstractRestricted = $this->productListRestrictionValidator->isProductAbstractRestricted($itemTransfer->getIdProductAbstract(), $customerWhitelistIds, $customerBlacklistIds);
+            if ($isProductConcreteRestricted || $isProductAbstractRestricted) {
                 $quoteTransfer->getItems()->offsetUnset($key);
                 $this->addFilterMessage($itemTransfer->getSku());
             }

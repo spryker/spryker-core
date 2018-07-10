@@ -101,7 +101,7 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
             return [];
         }
 
-        return $customerProductListCollectionTransfer->getBlacklistIds() ?? [];
+        return $customerProductListCollectionTransfer->getBlacklistIds() ?: [];
     }
 
     /**
@@ -115,7 +115,7 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
             return [];
         }
 
-        return $customerProductListCollectionTransfer->getWhitelistIds() ?? [];
+        return $customerProductListCollectionTransfer->getWhitelistIds() ?: [];
     }
 
     /**

@@ -55,8 +55,8 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
         }
 
         $customerProductListCollectionTransfer = $customerTransfer->getCustomerProductListCollection();
-        $customerWhitelistIds = $customerProductListCollectionTransfer->getWhitelistIds() ?? [];
-        $customerBlacklistIds = $customerProductListCollectionTransfer->getBlacklistIds() ?? [];
+        $customerWhitelistIds = $customerProductListCollectionTransfer->getWhitelistIds() ?: [];
+        $customerBlacklistIds = $customerProductListCollectionTransfer->getBlacklistIds() ?: [];
 
         foreach ($cartChangeTransfer->getItems() as $item) {
             $this->validateItem(
@@ -86,6 +86,7 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
     ): void {
         $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteSku($item->getSku());
         $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($item->getSku());
+
         if ($this->isProductAbstractRestricted($idProductAbstract, $customerWhitelistIds, $customerBlacklistIds)
             || $this->isProductConcreteRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds)
         ) {
@@ -112,8 +113,8 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
         $productAbstractBlacklistIds = $this->productListFacade->getProductAbstractBlacklistIdsByIdProductAbstract($idProductAbstract);
         $productAbstractWhitelistIds = $this->productListFacade->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
 
-        $isProductInBlacklist = count(array_intersect($productAbstractBlacklistIds, $customerBlacklistIds));
-        $isProductInWhitelist = count(array_intersect($productAbstractWhitelistIds, $customerWhitelistIds));
+        $isProductInBlacklist = !empty(array_intersect($productAbstractBlacklistIds, $customerBlacklistIds));
+        $isProductInWhitelist = !empty(array_intersect($productAbstractWhitelistIds, $customerWhitelistIds));
 
         return $isProductInBlacklist || (count($productAbstractWhitelistIds) && !$isProductInWhitelist);
     }
@@ -134,8 +135,8 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
         $productAbstractBlacklistIds = $this->productListFacade->getProductAbstractBlacklistIdsByIdProductConcrete($idProductConcrete);
         $productAbstractWhitelistIds = $this->productListFacade->getProductAbstractWhitelistIdsByIdProductConcrete($idProductConcrete);
 
-        $isProductInBlacklist = count(array_intersect($productAbstractBlacklistIds, $customerBlacklistIds));
-        $isProductInWhitelist = count(array_intersect($productAbstractWhitelistIds, $customerWhitelistIds));
+        $isProductInBlacklist = !empty(array_intersect($productAbstractBlacklistIds, $customerBlacklistIds));
+        $isProductInWhitelist = !empty(array_intersect($productAbstractWhitelistIds, $customerWhitelistIds));
 
         return $isProductInBlacklist || (count($productAbstractWhitelistIds) && !$isProductInWhitelist);
     }
