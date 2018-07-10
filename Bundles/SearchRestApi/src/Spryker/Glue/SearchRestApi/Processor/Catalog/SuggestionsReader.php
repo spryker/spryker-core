@@ -56,6 +56,11 @@ class SuggestionsReader implements SuggestionsReaderInterface
         $response = $this->restResourceBuilder->createRestResponse();
 
         $searchString = $this->getSuggestionsRestRequestQueryString($restRequest);
+
+        if (empty($searchString)) {
+            return $this->buildEmptyResponse($response);
+        }
+
         $requestParameters = $this->getSuggestionsRestRequestAttributes($restRequest);
         $restSuggestionsAttributeTransfer = $this->catalogClient->catalogSuggestSearch($searchString, $requestParameters);
 
@@ -82,5 +87,17 @@ class SuggestionsReader implements SuggestionsReaderInterface
     protected function getSuggestionsRestRequestAttributes(RestRequestInterface $restRequest): array
     {
         return $restRequest->getHttpRequest()->query->all();
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function buildEmptyResponse(RestResponseInterface $response): RestResponseInterface
+    {
+        $resource = $this->suggestionsResourceMapper->mapSuggestionsResponseAttributesTransferToRestResponse([]);
+
+        return $response->addResource($resource);
     }
 }
