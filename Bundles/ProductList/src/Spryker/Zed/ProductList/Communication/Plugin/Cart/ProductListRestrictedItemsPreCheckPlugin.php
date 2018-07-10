@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartProductListConnector\Communication\Plugin\Cart;
+namespace Spryker\Zed\ProductList\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
-use Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface;
-use Spryker\Zed\Cart\Dependency\TerminationAwareCartPreCheckPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\TerminationAwareCartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\CartProductListConnector\Business\CartProductListConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductList\Business\ProductListFacadeInterface getFacade()
  */
 class ProductListRestrictedItemsPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface, TerminationAwareCartPreCheckPluginInterface
 {

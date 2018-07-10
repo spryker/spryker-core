@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartProductListConnector\Business\RestrictedItemsFilter;
+namespace Spryker\Zed\ProductList\Business\RestrictedItemsFilter;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\CartProductListConnector\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface;
-use Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToMessengerFacadeInterface;
-use Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductFacadeInterface;
+use Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface;
+use Spryker\Zed\ProductList\Dependency\Facade\ProductListToMessengerFacadeInterface;
+use Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface;
 
 class RestrictedItemsFilter implements RestrictedItemsFilterInterface
 {
@@ -19,29 +19,29 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
     protected const MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED = 'product-cart.info.restricted-product.removed';
 
     /**
-     * @var \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToMessengerFacadeInterface
+     * @var \Spryker\Zed\ProductList\Dependency\Facade\ProductListToMessengerFacadeInterface
      */
     protected $messengerFacade;
 
     /**
-     * @var \Spryker\Zed\CartProductListConnector\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface
+     * @var \Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface
      */
     protected $productListRestrictionValidator;
 
     /**
-     * @var \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductFacadeInterface
+     * @var \Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface
      */
     protected $productFacade;
 
     /**
-     * @param \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToMessengerFacadeInterface $messengerFacade
-     * @param \Spryker\Zed\CartProductListConnector\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface $productListRestrictionValidator
-     * @param \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\ProductList\Dependency\Facade\ProductListToMessengerFacadeInterface $messengerFacade
+     * @param \Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface $productListRestrictionValidator
+     * @param \Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface $productFacade
      */
     public function __construct(
-        CartProductListConnectorToMessengerFacadeInterface $messengerFacade,
+        ProductListToMessengerFacadeInterface $messengerFacade,
         ProductListRestrictionValidatorInterface $productListRestrictionValidator,
-        CartProductListConnectorToProductFacadeInterface $productFacade
+        ProductListToProductFacadeInterface $productFacade
     ) {
         $this->messengerFacade = $messengerFacade;
         $this->productListRestrictionValidator = $productListRestrictionValidator;

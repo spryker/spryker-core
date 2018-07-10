@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartProductListConnector\Business\RestrictedItemsFilter;
+namespace Spryker\Zed\ProductList\Business\RestrictedItemsFilter;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 

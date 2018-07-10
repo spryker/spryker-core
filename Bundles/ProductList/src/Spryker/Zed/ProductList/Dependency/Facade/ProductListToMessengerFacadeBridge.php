@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartProductListConnector\Dependency\Facade;
+namespace Spryker\Zed\ProductList\Dependency\Facade;
 
 use Generated\Shared\Transfer\MessageTransfer;
 
-class CartProductListConnectorToMessengerFacadeBridge implements CartProductListConnectorToMessengerFacadeInterface
+class ProductListToMessengerFacadeBridge implements ProductListToMessengerFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Messenger\Business\MessengerFacadeInterface

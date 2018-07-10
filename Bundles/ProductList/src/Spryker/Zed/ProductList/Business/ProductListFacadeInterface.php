@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\ProductList\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductListFacadeInterface
 {
@@ -116,4 +119,29 @@ interface ProductListFacadeInterface
      * @return int[]
      */
     public function getProductAbstractIdsByProductListIds(array $productListIds): array;
+
+    /**
+     * Specification:
+     * - Validates product if they whitelisted or blacklisted.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateItemAddProductListRestrictions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Removes restricted items from quote.
+     *  - Adds note to messages about removed items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function filterRestrictedItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

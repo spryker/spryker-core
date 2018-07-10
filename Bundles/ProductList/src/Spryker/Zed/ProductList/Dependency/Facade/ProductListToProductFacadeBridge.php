@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartProductListConnector\Dependency\Facade;
+namespace Spryker\Zed\ProductList\Dependency\Facade;
 
-class CartProductListConnectorToProductFacadeBridge implements CartProductListConnectorToProductFacadeInterface
+class ProductListToProductFacadeBridge implements ProductListToProductFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface

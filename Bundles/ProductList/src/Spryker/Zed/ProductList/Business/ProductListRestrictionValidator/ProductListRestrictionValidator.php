@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartProductListConnector\Business\ProductListRestrictionValidator;
+namespace Spryker\Zed\ProductList\Business\ProductListRestrictionValidator;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductFacadeInterface;
-use Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductListFacadeInterface;
+use Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface;
+use Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface;
 
 class ProductListRestrictionValidator implements ProductListRestrictionValidatorInterface
 {
@@ -20,25 +20,25 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
     protected const MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED = 'product-cart.info.restricted-product.removed';
 
     /**
-     * @var \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductListFacadeInterface
-     */
-    protected $productListFacade;
-
-    /**
-     * @var \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductFacadeInterface
+     * @var \Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface
      */
     protected $productFacade;
 
     /**
-     * @param \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductFacadeInterface $productFacade
-     * @param \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductListFacadeInterface $productListFacade
+     * @var \Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface
+     */
+    protected $productListReader;
+
+    /**
+     * @param \Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface $productListReader
      */
     public function __construct(
-        CartProductListConnectorToProductFacadeInterface $productFacade,
-        CartProductListConnectorToProductListFacadeInterface $productListFacade
+        ProductListToProductFacadeInterface $productFacade,
+        ProductListReaderInterface $productListReader
     ) {
-        $this->productListFacade = $productListFacade;
         $this->productFacade = $productFacade;
+        $this->productListReader = $productListReader;
     }
 
     /**
@@ -113,13 +113,15 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
             return false;
         }
 
-        $productAbstractBlacklistIds = $this->productListFacade->getProductAbstractBlacklistIdsByIdProductAbstract($idProductAbstract);
-        $productAbstractWhitelistIds = $this->productListFacade->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
-
+        $productAbstractBlacklistIds = $this->productListReader
+            ->getProductAbstractBlacklistIdsByIdProductAbstract($idProductAbstract);
         $isProductInBlacklist = !empty(array_intersect($productAbstractBlacklistIds, $customerBlacklistIds));
+
+        $productAbstractWhitelistIds = $this->productListReader
+            ->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
         $isProductInWhitelist = !empty(array_intersect($productAbstractWhitelistIds, $customerWhitelistIds));
 
-        return $isProductInBlacklist || (count($productAbstractWhitelistIds) && !$isProductInWhitelist);
+        return $isProductInBlacklist || !(empty($productAbstractWhitelistIds) || $isProductInWhitelist);
     }
 
     /**
@@ -135,13 +137,15 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
             return false;
         }
 
-        $productAbstractBlacklistIds = $this->productListFacade->getProductAbstractBlacklistIdsByIdProductConcrete($idProductConcrete);
-        $productAbstractWhitelistIds = $this->productListFacade->getProductAbstractWhitelistIdsByIdProductConcrete($idProductConcrete);
-
+        $productAbstractBlacklistIds = $this->productListReader
+            ->getProductAbstractBlacklistIdsByIdProductConcrete($idProductConcrete);
         $isProductInBlacklist = !empty(array_intersect($productAbstractBlacklistIds, $customerBlacklistIds));
+
+        $productAbstractWhitelistIds = $this->productListReader
+            ->getProductAbstractWhitelistIdsByIdProductConcrete($idProductConcrete);
         $isProductInWhitelist = !empty(array_intersect($productAbstractWhitelistIds, $customerWhitelistIds));
 
-        return $isProductInBlacklist || (count($productAbstractWhitelistIds) && !$isProductInWhitelist);
+        return $isProductInBlacklist || !(empty($productAbstractWhitelistIds) || $isProductInWhitelist);
     }
 
     /**
