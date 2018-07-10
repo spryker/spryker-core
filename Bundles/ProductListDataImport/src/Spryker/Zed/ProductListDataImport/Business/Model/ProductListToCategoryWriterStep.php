@@ -9,10 +9,12 @@ namespace Spryker\Zed\ProductListDataImport\Business\Model;
 
 use Orm\Zed\ProductList\Persistence\SpyProductListCategoryQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\ProductList\Dependency\ProductListEvents;
 use Spryker\Zed\ProductListDataImport\Business\Model\DataSet\ProductListDataSetInterface;
 
-class ProductListToCategoryWriterStep implements DataImportStepInterface
+class ProductListToCategoryWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -39,5 +41,10 @@ class ProductListToCategoryWriterStep implements DataImportStepInterface
         $productListCategoryEntity->setFkProductList($dataSet[ProductListDataSetInterface::ID_PRODUCT_LIST])
             ->setFkCategory($dataSet[ProductListDataSetInterface::ID_CATEGORY])
             ->save();
+
+        $this->addPublishEvents(
+            ProductListEvents::PRODUCT_LIST_CATEGORY_PUBLISH,
+            $productListCategoryEntity->getFkCategory()
+        );
     }
 }

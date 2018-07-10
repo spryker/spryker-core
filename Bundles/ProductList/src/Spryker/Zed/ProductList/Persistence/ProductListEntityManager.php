@@ -36,6 +36,8 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
         $productListEntity->save();
         $productListTransfer->fromArray($productListEntity->toArray(), true);
 
+        $productListCategoryRelationTransfer->setIdProductList($productListTransfer->getIdProductList());
+        $productListProductConcreteRelationTransfer->setIdProductList($productListTransfer->getIdProductList());
         $productListTransfer->setProductListCategoryRelation($productListCategoryRelationTransfer);
         $productListTransfer->setProductListProductConcreteRelation($productListProductConcreteRelationTransfer);
 
@@ -56,8 +58,42 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return void
+     */
+    public function deleteProductListProductRelations(ProductListTransfer $productListTransfer): void
+    {
+        $productListConcreteProductEntities = $this->getFactory()
+            ->createProductListProductConcreteQuery()
+            ->filterByFkProductList($productListTransfer->getIdProductList())
+            ->find();
+
+        foreach ($productListConcreteProductEntities as $productListConcreteProductEntity) {
+            $productListConcreteProductEntity->delete();
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return void
+     */
+    public function deleteProductListCategoryRelations(ProductListTransfer $productListTransfer): void
+    {
+        $productListCategoryEntities = $this->getFactory()
+            ->createProductListCategoryQuery()
+            ->filterByFkProductList($productListTransfer->getIdProductList())
+            ->find();
+
+        foreach ($productListCategoryEntities as $productListCategoryEntity) {
+            $productListCategoryEntity->delete();
+        }
+    }
+
+    /**
      * @param int $idProductList
-     * @param array $categoryIds
+     * @param int[] $categoryIds
      *
      * @return void
      */
@@ -73,7 +109,7 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
 
     /**
      * @param int $idProductList
-     * @param array $categoryIds
+     * @param int[] $categoryIds
      *
      * @return void
      */
@@ -82,16 +118,21 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
         if (count($categoryIds) === 0) {
             return;
         }
-        $this->getFactory()
+
+        $productListCategoryEntities = $this->getFactory()
             ->createProductListCategoryQuery()
             ->filterByFkProductList($idProductList)
             ->filterByFkCategory_In($categoryIds)
-            ->delete();
+            ->find();
+
+        foreach ($productListCategoryEntities as $productListCategory) {
+            $productListCategory->delete();
+        }
     }
 
     /**
      * @param int $idProductList
-     * @param array $productIds
+     * @param int[] $productIds
      *
      * @return void
      */
@@ -107,19 +148,24 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
 
     /**
      * @param int $idProductList
-     * @param array $productIds
+     * @param int[] $productIds
      *
      * @return void
      */
     public function removeProductConcreteRelations(int $idProductList, array $productIds): void
     {
-        if (count($productIds) === 0) {
+        if (!$productIds) {
             return;
         }
-        $this->getFactory()
+
+        $productListConcreteProductEntities = $this->getFactory()
             ->createProductListProductConcreteQuery()
             ->filterByFkProductList($idProductList)
             ->filterByFkProduct_In($productIds)
-            ->delete();
+            ->find();
+
+        foreach ($productListConcreteProductEntities as $productListConcreteProductEntity) {
+            $productListConcreteProductEntity->delete();
+        }
     }
 }

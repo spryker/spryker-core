@@ -8,7 +8,11 @@
 namespace Spryker\Zed\ProductList\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGenerator;
+use Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface;
+use Spryker\Zed\ProductList\Business\ProductList\ProductListReader;
+use Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListWriter;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListWriterInterface;
 use Spryker\Zed\ProductList\Business\ProductListCategoryRelation\ProductListCategoryRelationPostSaver;
@@ -21,6 +25,14 @@ use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductL
 use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationReaderInterface;
 use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationWriter;
 use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationWriterInterface;
+use Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidator;
+use Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface;
+use Spryker\Zed\ProductList\Business\RestrictedItemsFilter\RestrictedItemsFilter;
+use Spryker\Zed\ProductList\Business\RestrictedItemsFilter\RestrictedItemsFilterInterface;
+use Spryker\Zed\ProductList\Dependency\Facade\ProductListToMessengerFacadeInterface;
+use Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface;
+use Spryker\Zed\ProductList\Dependency\Service\ProductListToUtilTextServiceInterface;
+use Spryker\Zed\ProductList\ProductListDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductList\ProductListConfig getConfig()
@@ -30,12 +42,48 @@ use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductL
 class ProductListBusinessFactory extends AbstractBusinessFactory
 {
     /**
+     * @return \Spryker\Zed\ProductList\Business\RestrictedItemsFilter\RestrictedItemsFilterInterface
+     */
+    public function createRestrictedItemsFilter(): RestrictedItemsFilterInterface
+    {
+        return new RestrictedItemsFilter(
+            $this->getMessengerFacade(),
+            $this->createProductListRestrictionValidator(),
+            $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface
+     */
+    public function createProductListRestrictionValidator(): ProductListRestrictionValidatorInterface
+    {
+        return new ProductListRestrictionValidator(
+            $this->getProductFacade(),
+            $this->createProductListReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface
+     */
+    public function createProductListReader(): ProductListReaderInterface
+    {
+        return new ProductListReader(
+            $this->getRepository(),
+            $this->createProductListCategoryRelationReader(),
+            $this->createProductListProductConcreteRelationReader()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductList\Business\ProductList\ProductListWriterInterface
      */
     public function createProductListWriter(): ProductListWriterInterface
     {
         return new ProductListWriter(
             $this->getEntityManager(),
+            $this->createProductListKeyGenerator(),
             $this->getProductListPostSaverCollection()
         );
     }
@@ -101,7 +149,42 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     {
         return [
             $this->createProductListCategoryRelationPostSaver(),
-            $this->createProductListProductConcreteRelationPostSaver()
+            $this->createProductListProductConcreteRelationPostSaver(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Dependency\Service\ProductListToUtilTextServiceInterface
+     */
+    public function getUtilTextService(): ProductListToUtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(ProductListDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface
+     */
+    public function createProductListKeyGenerator(): ProductListKeyGeneratorInterface
+    {
+        return new ProductListKeyGenerator(
+            $this->getRepository(),
+            $this->getUtilTextService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface
+     */
+    public function getProductFacade(): ProductListToProductFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductListDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Dependency\Facade\ProductListToMessengerFacadeInterface
+     */
+    public function getMessengerFacade(): ProductListToMessengerFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductListDependencyProvider::FACADE_MESSENGER);
     }
 }

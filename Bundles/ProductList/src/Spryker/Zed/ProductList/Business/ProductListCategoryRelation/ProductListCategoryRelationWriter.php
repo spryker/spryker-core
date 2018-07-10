@@ -77,7 +77,7 @@ class ProductListCategoryRelationWriter implements ProductListCategoryRelationWr
     /**
      * @param \Generated\Shared\Transfer\ProductListCategoryRelationTransfer $productListCategoryRelationTransfer
      *
-     * @return array
+     * @return int[]
      */
     protected function getRelatedCategoryIds(
         ProductListCategoryRelationTransfer $productListCategoryRelationTransfer
@@ -94,7 +94,7 @@ class ProductListCategoryRelationWriter implements ProductListCategoryRelationWr
     /**
      * @param \Generated\Shared\Transfer\ProductListCategoryRelationTransfer $productListCategoryRelationTransfer
      *
-     * @return array
+     * @return int[]
      */
     protected function getRequestedCategoryIds(
         ProductListCategoryRelationTransfer $productListCategoryRelationTransfer

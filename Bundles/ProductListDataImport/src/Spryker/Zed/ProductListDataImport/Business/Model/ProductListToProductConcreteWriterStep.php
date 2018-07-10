@@ -9,10 +9,12 @@ namespace Spryker\Zed\ProductListDataImport\Business\Model;
 
 use Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\ProductList\Dependency\ProductListEvents;
 use Spryker\Zed\ProductListDataImport\Business\Model\DataSet\ProductListDataSetInterface;
 
-class ProductListToProductConcreteWriterStep implements DataImportStepInterface
+class ProductListToProductConcreteWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -39,5 +41,10 @@ class ProductListToProductConcreteWriterStep implements DataImportStepInterface
         $productListProductConcreteEntity->setFkProductList($dataSet[ProductListDataSetInterface::ID_PRODUCT_LIST])
             ->setFkProduct($dataSet[ProductListDataSetInterface::ID_PRODUCT_CONCRETE])
             ->save();
+
+        $this->addPublishEvents(
+            ProductListEvents::PRODUCT_LIST_PRODUCT_CONCRETE_PUBLISH,
+            $productListProductConcreteEntity->getFkProduct()
+        );
     }
 }

@@ -9,12 +9,14 @@ namespace Spryker\Client\ProductListStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientBridge;
 use Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToStorageClientBridge;
 use Spryker\Client\ProductListStorage\Dependency\Service\ProductListStorageToSynchronizationServiceBridge;
 
 class ProductListStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
@@ -26,6 +28,7 @@ class ProductListStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addStorageClient($container);
+        $container = $this->addCustomerClient($container);
         $container = $this->addSynchronizationService($container);
 
         return $container;
@@ -40,6 +43,20 @@ class ProductListStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new ProductListStorageToStorageClientBridge($container->getLocator()->storage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCustomerClient(Container $container): Container
+    {
+        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+            return new ProductListStorageToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;
