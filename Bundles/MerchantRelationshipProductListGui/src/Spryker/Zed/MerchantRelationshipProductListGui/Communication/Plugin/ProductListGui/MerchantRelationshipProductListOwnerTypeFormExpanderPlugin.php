@@ -21,6 +21,8 @@ class MerchantRelationshipProductListOwnerTypeFormExpanderPlugin extends Abstrac
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @return string
      */
     public function getOwnerType(): string
