@@ -189,7 +189,7 @@ class IndexInstaller implements SearchInstallerInterface
         $settings = $indexDefinitionTransfer->getSettings();
         if ($settings) {
             $settings = $this->removeBlacklistedSettings($settings);
-            $index->setSettings($settings); // dfdf
+            $index->setSettings($settings);
         }
     }
 
@@ -231,6 +231,8 @@ class IndexInstaller implements SearchInstallerInterface
             }
             $settingsElement = &$settingsElement[$settingElementKey];
         }
+
+        return $settings;
     }
 
     /**
