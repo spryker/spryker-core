@@ -15,6 +15,8 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPl
 
 class Exporter implements ExporterInterface
 {
+    protected const DEFAULT_CHUNK_SIZE = 100;
+
     /**
      * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface
      */
@@ -45,12 +47,12 @@ class Exporter implements ExporterInterface
         SynchronizationToQueueClientInterface $queueClient,
         QueueMessageCreatorInterface $synchronizationQueueMessageCreator,
         array $synchronizationDataPlugins,
-        $chunkSize = 100
+        $chunkSize
     ) {
         $this->queueClient = $queueClient;
         $this->queueMessageCreator = $synchronizationQueueMessageCreator;
         $this->synchronizationDataPlugins = $synchronizationDataPlugins;
-        $this->chunkSize = $chunkSize;
+        $this->chunkSize = $chunkSize ?? static::DEFAULT_CHUNK_SIZE;
     }
 
     /**

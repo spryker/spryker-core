@@ -39,7 +39,7 @@ class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): ?bool
     {
         return true;
     }
@@ -74,7 +74,7 @@ class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +87,7 @@ class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return AvailabilityStorageConstants::AVAILABILITY_SYNC_STORAGE_QUEUE;
     }
@@ -100,7 +100,7 @@ class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getSynchronizationPoolName();
     }

@@ -39,7 +39,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -70,7 +70,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -83,7 +83,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return CategoryStorageConstants::CATEGORY_SYNC_STORAGE_QUEUE;
     }
@@ -96,7 +96,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getCategoryTreeSynchronizationPoolName();
     }

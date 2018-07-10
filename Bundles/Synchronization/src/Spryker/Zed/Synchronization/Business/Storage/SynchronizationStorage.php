@@ -37,8 +37,11 @@ class SynchronizationStorage implements SynchronizationInterface
      * @param \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\Synchronization\Business\Validation\OutdatedValidatorInterface $outdatedValidator
      */
-    public function __construct(SynchronizationToStorageClientInterface $storageClient, SynchronizationToUtilEncodingServiceInterface $utilEncodingService, OutdatedValidatorInterface $outdatedValidator)
-    {
+    public function __construct(
+        SynchronizationToStorageClientInterface $storageClient,
+        SynchronizationToUtilEncodingServiceInterface $utilEncodingService,
+        OutdatedValidatorInterface $outdatedValidator
+    ) {
         $this->storageClient = $storageClient;
         $this->utilEncodingService = $utilEncodingService;
         $this->outdatedValidator = $outdatedValidator;

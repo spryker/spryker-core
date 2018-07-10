@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event;
 
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
@@ -40,9 +41,9 @@ class CategoryTreeEventResourceQueryContainerPlugin extends AbstractPlugin imple
      *
      * @param int[] $ids
      *
-     * @return null
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = [])
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         return null;
     }
@@ -66,9 +67,9 @@ class CategoryTreeEventResourceQueryContainerPlugin extends AbstractPlugin imple
      *
      * @api
      *
-     * @return null
+     * @return null | string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): ?string
     {
         return null;
     }

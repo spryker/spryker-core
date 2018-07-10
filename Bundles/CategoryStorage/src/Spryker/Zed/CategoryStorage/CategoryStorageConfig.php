@@ -14,7 +14,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return true;
     }
@@ -22,7 +22,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
     /**
      * @return string|null
      */
-    public function getCategoryTreeSynchronizationPoolName()
+    public function getCategoryTreeSynchronizationPoolName(): ?string
     {
         return null;
     }
@@ -30,7 +30,7 @@ class CategoryStorageConfig extends AbstractBundleConfig
     /**
      * @return string|null
      */
-    public function getCategoryNodeSynchronizationPoolName()
+    public function getCategoryNodeSynchronizationPoolName(): ?string
     {
         return null;
     }
