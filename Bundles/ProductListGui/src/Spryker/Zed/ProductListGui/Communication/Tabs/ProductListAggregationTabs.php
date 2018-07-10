@@ -13,6 +13,18 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class ProductListAggregationTabs extends AbstractTabs
 {
+    const GENERAL_TAB_NAME = 'general';
+    const GENERAL_TAB_TITLE = 'General Information';
+    const GENERAL_TAB_TEMPLATE = '@ProductListGui/_partials/_tabs/general-information.twig';
+
+    const CATEGORIES_TAB_NAME = 'product_list_category_relation';
+    const CATEGORIES_TAB_TITLE = 'Assign Categories';
+    const CATEGORIES_TAB_TEMPLATE = '@ProductListGui/_partials/_tabs/product-list-category-relation.twig';
+
+    const PRODUCTS_TAB_NAME = 'product_list_product_concrete_relation';
+    const PRODUCTS_TAB_TITLE = 'Assign Products';
+    const PRODUCTS_TAB_TEMPLATE = '@ProductListGui/_partials/_tabs/product-list-product-concrete-relation.twig';
+
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
@@ -39,9 +51,9 @@ class ProductListAggregationTabs extends AbstractTabs
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('general')
-            ->setTitle('General Information')
-            ->setTemplate('@ProductListGui/_partials/_tabs/general-information.twig');
+            ->setName(static::GENERAL_TAB_NAME)
+            ->setTitle(static::GENERAL_TAB_TITLE)
+            ->setTemplate(static::GENERAL_TAB_TEMPLATE);
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
@@ -57,9 +69,9 @@ class ProductListAggregationTabs extends AbstractTabs
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('product_list_category_relation')
-            ->setTitle('Assign Categories')
-            ->setTemplate('@ProductListGui/_partials/_tabs/product-list-category-relation.twig');
+            ->setName(static::CATEGORIES_TAB_NAME)
+            ->setTitle(static::CATEGORIES_TAB_TITLE)
+            ->setTemplate(static::CATEGORIES_TAB_TEMPLATE);
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
@@ -75,9 +87,9 @@ class ProductListAggregationTabs extends AbstractTabs
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('product_list_product_concrete_relation')
-            ->setTitle('Assign Products')
-            ->setTemplate('@ProductListGui/_partials/_tabs/product-list-product-concrete-relation.twig');
+            ->setName(static::PRODUCTS_TAB_NAME)
+            ->setTitle(static::PRODUCTS_TAB_TITLE)
+            ->setTemplate(static::PRODUCTS_TAB_TEMPLATE);
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

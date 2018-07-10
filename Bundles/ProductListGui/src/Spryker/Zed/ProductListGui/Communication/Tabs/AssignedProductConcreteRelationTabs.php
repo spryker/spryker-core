@@ -13,6 +13,14 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class AssignedProductConcreteRelationTabs extends AbstractTabs
 {
+    const ASSIGNED_PRODUCT_TAB_NAME = 'assigned_product';
+    const ASSIGNED_PRODUCT_TAB_TITLE = 'Products in this list';
+    const ASSIGNED_PRODUCT_TAB_TEMPLATE = '@ProductListGui/_partials/_tables/assigned-product-table.twig';
+
+    const DEASSIGNED_PRODUCT_TAB_NAME = 'deassignment_product';
+    const DEASSIGNED_PRODUCT_TAB_TITLE = 'Products to be deassigned';
+    const DEASSIGNED_PRODUCT_TAB_TEMPLATE = '@ProductListGui/_partials/_tables/deassignment-product-table.twig';
+
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
@@ -37,9 +45,9 @@ class AssignedProductConcreteRelationTabs extends AbstractTabs
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('assigned_product')
-            ->setTitle('Products in this list')
-            ->setTemplate('@ProductListGui/_partials/_tables/assigned-product-table.twig');
+            ->setName(static::ASSIGNED_PRODUCT_TAB_NAME)
+            ->setTitle(static::ASSIGNED_PRODUCT_TAB_TITLE)
+            ->setTemplate(static::ASSIGNED_PRODUCT_TAB_TEMPLATE);
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
@@ -55,9 +63,9 @@ class AssignedProductConcreteRelationTabs extends AbstractTabs
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('deassignment_product')
-            ->setTitle('Products to be deassigned')
-            ->setTemplate('@ProductListGui/_partials/_tables/deassignment-product-table.twig');
+            ->setName(static::DEASSIGNED_PRODUCT_TAB_NAME)
+            ->setTitle(static::DEASSIGNED_PRODUCT_TAB_TITLE)
+            ->setTemplate(static::DEASSIGNED_PRODUCT_TAB_TEMPLATE);
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

@@ -13,6 +13,14 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class AvailableProductConcreteRelationTabs extends AbstractTabs
 {
+    const AVAILABLE_TAB_NAME = 'available_product';
+    const AVAILABLE_TAB_TITLE = 'Select Products to assign';
+    const AVAILABLE_TAB_TEMPLATE = '@ProductListGui/_partials/_tables/available-product-table.twig';
+
+    const ASSIGNED_TAB_NAME = 'assignment_product';
+    const ASSIGNED_TAB_TITLE = 'Products to be assigned';
+    const ASSIGNED_TAB_TEMPLATE = '@ProductListGui/_partials/_tables/assignment-product-table.twig';
+
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
@@ -37,9 +45,9 @@ class AvailableProductConcreteRelationTabs extends AbstractTabs
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('available_product')
-            ->setTitle('Select Products to assign')
-            ->setTemplate('@ProductListGui/_partials/_tables/available-product-table.twig');
+            ->setName(static::AVAILABLE_TAB_NAME)
+            ->setTitle(static::AVAILABLE_TAB_TITLE)
+            ->setTemplate(static::AVAILABLE_TAB_TEMPLATE);
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
@@ -55,9 +63,9 @@ class AvailableProductConcreteRelationTabs extends AbstractTabs
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer
-            ->setName('assignment_product')
-            ->setTitle('Products to be assigned')
-            ->setTemplate('@ProductListGui/_partials/_tables/assignment-product-table.twig');
+            ->setName(static::ASSIGNED_TAB_NAME)
+            ->setTitle(static::ASSIGNED_TAB_TITLE)
+            ->setTemplate(static::ASSIGNED_TAB_TEMPLATE);
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
