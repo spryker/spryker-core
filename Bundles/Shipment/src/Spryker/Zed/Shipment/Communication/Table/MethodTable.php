@@ -273,7 +273,7 @@ class MethodTable extends AbstractTable
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice[] $methodPriceEntities
      *
-     * @return array of \Generated\Shared\Transfer\MoneyTransfer[][]
+     * @return \Generated\Shared\Transfer\MoneyTransfer[][]
      */
     protected function getNetPricesGroupedData(array $methodPriceEntities): array
     {
