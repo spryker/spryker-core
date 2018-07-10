@@ -22,8 +22,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CmsEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * Specification:
-     *  - Returns the name of resource
+     * {@inheritdoc}
      *
      * @api
      *
@@ -35,9 +34,7 @@ class CmsEventResourceQueryContainerPlugin extends AbstractPlugin implements Eve
     }
 
     /**
-     * Specification:
-     *  - Returns query of resource entity, provided $ids parameter
-     *    will apply to query to limit the result
+     * {@inheritdoc}
      *
      * @api
      *
@@ -51,8 +48,7 @@ class CmsEventResourceQueryContainerPlugin extends AbstractPlugin implements Eve
     }
 
     /**
-     * Specification:
-     *  - Returns the event name of resource entity
+     * {@inheritdoc}
      *
      * @api
      *
@@ -64,8 +60,7 @@ class CmsEventResourceQueryContainerPlugin extends AbstractPlugin implements Eve
     }
 
     /**
-     * Specification:
-     *  - Returns the name of ID column for publishing
+     * {@inheritdoc}
      *
      * @api
      *

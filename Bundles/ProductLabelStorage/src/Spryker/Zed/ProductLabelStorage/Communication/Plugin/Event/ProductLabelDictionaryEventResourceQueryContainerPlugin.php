@@ -21,8 +21,7 @@ use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
 class ProductLabelDictionaryEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * Specification:
-     *  - Returns the name of resource
+     * {@inheritdoc}
      *
      * @api
      *
@@ -34,9 +33,7 @@ class ProductLabelDictionaryEventResourceQueryContainerPlugin extends AbstractPl
     }
 
     /**
-     * Specification:
-     *  - Returns query of resource entity, provided $ids parameter
-     *    will apply to query to limit the result
+     * {@inheritdoc}
      *
      * @api
      *
@@ -50,8 +47,7 @@ class ProductLabelDictionaryEventResourceQueryContainerPlugin extends AbstractPl
     }
 
     /**
-     * Specification:
-     *  - Returns the event name of resource entity
+     * {@inheritdoc}
      *
      * @api
      *
@@ -63,8 +59,7 @@ class ProductLabelDictionaryEventResourceQueryContainerPlugin extends AbstractPl
     }
 
     /**
-     * Specification:
-     *  - Returns the name of ID column for publishing
+     * {@inheritdoc}
      *
      * @api
      *

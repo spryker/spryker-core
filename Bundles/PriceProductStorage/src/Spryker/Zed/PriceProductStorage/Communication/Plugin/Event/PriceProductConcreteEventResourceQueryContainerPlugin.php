@@ -22,8 +22,7 @@ use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 class PriceProductConcreteEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * Specification:
-     *  - Returns the name of resource
+     * {@inheritdoc}
      *
      * @api
      *
@@ -35,9 +34,7 @@ class PriceProductConcreteEventResourceQueryContainerPlugin extends AbstractPlug
     }
 
     /**
-     * Specification:
-     *  - Returns query of resource entity, provided $ids parameter
-     *    will apply to query to limit the result
+     * {@inheritdoc}
      *
      * @api
      *
@@ -57,8 +54,7 @@ class PriceProductConcreteEventResourceQueryContainerPlugin extends AbstractPlug
     }
 
     /**
-     * Specification:
-     *  - Returns the event name of resource entity
+     * {@inheritdoc}
      *
      * @api
      *
@@ -70,8 +66,7 @@ class PriceProductConcreteEventResourceQueryContainerPlugin extends AbstractPlug
     }
 
     /**
-     * Specification:
-     *  - Returns the name of ID column for publishing
+     * {@inheritdoc}
      *
      * @api
      *

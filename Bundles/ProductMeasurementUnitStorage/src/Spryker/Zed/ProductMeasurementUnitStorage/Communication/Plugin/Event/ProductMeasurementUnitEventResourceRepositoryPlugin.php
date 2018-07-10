@@ -21,8 +21,7 @@ use Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents;
 class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
 {
     /**
-     * Specification:
-     *  - Returns the name of resource
+     * {@inheritdoc}
      *
      * @api
      *
@@ -34,9 +33,7 @@ class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin
     }
 
     /**
-     * Specification:
-     *  - Returns query of resource entity, provided $ids parameter
-     *    will apply to query to limit the result
+     * {@inheritdoc}
      *
      * @api
      *
@@ -53,8 +50,7 @@ class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin
     }
 
     /**
-     * Specification:
-     *  - Returns the event name of resource entity
+     * {@inheritdoc}
      *
      * @api
      *
@@ -66,8 +62,7 @@ class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin
     }
 
     /**
-     * Specification:
-     *  - Returns the name of ID column for publishing
+     * {@inheritdoc}
      *
      * @api
      *

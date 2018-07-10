@@ -20,8 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CategoryTreeEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * Specification:
-     *  - Returns the name of resource
+     * {@inheritdoc}
      *
      * @api
      *
@@ -33,9 +32,7 @@ class CategoryTreeEventResourceQueryContainerPlugin extends AbstractPlugin imple
     }
 
     /**
-     * Specification:
-     *  - Returns query of resource entity, provided $ids parameter
-     *    will apply to query to limit the result
+     * {@inheritdoc}
      *
      * @api
      *
@@ -49,8 +46,7 @@ class CategoryTreeEventResourceQueryContainerPlugin extends AbstractPlugin imple
     }
 
     /**
-     * Specification:
-     *  - Returns the event name of resource entity
+     * {@inheritdoc}
      *
      * @api
      *
@@ -62,8 +58,7 @@ class CategoryTreeEventResourceQueryContainerPlugin extends AbstractPlugin imple
     }
 
     /**
-     * Specification:
-     *  - Returns the name of ID column for publishing
+     * {@inheritdoc}
      *
      * @api
      *
