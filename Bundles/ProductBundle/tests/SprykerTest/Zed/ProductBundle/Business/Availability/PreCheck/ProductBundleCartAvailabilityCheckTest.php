@@ -74,7 +74,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     public function testCheckCartAvailabilityWhenBundledItemsNotAvailableShouldStoreErrorMessages()
     {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
-        $availabilityFacadeMock->expects($this->once())
+        $availabilityFacadeMock->expects($this->exactly(2))
             ->method('isProductSellableForStore')
             ->willReturn(false);
 
