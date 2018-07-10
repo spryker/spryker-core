@@ -73,13 +73,11 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      */
     public function doAllConcreteProductsHaveAlternatives(array $productIds): bool
     {
-        foreach ($productIds as $productId) {
-            if (!$this->getFactory()->createProductAlternativePropelQuery()->filterByFkProduct($productId)->exists()) {
-                return false;
-            }
-        }
-
-        return true;
+        return ($this->getFactory()
+            ->createProductAlternativePropelQuery()
+            ->filterByFkProduct_In($productIds)
+            ->groupByFkProduct()
+            ->count() === count($productIds)) ? true : false;
     }
 
     /**

@@ -9,17 +9,17 @@ namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Communication\Plug
 
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\DeleteProductAlternativePluginInterface;
+use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeCreatePluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig getConfig()
  */
-class DeleteProductAlternativesPlugin extends AbstractPlugin implements DeleteProductAlternativePluginInterface
+class PostProductAlternativeCreatePlugin extends AbstractPlugin implements PostProductAlternativeCreatePluginInterface
 {
     /**
      * Specification:
-     *  - Removes "Alternatives available" label if applicable.
+     *  - Adds or removes label "Alternatives available" if applicable.
      *
      * @api
      *
@@ -29,6 +29,6 @@ class DeleteProductAlternativesPlugin extends AbstractPlugin implements DeletePr
      */
     public function execute(ProductAlternativeTransfer $productAlternativeTransfer): void
     {
-        $this->getFacade()->removeProductAbstractRelationsForLabel($productAlternativeTransfer->getIdProduct());
+        $this->getFacade()->updateAbstractProductWithAlternativesAvailableLabel($productAlternativeTransfer->getIdProduct());
     }
 }

@@ -8,13 +8,13 @@
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Communication\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\ProductAlternativeLabelUpdaterPluginInterface;
+use Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig getConfig()
  */
-class ProductAlternativeLabelUpdaterPlugin extends AbstractPlugin implements ProductAlternativeLabelUpdaterPluginInterface
+class ProductAlternativeLabelUpdaterPlugin extends AbstractPlugin implements ProductLabelRelationUpdaterPluginInterface
 {
     /**
      * Specification:

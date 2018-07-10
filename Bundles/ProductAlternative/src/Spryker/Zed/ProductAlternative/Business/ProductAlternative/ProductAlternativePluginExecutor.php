@@ -12,25 +12,25 @@ use Generated\Shared\Transfer\ProductAlternativeTransfer;
 class ProductAlternativePluginExecutor implements ProductAlternativePluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductCreateAlternativesPluginInterface[]
+     * @var \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeCreatePluginInterface[]
      */
-    protected $postProductAlternativePlugins;
+    protected $postProductAlternativeCreatePlugins;
 
     /**
-     * @var \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\DeleteProductAlternativePluginInterface[]
+     * @var \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeDeletePluginInterface[]
      */
-    protected $postDeleteProductAlternativePlugins;
+    protected $postProductAlternativeDeletePlugins;
 
     /**
-     * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductCreateAlternativesPluginInterface[] $postProductAlternativePlugins
-     * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\DeleteProductAlternativePluginInterface[] $postDeleteProductAlternativePlugins
+     * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeCreatePluginInterface[] $postProductAlternativeCreatePlugins
+     * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeDeletePluginInterface[] $postProductAlternativeDeletePlugins
      */
     public function __construct(
-        array $postProductAlternativePlugins,
-        array $postDeleteProductAlternativePlugins
+        array $postProductAlternativeCreatePlugins,
+        array $postProductAlternativeDeletePlugins
     ) {
-        $this->postDeleteProductAlternativePlugins = $postDeleteProductAlternativePlugins;
-        $this->postProductAlternativePlugins = $postProductAlternativePlugins;
+        $this->postProductAlternativeDeletePlugins = $postProductAlternativeDeletePlugins;
+        $this->postProductAlternativeCreatePlugins = $postProductAlternativeCreatePlugins;
     }
 
     /**
@@ -38,9 +38,9 @@ class ProductAlternativePluginExecutor implements ProductAlternativePluginExecut
      *
      * @return void
      */
-    public function executePostProductAlternativePlugins(ProductAlternativeTransfer $productAlternativeTransfer): void
+    public function executePostProductAlternativeCreatePlugins(ProductAlternativeTransfer $productAlternativeTransfer): void
     {
-        foreach ($this->postProductAlternativePlugins as $postCreateProductAlternativePlugin) {
+        foreach ($this->postProductAlternativeCreatePlugins as $postCreateProductAlternativePlugin) {
             $postCreateProductAlternativePlugin->execute($productAlternativeTransfer);
         }
     }
@@ -50,10 +50,10 @@ class ProductAlternativePluginExecutor implements ProductAlternativePluginExecut
      *
      * @return void
      */
-    public function executeDeleteProductAlternativePlugins(ProductAlternativeTransfer $productAlternativeTransfer): void
+    public function executePostProductAlternativeDeletePlugins(ProductAlternativeTransfer $productAlternativeTransfer): void
     {
-        foreach ($this->postDeleteProductAlternativePlugins as $postDeleteProductAlternativePlugin) {
-            $postDeleteProductAlternativePlugin->execute($productAlternativeTransfer);
+        foreach ($this->postProductAlternativeDeletePlugins as $postProductAlternativeDeletePlugin) {
+            $postProductAlternativeDeletePlugin->execute($productAlternativeTransfer);
         }
     }
 }

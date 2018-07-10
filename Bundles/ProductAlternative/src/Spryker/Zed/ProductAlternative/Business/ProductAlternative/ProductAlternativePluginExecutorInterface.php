@@ -16,12 +16,12 @@ interface ProductAlternativePluginExecutorInterface
      *
      * @return void
      */
-    public function executePostProductAlternativePlugins(ProductAlternativeTransfer $productAlternativeTransfer): void;
+    public function executePostProductAlternativeCreatePlugins(ProductAlternativeTransfer $productAlternativeTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
      *
      * @return void
      */
-    public function executeDeleteProductAlternativePlugins(ProductAlternativeTransfer $productAlternativeTransfer): void;
+    public function executePostProductAlternativeDeletePlugins(ProductAlternativeTransfer $productAlternativeTransfer): void;
 }

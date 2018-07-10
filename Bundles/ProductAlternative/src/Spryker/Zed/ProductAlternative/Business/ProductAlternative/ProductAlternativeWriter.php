@@ -11,12 +11,15 @@ use Generated\Shared\Transfer\ProductAlternativeCreateRequestTransfer;
 use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface;
 use Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface;
 use Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface;
 
 class ProductAlternativeWriter implements ProductAlternativeWriterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface
      */
@@ -64,7 +67,9 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
     {
         $productConcreteTransfer->requireProductAlternativeCreateRequests();
         foreach ($productConcreteTransfer->getProductAlternativeCreateRequests() as $productAlternativeCreateRequestTransfer) {
-            $this->createProductAlternative($productAlternativeCreateRequestTransfer);
+            $this->getTransactionHandler()->handleTransaction(function () use ($productAlternativeCreateRequestTransfer) {
+                $this->executeCreateTransaction($productAlternativeCreateRequestTransfer);
+            });
         }
 
         return $productConcreteTransfer;
@@ -80,20 +85,31 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
         $productAlternativeTransfer = $this->productAlternativeRepository
             ->findProductAlternativeByIdProductAlternative($idProductAlternative);
 
-        $productAlternativeResponseTransfer = (new ProductAlternativeResponseTransfer())
-            ->setProductAlternative($productAlternativeTransfer);
-
         if (!$productAlternativeTransfer) {
-            return $productAlternativeResponseTransfer
+            return (new ProductAlternativeResponseTransfer())
+                ->setProductAlternative($productAlternativeTransfer)
                 ->setIsSuccessful(false);
         }
 
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productAlternativeTransfer) {
+            return $this->executeDeleteTransaction($productAlternativeTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    protected function executeDeleteTransaction($productAlternativeTransfer): ProductAlternativeResponseTransfer
+    {
         $this->productAlternativeEntityManager
             ->deleteProductAlternative($productAlternativeTransfer);
 
-        $this->productAlternativePluginExecutor->executeDeleteProductAlternativePlugins($productAlternativeTransfer);
+        $this->productAlternativePluginExecutor->executePostProductAlternativeDeletePlugins($productAlternativeTransfer);
 
-        return $productAlternativeResponseTransfer
+        return (new ProductAlternativeResponseTransfer())
+                ->setProductAlternative($productAlternativeTransfer)
             ->setIsSuccessful(true);
     }
 
@@ -102,7 +118,7 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
      *
      * @return void
      */
-    protected function createProductAlternative(ProductAlternativeCreateRequestTransfer $productAlternativeCreateRequestTransfer): void
+    protected function executeCreateTransaction(ProductAlternativeCreateRequestTransfer $productAlternativeCreateRequestTransfer): void
     {
         $idProductAbstract = $this->productFacade->findProductAbstractIdBySku($productAlternativeCreateRequestTransfer->getAlternativeSku());
         if ($idProductAbstract) {
@@ -133,7 +149,7 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
                 $idProductAbstractAlternative
             );
 
-        $this->productAlternativePluginExecutor->executePostProductAlternativePlugins($productAlternativeTransfer);
+        $this->productAlternativePluginExecutor->executePostProductAlternativeCreatePlugins($productAlternativeTransfer);
 
         return $productAlternativeTransfer;
     }
@@ -152,7 +168,7 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
                 $idProductConcreteAlternative
             );
 
-        $this->productAlternativePluginExecutor->executePostProductAlternativePlugins($productAlternativeTransfer);
+        $this->productAlternativePluginExecutor->executePostProductAlternativeCreatePlugins($productAlternativeTransfer);
 
         return $productAlternativeTransfer;
     }

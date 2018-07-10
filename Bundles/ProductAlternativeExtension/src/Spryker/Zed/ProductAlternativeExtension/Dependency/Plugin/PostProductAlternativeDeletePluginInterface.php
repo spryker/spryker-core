@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 
-interface DeleteProductAlternativePluginInterface
+interface PostProductAlternativeDeletePluginInterface
 {
     /**
      * Specification:
