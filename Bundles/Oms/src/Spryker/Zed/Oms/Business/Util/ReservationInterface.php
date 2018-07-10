@@ -42,7 +42,7 @@ interface ReservationInterface
     public function getReservationsFromOtherStores($sku, StoreTransfer $currentStoreTransfer);
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getReservedStateNames();
 }
