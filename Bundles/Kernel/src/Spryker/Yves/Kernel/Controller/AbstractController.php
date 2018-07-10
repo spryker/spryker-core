@@ -256,7 +256,7 @@ abstract class AbstractController
     protected function isUrlWhitelisted(string $absoluteUrl): bool
     {
         $absoluteUrl = str_replace(['http://', 'https://'], '', $absoluteUrl);
-        $whitelistUrls = Config::getInstance()->get(KernelConstants::URL_WHITELIST);
+        $whitelistUrls = Config::getInstance()->get(KernelConstants::URL_WHITELIST, []);
 
         foreach ($whitelistUrls as $whitelistUrl) {
             if (strpos($absoluteUrl, $whitelistUrl !== false)) {
