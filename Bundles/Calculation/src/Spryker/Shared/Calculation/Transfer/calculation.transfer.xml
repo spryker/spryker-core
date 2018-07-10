@@ -40,6 +40,7 @@
 
         <property name="taxAmountAfterCancellation" type="int" />
 
+        <property name="isPersistentSumPrice" type="bool" />
     </transfer>
 
     <transfer name="TaxTotal">
@@ -106,6 +107,7 @@
         <property name="taxRateAverageAggregation" type="float" />
         <property name="taxAmountAfterCancellation" type="int" />
 
+        <property name="isPersistentSumPrice" type="bool" />
     </transfer>
 
     <transfer name="ProductOption">
@@ -125,6 +127,7 @@
         <property name="unitDiscountAmountAggregation" type="int" />
         <property name="sumDiscountAmountAggregation" type="int" />
 
+        <property name="isPersistentSumPrice" type="bool" />
     </transfer>
 
     <transfer name="CalculableObject">

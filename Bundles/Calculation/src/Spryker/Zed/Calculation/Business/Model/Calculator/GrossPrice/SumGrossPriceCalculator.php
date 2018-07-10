@@ -16,7 +16,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 class SumGrossPriceCalculator implements CalculatorInterface
 {
     /**
-     * Populated sum prices are acting as source of truth.
+     * Sum prices from Persistence are acting as source of truth.
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -36,7 +36,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
     protected function calculateSumGrossPriceForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
-            if ($expenseTransfer->getSumGrossPrice()) {
+            if ($expenseTransfer->getIsPersistentSumPrice() === true) {
                 continue;
             }
 
@@ -53,7 +53,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
     {
         $this->assertItemRequirements($itemTransfer);
 
-        if ($itemTransfer->getSumGrossPrice()) {
+        if ($itemTransfer->getIsPersistentSumPrice() === true) {
             return;
         }
 
@@ -92,7 +92,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 $this->assertProductOptionPriceCalculationRequirements($productOptionTransfer);
 
-                if ($productOptionTransfer->getSumGrossPrice()) {
+                if ($productOptionTransfer->getIsPersistentSumPrice() === true) {
                     continue;
                 }
 
