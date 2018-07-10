@@ -122,7 +122,7 @@ class ProductListAbstractController extends AbstractController
      *
      * @return array
      */
-    protected function executeCreateAction(FormInterface $productListAggregateForm): array
+    protected function prepareTemplateVariables(FormInterface $productListAggregateForm): array
     {
         $assignedProductConcreteRelationTabs = $this->getFactory()->createAssignedProductConcreteRelationTabs();
         $availableProductConcreteRelationTabs = $this->getFactory()->createAvailableProductConcreteRelationTabs();

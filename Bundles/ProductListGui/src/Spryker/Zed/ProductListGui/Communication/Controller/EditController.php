@@ -77,7 +77,7 @@ class EditController extends ProductListAbstractController
     protected function executeEditAction(Request $request, FormInterface $productListAggregateForm)
     {
         $idProductList = $this->castId($request->get(static::URL_PARAM_ID_PRODUCT_LIST));
-        $data = $this->executeCreateAction($productListAggregateForm);
+        $data = $this->prepareTemplateVariables($productListAggregateForm);
         $data['idProductList'] = $idProductList;
 
         return $data;

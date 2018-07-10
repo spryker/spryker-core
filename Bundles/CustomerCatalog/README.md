@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/customer-catalog.svg)](https://travis-ci.org/spryker/customer-catalog)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/customer-catalog/badge.svg)](https://coveralls.io/github/spryker/customer-catalog)
 
-CustomerCatalog provides plugins to enable catalog with product lists.
+CustomerCatalog provides plugins to enable customization of a customer's catalog.
 
 ## Installation
 

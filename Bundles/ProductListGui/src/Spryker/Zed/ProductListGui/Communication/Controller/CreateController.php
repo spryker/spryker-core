@@ -40,7 +40,7 @@ class CreateController extends ProductListAbstractController
             return $this->redirectResponse(ProductListGuiConfig::REDIRECT_URL_DEFAULT);
         }
 
-        return $this->viewResponse($this->executeCreateAction($productListAggregateForm));
+        return $this->viewResponse($this->prepareTemplateVariables($productListAggregateForm));
     }
 
     /**
