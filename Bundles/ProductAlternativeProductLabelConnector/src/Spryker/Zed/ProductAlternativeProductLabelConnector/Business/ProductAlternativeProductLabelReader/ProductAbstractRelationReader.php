@@ -84,7 +84,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         )->getIdProductLabel();
 
         foreach ($productIds as $idProduct) {
-            $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
+            $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
             $concreteIds = [];
 
             foreach ($this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract) as $productConcreteTransfer) {
@@ -125,21 +125,21 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
 
     /**
      * @param int $idProductLabel
-     * @param array $idToAssign
-     * @param array $idsToDeAssign
+     * @param int[] $idsToAssign
+     * @param int[] $idsToDeAssign
      *
      * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer
      */
     protected function mapRelationTransfer(
         int $idProductLabel,
-        array $idToAssign,
+        array $idsToAssign,
         array $idsToDeAssign
     ): ProductLabelProductAbstractRelationsTransfer {
         $productLabelProductAbstractRelationsTransfer = new ProductLabelProductAbstractRelationsTransfer();
         $productLabelProductAbstractRelationsTransfer->setIdProductLabel($idProductLabel);
 
-        if (!empty($idToAssign)) {
-            $productLabelProductAbstractRelationsTransfer->setIdsProductAbstractToAssign($idToAssign);
+        if (!empty($idsToAssign)) {
+            $productLabelProductAbstractRelationsTransfer->setIdsProductAbstractToAssign($idsToAssign);
         }
 
         if (!empty($idsToDeAssign)) {

@@ -45,9 +45,9 @@ class ProductAlternativeProductLabelConnectorFacade extends AbstractFacade imple
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param int $idProduct
      *
@@ -61,6 +61,8 @@ class ProductAlternativeProductLabelConnectorFacade extends AbstractFacade imple
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]

@@ -53,7 +53,7 @@ interface ProductAlternativeFacadeInterface
 
     /**
      * Specification:
-     * - Checks if all given fk_product have alternatives.
+     * - Checks if all given products have alternatives.
      *
      * @api
      *

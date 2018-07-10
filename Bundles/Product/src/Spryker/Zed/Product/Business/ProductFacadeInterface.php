@@ -170,7 +170,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns the abstract product ID of the given concrete product ID if it exists.
+     * - Returns the abstract product ID by given concrete product ID.
      *
      * @api
      *
@@ -178,7 +178,8 @@ interface ProductFacadeInterface
      *
      * @return int
      */
-    public function getProductAbstractIdByConcreteId(int $idConcrete): int;
+    public function findProductAbstractIdByConcreteId(int $idConcrete): int;
+
     /**
      * Specification:
      * - Adds concrete product with attributes and localized attributes.

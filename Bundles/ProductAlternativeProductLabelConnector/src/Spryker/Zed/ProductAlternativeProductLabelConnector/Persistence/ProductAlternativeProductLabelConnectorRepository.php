@@ -24,7 +24,7 @@ class ProductAlternativeProductLabelConnectorRepository extends AbstractReposito
     public function findProductLabelByName(string $labelName): ?SpyProductLabel
     {
         $productLabelEntity = $this->getFactory()
-            ->createProductLabelPropelQuery()
+            ->getProductLabelPropelQuery()
             ->filterByName($labelName);
 
         if (!$productLabelEntity) {
@@ -35,12 +35,12 @@ class ProductAlternativeProductLabelConnectorRepository extends AbstractReposito
     }
 
     /**
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIds(): array
     {
         $productConcreteIds = $this->getFactory()
-            ->createProductAlternativePropelQuery()
+            ->getProductAlternativePropelQuery()
             ->select([SpyProductAlternativeTableMap::COL_FK_PRODUCT])
             ->groupByFkProduct()
             ->find();

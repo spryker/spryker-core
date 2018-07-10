@@ -17,6 +17,8 @@ use Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPlugin
 class ProductDiscontinuedLabelUpdaterPlugin extends AbstractPlugin implements ProductLabelRelationUpdaterPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * Specification:
      * - Returns a list of Product Label - Product Abstract relation to assign and deassign.
      * - The relation changes are based on discontinuation of product.

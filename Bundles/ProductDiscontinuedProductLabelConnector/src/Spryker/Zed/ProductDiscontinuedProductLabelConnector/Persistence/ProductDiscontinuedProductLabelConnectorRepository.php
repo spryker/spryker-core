@@ -35,7 +35,7 @@ class ProductDiscontinuedProductLabelConnectorRepository extends AbstractReposit
     }
 
     /**
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIds(): array
     {

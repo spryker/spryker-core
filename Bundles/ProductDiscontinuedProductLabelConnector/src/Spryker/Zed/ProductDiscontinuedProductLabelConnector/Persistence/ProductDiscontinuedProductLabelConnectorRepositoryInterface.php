@@ -19,7 +19,7 @@ interface ProductDiscontinuedProductLabelConnectorRepositoryInterface
     public function findProductLabelByName(string $labelName): ?SpyProductLabel;
 
     /**
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIds(): array;
 }

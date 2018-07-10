@@ -13,7 +13,7 @@ interface PostProductAlternativeCreatePluginInterface
 {
     /**
      * Specification:
-     * - Extends product alternative change request
+     * - Executes after ProductAlternative created.
      *
      * @api
      *

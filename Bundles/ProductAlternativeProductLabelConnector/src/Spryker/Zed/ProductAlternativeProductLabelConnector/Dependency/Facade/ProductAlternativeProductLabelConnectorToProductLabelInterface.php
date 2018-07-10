@@ -11,11 +11,11 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
 
 interface ProductAlternativeProductLabelConnectorToProductLabelInterface
 {
-  /**
-   * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-   *
-   * @return void
-   */
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return void
+     */
     public function createLabel(ProductLabelTransfer $productLabelTransfer): void;
 
     /**

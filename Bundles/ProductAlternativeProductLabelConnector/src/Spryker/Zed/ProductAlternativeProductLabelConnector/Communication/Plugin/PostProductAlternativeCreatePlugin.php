@@ -18,6 +18,8 @@ use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlterna
 class PostProductAlternativeCreatePlugin extends AbstractPlugin implements PostProductAlternativeCreatePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * Specification:
      *  - Adds or removes label "Alternatives available" if applicable.
      *

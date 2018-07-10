@@ -17,11 +17,6 @@ class ProductDiscontinuedProductLabelConnectorToProductLabelBridge implements Pr
     protected $productLabelFacade;
 
     /**
-     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
-     */
-    protected $productFacade;
-
-    /**
      * @param \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface $productLabelFacade
      */
     public function __construct($productLabelFacade)

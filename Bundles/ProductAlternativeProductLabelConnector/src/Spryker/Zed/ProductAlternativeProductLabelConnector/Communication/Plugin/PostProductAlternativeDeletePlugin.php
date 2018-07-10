@@ -18,6 +18,8 @@ use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlterna
 class PostProductAlternativeDeletePlugin extends AbstractPlugin implements PostProductAlternativeDeletePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * Specification:
      *  - Removes "Alternatives available" label if applicable.
      *

@@ -18,6 +18,8 @@ use Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscon
 class PostProductDiscontinuedPlugin extends AbstractPlugin implements PostProductDiscontinuePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * Specification:
      *  - Adds or removes label "Discontinued" if applicable.
      *

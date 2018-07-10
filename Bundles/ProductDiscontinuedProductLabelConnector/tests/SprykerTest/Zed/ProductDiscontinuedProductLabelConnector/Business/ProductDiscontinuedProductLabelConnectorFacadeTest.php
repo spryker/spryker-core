@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductDiscontinuedProductLabelConnector\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelConnectorBusinessFactory;
@@ -35,33 +34,19 @@ class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    /**
-     * @return void
-     */
     public function testFindProductsToAssignShouldReturnValidResults()
     {
         // Arrange
         $this->tester->haveProductLabel([
             ProductLabelTransfer::NAME => $this->getProductDiscontinueLabelName(),
         ]);
-
-        $productAbstractTransfer = $this->tester->haveProductAbstract(
-            [ProductAbstractTransfer::ID_PRODUCT_ABSTRACT => 1]
-        );
-
+        $productConcreteTransfer = $this->tester->haveProduct();
         $productDiscontinuedEntity = $this->getProductDiscontinuedQuery()
-            ->filterByFkProduct(1)
+            ->filterByFkProduct($productConcreteTransfer->getIdProductConcrete())
             ->findOneOrCreate();
-
         $productDiscontinuedEntity->setActiveUntil((new DateTime())
             ->modify(sprintf('+%s Days', 180))
             ->format('Y-m-d'));
-
         $productDiscontinuedEntity->save();
 
         // Act
@@ -69,56 +54,10 @@ class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
             ->findProductLabelProductAbstractRelationChanges();
 
         // Assert
-        $this->assertCount(
-            1,
-            $productLabelProductAbstractRelationTransfers,
-            'Result should have been matched expected number of label relation changes.'
-        );
-        $this->assertCount(
-            1,
-            $productLabelProductAbstractRelationTransfers[0]->getIdsProductAbstractToAssign(),
-            'Number of products to be assigned should have matched the expected amount.'
-        );
         $this->assertSame(
-            $productAbstractTransfer->getIdProductAbstract(),
+            $productConcreteTransfer->getFkProductAbstract(),
             $productLabelProductAbstractRelationTransfers[0]->getIdsProductAbstractToAssign()[0],
             'Product abstract to be assigned does not match expected ID.'
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testFindProductsToDeAssignShouldReturnValidResults()
-    {
-        // Arrange
-        $this->tester->haveProductLabel([
-            ProductLabelTransfer::NAME => $this->getProductDiscontinueLabelName(),
-        ]);
-
-        $productAbstractTransfer = $this->tester->haveProductAbstract(
-            [ProductAbstractTransfer::ID_PRODUCT_ABSTRACT => 146]
-        );
-
-        // Act
-        $productLabelProductAbstractRelationTransfers = $this->productDiscontinuedProductLabelConnectorFacade()
-            ->findProductLabelProductAbstractRelationChanges();
-
-        // Assert
-        $this->assertCount(
-            1,
-            $productLabelProductAbstractRelationTransfers,
-            'Result should have been matched expected number of label relation changes.'
-        );
-        $this->assertCount(
-            2,
-            $productLabelProductAbstractRelationTransfers[0]->getIdsProductAbstractToDeAssign(),
-            'Number of products to be deassigned should have matched the expected amount.'
-        );
-        $this->assertSame(
-            $productAbstractTransfer->getIdProductAbstract(),
-            $productLabelProductAbstractRelationTransfers[0]->getIdsProductAbstractToDeAssign()[0],
-            'Product abstract to be deassigned does not match expected ID.'
         );
     }
 
@@ -129,10 +68,19 @@ class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
     {
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
-        $idProduct = 265;
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $productDiscontinuedEntity = $this->getProductDiscontinuedQuery()
+            ->filterByFkProduct($productConcreteTransfer->getIdProductConcrete())
+            ->findOneOrCreate();
+        $productDiscontinuedEntity->setActiveUntil((new DateTime())
+            ->modify(sprintf('+%s Days', 180))
+            ->format('Y-m-d'));
+        $productDiscontinuedEntity->save();
+        $idProduct = $productConcreteTransfer->getIdProductConcrete();
 
         // Act
-        $this->productDiscontinuedProductLabelConnectorFacade()->updateAbstractProductWithDiscontinuedLabel($idProduct);
+        $this->productDiscontinuedProductLabelConnectorFacade()
+            ->updateAbstractProductWithDiscontinuedLabel($idProduct);
 
         // Assert
         $this->tester->assertDatabaseTableContainsData();

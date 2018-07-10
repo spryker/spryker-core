@@ -20,7 +20,7 @@ class ProductAlternativeProductLabelConnectorPersistenceFactory extends Abstract
     /**
      * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
      */
-    public function createProductAlternativePropelQuery(): SpyProductAlternativeQuery
+    public function getProductAlternativePropelQuery(): SpyProductAlternativeQuery
     {
         return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::PROPEL_QUERY_PRODUCT_ALTERNATIVE);
     }
@@ -28,7 +28,7 @@ class ProductAlternativeProductLabelConnectorPersistenceFactory extends Abstract
     /**
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
-    public function createProductLabelPropelQuery(): SpyProductLabelQuery
+    public function getProductLabelPropelQuery(): SpyProductLabelQuery
     {
         return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::PROPEL_QUERY_PRODUCT_LABEL);
     }
