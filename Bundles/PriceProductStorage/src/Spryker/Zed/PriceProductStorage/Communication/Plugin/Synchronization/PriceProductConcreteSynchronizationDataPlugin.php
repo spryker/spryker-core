@@ -20,8 +20,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQu
 class PriceProductConcreteSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataQueryContainerPluginInterface
 {
     /**
-     * Specification:
-     *  - Returns the resource name of the storage or search module
+     * {@inheritdoc}
      *
      * @api
      *
@@ -33,8 +32,7 @@ class PriceProductConcreteSynchronizationDataPlugin extends AbstractPlugin imple
     }
 
     /**
-     * Specification:
-     *  - Returns true if this entity has multi-store concept
+     * {@inheritdoc}
      *
      * @api
      *
@@ -46,9 +44,7 @@ class PriceProductConcreteSynchronizationDataPlugin extends AbstractPlugin imple
     }
 
     /**
-     * Specification:
-     *  - Returns array of storage or search synchronized data, provided $ids parameter
-     *    will limit the result
+     * {@inheritdoc}
      *
      * @api
      *
@@ -68,8 +64,7 @@ class PriceProductConcreteSynchronizationDataPlugin extends AbstractPlugin imple
     }
 
     /**
-     * Specification:
-     *  - Returns array of configuration parameter which needed for Redis or Elasticsearch
+     * {@inheritdoc}
      *
      * @api
      *
@@ -81,8 +76,7 @@ class PriceProductConcreteSynchronizationDataPlugin extends AbstractPlugin imple
     }
 
     /**
-     * Specification:
-     *  - Returns synchronization queue name
+     * {@inheritdoc}
      *
      * @api
      *
@@ -94,8 +88,7 @@ class PriceProductConcreteSynchronizationDataPlugin extends AbstractPlugin imple
     }
 
     /**
-     * Specification:
-     *  - Returns synchronization queue pool name for broadcasting messages
+     * {@inheritdoc}
      *
      * @api
      *
