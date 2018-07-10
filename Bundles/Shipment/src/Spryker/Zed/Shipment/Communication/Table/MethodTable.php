@@ -258,7 +258,7 @@ class MethodTable extends AbstractTable
     protected function getGrossPricesGroupedData(array $methodPriceEntities): array
     {
         $result = [];
-        foreach ($methodPriceEntities as $key => $methodPriceEntity) {
+        foreach ($methodPriceEntities as $methodPriceEntity) {
             if (!$methodPriceEntity->getDefaultGrossPrice()) {
                 continue;
             }
@@ -278,7 +278,7 @@ class MethodTable extends AbstractTable
     protected function getNetPricesGroupedData(array $methodPriceEntities): array
     {
         $result = [];
-        foreach ($methodPriceEntities as $key => $methodPriceEntity) {
+        foreach ($methodPriceEntities as $methodPriceEntity) {
             if (!$methodPriceEntity->getDefaultNetPrice()) {
                 continue;
             }
@@ -308,6 +308,7 @@ class MethodTable extends AbstractTable
                     : self::NO_PRICE_FOR_STORE_PLACEHOLDER)
             );
         }
+
         return $result;
     }
 }
