@@ -237,32 +237,29 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         ItemTransfer $itemTransfer,
         StoreTransfer $storeTransfer
     ) {
-        $unavailableBundleItemsMessages = [];
-
-        // check bundle items that are unavailable at the moment
         $unavailableBundleItems = $this->getUnavailableBundleItems($itemsInCart, $bundledProducts, $itemTransfer, $storeTransfer);
+
+        $availabilityEntity = $this->findAvailabilityEntityBySku($itemTransfer->getSku(), $storeTransfer);
+        $availabilityEntityQuantity = $availabilityEntity->getQuantity();
+
+        if ($itemTransfer->getQuantity() > $availabilityEntityQuantity
+            && count($unavailableBundleItems) === count($bundledProducts)) {
+            $bundleAvailabilityErrorMessage = $this->createItemIsNotAvailableMessageTransfer(
+                $availabilityEntityQuantity,
+                $itemTransfer->getSku()
+            );
+
+            return [
+                $bundleAvailabilityErrorMessage,
+            ];
+        }
+
+        $unavailableBundleItemsMessages = [];
 
         foreach ($unavailableBundleItems as $unavailableBundleItem) {
             $unavailableBundleItemsMessages[] = (new MessageTransfer())
                 ->setValue(static::ERROR_BUNDLE_ITEM_UNAVAILABLE_TRANSLATION_KEY)
                 ->setParameters($unavailableBundleItem);
-        }
-
-        if (!empty($unavailableBundleItemsMessages)) {
-            return $unavailableBundleItemsMessages;
-        }
-
-        // check is requested bundle quantity
-        $availabilityEntity = $this->findAvailabilityEntityBySku($itemTransfer->getSku(), $storeTransfer);
-
-        // $itemTransfer - bundle in cart, $availabilityEntity - bundle in stock
-        if ($itemTransfer->getQuantity() > $availabilityEntity->getQuantity()) {
-            $unavailableBundleItemsMessages[] = $this->createItemIsNotAvailableMessageTransfer(
-                $availabilityEntity->getQuantity(),
-                $itemTransfer->getSku()
-            );
-
-            return $unavailableBundleItemsMessages;
         }
 
         return $unavailableBundleItemsMessages;
