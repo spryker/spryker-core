@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 class EventJournalFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\EventJournal\EventJournalClientInterface
+     * @return \Spryker\Shared\EventJournal\Model\EventJournalInterface
      */
     public function createEventJournal()
     {

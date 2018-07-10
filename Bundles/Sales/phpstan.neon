@@ -5,6 +5,8 @@ parameters:
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrderQuery::filterByFkCustomer\(\)\.#'
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::getCustomer\(\)\.#'
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::setCustomer\(\)\.#'
+        - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::#'
+        - '#Method .+AbstractSpySalesOrderQuery::.+ should return \$this but returns .+#'
 
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 

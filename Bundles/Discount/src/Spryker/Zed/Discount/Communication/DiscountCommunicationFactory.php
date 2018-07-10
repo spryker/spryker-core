@@ -113,7 +113,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      * @param int $idDiscount
      * @param int $batchValue
      *
-     * @return \Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable|\Spryker\Zed\Gui\Communication\Table\AbstractTable
+     * @return \Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable
      */
     public function createDiscountVoucherCodesTable(DataTablesTransfer $dataTablesTransfer, $idPool, $idDiscount, $batchValue)
     {
