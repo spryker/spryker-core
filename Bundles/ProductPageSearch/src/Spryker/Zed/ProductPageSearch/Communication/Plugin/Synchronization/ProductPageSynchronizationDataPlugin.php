@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Synchronization;
 
-use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +50,9 @@ class ProductPageSynchronizationDataPlugin extends AbstractPlugin implements Syn
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyProductAbstractPageSearchQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryProductAbstractSearchPageByIds($ids);
 

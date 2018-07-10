@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Synchronization;
 
-use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\CmsBlockStorage\CmsBlockStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +50,9 @@ class CmsBlockSynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyCmsBlockStorageQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryCmsBlockStorageEntities($ids);
 

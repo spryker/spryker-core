@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization;
 
-use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +50,9 @@ class ProductAbstractLabelSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyProductAbstractLabelStorageQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryProductAbstractLabelStorageByIds($ids);
 

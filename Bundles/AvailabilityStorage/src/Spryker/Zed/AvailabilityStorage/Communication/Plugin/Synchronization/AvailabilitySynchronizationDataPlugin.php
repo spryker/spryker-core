@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Synchronization;
 
-use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +50,9 @@ class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyAvailabilityStorageQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryAvailabilityStorageByAvailabilityAbstractIds($ids);
 

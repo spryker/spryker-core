@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductSearchConfigStorage\Communication\Plugin\Synchronization;
 
-use Orm\Zed\ProductSearchConfigStorage\Persistence\SpyProductSearchConfigStorageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductSearchConfigStorage\ProductSearchConfigStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +50,9 @@ class ProductSearchConfigSynchronizationDataPlugin extends AbstractPlugin implem
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\ProductSearchConfigStorage\Persistence\SpyProductSearchConfigStorageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyProductSearchConfigStorageQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         return $this->getQueryContainer()->queryProductSearchConfigStorage();
     }

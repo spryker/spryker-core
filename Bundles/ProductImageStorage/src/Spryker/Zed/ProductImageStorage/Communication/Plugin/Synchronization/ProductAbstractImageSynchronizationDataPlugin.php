@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Synchronization;
 
-use Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +50,9 @@ class ProductAbstractImageSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyProductAbstractImageStorageQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryProductAbstractImageStorageByIds($ids);
 

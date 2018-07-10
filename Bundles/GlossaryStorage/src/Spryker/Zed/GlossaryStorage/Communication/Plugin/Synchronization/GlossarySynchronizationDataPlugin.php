@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Synchronization;
 
-use Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +50,9 @@ class GlossarySynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyGlossaryStorageQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryGlossaryStorageByGlossaryIds($ids);
 

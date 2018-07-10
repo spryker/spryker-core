@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductGroupStorage\Communication\Plugin\Synchronization;
 
-use Orm\Zed\ProductGroupStorage\Persistence\SpyProductAbstractGroupStorageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductGroupStorage\ProductGroupStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +50,9 @@ class ProductGroupSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\ProductGroupStorage\Persistence\SpyProductAbstractGroupStorageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyProductAbstractGroupStorageQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryProductAbstractGroupStorageByIds($ids);
 

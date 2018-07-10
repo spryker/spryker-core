@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SynchronizationExtension\Dependency\Plugin;
 
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+
 interface SynchronizationDataQueryContainerPluginInterface extends SynchronizationDataPluginInterface
 {
     /**
@@ -18,7 +20,7 @@ interface SynchronizationDataQueryContainerPluginInterface extends Synchronizati
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []);
+    public function queryData($ids = []): ?ModelCriteria;
 }

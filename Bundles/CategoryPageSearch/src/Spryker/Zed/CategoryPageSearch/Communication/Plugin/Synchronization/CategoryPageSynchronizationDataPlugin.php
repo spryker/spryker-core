@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Synchronization;
 
 use Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +51,9 @@ class CategoryPageSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyCategoryNodePageSearchQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryCategoryNodePageSearchByIds($ids);
 

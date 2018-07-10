@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\UrlStorage\Communication\Plugin\Synchronization;
 
-use Orm\Zed\UrlStorage\Persistence\SpyUrlStorageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +50,9 @@ class UrlRedirectSynchronizationDataPlugin extends AbstractPlugin implements Syn
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyUrlStorageQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryUrlStorageByIds($ids);
 

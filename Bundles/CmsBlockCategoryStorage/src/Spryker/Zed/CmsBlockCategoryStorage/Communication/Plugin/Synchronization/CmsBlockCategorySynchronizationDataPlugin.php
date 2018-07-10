@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Synchronization;
 
-use Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\CmsBlockCategoryStorage\CmsBlockCategoryStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +50,9 @@ class CmsBlockCategorySynchronizationDataPlugin extends AbstractPlugin implement
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyCmsBlockCategoryStorageQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryCmsBlockCategoryStorageByIds($ids);
 

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\NavigationStorage\Communication\Plugin\Synchronization;
 
-use Orm\Zed\NavigationStorage\Persistence\SpyNavigationStorageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\NavigationStorage\NavigationStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -54,9 +54,9 @@ class NavigationSynchronizationDataPlugin extends AbstractPlugin implements Sync
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\NavigationStorage\Persistence\SpyNavigationStorageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyNavigationStorageQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryNavigationStorageByNavigationIds($ids);
 

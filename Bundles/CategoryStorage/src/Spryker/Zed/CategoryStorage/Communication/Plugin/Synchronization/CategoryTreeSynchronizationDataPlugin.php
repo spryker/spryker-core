@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Synchronization;
 
-use Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +50,9 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyCategoryTreeStorageQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         return $this->getQueryContainer()->queryCategoryStorage();
     }

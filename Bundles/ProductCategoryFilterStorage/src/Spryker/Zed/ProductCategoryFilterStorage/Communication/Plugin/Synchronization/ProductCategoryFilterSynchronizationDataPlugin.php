@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterStorage\Communication\Plugin\Synchronization;
 
-use Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductCategoryFilterStorage\ProductCategoryFilterStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +50,9 @@ class ProductCategoryFilterSynchronizationDataPlugin extends AbstractPlugin impl
      *
      * @param int[] $ids
      *
-     * @return $this|\Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyProductCategoryFilterStorageQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryProductCategoryFilterStorageByFkCategories($ids);
 

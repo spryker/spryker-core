@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductReviewStorage\Communication\Plugin\Synchronization;
 
-use Orm\Zed\ProductReviewStorage\Persistence\SpyProductAbstractReviewStorageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductReviewStorage\ProductReviewStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +50,9 @@ class ProductReviewSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\ProductReviewStorage\Persistence\SpyProductAbstractReviewStorageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyProductAbstractReviewStorageQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryProductAbstractReviewStorageByIds($ids);
 

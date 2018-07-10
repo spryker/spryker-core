@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOptionStorage\Communication\Plugin\Synchronization;
 
-use Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductOptionStorage\ProductOptionStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +50,9 @@ class ProductOptionSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyProductAbstractOptionStorageQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryProductAbstractOptionStorageByIds($ids);
 

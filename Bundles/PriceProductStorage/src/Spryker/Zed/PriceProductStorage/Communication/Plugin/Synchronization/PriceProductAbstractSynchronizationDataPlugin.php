@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductStorage\Communication\Plugin\Synchronization;
 
-use Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -50,9 +50,9 @@ class PriceProductAbstractSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @param int[] $ids
      *
-     * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData($ids = []): SpyPriceProductAbstractStorageQuery
+    public function queryData($ids = []): ?ModelCriteria
     {
         $query = $this->getQueryContainer()->queryPriceAbstractStorageByPriceAbstractIds($ids);
 
