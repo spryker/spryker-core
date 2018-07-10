@@ -49,8 +49,10 @@ class ProductListAbstractController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer|null
      */
-    protected function handleProductListAggregateForm(Request $request, FormInterface $aggregateForm): ?ProductListTransfer
-    {
+    protected function handleProductListAggregateForm(
+        Request $request,
+        FormInterface $aggregateForm
+    ): ?ProductListTransfer {
         $aggregateForm->handleRequest($request);
 
         if (!$aggregateForm->isSubmitted() || !$aggregateForm->isValid()) {
@@ -62,7 +64,9 @@ class ProductListAbstractController extends AbstractController
 
         $productListTransfer = $aggregateFormTransfer->getProductList();
         $productListTransfer->setProductListCategoryRelation($aggregateFormTransfer->getProductListCategoryRelation());
-        $productListTransfer->setProductListProductConcreteRelation($aggregateFormTransfer->getProductListProductConcreteRelation());
+        $productListTransfer->setProductListProductConcreteRelation(
+            $aggregateFormTransfer->getProductListProductConcreteRelation()
+        );
         $productListTransfer->setProductListProductConcreteRelation(
             $this->getProductListProductConcreteRelationFromCsv(
                 $productListTransfer->getProductListProductConcreteRelation(),
