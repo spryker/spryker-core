@@ -188,8 +188,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param int $idConcrete
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return int
      */
     public function getProductAbstractIdByConcreteId(int $idConcrete): int
