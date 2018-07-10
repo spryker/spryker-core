@@ -21,6 +21,10 @@ use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedDeactivator\Prod
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedDeactivator\ProductDiscontinuedDeactivatorInterface;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedNote\ProductDiscontinuedNoteWriter;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedNote\ProductDiscontinuedNoteWriterInterface;
+use Spryker\Zed\ProductDiscontinued\Business\ShoppingListCheck\ShoppingListAddItemPreCheck;
+use Spryker\Zed\ProductDiscontinued\Business\ShoppingListCheck\ShoppingListAddItemPreCheckInterface;
+use Spryker\Zed\ProductDiscontinued\Business\WishlistCheck\WishlistAddItemPreCheck;
+use Spryker\Zed\ProductDiscontinued\Business\WishlistCheck\WishlistAddItemPreCheckInterface;
 use Spryker\Zed\ProductDiscontinued\Dependency\Facade\ProductDiscontinuedToProductFacadeInterface;
 use Spryker\Zed\ProductDiscontinued\ProductDiscontinuedDependencyProvider;
 
@@ -85,6 +89,22 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     public function createCartChangePreCheck(): CartChangePreCheckInterface
     {
         return new CartChangePreCheck($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinued\Business\ShoppingListCheck\ShoppingListAddItemPreCheckInterface
+     */
+    public function createShoppingListAddItemPreCheck(): ShoppingListAddItemPreCheckInterface
+    {
+        return new ShoppingListAddItemPreCheck($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinued\Business\WishlistCheck\WishlistAddItemPreCheckInterface
+     */
+    public function createWishlistAddItemPreCheck(): WishlistAddItemPreCheckInterface
+    {
+        return new WishlistAddItemPreCheck($this->getRepository());
     }
 
     /**

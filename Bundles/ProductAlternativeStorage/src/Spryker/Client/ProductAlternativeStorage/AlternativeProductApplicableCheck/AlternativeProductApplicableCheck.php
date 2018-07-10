@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 class AlternativeProductApplicableCheck implements AlternativeProductApplicableCheckInterface
 {
     /**
-     * @var \Spryker\Client\ProductAlternativeStorageExtension\Dependency\Plugin\AlternativeProductApplicableCheckPluginInterface[]
+     * @var \Spryker\Client\ProductAlternativeStorageExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface[]
      */
     protected $alternativeProductApplicableCheckPlugins;
 
     /**
-     * @param \Spryker\Client\ProductAlternativeStorageExtension\Dependency\Plugin\AlternativeProductApplicableCheckPluginInterface[] $alternativeProductApplicableCheckPlugins
+     * @param \Spryker\Client\ProductAlternativeStorageExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface[] $alternativeProductApplicableCheckPlugins
      */
     public function __construct(array $alternativeProductApplicableCheckPlugins)
     {

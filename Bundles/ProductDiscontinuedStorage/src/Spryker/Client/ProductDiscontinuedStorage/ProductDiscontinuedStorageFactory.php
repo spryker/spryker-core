@@ -12,8 +12,8 @@ use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontin
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToLocaleClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToStorageClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Service\ProductDiscontinuedStorageToSynchronizationServiceInterface;
-use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedOptionsProductViewExpander;
-use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedOptionsProductViewExpanderInterface;
+use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedSuperAttributesProductViewExpander;
+use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedSuperAttributesProductViewExpanderInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReader;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface;
 
@@ -31,11 +31,11 @@ class ProductDiscontinuedStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedOptionsProductViewExpanderInterface
+     * @return \Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedSuperAttributesProductViewExpanderInterface
      */
-    public function createDiscontinuedOptionsProductViewExpander(): DiscontinuedOptionsProductViewExpanderInterface
+    public function createDiscontinuedSuperAttributesProductViewExpander(): DiscontinuedSuperAttributesProductViewExpanderInterface
     {
-        return new DiscontinuedOptionsProductViewExpander(
+        return new DiscontinuedSuperAttributesProductViewExpander(
             $this->createProductDiscontinuedStorageReader(),
             $this->getGlossaryStorageClient()
         );

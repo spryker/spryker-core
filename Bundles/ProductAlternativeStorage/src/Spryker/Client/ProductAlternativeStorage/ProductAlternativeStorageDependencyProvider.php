@@ -78,7 +78,7 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
     }
 
     /**
-     * @return \Spryker\Client\ProductAlternativeStorageExtension\Dependency\Plugin\AlternativeProductApplicableCheckPluginInterface[]
+     * @return \Spryker\Client\ProductAlternativeStorageExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface[]
      */
     protected function getAlternativeProductApplicableCheckPlugins(): array
     {

@@ -124,7 +124,7 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
         return $this->getFactory()
             ->createProductDiscontinuedQuery()
             ->useProductQuery()
-                ->filterBySku_Like($sku)
+                ->filterBySku($sku)
             ->endUse()
             ->exists();
     }
