@@ -7,24 +7,9 @@
 namespace Spryker\Glue\SearchRestApi\Processor\Mapper;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface SuggestionsResourceMapperInterface
 {
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return string
-     */
-    public function mapRestSuggestionsRequestAttributesTransferToSuggestionsString(RestRequestInterface $restRequest): string;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return array
-     */
-    public function mapRestSuggestionsRequestAttributesTransferToSuggestionsRequestParameters(RestRequestInterface $restRequest): array;
-
     /**
      * @param array $restSearchResponse
      *

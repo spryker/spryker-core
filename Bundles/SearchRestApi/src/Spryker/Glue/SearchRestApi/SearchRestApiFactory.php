@@ -39,7 +39,7 @@ class SearchRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\SearchRestApi\Processor\Mapper\SuggestionsResourceMapperInterface
      */
-    protected function createSuggestionsResourceMapper(): SuggestionsResourceMapperInterface
+    public function createSuggestionsResourceMapper(): SuggestionsResourceMapperInterface
     {
         return new SuggestionsResourceMapper(
             $this->getResourceBuilder()

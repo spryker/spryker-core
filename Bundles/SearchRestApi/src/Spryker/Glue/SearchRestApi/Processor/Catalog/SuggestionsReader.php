@@ -14,6 +14,8 @@ use Spryker\Glue\SearchRestApi\Processor\Mapper\SuggestionsResourceMapperInterfa
 
 class SuggestionsReader implements SuggestionsReaderInterface
 {
+    protected const QUERY_STRING_PARAMETER = 'q';
+
     /**
      * @var \Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToCatalogClientInterface
      */
@@ -55,12 +57,32 @@ class SuggestionsReader implements SuggestionsReaderInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $searchString = $this->suggestionsResourceMapper->mapRestSuggestionsRequestAttributesTransferToSuggestionsString($restRequest);
-        $requestParameters = $this->suggestionsResourceMapper->mapRestSuggestionsRequestAttributesTransferToSuggestionsRequestParameters($restRequest);
+        $searchString = $this->getSuggestionsRestRequestQueryString($restRequest);
+        $requestParameters = $this->getSuggestionsRestRequestAttributes($restRequest);
         $restSuggestionsAttributeTransfer = $this->catalogClient->catalogSuggestSearch($searchString, $requestParameters);
 
         $restResource = $this->suggestionsResourceMapper->mapSuggestionsResponseAttributesTransferToRestResponse($restSuggestionsAttributeTransfer);
 
         return $response->addResource($restResource);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return string
+     */
+    protected function getSuggestionsRestRequestQueryString(RestRequestInterface $restRequest): string
+    {
+        return $restRequest->getHttpRequest()->query->get(static::QUERY_STRING_PARAMETER, '');
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return array
+     */
+    protected function getSuggestionsRestRequestAttributes(RestRequestInterface $restRequest): array
+    {
+        return $restRequest->getHttpRequest()->query->all();
     }
 }
