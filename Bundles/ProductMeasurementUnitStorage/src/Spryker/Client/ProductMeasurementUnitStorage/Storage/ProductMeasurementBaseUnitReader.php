@@ -34,14 +34,14 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
      */
-    public function findProductMeasurementBaseUnitByIdProductConcrete(int $idProductConcrete): ?ProductMeasurementUnitTransfer
+    public function findProductMeasurementBaseUnitByIdProduct(int $idProduct): ?ProductMeasurementUnitTransfer
     {
         $productConcreteMeasurementUnitStorageTransfer = $this->productConcreteMeasurementUnitStorageReader
-            ->findProductConcreteMeasurementUnitStorage($idProductConcrete);
+            ->findProductConcreteMeasurementUnitStorage($idProduct);
 
         if ($productConcreteMeasurementUnitStorageTransfer === null) {
             return null;

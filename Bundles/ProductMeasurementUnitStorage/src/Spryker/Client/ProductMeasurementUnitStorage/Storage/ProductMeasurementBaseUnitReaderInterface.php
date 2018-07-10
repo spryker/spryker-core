@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 interface ProductMeasurementBaseUnitReaderInterface
 {
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
      */
-    public function findProductMeasurementBaseUnitByIdProductConcrete(int $idProductConcrete): ?ProductMeasurementUnitTransfer;
+    public function findProductMeasurementBaseUnitByIdProduct(int $idProduct): ?ProductMeasurementUnitTransfer;
 }

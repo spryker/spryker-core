@@ -10,9 +10,9 @@ namespace Spryker\Client\ProductMeasurementUnitStorage\Storage;
 interface ProductMeasurementSalesUnitReaderInterface
 {
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null
      */
-    public function findProductMeasurementSalesUnitByIdProductConcrete(int $idProductConcrete): ?array;
+    public function findProductMeasurementSalesUnitByIdProduct(int $idProduct): ?array;
 }

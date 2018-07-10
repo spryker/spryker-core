@@ -42,7 +42,6 @@ interface ProductMeasurementUnitStorageClientInterface
     /**
      * Specification:
      * - Finds a product measurement unit within Storage with a given ID.
-     * - Returns product measurement unit transfer
      *
      * @api
      *
@@ -54,27 +53,25 @@ interface ProductMeasurementUnitStorageClientInterface
 
     /**
      * Specification:
-     * - Finds a product sales unit within Storage with a idProduct.
-     * - Returns product measurement sales init transfers
+     * - Finds a product sales unit within Storage with a given product ID.
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null
      */
-    public function findProductMeasurementSalesUnitByIdProduct(int $idProductConcrete): ?array;
+    public function findProductMeasurementSalesUnitByIdProduct(int $idProduct): ?array;
 
     /**
      * Specification:
-     * - Finds a product base unit within Storage with a idProduct.
-     * - Returns product measurement unit transfers
+     * - Finds a product base unit within Storage with a given product ID.
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
      */
-    public function findProductMeasurementBaseUnitByIdProduct(int $idProductConcrete): ?ProductMeasurementUnitTransfer;
+    public function findProductMeasurementBaseUnitByIdProduct(int $idProduct): ?ProductMeasurementUnitTransfer;
 }

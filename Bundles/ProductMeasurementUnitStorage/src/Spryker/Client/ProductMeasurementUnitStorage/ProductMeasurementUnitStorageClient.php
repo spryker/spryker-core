@@ -70,15 +70,15 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null
      */
-    public function findProductMeasurementSalesUnitByIdProduct(int $idProductConcrete): ?array
+    public function findProductMeasurementSalesUnitByIdProduct(int $idProduct): ?array
     {
         return $this->getFactory()
             ->createProductMeasurementSalesUnitReader()
-            ->findProductMeasurementSalesUnitByIdProductConcrete($idProductConcrete);
+            ->findProductMeasurementSalesUnitByIdProduct($idProduct);
     }
 
     /**
@@ -86,14 +86,14 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
      */
-    public function findProductMeasurementBaseUnitByIdProduct(int $idProductConcrete): ?ProductMeasurementUnitTransfer
+    public function findProductMeasurementBaseUnitByIdProduct(int $idProduct): ?ProductMeasurementUnitTransfer
     {
         return $this->getFactory()
             ->createProductMeasurementBaseUnitReader()
-            ->findProductMeasurementBaseUnitByIdProductConcrete($idProductConcrete);
+            ->findProductMeasurementBaseUnitByIdProduct($idProduct);
     }
 }

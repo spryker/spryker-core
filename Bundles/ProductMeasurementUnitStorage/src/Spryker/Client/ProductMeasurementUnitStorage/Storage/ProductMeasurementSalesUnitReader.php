@@ -35,14 +35,14 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null
      */
-    public function findProductMeasurementSalesUnitByIdProductConcrete(int $idProductConcrete): ?array
+    public function findProductMeasurementSalesUnitByIdProduct(int $idProduct): ?array
     {
         $productConcreteMeasurementUnitStorageTransfer = $this->productConcreteMeasurementUnitStorageReader
-            ->findProductConcreteMeasurementUnitStorage($idProductConcrete);
+            ->findProductConcreteMeasurementUnitStorage($idProduct);
 
         if ($productConcreteMeasurementUnitStorageTransfer === null) {
             return null;
