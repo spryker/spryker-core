@@ -67,7 +67,7 @@ class CategoryTreeEventResourceQueryContainerPlugin extends AbstractPlugin imple
      *
      * @api
      *
-     * @return null | string
+     * @return null|string
      */
     public function getIdColumnName(): ?string
     {

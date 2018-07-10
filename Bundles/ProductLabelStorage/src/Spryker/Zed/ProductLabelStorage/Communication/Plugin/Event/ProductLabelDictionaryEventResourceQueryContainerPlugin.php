@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event;
 
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -41,9 +42,9 @@ class ProductLabelDictionaryEventResourceQueryContainerPlugin extends AbstractPl
      *
      * @param int[] $ids
      *
-     * @return null
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData(array $ids = [])
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         return null;
     }
