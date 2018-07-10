@@ -36,9 +36,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         }
 
         $checkoutResponseTransfer->setIsSuccess(false);
-        foreach ($checkoutErrorMessages as $checkoutErrorTransfer) {
-            $checkoutResponseTransfer->addError($checkoutErrorTransfer);
-        }
+        $checkoutResponseTransfer->setErrors($checkoutErrorMessages);
 
         return false;
     }
