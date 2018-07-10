@@ -18,6 +18,7 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     protected const ERROR_AMOUNT_MIN_NOT_FULFILLED = 'cart.pre.check.amount.min.failed';
     protected const ERROR_AMOUNT_MAX_NOT_FULFILLED = 'cart.pre.check.amount.max.failed';
     protected const ERROR_AMOUNT_INTERVAL_NOT_FULFILLED = 'cart.pre.check.amount.interval.failed';
+    protected const ERROR_AMOUNT_IS_NOT_VARIABLE = 'cart.pre.check.amount.is_not_variable.failed';
 
     protected const PRODUCT_PACKAGING_UNIT_AMOUNT_DEFAULT_VALUES = [
         ProductPackagingUnitAmountTransfer::AMOUNT_INTERVAL => 1,
@@ -175,6 +176,8 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
         $min = $productPackagingUnitAmountTransfer->getAmountMin();
         $max = $productPackagingUnitAmountTransfer->getAmountMax();
         $interval = $productPackagingUnitAmountTransfer->getAmountInterval();
+        $defaultAmount = $productPackagingUnitAmountTransfer->getDefaultAmount();
+        $isVariable = $productPackagingUnitAmountTransfer->getIsVariable();
 
         if ($amount != 0 && $amount < $min) {
             $this->addViolation(static::ERROR_AMOUNT_MIN_NOT_FULFILLED, $sku, $min, $amount, $responseTransfer);
@@ -186,6 +189,10 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
 
         if ($max != null && $amount > $max) {
             $this->addViolation(static::ERROR_AMOUNT_MAX_NOT_FULFILLED, $sku, $max, $amount, $responseTransfer);
+        }
+
+        if (!$isVariable && $amount != $defaultAmount) {
+            $this->addViolation(static::ERROR_AMOUNT_IS_NOT_VARIABLE, $sku, $defaultAmount, $amount, $responseTransfer);
         }
     }
 
