@@ -9,13 +9,13 @@ namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Communication\Plug
 
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductUpdateAlternativesPluginInterface;
+use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductCreateAlternativesPluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig getConfig()
  */
-class PostProductUpdateAlternativesPlugin extends AbstractPlugin implements PostProductUpdateAlternativesPluginInterface
+class PostProductCreateAlternativesPlugin extends AbstractPlugin implements PostProductCreateAlternativesPluginInterface
 {
     /**
      * Specification:

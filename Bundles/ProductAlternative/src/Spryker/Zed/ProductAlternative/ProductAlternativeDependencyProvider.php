@@ -142,7 +142,7 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductUpdateAlternativesPluginInterface[]
+     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductCreateAlternativesPluginInterface[]
      */
     protected function getPostProductAlternativePlugins(): array
     {

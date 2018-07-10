@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductAlternativeTransfer;
 class ProductAlternativePluginExecutor implements ProductAlternativePluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductUpdateAlternativesPluginInterface[]
+     * @var \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductCreateAlternativesPluginInterface[]
      */
     protected $postProductAlternativePlugins;
 
@@ -22,7 +22,7 @@ class ProductAlternativePluginExecutor implements ProductAlternativePluginExecut
     protected $postDeleteProductAlternativePlugins;
 
     /**
-     * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductUpdateAlternativesPluginInterface[] $postProductAlternativePlugins
+     * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductCreateAlternativesPluginInterface[] $postProductAlternativePlugins
      * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\DeleteProductAlternativePluginInterface[] $postDeleteProductAlternativePlugins
      */
     public function __construct(
