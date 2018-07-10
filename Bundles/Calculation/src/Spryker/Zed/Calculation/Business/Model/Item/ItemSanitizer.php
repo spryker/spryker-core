@@ -58,8 +58,12 @@ class ItemSanitizer implements ItemSanitizerInterface
                 ->setSumPrice(null)
                 ->setSumGrossPrice(null)
                 ->setSumNetPrice(null)
-                ->setSumDiscountAmountAggregation(null)
-                ->setSumTaxAmount(null);
+                ->setSumDiscountAmountAggregation(null);
+
+            // feature check
+            if (defined($productOption::SUM_TAX_AMOUNT)) {
+                $productOption->setSumTaxAmount(null);
+            }
         }
 
         return $productOptions;
