@@ -46,7 +46,7 @@ class ProductListImporter implements ProductListImporterInterface
         UploadedFile $productsConcreteCsv,
         ProductListProductConcreteRelationTransfer $productConcreteRelationTransfer
     ): ProductListProductConcreteRelationTransfer {
-        $productTable = $this->csvService->readFile($productsConcreteCsv);
+        $productTable = $this->csvService->readUploadedFile($productsConcreteCsv);
 
         $productSkus = [];
         foreach ($productTable as $productRow) {

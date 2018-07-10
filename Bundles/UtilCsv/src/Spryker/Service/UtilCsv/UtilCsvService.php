@@ -26,7 +26,7 @@ class UtilCsvService extends AbstractService implements UtilCsvServiceInterface
      *
      * @return array
      */
-    public function readFile(UploadedFile $file): array
+    public function readUploadedFile(UploadedFile $file): array
     {
         return $this->getFactory()
             ->createFileReader()

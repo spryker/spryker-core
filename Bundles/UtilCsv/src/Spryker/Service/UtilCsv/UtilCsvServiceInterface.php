@@ -15,7 +15,8 @@ interface UtilCsvServiceInterface
 {
     /**
      * Specification:
-     * - Read data from uploaded csv file and returns content
+     * - Reads data from uploaded csv file and returns content.
+     * - Returns string[][]. Table row-by-row.
      *
      * @api
      *
@@ -23,11 +24,12 @@ interface UtilCsvServiceInterface
      *
      * @return array
      */
-    public function readFile(UploadedFile $file): array;
+    public function readUploadedFile(UploadedFile $file): array;
 
     /**
      * Specification:
-     * - Generates csv file and returns response with file for export
+     * - Generates csv file.
+     * - Returns stream response with generated file. So customer can download csv file.
      *
      * @api
      *
