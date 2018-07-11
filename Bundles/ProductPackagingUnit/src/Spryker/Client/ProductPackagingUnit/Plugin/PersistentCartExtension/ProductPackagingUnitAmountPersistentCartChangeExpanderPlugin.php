@@ -29,6 +29,6 @@ class ProductPackagingUnitAmountPersistentCartChangeExpanderPlugin extends Abstr
     public function extend(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
         return $this->getClient()
-            ->expandProductPackagingUnitAmountForPersistentCartChange($persistentCartChangeTransfer, $params);
+            ->expandAmountForPersistentCartChange($persistentCartChangeTransfer, $params);
     }
 }

@@ -18,6 +18,8 @@ use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 class ProductPackagingUnitReservationHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $sku

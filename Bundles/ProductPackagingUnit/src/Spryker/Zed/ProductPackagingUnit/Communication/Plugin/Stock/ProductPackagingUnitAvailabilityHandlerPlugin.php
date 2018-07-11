@@ -17,6 +17,8 @@ use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
 class ProductPackagingUnitAvailabilityHandlerPlugin extends AbstractPlugin implements StockUpdateHandlerPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $sku

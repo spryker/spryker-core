@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductPackagingUnit\Plugin\Cart;
+namespace Spryker\Client\ProductPackagingUnit\Plugin\CartExtension;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPluginInterface;
@@ -29,6 +29,6 @@ class ProductPackagingUnitAmountCartChangeRequestExpanderPlugin extends Abstract
     public function expand(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer
     {
         return $this->getClient()
-            ->expandProductPackagingUnitAmountForCartChangeRequest($cartChangeTransfer, $params);
+            ->expandAmountForCartChangeRequest($cartChangeTransfer, $params);
     }
 }

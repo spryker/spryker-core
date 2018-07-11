@@ -27,7 +27,7 @@ interface ProductPackagingUnitEvents
 
     /**
      * Specification:
-     * - This event is used for product_abstract_packaging_unit publishing.
+     * - This event is used for product_abstract_packaging publishing.
      *
      * @api
      */
@@ -35,7 +35,7 @@ interface ProductPackagingUnitEvents
 
     /**
      * Specification:
-     * - This event is used for product_abstract_packaging_unit unpublishing.
+     * - This event is used for product_abstract_packaging unpublishing.
      *
      * @api
      */

@@ -84,7 +84,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
-     * @uses Product
+     * @module Product
      *
      * @param int $idProductAbstract
      *
@@ -114,7 +114,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
-     * @uses Product
+     * @module Product
      *
      * @param string $productPackagingUnitSku
      *
@@ -147,7 +147,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
-     * @uses Product
+     * @module Product
      *
      * @param int[] $productPackagingUnitTypeIds
      *
@@ -223,7 +223,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
-     * @uses Product
+     * @module Product
      *
      * @param string $productPackagingUnitSku
      *
@@ -265,6 +265,8 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
+     * @module Product
+     *
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer
