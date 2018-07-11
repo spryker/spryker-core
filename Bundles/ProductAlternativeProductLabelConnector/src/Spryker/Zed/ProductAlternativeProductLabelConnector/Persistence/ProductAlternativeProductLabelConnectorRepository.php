@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence;
 
 use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -19,19 +18,19 @@ class ProductAlternativeProductLabelConnectorRepository extends AbstractReposito
     /**
      * @param string $labelName
      *
-     * @return null|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel
+     * @return bool
      */
-    public function findProductLabelByName(string $labelName): ?SpyProductLabel
+    public function getIsProductLabelActive(string $labelName): bool
     {
         $productLabelEntity = $this->getFactory()
             ->getProductLabelPropelQuery()
             ->filterByName($labelName);
 
         if (!$productLabelEntity) {
-            return null;
+            return false;
         }
 
-        return $productLabelEntity->findOne();
+        return $productLabelEntity->findOne()->getIsActive();
     }
 
     /**

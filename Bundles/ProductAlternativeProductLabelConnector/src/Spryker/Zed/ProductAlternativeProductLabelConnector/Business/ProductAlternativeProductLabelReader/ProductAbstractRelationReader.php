@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelReader;
 
 use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelInterface;
@@ -68,9 +67,10 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      */
     public function findProductLabelProductAbstractRelationChanges(): array
     {
-        $productLabelAlternativeEntity = $this->getProductLabelAlternativeEntity();
-
-        if (!$productLabelAlternativeEntity->getIsActive()) {
+        if (!$this->productAlternativeProductLabelConnectorRepository->getIsProductLabelActive(
+            $this->config->getProductAlternativesLabelName()
+        )
+        ) {
             return [];
         }
 
@@ -105,22 +105,6 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         $result[] = $this->mapRelationTransfer($idProductLabel, $idsToAssign, $idsToDeAssign);
 
         return $result;
-    }
-
-    /**
-     * @return null|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel
-     */
-    protected function getProductLabelAlternativeEntity(): ?SpyProductLabel
-    {
-        $labelAlternativeName = $this->config->getProductAlternativesLabelName();
-        $productLabelAlternativeEntity = $this->productAlternativeProductLabelConnectorRepository
-            ->findProductLabelByName($labelAlternativeName);
-
-        if (!$productLabelAlternativeEntity) {
-            return null;
-        }
-
-        return $productLabelAlternativeEntity;
     }
 
     /**

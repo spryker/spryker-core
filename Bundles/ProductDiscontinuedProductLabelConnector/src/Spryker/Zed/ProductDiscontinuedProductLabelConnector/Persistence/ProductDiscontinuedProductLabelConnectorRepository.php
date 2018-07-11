@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Persistence;
 
 use Orm\Zed\ProductDiscontinued\Persistence\Map\SpyProductDiscontinuedTableMap;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -19,19 +18,19 @@ class ProductDiscontinuedProductLabelConnectorRepository extends AbstractReposit
     /**
      * @param string $labelName
      *
-     * @return null|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel
+     * @return bool
      */
-    public function findProductLabelByName(string $labelName): ?SpyProductLabel
+    public function getIsProductLabelActive(string $labelName): bool
     {
         $productLabelEntity = $this->getFactory()
-            ->createProductLabelPropelQuery()
+            ->getProductLabelPropelQuery()
             ->filterByName($labelName);
 
         if (!$productLabelEntity) {
-            return null;
+            return false;
         }
 
-        return $productLabelEntity->findOne();
+        return $productLabelEntity->findOne()->getIsActive();
     }
 
     /**
@@ -40,7 +39,7 @@ class ProductDiscontinuedProductLabelConnectorRepository extends AbstractReposit
     public function getProductConcreteIds(): array
     {
         $productConcreteIds = $this->getFactory()
-            ->createProductDiscontinuedPropelQuery()
+            ->getProductDiscontinuedPropelQuery()
             ->select([SpyProductDiscontinuedTableMap::COL_FK_PRODUCT])
             ->groupByFkProduct()
             ->find();

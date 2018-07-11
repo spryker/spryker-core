@@ -7,16 +7,14 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Persistence;
 
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
-
 interface ProductDiscontinuedProductLabelConnectorRepositoryInterface
 {
     /**
      * @param string $labelName
      *
-     * @return null|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel
+     * @return bool
      */
-    public function findProductLabelByName(string $labelName): ?SpyProductLabel;
+    public function getIsProductLabelActive(string $labelName): bool;
 
     /**
      * @return int[]

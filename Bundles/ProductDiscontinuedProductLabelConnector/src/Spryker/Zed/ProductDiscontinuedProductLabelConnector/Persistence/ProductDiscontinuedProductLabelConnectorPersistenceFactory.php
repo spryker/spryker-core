@@ -20,7 +20,7 @@ class ProductDiscontinuedProductLabelConnectorPersistenceFactory extends Abstrac
     /**
      * @return \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery
      */
-    public function createProductDiscontinuedPropelQuery(): SpyProductDiscontinuedQuery
+    public function getProductDiscontinuedPropelQuery(): SpyProductDiscontinuedQuery
     {
         return $this->getProvidedDependency(ProductDiscontinuedProductLabelConnectorDependencyProvider::PROPEL_QUERY_PRODUCT_DISCONTINUED);
     }
@@ -28,7 +28,7 @@ class ProductDiscontinuedProductLabelConnectorPersistenceFactory extends Abstrac
     /**
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
-    public function createProductLabelPropelQuery(): SpyProductLabelQuery
+    public function getProductLabelPropelQuery(): SpyProductLabelQuery
     {
         return $this->getProvidedDependency(ProductDiscontinuedProductLabelConnectorDependencyProvider::PROPEL_QUERY_PRODUCT_LABEL);
     }

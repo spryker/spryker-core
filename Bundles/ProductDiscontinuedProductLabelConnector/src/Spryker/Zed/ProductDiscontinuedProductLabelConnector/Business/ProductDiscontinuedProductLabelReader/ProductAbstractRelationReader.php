@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelReader;
 
 use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductDiscontinuedFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelInterface;
@@ -68,9 +67,10 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      */
     public function findProductLabelProductAbstractRelationChanges(): array
     {
-        $productLabelDiscontinuedEntity = $this->getProductLabelDiscontinuedEntity();
-
-        if (!$productLabelDiscontinuedEntity->getIsActive()) {
+        if (!$this->productDiscontinuedProductLabelConnectorRepository->getIsProductLabelActive(
+            $this->config->getProductDiscontinueLabelName()
+        )
+        ) {
             return [];
         }
 
@@ -105,22 +105,6 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         $result[] = $this->mapRelationTransfer($idProductLabel, $idsToAssign, $idsToDeAssign);
 
         return $result;
-    }
-
-    /**
-     * @return null|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel
-     */
-    protected function getProductLabelDiscontinuedEntity(): ?SpyProductLabel
-    {
-        $labelDiscontinuedName = $this->config->getProductDiscontinueLabelName();
-        $productLabelDiscontinuedEntity = $this->productDiscontinuedProductLabelConnectorRepository
-            ->findProductLabelByName($labelDiscontinuedName);
-
-        if (!$productLabelDiscontinuedEntity) {
-            return null;
-        }
-
-        return $productLabelDiscontinuedEntity;
     }
 
     /**
