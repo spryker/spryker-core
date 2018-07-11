@@ -16,7 +16,7 @@ interface SynchronizationDataRepositoryPluginInterface extends SynchronizationDa
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */

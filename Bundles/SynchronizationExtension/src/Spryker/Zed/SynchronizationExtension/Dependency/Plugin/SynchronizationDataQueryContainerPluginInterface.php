@@ -18,7 +18,7 @@ interface SynchronizationDataQueryContainerPluginInterface extends Synchronizati
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
