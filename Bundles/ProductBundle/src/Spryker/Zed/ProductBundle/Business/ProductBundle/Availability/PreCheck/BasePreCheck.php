@@ -13,6 +13,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
 class BasePreCheck
 {
@@ -36,18 +37,26 @@ class BasePreCheck
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\ProductBundleConfig
+     */
+    protected $productBundleConfig;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductBundle\ProductBundleConfig $productBundleConfig
      */
     public function __construct(
         ProductBundleToAvailabilityInterface $availabilityFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
-        ProductBundleToStoreFacadeInterface $storeFacade
+        ProductBundleToStoreFacadeInterface $storeFacade,
+        ProductBundleConfig $productBundleConfig
     ) {
         $this->availabilityFacade = $availabilityFacade;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->storeFacade = $storeFacade;
+        $this->productBundleConfig = $productBundleConfig;
     }
 
     /**

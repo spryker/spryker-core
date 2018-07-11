@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Shared\Availability\AvailabilityConstants;
 use Spryker\Zed\Availability\AvailabilityConfig;
 
 class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
@@ -117,9 +116,11 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
         $checkoutErrorTransfer
             ->setErrorCode($this->availabilityConfig->getProductUnavailableErrorCode())
             ->setMessage(static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY)
-            ->setErrorType(AvailabilityConstants::ERROR_TYPE_AVAILABILITY)
+            ->setErrorType(
+                $this->availabilityConfig->getAvailabilityErrorType()
+            )
             ->setParameters([
-                AvailabilityConstants::CHECKOUT_PRODUCT_UNAVAILABLE_PARAMETER_SKU => $sku,
+                $this->availabilityConfig->getAvailabilityProductSkuParameter() => $sku,
             ]);
 
         $checkoutResponse

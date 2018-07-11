@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Shared\Availability\AvailabilityConstants;
 
 class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements ProductBundleCheckoutAvailabilityCheckInterface
 {
@@ -142,8 +141,8 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         $processedErrorMessages = [];
 
         foreach ($availabilityErrorMessages as $availabilityErrorMessage) {
-            if ($availabilityErrorMessage->getErrorType() !== AvailabilityConstants::ERROR_TYPE_AVAILABILITY
-            || !$this->hasRelatedAvailabilityErrorMessage($availabilityErrorMessage, $productBundleErrorMessages)) {
+            if (!$this->hasRelatedAvailabilityErrorMessage($availabilityErrorMessage, $productBundleErrorMessages)
+            || $this->isAvailabilityErrorMessage($availabilityErrorMessage)) {
                 $processedErrorMessages[] = $availabilityErrorMessage;
             }
         }
@@ -154,6 +153,16 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         );
 
         return new ArrayObject($processedErrorMessages);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutErrorTransfer $availabilityErrorMessage
+     *
+     * @return bool
+     */
+    protected function isAvailabilityErrorMessage(CheckoutErrorTransfer $availabilityErrorMessage): bool
+    {
+        return $availabilityErrorMessage->getErrorType() === $this->productBundleConfig->getAvailabilityErrorType();
     }
 
     /**
@@ -186,8 +195,9 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     protected function getAvailabilityErrorMessageSku(CheckoutErrorTransfer $availabilityErrorMessage): string
     {
         $availabilityErrorMessageParameters = $availabilityErrorMessage->getParameters();
+        $availabilityProductSkuParameter = $this->productBundleConfig->getAvailabilityProductSkuParameter();
 
-        return $availabilityErrorMessageParameters[AvailabilityConstants::CHECKOUT_PRODUCT_UNAVAILABLE_PARAMETER_SKU];
+        return $availabilityErrorMessageParameters[$availabilityProductSkuParameter];
     }
 
     /**

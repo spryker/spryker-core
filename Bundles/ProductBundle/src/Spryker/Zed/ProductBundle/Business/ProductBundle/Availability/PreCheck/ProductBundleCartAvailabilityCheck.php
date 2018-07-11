@@ -12,11 +12,13 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
 class ProductBundleCartAvailabilityCheck extends BasePreCheck implements ProductBundleCartAvailabilityCheckInterface
 {
@@ -35,14 +37,16 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductBundle\ProductBundleConfig $productBundleConfig
      */
     public function __construct(
         ProductBundleToAvailabilityInterface $availabilityFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer,
-        ProductBundleToStoreFacadeInterface $storeFacade
+        ProductBundleToStoreFacadeInterface $storeFacade,
+        ProductBundleConfig $productBundleConfig
     ) {
-        parent::__construct($availabilityFacade, $productBundleQueryContainer, $storeFacade);
+        parent::__construct($availabilityFacade, $productBundleQueryContainer, $storeFacade, $productBundleConfig);
 
         $this->availabilityQueryContainer = $availabilityQueryContainer;
     }
@@ -208,19 +212,18 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         StoreTransfer $storeTransfer
     ) {
         $bundledProducts = $this->findBundledProducts($itemTransfer->getSku());
+        $bundledProductsMessages = [];
 
         if (count($bundledProducts) > 0) {
-            return $this->checkBundleAvailability($itemsInCart, $bundledProducts, $itemTransfer, $storeTransfer);
+            return $this->getUnavailableBundleItemsInCart($itemsInCart, $bundledProducts, $itemTransfer, $storeTransfer);
         }
 
         $regularItemAvailability = $this->checkRegularItemAvailability($itemsInCart, $itemTransfer, $storeTransfer);
         if ($regularItemAvailability) {
-            return [
-                $regularItemAvailability,
-            ];
+            $bundledProductsMessages[] = $regularItemAvailability;
         }
 
-        return [];
+        return $bundledProductsMessages;
     }
 
     /**
@@ -231,7 +234,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    protected function checkBundleAvailability(
+    protected function getUnavailableBundleItemsInCart(
         ArrayObject $itemsInCart,
         ObjectCollection $bundledProducts,
         ItemTransfer $itemTransfer,
@@ -240,12 +243,11 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         $unavailableBundleItems = $this->getUnavailableBundleItems($itemsInCart, $bundledProducts, $itemTransfer, $storeTransfer);
 
         $availabilityEntity = $this->findAvailabilityEntityBySku($itemTransfer->getSku(), $storeTransfer);
-        $availabilityEntityQuantity = $availabilityEntity->getQuantity();
 
-        if ($itemTransfer->getQuantity() > $availabilityEntityQuantity
-            && count($unavailableBundleItems) === count($bundledProducts)) {
+        if ($this->isUserRequestedMoreItemsThanInStock($itemTransfer, $availabilityEntity)
+            && $this->isAllBundleItemsUnavailable($unavailableBundleItems, $bundledProducts)) {
             $bundleAvailabilityErrorMessage = $this->createItemIsNotAvailableMessageTransfer(
-                $availabilityEntityQuantity,
+                $availabilityEntity->getQuantity(),
                 $itemTransfer->getSku()
             );
 
@@ -254,6 +256,38 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
             ];
         }
 
+        return $this->createMessageTransfersForUnavailableBundleItems($unavailableBundleItems);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $availabilityEntity
+     *
+     * @return bool
+     */
+    protected function isUserRequestedMoreItemsThanInStock(ItemTransfer $itemTransfer, SpyAvailability $availabilityEntity): bool
+    {
+        return $itemTransfer->getQuantity() > $availabilityEntity->getQuantity();
+    }
+
+    /**
+     * @param array $unavailableBundleItems
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection $bundledProducts
+     *
+     * @return bool
+     */
+    protected function isAllBundleItemsUnavailable(array $unavailableBundleItems, ObjectCollection $bundledProducts): bool
+    {
+        return count($unavailableBundleItems) === count($bundledProducts);
+    }
+
+    /**
+     * @param array $unavailableBundleItems
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    protected function createMessageTransfersForUnavailableBundleItems(array $unavailableBundleItems): array
+    {
         $unavailableBundleItemsMessages = [];
 
         foreach ($unavailableBundleItems as $unavailableBundleItem) {
