@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
 {
     /**
-     * @return null| string
+     * @return string|null
      */
     public function getProductMeasurementUnitSynchronizationPoolName(): ?string
     {
@@ -20,7 +20,7 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return null| string
+     * @return string|null
      */
     public function getProductConcreteMeasurementUnitSynchronizationPoolName(): ?string
     {

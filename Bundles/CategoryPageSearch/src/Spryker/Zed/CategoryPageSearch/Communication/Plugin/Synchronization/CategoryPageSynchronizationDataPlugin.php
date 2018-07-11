@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Synchronization;
 
-use Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;

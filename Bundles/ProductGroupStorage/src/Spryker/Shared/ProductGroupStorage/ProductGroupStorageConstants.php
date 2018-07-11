@@ -25,7 +25,6 @@ class ProductGroupStorageConstants
      */
     const PRODUCT_GROUP_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 
-
     /**
      * Specification:
      * - Resource name, this will use for key generating

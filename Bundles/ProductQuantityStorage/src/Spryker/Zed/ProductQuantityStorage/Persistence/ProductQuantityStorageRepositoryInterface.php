@@ -20,6 +20,4 @@ interface ProductQuantityStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
      */
     public function findAllProductQuantityStorageEntities(): array;
-
-
 }

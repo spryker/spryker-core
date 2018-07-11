@@ -17,7 +17,6 @@ class ProductSetPageSearchConstants
      */
     const PRODUCT_SET_RESOURCE_NAME = 'product_set';
 
-
     /**
      * Specification:
      * - Queue name as used for processing Product messages

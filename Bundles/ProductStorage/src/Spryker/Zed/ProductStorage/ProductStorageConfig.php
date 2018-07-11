@@ -24,7 +24,7 @@ class ProductStorageConfig extends AbstractBundleConfig
      */
     public function getProductConcreteSynchronizationPoolName(): ?string
     {
-       return null;
+        return null;
     }
 
     /**
