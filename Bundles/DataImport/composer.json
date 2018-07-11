@@ -14,7 +14,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/event-behavior": "^0.1.0",
+    "spryker/event-behavior": "*",
     "spryker/testify": "*"
   },
   "suggest": {

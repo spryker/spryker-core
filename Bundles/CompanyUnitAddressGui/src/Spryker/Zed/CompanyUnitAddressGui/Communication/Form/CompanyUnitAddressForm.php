@@ -168,7 +168,7 @@ class CompanyUnitAddressForm extends AbstractType
     protected function addAddress1Field(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ADDRESS_1, TextType::class, [
-            'label' => 'Address1',
+            'label' => 'Street',
             'required' => true,
             'constraints' => [
                 new Required(),
@@ -188,7 +188,7 @@ class CompanyUnitAddressForm extends AbstractType
     protected function addAddress2Field(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ADDRESS_2, TextType::class, [
-            'label' => 'Address2',
+            'label' => 'Number',
             'required' => false,
             'constraints' => [
                 new Length(['max' => 255]),
@@ -206,7 +206,7 @@ class CompanyUnitAddressForm extends AbstractType
     protected function addAddress3Field(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ADDRESS_3, TextType::class, [
-            'label' => 'Address3',
+            'label' => 'Addition to address',
             'required' => false,
             'constraints' => [
                 new Length(['max' => 255]),
