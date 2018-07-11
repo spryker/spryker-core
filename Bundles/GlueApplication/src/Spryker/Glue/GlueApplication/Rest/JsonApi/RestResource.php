@@ -155,7 +155,7 @@ class RestResource implements RestResourceInterface
         ];
 
         if ($this->attributes) {
-            $response[RestResourceInterface::RESOURCE_ATTRIBUTES] = $this->attributes->toArray(true);
+            $response[RestResourceInterface::RESOURCE_ATTRIBUTES] = $this->attributes->toArray(true, true);
         }
 
         if ($this->links) {
