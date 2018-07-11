@@ -8,28 +8,25 @@
     <table name="spy_merchant_relationship_min_order_value" idMethod="native" allowPkInsert="true">
         <column name="id_merchant_relationship_min_order_value" required="true" type="INTEGER" primaryKey="true"
                 autoIncrement="true"/>
-        <column name="fk_min_order_value_type" type="INTEGER" required="true"/>
         <column name="fk_merchant_relationship" type="INTEGER" required="true"/>
-        <column name="fk_currency" type="INTEGER" required="true"/>
+        <column name="fk_min_order_value_attribute" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
-        <column name="value" type="INTEGER" required="true"/>
-        <column name="fee" type="INTEGER" required="false"/>
 
         <behavior name="timestampable"/>
 
         <id-method-parameter value="id_merchant_relationship_min_order_value_pk_seq"/>
 
-        <foreign-key name="spy_merchant_relationship_min-fk_min_order_value_type"
-                     foreignTable="spy_min_order_value_type" phpName="MinimumOrderValueType">
-            <reference local="fk_min_order_value_type" foreign="id_min_order_value_type"/>
+        <foreign-key name="spy_mer_rel_min_order_value-fk_merchant_relationship"
+                     foreignTable="spy_merchant_relationship" phpName="MerchantRelationship">
+            <reference local="fk_merchant_relationship" foreign="id_merchant_relationship"/>
         </foreign-key>
 
-        <foreign-key name="spy_merchant_relationship_min-fk_currency" foreignTable="spy_currency"
-                     phpName="Currency">
-            <reference local="fk_currency" foreign="id_currency"/>
+        <foreign-key name="spy_mer_rel_min_order_value-fk_min_order_value_attribute"
+                     foreignTable="spy_min_order_value_attribute" phpName="MinimumOrderValueAttribute">
+            <reference local="fk_min_order_value_attribute" foreign="id_min_order_value_attribute"/>
         </foreign-key>
 
-        <foreign-key name="spy_merchant_relationship_min-fk_store" foreignTable="spy_store"
+        <foreign-key name="spy_mer_rel_min-fk_store" foreignTable="spy_store"
                      phpName="Store">
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
