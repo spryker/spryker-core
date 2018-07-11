@@ -25,7 +25,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-        $checkoutErrorMessages = $this->checkAvailabilityErrorMessages(
+        $checkoutErrorMessages = $this->getAvailabilityErrorMessages(
             $checkoutResponseTransfer->getErrors(),
             $this->getCheckoutAvailabilityFailedItems($quoteTransfer)
         );
@@ -136,7 +136,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[]
      */
-    protected function checkAvailabilityErrorMessages(ArrayObject $availabilityErrorMessages, ArrayObject $productBundleErrorMessages): ArrayObject
+    protected function getAvailabilityErrorMessages(ArrayObject $availabilityErrorMessages, ArrayObject $productBundleErrorMessages): ArrayObject
     {
         $processedErrorMessages = [];
 
