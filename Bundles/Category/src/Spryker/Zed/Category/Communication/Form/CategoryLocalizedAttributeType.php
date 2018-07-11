@@ -8,7 +8,6 @@ namespace Spryker\Zed\Category\Communication\Form;
 
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -26,8 +25,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CategoryLocalizedAttributeType extends AbstractType
 {
-    public const OPTION_CATEGORY_QUERY_CONTAINER = 'OPTION_CATEGORY_QUERY_CONTAINER';
-
     const FIELD_NAME = 'name';
     const FIELD_FK_LOCALE = 'fk_locale';
     const FIELD_LOCALE_NAME = 'locale_name';
@@ -47,7 +44,7 @@ class CategoryLocalizedAttributeType extends AbstractType
 
         $resolver->setDefaults([
             'data_class' => CategoryLocalizedAttributesTransfer::class,
-        ])->setRequired(static::OPTION_CATEGORY_QUERY_CONTAINER);
+        ]);
     }
 
     /**
@@ -61,7 +58,7 @@ class CategoryLocalizedAttributeType extends AbstractType
         $this
             ->addFkLocaleField($builder)
             ->addLocaleNameField($builder)
-            ->addNameField($builder, $options[static::OPTION_CATEGORY_QUERY_CONTAINER])
+            ->addNameField($builder)
             ->addMetaTitleField($builder)
             ->addMetaDescriptionField($builder)
             ->addMetaKeywordsField($builder);
@@ -105,32 +102,23 @@ class CategoryLocalizedAttributeType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder, CategoryQueryContainerInterface $categoryQueryContainer)
+    protected function addNameField(FormBuilderInterface $builder)
     {
         $builder
             ->add(self::FIELD_NAME, TextType::class, [
                 'constraints' => [
                     new NotBlank(),
                     new Callback([
-                        'callback' => function ($key, ExecutionContextInterface $context) use ($categoryQueryContainer) {
-                            $data = $context->getRoot()->getData();
+                        'callback' => function ($nameKey, ExecutionContextInterface $context) {
+                            $categoryTransfer = $context->getRoot()->getData();
 
-                            $exists = false;
-                            if ($data instanceof CategoryTransfer && $key) {
-                                $exists = $categoryQueryContainer
-                                    ->queryFirstLevelChildrenByName(
-                                        $data->getParentCategoryNode()->getIdCategoryNode(),
-                                        $key
-                                    )
-                                    ->exists();
-                            }
-
-                            if ($exists) {
-                                $context->addViolation(sprintf('Category with name "%s" already in use in this category level, please choose another one.', $key));
+                            if ($categoryTransfer instanceof CategoryTransfer && $nameKey) {
+                                if ($this->getFacade()->hasFirstLevelChildrenByName($nameKey, $categoryTransfer)) {
+                                    $context->addViolation(sprintf('Category with name "%s" already in use in this category level, please choose another one.', $nameKey));
+                                }
                             }
                         },
                     ]),

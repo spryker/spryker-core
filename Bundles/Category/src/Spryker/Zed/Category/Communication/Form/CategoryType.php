@@ -83,7 +83,7 @@ class CategoryType extends AbstractType
             ->addExtraParentsField($builder, $options[static::OPTION_PARENT_CATEGORY_NODE_CHOICES])
             ->addTemplateField($builder, $options[static::OPTION_CATEGORY_TEMPLATE_CHOICES])
             ->addPluginForms($builder)
-            ->addLocalizedAttributesForm($builder, $options);
+            ->addLocalizedAttributesForm($builder);
     }
 
     /**
@@ -251,17 +251,13 @@ class CategoryType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
-    protected function addLocalizedAttributesForm(FormBuilderInterface $builder, array $options)
+    protected function addLocalizedAttributesForm(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_LOCALIZED_ATTRIBUTES, CollectionType::class, [
             'entry_type' => CategoryLocalizedAttributeType::class,
-            'entry_options' => [
-                CategoryLocalizedAttributeType::OPTION_CATEGORY_QUERY_CONTAINER => $options[static::OPTION_CATEGORY_QUERY_CONTAINER],
-            ],
         ]);
 
         return $this;
