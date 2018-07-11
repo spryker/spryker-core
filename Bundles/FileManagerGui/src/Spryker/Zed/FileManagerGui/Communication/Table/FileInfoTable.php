@@ -9,7 +9,6 @@ namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
 use Orm\Zed\FileManager\Persistence\Map\SpyFileInfoTableMap;
 use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -77,8 +76,7 @@ abstract class FileInfoTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->fileInfoQuery
-            ->filterByFkFile($this->idFile)
-            ->orderByVersion(Criteria::DESC);
+            ->filterByFkFile($this->idFile);
 
         $queryResults = $this->runQuery($query, $config);
         $results = [];
@@ -144,8 +142,9 @@ abstract class FileInfoTable extends AbstractTable
     protected function setSearchableFields(TableConfiguration $config)
     {
         $config->setSearchable([
-            static::COL_FILE_INFO_CREATED_AT,
+            static::COL_FILE_INFO_TYPE,
             static::COL_FILE_INFO_VERSION_NAME,
+            static::COL_FILE_INFO_CREATED_AT,
         ]);
     }
 
