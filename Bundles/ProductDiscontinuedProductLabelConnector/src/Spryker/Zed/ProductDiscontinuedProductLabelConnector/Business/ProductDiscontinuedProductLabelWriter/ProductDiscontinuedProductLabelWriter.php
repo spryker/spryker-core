@@ -87,6 +87,10 @@ class ProductDiscontinuedProductLabelWriter implements ProductDiscontinuedProduc
      */
     public function removeProductAbstractRelationsForLabel(int $idProduct): void
     {
+        if (!$this->productLabelFacade->findLabelByLabelName($this->config->getProductDiscontinueLabelName())) {
+            return;
+        }
+
         $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
             $this->config->getProductDiscontinueLabelName()
         )->getIdProductLabel();

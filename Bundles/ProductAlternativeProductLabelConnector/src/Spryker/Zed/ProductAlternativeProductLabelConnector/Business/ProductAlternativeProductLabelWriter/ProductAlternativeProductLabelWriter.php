@@ -87,6 +87,10 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
      */
     public function removeProductAbstractRelationsForLabel(int $idProduct): void
     {
+        if (!$this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabelName())) {
+            return;
+        }
+
         $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
             $this->config->getProductAlternativesLabelName()
         )->getIdProductLabel();
