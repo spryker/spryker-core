@@ -129,6 +129,7 @@ abstract class FileInfoTable extends AbstractTable
     protected function setSortableFields(TableConfiguration $config)
     {
         $config->setSortable([
+            static::COL_FILE_INFO_TYPE,
             static::COL_FILE_INFO_CREATED_AT,
             static::COL_FILE_INFO_VERSION_NAME,
         ]);
