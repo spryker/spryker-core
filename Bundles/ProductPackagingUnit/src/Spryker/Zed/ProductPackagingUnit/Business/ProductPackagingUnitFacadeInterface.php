@@ -21,7 +21,7 @@ interface ProductPackagingUnitFacadeInterface
 {
     /**
      * Specification:
-     * - Add infrastructural packaging unit type list to persistence.
+     * - Adds infrastructural packaging unit types to Persistence.
      *
      * @api
      *
@@ -41,7 +41,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     *  - Returns Default Packaging Unit Type Name
+     * - Returns the default packaging unit type name.
      *
      * @api
      *
@@ -51,7 +51,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves a product packaging unit type by the provided name within the provided transfer.
+     * - Retrieves a product packaging unit type using the name within the provided transfer.
      *
      * @api
      *
@@ -65,7 +65,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves a product packaging lead product by provided product abstract ID.
+     * - Retrieves a product packaging lead product by the provided product abstract ID.
      *
      * @api
      *
@@ -79,7 +79,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves a product packaging unit type by provided product packaging type ID within the provided transfer.
+     * - Retrieves a product packaging unit type using the product packaging type ID within the provided transfer.
      *
      * @api
      *
@@ -120,6 +120,7 @@ interface ProductPackagingUnitFacadeInterface
     /**
      * Specification:
      * - Creates product packaging unit type.
+     * - Validates if the packaging unit type name is unique.
      *
      * @api
      *
@@ -134,6 +135,7 @@ interface ProductPackagingUnitFacadeInterface
     /**
      * Specification:
      * - Updates product packaging unit type.
+     * - Validate if the name is still unique.
      *
      * @api
      *
@@ -147,7 +149,9 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Deletes a product packaging unit type.
+     * - Deletes a product packaging unit type by its ID.
+     * - Deletes related translations.
+     * - Deletes only if no product packaging unit is associated with this unit type.
      *
      * @api
      *
@@ -186,7 +190,7 @@ interface ProductPackagingUnitFacadeInterface
     /**
      * Specification:
      * - Calculates amount normalized sales unit value.
-     * - Updates quote item transfers
+     * - Updates quote item transfers.
      *
      * @api
      *
@@ -198,8 +202,8 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Returns the expanded group key if item has amount or sales unit.
-     * - Returns the provided group key otherwise.
+     * - Expands group key if item has amount sales unit.
+     * - Leaves the provided group key unchanged otherwise.
      *
      * @api
      *
@@ -236,7 +240,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Expands SalesOrderItemEntity with amount and sku.
+     * - Expands SalesOrderItemEntity with amount and sku if item has lead product.
      *
      * @api
      *
@@ -249,11 +253,9 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     *
-     * - Checks if items which being added to cart is available.
-     * - For packaging units it checks the lead product also if `hasLeadProduct`.
-     * - Even if same lead product added separatelly from packaging unit availability is checked together.
-     * - Sets error message if not available
+     * - Checks if item amounts which being added to cart are available.
+     * - Even if same lead product added separately, the lead product availability is checked together.
+     * - Sets error message if not available.
      *
      * @api
      *
@@ -265,11 +267,9 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     *
-     * - Checks if items which being added to cart is available.
-     * - For packaging units it checks the lead product also if `hasLeadProduct`.
-     * - Even if same lead product added separatelly from packaging unit availability is checked together.
-     * - Sets error message if not available
+     * - Checks if item amounts which being added to cart are available during checkout.
+     * - Even if same lead product added separately, the lead product availability is checked together.
+     * - Sets error message if not available.
      *
      * @api
      *
@@ -285,7 +285,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     *  - Updates the availability of the lead product of a given ProductPackagingUnit.
+     * - Updates the availability of a lead product that is related to the provided sibling product sku.
      *
      * @api
      *
@@ -297,7 +297,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Updates the product price for each item in cart according the specified amount.
+     * - Updates the product price for each item in cart according the corresponding specified amount.
      * - When amount is not specified, price is not changed.
      * - If amount is specified and differs to the default_amount it is calculated linearly based on the ratio of the
      * customer provided amount and default amount.
