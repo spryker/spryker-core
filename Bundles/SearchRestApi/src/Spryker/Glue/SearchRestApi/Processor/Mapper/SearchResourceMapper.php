@@ -14,7 +14,7 @@ use Spryker\Glue\SearchRestApi\SearchRestApiConfig;
 
 class SearchResourceMapper implements SearchResourceMapperInterface
 {
-    protected const SEARCH_GET_PARAMETER_NAME = 'q';
+    protected const QUERY_STRING_PARAMETER = 'q';
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -36,7 +36,7 @@ class SearchResourceMapper implements SearchResourceMapperInterface
      */
     public function mapRestSearchAttributesTransferToSearchString(RestRequestInterface $restRequest): string
     {
-        return $restRequest->getHttpRequest()->query->get(static::SEARCH_GET_PARAMETER_NAME, '');
+        return $restRequest->getHttpRequest()->query->get(static::QUERY_STRING_PARAMETER, '');
     }
 
     /**
@@ -56,7 +56,6 @@ class SearchResourceMapper implements SearchResourceMapperInterface
      */
     public function mapSearchResponseAttributesTransferToRestResponse(array $restSearchResponse): RestResourceInterface
     {
-
         $restSearchAttributesTransfer = (new RestSearchAttributesTransfer())->fromArray($restSearchResponse, true);
         $restSearchAttributesTransfer->setFacets([]);
         foreach ($restSearchResponse['facets'] as $facetTransfer) {

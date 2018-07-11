@@ -1,4 +1,6 @@
 namespace: SearchRestApi
+include:
+    - tests/SprykerTest/Glue/SearchRestApi
 actor: Tester
 paths:
     tests: tests
