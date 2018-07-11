@@ -18,6 +18,8 @@ use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomerQuery;
 use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade;
+use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -31,12 +33,14 @@ use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade;
  */
 class CustomerGroupFacadeTest extends Unit
 {
+    use LocatorHelperTrait;
+
     /**
      * @return void
      */
     public function testGetValid()
     {
-        $customerGroupEntity = $this->creteCustomerGroup();
+        $customerGroupEntity = $this->createCustomerGroup();
 
         $customerEntity = $this->createCustomer();
 
@@ -64,7 +68,7 @@ class CustomerGroupFacadeTest extends Unit
      */
     public function testFindCustomerGroupByIdCustomerShouldReturnGroupTransferWhenValidIdGiven()
     {
-        $customerGroupEntity = $this->creteCustomerGroup();
+        $customerGroupEntity = $this->createCustomerGroup();
 
         $customerEntity = $this->createCustomer();
 
@@ -78,6 +82,34 @@ class CustomerGroupFacadeTest extends Unit
 
         $this->assertNotEmpty($customerGroupTransfer);
         $this->assertEquals($customerGroupEntity->getName(), $customerGroupTransfer->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCustomerGroupNamesByIdCustomer(): void
+    {
+        $customerEntity = $this->createCustomer();
+
+        $customerGroupFirstEntity = $this->createCustomerGroup();
+        $customerGroupSecondEntity = $this->createCustomerGroup();
+
+        $customerGroupToCustomerEntities = [];
+
+        $customerGroupToCustomerEntities[] = (new SpyCustomerGroupToCustomer())
+            ->setFkCustomer($customerEntity->getIdCustomer())
+            ->setFkCustomerGroup($customerGroupFirstEntity->getIdCustomerGroup())
+            ->save();
+
+        $customerGroupToCustomerEntities[] = (new SpyCustomerGroupToCustomer())
+            ->setFkCustomer($customerEntity->getIdCustomer())
+            ->setFkCustomerGroup($customerGroupSecondEntity->getIdCustomerGroup())
+            ->save();
+
+        $customerGroupNamesTransfer = $this->getCustomerGroupFacade()
+            ->findCustomerGroupNamesByIdCustomer($customerEntity->getIdCustomer());
+
+        $this->assertCount(count($customerGroupToCustomerEntities), $customerGroupNamesTransfer->getCustomerGroupNames());
     }
 
     /**
@@ -190,7 +222,7 @@ class CustomerGroupFacadeTest extends Unit
     {
         $customerGroupFacade = $this->createCustomerGroupFacade();
 
-        $customerGroupEntity = $this->creteCustomerGroup();
+        $customerGroupEntity = $this->createCustomerGroup();
 
         $customerGroupTransfer = new CustomerGroupTransfer();
         $customerGroupTransfer->setIdCustomerGroup($customerGroupEntity->getIdCustomerGroup());
@@ -210,7 +242,7 @@ class CustomerGroupFacadeTest extends Unit
     {
         $customerGroupFacade = $this->createCustomerGroupFacade();
 
-        $customerGroupEntity = $this->creteCustomerGroup();
+        $customerGroupEntity = $this->createCustomerGroup();
 
         $customerEntity = $this->createCustomer();
 
@@ -244,8 +276,8 @@ class CustomerGroupFacadeTest extends Unit
     {
         $customerGroupFacade = $this->createCustomerGroupFacade();
 
-        $customerGroupEntity1 = $this->creteCustomerGroup();
-        $customerGroupEntity2 = $this->creteCustomerGroup();
+        $customerGroupEntity1 = $this->createCustomerGroup();
+        $customerGroupEntity2 = $this->createCustomerGroup();
 
         $customerEntity = $this->createCustomer();
 
@@ -286,7 +318,7 @@ class CustomerGroupFacadeTest extends Unit
     /**
      * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup
      */
-    protected function creteCustomerGroup()
+    protected function createCustomerGroup()
     {
         $customerGroupEntity = (new SpyCustomerGroup())
             ->setName('Test' . uniqid(true));
@@ -319,5 +351,13 @@ class CustomerGroupFacadeTest extends Unit
         $customerGroupToCustomerEntity->save();
 
         return $customerGroupToCustomerEntity;
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface
+     */
+    protected function getCustomerGroupFacade(): CustomerGroupFacadeInterface
+    {
+        return $this->getLocator()->customerGroup()->facade();
     }
 }
