@@ -13,7 +13,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Spryker\Glue\GlueApplication\Rest\Serialize\DecoderMatcherInterface;
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class RequestFormatter implements RequestFormatterInterface
@@ -184,9 +184,9 @@ class RequestFormatter implements RequestFormatterInterface
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      * @param array $data
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
      */
-    protected function mapEntityTransfer(HttpRequest $httpRequest, array $data): ?TransferInterface
+    protected function mapEntityTransfer(HttpRequest $httpRequest, array $data): ?AbstractTransfer
     {
         $className = $httpRequest->attributes->get(RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN);
 
@@ -195,7 +195,7 @@ class RequestFormatter implements RequestFormatterInterface
         }
 
         $restResourceAttributesTransfer = new $className();
-        if ($restResourceAttributesTransfer instanceof TransferInterface) {
+        if ($restResourceAttributesTransfer instanceof AbstractTransfer) {
             $restResourceAttributesTransfer->fromArray($data[RestResourceInterface::RESOURCE_ATTRIBUTES], true);
         }
 

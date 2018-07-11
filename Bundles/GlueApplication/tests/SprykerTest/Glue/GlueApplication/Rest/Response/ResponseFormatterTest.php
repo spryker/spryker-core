@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseFormatter;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseFormatterInterface;
-use Spryker\Glue\GlueApplication\Rest\Serialize\Encoder\EncoderInterface;
 use Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcherInterface;
+use Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface;
 use SprykerTest\Glue\GlueApplication\Stub\RestRequest;
 use SprykerTest\Glue\GlueApplication\Stub\RestResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -98,7 +98,7 @@ class ResponseFormatterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Rest\Serialize\Encoder\EncoderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface
      */
     protected function createEncoderMock(): EncoderInterface
     {

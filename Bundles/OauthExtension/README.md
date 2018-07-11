@@ -1,4 +1,4 @@
-# Oauth Extension Module
+# OauthExtension Module
 [![Build Status](https://travis-ci.org/spryker/oauth-extension.svg)](https://travis-ci.org/spryker/oauth-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/oauth-extension/badge.svg)](https://coveralls.io/github/spryker/oauth-extension)
 
