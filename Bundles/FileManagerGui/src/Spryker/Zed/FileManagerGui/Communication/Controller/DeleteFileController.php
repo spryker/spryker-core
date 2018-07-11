@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -27,14 +28,14 @@ class DeleteFileController extends AbstractController
      */
     public function fileInfoAction(Request $request)
     {
-        $idFile = $request->get(static::URL_PARAM_ID_FILE);
-        $idFileInfo = $request->get(static::URL_PARAM_ID_FILE_INFO);
+        $idFile = $this->castId($request->get(static::URL_PARAM_ID_FILE));
+        $idFileInfo = $this->castId($request->get(static::URL_PARAM_ID_FILE_INFO));
 
         $this->getFactory()
             ->getFileManagerFacade()
             ->deleteFileInfo($idFileInfo);
 
-        $redirectUrl = sprintf(static::URL_REDIRECT_BASE . '/edit-file?id-file=%s', $idFile);
+        $redirectUrl = Url::generate(sprintf(static::URL_REDIRECT_BASE . '/edit-file?id-file=%s', $idFile))->build();
 
         return $this->redirectResponse($redirectUrl);
     }
@@ -46,12 +47,14 @@ class DeleteFileController extends AbstractController
      */
     public function fileAction(Request $request)
     {
-        $idFile = $request->get(static::URL_PARAM_ID_FILE);
+        $idFile = $this->castId($request->get(static::URL_PARAM_ID_FILE));
 
         $this->getFactory()
             ->getFileManagerFacade()
             ->deleteFile($idFile);
 
-        return $this->redirectResponse(static::URL_REDIRECT_BASE);
+        $redirectUrl = Url::generate(static::URL_REDIRECT_BASE)->build();
+
+        return $this->redirectResponse($redirectUrl);
     }
 }
