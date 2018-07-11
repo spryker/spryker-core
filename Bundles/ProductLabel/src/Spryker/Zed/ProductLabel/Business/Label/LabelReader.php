@@ -62,7 +62,7 @@ class LabelReader implements LabelReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findByNameProductLabel($labelName)
+    public function findByNameProductLabel($labelName): ?ProductLabelTransfer
     {
         $productLabelEntity = $this->findEntityByNameProductLabel($labelName);
 

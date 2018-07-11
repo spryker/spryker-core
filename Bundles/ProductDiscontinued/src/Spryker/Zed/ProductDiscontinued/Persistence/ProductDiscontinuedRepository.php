@@ -58,7 +58,7 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
         return ($this->getFactory()
                 ->createProductDiscontinuedQuery()
                 ->filterByFkProduct_In($productIds)
-                ->count() === count($productIds)) ? true : false;
+                ->count() === count($productIds));
     }
 
     /**

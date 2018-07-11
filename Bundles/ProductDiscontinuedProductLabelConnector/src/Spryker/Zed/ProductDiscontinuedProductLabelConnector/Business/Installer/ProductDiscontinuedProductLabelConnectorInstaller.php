@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToGlossaryFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToLocaleFacadeInterface;
-use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelInterface;
+use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorConfig;
 
 class ProductDiscontinuedProductLabelConnectorInstaller implements ProductDiscontinuedProductLabelConnectorInstallerInterface
@@ -25,7 +25,7 @@ class ProductDiscontinuedProductLabelConnectorInstaller implements ProductDiscon
     protected $config;
 
     /**
-     * @var \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelInterface
+     * @var \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface
      */
     protected $productLabelFacade;
 
@@ -41,13 +41,13 @@ class ProductDiscontinuedProductLabelConnectorInstaller implements ProductDiscon
 
     /**
      * @param \Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorConfig $config
-     * @param \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelInterface $productLabelFacade
+     * @param \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade
      * @param \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         ProductDiscontinuedProductLabelConnectorConfig $config,
-        ProductDiscontinuedProductLabelConnectorToProductLabelInterface $productLabelFacade,
+        ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade,
         ProductDiscontinuedProductLabelConnectorToGlossaryFacadeInterface $glossaryFacade,
         ProductDiscontinuedProductLabelConnectorToLocaleFacadeInterface $localeFacade
     ) {

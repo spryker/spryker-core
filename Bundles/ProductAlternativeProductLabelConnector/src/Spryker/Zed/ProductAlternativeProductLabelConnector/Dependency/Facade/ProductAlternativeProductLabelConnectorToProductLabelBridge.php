@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
 
-class ProductAlternativeProductLabelConnectorToProductLabelBridge implements ProductAlternativeProductLabelConnectorToProductLabelInterface
+class ProductAlternativeProductLabelConnectorToProductLabelBridge implements ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface
 {
     /**
      * @var \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface

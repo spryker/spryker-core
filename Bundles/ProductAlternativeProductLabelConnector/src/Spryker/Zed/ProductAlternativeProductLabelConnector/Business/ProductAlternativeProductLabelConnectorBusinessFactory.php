@@ -11,7 +11,9 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\Installer\ProductAlternativeProductLabelConnectorInstaller;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\Installer\ProductAlternativeProductLabelConnectorInstallerInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelReader\ProductAbstractRelationReader;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelReader\ProductAbstractRelationReaderInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter\ProductAlternativeProductLabelWriter;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter\ProductAlternativeProductLabelWriterInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorDependencyProvider;
 
 /**
@@ -34,9 +36,9 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter\ProductAlternativeProductLabelWriter
+     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter\ProductAlternativeProductLabelWriterInterface
      */
-    public function createProductAlternativeProductLabelWriter()
+    public function createProductAlternativeProductLabelWriter(): ProductAlternativeProductLabelWriterInterface
     {
         return new ProductAlternativeProductLabelWriter(
             $this->getProductFacade(),
@@ -49,7 +51,7 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
     /**
      * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelReader\ProductAbstractRelationReaderInterface
      */
-    public function createProductAbstractRelationReader()
+    public function createProductAbstractRelationReader(): ProductAbstractRelationReaderInterface
     {
         return new ProductAbstractRelationReader(
             $this->getProductFacade(),
@@ -61,7 +63,7 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelInterface
+     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface
      */
     public function getProductLabelFacade()
     {

@@ -82,7 +82,7 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
      */
     protected function getPostProductAlternativeCreatePlugins(): array
     {
-        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::PLUGINS_POST_PRODUCT_ALTERNATIVE);
+        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::PLUGINS_POST_PRODUCT_ALTERNATIVE_CREATE);
     }
 
     /**
@@ -90,6 +90,6 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
      */
     protected function getPostProductAlternativeDeletePlugins(): array
     {
-        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::PLUGINS_DELETE_PRODUCT_ALTERNATIVE);
+        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::PLUGINS_POST_PRODUCT_ALTERNATIVE_DELETE);
     }
 }

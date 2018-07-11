@@ -77,7 +77,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
             ->createProductAlternativePropelQuery()
             ->filterByFkProduct_In($productIds)
             ->groupByFkProduct()
-            ->count() === count($productIds)) ? true : false;
+            ->count() === count($productIds));
     }
 
     /**

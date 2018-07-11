@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade;
+namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
 
-interface ProductAlternativeProductLabelConnectorToProductLabelInterface
+interface ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return void
-     */
+   /**
+    * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+    *
+    * @return void
+    */
     public function createLabel(ProductLabelTransfer $productLabelTransfer): void;
 
     /**
@@ -38,7 +38,7 @@ interface ProductAlternativeProductLabelConnectorToProductLabelInterface
      *
      * @return void
      */
-    public function removeProductAbstractRelationsForLabel($idProductLabel, array $idsProductAbstract): void;
+    public function removeProductAbstractRelationsForLabel(int $idProductLabel, array $idsProductAbstract): void;
 
     /**
      * @param int $idProductLabel
@@ -46,7 +46,7 @@ interface ProductAlternativeProductLabelConnectorToProductLabelInterface
      *
      * @return void
      */
-    public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract): void;
+    public function addAbstractProductRelationsForLabel(int $idProductLabel, array $idsProductAbstract): void;
 
     /**
      * @param int $idsProductAbstract

@@ -11,7 +11,9 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\Installer\ProductDiscontinuedProductLabelConnectorInstaller;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\Installer\ProductDiscontinuedProductLabelConnectorInstallerInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelReader\ProductAbstractRelationReader;
+use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelReader\ProductAbstractRelationReaderInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelWriter\ProductDiscontinuedProductLabelWriter;
+use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelWriter\ProductDiscontinuedProductLabelWriterInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorDependencyProvider;
 
 /**
@@ -36,7 +38,7 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
     /**
      * @return \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelWriter\ProductDiscontinuedProductLabelWriterInterface
      */
-    public function createProductDiscontinuedProductLabelWriter()
+    public function createProductDiscontinuedProductLabelWriter(): ProductDiscontinuedProductLabelWriterInterface
     {
         return new ProductDiscontinuedProductLabelWriter(
             $this->getProductFacade(),
@@ -49,7 +51,7 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
     /**
      * @return \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelReader\ProductAbstractRelationReaderInterface
      */
-    public function createProductAbstractRelationReader()
+    public function createProductAbstractRelationReader(): ProductAbstractRelationReaderInterface
     {
         return new ProductAbstractRelationReader(
             $this->getProductFacade(),
@@ -61,7 +63,7 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
     }
 
     /**
-     * @return \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelInterface
+     * @return \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface
      */
     public function getProductLabelFacade()
     {
