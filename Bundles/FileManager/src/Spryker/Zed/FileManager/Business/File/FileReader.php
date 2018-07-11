@@ -97,9 +97,12 @@ class FileReader implements FileReaderInterface
         $fileManagerDataTransfer->setFile($fileTransfer);
         $fileInfoTransfer = $this->getRequestedFileInfo($fileTransfer, $idFileInfo);
         $fileManagerDataTransfer->setFileInfo($fileInfoTransfer);
-        $fileManagerDataTransfer->setContent(
-            $this->fileContent->read($fileInfoTransfer->getStorageFileName())
-        );
+
+        if ($fileInfoTransfer !== null) {
+            $fileManagerDataTransfer->setContent(
+                $this->fileContent->read($fileInfoTransfer->getStorageFileName())
+            );
+        }
 
         return $fileManagerDataTransfer;
     }
