@@ -39,7 +39,7 @@ interface ProductLabelStorageQueryContainerInterface extends QueryContainerInter
     /**
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
      */
@@ -48,7 +48,7 @@ interface ProductLabelStorageQueryContainerInterface extends QueryContainerInter
     /**
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
      */

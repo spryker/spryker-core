@@ -72,7 +72,7 @@ class Exporter implements ExporterInterface
     }
 
     /**
-     * @param array $ids
+     * @param int[] $ids
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface $plugin
      *
      * @return void
@@ -120,7 +120,7 @@ class Exporter implements ExporterInterface
     }
 
     /**
-     * @param array $resources
+     * @param string[] $resources
      *
      * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]
      */

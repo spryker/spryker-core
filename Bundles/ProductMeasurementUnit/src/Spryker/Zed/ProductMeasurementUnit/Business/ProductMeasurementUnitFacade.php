@@ -67,8 +67,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * Specification:
-     * - Retrieves all product measurement sales units by ids.
+     * {@inheritdoc}
      *
      * @api
      *

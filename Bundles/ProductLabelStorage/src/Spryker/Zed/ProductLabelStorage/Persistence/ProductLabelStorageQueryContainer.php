@@ -81,7 +81,7 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     /**
      * @api
      *
-     * @param array $productLabelProductAbstractIds
+     * @param int[] $productLabelProductAbstractIds
      *
      * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
      */

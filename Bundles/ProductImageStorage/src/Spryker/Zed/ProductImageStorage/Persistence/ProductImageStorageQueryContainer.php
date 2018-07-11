@@ -142,7 +142,7 @@ class ProductImageStorageQueryContainer extends AbstractQueryContainer implement
     /**
      * @api
      *
-     * @param array $productImageSetToProductImageIds
+     * @param int[] $productImageSetToProductImageIds
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */
@@ -158,7 +158,7 @@ class ProductImageStorageQueryContainer extends AbstractQueryContainer implement
     /**
      * @api
      *
-     * @param array $productImageSetToProductImageIds
+     * @param int[] $productImageSetToProductImageIds
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */
