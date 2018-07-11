@@ -358,7 +358,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     public function expandSalesOrderItemWithAmountSalesUnit(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
     {
         return $this->getFactory()
-            ->createAmountSalesUnitOrderItemExpander()
+            ->createOrderItemExpander()
             ->expandSalesOrderItemWithAmountSalesUnit($itemTransfer, $salesOrderItemEntity);
     }
 
@@ -375,7 +375,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     public function expandSalesOrderItemWithAmountAndAmountSku(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
     {
         return $this->getFactory()
-            ->createAmountSalesUnitOrderItemExpander()
+            ->createOrderItemExpander()
             ->expandSalesOrderItemWithAmountAndAmountSku($itemTransfer, $salesOrderItemEntity);
     }
 }

@@ -269,7 +269,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemExpanderInterface
      */
-    public function createAmountSalesUnitOrderItemExpander(): OrderItemExpanderInterface
+    public function createOrderItemExpander(): OrderItemExpanderInterface
     {
         return new OrderItemExpander();
     }
