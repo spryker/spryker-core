@@ -20,7 +20,7 @@ abstract class AbstractRestController extends AbstractController
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface
      */
-    public function getRestRequest(): RestRequestInterface
+    protected function getRestRequest(): RestRequestInterface
     {
         return $this->restRequest;
     }
@@ -40,7 +40,7 @@ abstract class AbstractRestController extends AbstractController
      *
      * @return $this
      */
-    public function setRestRequest(RestRequestInterface $restRequest): self
+    protected function setRestRequest(RestRequestInterface $restRequest): self
     {
         $this->restRequest = $restRequest;
 
