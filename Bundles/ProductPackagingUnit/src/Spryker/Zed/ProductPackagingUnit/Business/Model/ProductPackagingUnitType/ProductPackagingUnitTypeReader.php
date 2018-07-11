@@ -98,9 +98,9 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
     }
 
     /**
-     * @param array $productPackagingUnitTypeIds
+     * @param int[] $productPackagingUnitTypeIds
      *
-     * @return array
+     * @return int[]
      */
     public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array
     {
