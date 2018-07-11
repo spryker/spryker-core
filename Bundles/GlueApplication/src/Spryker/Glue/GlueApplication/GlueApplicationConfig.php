@@ -13,6 +13,9 @@ use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 class GlueApplicationConfig extends AbstractBundleConfig
 {
     /**
+     * Specification:
+     *  - Domain name of glue application to build API links.
+     *
      * @return string
      */
     public function getGlueDomainName(): string
@@ -21,14 +24,20 @@ class GlueApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     *  - Indicates whether debug of rest is enabled.
+     *
      * @return bool
      */
-    public function getIsRestDebug(): bool
+    public function getIsRestDebugEnabled(): bool
     {
         return $this->get(GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG, false);
     }
 
     /**
+     * Specification:
+     *  - Specifies a URI that may access the resources.
+     *
      * @return string
      */
     public function getCorsAllowOrigin(): string
@@ -37,6 +46,9 @@ class GlueApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     *  - List of allowed CORS headers.
+     *
      * @return array
      */
     public function getCorsAllowedHeaders(): array

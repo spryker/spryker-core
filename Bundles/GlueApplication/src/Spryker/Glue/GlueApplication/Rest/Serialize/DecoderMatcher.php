@@ -7,7 +7,7 @@
 namespace Spryker\Glue\GlueApplication\Rest\Serialize;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface;
-use Spryker\Glue\GlueApplication\Rest\Serialize\Decoder\DecoderInterface;
+use Spryker\Glue\GlueApplication\Serialize\Decoder\DecoderInterface;
 
 class DecoderMatcher implements DecoderMatcherInterface
 {
@@ -17,7 +17,7 @@ class DecoderMatcher implements DecoderMatcherInterface
     public const DEFAULT_FORMAT = 'json';
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\Serialize\Decoder\DecoderInterface[]
+     * @var \Spryker\Glue\GlueApplication\Serialize\Decoder\DecoderInterface[]
      */
     protected $decoders;
 
@@ -32,7 +32,7 @@ class DecoderMatcher implements DecoderMatcherInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface $metadata
      *
-     * @return null|\Spryker\Glue\GlueApplication\Rest\Serialize\Decoder\DecoderInterface
+     * @return null|\Spryker\Glue\GlueApplication\Serialize\Decoder\DecoderInterface
      */
     public function match(MetadataInterface $metadata): ?DecoderInterface
     {

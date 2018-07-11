@@ -7,9 +7,9 @@
 namespace Spryker\Glue\GlueApplication\Rest;
 
 use Exception;
-use Spryker\Glue\GlueApplication\Controller\AbstractRestController;
-use Spryker\Glue\GlueApplication\Controller\ErrorController;
+use Spryker\Glue\GlueApplication\Controller\ErrorControllerInterface;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
+use Spryker\Glue\GlueApplication\Rest\Controller\AbstractRestController;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -97,7 +97,7 @@ class ControllerFilter implements ControllerFilterInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Controller\AbstractRestController $controller
+     * @param \Spryker\Glue\GlueApplication\Rest\Controller\AbstractRestController $controller
      * @param string $action
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
@@ -132,7 +132,7 @@ class ControllerFilter implements ControllerFilterInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Controller\AbstractRestController $controller
+     * @param \Spryker\Glue\GlueApplication\Rest\Controller\AbstractRestController $controller
      * @param string $action
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -150,7 +150,7 @@ class ControllerFilter implements ControllerFilterInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Controller\AbstractRestController $controller
+     * @param \Spryker\Glue\GlueApplication\Rest\Controller\AbstractRestController $controller
      * @param string $action
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -164,7 +164,7 @@ class ControllerFilter implements ControllerFilterInterface
 
         $this->controllerCallbacks->beforeAction($action, $restRequest);
 
-        if ($controller instanceof ErrorController) {
+        if ($controller instanceof ErrorControllerInterface) {
             $restResponse = $controller->$action();
         } else {
             $restResponse = $this->processResource($controller, $action, $restRequest);
@@ -184,7 +184,7 @@ class ControllerFilter implements ControllerFilterInterface
      */
     protected function handleException(Exception $exception): Response
     {
-        if ($this->applicationConfig->getIsRestDebug()) {
+        if ($this->applicationConfig->getIsRestDebugEnabled()) {
             throw $exception;
         }
 

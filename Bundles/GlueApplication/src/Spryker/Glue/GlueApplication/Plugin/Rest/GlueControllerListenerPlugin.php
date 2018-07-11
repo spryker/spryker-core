@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\GlueApplication\Plugin\Rest;
 
-use Spryker\Glue\GlueApplication\Controller\AbstractRestController;
+use Spryker\Glue\GlueApplication\Rest\Controller\AbstractRestController;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +40,7 @@ class GlueControllerListenerPlugin extends AbstractPlugin
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Controller\AbstractRestController $controller
+     * @param \Spryker\Glue\GlueApplication\Rest\Controller\AbstractRestController $controller
      * @param string $action
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -48,6 +48,6 @@ class GlueControllerListenerPlugin extends AbstractPlugin
      */
     public function filter(AbstractRestController $controller, string $action, Request $request): Response
     {
-        return $this->getFactory()->createControllerFilter()->filter($controller, $action, $request);
+        return $this->getFactory()->createRestControllerFilter()->filter($controller, $action, $request);
     }
 }

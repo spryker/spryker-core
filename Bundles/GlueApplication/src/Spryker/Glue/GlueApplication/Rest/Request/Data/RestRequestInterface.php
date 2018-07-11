@@ -12,8 +12,15 @@ use Symfony\Component\HttpFoundation\Request;
 interface RestRequestInterface
 {
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @param string $type
+     *
+     * @return null|\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
+    public function findParentResourceByType(string $type): ?RestResourceInterface;
+
+     /**
+      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+      */
     public function getResource(): RestResourceInterface;
 
     /**
