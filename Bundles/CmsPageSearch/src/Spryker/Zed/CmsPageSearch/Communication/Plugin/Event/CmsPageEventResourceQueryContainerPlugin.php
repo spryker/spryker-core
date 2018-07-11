@@ -70,9 +70,9 @@ class CmsPageEventResourceQueryContainerPlugin extends AbstractPlugin implements
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyCmsPageTableMap::COL_ID_CMS_PAGE;
     }

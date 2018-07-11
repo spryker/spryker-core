@@ -67,9 +67,9 @@ class ProductConcreteMeasurementUnitEventResourceRepositoryPlugin extends Abstra
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyProductMeasurementSalesUnitTableMap::COL_FK_PRODUCT;
     }

@@ -70,9 +70,9 @@ class ProductCategoryFilterEventResourceQueryContainerPlugin extends AbstractPlu
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyProductCategoryFilterTableMap::COL_ID_PRODUCT_CATEGORY_FILTER;
     }

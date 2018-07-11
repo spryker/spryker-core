@@ -70,9 +70,9 @@ class NavigationEventResourceQueryContainerPlugin extends AbstractPlugin impleme
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyNavigationTableMap::COL_ID_NAVIGATION;
     }

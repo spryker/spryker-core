@@ -70,9 +70,9 @@ class UrlEventResourceQueryContainerPlugin extends AbstractPlugin implements Eve
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyUrlTableMap::COL_ID_URL;
     }

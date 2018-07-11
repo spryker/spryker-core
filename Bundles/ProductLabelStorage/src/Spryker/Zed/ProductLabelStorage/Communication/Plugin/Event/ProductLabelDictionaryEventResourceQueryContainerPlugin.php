@@ -63,9 +63,9 @@ class ProductLabelDictionaryEventResourceQueryContainerPlugin extends AbstractPl
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return null;
     }

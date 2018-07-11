@@ -70,9 +70,9 @@ class ProductRelationEventResourceQueryContainerPlugin extends AbstractPlugin im
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyProductRelationTableMap::COL_FK_PRODUCT_ABSTRACT;
     }

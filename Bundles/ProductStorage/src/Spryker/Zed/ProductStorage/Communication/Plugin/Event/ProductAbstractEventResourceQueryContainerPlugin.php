@@ -70,9 +70,9 @@ class ProductAbstractEventResourceQueryContainerPlugin extends AbstractPlugin im
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT;
     }

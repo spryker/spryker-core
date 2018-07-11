@@ -70,9 +70,9 @@ class ProductConcreteImageEventResourceQueryContainerPlugin extends AbstractPlug
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyProductImageSetToProductImageTableMap::COL_FK_PRODUCT_IMAGE;
     }

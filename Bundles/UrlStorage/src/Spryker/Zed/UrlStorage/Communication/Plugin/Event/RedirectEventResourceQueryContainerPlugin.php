@@ -70,9 +70,9 @@ class RedirectEventResourceQueryContainerPlugin extends AbstractPlugin implement
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyUrlRedirectTableMap::COL_ID_URL_REDIRECT;
     }

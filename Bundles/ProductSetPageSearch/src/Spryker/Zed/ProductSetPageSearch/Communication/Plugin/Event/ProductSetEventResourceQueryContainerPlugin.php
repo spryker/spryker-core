@@ -70,9 +70,9 @@ class ProductSetEventResourceQueryContainerPlugin extends AbstractPlugin impleme
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyProductSetTableMap::COL_ID_PRODUCT_SET;
     }

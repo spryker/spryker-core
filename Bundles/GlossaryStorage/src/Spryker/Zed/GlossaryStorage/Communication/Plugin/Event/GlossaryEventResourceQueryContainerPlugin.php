@@ -70,9 +70,9 @@ class GlossaryEventResourceQueryContainerPlugin extends AbstractPlugin implement
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY;
     }

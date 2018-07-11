@@ -66,9 +66,9 @@ class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyProductMeasurementUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_UNIT;
     }

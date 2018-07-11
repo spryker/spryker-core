@@ -70,9 +70,9 @@ class CmsBlockEventResourceQueryContainerPlugin extends AbstractPlugin implement
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyCmsBlockTableMap::COL_ID_CMS_BLOCK;
     }

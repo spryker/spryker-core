@@ -70,9 +70,9 @@ class ProductReviewEventResourceQueryContainerPlugin extends AbstractPlugin impl
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyProductReviewTableMap::COL_ID_PRODUCT_REVIEW;
     }

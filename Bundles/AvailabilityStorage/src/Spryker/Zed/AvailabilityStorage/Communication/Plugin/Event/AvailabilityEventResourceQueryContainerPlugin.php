@@ -70,9 +70,9 @@ class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin imple
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyAvailabilityAbstractTableMap::COL_ID_AVAILABILITY_ABSTRACT;
     }
