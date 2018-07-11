@@ -65,12 +65,14 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
             $this->config->getProductAlternativesLabelName()
         )->getIdProductLabel();
 
-        if ($this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($concreteIds)) {
-            if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))) {
-                $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
-            }
-        } else {
+        if (!$this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($concreteIds)) {
             $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
+
+            return;
+        }
+
+        if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))) {
+            $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
         }
     }
 
