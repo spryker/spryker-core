@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductDiscontinuedProductLabelConnectorFacade extends AbstractFacade implements ProductDiscontinuedProductLabelConnectorFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -27,6 +29,8 @@ class ProductDiscontinuedProductLabelConnectorFacade extends AbstractFacade impl
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProduct
@@ -41,6 +45,8 @@ class ProductDiscontinuedProductLabelConnectorFacade extends AbstractFacade impl
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProduct
@@ -55,6 +61,8 @@ class ProductDiscontinuedProductLabelConnectorFacade extends AbstractFacade impl
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
