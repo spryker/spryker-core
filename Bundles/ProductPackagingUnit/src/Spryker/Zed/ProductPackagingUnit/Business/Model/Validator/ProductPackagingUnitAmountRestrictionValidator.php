@@ -60,26 +60,28 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
      */
     protected function validate(CartChangeTransfer $cartChangeTransfer, CartPreCheckResponseTransfer $responseTransfer): void
     {
-        $packagingUnitItemTransfers = $this->getPackagingUnitItemTransfers($cartChangeTransfer);
+        $itemTransfers = $this->selectItemTransfersWithAmountSalesUnit($cartChangeTransfer);
 
-        if ($packagingUnitItemTransfers) {
-            $changedSkuMapByGroupKey = $this->getChangedSkuMap($packagingUnitItemTransfers);
-            $cartAmountMapByGroupKey = $this->getItemAddCartAmountMap($packagingUnitItemTransfers, $cartChangeTransfer);
-            $productAmountTransferMapBySku = $this->getProductAmountTransferMap($packagingUnitItemTransfers);
+        if (!$itemTransfers) {
+            return;
+        }
 
-            foreach ($cartAmountMapByGroupKey as $productGroupKey => $amount) {
-                $productSku = $changedSkuMapByGroupKey[$productGroupKey];
-                $this->validateItem($productSku, $amount, $productAmountTransferMapBySku[$productSku], $responseTransfer);
-            }
+        $changedSkuMapByGroupKey = $this->getChangedSkuMap($itemTransfers);
+        $cartAmountMapByGroupKey = $this->getItemAddCartAmountMap($itemTransfers, $cartChangeTransfer);
+        $productPackagingUnitAmountTransferMapBySku = $this->getProductPackagingUnitAmountTransferMap($itemTransfers);
+
+        foreach ($cartAmountMapByGroupKey as $productGroupKey => $cartAmount) {
+            $productSku = $changedSkuMapByGroupKey[$productGroupKey];
+            $this->validateItem($productSku, $cartAmount, $productPackagingUnitAmountTransferMapBySku[$productSku], $responseTransfer);
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function getPackagingUnitItemTransfers(CartChangeTransfer $cartChangeTransfer): array
+    protected function selectItemTransfersWithAmountSalesUnit(CartChangeTransfer $cartChangeTransfer): array
     {
         $packagingUnitItemTransfers = [];
         $itemTransfers = $cartChangeTransfer->getItems();
@@ -153,7 +155,7 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer[].
      */
-    protected function getProductAmountTransferMap(array $itemTransfers): array
+    protected function getProductPackagingUnitAmountTransferMap(array $itemTransfers): array
     {
         $skus = $this->getChangedSkuMap($itemTransfers);
 
