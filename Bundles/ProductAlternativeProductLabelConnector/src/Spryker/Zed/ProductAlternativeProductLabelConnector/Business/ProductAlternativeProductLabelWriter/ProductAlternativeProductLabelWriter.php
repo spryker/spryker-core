@@ -54,7 +54,7 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
      */
     public function updateAbstractProductWithAlternativesAvailableLabel(int $idProduct): void
     {
-        $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
+        $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
         $concreteIds = [];
 
         foreach ($this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract) as $productConcreteTransfer) {
@@ -86,7 +86,7 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
         $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
             $this->config->getProductAlternativesLabelName()
         )->getIdProductLabel();
-        $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
+        $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
         $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
     }
 }

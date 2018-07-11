@@ -61,7 +61,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductRepositoryInterface
      */
-    private $repository;
+    protected $repository;
 
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
@@ -292,9 +292,9 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      *
      * @return int
      */
-    public function findProductAbstractIdByConcreteId(int $idConcrete): int
+    public function getProductAbstractIdByConcreteId(int $idConcrete): int
     {
-        return $this->repository->findProductAbstractIdByConcreteId($idConcrete);
+        return $this->repository->getProductAbstractIdByConcreteId($idConcrete);
     }
 
     /**

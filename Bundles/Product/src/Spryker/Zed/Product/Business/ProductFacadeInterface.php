@@ -178,7 +178,7 @@ interface ProductFacadeInterface
      *
      * @return int
      */
-    public function findProductAbstractIdByConcreteId(int $idConcrete): int;
+    public function getProductAbstractIdByConcreteId(int $idConcrete): int;
 
     /**
      * Specification:

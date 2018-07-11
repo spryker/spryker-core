@@ -35,7 +35,7 @@ interface ProductRepositoryInterface
      *
      * @return null|int
      */
-    public function findProductAbstractIdByConcreteId(int $idProductConcrete): ?int;
+    public function getProductAbstractIdByConcreteId(int $idProductConcrete): ?int;
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

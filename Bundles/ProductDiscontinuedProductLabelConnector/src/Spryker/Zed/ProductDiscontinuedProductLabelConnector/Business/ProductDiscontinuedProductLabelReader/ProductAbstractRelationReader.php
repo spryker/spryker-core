@@ -84,7 +84,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         )->getIdProductLabel();
 
         foreach ($productIds as $idProduct) {
-            $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
+            $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
             $concreteIds = [];
 
             foreach ($this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract) as $productConcreteTransfer) {

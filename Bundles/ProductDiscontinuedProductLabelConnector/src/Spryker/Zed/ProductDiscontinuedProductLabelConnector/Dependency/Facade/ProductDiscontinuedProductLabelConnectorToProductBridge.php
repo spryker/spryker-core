@@ -27,9 +27,9 @@ class ProductDiscontinuedProductLabelConnectorToProductBridge implements Product
      *
      * @return int
      */
-    public function findProductAbstractIdByConcreteId(int $idProduct): int
+    public function getProductAbstractIdByConcreteId(int $idProduct): int
     {
-        return $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
+        return $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
     }
 
     /**
