@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\CompanyUnitAddressGui\Communication\CompanyUnitAddressGuiCommunicationFactory getFactory()
  */
-class CreateCompanyUnitAddressController extends AbstractController
+class AddCompanyUnitAddressController extends AbstractController
 {
     protected const PARAM_REDIRECT_URL = 'redirect-url';
     protected const REDIRECT_URL_DEFAULT = '/company-unit-address-gui/list-company-unit-address';
