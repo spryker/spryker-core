@@ -1,0 +1,32 @@
+{
+  "name": "spryker/merchant-relationship-minimum-order-value",
+  "description": "MerchantRelationshipMinimumOrderValue module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/currency": "^3.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/minimum-order-value": "^1.0.0",
+    "spryker/store": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\MinimumOrderValue\Persistence"
+          package="src.Orm.Zed.MinimumOrderValue.Persistence">
+
+    <table name="spy_min_order_value_localized_message" idMethod="native" allowPkInsert="true">
+        <column name="id_min_order_value_localized_message" required="true" type="INTEGER" primaryKey="true"
+                autoIncrement="true"/>
+        <column name="fk_locale" type="INTEGER" required="true"/>
+        <column name="fk_min_order_value" type="INTEGER" required="true"/>
+        <column name="message" type="VARCHAR" required="true"/>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="id_min_order_value_localized_message_pk_seq"/>
+
+        <foreign-key name="spy_min_order_value_localized_message-fk_locale" foreignTable="spy_locale"
+                     phpName="Locale">
+            <reference local="fk_locale" foreign="id_locale"/>
+        </foreign-key>
+
+        <foreign-key name="spy_min_order_value_localized_message-fk_min_order_value"
+                     foreignTable="spy_min_order_value" phpName="MinimumOrderValue">
+            <reference local="fk_min_order_value" foreign="id_min_order_value"/>
+        </foreign-key>
+    </table>
+
+</database>
