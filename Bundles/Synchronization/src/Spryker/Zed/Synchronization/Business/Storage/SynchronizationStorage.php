@@ -114,7 +114,7 @@ class SynchronizationStorage implements SynchronizationInterface
     }
 
     /**
-     * @param string|array $value
+     * @param array $value
      *
      * @return string
      */

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * MIT License
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -17,8 +17,8 @@ class CompanyUnitAddressDataImportHelper extends Module
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
-        $companyUnitAddressQuery = $this->getCompanyUnitAddressQuery();
-        $companyUnitAddressQuery->find()->delete();
+        $this->getCompanyUnitAddressQuery()
+            ->deleteAll();
     }
 
     /**

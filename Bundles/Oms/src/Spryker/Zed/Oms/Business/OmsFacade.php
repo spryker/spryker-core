@@ -610,4 +610,19 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     {
         return $this->getFactory()->createExportReservation()->getLastExportedVersion();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $processName
+     * @param string $stateName
+     *
+     * @return string[]
+     */
+    public function getStateFlags(string $processName, string $stateName): array
+    {
+        return $this->getFactory()->createOrderStateMachineFlagReader()->getStateFlags($processName, $stateName);
+    }
 }
