@@ -19,8 +19,8 @@ class DeleteController extends AbstractController
 {
     protected const FIELD_ID_PRODUCT_ALTERNATIVE = 'id-product-alternative';
 
-    protected const MESSAGE_DELETE_PRODUCT_ALTERNATIVE_SUCCESS = 'Product Alternative was deleted successfully.';
-    protected const MESSAGE_DELETE_PRODUCT_ALTERNATIVE_ERROR = 'Product Alternative was not deleted.';
+    protected const MESSAGE_DELETE_PRODUCT_ALTERNATIVE_SUCCESS = 'Product Alternative was removed successfully.';
+    protected const MESSAGE_DELETE_PRODUCT_ALTERNATIVE_ERROR = 'Product Alternative was not removed.';
 
     protected const KEY_TAB_PRODUCT_ALTERNATIVE = '#tab-content-alternatives';
 
