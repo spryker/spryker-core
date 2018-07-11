@@ -6,7 +6,7 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\JsonApi;
 
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 interface RestResourceInterface
 {
@@ -68,9 +68,9 @@ interface RestResourceInterface
     public function getType(): string;
 
     /**
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
      */
-    public function getAttributes(): ?TransferInterface;
+    public function getAttributes(): ?AbstractTransfer;
 
     /**
      * @param bool $includeRelations
