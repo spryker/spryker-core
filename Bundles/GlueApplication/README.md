@@ -1,4 +1,4 @@
-# Glue Module
+# GlueApplication Module
 [![Build Status](https://travis-ci.org/spryker/glue.svg)](https://travis-ci.org/spryker/glue)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/glue/badge.svg)](https://coveralls.io/github/spryker/glue)
 
