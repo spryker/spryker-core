@@ -17,7 +17,7 @@ interface SynchronizationDataPluginInterface
      *
      * @return string
      */
-    public function getResourceName();
+    public function getResourceName(): string;
 
     /**
      * Specification:
@@ -27,7 +27,7 @@ interface SynchronizationDataPluginInterface
      *
      * @return bool
      */
-    public function hasStore();
+    public function hasStore(): bool;
 
     /**
      * Specification:
@@ -37,7 +37,7 @@ interface SynchronizationDataPluginInterface
      *
      * @return array
      */
-    public function getParams();
+    public function getParams(): array;
 
     /**
      * Specification:
@@ -47,7 +47,7 @@ interface SynchronizationDataPluginInterface
      *
      * @return string
      */
-    public function getQueueName();
+    public function getQueueName(): string;
 
     /**
      * Specification:
@@ -57,5 +57,5 @@ interface SynchronizationDataPluginInterface
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName();
+    public function getSynchronizationQueuePoolName(): ?string;
 }
