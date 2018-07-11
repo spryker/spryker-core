@@ -96,7 +96,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryAllCategoryNodes()
     {
-        return $this->getFactory()->createCategoryNodeQuery();
+        return $this->getFactory()->createCategoryNodeQuery()
+            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
     }
 
     /**
