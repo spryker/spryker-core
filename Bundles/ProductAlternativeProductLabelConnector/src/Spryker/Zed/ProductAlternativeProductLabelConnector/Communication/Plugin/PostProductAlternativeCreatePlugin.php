@@ -20,9 +20,6 @@ class PostProductAlternativeCreatePlugin extends AbstractPlugin implements PostP
     /**
      * {@inheritdoc}
      *
-     * Specification:
-     *  - Adds or removes label "Alternatives available" if applicable.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer

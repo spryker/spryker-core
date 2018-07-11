@@ -24,13 +24,14 @@ class ProductDiscontinuedProductLabelConnectorRepository extends AbstractReposit
     {
         $productLabelEntity = $this->getFactory()
             ->getProductLabelPropelQuery()
-            ->filterByName($labelName);
+            ->filterByName($labelName)
+            ->findOne();
 
         if (!$productLabelEntity) {
             return false;
         }
 
-        return $productLabelEntity->findOne()->getIsActive();
+        return $productLabelEntity->getIsActive();
     }
 
     /**

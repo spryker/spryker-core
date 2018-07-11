@@ -37,7 +37,7 @@ class ProductAlternativeProductLabelConnectorToProductBridge implements ProductA
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getConcreteProductsByAbstractProductId(int $idProduct): array
+    public function getConcreteProductsByAbstractProductId(int $idProduct)
     {
         return $this->productFacade->getConcreteProductsByAbstractProductId($idProduct);
     }

@@ -21,5 +21,5 @@ interface ProductAlternativeProductLabelConnectorToProductInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getConcreteProductsByAbstractProductId(int $idProduct): array;
+    public function getConcreteProductsByAbstractProductId(int $idProduct);
 }

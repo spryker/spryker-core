@@ -41,7 +41,7 @@ class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
             ProductLabelTransfer::NAME => $this->getProductDiscontinueLabelName(),
         ]);
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productDiscontinuedEntity = $this->getProductDiscontinuedQuery()
+        $productDiscontinuedEntity = $this->createProductDiscontinuedQuery()
             ->filterByFkProduct($productConcreteTransfer->getIdProductConcrete())
             ->findOneOrCreate();
         $productDiscontinuedEntity->setActiveUntil((new DateTime())
@@ -69,7 +69,7 @@ class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productDiscontinuedEntity = $this->getProductDiscontinuedQuery()
+        $productDiscontinuedEntity = $this->createProductDiscontinuedQuery()
             ->filterByFkProduct($productConcreteTransfer->getIdProductConcrete())
             ->findOneOrCreate();
         $productDiscontinuedEntity->setActiveUntil((new DateTime())
@@ -123,7 +123,7 @@ class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
     /**
      * @return \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery
      */
-    protected function getProductDiscontinuedQuery(): SpyProductDiscontinuedQuery
+    protected function createProductDiscontinuedQuery(): SpyProductDiscontinuedQuery
     {
         return SpyProductDiscontinuedQuery::create();
     }

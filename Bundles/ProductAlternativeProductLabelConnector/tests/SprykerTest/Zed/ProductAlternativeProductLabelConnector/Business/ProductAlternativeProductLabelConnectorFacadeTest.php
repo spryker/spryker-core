@@ -40,7 +40,7 @@ class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
             ProductLabelTransfer::NAME => $this->getProductAlternativeLabelName(),
         ]);
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productAlternativeEntity = $this->getProductAlternativeQuery()
+        $productAlternativeEntity = $this->createProductAlternativeQuery()
             ->filterByFkProduct($productConcreteTransfer->getIdProductConcrete())
             ->findOneOrCreate();
         $productAlternativeEntity->save();
@@ -65,7 +65,7 @@ class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productAlternativeEntity = $this->getProductAlternativeQuery()
+        $productAlternativeEntity = $this->createProductAlternativeQuery()
             ->filterByFkProduct($productConcreteTransfer->getIdProductConcrete())
             ->findOneOrCreate();
         $productAlternativeEntity->save();
@@ -116,7 +116,7 @@ class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
     /**
      * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
      */
-    protected function getProductAlternativeQuery(): SpyProductAlternativeQuery
+    protected function createProductAlternativeQuery(): SpyProductAlternativeQuery
     {
         return SpyProductAlternativeQuery::create();
     }

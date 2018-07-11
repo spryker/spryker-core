@@ -20,9 +20,6 @@ class PostDeleteProductDiscontinuedPlugin extends AbstractPlugin implements Post
     /**
      * {@inheritdoc}
      *
-     * Specification:
-     *  - Removes "Discontinued" label if applicable.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer

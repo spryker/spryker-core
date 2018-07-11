@@ -24,13 +24,14 @@ class ProductAlternativeProductLabelConnectorRepository extends AbstractReposito
     {
         $productLabelEntity = $this->getFactory()
             ->getProductLabelPropelQuery()
-            ->filterByName($labelName);
+            ->filterByName($labelName)
+            ->findOne();
 
         if (!$productLabelEntity) {
             return false;
         }
 
-        return $productLabelEntity->findOne()->getIsActive();
+        return $productLabelEntity->getIsActive();
     }
 
     /**

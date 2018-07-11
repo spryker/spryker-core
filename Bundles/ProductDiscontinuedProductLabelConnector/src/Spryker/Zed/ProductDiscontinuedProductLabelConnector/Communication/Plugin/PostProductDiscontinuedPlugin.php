@@ -20,9 +20,6 @@ class PostProductDiscontinuedPlugin extends AbstractPlugin implements PostProduc
     /**
      * {@inheritdoc}
      *
-     * Specification:
-     *  - Adds or removes label "Discontinued" if applicable.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer

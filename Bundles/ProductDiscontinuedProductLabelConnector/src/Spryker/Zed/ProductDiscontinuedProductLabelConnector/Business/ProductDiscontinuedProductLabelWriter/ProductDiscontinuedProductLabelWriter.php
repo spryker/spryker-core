@@ -54,16 +54,20 @@ class ProductDiscontinuedProductLabelWriter implements ProductDiscontinuedProduc
      */
     public function updateAbstractProductWithDiscontinuedLabel(int $idProduct): void
     {
+        if (!$this->productLabelFacade->findLabelByLabelName($this->config->getProductDiscontinueLabelName())) {
+            return;
+        }
+
+        $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
+            $this->config->getProductDiscontinueLabelName()
+        )->getIdProductLabel();
+
         $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
         $concreteIds = [];
 
         foreach ($this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract) as $productConcreteTransfer) {
             $concreteIds[] = $productConcreteTransfer->getIdProductConcrete();
         }
-
-        $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
-            $this->config->getProductDiscontinueLabelName()
-        )->getIdProductLabel();
 
         if (!$this->productDiscontinuedFacade->areAllConcreteProductsDiscontinued($concreteIds)) {
             $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);

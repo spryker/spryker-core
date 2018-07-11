@@ -54,16 +54,20 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
      */
     public function updateAbstractProductWithAlternativesAvailableLabel(int $idProduct): void
     {
+        if (!$this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabelName())) {
+            return;
+        }
+
+        $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
+            $this->config->getProductAlternativesLabelName()
+        )->getIdProductLabel();
+
         $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
         $concreteIds = [];
 
         foreach ($this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract) as $productConcreteTransfer) {
             $concreteIds[] = $productConcreteTransfer->getIdProductConcrete();
         }
-
-        $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
-            $this->config->getProductAlternativesLabelName()
-        )->getIdProductLabel();
 
         if (!$this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($concreteIds)) {
             $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);

@@ -20,9 +20,6 @@ class PostProductAlternativeDeletePlugin extends AbstractPlugin implements PostP
     /**
      * {@inheritdoc}
      *
-     * Specification:
-     *  - Removes "Alternatives available" label if applicable.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
