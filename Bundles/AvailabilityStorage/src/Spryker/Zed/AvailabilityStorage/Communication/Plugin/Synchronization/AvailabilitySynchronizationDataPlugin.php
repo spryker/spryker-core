@@ -39,7 +39,7 @@ class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return bool
      */
-    public function hasStore(): ?bool
+    public function hasStore(): bool
     {
         return true;
     }
