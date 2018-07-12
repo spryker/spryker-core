@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\MinimumOrderValue\Persistence"
+          package="src.Orm.Zed.MinimumOrderValue.Persistence">
+
+    <table name="spy_min_order_value" idMethod="native" allowPkInsert="true">
+        <column name="id_min_order_value" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_min_order_value_attribute" type="INTEGER" required="true"/>
+        <column name="fk_store" type="INTEGER" required="true"/>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="id_min_order_value_pk_seq"/>
+
+        <foreign-key name="spy_min_order_value-fk_min_order_value_attribute"
+                     foreignTable="spy_min_order_value_attribute" phpName="MinimumOrderValueAttribute">
+            <reference local="fk_min_order_value_attribute" foreign="id_min_order_value_attribute"/>
+        </foreign-key>
+
+        <foreign-key name="spy_min_order_value-fk_store" foreignTable="spy_store" phpName="Store">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+    </table>
+
+</database>
