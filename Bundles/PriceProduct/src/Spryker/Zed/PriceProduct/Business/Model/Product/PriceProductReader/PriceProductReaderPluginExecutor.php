@@ -5,11 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper;
+namespace Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductReader;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
-
-class PriceProductMapperPluginExecutor implements PriceProductMapperPluginExecutorInterface
+class PriceProductReaderPluginExecutor implements PriceProductReaderPluginExecutorInterface
 {
     /**
      * @var \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductMapperPricesExtractorPluginInterface[]
@@ -25,18 +23,18 @@ class PriceProductMapperPluginExecutor implements PriceProductMapperPluginExecut
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function executePriceExtractorPlugins(PriceProductTransfer $priceProductTransfer): array
+    public function executePriceExtractorPlugins(array $priceProductTransfers): array
     {
         $priceProducts = [];
 
         foreach ($this->extractorPlugins as $extractorPlugin) {
             $priceProducts = array_merge(
                 $priceProducts,
-                $extractorPlugin->extractProductPrices($priceProductTransfer)
+                $extractorPlugin->extractProductPrices($priceProductTransfers)
             );
         }
 

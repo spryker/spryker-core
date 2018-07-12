@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\VolumePriceProduct\Business;
+namespace Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductReader;
 
-interface VolumePriceProductFacadeInterface
+interface PriceProductReaderPluginExecutorInterface
 {
     /**
-     * Specification:
-     * - Extracts additional product prices from price product data volume prices
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractVolumePriceProducts(array $priceProductTransfers): array;
+    public function executePriceExtractorPlugins(array $priceProductTransfers): array;
 }

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductReader\PriceProductReaderPluginExecutorInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
@@ -61,6 +62,11 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     protected $priceProductExpander;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductReader\PriceProductReaderPluginExecutorInterface
+     */
+    protected $pluginExecutor;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface $productFacade
@@ -69,6 +75,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface $priceProductRepository
      * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpanderInterface $priceProductExpander
+     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductReader\PriceProductReaderPluginExecutorInterface $pluginExecutor
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
@@ -78,7 +85,8 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         PriceProductToStoreFacadeInterface $storeFacade,
         PriceProductRepositoryInterface $priceProductRepository,
         PriceProductServiceInterface $priceProductService,
-        PriceProductExpanderInterface $priceProductExpander
+        PriceProductExpanderInterface $priceProductExpander,
+        PriceProductReaderPluginExecutorInterface $pluginExecutor
     ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
         $this->priceProductMapper = $priceProductMapper;
@@ -88,6 +96,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         $this->priceProductRepository = $priceProductRepository;
         $this->priceProductService = $priceProductService;
         $this->priceProductExpander = $priceProductExpander;
+        $this->pluginExecutor = $pluginExecutor;
     }
 
     /**
@@ -129,6 +138,8 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
 
+        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPlugins($priceProductTransfers);
+
         return $priceProductTransfers;
     }
 
@@ -164,6 +175,8 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
 
+        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPlugins($priceProductTransfers);
+
         return $this->priceProductService->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
     }
 
@@ -185,6 +198,8 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductEntities);
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
+
+        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPlugins($priceProductTransfers);
 
         return $priceProductTransfers;
     }
@@ -232,5 +247,27 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
             $priceProductStoreEntity,
             $priceProductStoreEntity->getPriceProduct()
         );
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPricesWithoutPriceExtraction(int $idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array
+    {
+        if (!$priceProductCriteriaTransfer) {
+            $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
+        }
+
+        $priceProductEntities = $this->priceProductRepository
+            ->findProductAbstractPricesByIdAndCriteria($idProductAbstract, $priceProductCriteriaTransfer);
+
+        $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductEntities);
+
+        $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
+
+        return $priceProductTransfers;
     }
 }

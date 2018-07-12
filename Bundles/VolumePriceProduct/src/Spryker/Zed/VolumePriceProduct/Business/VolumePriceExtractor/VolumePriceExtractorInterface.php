@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\VolumePriceProduct\Business\VolumePriceExtractor;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
-
 interface VolumePriceExtractorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractVolumePriceProducts(PriceProductTransfer $priceProductTransfer): array;
+    public function extractVolumePriceProducts(array $priceProductTransfers): array;
 }

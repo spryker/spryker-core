@@ -38,9 +38,8 @@ use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInt
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpander;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpanderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper;
-use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper\PriceProductMapperPluginExecutor;
-use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper\PriceProductMapperPluginExecutorInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductReader\PriceProductReaderPluginExecutor;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Reader;
@@ -136,17 +135,16 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getCurrencyFacade(),
             $this->createPriceTypeMapper(),
             $this->getPriceFacade(),
-            $this->getConfig(),
-            $this->createPriceProductMapperPluginExecutor()
+            $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper\PriceProductMapperPluginExecutorInterface
+     * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductReader\PriceProductReaderPluginExecutor
      */
-    public function createPriceProductMapperPluginExecutor(): PriceProductMapperPluginExecutorInterface
+    public function createPriceProductReaderPluginExecutor(): PriceProductReaderPluginExecutor
     {
-        return new PriceProductMapperPluginExecutor(
+        return new PriceProductReaderPluginExecutor(
             $this->getPriceProductPricesExtractorPlugins()
         );
     }
@@ -182,7 +180,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getRepository(),
             $this->getPriceProductService(),
-            $this->createPriceProductExpander()
+            $this->createPriceProductExpander(),
+            $this->createPriceProductReaderPluginExecutor()
         );
     }
 
@@ -211,7 +210,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getRepository(),
             $this->getPriceProductService(),
-            $this->createPriceProductExpander()
+            $this->createPriceProductExpander(),
+            $this->createPriceProductReaderPluginExecutor()
         );
     }
 

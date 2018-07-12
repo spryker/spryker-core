@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\VolumePriceProduct\Communication\Plugin\PriceProductExtension;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductMapperPricesExtractorPluginInterface;
 
@@ -21,13 +20,12 @@ class VolumePriceProductExtractorPlugin extends AbstractPlugin implements PriceP
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractProductPrices(
-        PriceProductTransfer $priceProductTransfer
-    ): array {
-        return $this->getFacade()->extractVolumePriceProducts($priceProductTransfer);
+    public function extractProductPrices(array $priceProductTransfers): array
+    {
+        return $this->getFacade()->extractVolumePriceProducts($priceProductTransfers);
     }
 }

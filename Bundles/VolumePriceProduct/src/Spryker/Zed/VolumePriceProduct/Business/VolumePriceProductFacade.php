@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\VolumePriceProduct\Business;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -20,12 +19,12 @@ class VolumePriceProductFacade extends AbstractFacade implements VolumePriceProd
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractVolumePriceProducts(PriceProductTransfer $priceProductTransfer): array
+    public function extractVolumePriceProducts(array $priceProductTransfers): array
     {
-        return $this->getFactory()->createVolumePriceExtractor()->extractVolumePriceProducts($priceProductTransfer);
+        return $this->getFactory()->createVolumePriceExtractor()->extractVolumePriceProducts($priceProductTransfers);
     }
 }

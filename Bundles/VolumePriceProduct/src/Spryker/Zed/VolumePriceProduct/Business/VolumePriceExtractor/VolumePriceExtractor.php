@@ -35,11 +35,28 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function extractVolumePriceProducts(array $priceProductTransfers): array
+    {
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $priceProductTransfers = array_merge(
+                $priceProductTransfers,
+                $this->extractVolumePriceFromTransfer($priceProductTransfer)
+            );
+        }
+
+        return $priceProductTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractVolumePriceProducts(PriceProductTransfer $priceProductTransfer): array
+    protected function extractVolumePriceFromTransfer(PriceProductTransfer $priceProductTransfer)
     {
         if (!$priceProductTransfer->getMoneyValue()->getPriceData()) {
             return [];
@@ -70,7 +87,8 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
         $volumePriceTransfer = new PriceProductTransfer();
         $volumePriceTransfer->fromArray($priceProductTransfer->toArray(), true);
         $volumePriceTransfer->getMoneyValue()->setGrossAmount($volumePrice[static::VOLUME_PRICE_GROSS_PRICE])
-            ->setNetAmount($volumePrice[static::VOLUME_PRICE_NET_PRICE]);
+            ->setNetAmount($volumePrice[static::VOLUME_PRICE_NET_PRICE])
+            ->setPriceData(null);
         $volumePriceTransfer->setQuantityToApply($volumePrice[static::VOLUME_PRICE_QUANTITY]);
 
         return $volumePriceTransfer;

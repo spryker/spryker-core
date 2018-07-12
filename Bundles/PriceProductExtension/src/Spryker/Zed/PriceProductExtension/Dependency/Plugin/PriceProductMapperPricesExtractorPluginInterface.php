@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\PriceProductExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
-
 interface PriceProductMapperPricesExtractorPluginInterface
 {
     /**
@@ -17,11 +15,9 @@ interface PriceProductMapperPricesExtractorPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractProductPrices(
-        PriceProductTransfer $priceProductTransfer
-    ): array;
+    public function extractProductPrices(array $priceProductTransfers): array;
 }
