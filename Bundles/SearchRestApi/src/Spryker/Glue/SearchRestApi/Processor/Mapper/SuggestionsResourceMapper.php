@@ -63,9 +63,9 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
      */
     protected function mapCustomFields(RestSearchSuggestionsAttributesTransfer $restSuggestionsAttributesTransfer, array $restSearchResponse): RestSearchSuggestionsAttributesTransfer
     {
-        $restSuggestionsAttributesTransfer = $this->mapProductsSuggestions($restSuggestionsAttributesTransfer, $restSearchResponse);
-        $restSuggestionsAttributesTransfer = $this->mapCategoriesSuggestions($restSuggestionsAttributesTransfer, $restSearchResponse);
-        $restSuggestionsAttributesTransfer = $this->mapCmsPagesSuggestions($restSuggestionsAttributesTransfer, $restSearchResponse);
+        $restSuggestionsAttributesTransfer = $this->mapProductSuggestions($restSuggestionsAttributesTransfer, $restSearchResponse);
+        $restSuggestionsAttributesTransfer = $this->mapCategorySuggestions($restSuggestionsAttributesTransfer, $restSearchResponse);
+        $restSuggestionsAttributesTransfer = $this->mapCmsPageSuggestions($restSuggestionsAttributesTransfer, $restSearchResponse);
 
         return $restSuggestionsAttributesTransfer;
     }
@@ -76,7 +76,7 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestSearchSuggestionsAttributesTransfer
      */
-    protected function mapProductsSuggestions(RestSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer, array $restSearchResponse): RestSearchSuggestionsAttributesTransfer
+    protected function mapProductSuggestions(RestSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer, array $restSearchResponse): RestSearchSuggestionsAttributesTransfer
     {
         $suggestionName = static::SEARCH_RESPONSE_PRODUCT_ABSTRACT_KEY;
         $suggestionKeysRequired = [
@@ -96,7 +96,7 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestSearchSuggestionsAttributesTransfer
      */
-    protected function mapCategoriesSuggestions(RestSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer, array $restSearchResponse): RestSearchSuggestionsAttributesTransfer
+    protected function mapCategorySuggestions(RestSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer, array $restSearchResponse): RestSearchSuggestionsAttributesTransfer
     {
         $suggestionName = static::SEARCH_RESPONSE_CATEGORY_KEY;
         $suggestionKeysRequired = [static::SEARCH_RESPONSE_NAME_KEY];
@@ -112,7 +112,7 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestSearchSuggestionsAttributesTransfer
      */
-    protected function mapCmsPagesSuggestions(RestSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer, array $restSearchResponse): RestSearchSuggestionsAttributesTransfer
+    protected function mapCmsPageSuggestions(RestSearchSuggestionsAttributesTransfer $restSearchSuggestionsAttributesTransfer, array $restSearchResponse): RestSearchSuggestionsAttributesTransfer
     {
         $suggestionName = static::SEARCH_RESPONSE_CMS_PAGE_KEY;
         $suggestionKeysRequired = [static::SEARCH_RESPONSE_NAME_KEY];
