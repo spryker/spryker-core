@@ -21,7 +21,7 @@ class SearchRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToCatalogClientInterface
      */
-    protected function getCatalogClient(): SearchRestApiToCatalogClientInterface
+    public function getCatalogClient(): SearchRestApiToCatalogClientInterface
     {
         return $this->getProvidedDependency(SearchRestApiDependencyProvider::CLIENT_CATALOG_CLIENT);
     }
@@ -29,7 +29,7 @@ class SearchRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapperInterface
      */
-    protected function createSearchResourceMapper(): SearchResourceMapperInterface
+    public function createSearchResourceMapper(): SearchResourceMapperInterface
     {
         return new SearchResourceMapper(
             $this->getResourceBuilder()
