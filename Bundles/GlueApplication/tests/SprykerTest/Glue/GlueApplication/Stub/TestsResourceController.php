@@ -7,21 +7,22 @@
 namespace SprykerTest\Glue\GlueApplication\Stub;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\GlueApplication\Rest\Controller\AbstractRestController;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class TestsResourceController extends AbstractRestController
+class TestsResourceController extends AbstractController
 {
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getAction(): RestResponseInterface
+    public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restRequest = $this->getRestRequest();
-
         $restResponse = $this->createRestResourceBuilder()->createRestResponse(20);
 
         $restTestAttributesTransfer = (new RestTestAttributesTransfer())
@@ -36,15 +37,16 @@ class TestsResourceController extends AbstractRestController
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \SprykerTest\Glue\GlueApplication\Stub\RestTestAttributesTransfer $restTestAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function postAction(RestTestAttributesTransfer $restTestAttributesTransfer): RestResponseInterface
+    public function postAction(RestRequestInterface $restRequest, RestTestAttributesTransfer $restTestAttributesTransfer): RestResponseInterface
     {
         $restResponse = $this->createRestResourceBuilder()->createRestResponse();
 
-        $requestResource = $this->getRestRequest()->getResource();
+        $requestResource = $restRequest->getResource();
 
         if (!$restTestAttributesTransfer->getAttribute1()) {
             $restErrorTransfer = new RestErrorMessageTransfer();
@@ -78,13 +80,14 @@ class TestsResourceController extends AbstractRestController
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \SprykerTest\Glue\GlueApplication\Stub\RestTestAttributesTransfer $restTestAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function patchAction(RestTestAttributesTransfer $restTestAttributesTransfer): RestResponseInterface
+    public function patchAction(RestRequestInterface $restRequest, RestTestAttributesTransfer $restTestAttributesTransfer): RestResponseInterface
     {
-        return $this->postAction($restTestAttributesTransfer);
+        return $this->postAction($restRequest, $restTestAttributesTransfer);
     }
 
     /**
