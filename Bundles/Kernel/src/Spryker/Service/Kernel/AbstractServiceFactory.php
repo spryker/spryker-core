@@ -54,7 +54,7 @@ class AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface
+     * @return \Spryker\Service\Kernel\Container
      */
     protected function createContainerWithProvidedDependencies()
     {
@@ -63,6 +63,7 @@ class AbstractServiceFactory
 
         $this->provideExternalDependencies($dependencyProvider, $container);
 
+        /** @var \Spryker\Service\Kernel\Container $container */
         $container = $this->overwriteForTesting($container);
 
         return $container;

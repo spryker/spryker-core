@@ -1,11 +1,11 @@
 {
   "name": "spryker/company-business-unit-data-import",
   "description": "CompanyBusinessUnitDataImport module",
-  "license": "proprietary",
+  "license": "MIT",
   "require": {
     "php": ">=7.1",
     "spryker/company": "^1.0.0",
-    "spryker/company-business-unit": "^1.0.0",
+    "spryker/company-business-unit": "^2.0.0",
     "spryker/data-import": "^1.2.0",
     "spryker/kernel": "^3.0.0"
   },

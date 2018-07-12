@@ -544,7 +544,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @param string[] $voucherCodes
      *
-     * @return bool
+     * @return int
      */
     public function releaseUsedVoucherCodes(array $voucherCodes)
     {
@@ -560,7 +560,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @param string[] $voucherCodes
      *
-     * @return bool
+     * @return int
      */
     public function useVoucherCodes(array $voucherCodes)
     {

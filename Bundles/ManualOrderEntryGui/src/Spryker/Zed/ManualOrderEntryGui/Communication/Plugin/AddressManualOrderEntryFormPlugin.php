@@ -19,16 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeInterface
-     */
-    protected $customerFacade;
-
-    public function __construct()
-    {
-        $this->customerFacade = $this->getFactory()->getCustomerFacade();
-    }
-
-    /**
      * @return string
      */
     public function getName(): string
@@ -56,33 +46,30 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      */
     public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress()) {
-            $addressTransfer = $quoteTransfer->getShippingAddress();
-            $addressTransfer->setFkCustomer($quoteTransfer->getCustomer()->getIdCustomer());
-
-            $addressTransfer = $this->customerFacade->getAddress($addressTransfer);
-            $quoteTransfer->setShippingAddress($addressTransfer);
-        }
-
-        if ($quoteTransfer->getBillingSameAsShipping()) {
-            $quoteTransfer->setBillingAddress($quoteTransfer->getShippingAddress());
-        } elseif ($quoteTransfer->getBillingAddress()->getIdCustomerAddress()) {
-            $addressTransfer = $quoteTransfer->getBillingAddress();
-            $addressTransfer->setFkCustomer($quoteTransfer->getCustomer()->getIdCustomer());
-
-            $addressTransfer = $this->customerFacade->getAddress($addressTransfer);
-            $quoteTransfer->setBillingAddress($addressTransfer);
-        }
+        $quoteTransfer = $this->getFactory()
+            ->createAddressFormHandler()
+            ->handle($quoteTransfer, $form, $request);
 
         return $quoteTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isFormPreFilled(?QuoteTransfer $quoteTransfer = null): bool
+    public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
+    {
+        return false;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isFormSkipped(Request $request, QuoteTransfer $quoteTransfer): bool
     {
         return false;
     }

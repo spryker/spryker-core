@@ -74,6 +74,9 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
      */
     public function delete(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
     {
+        $companyBusinessUnitTransfer = $this->repository
+            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+
         $companyBusinessUnitResponseTransfer = (new CompanyBusinessUnitResponseTransfer())
             ->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer)
             ->setIsSuccessful(true);
@@ -100,11 +103,12 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
             return $companyBusinessUnitResponseTransfer;
         }
 
-        $this->entityManager->deleteCompanyBusinessUnitById(
-            $companyBusinessUnitResponseTransfer
-                ->getCompanyBusinessUnitTransfer()
-                ->getIdCompanyBusinessUnit()
-        );
+        $idCompanyBusinessUnit = $companyBusinessUnitResponseTransfer
+            ->getCompanyBusinessUnitTransfer()
+            ->getIdCompanyBusinessUnit();
+
+        $this->entityManager->clearParentBusinessUnit($idCompanyBusinessUnit);
+        $this->entityManager->deleteCompanyBusinessUnitById($idCompanyBusinessUnit);
 
         return $companyBusinessUnitResponseTransfer;
     }

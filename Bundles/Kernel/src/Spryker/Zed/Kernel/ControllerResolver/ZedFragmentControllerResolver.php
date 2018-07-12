@@ -44,6 +44,7 @@ class ZedFragmentControllerResolver extends SilexControllerResolver
     {
         $controllerResolver = new ControllerResolver();
 
+        /** @var \Spryker\Zed\Kernel\Communication\Controller\AbstractController $controller */
         $controller = $controllerResolver->resolve($bundleControllerAction);
         $controller->setApplication($this->app);
         $controller->initialize();

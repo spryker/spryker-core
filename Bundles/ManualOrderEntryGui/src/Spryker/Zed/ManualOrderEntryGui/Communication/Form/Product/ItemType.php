@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product;
 
-use Generated\Shared\Transfer\ManualOrderProductTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -39,7 +39,7 @@ class ItemType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(static::OPTION_ISO_CODE);
 
@@ -56,7 +56,7 @@ class ItemType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addSkuField($builder, $options)
@@ -85,7 +85,7 @@ class ItemType extends AbstractType
      *
      * @return $this
      */
-    protected function addSkuField(FormBuilderInterface $builder, array $options)
+    protected function addSkuField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_SKU, TextType::class, [
             'label' => 'SKU',
@@ -101,7 +101,7 @@ class ItemType extends AbstractType
      *
      * @return $this
      */
-    protected function addUnitGrossPriceField(FormBuilderInterface $builder, array $options)
+    protected function addUnitGrossPriceField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_UNIT_GROSS_PRICE, TextType::class, [
             'label' => 'Unit Gross Price',
@@ -120,7 +120,7 @@ class ItemType extends AbstractType
      *
      * @return $this
      */
-    protected function addQuantityField(FormBuilderInterface $builder, array $options)
+    protected function addQuantityField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_QUANTITY, TextType::class, [
             'label' => 'Quantity',
@@ -139,7 +139,7 @@ class ItemType extends AbstractType
      *
      * @return $this
      */
-    protected function addForcedUnitGrossPriceField(FormBuilderInterface $builder, array $options)
+    protected function addForcedUnitGrossPriceField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_FORCED_UNIT_GROSS_PRICE, HiddenType::class, [
             'data' => 1,
@@ -153,7 +153,7 @@ class ItemType extends AbstractType
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
      */
-    protected function createNumberConstraint(array $options)
+    protected function createNumberConstraint(array $options): Regex
     {
         $validationGroup = $this->getValidationGroup($options);
 
@@ -169,7 +169,7 @@ class ItemType extends AbstractType
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
      */
-    protected function createMoneyConstraint(array $options)
+    protected function createMoneyConstraint(array $options): Regex
     {
         $validationGroup = $this->getValidationGroup($options);
 
@@ -185,7 +185,7 @@ class ItemType extends AbstractType
      *
      * @return string
      */
-    protected function getValidationGroup(array $options)
+    protected function getValidationGroup(array $options): string
     {
         $validationGroup = Constraint::DEFAULT_GROUP;
         if (!empty($options['validation_group'])) {
@@ -200,12 +200,12 @@ class ItemType extends AbstractType
      *
      * @return void
      */
-    protected function convertIntToMoney(FormEvent $event, array $options)
+    protected function convertIntToMoney(FormEvent $event, array $options): void
     {
         $moneyFacade = $this->getFactory()->getMoneyFacade();
         $data = $event->getData();
 
-        if ($data instanceof ManualOrderProductTransfer) {
+        if ($data instanceof ItemTransfer) {
             $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data->getUnitGrossPrice());
             $data->setUnitGrossPrice($moneyFloat);
 
@@ -219,12 +219,12 @@ class ItemType extends AbstractType
      *
      * @return void
      */
-    protected function convertMoneyToInt(FormEvent $event, array $options)
+    protected function convertMoneyToInt(FormEvent $event, array $options): void
     {
         $moneyFacade = $this->getFactory()->getMoneyFacade();
         $data = $event->getData();
 
-        if ($data instanceof ManualOrderProductTransfer) {
+        if ($data instanceof ItemTransfer) {
             $moneyFloat = $moneyFacade->convertDecimalToInteger((float)$data->getUnitGrossPrice());
             $data->setUnitGrossPrice($moneyFloat);
 
@@ -235,7 +235,7 @@ class ItemType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'product';
     }

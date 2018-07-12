@@ -42,8 +42,8 @@ class OrderSourceReader implements OrderSourceReaderInterface
     /**
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
      */
-    public function getAllOrderSources(): array
+    public function findAllOrderSources(): array
     {
-        return $this->manualOrderEntryRepository->getAllOrderSources();
+        return $this->manualOrderEntryRepository->findAllOrderSources();
     }
 }

@@ -31,7 +31,7 @@ class CustomerType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addSalutationField($builder)
@@ -45,7 +45,7 @@ class CustomerType extends AbstractType
      *
      * @return $this
      */
-    protected function addSalutationField(FormBuilderInterface $builder)
+    protected function addSalutationField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_SALUTATION, ChoiceType::class, [
             'choices' => $this->getSalutationChoices(),
@@ -62,7 +62,7 @@ class CustomerType extends AbstractType
     /**
      * @return array
      */
-    protected function getSalutationChoices()
+    protected function getSalutationChoices(): array
     {
         return [
             'Ms' => 'Ms',
@@ -77,7 +77,7 @@ class CustomerType extends AbstractType
      *
      * @return $this
      */
-    protected function addFirstNameField(FormBuilderInterface $builder)
+    protected function addFirstNameField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
             'label' => 'First Name',
@@ -95,7 +95,7 @@ class CustomerType extends AbstractType
      *
      * @return $this
      */
-    protected function addLastNameField(FormBuilderInterface $builder)
+    protected function addLastNameField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_LAST_NAME, TextType::class, [
             'label' => 'Last Name',
@@ -113,7 +113,7 @@ class CustomerType extends AbstractType
      *
      * @return $this
      */
-    protected function addEmailField(FormBuilderInterface $builder)
+    protected function addEmailField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'Email',
@@ -130,7 +130,7 @@ class CustomerType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'customer';
     }
