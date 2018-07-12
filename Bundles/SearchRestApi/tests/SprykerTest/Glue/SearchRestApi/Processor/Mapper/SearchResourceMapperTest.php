@@ -69,13 +69,6 @@ class SearchResourceMapperTest extends AbstractMapperTest
         $this->assertEquals("rating", $this->restSearchAttributesTransfer->getFacets()[1]['name']);
         $this->assertEquals(0, $this->restSearchAttributesTransfer->getFacets()[1]['min']);
         $this->assertEquals(0, $this->restSearchAttributesTransfer->getFacets()[1]['max']);
-
-        $this->restSearchAttributesTransfer = $this
-            ->searchResourceMapper
-            ->mapSearchResponseAttributesTransferToRestResponse($this->mockEmptyRestSearchResponseTransfer())
-            ->getAttributes();
-
-        $this->assertEmpty($this->restSearchAttributesTransfer->getProducts());
     }
 
     /**
