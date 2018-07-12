@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryStorage\Persistence;
 
+use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CmsBlockCategoryStorageQueryContainerInterface extends QueryContainerInterface
