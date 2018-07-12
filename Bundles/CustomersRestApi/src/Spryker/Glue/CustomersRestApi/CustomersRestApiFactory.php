@@ -32,7 +32,7 @@ class CustomersRestApiFactory extends AbstractFactory
      */
     protected function getCustomerClient(): CustomersRestApiToCustomerClientInterface
     {
-        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::CLIENT_CUSTOMER_CLIENT);
+        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::CLIENT_CUSTOMER);
     }
 
     /**

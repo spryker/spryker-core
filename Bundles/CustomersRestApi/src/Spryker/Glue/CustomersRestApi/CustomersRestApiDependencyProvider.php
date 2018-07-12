@@ -12,7 +12,7 @@ use Spryker\Glue\Kernel\Container;
 
 class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_CUSTOMER_CLIENT = 'CLIENT_CUSTOMER_CLIENT';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -33,7 +33,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER_CLIENT] = function (Container $container) {
+        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new CustomersRestApiToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 

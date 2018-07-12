@@ -68,10 +68,10 @@ class CustomersWriter implements CustomersWriterInterface
                 return $this->createErrorResponse($customerResponseTransfer, $response);
             }
         } catch (Exception $ex) {
-            //TODO detect specific exception
             return $response->addError($this->createErrorCustomerCantRegisterCustomer());
         }
         $restResource = $this->customersResourceMapper->mapCustomerToCustomersRestResource($customerResponseTransfer->getCustomerTransfer());
+
         return $response->addResource($restResource);
     }
 
