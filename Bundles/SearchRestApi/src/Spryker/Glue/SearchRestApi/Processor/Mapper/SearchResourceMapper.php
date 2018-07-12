@@ -6,7 +6,7 @@
 
 namespace Spryker\Glue\SearchRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\RestSearchResponseAttributesTransfer;
+use Generated\Shared\Transfer\RestSearchAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -14,7 +14,7 @@ use Spryker\Glue\SearchRestApi\SearchRestApiConfig;
 
 class SearchResourceMapper implements SearchResourceMapperInterface
 {
-    protected const SEARCH_GET_PARAMETER_NAME = 'q';
+    protected const QUERY_STRING_PARAMETER = 'q';
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -34,9 +34,9 @@ class SearchResourceMapper implements SearchResourceMapperInterface
      *
      * @return string
      */
-    public function mapRestSearchRequestAttributesTransferToSearchString(RestRequestInterface $restRequest): string
+    public function mapRestSearchAttributesTransferToSearchString(RestRequestInterface $restRequest): string
     {
-        return $restRequest->getHttpRequest()->query->get(static::SEARCH_GET_PARAMETER_NAME, '');
+        return $restRequest->getHttpRequest()->query->get(static::QUERY_STRING_PARAMETER, '');
     }
 
     /**
@@ -44,7 +44,7 @@ class SearchResourceMapper implements SearchResourceMapperInterface
      *
      * @return array
      */
-    public function mapRestSearchRequestAttributesTransferToSearchRequestParameters(RestRequestInterface $restRequest): array
+    public function mapRestSearchAttributesTransferToSearchRequestParameters(RestRequestInterface $restRequest): array
     {
         return $restRequest->getHttpRequest()->query->all();
     }
@@ -56,7 +56,11 @@ class SearchResourceMapper implements SearchResourceMapperInterface
      */
     public function mapSearchResponseAttributesTransferToRestResponse(array $restSearchResponse): RestResourceInterface
     {
-        $restSearchAttributesTransfer = (new RestSearchResponseAttributesTransfer())->fromArray($restSearchResponse, true);
+        $restSearchAttributesTransfer = (new RestSearchAttributesTransfer())->fromArray($restSearchResponse, true);
+        $restSearchAttributesTransfer->setFacets([]);
+        foreach ($restSearchResponse['facets'] as $facetTransfer) {
+            $restSearchAttributesTransfer->addFacets($facetTransfer->toArray(true, true));
+        }
 
         return $this->restResourceBuilder->createRestResource(
             SearchRestApiConfig::RESOURCE_SEARCH,

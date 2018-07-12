@@ -53,8 +53,8 @@ class CatalogReader implements CatalogReaderInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $searchString = $this->searchResourceMapper->mapRestSearchRequestAttributesTransferToSearchString($restRequest);
-        $requestParameters = $this->searchResourceMapper->mapRestSearchRequestAttributesTransferToSearchRequestParameters($restRequest);
+        $searchString = $this->searchResourceMapper->mapRestSearchAttributesTransferToSearchString($restRequest);
+        $requestParameters = $this->searchResourceMapper->mapRestSearchAttributesTransferToSearchRequestParameters($restRequest);
         $restSearchResponseAttributesTransfer = $this->catalogClient->catalogSearch($searchString, $requestParameters);
 
         $restResource = $this->searchResourceMapper->mapSearchResponseAttributesTransferToRestResponse($restSearchResponseAttributesTransfer);

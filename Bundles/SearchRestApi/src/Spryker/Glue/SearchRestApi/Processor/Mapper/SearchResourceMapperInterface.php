@@ -16,14 +16,14 @@ interface SearchResourceMapperInterface
      *
      * @return string
      */
-    public function mapRestSearchRequestAttributesTransferToSearchString(RestRequestInterface $restRequest): string;
+    public function mapRestSearchAttributesTransferToSearchString(RestRequestInterface $restRequest): string;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return array
      */
-    public function mapRestSearchRequestAttributesTransferToSearchRequestParameters(RestRequestInterface $restRequest): array;
+    public function mapRestSearchAttributesTransferToSearchRequestParameters(RestRequestInterface $restRequest): array;
 
     /**
      * @param array $restSearchResponse
