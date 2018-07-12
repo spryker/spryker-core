@@ -94,7 +94,7 @@ class ProductConcreteImageSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @return string|null
      */
-    public function getSynchronizationQueuePoolName()
+    public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getProductImageSynchronizationPoolName();
     }
