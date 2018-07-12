@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -18,58 +19,61 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityStorage\Communication\AvailabilityStorageCommunicationFactory getFactory()
  */
-class AvailabilityEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * Specification:
-     *  - Returns the name of resource
+     * {@inheritdoc}
      *
      * @api
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return AvailabilityStorageConstants::AVAILABILITY_RESOURCE_NAME;
     }
 
     /**
-     * Specification:
-     *  - Returns query of resource entity, provided $ids parameter
-     *    will apply to query to limit the result
+     * {@inheritdoc}
      *
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @param int[] $ids
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData()
+    public function queryData(array $ids = []): ?ModelCriteria
     {
-        return $this->getQueryContainer()->queryProductAbstract();
+        $query = $this->getQueryContainer()->queryAvailabilityAbstractWithRelationsByIds($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**
-     * Specification:
-     *  - Returns the event name of resource entity
+     * {@inheritdoc}
      *
      * @api
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH;
     }
 
     /**
-     * Specification:
-     *  - Returns the name of ID column for publishing
+     * {@inheritdoc}
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): ?string
     {
-        return SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT;
+        return SpyAvailabilityAbstractTableMap::COL_ID_AVAILABILITY_ABSTRACT;
     }
 }

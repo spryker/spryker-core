@@ -20,4 +20,27 @@ interface ProductQuantityStorageFacadeInterface
      * @return void
      */
     public function publishProductQuantity(array $productIds): void;
+
+
+    /**
+     * Specification:
+     * - Retrieves all product quantity transfers.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findProductQuantityTransfers(): array;
+
+    /**
+     * Specification:
+     * - Retrieves product quantity transfers by product ids.
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findProductQuantityByProductIdsTransfers(array $productIds): array;
 }

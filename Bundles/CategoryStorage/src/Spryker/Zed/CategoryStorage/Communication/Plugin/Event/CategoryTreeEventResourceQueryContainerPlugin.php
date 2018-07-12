@@ -7,20 +7,20 @@
 
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event;
 
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
  */
-class CategoryTreeEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class CategoryTreeEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * Specification:
-     *  - Returns the name of resource
+     * {@inheritdoc}
      *
      * @api
      *
@@ -32,22 +32,21 @@ class CategoryTreeEventResourcePlugin extends AbstractPlugin implements EventRes
     }
 
     /**
-     * Specification:
-     *  - Returns query of resource entity, provided $ids parameter
-     *    will apply to query to limit the result
+     * {@inheritdoc}
      *
      * @api
      *
-     * @return null
+     * @param int[] $ids
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function queryData()
+    public function queryData(array $ids = []): ?ModelCriteria
     {
         return null;
     }
 
     /**
-     * Specification:
-     *  - Returns the event name of resource entity
+     * {@inheritdoc}
      *
      * @api
      *
@@ -59,14 +58,13 @@ class CategoryTreeEventResourcePlugin extends AbstractPlugin implements EventRes
     }
 
     /**
-     * Specification:
-     *  - Returns the name of ID column for publishing
+     * {@inheritdoc}
      *
      * @api
      *
-     * @return null
+     * @return null|string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): ?string
     {
         return null;
     }

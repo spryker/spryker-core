@@ -13,7 +13,7 @@ use Spryker\Zed\Synchronization\Business\Exception\SynchronizationQueuePoolNotFo
 
 class QueueMessageCreator implements QueueMessageCreatorInterface
 {
-    const WRITE = 'write';
+    protected const WRITE = 'write';
 
     /**
      * @param \Generated\Shared\Transfer\SynchronizationQueueMessageTransfer $synchronizationQueueMessageTransfer

@@ -16,10 +16,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductSetQueryContainer extends AbstractQueryContainer implements ProductSetQueryContainerInterface
 {
     /**
-     * @api
-     *
-     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
-     */
+ * @api
+ *
+ * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+ */
     public function queryProductSet()
     {
         return $this->getFactory()
@@ -59,6 +59,20 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     {
         return $this->queryProductSet()
             ->filterByIdProductSet($idProductSet);
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $ids
+     *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     */
+    public function queryProductSetByIds(array $ids)
+    {
+        return $this->getFactory()
+            ->createProductSetQuery()
+            ->filterByIdProductSet_In($ids);
     }
 
     /**

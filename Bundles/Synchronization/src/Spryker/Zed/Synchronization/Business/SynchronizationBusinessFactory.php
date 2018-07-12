@@ -110,7 +110,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface
      */
-    protected function getSearchClient()
+    public function getSearchClient()
     {
         return $this->getProvidedDependency(SynchronizationDependencyProvider::CLIENT_SEARCH);
     }
@@ -118,7 +118,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface
      */
-    protected function getQueueClient()
+    public function getQueueClient()
     {
         return $this->getProvidedDependency(SynchronizationDependencyProvider::CLIENT_QUEUE);
     }
@@ -126,7 +126,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface
      */
-    protected function getUtilEncodingService()
+    public function getUtilEncodingService()
     {
         return $this->getProvidedDependency(SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING);
     }
@@ -134,7 +134,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface[]
      */
-    protected function getSynchronizationDataPlugins()
+    public function getSynchronizationDataPlugins()
     {
         return $this->getProvidedDependency(SynchronizationDependencyProvider::PLUGINS_SYNCHRONIZATION_DATA);
     }

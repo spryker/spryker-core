@@ -31,15 +31,15 @@ class ProductCategoryFilterStorageQueryContainer extends AbstractQueryContainer 
     /**
      * @api
      *
-     * @param array $categoryIds
+     * @param int[] $productCategoryFilterIds
      *
      * @return $this|\Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
      */
-    public function queryProductCategoryByIdCategories(array $categoryIds)
+    public function queryProductCategoryByIds(array $productCategoryFilterIds)
     {
         return $this->getFactory()
             ->getProductCategoryFilterQuery()
             ->queryProductCategoryFilter()
-            ->filterByFkCategory_In($categoryIds);
+            ->filterByIdProductCategoryFilter_In($productCategoryFilterIds);
     }
 }

@@ -27,6 +27,18 @@ interface ProductMeasurementUnitRepositoryInterface
     public function getProductMeasurementSalesUnitTransfersByIdProduct(int $idProduct): array;
 
     /**
+     * @param int[] $salesUnitsIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getProductMeasurementSalesUnitTransfersByIds(array $salesUnitsIds): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getProductMeasurementSalesUnitTransfers(): array;
+
+    /**
      * @param int $idProductMeasurementBaseUnit
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer
@@ -39,4 +51,9 @@ interface ProductMeasurementUnitRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function findAllProductMeasurementUnitTransfers(): array;
 }

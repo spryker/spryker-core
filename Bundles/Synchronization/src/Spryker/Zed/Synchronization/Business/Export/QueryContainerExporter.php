@@ -16,6 +16,8 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQu
 
 class QueryContainerExporter implements ExporterInterface
 {
+    protected const DEFAULT_CHUNK_SIZE = 100;
+
     /**
      * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface
      */
@@ -44,11 +46,11 @@ class QueryContainerExporter implements ExporterInterface
     public function __construct(
         SynchronizationToQueueClientInterface $queueClient,
         QueueMessageCreatorInterface $synchronizationQueueMessageCreator,
-        $chunkSize = 100
+        $chunkSize
     ) {
         $this->queueClient = $queueClient;
         $this->queueMessageCreator = $synchronizationQueueMessageCreator;
-        $this->chunkSize = $chunkSize;
+        $this->chunkSize = $chunkSize ?? static::DEFAULT_CHUNK_SIZE;
     }
 
     /**
@@ -65,7 +67,7 @@ class QueryContainerExporter implements ExporterInterface
     }
 
     /**
-     * @param array $ids
+     * @param int[] $ids
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface $plugin
      *
      * @return void
@@ -98,11 +100,11 @@ class QueryContainerExporter implements ExporterInterface
     protected function syncData(SynchronizationDataPluginInterface $plugin, array $synchronizationEntities): void
     {
         $queueSendTransfers = [];
-        foreach ($synchronizationEntities as $synchronizedEntity) {
-            $store = $this->getStore($plugin->hasStore(), $synchronizedEntity);
+        foreach ($synchronizationEntities as $synchronizationEntity) {
+            $store = $this->getStore($plugin->hasStore(), $synchronizationEntity);
             $syncQueueMessage = (new SynchronizationQueueMessageTransfer())
-                ->setKey($synchronizedEntity->getKey())
-                ->setValue($synchronizedEntity->getData())
+                ->setKey($synchronizationEntity->getKey())
+                ->setValue($synchronizationEntity->getData())
                 ->setResource($plugin->getResourceName())
                 ->setParams($plugin->getParams());
 

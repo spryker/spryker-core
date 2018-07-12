@@ -10,6 +10,7 @@ namespace Spryker\Zed\CategoryStorage\Persistence;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -54,6 +55,23 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
             ->where(SpyCategoryAttributeTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
             ->where(SpyUrlTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
             ->where(SpyCategoryTableMap::COL_IS_ACTIVE . ' = ?', true);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $categoryNodeIds
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryCategoryNodeByIds(array $categoryNodeIds): SpyCategoryNodeQuery
+    {
+        $query = $this->getFactory()
+            ->getCategoryQueryContainer()
+            ->queryAllCategoryNodes()
+            ->filterByIdCategoryNode_In($categoryNodeIds);
 
         return $query;
     }
