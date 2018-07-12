@@ -44,7 +44,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findLabelByLabelName($labelName)
+    public function findLabelByLabelName(string $labelName): ?ProductLabelTransfer
     {
         return $this
             ->getFactory()

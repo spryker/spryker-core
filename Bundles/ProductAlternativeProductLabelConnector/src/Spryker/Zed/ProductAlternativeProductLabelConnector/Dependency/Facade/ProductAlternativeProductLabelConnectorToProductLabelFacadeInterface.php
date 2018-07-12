@@ -16,14 +16,14 @@ interface ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface
      *
      * @return void
      */
-    public function createLabel(ProductLabelTransfer $productLabelTransfer): void;
+    public function createLabel(ProductLabelTransfer $productLabelTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
      * @return void
      */
-    public function updateLabel(ProductLabelTransfer $productLabelTransfer): void;
+    public function updateLabel(ProductLabelTransfer $productLabelTransfer);
 
     /**
      * @param string $labelName
@@ -38,7 +38,7 @@ interface ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface
      *
      * @return void
      */
-    public function removeProductAbstractRelationsForLabel($idProductLabel, array $idsProductAbstract): void;
+    public function removeProductAbstractRelationsForLabel($idProductLabel, array $idsProductAbstract);
 
     /**
      * @param int $idProductLabel
@@ -46,12 +46,12 @@ interface ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface
      *
      * @return void
      */
-    public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract): void;
+    public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract);
 
     /**
      * @param int $idsProductAbstract
      *
      * @return int[]
      */
-    public function findActiveLabelIdsByIdProductAbstract(int $idsProductAbstract): array;
+    public function findActiveLabelIdsByIdProductAbstract(int $idsProductAbstract);
 }

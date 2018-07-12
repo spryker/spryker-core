@@ -62,7 +62,7 @@ class ProductDiscontinuedProductLabelWriter implements ProductDiscontinuedProduc
             $this->config->getProductDiscontinueLabelName()
         )->getIdProductLabel();
 
-        $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
+        $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
         $concreteIds = [];
 
         foreach ($this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract) as $productConcreteTransfer) {
@@ -94,7 +94,7 @@ class ProductDiscontinuedProductLabelWriter implements ProductDiscontinuedProduc
         $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
             $this->config->getProductDiscontinueLabelName()
         )->getIdProductLabel();
-        $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
+        $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
         $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
     }
 }

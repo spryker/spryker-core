@@ -116,7 +116,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         $idsToDeAssign = [];
 
         foreach ($productIds as $idProduct) {
-            $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
+            $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
             $concreteIds = $this->getProductConcreteIdsByAbstractProductId($idProductAbstract);
 
             if (!$this->productDiscontinuedFacade->areAllConcreteProductsDiscontinued($concreteIds)) {

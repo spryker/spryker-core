@@ -14,6 +14,11 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternat
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelReader\ProductAbstractRelationReaderInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter\ProductAlternativeProductLabelWriter;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter\ProductAlternativeProductLabelWriterInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToGlossaryFacadeInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorDependencyProvider;
 
 /**
@@ -65,7 +70,7 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
     /**
      * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface
      */
-    public function getProductLabelFacade()
+    public function getProductLabelFacade(): ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface
     {
         return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_PRODUCT_LABEL);
     }
@@ -73,7 +78,7 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
     /**
      * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface
      */
-    public function getProductFacade()
+    public function getProductFacade(): ProductAlternativeProductLabelConnectorToProductInterface
     {
         return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_PRODUCT);
     }
@@ -81,7 +86,7 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
     /**
      * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface
      */
-    public function getProductAlternativeFacade()
+    public function getProductAlternativeFacade(): ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface
     {
         return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_PRODUCT_ALTERNATIVE);
     }
@@ -89,7 +94,7 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
     /**
      * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToGlossaryFacadeInterface
      */
-    public function getGlossaryFacade()
+    public function getGlossaryFacade(): ProductAlternativeProductLabelConnectorToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_GLOSSARY);
     }
@@ -97,7 +102,7 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
     /**
      * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeInterface
      */
-    public function getLocaleFacade()
+    public function getLocaleFacade(): ProductAlternativeProductLabelConnectorToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_LOCALE);
     }

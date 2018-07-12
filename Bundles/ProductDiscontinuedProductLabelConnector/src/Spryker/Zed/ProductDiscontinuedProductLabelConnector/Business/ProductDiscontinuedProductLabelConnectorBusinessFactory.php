@@ -14,6 +14,11 @@ use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscont
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelReader\ProductAbstractRelationReaderInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelWriter\ProductDiscontinuedProductLabelWriter;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelWriter\ProductDiscontinuedProductLabelWriterInterface;
+use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToGlossaryFacadeInterface;
+use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToLocaleFacadeInterface;
+use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductDiscontinuedFacadeInterface;
+use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductInterface;
+use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorDependencyProvider;
 
 /**
@@ -65,7 +70,7 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
     /**
      * @return \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface
      */
-    public function getProductLabelFacade()
+    public function getProductLabelFacade(): ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface
     {
         return $this->getProvidedDependency(ProductDiscontinuedProductLabelConnectorDependencyProvider::FACADE_PRODUCT_LABEL);
     }
@@ -73,7 +78,7 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
     /**
      * @return \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductInterface
      */
-    public function getProductFacade()
+    public function getProductFacade(): ProductDiscontinuedProductLabelConnectorToProductInterface
     {
         return $this->getProvidedDependency(ProductDiscontinuedProductLabelConnectorDependencyProvider::FACADE_PRODUCT);
     }
@@ -81,7 +86,7 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
     /**
      * @return \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductDiscontinuedFacadeInterface
      */
-    public function getProductDiscontinuedFacade()
+    public function getProductDiscontinuedFacade(): ProductDiscontinuedProductLabelConnectorToProductDiscontinuedFacadeInterface
     {
         return $this->getProvidedDependency(ProductDiscontinuedProductLabelConnectorDependencyProvider::FACADE_PRODUCT_DISCONTINUED);
     }
@@ -89,7 +94,7 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
     /**
      * @return \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToGlossaryFacadeInterface
      */
-    public function getGlossaryFacade()
+    public function getGlossaryFacade(): ProductDiscontinuedProductLabelConnectorToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(ProductDiscontinuedProductLabelConnectorDependencyProvider::FACADE_GLOSSARY);
     }
@@ -97,7 +102,7 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
     /**
      * @return \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToLocaleFacadeInterface
      */
-    public function getLocaleFacade()
+    public function getLocaleFacade(): ProductDiscontinuedProductLabelConnectorToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(ProductDiscontinuedProductLabelConnectorDependencyProvider::FACADE_LOCALE);
     }

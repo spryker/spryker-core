@@ -105,7 +105,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      *
      * @return null|int
      */
-    public function getProductAbstractIdByConcreteId(int $idProductConcrete): ?int
+    public function findProductAbstractIdByConcreteId(int $idProductConcrete): ?int
     {
         $productConcrete = $this->getFactory()
             ->createProductQuery()

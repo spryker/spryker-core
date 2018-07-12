@@ -29,7 +29,7 @@ class ProductDiscontinuedProductLabelConnectorToProductLabelBridge implements Pr
      *
      * @return void
      */
-    public function createLabel(ProductLabelTransfer $productLabelTransfer): void
+    public function createLabel(ProductLabelTransfer $productLabelTransfer)
     {
         $this->productLabelFacade->createLabel($productLabelTransfer);
     }
@@ -39,7 +39,7 @@ class ProductDiscontinuedProductLabelConnectorToProductLabelBridge implements Pr
      *
      * @return void
      */
-    public function updateLabel(ProductLabelTransfer $productLabelTransfer): void
+    public function updateLabel(ProductLabelTransfer $productLabelTransfer)
     {
         $this->productLabelFacade->updateLabel($productLabelTransfer);
     }
@@ -60,7 +60,7 @@ class ProductDiscontinuedProductLabelConnectorToProductLabelBridge implements Pr
      *
      * @return void
      */
-    public function removeProductAbstractRelationsForLabel(int $idProductLabel, array $idsProductAbstract): void
+    public function removeProductAbstractRelationsForLabel(int $idProductLabel, array $idsProductAbstract)
     {
         $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, $idsProductAbstract);
     }
@@ -71,7 +71,7 @@ class ProductDiscontinuedProductLabelConnectorToProductLabelBridge implements Pr
      *
      * @return void
      */
-    public function addAbstractProductRelationsForLabel(int $idProductLabel, array $idsProductAbstract): void
+    public function addAbstractProductRelationsForLabel(int $idProductLabel, array $idsProductAbstract)
     {
         $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, $idsProductAbstract);
     }
@@ -81,7 +81,7 @@ class ProductDiscontinuedProductLabelConnectorToProductLabelBridge implements Pr
      *
      * @return int[]
      */
-    public function findActiveLabelIdsByIdProductAbstract(int $idsProductAbstract): array
+    public function findActiveLabelIdsByIdProductAbstract(int $idsProductAbstract)
     {
         return $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idsProductAbstract);
     }

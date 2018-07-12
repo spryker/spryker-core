@@ -62,7 +62,7 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
             $this->config->getProductAlternativesLabelName()
         )->getIdProductLabel();
 
-        $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
+        $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
         $concreteIds = [];
 
         foreach ($this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract) as $productConcreteTransfer) {
@@ -94,7 +94,7 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
         $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
             $this->config->getProductAlternativesLabelName()
         )->getIdProductLabel();
-        $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
+        $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
         $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
     }
 }

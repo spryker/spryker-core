@@ -79,9 +79,9 @@ interface ProductConcreteManagerInterface
     /**
      * @param int $idConcrete
      *
-     * @return int
+     * @return null|int
      */
-    public function getProductAbstractIdByConcreteId(int $idConcrete): int;
+    public function findProductAbstractIdByConcreteId(int $idConcrete): ?int;
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer

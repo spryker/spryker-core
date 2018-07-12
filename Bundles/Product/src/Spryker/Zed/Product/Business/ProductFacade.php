@@ -186,22 +186,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param int $idConcrete
-     *
-     * @return int
-     */
-    public function getProductAbstractIdByConcreteId(int $idConcrete): int
-    {
-        return $this->getFactory()
-            ->createProductConcreteManager()
-            ->getProductAbstractIdByConcreteId($idConcrete);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
@@ -263,6 +247,22 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createProductConcreteManager()
             ->findProductConcreteIdBySku($sku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idConcrete
+     *
+     * @return int|null
+     */
+    public function findProductAbstractIdByConcreteId(int $idConcrete): ?int
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->findProductAbstractIdByConcreteId($idConcrete);
     }
 
     /**

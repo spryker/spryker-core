@@ -290,11 +290,11 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @param int $idConcrete
      *
-     * @return int
+     * @return null|int
      */
-    public function getProductAbstractIdByConcreteId(int $idConcrete): int
+    public function findProductAbstractIdByConcreteId(int $idConcrete): ?int
     {
-        return $this->repository->getProductAbstractIdByConcreteId($idConcrete);
+        return $this->repository->findProductAbstractIdByConcreteId($idConcrete);
     }
 
     /**

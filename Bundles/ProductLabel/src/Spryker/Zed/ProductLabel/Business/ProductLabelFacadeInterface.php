@@ -36,7 +36,7 @@ interface ProductLabelFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findLabelByLabelName($labelName);
+    public function findLabelByLabelName(string $labelName): ?ProductLabelTransfer;
 
     /**
      * Specification:
