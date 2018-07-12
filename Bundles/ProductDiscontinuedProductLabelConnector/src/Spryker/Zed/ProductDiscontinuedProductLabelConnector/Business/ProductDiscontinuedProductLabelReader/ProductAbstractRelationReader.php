@@ -75,31 +75,17 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
 
         $productIds = $this->productDiscontinuedProductLabelConnectorRepository->getProductConcreteIds();
 
-        $idsToAssign = [];
-        $idsToDeAssign = [];
-
         $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
             $this->config->getProductDiscontinueLabelName()
         )->getIdProductLabel();
 
-        foreach ($productIds as $idProduct) {
-            $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
-            $concreteIds = $this->getProductConcreteIdsByAbstractProductId($idProductAbstract);
+        $idsToAssignAndToDeAssign = $this->getIdsToAssignAndToDeAssign($productIds, $idProductLabel);
 
-            if (!$this->productDiscontinuedFacade->areAllConcreteProductsDiscontinued($concreteIds)) {
-                $idsToDeAssign[] = $idProductAbstract;
-
-                continue;
-            }
-
-            if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))
-                && !in_array($idProductAbstract, $idsToAssign)
-            ) {
-                $idsToAssign[] = $idProductAbstract;
-            }
-        }
-
-        return [$this->mapRelationTransfer($idProductLabel, $idsToAssign, $idsToDeAssign)];
+        return [$this->mapRelationTransfer(
+            $idProductLabel,
+            $idsToAssignAndToDeAssign['idsToAssign'],
+            $idsToAssignAndToDeAssign['idsToDeAssign']
+        )];
     }
 
     /**
@@ -116,6 +102,35 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         }
 
         return $concreteIds;
+    }
+
+    /**
+     * @param int[] $productIds
+     * @param int $idProductLabel
+     *
+     * @return int[]
+     */
+    protected function getIdsToAssignAndToDeAssign(array $productIds, $idProductLabel): array
+    {
+        $idsToAssign = [];
+        $idsToDeAssign = [];
+
+        foreach ($productIds as $idProduct) {
+            $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
+            $concreteIds = $this->getProductConcreteIdsByAbstractProductId($idProductAbstract);
+
+            if (!$this->productDiscontinuedFacade->areAllConcreteProductsDiscontinued($concreteIds)) {
+                $idsToDeAssign[] = $idProductAbstract;
+
+                continue;
+            }
+
+            if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))) {
+                $idsToAssign[] = $idProductAbstract;
+            }
+        }
+
+        return ['idsToAssign' => array_unique($idsToAssign), 'idsToDeAssign' => array_unique($idsToDeAssign)];
     }
 
     /**
