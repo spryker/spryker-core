@@ -53,11 +53,9 @@ class ResponseBuilder implements ResponseBuilderInterface
         RestResponseInterface $restResponse,
         RestRequestInterface $restRequest
     ): array {
-
-        $response[RestResponseInterface::RESPONSE_LINKS] = $this->buildCollectionLink($restRequest);
-
         if (count($restResponse->getResources()) === 0) {
             $response[RestResponseInterface::RESPONSE_DATA] = [];
+            $response[RestResponseInterface::RESPONSE_LINKS] = $this->buildCollectionLink($restRequest);
             return $response;
         }
 
@@ -74,6 +72,7 @@ class ResponseBuilder implements ResponseBuilderInterface
             $response[RestResponseInterface::RESPONSE_DATA] = $data[0];
         } else {
             $response[RestResponseInterface::RESPONSE_DATA] = $data;
+            $response[RestResponseInterface::RESPONSE_LINKS] = $this->buildCollectionLink($restRequest);
         }
 
         $included = $this->responseRelationship->processIncluded($restResponse->getResources(), $restRequest);
@@ -82,7 +81,8 @@ class ResponseBuilder implements ResponseBuilderInterface
         }
 
         if ($restRequest->getPage()) {
-            $response[RestResponseInterface::RESPONSE_LINKS] += $this->responsePagination->buildPaginationLinks($restResponse, $restRequest);
+            $links = $response[RestResponseInterface::RESPONSE_LINKS] ?? [];
+            $response[RestResponseInterface::RESPONSE_LINKS] = $links + $this->responsePagination->buildPaginationLinks($restResponse, $restRequest);
         }
 
         return $response;
