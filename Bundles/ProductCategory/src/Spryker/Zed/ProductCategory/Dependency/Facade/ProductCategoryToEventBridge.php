@@ -26,7 +26,7 @@ class ProductCategoryToEventBridge implements ProductCategoryToEventInterface
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
      *
      * @return void
      */

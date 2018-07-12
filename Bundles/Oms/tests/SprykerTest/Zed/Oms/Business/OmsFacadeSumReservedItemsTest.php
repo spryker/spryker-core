@@ -15,9 +15,7 @@ use Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use ReflectionClass;
 use Spryker\Zed\Oms\Business\OmsFacade;
-use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
 
 /**
  * Auto-generated group annotations
@@ -66,19 +64,6 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $reservationQuantity = $omsFacade->getOmsReservedProductQuantityForSku(self::ORDER_ITEM_SKU, $storeTransfer);
 
         $this->assertSame(50, $reservationQuantity);
-    }
-
-    /**
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        $reflectionResolver = new ReflectionClass(ActiveProcessFetcher::class);
-        $reflectionProperty = $reflectionResolver->getProperty('reservedStatesCache');
-        $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue([]);
     }
 
     /**

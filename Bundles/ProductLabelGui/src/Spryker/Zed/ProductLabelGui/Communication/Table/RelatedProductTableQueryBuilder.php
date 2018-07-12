@@ -147,16 +147,14 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
     protected function addProductCategories(SpyProductAbstractQuery $query, LocaleTransfer $localeTransfer)
     {
         $query
-            ->useSpyProductCategoryQuery(null, Criteria::LEFT_JOIN)
-                ->useSpyCategoryQuery(null, Criteria::LEFT_JOIN)
-                    ->useAttributeQuery(null, Criteria::LEFT_JOIN)
+            ->useSpyProductCategoryQuery()
+                ->useSpyCategoryQuery()
+                    ->useAttributeQuery()
                         ->withColumn(
                             sprintf('GROUP_CONCAT(%s)', SpyCategoryAttributeTableMap::COL_NAME),
                             static::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV
                         )
                         ->filterByFkLocale($localeTransfer->getIdLocale())
-                        ->_or()
-                        ->filterByFkLocale(null)
                     ->endUse()
                 ->endUse()
                 ->groupByFkProductAbstract()
@@ -171,7 +169,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
     protected function addConcreteProductStates(SpyProductAbstractQuery $query)
     {
         $query
-            ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
+            ->useSpyProductQuery()
                 ->withColumn(
                     sprintf('GROUP_CONCAT(%s)', SpyProductTableMap::COL_IS_ACTIVE),
                     static::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV

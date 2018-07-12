@@ -156,7 +156,7 @@ class FilterPreferencesDataProvider
      * @param string $attributeKey
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return string|null
+     * @return string
      */
     protected function getAttributeKeyTranslation($attributeKey, LocaleTransfer $localeTransfer)
     {

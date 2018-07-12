@@ -18,7 +18,6 @@ use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTab
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTypeTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -159,7 +158,7 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
         return $this->getFactory()
             ->getProductQueryContainer()
             ->queryProductAbstract()
-            ->leftJoinSpyProduct()
+            ->joinSpyProduct()
             ->select([
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
                 SpyProductAbstractTableMap::COL_SKU,
@@ -175,23 +174,20 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
                 ),
                 static::COL_ASSIGNED_CATEGORIES
             )
-            ->leftJoinPriceProduct()
+            ->joinPriceProduct()
             ->useSpyProductAbstractLocalizedAttributesQuery()
-                ->filterByFkLocale($idLocale)
+              ->filterByFkLocale($idLocale)
             ->endUse()
-            ->leftJoinSpyProductCategory()
+            ->joinSpyProductCategory()
             ->useSpyProductImageSetQuery()
                 ->filterByFkLocale($idLocale)
-                ->_or()
-                ->filterByFkLocale(null)
-                ->useSpyProductImageSetToProductImageQuery(null, Criteria::LEFT_JOIN)
-                    ->leftJoinWithSpyProductImage()
+                ->useSpyProductImageSetToProductImageQuery()
+                   ->joinWithSpyProductImage()
                 ->endUse()
             ->endUse()
             ->addJoin(
                 [SpyProductCategoryTableMap::COL_FK_CATEGORY, $idLocale],
-                [SpyCategoryAttributeTableMap::COL_FK_CATEGORY, SpyCategoryAttributeTableMap::COL_FK_LOCALE],
-                Criteria::LEFT_JOIN
+                [SpyCategoryAttributeTableMap::COL_FK_CATEGORY, SpyCategoryAttributeTableMap::COL_FK_LOCALE]
             )
             ->withColumn(
                 'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',

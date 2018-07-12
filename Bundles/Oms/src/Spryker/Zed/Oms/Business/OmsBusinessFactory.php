@@ -24,8 +24,6 @@ use Spryker\Zed\Oms\Business\Process\Transition;
 use Spryker\Zed\Oms\Business\Reservation\ExportReservation;
 use Spryker\Zed\Oms\Business\Reservation\ReservationVersionHandler;
 use Spryker\Zed\Oms\Business\Reservation\ReservationWriter;
-use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
-use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
@@ -222,7 +220,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createUtilReservation()
     {
         return new Reservation(
-            $this->createActiveProcessFetcher(),
+            $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
+            $this->createOrderStateMachineBuilder(),
             $this->getQueryContainer(),
             $this->getReservationHandlerPlugins(),
             $this->getStoreFacade()
@@ -304,17 +303,6 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         );
 
         return $mailHandler;
-    }
-
-    /**
-     * @return \Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface
-     */
-    public function createActiveProcessFetcher(): ActiveProcessFetcherInterface
-    {
-        return new ActiveProcessFetcher(
-            $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
-            $this->createOrderStateMachineBuilder()
-        );
     }
 
     /**

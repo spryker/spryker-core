@@ -12,15 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsGuiConfig extends AbstractBundleConfig
 {
-    const CMS_FOLDER_PATH = '@Cms/templates/';
-
-    /**
-     * @return string
-     */
-    public function getCmsFolderPath(): string
-    {
-        return $this->get(CmsGuiConstants::CMS_FOLDER_PATH, static::CMS_FOLDER_PATH);
-    }
+    const CMS_FOLDER_PATH = '@Cms/template/';
 
     /**
      * @return string|null

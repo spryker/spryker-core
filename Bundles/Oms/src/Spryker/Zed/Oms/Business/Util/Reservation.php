@@ -7,11 +7,22 @@
 namespace Spryker\Zed\Oms\Business\Util;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Reservation implements ReservationInterface
 {
+    /**
+     * @var \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject
+     */
+    protected $activeProcesses;
+
+    /**
+     * @var \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
+     */
+    protected $builder;
+
     /**
      * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
@@ -28,23 +39,22 @@ class Reservation implements ReservationInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface
-     */
-    protected $activeProcessFetcher;
-
-    /**
-     * @param \Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface $activeProcessFetcher
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $activeProcesses
+     * @param \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface $builder
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[] $reservationHandlerPlugins
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
      */
     public function __construct(
-        ActiveProcessFetcherInterface $activeProcessFetcher,
+        ReadOnlyArrayObject $activeProcesses,
+        BuilderInterface $builder,
         OmsQueryContainerInterface $queryContainer,
         array $reservationHandlerPlugins,
         OmsToStoreFacadeInterface $storeFacade
     ) {
-        $this->activeProcessFetcher = $activeProcessFetcher;
+
+        $this->activeProcesses = $activeProcesses;
+        $this->builder = $builder;
         $this->queryContainer = $queryContainer;
         $this->reservationHandlerPlugins = $reservationHandlerPlugins;
         $this->storeFacade = $storeFacade;
@@ -78,7 +88,7 @@ class Reservation implements ReservationInterface
     public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null)
     {
         return $this->sumProductQuantitiesForSku(
-            $this->activeProcessFetcher->getReservedStatesFromAllActiveProcesses(),
+            $this->retrieveReservedStates(),
             $sku,
             false,
             $storeTransfer
@@ -162,6 +172,21 @@ class Reservation implements ReservationInterface
         return (int)$this->queryContainer
             ->sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest)
             ->findOne();
+    }
+
+    /**
+     * @return array
+     */
+    protected function retrieveReservedStates()
+    {
+        $reservedStates = [];
+        foreach ($this->activeProcesses as $processName) {
+            $builder = clone $this->builder;
+            $process = $builder->createProcess($processName);
+            $reservedStates = array_merge($reservedStates, $process->getAllReservedStates());
+        }
+
+        return $reservedStates;
     }
 
     /**

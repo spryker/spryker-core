@@ -57,7 +57,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     public function queryActiveKeysByName($keyName)
     {
         $query = $this->queryKeys();
-        $query->filterByIsActive(true)->filterByKey_Like($keyName);
+        $query->filterByIsActive(true)->filterByKey($keyName);
 
         return $query;
     }

@@ -58,7 +58,7 @@ class EventListenerContext implements EventListenerContextInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
      * @param string $eventName
      *
      * @return void
