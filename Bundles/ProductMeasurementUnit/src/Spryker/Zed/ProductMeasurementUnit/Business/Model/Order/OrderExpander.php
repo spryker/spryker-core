@@ -12,22 +12,23 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Zed\ProductMeasurementUnit\Dependency\QueryContainer\ProductMeasurementUnitToSalesQueryContainerInterface;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
+use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface;
 
 class OrderExpander implements OrderExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductMeasurementUnit\Dependency\QueryContainer\ProductMeasurementUnitToSalesQueryContainerInterface
+     * @var \Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface
      */
-    protected $salesQueryContainer;
+    protected $productMeasurementUnitRepository;
 
     /**
-     * @param \Spryker\Zed\ProductMeasurementUnit\Dependency\QueryContainer\ProductMeasurementUnitToSalesQueryContainerInterface $salesQueryContainer
+     * @param \Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface $productMeasurementUnitRepository
      */
-    public function __construct(ProductMeasurementUnitToSalesQueryContainerInterface $salesQueryContainer)
-    {
-        $this->salesQueryContainer = $salesQueryContainer;
+    public function __construct(
+        ProductMeasurementUnitRepositoryInterface $productMeasurementUnitRepository
+    ) {
+        $this->productMeasurementUnitRepository = $productMeasurementUnitRepository;
     }
 
     /**
@@ -37,20 +38,20 @@ class OrderExpander implements OrderExpanderInterface
      */
     public function expandOrderWithQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $salesOrderQuery = $this->salesQueryContainer->querySalesOrderItemsByIdSalesOrder($orderTransfer->getIdSalesOrder());
-        $salesOrderItemEntities = $salesOrderQuery->find();
+        $spySalesOrderItemEntityTransfers = $this->productMeasurementUnitRepository
+            ->querySalesOrderItemsByIdSalesOrder($orderTransfer->getIdSalesOrder());
 
-        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
+        foreach ($spySalesOrderItemEntityTransfers as $spySalesOrderItemEntityTransfer) {
             $itemTransfer = $this->findItemTransferByIdSalesOrderItem(
                 $orderTransfer,
-                $salesOrderItemEntity->getIdSalesOrderItem()
+                $spySalesOrderItemEntityTransfer->getIdSalesOrderItem()
             );
 
             if ($itemTransfer === null) {
                 continue;
             }
 
-            $quantitySalesUnit = $this->hydrateQuantitySalesUnitTransfer($salesOrderItemEntity);
+            $quantitySalesUnit = $this->hydrateQuantitySalesUnitTransfer($spySalesOrderItemEntityTransfer);
             $itemTransfer->setQuantitySalesUnit($quantitySalesUnit);
         }
 
@@ -58,20 +59,20 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItemEntity
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    protected function hydrateQuantitySalesUnitTransfer(SpySalesOrderItem $spySalesOrderItemEntity): ProductMeasurementSalesUnitTransfer
+    protected function hydrateQuantitySalesUnitTransfer(SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer): ProductMeasurementSalesUnitTransfer
     {
         $productMeasurementSalesUnitTransfer = new ProductMeasurementSalesUnitTransfer();
-        $productMeasurementSalesUnitTransfer->setConversion($spySalesOrderItemEntity->getQuantityMeasurementUnitConversion());
-        $productMeasurementSalesUnitTransfer->setPrecision($spySalesOrderItemEntity->getQuantityMeasurementUnitPrecision());
+        $productMeasurementSalesUnitTransfer->setConversion($spySalesOrderItemEntityTransfer->getQuantityMeasurementUnitConversion());
+        $productMeasurementSalesUnitTransfer->setPrecision($spySalesOrderItemEntityTransfer->getQuantityMeasurementUnitPrecision());
 
-        $productMeasurementBaseUnitTransfer = $this->createProductMeasurementBaseUnitTransfer($spySalesOrderItemEntity);
+        $productMeasurementBaseUnitTransfer = $this->createProductMeasurementBaseUnitTransfer($spySalesOrderItemEntityTransfer);
         $productMeasurementSalesUnitTransfer->setProductMeasurementBaseUnit($productMeasurementBaseUnitTransfer);
 
-        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($spySalesOrderItemEntity->getQuantityMeasurementUnitName());
+        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($spySalesOrderItemEntityTransfer->getQuantityMeasurementUnitName());
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 
         return $productMeasurementSalesUnitTransfer;
@@ -91,15 +92,16 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItemEntity
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     * @return \Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer
      */
-    protected function createProductMeasurementBaseUnitTransfer(SpySalesOrderItem $spySalesOrderItemEntity): ProductMeasurementBaseUnitTransfer
-    {
+    protected function createProductMeasurementBaseUnitTransfer(
+        SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer
+    ): ProductMeasurementBaseUnitTransfer {
         $productMeasurementBaseUnitTransfer = new ProductMeasurementBaseUnitTransfer();
 
-        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($spySalesOrderItemEntity->getQuantityBaseMeasurementUnitName());
+        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($spySalesOrderItemEntityTransfer->getQuantityBaseMeasurementUnitName());
         $productMeasurementBaseUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 
         return $productMeasurementBaseUnitTransfer;

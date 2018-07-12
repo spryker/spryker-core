@@ -523,6 +523,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      * @param int|null $minRestriction
      * @param int|null $maxRestriction
      * @param int|null $intervalRestriction
+     * @param bool $isVariable
      *
      * @return void
      */
@@ -532,7 +533,8 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         int $quoteAmount,
         ?int $minRestriction,
         ?int $maxRestriction,
-        ?int $intervalRestriction
+        ?int $intervalRestriction,
+        bool $isVariable
     ): void {
         // Assign
         $productAmountOverride = [
@@ -540,6 +542,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             SpyProductPackagingUnitAmountEntityTransfer::AMOUNT_MIN => $minRestriction,
             SpyProductPackagingUnitAmountEntityTransfer::AMOUNT_MAX => $maxRestriction,
             SpyProductPackagingUnitAmountEntityTransfer::AMOUNT_INTERVAL => $intervalRestriction,
+            SpyProductPackagingUnitAmountEntityTransfer::IS_VARIABLE => $isVariable,
         ];
 
         $itemProductConcreteTransfer = $this->tester->haveProduct();
@@ -597,14 +600,14 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function itemAdditionAmounts(): array
     {
         return [
-            [true, 1, 2, 1, null, 1], // general rule
-            [true, 1, 7, 7, null, 1], // min equals new amount
-            [true, 1, 5, 5, 5,    1], // max equals new amount
-            [true, 1, 7, 0, null, 7], // interval matches new amount
-            [false, 1, 5, 7, 7,    7], // min, max, interval matches new amount
-            [false, 1, 5, 8, null, 1], // min above new amount
-            [false, 1, 5, 1, 3,    1], // max below new amount
-            [false, 1, 5, 1, null, 3], // interval does not match new amount
+            [true, 1, 2, 1, null, 1, true], // general rule
+            [true, 1, 7, 7, null, 1, true], // min equals new amount
+            [true, 1, 5, 5, 5,    1, true], // max equals new amount
+            [true, 1, 7, 0, null, 7, true], // interval matches new amount
+            [false, 1, 5, 7, 7,    7, true], // min, max, interval matches new amount
+            [false, 1, 5, 8, null, 1, true], // min above new amount
+            [false, 1, 5, 1, 3,    1, true], // max below new amount
+            [false, 1, 5, 1, null, 3, true], // interval does not match new amount
         ];
     }
 
