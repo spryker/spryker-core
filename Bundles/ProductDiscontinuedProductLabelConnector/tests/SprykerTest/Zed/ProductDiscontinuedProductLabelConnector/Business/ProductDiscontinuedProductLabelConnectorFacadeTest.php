@@ -8,11 +8,9 @@
 namespace SprykerTest\Zed\ProductDiscontinuedProductLabelConnector\Business;
 
 use Codeception\Test\Unit;
-use DateTime;
+use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
-use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelConnectorBusinessFactory;
-use Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorConfig;
 
 /**
  * Auto-generated group annotations
@@ -26,6 +24,8 @@ use Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProd
  */
 class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
 {
+    protected const TEST_DISCONTINUED_LABEL = 'TEST_DISCONTINUED_LABEL';
+
     /**
      * @var \SprykerTest\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorBusinessTester
      */
@@ -38,19 +38,16 @@ class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
     {
         // Arrange
         $this->tester->haveProductLabel([
-            ProductLabelTransfer::NAME => $this->getProductDiscontinueLabelName(),
+            ProductLabelTransfer::NAME => self::TEST_DISCONTINUED_LABEL,
         ]);
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productDiscontinuedEntity = $this->createProductDiscontinuedQuery()
-            ->filterByFkProduct($productConcreteTransfer->getIdProductConcrete())
-            ->findOneOrCreate();
-        $productDiscontinuedEntity->setActiveUntil((new DateTime())
-            ->modify(sprintf('+%s Days', 180))
-            ->format('Y-m-d'));
-        $productDiscontinuedEntity->save();
+        $productDiscontinueRequestTransfer = (new ProductDiscontinueRequestTransfer())
+            ->setIdProduct($productConcreteTransfer->getIdProductConcrete());
+        $this->tester->getLocator()->productDiscontinued()->facade()
+            ->markProductAsDiscontinued($productDiscontinueRequestTransfer);
 
         // Act
-        $productLabelProductAbstractRelationTransfers = $this->productDiscontinuedProductLabelConnectorFacade()
+        $productLabelProductAbstractRelationTransfers = $this->tester->getFacade()
             ->findProductLabelProductAbstractRelationChanges();
 
         // Assert
@@ -69,55 +66,17 @@ class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productDiscontinuedEntity = $this->createProductDiscontinuedQuery()
-            ->filterByFkProduct($productConcreteTransfer->getIdProductConcrete())
-            ->findOneOrCreate();
-        $productDiscontinuedEntity->setActiveUntil((new DateTime())
-            ->modify(sprintf('+%s Days', 180))
-            ->format('Y-m-d'));
-        $productDiscontinuedEntity->save();
+        $productDiscontinueRequestTransfer = (new ProductDiscontinueRequestTransfer())
+            ->setIdProduct($productConcreteTransfer->getIdProductConcrete());
+        $this->tester->getLocator()->productDiscontinued()->facade()
+            ->markProductAsDiscontinued($productDiscontinueRequestTransfer);
         $idProduct = $productConcreteTransfer->getIdProductConcrete();
 
         // Act
-        $this->productDiscontinuedProductLabelConnectorFacade()
-            ->updateAbstractProductWithDiscontinuedLabel($idProduct);
+        $this->tester->getFacade()->updateAbstractProductWithDiscontinuedLabel($idProduct);
 
         // Assert
         $this->tester->assertDatabaseTableContainsData();
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    protected function getFacade()
-    {
-        $configMock = $this->getMockBuilder(ProductDiscontinuedProductLabelConnectorConfig::class)->getMock();
-        $configMock->method('getProductDiscontinueLabelName')
-            ->willReturn($this->getProductDiscontinueLabelName());
-
-        $factory = new ProductDiscontinuedProductLabelConnectorBusinessFactory();
-        $factory->setConfig($configMock);
-
-        $facade = $this->tester->getFacade();
-        $facade->setFactory($factory);
-
-        return $facade;
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelConnectorFacadeInterface
-     */
-    protected function productDiscontinuedProductLabelConnectorFacade()
-    {
-        return $this->tester->getLocator()->productDiscontinuedProductLabelConnector()->facade();
-    }
-
-    /**
-     * @return string
-     */
-    protected function getProductDiscontinueLabelName()
-    {
-        return 'TEST_DISCONTINUED_LABEL';
     }
 
     /**

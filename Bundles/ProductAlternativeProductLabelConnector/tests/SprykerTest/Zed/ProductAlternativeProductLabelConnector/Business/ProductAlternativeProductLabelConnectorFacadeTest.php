@@ -8,10 +8,9 @@
 namespace SprykerTest\Zed\ProductAlternativeProductLabelConnector\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ProductAlternativeCreateRequestTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
-use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelConnectorBusinessFactory;
-use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig;
 
 /**
  * Auto-generated group annotations
@@ -25,6 +24,8 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProduc
  */
 class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
 {
+    protected const TEST_ALTERNATIVE_LABEL = 'TEST_ALTERNATIVE_LABEL';
+
     /**
      * @var \SprykerTest\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorBusinessTester
      */
@@ -37,16 +38,20 @@ class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
     {
         // Arrange
         $this->tester->haveProductLabel([
-            ProductLabelTransfer::NAME => $this->getProductAlternativeLabelName(),
+            ProductLabelTransfer::NAME => self::TEST_ALTERNATIVE_LABEL,
         ]);
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productAlternativeEntity = $this->createProductAlternativeQuery()
-            ->filterByFkProduct($productConcreteTransfer->getIdProductConcrete())
-            ->findOneOrCreate();
-        $productAlternativeEntity->save();
+        $productAlternativeCreateRequestTransfer = (new ProductAlternativeCreateRequestTransfer())
+            ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
+            ->setAlternativeSku($productConcreteTransfer->getAbstractSku());
+        $productConcreteTransfer->addProductAlternativeCreateRequest($productAlternativeCreateRequestTransfer);
+        $this->tester->getLocator()
+            ->productAlternative()
+            ->facade()
+            ->persistProductAlternative($productConcreteTransfer);
 
         // Act
-        $productLabelProductAbstractRelationTransfers = $this->productAlternativeProductLabelConnectorFacade()
+        $productLabelProductAbstractRelationTransfers = $this->tester->getFacade()
             ->findProductLabelProductAbstractRelationChanges();
 
         // Assert
@@ -65,52 +70,21 @@ class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productAlternativeEntity = $this->createProductAlternativeQuery()
-            ->filterByFkProduct($productConcreteTransfer->getIdProductConcrete())
-            ->findOneOrCreate();
-        $productAlternativeEntity->save();
-        $idProduct = $productAlternativeEntity->getFkProduct();
+        $productAlternativeCreateRequestTransfer = (new ProductAlternativeCreateRequestTransfer())
+            ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
+            ->setAlternativeSku($productConcreteTransfer->getAbstractSku());
+        $productConcreteTransfer->addProductAlternativeCreateRequest($productAlternativeCreateRequestTransfer);
+        $productAlternativeTransfer = $this->tester->getLocator()
+            ->productAlternative()
+            ->facade()
+            ->persistProductAlternative($productConcreteTransfer);
+        $idProduct = $productAlternativeTransfer->getIdProductConcrete();
 
         // Act
-        $this->productAlternativeProductLabelConnectorFacade()
-            ->updateAbstractProductWithAlternativesAvailableLabel($idProduct);
+        $this->tester->getFacade()->updateAbstractProductWithAlternativesAvailableLabel($idProduct);
 
         // Assert
         $this->tester->assertDatabaseTableContainsData();
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    protected function getFacade()
-    {
-        $configMock = $this->getMockBuilder(ProductAlternativeProductLabelConnectorConfig::class)->getMock();
-        $configMock->method('getProductAlternativeLabelName')
-            ->willReturn($this->getProductAlternativeLabelName());
-
-        $factory = new ProductAlternativeProductLabelConnectorBusinessFactory();
-        $factory->setConfig($configMock);
-
-        $facade = $this->tester->getFacade();
-        $facade->setFactory($factory);
-
-        return $facade;
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelConnectorFacadeInterface
-     */
-    protected function productAlternativeProductLabelConnectorFacade()
-    {
-        return $this->tester->getLocator()->productAlternativeProductLabelConnector()->facade();
-    }
-
-    /**
-     * @return string
-     */
-    protected function getProductAlternativeLabelName()
-    {
-        return 'TEST_ALTERNATIVE_LABEL';
     }
 
     /**
