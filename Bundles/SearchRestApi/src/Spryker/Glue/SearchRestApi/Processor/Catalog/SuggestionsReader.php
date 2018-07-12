@@ -54,16 +54,13 @@ class SuggestionsReader implements SuggestionsReaderInterface
     public function catalogSuggestionsSearch(RestRequestInterface $restRequest): RestResponseInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
-
         $searchString = $this->getSuggestionsRestRequestQueryString($restRequest);
-
         if (empty($searchString)) {
             return $this->buildEmptyResponse($response);
         }
 
         $requestParameters = $this->getSuggestionsRestRequestAttributes($restRequest);
         $restSuggestionsAttributeTransfer = $this->catalogClient->catalogSuggestSearch($searchString, $requestParameters);
-
         $restResource = $this->suggestionsResourceMapper->mapSuggestionsResponseAttributesTransferToRestResponse($restSuggestionsAttributeTransfer);
 
         return $response->addResource($restResource);
