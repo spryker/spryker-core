@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Glue\SearchRestApi\Business\Mapper;
+namespace SprykerTest\Glue\SearchRestApi\Processor\Mapper;
 
 use ArrayObject;
 use Codeception\Test\Unit;
@@ -23,7 +23,7 @@ use Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapper;
  * @group SprykerTest
  * @group Glue
  * @group SearchRestApi
- * @group Business
+ * @group Processor
  * @group Mapper
  * @group AbstractMapperTest
  * Add your own group annotations below this line
@@ -64,6 +64,21 @@ abstract class AbstractMapperTest extends Unit
         $mockRestSearchResponse = [];
         $mockRestSearchResponse['facets'] = $this->mockFacets();
         $mockRestSearchResponse['products'] = $this->mockProducts();
+        $mockRestSearchResponse['sort'] = $this->mockSort();
+        $mockRestSearchResponse['pagination'] = $this->mockPagination();
+        $mockRestSearchResponse['spellingSuggestion'] = 'cameras';
+
+        return $mockRestSearchResponse;
+    }
+
+    /**
+     * @return array
+     */
+    protected function mockEmptyRestSearchResponseTransfer()
+    {
+        $mockRestSearchResponse = [];
+        $mockRestSearchResponse['facets'] = $this->mockFacets();
+        $mockRestSearchResponse['products'] = [];
         $mockRestSearchResponse['sort'] = $this->mockSort();
         $mockRestSearchResponse['pagination'] = $this->mockPagination();
         $mockRestSearchResponse['spellingSuggestion'] = 'cameras';

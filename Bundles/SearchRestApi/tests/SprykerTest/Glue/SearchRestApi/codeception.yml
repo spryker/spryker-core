@@ -12,9 +12,9 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
-        path: Business
-        class_name: SearchRestApiBusinessTester
+    Processor:
+        path: Processor
+        class_name: SearchRestApiProcessorTester
         modules:
             enabled:
                 - Asserts

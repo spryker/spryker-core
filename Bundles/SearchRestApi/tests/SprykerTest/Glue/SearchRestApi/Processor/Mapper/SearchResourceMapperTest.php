@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Glue\SearchRestApi\Business\Mapper;
+namespace SprykerTest\Glue\SearchRestApi\Processor\Mapper;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Glue
  * @group SearchRestApi
- * @group Business
+ * @group Processor
  * @group Mapper
  * @group SearchResourceMapperTest
  * Add your own group annotations below this line
@@ -69,5 +69,12 @@ class SearchResourceMapperTest extends AbstractMapperTest
         $this->assertEquals("rating", $this->restSearchAttributesTransfer->getFacets()[1]['name']);
         $this->assertEquals(0, $this->restSearchAttributesTransfer->getFacets()[1]['min']);
         $this->assertEquals(0, $this->restSearchAttributesTransfer->getFacets()[1]['max']);
+
+        $this->restSearchAttributesTransfer = $this
+            ->searchResourceMapper
+            ->mapSearchResponseAttributesTransferToRestResponse($this->mockEmptyRestSearchResponseTransfer())
+            ->getAttributes();
+
+        $this->assertEmpty($this->restSearchAttributesTransfer->getProducts());
     }
 }
