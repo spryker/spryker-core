@@ -24,7 +24,7 @@ class NonSplittableItemTransformerStrategyPlugin extends AbstractPlugin implemen
      */
     public function isApplicable(ItemTransfer $itemTransfer): bool
     {
-        return !$itemTransfer->getIsQuantitySplittable();
+        return $itemTransfer->getIsQuantitySplittable() === false;
     }
 
     /**

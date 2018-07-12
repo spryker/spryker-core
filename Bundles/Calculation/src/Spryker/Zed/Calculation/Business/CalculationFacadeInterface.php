@@ -295,8 +295,7 @@ interface CalculationFacadeInterface
 
     /**
      * Specification:
-     *  - Loops over items
-     *  - Sets to zero canceled amount
+     *  - Sets canceled amount to zero for provided items.
      *
      * @api
      *

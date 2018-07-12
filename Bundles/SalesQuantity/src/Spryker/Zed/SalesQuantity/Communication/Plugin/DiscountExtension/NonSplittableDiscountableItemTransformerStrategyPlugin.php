@@ -29,7 +29,7 @@ class NonSplittableDiscountableItemTransformerStrategyPlugin extends AbstractPlu
             return false;
         }
 
-        return !$originalItem->getIsQuantitySplittable();
+        return $originalItem->getIsQuantitySplittable() === false;
     }
 
     /**
@@ -41,6 +41,6 @@ class NonSplittableDiscountableItemTransformerStrategyPlugin extends AbstractPlu
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): DiscountableItemTransformerTransfer {
         return $this->getFacade()
-            ->transformDiscountableItem($discountableItemTransformerTransfer);
+            ->transformNonSplittableDiscountableItem($discountableItemTransformerTransfer);
     }
 }

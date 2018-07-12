@@ -17,7 +17,7 @@ interface SalesQuantityFacadeInterface
 {
     /**
      * Specification:
-     * - Adds unchanged item to the returned item collection according the non-splittable strategy.
+     * - Adds unchanged item to the returned item collection according to the non-splittable strategy.
      *
      * @api
      *
@@ -39,11 +39,11 @@ interface SalesQuantityFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandWithIsQuantitySplittable(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function expandCartChangeWithIsQuantitySplittable(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 
     /**
      * Specification:
-     * - Transforms discountable item according to item non splittable strategy.
+     * - Transforms discountable item according to the non splittable strategy.
      *
      * @api
      *
@@ -51,7 +51,7 @@ interface SalesQuantityFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
-    public function transformDiscountableItem(
+    public function transformNonSplittableDiscountableItem(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): DiscountableItemTransformerTransfer;
 }

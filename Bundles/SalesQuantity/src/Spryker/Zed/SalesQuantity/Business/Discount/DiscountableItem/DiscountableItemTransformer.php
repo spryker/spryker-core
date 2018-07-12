@@ -18,7 +18,7 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
-    public function transformDiscountableItem(
+    public function transformNonSplittableDiscountableItem(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): DiscountableItemTransformerTransfer {
         $roundingError = $discountableItemTransformerTransfer->getRoundingError();
@@ -37,12 +37,14 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
 
         $distributedDiscountTransfer = clone $calculatedDiscountTransfer;
         $distributedDiscountTransfer->setIdDiscount($discountTransfer->getIdDiscount());
-        $distributedDiscountTransfer->setUnitAmount($itemDiscountAmountRounded);
-        $distributedDiscountTransfer->setQuantity(1);
+        $distributedDiscountTransfer->setSumAmount($itemDiscountAmountRounded);
+        $distributedDiscountTransfer->setUnitAmount((int)round($itemDiscountAmountRounded / $quantity));
+        $distributedDiscountTransfer->setQuantity($quantity);
 
         $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
 
-        $discountableItemTransformerTransfer->setRoundingError($roundingError)
+        $discountableItemTransformerTransfer
+            ->setRoundingError($roundingError)
             ->setDiscountableItem($discountableItemTransfer);
 
         return $discountableItemTransformerTransfer;

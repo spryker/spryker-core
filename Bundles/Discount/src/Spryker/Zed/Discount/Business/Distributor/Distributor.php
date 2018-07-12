@@ -11,8 +11,7 @@ use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\Discount\Exception\MissingDiscountableItemTransformerStrategyPluginException;
-use Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface;
+use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface;
 
 class Distributor implements DistributorInterface
 {
@@ -22,15 +21,22 @@ class Distributor implements DistributorInterface
     protected $roundingError = 0.0;
 
     /**
+     * @var \Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface
+     */
+    protected $discountableItemTransformer;
+
+    /**
      * @var \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[]
      */
     protected $discountableItemTransformerStrategyPlugins;
 
     /**
+     * @param \Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface $discountableItemTransformer
      * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[] $discountableItemTransformerStrategyPlugins
      */
-    public function __construct(array $discountableItemTransformerStrategyPlugins)
+    public function __construct(DiscountableItemTransformerInterface $discountableItemTransformer, array $discountableItemTransformerStrategyPlugins)
     {
+        $this->discountableItemTransformer = $discountableItemTransformer;
         $this->discountableItemTransformerStrategyPlugins = $discountableItemTransformerStrategyPlugins;
     }
 
@@ -67,8 +73,6 @@ class Distributor implements DistributorInterface
      * @param int $totalDiscountAmount
      * @param int $totalAmount
      *
-     * @throws \Spryker\Zed\Discount\Exception\MissingDiscountableItemTransformerStrategyPluginException
-     *
      * @return void
      */
     protected function transformItemsPerStrategyPlugin(
@@ -80,23 +84,39 @@ class Distributor implements DistributorInterface
         $quantity = $this->getDiscountableItemQuantity($discountableItemTransfer);
 
         foreach ($this->discountableItemTransformerStrategyPlugins as $discountableItemTransformerStrategyPlugin) {
-            if ($discountableItemTransformerStrategyPlugin->isApplicable($discountableItemTransfer)) {
-                $discountableItemTransformerTransfer = $this->mapDiscountableItemTransformerTransfer($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
-                $discountableItemTransformerTransfer = $discountableItemTransformerStrategyPlugin->transformDiscountableItem($discountableItemTransformerTransfer);
-                $this->roundingError = $discountableItemTransformerTransfer->getRoundingError();
-
-                return;
+            if (!$discountableItemTransformerStrategyPlugin->isApplicable($discountableItemTransfer)) {
+                continue;
             }
+
+            $discountableItemTransformerTransfer = $this->mapDiscountableItemTransformerTransfer($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+            $discountableItemTransformerTransfer = $discountableItemTransformerStrategyPlugin->transformDiscountableItem($discountableItemTransformerTransfer);
+            $this->roundingError = $discountableItemTransformerTransfer->getRoundingError();
+
+            return;
         }
 
-        throw new MissingDiscountableItemTransformerStrategyPluginException(
-            sprintf(
-                'Missing instance of %s! You need to configure Distributor ' .
-                'in your own DiscountDependencyProvider::getDiscountableItemTransformerStrategyPlugins() ' .
-                'to be able to calculate discounts correctly.',
-                DiscountableItemTransformerStrategyPluginInterface::class
-            )
-        );
+        $this->applyTransformSplittableDiscountableItem($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param int $totalDiscountAmount
+     * @param int $totalAmount
+     * @param int $quantity
+     *
+     * @return void
+     */
+    protected function applyTransformSplittableDiscountableItem(
+        DiscountableItemTransfer $discountableItemTransfer,
+        DiscountTransfer $discountTransfer,
+        int $totalDiscountAmount,
+        int $totalAmount,
+        int $quantity
+    ) {
+        $discountableItemTransformerTransfer = $this->mapDiscountableItemTransformerTransfer($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+        $discountableItemTransformerTransfer = $this->discountableItemTransformer->transformSplittableDiscountableItem($discountableItemTransformerTransfer);
+        $this->roundingError = $discountableItemTransformerTransfer->getRoundingError();
     }
 
     /**

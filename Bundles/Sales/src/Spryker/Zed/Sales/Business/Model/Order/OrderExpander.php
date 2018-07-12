@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface;
 
 class OrderExpander implements OrderExpanderInterface
@@ -22,17 +23,27 @@ class OrderExpander implements OrderExpanderInterface
     protected $calculationFacade;
 
     /**
+     * @var \Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface
+     */
+    protected $orderItemTransformer;
+
+    /**
      * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginInterface[]
      */
     protected $itemTransformerStrategyPlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface $calculationFacade
+     * @param \Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface $orderItemTransformer
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginInterface[] $itemTransformerStrategyPlugins
      */
-    public function __construct(SalesToCalculationInterface $calculationFacade, array $itemTransformerStrategyPlugins)
-    {
+    public function __construct(
+        SalesToCalculationInterface $calculationFacade,
+        OrderItemTransformerInterface $orderItemTransformer,
+        array $itemTransformerStrategyPlugins
+    ) {
         $this->calculationFacade = $calculationFacade;
+        $this->orderItemTransformer = $orderItemTransformer;
         $this->itemTransformerStrategyPlugins = $itemTransformerStrategyPlugins;
     }
 
@@ -62,13 +73,13 @@ class OrderExpander implements OrderExpanderInterface
      */
     protected function transformItems(ArrayObject $items): ArrayObject
     {
-        $transformedItemTransferArray = [];
+        $transformedItemTransfers = [];
         foreach ($items as $itemTransfer) {
-            $transformedItemTransferCollection = $this->transformItemTransferPerStrategyPlugin($itemTransfer);
-            $transformedItemTransferArray = array_merge($transformedItemTransferArray, $transformedItemTransferCollection->getItems()->getArrayCopy());
+            $transformedItemTransferCollection = $this->applyItemTransformStrategyPlugin($itemTransfer);
+            $transformedItemTransfers = array_merge($transformedItemTransfers, $transformedItemTransferCollection->getItems()->getArrayCopy());
         }
 
-        return new ArrayObject($transformedItemTransferArray);
+        return new ArrayObject($transformedItemTransfers);
     }
 
     /**
@@ -76,7 +87,7 @@ class OrderExpander implements OrderExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    protected function transformItemTransferPerStrategyPlugin(ItemTransfer $itemTransfer): ItemCollectionTransfer
+    protected function applyItemTransformStrategyPlugin(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
         foreach ($this->itemTransformerStrategyPlugins as $itemTransformerStrategyPlugin) {
             if ($itemTransformerStrategyPlugin->isApplicable($itemTransfer)) {
@@ -84,7 +95,7 @@ class OrderExpander implements OrderExpanderInterface
             }
         }
 
-        return (new ItemCollectionTransfer())->addItem($itemTransfer);
+        return $this->orderItemTransformer->transformSplittableItem($itemTransfer);
     }
 
     /**
