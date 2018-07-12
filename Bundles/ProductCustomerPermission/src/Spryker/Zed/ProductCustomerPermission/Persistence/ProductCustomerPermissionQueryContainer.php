@@ -39,9 +39,12 @@ class ProductCustomerPermissionQueryContainer extends AbstractQueryContainer imp
      */
     public function queryProductCustomerPermissionByCustomerAndProducts(int $idCustomer, array $idProductAbstracts): SpyProductCustomerPermissionQuery
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery $query */
+        $query = $this->getFactory()
             ->createProductCustomerPermissionQuery()
             ->filterByFkCustomer($idCustomer)
             ->filterByFkProductAbstract_In($idProductAbstracts);
+
+        return $query;
     }
 }
