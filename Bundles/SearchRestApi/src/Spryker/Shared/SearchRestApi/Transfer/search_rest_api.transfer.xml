@@ -40,4 +40,11 @@
         <property name="sortOrder" type="int"/>
     </transfer>
 
+    <transfer name="RestSearchSuggestionsAttributes">
+        <property name="completion" type="string[]"/>
+        <property name="products" type="array"/>
+        <property name="categories" type="array"/>
+        <property name="cmsPages" type="array"/>
+    </transfer>
+
 </transfers>
