@@ -8,9 +8,13 @@
 namespace Spryker\Zed\Synchronization\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Synchronization\Business\Model\Search\SynchronizationSearch;
-use Spryker\Zed\Synchronization\Business\Model\Storage\SynchronizationStorage;
-use Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidator;
+use Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolver;
+use Spryker\Zed\Synchronization\Business\Export\QueryContainerExporter;
+use Spryker\Zed\Synchronization\Business\Export\RepositoryExporter;
+use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreator;
+use Spryker\Zed\Synchronization\Business\Search\SynchronizationSearch;
+use Spryker\Zed\Synchronization\Business\Storage\SynchronizationStorage;
+use Spryker\Zed\Synchronization\Business\Validation\OutdatedValidator;
 use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
 
 /**
@@ -19,7 +23,7 @@ use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
 class SynchronizationBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Synchronization\Business\Model\SynchronizationInterface
+     * @return \Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface
      */
     public function createStorageManager()
     {
@@ -31,7 +35,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Synchronization\Business\Model\SynchronizationInterface
+     * @return \Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface
      */
     public function createSearchManager()
     {
@@ -42,9 +46,45 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface
+     * @return \Spryker\Zed\Synchronization\Business\Export\RepositoryExporter
      */
-    public function createOutdatedValidator()
+    public function createRepositoryExporter()
+    {
+        return new RepositoryExporter(
+            $this->getQueueClient(),
+            $this->createQueueMessageCreator(),
+            $this->getConfig()->getSyncExportChunkSize()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Synchronization\Business\Export\QueryContainerExporter
+     */
+    public function createQueryContainerExporter()
+    {
+        return new QueryContainerExporter(
+            $this->getQueueClient(),
+            $this->createQueueMessageCreator(),
+            $this->getConfig()->getSyncExportChunkSize()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolver
+     */
+    public function createExporterPluginResolver()
+    {
+        return new ExporterPluginResolver(
+            $this->getSynchronizationDataPlugins(),
+            $this->createQueryContainerExporter(),
+            $this->createRepositoryExporter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Synchronization\Business\Validation\OutdatedValidatorInterface
+     */
+    protected function createOutdatedValidator()
     {
         return new OutdatedValidator(
             $this->getConfig()
@@ -52,26 +92,50 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageInterface
+     * @return \Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface
      */
-    public function getStorageClient()
+    protected function createQueueMessageCreator()
+    {
+        return new QueueMessageCreator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface
+     */
+    protected function getStorageClient()
     {
         return $this->getProvidedDependency(SynchronizationDependencyProvider::CLIENT_STORAGE);
     }
 
     /**
-     * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchInterface
+     * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface
      */
-    public function getSearchClient()
+    protected function getSearchClient()
     {
         return $this->getProvidedDependency(SynchronizationDependencyProvider::CLIENT_SEARCH);
     }
 
     /**
-     * @return \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface
+     * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface
      */
-    public function getUtilEncodingService()
+    protected function getQueueClient()
+    {
+        return $this->getProvidedDependency(SynchronizationDependencyProvider::CLIENT_QUEUE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface
+     */
+    protected function getUtilEncodingService()
     {
         return $this->getProvidedDependency(SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface[]
+     */
+    protected function getSynchronizationDataPlugins()
+    {
+        return $this->getProvidedDependency(SynchronizationDependencyProvider::PLUGINS_SYNCHRONIZATION_DATA);
     }
 }

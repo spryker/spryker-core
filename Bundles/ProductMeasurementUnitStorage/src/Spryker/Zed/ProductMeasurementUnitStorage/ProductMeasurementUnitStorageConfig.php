@@ -11,4 +11,19 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
 {
+    /**
+     * @return string|null
+     */
+    public function getProductMeasurementUnitSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProductConcreteMeasurementUnitSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
 }

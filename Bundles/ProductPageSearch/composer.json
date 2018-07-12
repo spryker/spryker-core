@@ -8,7 +8,7 @@
     "spryker/category": "^4.3.0",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.21.0",
-    "spryker/price-product": "^1.1.0",
+    "spryker/price-product": "^1.1.0 || ^2.0.0",
     "spryker/product": "^5.5.0 || ^6.0.0",
     "spryker/product-category": "^4.5.0",
     "spryker/product-image": "^3.5.0",

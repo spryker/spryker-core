@@ -31,5 +31,5 @@ class CmsPageSearchConstants
      *
      * @api
      */
-    const CMS_PAGE_RESOURCE_NAME = 'cms_page';
+    const CMS_PAGE_RESOURCE_NAME = 'cms_page_search';
 }
