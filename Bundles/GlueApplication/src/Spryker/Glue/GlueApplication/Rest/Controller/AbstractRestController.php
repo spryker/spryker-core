@@ -40,7 +40,7 @@ abstract class AbstractRestController extends AbstractController
      *
      * @return $this
      */
-    protected function setRestRequest(RestRequestInterface $restRequest): self
+    public function setRestRequest(RestRequestInterface $restRequest): self
     {
         $this->restRequest = $restRequest;
 
