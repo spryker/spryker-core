@@ -42,35 +42,52 @@ class PriceProductMapper implements PriceProductMapperInterface
     {
         $extractedPrices = [];
         $priceProductTransfers = [];
-        $priceProductTransfer = null;
 
         foreach ($priceProductStorageTransfer->getPrices() as $currencyCode => $prices) {
-            foreach ($prices as $priceMode => $priceTypes) {
-                if ($priceMode === PriceProductConstants::PRICE_DATA) {
-                    continue;
-                }
-
-                foreach ($priceTypes as $priceAttribute => $priceValue) {
-                    $priceProductTransfer = $this->findProductTransferInCollection($currencyCode, $priceAttribute, $priceProductTransfers);
-
-                    if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
-                        $priceProductTransfer->getMoneyValue()->setGrossAmount($priceValue);
-
-                        $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductConstants::PRICE_DATA]);
-                        continue;
-                    }
-
-                    $priceProductTransfer->getMoneyValue()->setNetAmount($priceValue);
-                    $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductConstants::PRICE_DATA]);
-                }
-            }
             $extractedPrices = array_merge(
                 $extractedPrices,
-                $this->applyPriceProductExtractorPlugins($priceProductTransfer)
+                $this->getPriceProductTransfersFromPriceData($priceProductTransfers, $prices, $currencyCode)
             );
         }
 
         return array_merge(array_values($priceProductTransfers), $extractedPrices);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array $prices
+     * @param string $currencyCode
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function getPriceProductTransfersFromPriceData(
+        array &$priceProductTransfers,
+        array $prices,
+        string $currencyCode
+    ): array {
+        $priceProductTransfer = null;
+
+        foreach ($prices as $priceMode => $priceTypes) {
+            if ($priceMode === PriceProductConstants::PRICE_DATA) {
+                continue;
+            }
+
+            foreach ($priceTypes as $priceAttribute => $priceValue) {
+                $priceProductTransfer = $this->findProductTransferInCollection($currencyCode, $priceAttribute, $priceProductTransfers);
+
+                if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
+                    $priceProductTransfer->getMoneyValue()->setGrossAmount($priceValue);
+                    $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductConstants::PRICE_DATA]);
+
+                    continue;
+                }
+
+                $priceProductTransfer->getMoneyValue()->setNetAmount($priceValue);
+                $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductConstants::PRICE_DATA]);
+            }
+        }
+
+        return $this->applyPriceProductExtractorPlugins($priceProductTransfer);
     }
 
     /**

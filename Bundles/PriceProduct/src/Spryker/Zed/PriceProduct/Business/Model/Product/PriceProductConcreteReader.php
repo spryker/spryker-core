@@ -116,7 +116,6 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
-
         $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPlugins($priceProductTransfers);
 
         return $priceProductTransfers;
@@ -146,7 +145,6 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
-
         $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPlugins($priceProductTransfers);
 
         return $priceProductTransfers;
@@ -168,7 +166,6 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
-
         $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPlugins($priceProductTransfers);
 
         return $this->priceProductService->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);

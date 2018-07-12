@@ -397,6 +397,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer[]
      */
     public function findProductAbstractPricesWithoutPriceExtraction(

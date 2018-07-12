@@ -234,7 +234,7 @@ class PriceManager implements PriceManagerInterface
     ) {
         $priceProductFilterTransfer =
             $this->mapItemTransferToPriceProductFilterTransfer(
-                (new PriceProductFilterTransfer()),
+                new PriceProductFilterTransfer(),
                 $itemTransfer
             )
             ->setPriceMode($quoteTransfer->getPriceMode())
