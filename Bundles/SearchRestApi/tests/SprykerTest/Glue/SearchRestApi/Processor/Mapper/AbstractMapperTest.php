@@ -54,7 +54,12 @@ abstract class AbstractMapperTest extends Unit
     /**
      * @return void
      */
-    abstract public function testMapper();
+    abstract public function testMapperWillReturnRestResponseWithNotEmptyAttributesData();
+
+    /**
+     * @return void
+     */
+    abstract public function testMapperWillReturnRestResponseWithEmptyAttributesData();
 
     /**
      * @return array

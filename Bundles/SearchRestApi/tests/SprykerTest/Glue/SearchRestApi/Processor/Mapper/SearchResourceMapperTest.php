@@ -22,7 +22,7 @@ class SearchResourceMapperTest extends AbstractMapperTest
     /**
      * @return void
      */
-    public function testMapper()
+    public function testMapperWillReturnRestResponseWithNotEmptyAttributesData()
     {
         $this->restSearchAttributesTransfer = $this
             ->searchResourceMapper
@@ -70,6 +70,19 @@ class SearchResourceMapperTest extends AbstractMapperTest
         $this->assertEquals(0, $this->restSearchAttributesTransfer->getFacets()[1]['min']);
         $this->assertEquals(0, $this->restSearchAttributesTransfer->getFacets()[1]['max']);
 
+        $this->restSearchAttributesTransfer = $this
+            ->searchResourceMapper
+            ->mapSearchResponseAttributesTransferToRestResponse($this->mockEmptyRestSearchResponseTransfer())
+            ->getAttributes();
+
+        $this->assertEmpty($this->restSearchAttributesTransfer->getProducts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapperWillReturnRestResponseWithEmptyAttributesData()
+    {
         $this->restSearchAttributesTransfer = $this
             ->searchResourceMapper
             ->mapSearchResponseAttributesTransferToRestResponse($this->mockEmptyRestSearchResponseTransfer())
