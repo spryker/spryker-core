@@ -10,9 +10,6 @@ namespace Spryker\Shared\Kernel\ClassResolver\Config;
 use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 
-/**
- * @method \Spryker\Shared\Kernel\AbstractSharedConfig getResolvedClassInstance()
- */
 class SharedConfigResolver extends AbstractClassResolver
 {
     const CLASS_NAME_PATTERN = '\\%1$s\\Shared\\%2$s%3$s\\%2$sConfig';
@@ -36,7 +33,7 @@ class SharedConfigResolver extends AbstractClassResolver
             return $this->getResolvedClassInstance();
         }
 
-        throw new SharedConfigNotFoundException($this->classInfo);
+        throw new SharedConfigNotFoundException($callerClass);
     }
 
     /**

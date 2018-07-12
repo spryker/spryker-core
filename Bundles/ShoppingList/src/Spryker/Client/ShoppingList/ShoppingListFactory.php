@@ -12,7 +12,6 @@ use Spryker\Client\ShoppingList\Cart\CartHandler;
 use Spryker\Client\ShoppingList\Cart\CartHandlerInterface;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCustomerClientInterface;
-use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToPriceProductClientInterface;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToProductClientInterface;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientInterface;
@@ -59,8 +58,7 @@ class ShoppingListFactory extends AbstractFactory
     {
         return new CartHandler(
             $this->getCartClient(),
-            $this->createShoppingListStub(),
-            $this->getMessengerClient()
+            $this->createShoppingListStub()
         );
     }
 
@@ -94,14 +92,6 @@ class ShoppingListFactory extends AbstractFactory
     public function getCartClient(): ShoppingListToCartClientInterface
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::CLIENT_CART);
-    }
-
-    /**
-     * @return \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface
-     */
-    public function getMessengerClient(): ShoppingListToMessengerClientInterface
-    {
-        return $this->getProvidedDependency(ShoppingListDependencyProvider::CLIENT_MESSENGER);
     }
 
     /**

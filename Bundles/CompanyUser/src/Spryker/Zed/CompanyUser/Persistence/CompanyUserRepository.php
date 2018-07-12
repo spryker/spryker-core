@@ -44,8 +44,6 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
-     *
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
@@ -72,8 +70,6 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
-     *
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
@@ -101,22 +97,16 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
-     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
-     *
      * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
     public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer
     {
-        // TODO: leftJoinWithCompany() for BC reasons, it will be innerJoin
         $query = $this->getFactory()
             ->createCompanyUserQuery()
             ->joinWithCustomer()
-            ->leftJoinWithCompany()
             ->filterByIdCompanyUser($idCompanyUser);
-
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
 
         return $this->getFactory()
@@ -158,8 +148,6 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
-     *
      * @param int $idCompany
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
@@ -180,25 +168,5 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
         return $this->getFactory()
             ->createCompanyUserMapper()
             ->mapEntityTransferToCompanyUserTransfer($entityTransfer);
-    }
-
-    /**
-     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
-     *
-     * @param int $idCustomer
-     *
-     * @return int
-     */
-    public function countActiveCompanyUsersByIdCustomer(int $idCustomer): int
-    {
-        $query = $this->getFactory()
-            ->createCompanyUserQuery()
-            ->filterByFkCustomer($idCustomer)
-            ->joinCompany()
-            ->useCompanyQuery()
-                ->filterByIsActive(true)
-            ->endUse();
-
-        return $query->count();
     }
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Client\Search\SearchConfig;
 
 class StringFacetAggregation extends AbstractTermsFacetAggregation
 {
@@ -25,23 +24,13 @@ class StringFacetAggregation extends AbstractTermsFacetAggregation
     protected $aggregationBuilder;
 
     /**
-     * @var \Spryker\Client\Search\SearchConfig
-     */
-    protected $searchConfig;
-
-    /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface $aggregationBuilder
-     * @param \Spryker\Client\Search\SearchConfig $searchConfig
      */
-    public function __construct(
-        FacetConfigTransfer $facetConfigTransfer,
-        AggregationBuilderInterface $aggregationBuilder,
-        SearchConfig $searchConfig
-    ) {
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, AggregationBuilderInterface $aggregationBuilder)
+    {
         $this->facetConfigTransfer = $facetConfigTransfer;
         $this->aggregationBuilder = $aggregationBuilder;
-        $this->searchConfig = $searchConfig;
     }
 
     /**
@@ -76,8 +65,7 @@ class StringFacetAggregation extends AbstractTermsFacetAggregation
         }
 
         return $this->createFacetNameAggregation(
-            $facetConfigTransfer->getFieldName(),
-            $this->getFacetNameAggregationSize()
+            $facetConfigTransfer->getFieldName()
         );
     }
 
@@ -85,7 +73,7 @@ class StringFacetAggregation extends AbstractTermsFacetAggregation
      * @param string $fieldName
      * @param string $nestedFieldName
      *
-     * @return \Elastica\Aggregation\AbstractAggregation
+     * @return \Elastica\Aggregation\AbstractTermsAggregation
      */
     protected function createValueAgg($fieldName, $nestedFieldName)
     {
@@ -98,13 +86,5 @@ class StringFacetAggregation extends AbstractTermsFacetAggregation
         $aggregation = $this->applyAggregationParams($aggregation, $this->facetConfigTransfer);
 
         return $aggregation;
-    }
-
-    /**
-     * @return int
-     */
-    protected function getFacetNameAggregationSize(): int
-    {
-        return $this->searchConfig->getFacetNameAggregationSize();
     }
 }

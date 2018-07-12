@@ -10,9 +10,6 @@ namespace Spryker\Shared\Kernel\ClassResolver\Controller;
 use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 
-/**
- * @method \Spryker\Zed\Kernel\Communication\Controller\AbstractController getResolvedClassInstance()
- */
 abstract class AbstractControllerResolver extends AbstractClassResolver
 {
     const KEY_CONTROLLER = '%controller%';
@@ -27,7 +24,7 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
      *
      * @throws \Spryker\Shared\Kernel\ClassResolver\Controller\ControllerNotFoundException
      *
-     * @return object
+     * @return \Spryker\Yves\Kernel\Controller\AbstractController
      */
     public function resolve(BundleControllerActionInterface $bundleControllerAction)
     {

@@ -22,7 +22,7 @@ class AddressSelectionType extends AddressType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
 
@@ -40,7 +40,7 @@ class AddressSelectionType extends AddressType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
             ->addAddressSelectField($builder, $options)
@@ -63,7 +63,7 @@ class AddressSelectionType extends AddressType
      *
      * @return $this
      */
-    protected function addAddressSelectField(FormBuilderInterface $builder, array $options): self
+    protected function addAddressSelectField(FormBuilderInterface $builder, array $options)
     {
         if (count($options[static::OPTION_ADDRESS_CHOICES]) === 0) {
             return $this;
@@ -87,7 +87,7 @@ class AddressSelectionType extends AddressType
      *
      * @return \Symfony\Component\Validator\Constraints\NotBlank
      */
-    protected function createNotBlankConstraint(array $options): NotBlank
+    protected function createNotBlankConstraint(array $options)
     {
         return new NotBlank(['groups' => $options[static::OPTION_VALIDATION_GROUP]]);
     }

@@ -27,7 +27,7 @@ class Environment
     protected static $instance;
 
     /**
-     * @return self
+     * @return $this
      */
     public static function getInstance()
     {
@@ -113,7 +113,7 @@ class Environment
     /**
      * @param string $environment
      *
-     * @return void
+     * @return string
      */
     public static function setEnvironment($environment)
     {

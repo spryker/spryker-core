@@ -100,7 +100,7 @@ class ProductAbstractReviewTwigExtension extends TwigExtension
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function renderProductAbstractReviewMaximumRating()
     {

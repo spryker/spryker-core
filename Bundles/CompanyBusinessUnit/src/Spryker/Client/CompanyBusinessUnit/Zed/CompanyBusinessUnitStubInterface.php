@@ -17,7 +17,7 @@ interface CompanyBusinessUnitStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function createCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
@@ -26,7 +26,7 @@ interface CompanyBusinessUnitStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function updateCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
@@ -35,7 +35,7 @@ interface CompanyBusinessUnitStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function deleteCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
@@ -44,7 +44,7 @@ interface CompanyBusinessUnitStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getCompanyBusinessUnitCollection(
         CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
@@ -53,7 +53,7 @@ interface CompanyBusinessUnitStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getCompanyBusinessUnitById(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer

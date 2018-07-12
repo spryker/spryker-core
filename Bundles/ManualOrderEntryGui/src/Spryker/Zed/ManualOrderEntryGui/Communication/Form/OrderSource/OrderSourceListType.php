@@ -31,7 +31,7 @@ class OrderSourceListType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addOrderSourceField(
             $builder,
@@ -44,7 +44,7 @@ class OrderSourceListType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setRequired(static::OPTION_ORDER_SOURCE_ARRAY);
@@ -56,7 +56,7 @@ class OrderSourceListType extends AbstractType
      *
      * @return $this
      */
-    protected function addOrderSourceField(FormBuilderInterface $builder, array $orderSourceList): self
+    protected function addOrderSourceField(FormBuilderInterface $builder, array $orderSourceList)
     {
         $builder->add(static::FIELD_ORDER_SOURCE, Select2ComboBoxType::class, [
             'property_path' => QuoteTransfer::ORDER_SOURCE . '.' . OrderSourceTransfer::ID_ORDER_SOURCE,
@@ -72,7 +72,7 @@ class OrderSourceListType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix(): string
+    public function getBlockPrefix()
     {
         return static::TYPE_NAME;
     }

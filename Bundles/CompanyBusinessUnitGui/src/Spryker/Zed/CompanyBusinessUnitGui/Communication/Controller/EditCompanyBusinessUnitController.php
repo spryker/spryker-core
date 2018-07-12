@@ -15,18 +15,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditCompanyBusinessUnitController extends AbstractController
 {
-    /**
-     * @see CompanyBusinessUnitForm::FIELD_ID_COMPANY_BUSINESS_UNIT
-     */
-    protected const PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
-    protected const PARAM_REDIRECT_URL = 'redirect-url';
-    /**
-     * @see ListCompanyBusinessUnitController::indexAction()
-     */
-    protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';
+    protected const URL_PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
+    protected const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    protected const REDIRECT_URL_DEFAULT = '/company-business-unit-gui/list-company-business-unit';
 
-    protected const MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_UPDATE = 'Company Business Unit "%s" has been updated.';
-    protected const MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_UPDATE = 'Company Business Unit "%s" has not been updated.';
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_SUCCESS = 'Company Business Unit has been updated.';
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_ERROR = 'Company Business Unit has not been updated.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -35,8 +29,8 @@ class EditCompanyBusinessUnitController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCompanyBusinessUnit = $this->castId($request->query->get(static::PARAM_ID_COMPANY_BUSINESS_UNIT));
-        $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL, static::URL_BUSINESS_UNIT_LIST);
+        $idCompanyBusinessUnit = $this->castId($request->query->get(static::URL_PARAM_ID_COMPANY_BUSINESS_UNIT));
+        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
         $dataProvider = $this->getFactory()->createCompanyBusinessUnitFormDataProvider();
         $form = $this->getFactory()
@@ -53,10 +47,7 @@ class EditCompanyBusinessUnitController extends AbstractController
                 ->update($companyBusinessUnitTransfer);
 
             if (!$companyResponseTransfer->getIsSuccessful()) {
-                $this->addErrorMessage(sprintf(
-                    static::MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_UPDATE,
-                    $companyBusinessUnitTransfer->getName()
-                ));
+                $this->addErrorMessage(static::MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_ERROR);
 
                 return $this->viewResponse([
                     'form' => $form->createView(),
@@ -64,10 +55,7 @@ class EditCompanyBusinessUnitController extends AbstractController
                 ]);
             }
 
-            $this->addSuccessMessage(sprintf(
-                static::MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_UPDATE,
-                $companyBusinessUnitTransfer->getName()
-            ));
+            $this->addSuccessMessage(static::MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_SUCCESS);
 
             return $this->redirectResponse($redirectUrl);
         }

@@ -141,7 +141,7 @@ class StateMachineMocks extends Unit
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface
      */
-    protected function createStateMachinePersistenceMock()
+    protected function createStateMachinePersitenceMock()
     {
         $persistenceMock = $this->getMockBuilder(PersistenceInterface::class)->getMock();
 

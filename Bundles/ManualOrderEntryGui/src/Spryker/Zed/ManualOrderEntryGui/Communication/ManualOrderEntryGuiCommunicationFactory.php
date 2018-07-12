@@ -8,9 +8,7 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Controller\CreateController;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Constraint\SkuExists;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
@@ -34,17 +32,7 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Shipment\ShipmentType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Store\StoreType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Summary\SummaryType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher\VoucherType;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\AddressFormHandler;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\CustomerFormHandler;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ItemFormHandler;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\OrderSourceFormHandler;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\PaymentFormHandler;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ProductFormHandler;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ShipmentFormHandler;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\StoreFormHandler;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\VoucherFormHandler;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Service\ManualOrderEntryFormPluginFilter;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Service\StepEngine;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCalculationFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCheckoutFacadeInterface;
@@ -57,8 +45,8 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMoney
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToPaymentFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface;
-use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface;
 use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -166,14 +154,6 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeInterface
-     */
-    public function getStoreFacade(): ManualOrderEntryGuiToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_STORE);
-    }
-
-    /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface
      */
     public function getCustomerQueryContainer(): ManualOrderEntryGuiToCustomerQueryContainerInterface
@@ -182,48 +162,40 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface
+     */
+    public function getStore(): ManualOrderEntryGuiToStoreInterface
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::STORE);
+    }
+
+    /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
-    public function getManualOrderEntryFormPlugins(): array
+    public function getManualOrderEntryFormPlugins()
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PLUGINS_MANUAL_ORDER_ENTRY_FORM);
     }
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $formPlugins
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
-    public function getManualOrderEntryFilteredFormPlugins($formPlugins, Request $request, QuoteTransfer $quoteTransfer): array
+    public function getManualOrderEntryFilteredFormPlugins(Request $request, $quoteTransfer)
     {
-        return $this->createManualOrderEntryFormPluginFilter()
-            ->getFilteredFormPlugins($formPlugins, $request, $quoteTransfer);
+        $formPlugins = $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PLUGINS_MANUAL_ORDER_ENTRY_FORM);
+
+        return $this->createStepEngine()->filterFormPlugins($formPlugins, $request, $quoteTransfer);
     }
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $formPlugins
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Service\StepEngine
      */
-    public function getManualOrderEntrySkippedFormPlugins($formPlugins, Request $request, QuoteTransfer $quoteTransfer): array
+    public function createStepEngine(): StepEngine
     {
-        return $this->createManualOrderEntryFormPluginFilter()
-            ->getSkippedFormPlugins($formPlugins, $request, $quoteTransfer);
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Service\ManualOrderEntryFormPluginFilter
-     */
-    public function createManualOrderEntryFormPluginFilter(): ManualOrderEntryFormPluginFilter
-    {
-        return new ManualOrderEntryFormPluginFilter(
-            CreateController::PREVIOUS_STEP_NAME,
-            CreateController::NEXT_STEP_NAME
-        );
+        return new StepEngine($this->getConfig()->getNextStepName());
     }
 
     /**
@@ -241,11 +213,11 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCustomersListForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
+    public function createCustomersListForm(Request $request, $quoteTransfer): FormInterface
     {
         $formDataProvider = $this->createCustomersListDataProvider($request);
 
@@ -259,7 +231,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\OrderSourceListDataProvider
      */
-    public function createOrderSourceListDataProvider(): OrderSourceListDataProvider
+    public function createOrderSourceListDataProvider()
     {
         return new OrderSourceListDataProvider(
             $this->getManualOrderEntryFacade()
@@ -268,11 +240,11 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createOrderSourceListForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
+    public function createOrderSourceListForm(Request $request, $quoteTransfer)
     {
         $formDataProvider = $this->createOrderSourceListDataProvider();
 
@@ -312,15 +284,15 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createAddressCollectionDataProvider(): AddressCollectionDataProvider
     {
-        return new AddressCollectionDataProvider($this->getStoreFacade());
+        return new AddressCollectionDataProvider($this->getStore());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createAddressCollectionForm(QuoteTransfer $quoteTransfer): FormInterface
+    public function createAddressCollectionForm($quoteTransfer): FormInterface
     {
         $formDataProvider = $this->createAddressCollectionDataProvider();
 
@@ -343,11 +315,11 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createStoreForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
+    public function createStoreForm(Request $request, $quoteTransfer): FormInterface
     {
         $formDataProvider = $this->createStoreDataProvider();
 
@@ -367,11 +339,11 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductsCollectionForm(QuoteTransfer $quoteTransfer): FormInterface
+    public function createProductsCollectionForm($quoteTransfer): FormInterface
     {
         $formDataProvider = $this->createProductsCollectionDataProvider();
 
@@ -401,11 +373,11 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createItemsCollectionForm(QuoteTransfer $quoteTransfer): FormInterface
+    public function createItemsCollectionForm($quoteTransfer): FormInterface
     {
         $formDataProvider = $this->createItemsCollectionDataProvider();
 
@@ -425,11 +397,11 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createVoucherForm(QuoteTransfer $quoteTransfer): FormInterface
+    public function createVoucherForm($quoteTransfer): FormInterface
     {
         $formDataProvider = $this->createVoucherDataProvider();
 
@@ -453,11 +425,11 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createShipmentForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
+    public function createShipmentForm(Request $request, $quoteTransfer): FormInterface
     {
         $formDataProvider = $this->createShipmentDataProvider();
 
@@ -480,11 +452,11 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createPaymentForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
+    public function createPaymentForm(Request $request, $quoteTransfer): FormInterface
     {
         $formDataProvider = $this->createPaymentDataProvider();
 
@@ -498,7 +470,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     /**
      * @return \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface[]
      */
-    public function getPaymentMethodSubFormPlugins(): array
+    public function getPaymentMethodSubFormPlugins()
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PAYMENT_SUB_FORMS);
     }
@@ -515,11 +487,11 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createSummaryForm(QuoteTransfer $quoteTransfer): FormInterface
+    public function createSummaryForm($quoteTransfer): FormInterface
     {
         $formDataProvider = $this->createSummaryDataProvider();
 
@@ -533,101 +505,8 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin\QuoteExpanderPluginInterface[]
      */
-    public function getQuoteExpanderPlugins(): array
+    public function getQuoteExpanderPlugins()
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PLUGINS_QUOTE_EXPANDER);
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
-     */
-    public function createAddressFormHandler(): FormHandlerInterface
-    {
-        return new AddressFormHandler(
-            $this->getCustomerFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
-     */
-    public function createCustomerFormHandler(): FormHandlerInterface
-    {
-        return new CustomerFormHandler(
-            $this->getCustomerFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
-     */
-    public function createPaymentFormHandler(): FormHandlerInterface
-    {
-        return new PaymentFormHandler(
-            $this->getPaymentFacade(),
-            $this->getPaymentMethodSubFormPlugins()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
-     */
-    public function createProductFormHandler(): FormHandlerInterface
-    {
-        return new ProductFormHandler(
-            $this->getCartFacade(),
-            $this->getProductFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
-     */
-    public function createItemFormHandler(): FormHandlerInterface
-    {
-        return new ItemFormHandler(
-            $this->getCartFacade(),
-            $this->getMessengerFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
-     */
-    public function createShipmentFormHandler(): FormHandlerInterface
-    {
-        return new ShipmentFormHandler(
-            $this->getShipmentFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
-     */
-    public function createStoreFormHandler(): FormHandlerInterface
-    {
-        return new StoreFormHandler(
-            $this->getCurrencyFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
-     */
-    public function createVoucherFormHandler(): FormHandlerInterface
-    {
-        return new VoucherFormHandler(
-            $this->getCartFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
-     */
-    public function createOrderSourceFormHandler(): FormHandlerInterface
-    {
-        return new OrderSourceFormHandler(
-            $this->getManualOrderEntryFacade()
-        );
     }
 }

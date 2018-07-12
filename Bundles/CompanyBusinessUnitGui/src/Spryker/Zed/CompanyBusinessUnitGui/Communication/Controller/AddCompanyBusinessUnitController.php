@@ -16,13 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
 class AddCompanyBusinessUnitController extends AbstractController
 {
     protected const PARAM_REDIRECT_URL = 'redirect-url';
-    /**
-     * @see ListCompanyBusinessUnitController::indexAction()
-     */
-    protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';
+    protected const REDIRECT_URL_DEFAULT = '/company-business-unit-gui/list-company-business-unit';
 
-    protected const MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_CREATE = 'Company Business Unit "%s" has been created.';
-    protected const MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_CREATE = 'Company Business Unit "%s" has not been created.';
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_SUCCESS = 'Company Business Unit has been created.';
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_ERROR = 'Company Business Unit has not been created.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -31,7 +28,7 @@ class AddCompanyBusinessUnitController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL, static::URL_BUSINESS_UNIT_LIST);
+        $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
         $dataProvider = $this->getFactory()->createCompanyBusinessUnitFormDataProvider();
         $form = $this->getFactory()
@@ -48,27 +45,20 @@ class AddCompanyBusinessUnitController extends AbstractController
                 ->create($companyBusinessUnitTransfer);
 
             if (!$companyResponseTransfer->getIsSuccessful()) {
-                $this->addErrorMessage(sprintf(
-                    static::MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_CREATE,
-                    $companyBusinessUnitTransfer->getName()
-                ));
+                $this->addErrorMessage(static::MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_ERROR);
 
                 return $this->viewResponse([
                     'form' => $form->createView(),
                 ]);
             }
 
-            $this->addSuccessMessage(sprintf(
-                static::MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_CREATE,
-                $companyBusinessUnitTransfer->getName()
-            ));
+            $this->addSuccessMessage(static::MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_SUCCESS);
 
             return $this->redirectResponse($redirectUrl);
         }
 
         return $this->viewResponse([
             'form' => $form->createView(),
-            'backButton' => static::URL_BUSINESS_UNIT_LIST,
         ]);
     }
 }

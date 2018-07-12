@@ -14,17 +14,17 @@ use UnexpectedValueException;
 class CsvReader implements CsvReaderInterface
 {
     /**
-     * @var \SplFileObject|null
+     * @var \SplFileObject
      */
     protected $csvFile;
 
     /**
-     * @var \Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvMetaInterface|null
+     * @var \Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvMetaInterface
      */
     protected $csvMeta;
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $csvFilename;
 

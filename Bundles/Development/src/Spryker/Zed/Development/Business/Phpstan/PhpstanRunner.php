@@ -110,13 +110,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
     {
         $command = 'php -d memory_limit=%s vendor/bin/phpstan analyze --no-progress -c %s %s -l %s';
 
-        $defaultLevel = $this->getDefaultLevel($path, $configFilePath);
-        $level = $input->getOption('level');
-        if (preg_match('/^([+])(\d)$/', $level, $matches)) {
-            $level = $defaultLevel + (int)$matches[2];
-        } else {
-            $level = (int)$level ?: $defaultLevel;
-        }
+        $level = $input->getOption('level') ?: $this->getDefaultLevel($path, $configFilePath);
 
         if (is_dir($path . 'src')) {
             $path .= 'src' . DIRECTORY_SEPARATOR;

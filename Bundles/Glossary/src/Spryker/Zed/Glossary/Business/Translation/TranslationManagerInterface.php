@@ -125,7 +125,7 @@ interface TranslationManagerInterface
     /**
      * @param array $idKeys
      *
-     * @return void
+     * @return bool
      */
     public function deleteTranslationsByFkKeys(array $idKeys);
 

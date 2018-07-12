@@ -28,7 +28,7 @@ class AvailabilityStub implements AvailabilityStubInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function findProductConcreteAvailability(ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer)
     {

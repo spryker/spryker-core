@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\CompanyUser\Persistence" package="src.Orm.Zed.CompanyUser.Persistence" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd">
-    <table name="spy_company_user" phpName="SpyCompanyUser">
-        <column name="is_default" type="BOOLEAN" required="true" default="false"/>
-    </table>
-</database>

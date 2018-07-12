@@ -29,7 +29,7 @@ abstract class AbstractLocatorLocator implements LocatorLocatorInterface
     private static $instance;
 
     /**
-     * @return static
+     * @return \Spryker\Shared\Kernel\AbstractLocatorLocator|static
      */
     public static function getInstance()
     {

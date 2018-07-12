@@ -38,6 +38,7 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
      * @api
      *
      * @param int $idCustomer
+     * @param \Generated\Shared\Transfer\ApiFilterTransfer $apiFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer $customerTransfer
      */

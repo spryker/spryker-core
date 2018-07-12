@@ -22,7 +22,7 @@ class File extends AbstractWriter
     public static $fileHandles = [];
 
     /**
-     * @var resource|null
+     * @var resource
      */
     public static $preferredHandle;
 

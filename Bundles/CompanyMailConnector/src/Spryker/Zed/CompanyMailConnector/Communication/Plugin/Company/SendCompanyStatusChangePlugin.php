@@ -23,9 +23,9 @@ class SendCompanyStatusChangePlugin extends AbstractPlugin implements CompanyPos
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyTransfer
      */
     public function postSave(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {

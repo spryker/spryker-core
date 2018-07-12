@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\PriceCartConnector\Business\Fixture;
 
-use RuntimeException;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class CartItemFixture extends AbstractTransfer
@@ -38,24 +37,20 @@ class CartItemFixture extends AbstractTransfer
     }
 
     /**
-     * @throws \RuntimeException
-     *
      * @return int
      */
     public function getQuantity()
     {
-        throw new RuntimeException('Implement getQuantity() method');
+        // TODO: Implement getQuantity() method.
     }
 
     /**
      * @param int $quantity
      *
-     * @throws \RuntimeException
-     *
      * @return $this
      */
     public function setQuantity($quantity = 1)
     {
-        throw new RuntimeException('Implement setQuantity() method');
+        // TODO: Implement setQuantity() method.
     }
 }

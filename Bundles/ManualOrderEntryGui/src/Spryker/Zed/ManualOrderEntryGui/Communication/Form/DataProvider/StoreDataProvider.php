@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ManualOrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Store\StoreType;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\StoreFormHandler;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeInterface;
 
 class StoreDataProvider implements FormDataProviderInterface
@@ -34,7 +32,7 @@ class StoreDataProvider implements FormDataProviderInterface
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions($quoteTransfer)
     {
         return [
             'data_class' => QuoteTransfer::class,
@@ -49,19 +47,15 @@ class StoreDataProvider implements FormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData($quoteTransfer)
     {
-        if ($quoteTransfer->getManualOrder() === null) {
-            $quoteTransfer->setManualOrder(new ManualOrderTransfer());
-        }
-
         if ($quoteTransfer->getStore() !== null
             && $quoteTransfer->getCurrency() !== null
         ) {
             $storeName = $quoteTransfer->getStore()->getName();
             $currencyCode = $quoteTransfer->getCurrency()->getCode();
 
-            $quoteTransfer->getManualOrder()->setStoreCurrency($storeName . StoreFormHandler::STORE_CURRENCY_DELIMITER . $currencyCode);
+            $quoteTransfer->setStoreCurrency($storeName . ';' . $currencyCode);
         }
 
         return $quoteTransfer;
@@ -70,7 +64,7 @@ class StoreDataProvider implements FormDataProviderInterface
     /**
      * @return array
      */
-    protected function getStoreList(): array
+    protected function getStoreList()
     {
         $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
         $storeList = [];
@@ -84,7 +78,7 @@ class StoreDataProvider implements FormDataProviderInterface
                     . $currencyTransfer->getName()
                     . ' [' . $currencyTransfer->getCode() . ']';
 
-                $storeList[$storeTransfer->getName() . StoreFormHandler::STORE_CURRENCY_DELIMITER . $currencyTransfer->getCode()] = $row;
+                $storeList[$storeTransfer->getName() . ';' . $currencyTransfer->getCode()] = $row;
             }
         }
 

@@ -16,7 +16,7 @@ class CustomerDataProvider implements FormDataProviderInterface
      *
      * @return array
      */
-    public function getOptions($customerTransfer): array
+    public function getOptions($customerTransfer)
     {
         return [
             'data_class' => CustomerTransfer::class,
@@ -28,7 +28,7 @@ class CustomerDataProvider implements FormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function getData($customerTransfer): CustomerTransfer
+    public function getData($customerTransfer)
     {
         return $customerTransfer;
     }

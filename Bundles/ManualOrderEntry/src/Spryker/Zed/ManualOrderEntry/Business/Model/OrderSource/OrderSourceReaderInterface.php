@@ -21,5 +21,5 @@ interface OrderSourceReaderInterface
     /**
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
      */
-    public function findAllOrderSources(): array;
+    public function getAllOrderSources(): array;
 }

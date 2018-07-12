@@ -10,21 +10,21 @@ namespace Spryker\Service\UtilDateTime\Model;
 interface DateTimeFormatterInterface
 {
     /**
-     * @param \DateTime|string $dateTime
+     * @param string $dateTime
      *
      * @return string
      */
     public function formatDate($dateTime);
 
     /**
-     * @param \DateTime|string $dateTime
+     * @param string $dateTime
      *
      * @return string
      */
     public function formatTime($dateTime);
 
     /**
-     * @param \DateTime|string $dateTime
+     * @param string $dateTime
      *
      * @return string
      */

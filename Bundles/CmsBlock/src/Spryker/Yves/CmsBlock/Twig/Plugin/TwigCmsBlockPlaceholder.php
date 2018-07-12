@@ -71,7 +71,7 @@ class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPlug
     /**
      * @param string $translation
      *
-     * @return bool
+     * @return string
      */
     protected function isGlossaryKey($translation)
     {

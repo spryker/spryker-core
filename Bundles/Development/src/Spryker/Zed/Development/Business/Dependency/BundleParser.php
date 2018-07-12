@@ -226,7 +226,7 @@ class BundleParser implements BundleParserInterface
     /**
      * @param array $allFileDependencies
      *
-     * @return void
+     * @return array
      */
     protected function buildBundleDependencies(array $allFileDependencies)
     {
@@ -339,7 +339,7 @@ class BundleParser implements BundleParserInterface
     protected function addPersistenceLayerDependency($table)
     {
         $filter = new UnderscoreToCamelCase();
-        $name = (string)$filter->filter($table);
+        $name = $filter->filter($table);
 
         $existent = $this->isExistentBundle($name);
         if ($existent) {
@@ -360,7 +360,7 @@ class BundleParser implements BundleParserInterface
             $table = substr($table, 0, $lastUnderscore);
 
             $filter = new UnderscoreToCamelCase();
-            $name = (string)$filter->filter($table);
+            $name = $filter->filter($table);
 
             $existent = $this->isExistentBundle($name);
             if (!$existent) {

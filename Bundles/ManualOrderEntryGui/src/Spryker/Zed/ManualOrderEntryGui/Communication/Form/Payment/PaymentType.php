@@ -40,7 +40,7 @@ class PaymentType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addPaymentMethods($builder, $options);
     }
@@ -51,7 +51,7 @@ class PaymentType extends AbstractType
      *
      * @return $this
      */
-    protected function addPaymentMethods(FormBuilderInterface $builder, array $options): self
+    protected function addPaymentMethods(FormBuilderInterface $builder, array $options)
     {
         $paymentSubFormPlugins = $this->getFactory()
             ->getPaymentMethodSubFormPlugins();
@@ -70,7 +70,7 @@ class PaymentType extends AbstractType
      *
      * @return $this
      */
-    protected function addPaymentMethodChoices(FormBuilderInterface $builder, array $paymentMethodChoices): self
+    protected function addPaymentMethodChoices(FormBuilderInterface $builder, array $paymentMethodChoices)
     {
         $builder->add(
             static::PAYMENT_SELECTION,
@@ -99,7 +99,7 @@ class PaymentType extends AbstractType
      *
      * @return $this
      */
-    protected function addPaymentMethodSubForms(FormBuilderInterface $builder, array $paymentMethodSubForms, array $options): self
+    protected function addPaymentMethodSubForms(FormBuilderInterface $builder, array $paymentMethodSubForms, array $options)
     {
         foreach ($paymentMethodSubForms as $paymentMethodSubForm) {
             $builder->add(
@@ -121,7 +121,7 @@ class PaymentType extends AbstractType
      *
      * @return array
      */
-    protected function getPaymentMethodSubForms($paymentSubFormPlugins): array
+    protected function getPaymentMethodSubForms($paymentSubFormPlugins)
     {
         $paymentMethodSubForms = [];
 
@@ -142,7 +142,7 @@ class PaymentType extends AbstractType
      *
      * @return array
      */
-    protected function getPaymentMethodChoices(array $paymentMethodSubForms): array
+    protected function getPaymentMethodChoices(array $paymentMethodSubForms)
     {
         $choices = [];
 
@@ -160,7 +160,7 @@ class PaymentType extends AbstractType
      *
      * @return \Spryker\Zed\Kernel\Communication\Form\AbstractType
      */
-    protected function createSubForm(PaymentSubFormPluginInterface $paymentMethodSubForm): AbstractType
+    protected function createSubForm(PaymentSubFormPluginInterface $paymentMethodSubForm)
     {
         return $paymentMethodSubForm->createSubForm();
     }
@@ -170,7 +170,7 @@ class PaymentType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
@@ -190,7 +190,7 @@ class PaymentType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix(): string
+    public function getBlockPrefix()
     {
         return static::TYPE_NAME;
     }

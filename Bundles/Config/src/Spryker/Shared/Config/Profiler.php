@@ -63,7 +63,7 @@ class Profiler
     /**
      * @param mixed $value
      *
-     * @return string|array
+     * @return string
      */
     protected function formatValue($value)
     {

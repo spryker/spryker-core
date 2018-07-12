@@ -9,8 +9,6 @@ namespace Spryker\Zed\ManualOrderEntry\Persistence;
 
 use Orm\Zed\ManualOrderEntry\Persistence\SpyOrderSourceQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ManualOrderEntry\Persistence\Propel\Mapper\OrderSourceMapper;
-use Spryker\Zed\ManualOrderEntry\Persistence\Propel\Mapper\OrderSourceMapperInterface;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntry\ManualOrderEntryConfig getConfig()
@@ -23,13 +21,5 @@ class ManualOrderEntryPersistenceFactory extends AbstractPersistenceFactory
     public function createOrderSourceQuery()
     {
         return SpyOrderSourceQuery::create();
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntry\Persistence\Propel\Mapper\OrderSourceMapperInterface
-     */
-    public function createOrderSourceMapper(): OrderSourceMapperInterface
-    {
-        return new OrderSourceMapper();
     }
 }

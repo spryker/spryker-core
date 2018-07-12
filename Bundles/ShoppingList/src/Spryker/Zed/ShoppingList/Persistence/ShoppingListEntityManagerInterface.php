@@ -8,57 +8,63 @@
 namespace Spryker\Zed\ShoppingList\Persistence;
 
 use Generated\Shared\Transfer\PermissionTransfer;
-use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Generated\Shared\Transfer\ShoppingListTransfer;
+use Generated\Shared\Transfer\SpyPermissionEntityTransfer;
+use Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer;
+use Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer;
+use Generated\Shared\Transfer\SpyShoppingListEntityTransfer;
+use Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer;
 use Generated\Shared\Transfer\SpyShoppingListPermissionGroupEntityTransfer;
 
 interface ShoppingListEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     * @return \Generated\Shared\Transfer\SpyShoppingListEntityTransfer
      */
-    public function saveShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer;
+    public function saveShoppingList(SpyShoppingListEntityTransfer $shoppingListEntityTransfer): SpyShoppingListEntityTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
      *
      * @return void
      */
-    public function deleteShoppingListByName(ShoppingListTransfer $shoppingListTransfer): void;
+    public function deleteShoppingListByName(SpyShoppingListEntityTransfer $shoppingListEntityTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
      *
      * @return void
      */
-    public function deleteShoppingListItems(ShoppingListTransfer $shoppingListTransfer): void;
+    public function deleteShoppingListItems(SpyShoppingListEntityTransfer $shoppingListEntityTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param \Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer $shoppingListItemEntityTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     * @return \Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer
      */
-    public function saveShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+    public function saveShoppingListItem(SpyShoppingListItemEntityTransfer $shoppingListItemEntityTransfer): SpyShoppingListItemEntityTransfer;
 
     /**
-     * @param int $idShoppingListItem
+     * @param \Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer $shoppingListItemEntityTransfer
      *
      * @return void
      */
-    public function deleteShoppingListItem(int $idShoppingListItem): void;
+    public function deleteShoppingListItem(SpyShoppingListItemEntityTransfer $shoppingListItemEntityTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListPermissionGroupEntityTransfer $shoppingListPermissionGroupEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyShoppingListPermissionGroupEntityTransfer
      */
-    public function saveShoppingListPermissionGroup(
-        SpyShoppingListPermissionGroupEntityTransfer $shoppingListPermissionGroupEntityTransfer
-    ): SpyShoppingListPermissionGroupEntityTransfer;
+    public function saveShoppingListPermissionGroupEntity(SpyShoppingListPermissionGroupEntityTransfer $shoppingListPermissionGroupEntityTransfer): SpyShoppingListPermissionGroupEntityTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyPermissionEntityTransfer $permissionEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyPermissionEntityTransfer
+     */
+    public function savePermissionEntity(SpyPermissionEntityTransfer $permissionEntityTransfer): SpyPermissionEntityTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListPermissionGroupEntityTransfer $shoppingListPermissionGroupEntityTransfer
@@ -66,36 +72,33 @@ interface ShoppingListEntityManagerInterface
      *
      * @return void
      */
-    public function saveShoppingListPermissionGroupToPermission(
-        SpyShoppingListPermissionGroupEntityTransfer $shoppingListPermissionGroupEntityTransfer,
-        PermissionTransfer $permissionTransfer
-    ): void;
+    public function saveShoppingListPermissionGroupToPermissionEntity(SpyShoppingListPermissionGroupEntityTransfer $shoppingListPermissionGroupEntityTransfer, PermissionTransfer $permissionTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
+     * @param \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer $shoppingListCompanyBusinessUnitEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer
+     */
+    public function saveShoppingListCompanyBusinessUnitEntity(SpyShoppingListCompanyBusinessUnitEntityTransfer $shoppingListCompanyBusinessUnitEntityTransfer): SpyShoppingListCompanyBusinessUnitEntityTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer $shoppingListCompanyUserEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer
+     */
+    public function saveShoppingListCompanyUserEntity(SpyShoppingListCompanyUserEntityTransfer $shoppingListCompanyUserEntityTransfer): SpyShoppingListCompanyUserEntityTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
      *
      * @return void
      */
-    public function saveShoppingListCompanyBusinessUnit(ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer): void;
+    public function deleteShoppingListCompanyUsers(SpyShoppingListEntityTransfer $shoppingListEntityTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
+     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
      *
      * @return void
      */
-    public function saveShoppingListCompanyUser(ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return void
-     */
-    public function deleteShoppingListCompanyUsers(ShoppingListTransfer $shoppingListTransfer): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return void
-     */
-    public function deleteShoppingListCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer): void;
+    public function deleteShoppingListCompanyBusinessUnits(SpyShoppingListEntityTransfer $shoppingListEntityTransfer): void;
 }

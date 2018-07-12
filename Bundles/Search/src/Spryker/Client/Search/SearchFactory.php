@@ -110,11 +110,7 @@ class SearchFactory extends AbstractFactory
      */
     public function createFacetAggregationFactory()
     {
-        return new FacetAggregationFactory(
-            $this->createPageIndexMap(),
-            $this->createAggregationBuilder(),
-            $this->getConfig()
-        );
+        return new FacetAggregationFactory($this->createPageIndexMap(), $this->createAggregationBuilder());
     }
 
     /**

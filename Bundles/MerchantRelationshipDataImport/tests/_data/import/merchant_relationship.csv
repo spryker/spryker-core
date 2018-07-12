@@ -1,4 +1,0 @@
-merchant_relation_key,merchant_key,company_business_unit_owner_key,company_business_unit_assignee_keys
-test-mr-001,oryx-merchant-test,ttest-business-unit-1,"ttest-business-unit-1;ttest-business-unit-2"
-test-mr-002,oryx-merchant-test,ttest-business-unit-2,"ttest-business-unit-1"
-test-mr-003,oryx-merchant-test,ttest-business-unit-3,

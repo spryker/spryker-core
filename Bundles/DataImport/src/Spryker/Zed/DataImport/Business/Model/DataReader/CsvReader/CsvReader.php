@@ -75,7 +75,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     /**
      * @throws \Spryker\Zed\DataImport\Business\Exception\DataReaderException
      *
-     * @return void
+     * @return \SplFileObject
      */
     protected function createFileObject()
     {

@@ -15,7 +15,7 @@ class AvailableCustomerTable extends AbstractAssignmentTable
     protected $defaultUrl = 'available-customer-table';
 
     /**
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @return string
      */
     protected function getQuery()
     {

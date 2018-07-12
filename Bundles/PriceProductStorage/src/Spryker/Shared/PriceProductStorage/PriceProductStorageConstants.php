@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\PriceProductStorage;
 
-interface PriceProductStorageConstants
+class PriceProductStorageConstants
 {
     /**
      * Specification:
@@ -15,7 +15,7 @@ interface PriceProductStorageConstants
      *
      * @api
      */
-    public const PRICE_SYNC_STORAGE_QUEUE = 'sync.storage.price';
+    const PRICE_SYNC_STORAGE_QUEUE = 'sync.storage.price';
 
     /**
      * Specification:
@@ -23,7 +23,7 @@ interface PriceProductStorageConstants
      *
      * @api
      */
-    public const PRICE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.price.error';
+    const PRICE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.price.error';
 
     /**
      * Specification:
@@ -31,7 +31,7 @@ interface PriceProductStorageConstants
      *
      * @api
      */
-    public const PRICE_ABSTRACT_RESOURCE_NAME = 'price_product_abstract';
+    const PRICE_ABSTRACT_RESOURCE_NAME = 'price_product_abstract';
 
     /**
      * Specification:
@@ -39,11 +39,5 @@ interface PriceProductStorageConstants
      *
      * @api
      */
-    public const PRICE_CONCRETE_RESOURCE_NAME = 'price_product_concrete';
-
-    /**
-     * Specification:
-     *  - Default Price Dimension name.
-     */
-    public const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
+    const PRICE_CONCRETE_RESOURCE_NAME = 'price_product_concrete';
 }

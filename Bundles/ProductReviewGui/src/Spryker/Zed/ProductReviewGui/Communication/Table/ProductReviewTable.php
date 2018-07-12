@@ -29,7 +29,7 @@ class ProductReviewTable extends AbstractTable
     protected $localeTransfer;
 
     /**
-     * @var \Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilDateTimeInterface
+     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
     protected $utilDateTimeService;
 
@@ -239,7 +239,7 @@ class ProductReviewTable extends AbstractTable
     /**
      * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
      *
-     * @return array
+     * @return string
      */
     protected function generateApproveButtonGroupItem(SpyProductReview $productReviewEntity)
     {
@@ -254,7 +254,7 @@ class ProductReviewTable extends AbstractTable
     /**
      * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
      *
-     * @return array
+     * @return string
      */
     protected function generateRejectButtonGroupItem(SpyProductReview $productReviewEntity)
     {
@@ -325,7 +325,7 @@ class ProductReviewTable extends AbstractTable
     /**
      * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
      *
-     * @return string|\DateTime
+     * @return string
      */
     protected function getCreatedAt(SpyProductReview $productReviewEntity)
     {

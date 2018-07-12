@@ -9,7 +9,6 @@ namespace Spryker\Zed\ManualOrderEntry\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderSourceTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\ManualOrderEntry\Business\Exception\OrderSourceNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -27,13 +26,10 @@ class SalesController extends AbstractController
     {
         $orderTransfer = $this->getOrderTransfer($request);
 
-        try {
-            $orderSourceTransfer = $this->getRepository()
-                ->getOrderSourceById($orderTransfer->getFkOrderSource());
-            $orderSourceName = $this->getOrderSourceName($orderSourceTransfer);
-        } catch (OrderSourceNotFoundException $e) {
-            $orderSourceName = '-';
-        }
+        $orderSourceTransfer = $this->getRepository()
+            ->getOrderSourceById($orderTransfer->getFkOrderSource());
+
+        $orderSourceName = $this->getOrderSourceName($orderSourceTransfer);
 
         return $this->viewResponse([
             'orderSourceName' => $orderSourceName,

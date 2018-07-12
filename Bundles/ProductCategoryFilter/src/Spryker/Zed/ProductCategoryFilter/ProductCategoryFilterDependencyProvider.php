@@ -43,7 +43,7 @@ class ProductCategoryFilterDependencyProvider extends AbstractBundleDependencyPr
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
      * @return void
      */

@@ -123,7 +123,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
      *
      * @param array $parameters
      *
-     * @return \Symfony\Component\HttpFoundation\Response|null
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function render(array $parameters = [])
     {
@@ -131,7 +131,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         $controller = $request->attributes->get('_controller');
 
         if (!is_string($controller) || empty($controller)) {
-            return null;
+            return;
         }
 
         if (isset($parameters['alternativeRoute'])) {

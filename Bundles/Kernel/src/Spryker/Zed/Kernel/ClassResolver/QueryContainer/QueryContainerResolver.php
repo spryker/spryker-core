@@ -24,10 +24,7 @@ class QueryContainerResolver extends AbstractClassResolver
     {
         $this->setCallerClass($callerClass);
         if ($this->canResolve()) {
-            /** @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $class */
-            $class = $this->getResolvedClassInstance();
-
-            return $class;
+            return $this->getResolvedClassInstance();
         }
 
         throw new QueryContainerNotFoundException($this->getClassInfo());

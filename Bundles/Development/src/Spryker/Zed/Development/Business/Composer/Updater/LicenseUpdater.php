@@ -7,22 +7,24 @@
 
 namespace Spryker\Zed\Development\Business\Composer\Updater;
 
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 class LicenseUpdater implements UpdaterInterface
 {
-    protected const KEY_LICENSE = 'license';
+    const KEY_LICENSE = 'license';
 
-    protected const LICENSE_TYPE_MIT = 'MIT';
+    /**
+     * @var string
+     */
+    protected $license;
 
-    protected const LICENSE_TYPE_PROPRIETARY = 'proprietary';
-
-    protected const MIT_LICENSE = 'The MIT License (MIT)';
-
-    protected const LICENSE_FILE_DEPTH = 0;
-
-    protected const LICENSE_FILE_NAME = 'LICENSE';
+    /**
+     * @param string $license
+     */
+    public function __construct($license)
+    {
+        $this->license = $license;
+    }
 
     /**
      * @param array $composerJson
@@ -32,19 +34,7 @@ class LicenseUpdater implements UpdaterInterface
      */
     public function update(array $composerJson, SplFileInfo $composerJsonFile)
     {
-        $modulePath = dirname($composerJsonFile->getPathname());
-        $license = static::LICENSE_TYPE_PROPRIETARY;
-
-        $isMitLicense = (new Finder())->files()
-            ->in($modulePath)->depth(static::LICENSE_FILE_DEPTH)
-            ->name(static::LICENSE_FILE_NAME)->contains(static::MIT_LICENSE)
-            ->hasResults();
-
-        if ($isMitLicense) {
-            $license = static::LICENSE_TYPE_MIT;
-        }
-
-        $composerJson[static::KEY_LICENSE] = $license;
+        $composerJson[static::KEY_LICENSE] = $this->license;
 
         return $composerJson;
     }

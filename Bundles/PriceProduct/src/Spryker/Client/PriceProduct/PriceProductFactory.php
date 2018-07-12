@@ -8,11 +8,7 @@
 namespace Spryker\Client\PriceProduct;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface;
-use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface;
-use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface;
 use Spryker\Client\PriceProduct\ProductPriceResolver\ProductPriceResolver;
-use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 
 /**
  * @method \Spryker\Client\PriceProduct\PriceProductConfig getConfig()
@@ -27,24 +23,14 @@ class PriceProductFactory extends AbstractFactory
         return new ProductPriceResolver(
             $this->getPriceClient(),
             $this->getCurrencyClient(),
-            $this->getConfig(),
-            $this->getQuoteClient(),
-            $this->getPriceProductService()
+            $this->getConfig()
         );
-    }
-
-    /**
-     * @return \Spryker\Service\PriceProduct\PriceProductServiceInterface
-     */
-    public function getPriceProductService(): PriceProductServiceInterface
-    {
-        return $this->getProvidedDependency(PriceProductDependencyProvider::SERVICE_PRICE_PRODUCT);
     }
 
     /**
      * @return \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface
      */
-    public function getPriceClient(): PriceProductToPriceClientInterface
+    protected function getPriceClient()
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::CLIENT_PRICE);
     }
@@ -52,17 +38,9 @@ class PriceProductFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface
      */
-    public function getCurrencyClient(): PriceProductToCurrencyClientInterface
+    protected function getCurrencyClient()
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::CLIENT_CURRENCY);
-    }
-
-    /**
-     * @return \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface
-     */
-    public function getQuoteClient(): PriceProductToQuoteClientInterface
-    {
-        return $this->getProvidedDependency(PriceProductDependencyProvider::CLIENT_QUOTE);
     }
 
     /**

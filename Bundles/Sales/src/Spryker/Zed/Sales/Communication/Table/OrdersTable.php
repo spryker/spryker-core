@@ -122,7 +122,7 @@ class OrdersTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return string
+     * @return int
      */
     protected function getGrandTotal(array $item)
     {

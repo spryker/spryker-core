@@ -118,7 +118,7 @@ class ConfigProfilerServiceProvider implements ServiceProviderInterface
         $loaderKey = $this->getLoaderKey();
         $app[$loaderKey] = $app->extend($loaderKey, function (TwigFilesystemLoader $loader) {
             $pathToTemplates = $this->getPathToTemplates();
-            if ($pathToTemplates && method_exists($loader, 'addPath')) {
+            if (method_exists($loader, 'addPath')) {
                 $loader->addPath($pathToTemplates);
 
                 return $loader;
@@ -138,10 +138,10 @@ class ConfigProfilerServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * @return string|null
+     * @return bool|string
      */
     protected function getPathToTemplates()
     {
-        return realpath(dirname(__DIR__) . '/../Theme/default') ?: null;
+        return realpath(dirname(__DIR__) . '/../Theme/default');
     }
 }

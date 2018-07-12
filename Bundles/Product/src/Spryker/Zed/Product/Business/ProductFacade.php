@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Product\Business\ProductBusinessFactory getFactory()
- * @method \Spryker\Zed\Product\Persistence\ProductRepositoryInterface getRepository()
  */
 class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 {
@@ -700,22 +699,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createProductAbstractStatusChecker()
             ->isActive($idProductAbstract);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return bool
-     */
-    public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool
-    {
-        return $this->getFactory()
-            ->createProductConcreteStatusChecker()
-            ->isActive($productConcreteTransfer);
     }
 
     /**

@@ -57,6 +57,7 @@ class OfferQuoteExpander implements OfferQuoteExpanderInterface
 
         if ($customerTransfer) {
             $quoteTransfer->setCustomer($customerTransfer);
+            $quoteTransfer->setIdCustomer($customerTransfer->getIdCustomer());
         }
 
         return $quoteTransfer;

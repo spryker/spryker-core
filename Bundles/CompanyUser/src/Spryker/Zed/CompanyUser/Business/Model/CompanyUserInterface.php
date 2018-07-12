@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUser\Business\Model;
 
-use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
@@ -44,13 +43,6 @@ interface CompanyUserInterface
     public function findCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer;
 
     /**
-     * @param int $idCompanyUser
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
-    public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer;
-
-    /**
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
@@ -65,11 +57,4 @@ interface CompanyUserInterface
     public function getCompanyUserCollection(
         CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): CompanyUserCollectionTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
-     */
-    public function createInitialCompanyUser(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer;
 }

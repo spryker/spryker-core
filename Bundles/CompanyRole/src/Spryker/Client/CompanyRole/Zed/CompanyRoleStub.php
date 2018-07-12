@@ -35,7 +35,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function createCompanyRole(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
     {
@@ -45,7 +45,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getCompanyRoleCollection(
         CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
@@ -59,7 +59,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer
     {
@@ -85,7 +85,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function deleteCompanyRole(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
     {
@@ -98,7 +98,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function findCompanyRolePermissions(CompanyRoleTransfer $companyRoleTransfer): PermissionCollectionTransfer
     {
@@ -124,7 +124,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     /**
      * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
-     * @return \Generated\Shared\Transfer\PermissionTransfer
+     * @return \Generated\Shared\Transfer\PermissionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function findPermissionByIdCompanyRoleByIdPermission(PermissionTransfer $permissionTransfer): PermissionTransfer
     {
@@ -137,7 +137,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     /**
      * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer
     {

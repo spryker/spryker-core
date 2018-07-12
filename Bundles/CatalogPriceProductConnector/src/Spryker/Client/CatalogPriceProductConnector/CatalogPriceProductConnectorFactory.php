@@ -33,14 +33,6 @@ class CatalogPriceProductConnectorFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToPriceProductStorageClientInterface
-     */
-    public function getPriceProductStorageClient()
-    {
-        return $this->getProvidedDependency(CatalogPriceProductConnectorDependencyProvider::CLIENT_PRICE_PRODUCT_STORAGE);
-    }
-
-    /**
      * @return \Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToPriceClientInterface
      */
     protected function getPriceClient()

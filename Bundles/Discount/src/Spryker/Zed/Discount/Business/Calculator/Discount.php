@@ -353,7 +353,7 @@ class Discount implements DiscountInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idDiscount
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function filterDiscountApplicableItems(QuoteTransfer $quoteTransfer, $idDiscount)
     {

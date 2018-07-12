@@ -8,9 +8,6 @@
 namespace Spryker\Zed\PriceProduct\Persistence;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 
 interface PriceProductQueryContainerInterface
 {
@@ -24,14 +21,14 @@ interface PriceProductQueryContainerInterface
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery
      */
-    public function queryPriceType($name): SpyPriceTypeQuery;
+    public function queryPriceType($name);
 
     /**
      * @api
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery
      */
-    public function queryAllPriceTypes(): SpyPriceTypeQuery;
+    public function queryAllPriceTypes();
 
     /**
      * @api
@@ -41,7 +38,7 @@ interface PriceProductQueryContainerInterface
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceEntityForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): SpyPriceProductQuery;
+    public function queryPriceEntityForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer);
 
     /**
      * @api
@@ -51,7 +48,7 @@ interface PriceProductQueryContainerInterface
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
      */
-    public function queryPriceEntityForProductAbstractById($idAbstractProduct, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): SpyPriceProductStoreQuery;
+    public function queryPriceEntityForProductAbstractById($idAbstractProduct, PriceProductCriteriaTransfer $priceProductCriteriaTransfer);
 
     /**
      * @api
@@ -62,16 +59,7 @@ interface PriceProductQueryContainerInterface
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
      */
-    public function queryPriceProductStoreByProductCurrencyStore($idPriceProduct, $idCurrency, $idStore): SpyPriceProductStoreQuery;
-
-    /**
-     * @api
-     *
-     * @param int $idPriceProductStore
-     *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
-     */
-    public function queryPriceProductStoreById($idPriceProductStore): SpyPriceProductStoreQuery;
+    public function queryPriceProductStoreByProductCurrencyStore($idPriceProduct, $idCurrency, $idStore);
 
     /**
      * @api
@@ -81,7 +69,7 @@ interface PriceProductQueryContainerInterface
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPricesForProductAbstractBySkuForStore($sku, $idStore): SpyPriceProductQuery;
+    public function queryPricesForProductAbstractBySkuForStore($sku, $idStore);
 
     /**
      * @api
@@ -90,7 +78,7 @@ interface PriceProductQueryContainerInterface
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPricesForProductAbstractById($idProductAbstract): SpyPriceProductQuery;
+    public function queryPricesForProductAbstractById($idProductAbstract);
 
     /**
      * @api
@@ -107,7 +95,7 @@ interface PriceProductQueryContainerInterface
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceEntityForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): SpyPriceProductQuery;
+    public function queryPriceEntityForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer);
 
     /**
      * @api
@@ -117,7 +105,7 @@ interface PriceProductQueryContainerInterface
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPricesForProductConcreteBySkuForStore($sku, $idStore): SpyPriceProductQuery;
+    public function queryPricesForProductConcreteBySkuForStore($sku, $idStore);
 
     /**
      * @api
@@ -126,7 +114,7 @@ interface PriceProductQueryContainerInterface
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPricesForProductConcreteById($idProductConcrete): SpyPriceProductQuery;
+    public function queryPricesForProductConcreteById($idProductConcrete);
 
     /**
      * @api
@@ -135,7 +123,7 @@ interface PriceProductQueryContainerInterface
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceProductEntity($idPriceProduct): SpyPriceProductQuery;
+    public function queryPriceProductEntity($idPriceProduct);
 
     /**
      * @api
@@ -145,7 +133,7 @@ interface PriceProductQueryContainerInterface
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceProductForConcreteProductBy($idProductConcrete, $idPriceType): SpyPriceProductQuery;
+    public function queryPriceProductForConcreteProductBy($idProductConcrete, $idPriceType);
 
     /**
      * @api
@@ -155,5 +143,5 @@ interface PriceProductQueryContainerInterface
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceProductForAbstractProduct($idProductAbstract, $idPriceType): SpyPriceProductQuery;
+    public function queryPriceProductForAbstractProduct($idProductAbstract, $idPriceType);
 }

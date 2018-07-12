@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\PriceProduct;
 
-use Spryker\Client\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 /**
  * @method \Spryker\Shared\PriceProduct\PriceProductConfig getSharedConfig()
@@ -20,13 +20,5 @@ class PriceProductConfig extends AbstractBundleConfig
     public function getPriceTypeDefaultName()
     {
         return $this->getSharedConfig()->getPriceTypeDefaultName();
-    }
-
-    /**
-     * @return string
-     */
-    public function getPriceModeIdentifierForNetType()
-    {
-        return $this->getSharedConfig()->getPriceModeIdentifierForNetType();
     }
 }

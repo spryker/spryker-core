@@ -62,7 +62,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
-     * @return int
+     * @return string
      */
     public function getTimestamp($filesystemName, $path)
     {

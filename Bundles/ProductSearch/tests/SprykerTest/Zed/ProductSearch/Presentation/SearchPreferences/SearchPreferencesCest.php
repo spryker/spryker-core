@@ -61,8 +61,7 @@ class SearchPreferencesCest
         $i->click('#syncSearchPreferences');
 
         $i->canSeeCurrentUrlEquals(SearchPreferencesPage::URL_LIST);
-
-        $i->waitForJS('return document.readyState == "complete"');
+        $i->wait(1);
         $i->canSee('Search preferences synchronization was successful.');
 
         // TODO: don't need to delete, after we have clean test state after each test case

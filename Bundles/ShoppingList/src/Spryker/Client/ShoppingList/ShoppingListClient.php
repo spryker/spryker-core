@@ -41,7 +41,6 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     {
         $shoppingListResponseTransfer = $this->getZedStub()->createShoppingList($shoppingListTransfer);
 
-        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
         $this->updatePermissions();
 
         return $shoppingListResponseTransfer;
@@ -58,12 +57,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      */
     public function updateShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        $shoppingListResponseTransfer = $this->getZedStub()->updateShoppingList($shoppingListTransfer);
-
-        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
-        $this->updatePermissions();
-
-        return $shoppingListResponseTransfer;
+        return $this->getZedStub()->updateShoppingList($shoppingListTransfer);
     }
 
     /**
@@ -79,7 +73,6 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     {
         $shoppingListResponseTransfer = $this->getZedStub()->removeShoppingList($shoppingListTransfer);
 
-        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
         $this->updatePermissions();
 
         return $shoppingListResponseTransfer;
@@ -98,7 +91,6 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     {
         $shoppingListItemTransfer = $this->getZedStub()->addItem($shoppingListItemTransfer);
 
-        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
         $this->updatePermissions();
 
         return $shoppingListItemTransfer;
@@ -115,11 +107,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      */
     public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
-        $shoppingListItemResponseTransfer = $this->getZedStub()->removeItemById($shoppingListItemTransfer);
-
-        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
-
-        return $shoppingListItemResponseTransfer;
+        return $this->getZedStub()->removeItemById($shoppingListItemTransfer);
     }
 
     /**
@@ -133,11 +121,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      */
     public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
-        $shoppingListTransfer = $this->getZedStub()->getShoppingList($shoppingListTransfer);
-
-        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
-
-        return $shoppingListTransfer;
+        return $this->getZedStub()->getShoppingList($shoppingListTransfer);
     }
 
     /**
@@ -253,12 +237,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      */
     public function createShoppingListFromQuote(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
     {
-        $shoppingListResponseTransfer = $this->getZedStub()->createShoppingListFromQuote($shoppingListFromCartRequestTransfer);
-
-        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
-        $this->updatePermissions();
-
-        return $shoppingListResponseTransfer;
+        return $this->getZedStub()->createShoppingListFromQuote($shoppingListFromCartRequestTransfer);
     }
 
     /**
@@ -287,11 +266,8 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
         if ($shoppingListShareRequestTransfer->getIdCompanyBusinessUnit()) {
             return $this->getZedStub()->shareShoppingListWithCompanyBusinessUnit($shoppingListShareRequestTransfer);
         }
-        if ($shoppingListShareRequestTransfer->getIdCompanyUser()) {
-            return $this->getZedStub()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
-        }
 
-        return (new ShoppingListShareResponseTransfer)->setIsSuccess(false);
+        return $this->getZedStub()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
     }
 
     /**

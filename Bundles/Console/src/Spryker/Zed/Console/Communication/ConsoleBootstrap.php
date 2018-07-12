@@ -116,14 +116,11 @@ class ConsoleBootstrap extends Application
     }
 
     /**
-     * @return \Spryker\Zed\Console\Business\ConsoleFacadeInterface
+     * @return \Spryker\Zed\Console\Business\ConsoleFacade
      */
     protected function resolveFacade()
     {
-        /** @var \Spryker\Zed\Console\Business\ConsoleFacadeInterface $facade */
-        $facade = $this->getFacadeResolver()->resolve($this);
-
-        return $facade;
+        return $this->getFacadeResolver()->resolve($this);
     }
 
     /**

@@ -51,7 +51,7 @@ trait KeyBuilderTrait
     }
 
     /**
-     * @param string $data
+     * @param mixed $data
      *
      * @return string
      */

@@ -11,7 +11,6 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientBridge;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCustomerClientBridge;
-use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientBridge;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToPriceProductClientBridge;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToProductClientBridge;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientBridge;
@@ -23,7 +22,6 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
-    public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -37,7 +35,6 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
         $container = $this->addCartClient($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addPriceProductClient($container);
-        $container = $this->addMessengerClient($container);
 
         return $container;
     }
@@ -107,20 +104,6 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
             return new ShoppingListToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addMessengerClient(Container $container): Container
-    {
-        $container[static::CLIENT_MESSENGER] = function (Container $container) {
-            return new ShoppingListToMessengerClientBridge($container->getLocator()->messenger()->client());
         };
 
         return $container;

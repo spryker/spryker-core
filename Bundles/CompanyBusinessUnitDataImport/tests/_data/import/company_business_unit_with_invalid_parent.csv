@@ -1,2 +1,0 @@
-company_key,business_unit_key,name,email,phone,external_url,parent_business_unit_key
-spryker,spryker-business-unit,Spryker business unit,test@spryker.com,1234567890,"","invalid parent"

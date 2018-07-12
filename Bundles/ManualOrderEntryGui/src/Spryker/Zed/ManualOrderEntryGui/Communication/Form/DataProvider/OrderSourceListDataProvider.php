@@ -33,7 +33,7 @@ class OrderSourceListDataProvider implements FormDataProviderInterface
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions($quoteTransfer)
     {
         return [
             'data_class' => QuoteTransfer::class,
@@ -48,7 +48,7 @@ class OrderSourceListDataProvider implements FormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData($quoteTransfer)
     {
         if ($quoteTransfer->getOrderSource() === null) {
             $quoteTransfer->setOrderSource(new OrderSourceTransfer());
@@ -60,7 +60,7 @@ class OrderSourceListDataProvider implements FormDataProviderInterface
     /**
      * @return array
      */
-    protected function getOrderSourceList(): array
+    protected function getOrderSourceList()
     {
         $orderSourceTransfers = $this->manualOrderEntryFacade
             ->getAllOrderSources();

@@ -205,15 +205,13 @@ class ZedBootstrap
      * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container $container
+     * @return void
      */
     protected function provideExternalDependencies(AbstractBundleDependencyProvider $dependencyProvider, Container $container)
     {
         $dependencyProvider->provideBusinessLayerDependencies($container);
         $dependencyProvider->provideCommunicationLayerDependencies($container);
         $dependencyProvider->providePersistenceLayerDependencies($container);
-
-        return $container;
     }
 
     /**

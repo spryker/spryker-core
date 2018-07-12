@@ -28,13 +28,10 @@ class CheckoutStub implements CheckoutStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function placeOrder(QuoteTransfer $quoteTransfer)
     {
-        /** @var \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer */
-        $checkoutResponseTransfer = $this->zedStub->call('/checkout/gateway/place-order', $quoteTransfer);
-
-        return $checkoutResponseTransfer;
+        return $this->zedStub->call('/checkout/gateway/place-order', $quoteTransfer);
     }
 }

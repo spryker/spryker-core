@@ -23,7 +23,7 @@ class MultiCartToUtilDateTimeServiceBridge implements MultiCartToUtilDateTimeSer
     }
 
     /**
-     * @param \DateTime|string $date
+     * @param string $date
      *
      * @return string
      */

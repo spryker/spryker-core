@@ -24,10 +24,7 @@ class BundleConfigResolver extends AbstractClassResolver
     {
         $this->setCallerClass($callerClass);
         if ($this->canResolve()) {
-            /** @var \Spryker\Client\Kernel\AbstractBundleConfig $class */
-            $class = $this->getResolvedClassInstance();
-
-            return $class;
+            return $this->getResolvedClassInstance();
         }
 
         throw new BundleConfigNotFoundException($this->getClassInfo());

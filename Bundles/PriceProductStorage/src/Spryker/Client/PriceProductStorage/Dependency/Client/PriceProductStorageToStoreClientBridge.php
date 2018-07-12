@@ -23,7 +23,7 @@ class PriceProductStorageToStoreClientBridge implements PriceProductStorageToSto
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return \Generated\Shared\Transfer\StoreTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getCurrentStore()
     {

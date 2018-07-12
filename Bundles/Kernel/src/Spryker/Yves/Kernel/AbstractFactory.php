@@ -111,7 +111,7 @@ abstract class AbstractFactory implements FactoryInterface
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface
      */
     protected function createContainerWithProvidedDependencies()
     {
@@ -123,7 +123,6 @@ abstract class AbstractFactory implements FactoryInterface
         $container = $this->provideDependencies($dependencyProvider, $container);
         $container = $dependencyInjector->inject($container);
 
-        /** @var \Spryker\Yves\Kernel\Container $container */
         $container = $this->overwriteForTesting($container);
 
         return $container;

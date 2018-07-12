@@ -24,7 +24,7 @@ class CategoryNodeCategoryTemplateStorageListener extends AbstractPlugin impleme
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
      * @param string $eventName
      *
      * @return void

@@ -61,8 +61,7 @@ class ProductMoneyCollectionDataProvider
                 }
             }
         }
-
-        return $this->mapProductMoneyValueCollection($productMoneyValueCollection);
+        return $productMoneyValueCollection;
     }
 
     /**
@@ -75,36 +74,11 @@ class ProductMoneyCollectionDataProvider
         $storeCurrencyCollection = $this->currencyFacade->getAllStoresWithCurrencies();
         $existingCurrencyMap = $this->createCurrencyIndexMap($currentFormMoneyValueCollection);
 
-        $currentFormMoneyValueCollection = $this->mapProductMoneyValueCollection($currentFormMoneyValueCollection);
-
         return $this->mergeMultiStoreMoneyCollection(
             $currentFormMoneyValueCollection,
             $storeCurrencyCollection,
             $existingCurrencyMap
         );
-    }
-
-    /**
-     * @param \ArrayObject $productMoneyValueCollection
-     *
-     * @return \ArrayObject
-     */
-    protected function mapProductMoneyValueCollection(ArrayObject $productMoneyValueCollection)
-    {
-        $mappedProductMoneyValueCollection = new ArrayObject();
-
-        foreach ($productMoneyValueCollection as $priceProductTransfer) {
-            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-            $identifier = $this->buildItemIdentifier(
-                $moneyValueTransfer->getFkStore(),
-                $priceProductTransfer->getPriceType(),
-                $moneyValueTransfer->getCurrency()
-            );
-
-            $mappedProductMoneyValueCollection[$identifier] = $priceProductTransfer;
-        }
-
-        return $mappedProductMoneyValueCollection;
     }
 
     /**

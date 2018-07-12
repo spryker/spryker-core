@@ -29,247 +29,190 @@ class CustomerStub implements CustomerStubInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function hasCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer)
     {
-        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
-        $customerResponseTransfer = $this->zedStub->call('/customer/gateway/has-customer-with-email-and-password', $customerTransfer);
-
-        return $customerResponseTransfer;
+        return $this->zedStub->call('/customer/gateway/has-customer-with-email-and-password', $customerTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer)
     {
-        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
-        $customerResponseTransfer = $this->zedStub->call('/customer/gateway/send-password-restore-mail', $customerTransfer);
-
-        return $customerResponseTransfer;
+        return $this->zedStub->call('/customer/gateway/send-password-restore-mail', $customerTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
-        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
-        $customerResponseTransfer = $this->zedStub->call('/customer/gateway/restore-password', $customerTransfer);
-
-        return $customerResponseTransfer;
+        return $this->zedStub->call('/customer/gateway/restore-password', $customerTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
-        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
-        $customerTransfer = $this->zedStub->call('/customer/gateway/confirm-registration', $customerTransfer);
-
-        return $customerTransfer;
+        return $this->zedStub->call('/customer/gateway/confirm-registration', $customerTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function register(CustomerTransfer $customerTransfer)
     {
-        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
-        $customerResponseTransfer = $this->zedStub->call('/customer/gateway/register', $customerTransfer);
-
-        return $customerResponseTransfer;
+        return $this->zedStub->call('/customer/gateway/register', $customerTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function get(CustomerTransfer $customerTransfer)
     {
-        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
-        $customerTransfer = $this->zedStub->call('/customer/gateway/customer', $customerTransfer);
-
-        return $customerTransfer;
+        return $this->zedStub->call('/customer/gateway/customer', $customerTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function update(CustomerTransfer $customerTransfer)
     {
-        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
-        $customerResponseTransfer = $this->zedStub->call('/customer/gateway/update', $customerTransfer);
-
-        return $customerResponseTransfer;
+        return $this->zedStub->call('/customer/gateway/update', $customerTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function updatePassword(CustomerTransfer $customerTransfer)
     {
-        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
-        $customerResponseTransfer = $this->zedStub->call('/customer/gateway/update-password', $customerTransfer);
-
-        return $customerResponseTransfer;
+        return $this->zedStub->call('/customer/gateway/update-password', $customerTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Spryker\Client\ZedRequest\Client\Response
+     * @return \Spryker\Client\ZedRequest\Client\Response|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function delete(CustomerTransfer $customerTransfer)
     {
-        /** @var \Spryker\Client\ZedRequest\Client\Response $response */
-        $response = $this->zedStub->call('/customer/gateway/delete', $customerTransfer);
-
-        return $response;
+        return $this->zedStub->call('/customer/gateway/delete', $customerTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function createAddress(AddressTransfer $addressTransfer)
     {
-        /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
-        $addressTransfer = $this->zedStub->call('/customer/gateway/new-address', $addressTransfer);
-
-        return $addressTransfer;
+        return $this->zedStub->call('/customer/gateway/new-address', $addressTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function updateAddress(AddressTransfer $addressTransfer)
     {
-        /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
-        $addressTransfer = $this->zedStub->call('/customer/gateway/update-address', $addressTransfer);
-
-        return $addressTransfer;
+        return $this->zedStub->call('/customer/gateway/update-address', $addressTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
-        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
-        $customerTransfer = $this->zedStub->call('/customer/gateway/update-address-and-customer-default-addresses', $addressTransfer);
-
-        return $customerTransfer;
+        return $this->zedStub->call('/customer/gateway/update-address-and-customer-default-addresses', $addressTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
-        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
-        $customerTransfer = $this->zedStub->call('/customer/gateway/create-address-and-update-customer-default-addresses', $addressTransfer);
-
-        return $customerTransfer;
+        return $this->zedStub->call('/customer/gateway/create-address-and-update-customer-default-addresses', $addressTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getAddress(AddressTransfer $addressTransfer)
     {
-        /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
-        $addressTransfer = $this->zedStub->call('/customer/gateway/address', $addressTransfer);
-
-        return $addressTransfer;
+        return $this->zedStub->call('/customer/gateway/address', $addressTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressesTransfer
+     * @return \Generated\Shared\Transfer\AddressesTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getAddresses(CustomerTransfer $customerTransfer)
     {
-        /** @var \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer */
-        $addressesTransfer = $this->zedStub->call('/customer/gateway/addresses', $customerTransfer);
-
-        return $addressesTransfer;
+        return $this->zedStub->call('/customer/gateway/addresses', $customerTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $AddressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function deleteAddress(AddressTransfer $AddressTransfer)
     {
-        /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
-        $addressTransfer = $this->zedStub->call('/customer/gateway/delete-address', $AddressTransfer);
-
-        return $addressTransfer;
+        return $this->zedStub->call('/customer/gateway/delete-address', $AddressTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $AddressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function setDefaultBillingAddress(AddressTransfer $AddressTransfer)
     {
-        /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
-        $addressTransfer = $this->zedStub->call('/customer/gateway/default-billing-address', $AddressTransfer);
-
-        return $addressTransfer;
+        return $this->zedStub->call('/customer/gateway/default-billing-address', $AddressTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $AddressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function setDefaultShippingAddress(AddressTransfer $AddressTransfer)
     {
-        /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
-        $addressTransfer = $this->zedStub->call('/customer/gateway/default-shipping-address', $AddressTransfer);
-
-        return $addressTransfer;
+        return $this->zedStub->call('/customer/gateway/default-shipping-address', $AddressTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function anonymizeCustomer(CustomerTransfer $customerTransfer)
     {
-        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
-        $customerTransfer = $this->zedStub->call('/customer/gateway/anonymize-customer', $customerTransfer);
-
-        return $customerTransfer;
+        return $this->zedStub->call('/customer/gateway/anonymize-customer', $customerTransfer);
     }
 }

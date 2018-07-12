@@ -5,7 +5,8 @@
   "require": {
     "php": ">=7.1",
     "phpdocumentor/graphviz": "^1.0.4",
-    "everon/criteria-builder": "^1.1.5",
+    "paragonie/random_compat": "^2.0.10",
+    "everon/criteria-builder": "^1.1.0",
     "moneyphp/money": "^3.0.0",
     "fzaninotto/faker": "^1.6"
   },
@@ -42,8 +43,6 @@
     "spryker/availability-gui": "*",
     "spryker/availability-storage": "*",
     "spryker/braintree": "*",
-    "spryker/business-on-behalf": "*",
-    "spryker/business-on-behalf-data-import": "*",
     "spryker/cache": "*",
     "spryker/calculation": "*",
     "spryker/cart": "*",

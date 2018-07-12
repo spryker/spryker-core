@@ -16,8 +16,6 @@ interface ManualOrderEntryRepositoryInterface
      *
      * @param int $idOrderSource
      *
-     * @throws \Spryker\Zed\ManualOrderEntry\Business\Exception\OrderSourceNotFoundException
-     *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer
      */
     public function getOrderSourceById($idOrderSource): OrderSourceTransfer;
@@ -27,5 +25,5 @@ interface ManualOrderEntryRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
      */
-    public function findAllOrderSources(): array;
+    public function getAllOrderSources(): array;
 }

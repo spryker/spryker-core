@@ -19,12 +19,12 @@ class BraintreeHandlerPlugin extends AbstractPlugin implements StepHandlerPlugin
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return void
      */
     public function addToDataClass(Request $request, AbstractTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createBraintreeHandler()->addPaymentToQuote($request, $quoteTransfer);
+        $this->getFactory()->createBraintreeHandler()->addPaymentToQuote($request, $quoteTransfer);
     }
 }

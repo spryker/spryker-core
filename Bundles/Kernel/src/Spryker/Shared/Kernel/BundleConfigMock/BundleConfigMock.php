@@ -43,7 +43,7 @@ class BundleConfigMock
     /**
      * @param \Spryker\Shared\Kernel\AbstractBundleConfig $bundleConfig
      *
-     * @return \Spryker\Shared\Kernel\AbstractBundleConfig
+     * @return \Spryker\Zed\Kernel\AbstractBundleConfig
      */
     public function getBundleConfigMock(AbstractBundleConfig $bundleConfig)
     {

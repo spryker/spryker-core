@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Constraint;
 
-use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class SkuExists extends SymfonyConstraint
@@ -22,7 +21,7 @@ class SkuExists extends SymfonyConstraint
     /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface
      */
-    public function getProductFacade(): ManualOrderEntryGuiToProductFacadeInterface
+    public function getProductFacade()
     {
         return $this->productFacade;
     }
@@ -30,7 +29,7 @@ class SkuExists extends SymfonyConstraint
     /**
      * @return string
      */
-    public function getTargets(): string
+    public function getTargets()
     {
         return static::CLASS_CONSTRAINT;
     }

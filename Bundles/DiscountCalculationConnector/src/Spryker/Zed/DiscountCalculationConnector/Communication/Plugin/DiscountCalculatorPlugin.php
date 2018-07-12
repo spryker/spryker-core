@@ -20,7 +20,7 @@ class DiscountCalculatorPlugin extends AbstractPlugin implements CalculatorPlugi
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return array
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {

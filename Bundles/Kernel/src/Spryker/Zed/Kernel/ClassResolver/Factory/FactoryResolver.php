@@ -18,7 +18,7 @@ class FactoryResolver extends AbstractClassResolver
      *
      * @throws \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
-     * @return object
+     * @return \Spryker\Zed\Kernel\AbstractFactory
      */
     public function resolve($callerClass)
     {

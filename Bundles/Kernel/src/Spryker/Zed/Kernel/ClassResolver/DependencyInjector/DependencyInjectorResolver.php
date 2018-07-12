@@ -50,14 +50,11 @@ class DependencyInjectorResolver extends AbstractClassResolver
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface
+     * @return object|\Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface
      */
     protected function getResolvedClassInstance()
     {
-        /** @var \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface $class */
-        $class = parent::getResolvedClassInstance();
-
-        return $class;
+        return parent::getResolvedClassInstance();
     }
 
     /**

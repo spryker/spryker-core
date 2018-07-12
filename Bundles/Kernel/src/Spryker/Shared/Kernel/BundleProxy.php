@@ -84,7 +84,7 @@ class BundleProxy
 
     /**
      * @param string $method
-     * @param array $arguments
+     * @param string $arguments
      *
      * @throws \LogicException
      *

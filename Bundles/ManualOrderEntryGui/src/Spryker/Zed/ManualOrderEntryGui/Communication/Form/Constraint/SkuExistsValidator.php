@@ -23,7 +23,7 @@ class SkuExistsValidator extends ConstraintValidator
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint): void
+    public function validate($value, Constraint $constraint)
     {
         if (!$value->getSku()) {
             return;
@@ -47,7 +47,7 @@ class SkuExistsValidator extends ConstraintValidator
      *
      * @return bool
      */
-    protected function hasProductConcrete($concreteSku, SkuExists $constraint): bool
+    protected function hasProductConcrete($concreteSku, SkuExists $constraint)
     {
         return $constraint->getProductFacade()->hasProductConcrete($concreteSku);
     }

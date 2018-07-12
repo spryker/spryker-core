@@ -23,7 +23,7 @@ class ProductReviewGuiToUtilDateTimeBridge implements ProductReviewGuiToUtilDate
     }
 
     /**
-     * @param \DateTime|string $date
+     * @param string $date
      *
      * @return string
      */

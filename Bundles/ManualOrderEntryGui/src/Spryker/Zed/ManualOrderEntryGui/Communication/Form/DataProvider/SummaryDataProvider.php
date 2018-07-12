@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ManualOrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Traits\UniqueFlashMessagesTrait;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCalculationFacadeInterface;
@@ -42,14 +41,10 @@ class SummaryDataProvider implements FormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData($quoteTransfer)
     {
-        if ($quoteTransfer->getManualOrder() === null) {
-            $quoteTransfer->setManualOrder(new ManualOrderTransfer());
-        }
-
         $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
 
         $this->uniqueFlashMessages();
@@ -62,7 +57,7 @@ class SummaryDataProvider implements FormDataProviderInterface
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions($quoteTransfer)
     {
         return [
             'data_class' => QuoteTransfer::class,

@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ShoppingList\Dependency\Client;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class ShoppingListToCartClientBridge implements ShoppingListToCartClientInterface
@@ -26,20 +25,13 @@ class ShoppingListToCartClientBridge implements ShoppingListToCartClientInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addValidItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
+    public function addItems(array $itemTransfers, array $params = []): QuoteTransfer
     {
-        return $this->cartClient->addValidItems($cartChangeTransfer);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getQuote(): QuoteTransfer
-    {
-        return $this->cartClient->getQuote();
+        return $this->cartClient->addItems($itemTransfers, $params);
     }
 }

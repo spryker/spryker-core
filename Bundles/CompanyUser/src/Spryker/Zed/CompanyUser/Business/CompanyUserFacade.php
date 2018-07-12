@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUser\Business;
 
-use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
@@ -36,22 +35,6 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
         return $this->getFactory()
             ->createCompanyUser()
             ->create($companyUserTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
-     */
-    public function createInitialCompanyUser(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
-    {
-        return $this->getFactory()
-            ->createCompanyUser()
-            ->createInitialCompanyUser($companyResponseTransfer);
     }
 
     /**
@@ -146,7 +129,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
      */
     public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer
     {
-        return $this->getFactory()->createCompanyUser()->getCompanyUserById($idCompanyUser);
+        return $this->getRepository()->getCompanyUserById($idCompanyUser);
     }
 
     /**
@@ -161,20 +144,5 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     public function findInitialCompanyUserByCompanyId(int $idCompany): ?CompanyUserTransfer
     {
         return $this->getRepository()->findInitialCompanyUserByCompanyId($idCompany);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return int
-     */
-    public function countActiveCompanyUsersByIdCustomer(CustomerTransfer $customerTransfer): int
-    {
-        return $this->getRepository()
-            ->countActiveCompanyUsersByIdCustomer($customerTransfer->getIdCustomer());
     }
 }

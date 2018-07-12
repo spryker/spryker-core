@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 interface PriceProductCriteriaBuilderInterface
@@ -17,12 +16,12 @@ interface PriceProductCriteriaBuilderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
-    public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductCriteriaTransfer;
+    public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer);
 
     /**
      * @param string|null $priceTypeName
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
-    public function buildCriteriaWithDefaultValues($priceTypeName = null): PriceProductCriteriaTransfer;
+    public function buildCriteriaWithDefaultValues($priceTypeName = null);
 }

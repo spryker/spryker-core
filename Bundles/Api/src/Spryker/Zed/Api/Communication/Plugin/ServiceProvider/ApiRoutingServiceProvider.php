@@ -16,7 +16,7 @@ use Spryker\Zed\Api\Business\Model\Router\ApiRouter;
 class ApiRoutingServiceProvider implements ServiceProviderInterface
 {
     /**
-     * @param \Spryker\Shared\Kernel\Communication\Application $app
+     * @param \Silex\Application $app
      *
      * @throws \RuntimeException
      *
@@ -32,7 +32,7 @@ class ApiRoutingServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Communication\Application $app
+     * @param \Silex\Application $app
      *
      * @return void
      */

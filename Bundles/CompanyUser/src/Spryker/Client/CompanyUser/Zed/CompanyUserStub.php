@@ -37,7 +37,7 @@ class CompanyUserStub implements CompanyUserStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function createCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
@@ -45,69 +45,54 @@ class CompanyUserStub implements CompanyUserStubInterface
             return $this->generatePermissionErrorMessage();
         }
 
-        /** @var \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer */
-        $companyUserResponseTransfer = $this->zedRequestClient->call('/company-user/gateway/create', $companyUserTransfer);
-
-        return $companyUserResponseTransfer;
+        return $this->zedRequestClient->call('/company-user/gateway/create', $companyUserTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function updateCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer */
-        $companyUserResponseTransfer = $this->zedRequestClient->call('/company-user/gateway/update', $companyUserTransfer);
-
-        return $companyUserResponseTransfer;
+        return $this->zedRequestClient->call('/company-user/gateway/update', $companyUserTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        /** @var \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer */
-        $companyUserResponseTransfer = $this->zedRequestClient->call('/company-user/gateway/delete', $companyUserTransfer);
-
-        return $companyUserResponseTransfer;
+        return $this->zedRequestClient->call('/company-user/gateway/delete', $companyUserTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getCompanyUserCollection(
         CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUserCollectionTransfer {
-        /** @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer */
-        $companyUserCollectionTransfer = $this->zedRequestClient->call(
+        return $this->zedRequestClient->call(
             '/company-user/gateway/get-company-user-collection',
             $criteriaFilterTransfer
         );
-
-        return $companyUserCollectionTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getCompanyUserById(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
     {
-        /** @var \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer */
-        $companyUserTransfer = $this->zedRequestClient->call(
+        return $this->zedRequestClient->call(
             '/company-user/gateway/get-company-user-by-id',
             $companyUserTransfer
         );
-
-        return $companyUserTransfer;
     }
 
     /**

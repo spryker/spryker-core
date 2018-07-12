@@ -19,12 +19,12 @@ use Spryker\Shared\ProductSetPageSearch\ProductSetPageSearchConstants;
 class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements QueryInterface
 {
     /**
-     * @var int|null
+     * @var null
      */
     protected $limit;
 
     /**
-     * @var int|null
+     * @var null
      */
     protected $offset;
 

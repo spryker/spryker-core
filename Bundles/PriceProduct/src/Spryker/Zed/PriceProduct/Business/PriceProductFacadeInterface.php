@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\PriceProduct\Business;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -214,8 +212,8 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
-     *  - Reads prices same as findPricesBySkuForCurrentStore, then groups by currency, price mode, price type for current store.
-     *  - Delegates call to findPricesBySkuForCurrentStore and groups result after by currency, price mode and price type.
+     *  - Reads prices same as findPricesBySkuGroupedForCurrentStore, then groups by currency, price mode, price type for current store.
+     *  - Delegates call to findPricesBySkuGroupedForCurrentStore and groups result after by currency, price mode and price type.
      *
      * For example:
      *   $result = [
@@ -230,11 +228,10 @@ interface PriceProductFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
      *
      * @return array
      */
-    public function findPricesBySkuGroupedForCurrentStore(string $sku, ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null): array;
+    public function findPricesBySkuGroupedForCurrentStore($sku);
 
     /**
      * Specification:
@@ -265,14 +262,10 @@ interface PriceProductFacadeInterface
      * @api
      *
      * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPrices(
-        int $idProductAbstract,
-        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ): array;
+    public function findProductAbstractPrices($idProductAbstract);
 
     /**
      * Specification:
@@ -283,15 +276,10 @@ interface PriceProductFacadeInterface
      *
      * @param int $idProductConcrete
      * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePrices(
-        int $idProductConcrete,
-        int $idProductAbstract,
-        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ): array;
+    public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
 
     /**
      * Specification:
@@ -317,38 +305,4 @@ interface PriceProductFacadeInterface
      * @return string
      */
     public function getPriceModeIdentifierForBothType();
-
-    /**
-     * Specification:
-     *  - Generates checksum hash for price data field.
-     *
-     * @api
-     *
-     * @param array $priceData
-     *
-     * @return string
-     */
-    public function generatePriceDataChecksum(array $priceData): string;
-
-    /**
-     * Specification:
-     *  - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    public function persistPriceProductStore(PriceProductTransfer $priceProductTransfer): PriceProductTransfer;
-
-    /**
-     * Specification:
-     *  - Deletes records from spy_price_product_store without any dimension.
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function deleteOrphanPriceProductStoreEntities(): void;
 }

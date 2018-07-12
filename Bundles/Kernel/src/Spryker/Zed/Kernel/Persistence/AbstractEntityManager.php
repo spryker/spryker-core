@@ -29,15 +29,13 @@ abstract class AbstractEntityManager implements EntityManagerInterface
      * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container $container
+     * @return void
      */
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,
         Container $container
     ) {
         $dependencyProvider->providePersistenceLayerDependencies($container);
-
-        return $container;
     }
 
     /**
@@ -80,14 +78,11 @@ abstract class AbstractEntityManager implements EntityManagerInterface
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface
+     * @return \Spryker\Zed\Kernel\AbstractFactory
      */
     private function resolveFactory()
     {
-        /** @var \Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface $factory */
-        $factory = $this->getFactoryResolver()->resolve($this);
-
-        return $factory;
+        return $this->getFactoryResolver()->resolve($this);
     }
 
     /**

@@ -48,7 +48,7 @@ class CustomerReviewSubmitMapper implements CustomerReviewSubmitMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductReviewRequestTransfer $productReviewRequestTransfer
      *
-     * @return int
+     * @return string
      */
     protected function getIdLocale(ProductReviewRequestTransfer $productReviewRequestTransfer)
     {

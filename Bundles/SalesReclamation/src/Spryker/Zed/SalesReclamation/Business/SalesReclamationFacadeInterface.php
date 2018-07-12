@@ -51,7 +51,7 @@ interface SalesReclamationFacadeInterface
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationTransfer
+     * @return null|\Generated\Shared\Transfer\ReclamationTransfer
      */
     public function hydrateReclamationByOrder(OrderTransfer $orderTransfer): ReclamationTransfer;
 

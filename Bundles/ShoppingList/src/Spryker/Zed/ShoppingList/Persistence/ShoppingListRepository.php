@@ -7,89 +7,78 @@
 
 namespace Spryker\Zed\ShoppingList\Persistence;
 
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListPaginationTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
+use Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer;
+use Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyBusinessUnitTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyUserTableMap;
-use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListItemTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingList;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingListPermissionGroup;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapper;
 
 /**
  * @method \Spryker\Zed\ShoppingList\Persistence\ShoppingListPersistenceFactory getFactory()
  */
 class ShoppingListRepository extends AbstractRepository implements ShoppingListRepositoryInterface
 {
+    protected const FIELD_FIRST_NAME = 'first_name';
+    protected const FIELD_LAST_NAME = 'last_name';
+
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
      */
-    public function findCustomerShoppingListByName(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer
+    public function findCustomerShoppingListWithSameName(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer
     {
-        $shoppingListQuery = $this->createCustomerShoppingListQuery($shoppingListTransfer->getCustomerReference())
-            ->filterByName($shoppingListTransfer->getName());
+        $shoppingListEntity = $this->createCustomerShoppingListQuery($shoppingListTransfer->getCustomerReference())
+            ->filterByName($shoppingListTransfer->getName())
+            ->findOne();
 
-        $shoppingListEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListQuery)->find();
-
-        if ($shoppingListEntityTransferCollection) {
-            return $this->getFactory()
-                ->createShoppingListMapper()
-                ->mapShoppingListTransfer($shoppingListEntityTransferCollection[0], new ShoppingListTransfer());
+        if ($shoppingListEntity) {
+            return $this->mapShoppingListEntityToTransfer($shoppingListEntity);
         }
 
-        return null;
+        return $shoppingListEntity;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return null|\Generated\Shared\Transfer\ShoppingListTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function findCustomerShoppingListById(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer
+    public function findCustomerShoppingListById(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
-        $shoppingListQuery = $this->createCustomerShoppingListQuery($shoppingListTransfer->getCustomerReference())
-            ->filterByIdShoppingList($shoppingListTransfer->getIdShoppingList());
+        $shoppingListEntity = $this->createCustomerShoppingListQuery($shoppingListTransfer->getCustomerReference())
+            ->filterByIdShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->findOne();
 
-        $shoppingListEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListQuery)->find();
-
-        if ($shoppingListEntityTransferCollection) {
-            return $this->getFactory()
-                ->createShoppingListMapper()
-                ->mapShoppingListTransfer($shoppingListEntityTransferCollection[0], $shoppingListTransfer);
-        }
-
-        return null;
+        return $this->mapShoppingListEntityToTransfer($shoppingListEntity);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return null|\Generated\Shared\Transfer\ShoppingListTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function findShoppingListById(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer
+    public function findShoppingListById(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
-        $shoppingListQuery = $this->getFactory()->createShoppingListQuery()
-            ->leftJoinWithSpyShoppingListItem()
-            ->filterByIdShoppingList($shoppingListTransfer->getIdShoppingList());
+        $shoppingListEntity = $this->getFactory()->createShoppingListQuery()
+            ->filterByIdShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->findOne();
 
-        $shoppingListEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListQuery)->find();
-
-        if ($shoppingListEntityTransferCollection) {
-            return $this->getFactory()
-                ->createShoppingListMapper()
-                ->mapShoppingListTransfer($shoppingListEntityTransferCollection[0], $shoppingListTransfer);
-        }
-
-        return null;
+        return $this->mapShoppingListEntityToTransfer($shoppingListEntity, $shoppingListTransfer);
     }
 
     /**
@@ -99,22 +88,16 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function findShoppingListPaginatedItems(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer
     {
-        $shoppingListItemQuery = $this->getFactory()
+        $paginationModel = $this->getFactory()
             ->createShoppingListItemQuery()
-            ->filterByFkShoppingList($shoppingListOverviewRequestTransfer->getShoppingList()->getIdShoppingList());
+            ->filterByFkShoppingList($shoppingListOverviewRequestTransfer->getShoppingList()->getIdShoppingList())
+            ->paginate($shoppingListOverviewRequestTransfer->getPage(), $shoppingListOverviewRequestTransfer->getItemsPerPage());
 
-        $shoppingListItemEntityTransferCollection = $this->buildQueryFromCriteria(
-            $shoppingListItemQuery,
-            (new FilterTransfer())
-                ->setOrderBy(SpyShoppingListItemTableMap::COL_ID_SHOPPING_LIST_ITEM)
-                ->setOrderDirection('ASC')
-        )
-            ->find();
+        $shoppingListOverviewResponseTransfer = new ShoppingListOverviewResponseTransfer();
+        $shoppingListOverviewResponseTransfer->setItemsCollection($this->mapItemEntitiesToItemCollectionTransfer($paginationModel->getResults()));
+        $shoppingListOverviewResponseTransfer->setPagination((new ShoppingListPaginationTransfer())->setPage($paginationModel->getPage()));
 
-        return (new ShoppingListOverviewResponseTransfer())
-            ->setItemsCollection(
-                $this->getFactory()->createShoppingListItemMapper()->mapItemCollectionTransfer($shoppingListItemEntityTransferCollection)
-            );
+        return $shoppingListOverviewResponseTransfer;
     }
 
     /**
@@ -124,12 +107,8 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function findCustomerShoppingLists(string $customerReference): ShoppingListCollectionTransfer
     {
-        $shoppingListsQuery = $this->createCustomerShoppingListQuery($customerReference);
-        $shoppingListsEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListsQuery)->find();
-
-        return $this->getFactory()
-            ->createShoppingListMapper()
-            ->mapCollectionTransfer($shoppingListsEntityTransferCollection);
+        $shoppingLists = $this->createCustomerShoppingListQuery($customerReference)->find();
+        return $this->mapShoppingListEntitiesToCollectionTransfer($shoppingLists);
     }
 
     /**
@@ -139,16 +118,14 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function findCustomerShoppingListsItemsByIds(array $shoppingListIds): ShoppingListItemCollectionTransfer
     {
-        $shoppingListsItemQuery = $this->getFactory()
+        $shoppingListsItems = $this->getFactory()
             ->createShoppingListItemQuery()
             ->useSpyShoppingListQuery()
-            ->filterByIdShoppingList_In($shoppingListIds)
-            ->endUse();
-        $shoppingListsItemEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListsItemQuery)->find();
+                ->filterByIdShoppingList_In($shoppingListIds)
+            ->endUse()
+            ->find();
 
-        return $this->getFactory()
-            ->createShoppingListItemMapper()
-            ->mapItemCollectionTransfer($shoppingListsItemEntityTransferCollection);
+        return $this->mapItemEntitiesToItemCollectionTransfer($shoppingListsItems);
     }
 
     /**
@@ -158,14 +135,12 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function findShoppingListItemsByIds(array $shoppingListItemIds): ShoppingListItemCollectionTransfer
     {
-        $shoppingListsItemQuery = $this->getFactory()
+        $shoppingListsItems = $this->getFactory()
             ->createShoppingListItemQuery()
-            ->filterByIdShoppingListItem_In($shoppingListItemIds);
-        $shoppingListsItemEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListsItemQuery)->find();
+            ->filterByIdShoppingListItem_In($shoppingListItemIds)
+            ->find();
 
-        return $this->getFactory()
-            ->createShoppingListItemMapper()
-            ->mapItemCollectionTransfer($shoppingListsItemEntityTransferCollection);
+        return $this->mapItemEntitiesToItemCollectionTransfer($shoppingListsItems);
     }
 
     /**
@@ -173,42 +148,53 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
     {
-        $shoppingListPermissionGroupQuery = $this->getFactory()->createShoppingListPermissionGroupQuery();
-        $permissionGroupEntityTransfer = $this->buildQueryFromCriteria($shoppingListPermissionGroupQuery)->findOne();
+        $shoppingListPermissionGroupEntity = $this->getFactory()->createShoppingListPermissionGroupQuery()->findOne();
 
-        return (new ShoppingListPermissionGroupTransfer())->fromArray($permissionGroupEntityTransfer->modifiedToArray(), true);
+        return $this->mapShoppingListPermissionGroupEntityToTransfer($shoppingListPermissionGroupEntity);
     }
 
     /**
      * @param int $idShoppingList
      * @param int $idCompanyBusinessUnit
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer|null
      */
-    public function isShoppingListSharedWithCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): bool
+    public function getShoppingListCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): ?SpyShoppingListCompanyBusinessUnitEntityTransfer
     {
-        $shoppingListCompanyBusinessUnitEntityQuery = $this->getFactory()
+        $shoppingListCompanyBusinessUnitEntity = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
             ->filterByFkShoppingList($idShoppingList)
-            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit);
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->findOne();
 
-        return $this->buildQueryFromCriteria($shoppingListCompanyBusinessUnitEntityQuery)->exists();
+        if (!$shoppingListCompanyBusinessUnitEntity) {
+            return null;
+        }
+
+        return (new SpyShoppingListCompanyBusinessUnitEntityTransfer())
+            ->fromArray($shoppingListCompanyBusinessUnitEntity->toArray(), true);
     }
 
     /**
      * @param int $idShoppingList
      * @param int $idCompanyUser
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer|null
      */
-    public function isShoppingListSharedWithCompanyUser(int $idShoppingList, int $idCompanyUser): bool
+    public function getShoppingListCompanyUser(int $idShoppingList, int $idCompanyUser): ?SpyShoppingListCompanyUserEntityTransfer
     {
-        $shoppingListCompanyUserEntityQuery = $this->getFactory()
+        $shoppingListCompanyUserEntity = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
             ->filterByFkShoppingList($idShoppingList)
-            ->filterByFkCompanyUser($idCompanyUser);
+            ->filterByFkCompanyUser($idCompanyUser)
+            ->findOne();
 
-        return $this->buildQueryFromCriteria($shoppingListCompanyUserEntityQuery)->exists();
+        if (!$shoppingListCompanyUserEntity) {
+            return null;
+        }
+
+        return (new SpyShoppingListCompanyUserEntityTransfer())
+            ->fromArray($shoppingListCompanyUserEntity->toArray(), true);
     }
 
     /**
@@ -248,21 +234,17 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function findCompanyUserSharedShoppingLists(int $idCompanyUser): ShoppingListCollectionTransfer
     {
-        $shoppingListsQuery = $this->getFactory()
+        $shoppingLists = $this->getFactory()
             ->createShoppingListQuery()
             ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
-            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
-            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::FIELD_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::FIELD_LAST_NAME)
             ->useSpyShoppingListCompanyUserQuery()
-            ->filterByFkCompanyUser($idCompanyUser)
+                ->filterByFkCompanyUser($idCompanyUser)
             ->endUse()
-            ->leftJoinWithSpyShoppingListItem();
+            ->find();
 
-        $shoppingListsEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListsQuery)->find();
-
-        return $this->getFactory()
-            ->createShoppingListMapper()
-            ->mapCollectionTransfer($shoppingListsEntityTransferCollection);
+        return $this->mapShoppingListEntitiesToCollectionTransfer($shoppingLists);
     }
 
     /**
@@ -272,21 +254,17 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function findCompanyBusinessUnitSharedShoppingLists(int $idCompanyBusinessUnit): ShoppingListCollectionTransfer
     {
-        $shoppingListQuery = $this->getFactory()
+        $shoppingLists = $this->getFactory()
             ->createShoppingListQuery()
             ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
-            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
-            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::FIELD_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::FIELD_LAST_NAME)
             ->useSpyShoppingListCompanyBusinessUnitQuery()
-            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+                ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->endUse()
-            ->leftJoinWithSpyShoppingListItem();
+            ->find();
 
-        $shoppingListsEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListQuery)->find();
-
-        return $this->getFactory()
-            ->createShoppingListMapper()
-            ->mapCollectionTransfer($shoppingListsEntityTransferCollection);
+        return $this->mapShoppingListEntitiesToCollectionTransfer($shoppingLists);
     }
 
     /**
@@ -299,10 +277,77 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
         return $this->getFactory()
             ->createShoppingListQuery()
             ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
-            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
-            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::FIELD_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::FIELD_LAST_NAME)
             ->filterByCustomerReference($customerReference)
-            ->orderByIdShoppingList()
-            ->leftJoinWithSpyShoppingListItem();
+            ->orderByIdShoppingList();
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem[] $itemEntities
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    protected function mapItemEntitiesToItemCollectionTransfer(ObjectCollection $itemEntities): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListItemCollectionTransfer = new ShoppingListItemCollectionTransfer();
+        foreach ($itemEntities as $item) {
+            $shoppingListItemTransfer = (new ShoppingListItemTransfer())->fromArray($item->toArray(), true);
+            $shoppingListItemCollectionTransfer->addItem($shoppingListItemTransfer);
+        }
+
+        return $shoppingListItemCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingList $shoppingListEntity
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer|null $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function mapShoppingListEntityToTransfer(SpyShoppingList $shoppingListEntity, ?ShoppingListTransfer $shoppingListTransfer = null): ShoppingListTransfer
+    {
+        if (!$shoppingListTransfer) {
+            $shoppingListTransfer = new ShoppingListTransfer();
+        }
+
+        $shoppingListTransfer = $shoppingListTransfer->fromArray($shoppingListEntity->toArray(), true);
+        if ($shoppingListEntity->hasVirtualColumn(static::FIELD_FIRST_NAME) && $shoppingListEntity->hasVirtualColumn(static::FIELD_LAST_NAME)) {
+            $shoppingListTransfer->setOwner($shoppingListEntity->getVirtualColumn(static::FIELD_FIRST_NAME) . ' ' . $shoppingListEntity->getVirtualColumn(static::FIELD_LAST_NAME));
+        }
+
+        $numberOfItems = 0;
+        foreach ($shoppingListEntity->getSpyShoppingListItems() as $shoppingListItem) {
+            $numberOfItems += $shoppingListItem->getQuantity();
+        }
+
+        $shoppingListTransfer->setNumberOfItems($numberOfItems);
+        return $shoppingListTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListPermissionGroup $shoppingListPermissionGroupEntity
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
+     */
+    protected function mapShoppingListPermissionGroupEntityToTransfer(SpyShoppingListPermissionGroup $shoppingListPermissionGroupEntity): ShoppingListPermissionGroupTransfer
+    {
+        return (new ShoppingListPermissionGroupTransfer())->fromArray($shoppingListPermissionGroupEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingList\Persistence\SpyShoppingList[] $shoppingLists
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    protected function mapShoppingListEntitiesToCollectionTransfer(ObjectCollection $shoppingLists): ShoppingListCollectionTransfer
+    {
+        $shoppingListCollectionTransfer = new ShoppingListCollectionTransfer();
+
+        foreach ($shoppingLists as $shoppingList) {
+            $shoppingListCollectionTransfer->addShoppingList($this->mapShoppingListEntityToTransfer($shoppingList));
+        }
+
+        return $shoppingListCollectionTransfer;
     }
 }

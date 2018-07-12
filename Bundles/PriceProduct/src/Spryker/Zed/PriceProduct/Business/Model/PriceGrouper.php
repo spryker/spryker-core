@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface;
-use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceGrouper implements PriceGrouperInterface
 {
@@ -25,42 +22,25 @@ class PriceGrouper implements PriceGrouperInterface
     protected $priceProductMapper;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\PriceProductConfig
-     */
-    protected $config;
-
-    /**
      * @param \Spryker\Zed\PriceProduct\Business\Model\ReaderInterface $priceReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
-     * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
      */
     public function __construct(
         ReaderInterface $priceReader,
-        PriceProductMapperInterface $priceProductMapper,
-        PriceProductConfig $config
+        PriceProductMapperInterface $priceProductMapper
     ) {
         $this->priceReader = $priceReader;
         $this->priceProductMapper = $priceProductMapper;
-        $this->config = $config;
     }
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
      *
      * @return array
      */
-    public function findPricesBySkuGroupedForCurrentStore(
-        string $sku,
-        ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null
-    ): array {
-
-        if (!$priceProductDimensionTransfer) {
-            $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-                ->setType($this->config->getPriceDimensionDefault());
-        }
-
-        $priceProductTransfers = $this->priceReader->findPricesBySkuForCurrentStore($sku, $priceProductDimensionTransfer);
+    public function findPricesBySkuGroupedForCurrentStore($sku)
+    {
+        $priceProductTransfers = $this->priceReader->findPricesBySkuForCurrentStore($sku);
 
         return $this->groupPriceProduct($priceProductTransfers);
     }
@@ -74,31 +54,18 @@ class PriceGrouper implements PriceGrouperInterface
     {
         $prices = [];
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $prices = $this->groupPriceByCurrencyAndStore($priceProductTransfer, $prices);
-        }
+            $priceMoneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
-        return $prices;
-    }
+            $priceType = $priceProductTransfer->getPriceType()->getName();
+            $currencyIsoCode = $priceMoneyValueTransfer->getCurrency()->getCode();
 
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $prices
-     *
-     * @return array
-     */
-    protected function groupPriceByCurrencyAndStore(PriceProductTransfer $priceProductTransfer, array $prices): array
-    {
-        $priceMoneyValueTransfer = $priceProductTransfer->getMoneyValue();
+            if ($priceMoneyValueTransfer->getGrossAmount() !== null) {
+                $prices[$currencyIsoCode][$this->priceProductMapper->getGrossPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getGrossAmount();
+            }
 
-        $priceType = $priceProductTransfer->getPriceType()->getName();
-        $currencyIsoCode = $priceMoneyValueTransfer->getCurrency()->getCode();
-
-        if ($priceMoneyValueTransfer->getGrossAmount() !== null) {
-            $prices[$currencyIsoCode][$this->priceProductMapper->getGrossPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getGrossAmount();
-        }
-
-        if ($priceMoneyValueTransfer->getNetAmount() !== null) {
-            $prices[$currencyIsoCode][$this->priceProductMapper->getNetPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getNetAmount();
+            if ($priceMoneyValueTransfer->getNetAmount() !== null) {
+                $prices[$currencyIsoCode][$this->priceProductMapper->getNetPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getNetAmount();
+            }
         }
 
         return $prices;

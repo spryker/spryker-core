@@ -67,7 +67,7 @@ class RefundSaver implements RefundSaverInterface
     /**
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
-     * @return void
+     * @return int
      */
     protected function storeRefund(RefundTransfer $refundTransfer)
     {

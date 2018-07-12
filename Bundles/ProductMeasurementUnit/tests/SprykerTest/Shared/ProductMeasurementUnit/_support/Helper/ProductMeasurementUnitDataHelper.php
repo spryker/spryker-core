@@ -114,7 +114,7 @@ class ProductMeasurementUnitDataHelper extends Module
     /**
      * @param \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer $salesUnitEntityTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
      */
     protected function storeSalesUnitStore(SpyProductMeasurementSalesUnitEntityTransfer $salesUnitEntityTransfer)
     {

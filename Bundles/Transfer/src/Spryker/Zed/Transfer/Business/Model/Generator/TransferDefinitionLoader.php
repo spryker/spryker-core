@@ -65,7 +65,7 @@ class TransferDefinitionLoader implements LoaderInterface
     }
 
     /**
-     * @return void
+     * @return array
      */
     protected function loadDefinitions()
     {

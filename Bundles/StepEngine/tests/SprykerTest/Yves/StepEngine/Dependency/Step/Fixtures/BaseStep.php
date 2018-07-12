@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 class BaseStep extends AbstractBaseStep
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return bool
      */

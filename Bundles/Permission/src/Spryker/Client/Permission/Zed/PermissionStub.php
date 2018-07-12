@@ -26,16 +26,13 @@ class PermissionStub implements PermissionStubInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findAll(): PermissionCollectionTransfer
     {
-        /** @var \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer */
-        $permissionCollectionTransfer = $this->zedRequestClient->call(
+        return $this->zedRequestClient->call(
             '/permission/gateway/find-all',
             new PermissionCollectionTransfer()
         );
-
-        return $permissionCollectionTransfer;
     }
 }

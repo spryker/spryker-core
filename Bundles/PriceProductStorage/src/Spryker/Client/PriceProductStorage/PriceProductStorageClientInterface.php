@@ -9,27 +9,4 @@ namespace Spryker\Client\PriceProductStorage;
 
 interface PriceProductStorageClientInterface
 {
-    /**
-     * Specification:
-     *  - Returns abstract product prices from Storage.
-     *
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|null
-     */
-    public function getPriceProductAbstractTransfers(int $idProductAbstract): array;
-
-    /**
-     * Specification:
-     *  - Returns concrete product prices from Storage.
-     *
-     * @api
-     *
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|null
-     */
-    public function getPriceProductConcreteTransfers(int $idProductConcrete): array;
 }

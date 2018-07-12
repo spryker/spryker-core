@@ -14,7 +14,7 @@ interface KeyStrategyInterface
     /**
      * @param \Generated\Shared\Transfer\StorageProductLabelTransfer $storageProductLabelTransfer
      *
-     * @return int|string
+     * @return mixed
      */
     public function getDictionaryKey(StorageProductLabelTransfer $storageProductLabelTransfer);
 }

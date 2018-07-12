@@ -220,7 +220,6 @@ class Customer implements CustomerInterface
         }
 
         $this->executePostCustomerRegistrationPlugins($customerTransfer);
-        $customerTransfer = $this->customerExpander->expand($customerTransfer);
 
         $this->sendRegistrationToken($customerTransfer);
 

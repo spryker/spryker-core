@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 class ProductCategoryFilterGuiToCategoryFacadeBridge implements ProductCategoryFilterGuiToCategoryFacadeInterface
 {
     /**
-     * @var \Spryker\Zed\Category\Business\CategoryFacadeInterface
+     * @var \Spryker\Zed\Category\Business\CategoryFacade
      */
     protected $categoryFacade;
 

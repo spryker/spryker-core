@@ -111,7 +111,7 @@ class OfferWriter implements OfferWriterInterface
      */
     protected function executeCreateOffer(OfferTransfer $offerTransfer)
     {
-        $offerTransfer->setStatus($this->offerConfig->getStatusPending());
+        $offerTransfer->setStatus($this->offerConfig->getInitialStatus());
         $offerTransfer = $this->offerEntityManager->createOffer($offerTransfer);
         $offerTransfer->getQuote()->setCheckoutConfirmed(true);
 

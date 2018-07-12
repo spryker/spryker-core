@@ -144,6 +144,7 @@ class Company implements CompanyInterface
      */
     protected function executePostCreatePlugins(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {
+
         $companyResponseTransfer = $this->companyPluginExecutor->executeCompanyPostCreatePlugins($companyResponseTransfer);
 
         return $companyResponseTransfer;

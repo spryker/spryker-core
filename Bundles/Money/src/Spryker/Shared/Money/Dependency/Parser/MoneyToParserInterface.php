@@ -13,7 +13,7 @@ interface MoneyToParserInterface
      * @param string $money
      * @param string $isoCode
      *
-     * @return \Money\Money
+     * @return string
      */
     public function parse($money, $isoCode);
 }

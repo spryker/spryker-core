@@ -21,12 +21,12 @@ class View implements ViewInterface, WidgetContainerInterface
     protected $template;
 
     /**
-     * @var array
+     * @var \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     protected $data;
 
     /**
-     * @var string[]
+     * @var \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[]
      */
     protected $widgets = [];
 

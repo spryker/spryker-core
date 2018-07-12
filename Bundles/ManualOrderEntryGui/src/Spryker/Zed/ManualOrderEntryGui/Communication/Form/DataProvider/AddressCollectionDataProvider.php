@@ -10,14 +10,14 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
-use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeInterface;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface;
 
 class AddressCollectionDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeInterface
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface
      */
-    protected $storeFacade;
+    protected $store;
 
     /**
      * @var \Generated\Shared\Transfer\CustomerTransfer
@@ -25,19 +25,19 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
     protected $customerTransfer;
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface $store
      */
-    public function __construct(ManualOrderEntryGuiToStoreFacadeInterface $storeFacade)
+    public function __construct(ManualOrderEntryGuiToStoreInterface $store)
     {
-        $this->storeFacade = $storeFacade;
+        $this->store = $store;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData($quoteTransfer)
     {
         $this->customerTransfer = $quoteTransfer->getCustomer();
 
@@ -56,7 +56,7 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions($quoteTransfer)
     {
         return [
             'data_class' => QuoteTransfer::class,
@@ -72,7 +72,7 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function getShippingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
+    protected function getShippingAddress(QuoteTransfer $quoteTransfer)
     {
         $shippingAddressTransfer = new AddressTransfer();
         if ($quoteTransfer->getShippingAddress() !== null) {
@@ -91,7 +91,7 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function getBillingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
+    protected function getBillingAddress(QuoteTransfer $quoteTransfer)
     {
         $billingAddressTransfer = new AddressTransfer();
         if ($quoteTransfer->getBillingAddress() !== null) {
@@ -108,7 +108,7 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
     /**
      * @return array
      */
-    protected function getAddressChoices(): array
+    protected function getAddressChoices()
     {
         if ($this->customerTransfer === null) {
             return [];
@@ -140,11 +140,11 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
     /**
      * @return array
      */
-    protected function getAvailableCountries(): array
+    protected function getAvailableCountries()
     {
         $countries = [];
 
-        foreach ($this->storeFacade->getCountries() as $iso2Code) {
+        foreach ($this->store->getCountries() as $iso2Code) {
             $countries[$iso2Code] = $iso2Code;
         }
 

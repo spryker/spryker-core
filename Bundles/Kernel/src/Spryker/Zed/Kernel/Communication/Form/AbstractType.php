@@ -97,10 +97,7 @@ abstract class AbstractType extends SymfonyAbstractType
      */
     private function resolveFactory()
     {
-        /** @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory $factory */
-        $factory = $this->getFactoryResolver()->resolve($this);
-
-        return $factory;
+        return $this->getFactoryResolver()->resolve($this);
     }
 
     /**

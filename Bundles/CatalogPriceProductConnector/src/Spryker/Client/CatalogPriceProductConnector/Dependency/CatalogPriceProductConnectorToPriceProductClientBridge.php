@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\CatalogPriceProductConnector\Dependency;
 
-use Generated\Shared\Transfer\CurrentProductPriceTransfer;
-
 class CatalogPriceProductConnectorToPriceProductClientBridge implements CatalogPriceProductConnectorToPriceProductClientInterface
 {
     /**
@@ -35,18 +33,8 @@ class CatalogPriceProductConnectorToPriceProductClientBridge implements CatalogP
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     * @return string
      */
-    public function resolveProductPriceTransfer(array $priceProductTransfers): CurrentProductPriceTransfer
-    {
-        return $this->priceProductClient->resolveProductPriceTransfer($priceProductTransfers);
-    }
-
-        /**
-         * @return string
-         */
     public function getPriceTypeDefaultName()
     {
         return $this->priceProductClient->getPriceTypeDefaultName();

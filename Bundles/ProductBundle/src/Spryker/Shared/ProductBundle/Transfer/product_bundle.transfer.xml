@@ -43,10 +43,6 @@
 
     </transfer>
 
-    <transfer name="ItemCollection">
-        <property name="Items" type="Item[]" singular="item"/>
-    </transfer>
-
     <transfer name="Quote">
         <property name="bundleItems" type="Item[]" singular="bundleItem" />
         <property name="store" type="Store" />

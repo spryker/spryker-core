@@ -165,7 +165,7 @@ class EventDispatcherTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     protected function createTransferMock()
     {

@@ -47,11 +47,4 @@ interface CompanyUserRepositoryInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     public function findInitialCompanyUserByCompanyId(int $idCompany): ?CompanyUserTransfer;
-
-    /**
-     * @param int $idCustomer
-     *
-     * @return int
-     */
-    public function countActiveCompanyUsersByIdCustomer(int $idCustomer): int;
 }

@@ -25,7 +25,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class CategoryCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer
+     * @var string
      */
     protected $currentLocale;
 

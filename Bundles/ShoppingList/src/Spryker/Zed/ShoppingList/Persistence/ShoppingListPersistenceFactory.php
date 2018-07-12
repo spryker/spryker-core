@@ -15,10 +15,6 @@ use Orm\Zed\ShoppingList\Persistence\SpyShoppingListPermissionGroupQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListPermissionGroupToPermissionQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListItemMapper;
-use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListItemMapperInterface;
-use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapper;
-use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapperInterface;
 
 /**
  * @method \Spryker\Zed\ShoppingList\ShoppingListConfig getConfig()
@@ -79,21 +75,5 @@ class ShoppingListPersistenceFactory extends AbstractPersistenceFactory
     public function createShoppingListCompanyUserQuery(): SpyShoppingListCompanyUserQuery
     {
         return SpyShoppingListCompanyUserQuery::create();
-    }
-
-    /**
-     * @return \Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapperInterface
-     */
-    public function createShoppingListMapper(): ShoppingListMapperInterface
-    {
-        return new ShoppingListMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListItemMapperInterface
-     */
-    public function createShoppingListItemMapper(): ShoppingListItemMapperInterface
-    {
-        return new ShoppingListItemMapper();
     }
 }

@@ -132,7 +132,7 @@ interface CmsBlockFacadeInterface
      *
      * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplatePathExistsException
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
+     * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
     public function createTemplate($name, $path);
 
@@ -145,7 +145,7 @@ interface CmsBlockFacadeInterface
      *
      * @param string $path
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer|null
+     * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
      */
     public function findTemplate($path);
 

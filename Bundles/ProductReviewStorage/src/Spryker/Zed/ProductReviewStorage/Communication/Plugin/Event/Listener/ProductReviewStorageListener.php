@@ -24,7 +24,7 @@ class ProductReviewStorageListener extends AbstractPlugin implements EventBulkHa
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
      * @param string $eventName
      *
      * @return void

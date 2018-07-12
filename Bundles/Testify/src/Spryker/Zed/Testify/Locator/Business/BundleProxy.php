@@ -58,7 +58,7 @@ class BundleProxy extends KernelBundleProxy
      * @param string $method
      * @param array $arguments
      *
-     * @return object
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Kernel\Persistence\AbstractQueryContainer|\Spryker\Service\Kernel\AbstractService|object
      */
     public function __call($method, $arguments)
     {
@@ -82,10 +82,8 @@ class BundleProxy extends KernelBundleProxy
         $dependencyProvider = $this->getDependencyProvider($factory);
 
         $configurator = $this->getConfigurator();
-        /** @var \Spryker\Zed\Kernel\Container $container */
-        $container = $configurator->getContainer();
         $container = $dependencyProvider->provideBusinessLayerDependencies(
-            $container
+            $configurator->getContainer()
         );
         $container = $this->overwriteForTesting($container);
 
@@ -113,16 +111,13 @@ class BundleProxy extends KernelBundleProxy
     /**
      * @param \Spryker\Zed\Kernel\Business\AbstractFacade $facade
      *
-     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     * @return \Spryker\Zed\Kernel\AbstractFactory|\Spryker\Zed\Kernel\Business\AbstractBusinessFactory
      */
     private function getFactory(AbstractFacade $facade)
     {
         $factoryResolver = new FactoryResolver();
 
-        /** @var \Spryker\Zed\Kernel\Business\AbstractBusinessFactory $factory */
-        $factory = $factoryResolver->resolve($facade);
-
-        return $factory;
+        return $factoryResolver->resolve($facade);
     }
 
     /**
@@ -164,8 +159,7 @@ class BundleProxy extends KernelBundleProxy
         $bundleConfig = new BundleConfigMock();
 
         if ($bundleConfig->hasBundleConfigMock($config)) {
-            /** @var \Spryker\Zed\Kernel\AbstractBundleConfig $config */
-            $config = $bundleConfig->getBundleConfigMock($config);
+            return $bundleConfig->getBundleConfigMock($config);
         }
 
         return $config;

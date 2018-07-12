@@ -23,15 +23,11 @@ use Symfony\Component\Validator\Constraints\Required;
 class CompanyBusinessUnitForm extends AbstractType
 {
     public const OPTION_COMPANY_CHOICES = 'company_choices';
-    public const OPTION_PARENT_CHOICES_VALUES = 'parent_choices_values';
-    public const OPTION_PARENT_CHOICES_ATTRIBUTES = 'parent_choices_attributes';
-
-    public const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
-    public const FIELD_FK_COMPANY = 'fk_company';
-    public const FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT = 'fk_parent_company_business_unit';
-    public const FIELD_NAME = 'name';
-    public const FIELD_IBAN = 'iban';
-    public const FIELD_BIC = 'bic';
+    protected const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
+    protected const FIELD_FK_COMPANY = 'fk_company';
+    protected const FIELD_NAME = 'name';
+    protected const FIELD_IBAN = 'iban';
+    protected const FIELD_BIC = 'bic';
 
     /**
      * @return string
@@ -49,8 +45,6 @@ class CompanyBusinessUnitForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_COMPANY_CHOICES);
-        $resolver->setRequired(static::OPTION_PARENT_CHOICES_VALUES);
-        $resolver->setRequired(static::OPTION_PARENT_CHOICES_ATTRIBUTES);
     }
 
     /**
@@ -64,15 +58,11 @@ class CompanyBusinessUnitForm extends AbstractType
         $this
             ->addCompanyField($builder, $options[static::OPTION_COMPANY_CHOICES])
             ->addIdCompanyBusinessUnitField($builder)
-            ->addParentNameField(
-                $builder,
-                $options[static::OPTION_PARENT_CHOICES_VALUES],
-                $options[static::OPTION_PARENT_CHOICES_ATTRIBUTES]
-            )
             ->addNameField($builder)
             ->addIbanField($builder)
             ->addBicField($builder)
             ->addPluginForms($builder);
+        ;
     }
 
     /**
@@ -83,30 +73,6 @@ class CompanyBusinessUnitForm extends AbstractType
     protected function addIdCompanyBusinessUnitField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $choicesValues [unitKey => idUnit]
-     * @param array[] $choicesAttributes [unitKey => ['data-id_company' => idCompany]
-     *
-     * @return $this
-     */
-    protected function addParentNameField(
-        FormBuilderInterface $builder,
-        array $choicesValues,
-        array $choicesAttributes
-    ): self {
-        $builder->add(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
-            'label' => 'Parent',
-            'placeholder' => 'No parent',
-            'choices' => $choicesValues,
-            'choices_as_values' => true,
-            'required' => false,
-            'choice_attr' => $choicesAttributes,
-        ]);
 
         return $this;
     }
@@ -175,7 +141,7 @@ class CompanyBusinessUnitForm extends AbstractType
         $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
             'label' => 'Company',
             'placeholder' => 'Select one',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
             'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),

@@ -27,9 +27,6 @@ class CreateController extends AbstractController
     public const PARAM_TYPE = 'type';
     public const PARAM_REDIRECT_URL = 'redirect-url';
 
-    public const PREVIOUS_STEP_NAME = 'previous-step';
-    public const NEXT_STEP_NAME = 'next-step';
-
     protected const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
     protected const SUCCESSFUL_MESSAGE_CUSTOMER_CREATED = 'Customer is registered successfully.';
     protected const SUCCESSFUL_MESSAGE_ORDER_CREATED = 'Order is created successfully.';
@@ -44,10 +41,9 @@ class CreateController extends AbstractController
         $quoteTransfer = $this->getInitialQuote($request);
 
         $forms = [];
-        $allFormsAreValid = true;
+        $validForms = true;
         $allFormPlugins = $this->getFactory()->getManualOrderEntryFormPlugins();
-        $filteredFormPlugins = $this->getFactory()->getManualOrderEntryFilteredFormPlugins($allFormPlugins, $request, $quoteTransfer);
-        $skippedFormPlugins = $this->getFactory()->getManualOrderEntrySkippedFormPlugins($allFormPlugins, $request, $quoteTransfer);
+        $filteredFormPlugins = $this->getFactory()->getManualOrderEntryFilteredFormPlugins($request, $quoteTransfer);
 
         foreach ($filteredFormPlugins as $formPlugin) {
             $form = $formPlugin->createForm($request, $quoteTransfer);
@@ -62,13 +58,16 @@ class CreateController extends AbstractController
             if ($form->isValid()) {
                 $quoteTransfer = $formPlugin->handleData($quoteTransfer, $form, $request);
             } else {
-                $allFormsAreValid = false;
+                $validForms = false;
             }
 
             $forms[] = $form;
         }
 
-        if ($this->isReadyToCreateOrder($allFormsAreValid, $allFormPlugins, $filteredFormPlugins, $skippedFormPlugins)) {
+        if ($validForms
+            && count($allFormPlugins)
+            && count($allFormPlugins) == count($filteredFormPlugins)
+        ) {
             $checkoutResponseTransfer = $this->createOrder($quoteTransfer);
 
             if ($checkoutResponseTransfer->getIsSuccess()) {
@@ -85,8 +84,7 @@ class CreateController extends AbstractController
 
         return $this->viewResponse([
             'forms' => $formsView,
-            'previousStepName' => static::PREVIOUS_STEP_NAME,
-            'nextStepName' => static::NEXT_STEP_NAME,
+            'nextStepName' => $this->getFactory()->getConfig()->getNextStepName(),
             'quoteTransfer' => $quoteTransfer,
             'params' => $request->query->all(),
         ]);
@@ -225,7 +223,7 @@ class CreateController extends AbstractController
      *
      * @return void
      */
-    protected function processResponseErrors(CustomerResponseTransfer $customerResponseTransfer): void
+    protected function processResponseErrors(CustomerResponseTransfer $customerResponseTransfer)
     {
         foreach ($customerResponseTransfer->getErrors() as $errorTransfer) {
             $this->addErrorMessage($errorTransfer->getMessage());
@@ -246,22 +244,5 @@ class CreateController extends AbstractController
         }
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param bool $allFormsAreValid
-     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $allFormPlugins
-     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $filteredFormPlugins
-     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $skippedFormPlugins
-     *
-     * @return bool
-     */
-    protected function isReadyToCreateOrder($allFormsAreValid, $allFormPlugins, $filteredFormPlugins, $skippedFormPlugins): bool
-    {
-        $numberProcessedForms = count($filteredFormPlugins) + count($skippedFormPlugins);
-
-        return $allFormsAreValid
-            && !empty($allFormPlugins)
-            && count($allFormPlugins) === $numberProcessedForms;
     }
 }

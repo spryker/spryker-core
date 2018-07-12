@@ -1,9 +1,5 @@
 namespace: ManualOrderEntry
 actor: Tester
-
-include:
-    - tests/SprykerTest/Zed/ManualOrderEntry
-
 paths:
     tests: tests
     log: tests/_output

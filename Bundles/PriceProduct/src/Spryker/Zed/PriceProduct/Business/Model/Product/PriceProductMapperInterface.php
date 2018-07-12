@@ -21,6 +21,13 @@ interface PriceProductMapperInterface
     public function mapProductPriceTransfer(SpyPriceProductStore $priceProductStoreEntity, SpyPriceProduct $priceProductEntity);
 
     /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct[] $priceProductEntities
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function mapPriceProductTransferCollection($priceProductEntities);
+
+    /**
      * @return string
      */
     public function getGrossPriceModeIdentifier();
@@ -29,13 +36,4 @@ interface PriceProductMapperInterface
      * @return string
      */
     public function getNetPriceModeIdentifier();
-
-    /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function mapPriceProductStoreEntitiesToPriceProductTransfers(
-        $priceProductStoreEntities
-    ): array;
 }

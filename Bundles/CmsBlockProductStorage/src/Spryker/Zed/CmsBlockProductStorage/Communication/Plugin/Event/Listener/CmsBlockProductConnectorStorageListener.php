@@ -23,7 +23,7 @@ class CmsBlockProductConnectorStorageListener extends AbstractPlugin implements 
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
      * @param string $eventName
      *
      * @return void

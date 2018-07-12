@@ -193,7 +193,7 @@ class StateUpdaterTest extends StateMachineMocks
         }
 
         if ($stateMachinePersistenceMock === null) {
-            $stateMachinePersistenceMock = $this->createStateMachinePersistenceMock();
+            $stateMachinePersistenceMock = $this->createStateMachinePersitenceMock();
         }
 
         if ($propelConnectionMock === null) {

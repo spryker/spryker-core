@@ -18,16 +18,13 @@ class FactoryResolver extends AbstractClassResolver
      *
      * @throws \Spryker\Service\Kernel\ClassResolver\Factory\FactoryNotFoundException
      *
-     * @return \Spryker\Service\Kernel\AbstractServiceFactory
+     * @return \Spryker\Service\Kernel\AbstractServiceFactory|object
      */
     public function resolve($callerClass)
     {
         $this->setCallerClass($callerClass);
         if ($this->canResolve()) {
-            /** @var \Spryker\Service\Kernel\AbstractServiceFactory $class */
-            $class = $this->getResolvedClassInstance();
-
-            return $class;
+            return $this->getResolvedClassInstance();
         }
 
         throw new FactoryNotFoundException($this->getClassInfo());

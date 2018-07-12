@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesReclamation\Dependency\Service;
 class SalesReclamationToUtilDateTimeServiceBridge implements SalesReclamationToUtilDateTimeServiceInterface
 {
     /**
-     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
+     * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
      */
     private $utilDateTimeService;
 

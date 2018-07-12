@@ -1,8 +1,0 @@
-{
-  "private": true,
-  "name": "spryker-zed-chart-plotly",
-  "version": "1.0.0",
-  "dependencies": {
-    "plotly.js": "^1.33.0"
-  }
-}

@@ -14,12 +14,7 @@ interface PriceProductStoreWriterInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore
      */
-    public function persistPriceProductStore(PriceProductTransfer $priceProductTransfer): PriceProductTransfer;
-
-    /**
-     * @return void
-     */
-    public function deleteOrphanPriceProductStoreEntities(): void;
+    public function persistPriceProductStore(PriceProductTransfer $priceProductTransfer);
 }

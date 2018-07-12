@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Store;
 
-use Generated\Shared\Transfer\ManualOrderTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,7 +29,7 @@ class StoreType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addStoreField(
             $builder,
@@ -44,7 +42,7 @@ class StoreType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(static::OPTION_STORES_ARRAY);
     }
@@ -55,10 +53,10 @@ class StoreType extends AbstractType
      *
      * @return $this
      */
-    protected function addStoreField(FormBuilderInterface $builder, array $storesList): self
+    protected function addStoreField(FormBuilderInterface $builder, array $storesList)
     {
         $builder->add(static::FIELD_STORE, Select2ComboBoxType::class, [
-            'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::STORE_CURRENCY,
+            'property_path' => static::FIELD_STORE,
             'label' => 'Store and Currency',
             'choices' => array_flip($storesList),
             'choices_as_values' => true,
@@ -72,7 +70,7 @@ class StoreType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix(): string
+    public function getBlockPrefix()
     {
         return static::TYPE_NAME;
     }

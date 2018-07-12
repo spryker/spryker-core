@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
@@ -18,6 +19,16 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
+    /**
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeInterface
+     */
+    protected $customerFacade;
+
+    public function __construct()
+    {
+        $this->customerFacade = $this->getFactory()->getCustomerFacade();
+    }
+
     /**
      * @return string
      */
@@ -46,9 +57,11 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
      */
     public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        $quoteTransfer = $this->getFactory()
-            ->createCustomerFormHandler()
-            ->handle($quoteTransfer, $form, $request);
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setIdCustomer($quoteTransfer->getIdCustomer());
+
+        $customerTransfer = $this->customerFacade->findCustomerById($customerTransfer);
+        $quoteTransfer->setCustomer($customerTransfer);
 
         return $quoteTransfer;
     }
@@ -60,21 +73,10 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
      */
     public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
     {
-        if ($quoteTransfer->getCustomer() && $quoteTransfer->getCustomer()->getIdCustomer()) {
+        if ($quoteTransfer->getIdCustomer()) {
             return true;
         }
 
-        return false;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isFormSkipped(Request $request, QuoteTransfer $quoteTransfer): bool
-    {
         return false;
     }
 }

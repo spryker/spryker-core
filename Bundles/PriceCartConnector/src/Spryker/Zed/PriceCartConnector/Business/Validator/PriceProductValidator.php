@@ -60,10 +60,6 @@ class PriceProductValidator implements PriceProductValidatorInterface
                 $currencyTransfer->getCode()
             );
 
-            if ($this->isPriceProductDimensionEnabled($priceProductFilterTransfer)) {
-                $priceProductFilterTransfer->setQuote($cartChangeTransfer->getQuote());
-            }
-
             if ($this->priceProductFacade->hasValidPriceFor($priceProductFilterTransfer)) {
                 continue;
             }
@@ -115,15 +111,5 @@ class PriceProductValidator implements PriceProductValidatorInterface
             return $this->priceFacade->getDefaultPriceMode();
         }
         return $cartChangeTransfer->getQuote()->getPriceMode();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
-     *
-     * @return bool
-     */
-    protected function isPriceProductDimensionEnabled(PriceProductFilterTransfer $priceProductFilterTransfer): bool
-    {
-        return property_exists($priceProductFilterTransfer, 'quote');
     }
 }

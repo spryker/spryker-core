@@ -15,7 +15,7 @@ interface ProductStockHelperInterface
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Orm\Zed\Stock\Persistence\SpyStock[] $stockTypeEntities
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function addMissingStockTypes(ProductConcreteTransfer $productConcreteTransfer, array $stockTypeEntities);
 }

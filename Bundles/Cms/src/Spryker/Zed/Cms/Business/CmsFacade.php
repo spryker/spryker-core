@@ -566,11 +566,11 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @param int $idCmsPage
      *
-     * @return void
+     * @return bool
      */
     public function revert($idCmsPage)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createVersionRollback()
             ->revert($idCmsPage);
     }

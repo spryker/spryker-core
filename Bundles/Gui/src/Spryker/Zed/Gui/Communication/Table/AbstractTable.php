@@ -973,7 +973,6 @@ abstract class AbstractTable
                 $utilSanitizeService = new UtilSanitizeService();
                 $url = $utilSanitizeService->escapeHtml($button['url']);
             } else {
-                /** @var \Spryker\Service\UtilText\Model\Url\Url $buttonUrl */
                 $buttonUrl = $button['url'];
                 $url = $buttonUrl->buildEscaped();
             }

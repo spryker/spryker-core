@@ -10,7 +10,7 @@
         {% block widget_content %}
 
             {% if forms|length %}
-            {{ form_start(forms[0], {'attr': {'class': 'ManualOrderEntryForm'}}) }}
+            {{ form_start(forms[0]) }}
 
                 {% for form in forms %}
 
@@ -34,7 +34,7 @@
 
                 {% endfor %}
 
-                {% include '@ManualOrderEntryGui/create/partials/submit-buttons.twig' with {'firstForm': forms|first, 'lastForm': forms|last} %}
+                {% include '@ManualOrderEntryGui/create/partials/submit-buttons.twig' with {'form': forms|last, 'nextStepName': nextStepName} %}
 
             {{ form_end(forms[0]) }}
             {% endif %}

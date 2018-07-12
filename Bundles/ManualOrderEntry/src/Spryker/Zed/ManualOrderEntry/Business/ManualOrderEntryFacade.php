@@ -18,7 +18,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ManualOrderEntryFacade extends AbstractFacade implements ManualOrderEntryFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Returns the order source for the given order source id.
      *
      * @api
      *
@@ -34,7 +35,8 @@ class ManualOrderEntryFacade extends AbstractFacade implements ManualOrderEntryF
     }
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Returns the order source for the given order source id.
      *
      * @api
      *
@@ -44,11 +46,12 @@ class ManualOrderEntryFacade extends AbstractFacade implements ManualOrderEntryF
     {
         return $this->getFactory()
             ->createOrderSourceReader()
-            ->findAllOrderSources();
+            ->getAllOrderSources();
     }
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     *   - Adds OrderSource to SpySalesOrderEntityTransfer
      *
      * @api
      *

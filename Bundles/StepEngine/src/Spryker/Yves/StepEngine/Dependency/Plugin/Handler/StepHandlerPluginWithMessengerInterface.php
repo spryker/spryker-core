@@ -17,9 +17,9 @@ interface StepHandlerPluginWithMessengerInterface extends StepHandlerPluginInter
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function addToDataClass(Request $request, AbstractTransfer $dataTransfer);
 

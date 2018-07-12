@@ -24,10 +24,7 @@ class EntityManagerResolver extends AbstractClassResolver
     {
         $this->setCallerClass($callerClass);
         if ($this->canResolve()) {
-            /** @var \Spryker\Zed\Kernel\Persistence\AbstractRepository $class */
-            $class = $this->getResolvedClassInstance();
-
-            return $class;
+            return $this->getResolvedClassInstance();
         }
 
         throw new EntityManagerNotFoundException($this->getClassInfo());

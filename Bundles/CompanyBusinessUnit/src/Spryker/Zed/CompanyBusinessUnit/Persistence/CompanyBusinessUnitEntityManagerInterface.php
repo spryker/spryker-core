@@ -26,11 +26,4 @@ interface CompanyBusinessUnitEntityManagerInterface
      * @return void
      */
     public function deleteCompanyBusinessUnitById(int $idCompanyBusinessUnit): void;
-
-    /**
-     * @param int $idCompanyBusinessUnit
-     *
-     * @return void
-     */
-    public function clearParentBusinessUnit(int $idCompanyBusinessUnit): void;
 }

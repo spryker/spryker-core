@@ -12,7 +12,7 @@ interface NewsletterToUtilValidateServiceInterface
     /**
      * @param string $email
      *
-     * @return bool
+     * @return string
      */
     public function isEmailFormatValid($email);
 }

@@ -16,12 +16,12 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 class DiscountAmountAggregator implements CalculatorInterface
 {
     /**
-     * @var int[]
+     * @var array|\Generated\Shared\Transfer\DiscountTransfer[]
      */
     protected $voucherDiscountTotals = [];
 
     /**
-     * @var int[]
+     * @var array|\Generated\Shared\Transfer\DiscountTransfer[]
      */
     protected $cartRuleDiscountTotals = [];
 
@@ -162,7 +162,7 @@ class DiscountAmountAggregator implements CalculatorInterface
             if (isset($appliedDiscounts[$idDiscount])) {
                 continue;
             }
-
+            
             $discountAmount = $calculatedDiscountTransfer->getUnitAmount();
             $itemUnitDiscountAmountAggregation += $discountAmount;
             $appliedDiscounts[$idDiscount] = true;

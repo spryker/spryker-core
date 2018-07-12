@@ -22,12 +22,12 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
 {
     /**
-     * @var int[]
+     * @var array|\Generated\Shared\Transfer\DiscountTransfer[]
      */
     protected $voucherDiscountTotals = [];
 
     /**
-     * @var int[]
+     * @var array|\Generated\Shared\Transfer\DiscountTransfer[]
      */
     protected $cartRuleDiscountTotals = [];
 

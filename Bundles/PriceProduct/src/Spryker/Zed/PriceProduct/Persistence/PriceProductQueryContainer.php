@@ -11,9 +11,6 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use PDO;
@@ -34,7 +31,7 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery
      */
-    public function queryPriceType($name): SpyPriceTypeQuery
+    public function queryPriceType($name)
     {
         return $this->getFactory()->createPriceTypeQuery()->filterByName($name);
     }
@@ -44,7 +41,7 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery
      */
-    public function queryAllPriceTypes(): SpyPriceTypeQuery
+    public function queryAllPriceTypes()
     {
         return $this->getFactory()->createPriceTypeQuery();
     }
@@ -54,7 +51,7 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryAllPriceProducts(): SpyPriceProductQuery
+    public function queryAllPriceProducts()
     {
         return $this->getFactory()->createPriceProductQuery();
     }
@@ -67,10 +64,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceEntityForProductAbstract(
-        $sku,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): SpyPriceProductQuery {
+    public function queryPriceEntityForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
+    {
         return $this->getFactory()
             ->createPriceProductQuery()
             ->usePriceTypeQuery()
@@ -102,14 +97,12 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceEntityForProductConcrete(
-        $sku,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): SpyPriceProductQuery {
+    public function queryPriceEntityForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
+    {
         return $this->getFactory()
             ->createPriceProductQuery()
             ->usePriceTypeQuery()
-                ->filterByName($priceProductCriteriaTransfer->getPriceType())
+            ->filterByName($priceProductCriteriaTransfer->getPriceType())
             ->endUse()
             ->addJoin([
                 SpyPriceProductTableMap::COL_FK_PRODUCT,
@@ -140,7 +133,7 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     public function queryPriceEntityForProductAbstractById(
         $idAbstractProduct,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): SpyPriceProductStoreQuery {
+    ) {
         return $this->getFactory()
             ->createPriceProductStoreQuery()
             ->addJoin([
@@ -171,7 +164,7 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
      */
-    public function queryPriceProductStoreByProductCurrencyStore($idPriceProduct, $idCurrency, $idStore): SpyPriceProductStoreQuery
+    public function queryPriceProductStoreByProductCurrencyStore($idPriceProduct, $idCurrency, $idStore)
     {
         return $this->getFactory()
             ->createPriceProductStoreQuery()
@@ -183,33 +176,18 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     /**
      * @api
      *
-     * @param int $idPriceProductStore
-     *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
-     */
-    public function queryPriceProductStoreById($idPriceProductStore): SpyPriceProductStoreQuery
-    {
-        return $this->getFactory()
-            ->createPriceProductStoreQuery()
-            ->filterByIdPriceProductStore($idPriceProductStore);
-    }
-
-    /**
-     * @api
-     *
      * @param string $sku
      * @param int $idStore
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPricesForProductAbstractBySkuForStore($sku, $idStore): SpyPriceProductQuery
+    public function queryPricesForProductAbstractBySkuForStore($sku, $idStore)
     {
         return $this->getFactory()
             ->createPriceProductQuery()
             ->filterByPrice(null, Criteria::ISNOTNULL)
             ->joinWithPriceType()
             ->joinWithPriceProductStore()
-            ->joinWithPriceProductDefault()
             ->where(SpyPriceProductStoreTableMap::COL_FK_STORE . ' = ?', $idStore)
             ->useSpyProductAbstractQuery()
                 ->filterBySku($sku)
@@ -223,7 +201,7 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPricesForProductAbstractById($idProductAbstract): SpyPriceProductQuery
+    public function queryPricesForProductAbstractById($idProductAbstract)
     {
         return $this->getFactory()
             ->createPriceProductQuery()
@@ -238,7 +216,7 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
 
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceProduct(): SpyPriceProductQuery
+    public function queryPriceProduct()
     {
         return $this->getFactory()->createPriceProductQuery();
     }
@@ -251,14 +229,13 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPricesForProductConcreteBySkuForStore($sku, $idStore): SpyPriceProductQuery
+    public function queryPricesForProductConcreteBySkuForStore($sku, $idStore)
     {
         return $this->getFactory()
             ->createPriceProductQuery()
             ->filterByPrice(null, Criteria::ISNOTNULL)
             ->joinWithPriceType()
             ->joinWithPriceProductStore()
-            ->joinWithPriceProductDefault()
             ->where(SpyPriceProductStoreTableMap::COL_FK_STORE . ' = ?', $idStore)
             ->useProductQuery()
                 ->filterBySku($sku)
@@ -272,7 +249,7 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPricesForProductConcreteById($idProductConcrete): SpyPriceProductQuery
+    public function queryPricesForProductConcreteById($idProductConcrete)
     {
         return $this->getFactory()
             ->createPriceProductQuery()
@@ -288,7 +265,7 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceProductEntity($idPriceProduct): SpyPriceProductQuery
+    public function queryPriceProductEntity($idPriceProduct)
     {
         return $this->getFactory()
             ->createPriceProductQuery()
@@ -303,7 +280,7 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceProductForConcreteProductBy($idProductConcrete, $idPriceType): SpyPriceProductQuery
+    public function queryPriceProductForConcreteProductBy($idProductConcrete, $idPriceType)
     {
         return $this->getFactory()
             ->createPriceProductQuery()
@@ -320,7 +297,7 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPriceProductForAbstractProduct($idProductAbstract, $idPriceType): SpyPriceProductQuery
+    public function queryPriceProductForAbstractProduct($idProductAbstract, $idPriceType)
     {
         return $this->getFactory()
             ->createPriceProductQuery()

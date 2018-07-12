@@ -59,7 +59,7 @@ class TimeoutTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testDropOldTimeoutShouldRemoveExpiredTimeoutsFromPersistence()
+    public function testDropOldTimeoutShouldRemoveExpiredTimeoutsFromPersitence()
     {
         $stateMachinePersistenceMock = $this->createPersistenceMock();
 

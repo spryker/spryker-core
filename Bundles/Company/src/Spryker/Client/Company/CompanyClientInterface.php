@@ -20,7 +20,7 @@ interface CompanyClientInterface
      *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function createCompany(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
 

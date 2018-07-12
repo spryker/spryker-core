@@ -8,8 +8,6 @@
 namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 
 interface PriceProductAbstractReaderInterface
 {
@@ -23,11 +21,10 @@ interface PriceProductAbstractReaderInterface
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesBySkuForCurrentStore(string $sku, PriceProductDimensionTransfer $priceProductDimensionTransfer): array;
+    public function findProductAbstractPricesBySkuForCurrentStore($sku);
 
     /**
      * @param string $sku
@@ -40,17 +37,16 @@ interface PriceProductAbstractReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     * @return array|null
      */
-    public function findPriceForProductAbstract(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer;
+    public function findPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer);
 
     /**
      * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesById(int $idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array;
+    public function findProductAbstractPricesById($idProductAbstract);
 
     /**
      * @param string $sku

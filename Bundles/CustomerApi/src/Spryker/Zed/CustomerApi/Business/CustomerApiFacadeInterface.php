@@ -50,7 +50,7 @@ interface CustomerApiFacadeInterface
      * @param int $idCustomer
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     * @return void
      */
     public function updateCustomer($idCustomer, ApiDataTransfer $apiDataTransfer);
 
@@ -64,7 +64,7 @@ interface CustomerApiFacadeInterface
      *
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     * @return void
      */
     public function removeCustomer($idCustomer);
 

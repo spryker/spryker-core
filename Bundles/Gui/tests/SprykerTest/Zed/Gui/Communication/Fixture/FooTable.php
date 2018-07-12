@@ -19,7 +19,6 @@ class FooTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        return new TableConfiguration();
     }
 
     /**
@@ -29,7 +28,6 @@ class FooTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        return [];
     }
 
     /**

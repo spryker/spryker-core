@@ -8,8 +8,7 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ManualOrderTransfer;
+use Generated\Shared\Transfer\ManualOrderProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductCollectionType;
 
@@ -20,19 +19,15 @@ class ProductCollectionDataProvider implements FormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData($quoteTransfer)
     {
-        if ($quoteTransfer->getManualOrder() === null) {
-            $quoteTransfer->setManualOrder(new ManualOrderTransfer());
-        }
-
-        $products = new ArrayObject();
+        $manualOrderProducts = new ArrayObject();
         for ($i = 0; $i < static::NUMBER_PRODUCT_ROWS; $i++) {
-            $products->append(new ItemTransfer());
+            $manualOrderProducts->append(new ManualOrderProductTransfer());
         }
-        $quoteTransfer->getManualOrder()->setProducts($products);
+        $quoteTransfer->setManualOrderProducts($manualOrderProducts);
 
         return $quoteTransfer;
     }
@@ -42,11 +37,11 @@ class ProductCollectionDataProvider implements FormDataProviderInterface
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions($quoteTransfer)
     {
         return [
             'data_class' => QuoteTransfer::class,
-            ProductCollectionType::OPTION_PRODUCT_CLASS_COLLECTION => ItemTransfer::class,
+            ProductCollectionType::OPTION_MANUAL_ORDER_PRODUCT_CLASS_COLLECTION => ManualOrderProductTransfer::class,
             'allow_extra_fields' => true,
             'csrf_protection' => false,
         ];

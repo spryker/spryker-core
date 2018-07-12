@@ -23,7 +23,7 @@ class OfferGuiToUtilDateTimeServiceBridge implements OfferGuiToUtilDateTimeServi
     }
 
     /**
-     * @param \DateTime|string $date
+     * @param string $date
      *
      * @return string
      */
@@ -33,7 +33,7 @@ class OfferGuiToUtilDateTimeServiceBridge implements OfferGuiToUtilDateTimeServi
     }
 
     /**
-     * @param \DateTime|string $date
+     * @param string $date
      *
      * @return string
      */

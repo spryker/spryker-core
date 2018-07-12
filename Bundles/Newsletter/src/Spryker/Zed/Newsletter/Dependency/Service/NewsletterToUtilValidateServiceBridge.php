@@ -25,7 +25,7 @@ class NewsletterToUtilValidateServiceBridge implements NewsletterToUtilValidateS
     /**
      * @param string $email
      *
-     * @return bool
+     * @return string
      */
     public function isEmailFormatValid($email)
     {

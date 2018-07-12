@@ -22,11 +22,7 @@ class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
         CompanyBusinessUnitTransfer $businessUnitTransfer,
         SpyCompanyBusinessUnitEntityTransfer $businessUnitEntityTransfer
     ): SpyCompanyBusinessUnitEntityTransfer {
-        $businessUnitEntityTransfer->fromArray($businessUnitTransfer->modifiedToArray(), true);
-        $businessUnitEntityTransfer->setCompany(null);
-        $businessUnitEntityTransfer->setParentCompanyBusinessUnit(null);
-
-        return $businessUnitEntityTransfer;
+        return $businessUnitEntityTransfer->fromArray($businessUnitTransfer->modifiedToArray(), true);
     }
 
     /**
@@ -39,11 +35,6 @@ class CompanyBusinessUnitMapper implements CompanyBusinessUnitMapperInterface
         SpyCompanyBusinessUnitEntityTransfer $businessUnitEntityTransfer,
         CompanyBusinessUnitTransfer $businessUnitTransfer
     ): CompanyBusinessUnitTransfer {
-        $businessUnitTransfer->fromArray($businessUnitEntityTransfer->toArray(), true);
-        if (!$businessUnitTransfer->getFkParentCompanyBusinessUnit()) {
-            $businessUnitTransfer->setParentCompanyBusinessUnit(null);
-        }
-
-        return $businessUnitTransfer;
+        return $businessUnitTransfer->fromArray($businessUnitEntityTransfer->toArray(), true);
     }
 }

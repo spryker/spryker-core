@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product;
 
-use Generated\Shared\Transfer\ManualOrderTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,7 +19,7 @@ class ItemCollectionType extends AbstractType
 {
     public const TYPE_NAME = 'items';
 
-    public const FIELD_ITEMS = 'items';
+    public const FIELD_ITEMS = 'manualOrderItems';
 
     public const OPTION_ITEM_CLASS_COLLECTION = 'item_class_collection';
     public const OPTION_ISO_CODE = 'isoCode';
@@ -31,7 +29,7 @@ class ItemCollectionType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(static::OPTION_ITEM_CLASS_COLLECTION);
         $resolver->setDefined(static::OPTION_ISO_CODE);
@@ -43,7 +41,7 @@ class ItemCollectionType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
             ->addItemsField($builder, $options);
@@ -55,10 +53,9 @@ class ItemCollectionType extends AbstractType
      *
      * @return $this
      */
-    protected function addItemsField(FormBuilderInterface $builder, array $options): self
+    protected function addItemsField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_ITEMS, CollectionType::class, [
-            'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::ITEMS,
             'entry_type' => ItemType::class,
             'label' => 'Added Items',
             'required' => false,
@@ -76,7 +73,7 @@ class ItemCollectionType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix(): string
+    public function getBlockPrefix()
     {
         return static::TYPE_NAME;
     }

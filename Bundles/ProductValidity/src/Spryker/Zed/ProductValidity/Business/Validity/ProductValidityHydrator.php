@@ -15,9 +15,7 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
 {
     public const VALIDITY_DATE_TIME_FORMAT = 'Y-m-d G:i';
 
-    /**
-     * @var \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface
-     */
+    /** @var \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface */
     protected $productValidityQueryContainer;
 
     /**

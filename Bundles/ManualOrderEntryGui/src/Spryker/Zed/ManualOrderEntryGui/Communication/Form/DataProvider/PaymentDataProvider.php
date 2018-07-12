@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Payment\PaymentType;
 
 class PaymentDataProvider implements FormDataProviderInterface
@@ -30,7 +29,7 @@ class PaymentDataProvider implements FormDataProviderInterface
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions($quoteTransfer)
     {
         $options = [];
         foreach ($this->subFormPlugins as $subFormPlugin) {
@@ -52,7 +51,7 @@ class PaymentDataProvider implements FormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData($quoteTransfer)
     {
         foreach ($this->subFormPlugins as $subFormPlugin) {
             $quoteTransfer = $subFormPlugin->getData($quoteTransfer);

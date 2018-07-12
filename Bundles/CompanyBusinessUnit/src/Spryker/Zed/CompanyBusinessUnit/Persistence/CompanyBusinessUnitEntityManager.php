@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanyBusinessUnit\Persistence;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer;
-use Spryker\Zed\CompanyBusinessUnit\Persistence\Mapper\CompanyBusinessUnitMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -25,16 +24,20 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
     public function saveCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitTransfer {
-        $entityTransfer = $this->getMapper()->mapBusinessUnitTransferToEntityTransfer(
-            $companyBusinessUnitTransfer,
-            new SpyCompanyBusinessUnitEntityTransfer()
-        );
+        $entityTransfer = $this->getFactory()
+            ->createCompanyBusinessUnitMapper()
+            ->mapBusinessUnitTransferToEntityTransfer(
+                $companyBusinessUnitTransfer,
+                new SpyCompanyBusinessUnitEntityTransfer()
+            );
         $entityTransfer = $this->save($entityTransfer);
 
-        return $this->getMapper()->mapEntityTransferToBusinessUnitTransfer(
-            $entityTransfer,
-            $companyBusinessUnitTransfer
-        );
+        return $this->getFactory()
+            ->createCompanyBusinessUnitMapper()
+            ->mapEntityTransferToBusinessUnitTransfer(
+                $entityTransfer,
+                $companyBusinessUnitTransfer
+            );
     }
 
     /**
@@ -48,26 +51,5 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
             ->createCompanyBusinessUnitQuery()
             ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit)
             ->delete();
-    }
-
-    /**
-     * @param int $idCompanyBusinessUnit
-     *
-     * @return void
-     */
-    public function clearParentBusinessUnit(int $idCompanyBusinessUnit): void
-    {
-        $this->getFactory()
-            ->createCompanyBusinessUnitQuery()
-            ->filterByFkParentCompanyBusinessUnit($idCompanyBusinessUnit)
-            ->update(['FkParentCompanyBusinessUnit' => null]);
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyBusinessUnit\Persistence\Mapper\CompanyBusinessUnitMapperInterface
-     */
-    protected function getMapper(): CompanyBusinessUnitMapperInterface
-    {
-        return $this->getFactory()->createCompanyBusinessUnitMapper();
     }
 }

@@ -105,7 +105,7 @@ class CreditCardSubForm extends AbstractSubForm
             ChoiceType::class,
             [
                 'choices' => ['Visa' => 'Visa', 'Master Card' => 'Master Card'],
-                'label' => 'dummyPaymentCreditCard.card_type',
+                'label' => false,
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
@@ -130,7 +130,7 @@ class CreditCardSubForm extends AbstractSubForm
             self::FIELD_CARD_NUMBER,
             TextType::class,
             [
-                'label' => 'dummyPaymentCreditCard.card_number',
+                'label' => false,
                 'required' => true,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
@@ -152,7 +152,7 @@ class CreditCardSubForm extends AbstractSubForm
             self::FIELD_NAME_ON_CARD,
             TextType::class,
             [
-                'label' => 'dummyPaymentCreditCard.name_on_card',
+                'label' => false,
                 'required' => true,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
@@ -175,7 +175,7 @@ class CreditCardSubForm extends AbstractSubForm
             self::FIELD_CARD_EXPIRES_MONTH,
             ChoiceType::class,
             [
-                'label' => 'dummyPaymentCreditCard.card_expires',
+                'label' => false,
                 'choices' => array_flip($options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_MONTH]),
                 'choices_as_values' => true,
                 'required' => true,
@@ -227,7 +227,7 @@ class CreditCardSubForm extends AbstractSubForm
             self::FIELD_CARD_SECURITY_CODE,
             TextType::class,
             [
-                'label' => 'dummyPaymentCreditCard.card_security_code',
+                'label' => false,
                 'required' => true,
                 'constraints' => [
                     $this->createNotBlankConstraint(),

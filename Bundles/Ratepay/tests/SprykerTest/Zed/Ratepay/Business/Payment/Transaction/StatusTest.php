@@ -29,7 +29,7 @@ use Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface;
 class StatusTest extends Unit
 {
     /**
-     * @return void
+     * @return bool
      */
     public function testPaymentConfirmed()
     {
@@ -50,7 +50,7 @@ class StatusTest extends Unit
     }
 
     /**
-     * @return void
+     * @return bool
      */
     public function testDeliveryConfirmed()
     {
@@ -71,7 +71,7 @@ class StatusTest extends Unit
     }
 
     /**
-     * @return void
+     * @return bool
      */
     public function testCancellationConfirmed()
     {
@@ -92,7 +92,7 @@ class StatusTest extends Unit
     }
 
     /**
-     * @return void
+     * @return bool
      */
     public function testRefundApproved()
     {

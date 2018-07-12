@@ -10,14 +10,14 @@ namespace Spryker\Zed\OfferGui\Dependency\Service;
 interface OfferGuiToUtilDateTimeServiceInterface
 {
     /**
-     * @param \DateTime|string $date
+     * @param string $date
      *
      * @return string
      */
     public function formatDateTime($date): string;
 
     /**
-     * @param \DateTime|string $date
+     * @param string $date
      *
      * @return string
      */

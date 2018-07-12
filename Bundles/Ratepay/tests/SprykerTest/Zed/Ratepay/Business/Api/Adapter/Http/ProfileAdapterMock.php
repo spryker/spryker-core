@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Ratepay\Business\Api\Adapter\Http;
 class ProfileAdapterMock extends AbstractAdapterMock
 {
     /**
-     * @return string
+     * @return array
      */
     public function getSuccessResponse()
     {

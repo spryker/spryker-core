@@ -20,7 +20,7 @@ class UtilDateTimeService extends AbstractService implements UtilDateTimeService
      *
      * @api
      *
-     * @param \DateTime|string $date
+     * @param string $date
      *
      * @return string
      */
@@ -35,7 +35,7 @@ class UtilDateTimeService extends AbstractService implements UtilDateTimeService
      *
      * @api
      *
-     * @param \DateTime|string $date
+     * @param string $date
      *
      * @return string
      */
@@ -50,7 +50,7 @@ class UtilDateTimeService extends AbstractService implements UtilDateTimeService
      *
      * @api
      *
-     * @param \DateTime|string $date
+     * @param string $date
      *
      * @return string
      */

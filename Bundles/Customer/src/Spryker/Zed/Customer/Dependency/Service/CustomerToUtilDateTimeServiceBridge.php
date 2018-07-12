@@ -23,7 +23,7 @@ class CustomerToUtilDateTimeServiceBridge implements CustomerToUtilDateTimeServi
     }
 
     /**
-     * @param \DateTime|string $date
+     * @param string $date
      *
      * @return string
      */

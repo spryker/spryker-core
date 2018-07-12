@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher;
 
-use Generated\Shared\Transfer\ManualOrderTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,14 +19,14 @@ class VoucherType extends AbstractType
 {
     public const TYPE_NAME = 'voucher';
 
-    public const FIELD_VOUCHER_CODE = 'voucherCode';
+    public const FIELD_VOUCHER_CODE = 'voucher_code';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
     }
 
@@ -38,7 +36,7 @@ class VoucherType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
             ->addVoucherCodeField($builder, $options);
@@ -50,10 +48,9 @@ class VoucherType extends AbstractType
      *
      * @return $this
      */
-    protected function addVoucherCodeField(FormBuilderInterface $builder, array $options): self
+    protected function addVoucherCodeField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_VOUCHER_CODE, TextType::class, [
-            'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::VOUCHER_CODE,
             'label' => 'Add Voucher',
             'required' => false,
         ]);
@@ -64,7 +61,7 @@ class VoucherType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix(): string
+    public function getBlockPrefix()
     {
         return static::TYPE_NAME;
     }

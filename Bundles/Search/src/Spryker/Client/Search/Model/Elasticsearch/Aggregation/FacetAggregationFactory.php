@@ -9,7 +9,6 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Search\Exception\MissingFacetAggregationException;
-use Spryker\Client\Search\SearchConfig as ClientSearchConfig;
 use Spryker\Shared\Search\IndexMapInterface;
 use Spryker\Shared\Search\SearchConfig;
 
@@ -26,20 +25,13 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
     protected $aggregationBuilder;
 
     /**
-     * @var \Spryker\Client\Search\SearchConfig
-     */
-    protected $searchConfig;
-
-    /**
      * @param \Spryker\Shared\Search\IndexMapInterface $indexMap
      * @param \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface $aggregationBuilder
-     * @param \Spryker\Client\Search\SearchConfig $searchConfig
      */
-    public function __construct(IndexMapInterface $indexMap, AggregationBuilderInterface $aggregationBuilder, ClientSearchConfig $searchConfig)
+    public function __construct(IndexMapInterface $indexMap, AggregationBuilderInterface $aggregationBuilder)
     {
         $this->indexMap = $indexMap;
         $this->aggregationBuilder = $aggregationBuilder;
-        $this->searchConfig = $searchConfig;
     }
 
     /**
@@ -125,11 +117,7 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
      */
     protected function createStringFacetAggregation(FacetConfigTransfer $facetConfigTransfer)
     {
-        return new StringFacetAggregation(
-            $facetConfigTransfer,
-            $this->aggregationBuilder,
-            $this->searchConfig
-        );
+        return new StringFacetAggregation($facetConfigTransfer, $this->aggregationBuilder);
     }
 
     /**
@@ -139,6 +127,6 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
      */
     protected function createNumericFacetAggregation(FacetConfigTransfer $facetConfigTransfer)
     {
-        return new NumericFacetAggregation($facetConfigTransfer, $this->aggregationBuilder, $this->searchConfig);
+        return new NumericFacetAggregation($facetConfigTransfer, $this->aggregationBuilder);
     }
 }
