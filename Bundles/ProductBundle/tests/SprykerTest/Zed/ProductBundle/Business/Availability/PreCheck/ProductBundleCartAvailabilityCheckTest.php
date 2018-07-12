@@ -14,6 +14,7 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInter
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
 /**
  * Auto-generated group annotations
@@ -131,8 +132,10 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
             $storeFacadeMock = $this->buildStoreFacadeMock();
         }
 
+        $productBundleConfig = $this->createProductBundleConfig();
+
         $productBundleCartAvailabilityCheckMock = $this->getMockBuilder(ProductBundleCartAvailabilityCheck::class)
-            ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $availabilityQueryContainerMock, $storeFacadeMock])
+            ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $availabilityQueryContainerMock, $storeFacadeMock, $productBundleConfig])
             ->setMethods(['findBundledProducts', 'findAvailabilityEntityBySku'])
             ->getMock();
 
@@ -145,5 +148,13 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     protected function createStoreFacadeMock()
     {
         return $this->getMockBuilder(ProductBundleToStoreFacadeInterface::class)->getMock();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\ProductBundleConfig
+     */
+    protected function createProductBundleConfig(): ProductBundleConfig
+    {
+        return new ProductBundleConfig();
     }
 }
