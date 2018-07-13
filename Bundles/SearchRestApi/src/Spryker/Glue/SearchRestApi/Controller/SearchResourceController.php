@@ -6,7 +6,7 @@
 
 namespace Spryker\Glue\SearchRestApi\Controller;
 
-use Spryker\Glue\GlueApplication\Controller\AbstractRestController;
+use Spryker\Glue\GlueApplication\Rest\Controller\AbstractRestController;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 /**
