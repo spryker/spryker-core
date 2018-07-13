@@ -195,7 +195,6 @@ class ProductPackagingUnitOrderHydrator implements ProductPackagingUnitOrderHydr
     {
         return (new ProductPackagingLeadProductTransfer())
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
-            ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
-            ->setSku($productConcreteTransfer->getSku());
+            ->setProduct($productConcreteTransfer);
     }
 }
