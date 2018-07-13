@@ -14,7 +14,7 @@ use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
  */
-class ProductPackagingUnitAvailabilityHandlerPlugin extends AbstractPlugin implements StockUpdateHandlerPluginInterface
+class LeadProductStockUpdateHandlerPlugin extends AbstractPlugin implements StockUpdateHandlerPluginInterface
 {
     /**
      * {@inheritdoc}
