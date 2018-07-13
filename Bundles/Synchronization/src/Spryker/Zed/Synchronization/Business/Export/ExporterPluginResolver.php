@@ -65,19 +65,14 @@ class ExporterPluginResolver
     protected function getResolvedPluginsByResources(array $resources): array
     {
         $this->mapPluginsByResourceName();
-        $effectivePlugins = $this->getEffectivePlugins($resources);
+        $effectivePluginsByResource = $this->getEffectivePlugins($resources);
         $pluginsPerExporter = [
             static::REPOSITORY_SYNCHRONIZATION_PLUGINS => [],
             static::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS => [],
         ];
 
-        foreach ($effectivePlugins as $effectivePlugin) {
-            if ($effectivePlugin instanceof SynchronizationDataRepositoryPluginInterface) {
-                $pluginsPerExporter[static::REPOSITORY_SYNCHRONIZATION_PLUGINS][] = $effectivePlugin;
-            }
-            if ($effectivePlugin instanceof SynchronizationDataQueryContainerPluginInterface) {
-                $pluginsPerExporter[static::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS][] = $effectivePlugin;
-            }
+        foreach ($effectivePluginsByResource as $effectivePlugins) {
+            $pluginsPerExporter = $this->extractEffectivePlugins($effectivePlugins, $pluginsPerExporter);
         }
 
         return $pluginsPerExporter;
@@ -111,9 +106,29 @@ class ExporterPluginResolver
     {
         $mappedDataPlugins = [];
         foreach ($this->synchronizationDataPlugins as $plugin) {
-            $mappedDataPlugins[$plugin->getResourceName()] = $plugin;
+            $mappedDataPlugins[$plugin->getResourceName()][] = $plugin;
         }
 
         $this->synchronizationDataPlugins = $mappedDataPlugins;
+    }
+
+    /**
+     * @param $effectivePlugins
+     * @param $pluginsPerExporter
+     *
+     * @return mixed
+     */
+    protected function extractEffectivePlugins($effectivePlugins, $pluginsPerExporter)
+    {
+        foreach ($effectivePlugins as $effectivePlugin) {
+            if ($effectivePlugin instanceof SynchronizationDataRepositoryPluginInterface) {
+                $pluginsPerExporter[static::REPOSITORY_SYNCHRONIZATION_PLUGINS][] = $effectivePlugin;
+            }
+            if ($effectivePlugin instanceof SynchronizationDataQueryContainerPluginInterface) {
+                $pluginsPerExporter[static::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS][] = $effectivePlugin;
+            }
+        }
+
+        return $pluginsPerExporter;
     }
 }

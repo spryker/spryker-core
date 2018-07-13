@@ -28,7 +28,7 @@ class CategoryPageSynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function getResourceName(): string
     {
-        return CategoryPageSearchConstants::CATEGORY_SYNC_SEARCH_QUEUE;
+        return CategoryPageSearchConstants::CATEGORY_NODE_RESOURCE_NAME;
     }
 
     /**
