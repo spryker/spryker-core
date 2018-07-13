@@ -56,7 +56,7 @@ class CustomerGroupDecisionRule implements CustomerGroupDecisionRuleInterface
         $customerTransfer = $quoteTransfer->getCustomer();
 
         $customerGroupNamesTransfer = $this->customerGroupFacade
-            ->findCustomerGroupNamesByIdCustomer($customerTransfer->getIdCustomer());
+            ->getCustomerGroupNamesByIdCustomer($customerTransfer->getIdCustomer());
 
         $customerGroupNamesTransfer->requireCustomerGroupNames();
 

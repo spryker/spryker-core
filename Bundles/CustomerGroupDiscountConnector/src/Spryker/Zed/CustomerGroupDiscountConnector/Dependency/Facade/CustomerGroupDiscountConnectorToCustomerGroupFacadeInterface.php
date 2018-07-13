@@ -14,5 +14,5 @@ interface CustomerGroupDiscountConnectorToCustomerGroupFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerGroupNamesTransfer
      */
-    public function findCustomerGroupNamesByIdCustomer($idCustomer): CustomerGroupNamesTransfer;
+    public function getCustomerGroupNamesByIdCustomer($idCustomer): CustomerGroupNamesTransfer;
 }
