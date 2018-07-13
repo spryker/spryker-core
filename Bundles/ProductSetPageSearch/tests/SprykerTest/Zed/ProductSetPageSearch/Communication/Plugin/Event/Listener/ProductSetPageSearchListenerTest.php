@@ -229,9 +229,8 @@ class ProductSetPageSearchListenerTest extends Unit
     {
         $productSetPageQueryContainer = new ProductSetPageSearchQueryContainer();
         $productSetIds = $productSetPageQueryContainer->queryProductSetIdsByProductImageSetToProductImageIds([1021])->find()->getData();
-        $beforeCount = SpyProductSetPageSearchQuery::create()->count();
         SpyProductSetPageSearchQuery::create()->filterByFkProductSet_In($productSetIds)->delete();
-        $afterDeleteCount = SpyProductSetPageSearchQuery::create()->count();
+        $beforeCount = SpyProductSetPageSearchQuery::create()->count();
 
         // Act
         $productSetPageProductImageSetImageSearchListener = new ProductSetPageProductImageSetImageSearchListener();
@@ -244,8 +243,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductSetPageSearchQuery::create()->count();
-        $this->assertLessThan($beforeCount, $afterDeleteCount);
-        $this->assertSame($beforeCount, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->assertProductSetPageSearch();
     }
 
