@@ -20,6 +20,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceBrid
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBundleBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreBridge;
@@ -37,6 +38,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const FACADE_CATEGORY = 'FACADE_LOCALE';
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    const FACADE_PRODUCT_BUNDLE = 'FACADE_PRODUCT_BUNDLE';
     const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
     const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
     const FACADE_TOUCH = 'FACADE_TOUCH';
@@ -143,6 +145,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductManagementToProductBridge($container->getLocator()->product()->facade());
+        };
+
+        $container[static::FACADE_PRODUCT_BUNDLE] = function (Container $container) {
+            return new ProductManagementToProductBundleBridge($container->getLocator()->productBundle()->facade());
         };
 
         $container[static::FACADE_CATEGORY] = function (Container $container) {

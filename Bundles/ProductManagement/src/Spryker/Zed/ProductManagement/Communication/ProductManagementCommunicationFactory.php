@@ -229,6 +229,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBundleInterface
+     */
+    public function getProductBundleFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT_BUNDLE);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface
      */
     public function getProductImageFacade()
