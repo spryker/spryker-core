@@ -303,11 +303,11 @@ class Calculator implements CalculatorInterface
     protected function addNewCartRuleDiscountsAppliedMessage(array $collectedDiscountTransferCollection, ArrayObject $oldCartRuleDiscountTransferCollection): void
     {
         $oldCartRulesIds = $this->getCartRulesDiscountIds($oldCartRuleDiscountTransferCollection);
-        foreach ($collectedDiscountTransferCollection as $discountTransfer) {
-            if (!in_array($discountTransfer->getDiscount()->getIdDiscount(), $oldCartRulesIds)
-             || $this->isDiscountAmountBeenChanged($discountTransfer->getDiscount(), $oldCartRuleDiscountTransferCollection)
+        foreach ($collectedDiscountTransferCollection as $collectedDiscountTransfer) {
+            if (!in_array($collectedDiscountTransfer->getDiscount()->getIdDiscount(), $oldCartRulesIds)
+             || $this->isDiscountAmountBeenChanged($collectedDiscountTransfer->getDiscount(), $oldCartRuleDiscountTransferCollection)
             ) {
-                $this->setSuccessfulDiscountAddMessage($discountTransfer->getDiscount());
+                $this->setSuccessfulDiscountAddMessage($collectedDiscountTransfer->getDiscount());
             }
         }
     }
