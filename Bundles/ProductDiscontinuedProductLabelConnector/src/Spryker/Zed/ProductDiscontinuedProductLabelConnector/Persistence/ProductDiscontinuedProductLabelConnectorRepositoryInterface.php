@@ -20,4 +20,16 @@ interface ProductDiscontinuedProductLabelConnectorRepositoryInterface
      * @return int[]
      */
     public function getProductConcreteIds(): array;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
+
+    /**
+     * @return int[]
+     */
+    public function getProductAbstractIdsForDiscontinued(): array;
 }

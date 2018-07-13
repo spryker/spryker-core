@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence;
 
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -50,5 +51,44 @@ class ProductAlternativeProductLabelConnectorRepository extends AbstractReposito
         }
 
         return $productConcreteIds->getData();
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
+    {
+        $productConcreteIds = $this->getFactory()
+            ->getProductPropelQuery()
+            ->select([SpyProductTableMap::COL_ID_PRODUCT])
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->find();
+
+        if (!$productConcreteIds) {
+            return [];
+        }
+
+        return $productConcreteIds->getData();
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getProductAbstractIdsForAlternative(): array
+    {
+        $productAbstractIds = $this->getFactory()
+            ->getProductPropelQuery()
+            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->filterByIdProduct_In($this->getProductConcreteIds())
+            ->groupByFkProductAbstract()
+            ->find();
+
+        if (!$productAbstractIds) {
+            return [];
+        }
+
+        return $productAbstractIds->getData();
     }
 }

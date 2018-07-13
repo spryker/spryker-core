@@ -20,4 +20,16 @@ interface ProductAlternativeProductLabelConnectorRepositoryInterface
      * @return array
      */
     public function getProductConcreteIds(): array;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
+
+    /**
+     * @return int[]
+     */
+    public function getProductAbstractIdsForAlternative(): array;
 }

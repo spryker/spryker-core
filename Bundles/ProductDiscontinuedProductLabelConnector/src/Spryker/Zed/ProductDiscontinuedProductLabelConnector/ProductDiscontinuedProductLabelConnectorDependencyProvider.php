@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector;
 
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -25,6 +26,7 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const PROPEL_QUERY_PRODUCT_DISCONTINUED = 'PROPEL_QUERY_PRODUCT_DISCONTINUED';
     public const PROPEL_QUERY_PRODUCT_LABEL = 'PROPEL_QUERY_PRODUCT_LABEL';
+    public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -53,6 +55,7 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
         $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addProductDiscontinuedQuery($container);
         $container = $this->addProductLabelQuery($container);
+        $container = $this->addProductQuery($container);
 
         return $container;
     }
@@ -160,6 +163,20 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
     {
         $container[static::PROPEL_QUERY_PRODUCT_LABEL] = function () {
             return SpyProductLabelQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_PRODUCT] = function () {
+            return SpyProductQuery::create();
         };
 
         return $container;

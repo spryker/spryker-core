@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -31,5 +32,13 @@ class ProductDiscontinuedProductLabelConnectorPersistenceFactory extends Abstrac
     public function getProductLabelPropelQuery(): SpyProductLabelQuery
     {
         return $this->getProvidedDependency(ProductDiscontinuedProductLabelConnectorDependencyProvider::PROPEL_QUERY_PRODUCT_LABEL);
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function getProductPropelQuery(): SpyProductQuery
+    {
+        return $this->getProvidedDependency(ProductDiscontinuedProductLabelConnectorDependencyProvider::PROPEL_QUERY_PRODUCT);
     }
 }

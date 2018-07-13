@@ -68,56 +68,27 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     public function findProductLabelProductAbstractRelationChanges(): array
     {
         if (!$this->productAlternativeProductLabelConnectorRepository
-            ->getIsProductLabelActive($this->config->getProductAlternativesLabelName())
+                ->getIsProductLabelActive($this->config->getProductAlternativesLabelName()) || !$this->findProductLabelId()
         ) {
             return [];
         }
 
-        $productIds = $this->productAlternativeProductLabelConnectorRepository->getProductConcreteIds();
-
-        $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
-            $this->config->getProductAlternativesLabelName()
-        )->getIdProductLabel();
-
-        $idsToAssignAndToDeAssign = $this->getIdsToAssignAndToDeAssign($productIds, $idProductLabel);
-
-        return [$this->mapRelationTransfer(
-            $idProductLabel,
-            $idsToAssignAndToDeAssign['idsToAssign'],
-            $idsToAssignAndToDeAssign['idsToDeAssign']
-        )];
+        return $this->getIdsToAssignAndToDeAssign();
     }
 
     /**
-     * @param int $idProductAbstract
-     *
      * @return int[]
      */
-    protected function getProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
-    {
-        $concreteIds = [];
-
-        foreach ($this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract) as $productConcreteTransfer) {
-            $concreteIds[] = $productConcreteTransfer->getIdProductConcrete();
-        }
-
-        return $concreteIds;
-    }
-
-    /**
-     * @param int[] $productIds
-     * @param int $idProductLabel
-     *
-     * @return int[]
-     */
-    protected function getIdsToAssignAndToDeAssign(array $productIds, $idProductLabel): array
+    protected function getIdsToAssignAndToDeAssign(): array
     {
         $idsToAssign = [];
         $idsToDeAssign = [];
 
-        foreach ($productIds as $idProduct) {
-            $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
-            $concreteIds = $this->getProductConcreteIdsByAbstractProductId($idProductAbstract);
+        $idProductLabel = $this->findProductLabelId();
+
+        foreach ($this->productAlternativeProductLabelConnectorRepository->getProductAbstractIdsForAlternative() as $idProductAbstract) {
+            $concreteIds = $this->productAlternativeProductLabelConnectorRepository
+                ->getProductConcreteIdsByAbstractProductId($idProductAbstract);
 
             if (!$this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($concreteIds)) {
                 $idsToDeAssign[] = $idProductAbstract;
@@ -130,7 +101,21 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
             }
         }
 
-        return ['idsToAssign' => array_unique($idsToAssign), 'idsToDeAssign' => array_unique($idsToDeAssign)];
+        return [$this->mapRelationTransfer(
+            $idProductLabel,
+            $idsToAssign,
+            $idsToDeAssign
+        )];
+    }
+
+    /**
+     * @return int|null
+     */
+    protected function findProductLabelId(): ?int
+    {
+        return $this->productLabelFacade->findLabelByLabelName(
+            $this->config->getProductAlternativesLabelName()
+        )->getIdProductLabel();
     }
 
     /**
