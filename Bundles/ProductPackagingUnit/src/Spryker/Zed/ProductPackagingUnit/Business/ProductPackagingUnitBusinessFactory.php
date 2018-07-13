@@ -54,7 +54,6 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToPro
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface;
-use Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilTextServiceInterface;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitDependencyProvider;
 
@@ -222,14 +221,6 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface
-     */
-    public function getSalesQueryContainer(): ProductPackagingUnitToSalesQueryContainerInterface
-    {
-        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::QUERY_CONTAINER_SALES);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpanderInterface
      */
     public function createCartChangeExpander(): CartChangeExpanderInterface
@@ -265,7 +256,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitOrderHydrator(): ProductPackagingUnitOrderHydratorInterface
     {
         return new ProductPackagingUnitOrderHydrator(
-            $this->getSalesQueryContainer(),
+            $this->getRepository(),
             $this->getProductFacade()
         );
     }
@@ -286,7 +277,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new LeadProductReservationCalculator(
             $this->getOmsFacade(),
             $this->getStockFacade(),
-            $this->getSalesQueryContainer()
+            $this->getRepository()
         );
     }
 

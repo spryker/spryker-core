@@ -14,16 +14,16 @@ use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductFacadeInterface;
-use Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface;
+use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class ProductPackagingUnitOrderHydrator implements ProductPackagingUnitOrderHydratorInterface
 {
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface
      */
-    protected $salesQueryContainer;
+    protected $productPackagingUnitRepository;
 
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductFacadeInterface
@@ -31,14 +31,14 @@ class ProductPackagingUnitOrderHydrator implements ProductPackagingUnitOrderHydr
     protected $productFacade;
 
     /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface $salesQueryContainer
+     * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductFacadeInterface $productFacade
      */
     public function __construct(
-        ProductPackagingUnitToSalesQueryContainerInterface $salesQueryContainer,
+        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository,
         ProductPackagingUnitToProductFacadeInterface $productFacade
     ) {
-        $this->salesQueryContainer = $salesQueryContainer;
+        $this->productPackagingUnitRepository = $productPackagingUnitRepository;
         $this->productFacade = $productFacade;
     }
 
@@ -49,22 +49,21 @@ class ProductPackagingUnitOrderHydrator implements ProductPackagingUnitOrderHydr
      */
     public function hydrateOrderWithAmountSalesUnitAndLeadProduct(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $salesOrderQuery = $this->salesQueryContainer->querySalesOrderItemsByIdSalesOrder($orderTransfer->getIdSalesOrder());
+        $spySalesOrderItemEntityTransfers = $this->productPackagingUnitRepository
+            ->findSalesOrderItemsByIdSalesOrder($orderTransfer->getIdSalesOrder());
 
-        $salesOrderItemEntities = $salesOrderQuery->find();
-
-        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
+        foreach ($spySalesOrderItemEntityTransfers as $spySalesOrderItemEntityTransfer) {
             $itemTransfer = $this->findItemTransferAmountSalesUnitsBelongTo(
                 $orderTransfer,
-                $salesOrderItemEntity->getIdSalesOrderItem()
+                $spySalesOrderItemEntityTransfer->getIdSalesOrderItem()
             );
 
             if (!$itemTransfer) {
                 continue;
             }
 
-            $this->setAmountSalesUnit($itemTransfer, $salesOrderItemEntity);
-            $this->setAmountLeadProduct($itemTransfer, $salesOrderItemEntity);
+            $this->setAmountSalesUnit($itemTransfer, $spySalesOrderItemEntityTransfer);
+            $this->setAmountLeadProduct($itemTransfer, $spySalesOrderItemEntityTransfer);
         }
 
         return $orderTransfer;
@@ -72,30 +71,30 @@ class ProductPackagingUnitOrderHydrator implements ProductPackagingUnitOrderHydr
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer
      *
      * @return void
      */
-    protected function setAmountSalesUnit(ItemTransfer $itemTransfer, SpySalesOrderItem $salesOrderItemEntity): void
+    protected function setAmountSalesUnit(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer): void
     {
-        $itemAmountMeasurementUnitTransfer = $this->hydrateItemAmountSalesUnitTransfer($salesOrderItemEntity);
+        $itemAmountMeasurementUnitTransfer = $this->hydrateItemAmountSalesUnitTransfer($spySalesOrderItemEntityTransfer);
 
         $itemTransfer->setAmountSalesUnit($itemAmountMeasurementUnitTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer
      *
      * @return void
      */
-    protected function setAmountLeadProduct(ItemTransfer $itemTransfer, SpySalesOrderItem $salesOrderItemEntity): void
+    protected function setAmountLeadProduct(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer): void
     {
-        if (!$salesOrderItemEntity->getAmountSku() || !$salesOrderItemEntity->getAmount()) {
+        if (!$spySalesOrderItemEntityTransfer->getAmountSku() || !$spySalesOrderItemEntityTransfer->getAmount()) {
             return;
         }
 
-        $leadProductConcreteTransfer = $this->findProductConcreteBySku($salesOrderItemEntity->getAmountSku());
+        $leadProductConcreteTransfer = $this->findProductConcreteBySku($spySalesOrderItemEntityTransfer->getAmountSku());
         if (!$leadProductConcreteTransfer) {
             return;
         }
@@ -106,20 +105,20 @@ class ProductPackagingUnitOrderHydrator implements ProductPackagingUnitOrderHydr
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItemEntity
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    protected function hydrateItemAmountSalesUnitTransfer(SpySalesOrderItem $spySalesOrderItemEntity): ProductMeasurementSalesUnitTransfer
+    protected function hydrateItemAmountSalesUnitTransfer(SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer): ProductMeasurementSalesUnitTransfer
     {
         $productMeasurementSalesUnitTransfer = new ProductMeasurementSalesUnitTransfer();
-        $productMeasurementSalesUnitTransfer->setConversion($spySalesOrderItemEntity->getAmountMeasurementUnitConversion());
-        $productMeasurementSalesUnitTransfer->setPrecision($spySalesOrderItemEntity->getAmountMeasurementUnitPrecision());
+        $productMeasurementSalesUnitTransfer->setConversion($spySalesOrderItemEntityTransfer->getAmountMeasurementUnitConversion());
+        $productMeasurementSalesUnitTransfer->setPrecision($spySalesOrderItemEntityTransfer->getAmountMeasurementUnitPrecision());
 
-        $productMeasurementBaseUnitTransfer = $this->createProductMeasurementBaseUnitTransfer($spySalesOrderItemEntity);
+        $productMeasurementBaseUnitTransfer = $this->createProductMeasurementBaseUnitTransfer($spySalesOrderItemEntityTransfer);
         $productMeasurementSalesUnitTransfer->setProductMeasurementBaseUnit($productMeasurementBaseUnitTransfer);
 
-        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($spySalesOrderItemEntity->getAmountMeasurementUnitName() ?? '');
+        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($spySalesOrderItemEntityTransfer->getAmountMeasurementUnitName() ?? '');
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 
         return $productMeasurementSalesUnitTransfer;
@@ -139,14 +138,14 @@ class ProductPackagingUnitOrderHydrator implements ProductPackagingUnitOrderHydr
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItemEntity
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer
      */
-    protected function createProductMeasurementBaseUnitTransfer(SpySalesOrderItem $spySalesOrderItemEntity): ProductMeasurementBaseUnitTransfer
+    protected function createProductMeasurementBaseUnitTransfer(SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer): ProductMeasurementBaseUnitTransfer
     {
         $productMeasurementBaseUnitTransfer = new ProductMeasurementBaseUnitTransfer();
-        $amountBaseMeasurementUnitName = $spySalesOrderItemEntity->getAmountBaseMeasurementUnitName() ?? '';
+        $amountBaseMeasurementUnitName = $spySalesOrderItemEntityTransfer->getAmountBaseMeasurementUnitName() ?? '';
         $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($amountBaseMeasurementUnitName);
         $productMeasurementBaseUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 

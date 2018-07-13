@@ -30,13 +30,6 @@ interface ProductPackagingUnitReaderInterface
     public function findProductPackagingLeadProductByProductPackagingSku(string $productPackagingUnitSku): ?ProductPackagingLeadProductTransfer;
 
     /**
-     * @param string $sku
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer
-     */
-    public function findProductPackagingUnitBySku(string $sku): ProductPackagingUnitTransfer;
-
-    /**
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
