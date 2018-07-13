@@ -53,9 +53,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->addOr($skuLikeCriteria)
             ->limit($limit)
             ->select([
-                 static::KEY_FILTERED_PRODUCTS_RESULT,
-                 static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME,
-             ]);
+                static::KEY_FILTERED_PRODUCTS_RESULT,
+                static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME,
+            ]);
 
         return $this->collectFilteredResults(
             $productAbstractQuery->find()->toArray()
@@ -91,13 +91,32 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->addOr($skuLikeCriteria)
             ->limit($limit)
             ->select([
-                 static::KEY_FILTERED_PRODUCTS_RESULT,
-                 static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME,
-             ]);
+                static::KEY_FILTERED_PRODUCTS_RESULT,
+                static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME,
+            ]);
 
         return $this->collectFilteredResults(
             $productConcreteQuery->find()->toArray()
         );
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return null|int
+     */
+    public function findProductAbstractIdByConcreteId(int $idProductConcrete): ?int
+    {
+        $productConcrete = $this->getFactory()
+            ->createProductQuery()
+            ->filterByIdProduct($idProductConcrete)
+            ->findOne();
+
+        if (!$productConcrete) {
+            return null;
+        }
+
+        return $productConcrete->getFkProductAbstract();
     }
 
     /**

@@ -1,6 +1,11 @@
 {% if productAlternatives is not empty %}
     <table class="table table-bordered table-striped table-sm">
         {% filter trans|raw %}
+            <thead>
+            <tr>
+                <th colspan="7">List of Alternative products</th>
+            </tr>
+            </thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>

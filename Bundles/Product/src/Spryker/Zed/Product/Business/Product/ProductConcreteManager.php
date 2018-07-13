@@ -19,6 +19,7 @@ use Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 
 class ProductConcreteManager extends AbstractProductConcreteManagerSubject implements ProductConcreteManagerInterface
 {
@@ -58,6 +59,11 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     private $productTransferMapper;
 
     /**
+     * @var \Spryker\Zed\Product\Persistence\ProductRepositoryInterface
+     */
+    protected $repository;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
@@ -65,6 +71,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      * @param \Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface $productConcreteAssertion
      * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
      * @param \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface $productTransferMapper
+     * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $repository
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -73,7 +80,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         ProductAbstractAssertionInterface $productAbstractAssertion,
         ProductConcreteAssertionInterface $productConcreteAssertion,
         AttributeEncoderInterface $attributeEncoder,
-        ProductTransferMapperInterface $productTransferMapper
+        ProductTransferMapperInterface $productTransferMapper,
+        ProductRepositoryInterface $repository
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -82,6 +90,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $this->productConcreteAssertion = $productConcreteAssertion;
         $this->attributeEncoder = $attributeEncoder;
         $this->productTransferMapper = $productTransferMapper;
+        $this->repository = $repository;
     }
 
     /**
@@ -276,6 +285,16 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         }
 
         return $productConcrete->getFkProductAbstract();
+    }
+
+    /**
+     * @param int $idConcrete
+     *
+     * @return null|int
+     */
+    public function findProductAbstractIdByConcreteId(int $idConcrete): ?int
+    {
+        return $this->repository->findProductAbstractIdByConcreteId($idConcrete);
     }
 
     /**

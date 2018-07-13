@@ -18,6 +18,8 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const PLUGINS_POST_PRODUCT_ALTERNATIVE_CREATE = 'PLUGINS_POST_PRODUCT_ALTERNATIVE_CREATE';
+    public const PLUGINS_POST_PRODUCT_ALTERNATIVE_DELETE = 'PLUGINS_POST_PRODUCT_ALTERNATIVE_DELETE';
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
     public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'QUERY_PRODUCT_ABSTRACT';
 
@@ -31,6 +33,8 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addProductFacade($container);
+        $container = $this->addPostProductAlternativeCreatePlugins($container);
+        $container = $this->addPostProductAlternativeDeletePlugins($container);
 
         return $container;
     }
@@ -107,5 +111,49 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPostProductAlternativeCreatePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_POST_PRODUCT_ALTERNATIVE_CREATE] = function () {
+            return $this->getPostProductAlternativeCreatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPostProductAlternativeDeletePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_POST_PRODUCT_ALTERNATIVE_DELETE] = function () {
+            return $this->getPostProductAlternativeDeletePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeCreatePluginInterface[]
+     */
+    protected function getPostProductAlternativeCreatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeDeletePluginInterface[]
+     */
+    protected function getPostProductAlternativeDeletePlugins(): array
+    {
+        return [];
     }
 }

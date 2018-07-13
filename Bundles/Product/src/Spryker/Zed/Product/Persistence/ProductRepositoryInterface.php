@@ -31,6 +31,13 @@ interface ProductRepositoryInterface
     public function findProductConcreteDataBySkuOrLocalizedName(string $search, LocaleTransfer $localeTransfer, int $limit): array;
 
     /**
+     * @param int $idProductConcrete
+     *
+     * @return null|int
+     */
+    public function findProductAbstractIdByConcreteId(int $idProductConcrete): ?int;
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return bool

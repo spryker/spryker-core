@@ -66,7 +66,24 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
 
     /**
      * @modules Product
-     * @modules Category
+     *
+     * @param int[] $productIds
+     *
+     * @return bool
+     */
+    public function doAllConcreteProductsHaveAlternatives(array $productIds): bool
+    {
+        return ($this->getFactory()
+            ->createProductAlternativePropelQuery()
+            ->filterByFkProduct_In($productIds)
+            ->groupByFkProduct()
+            ->count() === count($productIds));
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
      *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
