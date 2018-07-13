@@ -28,4 +28,9 @@ interface CustomerAccessReaderInterface
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function getAllContentTypes(): CustomerAccessTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    public function getRestrictedContentTypes(): CustomerAccessTransfer;
 }

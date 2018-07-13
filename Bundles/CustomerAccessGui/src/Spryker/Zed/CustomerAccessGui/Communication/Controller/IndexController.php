@@ -25,7 +25,7 @@ class IndexController extends AbstractController
     public function indexAction(Request $request): array
     {
         $customerAccessDataProvider = $this->getFactory()->createCustomerAccessDataProvider(
-            $this->getFactory()->getCustomerAccessFacade()->getContentTypesWithUnauthenticatedCustomerAccess()
+            $this->getFactory()->getCustomerAccessFacade()->getRestrictedContentTypes()
         );
 
         $customerAccessForm = $this->getFactory()->getCustomerAccessForm($customerAccessDataProvider->getData(), $customerAccessDataProvider->getOptions());

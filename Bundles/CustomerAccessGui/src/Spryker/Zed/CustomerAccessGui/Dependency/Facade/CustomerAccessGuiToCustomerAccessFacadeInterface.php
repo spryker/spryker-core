@@ -27,4 +27,9 @@ interface CustomerAccessGuiToCustomerAccessFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function getContentTypesWithUnauthenticatedCustomerAccess(): CustomerAccessTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    public function getRestrictedContentTypes(): CustomerAccessTransfer;
 }

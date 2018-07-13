@@ -46,4 +46,14 @@ interface CustomerAccessRepositoryInterface
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function getAllContentTypes(): CustomerAccessTransfer;
+
+    /**
+     * Specification:
+     * - Returns list of accesses for content that unauthenticated customer can not have
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    public function getRestrictedContentTypes(): CustomerAccessTransfer;
 }

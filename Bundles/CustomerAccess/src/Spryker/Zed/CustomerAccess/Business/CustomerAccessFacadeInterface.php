@@ -54,4 +54,14 @@ interface CustomerAccessFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer;
+
+    /**
+     * Specification:
+     * - Returns list of accesses for content that unauthenticated customer can not have
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    public function getRestrictedContentTypes(): CustomerAccessTransfer;
 }

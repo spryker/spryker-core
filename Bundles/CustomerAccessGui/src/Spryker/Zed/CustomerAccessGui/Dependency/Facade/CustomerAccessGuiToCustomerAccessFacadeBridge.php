@@ -49,4 +49,12 @@ class CustomerAccessGuiToCustomerAccessFacadeBridge implements CustomerAccessGui
     {
         return $this->customerAccessFacade->getContentTypesWithUnauthenticatedCustomerAccess();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    public function getRestrictedContentTypes(): CustomerAccessTransfer
+    {
+        return $this->customerAccessFacade->getRestrictedContentTypes();
+    }
 }

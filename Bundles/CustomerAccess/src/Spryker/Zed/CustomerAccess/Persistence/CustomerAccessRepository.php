@@ -75,6 +75,23 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    public function getRestrictedContentTypes(): CustomerAccessTransfer
+    {
+        $unauthenticatedCustomerAccessEntity = $this->getFactory()
+            ->createPropelCustomerAccessQuery()
+            ->filterByIsRestricted(true)
+            ->find();
+
+        return $this->fillCustomerAccessTransferFromEntities($unauthenticatedCustomerAccessEntity);
+    }
+
+    /**
      * @param \Propel\Runtime\Collection\ObjectCollection $customerAccessEntities
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer

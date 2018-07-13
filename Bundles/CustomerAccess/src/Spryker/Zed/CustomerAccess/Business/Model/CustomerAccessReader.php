@@ -51,4 +51,12 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
     {
         return $this->customerAccessRepository->getAllContentTypes();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    public function getRestrictedContentTypes(): CustomerAccessTransfer
+    {
+        return $this->customerAccessRepository->getRestrictedContentTypes();
+    }
 }
