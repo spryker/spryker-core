@@ -112,6 +112,36 @@ class OmsFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testReservedItemsByNonExistentSku()
+    {
+        $omsFacade = $this->createOmsFacade();
+        $items = $omsFacade->getReservedOrderItemsForSku('non-existent-sku');
+
+        $this->assertSame(0, $items->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetReservedStateNames()
+    {
+        $omsFacade = $this->createOmsFacade();
+        $stateNames = $omsFacade->getReservedStateNames();
+
+        $expect = [
+            'new',
+            'payment pending',
+            'paid',
+            'exported',
+            'shipped',
+        ];
+
+        $this->assertSame($expect, $stateNames);
+    }
+
+    /**
      * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
     protected function createOmsFacade()
@@ -137,16 +167,5 @@ class OmsFacadeTest extends Unit
         $this->tester->configureTestStateMachine($activeProcesses, $xmlFolder);
 
         return new OmsFacade();
-    }
-
-    /**
-     * @return void
-     */
-    public function testReservedItemsByNonExistentSku()
-    {
-        $omsFacade = $this->createOmsFacade();
-        $items = $omsFacade->getReservedOrderItemsForSku('non-existent-sku');
-
-        $this->assertSame(0, $items->count());
     }
 }

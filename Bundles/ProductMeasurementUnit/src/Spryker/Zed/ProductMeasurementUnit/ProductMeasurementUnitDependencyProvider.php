@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit;
 
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeBridge;
-use Spryker\Zed\ProductMeasurementUnit\Dependency\QueryContainer\ProductMeasurementUnitToSalesQueryContainerBridge;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceBridge;
 
 class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyProvider
@@ -18,7 +18,7 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
     public const SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION = 'SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION';
     public const FACADE_EVENT = 'FACADE_EVENT';
 
-    public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+    public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,7 +31,7 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
 
         $container = $this->addUtilMeasurementUnitConversionService($container);
         $container = $this->addEventFacade($container);
-        $container = $this->addSalesQueryContainer($container);
+        $container = $this->addSalesOrderItemQuery($container);
 
         return $container;
     }
@@ -44,6 +44,7 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addSalesOrderItemQuery($container);
 
         return $container;
     }
@@ -81,12 +82,10 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesQueryContainer(Container $container): Container
+    protected function addSalesOrderItemQuery(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
-            return new ProductMeasurementUnitToSalesQueryContainerBridge(
-                $container->getLocator()->sales()->queryContainer()
-            );
+        $container[static::PROPEL_QUERY_SALES_ORDER_ITEM] = function (Container $container) {
+            return SpySalesOrderItemQuery::create();
         };
 
         return $container;

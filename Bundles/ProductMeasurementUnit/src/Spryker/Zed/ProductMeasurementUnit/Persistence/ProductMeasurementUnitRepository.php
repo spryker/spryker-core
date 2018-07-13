@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductMeasurementUnit\Persistence;
 use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Propel\Runtime\Exception\EntityNotFoundException;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -148,5 +149,29 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         }
 
         return $productMeasurementUnitTransfers;
+    }
+
+    /**
+     * @param int $idOrder
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer[]
+     */
+    public function querySalesOrderItemsByIdSalesOrder($idOrder): array
+    {
+        $salesOrderItemEntities = $this->getFactory()
+            ->createSalesOrderItemQuery()
+            ->filterByFkSalesOrder($idOrder)
+            ->find();
+
+        $spySalesOrderItemEntityTransfers = [];
+        $mapper = $this->getFactory()->createSalesOrderItemMapper();
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
+            $spySalesOrderItemEntityTransfers[] = $mapper->mapSalesOrderItemTransfer(
+                $salesOrderItemEntity,
+                new SpySalesOrderItemEntityTransfer()
+            );
+        }
+
+        return $spySalesOrderItemEntityTransfers;
     }
 }
