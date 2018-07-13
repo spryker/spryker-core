@@ -27,6 +27,7 @@ class ProductLabelDataExpanderPlugin extends AbstractPlugin implements ProductPa
      */
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
     {
+        //TODO SLOW PART
         $allLabelIds = $this->getFactory()->getProductLabelFacade()->findLabelIdsByIdProductAbstract($productData['fk_product_abstract']);
         $labelEntities = SpyProductLabelQuery::create()
             ->filterByIdProductLabel_In($allLabelIds)

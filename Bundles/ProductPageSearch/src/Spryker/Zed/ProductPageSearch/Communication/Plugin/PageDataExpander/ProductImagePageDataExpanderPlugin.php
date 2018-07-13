@@ -26,6 +26,7 @@ class ProductImagePageDataExpanderPlugin extends AbstractPlugin implements Produ
      */
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
     {
+        //TODO SLOW PART
         $images = $this->generateImages($productData['id_image_set']);
         $productAbstractPageSearchTransfer->setProductImages($images);
     }

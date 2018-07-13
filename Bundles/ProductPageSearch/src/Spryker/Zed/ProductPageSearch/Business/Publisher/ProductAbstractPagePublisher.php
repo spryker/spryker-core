@@ -116,6 +116,13 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     {
         $pageDataExpanderPlugins = $this->getPageDataExpanderPlugins($pageDataExpanderPluginNames);
 
+        //TODO MUST runs query only once
+        //These lines will run only one query and load all necessary data for product abstracts
+        //$imageData = $this->queryImageDataByProductAbstractIds($productAbstractIds);
+        //$priceData = $this->queryPriceDataByProductAbstractIds($productAbstractIds);
+        //$categoryData = $this->queryCategoryDataByProductAbstractIds($productAbstractIds);
+        // ....
+
         $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
 

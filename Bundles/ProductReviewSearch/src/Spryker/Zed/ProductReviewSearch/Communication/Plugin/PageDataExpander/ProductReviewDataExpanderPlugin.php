@@ -27,6 +27,7 @@ class ProductReviewDataExpanderPlugin extends AbstractPlugin implements ProductP
      */
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
     {
+        //TODO SLOW PART
         $productReviewArray = $this->getQueryContainer()
             ->queryProductReviewRatingByIdAbstractProduct($productData['fk_product_abstract'])
             ->findOne();
