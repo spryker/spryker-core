@@ -7,8 +7,22 @@
 
 namespace Spryker\Zed\SalesQuantity;
 
+use Spryker\Shared\SalesQuantity\SalesQuantityConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SalesQuantityConfig extends AbstractBundleConfig
 {
+    /**
+     * @return int|null
+     */
+    public function findItemQuantityThreshold(): ?int
+    {
+        $threshold = $this->get(SalesQuantityConstants::ITEM_NONSPLIT_QUANTITY_THRESHOLD, false);
+
+        if ($threshold === false) {
+            return null;
+        }
+
+        return (int)$threshold;
+    }
 }
