@@ -31,7 +31,7 @@ interface ProductPackagingUnitEvents
      *
      * @api
      */
-    public const PRODUCT_ABSTRACT_PACKAGING_PUBLISH = 'ProductPackagingUnit.product_abstract_packaging_unit.publish';
+    public const PRODUCT_ABSTRACT_PACKAGING_PUBLISH = 'ProductPackagingUnit.product_abstract_packaging.publish';
 
     /**
      * Specification:
@@ -39,7 +39,7 @@ interface ProductPackagingUnitEvents
      *
      * @api
      */
-    public const PRODUCT_ABSTRACT_PACKAGING_UNPUBLISH = 'ProductPackagingUnit.product_abstract_packaging_unit.unpublish';
+    public const PRODUCT_ABSTRACT_PACKAGING_UNPUBLISH = 'ProductPackagingUnit.product_abstract_packaging.unpublish';
 
     /**
      * Specification
