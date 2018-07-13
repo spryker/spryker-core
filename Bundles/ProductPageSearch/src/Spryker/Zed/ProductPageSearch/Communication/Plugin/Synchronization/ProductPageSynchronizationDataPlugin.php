@@ -72,7 +72,7 @@ class ProductPageSynchronizationDataPlugin extends AbstractPlugin implements Syn
      */
     public function getParams(): array
     {
-        return ["type" => "page"];
+        return ['type' => 'page'];
     }
 
     /**

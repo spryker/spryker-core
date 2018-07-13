@@ -72,7 +72,7 @@ class CategoryPageSynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function getParams(): array
     {
-        return ["type" => "page"];
+        return ['type' => 'page'];
     }
 
     /**

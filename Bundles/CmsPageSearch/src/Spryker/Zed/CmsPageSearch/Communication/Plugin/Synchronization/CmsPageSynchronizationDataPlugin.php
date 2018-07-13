@@ -72,7 +72,7 @@ class CmsPageSynchronizationDataPlugin extends AbstractPlugin implements Synchro
      */
     public function getParams(): array
     {
-        return ["type" => "page"];
+        return ['type' => 'page'];
     }
 
     /**
