@@ -74,6 +74,8 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         SpySalesExpense $salesOrderExpenseEntity,
         ExpenseTransfer $expenseTransfer
     ) {
+        $expenseTransfer = $this->sanitizeExpenseSumPrices(clone $expenseTransfer);
+
         $salesOrderExpenseEntity->fromArray($expenseTransfer->toArray());
         $salesOrderExpenseEntity->setGrossPrice($expenseTransfer->getSumGrossPrice());
         $salesOrderExpenseEntity->setNetPrice($expenseTransfer->getSumNetPrice());
@@ -81,6 +83,23 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         $salesOrderExpenseEntity->setTaxAmount($expenseTransfer->getSumTaxAmount());
         $salesOrderExpenseEntity->setDiscountAmountAggregation($expenseTransfer->getSumDiscountAmountAggregation());
         $salesOrderExpenseEntity->setPriceToPayAggregation($expenseTransfer->getSumPriceToPayAggregation());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    protected function sanitizeExpenseSumPrices(ExpenseTransfer $expenseTransfer)
+    {
+        $expenseTransfer->setSumGrossPrice($expenseTransfer->getSumGrossPrice() ?? $expenseTransfer->getUnitGrossPrice());
+        $expenseTransfer->setSumNetPrice($expenseTransfer->getSumNetPrice() ?? $expenseTransfer->getUnitNetPrice());
+        $expenseTransfer->setSumPrice($expenseTransfer->getSumPrice() ?? $expenseTransfer->getUnitPrice());
+        $expenseTransfer->setSumTaxAmount($expenseTransfer->getSumTaxAmount() ?? $expenseTransfer->getUnitTaxAmount());
+        $expenseTransfer->setSumDiscountAmountAggregation($expenseTransfer->getSumDiscountAmountAggregation() ?? $expenseTransfer->getUnitDiscountAmountAggregation());
+        $expenseTransfer->setSumPriceToPayAggregation($expenseTransfer->getSumPriceToPayAggregation() ?? $expenseTransfer->getUnitPriceToPayAggregation());
+
+        return $expenseTransfer;
     }
 
     /**

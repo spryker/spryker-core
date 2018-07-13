@@ -69,6 +69,8 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
         ProductOptionTransfer $productOptionTransfer,
         ItemTransfer $itemTransfer
     ) {
+        $productOptionTransfer = $this->sanitizeProductOptionSumPrices(clone $productOptionTransfer);
+
         $salesOrderItemOptionEntity->fromArray($productOptionTransfer->toArray());
         $salesOrderItemOptionEntity->setGrossPrice($productOptionTransfer->getSumGrossPrice());
         $salesOrderItemOptionEntity->setNetPrice($productOptionTransfer->getSumNetPrice());
@@ -77,6 +79,24 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
         $salesOrderItemOptionEntity->setPrice($productOptionTransfer->getSumPrice());
 
         $salesOrderItemOptionEntity->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());
+    }
+
+    /**
+     * @deprecated For BC reasons the missing sum prices are mirrored from unit prices
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
+     */
+    protected function sanitizeProductOptionSumPrices(ProductOptionTransfer $productOptionTransfer)
+    {
+        $productOptionTransfer->setSumGrossPrice($productOptionTransfer->getSumGrossPrice() ?? $productOptionTransfer->getUnitGrossPrice());
+        $productOptionTransfer->setSumNetPrice($productOptionTransfer->getSumNetPrice() ?? $productOptionTransfer->getUnitNetPrice());
+        $productOptionTransfer->setSumTaxAmount($productOptionTransfer->getSumTaxAmount() ?? $productOptionTransfer->getUnitTaxAmount());
+        $productOptionTransfer->setSumDiscountAmountAggregation($productOptionTransfer->getSumDiscountAmountAggregation() ?? $productOptionTransfer->getUnitDiscountAmountAggregation());
+        $productOptionTransfer->setSumPrice($productOptionTransfer->getSumPrice() ?? $productOptionTransfer->getUnitPrice());
+
+        return $productOptionTransfer;
     }
 
     /**
