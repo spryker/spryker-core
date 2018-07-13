@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductMeasurementUnit\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
 
@@ -259,5 +260,20 @@ class ProductMeasurementUnitFacadeTest extends Unit
         $productMeasurementSalesUnitTransfer = $this->productMeasurementUnitFacade->getProductMeasurementSalesUnitTransfer($productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit());
 
         $this->assertInstanceOf(ProductMeasurementSalesUnitTransfer::class, $productMeasurementSalesUnitTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandOrderWithQuantitySalesUnit(): void
+    {
+        // Assign
+        $orderTransfer = (new OrderTransfer())
+            ->setIdSalesOrder(1);
+
+        $orderTransfer = $this->productMeasurementUnitFacade
+            ->expandOrderWithQuantitySalesUnit($orderTransfer);
+
+        $this->assertInstanceOf(OrderTransfer::class, $orderTransfer);
     }
 }

@@ -19,7 +19,6 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
     public const FACADE_EVENT = 'FACADE_EVENT';
 
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
-    public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -45,6 +44,7 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addSalesOrderItemQuery($container);
 
         return $container;
     }
