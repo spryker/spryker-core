@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
@@ -74,9 +75,10 @@ class ProductPackagingUnitMapper implements ProductPackagingUnitMapperInterface
         SpyProductPackagingLeadProduct $productPackagingLeadProductEntity,
         ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
     ): ProductPackagingLeadProductTransfer {
-        $productPackagingLeadProductTransfer->setIdProduct($productPackagingLeadProductEntity->getFkProduct());
+        $productConcreteTransfer = (new ProductConcreteTransfer())
+            ->fromArray($productPackagingLeadProductEntity->getSpyProduct()->toArray(), true);
+        $productPackagingLeadProductTransfer->setProduct($productConcreteTransfer);
         $productPackagingLeadProductTransfer->setIdProductAbstract($productPackagingLeadProductEntity->getFkProductAbstract());
-        $productPackagingLeadProductTransfer->setSku($productPackagingLeadProductEntity->getSpyProduct()->getSku());
 
         return $productPackagingLeadProductTransfer;
     }

@@ -254,7 +254,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
         foreach ($cartChange->getItems() as $itemTransfer) {
             $this->assertInstanceOf(ProductPackagingLeadProductTransfer::class, $itemTransfer->getAmountLeadProduct());
-            $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getAmountLeadProduct()->getSku());
+            $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getAmountLeadProduct()->getProduct()->getSku());
         }
     }
 
@@ -440,7 +440,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             ->setAmount(static::PACKAGE_AMOUNT)
             ->setAmountLeadProduct(
                 (new ProductPackagingLeadProductTransfer())
-                    ->setSku($boxProductConcreteTransfer->getSku())
+                    ->setProduct($boxProductConcreteTransfer)
             );
     }
 

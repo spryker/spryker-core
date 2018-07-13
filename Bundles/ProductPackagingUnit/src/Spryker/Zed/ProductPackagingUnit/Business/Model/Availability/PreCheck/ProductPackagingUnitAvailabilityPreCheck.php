@@ -40,8 +40,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
             ->requireAmountLeadProduct()
             ->requireAmount();
 
-        $itemTransfer->getAmountLeadProduct()
-            ->requireSku();
+        $itemTransfer->getAmountLeadProduct();
     }
 
     /**
@@ -53,7 +52,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
      */
     protected function isPackagingUnitLeadProductSellable(ItemTransfer $item, Traversable $items, StoreTransfer $storeTransfer): bool
     {
-        $itemLeadProductSku = $item->getAmountLeadProduct()->getSku();
+        $itemLeadProductSku = $item->getAmountLeadProduct()->getProduct()->getSku();
         $accumulatedItemLeadProductQuantity = $this->getAccumulatedQuantityForLeadProduct($items, $itemLeadProductSku);
 
         return $this->isProductSellableForStore(
