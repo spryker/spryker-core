@@ -296,7 +296,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveCanceledAmountCalculator|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface
      */
     public function createRemoveCanceledAmountCalculator()
     {

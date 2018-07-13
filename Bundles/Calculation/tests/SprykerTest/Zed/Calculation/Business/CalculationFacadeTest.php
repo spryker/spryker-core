@@ -155,24 +155,28 @@ class CalculationFacadeTest extends Unit
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
         $calculatedDiscountTransfer->setUnitAmount(20);
+        $calculatedDiscountTransfer->setSumAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
         $calculatedDiscountTransfer->setUnitAmount(20);
+        $calculatedDiscountTransfer->setSumAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
         $calculatedDiscountTransfer->setUnitAmount(20);
+        $calculatedDiscountTransfer->setSumAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
         $calculatedDiscountTransfer->setUnitAmount(20);
+        $calculatedDiscountTransfer->setSumAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
@@ -185,6 +189,7 @@ class CalculationFacadeTest extends Unit
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
         $calculatedDiscountTransfer->setUnitAmount(20);
+        $calculatedDiscountTransfer->setSumAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $expenseTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
