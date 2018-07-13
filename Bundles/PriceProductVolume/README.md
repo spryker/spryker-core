@@ -1,8 +1,8 @@
-# VolumePriceProduct Module
+# PriceProductVolume Module
 [![Build Status](https://travis-ci.org/spryker/volume-price-product.svg)](https://travis-ci.org/spryker/volume-price-product)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/volume-price-product/badge.svg)](https://coveralls.io/github/spryker/volume-price-product)
 
-VolumePriceProduct provides functionality to handle volume prices for product.
+PriceProductVolume provides functionality to handle volume prices for product.
 
 ## Installation
 

@@ -56,7 +56,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
         $priceProductTransfers = $this->findPricesByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-            ->setPriceMode($priceProductCriteriaTransfer->getPriceMode());
+            ->fromArray($priceProductCriteriaTransfer->toArray(), true);
 
         $priceProductTransfers = $this->applyPriceProductFilerPlugins($priceProductTransfers, $priceProductFilterTransfer);
 

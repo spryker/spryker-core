@@ -32,4 +32,9 @@ class ProductPageSearchConstants
      * @api
      */
     const PRODUCT_ABSTRACT_RESOURCE_NAME = 'product_abstract';
+
+    /**
+     * @see \Spryker\Shared\PriceProduct\PriceProductConstants::PRICE_DATA
+     */
+    public const PRICE_DATA = 'priceData';
 }

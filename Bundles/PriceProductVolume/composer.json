@@ -1,6 +1,6 @@
 {
-  "name": "spryker/volume-price-product",
-  "description": "VolumePriceProduct module",
+  "name": "spryker/price-product-volume",
+  "description": "PriceProductVolume module",
   "license": "proprietary",
   "require": {
   },

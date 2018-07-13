@@ -108,6 +108,16 @@ class PriceProductStorageFactory extends AbstractFactory
      */
     public function createPriceProductMapper(): PriceProductMapperInterface
     {
-        return new PriceProductMapper();
+        return new PriceProductMapper(
+            $this->getPriceProductPricesExtractorPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductMapperPricesExtractorPluginInterface[]
+     */
+    public function getPriceProductPricesExtractorPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR);
     }
 }

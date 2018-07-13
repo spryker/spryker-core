@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\VolumePriceProduct;
+namespace Spryker\Shared\PriceProductVolume;
 
-interface VolumePriceProductConfig
+interface PriceProductVolumeConfig
 {
     public const VOLUME_PRICE_TYPE = 'volume_prices';
 }
