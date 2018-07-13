@@ -29,15 +29,13 @@ class PriceProductReaderPluginExecutor implements PriceProductReaderPluginExecut
      */
     public function executePriceExtractorPlugins(array $priceProductTransfers): array
     {
-        $priceProducts = [];
-
         foreach ($this->extractorPlugins as $extractorPlugin) {
-            $priceProducts = array_merge(
-                $priceProducts,
+            $priceProductTransfers = array_merge(
+                $priceProductTransfers,
                 $extractorPlugin->extractProductPrices($priceProductTransfers)
             );
         }
 
-        return $priceProducts;
+        return $priceProductTransfers;
     }
 }
