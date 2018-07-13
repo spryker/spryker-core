@@ -29,7 +29,7 @@ class DiscontinuedCheckAlternativeProductApplicablePlugin extends AbstractPlugin
     public function check(ProductViewTransfer $productViewTransfer): bool
     {
         return $this->getClient()->isProductDiscontinued(
-            $productViewTransfer->getSku(),
+            $productViewTransfer,
             $this->getFactory()->getLocaleClient()->getCurrentLocale()
         );
     }

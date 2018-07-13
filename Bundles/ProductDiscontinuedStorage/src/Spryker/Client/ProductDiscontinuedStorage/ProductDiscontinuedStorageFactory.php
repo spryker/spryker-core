@@ -12,6 +12,8 @@ use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontin
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToLocaleClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToStorageClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Service\ProductDiscontinuedStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedChecker\ProductDiscontinuedChecker;
+use Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedChecker\ProductDiscontinuedCheckerInterface;
 use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedSuperAttributesProductViewExpander;
 use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedSuperAttributesProductViewExpanderInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReader;
@@ -38,6 +40,16 @@ class ProductDiscontinuedStorageFactory extends AbstractFactory
         return new DiscontinuedSuperAttributesProductViewExpander(
             $this->createProductDiscontinuedStorageReader(),
             $this->getGlossaryStorageClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedChecker\ProductDiscontinuedCheckerInterface
+     */
+    public function createProductDiscontinuedChecker(): ProductDiscontinuedCheckerInterface
+    {
+        return new ProductDiscontinuedChecker(
+            $this->createProductDiscontinuedStorageReader()
         );
     }
 

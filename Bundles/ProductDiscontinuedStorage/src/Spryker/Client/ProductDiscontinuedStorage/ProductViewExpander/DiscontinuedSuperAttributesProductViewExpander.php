@@ -76,10 +76,13 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
 
         foreach ($superAttributes as $attributeKey => $attribute) {
             foreach ($attribute as $valueKey => $value) {
-                $idProductConcrete = $this->getIdProductConcreteByAttributeValueKey(
+                $idProductConcrete = $this->findIdProductConcreteByAttributeValueKey(
                     $this->getAttributeValueKey($attributeKey, $value),
                     $attributeMapStorageTransfer
                 );
+                if (!$idProductConcrete) {
+                    continue;
+                }
                 $sku = $this->getSkuByIdProductConcrete($idProductConcrete, $attributeMapStorageTransfer);
                 $value = $this->expandAttributeName($value, $sku, $localeName);
 
@@ -110,11 +113,11 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
      * @param string $attributeValueKey
      * @param \Generated\Shared\Transfer\AttributeMapStorageTransfer $attributeMapStorageTransfer
      *
-     * @return int
+     * @return null|int
      */
-    protected function getIdProductConcreteByAttributeValueKey(string $attributeValueKey, AttributeMapStorageTransfer $attributeMapStorageTransfer): int
+    protected function findIdProductConcreteByAttributeValueKey(string $attributeValueKey, AttributeMapStorageTransfer $attributeMapStorageTransfer): ?int
     {
-        return $attributeMapStorageTransfer->getAttributeVariants()[$attributeValueKey][static::ID_PRODUCT_CONCRETE];
+        return $attributeMapStorageTransfer->getAttributeVariants()[$attributeValueKey][static::ID_PRODUCT_CONCRETE] ?? null;
     }
 
     /**

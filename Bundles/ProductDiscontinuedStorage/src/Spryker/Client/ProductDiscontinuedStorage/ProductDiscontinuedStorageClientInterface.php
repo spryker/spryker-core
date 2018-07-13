@@ -36,12 +36,12 @@ interface ProductDiscontinuedStorageClientInterface
      *
      * @api
      *
-     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $locale
      *
      * @return bool
      */
-    public function isProductDiscontinued(string $concreteSku, string $locale): bool;
+    public function isProductDiscontinued(ProductViewTransfer $productViewTransfer, string $locale): bool;
 
     /**
      * Specification:
