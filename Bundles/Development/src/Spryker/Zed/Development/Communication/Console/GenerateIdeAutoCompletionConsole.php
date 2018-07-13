@@ -41,6 +41,7 @@ class GenerateIdeAutoCompletionConsole extends Console
             GenerateZedIdeAutoCompletionConsole::COMMAND_NAME,
             GenerateClientIdeAutoCompletionConsole::COMMAND_NAME,
             GenerateServiceIdeAutoCompletionConsole::COMMAND_NAME,
+            GenerateGlueIdeAutoCompletionConsole::COMMAND_NAME,
         ];
 
         foreach ($dependingCommands as $commandName) {
