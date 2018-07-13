@@ -33,5 +33,4 @@ class ProductManagementToProductBundleBridge implements ProductManagementToProdu
     {
         return $this->productBundleFacade->saveBundledProducts($productConcreteTransfer);
     }
-
 }
