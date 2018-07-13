@@ -49,7 +49,7 @@ class CustomerRestoredPasswordConfirmationMailTypePlugin extends AbstractPlugin 
      */
     protected function setSubject(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSubject('mail.customer.reset_password_confirmation.subject');
+        $mailBuilder->setSubject('mail.customer.restore_password_confirmation.subject');
 
         return $this;
     }

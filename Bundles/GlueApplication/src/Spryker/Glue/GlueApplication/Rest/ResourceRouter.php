@@ -118,7 +118,7 @@ class ResourceRouter implements ResourceRouterInterface
      */
     protected function createResourceNotFoundRoute(): array
     {
-        return $this->createRoute('GlueApplication', 'Error', 'resource-not-found');
+        return $this->createRoute('GlueApplication', 'ErrorRest', 'resource-not-found');
     }
 
     /**
