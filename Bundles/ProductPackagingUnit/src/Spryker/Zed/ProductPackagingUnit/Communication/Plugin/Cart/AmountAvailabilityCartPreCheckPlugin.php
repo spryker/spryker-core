@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
  */
-class CartPackagingUnitAvailabilityPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface
+class AmountAvailabilityCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface
 {
     /**
      * {@inheritdoc}

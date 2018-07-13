@@ -14,7 +14,7 @@ interface ProductPackagingUnitTypeKeyGeneratorInterface
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
-     * @return mixed
+     * @return void
      */
     public function generateProductPackagingUnitTypeKey(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): void;
 }

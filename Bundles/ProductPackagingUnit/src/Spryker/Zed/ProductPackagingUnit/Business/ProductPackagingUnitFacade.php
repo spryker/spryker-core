@@ -70,6 +70,8 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
     public function findProductPackagingUnitTypeByName(
@@ -139,6 +141,8 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
