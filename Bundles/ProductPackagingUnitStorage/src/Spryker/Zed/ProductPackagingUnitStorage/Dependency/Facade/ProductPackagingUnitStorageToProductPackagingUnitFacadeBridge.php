@@ -48,8 +48,8 @@ class ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge implements P
      *
      * @return array
      */
-    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array
+    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {
-        return $this->productPackagingUnitFacade->getIdProductAbstractsByIdProductPackagingUnitTypes($productPackagingUnitTypeIds);
+        return $this->productPackagingUnitFacade->findProductAbstractIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
     }
 }

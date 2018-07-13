@@ -55,10 +55,10 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
      *
      * @return array
      */
-    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array
+    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {
         return $this->getFactory()
             ->getProductPackagingUnitFacade()
-            ->getIdProductAbstractsByIdProductPackagingUnitTypes($productPackagingUnitTypeIds);
+            ->findProductAbstractIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
     }
 }

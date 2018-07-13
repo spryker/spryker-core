@@ -27,9 +27,9 @@ class ProductPackagingUnitGuiToProductPackagingUnitFacadeBridge implements Produ
     /**
      * @return string[]
      */
-    public function getInfrastructuralPackagingUnitTypeNames(): array
+    public function getInfrastructuralProductPackagingUnitTypeNames(): array
     {
-        return $this->productPackagingUnitFacade->getInfrastructuralPackagingUnitTypeNames();
+        return $this->productPackagingUnitFacade->getInfrastructuralProductPackagingUnitTypeNames();
     }
 
     /**

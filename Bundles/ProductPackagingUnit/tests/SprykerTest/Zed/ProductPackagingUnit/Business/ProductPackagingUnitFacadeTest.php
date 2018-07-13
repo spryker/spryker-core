@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTranslationTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyProductAbstractEntityTransfer;
@@ -736,5 +737,102 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
                 return static::DEFAULT_PRODUCT_PACKAGING_UNIT_TYPE_NAME;
             },
         ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCountProductPackagingUnitsByTypeId(): void
+    {
+        // Assign
+        $itemProductConcreteTransfer = $this->tester->haveProduct();
+        $boxProductConcreteTransfer = $this->tester->haveProduct([
+            SpyProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ], [
+            SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ]);
+
+        $boxProductPackagingUnitTypeEntityTransfer = $this->tester->haveProductPackagingUnitType([
+            SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE,
+        ]);
+
+        $this->tester->haveProductPackagingUnit([
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitTypeEntityTransfer->getIdProductPackagingUnitType(),
+        ]);
+
+        $boxProductPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeTransfer())->fromArray($boxProductPackagingUnitTypeEntityTransfer->toArray(), true);
+
+        //Act
+        $productPackagingUnitTypeCount = $this->getFacade()->countProductPackagingUnitsByTypeId($boxProductPackagingUnitTypeTransfer);
+
+        //Assert
+        $this->assertSame($productPackagingUnitTypeCount, 1);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductPackagingLeadProductByIdProductAbstract(): void
+    {
+        // Assign
+        $itemProductConcreteTransfer = $this->tester->haveProduct();
+        $boxProductConcreteTransfer = $this->tester->haveProduct([
+            SpyProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ], [
+            SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ]);
+
+        $this->tester->haveProductPackagingLeadProduct([
+            SpyProductPackagingLeadProductEntityTransfer::FK_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingLeadProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ]);
+
+        //Act
+        $productPackagingLeadProduct = $this->getFacade()->findProductPackagingLeadProductByIdProductAbstract($boxProductConcreteTransfer->getFkProductAbstract());
+
+        //Assert
+        $this->assertInstanceOf(ProductPackagingLeadProductTransfer::class, $productPackagingLeadProduct);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetInfrastructuralProductPackagingUnitTypeNames(): void
+    {
+        //Act
+        $infrastructuralProductPackagingUnitTypeNames = $this->getFacade()->getInfrastructuralProductPackagingUnitTypeNames();
+
+        //Assert
+        $this->assertCount(1, $infrastructuralProductPackagingUnitTypeNames);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductAbstractIdsByProductPackagingUnitTypeIds(): void
+    {
+        // Assign
+        $itemProductConcreteTransfer = $this->tester->haveProduct();
+        $boxProductConcreteTransfer = $this->tester->haveProduct([
+            SpyProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ], [
+            SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ]);
+
+        $boxProductPackagingUnitTypeEntityTransfer = $this->tester->haveProductPackagingUnitType([
+            SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE,
+        ]);
+
+        $this->tester->haveProductPackagingUnit([
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitTypeEntityTransfer->getIdProductPackagingUnitType(),
+        ]);
+
+        //Act
+        $productAbstractIds = $this->getFacade()->findProductAbstractIdsByProductPackagingUnitTypeIds([$boxProductPackagingUnitTypeEntityTransfer->getIdProductPackagingUnitType()]);
+
+        //Assert
+        $this->assertCount(1, $productAbstractIds);
     }
 }

@@ -30,5 +30,5 @@ interface ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface
      *
      * @return array
      */
-    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array;
+    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 }

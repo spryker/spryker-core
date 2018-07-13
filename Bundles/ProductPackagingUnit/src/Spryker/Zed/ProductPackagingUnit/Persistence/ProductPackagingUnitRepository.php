@@ -96,7 +96,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
         $productPackagingLeadProductEntity = $this->getFactory()
             ->createProductPackagingLeadProductQuery()
             ->filterByFkProductAbstract($idProductAbstract)
-            ->innerJoinSpyProduct()
+            ->innerJoinWithSpyProduct()
             ->findOne();
 
         if (!$productPackagingLeadProductEntity) {
@@ -153,7 +153,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      *
      * @return int[]
      */
-    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array
+    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {
         $query = $this->getFactory()
             ->createProductPackagingUnitQuery()

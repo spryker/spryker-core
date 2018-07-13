@@ -19,7 +19,7 @@ interface ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
      *
      * @return string[]
      */
-    public function getInfrastructuralPackagingUnitTypeNames(): array;
+    public function getInfrastructuralProductPackagingUnitTypeNames(): array;
 
     /**
      * Specification:

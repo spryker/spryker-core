@@ -35,7 +35,7 @@ class ProductPackagingUnitBusinessTester extends Actor
     use _generated\ProductPackagingUnitBusinessTesterActions;
 
     /**
-     * @param int $amounttestSetCustomAmountPrice
+     * @param int $amount
      * @param int $quantity
      * @param float $conversion
      * @param int $precision

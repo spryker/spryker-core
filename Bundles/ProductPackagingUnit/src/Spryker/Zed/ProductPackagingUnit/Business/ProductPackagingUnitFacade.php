@@ -44,11 +44,11 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return string[]
      */
-    public function getInfrastructuralPackagingUnitTypeNames(): array
+    public function getInfrastructuralProductPackagingUnitTypeNames(): array
     {
         return $this->getFactory()
             ->getConfig()
-            ->getInfrastructuralPackagingUnitTypeNames();
+            ->getInfrastructuralProductPackagingUnitTypeNames();
     }
 
     /**
@@ -86,6 +86,8 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
@@ -155,6 +157,8 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException
+     *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
     public function updateProductPackagingUnitType(
@@ -191,11 +195,11 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return int[]
      */
-    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array
+    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {
         return $this->getFactory()
             ->createProductPackagingUnitTypeReader()
-            ->getIdProductAbstractsByIdProductPackagingUnitTypes($productPackagingUnitTypeIds);
+            ->findProductAbstractIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
     }
 
     /**

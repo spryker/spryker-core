@@ -37,7 +37,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return string[]
      */
-    public function getInfrastructuralPackagingUnitTypeNames(): array;
+    public function getInfrastructuralProductPackagingUnitTypeNames(): array;
 
     /**
      * Specification:
@@ -85,6 +85,8 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
     public function getProductPackagingUnitTypeById(
@@ -115,7 +117,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return int[]
      */
-    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array;
+    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 
     /**
      * Specification:
@@ -140,6 +142,8 @@ interface ProductPackagingUnitFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */

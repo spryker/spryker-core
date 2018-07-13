@@ -42,7 +42,7 @@ class ProductPackagingUnitConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getInfrastructuralPackagingUnitTypeNames(): array
+    public function getInfrastructuralProductPackagingUnitTypeNames(): array
     {
         return array_column(static::INFRASTRUCTURAL_PACKAGING_UNIT_TYPES, 'name');
     }

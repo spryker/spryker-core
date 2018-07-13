@@ -31,7 +31,7 @@ class ProductPackagingUnitTypePublishStorageListener extends AbstractPlugin impl
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        $idProductAbstracts = $this->getFacade()->getIdProductAbstractsByIdProductPackagingUnitTypes($idProductPackagingTypes);
+        $idProductAbstracts = $this->getFacade()->findProductAbstractIdsByProductPackagingUnitTypeIds($idProductPackagingTypes);
 
         $publishEvents = $this->getPublishEvents();
 
