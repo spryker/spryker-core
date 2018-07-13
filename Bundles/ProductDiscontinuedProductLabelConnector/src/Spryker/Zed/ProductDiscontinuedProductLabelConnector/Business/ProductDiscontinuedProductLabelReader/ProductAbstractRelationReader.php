@@ -73,13 +73,13 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
             return [];
         }
 
-        return $this->getIdsToAssignAndToDeAssign();
+        return $this->getRelationsData();
     }
 
     /**
-     * @return int[]
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
      */
-    protected function getIdsToAssignAndToDeAssign(): array
+    protected function getRelationsData(): array
     {
         $idsToAssign = [];
         $idsToDeAssign = [];
