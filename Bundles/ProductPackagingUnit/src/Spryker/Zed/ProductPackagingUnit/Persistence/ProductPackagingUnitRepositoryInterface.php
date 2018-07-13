@@ -50,12 +50,12 @@ interface ProductPackagingUnitRepositoryInterface
     ): ?ProductPackagingLeadProductTransfer;
 
     /**
-     * @param string $productPackagingUnitSku
+     * @param string $siblingProductSku
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function findProductPackagingLeadProductByProductPackagingSku(
-        string $productPackagingUnitSku
+    public function findProductPackagingLeadProductBySiblingProductSku(
+        string $siblingProductSku
     ): ?ProductPackagingLeadProductTransfer;
 
     /**
@@ -75,13 +75,6 @@ interface ProductPackagingUnitRepositoryInterface
     ): ?ProductPackagingUnitTransfer;
 
     /**
-     * @param string $sku
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer
-     */
-    public function findProductPackagingUnitBySku(string $sku): ProductPackagingUnitTransfer;
-
-    /**
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
@@ -91,11 +84,28 @@ interface ProductPackagingUnitRepositoryInterface
     ): ?ProductPackagingUnitTransfer;
 
     /**
-     * @param string $productPackagingUnitSku
+     * @param string $productSku
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
      */
     public function findProductPackagingUnitByProductSku(
-        string $productPackagingUnitSku
+        string $productSku
     ): ?ProductPackagingUnitTransfer;
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer[]
+     */
+    public function findSalesOrderItemsByIdSalesOrder(int $idSalesOrder): array;
+
+    /**
+     * @uses State
+     *
+     * @param string $sku
+     * @param string[] $reservedStateNames
+     *
+     * @return int
+     */
+    public function sumLeadProductAmountsForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): int;
 }

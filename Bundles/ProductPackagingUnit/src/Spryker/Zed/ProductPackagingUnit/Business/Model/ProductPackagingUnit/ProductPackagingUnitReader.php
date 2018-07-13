@@ -70,7 +70,7 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
      */
     public function findProductPackagingLeadProductByProductPackagingSku(string $productPackagingUnitSku): ?ProductPackagingLeadProductTransfer
     {
-        return $this->repository->findProductPackagingLeadProductByProductPackagingSku($productPackagingUnitSku);
+        return $this->repository->findProductPackagingLeadProductBySiblingProductSku($productPackagingUnitSku);
     }
 
     /**
@@ -127,15 +127,5 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
     public function getProductMeasurementSalesUnitTransfer(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer
     {
         return $this->productMeasurementUnitFacade->getProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer
-     */
-    public function findProductPackagingUnitBySku(string $sku): ProductPackagingUnitTransfer
-    {
-        return $this->repository->findProductPackagingUnitBySku($sku);
     }
 }

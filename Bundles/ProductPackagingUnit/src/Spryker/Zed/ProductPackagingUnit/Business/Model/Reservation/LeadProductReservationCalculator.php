@@ -8,11 +8,9 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeInterface;
-use Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface;
+use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class LeadProductReservationCalculator implements LeadProductReservationCalculatorInterface
 {
@@ -29,23 +27,23 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
     protected $stockFacade;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface
      */
-    protected $salesQueryContainer;
+    protected $productPackagingUnitRepository;
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface $omsFacade
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeInterface $stockFacade
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface $salesQueryContainer
+     * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
      */
     public function __construct(
         ProductPackagingUnitToOmsFacadeInterface $omsFacade,
         ProductPackagingUnitToStockFacadeInterface $stockFacade,
-        ProductPackagingUnitToSalesQueryContainerInterface $salesQueryContainer
+        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
     ) {
         $this->omsFacade = $omsFacade;
         $this->stockFacade = $stockFacade;
-        $this->salesQueryContainer = $salesQueryContainer;
+        $this->productPackagingUnitRepository = $productPackagingUnitRepository;
     }
 
     /**
@@ -58,30 +56,10 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
     {
         $physicalItems = $this->stockFacade->calculateProductStockForStore($leadProductSku, $storeTransfer);
         $reservedItems = $this->omsFacade->getOmsReservedProductQuantityForSku($leadProductSku, $storeTransfer);
-        $leadProductReservedAmount = $this->sumLeadProductAmountsForAllSalesOrderItemsBySku($leadProductSku);
+        $leadProductReservedAmount = $this->productPackagingUnitRepository
+            ->sumLeadProductAmountsForAllSalesOrderItemsBySku($leadProductSku, $this->getReservedStateNames());
 
         return $physicalItems - $reservedItems - $leadProductReservedAmount;
-    }
-
-    /**
-     * @uses State
-     *
-     * @param string $sku
-     *
-     * @return int
-     */
-    protected function sumLeadProductAmountsForAllSalesOrderItemsBySku(string $sku): int
-    {
-        $salesOrderItemQuery = $this->salesQueryContainer
-            ->querySalesOrderItem()
-            ->filterByAmountSku($sku)
-            ->useStateQuery()
-                ->filterByName($this->getReservedStateNames(), Criteria::IN)
-            ->endUse()
-            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_AMOUNT . ')', static::COL_SUM)
-            ->select([static::COL_SUM]);
-
-        return (int)$salesOrderItemQuery->findOne();
     }
 
     /**
