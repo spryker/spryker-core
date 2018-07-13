@@ -104,7 +104,7 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
         }
 
         $productBundleQueryContainerMock = $this->getMockBuilder(ProductBundleQueryContainerInterface::class)->getMock();
-        $productBundleConfig = $this->createProductBundleConfig();
+        $productBundleConfig = $this->createProductBundleConfigMock();
 
         $productBundleCartAvailabilityCheckMock = $this->getMockBuilder(ProductBundleCheckoutAvailabilityCheck::class)
             ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $storeFacadeMock, $productBundleConfig])
@@ -115,10 +115,10 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\ProductBundleConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\ProductBundleConfig
      */
-    protected function createProductBundleConfig(): ProductBundleConfig
+    protected function createProductBundleConfigMock(): ProductBundleConfig
     {
-        return new ProductBundleConfig();
+        return $this->getMockBuilder(ProductBundleConfig::class)->getMock();
     }
 }

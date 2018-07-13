@@ -75,7 +75,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     public function testCheckCartAvailabilityWhenBundledItemsNotAvailableShouldStoreErrorMessages()
     {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
-        $availabilityFacadeMock->expects($this->exactly(2))
+        $availabilityFacadeMock->expects($this->once())
             ->method('isProductSellableForStore')
             ->willReturn(false);
 
@@ -132,7 +132,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
             $storeFacadeMock = $this->buildStoreFacadeMock();
         }
 
-        $productBundleConfig = $this->createProductBundleConfig();
+        $productBundleConfig = $this->createProductBundleConfigMock();
 
         $productBundleCartAvailabilityCheckMock = $this->getMockBuilder(ProductBundleCartAvailabilityCheck::class)
             ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $availabilityQueryContainerMock, $storeFacadeMock, $productBundleConfig])
@@ -151,10 +151,10 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\ProductBundleConfig
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\ProductBundleConfig
      */
-    protected function createProductBundleConfig(): ProductBundleConfig
+    protected function createProductBundleConfigMock(): ProductBundleConfig
     {
-        return new ProductBundleConfig();
+        return $this->getMockBuilder(ProductBundleConfig::class)->getMock();
     }
 }
