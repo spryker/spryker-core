@@ -64,21 +64,21 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         $currencyTransfer = (new CurrencyTransfer())->setIdCurrency(1)->setCode('EUR');
 
         // Action
-        $hardThreshold1 = $this->getFacade()->setStoreHardThreshold(
+        $hardThreshold1 = $this->getFacade()->setStoreThreshold(
             $minimumOrderValueHardTypeTransfer,
             $storeTransfer,
             $currencyTransfer,
             100
         );
 
-        $hardThreshold2 = $this->getFacade()->setStoreHardThreshold(
+        $hardThreshold2 = $this->getFacade()->setStoreThreshold(
             $minimumOrderValueHardTypeTransfer,
             $storeTransfer,
             $currencyTransfer,
             200
         );
 
-        $softThreshold1 = $this->getFacade()->setStoreSoftThreshold(
+        $softThreshold1 = $this->getFacade()->setStoreThreshold(
             $minimumOrderValueSoftTypeTransfer,
             $storeTransfer,
             $currencyTransfer,
@@ -87,52 +87,6 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
 
         $this->assertEquals($hardThreshold1->getIdMinimumOrderValue(), $hardThreshold2->getIdMinimumOrderValue());
         $this->assertNotEquals($hardThreshold1->getIdMinimumOrderValue(), $softThreshold1->getIdMinimumOrderValue());
-    }
-
-    /**
-     * @expectedException \Spryker\Zed\MinimumOrderValue\Business\Exception\MinimumOrderValueStrategyGroupMismatchException
-     *
-     * @return void
-     */
-    public function testSetStoreHardThresholdWithSoftStrategyThrowsAnException(): void
-    {
-        $minimumOrderValueSoftTypeTransfer = $this->getMinimumOrderValueTypeTransferForStrategy(
-            MinimumOrderValueStrategyInterface::GROUP_SOFT
-        );
-
-        $storeTransfer = (new StoreTransfer())->setIdStore(1)->setName('DE');
-        $currencyTransfer = (new CurrencyTransfer())->setIdCurrency(1)->setCode('EUR');
-
-        // Action
-        $this->getFacade()->setStoreHardThreshold(
-            $minimumOrderValueSoftTypeTransfer,
-            $storeTransfer,
-            $currencyTransfer,
-            200
-        );
-    }
-
-    /**
-     * @expectedException \Spryker\Zed\MinimumOrderValue\Business\Exception\MinimumOrderValueStrategyGroupMismatchException
-     *
-     * @return void
-     */
-    public function testSetStoreSoftThresholdWithHardStrategyThrowsAnException(): void
-    {
-        $minimumOrderValueHardTypeTransfer = $this->getMinimumOrderValueTypeTransferForStrategy(
-            MinimumOrderValueStrategyInterface::GROUP_HARD
-        );
-
-        $storeTransfer = (new StoreTransfer())->setIdStore(1)->setName('DE');
-        $currencyTransfer = (new CurrencyTransfer())->setIdCurrency(1)->setCode('EUR');
-
-        // Action
-        $this->getFacade()->setStoreSoftThreshold(
-            $minimumOrderValueHardTypeTransfer,
-            $storeTransfer,
-            $currencyTransfer,
-            100
-        );
     }
 
     /**

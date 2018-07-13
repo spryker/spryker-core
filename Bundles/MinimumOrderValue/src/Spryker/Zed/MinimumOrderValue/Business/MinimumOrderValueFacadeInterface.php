@@ -26,7 +26,7 @@ interface MinimumOrderValueFacadeInterface
 
     /**
      * Specification:
-     * - Set store Hard minimum order value threshold.
+     * - Set store minimum order value threshold.
      *
      * @api
      *
@@ -38,29 +38,7 @@ interface MinimumOrderValueFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
-    public function setStoreHardThreshold(
-        MinimumOrderValueStrategyInterface $minimumOrderValueStrategy,
-        StoreTransfer $storeTransfer,
-        CurrencyTransfer $currencyTransfer,
-        int $value,
-        ?int $fee = null
-    ): MinimumOrderValueTransfer;
-
-    /**
-     * Specification:
-     * - Set store Soft minimum order value threshold.
-     *
-     * @api
-     *
-     * @param \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface $minimumOrderValueStrategy
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param int $value
-     * @param int|null $fee
-     *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
-     */
-    public function setStoreSoftThreshold(
+    public function setStoreThreshold(
         MinimumOrderValueStrategyInterface $minimumOrderValueStrategy,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,

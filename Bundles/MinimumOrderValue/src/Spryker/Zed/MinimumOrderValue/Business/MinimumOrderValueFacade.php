@@ -15,6 +15,7 @@ use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyI
 
 /**
  * @method \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueBusinessFactory getFactory()
+ * @method \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface getEntityManager()
  */
 class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValueFacadeInterface
 {
@@ -45,47 +46,15 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
-    public function setStoreHardThreshold(
+    public function setStoreThreshold(
         MinimumOrderValueStrategyInterface $minimumOrderValueStrategy,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
         int $value,
         ?int $fee = null
     ): MinimumOrderValueTransfer {
-        return $this->getFactory()
-            ->createMinimumOrderValueStoreThresholdManager()
-            ->setStoreHardThreshold(
-                $minimumOrderValueStrategy,
-                $storeTransfer,
-                $currencyTransfer,
-                $value,
-                $fee
-            );
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface $minimumOrderValueStrategy
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param int $value
-     * @param int|null $fee
-     *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
-     */
-    public function setStoreSoftThreshold(
-        MinimumOrderValueStrategyInterface $minimumOrderValueStrategy,
-        StoreTransfer $storeTransfer,
-        CurrencyTransfer $currencyTransfer,
-        int $value,
-        ?int $fee = null
-    ): MinimumOrderValueTransfer {
-        return $this->getFactory()
-            ->createMinimumOrderValueStoreThresholdManager()
-            ->setStoreSoftThreshold(
+        return $this->getEntityManager()
+            ->setStoreThreshold(
                 $minimumOrderValueStrategy,
                 $storeTransfer,
                 $currencyTransfer,
