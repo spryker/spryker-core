@@ -40,7 +40,7 @@ class CustomerGroupFacadeTest extends Unit
      */
     public function testGetValid()
     {
-        $customerGroupEntity = $this->creteCustomerGroup();
+        $customerGroupEntity = $this->createCustomerGroup();
 
         $customerEntity = $this->createCustomer();
 
@@ -68,7 +68,7 @@ class CustomerGroupFacadeTest extends Unit
      */
     public function testFindCustomerGroupByIdCustomerShouldReturnGroupTransferWhenValidIdGiven()
     {
-        $customerGroupEntity = $this->creteCustomerGroup();
+        $customerGroupEntity = $this->createCustomerGroup();
 
         $customerEntity = $this->createCustomer();
 
@@ -91,8 +91,8 @@ class CustomerGroupFacadeTest extends Unit
     {
         $customerEntity = $this->createCustomer();
 
-        $customerGroupFirstEntity = $this->creteCustomerGroup();
-        $customerGroupSecondEntity = $this->creteCustomerGroup();
+        $customerGroupFirstEntity = $this->createCustomerGroup();
+        $customerGroupSecondEntity = $this->createCustomerGroup();
 
         $customerGroupToCustomerEntities = [];
 
@@ -222,7 +222,7 @@ class CustomerGroupFacadeTest extends Unit
     {
         $customerGroupFacade = $this->createCustomerGroupFacade();
 
-        $customerGroupEntity = $this->creteCustomerGroup();
+        $customerGroupEntity = $this->createCustomerGroup();
 
         $customerGroupTransfer = new CustomerGroupTransfer();
         $customerGroupTransfer->setIdCustomerGroup($customerGroupEntity->getIdCustomerGroup());
@@ -242,7 +242,7 @@ class CustomerGroupFacadeTest extends Unit
     {
         $customerGroupFacade = $this->createCustomerGroupFacade();
 
-        $customerGroupEntity = $this->creteCustomerGroup();
+        $customerGroupEntity = $this->createCustomerGroup();
 
         $customerEntity = $this->createCustomer();
 
@@ -276,8 +276,8 @@ class CustomerGroupFacadeTest extends Unit
     {
         $customerGroupFacade = $this->createCustomerGroupFacade();
 
-        $customerGroupEntity1 = $this->creteCustomerGroup();
-        $customerGroupEntity2 = $this->creteCustomerGroup();
+        $customerGroupEntity1 = $this->createCustomerGroup();
+        $customerGroupEntity2 = $this->createCustomerGroup();
 
         $customerEntity = $this->createCustomer();
 
@@ -318,7 +318,7 @@ class CustomerGroupFacadeTest extends Unit
     /**
      * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup
      */
-    protected function creteCustomerGroup()
+    protected function createCustomerGroup()
     {
         $customerGroupEntity = (new SpyCustomerGroup())
             ->setName('Test' . uniqid(true));
