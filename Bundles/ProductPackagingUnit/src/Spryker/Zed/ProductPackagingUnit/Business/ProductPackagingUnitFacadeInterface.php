@@ -185,18 +185,6 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Hydrates order transfer with additional packaging unit amount fields from sales_order_item table.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function hydrateOrderWithAmountSalesUnitAndLeadProduct(OrderTransfer $orderTransfer): OrderTransfer;
-
-    /**
-     * Specification:
      * - Calculates amount normalized sales unit value.
      * - Updates quote item transfers.
      *
