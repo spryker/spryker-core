@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountExpanderInterface
 {
     protected const PARAM_AMOUNT = 'amount-packaging-unit';
-    protected const PARAM_AMOUNT_SALES_UNIT = 'id-lead-product-measurement-sales-unit';
+    protected const PARAM_AMOUNT_SALES_UNIT = 'amount-id-product-measurement-sales-unit';
 
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
@@ -100,7 +100,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
             return null;
         }
 
-        return (int) $params[static::PARAM_AMOUNT][$sku];
+        return (int)$params[static::PARAM_AMOUNT][$sku];
     }
 
     /**
@@ -115,6 +115,6 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
             return null;
         }
 
-        return (int) $params[static::PARAM_AMOUNT_SALES_UNIT][$sku];
+        return (int)$params[static::PARAM_AMOUNT_SALES_UNIT][$sku];
     }
 }
