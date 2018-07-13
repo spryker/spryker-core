@@ -31,6 +31,6 @@ class CustomerGroupDiscountConnectorToCustomerGroupFacadeBridge implements Custo
     public function findCustomerGroupNamesByIdCustomer($idCustomer): CustomerGroupNamesTransfer
     {
         return $this->customerGroupFacade
-            ->findCustomerGroupNamesByIdCustomer($idCustomer);
+            ->getCustomerGroupNamesByIdCustomer($idCustomer);
     }
 }

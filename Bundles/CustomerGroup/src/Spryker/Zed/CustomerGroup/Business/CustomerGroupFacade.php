@@ -122,11 +122,11 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
      *
      * @return \Generated\Shared\Transfer\CustomerGroupNamesTransfer
      */
-    public function findCustomerGroupNamesByIdCustomer(int $idCustomer): CustomerGroupNamesTransfer
+    public function getCustomerGroupNamesByIdCustomer(int $idCustomer): CustomerGroupNamesTransfer
     {
         return $this->getFactory()
             ->createCustomerGroupFinder()
-            ->findCustomerGroupNamesByIdCustomer($idCustomer);
+            ->getCustomerGroupNamesByIdCustomer($idCustomer);
     }
 
     /**

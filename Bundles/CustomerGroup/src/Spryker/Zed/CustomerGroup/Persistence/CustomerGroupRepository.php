@@ -10,7 +10,6 @@ namespace Spryker\Zed\CustomerGroup\Persistence;
 use Generated\Shared\Transfer\CustomerGroupNamesTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\CustomerGroup\Persistence\Map\SpyCustomerGroupTableMap;
-use Spryker\Zed\CustomerGroup\Persistence\Mapper\CustomerGroupMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -23,7 +22,7 @@ class CustomerGroupRepository extends AbstractRepository implements CustomerGrou
      *
      * @return \Generated\Shared\Transfer\CustomerGroupNamesTransfer
      */
-    public function findCustomerGroupNamesByIdCustomer(int $idCustomer): CustomerGroupNamesTransfer
+    public function getCustomerGroupNamesByIdCustomer(int $idCustomer): CustomerGroupNamesTransfer
     {
         $customerGroupNames = $this->getCustomerQuery()
             ->filterByIdCustomer($idCustomer)
@@ -35,8 +34,18 @@ class CustomerGroupRepository extends AbstractRepository implements CustomerGrou
             ->find()
             ->toArray();
 
-        return $this->getCustomerGroupMapper()
-            ->mapCustomerGroupNamesToCustomerGroupNamesTransfer($customerGroupNames);
+        return $this->mapCustomerGroupNamesToCustomerGroupNamesTransfer($customerGroupNames);
+    }
+
+    /**
+     * @param array $customerGroupNames
+     *
+     * @return \Generated\Shared\Transfer\CustomerGroupNamesTransfer
+     */
+    public function mapCustomerGroupNamesToCustomerGroupNamesTransfer(array $customerGroupNames): CustomerGroupNamesTransfer
+    {
+        return (new CustomerGroupNamesTransfer())
+            ->setCustomerGroupNames($customerGroupNames);
     }
 
     /**
@@ -45,13 +54,5 @@ class CustomerGroupRepository extends AbstractRepository implements CustomerGrou
     protected function getCustomerQuery(): SpyCustomerQuery
     {
         return $this->getFactory()->createCustomerQuery();
-    }
-
-    /**
-     * @return \Spryker\Zed\CustomerGroup\Persistence\Mapper\CustomerGroupMapperInterface
-     */
-    protected function getCustomerGroupMapper(): CustomerGroupMapperInterface
-    {
-        return $this->getFactory()->createCustomerGroupMapper();
     }
 }

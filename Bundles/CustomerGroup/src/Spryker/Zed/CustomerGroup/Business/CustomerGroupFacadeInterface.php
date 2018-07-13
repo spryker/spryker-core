@@ -113,7 +113,7 @@ interface CustomerGroupFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerGroupNamesTransfer
      */
-    public function findCustomerGroupNamesByIdCustomer(int $idCustomer): CustomerGroupNamesTransfer;
+    public function getCustomerGroupNamesByIdCustomer(int $idCustomer): CustomerGroupNamesTransfer;
 
     /**
      * Specification:

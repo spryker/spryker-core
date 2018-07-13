@@ -107,7 +107,7 @@ class CustomerGroupFacadeTest extends Unit
             ->save();
 
         $customerGroupNamesTransfer = $this->getCustomerGroupFacade()
-            ->findCustomerGroupNamesByIdCustomer($customerEntity->getIdCustomer());
+            ->getCustomerGroupNamesByIdCustomer($customerEntity->getIdCustomer());
 
         $this->assertCount(count($customerGroupToCustomerEntities), $customerGroupNamesTransfer->getCustomerGroupNames());
     }

@@ -30,8 +30,8 @@ class CustomerGroupFinder implements CustomerGroupFinderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerGroupNamesTransfer
      */
-    public function findCustomerGroupNamesByIdCustomer(int $idCustomer): CustomerGroupNamesTransfer
+    public function getCustomerGroupNamesByIdCustomer(int $idCustomer): CustomerGroupNamesTransfer
     {
-        return $this->customerGroupRepository->findCustomerGroupNamesByIdCustomer($idCustomer);
+        return $this->customerGroupRepository->getCustomerGroupNamesByIdCustomer($idCustomer);
     }
 }
