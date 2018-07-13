@@ -60,33 +60,52 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
             MinimumOrderValueStrategyInterface::GROUP_SOFT
         );
 
-        $storeTransfer = (new StoreTransfer())->setIdStore(1)->setName('DE');
-        $currencyTransfer = (new CurrencyTransfer())->setIdCurrency(1)->setCode('EUR');
+        $storeTransferDE = (new StoreTransfer())->setIdStore(1)->setName('DE');
+        $storeTransferUS = (new StoreTransfer())->setIdStore(2)->setName('US');
+        $currencyTransferEUR = (new CurrencyTransfer())->setIdCurrency(1)->setCode('EUR');
+        $currencyTransferUSD = (new CurrencyTransfer())->setIdCurrency(2)->setCode('USD');
 
         // Action
         $hardThreshold1 = $this->getFacade()->setStoreThreshold(
             $minimumOrderValueHardTypeTransfer,
-            $storeTransfer,
-            $currencyTransfer,
+            $storeTransferDE,
+            $currencyTransferEUR,
             100
         );
 
         $hardThreshold2 = $this->getFacade()->setStoreThreshold(
             $minimumOrderValueHardTypeTransfer,
-            $storeTransfer,
-            $currencyTransfer,
+            $storeTransferDE,
+            $currencyTransferEUR,
             200
         );
 
         $softThreshold1 = $this->getFacade()->setStoreThreshold(
             $minimumOrderValueSoftTypeTransfer,
-            $storeTransfer,
-            $currencyTransfer,
+            $storeTransferDE,
+            $currencyTransferEUR,
+            200
+        );
+
+        $softThreshold2 = $this->getFacade()->setStoreThreshold(
+            $minimumOrderValueSoftTypeTransfer,
+            $storeTransferUS,
+            $currencyTransferEUR,
+            200
+        );
+
+        $softThreshold3 = $this->getFacade()->setStoreThreshold(
+            $minimumOrderValueSoftTypeTransfer,
+            $storeTransferUS,
+            $currencyTransferUSD,
             200
         );
 
         $this->assertEquals($hardThreshold1->getIdMinimumOrderValue(), $hardThreshold2->getIdMinimumOrderValue());
         $this->assertNotEquals($hardThreshold1->getIdMinimumOrderValue(), $softThreshold1->getIdMinimumOrderValue());
+        $this->assertNotEquals($softThreshold1->getIdMinimumOrderValue(), $softThreshold2->getIdMinimumOrderValue());
+        $this->assertNotEquals($softThreshold1->getIdMinimumOrderValue(), $softThreshold3->getIdMinimumOrderValue());
+        $this->assertNotEquals($softThreshold2->getIdMinimumOrderValue(), $softThreshold3->getIdMinimumOrderValue());
     }
 
     /**

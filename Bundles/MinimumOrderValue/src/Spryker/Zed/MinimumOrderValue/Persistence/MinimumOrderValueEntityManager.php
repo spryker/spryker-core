@@ -72,15 +72,15 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
         $minimumOrderValueEntity = $this->getFactory()
             ->createMinimumOrderValueQuery()
             ->filterByFkStore($storeTransfer->getIdStore())
+            ->filterByFkCurrency($currencyTransfer->getIdCurrency())
             ->filterByThresholdGroup($minimumOrderValueStrategy->getGroup())
             ->findOneOrCreate();
-        $minimumOrderValueEntity
-            ->setFkStore($storeTransfer->getIdStore())
-            ->setFkMinOrderValueType($minimumOrderValueTypeTransfer->getIdMinimumOrderValueType())
-            ->setValue($value)
+
+        $minimumOrderValueEntity->setValue($value)
             ->setFee($fee)
-            ->setFkCurrency($currencyTransfer->getIdCurrency())
-            ->save();
+            ->setFkMinOrderValueType(
+                $minimumOrderValueTypeTransfer->getIdMinimumOrderValueType()
+            )->save();
 
         $minimumOrderValueTransfer = $this->getFactory()
             ->createMinimumOrderValueMapper()

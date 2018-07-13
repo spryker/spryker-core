@@ -15,7 +15,7 @@ class MinimumOrderValueHelper extends Module
 {
     protected const ERROR_MESSAGE_FOUND = 'Found at least one entry in the database table but database table `%s` was expected to be empty.';
 
-    protected const ERROR_MESSAGE_EXPECTED = 'Expected at least %d entry in the database table `%s` but database` table is empty.';
+    protected const ERROR_MESSAGE_EXPECTED = 'Expected at least %d entries in the database table `%s` and found %d entries.';
 
     /**
      * @return void
@@ -41,7 +41,8 @@ class MinimumOrderValueHelper extends Module
      */
     public function assertMinimumOrderValueTypeTableHasRecords(int $recordsNum): void
     {
-        $this->assertEquals($this->getMinimumOrderValueTypeQuery()->count(), $recordsNum, sprintf(static::ERROR_MESSAGE_EXPECTED, $recordsNum, SpyMinimumOrderValueTypeTableMap::TABLE_NAME));
+        $entriesFound = $this->getMinimumOrderValueTypeQuery()->count();
+        $this->assertEquals($entriesFound, $recordsNum, sprintf(static::ERROR_MESSAGE_EXPECTED, $recordsNum, SpyMinimumOrderValueTypeTableMap::TABLE_NAME, $entriesFound));
     }
 
     /**
