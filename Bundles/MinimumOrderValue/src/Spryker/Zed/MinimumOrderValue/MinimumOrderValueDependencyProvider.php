@@ -8,7 +8,42 @@
 namespace Spryker\Zed\MinimumOrderValue;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MinimumOrderValue\Business\Strategies\HardThresholdStrategy;
+use Spryker\Zed\MinimumOrderValue\Business\Strategies\SoftThresholdWithFixedFeeStrategy;
+use Spryker\Zed\MinimumOrderValue\Business\Strategies\SoftThresholdWithFlexibleFeeStrategy;
+use Spryker\Zed\MinimumOrderValue\Business\Strategies\SoftThresholdWithMessageStrategy;
 
 class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const MINIMUM_ORDER_VALUE_STRATEGIES = 'MINIMUM_ORDER_VALUE_STRATEGIES';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container[self::MINIMUM_ORDER_VALUE_STRATEGIES] = function (Container $container) {
+            return $this->getMinimumOrderValueStrategies($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface[]
+     */
+    protected function getMinimumOrderValueStrategies(Container $container): array
+    {
+        return [
+            new HardThresholdStrategy(),
+            new SoftThresholdWithMessageStrategy(),
+            new SoftThresholdWithFixedFeeStrategy(),
+            new SoftThresholdWithFlexibleFeeStrategy(),
+        ];
+    }
 }

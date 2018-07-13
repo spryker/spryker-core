@@ -5,7 +5,8 @@
           namespace="Orm\Zed\MerchantRelationshipMinimumOrderValue\Persistence"
           package="src.Orm.Zed.MerchantRelationshipMinimumOrderValue.Persistence">
 
-    <table name="spy_merchant_relationship_min_order_value" idMethod="native" allowPkInsert="true">
+    <table name="spy_merchant_relationship_min_order_value" idMethod="native" allowPkInsert="true"
+           phpName="SpyMerchantRelationshipMinimumOrderValue">
         <column name="id_merchant_relationship_min_order_value" required="true" type="INTEGER" primaryKey="true"
                 autoIncrement="true"/>
         <column name="fk_merchant_relationship" type="INTEGER" required="true"/>

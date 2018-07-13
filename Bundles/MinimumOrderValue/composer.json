@@ -11,11 +11,21 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/installer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/installer": "If you want to use Installer plugins: ^4.0.0."
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\MinimumOrderValue\\Helper\\": "tests/SprykerTest/Zed/MinimumOrderValue/_support/Helper/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

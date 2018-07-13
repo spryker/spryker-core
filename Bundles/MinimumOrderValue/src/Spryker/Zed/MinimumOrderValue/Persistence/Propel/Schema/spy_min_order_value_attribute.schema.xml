@@ -5,8 +5,10 @@
           namespace="Orm\Zed\MinimumOrderValue\Persistence"
           package="src.Orm.Zed.MinimumOrderValue.Persistence">
 
-    <table name="spy_min_order_value_attribute" idMethod="native" allowPkInsert="true">
-        <column name="id_min_order_value_attribute" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+    <table name="spy_min_order_value_attribute" idMethod="native" allowPkInsert="true"
+           phpName="SpyMinimumOrderValueAttribute">
+        <column name="id_min_order_value_attribute" required="true" type="INTEGER" primaryKey="true"
+                autoIncrement="true"/>
         <column name="fk_min_order_value_type" type="INTEGER" required="true"/>
         <column name="fk_currency" type="INTEGER" required="true"/>
         <column name="value" type="INTEGER" required="true"/>

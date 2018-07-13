@@ -5,10 +5,11 @@
           namespace="Orm\Zed\MinimumOrderValue\Persistence"
           package="src.Orm.Zed.MinimumOrderValue.Persistence">
 
-    <table name="spy_min_order_value" idMethod="native" allowPkInsert="true">
+    <table name="spy_min_order_value" idMethod="native" allowPkInsert="true" phpName="SpyMinimumOrderValue">
         <column name="id_min_order_value" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_min_order_value_attribute" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
+        <column name="threshold_group" type="VARCHAR" required="true"/>
 
         <behavior name="timestampable"/>
 
@@ -22,6 +23,10 @@
         <foreign-key name="spy_min_order_value-fk_store" foreignTable="spy_store" phpName="Store">
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
+
+        <unique name="spy_min_order_value-unique-threshold_group">
+            <unique-column name="threshold_group"/>
+        </unique>
     </table>
 
 </database>

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MinimumOrderValueType">
+        <property name="idMinimumOrderValueType" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MinimumOrderValue">
+        <property name="idMinimumOrderValue" type="int"/>
+        <property name="minimumOrderValueAttribute" type="MinimumOrderValueAttribute"/>
+        <property name="store" type="Store"/>
+        <property name="thresholdGroup" type="string"/>
+    </transfer>
+
+    <transfer name="MinimumOrderValueAttribute">
+        <property name="idMinimumOrderValueAttribute" type="int"/>
+        <property name="minimumOrderValueType" type="MinimumOrderValueType"/>
+        <property name="value" type="int"/>
+        <property name="fee" type="int"/>
+        <property name="currency" type="Currency"/>
+    </transfer>
+
+</transfers>
