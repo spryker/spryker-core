@@ -28,6 +28,6 @@ class ProductPackagingUnitAvailabilityHandlerPlugin extends AbstractPlugin imple
     public function handle($sku)
     {
         $this->getFacade()
-            ->updateProductPackagingUnitLeadProductAvailability($sku);
+            ->updateLeadProductAvailability($sku);
     }
 }

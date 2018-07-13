@@ -167,13 +167,13 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
 
     /**
      * @param string $sku
-     * @param float $amount
+     * @param int $amount
      * @param \Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer $productPackagingUnitAmountTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
      * @return void
      */
-    protected function validateItem(string $sku, float $amount, ProductPackagingUnitAmountTransfer $productPackagingUnitAmountTransfer, CartPreCheckResponseTransfer $responseTransfer): void
+    protected function validateItem(string $sku, int $amount, ProductPackagingUnitAmountTransfer $productPackagingUnitAmountTransfer, CartPreCheckResponseTransfer $responseTransfer): void
     {
         $min = $productPackagingUnitAmountTransfer->getAmountMin();
         $max = $productPackagingUnitAmountTransfer->getAmountMax();
@@ -185,7 +185,7 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
             $this->addViolation(static::ERROR_AMOUNT_MIN_NOT_FULFILLED, $sku, $min, $amount, $responseTransfer);
         }
 
-        if ($amount != 0 && $interval != null && $amount % $interval != 0) {
+        if ($amount != 0 && $interval != null && ($amount - $min) % $interval != 0) {
             $this->addViolation(static::ERROR_AMOUNT_INTERVAL_NOT_FULFILLED, $sku, $interval, $amount, $responseTransfer);
         }
 

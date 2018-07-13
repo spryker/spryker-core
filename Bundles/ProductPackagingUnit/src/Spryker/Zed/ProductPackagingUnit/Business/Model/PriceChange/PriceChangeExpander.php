@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 
 class PriceChangeExpander implements PriceChangeExpanderInterface
@@ -46,31 +48,39 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
                 continue;
             }
 
-            $this->expandItem($itemTransfer);
+            $this->expandItem($cartChangeTransfer->getQuote(), $itemTransfer);
         }
 
         return $cartChangeTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function expandItem(ItemTransfer $itemTransfer)
+    protected function expandItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer)
     {
         $defaultAmount = $itemTransfer->getProductPackagingUnit()
             ->getProductPackagingUnitAmount()
             ->getDefaultAmount();
 
-        if ($itemTransfer->getAmount() === $defaultAmount) {
+        $amount = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
+
+        if ($amount === $defaultAmount) {
             return $itemTransfer;
         }
 
-        $originUnitGrossPrice = $itemTransfer->getOriginUnitGrossPrice();
-        $newUnitGrossPrice = (int)(($itemTransfer->getAmount() / $defaultAmount) * $originUnitGrossPrice);
-
-        $itemTransfer->setUnitGrossPrice($newUnitGrossPrice);
+        if ($quoteTransfer->getPriceMode() === CalculationPriceMode::PRICE_MODE_NET) {
+            $unitGrossPrice = $itemTransfer->getUnitGrossPrice();
+            $newUnitGrossPrice = (int)(($itemTransfer->getAmount() / $defaultAmount) * $unitGrossPrice);
+            $itemTransfer->setUnitGrossPrice($newUnitGrossPrice);
+        } else {
+            $unitNetPrice = $itemTransfer->getUnitNetPrice();
+            $newUnitNetPrice = (int)(($itemTransfer->getAmount() / $defaultAmount) * $unitNetPrice);
+            $itemTransfer->setUnitNetPrice($newUnitNetPrice);
+        }
 
         return $itemTransfer;
     }

@@ -227,7 +227,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     {
         return $this->getFactory()
             ->createProductPackagingUnitAmountSalesUnitValue()
-            ->calculateSalesUnitValueInQuote($quoteTransfer);
+            ->calculateAmountSalesUnitValueInQuote($quoteTransfer);
     }
 
     /**
@@ -271,7 +271,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function preCheckCartAvailability(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    public function checkCartChangeAmountAvailability(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         return $this->getFactory()
             ->createProductPackagingUnitCartPreCheck()
@@ -288,7 +288,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return bool
      */
-    public function checkoutAvailabilityPreCheck(
+    public function checkCheckoutAmountAvailability(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool {
@@ -306,7 +306,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return void
      */
-    public function updateProductPackagingUnitLeadProductAvailability(string $sku): void
+    public function updateLeadProductAvailability(string $sku): void
     {
         $this->getFactory()
             ->createProductPackagingUnitAvailabilityHandler()

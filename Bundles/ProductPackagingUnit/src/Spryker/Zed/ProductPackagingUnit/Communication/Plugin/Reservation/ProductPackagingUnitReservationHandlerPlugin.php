@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Oms;
+namespace Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Reservation;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -28,6 +28,6 @@ class ProductPackagingUnitReservationHandlerPlugin extends AbstractPlugin implem
      */
     public function handle($sku): void
     {
-        $this->getFacade()->updateProductPackagingUnitLeadProductAvailability($sku);
+        $this->getFacade()->updateLeadProductAvailability($sku);
     }
 }

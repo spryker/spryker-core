@@ -15,6 +15,9 @@ use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryI
 class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterInterface
 {
     protected const ERROR_PRODUCT_PACKAGING_UNIT_TYPE_EXISTS = 'Product packaging unit type was found already for name "%s".';
+
+    protected const PRODUCT_PACKAGING_UNIT_TYPE_KEY = 'packaging_unit_type.%s.name';
+
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitEntityManagerInterface
      */
@@ -31,18 +34,26 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
     protected $translationWriter;
 
     /**
+     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeKeyGeneratorInterface
+     */
+    protected $productPackagingUnitTypeKeyGenerator;
+
+    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitEntityManagerInterface $entityManager
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $repository
      * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationWriterInterface $translationWriter
+     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeKeyGeneratorInterface $productPackagingUnitTypeGroupKeyGenerator
      */
     public function __construct(
         ProductPackagingUnitEntityManagerInterface $entityManager,
         ProductPackagingUnitRepositoryInterface $repository,
-        ProductPackagingUnitTypeTranslationWriterInterface $translationWriter
+        ProductPackagingUnitTypeTranslationWriterInterface $translationWriter,
+        ProductPackagingUnitTypeKeyGeneratorInterface $productPackagingUnitTypeGroupKeyGenerator
     ) {
         $this->entityManager = $entityManager;
         $this->repository = $repository;
         $this->translationWriter = $translationWriter;
+        $this->productPackagingUnitTypeKeyGenerator = $productPackagingUnitTypeGroupKeyGenerator;
     }
 
     /**
@@ -55,6 +66,9 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
     public function createProductPackagingUnitType(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ProductPackagingUnitTypeTransfer {
+
+        $this->productPackagingUnitTypeKeyGenerator->generateProductPackagingUnitTypeKey($productPackagingUnitTypeTransfer);
+
         $productPackagingUnitTypeTransfer->requireName();
 
         if ($this->isUniqueForCreate($productPackagingUnitTypeTransfer)) {

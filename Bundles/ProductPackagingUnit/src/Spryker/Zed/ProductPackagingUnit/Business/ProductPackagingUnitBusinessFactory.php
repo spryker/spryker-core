@@ -20,8 +20,6 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\ProductPackagingUni
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\ProductPackagingUnitOrderHydratorInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstaller;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstallerInterface;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculator;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculatorInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemExpander;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpander;
@@ -34,6 +32,8 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\Product
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitLeadProduct\ProductPackagingUnitLeadProductReader;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitLeadProduct\ProductPackagingUnitLeadProductReaderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeKeyGenerator;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeKeyGeneratorInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeReader;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationReader;
@@ -42,6 +42,8 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\Pro
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationWriterInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriter;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriterInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculator;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculatorInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Validator\ProductPackagingUnitAmountRestrictionValidator;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Validator\ProductPackagingUnitAmountRestrictionValidatorInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
@@ -53,6 +55,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToPro
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilTextServiceInterface;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitDependencyProvider;
 
 /**
@@ -92,7 +95,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new ProductPackagingUnitTypeWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createProductPackagingUnitTypeTranslationWriter()
+            $this->createProductPackagingUnitTypeTranslationWriter(),
+            $this->createProductPackagingUnitTypeKeyGenerator()
         );
     }
 
@@ -275,7 +279,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculatorInterface
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculatorInterface
      */
     public function createLeadProductReservationCalculator(): LeadProductReservationCalculatorInterface
     {
@@ -320,5 +324,23 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new ProductPackagingUnitAmountRestrictionValidator(
             $this->createProductPackagingUnitReader()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeKeyGeneratorInterface
+     */
+    public function createProductPackagingUnitTypeKeyGenerator(): ProductPackagingUnitTypeKeyGeneratorInterface
+    {
+        return new ProductPackagingUnitTypeKeyGenerator(
+            $this->getUtilTextService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilTextServiceInterface
+     */
+    public function getUtilTextService(): ProductPackagingUnitToUtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::SERVICE_UTIL_TEXT);
     }
 }

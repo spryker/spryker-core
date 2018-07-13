@@ -17,7 +17,7 @@ class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAm
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function calculateSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function calculateAmountSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (!$itemTransfer->getAmountSalesUnit()) {
@@ -42,12 +42,13 @@ class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAm
         $itemTransfer
             ->requireAmountSalesUnit()
             ->requireAmount()
+            ->requireQuantity()
             ->getAmountSalesUnit()
             ->requireConversion()
             ->requirePrecision();
 
         return $this->calculateNormalizedValue(
-            $itemTransfer->getAmount(),
+            $itemTransfer->getAmount() / $itemTransfer->getQuantity(),
             $itemTransfer->getAmountSalesUnit()->getConversion(),
             $itemTransfer->getAmountSalesUnit()->getPrecision()
         );

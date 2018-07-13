@@ -45,50 +45,46 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
      * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    protected function isPackagingUnitLeadProductSellable(ItemTransfer $itemTransfer, Traversable $items, StoreTransfer $storeTransfer): bool
+    protected function isPackagingUnitLeadProductSellable(ItemTransfer $item, Traversable $items, StoreTransfer $storeTransfer): bool
     {
-        $leadProductSku = $itemTransfer->getAmountLeadProduct()->getSku();
-        $leadProductQuantity = $itemTransfer->getAmount() +
-            $this->getAccumaltedQuantityForLeadProduct($items, $leadProductSku, $itemTransfer);
+        $itemLeadProductSku = $item->getAmountLeadProduct()->getSku();
+        $accumulatedItemLeadProductQuantity = $this->getAccumulatedQuantityForLeadProduct($items, $itemLeadProductSku);
 
         return $this->isProductSellableForStore(
-            $leadProductSku,
-            $leadProductQuantity,
+            $itemLeadProductSku,
+            $accumulatedItemLeadProductQuantity,
             $storeTransfer
         );
     }
 
     /**
      * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\ItemTransfer $currentItem
+     * @param string $leadProductSku
      *
      * @return int
      */
-    protected function getAccumaltedQuantityForLeadProduct(Traversable $items, string $sku, ItemTransfer $currentItem): int
+    protected function getAccumulatedQuantityForLeadProduct(Traversable $items, string $leadProductSku): int
     {
         $quantity = 0;
-        foreach ($items as $itemTransfer) {
-            if ($itemTransfer->getSku() === $currentItem->getSku()) { // Skip the current item
+
+        foreach ($items as $item) {
+            if ($leadProductSku === $item->getSku()) { // Lead product is in cart as an individual item
+                $quantity += $item->getQuantity();
                 continue;
             }
 
-            if ($sku === $itemTransfer->getSku()) { // Lead product is in cart as an indivdual items
-                $quantity += $itemTransfer->getQuantity();
+            if (!$item->getAmountLeadProduct()) { // Skip remaining items without lead product
                 continue;
             }
 
-            $productPacakgingLeadProduct = $itemTransfer->getAmountLeadProduct();
-            if ($productPacakgingLeadProduct && // Other items in cart are also a pacakging unit
-                // Lead product is a lead product of another item in cart
-                $productPacakgingLeadProduct->getSku() === $itemTransfer->getSku()) {
-                $quantity += $itemTransfer->getAmount();
+            if ($item->getAmountLeadProduct()->getSku() === $leadProductSku) { // Item in cart has the searched lead product
+                $quantity += $item->getAmount();
             }
         }
 

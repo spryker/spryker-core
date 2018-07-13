@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Oms;
+namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
@@ -72,7 +72,6 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
      */
     protected function sumLeadProductAmountsForAllSalesOrderItemsBySku(string $sku): int
     {
-        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $salesOrderItemQuery */
         $salesOrderItemQuery = $this->salesQueryContainer
             ->querySalesOrderItem()
             ->filterByAmountSku($sku)

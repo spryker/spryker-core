@@ -32,20 +32,17 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
 
             $this->assertAmountPackagingUnitExpanded($itemTransfer);
 
-            // No need for checking if packaging unit is sellable
-            // it's already checked in the product pre-check
+            $isPackagingUnitLeadProductSellable = $this->isPackagingUnitLeadProductSellable(
+                $itemTransfer,
+                $cartChangeTransfer->getItems(),
+                $storeTransfer
+            );
 
-            if ($itemTransfer->getAmount() > 0) { // It hasLeadProduct
-                if (!$this->isPackagingUnitLeadProductSellable(
-                    $itemTransfer,
-                    $cartChangeTransfer->getItems(),
-                    $storeTransfer
-                )) {
-                    $cartErrorMessages[] = $this->createMessageTransfer(
-                        static::CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED,
-                        ['sku' => $itemTransfer->getSku()]
-                    );
-                }
+            if ($itemTransfer->getAmount() > 0 && !$isPackagingUnitLeadProductSellable) {
+                $cartErrorMessages[] = $this->createMessageTransfer(
+                    static::CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED,
+                    ['sku' => $itemTransfer->getSku()]
+                );
             }
         }
 

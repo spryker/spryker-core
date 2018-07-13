@@ -20,7 +20,7 @@ class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroup
      */
     public function getItemWithGroupKey(ItemTransfer $itemTransfer): string
     {
-        if (!$itemTransfer->getAmountSalesUnit()) {
+        if (!$itemTransfer->getAmountSalesUnit() || !$itemTransfer->getAmount()) {
             return $itemTransfer->getGroupKey();
         }
 

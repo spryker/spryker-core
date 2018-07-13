@@ -18,6 +18,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToPro
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerBridge;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilTextServiceBridge;
 
 class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -31,6 +32,8 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+
+    public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -49,6 +52,8 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addProductFacade($container);
 
         $container = $this->addSalesQueryContainer($container);
+
+        $container = $this->addUtilTextService($container);
 
         return $container;
     }
@@ -192,6 +197,20 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
             return new ProductPackagingUnitToSalesQueryContainerBridge(
                 $container->getLocator()->sales()->queryContainer()
             );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilTextService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
+            return new ProductPackagingUnitToUtilTextServiceBridge($container->getLocator()->utilText()->service());
         };
 
         return $container;

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Oms;
+namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
 use Generated\Shared\Transfer\StoreTransfer;
 

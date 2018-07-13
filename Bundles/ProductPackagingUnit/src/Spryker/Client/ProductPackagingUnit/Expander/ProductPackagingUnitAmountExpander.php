@@ -29,7 +29,8 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
             $amount = $this->findAmount($params, $itemTransfer->getSku());
 
             if ($amount) {
-                $itemTransfer->setAmount($amount);
+                $amountPerQuantity = $amount / $itemTransfer->getQuantity();
+                $itemTransfer->setAmount($amountPerQuantity);
             }
 
             $this->updateItemTransferWithAmountSalesUnit($itemTransfer, $params);
@@ -50,7 +51,8 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
             $amount = $this->findAmount($params, $itemTransfer->getSku());
 
             if ($amount) {
-                $itemTransfer->setAmount($amount);
+                $amountPerQuantity = $amount / $itemTransfer->getQuantity();
+                $itemTransfer->setAmount($amountPerQuantity);
             }
 
             $this->updateItemTransferWithAmountSalesUnit($itemTransfer, $params);

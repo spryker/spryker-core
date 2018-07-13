@@ -57,19 +57,16 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
 
             $this->assertAmountPackagingUnitExpanded($itemTransfer);
 
-            // No need for checking if packaging unit is sellable
-            // it's already checked in the product pre-check
+            $isPackagingUnitLeadProductSellable = $this->isPackagingUnitLeadProductSellable(
+                $itemTransfer,
+                $quoteTransfer->getItems(),
+                $storeTransfer
+            );
 
-            if ($itemTransfer->getAmount() > 0) { // It hasLeadProduct
-                if (!$this->isPackagingUnitLeadProductSellable(
-                    $itemTransfer,
-                    $quoteTransfer->getItems(),
-                    $storeTransfer
-                )) {
-                    $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer(
-                        static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY
-                    );
-                }
+            if ($itemTransfer->getAmount() > 0 && !$isPackagingUnitLeadProductSellable) {
+                $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer(
+                    static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY
+                );
             }
         }
 

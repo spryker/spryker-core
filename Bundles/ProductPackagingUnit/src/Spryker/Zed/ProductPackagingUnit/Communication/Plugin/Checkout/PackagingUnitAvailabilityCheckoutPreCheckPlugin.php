@@ -30,6 +30,6 @@ class PackagingUnitAvailabilityCheckoutPreCheckPlugin extends AbstractPlugin imp
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        return $this->getFacade()->checkoutAvailabilityPreCheck($quoteTransfer, $checkoutResponseTransfer);
+        return $this->getFacade()->checkCheckoutAmountAvailability($quoteTransfer, $checkoutResponseTransfer);
     }
 }

@@ -28,6 +28,6 @@ class CartPackagingUnitAvailabilityPreCheckPlugin extends AbstractPlugin impleme
      */
     public function check(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFacade()->preCheckCartAvailability($cartChangeTransfer);
+        return $this->getFacade()->checkCartChangeAmountAvailability($cartChangeTransfer);
     }
 }

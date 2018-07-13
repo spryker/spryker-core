@@ -16,5 +16,5 @@ interface ProductPackagingUnitAmountSalesUnitValueInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function calculateSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function calculateAmountSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

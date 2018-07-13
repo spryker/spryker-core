@@ -263,7 +263,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function preCheckCartAvailability(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+    public function checkCartChangeAmountAvailability(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 
     /**
      * Specification:
@@ -278,7 +278,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return bool
      */
-    public function checkoutAvailabilityPreCheck(
+    public function checkCheckoutAmountAvailability(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool;
@@ -293,7 +293,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return void
      */
-    public function updateProductPackagingUnitLeadProductAvailability(string $sku): void;
+    public function updateLeadProductAvailability(string $sku): void;
 
     /**
      * Specification:

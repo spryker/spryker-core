@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Availability;
 
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculatorInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculatorInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface;
 
@@ -22,7 +22,7 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
     protected $packagingUnitReader;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculatorInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculatorInterface
      */
     protected $leadProductReservationCalculator;
 
@@ -38,7 +38,7 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $packagingUnitReader
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculatorInterface $leadProductReservationCalculator
+     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculatorInterface $leadProductReservationCalculator
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface $storeFacade
      */

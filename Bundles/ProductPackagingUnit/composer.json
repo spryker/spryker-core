@@ -17,7 +17,9 @@
     "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
     "spryker/sales-extension": "^1.1.0",
     "spryker/stock": "^5.0.0",
-    "spryker/store": "^1.7.0"
+    "spryker/store": "^1.7.0",
+    "spryker/util-text": "^1.0.0",
+    "spryker/calculation": "^4.0.0"
   },
   "require-dev": {
     "spryker/cart": "*",

@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitGui\Communication\ProductPackagingUnitGuiCommunicationFactory getFactory()
@@ -53,31 +52,17 @@ class ProductPackagingUnitTypeFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $disableEdit = false;
-            /** @var \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer */
-            $productPackagingUnitTypeTransfer = $event->getData();
-            if (!$this->isNew($productPackagingUnitTypeTransfer) &&
-                (
-                    $this->isInfrastructuralType($productPackagingUnitTypeTransfer) ||
-                    $this->hasPackagingUnits($productPackagingUnitTypeTransfer)
-                )
-            ) {
-                $disableEdit = true;
-            }
-
-            $this->addNameField($event->getForm(), $disableEdit);
+            $this->addNameField($event->getForm());
         });
-
         $this->addProductPackagingUnitTranslationFields($builder);
     }
 
     /**
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param bool $disableEdit
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function addNameField(FormInterface $form, bool $disableEdit)
+    protected function addNameField(FormInterface $form)
     {
         $form->add(
             static::FIELD_NAME,
@@ -85,11 +70,8 @@ class ProductPackagingUnitTypeFormType extends AbstractType
             [
                 'label' => 'Key *',
                 'required' => true,
-                'constraints' => [
-                    new NotBlank(),
-                ],
                 'attr' => [
-                    'readonly' => $disableEdit,
+                    'readonly' => true,
                 ],
             ]
         );
@@ -112,45 +94,5 @@ class ProductPackagingUnitTypeFormType extends AbstractType
         ]);
 
         return $this;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-     *
-     * @return bool
-     */
-    protected function isNew(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): bool
-    {
-        return $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType() == null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-     *
-     * @return bool
-     */
-    protected function isInfrastructuralType(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): bool
-    {
-        if ($productPackagingUnitTypeTransfer->getName() != null &&
-            in_array($productPackagingUnitTypeTransfer->getName(), $this->getFactory()
-                ->getProductPackagingUnitFacade()
-                ->getInfrastructuralPackagingUnitTypeNames())
-        ) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-     *
-     * @return bool
-     */
-    protected function hasPackagingUnits(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): bool
-    {
-        return $this->getFactory()
-                ->getProductPackagingUnitFacade()
-                ->countProductPackagingUnitsByTypeId($productPackagingUnitTypeTransfer) > 0;
     }
 }
