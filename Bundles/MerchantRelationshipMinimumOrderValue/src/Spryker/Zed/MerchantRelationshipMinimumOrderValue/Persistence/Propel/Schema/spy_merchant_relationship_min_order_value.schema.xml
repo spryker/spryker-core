@@ -11,7 +11,12 @@
                 autoIncrement="true"/>
         <column name="fk_merchant_relationship" type="INTEGER" required="true"/>
         <column name="fk_min_order_value_attribute" type="INTEGER" required="true"/>
+        <column name="fk_min_order_value_type" type="INTEGER" required="true"/>
+        <column name="threshold_group" type="VARCHAR" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
+        <column name="fk_currency" type="INTEGER" required="true"/>
+        <column name="value" type="INTEGER" required="true"/>
+        <column name="fee" type="INTEGER" required="false"/>
 
         <behavior name="timestampable"/>
 
@@ -22,15 +27,25 @@
             <reference local="fk_merchant_relationship" foreign="id_merchant_relationship"/>
         </foreign-key>
 
-        <foreign-key name="spy_mer_rel_min_order_value-fk_min_order_value_attribute"
-                     foreignTable="spy_min_order_value_attribute" phpName="MinimumOrderValueAttribute">
-            <reference local="fk_min_order_value_attribute" foreign="id_min_order_value_attribute"/>
+        <foreign-key name="spy_mer_rel_min_order_value-fk_min_order_value_type"
+                     foreignTable="spy_min_order_value_type" phpName="MinimumOrderValueType">
+            <reference local="fk_min_order_value_type" foreign="id_min_order_value_type"/>
         </foreign-key>
 
-        <foreign-key name="spy_mer_rel_min-fk_store" foreignTable="spy_store"
+        <foreign-key name="spy_mer_rel_min_order_value-fk_currency" foreignTable="spy_currency" phpName="Currency">
+            <reference local="fk_currency" foreign="id_currency"/>
+        </foreign-key>
+
+        <foreign-key name="spy_mer_rel_min_order_value-fk_store" foreignTable="spy_store"
                      phpName="Store">
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
+
+        <unique name="spy_mer_rel_min_order_value-unique-threshold_group-store-currency">
+            <unique-column name="threshold_group"/>
+            <unique-column name="fk_store"/>
+            <unique-column name="fk_currency"/>
+        </unique>
     </table>
 
 </database>

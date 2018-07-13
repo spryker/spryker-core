@@ -62,7 +62,9 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
         int $value,
         ?int $fee = null
     ): MinimumOrderValueTransfer {
-        $minimumOrderValueTypeTransfer = $this->saveMinimumOrderValueType($minimumOrderValueStrategy->toTransfer());
+        $minimumOrderValueTypeTransfer = $this->saveMinimumOrderValueType(
+            $minimumOrderValueStrategy->toTransfer()
+        );
 
         $storeTransfer->requireIdStore();
         $currencyTransfer->requireIdCurrency();
@@ -72,17 +74,8 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
             ->filterByFkStore($storeTransfer->getIdStore())
             ->filterByThresholdGroup($minimumOrderValueStrategy->getGroup())
             ->findOneOrCreate();
-
-        $minimumOrderValueEntity = $this->getFactory()
-            ->createMinimumOrderValueMapper()
-            ->mapMinimumOrderValueEntity(
-                new MinimumOrderValueTransfer(),
-                $minimumOrderValueEntity
-            );
-
         $minimumOrderValueEntity
             ->setFkStore($storeTransfer->getIdStore())
-            ->getMinimumOrderValueAttribute()
             ->setFkMinOrderValueType($minimumOrderValueTypeTransfer->getIdMinimumOrderValueType())
             ->setValue($value)
             ->setFee($fee)

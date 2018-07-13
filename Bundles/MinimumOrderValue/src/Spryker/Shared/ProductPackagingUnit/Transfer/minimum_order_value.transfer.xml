@@ -10,14 +10,9 @@
 
     <transfer name="MinimumOrderValue">
         <property name="idMinimumOrderValue" type="int"/>
-        <property name="minimumOrderValueAttribute" type="MinimumOrderValueAttribute"/>
-        <property name="store" type="Store"/>
-        <property name="thresholdGroup" type="string"/>
-    </transfer>
-
-    <transfer name="MinimumOrderValueAttribute">
-        <property name="idMinimumOrderValueAttribute" type="int"/>
         <property name="minimumOrderValueType" type="MinimumOrderValueType"/>
+        <property name="thresholdGroup" type="string"/>
+        <property name="store" type="Store"/>
         <property name="value" type="int"/>
         <property name="fee" type="int"/>
         <property name="currency" type="Currency"/>

@@ -26,17 +26,6 @@ interface MinimumOrderValueMapperInterface
     ): MinimumOrderValueTypeTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
-     * @param \Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValue $minimumOrderValueEntity
-     *
-     * @return \Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValue
-     */
-    public function mapMinimumOrderValueEntity(
-        MinimumOrderValueTransfer $minimumOrderValueTransfer,
-        SpyMinimumOrderValue $minimumOrderValueEntity
-    ): SpyMinimumOrderValue;
-
-    /**
      * @param \Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValue $minimumOrderValueEntity
      * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
