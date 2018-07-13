@@ -35,17 +35,19 @@ class ProductPackagingUnitBusinessTester extends Actor
     use _generated\ProductPackagingUnitBusinessTesterActions;
 
     /**
-     * @param int $amount
+     * @param int $amounttestSetCustomAmountPrice
+     * @param int $quantity
      * @param float $conversion
      * @param int $precision
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function createQuoteTransferForValueCalculation(int $amount, float $conversion, int $precision): QuoteTransfer
+    public function createQuoteTransferForValueCalculation(int $amount, int $quantity, float $conversion, int $precision): QuoteTransfer
     {
         return (new QuoteTransfer())
             ->addItem((new ItemTransfer())
                 ->setAmount($amount)
+                ->setQuantity($quantity)
                 ->setAmountSalesUnit(
                     (new ProductMeasurementSalesUnitTransfer())
                         ->setConversion($conversion)

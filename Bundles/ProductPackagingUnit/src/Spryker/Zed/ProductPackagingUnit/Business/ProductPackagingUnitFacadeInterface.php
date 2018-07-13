@@ -47,7 +47,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return string
      */
-    public function getDefaultPackagingUnitTypeName(): string;
+    public function getDefaultProductPackagingUnitTypeName(): string;
 
     /**
      * Specification:

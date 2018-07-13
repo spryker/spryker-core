@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ProductPackagingUnit\Business;
 
+use Codeception\Stub;
 use Generated\Shared\DataBuilder\ProductPackagingUnitTypeBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -27,6 +28,7 @@ use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig;
 
 /**
  * Auto-generated group annotations
@@ -51,6 +53,11 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     protected const GROUP_KEY_FORMAT = '%s_amount_%s_sales_unit_id_%s';
     protected const AMOUNT_VALUE = 5;
     protected const SALES_UNIT_ID = 5;
+
+    protected const DEFAULT_PRODUCT_PACKAGING_UNIT_TYPE_NAME = 'packaging_unit_type.item.name';
+
+    protected const PRICE_MODE_NET = 'NET_MODE';
+    protected const PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
      * @var \SprykerTest\Zed\ProductPackagingUnit\ProductPackagingUnitBusinessTester
@@ -260,7 +267,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             ->addItem($this->createTestPackagingUnitItemTransfer());
 
         // Action
-        $cartPreCheckResponseTransfer = $this->getFacade()->preCheckCartAvailability($cartChangeTransfer);
+        $cartPreCheckResponseTransfer = $this->getFacade()->checkCartChangeAmountAvailability($cartChangeTransfer);
         $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
     }
 
@@ -275,7 +282,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
         // Action
         $this->getFacade()
-            ->checkoutAvailabilityPreCheck($quoteTransfer, $checkoutResponseTransfer);
+            ->checkCheckoutAmountAvailability($quoteTransfer, $checkoutResponseTransfer);
 
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
     }
@@ -313,7 +320,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             SpyProductPackagingUnitAmountEntityTransfer::DEFAULT_AMOUNT => static::PACKAGE_AMOUNT,
         ]);
 
-        $this->getFacade()->updateProductPackagingUnitLeadProductAvailability($boxProductConcreteTransfer->getSku());
+        $this->getFacade()->updateLeadProductAvailability($boxProductConcreteTransfer->getSku());
     }
 
     /**
@@ -336,19 +343,19 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
         $itemProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE_DEFAULT]);
 
-        $itemProductPackagingUnit = $this->tester->haveProductPackagingUnit([
+        $this->tester->haveProductPackagingUnit([
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $itemProductPackagingUnitType->getIdProductPackagingUnitType(),
         ]);
 
-        $boxProductPackagingUnit = $this->tester->haveProductPackagingUnit([
+        $this->tester->haveProductPackagingUnit([
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitType->getIdProductPackagingUnitType(),
         ], [
             SpyProductPackagingUnitAmountEntityTransfer::DEFAULT_AMOUNT => static::PACKAGE_AMOUNT,
         ]);
 
-        $originUnitGrossPrice = 6000;
+        $unitGrossPrice = 6000;
 
         $productPackagingUnitAmountTransfer = (new ProductPackagingUnitAmountTransfer())
             ->setIsVariable(true)
@@ -358,19 +365,23 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             ->setProductPackagingUnitAmount($productPackagingUnitAmountTransfer);
 
         $cartChange = (new CartChangeTransfer())
+            ->setQuote(
+                (new QuoteTransfer())
+                    ->setPriceMode(static::PRICE_MODE_GROSS)
+            )
             ->addItem(
                 (new ItemTransfer())
                     ->setSku($boxProductConcreteTransfer->getSku())
                     ->setQuantity(static::ITEM_QUANTITY)
                     ->setAmount(6)
                     ->setProductPackagingUnit($productPackagingUnitTransfer)
-                    ->setOriginUnitGrossPrice($originUnitGrossPrice)
+                    ->setUnitGrossPrice($unitGrossPrice)
             );
 
         $this->getFacade()->setCustomAmountPrice($cartChange);
 
         foreach ($cartChange->getItems() as $itemTransfer) {
-            $this->assertNotEquals($itemTransfer->getUnitGrossPrice(), $originUnitGrossPrice);
+            $this->assertNotEquals($itemTransfer->getUnitGrossPrice(), $unitGrossPrice);
             $this->assertEquals($itemTransfer->getUnitGrossPrice(), 9000);
         }
     }
@@ -477,16 +488,17 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      * @dataProvider calculateAmountNormalizedSalesUnitValues
      *
      * @param int $amount
+     * @param int $quantity
      * @param float $conversion
      * @param int $precision
      * @param int $expectedResult
      *
      * @return void
      */
-    public function testCalculateAmountNormalizedSalesUnitValueCalculatesCorrectValues(int $amount, float $conversion, int $precision, int $expectedResult): void
+    public function testCalculateAmountNormalizedSalesUnitValueCalculatesCorrectValues(int $amount, int $quantity, float $conversion, int $precision, int $expectedResult): void
     {
         // Assign
-        $quoteTransfer = $this->tester->createQuoteTransferForValueCalculation($amount, $conversion, $precision);
+        $quoteTransfer = $this->tester->createQuoteTransferForValueCalculation($amount, $quantity, $conversion, $precision);
 
         // Act
         $updatedQuoteTransfer = $this->getFacade()->calculateAmountSalesUnitValueInQuote($quoteTransfer);
@@ -502,15 +514,15 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function calculateAmountNormalizedSalesUnitValues(): array
     {
         return [
-            [7, 1.25, 1000, 5600],
-            [7, 1.25, 100, 560],
-            [7, 1.25, 10, 56],
-            [7, 1.25, 1, 6],
-            [10, 5, 1, 2],
-            [13, 7, 1000, 1857],
-            [13, 7, 100, 186],
-            [13, 7, 10, 19],
-            [13, 7, 1, 2],
+            [7, 1, 1.25, 1000, 5600],
+            [7, 1, 1.25, 100, 560],
+            [7, 1, 1.25, 10, 56],
+            [7, 1, 1.25, 1, 6],
+            [10, 1, 5, 1, 2],
+            [13, 1, 7, 1000, 1857],
+            [13, 1, 7, 100, 186],
+            [13, 1, 7, 10, 19],
+            [13, 1, 7, 1, 2],
         ];
     }
 
@@ -639,6 +651,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
         $amountSalesUnitTransfer = (new ProductMeasurementSalesUnitTransfer())->fromArray($productMeasurementSalesUnitTransfer->toArray(), true);
         $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity(static::ITEM_QUANTITY);
         $itemTransfer->setAmountSalesUnit($amountSalesUnitTransfer);
 
         //Act
@@ -696,5 +709,32 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             $this->assertInstanceOf(ProductMeasurementSalesUnitTransfer::class, $itemTransfer->getAmountSalesUnit());
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testDefaultProductPackagingUnitTypeName(): void
+    {
+        // Assign
+        $configDefaultProductPackagingUnitTypMockeName = $this->getConfigStub()->getDefaultProductPackagingUnitTypeName();
+
+        //Act
+        $defaultProductPackagingUnitTypeName = $this->getFacade()->getDefaultProductPackagingUnitTypeName();
+
+        //Assert
+        $this->assertSame($configDefaultProductPackagingUnitTypMockeName, $defaultProductPackagingUnitTypeName);
+    }
+
+    /**
+     * @return object|\Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig
+     */
+    protected function getConfigStub()
+    {
+        return Stub::make(ProductPackagingUnitConfig::class, [
+            'getDefaultProductPackagingUnitTypeName' => function () {
+                return static::DEFAULT_PRODUCT_PACKAGING_UNIT_TYPE_NAME;
+            },
+        ]);
     }
 }

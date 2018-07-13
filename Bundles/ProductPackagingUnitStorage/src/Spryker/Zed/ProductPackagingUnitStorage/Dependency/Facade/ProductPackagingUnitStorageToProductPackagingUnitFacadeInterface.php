@@ -23,7 +23,7 @@ interface ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface
     /**
      * @return string
      */
-    public function getDefaultPackagingUnitTypeName(): string;
+    public function getDefaultProductPackagingUnitTypeName(): string;
 
     /**
      * @param array $productPackagingUnitTypeIds

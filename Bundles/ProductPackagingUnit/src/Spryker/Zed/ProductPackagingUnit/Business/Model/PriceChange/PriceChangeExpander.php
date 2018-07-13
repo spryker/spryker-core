@@ -73,13 +73,13 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
         }
 
         if ($quoteTransfer->getPriceMode() === CalculationPriceMode::PRICE_MODE_NET) {
-            $unitGrossPrice = $itemTransfer->getUnitGrossPrice();
-            $newUnitGrossPrice = (int)(($itemTransfer->getAmount() / $defaultAmount) * $unitGrossPrice);
-            $itemTransfer->setUnitGrossPrice($newUnitGrossPrice);
-        } else {
             $unitNetPrice = $itemTransfer->getUnitNetPrice();
             $newUnitNetPrice = (int)(($itemTransfer->getAmount() / $defaultAmount) * $unitNetPrice);
             $itemTransfer->setUnitNetPrice($newUnitNetPrice);
+        } else {
+            $unitGrossPrice = $itemTransfer->getUnitGrossPrice();
+            $newUnitGrossPrice = (int)(($itemTransfer->getAmount() / $defaultAmount) * $unitGrossPrice);
+            $itemTransfer->setUnitGrossPrice($newUnitGrossPrice);
         }
 
         return $itemTransfer;

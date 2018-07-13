@@ -127,7 +127,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     protected function getProductAbstractPackagingTypes(array $packageProductConcreteEntityTransfers): array
     {
         $productConcretePackagingStorageTransfers = [];
-        $defaultPackagingUnitTypeName = $this->getDefaultPackagingUnitTypeName();
+        $defaultPackagingUnitTypeName = $this->getDefaultProductPackagingUnitTypeName();
 
         foreach ($packageProductConcreteEntityTransfers as $packageProductConcreteEntityTransfer) {
             $productConcretePackagingStorageTransfer = $this->createProductConcretePackagingStorageTransfer($packageProductConcreteEntityTransfer);
@@ -165,7 +165,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     protected function getDefaultParameters(ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer, bool $hasProductPackagingUnit): void
     {
         if ($hasProductPackagingUnit) {
-            $productConcretePackagingStorageTransfer->setName($this->getDefaultPackagingUnitTypeName());
+            $productConcretePackagingStorageTransfer->setName($this->getDefaultProductPackagingUnitTypeName());
         }
 
         $productConcretePackagingStorageTransfer->fromArray($this->createDefaultProductPackagingUnitAmountTransfer()->toArray(), true);
@@ -255,9 +255,9 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     /**
      * @return string
      */
-    protected function getDefaultPackagingUnitTypeName(): string
+    protected function getDefaultProductPackagingUnitTypeName(): string
     {
-        return $this->productPackagingUnitFacade->getDefaultPackagingUnitTypeName();
+        return $this->productPackagingUnitFacade->getDefaultProductPackagingUnitTypeName();
     }
 
     /**

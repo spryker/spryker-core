@@ -38,9 +38,9 @@ class ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge implements P
     /**
      * @return string
      */
-    public function getDefaultPackagingUnitTypeName(): string
+    public function getDefaultProductPackagingUnitTypeName(): string
     {
-        return $this->productPackagingUnitFacade->getDefaultPackagingUnitTypeName();
+        return $this->productPackagingUnitFacade->getDefaultProductPackagingUnitTypeName();
     }
 
     /**

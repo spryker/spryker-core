@@ -15,7 +15,7 @@ class ProductPackagingUnitConfig extends AbstractBundleConfig
     /**
      * Default packaging unit type name.
      */
-    protected const DEFAULT_PACKAGING_UNIT_TYPE_NAME = 'packaging_unit_type.item.name';
+    protected const DEFAULT_PRODUCT_PACKAGING_UNIT_TYPE_NAME = 'packaging_unit_type.item.name';
 
     /**
      * Infrastructural packaging unit types.
@@ -50,8 +50,8 @@ class ProductPackagingUnitConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getDefaultPackagingUnitTypeName(): string
+    public function getDefaultProductPackagingUnitTypeName(): string
     {
-        return static::DEFAULT_PACKAGING_UNIT_TYPE_NAME;
+        return static::DEFAULT_PRODUCT_PACKAGING_UNIT_TYPE_NAME;
     }
 }

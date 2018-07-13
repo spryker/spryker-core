@@ -58,9 +58,9 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return string
      */
-    public function getDefaultPackagingUnitTypeName(): string
+    public function getDefaultProductPackagingUnitTypeName(): string
     {
-        return $this->getFactory()->getConfig()->getDefaultPackagingUnitTypeName();
+        return $this->getFactory()->getConfig()->getDefaultProductPackagingUnitTypeName();
     }
 
     /**
