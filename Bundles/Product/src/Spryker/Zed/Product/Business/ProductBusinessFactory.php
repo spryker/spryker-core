@@ -103,7 +103,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractAssertion(),
             $this->createProductConcreteAssertion(),
             $this->createAttributeEncoder(),
-            $this->createProductTransferMapper()
+            $this->createProductTransferMapper(),
+            $this->getRepository()
         );
 
         $productConcreteManager->setEventFacade($this->getEventFacade());

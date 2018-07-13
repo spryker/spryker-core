@@ -228,6 +228,18 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Returns the abstract product ID by given concrete product ID.
+     *
+     * @api
+     *
+     * @param int $idConcrete
+     *
+     * @return int|null
+     */
+    public function findProductAbstractIdByConcreteId(int $idConcrete): ?int;
+
+    /**
+     * Specification:
      * - Returns the concrete product with attributes and localized attributes.
      * - Returns null if the concrete product is not found by ID.
      * - Triggers READ plugins.
