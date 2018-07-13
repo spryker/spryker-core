@@ -103,8 +103,9 @@ class SalesQuantityFacadeTest extends Unit
         $this->assertSame($discountableItemTransfer->getOriginalItemCalculatedDiscounts()->count(), 1);
 
         foreach ($discountableItemTransfer->getOriginalItemCalculatedDiscounts() as $resultedDiscountableItemTransfer) {
-            $this->assertSame($resultedDiscountableItemTransfer->getUnitAmount(), 50);
-            $this->assertSame($resultedDiscountableItemTransfer->getQuantity(), 1);
+            $this->assertSame($resultedDiscountableItemTransfer->getUnitAmount(), 10);
+            $this->assertSame($resultedDiscountableItemTransfer->getSumAmount(), 50);
+            $this->assertSame($resultedDiscountableItemTransfer->getQuantity(), static::QUANTITY);
         }
     }
 

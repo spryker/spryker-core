@@ -245,7 +245,7 @@ class ProductSetPageSearchListenerTest extends Unit
         // Assert
         $afterCount = SpyProductSetPageSearchQuery::create()->count();
         $this->assertLessThan($beforeCount, $afterDeleteCount);
-        $this->assertSame($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount, $afterCount);
         $this->assertProductSetPageSearch();
     }
 
