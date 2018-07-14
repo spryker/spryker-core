@@ -6,7 +6,7 @@
           package="src.Orm.Zed.MerchantRelationshipMinimumOrderValue.Persistence">
 
     <table name="spy_merchant_relationship_min_order_value_localized_message" idMethod="native"
-           allowPkInsert="true">
+           allowPkInsert="true" phpName="SpyMerchantRelationshipMinimumOrderValueLocalizedMessage">
         <column name="id_merchant_relationship_min_order_value_localized_message" required="true" type="INTEGER"
                 primaryKey="true" autoIncrement="true"/>
         <column name="fk_merchant_relationship_min_order_value" type="INTEGER" required="true"/>
