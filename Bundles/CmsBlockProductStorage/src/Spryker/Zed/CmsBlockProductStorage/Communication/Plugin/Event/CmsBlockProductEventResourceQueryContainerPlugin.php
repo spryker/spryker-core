@@ -74,6 +74,6 @@ class CmsBlockProductEventResourceQueryContainerPlugin extends AbstractPlugin im
      */
     public function getIdColumnName(): ?string
     {
-        return SpyCmsBlockProductConnectorTableMap::COL_ID_CMS_BLOCK_PRODUCT_CONNECTOR;
+        return SpyCmsBlockProductConnectorTableMap::COL_FK_PRODUCT_ABSTRACT;
     }
 }

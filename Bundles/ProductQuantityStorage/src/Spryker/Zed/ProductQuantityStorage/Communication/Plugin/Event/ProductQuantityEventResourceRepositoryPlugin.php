@@ -70,6 +70,6 @@ class ProductQuantityEventResourceRepositoryPlugin extends AbstractPlugin implem
      */
     public function getIdColumnName(): ?string
     {
-        return SpyProductQuantityTableMap::COL_ID_PRODUCT_QUANTITY;
+        return SpyProductQuantityTableMap::COL_FK_PRODUCT;
     }
 }
