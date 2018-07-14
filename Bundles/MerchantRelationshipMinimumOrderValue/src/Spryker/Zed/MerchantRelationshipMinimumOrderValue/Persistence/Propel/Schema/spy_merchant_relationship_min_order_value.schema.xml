@@ -41,10 +41,11 @@
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
 
-        <unique name="spy_mer_rel_min_order_value-unique-threshold_group-store-currency">
+        <unique name="spy_mer_rel_min_order_value-unique-threshold_group-store-currency-fk_merchant_relationship">
             <unique-column name="threshold_group"/>
             <unique-column name="fk_store"/>
             <unique-column name="fk_currency"/>
+            <unique-column name="fk_merchant_relationship"/>
         </unique>
     </table>
 
