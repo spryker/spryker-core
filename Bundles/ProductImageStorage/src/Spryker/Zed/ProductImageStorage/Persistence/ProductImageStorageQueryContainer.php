@@ -146,22 +146,6 @@ class ProductImageStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */
-    public function queryProductImageSetToProductImageByIds(array $productImageSetToProductImageIds)
-    {
-        $query = $this->getFactory()->getProductImageQueryContainer()
-            ->queryProductImageSetToProductImage()
-            ->filterByIdProductImageSetToProductImage_In($productImageSetToProductImageIds);
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @param int[] $productImageSetToProductImageIds
-     *
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
-     */
     public function queryProductIdsByProductImageSetToProductImageIds(array $productImageSetToProductImageIds)
     {
         $query = $this->getFactory()->getProductImageQueryContainer()

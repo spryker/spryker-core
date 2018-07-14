@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event;
 
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetToProductImageTableMap;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
@@ -44,10 +44,12 @@ class ProductConcreteImageEventResourceQueryContainerPlugin extends AbstractPlug
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryProductImageSetToProductImageByIds($ids);
+        $query = $this->getQueryContainer()->queryProductIdsByProductImageSetToProductImageIds($ids);
 
         if (empty($ids)) {
             $query->clear();
+            $query->clearSelectColumns();
+            $query->innerJoinSpyProductImageSet();
         }
 
         return $query;
@@ -74,6 +76,6 @@ class ProductConcreteImageEventResourceQueryContainerPlugin extends AbstractPlug
      */
     public function getIdColumnName(): ?string
     {
-        return SpyProductImageSetToProductImageTableMap::COL_FK_PRODUCT_IMAGE;
+        return SpyProductImageSetTableMap::COL_FK_PRODUCT;
     }
 }
