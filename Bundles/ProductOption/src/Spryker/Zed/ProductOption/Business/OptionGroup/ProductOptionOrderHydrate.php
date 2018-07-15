@@ -52,7 +52,6 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
             }
 
             $itemTransfer->setSumProductOptionPriceAggregation($salesOrderItemEntity->getProductOptionPriceAggregation());
-
             $this->deriveItemTransferUnitPrices($itemTransfer, $salesOrderItemEntity);
 
             foreach ($salesOrderItemEntity->getOptions() as $orderItemOptionEntity) {
@@ -74,8 +73,9 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
      */
     protected function deriveItemTransferUnitPrices(ItemTransfer $itemTransfer, SpySalesOrderItem $salesOrderItemEntity)
     {
-        $price = (int)round($salesOrderItemEntity->getProductOptionPriceAggregation() / $salesOrderItemEntity->getQuantity());
-        $itemTransfer->setUnitProductOptionPriceAggregation($price);
+        $itemTransfer->setUnitProductOptionPriceAggregation(
+            (int)round($salesOrderItemEntity->getProductOptionPriceAggregation() / $salesOrderItemEntity->getQuantity())
+        );
     }
 
     /**
@@ -115,7 +115,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
 
         $productOptionsTransfer->setIsOrdered(true);
 
-        $this->deriveUnitPrices($productOptionsTransfer);
+        $this->deriveProductOptionUnitPrices($productOptionsTransfer);
 
         $idProductOptionsValue = $this->getIdProductOptionValue($orderItemOptionEntity);
         if ($idProductOptionsValue) {
@@ -132,7 +132,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
      *
      * @return void
      */
-    protected function deriveUnitPrices(ProductOptionTransfer $productOptionTransfer)
+    protected function deriveProductOptionUnitPrices(ProductOptionTransfer $productOptionTransfer)
     {
         $productOptionTransfer->setUnitPrice((int)round($productOptionTransfer->getSumPrice() / $productOptionTransfer->getQuantity()));
         $productOptionTransfer->setUnitGrossPrice((int)round($productOptionTransfer->getSumGrossPrice() / $productOptionTransfer->getQuantity()));
