@@ -114,6 +114,22 @@ class DiscountAmountAggregator implements CalculatorInterface
     }
 
     /**
+     * @deprecated For BC reasons, the sum prices is populated in case if it is not set
+     *
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
+     *
+     * @return void
+     */
+    protected function sanitizeCalculatedDiscountPrices(CalculatedDiscountTransfer $calculatedDiscountTransfer)
+    {
+        if (!$calculatedDiscountTransfer->getSumAmount()) {
+            $calculatedDiscountTransfer->setSumAmount(
+                $calculatedDiscountTransfer->getUnitAmount() * $calculatedDiscountTransfer->getQuantity()
+            );
+        }
+    }
+
+    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculateDiscounts
      * @param int $maxAmount
      *
@@ -123,6 +139,7 @@ class DiscountAmountAggregator implements CalculatorInterface
     {
         $itemSumDiscountAmountAggregation = 0;
         foreach ($calculateDiscounts as $calculatedDiscountTransfer) {
+            $this->sanitizeCalculatedDiscountPrices($calculatedDiscountTransfer);
             $this->setCalculatedDiscounts($calculatedDiscountTransfer);
 
             $discountAmount = $calculatedDiscountTransfer->getSumAmount();
@@ -148,16 +165,13 @@ class DiscountAmountAggregator implements CalculatorInterface
         $itemUnitDiscountAmountAggregation = 0;
         $appliedDiscounts = [];
         foreach ($calculateDiscounts as $calculatedDiscountTransfer) {
-            $this->deriveUnitAmount($calculatedDiscountTransfer);
-
             $idDiscount = $calculatedDiscountTransfer->getIdDiscount();
             if (isset($appliedDiscounts[$idDiscount])) {
                 continue;
             }
 
-            $derivedUnitAmount = $calculatedDiscountTransfer->getUnitAmount();
-
-            $itemUnitDiscountAmountAggregation += $derivedUnitAmount;
+            $discountAmount = $calculatedDiscountTransfer->getUnitAmount();
+            $itemUnitDiscountAmountAggregation += $discountAmount;
             $appliedDiscounts[$idDiscount] = true;
         }
 
@@ -166,16 +180,6 @@ class DiscountAmountAggregator implements CalculatorInterface
         }
 
         return $itemUnitDiscountAmountAggregation;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
-     *
-     * @return void
-     */
-    protected function deriveUnitAmount(CalculatedDiscountTransfer $calculatedDiscountTransfer)
-    {
-        $calculatedDiscountTransfer->setUnitAmount((int)round($calculatedDiscountTransfer->getSumAmount() / $calculatedDiscountTransfer->getQuantity()));
     }
 
     /**
