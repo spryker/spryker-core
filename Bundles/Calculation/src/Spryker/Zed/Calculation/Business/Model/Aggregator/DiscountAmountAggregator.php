@@ -112,7 +112,7 @@ class DiscountAmountAggregator implements CalculatorInterface
     }
 
     /**
-     * @deprecated For BC reasons, the sum prices is populated in case if it is not set
+     * @deprecated For BC reasons, the sum prices are populated in case if they are not set
      *
      * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
      *

@@ -180,7 +180,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
         $calculatedDiscountTransfer->setSumAmount($salesOrderDiscountEntity->getAmount());
         $calculatedDiscountTransfer->setQuantity($this->getCalculatedDiscountQuantity($salesOrderDiscountEntity));
 
-        $this->deriveUnitAmount($calculatedDiscountTransfer, $salesOrderDiscountEntity);
+        $this->deriveCalculatedDiscountUnitAmounts($calculatedDiscountTransfer, $salesOrderDiscountEntity);
 
         foreach ($salesOrderDiscountEntity->getDiscountCodes() as $discountCodeEntity) {
             $calculatedDiscountTransfer->setVoucherCode($discountCodeEntity->getCode());
@@ -190,12 +190,14 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
     }
 
     /**
+     * Unit amounts are populated for presentation purposes only. For further calculations use sum amounts or properly populated unit amounts.
+     *
      * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesOrderDiscountEntity
      *
      * @return void
      */
-    protected function deriveUnitAmount(CalculatedDiscountTransfer $calculatedDiscountTransfer, SpySalesDiscount $salesOrderDiscountEntity): void
+    protected function deriveCalculatedDiscountUnitAmounts(CalculatedDiscountTransfer $calculatedDiscountTransfer, SpySalesDiscount $salesOrderDiscountEntity): void
     {
         $quantity = $this->getCalculatedDiscountQuantity($salesOrderDiscountEntity);
 
