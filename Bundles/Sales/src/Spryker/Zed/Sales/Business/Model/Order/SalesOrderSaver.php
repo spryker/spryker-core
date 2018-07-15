@@ -328,22 +328,22 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $processEntity = $this->getProcessEntity($quoteTransfer, $itemTransfer);
         $initialStateEntity = $this->omsFacade->getInitialStateEntity();
 
-        $itemTransfer = $this->sanitizeItemSumPrices(clone $itemTransfer);
+        $sanitizedItemTransfer = $this->sanitizeItemSumPrices(clone $itemTransfer);
 
         $salesOrderItemEntity->fromArray($itemTransfer->toArray());
         $salesOrderItemEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $salesOrderItemEntity->setFkOmsOrderItemState($initialStateEntity->getIdOmsOrderItemState());
-        $salesOrderItemEntity->setGrossPrice($itemTransfer->getSumGrossPrice());
-        $salesOrderItemEntity->setNetPrice($itemTransfer->getSumNetPrice());
-        $salesOrderItemEntity->setPrice($itemTransfer->getSumPrice());
-        $salesOrderItemEntity->setPriceToPayAggregation($itemTransfer->getSumPriceToPayAggregation());
-        $salesOrderItemEntity->setSubtotalAggregation($itemTransfer->getSumSubtotalAggregation());
-        $salesOrderItemEntity->setProductOptionPriceAggregation($itemTransfer->getSumProductOptionPriceAggregation());
-        $salesOrderItemEntity->setExpensePriceAggregation($itemTransfer->getSumExpensePriceAggregation());
-        $salesOrderItemEntity->setTaxAmount($itemTransfer->getSumTaxAmount());
-        $salesOrderItemEntity->setTaxAmountFullAggregation($itemTransfer->getSumTaxAmountFullAggregation());
-        $salesOrderItemEntity->setDiscountAmountAggregation($itemTransfer->getSumDiscountAmountAggregation());
-        $salesOrderItemEntity->setDiscountAmountFullAggregation($itemTransfer->getSumDiscountAmountFullAggregation());
+        $salesOrderItemEntity->setGrossPrice($sanitizedItemTransfer->getSumGrossPrice());
+        $salesOrderItemEntity->setNetPrice($sanitizedItemTransfer->getSumNetPrice());
+        $salesOrderItemEntity->setPrice($sanitizedItemTransfer->getSumPrice());
+        $salesOrderItemEntity->setPriceToPayAggregation($sanitizedItemTransfer->getSumPriceToPayAggregation());
+        $salesOrderItemEntity->setSubtotalAggregation($sanitizedItemTransfer->getSumSubtotalAggregation());
+        $salesOrderItemEntity->setProductOptionPriceAggregation($sanitizedItemTransfer->getSumProductOptionPriceAggregation());
+        $salesOrderItemEntity->setExpensePriceAggregation($sanitizedItemTransfer->getSumExpensePriceAggregation());
+        $salesOrderItemEntity->setTaxAmount($sanitizedItemTransfer->getSumTaxAmount());
+        $salesOrderItemEntity->setTaxAmountFullAggregation($sanitizedItemTransfer->getSumTaxAmountFullAggregation());
+        $salesOrderItemEntity->setDiscountAmountAggregation($sanitizedItemTransfer->getSumDiscountAmountAggregation());
+        $salesOrderItemEntity->setDiscountAmountFullAggregation($sanitizedItemTransfer->getSumDiscountAmountFullAggregation());
         $salesOrderItemEntity->setRefundableAmount($itemTransfer->getRefundableAmount());
         $salesOrderItemEntity->setProcess($processEntity);
     }

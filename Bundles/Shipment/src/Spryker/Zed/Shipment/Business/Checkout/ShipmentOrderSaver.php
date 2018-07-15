@@ -74,18 +74,20 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         SpySalesExpense $salesOrderExpenseEntity,
         ExpenseTransfer $expenseTransfer
     ) {
-        $expenseTransfer = $this->sanitizeExpenseSumPrices(clone $expenseTransfer);
+        $sanitizedExpenseTransfer = $this->sanitizeExpenseSumPrices(clone $expenseTransfer);
 
         $salesOrderExpenseEntity->fromArray($expenseTransfer->toArray());
-        $salesOrderExpenseEntity->setGrossPrice($expenseTransfer->getSumGrossPrice());
-        $salesOrderExpenseEntity->setNetPrice($expenseTransfer->getSumNetPrice());
-        $salesOrderExpenseEntity->setPrice($expenseTransfer->getSumPrice());
-        $salesOrderExpenseEntity->setTaxAmount($expenseTransfer->getSumTaxAmount());
-        $salesOrderExpenseEntity->setDiscountAmountAggregation($expenseTransfer->getSumDiscountAmountAggregation());
-        $salesOrderExpenseEntity->setPriceToPayAggregation($expenseTransfer->getSumPriceToPayAggregation());
+        $salesOrderExpenseEntity->setGrossPrice($sanitizedExpenseTransfer->getSumGrossPrice());
+        $salesOrderExpenseEntity->setNetPrice($sanitizedExpenseTransfer->getSumNetPrice());
+        $salesOrderExpenseEntity->setPrice($sanitizedExpenseTransfer->getSumPrice());
+        $salesOrderExpenseEntity->setTaxAmount($sanitizedExpenseTransfer->getSumTaxAmount());
+        $salesOrderExpenseEntity->setDiscountAmountAggregation($sanitizedExpenseTransfer->getSumDiscountAmountAggregation());
+        $salesOrderExpenseEntity->setPriceToPayAggregation($sanitizedExpenseTransfer->getSumPriceToPayAggregation());
     }
 
     /**
+     * @deprecated For BC reasons the missing sum prices are mirrored from unit prices
+     *
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer

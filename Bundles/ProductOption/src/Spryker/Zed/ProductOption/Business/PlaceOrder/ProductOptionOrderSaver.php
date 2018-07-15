@@ -69,14 +69,14 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
         ProductOptionTransfer $productOptionTransfer,
         ItemTransfer $itemTransfer
     ) {
-        $productOptionTransfer = $this->sanitizeProductOptionSumPrices(clone $productOptionTransfer);
+        $sanitizedProductOptionTransfer = $this->sanitizeProductOptionSumPrices(clone $productOptionTransfer);
 
         $salesOrderItemOptionEntity->fromArray($productOptionTransfer->toArray());
-        $salesOrderItemOptionEntity->setGrossPrice($productOptionTransfer->getSumGrossPrice());
-        $salesOrderItemOptionEntity->setNetPrice($productOptionTransfer->getSumNetPrice());
-        $salesOrderItemOptionEntity->setTaxAmount($productOptionTransfer->getSumTaxAmount());
-        $salesOrderItemOptionEntity->setDiscountAmountAggregation($productOptionTransfer->getSumDiscountAmountAggregation());
-        $salesOrderItemOptionEntity->setPrice($productOptionTransfer->getSumPrice());
+        $salesOrderItemOptionEntity->setGrossPrice($sanitizedProductOptionTransfer->getSumGrossPrice());
+        $salesOrderItemOptionEntity->setNetPrice($sanitizedProductOptionTransfer->getSumNetPrice());
+        $salesOrderItemOptionEntity->setTaxAmount($sanitizedProductOptionTransfer->getSumTaxAmount());
+        $salesOrderItemOptionEntity->setDiscountAmountAggregation($sanitizedProductOptionTransfer->getSumDiscountAmountAggregation());
+        $salesOrderItemOptionEntity->setPrice($sanitizedProductOptionTransfer->getSumPrice());
 
         $salesOrderItemOptionEntity->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());
     }
