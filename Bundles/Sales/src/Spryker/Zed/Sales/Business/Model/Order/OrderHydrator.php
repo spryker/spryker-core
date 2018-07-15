@@ -231,7 +231,7 @@ class OrderHydrator implements OrderHydratorInterface
 
         $itemTransfer->setIsOrdered(true);
 
-        $this->deriveOrderItemTransferUnitPrices($itemTransfer);
+        $this->deriveOrderItemUnitPrices($itemTransfer);
 
         $this->hydrateStateHistory($orderItemEntity, $itemTransfer);
         $this->hydrateCurrentSalesOrderItemState($orderItemEntity, $itemTransfer);
@@ -246,7 +246,7 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return void
      */
-    protected function deriveOrderItemTransferUnitPrices(ItemTransfer $itemTransfer)
+    protected function deriveOrderItemUnitPrices(ItemTransfer $itemTransfer)
     {
         $itemTransfer->setUnitGrossPrice((int)round($itemTransfer->getSumGrossPrice() / $itemTransfer->getQuantity()));
         $itemTransfer->setUnitNetPrice((int)round($itemTransfer->getSumNetPrice() / $itemTransfer->getQuantity()));
@@ -330,7 +330,7 @@ class OrderHydrator implements OrderHydratorInterface
 
             $expenseTransfer->setIsOrdered(true);
 
-            $this->deriveExpenseTransferUnitPrices($expenseTransfer);
+            $this->deriveExpenseUnitPrices($expenseTransfer);
 
             $orderTransfer->addExpense($expenseTransfer);
         }
@@ -343,7 +343,7 @@ class OrderHydrator implements OrderHydratorInterface
      *
      * @return void
      */
-    protected function deriveExpenseTransferUnitPrices(ExpenseTransfer $expenseTransfer)
+    protected function deriveExpenseUnitPrices(ExpenseTransfer $expenseTransfer)
     {
         $expenseTransfer->setUnitGrossPrice((int)round($expenseTransfer->getSumGrossPrice() / $expenseTransfer->getQuantity()));
         $expenseTransfer->setUnitNetPrice((int)round($expenseTransfer->getSumNetPrice() / $expenseTransfer->getQuantity()));
