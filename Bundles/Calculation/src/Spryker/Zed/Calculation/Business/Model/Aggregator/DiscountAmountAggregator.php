@@ -26,8 +26,6 @@ class DiscountAmountAggregator implements CalculatorInterface
     protected $cartRuleDiscountTotals = [];
 
     /**
-     * Unit prices are populated for presentation purposes only. For further calculations use sum prices or properly populated unit prices.
-     *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
