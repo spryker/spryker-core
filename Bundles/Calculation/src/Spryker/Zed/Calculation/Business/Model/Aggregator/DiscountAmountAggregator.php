@@ -118,7 +118,7 @@ class DiscountAmountAggregator implements CalculatorInterface
      *
      * @return void
      */
-    protected function sanitizeCalculatedDiscountPrices(CalculatedDiscountTransfer $calculatedDiscountTransfer)
+    protected function sanitizeCalculatedDiscountSumPrices(CalculatedDiscountTransfer $calculatedDiscountTransfer)
     {
         if (!$calculatedDiscountTransfer->getSumAmount()) {
             $calculatedDiscountTransfer->setSumAmount(
@@ -137,7 +137,7 @@ class DiscountAmountAggregator implements CalculatorInterface
     {
         $itemSumDiscountAmountAggregation = 0;
         foreach ($calculateDiscounts as $calculatedDiscountTransfer) {
-            $this->sanitizeCalculatedDiscountPrices($calculatedDiscountTransfer);
+            $this->sanitizeCalculatedDiscountSumPrices($calculatedDiscountTransfer);
             $this->setCalculatedDiscounts($calculatedDiscountTransfer);
 
             $discountAmount = $calculatedDiscountTransfer->getSumAmount();

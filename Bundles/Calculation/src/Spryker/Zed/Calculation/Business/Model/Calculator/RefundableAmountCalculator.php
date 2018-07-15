@@ -47,6 +47,8 @@ class RefundableAmountCalculator implements CalculatorInterface
     protected function calculateRefundableAmountForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
+            $expenseTransfer->requireSumPriceToPayAggregation();
+
             $expenseTransfer->setRefundableAmount(
                 $expenseTransfer->getSumPriceToPayAggregation() - $expenseTransfer->getCanceledAmount()
             );
