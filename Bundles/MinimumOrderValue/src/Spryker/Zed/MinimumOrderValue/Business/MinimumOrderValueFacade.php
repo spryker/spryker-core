@@ -44,6 +44,7 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      * @param int|null $fee
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyNotFoundException
+     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyInvalidArgumentException
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
@@ -54,13 +55,10 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
         int $value,
         ?int $fee = null
     ): MinimumOrderValueTransfer {
-        $minimumOrderValueStrategy = $this->getFactory()
-            ->createMinimumOrderValueStrategyResolver()
-            ->resolveMinimumOrderValueStrategy($strategyKey);
-
-        return $this->getEntityManager()
+        return $this->getFactory()
+            ->createStoreThresholdManager()
             ->setStoreThreshold(
-                $minimumOrderValueStrategy,
+                $strategyKey,
                 $storeTransfer,
                 $currencyTransfer,
                 $value,

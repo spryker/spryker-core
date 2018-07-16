@@ -5,33 +5,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Persistence;
+namespace Spryker\Zed\MinimumOrderValue\Business\StoreThreshold;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
-use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
-interface MinimumOrderValueEntityManagerInterface
+interface StoreThresholdManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
-     *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
-     */
-    public function saveMinimumOrderValueType(MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer): MinimumOrderValueTypeTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
+     * @param string $strategyKey
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      * @param int $value
      * @param int|null $fee
      *
+     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyNotFoundException
+     *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
     public function setStoreThreshold(
-        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
+        string $strategyKey,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
         int $value,

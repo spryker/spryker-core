@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface;
 
 /**
  * @method \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValuePersistenceFactory getFactory()
@@ -49,7 +48,7 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
     }
 
     /**
-     * @param \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface $minimumOrderValueStrategy
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      * @param int $value
@@ -58,16 +57,13 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
     public function setStoreThreshold(
-        MinimumOrderValueStrategyInterface $minimumOrderValueStrategy,
+        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
         int $value,
         ?int $fee = null
     ): MinimumOrderValueTransfer {
-        $minimumOrderValueTypeTransfer = $this->saveMinimumOrderValueType(
-            $minimumOrderValueStrategy->toTransfer()
-        );
-
+        $minimumOrderValueTypeTransfer->requireIdMinimumOrderValueType()->requireGroup();
         $storeTransfer->requireIdStore();
         $currencyTransfer->requireIdCurrency();
 
@@ -75,7 +71,7 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
             ->createMinimumOrderValueQuery()
             ->filterByFkStore($storeTransfer->getIdStore())
             ->filterByFkCurrency($currencyTransfer->getIdCurrency())
-            ->filterByThresholdGroup($minimumOrderValueStrategy->getGroup())
+            ->filterByThresholdGroup($minimumOrderValueTypeTransfer->getGroup())
             ->findOneOrCreate();
 
         $minimumOrderValueEntity

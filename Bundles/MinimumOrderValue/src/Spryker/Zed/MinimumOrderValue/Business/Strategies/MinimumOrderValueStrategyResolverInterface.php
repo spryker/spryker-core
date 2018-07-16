@@ -16,5 +16,5 @@ interface MinimumOrderValueStrategyResolverInterface
      *
      * @return \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface
      */
-    public function resolveMinimumOrderValueStrategy(string $strategyKey): ?MinimumOrderValueStrategyInterface;
+    public function resolveMinimumOrderValueStrategy(string $strategyKey): MinimumOrderValueStrategyInterface;
 }

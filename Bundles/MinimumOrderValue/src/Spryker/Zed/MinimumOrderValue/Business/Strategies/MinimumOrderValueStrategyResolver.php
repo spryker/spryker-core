@@ -32,7 +32,7 @@ class MinimumOrderValueStrategyResolver implements MinimumOrderValueStrategyReso
      *
      * @return \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface
      */
-    public function resolveMinimumOrderValueStrategy(string $strategyKey): ?MinimumOrderValueStrategyInterface
+    public function resolveMinimumOrderValueStrategy(string $strategyKey): MinimumOrderValueStrategyInterface
     {
         foreach ($this->minimumOrderValueStrategies as $minimumOrderValueStrategy) {
             if ($minimumOrderValueStrategy->getKey() === $strategyKey) {

@@ -28,4 +28,12 @@ interface MinimumOrderValueStrategyInterface
      * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
      */
     public function toTransfer(): MinimumOrderValueTypeTransfer;
+
+    /**
+     * @param int $value
+     * @param int|null $fee
+     *
+     * @return bool
+     */
+    public function validate(int $value, ?int $fee = 0): bool;
 }
