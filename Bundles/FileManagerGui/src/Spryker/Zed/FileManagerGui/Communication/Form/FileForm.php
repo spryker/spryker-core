@@ -140,7 +140,7 @@ class FileForm extends AbstractType
         $formData = $builder->getData();
 
         $uploadedFileNameCallback = function ($object, ExecutionContextInterface $context) use ($formData) {
-            if ($formData->getUseRealName() === false || $formData->getFileUpload() === null) {
+            if ($formData->getUseRealName() !== true || $formData->getFileUpload() === null) {
                 return;
             }
 
