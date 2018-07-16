@@ -25,6 +25,7 @@ class DevelopmentConfig extends AbstractBundleConfig
         'Shared',
         'Yves',
         'Zed',
+        'Glue',
     ];
 
     /**
@@ -258,6 +259,17 @@ class DevelopmentConfig extends AbstractBundleConfig
     {
         $options = $this->getDefaultIdeAutoCompletionOptions();
         $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME] = 'Client';
+
+        return $options;
+    }
+
+    /**
+     * @return array
+     */
+    public function getGlueIdeAutoCompletionOptions()
+    {
+        $options = $this->getDefaultIdeAutoCompletionOptions();
+        $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME] = 'Glue';
 
         return $options;
     }
