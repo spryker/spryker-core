@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\FileManager\Business\FileDirectory;
 
-use ArrayObject;
 use Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
 use Generated\Shared\Transfer\FileSystemRenameTransfer;
@@ -86,11 +85,9 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
      */
     protected function executeDeleteTransaction(int $idFileDirectory, ?int $idParentFileDirectory = null)
     {
-        $directoryFiles = $this->repository->getDirectoryFiles($idFileDirectory);
-
         $idParentFileDirectory === null ?
-            $this->deleteDirectoryFiles($directoryFiles) :
-            $this->moveDirectoryFiles($directoryFiles, $idParentFileDirectory);
+            $this->deleteDirectoryFiles($idFileDirectory) :
+            $this->moveDirectoryFiles($idFileDirectory, $idParentFileDirectory);
 
         $fileSystemDeleteDirectoryTransfer = new FileSystemDeleteDirectoryTransfer();
         $fileSystemDeleteDirectoryTransfer->setFileSystemName($this->config->getStorageName());
@@ -108,25 +105,56 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileTransfer[] $directoryFiles
+     * @param int $idFileDirectory
      *
      * @return void
      */
-    protected function deleteDirectoryFiles(ArrayObject $directoryFiles)
+    protected function deleteDirectoryFiles(int $idFileDirectory)
     {
-        foreach ($directoryFiles as $fileTransfer) {
+        $this->performDirectoryFilesDeletion($idFileDirectory);
+
+        foreach ($this->repository->getFileDirectories($idFileDirectory) as $childFileDirectory) {
+            $this->deleteDirectoryFiles($childFileDirectory->getIdFileDirectory());
+        }
+    }
+
+    /**
+     * @param int $idFileDirectory
+     *
+     * @return void
+     */
+    protected function performDirectoryFilesDeletion(int $idFileDirectory)
+    {
+        foreach ($this->repository->getDirectoryFiles($idFileDirectory) as $fileTransfer) {
             $this->entityManager->deleteFile($fileTransfer);
         }
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileTransfer[] $directoryFiles
+     * @param int $idFileDirectory
      * @param int $idParentFileDirectory
      *
      * @return void
      */
-    protected function moveDirectoryFiles(ArrayObject $directoryFiles, int $idParentFileDirectory)
+    protected function moveDirectoryFiles(int $idFileDirectory, int $idParentFileDirectory)
     {
+        $this->performDirectoryFilesMove($idFileDirectory, $idParentFileDirectory);
+
+        foreach ($this->repository->getFileDirectories($idFileDirectory) as $childFileDirectory) {
+            $this->moveDirectoryFiles($childFileDirectory->getIdFileDirectory(), $idParentFileDirectory);
+        }
+    }
+
+    /**
+     * @param int $idFileDirectory
+     * @param int $idParentFileDirectory
+     *
+     * @return void
+     */
+    protected function performDirectoryFilesMove(int $idFileDirectory, int $idParentFileDirectory)
+    {
+        $directoryFiles = $this->repository->getDirectoryFiles($idFileDirectory);
+
         foreach ($directoryFiles as $fileTransfer) {
             foreach ($fileTransfer->getFileInfo() as $fileInfoTransfer) {
                 $fileSystemRenameTransfer = new FileSystemRenameTransfer();
