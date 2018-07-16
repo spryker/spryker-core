@@ -95,7 +95,7 @@ class SuggestionsReader implements SuggestionsReaderInterface
     {
         $resource = $this->suggestionsResourceMapper->mapSuggestionsResponseAttributesTransferToRestResponse([
             'completion' => [],
-            'suggestionsByType' => [],
+            'suggestionByType' => [],
         ]);
 
         return $response->addResource($resource);
