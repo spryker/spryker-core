@@ -147,9 +147,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToProductBridge($container->getLocator()->product()->facade());
         };
 
-        $container[static::FACADE_PRODUCT_BUNDLE] = function (Container $container) {
-            return new ProductManagementToProductBundleBridge($container->getLocator()->productBundle()->facade());
-        };
+        $container = $this->addProductBundleFacade($container);
 
         $container[static::FACADE_CATEGORY] = function (Container $container) {
             return new ProductManagementToCategoryBridge($container->getLocator()->category()->facade());
@@ -335,6 +333,20 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
                 FormTypeInterface::class
             )
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductBundleFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRODUCT_BUNDLE] = function (Container $container) {
+            return new ProductManagementToProductBundleBridge($container->getLocator()->productBundle()->facade());
+        };
+
+        return $container;
     }
 
     /**
