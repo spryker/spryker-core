@@ -15,12 +15,15 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
 {
     protected const SEARCH_RESPONSE_SUGGESTIONS_KEY = 'suggestionByType';
     protected const SEARCH_RESPONSE_PRODUCT_ABSTRACT_KEY = 'product_abstract';
+    protected const SEARCH_RESPONSE_PRODUCT_ABSTRACT_IMAGES_KEY = 'images';
     protected const SEARCH_RESPONSE_CATEGORY_KEY = 'category';
     protected const SEARCH_RESPONSE_CMS_PAGE_KEY = 'cms_page';
 
     protected const SEARCH_RESPONSE_ABSTRACT_SKU_KEY = 'abstract_sku';
     protected const SEARCH_RESPONSE_PRICE_KEY = 'price';
     protected const SEARCH_RESPONSE_ABSTRACT_NAME_KEY = 'abstract_name';
+    protected const SEARCH_RESPONSE_IMAGE_URL_SMALL_KEY = 'external_url_small';
+    protected const SEARCH_RESPONSE_IMAGE_URL_LARGE_KEY = 'external_url_large';
     protected const SEARCH_RESPONSE_NAME_KEY = 'name';
 
     /**
@@ -83,8 +86,11 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
             static::SEARCH_RESPONSE_ABSTRACT_SKU_KEY,
             static::SEARCH_RESPONSE_PRICE_KEY,
             static::SEARCH_RESPONSE_ABSTRACT_NAME_KEY,
+            static::SEARCH_RESPONSE_PRODUCT_ABSTRACT_IMAGES_KEY,
         ];
+
         $productsSuggestions = $this->mapSuggestions($restSearchResponse, $suggestionName, $suggestionKeysRequired);
+        $productsSuggestions = $this->mapProductsImages($productsSuggestions);
         $restSearchSuggestionsAttributesTransfer->setProducts($productsSuggestions);
 
         return $restSearchSuggestionsAttributesTransfer;
@@ -123,6 +129,34 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
     }
 
     /**
+     * @param array $productSuggestions
+     *
+     * @return array
+     */
+    protected function mapProductsImages(array $productSuggestions): array
+    {
+        $imagesKeysRequired = [
+            static::SEARCH_RESPONSE_IMAGE_URL_SMALL_KEY,
+            static::SEARCH_RESPONSE_IMAGE_URL_LARGE_KEY,
+        ];
+
+        foreach ($productSuggestions as &$productSuggestion) {
+            $productImages = [];
+            if (is_array($productSuggestion[static::SEARCH_RESPONSE_PRODUCT_ABSTRACT_IMAGES_KEY])) {
+                $productImages = $this->mapArrayValuesByKeys(
+                    $productSuggestion[static::SEARCH_RESPONSE_PRODUCT_ABSTRACT_IMAGES_KEY],
+                    $imagesKeysRequired
+                );
+            }
+
+            $productSuggestion[static::SEARCH_RESPONSE_PRODUCT_ABSTRACT_IMAGES_KEY] = $productImages;
+        }
+        unset($productSuggestion);
+
+        return $productSuggestions;
+    }
+
+    /**
      * @param array $restSearchResponse
      * @param string $suggestionName
      * @param array $suggestionKeysRequired
@@ -137,9 +171,26 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
             return $result;
         }
 
-        foreach ($restSearchResponse[static::SEARCH_RESPONSE_SUGGESTIONS_KEY][$suggestionName] as $cmsPage) {
-            if ($this->checkSuggestionsValuesExists($cmsPage, $suggestionKeysRequired)) {
-                $result[] = array_intersect_key($cmsPage, array_flip($suggestionKeysRequired));
+        $result = $this->mapArrayValuesByKeys(
+            $restSearchResponse[static::SEARCH_RESPONSE_SUGGESTIONS_KEY][$suggestionName],
+            $suggestionKeysRequired
+        );
+
+        return $result;
+    }
+
+    /**
+     * @param array $source
+     * @param array $keysRequired
+     *
+     * @return array
+     */
+    protected function mapArrayValuesByKeys(array $source, array $keysRequired): array
+    {
+        $result = [];
+        foreach ($source as $data) {
+            if ($this->checkSuggestionsValuesExists($data, $keysRequired)) {
+                $result[] = array_intersect_key($data, array_flip($keysRequired));
             }
         }
 
