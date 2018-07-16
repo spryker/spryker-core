@@ -97,6 +97,46 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         }
 
         $priceProductFilter = $this->buildPriceProductFilterWithCurrentValues();
+
+        return $this->prepareCurrentProductPriceTransfer(
+            $priceProductTransfers, $currentProductPriceTransfer, $priceProductFilter
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveProductPriceTransferByPriceProductFilter(
+        array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer
+    ): CurrentProductPriceTransfer
+    {
+        $currentProductPriceTransfer = new CurrentProductPriceTransfer();
+        if (!$priceProductTransfers) {
+            return $currentProductPriceTransfer;
+        }
+
+        $priceProductFilter = $this->buildPriceProductFilterWithCurrentValues($priceProductFilterTransfer);
+
+        return $this->prepareCurrentProductPriceTransfer(
+            $priceProductTransfers, $currentProductPriceTransfer, $priceProductFilter
+        );
+    }
+
+    /**
+     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilter
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    protected function prepareCurrentProductPriceTransfer(
+        array $priceProductTransfers,
+        CurrentProductPriceTransfer $currentProductPriceTransfer,
+        PriceProductFilterTransfer $priceProductFilter
+    ): CurrentProductPriceTransfer {
         $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductFilter(
             $priceProductTransfers,
             $priceProductFilter
@@ -133,20 +173,32 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer|null $priceProductFilterTransfer
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    protected function buildPriceProductFilterWithCurrentValues(): PriceProductFilterTransfer
-    {
+    protected function buildPriceProductFilterWithCurrentValues(
+        ?PriceProductFilterTransfer $priceProductFilterTransfer = null
+    ): PriceProductFilterTransfer {
         $currencyIsoCode = $this->currencyClient->getCurrent()->getCode();
         $priceMode = $this->priceClient->getCurrentPriceMode();
         $priceTypeName = $this->priceProductConfig->getPriceTypeDefaultName();
         $quote = $this->quoteClient->getQuote();
 
-        return (new PriceProductFilterTransfer())
+        $builtPriceProductFilterTransfer = new PriceProductFilterTransfer();
+
+        if ($priceProductFilterTransfer) {
+            $builtPriceProductFilterTransfer->fromArray(
+                $priceProductFilterTransfer->toArray(), true
+            );
+        }
+
+        $builtPriceProductFilterTransfer
             ->setPriceMode($priceMode)
             ->setCurrencyIsoCode($currencyIsoCode)
             ->setPriceTypeName($priceTypeName)
             ->setQuote($quote);
+
+        return $builtPriceProductFilterTransfer;
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace Spryker\Client\PriceProductStorage\Dependency\Client;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 class PriceProductStorageToPriceProductBridge implements PriceProductStorageToPriceProductInterface
 {
@@ -42,5 +43,17 @@ class PriceProductStorageToPriceProductBridge implements PriceProductStorageToPr
     public function resolveProductPriceTransfer(array $priceProductTransfers): CurrentProductPriceTransfer
     {
         return $this->priceProductClient->resolveProductPriceTransfer($priceProductTransfers);
+    }
+
+    /**
+     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveProductPriceTransferByPriceProductFilter(
+        array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer
+    ): CurrentProductPriceTransfer {
+        return $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
     }
 }

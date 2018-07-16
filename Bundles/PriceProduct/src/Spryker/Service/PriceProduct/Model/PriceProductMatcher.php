@@ -58,7 +58,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->fromArray($priceProductCriteriaTransfer->toArray(), true);
 
-        $priceProductTransfers = $this->applyPriceProductFilerPlugins($priceProductTransfers, $priceProductFilterTransfer);
+        $priceProductTransfers = $this->applyPriceProductFilterPlugins($priceProductTransfers, $priceProductFilterTransfer);
 
         return $this->singlePriceProductFilterStrategy->findOne($priceProductTransfers, $priceProductFilterTransfer);
     }
@@ -69,7 +69,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function applyPriceProductFilerPlugins(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer)
+    protected function applyPriceProductFilterPlugins(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer)
     {
         foreach ($this->priceProductFilterPlugins as $priceProductFilterPlugin) {
             $priceProductTransfers = $priceProductFilterPlugin->filter($priceProductTransfers, $priceProductFilterTransfer);
@@ -149,7 +149,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             ->requirePriceMode();
 
         $priceProductTransfers = $this->findPricesByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
-        $priceProductTransfers = $this->applyPriceProductFilerPlugins($priceProductTransfers, $priceProductFilterTransfer);
+        $priceProductTransfers = $this->applyPriceProductFilterPlugins($priceProductTransfers, $priceProductFilterTransfer);
 
         return $this->singlePriceProductFilterStrategy->findOne($priceProductTransfers, $priceProductFilterTransfer);
     }
@@ -191,7 +191,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             }
         }
 
-        return $this->applyPriceProductFilerPlugins($matchedPriceProductTransfers, $priceProductFilterTransfer);
+        return $this->applyPriceProductFilterPlugins($matchedPriceProductTransfers, $priceProductFilterTransfer);
     }
 
     /**
