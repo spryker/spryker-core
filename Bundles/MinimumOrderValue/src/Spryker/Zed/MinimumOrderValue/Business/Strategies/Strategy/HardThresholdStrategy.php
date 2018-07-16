@@ -5,15 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\Strategies;
+namespace Spryker\Zed\MinimumOrderValue\Business\Strategies\Strategy;
+
+use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueAbstractStrategy;
+use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface;
 
 class HardThresholdStrategy extends MinimumOrderValueAbstractStrategy implements MinimumOrderValueStrategyInterface
 {
-    protected const STRATEGY_NAME = 'HardThreshold';
+    protected const STRATEGY_KEY = 'hard-threshold';
 
     public function __construct()
     {
-        $this->setName(static::STRATEGY_NAME);
+        $this->setKey(static::STRATEGY_KEY);
         $this->setGroup(static::GROUP_HARD);
     }
 }

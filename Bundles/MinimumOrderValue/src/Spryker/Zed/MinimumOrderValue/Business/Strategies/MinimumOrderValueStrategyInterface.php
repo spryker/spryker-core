@@ -11,13 +11,13 @@ use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 
 interface MinimumOrderValueStrategyInterface
 {
-    public const GROUP_HARD = 'hard';
-    public const GROUP_SOFT = 'soft';
+    public const GROUP_HARD = 'Hard';
+    public const GROUP_SOFT = 'Soft';
 
     /**
      * @return string
      */
-    public function getName(): string;
+    public function getKey(): string;
 
     /**
      * @return string

@@ -24,8 +24,10 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
         SpyMinimumOrderValueType $spyMinimumOrderValueType,
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
     ): MinimumOrderValueTypeTransfer {
-        $minimumOrderValueTypeTransfer->fromArray($spyMinimumOrderValueType->toArray(), true);
-        $minimumOrderValueTypeTransfer->setIdMinimumOrderValueType($spyMinimumOrderValueType->getIdMinOrderValueType());
+        $minimumOrderValueTypeTransfer
+            ->fromArray($spyMinimumOrderValueType->toArray(), true)
+            ->setIdMinimumOrderValueType($spyMinimumOrderValueType->getIdMinOrderValueType())
+            ->setGroup($spyMinimumOrderValueType->getThresholdGroup());
 
         return $minimumOrderValueTypeTransfer;
     }
@@ -40,8 +42,8 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
         SpyMinimumOrderValue $minimumOrderValueEntity,
         MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): MinimumOrderValueTransfer {
-        $minimumOrderValueTransfer->fromArray($minimumOrderValueEntity->toArray(), true);
-        $minimumOrderValueTransfer->setIdMinimumOrderValue($minimumOrderValueEntity->getIdMinOrderValue());
+        $minimumOrderValueTransfer->fromArray($minimumOrderValueEntity->toArray(), true)
+            ->setIdMinimumOrderValue($minimumOrderValueEntity->getIdMinOrderValue());
 
         return $minimumOrderValueTransfer;
     }

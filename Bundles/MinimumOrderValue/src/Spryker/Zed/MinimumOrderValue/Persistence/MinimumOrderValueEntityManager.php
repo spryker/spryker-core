@@ -27,14 +27,16 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
     public function saveMinimumOrderValueType(
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
     ): MinimumOrderValueTypeTransfer {
-        $minimumOrderValueTypeTransfer->requireName();
+        $minimumOrderValueTypeTransfer->requireKey()->requireGroup();
 
         $minimumOrderValueTypeEntity = $this->getFactory()
             ->createMinimumOrderValueTypeQuery()
-            ->filterByName($minimumOrderValueTypeTransfer->getName())
+            ->filterByKey($minimumOrderValueTypeTransfer->getKey())
             ->findOneOrCreate();
 
-        $minimumOrderValueTypeEntity->save();
+        $minimumOrderValueTypeEntity
+            ->setThresholdGroup($minimumOrderValueTypeTransfer->getGroup())
+            ->save();
 
         $this->getFactory()
             ->createMinimumOrderValueMapper()
@@ -76,7 +78,8 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
             ->filterByThresholdGroup($minimumOrderValueStrategy->getGroup())
             ->findOneOrCreate();
 
-        $minimumOrderValueEntity->setValue($value)
+        $minimumOrderValueEntity
+            ->setValue($value)
             ->setFee($fee)
             ->setFkMinOrderValueType(
                 $minimumOrderValueTypeTransfer->getIdMinimumOrderValueType()

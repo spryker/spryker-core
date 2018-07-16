@@ -14,7 +14,7 @@ abstract class MinimumOrderValueAbstractStrategy
     /**
      * @var string
      */
-    protected $name;
+    protected $key;
 
     /**
      * @var string
@@ -22,13 +22,13 @@ abstract class MinimumOrderValueAbstractStrategy
     protected $group;
 
     /**
-     * @param string $name
+     * @param string $key
      *
      * @return $this
      */
-    protected function setName(string $name): MinimumOrderValueStrategyInterface
+    protected function setKey(string $key): MinimumOrderValueStrategyInterface
     {
-        $this->name = $name;
+        $this->key = $key;
 
         return $this;
     }
@@ -36,9 +36,9 @@ abstract class MinimumOrderValueAbstractStrategy
     /**
      * @return string
      */
-    public function getName(): string
+    public function getKey(): string
     {
-        return $this->name;
+        return $this->key;
     }
 
     /**
@@ -67,6 +67,7 @@ abstract class MinimumOrderValueAbstractStrategy
     public function toTransfer(): MinimumOrderValueTypeTransfer
     {
         return (new MinimumOrderValueTypeTransfer())
-            ->setName($this->getName());
+            ->setKey($this->getKey())
+            ->setGroup($this->getGroup());
     }
 }

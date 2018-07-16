@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface;
 
 /**
  * @method \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueBusinessFactory getFactory()
@@ -38,21 +37,27 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @api
      *
-     * @param \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface $minimumOrderValueStrategy
+     * @param string $strategyKey
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      * @param int $value
      * @param int|null $fee
      *
+     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyNotFoundException
+     *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
     public function setStoreThreshold(
-        MinimumOrderValueStrategyInterface $minimumOrderValueStrategy,
+        string $strategyKey,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
         int $value,
         ?int $fee = null
     ): MinimumOrderValueTransfer {
+        $minimumOrderValueStrategy = $this->getFactory()
+            ->createMinimumOrderValueStrategyResolver()
+            ->resolveMinimumOrderValueStrategy($strategyKey);
+
         return $this->getEntityManager()
             ->setStoreThreshold(
                 $minimumOrderValueStrategy,
