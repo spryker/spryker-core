@@ -87,6 +87,7 @@ class SuggestionsResourceMapperTest extends Unit
             $this->assertArrayHasKey('abstract_sku', $product);
             $this->assertArrayHasKey('abstract_name', $product);
             $this->assertArrayHasKey('price', $product);
+            $this->assertArrayHasKey('images', $product);
             $this->assertArrayNotHasKey('id_product_abstract', $product);
         }
 

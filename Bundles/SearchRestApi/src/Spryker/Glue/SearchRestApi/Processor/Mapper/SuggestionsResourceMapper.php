@@ -90,7 +90,7 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
         ];
 
         $productsSuggestions = $this->mapSuggestions($restSearchResponse, $suggestionName, $suggestionKeysRequired);
-        $productsSuggestions = $this->mapProductsImages($productsSuggestions);
+        $productsSuggestions = $this->mapProductImages($productsSuggestions);
         $restSearchSuggestionsAttributesTransfer->setProducts($productsSuggestions);
 
         return $restSearchSuggestionsAttributesTransfer;
@@ -133,7 +133,7 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
      *
      * @return array
      */
-    protected function mapProductsImages(array $productSuggestions): array
+    protected function mapProductImages(array $productSuggestions): array
     {
         $imagesKeysRequired = [
             static::SEARCH_RESPONSE_IMAGE_URL_SMALL_KEY,
