@@ -21,8 +21,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -v --ignore=/key-generation-behavior/vendor/,/templates/ ./",
-    "cs-fix": "phpcbf --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -v --ignore=/key-generation-behavior/vendor/,/templates/ ./"
+    "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -v --ignore=/key-generation-behavior/,/templates/ ./",
+    "cs-fix": "phpcbf --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -v --ignore=/key-generation-behavior/,/templates/ ./"
   },
   "extra": {
     "name": "key-generation",

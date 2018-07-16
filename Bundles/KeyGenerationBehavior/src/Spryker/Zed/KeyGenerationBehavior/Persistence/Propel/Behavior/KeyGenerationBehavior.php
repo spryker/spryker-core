@@ -44,9 +44,7 @@ class KeyGenerationBehavior extends Behavior
      */
     public function preSave(): string
     {
-        return '
-            $this->setGeneratedKey();
-        ';
+        return '$this->setGeneratedKey();';
     }
 
     /**
