@@ -4,6 +4,10 @@
     {% set widget_title = 'Create a Product List' | trans %}
 {% endif %}
 
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
@@ -33,11 +37,12 @@
 
 {% block head_css %}
     {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-product-list-main.css" />
 {% endblock %}
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-productlist-assign.js"></script>
+    <script src="/assets/js/spryker-zed-product-list-assign.js"></script>
 {% endblock %}
 
 
