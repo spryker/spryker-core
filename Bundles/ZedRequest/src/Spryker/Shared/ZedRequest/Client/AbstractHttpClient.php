@@ -32,7 +32,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 {
     const META_TRANSFER_ERROR =
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
-    const INVALID_HOST_NAME_ERROR =
+    const HOST_NAME_ERROR =
         'Incorrect HOST_ZED config, expected `%s`, got `%s`. Set the URLs in your Shared/config_default_%s.php or env specific config files.';
 
     const HEADER_USER_AGENT = 'User-Agent';
@@ -160,7 +160,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
             $symfonyRequest = SymfonyRequest::createFromGlobals();
             $hostName = $symfonyRequest->server->get(static::SERVER_HTTP_HOST);
             $configuredHostName = $request->getUri()->getHost();
-            $message = sprintf(static::INVALID_HOST_NAME_ERROR, $hostName, $configuredHostName, Store::getInstance()->getStoreName());
+            $message = sprintf(static::HOST_NAME_ERROR, $hostName, $configuredHostName, Store::getInstance()->getStoreName());
             $response = $e->getResponse();
             if ($response) {
                 $message .= PHP_EOL . PHP_EOL . $response->getBody();
