@@ -7,14 +7,14 @@
 namespace Spryker\Glue\GlueApplication\Rest\Serialize;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface;
-use Spryker\Glue\GlueApplication\Rest\Serialize\Decoder\DecoderInterface;
+use Spryker\Glue\GlueApplication\Serialize\Decoder\DecoderInterface;
 
 interface DecoderMatcherInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface $metadata
      *
-     * @return null|\Spryker\Glue\GlueApplication\Rest\Serialize\Decoder\DecoderInterface
+     * @return null|\Spryker\Glue\GlueApplication\Serialize\Decoder\DecoderInterface
      */
     public function match(MetadataInterface $metadata): ?DecoderInterface;
 }

@@ -116,6 +116,20 @@ class RestRequest implements RestRequestInterface
     }
 
     /**
+     * @param string $type
+     *
+     * @return null|\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function findParentResourceByType(string $type): ?RestResourceInterface
+    {
+        if (!isset($this->parentResources[$type])) {
+            return null;
+        }
+
+        return $this->parentResources[$type];
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function getResource(): RestResourceInterface

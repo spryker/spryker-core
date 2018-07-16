@@ -45,7 +45,7 @@ class MerchantRelationshipWriterStep implements DataImportStepInterface
     {
         SpyMerchantRelationshipToCompanyBusinessUnitQuery::create()
             ->filterByFkMerchantRelationship($idMerchantRelationship)
-            ->deleteAll();
+            ->delete();
 
         foreach ($dataSet[MerchantRelationshipDataSetInterface::ID_COMPANY_BUSINESS_UNIT_ASSIGNEE_COLLECTION] as $idCompanyBusinessUnit) {
             (new SpyMerchantRelationshipToCompanyBusinessUnit())

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -56,7 +55,6 @@ class CarrierForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addNameField($builder)
-            ->addGlossaryKeyField($builder)
             ->addIsActiveField($builder)
             ->addIdCarrierField($builder);
     }
@@ -75,24 +73,6 @@ class CarrierForm extends AbstractType
                 new Callback([
                     'callback' => [$this, 'uniqueCarrierNameCheck'],
                 ]),
-            ],
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addGlossaryKeyField(FormBuilderInterface $builder)
-    {
-        $builder->add(self::FIELD_NAME_GLOSSARY_FIELD, AutosuggestType::class, [
-            'label' => 'Name glossary key',
-            'url' => '/glossary/ajax/keys',
-            'constraints' => [
-                new NotBlank(),
             ],
         ]);
 
