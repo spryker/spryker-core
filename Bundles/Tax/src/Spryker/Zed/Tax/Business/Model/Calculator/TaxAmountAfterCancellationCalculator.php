@@ -49,6 +49,9 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
                 continue;
             }
 
+            $itemTransfer->requireSumPriceToPayAggregation();
+            $itemTransfer->requireSumTaxAmountFullAggregation();
+
             $canceledTaxableAmount = $itemTransfer->getSumPriceToPayAggregation() - $itemTransfer->getCanceledAmount();
 
             if (!$canceledTaxableAmount) {
@@ -76,6 +79,9 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
             if (!$expenseTransfer->getCanceledAmount()) {
                 continue;
             }
+
+            $expenseTransfer->requireSumPriceToPayAggregation();
+            $expenseTransfer->requireSumTaxAmount();
 
             $canceledTaxableAmount = $expenseTransfer->getSumPriceToPayAggregation() - $expenseTransfer->getCanceledAmount();
 
