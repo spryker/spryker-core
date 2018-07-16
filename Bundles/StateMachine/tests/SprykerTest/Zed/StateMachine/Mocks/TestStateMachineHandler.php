@@ -103,7 +103,14 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
      */
     public function getStateMachineItemsByStateIds(array $stateIds = [])
     {
-        return $this->stateMachineItemsByStateIds;
+        $result = [];
+        foreach ($this->stateMachineItemsByStateIds as $stateMachineItemTransfer) {
+            if (in_array($stateMachineItemTransfer->getIdItemState(), $stateIds)) {
+                $result[] = $stateMachineItemTransfer;
+            }
+        }
+
+        return $result;
     }
 
     /**
