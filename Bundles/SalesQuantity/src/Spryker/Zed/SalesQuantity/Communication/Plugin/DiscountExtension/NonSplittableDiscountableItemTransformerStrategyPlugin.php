@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesQuantity\SalesQuantityConfig getConfig()
  */
 class NonSplittableDiscountableItemTransformerStrategyPlugin extends AbstractPlugin implements DiscountableItemTransformerStrategyPluginInterface
 {
@@ -29,7 +30,7 @@ class NonSplittableDiscountableItemTransformerStrategyPlugin extends AbstractPlu
             return false;
         }
 
-        return $originalItem->getIsQuantitySplittable() === false;
+        return $this->getFacade()->isItemQuantityNonSplittable($originalItem);
     }
 
     /**

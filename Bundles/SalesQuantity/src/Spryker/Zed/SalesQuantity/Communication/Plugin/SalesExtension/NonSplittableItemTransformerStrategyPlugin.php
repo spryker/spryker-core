@@ -14,6 +14,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginIn
 
 /**
  * @method \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesQuantity\SalesQuantityConfig getConfig()
  */
 class NonSplittableItemTransformerStrategyPlugin extends AbstractPlugin implements ItemTransformerStrategyPluginInterface
 {
@@ -24,7 +25,7 @@ class NonSplittableItemTransformerStrategyPlugin extends AbstractPlugin implemen
      */
     public function isApplicable(ItemTransfer $itemTransfer): bool
     {
-        return $itemTransfer->getIsQuantitySplittable() === false;
+        return $this->getFacade()->isItemQuantityNonSplittable($itemTransfer);
     }
 
     /**

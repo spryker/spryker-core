@@ -66,4 +66,20 @@ class SalesQuantityFacade extends AbstractFacade implements SalesQuantityFacadeI
             ->createDiscountableItemTransformer()
             ->transformNonSplittableDiscountableItem($discountableItemTransformerTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    public function isItemQuantityNonSplittable(ItemTransfer $itemTransfer)
+    {
+        return $this->getFactory()
+            ->createItemQuantityValidator()
+            ->isItemQuantityNonSplittable($itemTransfer);
+    }
 }
