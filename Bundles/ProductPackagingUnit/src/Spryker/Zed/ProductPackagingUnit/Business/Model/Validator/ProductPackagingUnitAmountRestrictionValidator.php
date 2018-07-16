@@ -257,7 +257,9 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
 
         foreach ($itemTransfers as $itemTransfer) {
             $productPackagingUnitTransfer = $this->productPackagingUnitReader->findProductPackagingUnitByProductSku($itemTransfer->getSku());
-            $productPackagingUnitAmountTransferMap[$itemTransfer->getSku()] = $productPackagingUnitTransfer->getProductPackagingUnitAmount();
+            if ($productPackagingUnitTransfer) {
+                $productPackagingUnitAmountTransferMap[$itemTransfer->getSku()] = $productPackagingUnitTransfer->getProductPackagingUnitAmount();
+            }
         }
 
         return $productPackagingUnitAmountTransferMap;

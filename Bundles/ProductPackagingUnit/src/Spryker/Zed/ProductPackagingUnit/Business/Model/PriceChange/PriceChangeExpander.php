@@ -66,7 +66,7 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
             ->getProductPackagingUnitAmount()
             ->getDefaultAmount();
 
-        $amount = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
+        $amount = $itemTransfer->getAmount();
 
         if ($amount === $defaultAmount) {
             return $itemTransfer;
@@ -74,11 +74,11 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
 
         if ($quoteTransfer->getPriceMode() === CalculationPriceMode::PRICE_MODE_NET) {
             $unitNetPrice = $itemTransfer->getUnitNetPrice();
-            $newUnitNetPrice = (int)(($itemTransfer->getAmount() / $defaultAmount) * $unitNetPrice);
+            $newUnitNetPrice = (int)(($amount / $defaultAmount) * $unitNetPrice);
             $itemTransfer->setUnitNetPrice($newUnitNetPrice);
         } else {
             $unitGrossPrice = $itemTransfer->getUnitGrossPrice();
-            $newUnitGrossPrice = (int)(($itemTransfer->getAmount() / $defaultAmount) * $unitGrossPrice);
+            $newUnitGrossPrice = (int)(($amount / $defaultAmount) * $unitGrossPrice);
             $itemTransfer->setUnitGrossPrice($newUnitGrossPrice);
         }
 
