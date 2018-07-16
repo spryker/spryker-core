@@ -28,9 +28,9 @@ class SprykMainForm extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
-     * @return \Symfony\Component\OptionsResolver\OptionsResolver|void
+     * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
             static::SPRYK,
