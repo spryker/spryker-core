@@ -14,7 +14,6 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternat
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelReader\ProductAbstractRelationReaderInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter\ProductAlternativeProductLabelWriter;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter\ProductAlternativeProductLabelWriterInterface;
-use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToGlossaryFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface;
@@ -35,7 +34,6 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
         return new ProductAlternativeProductLabelConnectorInstaller(
             $this->getConfig(),
             $this->getProductLabelFacade(),
-            $this->getGlossaryFacade(),
             $this->getLocaleFacade()
         );
     }
@@ -89,14 +87,6 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
     public function getProductAlternativeFacade(): ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface
     {
         return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_PRODUCT_ALTERNATIVE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToGlossaryFacadeInterface
-     */
-    public function getGlossaryFacade(): ProductAlternativeProductLabelConnectorToGlossaryFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_GLOSSARY);
     }
 
     /**

@@ -38,6 +38,13 @@ interface ProductRepositoryInterface
     public function findProductAbstractIdByConcreteId(int $idProductConcrete): ?int;
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return bool

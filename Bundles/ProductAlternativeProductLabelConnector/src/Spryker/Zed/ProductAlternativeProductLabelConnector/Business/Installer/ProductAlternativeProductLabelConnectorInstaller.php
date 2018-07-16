@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Business\Installer
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToGlossaryFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig;
@@ -30,11 +29,6 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
     protected $productLabelFacade;
 
     /**
-     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToGlossaryFacadeInterface
-     */
-    protected $glossaryFacade;
-
-    /**
      * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeInterface
      */
     protected $localeFacade;
@@ -42,18 +36,15 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
     /**
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig $config
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade
-     * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         ProductAlternativeProductLabelConnectorConfig $config,
         ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade,
-        ProductAlternativeProductLabelConnectorToGlossaryFacadeInterface $glossaryFacade,
         ProductAlternativeProductLabelConnectorToLocaleFacadeInterface $localeFacade
     ) {
         $this->config = $config;
         $this->productLabelFacade = $productLabelFacade;
-        $this->glossaryFacade = $glossaryFacade;
         $this->localeFacade = $localeFacade;
     }
 

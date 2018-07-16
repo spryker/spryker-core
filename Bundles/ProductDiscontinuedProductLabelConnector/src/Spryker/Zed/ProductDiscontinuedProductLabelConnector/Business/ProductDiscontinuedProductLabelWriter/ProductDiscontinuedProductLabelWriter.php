@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelWriter;
 
+use Generated\Shared\Transfer\ProductLabelTransfer;
+
 class ProductDiscontinuedProductLabelWriter implements ProductDiscontinuedProductLabelWriterInterface
 {
     /**
@@ -54,20 +56,14 @@ class ProductDiscontinuedProductLabelWriter implements ProductDiscontinuedProduc
      */
     public function updateAbstractProductWithDiscontinuedLabel(int $idProduct): void
     {
-        if (!$this->productLabelFacade->findLabelByLabelName($this->config->getProductDiscontinueLabelName())) {
+        $productLabelTransfer = $this->findProductDiscontinuedProductLabel();
+        $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
+        if (!$productLabelTransfer || !$idProductAbstract) {
             return;
         }
 
-        $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
-            $this->config->getProductDiscontinueLabelName()
-        )->getIdProductLabel();
-
-        $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
-        $concreteIds = [];
-
-        foreach ($this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract) as $productConcreteTransfer) {
-            $concreteIds[] = $productConcreteTransfer->getIdProductConcrete();
-        }
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
+        $concreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
 
         if (!$this->productDiscontinuedFacade->areAllConcreteProductsDiscontinued($concreteIds)) {
             $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
@@ -81,20 +77,28 @@ class ProductDiscontinuedProductLabelWriter implements ProductDiscontinuedProduc
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
+     */
+    protected function findProductDiscontinuedProductLabel(): ?ProductLabelTransfer
+    {
+        return $this->productLabelFacade->findLabelByLabelName(
+            $this->config->getProductDiscontinueLabelName()
+        );
+    }
+
+    /**
      * @param int $idProduct
      *
      * @return void
      */
     public function removeProductAbstractRelationsForLabel(int $idProduct): void
     {
-        if (!$this->productLabelFacade->findLabelByLabelName($this->config->getProductDiscontinueLabelName())) {
+        $productLabelTransfer = $this->findProductDiscontinuedProductLabel();
+        $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
+        if (!$productLabelTransfer || !$idProductAbstract) {
             return;
         }
 
-        $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
-            $this->config->getProductDiscontinueLabelName()
-        )->getIdProductLabel();
-        $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
-        $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
+        $this->productLabelFacade->removeProductAbstractRelationsForLabel($productLabelTransfer->getIdProductLabel(), [$idProductAbstract]);
     }
 }

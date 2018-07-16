@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter;
 
+use Generated\Shared\Transfer\ProductLabelTransfer;
+
 class ProductAlternativeProductLabelWriter implements ProductAlternativeProductLabelWriterInterface
 {
     /**
@@ -54,20 +56,14 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
      */
     public function updateAbstractProductWithAlternativesAvailableLabel(int $idProduct): void
     {
-        if (!$this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabelName())) {
+        $productLabelTransfer = $this->findProductAlternativeProductLabel();
+        $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
+        if (!$productLabelTransfer || !$idProductAbstract) {
             return;
         }
 
-        $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
-            $this->config->getProductAlternativesLabelName()
-        )->getIdProductLabel();
-
-        $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
-        $concreteIds = [];
-
-        foreach ($this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract) as $productConcreteTransfer) {
-            $concreteIds[] = $productConcreteTransfer->getIdProductConcrete();
-        }
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
+        $concreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
 
         if (!$this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($concreteIds)) {
             $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
@@ -81,20 +77,28 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
+     */
+    protected function findProductAlternativeProductLabel(): ?ProductLabelTransfer
+    {
+        return $this->productLabelFacade->findLabelByLabelName(
+            $this->config->getProductAlternativesLabelName()
+        );
+    }
+
+    /**
      * @param int $idProduct
      *
      * @return void
      */
     public function removeProductAbstractRelationsForLabel(int $idProduct): void
     {
-        if (!$this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabelName())) {
+        $productLabelTransfer = $this->findProductAlternativeProductLabel();
+        $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
+        if (!$productLabelTransfer || !$idProductAbstract) {
             return;
         }
 
-        $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
-            $this->config->getProductAlternativesLabelName()
-        )->getIdProductLabel();
-        $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProduct);
-        $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
+        $this->productLabelFacade->removeProductAbstractRelationsForLabel($productLabelTransfer->getIdProductLabel(), [$idProductAbstract]);
     }
 }

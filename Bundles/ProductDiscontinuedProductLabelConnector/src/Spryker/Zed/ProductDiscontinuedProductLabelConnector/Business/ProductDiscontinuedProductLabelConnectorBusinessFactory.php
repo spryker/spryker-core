@@ -14,7 +14,6 @@ use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscont
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelReader\ProductAbstractRelationReaderInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelWriter\ProductDiscontinuedProductLabelWriter;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelWriter\ProductDiscontinuedProductLabelWriterInterface;
-use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToGlossaryFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToLocaleFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductDiscontinuedFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductInterface;
@@ -35,7 +34,6 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
         return new ProductDiscontinuedProductLabelConnectorInstaller(
             $this->getConfig(),
             $this->getProductLabelFacade(),
-            $this->getGlossaryFacade(),
             $this->getLocaleFacade()
         );
     }
@@ -89,14 +87,6 @@ class ProductDiscontinuedProductLabelConnectorBusinessFactory extends AbstractBu
     public function getProductDiscontinuedFacade(): ProductDiscontinuedProductLabelConnectorToProductDiscontinuedFacadeInterface
     {
         return $this->getProvidedDependency(ProductDiscontinuedProductLabelConnectorDependencyProvider::FACADE_PRODUCT_DISCONTINUED);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToGlossaryFacadeInterface
-     */
-    public function getGlossaryFacade(): ProductDiscontinuedProductLabelConnectorToGlossaryFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductDiscontinuedProductLabelConnectorDependencyProvider::FACADE_GLOSSARY);
     }
 
     /**
