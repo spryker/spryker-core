@@ -36,6 +36,9 @@ class ApiConfig extends AbstractBundleConfig
     const HTTP_CODE_NOT_ALLOWED = 405;
     const HTTP_CODE_VALIDATION_ERRORS = 422;
     const HTTP_CODE_INTERNAL_ERROR = 500;
+    const ALLOWED_SERVER_VARIABLES = [
+        'REQUEST_URI',
+    ];
 
     /**
      * @return int
@@ -129,5 +132,13 @@ class ApiConfig extends AbstractBundleConfig
         $methods = array_merge($methodsForItem, $methodsForCollection);
 
         return array_unique($methods);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllowedServerVariables(): array
+    {
+        return static::ALLOWED_SERVER_VARIABLES;
     }
 }

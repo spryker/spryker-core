@@ -22,6 +22,7 @@ use Throwable;
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\Api\ApiConfig getConfig()
  */
 class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControllerListenerInterface
 {
@@ -116,7 +117,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $queryData = $request->query->all();
         $requestTransfer->setQueryData($queryData);
 
-        $serverData = $request->server->all();
+        $serverData = $this->filterServerData($request->server->all());
         $requestTransfer->setServerData($serverData);
 
         $headerData = $request->headers->all();
@@ -164,5 +165,17 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
             $responseTransfer->getCode(),
             json_encode($array)
         ));
+    }
+
+    /**
+     * @param array $serverData
+     *
+     * @return array
+     */
+    protected function filterServerData(array $serverData): array
+    {
+        $allowedVariables = $this->getConfig()->getAllowedServerVariables();
+
+        return array_intersect_key($serverData, array_flip($allowedVariables));
     }
 }
