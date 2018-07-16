@@ -7,12 +7,9 @@
 
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector;
 
-use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
-use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToGlossaryFacadeBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductBridge;
@@ -23,11 +20,8 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
     public const FACADE_PRODUCT_ALTERNATIVE = 'FACADE_PRODUCT_ALTERNATIVE';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const PROPEL_QUERY_PRODUCT_ALTERNATIVE = 'PROPEL_QUERY_PRODUCT_ALTERNATIVE';
-    public const PROPEL_QUERY_PRODUCT_LABEL = 'PROPEL_QUERY_PRODUCT_LABEL';
-    public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -40,7 +34,6 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
         $container = $this->addProductLabelFacade($container);
         $container = $this->addProductFacade($container);
         $container = $this->addProductAlternativeFacade($container);
-        $container = $this->addGlossaryFacade($container);
         $container = $this->addLocaleFacade($container);
 
         return $container;
@@ -55,8 +48,6 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
     {
         $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addProductAlternativeQuery($container);
-        $container = $this->addProductLabelQuery($container);
-        $container = $this->addProductQuery($container);
 
         return $container;
     }
@@ -114,22 +105,6 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addGlossaryFacade(Container $container): Container
-    {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
-            return new ProductAlternativeProductLabelConnectorToGlossaryFacadeBridge(
-                $container->getLocator()->glossary()->facade()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addLocaleFacade(Container $container): Container
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
@@ -150,34 +125,6 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
     {
         $container[static::PROPEL_QUERY_PRODUCT_ALTERNATIVE] = function () {
             return SpyProductAlternativeQuery::create();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductLabelQuery(Container $container): Container
-    {
-        $container[static::PROPEL_QUERY_PRODUCT_LABEL] = function () {
-            return SpyProductLabelQuery::create();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductQuery(Container $container): Container
-    {
-        $container[static::PROPEL_QUERY_PRODUCT] = function () {
-            return SpyProductQuery::create();
         };
 
         return $container;

@@ -10,25 +10,6 @@ namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence;
 interface ProductAlternativeProductLabelConnectorRepositoryInterface
 {
     /**
-     * @param string $labelName
-     *
-     * @return bool
-     */
-    public function getIsProductLabelActive(string $labelName): bool;
-
-    /**
-     * @return array
-     */
-    public function getProductConcreteIds(): array;
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return int[]
-     */
-    public function getProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
-
-    /**
      * @return int[]
      */
     public function getProductAbstractIdsForAlternative(): array;

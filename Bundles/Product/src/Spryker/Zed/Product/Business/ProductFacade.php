@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductSuggestionDetailsTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -878,14 +877,14 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param string $suggestion
+     * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductSuggestionDetailsTransfer
+     * @return int[]
      */
-    public function getSuggestionDetails(string $suggestion): ProductSuggestionDetailsTransfer
+    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
     {
         return $this->getFactory()
-            ->createProductSuggestionDetailsProvider()
-            ->getSuggestionDetails($suggestion);
+            ->createProductConcreteManager()
+            ->findProductConcreteIdsByAbstractProductId($idProductAbstract);
     }
 }

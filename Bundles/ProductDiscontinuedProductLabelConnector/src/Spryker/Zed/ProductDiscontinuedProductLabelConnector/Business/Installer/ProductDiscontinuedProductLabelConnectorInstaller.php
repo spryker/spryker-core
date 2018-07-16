@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\Installe
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToGlossaryFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToLocaleFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorConfig;
@@ -30,11 +29,6 @@ class ProductDiscontinuedProductLabelConnectorInstaller implements ProductDiscon
     protected $productLabelFacade;
 
     /**
-     * @var \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToGlossaryFacadeInterface
-     */
-    protected $glossaryFacade;
-
-    /**
      * @var \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToLocaleFacadeInterface
      */
     protected $localeFacade;
@@ -42,18 +36,15 @@ class ProductDiscontinuedProductLabelConnectorInstaller implements ProductDiscon
     /**
      * @param \Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorConfig $config
      * @param \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade
-     * @param \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         ProductDiscontinuedProductLabelConnectorConfig $config,
         ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade,
-        ProductDiscontinuedProductLabelConnectorToGlossaryFacadeInterface $glossaryFacade,
         ProductDiscontinuedProductLabelConnectorToLocaleFacadeInterface $localeFacade
     ) {
         $this->config = $config;
         $this->productLabelFacade = $productLabelFacade;
-        $this->glossaryFacade = $glossaryFacade;
         $this->localeFacade = $localeFacade;
     }
 

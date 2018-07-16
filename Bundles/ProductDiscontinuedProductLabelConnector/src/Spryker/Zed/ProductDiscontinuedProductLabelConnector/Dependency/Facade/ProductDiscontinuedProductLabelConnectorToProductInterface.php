@@ -17,9 +17,9 @@ interface ProductDiscontinuedProductLabelConnectorToProductInterface
     public function findProductAbstractIdByConcreteId(int $idProduct): ?int;
 
     /**
-     * @param int $idProduct
+     * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return int[]
      */
-    public function getConcreteProductsByAbstractProductId(int $idProduct): array;
+    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
 }

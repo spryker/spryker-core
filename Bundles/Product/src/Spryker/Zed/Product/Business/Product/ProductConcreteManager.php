@@ -61,7 +61,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductRepositoryInterface
      */
-    protected $repository;
+    protected $productRepository;
 
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
@@ -71,7 +71,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      * @param \Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface $productConcreteAssertion
      * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
      * @param \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface $productTransferMapper
-     * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $repository
+     * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -81,7 +81,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         ProductConcreteAssertionInterface $productConcreteAssertion,
         AttributeEncoderInterface $attributeEncoder,
         ProductTransferMapperInterface $productTransferMapper,
-        ProductRepositoryInterface $repository
+        ProductRepositoryInterface $productRepository
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -90,7 +90,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $this->productConcreteAssertion = $productConcreteAssertion;
         $this->attributeEncoder = $attributeEncoder;
         $this->productTransferMapper = $productTransferMapper;
-        $this->repository = $repository;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -294,7 +294,17 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      */
     public function findProductAbstractIdByConcreteId(int $idConcrete): ?int
     {
-        return $this->repository->findProductAbstractIdByConcreteId($idConcrete);
+        return $this->productRepository->findProductAbstractIdByConcreteId($idConcrete);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
+    {
+        return $this->productRepository->findProductConcreteIdsByAbstractProductId($idProductAbstract);
     }
 
     /**

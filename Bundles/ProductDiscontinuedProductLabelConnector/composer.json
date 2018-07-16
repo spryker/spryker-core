@@ -3,13 +3,12 @@
   "description": "ProductDiscontinuedProductLabelConnector module",
   "license": "proprietary",
   "require": {
-    "spryker/glossary": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
-    "spryker/product": "^5.0.0 || ^6.0.0",
+    "spryker/product": "^6.2.0",
     "spryker/product-discontinued": "^1.0.0",
     "spryker/product-discontinued-extension": "^1.0.0",
-    "spryker/product-label": "^1.0.0"
+    "spryker/product-label": "^2.5.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

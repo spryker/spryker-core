@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductSuggestionDetailsTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
 interface ProductFacadeInterface
@@ -755,16 +754,13 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Retrieve product id accordingly to suggestion.
-     * - Has $idProductConcrete property set, if concrete product was found for suggestion.
-     * - Has $idProductAbstract property set, if abstract product was found for suggestion.
-     * - If no products were found for suggestion, $isSuccessful property will be set to false.
+     * - Finds product concrete ids by product abstract id.
      *
      * @api
      *
-     * @param string $suggestion
+     * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductSuggestionDetailsTransfer
+     * @return int[]
      */
-    public function getSuggestionDetails(string $suggestion): ProductSuggestionDetailsTransfer;
+    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
 }

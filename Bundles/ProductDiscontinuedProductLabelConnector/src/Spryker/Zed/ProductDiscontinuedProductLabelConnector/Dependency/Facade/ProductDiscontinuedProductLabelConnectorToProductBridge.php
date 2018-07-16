@@ -33,12 +33,12 @@ class ProductDiscontinuedProductLabelConnectorToProductBridge implements Product
     }
 
     /**
-     * @param int $idProduct
+     * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return int[]
      */
-    public function getConcreteProductsByAbstractProductId(int $idProduct): array
+    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
     {
-        return $this->productFacade->getConcreteProductsByAbstractProductId($idProduct);
+        return $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
     }
 }

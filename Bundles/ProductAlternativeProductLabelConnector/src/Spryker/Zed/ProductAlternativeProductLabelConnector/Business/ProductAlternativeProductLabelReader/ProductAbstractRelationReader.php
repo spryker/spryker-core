@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelReader;
 
 use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
+use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface;
@@ -67,28 +68,28 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      */
     public function findProductLabelProductAbstractRelationChanges(): array
     {
-        if (!$this->productAlternativeProductLabelConnectorRepository
-                ->getIsProductLabelActive($this->config->getProductAlternativesLabelName()) || !$this->findProductLabelId()
-        ) {
+        $productLabelTransfer = $this->findProductAlternativeProductLabel();
+        if (!$productLabelTransfer) {
             return [];
         }
 
-        return $this->getRelationsData();
+        return $this->getRelationsData($productLabelTransfer);
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
      * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
      */
-    protected function getRelationsData(): array
+    protected function getRelationsData(ProductLabelTransfer $productLabelTransfer): array
     {
         $idsToAssign = [];
         $idsToDeAssign = [];
 
-        $idProductLabel = $this->findProductLabelId();
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
 
         foreach ($this->productAlternativeProductLabelConnectorRepository->getProductAbstractIdsForAlternative() as $idProductAbstract) {
-            $concreteIds = $this->productAlternativeProductLabelConnectorRepository
-                ->getProductConcreteIdsByAbstractProductId($idProductAbstract);
+            $concreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
 
             if (!$this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($concreteIds)) {
                 $idsToDeAssign[] = $idProductAbstract;
@@ -109,13 +110,13 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     }
 
     /**
-     * @return int|null
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    protected function findProductLabelId(): ?int
+    protected function findProductAlternativeProductLabel(): ?ProductLabelTransfer
     {
         return $this->productLabelFacade->findLabelByLabelName(
             $this->config->getProductAlternativesLabelName()
-        )->getIdProductLabel();
+        );
     }
 
     /**

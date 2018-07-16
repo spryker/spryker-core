@@ -120,6 +120,26 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
+    {
+        $productConcreteIds = $this->getFactory()
+            ->createProductQuery()
+            ->select([SpyProductTableMap::COL_ID_PRODUCT])
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->find();
+
+        if (!$productConcreteIds) {
+            return [];
+        }
+
+        return $productConcreteIds->getData();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return bool
