@@ -88,7 +88,7 @@ class Event implements EventInterface
             }
         }
 
-        return $check;
+        return (bool)$check;
     }
 
     /**

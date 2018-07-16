@@ -120,7 +120,7 @@ class CustomerForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return \Spryker\Zed\Customer\Communication\Form\CustomerForm
+     * @return $this
      */
     protected function addSalutationField(FormBuilderInterface $builder, array $choices)
     {

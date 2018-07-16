@@ -11,4 +11,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductPageSearchConfig extends AbstractBundleConfig
 {
+    /**
+     * @return bool
+     */
+    public function isSendingToQueue()
+    {
+        return true;
+    }
 }

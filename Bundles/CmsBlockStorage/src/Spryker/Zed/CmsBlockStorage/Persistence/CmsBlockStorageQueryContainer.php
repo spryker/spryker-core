@@ -22,7 +22,7 @@ class CmsBlockStorageQueryContainer extends AbstractQueryContainer implements Cm
      *
      * @return \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery
      */
-    public function queryCmsStorageEntities(array $cmsBlockIds)
+    public function queryCmsBlockStorageEntities(array $cmsBlockIds)
     {
         return $this->getFactory()
             ->createSpyCmsBlockStorage()
@@ -40,9 +40,15 @@ class CmsBlockStorageQueryContainer extends AbstractQueryContainer implements Cm
     {
         $query = $this->getFactory()->createCmsBlockQuery()
             ->filterByIdCmsBlock_In($cmsBlockIds)
-            ->joinWith('SpyCmsBlock.CmsBlockTemplate')
-            ->joinWith('SpyCmsBlock.SpyCmsBlockGlossaryKeyMapping')
-            ->joinWith('SpyCmsBlockGlossaryKeyMapping.GlossaryKey')
+            ->joinWithCmsBlockTemplate()
+            ->joinWithSpyCmsBlockGlossaryKeyMapping()
+            ->useSpyCmsBlockGlossaryKeyMappingQuery()
+                ->joinWithGlossaryKey()
+            ->endUse()
+            ->joinWithSpyCmsBlockStore()
+            ->useSpyCmsBlockStoreQuery()
+                ->joinWithSpyStore()
+            ->endUse()
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
         return $query;

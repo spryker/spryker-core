@@ -9,6 +9,7 @@ namespace Spryker\Zed\Event\Business\Queue\Consumer;
 
 use Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
+use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\Event\Business\Logger\EventLoggerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
@@ -87,7 +88,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                     $exception->getMessage(),
                     $exception->getTraceAsString()
                 );
-                $this->logConsumerAction($errorMessage);
+                $this->logConsumerAction($errorMessage, $exception);
                 $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
             }
         }
@@ -123,7 +124,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                     $throwable->getMessage(),
                     $throwable->getTraceAsString()
                 );
-                $this->logConsumerAction($errorMessage);
+                $this->logConsumerAction($errorMessage, $throwable);
                 foreach ($eventItem[static::EVENT_MESSAGES] as $queueMessageTransfer) {
                     $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
                 }
@@ -174,12 +175,17 @@ class EventQueueConsumer implements EventQueueConsumerInterface
 
     /**
      * @param string $message
+     * @param \Throwable|null $throwable
      *
      * @return void
      */
-    protected function logConsumerAction($message)
+    protected function logConsumerAction($message, ?Throwable $throwable = null)
     {
         $this->eventLogger->log('[async] ' . $message);
+
+        if ($throwable !== null) {
+            ErrorLogger::getInstance()->log($throwable);
+        }
     }
 
     /**
@@ -248,10 +254,11 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     /**
      * @param \Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer $eventQueueSentMessageBodyTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\EventEntityTransfer
      */
     protected function mapEventTransfer(EventQueueSendMessageBodyTransfer $eventQueueSentMessageBodyTransfer)
     {
+        /** @var \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer */
         $eventTransfer = $this->createEventTransfer($eventQueueSentMessageBodyTransfer->getTransferClassName());
         $eventTransfer->fromArray($eventQueueSentMessageBodyTransfer->getTransferData(), true);
 

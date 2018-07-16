@@ -7,24 +7,12 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer;
-use Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductMeasurementUnitFacadeInterface
 {
-    /**
-     * Specification:
-     * - Retrieves a product measurement base unit for a given product concrete.
-     *
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
-     */
-    public function getBaseUnitByIdProduct(int $idProduct): SpyProductMeasurementBaseUnitEntityTransfer;
-
     /**
      * Specification:
      * - Retrieves all product measurement sales units related to a given product concrete.
@@ -33,7 +21,7 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
     public function getSalesUnitsByIdProduct(int $idProduct): array;
 
@@ -48,7 +36,7 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return string
      */
-    public function expandItemGroupKeyWithSalesUnit(ItemTransfer $itemTransfer): string;
+    public function expandItemGroupKeyWithQuantitySalesUnit(ItemTransfer $itemTransfer): string;
 
     /**
      * Specification:
@@ -64,26 +52,15 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves a product measurement sales unit transfer object by the provided ID.
-     * - Sets related default precision and conversion ratio when not defined.
+     * - Expands CartChangeTransfer with QuantitySalesUnit.
      *
      * @api
      *
-     * @param int $idProductMeasurementSalesUnit
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function getSalesUnitEntity(int $idProductMeasurementSalesUnit): SpyProductMeasurementSalesUnitEntityTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves a list of all product measurement unit codes, mapped by their own ID.
-     *
-     * @api
-     *
-     * @return string[]
-     */
-    public function getProductMeasurementUnitCodeMap(): array;
+    public function expandCartChangeWithQuantitySalesUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 
     /**
      * Specification:
@@ -93,7 +70,30 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @param int[] $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitEntities(array $productMeasurementUnitIds): array;
+    public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
+
+    /**
+     * Specification:
+     * - Calculates quantity normalized sales unit value.
+     * - Updates quote item transfers
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function calculateQuantitySalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Add infrastructural measurement unit list to database.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function installProductMeasurementUnit(): void;
 }

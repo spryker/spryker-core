@@ -11,4 +11,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductReviewStorageConfig extends AbstractBundleConfig
 {
+    /**
+     * @return bool
+     */
+    public function isSendingToQueue()
+    {
+        return true;
+    }
 }

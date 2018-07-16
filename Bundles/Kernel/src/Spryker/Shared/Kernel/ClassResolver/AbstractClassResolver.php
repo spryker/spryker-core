@@ -48,7 +48,7 @@ abstract class AbstractClassResolver
     /**
      * @param object|string $callerClass
      *
-     * @return \Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver
+     * @return $this
      */
     public function setCallerClass($callerClass)
     {
@@ -138,7 +138,7 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Controller\AbstractController
+     * @return object
      */
     protected function getResolvedClassInstance()
     {

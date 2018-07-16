@@ -8,20 +8,23 @@
 namespace Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationNodeTableMap;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\NavigationStorage\Communication\NavigationStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NavigationStorage\Business\NavigationStorageFacadeInterface getFacade()
  */
-class NavigationNodeStorageListener extends AbstractNavigationStorageListener
+class NavigationNodeStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
      *
      * @return void
@@ -31,6 +34,6 @@ class NavigationNodeStorageListener extends AbstractNavigationStorageListener
         $this->preventTransaction();
         $navigationIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyNavigationNodeTableMap::COL_FK_NAVIGATION);
 
-        $this->publish($navigationIds);
+        $this->getFacade()->publish($navigationIds);
     }
 }

@@ -108,9 +108,11 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
             foreach ($categoryNodeWithLocales as $localeName => $categoryNodeWithLocale) {
                 if (isset($spyCategoryNodeStorageEntities[$categoryNodeId][$localeName])) {
                     $this->storeDataSet($categoryNodeWithLocale, $localeName, $spyCategoryNodeStorageEntities[$categoryNodeId][$localeName]);
-                } else {
-                    $this->storeDataSet($categoryNodeWithLocale, $localeName);
+
+                    continue;
                 }
+
+                $this->storeDataSet($categoryNodeWithLocale, $localeName);
             }
         }
     }
@@ -139,7 +141,6 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
         $categoryNodeNodeData = $this->utilSanitize->arrayFilterRecursive($categoryNodeStorageTransfer->toArray());
         $spyCategoryNodeStorageEntity->setFkCategoryNode($categoryNodeStorageTransfer->getNodeId());
         $spyCategoryNodeStorageEntity->setData($categoryNodeNodeData);
-        $spyCategoryNodeStorageEntity->setStore($this->store->getStoreName());
         $spyCategoryNodeStorageEntity->setLocale($localeName);
         $spyCategoryNodeStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyCategoryNodeStorageEntity->save();

@@ -8,18 +8,21 @@
 namespace Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\CmsBlockCategoryConnectorEvents;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\CmsBlockCategoryStorage\Communication\CmsBlockCategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockCategoryStorage\Business\CmsBlockCategoryStorageFacadeInterface getFacade()
  */
-class CmsBlockCategoryConnectorPublishStorageListener extends AbstractCmsBlockCategoryStorageListener
+class CmsBlockCategoryConnectorPublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
      *
      * @return void
@@ -30,11 +33,11 @@ class CmsBlockCategoryConnectorPublishStorageListener extends AbstractCmsBlockCa
         $idCategories = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         if ($eventName === CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_UNPUBLISH) {
-            $this->refreshOrUnpublish($idCategories);
+            $this->getFacade()->refreshOrUnpublish($idCategories);
 
             return;
         }
 
-        $this->publish($idCategories);
+        $this->getFacade()->publish($idCategories);
     }
 }

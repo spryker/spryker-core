@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToStorageClientInterface;
 use Spryker\Client\ProductRelationStorage\Dependency\Service\ProductRelationStorageToSynchronizationServiceInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig;
 
 class ProductAbstractRelationStorageReader implements ProductAbstractRelationStorageReaderInterface
@@ -62,11 +61,8 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
      */
     protected function generateKey($idProductAbstract)
     {
-        $store = Store::getInstance()->getStoreName();
-
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setStore($store)
             ->setReference($idProductAbstract);
 
         return $this->synchronizationService

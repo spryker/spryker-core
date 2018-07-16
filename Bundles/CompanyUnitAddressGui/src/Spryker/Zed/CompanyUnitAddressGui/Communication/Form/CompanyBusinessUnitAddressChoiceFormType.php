@@ -25,9 +25,9 @@ class CompanyBusinessUnitAddressChoiceFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \Spryker\Zed\CompanyUnitAddressGui\Communication\Form\CompanyBusinessUnitAddressChoiceFormType
+     * @return $this
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): CompanyBusinessUnitAddressChoiceFormType
+    public function buildForm(FormBuilderInterface $builder, array $options): self
     {
         $this->addLabelSelectField($builder, $options);
 

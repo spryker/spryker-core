@@ -46,7 +46,6 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
         return $this->getFactory()
             ->getProductQueryContainer()
             ->queryAllProductAbstractLocalizedAttributes()
-            ->joinWithLocale()
             ->joinWithSpyProductAbstract()
             ->filterByFkProductAbstract_In($productAbstractIds);
     }

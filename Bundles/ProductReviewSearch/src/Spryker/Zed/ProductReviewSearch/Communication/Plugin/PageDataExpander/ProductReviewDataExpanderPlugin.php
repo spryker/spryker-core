@@ -15,6 +15,7 @@ use Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContaine
 /**
  * @method \Spryker\Zed\ProductReviewSearch\Communication\ProductReviewSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductReviewSearch\Business\ProductReviewSearchFacadeInterface getFacade()
  */
 class ProductReviewDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {

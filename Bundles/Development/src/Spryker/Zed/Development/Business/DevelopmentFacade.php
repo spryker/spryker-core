@@ -308,6 +308,16 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateGlueIdeAutoCompletion()
+    {
+        $this->getFactory()->createGlueIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api

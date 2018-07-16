@@ -8,20 +8,22 @@
 namespace Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSetPageSearch\Communication\ProductSetPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacadeInterface getFacade()
  */
-class ProductSetPageProductImageSetImageSearchListener extends AbstractProductSetPageSearchListener implements EventBulkHandlerInterface
+class ProductSetPageProductImageSetImageSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
      *
      * @return void
@@ -32,6 +34,6 @@ class ProductSetPageProductImageSetImageSearchListener extends AbstractProductSe
         $productImageSetToProductImageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
         $productSetIds = $this->getQueryContainer()->queryProductSetIdsByProductImageSetToProductImageIds($productImageSetToProductImageIds)->find()->getData();
 
-        $this->publish($productSetIds);
+        $this->getFacade()->publish($productSetIds);
     }
 }

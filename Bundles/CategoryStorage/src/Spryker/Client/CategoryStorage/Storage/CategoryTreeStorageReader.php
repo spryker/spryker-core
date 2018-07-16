@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface;
 use Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceInterface;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
-use Spryker\Shared\Kernel\Store;
 
 class CategoryTreeStorageReader implements CategoryTreeStorageReaderInterface
 {
@@ -62,10 +61,7 @@ class CategoryTreeStorageReader implements CategoryTreeStorageReaderInterface
      */
     protected function generateKey($locale)
     {
-        $store = Store::getInstance()->getStoreName();
-
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setStore($store);
         $synchronizationDataTransfer->setLocale($locale);
 
         return $this->synchronizationService->getStorageKeyBuilder(CategoryStorageConstants::CATEGORY_TREE_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);

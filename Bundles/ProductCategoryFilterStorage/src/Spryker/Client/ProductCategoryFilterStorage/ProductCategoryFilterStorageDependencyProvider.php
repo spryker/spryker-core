@@ -11,13 +11,11 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductCategoryFilterStorage\Dependency\Client\ProductCategoryFilterStorageToStorageBridge;
 use Spryker\Client\ProductCategoryFilterStorage\Dependency\Service\ProductCategoryFilterStorageToSynchronizationServiceBridge;
-use Spryker\Shared\Kernel\Store;
 
 class ProductCategoryFilterStorageDependencyProvider extends AbstractDependencyProvider
 {
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
-    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -28,7 +26,6 @@ class ProductCategoryFilterStorageDependencyProvider extends AbstractDependencyP
     {
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
-        $container = $this->addStore($container);
 
         return $container;
     }
@@ -56,20 +53,6 @@ class ProductCategoryFilterStorageDependencyProvider extends AbstractDependencyP
     {
         $container[self::SERVICE_SYNCHRONIZATION] = function (Container $container) {
             return new ProductCategoryFilterStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addStore(Container $container): Container
-    {
-        $container[self::STORE] = function () {
-            return Store::getInstance();
         };
 
         return $container;

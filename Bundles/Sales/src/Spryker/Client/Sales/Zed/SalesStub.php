@@ -29,30 +29,39 @@ class SalesStub implements SalesStubInterface
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderListTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrders(OrderListTransfer $orderListTransfer)
     {
-        return $this->zedStub->call('/sales/gateway/get-orders', $orderListTransfer);
+        /** @var \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer */
+        $orderListTransfer = $this->zedStub->call('/sales/gateway/get-orders', $orderListTransfer);
+
+        return $orderListTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderListTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getPaginatedOrders(OrderListTransfer $orderListTransfer)
     {
-        return $this->zedStub->call('/sales/gateway/get-paginated-orders', $orderListTransfer);
+        /** @var \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer */
+        $orderListTransfer = $this->zedStub->call('/sales/gateway/get-paginated-orders', $orderListTransfer);
+
+        return $orderListTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderDetails(OrderTransfer $orderTransfer)
     {
-        return $this->zedStub->call('/sales/gateway/get-order-details', $orderTransfer);
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
+        $orderTransfer = $this->zedStub->call('/sales/gateway/get-order-details', $orderTransfer);
+
+        return $orderTransfer;
     }
 }

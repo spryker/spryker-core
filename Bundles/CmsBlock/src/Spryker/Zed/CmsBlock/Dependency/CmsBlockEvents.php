@@ -64,4 +64,28 @@ interface CmsBlockEvents
      * @api
      */
     const ENTITY_SPY_CMS_BLOCK_DELETE = 'Entity.spy_cms_block.delete';
+
+    /**
+     * Specification:
+     * - Represents spy_cms_block_store entity creation.
+     *
+     * @api
+     */
+    const ENTITY_SPY_CMS_BLOCK_STORE_CREATE = 'Entity.spy_cms_block_store.create';
+
+    /**
+     * Specification:
+     * - Represents spy_cms_block_store entity changes.
+     *
+     * @api
+     */
+    const ENTITY_SPY_CMS_BLOCK_STORE_UPDATE = 'Entity.spy_cms_block_store.update';
+
+    /**
+     * Specification:
+     * - Represents spy_cms_block_store entity deletion.
+     *
+     * @api
+     */
+    const ENTITY_SPY_CMS_BLOCK_STORE_DELETE = 'Entity.spy_cms_block_store.delete';
 }

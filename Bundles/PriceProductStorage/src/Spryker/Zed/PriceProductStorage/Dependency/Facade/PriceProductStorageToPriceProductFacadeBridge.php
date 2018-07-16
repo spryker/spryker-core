@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\PriceProductStorage\Dependency\Facade;
 
-class PriceProductStorageToPriceProductFacadeBridge
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+
+class PriceProductStorageToPriceProductFacadeBridge implements PriceProductStorageToPriceProductFacadeInterface
 {
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
@@ -23,12 +25,35 @@ class PriceProductStorageToPriceProductFacadeBridge
     }
 
     /**
-     * @param string $sku
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPrices($idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null)
+    {
+        return $this->priceProductFacade->findProductAbstractPrices($idProductAbstract, $priceProductCriteriaTransfer);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePrices($idProductConcrete, $idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null)
+    {
+        return $this->priceProductFacade->findProductConcretePrices($idProductConcrete, $idProductAbstract, $priceProductCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return array
      */
-    public function findPricesBySkuGroupedForCurrentStore($sku)
+    public function groupPriceProductCollection(array $priceProductTransfers)
     {
-        return $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore($sku);
+        return $this->priceProductFacade->groupPriceProductCollection($priceProductTransfers);
     }
 }

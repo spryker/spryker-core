@@ -14,6 +14,7 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
+use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineFlagReader;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
 use Spryker\Zed\Oms\Business\Process\Event;
@@ -23,6 +24,8 @@ use Spryker\Zed\Oms\Business\Process\Transition;
 use Spryker\Zed\Oms\Business\Reservation\ExportReservation;
 use Spryker\Zed\Oms\Business\Reservation\ReservationVersionHandler;
 use Spryker\Zed\Oms\Business\Reservation\ReservationWriter;
+use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
+use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
@@ -219,8 +222,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createUtilReservation()
     {
         return new Reservation(
-            $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
-            $this->createOrderStateMachineBuilder(),
+            $this->createActiveProcessFetcher(),
             $this->getQueryContainer(),
             $this->getReservationHandlerPlugins(),
             $this->getStoreFacade()
@@ -305,6 +307,17 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface
+     */
+    public function createActiveProcessFetcher(): ActiveProcessFetcherInterface
+    {
+        return new ActiveProcessFetcher(
+            $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
+            $this->createOrderStateMachineBuilder()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface
      */
     protected function getMailFacade()
@@ -326,5 +339,15 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     protected function getReservationExportPlugins()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION_EXPORT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineFlagReaderInterface
+     */
+    public function createOrderStateMachineFlagReader()
+    {
+        return new OrderStateMachineFlagReader(
+            $this->createOrderStateMachineBuilder()
+        );
     }
 }

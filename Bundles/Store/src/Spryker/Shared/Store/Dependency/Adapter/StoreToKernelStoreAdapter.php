@@ -135,4 +135,12 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     {
         return $this->store->getConfigurationForStore($storeName);
     }
+
+    /**
+     * @return array
+     */
+    public function getQueuePools()
+    {
+        return $this->store->getQueuePools();
+    }
 }

@@ -87,9 +87,11 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
         foreach ($categoryTrees as $localeName => $categoryTreeByLocale) {
             if (isset($spyCategoryStorageEntities[$localeName])) {
                 $this->storeDataSet($categoryTreeByLocale, $localeName, $spyCategoryStorageEntities[$localeName]);
-            } else {
-                $this->storeDataSet($categoryTreeByLocale, $localeName);
+
+                continue;
             }
+
+            $this->storeDataSet($categoryTreeByLocale, $localeName);
         }
     }
 
@@ -113,7 +115,6 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
 
         $data = $this->utilSanitize->arrayFilterRecursive($categoryTreeStorageTransfer->toArray());
         $spyCategoryTreeStorage->setLocale($localeName);
-        $spyCategoryTreeStorage->setStore($this->store->getStoreName());
         $spyCategoryTreeStorage->setData($data);
         $spyCategoryTreeStorage->setIsSendingToQueue($this->isSendingToQueue);
         $spyCategoryTreeStorage->save();

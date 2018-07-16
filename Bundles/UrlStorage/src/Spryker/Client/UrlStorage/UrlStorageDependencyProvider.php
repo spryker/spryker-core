@@ -11,14 +11,12 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageBridge;
 use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceBridge;
-use Spryker\Shared\Kernel\Store;
 
 class UrlStorageDependencyProvider extends AbstractDependencyProvider
 {
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     const PLUGINS_URL_STORAGE_RESOURCE_MAPPER = 'PLUGINS_URL_STORAGE_RESOURCE_MAPPER';
-    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -37,10 +35,6 @@ class UrlStorageDependencyProvider extends AbstractDependencyProvider
 
         $container[self::PLUGINS_URL_STORAGE_RESOURCE_MAPPER] = function (Container $container) {
             return $this->getUrlStorageResourceMapperPlugins();
-        };
-
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
         };
 
         return $container;

@@ -41,4 +41,12 @@ interface ManualOrderEntryFormPluginInterface
      * @return bool
      */
     public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isFormSkipped(Request $request, QuoteTransfer $quoteTransfer): bool;
 }
