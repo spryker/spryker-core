@@ -76,10 +76,10 @@ class SalesQuantityFacade extends AbstractFacade implements SalesQuantityFacadeI
      *
      * @return bool
      */
-    public function isItemQuantitySplitRequired(ItemTransfer $itemTransfer)
+    public function isItemQuantityNonSplittable(ItemTransfer $itemTransfer)
     {
         return $this->getFactory()
             ->createItemQuantityValidator()
-            ->isItemQuantitySplitRequired($itemTransfer);
+            ->isItemQuantityNonSplittable($itemTransfer);
     }
 }

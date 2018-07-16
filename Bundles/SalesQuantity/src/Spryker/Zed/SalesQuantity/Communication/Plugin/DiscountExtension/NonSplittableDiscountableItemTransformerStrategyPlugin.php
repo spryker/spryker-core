@@ -30,7 +30,7 @@ class NonSplittableDiscountableItemTransformerStrategyPlugin extends AbstractPlu
             return false;
         }
 
-        return $this->getFacade()->isItemQuantitySplitRequired($originalItem);
+        return $this->getFacade()->isItemQuantityNonSplittable($originalItem);
     }
 
     /**

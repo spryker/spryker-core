@@ -25,7 +25,7 @@ class NonSplittableItemTransformerStrategyPlugin extends AbstractPlugin implemen
      */
     public function isApplicable(ItemTransfer $itemTransfer): bool
     {
-        return $this->getFacade()->isItemQuantitySplitRequired($itemTransfer);
+        return $this->getFacade()->isItemQuantityNonSplittable($itemTransfer);
     }
 
     /**

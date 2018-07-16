@@ -30,7 +30,7 @@ class ItemQuantityValidator implements ItemQuantityValidatorInterface
      *
      * @return bool
      */
-    public function isItemQuantitySplitRequired(ItemTransfer $itemTransfer): bool
+    public function isItemQuantityNonSplittable(ItemTransfer $itemTransfer): bool
     {
         if ($this->isBundledItem($itemTransfer)) {
             return false;
