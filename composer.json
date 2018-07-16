@@ -118,6 +118,7 @@
     "spryker/graphviz": "*",
     "spryker/glossary": "*",
     "spryker/glossary-storage": "*",
+    "spryker/glue-application": "*",
     "spryker/gui": "*",
     "spryker/guzzle": "*",
     "spryker/heartbeat": "*",
