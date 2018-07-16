@@ -733,7 +733,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $this->assertInstanceOf(OrderTransfer::class, $orderTransfer);
 
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $this->assertInstanceOf(ProductMeasurementSalesUnitTransfer::class, $itemTransfer->getAmountSalesUnit());
+            $this->assertInstanceOf(ProductMeasurementSalesUnitTransfer::class, $itemTransfer->getAmountLeadProduct());
         }
     }
 
