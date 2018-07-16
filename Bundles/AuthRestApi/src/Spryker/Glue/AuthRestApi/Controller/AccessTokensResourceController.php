@@ -8,20 +8,22 @@
 namespace Spryker\Glue\AuthRestApi\Controller;
 
 use Generated\Shared\Transfer\RestAccessTokensAttributesTransfer;
-use Spryker\Glue\GlueApplication\Controller\AbstractRestController;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\Kernel\Controller\AbstractController;
 
 /**
  * @method \Spryker\Glue\AuthRestApi\AuthRestApiFactory getFactory()
  */
-class AccessTokensResourceController extends AbstractRestController
+class AccessTokensResourceController extends AbstractController
 {
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function postAction(RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer): RestResponseInterface
+    public function postAction(RestRequestInterface $restRequest, RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
             ->createAccessTokensReader()
