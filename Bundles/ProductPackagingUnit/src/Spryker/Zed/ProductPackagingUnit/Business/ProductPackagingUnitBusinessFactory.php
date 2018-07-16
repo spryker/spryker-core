@@ -16,8 +16,10 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\ProductPackagin
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\ProductPackagingUnitAvailabilityHandlerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpander;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpanderInterface;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\ProductPackagingUnitOrderHydrator;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\ProductPackagingUnitOrderHydratorInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountLeadProductHydrateOrder;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountLeadProductHydrateOrderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountSalesUnitHydrateOrder;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountSalesUnitHydrateOrderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstaller;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstallerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemExpander;
@@ -251,17 +253,6 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\ProductPackagingUnitOrderHydratorInterface
-     */
-    public function createProductPackagingUnitOrderHydrator(): ProductPackagingUnitOrderHydratorInterface
-    {
-        return new ProductPackagingUnitOrderHydrator(
-            $this->getRepository(),
-            $this->getProductFacade()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemExpanderInterface
      */
     public function createOrderItemExpander(): OrderItemExpanderInterface
@@ -333,5 +324,26 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function getUtilTextService(): ProductPackagingUnitToUtilTextServiceInterface
     {
         return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountLeadProductHydrateOrderInterface
+     */
+    public function createAmountLeadProductHydrateOrder(): AmountLeadProductHydrateOrderInterface
+    {
+        return new AmountLeadProductHydrateOrder(
+            $this->getRepository(),
+            $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountSalesUnitHydrateOrderInterface
+     */
+    public function createAmountSalesUnitHydrateOrder(): AmountSalesUnitHydrateOrderInterface
+    {
+        return new AmountSalesUnitHydrateOrder(
+            $this->getRepository()
+        );
     }
 }

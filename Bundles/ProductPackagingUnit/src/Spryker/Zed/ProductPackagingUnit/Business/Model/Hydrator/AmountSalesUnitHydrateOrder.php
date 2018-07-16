@@ -9,16 +9,13 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
-class ProductPackagingUnitOrderHydrator implements ProductPackagingUnitOrderHydratorInterface
+class AmountSalesUnitHydrateOrder implements AmountSalesUnitHydrateOrderInterface
 {
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface
@@ -26,20 +23,12 @@ class ProductPackagingUnitOrderHydrator implements ProductPackagingUnitOrderHydr
     protected $productPackagingUnitRepository;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductFacadeInterface
-     */
-    protected $productFacade;
-
-    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductFacadeInterface $productFacade
      */
     public function __construct(
-        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository,
-        ProductPackagingUnitToProductFacadeInterface $productFacade
+        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
     ) {
         $this->productPackagingUnitRepository = $productPackagingUnitRepository;
-        $this->productFacade = $productFacade;
     }
 
     /**
@@ -47,7 +36,7 @@ class ProductPackagingUnitOrderHydrator implements ProductPackagingUnitOrderHydr
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateOrderWithAmountSalesUnitAndLeadProduct(OrderTransfer $orderTransfer): OrderTransfer
+    public function expandOrderWithAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer
     {
         $spySalesOrderItemEntityTransfers = $this->productPackagingUnitRepository
             ->findSalesOrderItemsByIdSalesOrder($orderTransfer->getIdSalesOrder());
@@ -63,7 +52,6 @@ class ProductPackagingUnitOrderHydrator implements ProductPackagingUnitOrderHydr
             }
 
             $this->setAmountSalesUnit($itemTransfer, $spySalesOrderItemEntityTransfer);
-            $this->setAmountLeadProduct($itemTransfer, $spySalesOrderItemEntityTransfer);
         }
 
         return $orderTransfer;
@@ -80,28 +68,6 @@ class ProductPackagingUnitOrderHydrator implements ProductPackagingUnitOrderHydr
         $itemAmountMeasurementUnitTransfer = $this->hydrateItemAmountSalesUnitTransfer($spySalesOrderItemEntityTransfer);
 
         $itemTransfer->setAmountSalesUnit($itemAmountMeasurementUnitTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer
-     *
-     * @return void
-     */
-    protected function setAmountLeadProduct(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer): void
-    {
-        if (!$spySalesOrderItemEntityTransfer->getAmountSku() || !$spySalesOrderItemEntityTransfer->getAmount()) {
-            return;
-        }
-
-        $leadProductConcreteTransfer = $this->findProductConcreteBySku($spySalesOrderItemEntityTransfer->getAmountSku());
-        if (!$leadProductConcreteTransfer) {
-            return;
-        }
-
-        $itemTransfer->setAmountLeadProduct(
-            $this->createProductPackagingLeadProductTransfer($leadProductConcreteTransfer)
-        );
     }
 
     /**
@@ -167,33 +133,5 @@ class ProductPackagingUnitOrderHydrator implements ProductPackagingUnitOrderHydr
         }
 
         return null;
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
-     */
-    protected function findProductConcreteBySku(string $sku): ?ProductConcreteTransfer
-    {
-        $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($sku);
-
-        if (!$idProductConcrete) {
-            return null;
-        }
-
-        return $this->productFacade->findProductConcreteById($idProductConcrete);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer
-     */
-    protected function createProductPackagingLeadProductTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductPackagingLeadProductTransfer
-    {
-        return (new ProductPackagingLeadProductTransfer())
-            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
-            ->setProduct($productConcreteTransfer);
     }
 }

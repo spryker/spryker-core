@@ -9,12 +9,12 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface ProductPackagingUnitOrderHydratorInterface
+interface AmountSalesUnitHydrateOrderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateOrderWithAmountSalesUnitAndLeadProduct(OrderTransfer $orderTransfer): OrderTransfer;
+    public function expandOrderWithAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
 }

@@ -57,6 +57,8 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
     public function findProductPackagingUnitTypeByName(
@@ -128,6 +130,8 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException
+     *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
     public function createProductPackagingUnitType(
@@ -178,18 +182,6 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandCartChangeWithAmountLeadProduct(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
-
-    /**
-     * Specification:
-     * - Hydrates order transfer with additional packaging unit amount fields from sales_order_item table.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function hydrateOrderWithAmountSalesUnitAndLeadProduct(OrderTransfer $orderTransfer): OrderTransfer;
 
     /**
      * Specification:
@@ -313,4 +305,28 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function setCustomAmountPrice(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Hydrates order transfer with additional packaging unit sales unit.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderWithAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Hydrates order transfer with additional packaging unit amount lead product.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderWithAmountLeadProduct(OrderTransfer $orderTransfer): OrderTransfer;
 }

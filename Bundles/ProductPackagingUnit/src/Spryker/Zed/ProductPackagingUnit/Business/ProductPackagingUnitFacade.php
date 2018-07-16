@@ -70,6 +70,8 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
     public function findProductPackagingUnitTypeByName(
@@ -139,6 +141,8 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
@@ -338,22 +342,6 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function hydrateOrderWithAmountSalesUnitAndLeadProduct(OrderTransfer $orderTransfer): OrderTransfer
-    {
-        return $this->getFactory()
-            ->createProductPackagingUnitOrderHydrator()
-            ->hydrateOrderWithAmountSalesUnitAndLeadProduct($orderTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
      *
@@ -381,5 +369,39 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
         return $this->getFactory()
             ->createOrderItemExpander()
             ->expandSalesOrderItemWithAmountAndAmountSku($itemTransfer, $salesOrderItemEntity);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderWithAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createAmountSalesUnitHydrateOrder()
+            ->expandOrderWithAmountSalesUnit($orderTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @@api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderWithAmountLeadProduct(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createAmountLeadProductHydrateOrder()
+            ->expandOrderWithAmountLeadProduct($orderTransfer);
     }
 }
