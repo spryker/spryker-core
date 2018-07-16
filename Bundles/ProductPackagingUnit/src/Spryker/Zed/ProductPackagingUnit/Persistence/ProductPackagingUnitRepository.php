@@ -129,14 +129,15 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
         string $siblingProductSku
     ): ?ProductPackagingLeadProductTransfer {
         $productPackagingLeadProductQuery = $this->getFactory()->createProductPackagingLeadProductQuery();
-        $productPackagingLeadProductQuery->useSpyProductAbstractQuery()
-                ->joinWithSpyProduct()
+        $productPackagingLeadProductQuery
+            ->useSpyProductAbstractQuery()
                 ->useSpyProductQuery()
                     ->filterBySku($siblingProductSku)
                 ->endUse()
             ->endUse();
 
-        $productPackagingLeadProductEntity = $productPackagingLeadProductQuery->findOne();
+        $productPackagingLeadProductEntity = $productPackagingLeadProductQuery
+            ->findOne();
 
         if (!$productPackagingLeadProductEntity) {
             return null;
