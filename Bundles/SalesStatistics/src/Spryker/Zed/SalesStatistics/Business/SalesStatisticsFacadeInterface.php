@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SalesStatistics\Business;
 
-use Generated\Shared\Transfer\SalesStatisticTransfer;
+use Generated\Shared\Transfer\ChartDataTraceTransfer;
 
 interface SalesStatisticsFacadeInterface
 {
@@ -19,9 +19,9 @@ interface SalesStatisticsFacadeInterface
      *
      * @param int $days
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function getOrderStatisticByCountDay($days): SalesStatisticTransfer;
+    public function getOrderStatisticByCountDay($days): ChartDataTraceTransfer;
 
     /**
      * Specification:
@@ -29,9 +29,9 @@ interface SalesStatisticsFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function getStatusOrderStatistic(): SalesStatisticTransfer;
+    public function getStatusOrderStatistic(): ChartDataTraceTransfer;
 
     /**
      * Specification:
@@ -41,7 +41,7 @@ interface SalesStatisticsFacadeInterface
      *
      * @param int $countProduct
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function getTopOrderStatistic(int $countProduct): SalesStatisticTransfer;
+    public function getTopOrderStatistic(int $countProduct): ChartDataTraceTransfer;
 }

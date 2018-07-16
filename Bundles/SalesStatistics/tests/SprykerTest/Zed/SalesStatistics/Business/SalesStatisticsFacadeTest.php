@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\SalesStatistics\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\SalesStatisticTransfer;
-use SprykerTest\Zed\SalesStatistics\Helper\BusinessHelper;
+use Generated\Shared\Transfer\ChartDataTraceTransfer;
+use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
  * Auto-generated group annotations
@@ -47,11 +47,11 @@ class SalesStatisticsFacadeTest extends Unit
      */
     public function testOrderStatisticByCountDay()
     {
-        $salesStatisticTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getOrderStatisticByCountDay(1);
+        $chartDataTraceTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getOrderStatisticByCountDay(1);
 
-        $this->assertInstanceOf(SalesStatisticTransfer::class, $salesStatisticTransfer);
-        $this->assertEquals($salesStatisticTransfer->getValues(), [1]);
-        $this->assertEquals($salesStatisticTransfer->getLabels(), [$this->spySalesOrder->getCreatedAt('Y-m-d')]);
+        $this->assertInstanceOf(ChartDataTraceTransfer::class, $chartDataTraceTransfer);
+        $this->assertEquals($chartDataTraceTransfer->getValues(), [1]);
+        $this->assertEquals($chartDataTraceTransfer->getLabels(), [$this->spySalesOrder->getCreatedAt('Y-m-d')]);
     }
 
     /**
@@ -59,16 +59,16 @@ class SalesStatisticsFacadeTest extends Unit
      */
     public function testStatusOrderStatistic()
     {
-        $salesStatisticTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getStatusOrderStatistic();
+        $chartDataTraceTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getStatusOrderStatistic();
 
         $sum = array_reduce($this->spySalesOrder->getItems()->toArray(), function ($sum, $item) {
             return $sum + $item['PriceToPayAggregation'];
         }, 0);
         $sum = $sum / 100;
 
-        $this->assertInstanceOf(SalesStatisticTransfer::class, $salesStatisticTransfer);
-        $this->assertEquals($salesStatisticTransfer->getValues(), [$sum]);
-        $this->assertEquals($salesStatisticTransfer->getLabels(), [BusinessHelper::DEFAULT_ITEM_STATE]);
+        $this->assertInstanceOf(ChartDataTraceTransfer::class, $chartDataTraceTransfer);
+        $this->assertEquals($chartDataTraceTransfer->getValues(), [$sum]);
+        $this->assertEquals($chartDataTraceTransfer->getLabels(), [BusinessHelper::DEFAULT_ITEM_STATE]);
     }
 
     /**
@@ -76,10 +76,10 @@ class SalesStatisticsFacadeTest extends Unit
      */
     public function testTopOrderStatistic()
     {
-        $salesStatisticTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getTopOrderStatistic(1);
+        $chartDataTraceTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getTopOrderStatistic(1);
 
-        $this->assertInstanceOf(SalesStatisticTransfer::class, $salesStatisticTransfer);
-        $this->assertEquals($salesStatisticTransfer->getValues(), [count($this->spySalesOrder->getItems())]);
-        $this->assertEquals($salesStatisticTransfer->getLabels(), [BusinessHelper::DEFAULT_PRODUCT_NAME]);
+        $this->assertInstanceOf(ChartDataTraceTransfer::class, $chartDataTraceTransfer);
+        $this->assertEquals($chartDataTraceTransfer->getValues(), ['test1']);
+        $this->assertEquals($chartDataTraceTransfer->getLabels(), [count($this->spySalesOrder->getItems())]);
     }
 }

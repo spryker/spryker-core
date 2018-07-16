@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/sales-statistics.svg)](https://travis-ci.org/spryker/sales-statistics)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/sales-statistics/badge.svg)](https://coveralls.io/github/spryker/sales-statistics)
 
-Module for sales statistic
+Module for sales statistic. Contains plugins for Top Orders, Status orders, Count orders.
 
 ## Installation
 

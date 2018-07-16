@@ -7,26 +7,26 @@
 
 namespace Spryker\Zed\SalesStatistics\Business\Reader;
 
-use Generated\Shared\Transfer\SalesStatisticTransfer;
+use Generated\Shared\Transfer\ChartDataTraceTransfer;
 
 interface ReaderInterface
 {
     /**
      * @param int $days
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function getOrderCountStatisticByDays(int $days): SalesStatisticTransfer;
+    public function getOrderCountStatisticByDays(int $days): ChartDataTraceTransfer;
 
     /**
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function getStatusOrderStatistic(): SalesStatisticTransfer;
+    public function getStatusOrderStatistic(): ChartDataTraceTransfer;
 
     /**
      * @param int $countProduct
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function getTopOrderStatistic(int $countProduct): SalesStatisticTransfer;
+    public function getTopOrderStatistic(int $countProduct): ChartDataTraceTransfer;
 }

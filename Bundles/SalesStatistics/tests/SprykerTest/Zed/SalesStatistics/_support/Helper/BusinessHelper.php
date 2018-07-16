@@ -24,9 +24,9 @@ use Orm\Zed\Sales\Persistence\SpySalesShipment;
 
 class BusinessHelper extends Module
 {
-    const DEFAULT_OMS_PROCESS_NAME = 'TestStatistic01';
-    const DEFAULT_ITEM_STATE = 'testStatistic';
-    const DEFAULT_PRODUCT_NAME = 'testStatistic1';
+    public const DEFAULT_OMS_PROCESS_NAME = 'TestStatistic01';
+    public const DEFAULT_ITEM_STATE = 'testStatistic';
+    public const DEFAULT_PRODUCT_NAME = 'testStatistic';
 
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
@@ -85,7 +85,7 @@ class BusinessHelper extends Module
         $salesOrderItem->setGrossPrice($grossPrice);
         $salesOrderItem->setQuantity($quantity);
         $salesOrderItem->setSku('123');
-        $salesOrderItem->setName('testStatistic1');
+        $salesOrderItem->setName('testStatistic');
         $salesOrderItem->setTaxRate($taxRate);
         $salesOrderItem->setPriceToPayAggregation(100);
         $salesOrderItem->setFkOmsOrderItemState($omsStateEntity->getIdOmsOrderItemState());

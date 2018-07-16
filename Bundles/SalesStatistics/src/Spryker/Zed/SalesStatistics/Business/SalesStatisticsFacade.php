@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SalesStatistics\Business;
 
-use Generated\Shared\Transfer\SalesStatisticTransfer;
+use Generated\Shared\Transfer\ChartDataTraceTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -22,9 +22,9 @@ class SalesStatisticsFacade extends AbstractFacade implements SalesStatisticsFac
      *
      * @param int $days
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function getOrderStatisticByCountDay($days): SalesStatisticTransfer
+    public function getOrderStatisticByCountDay($days): ChartDataTraceTransfer
     {
         return $this->getFactory()->createReader()->getOrderCountStatisticByDays($days);
     }
@@ -34,9 +34,9 @@ class SalesStatisticsFacade extends AbstractFacade implements SalesStatisticsFac
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function getStatusOrderStatistic(): SalesStatisticTransfer
+    public function getStatusOrderStatistic(): ChartDataTraceTransfer
     {
         return $this->getFactory()->createReader()->getStatusOrderStatistic();
     }
@@ -48,9 +48,9 @@ class SalesStatisticsFacade extends AbstractFacade implements SalesStatisticsFac
      *
      * @param int $countProduct
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function getTopOrderStatistic(int $countProduct): SalesStatisticTransfer
+    public function getTopOrderStatistic(int $countProduct): ChartDataTraceTransfer
     {
         return $this->getFactory()->createReader()->getTopOrderStatistic($countProduct);
     }

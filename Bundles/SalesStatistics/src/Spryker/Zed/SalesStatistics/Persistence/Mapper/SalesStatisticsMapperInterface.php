@@ -7,28 +7,28 @@
 
 namespace Spryker\Zed\SalesStatistics\Persistence\Mapper;
 
-use Generated\Shared\Transfer\SalesStatisticTransfer;
+use Generated\Shared\Transfer\ChartDataTraceTransfer;
 
 interface SalesStatisticsMapperInterface
 {
     /**
      * @param array $statistic
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function mapCountStatisticToTransfer(array $statistic): SalesStatisticTransfer;
+    public function mapCountStatisticToTransfer(array $statistic): ChartDataTraceTransfer;
 
     /**
      * @param array $statistic
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function mapStatusOrderStatisticToTransfer(array $statistic): SalesStatisticTransfer;
+    public function mapStatusOrderStatisticToTransfer(array $statistic): ChartDataTraceTransfer;
 
     /**
      * @param array $statistic
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function mapTopOrderStatisticToTransfer(array $statistic): SalesStatisticTransfer;
+    public function mapTopOrderStatisticToTransfer(array $statistic): ChartDataTraceTransfer;
 }

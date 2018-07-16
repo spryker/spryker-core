@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SalesStatistics\Persistence\Mapper;
 
-use Generated\Shared\Transfer\SalesStatisticTransfer;
+use Generated\Shared\Transfer\ChartDataTraceTransfer;
 use Spryker\Zed\SalesStatistics\Persistence\SalesStatisticsRepository;
 
 class SalesStatisticsMapper implements SalesStatisticsMapperInterface
@@ -17,11 +17,11 @@ class SalesStatisticsMapper implements SalesStatisticsMapperInterface
     /**
      * @param array $statistic
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function mapCountStatisticToTransfer(array $statistic): SalesStatisticTransfer
+    public function mapCountStatisticToTransfer(array $statistic): ChartDataTraceTransfer
     {
-        $chartDataTraceTransfer = new SalesStatisticTransfer();
+        $chartDataTraceTransfer = new ChartDataTraceTransfer();
         if ($statistic) {
             foreach ($statistic as $statisticItem) {
                 $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::DATE]);
@@ -35,11 +35,11 @@ class SalesStatisticsMapper implements SalesStatisticsMapperInterface
     /**
      * @param array $statistic
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function mapStatusOrderStatisticToTransfer(array $statistic): SalesStatisticTransfer
+    public function mapStatusOrderStatisticToTransfer(array $statistic): ChartDataTraceTransfer
     {
-        $chartDataTraceTransfer = new SalesStatisticTransfer();
+        $chartDataTraceTransfer = new ChartDataTraceTransfer();
         if ($statistic) {
             foreach ($statistic as $statisticItem) {
                 $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::STATUS_NAME]);
@@ -53,15 +53,15 @@ class SalesStatisticsMapper implements SalesStatisticsMapperInterface
     /**
      * @param array $statistic
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function mapTopOrderStatisticToTransfer(array $statistic): SalesStatisticTransfer
+    public function mapTopOrderStatisticToTransfer(array $statistic): ChartDataTraceTransfer
     {
-        $chartDataTraceTransfer = new SalesStatisticTransfer();
+        $chartDataTraceTransfer = new ChartDataTraceTransfer();
         if ($statistic) {
             foreach ($statistic as $statisticItem) {
-                $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::ITEM_NAME]);
-                $chartDataTraceTransfer->addValue($statisticItem[SalesStatisticsRepository::COUNT]);
+                $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::COUNT]);
+                $chartDataTraceTransfer->addValue($statisticItem[SalesStatisticsRepository::ITEM_NAME]);
             }
         }
 

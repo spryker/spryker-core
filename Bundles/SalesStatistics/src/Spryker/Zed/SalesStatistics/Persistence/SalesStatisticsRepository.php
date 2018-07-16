@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SalesStatistics\Persistence;
 
-use Generated\Shared\Transfer\SalesStatisticTransfer;
+use Generated\Shared\Transfer\ChartDataTraceTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
@@ -28,9 +28,9 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
     /**
      * @param int $day
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function getOrderCountStatisticByDays(int $day): SalesStatisticTransfer
+    public function getOrderCountStatisticByDays(int $day): ChartDataTraceTransfer
     {
         $dateInterval = date('Y-m-d H:i:s.u', strtotime(sprintf('-%d days', $day)));
 
@@ -46,9 +46,9 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function getStatusOrderStatistic(): SalesStatisticTransfer
+    public function getStatusOrderStatistic(): ChartDataTraceTransfer
     {
         $result = $this->getFactory()->createSalesOrderItemQuery()
             ->joinWithState()
@@ -64,9 +64,9 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
     /**
      * @param int $countProduct
      *
-     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function getTopOrderStatistic(int $countProduct): SalesStatisticTransfer
+    public function getTopOrderStatistic(int $countProduct): ChartDataTraceTransfer
     {
         $result = $this->getFactory()->createSalesOrderItemQuery()
             ->select([static::ITEM_NAME, static::COUNT])
