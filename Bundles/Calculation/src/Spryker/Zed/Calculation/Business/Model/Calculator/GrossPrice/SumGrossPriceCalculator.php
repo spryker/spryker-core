@@ -16,7 +16,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 class SumGrossPriceCalculator implements CalculatorInterface
 {
     /**
-     * Sum prices from Persistence are acting as source of truth.
+     * For already ordered entities, sum prices are acting as source of truth.
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
