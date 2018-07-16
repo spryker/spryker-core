@@ -209,6 +209,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             '/zendframework/' => 'spryker/zend',
             'phpdocumentor/graphviz' => 'spryker/graphviz',
             'egulias/email-validator' => 'spryker/egulias',
+            'ramsey/uuid' => 'spryker/ramsey-uuid',
         ];
     }
 
