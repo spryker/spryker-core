@@ -19,13 +19,17 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginIn
 class NonSplittableItemTransformerStrategyPlugin extends AbstractPlugin implements ItemTransformerStrategyPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return bool
      */
     public function isApplicable(ItemTransfer $itemTransfer): bool
     {
-        return $this->getFacade()->isItemQuantityNonSplittable($itemTransfer);
+        return !$this->getFacade()->isItemQuantitySplittable($itemTransfer);
     }
 
     /**

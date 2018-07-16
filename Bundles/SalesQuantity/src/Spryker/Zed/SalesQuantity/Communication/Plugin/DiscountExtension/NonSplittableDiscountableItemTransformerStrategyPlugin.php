@@ -18,6 +18,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class NonSplittableDiscountableItemTransformerStrategyPlugin extends AbstractPlugin implements DiscountableItemTransformerStrategyPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
      *
      * @return bool
@@ -30,10 +34,14 @@ class NonSplittableDiscountableItemTransformerStrategyPlugin extends AbstractPlu
             return false;
         }
 
-        return $this->getFacade()->isItemQuantityNonSplittable($originalItem);
+        return !$this->getFacade()->isItemQuantitySplittable($originalItem);
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer

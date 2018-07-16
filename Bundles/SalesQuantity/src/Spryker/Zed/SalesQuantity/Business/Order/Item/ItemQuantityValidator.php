@@ -30,21 +30,21 @@ class ItemQuantityValidator implements ItemQuantityValidatorInterface
      *
      * @return bool
      */
-    public function isItemQuantityNonSplittable(ItemTransfer $itemTransfer): bool
+    public function isItemQuantitySplittable(ItemTransfer $itemTransfer): bool
     {
         if ($this->isBundledItem($itemTransfer)) {
-            return false;
+            return true;
         }
 
         if ($this->isNonSplittableItem($itemTransfer)) {
-            return true;
+            return false;
         }
 
-        if ($this->isQuantityThresholdExceeded($itemTransfer)) {
-            return true;
+        if ($this->isNonSplittableQuantityThresholdExceeded($itemTransfer)) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -76,7 +76,7 @@ class ItemQuantityValidator implements ItemQuantityValidatorInterface
      *
      * @return bool
      */
-    protected function isQuantityThresholdExceeded(ItemTransfer $itemTransfer)
+    protected function isNonSplittableQuantityThresholdExceeded(ItemTransfer $itemTransfer)
     {
         $threshold = $this->config->findItemQuantityThreshold();
         if ($threshold === null) {

@@ -16,5 +16,5 @@ interface ItemQuantityValidatorInterface
      *
      * @return bool
      */
-    public function isItemQuantityNonSplittable(ItemTransfer $itemTransfer): bool;
+    public function isItemQuantitySplittable(ItemTransfer $itemTransfer): bool;
 }

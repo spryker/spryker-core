@@ -13,7 +13,7 @@ use Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeBrid
 
 class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
