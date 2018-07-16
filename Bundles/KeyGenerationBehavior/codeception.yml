@@ -1,4 +1,4 @@
-namespace: KeyGenerationBehaviour
+namespace: KeyGenerationBehavior
 actor: Tester
 paths:
     tests: tests
