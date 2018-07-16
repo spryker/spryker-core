@@ -54,4 +54,20 @@ interface SalesQuantityFacadeInterface
     public function transformNonSplittableDiscountableItem(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): DiscountableItemTransformerTransfer;
+
+    /**
+     * Specification:
+     * - Checks if the item should be splitted per quantity.
+     * - Returns false if the item is a bundled item.
+     * - Returns true if the item is non-splittable.
+     * - Returns true if the item exceeded the preconfigured quantity threshold.
+     * - Returns false in any other case.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    public function isItemQuantitySplitRequired(ItemTransfer $itemTransfer);
 }

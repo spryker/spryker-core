@@ -30,16 +30,7 @@ class NonSplittableDiscountableItemTransformerStrategyPlugin extends AbstractPlu
             return false;
         }
 
-        if ($originalItem->getIsQuantitySplittable() === false) {
-            return true;
-        }
-
-        $threshold = $this->getConfig()->findItemQuantityThreshold();
-        if ($threshold !== null && $originalItem->getQuantity() >= $threshold) {
-            return true;
-        }
-
-        return false;
+        return $this->getFacade()->isItemQuantitySplitRequired($originalItem);
     }
 
     /**

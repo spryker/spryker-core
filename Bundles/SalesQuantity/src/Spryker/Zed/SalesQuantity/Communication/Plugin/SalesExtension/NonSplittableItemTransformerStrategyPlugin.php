@@ -25,16 +25,7 @@ class NonSplittableItemTransformerStrategyPlugin extends AbstractPlugin implemen
      */
     public function isApplicable(ItemTransfer $itemTransfer): bool
     {
-        if ($itemTransfer->getIsQuantitySplittable() === false) {
-            return true;
-        }
-
-        $threshold = $this->getConfig()->findItemQuantityThreshold();
-        if ($threshold !== null && $itemTransfer->getQuantity() >= $threshold) {
-            return true;
-        }
-
-        return false;
+        return $this->getFacade()->isItemQuantitySplitRequired($itemTransfer);
     }
 
     /**
