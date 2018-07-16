@@ -187,7 +187,9 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
         int $idProductPackagingUnit
     ): ?ProductPackagingUnitTransfer {
         $productPackagingUnitEntity = $this->getProductPackagingUnitCriteria()
-            ->findOneByIdProductPackagingUnit($idProductPackagingUnit);
+            ->filterByIdProductPackagingUnit($idProductPackagingUnit)
+            ->find()
+            ->getFirst();
 
         if (!$productPackagingUnitEntity) {
             return null;
@@ -212,7 +214,9 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
         int $idProduct
     ): ?ProductPackagingUnitTransfer {
         $productPackagingUnitEntity = $this->getProductPackagingUnitCriteria()
-            ->findOneByFkProduct($idProduct);
+            ->filterByFkProduct($idProduct)
+            ->find()
+            ->getFirst();
 
         if (!$productPackagingUnitEntity) {
             return null;
@@ -243,7 +247,8 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->useProductQuery()
                 ->filterBySku($productSku)
             ->endUse()
-            ->findOne();
+            ->find()
+            ->getFirst();
 
         if (!$productPackagingUnitEntity) {
             return null;
