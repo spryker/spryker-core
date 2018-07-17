@@ -166,7 +166,6 @@ abstract class AbstractMapperTest extends Unit
                     "external_url_small" => "//images.icecat.biz/img/norm/medium/15743_12554247-9579.jpg",
                     "external_url_large" => "//images.icecat.biz/img/norm/high/15743_12554247-9579.jpg",
                     "id_product_image_set_to_product_image" => 423,
-                    "sort_order" => 0,
                     "fk_product_image" => 204],
             ],
             "id_product_labels" => [
@@ -189,7 +188,6 @@ abstract class AbstractMapperTest extends Unit
                 "external_url_small" => "//images.icecat.biz/img/norm/low/15721464-9569.jpg",
                 "external_url_large" => "//images.icecat.biz/img/norm/high/15721464-9569.jpg",
                 "id_product_image_set_to_product_image" => 421,
-                "sort_order" => 0,
                 "fk_product_image" => 202,
             ],
             "id_product_labels" => [
@@ -213,7 +211,6 @@ abstract class AbstractMapperTest extends Unit
                     "external_url_small" => "//images.icecat.biz/img/norm/low/14678762-7696.jpg",
                     "external_url_large" => "//images.icecat.biz/img/norm/high/14678762-7696.jpg",
                     "id_product_image_set_to_product_image" => 422,
-                    "sort_order" => 0,
                     "fk_product_image" => 203,
                 ],
             ],

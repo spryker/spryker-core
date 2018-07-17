@@ -46,7 +46,6 @@ class SearchResourceMapperTest extends AbstractMapperTest
 
         $this->assertEquals("//images.icecat.biz/img/norm/medium/15743_12554247-9579.jpg", $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]['externalUrlSmall']);
         $this->assertEquals("//images.icecat.biz/img/norm/high/15743_12554247-9579.jpg", $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]['externalUrlLarge']);
-        $this->assertEquals(0, $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]['sortOrder']);
 
         $this->assertEquals("name_asc", $this->restSearchAttributesTransfer->getSort()->getCurrentSortOrder());
         $this->assertEquals("1", $this->restSearchAttributesTransfer->getSort()->getCurrentSortParam());

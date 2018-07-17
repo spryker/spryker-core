@@ -35,7 +35,6 @@
     <transfer name="RestSearchProductImageAttributes">
         <property name="externalUrlSmall" type="string"/>
         <property name="externalUrlLarge" type="string"/>
-        <property name="sortOrder" type="int"/>
     </transfer>
 
     <transfer name="RestSearchSuggestionsAttributes">
