@@ -68,6 +68,6 @@ abstract class MinimumOrderValueAbstractStrategy
     {
         return (new MinimumOrderValueTypeTransfer())
             ->setKey($this->getKey())
-            ->setGroup($this->getGroup());
+            ->setThresholdGroup($this->getGroup());
     }
 }
