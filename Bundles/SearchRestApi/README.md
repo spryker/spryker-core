@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/search-rest-api.svg)](https://travis-ci.org/spryker/search-rest-api)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/search-rest-api/badge.svg)](https://coveralls.io/github/spryker/search-rest-api)
 
-SearchRestApi module provides rest api for search 
+SearchRestApi module provides rest api for search.
 
 ## Installation
 
