@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Category;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface CategoryConstants
 {
     const PARAM_ID_NODE = 'id-node';
