@@ -93,10 +93,9 @@ class SuggestionsReader implements SuggestionsReaderInterface
      */
     protected function buildEmptyResponse(RestResponseInterface $response): RestResponseInterface
     {
-        $resource = $this->suggestionsResourceMapper->mapSuggestionsResponseAttributesTransferToRestResponse([
-            'completion' => [],
-            'suggestionByType' => [],
-        ]);
+        $resource = $this->suggestionsResourceMapper->mapSuggestionsResponseAttributesTransferToRestResponse(
+            $this->suggestionsResourceMapper->getSearchResponseDefaultStructure()
+        );
 
         return $response->addResource($resource);
     }
