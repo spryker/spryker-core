@@ -62,6 +62,19 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
+     * @param int $idProduct
+     *
+     * @return bool
+     */
+    public function isConcreteDiscontinued(int $idProduct): bool
+    {
+        return ($this->getFactory()
+                ->createProductDiscontinuedQuery()
+                ->filterByFkProduct($idProduct)
+                ->count() > 0);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
     public function findProductsToDeactivate(): ProductDiscontinuedCollectionTransfer

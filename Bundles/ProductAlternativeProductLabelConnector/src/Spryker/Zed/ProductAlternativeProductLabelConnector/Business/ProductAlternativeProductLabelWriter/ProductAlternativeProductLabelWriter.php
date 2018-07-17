@@ -8,6 +8,12 @@
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToAvailabilityFacadeInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig;
 
 class ProductAlternativeProductLabelWriter implements ProductAlternativeProductLabelWriterInterface
 {
@@ -27,6 +33,16 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
     protected $productAlternativeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeInterface $productDiscontinuedFacade
+     */
+    protected $productDiscontinuedFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeInterface $productDiscontinuedFacade
+     */
+    protected $availabilityFacade;
+
+    /**
      * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig
      */
     protected $config;
@@ -35,17 +51,23 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface $productFacade
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface $productAlternativeFacade
+     * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeInterface $productDiscontinuedFacade
+     * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig $config
      */
     public function __construct(
-        $productFacade,
-        $productLabelFacade,
-        $productAlternativeFacade,
-        $config
+        ProductAlternativeProductLabelConnectorToProductInterface $productFacade,
+        ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade,
+        ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface $productAlternativeFacade,
+        ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeInterface $productDiscontinuedFacade,
+        ProductAlternativeProductLabelConnectorToAvailabilityFacadeInterface $availabilityFacade,
+        ProductAlternativeProductLabelConnectorConfig $config
     ) {
         $this->productFacade = $productFacade;
         $this->productLabelFacade = $productLabelFacade;
         $this->productAlternativeFacade = $productAlternativeFacade;
+        $this->productDiscontinuedFacade = $productDiscontinuedFacade;
+        $this->availabilityFacade = $availabilityFacade;
         $this->config = $config;
     }
 
@@ -65,15 +87,37 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
         $idProductLabel = $productLabelTransfer->getIdProductLabel();
         $concreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
 
-        if (!$this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($concreteIds)) {
+        if (!$this->areAllConcretesUnavailableOrDiscontinued($concreteIds)) {
             $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
 
             return;
         }
 
-        if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))) {
+        if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))
+            && $this->areAllConcretesUnavailableOrDiscontinued($concreteIds)
+        ) {
             $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
         }
+    }
+
+    /**
+     * @param int[] $concreteIds
+     *
+     * @return bool
+     */
+    protected function areAllConcretesUnavailableOrDiscontinued(array $concreteIds): bool
+    {
+        $isPassed = true;
+
+        foreach ($concreteIds as $concreteId) {
+            if ($this->availabilityFacade->isProductConcreteIsAvailable($concreteId)
+                && !$this->productDiscontinuedFacade->isConcreteDiscontinued($concreteId)
+            ) {
+                $isPassed = false;
+            }
+        }
+
+        return $isPassed;
     }
 
     /**

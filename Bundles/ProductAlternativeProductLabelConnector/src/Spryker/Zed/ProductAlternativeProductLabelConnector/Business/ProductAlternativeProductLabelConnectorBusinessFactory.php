@@ -14,8 +14,10 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternat
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelReader\ProductAbstractRelationReaderInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter\ProductAlternativeProductLabelWriter;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter\ProductAlternativeProductLabelWriterInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToAvailabilityFacadeBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorDependencyProvider;
@@ -47,6 +49,8 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
             $this->getProductFacade(),
             $this->getProductLabelFacade(),
             $this->getProductAlternativeFacade(),
+            $this->getProductDiscontinuedFacade(),
+            $this->getavailabilityFacade(),
             $this->getConfig()
         );
     }
@@ -60,6 +64,8 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
             $this->getProductFacade(),
             $this->getProductLabelFacade(),
             $this->getProductAlternativeFacade(),
+            $this->getProductDiscontinuedFacade(),
+            $this->getavailabilityFacade(),
             $this->getRepository(),
             $this->getConfig()
         );
@@ -87,6 +93,22 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
     public function getProductAlternativeFacade(): ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface
     {
         return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_PRODUCT_ALTERNATIVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeInterface
+     */
+    public function getProductDiscontinuedFacade(): ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_PRODUCT_DISCONTINUED);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToAvailabilityFacadeInterface
+     */
+    public function getavailabilityFacade(): ProductAlternativeProductLabelConnectorToAvailabilityFacadeBridge
+    {
+        return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_AVAILABILITY);
     }
 
     /**

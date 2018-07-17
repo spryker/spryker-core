@@ -10,15 +10,19 @@ namespace Spryker\Zed\ProductAlternativeProductLabelConnector;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToAvailabilityFacadeBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductBridge;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelBridge;
 
 class ProductAlternativeProductLabelConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
     public const FACADE_PRODUCT_ALTERNATIVE = 'FACADE_PRODUCT_ALTERNATIVE';
+    public const FACADE_PRODUCT_DISCONTINUED = 'FACADE_PRODUCT_DISCONTINUED';
+    public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const PROPEL_QUERY_PRODUCT_ALTERNATIVE = 'PROPEL_QUERY_PRODUCT_ALTERNATIVE';
@@ -34,6 +38,8 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
         $container = $this->addProductLabelFacade($container);
         $container = $this->addProductFacade($container);
         $container = $this->addProductAlternativeFacade($container);
+        $container = $this->addProductDiscontinuedFacade($container);
+        $container = $this->addAvailabilityFacade($container);
         $container = $this->addLocaleFacade($container);
 
         return $container;
@@ -110,6 +116,38 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ProductAlternativeProductLabelConnectorToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductDiscontinuedFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRODUCT_DISCONTINUED] = function (Container $container) {
+            return new ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeBridge(
+                $container->getLocator()->productDiscontinued()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAvailabilityFacade(Container $container): Container
+    {
+        $container[static::FACADE_AVAILABILITY] = function (Container $container) {
+            return new ProductAlternativeProductLabelConnectorToAvailabilityFacadeBridge(
+                $container->getLocator()->availability()->facade()
             );
         };
 

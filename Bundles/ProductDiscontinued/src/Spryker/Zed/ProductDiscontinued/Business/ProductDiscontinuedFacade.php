@@ -98,6 +98,21 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
      *
      * @api
      *
+     * @param int $idProduct
+     *
+     * @return bool
+     */
+    public function isConcreteDiscontinued(int $idProduct): bool
+    {
+        return $this->getRepository()
+            ->isConcreteDiscontinued($idProduct);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer

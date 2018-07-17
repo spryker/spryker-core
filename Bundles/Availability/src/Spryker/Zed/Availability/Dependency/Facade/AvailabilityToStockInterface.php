@@ -62,6 +62,13 @@ interface AvailabilityToStockInterface
     public function getAvailableStockTypes();
 
     /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductsByIdProduct(int $idProductConcrete): array;
+
+    /**
      * @return array
      */
     public function getWarehouseToStoreMapping();
