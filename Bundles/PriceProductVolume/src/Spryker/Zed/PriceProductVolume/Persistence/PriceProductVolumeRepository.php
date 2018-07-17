@@ -8,10 +8,12 @@
 namespace Spryker\Zed\PriceProductVolume\Persistence;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
+/**
+ * @method \Spryker\Zed\PriceProductVolume\Persistence\PriceProductVolumePersistenceFactory getFactory()
+ */
 class PriceProductVolumeRepository extends AbstractRepository implements PriceProductVolumeRepositoryInterface
 {
     /**
@@ -21,15 +23,18 @@ class PriceProductVolumeRepository extends AbstractRepository implements PricePr
      */
     public function findIdProductAbstractForPriceProduct(PriceProductTransfer $priceProductTransfer): ?int
     {
-        $query = $this->getProductQuery()
-            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT]);
-
         if ($priceProductTransfer->getIdProduct()) {
-            return $query->findOneByIdProduct($priceProductTransfer->getIdProduct());
+            $productEntity = $this->getProductQuery()
+                ->findOneByIdProduct($priceProductTransfer->getIdProduct());
+
+            return $productEntity ? $productEntity->getFkProductAbstract() : null;
         }
 
         if ($priceProductTransfer->getSkuProduct()) {
-            return $query->findOneBySku($priceProductTransfer->getSkuProduct());
+            $productEntity = $this->getProductQuery()
+                ->findOneBySku($priceProductTransfer->getSkuProduct());
+
+            return $productEntity ? $productEntity->getFkProductAbstract() : null;
         }
 
         return null;
