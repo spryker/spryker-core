@@ -6,21 +6,22 @@
 
 namespace Spryker\Glue\SearchRestApi\Controller;
 
-use Spryker\Glue\GlueApplication\Rest\Controller\AbstractRestController;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\Kernel\Controller\AbstractController;
 
 /**
  * @method \Spryker\Glue\SearchRestApi\SearchRestApiFactory getFactory()
  */
-class SearchResourceController extends AbstractRestController
+class SearchResourceController extends AbstractController
 {
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getAction(): RestResponseInterface
+    public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restRequest = $this->getRestRequest();
-
         return $this->getFactory()->createCatalogReader()->catalogSearch($restRequest);
     }
 }

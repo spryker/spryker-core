@@ -12,7 +12,7 @@ interface ProductOptionToEventFacadeInterface
 {
     /**
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
+     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
      *
      * @return void
      */
