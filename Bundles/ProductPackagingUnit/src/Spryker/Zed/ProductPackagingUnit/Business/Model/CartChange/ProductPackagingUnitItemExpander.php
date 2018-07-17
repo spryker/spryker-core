@@ -32,7 +32,7 @@ class ProductPackagingUnitItemExpander implements ProductPackagingUnitItemExpand
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandCartWithAmountLeadProductAndProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function expandCartChangeWithProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if (!$itemTransfer->getAmount()) {

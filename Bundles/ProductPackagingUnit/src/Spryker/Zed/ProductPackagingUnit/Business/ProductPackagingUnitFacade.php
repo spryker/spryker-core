@@ -235,7 +235,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     {
         return $this->getFactory()
             ->createProductPackagingUnitItemExpander()
-            ->expandCartWithAmountLeadProductAndProductPackagingUnit($cartChangeTransfer);
+            ->expandCartChangeWithProductPackagingUnit($cartChangeTransfer);
     }
 
     /**
