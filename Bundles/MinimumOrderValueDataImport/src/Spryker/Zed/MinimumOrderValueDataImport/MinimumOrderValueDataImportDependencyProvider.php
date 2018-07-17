@@ -24,7 +24,7 @@ class MinimumOrderValueDataImportDependencyProvider extends DataImportDependency
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
@@ -40,7 +40,7 @@ class MinimumOrderValueDataImportDependencyProvider extends DataImportDependency
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMinimumOrderValueFacade(Container $container)
+    protected function addMinimumOrderValueFacade(Container $container): Container
     {
         $container[static::FACADE_MINIMUM_ORDER_VALUE] = function (Container $container) {
             return new MinimumOrderValueDataImportToMinimumOrderValueFacadeBridge(
@@ -56,7 +56,7 @@ class MinimumOrderValueDataImportDependencyProvider extends DataImportDependency
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStoreFacade(Container $container)
+    protected function addStoreFacade(Container $container): Container
     {
         $container[static::FACADE_STORE] = function (Container $container) {
             return new MinimumOrderValueDataImportToStoreFacadeBridge(
@@ -72,7 +72,7 @@ class MinimumOrderValueDataImportDependencyProvider extends DataImportDependency
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCurrencyFacade(Container $container)
+    protected function addCurrencyFacade(Container $container): Container
     {
         $container[static::FACADE_CURRENCY] = function (Container $container) {
             return new MinimumOrderValueDataImportToCurrencyFacadeBridge(
