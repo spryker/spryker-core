@@ -45,6 +45,29 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     /**
      * {@inheritdoc}
      *
+     * @param string $merchantRelationshipKey
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
+     */
+    public function getMerchantRelationshipByKey(string $merchantRelationshipKey): ?MerchantRelationshipTransfer
+    {
+        $spyMerchantRelation = $this->getFactory()
+            ->createMerchantRelationshipQuery()
+            ->filterByMerchantRelationshipKey($merchantRelationshipKey)
+            ->findOne();
+
+        if (!$spyMerchantRelation) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createPropelMerchantRelationshipMapper()
+            ->mapEntityToMerchantRelationshipTransfer($spyMerchantRelation, new MerchantRelationshipTransfer());
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @param int $idMerchantRelationship
      *
      * @return int[]

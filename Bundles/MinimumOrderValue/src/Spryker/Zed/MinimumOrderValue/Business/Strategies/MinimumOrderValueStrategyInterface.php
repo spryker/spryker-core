@@ -30,10 +30,10 @@ interface MinimumOrderValueStrategyInterface
     public function toTransfer(): MinimumOrderValueTypeTransfer;
 
     /**
-     * @param int $value
+     * @param int $thresholdValue
      * @param int|null $fee
      *
      * @return bool
      */
-    public function validate(int $value, ?int $fee = 0): bool;
+    public function validate(int $thresholdValue, ?int $fee = null): bool;
 }

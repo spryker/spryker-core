@@ -10,7 +10,7 @@ namespace Spryker\Zed\MinimumOrderValue\Persistence\Propel;
 use Orm\Zed\MinimumOrderValue\Persistence\Base\SpyMinimumOrderValueQuery as BaseSpyMinimumOrderValueQuery;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_min_order_value' table.
+ * Skeleton subclass for performing query and update operations on the 'spy_min_order_value' table.
  *
  *
  *

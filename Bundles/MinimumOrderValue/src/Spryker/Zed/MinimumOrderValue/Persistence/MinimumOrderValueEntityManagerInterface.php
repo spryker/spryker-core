@@ -25,7 +25,7 @@ interface MinimumOrderValueEntityManagerInterface
      * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param int $value
+     * @param int $thresholdValue
      * @param int|null $fee
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
@@ -34,7 +34,7 @@ interface MinimumOrderValueEntityManagerInterface
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
-        int $value,
+        int $thresholdValue,
         ?int $fee = null
     ): MinimumOrderValueTransfer;
 }

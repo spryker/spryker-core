@@ -1,0 +1,13 @@
+merchant_relation_key,store,currency,strategy,threshold,fee,message_en,message_de
+sugar-moster-27-rif-hq-1,DE,EUR,hard-threshold,800,,,
+sugar-moster-27-rif-hq-1,DE,EUR,soft-threshold,1200,,,
+sugar-moster-27-rif-hq-2,DE,EUR,hard-threshold,300,,,
+sugar-moster-27-rif-hq-2,DE,EUR,soft-threshold-flexible-fee,500,12%,,
+sugar-moster-27-rif-hq-3,DE,EUR,hard-threshold,500,,,
+sugar-moster-27-rif-hq-3,DE,EUR,soft-threshold-fixed-fee,650,45,,
+sugar-moster-27-rif-hq-4,DE,EUR,soft-threshold-flexible-fee,650,10%,,
+sugar-moster-27-rif-hq-4,DE,EUR,hard-threshold,500,,,
+sugar-moster-27-rif-hq-5,DE,EUR,hard-threshold,500,,,
+sugar-moster-27-rif-hq-5,DE,EUR,soft-threshold-fixed-fee,650,45,,
+sugar-moster-27-rif-hq-6,DE,EUR,soft-threshold-flexible-fee,250,25%,,
+sugar-moster-27-rif-hq-7,DE,EUR,soft-threshold-fixed-fee,400,77,,

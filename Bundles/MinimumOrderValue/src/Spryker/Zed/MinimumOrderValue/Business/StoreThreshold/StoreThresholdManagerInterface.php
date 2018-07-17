@@ -17,7 +17,7 @@ interface StoreThresholdManagerInterface
      * @param string $strategyKey
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param int $value
+     * @param int $thresholdValue
      * @param int|null $fee
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyNotFoundException
@@ -28,7 +28,7 @@ interface StoreThresholdManagerInterface
         string $strategyKey,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
-        int $value,
+        int $thresholdValue,
         ?int $fee = null
     ): MinimumOrderValueTransfer;
 }

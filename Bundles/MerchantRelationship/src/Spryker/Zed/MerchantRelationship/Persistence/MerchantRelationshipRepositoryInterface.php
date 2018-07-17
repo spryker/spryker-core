@@ -24,6 +24,17 @@ interface MerchantRelationshipRepositoryInterface
 
     /**
      * Specification:
+     * - Returns a MerchantRelationshipTransfer by merchant relationship key.
+     * - Returns null in case a record is not found.
+     *
+     * @param string $merchantRelationshipKey
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
+     */
+    public function getMerchantRelationshipByKey(string $merchantRelationshipKey): ?MerchantRelationshipTransfer;
+
+    /**
+     * Specification:
      * - Returns ids of all assigned company business units by merchant relationship id.
      *
      * @param int $idMerchantRelationship

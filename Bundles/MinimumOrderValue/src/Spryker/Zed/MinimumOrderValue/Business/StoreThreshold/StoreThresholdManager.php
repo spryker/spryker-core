@@ -42,7 +42,7 @@ class StoreThresholdManager implements StoreThresholdManagerInterface
      * @param string $strategyKey
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param int $value
+     * @param int $thresholdValue
      * @param int|null $fee
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyInvalidArgumentException
@@ -53,25 +53,25 @@ class StoreThresholdManager implements StoreThresholdManagerInterface
         string $strategyKey,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
-        int $value,
+        int $thresholdValue,
         ?int $fee = null
     ): MinimumOrderValueTransfer {
         $minimumOrderValueStrategy = $this->minimumOrderValueStrategyResolver
             ->resolveMinimumOrderValueStrategy($strategyKey);
 
-        if (!$minimumOrderValueStrategy->validate($value, $fee)) {
+        if (!$minimumOrderValueStrategy->validate($thresholdValue, $fee)) {
             throw new StrategyInvalidArgumentException();
         }
 
-        $minimumOrderValueStrategyTransfer = $this->entityManager
+        $minimumOrderValueTypeTransfer = $this->entityManager
             ->saveMinimumOrderValueType($minimumOrderValueStrategy->toTransfer());
 
         return $this->entityManager
             ->setStoreThreshold(
-                $minimumOrderValueStrategyTransfer,
+                $minimumOrderValueTypeTransfer,
                 $storeTransfer,
                 $currencyTransfer,
-                $value,
+                $thresholdValue,
                 $fee
             );
     }

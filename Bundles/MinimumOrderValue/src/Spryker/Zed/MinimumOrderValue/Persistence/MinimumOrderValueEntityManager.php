@@ -53,7 +53,7 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
      * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param int $value
+     * @param int $thresholdValue
      * @param int|null $fee
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
@@ -62,7 +62,7 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
-        int $value,
+        int $thresholdValue,
         ?int $fee = null
     ): MinimumOrderValueTransfer {
         $minimumOrderValueTypeTransfer->requireIdMinimumOrderValueType()->requireThresholdGroup();
@@ -85,7 +85,7 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
         }
 
         $minimumOrderValueEntity
-            ->setValue($value)
+            ->setValue($thresholdValue)
             ->setFee($fee)
             ->setFkMinOrderValueType(
                 $minimumOrderValueTypeTransfer->getIdMinimumOrderValueType()

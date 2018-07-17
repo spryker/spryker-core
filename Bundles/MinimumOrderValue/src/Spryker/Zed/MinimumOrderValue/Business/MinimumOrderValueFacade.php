@@ -9,6 +9,7 @@ namespace Spryker\Zed\MinimumOrderValue\Business;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -40,7 +41,7 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      * @param string $strategyKey
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param int $value
+     * @param int $thresholdValue
      * @param int|null $fee
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyNotFoundException
@@ -52,7 +53,7 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
         string $strategyKey,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
-        int $value,
+        int $thresholdValue,
         ?int $fee = null
     ): MinimumOrderValueTransfer {
         return $this->getFactory()
@@ -61,8 +62,55 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
                 $strategyKey,
                 $storeTransfer,
                 $currencyTransfer,
-                $value,
+                $thresholdValue,
                 $fee
             );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $strategyKey
+     *
+     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     */
+    public function getMinimumOrderValueType(
+        string $strategyKey
+    ): MinimumOrderValueTypeTransfer {
+        $minimumOrderValueStrategy = $this->getFactory()
+            ->createMinimumOrderValueStrategyResolver()
+            ->resolveMinimumOrderValueStrategy($strategyKey);
+
+        return $this->getEntityManager()
+            ->saveMinimumOrderValueType($minimumOrderValueStrategy->toTransfer());
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $strategyKey
+     * @param int $thresholdValue
+     * @param int|null $fee
+     *
+     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyNotFoundException
+     *
+     * @return bool
+     */
+    public function validateStrategy(
+        string $strategyKey,
+        int $thresholdValue,
+        ?int $fee = null
+    ): bool {
+        $minimumOrderValueStrategy = $this->getFactory()
+            ->createMinimumOrderValueStrategyResolver()
+            ->resolveMinimumOrderValueStrategy($strategyKey);
+
+        return $minimumOrderValueStrategy->validate($thresholdValue, $fee);
     }
 }
