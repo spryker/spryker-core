@@ -4,7 +4,7 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestSearchAttributes">
-        <property name="facets" type="array"/>
+        <property name="currency" type="string"/>
         <property name="sort" type="RestSearchSortAttributes"/>
         <property name="pagination" type="RestSearchPaginationAttributes"/>
         <property name="products" type="RestSearchProductsAttributes[]"/>
@@ -33,10 +33,8 @@
     </transfer>
 
     <transfer name="RestSearchProductImageAttributes">
-        <property name="updatedAt" type="string"/>
         <property name="externalUrlSmall" type="string"/>
         <property name="externalUrlLarge" type="string"/>
-        <property name="createdAt" type="string"/>
         <property name="sortOrder" type="int"/>
     </transfer>
 

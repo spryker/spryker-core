@@ -11,6 +11,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SearchRestApi\SearchRestApiConfig;
+use Spryker\Shared\Kernel\Store;
 
 class SearchResourceMapper implements SearchResourceMapperInterface
 {
@@ -57,10 +58,7 @@ class SearchResourceMapper implements SearchResourceMapperInterface
     public function mapSearchResponseAttributesTransferToRestResponse(array $restSearchResponse): RestResourceInterface
     {
         $restSearchAttributesTransfer = (new RestSearchAttributesTransfer())->fromArray($restSearchResponse, true);
-        $restSearchAttributesTransfer->setFacets([]);
-        foreach ($restSearchResponse['facets'] as $facetTransfer) {
-            $restSearchAttributesTransfer->addFacets($facetTransfer->toArray(true, true));
-        }
+        $restSearchAttributesTransfer->setCurrency(Store::getInstance()->getCurrencyIsoCode());
 
         return $this->restResourceBuilder->createRestResource(
             SearchRestApiConfig::RESOURCE_SEARCH,

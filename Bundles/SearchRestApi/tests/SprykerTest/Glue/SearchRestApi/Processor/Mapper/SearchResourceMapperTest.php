@@ -59,16 +59,6 @@ class SearchResourceMapperTest extends AbstractMapperTest
         $this->assertEquals(12, $this->restSearchAttributesTransfer->getPagination()->getCurrentItemsPerPage());
         $this->assertEquals(1, $this->restSearchAttributesTransfer->getPagination()->getMaxPage());
         $this->assertEquals(3, $this->restSearchAttributesTransfer->getPagination()->getNumFound());
-
-        $this->assertEquals(2, count($this->restSearchAttributesTransfer->getFacets()));
-        $this->assertInternalType("array", $this->restSearchAttributesTransfer->getFacets());
-        $this->assertInternalType("array", $this->restSearchAttributesTransfer->getFacets()[0]);
-        $this->assertInternalType("array", $this->restSearchAttributesTransfer->getFacets()[1]);
-
-        $this->assertEquals("category", $this->restSearchAttributesTransfer->getFacets()[0]['name']);
-        $this->assertEquals("rating", $this->restSearchAttributesTransfer->getFacets()[1]['name']);
-        $this->assertEquals(0, $this->restSearchAttributesTransfer->getFacets()[1]['min']);
-        $this->assertEquals(0, $this->restSearchAttributesTransfer->getFacets()[1]['max']);
     }
 
     /**
