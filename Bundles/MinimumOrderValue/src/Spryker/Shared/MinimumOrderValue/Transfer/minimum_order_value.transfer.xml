@@ -5,7 +5,8 @@
 
     <transfer name="MinimumOrderValueType">
         <property name="idMinimumOrderValueType" type="int"/>
-        <property name="name" type="string"/>
+        <property name="key" type="string"/>
+        <property name="group" type="string"/>
     </transfer>
 
     <transfer name="MinimumOrderValue">

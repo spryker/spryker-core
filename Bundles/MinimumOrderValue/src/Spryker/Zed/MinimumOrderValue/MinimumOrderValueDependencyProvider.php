@@ -9,10 +9,10 @@ namespace Spryker\Zed\MinimumOrderValue;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\HardThresholdStrategy;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\SoftThresholdWithFixedFeeStrategy;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\SoftThresholdWithFlexibleFeeStrategy;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\SoftThresholdWithMessageStrategy;
+use Spryker\Zed\MinimumOrderValue\Business\Strategies\Strategy\HardThresholdStrategy;
+use Spryker\Zed\MinimumOrderValue\Business\Strategies\Strategy\SoftThresholdWithFixedFeeStrategy;
+use Spryker\Zed\MinimumOrderValue\Business\Strategies\Strategy\SoftThresholdWithFlexibleFeeStrategy;
+use Spryker\Zed\MinimumOrderValue\Business\Strategies\Strategy\SoftThresholdWithMessageStrategy;
 
 class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvider
 {

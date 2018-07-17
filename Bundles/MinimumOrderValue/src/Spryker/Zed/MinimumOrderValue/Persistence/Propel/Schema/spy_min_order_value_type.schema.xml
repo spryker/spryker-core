@@ -8,14 +8,15 @@
     <table name="spy_min_order_value_type" idMethod="native" allowPkInsert="true" phpName="SpyMinimumOrderValueType">
         <column name="id_min_order_value_type" required="true" type="INTEGER" primaryKey="true"
                 autoIncrement="true"/>
-        <column name="name" type="VARCHAR" required="true"/>
+        <column name="key" type="VARCHAR" required="true"/>
+        <column name="threshold_group" type="VARCHAR" required="true"/>
 
         <behavior name="timestampable"/>
 
         <id-method-parameter value="id_min_order_value_type_pk_seq"/>
 
-        <unique name="spy_min_order_value_type-unique-name">
-            <unique-column name="name"/>
+        <unique name="spy_min_order_value_type-unique-key">
+            <unique-column name="key"/>
         </unique>
     </table>
 

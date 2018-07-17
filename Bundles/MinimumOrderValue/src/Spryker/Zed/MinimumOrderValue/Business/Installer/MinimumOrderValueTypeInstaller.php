@@ -68,6 +68,8 @@ class MinimumOrderValueTypeInstaller implements MinimumOrderValueTypeInstallerIn
     protected function createMinimumOrderValueTypeTransfer(
         MinimumOrderValueStrategyInterface $minimumOrderValueStrategy
     ): MinimumOrderValueTypeTransfer {
-        return (new MinimumOrderValueTypeTransfer())->setName($minimumOrderValueStrategy->getName());
+        return (new MinimumOrderValueTypeTransfer())
+            ->setKey($minimumOrderValueStrategy->getKey())
+            ->setGroup($minimumOrderValueStrategy->getGroup());
     }
 }

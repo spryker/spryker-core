@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\MinimumOrderValue\Helper;
 
 use Codeception\Module;
+use Orm\Zed\MinimumOrderValue\Persistence\Map\SpyMinimumOrderValueTableMap;
 use Orm\Zed\MinimumOrderValue\Persistence\Map\SpyMinimumOrderValueTypeTableMap;
+use Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValueQuery;
 use Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValueTypeQuery;
 
 class MinimumOrderValueHelper extends Module
@@ -20,10 +22,27 @@ class MinimumOrderValueHelper extends Module
     /**
      * @return void
      */
+    public function truncateMinimumOrderValues(): void
+    {
+        $this->getMinimumOrderValueQuery()
+            ->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
     public function truncateMinimumOrderValueTypes(): void
     {
         $this->getMinimumOrderValueTypeQuery()
             ->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function assertMinimumOrderValueTableIsEmtpy(): void
+    {
+        $this->assertFalse($this->getMinimumOrderValueQuery()->exists(), sprintf(static::ERROR_MESSAGE_FOUND, SpyMinimumOrderValueTableMap::TABLE_NAME));
     }
 
     /**
@@ -43,6 +62,14 @@ class MinimumOrderValueHelper extends Module
     {
         $entriesFound = $this->getMinimumOrderValueTypeQuery()->count();
         $this->assertEquals($entriesFound, $recordsNum, sprintf(static::ERROR_MESSAGE_EXPECTED, $recordsNum, SpyMinimumOrderValueTypeTableMap::TABLE_NAME, $entriesFound));
+    }
+
+    /**
+     * @return \Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValueQuery
+     */
+    protected function getMinimumOrderValueQuery(): SpyMinimumOrderValueQuery
+    {
+        return SpyMinimumOrderValueQuery::create();
     }
 
     /**

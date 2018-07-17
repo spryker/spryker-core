@@ -5,30 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business;
+namespace Spryker\Zed\MinimumOrderValue\Business\StoreThreshold;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
-interface MinimumOrderValueFacadeInterface
+interface StoreThresholdManagerInterface
 {
     /**
-     * Specification:
-     * - Add minimum order value strategies to the types persistence.
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function installMinimumOrderValueTypes(): void;
-
-    /**
-     * Specification:
-     * - Set store minimum order value threshold.
-     *
-     * @api
-     *
      * @param string $strategyKey
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
