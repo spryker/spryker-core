@@ -186,7 +186,6 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
                 $serverVariablesCallback = $this->getConfig()->getServerVariablesCallback();
                 $serverData = (array)$serverVariablesCallback($serverData);
                 break;
-            default:
         }
 
         return $serverData;
