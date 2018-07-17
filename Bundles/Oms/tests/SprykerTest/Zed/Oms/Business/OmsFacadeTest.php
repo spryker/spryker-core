@@ -78,6 +78,7 @@ class OmsFacadeTest extends Unit
 
         $saveOrderTransfer = $this->tester->haveOrder([
             'unitPrice' => 100,
+            'sumPrice' => 100,
         ], $testStateMachineProcessName);
 
         $idSalesOrder = $saveOrderTransfer->getIdSalesOrder();
@@ -102,6 +103,7 @@ class OmsFacadeTest extends Unit
 
         $saveOrderTransfer = $this->tester->haveOrder([
             'unitPrice' => 100,
+            'sumPrice' => 100,
         ], $testStateMachineProcessName);
 
         $idSalesOrder = $saveOrderTransfer->getIdSalesOrder();
