@@ -159,7 +159,7 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
-     * - Checks if the are no discontinued products in checkout
+     * - Checks if the are no discontinued products in checkout.
      *
      * @api
      *
