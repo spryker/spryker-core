@@ -135,7 +135,7 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
-     *  - Checks if shopping list item product is not discontinued.
+     *  - Checks if shopping list item is not discontinued.
      *
      * @api
      *
@@ -147,7 +147,7 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
-     *  - Checks if wishlist item product is not discontinued.
+     *  - Checks if wishlist item is not discontinued.
      *
      * @api
      *

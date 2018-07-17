@@ -14,6 +14,8 @@ use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontin
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Service\ProductDiscontinuedStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedChecker\ProductDiscontinuedChecker;
 use Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedChecker\ProductDiscontinuedCheckerInterface;
+use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedAvailabilityProductViewExpander;
+use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedAvailabilityProductViewExpanderInterface;
 use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedSuperAttributesProductViewExpander;
 use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedSuperAttributesProductViewExpanderInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReader;
@@ -49,6 +51,16 @@ class ProductDiscontinuedStorageFactory extends AbstractFactory
     public function createProductDiscontinuedChecker(): ProductDiscontinuedCheckerInterface
     {
         return new ProductDiscontinuedChecker(
+            $this->createProductDiscontinuedStorageReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedAvailabilityProductViewExpanderInterface
+     */
+    public function createDiscontinuedAvailabilityProductViewExpander(): DiscontinuedAvailabilityProductViewExpanderInterface
+    {
+        return new DiscontinuedAvailabilityProductViewExpander(
             $this->createProductDiscontinuedStorageReader()
         );
     }

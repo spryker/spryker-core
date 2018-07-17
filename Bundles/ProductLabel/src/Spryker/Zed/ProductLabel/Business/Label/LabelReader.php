@@ -62,7 +62,7 @@ class LabelReader implements LabelReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findByNameProductLabel($labelName): ?ProductLabelTransfer
+    public function findProductLabelByName($labelName): ?ProductLabelTransfer
     {
         $productLabelEntity = $this->findEntityByNameProductLabel($labelName);
 
@@ -94,7 +94,7 @@ class LabelReader implements LabelReaderInterface
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel|null
      */
-    protected function findEntityByNameProductLabel($labelName)
+    protected function findEntityByNameProductLabel($labelName): ?SpyProductLabel
     {
         return $this
             ->queryContainer

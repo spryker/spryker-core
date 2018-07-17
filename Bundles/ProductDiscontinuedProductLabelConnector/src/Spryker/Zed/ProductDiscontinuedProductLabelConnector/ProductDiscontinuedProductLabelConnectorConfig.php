@@ -11,17 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductDiscontinuedProductLabelConnectorConfig extends AbstractBundleConfig
 {
-    protected const PRODUCT_DISCONTINUE_LABEL_KEY = 'product.discontinued.product.label.name';
-
     protected const PRODUCT_DISCONTINUE_LABEL_NAME = 'Discontinued';
-
-    /**
-     * @return string
-     */
-    public function getProductDiscontinueLabelKey(): string
-    {
-        return static::PRODUCT_DISCONTINUE_LABEL_KEY;
-    }
 
     /**
      * @return string

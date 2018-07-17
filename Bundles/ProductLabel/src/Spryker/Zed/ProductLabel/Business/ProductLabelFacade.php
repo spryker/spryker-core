@@ -49,7 +49,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
         return $this
             ->getFactory()
             ->createLabelReader()
-            ->findByNameProductLabel($labelName);
+            ->findProductLabelByName($labelName);
     }
 
     /**

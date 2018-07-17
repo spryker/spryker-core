@@ -55,4 +55,17 @@ interface ProductDiscontinuedStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     public function expandDiscontinuedProductSuperAttributes(ProductViewTransfer $productViewTransfer, string $localeName): ProductViewTransfer;
+
+    /**
+     * Specification:
+     *  - Marks product as not available if product is discontinued.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandDiscontinuedProductAvailability(ProductViewTransfer $productViewTransfer, string $localeName): ProductViewTransfer;
 }

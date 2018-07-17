@@ -72,4 +72,21 @@
         <property name="errors" type="CheckoutError[]" singular="error" />
     </transfer>
 
+    <transfer name="WishlistItem">
+        <property name="sku" type="string" />
+    </transfer>
+
+    <transfer name="WishlistPreAddItemCheckResponse">
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="ShoppingListItem">
+        <property name="sku" type="string" />
+    </transfer>
+
+    <transfer name="ShoppingListPreAddItemCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
 </transfers>

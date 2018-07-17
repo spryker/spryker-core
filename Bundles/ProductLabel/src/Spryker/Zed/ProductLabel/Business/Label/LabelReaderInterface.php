@@ -23,7 +23,7 @@ interface LabelReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findByNameProductLabel($labelName): ?ProductLabelTransfer;
+    public function findProductLabelByName($labelName): ?ProductLabelTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
