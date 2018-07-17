@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Wishlist\Cart;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
@@ -102,7 +103,8 @@ class CartHandler implements CartHandlerInterface
             $itemTransfers[] = $this->createItemTransfer($wishlistMoveToCartRequestTransfer->getSku());
         }
 
-        $quoteTransfer = $this->cartClient->addItems($itemTransfers);
+        $wishlistCartChangeTransfer = (new CartChangeTransfer())->setItems($itemTransfers);
+        $quoteTransfer = $this->cartClient->addValidItems($wishlistCartChangeTransfer);
 
         $failedToMoveRequestCollectionTransfer = $this->getWishlistRequestCollectionToCartDiff(
             $wishlistMoveToCartRequestCollectionTransfer,
