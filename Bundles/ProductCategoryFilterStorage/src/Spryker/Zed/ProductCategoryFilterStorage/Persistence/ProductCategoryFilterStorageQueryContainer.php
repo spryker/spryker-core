@@ -35,7 +35,7 @@ class ProductCategoryFilterStorageQueryContainer extends AbstractQueryContainer 
      *
      * @return $this|\Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
      */
-    public function queryProductCategoryByIds(array $productCategoryFilterIds)
+    public function queryProductCategoryByIdCategories(array $productCategoryFilterIds)
     {
         return $this->getFactory()
             ->getProductCategoryFilterQuery()
