@@ -17,6 +17,12 @@
         <property name="value" type="int"/>
         <property name="fee" type="int"/>
         <property name="currency" type="Currency"/>
+        <property name="localizedMessages" type="MinimumOrderValueLocalizedMessage[]" singular="localizedMessage" />
+    </transfer>
+
+    <transfer name="MinimumOrderValueLocalizedMessage">
+        <property name="message" type="string" />
+        <property name="localeCode" type="string" />
     </transfer>
 
 </transfers>
