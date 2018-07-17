@@ -6,13 +6,12 @@
     <transfer name="MinimumOrderValueType">
         <property name="idMinimumOrderValueType" type="int"/>
         <property name="key" type="string"/>
-        <property name="group" type="string"/>
+        <property name="thresholdGroup" type="string"/>
     </transfer>
 
     <transfer name="MinimumOrderValue">
         <property name="idMinimumOrderValue" type="int"/>
         <property name="minimumOrderValueType" type="MinimumOrderValueType"/>
-        <property name="thresholdGroup" type="string"/>
         <property name="store" type="Store"/>
         <property name="value" type="int"/>
         <property name="fee" type="int"/>
