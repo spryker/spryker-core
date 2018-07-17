@@ -43,6 +43,7 @@ use Spryker\Zed\ProductBundle\ProductBundleDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
  * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface getRepository()()
  */
 class ProductBundleBusinessFactory extends AbstractBusinessFactory
 {
@@ -156,7 +157,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductBundleCartActivePreCheck(): ProductBundleCartActiveCheckInterface
     {
         return new ProductBundleCartActiveCheck(
-            $this->getQueryContainer()
+            $this->getRepository()
         );
     }
 

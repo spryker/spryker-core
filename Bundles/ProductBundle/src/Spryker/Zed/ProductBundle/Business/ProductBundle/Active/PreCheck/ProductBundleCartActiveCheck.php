@@ -7,30 +7,27 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Active\PreCheck;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
 class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterface
 {
     public const CART_PRE_CHECK_ACTIVE_FAILED = 'cart.pre.check.active.failed';
-    public const SKU_TRANSLATION_PARAMETER = '%sku%';
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
+     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
      */
-    protected $productBundleQueryContainer;
+    protected $productBundleRepository;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
+     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
      */
-    public function __construct(ProductBundleQueryContainerInterface $productBundleQueryContainer)
+    public function __construct(ProductBundleRepositoryInterface $productBundleRepository)
     {
-        $this->productBundleQueryContainer = $productBundleQueryContainer;
+        $this->productBundleRepository = $productBundleRepository;
     }
 
     /**
@@ -40,70 +37,85 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
      */
     public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
-        $messages = new ArrayObject();
-
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $this->checkIsBundledProductsActive($itemTransfer, $messages);
+            if (!$this->isBundledProductsActive($itemTransfer)) {
+                return $this->getFailedResponse();
+            }
         }
 
-        return $this->createCartPreCheckResponseTransfer($messages);
+        return $this->getSuccessResponse();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    protected function getFailedResponse(): CartPreCheckResponseTransfer
+    {
+        return $this->createCartPreCheckResponseTransfer(
+            $this->createItemIsNotActiveMessageTransfer()
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    protected function getSuccessResponse(): CartPreCheckResponseTransfer
+    {
+        return $this->createCartPreCheckResponseTransfer();
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \ArrayObject $messages
      *
-     * @return void
+     * @return bool
      */
-    protected function checkIsBundledProductsActive(ItemTransfer $itemTransfer, ArrayObject $messages): void
+    protected function isBundledProductsActive(ItemTransfer $itemTransfer): bool
     {
-        $productBundleEntities = $this->findBundledProducts($itemTransfer->getSku());
+        $productEntityTransfers = $this->findBundledProducts($itemTransfer->getSku());
 
-        foreach ($productBundleEntities as $productBundleEntity) {
-            $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
-
-            if (!$bundledProductConcreteEntity->getIsActive()) {
-                $messages[] = $this->createItemIsNotActiveMessageTransfer($bundledProductConcreteEntity->getSku());
+        foreach ($productEntityTransfers as $productEntityTransfer) {
+            if (!$productEntityTransfer->getIsActive()) {
+                return false;
             }
         }
+
+        return true;
     }
 
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
-    protected function findBundledProducts($sku): ObjectCollection
+    protected function findBundledProducts(string $sku): array
     {
-        return $this->productBundleQueryContainer
-            ->queryBundleProductBySku($sku)
-            ->find();
+        return $this->productBundleRepository->findBundledProductsBySku($sku);
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messages
+     * @param \Generated\Shared\Transfer\MessageTransfer|null $message
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    protected function createCartPreCheckResponseTransfer(ArrayObject $messages)
+    protected function createCartPreCheckResponseTransfer(?MessageTransfer $message = null): CartPreCheckResponseTransfer
     {
-        return (new CartPreCheckResponseTransfer())
-            ->setIsSuccess(count($messages) == 0)
-            ->setMessages($messages);
+        $cartPreCheckResponseTransfer = new CartPreCheckResponseTransfer();
+        $cartPreCheckResponseTransfer->setIsSuccess($message === null);
+
+        if ($message !== null) {
+            $cartPreCheckResponseTransfer->addMessage($message);
+        }
+
+        return $cartPreCheckResponseTransfer;
     }
 
     /**
-     * @param string $sku
-     *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createItemIsNotActiveMessageTransfer($sku)
+    protected function createItemIsNotActiveMessageTransfer(): MessageTransfer
     {
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue(static::CART_PRE_CHECK_ACTIVE_FAILED);
-        $messageTransfer->setParameters([
-            static::SKU_TRANSLATION_PARAMETER => $sku,
-        ]);
 
         return $messageTransfer;
     }
