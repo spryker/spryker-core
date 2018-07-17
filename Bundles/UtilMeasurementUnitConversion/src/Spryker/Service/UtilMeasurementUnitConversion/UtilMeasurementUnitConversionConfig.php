@@ -174,7 +174,7 @@ class UtilMeasurementUnitConversionConfig extends AbstractBundleConfig
             'MMET' => 304.8,
             'KMET' => 0.0003048,
             'INCH' => 12,
-            'YARD' => 0.3,
+            'YARD' => 0.333333,
             'FOOT' => 1,
             'MILE' => 0.0001893939,
         ],
