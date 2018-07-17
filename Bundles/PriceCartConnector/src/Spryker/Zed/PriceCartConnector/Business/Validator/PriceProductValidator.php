@@ -72,7 +72,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    protected function createPriceProductFilter(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer)
+    protected function createPriceProductFilter(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): PriceProductFilterTransfer
     {
         $priceMode = $this->getPriceMode($quoteTransfer);
         $currencyTransfer = $quoteTransfer->getCurrency();
@@ -109,7 +109,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
      *
      * @return string
      */
-    protected function getPriceMode(QuoteTransfer $quoteTransfer)
+    protected function getPriceMode(QuoteTransfer $quoteTransfer): string
     {
         if (!$quoteTransfer->getPriceMode()) {
             return $this->priceFacade->getDefaultPriceMode();

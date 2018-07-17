@@ -17,11 +17,11 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="store" type="Store"/>
+        <property name="store" type="Store" />
     </transfer>
 
     <transfer name="Store">
-        <property name="name"/>
+        <property name="name" type="string" />
     </transfer>
 
 </transfers>

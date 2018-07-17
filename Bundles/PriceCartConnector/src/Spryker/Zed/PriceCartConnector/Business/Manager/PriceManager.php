@@ -231,7 +231,7 @@ class PriceManager implements PriceManagerInterface
     protected function createPriceProductFilter(
         ItemTransfer $itemTransfer,
         QuoteTransfer $quoteTransfer
-    ) {
+    ): PriceProductFilterTransfer {
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setStoreName($this->findStoreName($quoteTransfer))
             ->setPriceMode($quoteTransfer->getPriceMode())
