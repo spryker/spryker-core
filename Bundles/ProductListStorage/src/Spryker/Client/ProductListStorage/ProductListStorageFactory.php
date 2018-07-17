@@ -19,6 +19,8 @@ use Spryker\Client\ProductListStorage\ProductListProductAbstractStorage\ProductL
 use Spryker\Client\ProductListStorage\ProductListProductAbstractStorage\ProductListProductAbstractStorageReaderInterface;
 use Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductListProductConcreteStorageReader;
 use Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductListProductConcreteStorageReaderInterface;
+use Spryker\Client\ProductListStorage\ProductViewVariantRestrictionExpander\ProductViewVariantRestrictionExpander;
+use Spryker\Client\ProductListStorage\ProductViewVariantRestrictionExpander\ProductViewVariantRestrictionExpanderInterface;
 
 class ProductListStorageFactory extends AbstractFactory
 {
@@ -88,5 +90,13 @@ class ProductListStorageFactory extends AbstractFactory
     public function getSynchronizationService(): ProductListStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ProductListStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductListStorage\ProductViewVariantRestrictionExpander\ProductViewVariantRestrictionExpanderInterface
+     */
+    public function createProductViewVariantRestrictionExpander(): ProductViewVariantRestrictionExpanderInterface
+    {
+        return new ProductViewVariantRestrictionExpander($this->createProductConcreteRestrictionReader());
     }
 }

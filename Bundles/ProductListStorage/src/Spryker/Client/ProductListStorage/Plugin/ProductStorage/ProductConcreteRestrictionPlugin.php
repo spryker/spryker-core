@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductListStorage\Plugin;
+namespace Spryker\Client\ProductListStorage\Plugin\ProductStorage;
 
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface;
