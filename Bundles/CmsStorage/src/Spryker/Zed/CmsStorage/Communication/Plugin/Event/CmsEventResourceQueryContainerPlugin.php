@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CmsStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
-use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\CmsStorage\CmsStorageConstants;
 use Spryker\Zed\Cms\Dependency\CmsEvents;

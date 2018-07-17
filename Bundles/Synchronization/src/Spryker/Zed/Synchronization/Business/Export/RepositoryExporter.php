@@ -52,7 +52,7 @@ class RepositoryExporter implements ExporterInterface
     }
 
     /**
-     * @param array $plugins
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[] $plugins
      * @param int[] $ids
      *
      * @return void

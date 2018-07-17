@@ -34,26 +34,34 @@ interface ProductMeasurementUnitStorageFacadeInterface
     public function publishProductConcreteMeasurementUnit(array $productIds): void;
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findAllProductMeasurementUnitTransfers();
+    public function findAllProductMeasurementUnitTransfers(): array;
 
     /**
+     * @api
+     *
      * @param int[] $productMeasurementUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds);
+    public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function getSalesUnits();
+    public function getSalesUnits(): array;
 
     /**
+     * @api
+     *
      * @param int[] $salesUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function getSalesUnitsByIds(array $salesUnitIds);
+    public function getSalesUnitsByIds(array $salesUnitIds): array;
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetToProductImageTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
