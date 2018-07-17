@@ -16,8 +16,6 @@
     <transfer name="CheckoutError">
         <property name="errorCode" type="int" />
         <property name="message" type="string" />
-        <property name="parameters" type="array"/>
-        <property name="errorType" type="string"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
@@ -80,3 +78,4 @@
     </transfer>
 
 </transfers>
+
