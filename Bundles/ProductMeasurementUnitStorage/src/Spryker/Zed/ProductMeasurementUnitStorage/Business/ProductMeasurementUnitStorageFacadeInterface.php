@@ -38,7 +38,7 @@ interface ProductMeasurementUnitStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findAllProductMeasurementUnitTransfers();
+    public function findAllProductMeasurementUnitTransfers(): array;
 
     /**
      * @api
@@ -47,14 +47,14 @@ interface ProductMeasurementUnitStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds);
+    public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
 
     /**
      * @api
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function getSalesUnits();
+    public function getSalesUnits(): array;
 
     /**
      * @api
@@ -63,5 +63,5 @@ interface ProductMeasurementUnitStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function getSalesUnitsByIds(array $salesUnitIds);
+    public function getSalesUnitsByIds(array $salesUnitIds): array;
 }

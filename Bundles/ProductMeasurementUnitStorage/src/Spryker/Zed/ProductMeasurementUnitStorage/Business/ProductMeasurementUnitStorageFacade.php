@@ -47,7 +47,7 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findAllProductMeasurementUnitTransfers()
+    public function findAllProductMeasurementUnitTransfers(): array
     {
         return $this->getFactory()->getProductMeasurementUnitFacade()->findAllProductMeasurementUnitTransfers();
     }
@@ -59,7 +59,7 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds)
+    public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array
     {
         return $this->getFactory()->getProductMeasurementUnitFacade()->findProductMeasurementUnitTransfers($productMeasurementUnitIds);
     }
@@ -69,7 +69,7 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function getSalesUnits()
+    public function getSalesUnits(): array
     {
         return $this->getFactory()->getProductMeasurementUnitFacade()->getSalesUnits();
     }
@@ -81,7 +81,7 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function getSalesUnitsByIds(array $salesUnitsIds)
+    public function getSalesUnitsByIds(array $salesUnitsIds): array
     {
         return $this->getFactory()->getProductMeasurementUnitFacade()->getSalesUnitsByIds($salesUnitsIds);
     }
