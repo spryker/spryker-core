@@ -19,5 +19,5 @@ interface ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInter
     /**
      * @return int[]
      */
-    public function findProductAbstractIdsConcreteConcreteWithAlternative(): array;
+    public function findProductAbstractIdsWhichConcreteHasAlternative(): array;
 }

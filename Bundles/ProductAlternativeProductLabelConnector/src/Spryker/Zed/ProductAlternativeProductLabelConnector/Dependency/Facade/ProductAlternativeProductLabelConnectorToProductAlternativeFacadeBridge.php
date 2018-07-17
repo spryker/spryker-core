@@ -35,8 +35,8 @@ class ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge im
     /**
      * @return int[]
      */
-    public function findProductAbstractIdsConcreteConcreteWithAlternative(): array
+    public function findProductAbstractIdsWhichConcreteHasAlternative(): array
     {
-        return $this->productAlternativeFacade->findProductAbstractIdsConcreteConcreteWithAlternative();
+        return $this->productAlternativeFacade->findProductAbstractIdsWhichConcreteHasAlternative();
     }
 }

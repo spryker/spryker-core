@@ -60,5 +60,5 @@ interface ProductAlternativeRepositoryInterface
     /**
      * @return int[]
      */
-    public function findProductAbstractIdsConcreteConcreteWithAlternative(): array;
+    public function findProductAbstractIdsWhichConcreteHasAlternative(): array;
 }

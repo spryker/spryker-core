@@ -252,7 +252,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      *
      * @return int[]
      */
-    public function findProductAbstractIdsConcreteConcreteWithAlternative(): array
+    public function findProductAbstractIdsWhichConcreteHasAlternative(): array
     {
         return $this->getFactory()
             ->createProductAlternativePropelQuery()

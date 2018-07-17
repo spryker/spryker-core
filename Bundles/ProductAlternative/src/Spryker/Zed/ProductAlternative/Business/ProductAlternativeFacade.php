@@ -89,10 +89,10 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      *
      * @return int[]
      */
-    public function findProductAbstractIdsConcreteConcreteWithAlternative(): array
+    public function findProductAbstractIdsWhichConcreteHasAlternative(): array
     {
         return $this->getFactory()
             ->createProductAlternativeReader()
-            ->findProductAbstractIdsConcreteConcreteWithAlternative();
+            ->findProductAbstractIdsWhichConcreteHasAlternative();
     }
 }
