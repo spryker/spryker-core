@@ -11,6 +11,8 @@ use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductDiscontinued\Business\CartChangePreCheck\CartChangePreCheck;
 use Spryker\Zed\ProductDiscontinued\Business\CartChangePreCheck\CartChangePreCheckInterface;
+use Spryker\Zed\ProductDiscontinued\Business\Checkout\ProductDiscontinuedCheckoutPreConditionChecker;
+use Spryker\Zed\ProductDiscontinued\Business\Checkout\ProductDiscontinuedCheckoutPreConditionCheckerInterface;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutor;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutorInterface;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedReader;
@@ -114,6 +116,16 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductDiscontinuedNoteWriter(
             $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinued\Business\Checkout\ProductDiscontinuedCheckoutPreConditionCheckerInterface
+     */
+    public function createProductDiscontinuedCheckoutPreConditionChecker(): ProductDiscontinuedCheckoutPreConditionCheckerInterface
+    {
+        return new ProductDiscontinuedCheckoutPreConditionChecker(
+            $this->getRepository()
         );
     }
 
