@@ -102,11 +102,7 @@ class CartHandler implements CartHandlerInterface
             $itemTransfers[] = $this->createItemTransfer($wishlistMoveToCartRequestTransfer->getSku());
         }
 
-        $quoteTransfer = new QuoteTransfer();
-
-        foreach ($itemTransfers as $itemTransfer) {
-            $quoteTransfer = $this->cartClient->addItem($itemTransfer);
-        }
+        $quoteTransfer = $this->cartClient->addItems($itemTransfers);
 
         $failedToMoveRequestCollectionTransfer = $this->getWishlistRequestCollectionToCartDiff(
             $wishlistMoveToCartRequestCollectionTransfer,
