@@ -15,9 +15,9 @@
   },
   "require-dev": {
     "spryker/cart": "*",
+    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/checkout": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
