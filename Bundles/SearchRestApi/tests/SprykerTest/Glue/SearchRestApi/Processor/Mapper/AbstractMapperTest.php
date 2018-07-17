@@ -67,7 +67,6 @@ abstract class AbstractMapperTest extends Unit
     protected function mockRestSearchResponseTransfer()
     {
         $mockRestSearchResponse = [];
-        $mockRestSearchResponse['facets'] = $this->mockFacets();
         $mockRestSearchResponse['products'] = $this->mockProducts();
         $mockRestSearchResponse['sort'] = $this->mockSort();
         $mockRestSearchResponse['pagination'] = $this->mockPagination();
@@ -82,7 +81,6 @@ abstract class AbstractMapperTest extends Unit
     protected function mockEmptyRestSearchResponseTransfer()
     {
         $mockRestSearchResponse = [];
-        $mockRestSearchResponse['facets'] = $this->mockFacets();
         $mockRestSearchResponse['products'] = [];
         $mockRestSearchResponse['sort'] = $this->mockSort();
         $mockRestSearchResponse['pagination'] = $this->mockPagination();

@@ -11,6 +11,8 @@ use Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToCatalogClientInt
 use Spryker\Glue\SearchRestApi\Processor\Catalog\CatalogReader;
 use Spryker\Glue\SearchRestApi\Processor\Catalog\SuggestionsReader;
 use Spryker\Glue\SearchRestApi\Processor\Catalog\SuggestionsReaderInterface;
+use Spryker\Glue\SearchRestApi\Processor\Currency\ValidateCurrency;
+use Spryker\Glue\SearchRestApi\Processor\Currency\ValidateCurrencyInterface;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapper;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapperInterface;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SuggestionsResourceMapper;
@@ -68,5 +70,13 @@ class SearchRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createSuggestionsResourceMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\SearchRestApi\Processor\Currency\ValidateCurrencyInterface
+     */
+    public function createCurrencyValidator(): ValidateCurrencyInterface
+    {
+        return new ValidateCurrency();
     }
 }
