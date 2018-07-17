@@ -139,7 +139,7 @@ class Reservation implements ReservationInterface
     public function getReservedStateNames()
     {
         $stateNames = [];
-        foreach ($this->retrieveReservedStates() as $reservedState) {
+        foreach ($this->activeProcessFetcher->getReservedStatesFromAllActiveProcesses() as $reservedState) {
             $stateNames[] = $reservedState->getName();
         }
 
@@ -175,21 +175,6 @@ class Reservation implements ReservationInterface
         return (int)$this->queryContainer
             ->sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest)
             ->findOne();
-    }
-
-    /**
-     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
-     */
-    protected function retrieveReservedStates()
-    {
-        $reservedStates = [];
-        foreach ($this->activeProcesses as $processName) {
-            $builder = clone $this->builder;
-            $process = $builder->createProcess($processName);
-            $reservedStates = array_merge($reservedStates, $process->getAllReservedStates());
-        }
-
-        return $reservedStates;
     }
 
     /**

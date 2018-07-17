@@ -9,10 +9,9 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitGroupKeyGeneratorInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 
-class CartChangeExpander implements CartChangeExpanderInterface
+class ProductPackagingUnitItemExpander implements ProductPackagingUnitItemExpanderInterface
 {
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
@@ -20,20 +19,12 @@ class CartChangeExpander implements CartChangeExpanderInterface
     protected $productPackagingUnitReader;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitGroupKeyGeneratorInterface
-     */
-    protected $productPackagingUnitGroupKeyGenerator;
-
-    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitGroupKeyGeneratorInterface $productPackagingUnitGroupKeyGenerator
      */
     public function __construct(
-        ProductPackagingUnitReaderInterface $productPackagingUnitReader,
-        ProductPackagingUnitGroupKeyGeneratorInterface $productPackagingUnitGroupKeyGenerator
+        ProductPackagingUnitReaderInterface $productPackagingUnitReader
     ) {
         $this->productPackagingUnitReader = $productPackagingUnitReader;
-        $this->productPackagingUnitGroupKeyGenerator = $productPackagingUnitGroupKeyGenerator;
     }
 
     /**
@@ -41,30 +32,14 @@ class CartChangeExpander implements CartChangeExpanderInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandWithAmountLeadProduct(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function expandCartWithAmountLeadProductAndProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getAmount() || !$itemTransfer->getAmountSalesUnit()) {
+            if (!$itemTransfer->getAmount()) {
                 continue;
             }
 
             $this->expandItem($itemTransfer);
-        }
-
-        return $cartChangeTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    public function expandWithAmountGroupKey(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
-    {
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->setGroupKey(
-                $this->productPackagingUnitGroupKeyGenerator->getItemWithGroupKey($itemTransfer)
-            );
         }
 
         return $cartChangeTransfer;
@@ -96,11 +71,6 @@ class CartChangeExpander implements CartChangeExpanderInterface
         if ($productPackagingLeadProductTransfer) {
             $itemTransfer->setAmountLeadProduct($productPackagingLeadProductTransfer);
         }
-
-        $productMeasurementUnitTransfer = $this->productPackagingUnitReader
-            ->getProductMeasurementSalesUnitTransfer($itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit());
-
-        $itemTransfer->setAmountSalesUnit($productMeasurementUnitTransfer);
 
         return $itemTransfer;
     }

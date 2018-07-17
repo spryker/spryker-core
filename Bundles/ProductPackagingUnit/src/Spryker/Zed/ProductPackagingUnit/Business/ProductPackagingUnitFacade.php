@@ -215,11 +215,27 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandCartChangeWithAmountLeadProduct(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function expandCartChangeWithAmountSalesUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         return $this->getFactory()
-            ->createCartChangeExpander()
-            ->expandWithAmountLeadProduct($cartChangeTransfer);
+            ->createAmountSalesUnitItemExpander()
+            ->expandCartWithAmountSalesUnit($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandCartChangeWithProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createProductPackagingUnitItemExpander()
+            ->expandCartWithAmountLeadProductAndProductPackagingUnit($cartChangeTransfer);
     }
 
     /**
@@ -250,8 +266,8 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     public function expandCartChangeGroupKeyWithAmount(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         return $this->getFactory()
-            ->createCartChangeExpander()
-            ->expandWithAmountGroupKey($cartChangeTransfer);
+            ->createAmountGroupKeyItemExpander()
+            ->expandCartWithAmountGroupKey($cartChangeTransfer);
     }
 
     /**

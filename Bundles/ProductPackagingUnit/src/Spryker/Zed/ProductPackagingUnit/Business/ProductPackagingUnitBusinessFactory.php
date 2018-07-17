@@ -14,8 +14,12 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\Produc
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCheckoutPreCheckInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\ProductPackagingUnitAvailabilityHandler;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\ProductPackagingUnitAvailabilityHandlerInterface;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpander;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpanderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\AmountGroupKeyItemExpander;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\AmountGroupKeyItemExpanderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\AmountSalesUnitItemExpander;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\AmountSalesUnitItemExpanderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\ProductPackagingUnitItemExpander;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\ProductPackagingUnitItemExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountLeadProductHydrateOrder;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountLeadProductHydrateOrderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountSalesUnitHydrateOrder;
@@ -223,13 +227,32 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpanderInterface
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\AmountGroupKeyItemExpanderInterface
      */
-    public function createCartChangeExpander(): CartChangeExpanderInterface
+    public function createAmountGroupKeyItemExpander(): AmountGroupKeyItemExpanderInterface
     {
-        return new CartChangeExpander(
-            $this->createProductPackagingUnitReader(),
+        return new AmountGroupKeyItemExpander(
             $this->createProductPackagingUnitGroupKeyGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\AmountSalesUnitItemExpanderInterface
+     */
+    public function createAmountSalesUnitItemExpander(): AmountSalesUnitItemExpanderInterface
+    {
+        return new AmountSalesUnitItemExpander(
+            $this->createProductPackagingUnitReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\ProductPackagingUnitItemExpanderInterface
+     */
+    public function createProductPackagingUnitItemExpander(): ProductPackagingUnitItemExpanderInterface
+    {
+        return new ProductPackagingUnitItemExpander(
+            $this->createProductPackagingUnitReader()
         );
     }
 

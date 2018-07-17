@@ -9,19 +9,12 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-interface CartChangeExpanderInterface
+interface AmountGroupKeyItemExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandWithAmountLeadProduct(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    public function expandWithAmountGroupKey(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function expandCartWithAmountGroupKey(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

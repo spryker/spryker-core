@@ -139,4 +139,11 @@ class ProductPackagingUnitHelper extends Module
     {
         return SpyProductPackagingUnitAmountQuery::create();
     }
+
+    /**
+     * @return void
+     */
+    public function prepareOrder()
+    {
+    }
 }

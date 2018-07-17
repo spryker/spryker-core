@@ -173,7 +173,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Expands CartChangeTransfer with amountLeadProduct.
+     * - Expands CartChangeTransfer with amountSalesUnit.
      *
      * @api
      *
@@ -181,7 +181,20 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandCartChangeWithAmountLeadProduct(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function expandCartChangeWithAmountSalesUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Expands CartChangeTransfer with amountLeadProduct and productPackagingUnit of amount is specified.
+     * - AmountSalesUnit is NOT required
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandCartChangeWithProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 
     /**
      * Specification:
