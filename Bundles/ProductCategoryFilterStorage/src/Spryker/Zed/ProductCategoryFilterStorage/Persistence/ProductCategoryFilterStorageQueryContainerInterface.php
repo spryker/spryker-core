@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterStorage\Persistence;
 
+use Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductCategoryFilterStorageQueryContainerInterface extends QueryContainerInterface
@@ -28,4 +29,13 @@ interface ProductCategoryFilterStorageQueryContainerInterface extends QueryConta
      * @return $this|\Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
      */
     public function queryProductCategoryByIdCategories(array $categoryIds);
+
+    /**
+     * @api
+     *
+     * @param int[] $productCategoryFilterIds
+     *
+     * @return $this|\Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
+     */
+    public function queryProductCategoryByCategoryFilterIds(array $productCategoryFilterIds): SpyProductCategoryFilterQuery;
 }

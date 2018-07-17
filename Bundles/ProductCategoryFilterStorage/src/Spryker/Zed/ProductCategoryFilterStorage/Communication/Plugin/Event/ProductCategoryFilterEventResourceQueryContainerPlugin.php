@@ -44,7 +44,7 @@ class ProductCategoryFilterEventResourceQueryContainerPlugin extends AbstractPlu
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryProductCategoryByIdCategories($ids);
+        $query = $this->getQueryContainer()->queryProductCategoryByCategoryFilterIds($ids);
 
         if (empty($ids)) {
             $query->clear();
