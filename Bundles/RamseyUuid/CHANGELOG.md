@@ -1,3 +1,3 @@
-# Ramsey Changelog
+# RamseyUuid Changelog
 
-[Release Changelog](https://github.com/spryker/ramsey/releases)
+[Release Changelog](https://github.com/spryker/ramsey-uuid/releases)
