@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageMapExpander;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
-use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
+use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
@@ -53,7 +53,7 @@ class PricePageMapExpanderPlugin extends AbstractPlugin implements ProductPageMa
     {
         foreach ($productData['prices'] as $currencyIsoCode => $pricesByPriceMode) {
             foreach ($pricesByPriceMode as $priceMode => $pricesByType) {
-                if ($priceMode === ProductPageSearchConstants::PRICE_DATA) {
+                if ($priceMode === ProductPageSearchConfig::PRICE_DATA) {
                     continue;
                 }
 

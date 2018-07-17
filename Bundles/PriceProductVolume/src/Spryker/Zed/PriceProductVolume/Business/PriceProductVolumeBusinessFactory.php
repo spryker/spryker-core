@@ -8,11 +8,17 @@
 namespace Spryker\Zed\PriceProductVolume\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\PriceProductVolume\Business\PriceProductReader\PriceProductReader;
+use Spryker\Zed\PriceProductVolume\Business\PriceProductReader\PriceProductReaderInterface;
 use Spryker\Zed\PriceProductVolume\Business\VolumePriceExtractor\VolumePriceExtractor;
 use Spryker\Zed\PriceProductVolume\Business\VolumePriceExtractor\VolumePriceExtractorInterface;
+use Spryker\Zed\PriceProductVolume\Dependency\Facade\PriceProductVolumeToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductVolume\Dependency\Service\PriceProductVolumeToUtilEncodingServiceInterface;
 use Spryker\Zed\PriceProductVolume\PriceProductVolumeDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\PriceProductVolume\Persistence\PriceProductVolumeRepositoryInterface getRepository()
+ */
 class PriceProductVolumeBusinessFactory extends AbstractBusinessFactory
 {
     /**
@@ -21,7 +27,19 @@ class PriceProductVolumeBusinessFactory extends AbstractBusinessFactory
     public function createVolumePriceExtractor(): VolumePriceExtractorInterface
     {
         return new VolumePriceExtractor(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
+            $this->createPriceProductReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductVolume\Business\PriceProductReader\PriceProductReaderInterface
+     */
+    public function createPriceProductReader(): PriceProductReaderInterface
+    {
+        return new PriceProductReader(
+            $this->getRepository(),
+            $this->getPriceProductFacade()
         );
     }
 
@@ -31,5 +49,13 @@ class PriceProductVolumeBusinessFactory extends AbstractBusinessFactory
     public function getUtilEncodingService(): PriceProductVolumeToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(PriceProductVolumeDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductVolume\Dependency\Facade\PriceProductVolumeToPriceProductFacadeInterface
+     */
+    public function getPriceProductFacade(): PriceProductVolumeToPriceProductFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductVolumeDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 }

@@ -19,5 +19,18 @@ interface PriceProductVolumeFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractPriceProductVolumes(array $priceProductTransfers): array;
+    public function extractPriceProductVolumesForProductAbstract(array $priceProductTransfers): array;
+
+    /**
+     * Specification:
+     * - Extracts additional product prices from price product data volume prices
+     * - If volume prices for concrete product empty - fetches product abstract prices and extract from them
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function extractPriceProductVolumesForProductConcrete(array $priceProductTransfers): array;
 }

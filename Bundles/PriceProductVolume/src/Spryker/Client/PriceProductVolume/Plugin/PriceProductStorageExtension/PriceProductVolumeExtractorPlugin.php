@@ -7,28 +7,44 @@
 
 namespace Spryker\Client\PriceProductVolume\Plugin\PriceProductStorageExtension;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductMapperPricesExtractorPluginInterface;
+use Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface;
 
 /**
  * @method \Spryker\Client\PriceProductVolume\PriceProductVolumeFactory getFactory()
  */
-class PriceProductVolumeExtractorPlugin extends AbstractPlugin implements PriceProductMapperPricesExtractorPluginInterface
+class PriceProductVolumeExtractorPlugin extends AbstractPlugin implements PriceProductStoragePricesExtractorPluginInterface
 {
     /**
      * {@inheritdoc}
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractProductPrices(PriceProductTransfer $priceProductTransfer): array
+    public function extractProductPricesForProductAbstract(array $priceProductTransfers): array
     {
         return $this->getFactory()
             ->createVolumePriceExtractor()
-            ->extractPriceProductVolumes($priceProductTransfer);
+            ->extractProductPricesForProductAbstract($priceProductTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function extractProductPricesForProductConcrete(int $idProductAbstract, array $priceProductTransfers): array
+    {
+        return $this->getFactory()
+            ->createVolumePriceExtractor()
+            ->extractProductPricesForProductConcrete($idProductAbstract, $priceProductTransfers);
     }
 }

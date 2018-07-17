@@ -33,7 +33,8 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
         }
 
         $minPriceProductTransfer = $this->getMinPrice(
-            $priceProductTransfers, $priceProductFilterTransfer->getQuantity()
+            $priceProductTransfers,
+            $priceProductFilterTransfer->getQuantity()
         );
 
         if ($minPriceProductTransfer == null) {
@@ -60,6 +61,7 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param int $filterQuantity
+     *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     protected function getMinPrice(array $priceProductTransfers, int $filterQuantity): ?PriceProductTransfer

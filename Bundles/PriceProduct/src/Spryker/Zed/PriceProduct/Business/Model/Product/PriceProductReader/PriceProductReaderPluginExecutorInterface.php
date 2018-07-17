@@ -14,5 +14,12 @@ interface PriceProductReaderPluginExecutorInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function executePriceExtractorPlugins(array $priceProductTransfers): array;
+    public function executePriceExtractorPluginsForProductAbstract(array $priceProductTransfers): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function executePriceExtractorPluginsForProductConcrete(array $priceProductTransfers): array;
 }

@@ -23,8 +23,26 @@ class PriceProductVolumeFacade extends AbstractFacade implements PriceProductVol
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractPriceProductVolumes(array $priceProductTransfers): array
+    public function extractPriceProductVolumesForProductAbstract(array $priceProductTransfers): array
     {
-        return $this->getFactory()->createVolumePriceExtractor()->extractPriceProductVolumes($priceProductTransfers);
+        return $this->getFactory()
+            ->createVolumePriceExtractor()
+            ->extractPriceProductVolumesForProductAbstract($priceProductTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function extractPriceProductVolumesForProductConcrete(array $priceProductTransfers): array
+    {
+        return $this->getFactory()
+            ->createVolumePriceExtractor()
+            ->extractPriceProductVolumesForProductConcrete($priceProductTransfers);
     }
 }

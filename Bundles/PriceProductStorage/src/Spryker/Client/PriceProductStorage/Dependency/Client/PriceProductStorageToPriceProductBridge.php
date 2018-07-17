@@ -52,7 +52,8 @@ class PriceProductStorageToPriceProductBridge implements PriceProductStorageToPr
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveProductPriceTransferByPriceProductFilter(
-        array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
     ): CurrentProductPriceTransfer {
         return $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
     }

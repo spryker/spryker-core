@@ -99,7 +99,9 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         $priceProductFilter = $this->buildPriceProductFilterWithCurrentValues();
 
         return $this->prepareCurrentProductPriceTransfer(
-            $priceProductTransfers, $currentProductPriceTransfer, $priceProductFilter
+            $priceProductTransfers,
+            $currentProductPriceTransfer,
+            $priceProductFilter
         );
     }
 
@@ -110,9 +112,9 @@ class ProductPriceResolver implements ProductPriceResolverInterface
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveProductPriceTransferByPriceProductFilter(
-        array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer
-    ): CurrentProductPriceTransfer
-    {
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): CurrentProductPriceTransfer {
         $currentProductPriceTransfer = new CurrentProductPriceTransfer();
         if (!$priceProductTransfers) {
             return $currentProductPriceTransfer;
@@ -121,7 +123,9 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         $priceProductFilter = $this->buildPriceProductFilterWithCurrentValues($priceProductFilterTransfer);
 
         return $this->prepareCurrentProductPriceTransfer(
-            $priceProductTransfers, $currentProductPriceTransfer, $priceProductFilter
+            $priceProductTransfers,
+            $currentProductPriceTransfer,
+            $priceProductFilter
         );
     }
 
@@ -174,6 +178,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer|null $priceProductFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
     protected function buildPriceProductFilterWithCurrentValues(
@@ -188,7 +193,8 @@ class ProductPriceResolver implements ProductPriceResolverInterface
 
         if ($priceProductFilterTransfer) {
             $builtPriceProductFilterTransfer->fromArray(
-                $priceProductFilterTransfer->toArray(), true
+                $priceProductFilterTransfer->toArray(),
+                true
             );
         }
 

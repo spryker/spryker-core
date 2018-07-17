@@ -116,7 +116,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
-        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPlugins($priceProductTransfers);
+        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
 
         return $priceProductTransfers;
     }
@@ -145,7 +145,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
-        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPlugins($priceProductTransfers);
+        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
 
         return $priceProductTransfers;
     }
@@ -166,7 +166,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
-        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPlugins($priceProductTransfers);
+        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
 
         return $this->priceProductService->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
     }
@@ -209,11 +209,9 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
             $idProductConcrete,
             $priceProductCriteriaTransfer
         );
-
         $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
             $priceProductStoreEntities
         );
-
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
 
         return $priceProductTransfers;

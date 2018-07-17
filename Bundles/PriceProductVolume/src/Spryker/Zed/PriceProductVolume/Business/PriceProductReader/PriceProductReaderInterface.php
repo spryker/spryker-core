@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductVolume\Business\VolumePriceExtractor;
+namespace Spryker\Zed\PriceProductVolume\Business\PriceProductReader;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 
-interface VolumePriceExtractorInterface
+interface PriceProductReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array
      */
-    public function extractPriceProductVolumes(PriceProductTransfer $priceProductTransfer): array;
+    public function getPriceProductAbstractFromPriceProduct(PriceProductTransfer $priceProductTransfer): array;
 }

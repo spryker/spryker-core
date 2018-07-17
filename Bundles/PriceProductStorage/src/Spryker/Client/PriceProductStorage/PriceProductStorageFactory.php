@@ -38,7 +38,8 @@ class PriceProductStorageFactory extends AbstractFactory
             $this->getStorage(),
             $this->createPriceProductStorageKeyGenerator(),
             $this->createPriceProductMapper(),
-            $this->getPriceDimensionPlugins()
+            $this->getPriceDimensionPlugins(),
+            $this->getPriceProductPricesExtractorPlugins()
         );
     }
 
@@ -51,7 +52,8 @@ class PriceProductStorageFactory extends AbstractFactory
             $this->getStorage(),
             $this->createPriceProductStorageKeyGenerator(),
             $this->createPriceProductMapper(),
-            $this->getPriceDimensionPlugins()
+            $this->getPriceDimensionPlugins(),
+            $this->getPriceProductPricesExtractorPlugins()
         );
     }
 
@@ -108,13 +110,11 @@ class PriceProductStorageFactory extends AbstractFactory
      */
     public function createPriceProductMapper(): PriceProductMapperInterface
     {
-        return new PriceProductMapper(
-            $this->getPriceProductPricesExtractorPlugins()
-        );
+        return new PriceProductMapper();
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductMapperPricesExtractorPluginInterface[]
+     * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface[]
      */
     public function getPriceProductPricesExtractorPlugins(): array
     {

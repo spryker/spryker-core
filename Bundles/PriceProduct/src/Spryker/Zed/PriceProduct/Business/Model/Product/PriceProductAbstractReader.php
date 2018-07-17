@@ -137,8 +137,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
-
-        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPlugins($priceProductTransfers);
+        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductAbstract($priceProductTransfers);
 
         return $priceProductTransfers;
     }
@@ -174,8 +173,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
-
-        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPlugins($priceProductTransfers);
+        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductAbstract($priceProductTransfers);
 
         return $this->priceProductService->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
     }
@@ -196,10 +194,8 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
             ->findProductAbstractPricesByIdAndCriteria($idProductAbstract, $priceProductCriteriaTransfer);
 
         $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductEntities);
-
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
-
-        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPlugins($priceProductTransfers);
+        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductAbstract($priceProductTransfers);
 
         return $priceProductTransfers;
     }
@@ -263,9 +259,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
 
         $priceProductEntities = $this->priceProductRepository
             ->findProductAbstractPricesByIdAndCriteria($idProductAbstract, $priceProductCriteriaTransfer);
-
         $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductEntities);
-
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
 
         return $priceProductTransfers;

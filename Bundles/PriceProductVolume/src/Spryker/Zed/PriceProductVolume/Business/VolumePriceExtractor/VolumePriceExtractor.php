@@ -8,15 +8,12 @@
 namespace Spryker\Zed\PriceProductVolume\Business\VolumePriceExtractor;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig;
+use Spryker\Zed\PriceProductVolume\Business\PriceProductReader\PriceProductReaderInterface;
 use Spryker\Zed\PriceProductVolume\Dependency\Service\PriceProductVolumeToUtilEncodingServiceInterface;
 
 class VolumePriceExtractor implements VolumePriceExtractorInterface
 {
-    /**
-     * @see \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_TYPE
-     */
-    protected const VOLUME_PRICE_TYPE = 'volume_prices';
-
     protected const VOLUME_PRICE_QUANTITY = 'quantity';
     protected const VOLUME_PRICE_NET_PRICE = 'net_price';
     protected const VOLUME_PRICE_GROSS_PRICE = 'gross_price';
@@ -27,11 +24,20 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
     protected $utilEncoding;
 
     /**
-     * @param \Spryker\Zed\PriceProductVolume\Dependency\Service\PriceProductVolumeToUtilEncodingServiceInterface $utilEncoding
+     * @var \Spryker\Zed\PriceProductVolume\Business\PriceProductReader\PriceProductReaderInterface
      */
-    public function __construct(PriceProductVolumeToUtilEncodingServiceInterface $utilEncoding)
-    {
+    protected $priceProductReader;
+
+    /**
+     * @param \Spryker\Zed\PriceProductVolume\Dependency\Service\PriceProductVolumeToUtilEncodingServiceInterface $utilEncoding
+     * @param \Spryker\Zed\PriceProductVolume\Business\PriceProductReader\PriceProductReaderInterface $priceProductReader
+     */
+    public function __construct(
+        PriceProductVolumeToUtilEncodingServiceInterface $utilEncoding,
+        PriceProductReaderInterface $priceProductReader
+    ) {
         $this->utilEncoding = $utilEncoding;
+        $this->priceProductReader = $priceProductReader;
     }
 
     /**
@@ -39,16 +45,49 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractPriceProductVolumes(array $priceProductTransfers): array
+    public function extractPriceProductVolumesForProductAbstract(array $priceProductTransfers): array
     {
+        $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($priceProductTransfers);
+
+        return array_merge($extractedPrices, $priceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function extractPriceProductVolumesForProductConcrete(array $priceProductTransfers): array
+    {
+        $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($priceProductTransfers);
+
+        if (empty($extractedPrices) && !empty($priceProductTransfers)) {
+            $abstractProductPrices = $this->priceProductReader->getPriceProductAbstractFromPriceProduct(
+                $priceProductTransfers[0]
+            );
+            $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($abstractProductPrices);
+        }
+
+        return array_merge($extractedPrices, $priceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function extractPriceProductVolumeTransfersFromArray(array $priceProductTransfers): array
+    {
+        $extractedPrices = [];
+
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceProductTransfers = array_merge(
-                $priceProductTransfers,
+            $extractedPrices = array_merge(
+                $extractedPrices,
                 $this->extractVolumePriceFromTransfer($priceProductTransfer)
             );
         }
 
-        return $priceProductTransfers;
+        return $extractedPrices;
     }
 
     /**
@@ -65,11 +104,11 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
         $priceProductTransfers = [];
         $priceData = $this->utilEncoding->decodeJson($priceProductTransfer->getMoneyValue()->getPriceData(), true);
 
-        if (!is_array($priceData) || !isset($priceData[static::VOLUME_PRICE_TYPE])) {
+        if (!is_array($priceData) || !isset($priceData[PriceProductVolumeConfig::VOLUME_PRICE_TYPE])) {
             return [];
         }
 
-        foreach ($priceData[static::VOLUME_PRICE_TYPE] as $volumePrice) {
+        foreach ($priceData[PriceProductVolumeConfig::VOLUME_PRICE_TYPE] as $volumePrice) {
             $priceProductTransfers[] = $this->mapVolumePriceToPriceProductTransfer($priceProductTransfer, $volumePrice);
         }
 
@@ -86,11 +125,11 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
     {
         $volumePriceTransfer = (new PriceProductTransfer())
             ->fromArray($priceProductTransfer->toArray(), true)
-            ->setQuantityToApply($volumePrice[static::VOLUME_PRICE_QUANTITY]);
+            ->setQuantityToApply($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY]);
         $volumePriceTransfer->getMoneyValue()
-            ->setGrossAmount($volumePrice[static::VOLUME_PRICE_GROSS_PRICE])
-            ->setNetAmount($volumePrice[static::VOLUME_PRICE_NET_PRICE])
-            ->setPriceData('');
+            ->setGrossAmount($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE])
+            ->setNetAmount($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE])
+            ->setPriceData($this->utilEncoding->encodeJson([]));
 
         return $volumePriceTransfer;
     }

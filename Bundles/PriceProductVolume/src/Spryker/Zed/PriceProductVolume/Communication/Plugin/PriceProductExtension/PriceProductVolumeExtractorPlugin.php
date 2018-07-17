@@ -8,12 +8,12 @@
 namespace Spryker\Zed\PriceProductVolume\Communication\Plugin\PriceProductExtension;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductMapperPricesExtractorPluginInterface;
+use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface;
 
 /**
  * @method \Spryker\Zed\PriceProductVolume\Business\PriceProductVolumeFacadeInterface getFacade()
  */
-class PriceProductVolumeExtractorPlugin extends AbstractPlugin implements PriceProductMapperPricesExtractorPluginInterface
+class PriceProductVolumeExtractorPlugin extends AbstractPlugin implements PriceProductReaderPricesExtractorPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -24,8 +24,22 @@ class PriceProductVolumeExtractorPlugin extends AbstractPlugin implements PriceP
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractProductPrices(array $priceProductTransfers): array
+    public function extractProductPricesForProductAbstract(array $priceProductTransfers): array
     {
-        return $this->getFacade()->extractPriceProductVolumes($priceProductTransfers);
+        return $this->getFacade()->extractPriceProductVolumesForProductAbstract($priceProductTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function extractProductPricesForProductConcrete(array $priceProductTransfers): array
+    {
+        return $this->getFacade()->extractPriceProductVolumesForProductConcrete($priceProductTransfers);
     }
 }

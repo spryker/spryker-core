@@ -7,22 +7,43 @@
 
 namespace Spryker\Zed\PriceProductVolume;
 
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\PriceProductVolume\Dependency\Facade\PriceProductVolumeToPriceProductFacadeBridge;
 use Spryker\Zed\PriceProductVolume\Dependency\Service\PriceProductVolumeToUtilEncodingServiceBridge;
 
 class PriceProductVolumeDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
+    public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+
+    public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container): Container
+    public function provideBusinessLayerDependencies(Container $container)
     {
+        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addPriceProductFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addProductPropelQuery($container);
 
         return $container;
     }
@@ -38,6 +59,36 @@ class PriceProductVolumeDependencyProvider extends AbstractBundleDependencyProvi
             return new PriceProductVolumeToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+            return new PriceProductVolumeToPriceProductFacadeBridge(
+                $container->getLocator()->priceProduct()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductPropelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_PRODUCT] = function (Container $container) {
+            return SpyProductQuery::create();
         };
 
         return $container;

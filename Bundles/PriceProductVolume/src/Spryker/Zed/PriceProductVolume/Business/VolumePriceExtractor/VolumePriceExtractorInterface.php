@@ -14,5 +14,12 @@ interface VolumePriceExtractorInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractPriceProductVolumes(array $priceProductTransfers): array;
+    public function extractPriceProductVolumesForProductAbstract(array $priceProductTransfers): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function extractPriceProductVolumesForProductConcrete(array $priceProductTransfers): array;
 }

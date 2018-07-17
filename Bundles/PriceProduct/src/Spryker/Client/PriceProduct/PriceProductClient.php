@@ -74,7 +74,8 @@ class PriceProductClient extends AbstractClient implements PriceProductClientInt
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveProductPriceTransferByPriceProductFilter(
-        array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
     ): CurrentProductPriceTransfer {
         return $this->getFactory()
             ->createProductPriceResolver()

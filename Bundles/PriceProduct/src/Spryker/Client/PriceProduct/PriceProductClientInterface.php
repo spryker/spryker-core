@@ -91,6 +91,7 @@ interface PriceProductClientInterface
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveProductPriceTransferByPriceProductFilter(
-        array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
     ): CurrentProductPriceTransfer;
 }

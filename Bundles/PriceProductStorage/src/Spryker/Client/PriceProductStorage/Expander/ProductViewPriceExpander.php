@@ -66,8 +66,9 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
                 ->setPrices($currentProductAbstractPriceTransfer->getPrices());
         }
 
-        $currentProductConcretePriceTransfer = $this->priceProductClient->resolveProductPriceTransfer(
-            $priceProductConcreteTransfers
+        $currentProductConcretePriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
+            $priceProductConcreteTransfers,
+            $this->getPriceProductFilterFromProductView($productViewTransfer)
         );
 
         if (!$currentProductConcretePriceTransfer->getPrice()) {
