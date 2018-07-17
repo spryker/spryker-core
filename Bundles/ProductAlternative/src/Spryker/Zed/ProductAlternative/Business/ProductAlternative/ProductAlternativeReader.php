@@ -64,6 +64,26 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     }
 
     /**
+     * @param int[] $productIds
+     *
+     * @return bool
+     */
+    public function doAllConcreteProductsHaveAlternatives(array $productIds): bool
+    {
+        return $this->productAlternativeRepository
+            ->doAllConcreteProductsHaveAlternatives($productIds);
+    }
+
+    /**
+     * @return int[]
+     */
+    public function findProductAbstractIdsConcreteConcreteWithAlternative(): array
+    {
+        return $this->productAlternativeRepository
+            ->findProductAbstractIdsConcreteConcreteWithAlternative();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer $productAlternativeCollectionTransfer
      * @param \Generated\Shared\Transfer\ProductAlternativeListTransfer $productAlternativeListTransfer
      *

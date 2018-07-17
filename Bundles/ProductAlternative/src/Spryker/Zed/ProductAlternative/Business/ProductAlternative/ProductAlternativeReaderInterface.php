@@ -17,4 +17,16 @@ interface ProductAlternativeReaderInterface
      * @return \Generated\Shared\Transfer\ProductAlternativeListTransfer
      */
     public function getProductAlternativeListByIdProductConcrete(int $idProductConcrete): ProductAlternativeListTransfer;
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return bool
+     */
+    public function doAllConcreteProductsHaveAlternatives(array $productIds): bool;
+
+    /**
+     * @return int[]
+     */
+    public function findProductAbstractIdsConcreteConcreteWithAlternative(): array;
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface;
-use Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence\ProductAlternativeProductLabelConnectorRepositoryInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig;
 
 class ProductAbstractRelationReader implements ProductAbstractRelationReaderInterface
@@ -33,11 +32,6 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     protected $productAlternativeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence\ProductAlternativeProductLabelConnectorRepositoryInterface $productAlternativeProductLabelConnectorRepository
-     */
-    protected $productAlternativeProductLabelConnectorRepository;
-
-    /**
      * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig $config
      */
     protected $config;
@@ -46,20 +40,17 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface $productFacade
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface $productAlternativeFacade
-     * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence\ProductAlternativeProductLabelConnectorRepositoryInterface $productAlternativeProductLabelConnectorRepository
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig $config
      */
     public function __construct(
         ProductAlternativeProductLabelConnectorToProductInterface $productFacade,
         ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade,
         ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface $productAlternativeFacade,
-        ProductAlternativeProductLabelConnectorRepositoryInterface $productAlternativeProductLabelConnectorRepository,
         ProductAlternativeProductLabelConnectorConfig $config
     ) {
         $this->productFacade = $productFacade;
         $this->productLabelFacade = $productLabelFacade;
         $this->productAlternativeFacade = $productAlternativeFacade;
-        $this->productAlternativeProductLabelConnectorRepository = $productAlternativeProductLabelConnectorRepository;
         $this->config = $config;
     }
 
@@ -88,7 +79,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
 
         $idProductLabel = $productLabelTransfer->getIdProductLabel();
 
-        foreach ($this->productAlternativeProductLabelConnectorRepository->getProductAbstractIdsForAlternative() as $idProductAbstract) {
+        foreach ($this->productAlternativeFacade->findProductAbstractIdsConcreteConcreteWithAlternative() as $idProductAbstract) {
             $concreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
 
             if (!$this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($concreteIds)) {

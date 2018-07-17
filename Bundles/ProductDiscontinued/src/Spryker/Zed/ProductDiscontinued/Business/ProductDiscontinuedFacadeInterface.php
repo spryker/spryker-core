@@ -28,7 +28,7 @@ interface ProductDiscontinuedFacadeInterface
 {
     /**
      * Specification:
-     *  - Mark concrete product as discontinued.
+     *  - Marks concrete product as discontinued.
      *
      * @api
      *
@@ -42,7 +42,7 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
-     *  - Mark concrete product as not discontinued.
+     *  - Marks concrete product as not discontinued.
      *
      * @api
      *
@@ -56,7 +56,7 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
-     *  - Find product discontinued by concrete product id.
+     *  - Finds product discontinued by concrete product id.
      *
      * @api
      *
@@ -80,7 +80,7 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
-     *  - Find product discontinued by filters.
+     *  - Finds product discontinued by filters.
      *
      * @api
      *
@@ -154,4 +154,14 @@ interface ProductDiscontinuedFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer
      */
     public function checkWishlistItemProductIsNotDiscontinued(WishlistItemTransfer $wishlistItemTransfer): WishlistPreAddItemCheckResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Gets list of abstract ids which have related discontinued concrete product.
+     *
+     * @api
+     *
+     * @return int[]
+     */
+    public function findProductAbstractIdsWithDiscontinuedConcrete(): array;
 }

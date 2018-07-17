@@ -47,8 +47,6 @@ interface ProductAlternativeRepositoryInterface
     ): ProductAlternativeListItemTransfer;
 
     /**
-     * @api
-     *
      * @param int $idProduct
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -58,4 +56,9 @@ interface ProductAlternativeRepositoryInterface
         int $idProduct,
         LocaleTransfer $localeTransfer
     ): ProductAlternativeListItemTransfer;
+
+    /**
+     * @return int[]
+     */
+    public function findProductAbstractIdsConcreteConcreteWithAlternative(): array;
 }

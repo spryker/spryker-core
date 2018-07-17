@@ -31,4 +31,12 @@ class ProductDiscontinuedProductLabelConnectorToProductDiscontinuedFacadeBridge 
     {
         return $this->productDiscontinuedFacade->areAllConcreteProductsDiscontinued($productIds);
     }
+
+    /**
+     * @return int[]
+     */
+    public function findProductAbstractIdsWithDiscontinuedConcrete(): array
+    {
+        return $this->productDiscontinuedFacade->findProductAbstractIdsWithDiscontinuedConcrete();
+    }
 }

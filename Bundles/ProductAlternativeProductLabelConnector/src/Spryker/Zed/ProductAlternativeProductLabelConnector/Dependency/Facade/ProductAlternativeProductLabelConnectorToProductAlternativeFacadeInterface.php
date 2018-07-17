@@ -15,4 +15,9 @@ interface ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInter
      * @return bool
      */
     public function doAllConcreteProductsHaveAlternatives(array $productIds): bool;
+
+    /**
+     * @return int[]
+     */
+    public function findProductAbstractIdsConcreteConcreteWithAlternative(): array;
 }

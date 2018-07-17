@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector;
 
-use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToLocaleFacadeBridge;
@@ -20,7 +19,6 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
     public const FACADE_PRODUCT_DISCONTINUED = 'FACADE_PRODUCT_DISCONTINUED';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
-    public const PROPEL_QUERY_PRODUCT_DISCONTINUED = 'PROPEL_QUERY_PRODUCT_DISCONTINUED';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,19 +32,6 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
         $container = $this->addProductFacade($container);
         $container = $this->addProductDiscontinuedFacade($container);
         $container = $this->addLocaleFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function providePersistenceLayerDependencies(Container $container): Container
-    {
-        $container = parent::providePersistenceLayerDependencies($container);
-        $container = $this->addProductDiscontinuedQuery($container);
 
         return $container;
     }
@@ -110,20 +95,6 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
             return new ProductDiscontinuedProductLabelConnectorToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductDiscontinuedQuery(Container $container): Container
-    {
-        $container[static::PROPEL_QUERY_PRODUCT_DISCONTINUED] = function () {
-            return SpyProductDiscontinuedQuery::create();
         };
 
         return $container;
