@@ -8,12 +8,14 @@
 namespace Spryker\Shared\ErrorHandler;
 
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\ErrorHandler\ErrorRenderer\ApiErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 
 class ErrorHandlerFactory
 {
     const APPLICATION_ZED = 'ZED';
+    const APPLICATION_GLUE = 'GLUE';
     const SAPI_CLI = 'cli';
     const SAPI_PHPDBG = 'phpdbg';
 
@@ -56,6 +58,10 @@ class ErrorHandlerFactory
      */
     protected function createErrorRenderer()
     {
+        if ($this->isGlueApplication()) {
+            return $this->createApiRenderer();
+        }
+
         if ($this->isCliCall()) {
             return $this->createCliRenderer();
         }
@@ -63,6 +69,14 @@ class ErrorHandlerFactory
         $errorRendererClassName = Config::get(ErrorHandlerConstants::ERROR_RENDERER, WebHtmlErrorRenderer::class);
 
         return $this->createWebErrorRenderer($errorRendererClassName);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isGlueApplication()
+    {
+        return $this->application === self::APPLICATION_GLUE;
     }
 
     /**
@@ -79,6 +93,14 @@ class ErrorHandlerFactory
     protected function createCliRenderer()
     {
         return new CliErrorRenderer();
+    }
+
+    /**
+     * @return \Spryker\Shared\ErrorHandler\ErrorRenderer\ApiErrorRenderer
+     */
+    protected function createApiRenderer()
+    {
+        return new ApiErrorRenderer();
     }
 
     /**
