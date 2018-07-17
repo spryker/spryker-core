@@ -29,4 +29,8 @@
         <property name="productImages" type="array" />
     </transfer>
 
+    <transfer name="ProductPageLoad">
+        <property name="productAbstractIds" type="array" />
+    </transfer>
+
 </transfers>

@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business\Publisher;
 
+use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch;
 use Spryker\Zed\ProductPageSearch\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface;
 use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface;
+use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface;
 
 class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterface
@@ -25,6 +27,11 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * @var \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface
      */
     protected $queryContainer;
+
+    /**
+     * @var ProductPageDataLoaderPluginInterface[]
+     */
+    protected $productPageDataLoaderPlugins = [];
 
     /**
      * @var \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[]
@@ -44,18 +51,21 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     /**
      * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
+     * @param ProductPageDataLoaderPluginInterface[] $productPageDataLoaderPlugins
      * @param \Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface $productPageSearchMapper
      * @param \Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface $productPageSearchWriter
      */
     public function __construct(
         ProductPageSearchQueryContainerInterface $queryContainer,
         array $pageDataExpanderPlugins,
+        array $productPageDataLoaderPlugins,
         ProductPageSearchMapperInterface $productPageSearchMapper,
         ProductPageSearchWriterInterface $productPageSearchWriter
     ) {
 
         $this->queryContainer = $queryContainer;
         $this->pageDataExpanderPlugins = $pageDataExpanderPlugins;
+        $this->productPageDataLoaderPlugins = $productPageDataLoaderPlugins;
         $this->productPageSearchMapper = $productPageSearchMapper;
         $this->productPageSearchWriter = $productPageSearchWriter;
     }
@@ -115,6 +125,14 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     protected function publishEntities(array $productAbstractIds, array $pageDataExpanderPluginNames, $isRefresh = false)
     {
         $pageDataExpanderPlugins = $this->getPageDataExpanderPlugins($pageDataExpanderPluginNames);
+
+        $productPageLoadTransfer = (new ProductPageLoadTransfer())->setProductAbstractIds($productAbstractIds);
+
+        //TODO load related plugin data
+        $data = [];
+        foreach ($this->productPageDataLoaderPlugins as $productPageDataLoaderPlugin) {
+            $data[$productPageDataLoaderPlugin->getProductPageType()] = $productPageDataLoaderPlugin->loadProductPageData($productPageLoadTransfer);
+        }
 
         //TODO MUST runs query only once
         //These lines will run only one query and load all necessary data for product abstracts

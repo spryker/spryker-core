@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\PricePageDataExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\ProductCategoryPageDataExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\ProductImagePageDataExpanderPlugin;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataLoader\PricePageDataLoaderPlugin;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageMapExpander\PricePageMapExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageMapExpander\ProductCategoryPageMapExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageMapExpander\ProductImagePageMapExpanderPlugin;
@@ -49,6 +50,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const PLUGIN_PRODUCT_PAGE_DATA_EXPANDER = 'PLUGIN_PRODUCT_PAGE_DATA_EXPANDER';
+    const PLUGIN_PRODUCT_PAGE_DATA_LOADER = 'PLUGIN_PRODUCT_PAGE_DATA_LOADER';
     const PLUGIN_PRODUCT_PAGE_MAP_EXPANDER = 'PLUGIN_PRODUCT_PAGE_MAP_EXPANDER';
     const PLUGIN_PRODUCT_PRICE_PAGE_DATA = 'PLUGIN_PRODUCT_PRICE_PAGE_DATA';
     const PLUGIN_PRODUCT_CATEGORY_PAGE_DATA = 'PLUGIN_PRODUCT_CATEGORY_PAGE_DATA';
@@ -131,6 +133,10 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return $this->getDataExpanderPlugins();
         };
 
+        $container[static::PLUGIN_PRODUCT_PAGE_DATA_LOADER] = function (Container $container) {
+            return $this->getDataLoaderPlugins();
+        };
+
         return $container;
     }
 
@@ -170,9 +176,9 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     protected function getDataExpanderPlugins()
     {
         return [
-            self::PLUGIN_PRODUCT_PRICE_PAGE_DATA => new PricePageDataExpanderPlugin(),
-            self::PLUGIN_PRODUCT_CATEGORY_PAGE_DATA => new ProductCategoryPageDataExpanderPlugin(),
-            self::PLUGIN_PRODUCT_IMAGE_PAGE_DATA => new ProductImagePageDataExpanderPlugin(),
+//            self::PLUGIN_PRODUCT_PRICE_PAGE_DATA => new PricePageDataExpanderPlugin(),
+//            self::PLUGIN_PRODUCT_CATEGORY_PAGE_DATA => new ProductCategoryPageDataExpanderPlugin(),
+//            self::PLUGIN_PRODUCT_IMAGE_PAGE_DATA => new ProductImagePageDataExpanderPlugin(),
         ];
     }
 
@@ -182,9 +188,16 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     protected function getMapExpanderPlugins()
     {
         return [
-            new PricePageMapExpanderPlugin(),
-            new ProductCategoryPageMapExpanderPlugin(),
-            new ProductImagePageMapExpanderPlugin(),
+//            new PricePageMapExpanderPlugin(),
+//            new ProductCategoryPageMapExpanderPlugin(),
+//            new ProductImagePageMapExpanderPlugin(),
+        ];
+    }
+
+    protected function getDataLoaderPlugins()
+    {
+        return [
+            new PricePageDataLoaderPlugin()
         ];
     }
 }
