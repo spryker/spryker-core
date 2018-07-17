@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Api;
 
+use Spryker\Shared\Api\ApiConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ApiConfig extends AbstractBundleConfig
@@ -36,9 +37,6 @@ class ApiConfig extends AbstractBundleConfig
     const HTTP_CODE_NOT_ALLOWED = 405;
     const HTTP_CODE_VALIDATION_ERRORS = 422;
     const HTTP_CODE_INTERNAL_ERROR = 500;
-    public const ALLOWED_SERVER_VARIABLES = [
-        'REQUEST_URI',
-    ];
 
     /**
      * @return int
@@ -135,10 +133,34 @@ class ApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getServerVariablesFilterStrategy(): string
+    {
+        return $this->get(ApiConstants::SERVER_VARIABLE_FILTER_STRATEGY);
+    }
+
+    /**
      * @return array
      */
-    public function getAllowedServerVariables(): array
+    public function getServerVariablesWhitelist(): array
     {
-        return static::ALLOWED_SERVER_VARIABLES;
+        return $this->get(ApiConstants::SERVER_VARIABLE_WHITELIST);
+    }
+
+    /**
+     * @return array
+     */
+    public function getServerVariablesBlacklist(): array
+    {
+        return $this->get(ApiConstants::SERVER_VARIABLE_BLACKLIST);
+    }
+
+    /**
+     * @return callable
+     */
+    public function getServerVariablesCallback(): callable
+    {
+        return $this->get(ApiConstants::SERVER_VARIABLE_CALLBACK);
     }
 }

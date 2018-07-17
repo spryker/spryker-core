@@ -10,6 +10,7 @@ namespace Spryker\Zed\Api\Communication\Plugin;
 use Exception;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
+use Spryker\Shared\Api\ApiConstants;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Communication\Controller\AbstractApiController;
@@ -174,8 +175,20 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      */
     protected function filterServerData(array $serverData): array
     {
-        $allowedVariables = $this->getConfig()->getAllowedServerVariables();
+        switch ($this->getConfig()->getServerVariablesFilterStrategy()) {
+            case ApiConstants::SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST:
+                $serverData = array_intersect_key($serverData, array_flip($this->getConfig()->getServerVariablesWhitelist()));
+                break;
+            case ApiConstants::SERVER_VARIABLE_FILTER_STRATEGY_BLACKLIST:
+                $serverData = array_diff_key($serverData, array_flip($this->getConfig()->getServerVariablesBlacklist()));
+                break;
+            case ApiConstants::SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK:
+                $serverVariablesCallback = $this->getConfig()->getServerVariablesCallback();
+                $serverData = (array)$serverVariablesCallback($serverData);
+                break;
+            default:
+        }
 
-        return array_intersect_key($serverData, array_flip($allowedVariables));
+        return $serverData;
     }
 }
