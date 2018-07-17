@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 
+use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 
 interface ProductPackagingUnitRepositoryInterface
@@ -14,9 +16,61 @@ interface ProductPackagingUnitRepositoryInterface
     /**
      * @param string $productPackagingUnitTypeName
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
-    public function getProductPackagingUnitTypeByName(
+    public function findProductPackagingUnitTypeByName(
         string $productPackagingUnitTypeName
-    ): ProductPackagingUnitTypeTransfer;
+    ): ?ProductPackagingUnitTypeTransfer;
+
+    /**
+     * @param int $idProductPackagingUnitType
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
+     */
+    public function findProductPackagingUnitTypeById(
+        int $idProductPackagingUnitType
+    ): ?ProductPackagingUnitTypeTransfer;
+
+    /**
+     * @param int $idProductPackagingUnitType
+     *
+     * @return int
+     */
+    public function countProductPackagingUnitsByTypeId(
+        int $idProductPackagingUnitType
+    ): int;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
+     */
+    public function findProductPackagingLeadProductByIdProductAbstract(
+        int $idProductAbstract
+    ): ?ProductPackagingLeadProductTransfer;
+
+    /**
+     * @param string $productPackagingUnitSku
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
+     */
+    public function findProductPackagingLeadProductByProductPackagingSku(
+        string $productPackagingUnitSku
+    ): ?ProductPackagingLeadProductTransfer;
+
+    /**
+     * @param int[] $productPackagingUnitTypeIds
+     *
+     * @return int[]
+     */
+    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array;
+
+    /**
+     * @param int $idProductPackagingUnit
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
+     */
+    public function findProductPackagingUnitById(
+        int $idProductPackagingUnit
+    ): ?ProductPackagingUnitTransfer;
 }

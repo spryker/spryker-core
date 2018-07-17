@@ -8,6 +8,15 @@
 namespace SprykerTest\Zed\ProductPackagingUnit\Business;
 
 use Generated\Shared\DataBuilder\ProductPackagingUnitTypeBuilder;
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitTypeTranslationTransfer;
+use Generated\Shared\Transfer\SpyProductAbstractEntityTransfer;
+use Generated\Shared\Transfer\SpyProductEntityTransfer;
+use Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer;
+use Generated\Shared\Transfer\SpyProductPackagingUnitAmountEntityTransfer;
+use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
+use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
 
 /**
  * Auto-generated group annotations
@@ -22,6 +31,12 @@ use Generated\Shared\DataBuilder\ProductPackagingUnitTypeBuilder;
  */
 class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 {
+    protected const PACKAGING_TYPE_DEFAULT = 'item';
+    protected const PACKAGING_TYPE = 'box';
+
+    protected const ITEM_QUANTITY = 2;
+    protected const PACKAGE_AMOUNT = 4;
+
     /**
      * @var \SprykerTest\Zed\ProductPackagingUnit\ProductPackagingUnitBusinessTester
      */
@@ -44,8 +59,159 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $facade->installProductPackagingUnitTypes();
 
         // Assert
-        $productPackagingUnitTypeTransfer = $facade->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
+        $productPackagingUnitTypeTransfer = $this->getFacade()->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
         $this->assertNotNull($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType());
+    }
+
+    /**
+     * @dataProvider getProductPackagingUnitTypeData
+     *
+     * @param string $name
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTranslationTransfer ...$nameTranslations
+     *
+     * @return void
+     */
+    public function testCreateProductPackagingUnitTypeShouldPersistPackagingUnitType(string $name, ProductPackagingUnitTypeTranslationTransfer ... $nameTranslations): void
+    {
+        $productPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeBuilder())
+            ->build()
+            ->setName($name);
+
+        foreach ($nameTranslations as $nameTranslation) {
+            $productPackagingUnitTypeTransfer->addProductPackagingUnitTypeTranslation($nameTranslation);
+        }
+
+        // Action
+        $this->getFacade()->createProductPackagingUnitType($productPackagingUnitTypeTransfer);
+        $productPackagingUnitTypeTransfer = $this->getFacade()->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
+        $this->assertNotNull($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType());
+        // Assert translations persisted
+        $this->assertCount($productPackagingUnitTypeTransfer->getTranslations()->count(), $nameTranslations);
+    }
+
+    /**
+     * @dataProvider getProductPackagingUnitTypeData
+     *
+     * @expectedException \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
+     *
+     * @param string $name
+     *
+     * @return void
+     */
+    public function testDeleteProductPackagingUnitTypeShouldDeletePackagingUnitType(string $name): void
+    {
+        $productPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeBuilder())
+            ->build()
+            ->setName($name);
+
+        $this->getFacade()->createProductPackagingUnitType($productPackagingUnitTypeTransfer);
+
+        // Action
+        $productPackagingUnitTypeDeleted = $this->getFacade()->deleteProductPackagingUnitType($productPackagingUnitTypeTransfer);
+        $this->assertTrue($productPackagingUnitTypeDeleted);
+        // Assert exception thrown
+        $this->getFacade()->getProductPackagingUnitTypeById($productPackagingUnitTypeTransfer);
+    }
+
+    /**
+     * @return array
+     */
+    public function getProductPackagingUnitTypeData()
+    {
+        return [
+            [
+                'packaging_unit_type.test1.name',
+                (new ProductPackagingUnitTypeTranslationTransfer())
+                    ->setLocaleCode('en_US')
+                    ->setName('name1'),
+                (new ProductPackagingUnitTypeTranslationTransfer())
+                    ->setLocaleCode('de_DE')
+                    ->setName('Name1'),
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider getProductPackagingUnitTypeDataForNameChange
+     *
+     * @param string $name
+     * @param string $newName
+     *
+     * @return void
+     */
+    public function testUpdateProductPackagingUnitTypeShouldUpdatePackagingUnitType(string $name, string $newName): void
+    {
+        $productPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeBuilder())
+            ->build()
+            ->setName($name);
+
+        $productPackagingUnitTypeTransfer = $this->getFacade()->createProductPackagingUnitType($productPackagingUnitTypeTransfer);
+
+        // Action
+        $productPackagingUnitTypeTransfer->setName($newName);
+        $productPackagingUnitTypeTransfer = $this->getFacade()->updateProductPackagingUnitType($productPackagingUnitTypeTransfer);
+        $this->assertEquals($productPackagingUnitTypeTransfer->getName(), $newName);
+    }
+
+    /**
+     * @return array
+     */
+    public function getProductPackagingUnitTypeDataForNameChange()
+    {
+        return [
+            [
+                'packaging_unit_type.test1.name',
+                'packaging_unit_type.test2.name',
+            ],
+        ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandCartChangeTransferWithAmountLeadProduct(): void
+    {
+        $itemProductConcreteTransfer = $this->tester->haveProduct();
+        $boxProductConcreteTransfer = $this->tester->haveProduct([
+            SpyProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ], [
+            SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ]);
+
+        $this->tester->haveProductPackagingLeadProduct([
+            SpyProductPackagingLeadProductEntityTransfer::FK_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingLeadProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ]);
+
+        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
+        $itemProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE_DEFAULT]);
+
+        $itemProductPackagingUnit = $this->tester->haveProductPackagingUnit([
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $itemProductPackagingUnitType->getIdProductPackagingUnitType(),
+        ]);
+
+        $boxProductPackagingUnit = $this->tester->haveProductPackagingUnit([
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitType->getIdProductPackagingUnitType(),
+        ], [
+            SpyProductPackagingUnitAmountEntityTransfer::DEFAULT_AMOUNT => static::PACKAGE_AMOUNT,
+        ]);
+
+        $cartChange = (new CartChangeTransfer())
+            ->addItem(
+                (new ItemTransfer())
+                    ->setSku($boxProductConcreteTransfer->getSku())
+                    ->setQuantity(static::ITEM_QUANTITY)
+                    ->setAmount(static::PACKAGE_AMOUNT)
+            );
+
+        $this->getFacade()->expandCartChangeWithAmountLeadProduct($cartChange);
+        foreach ($cartChange->getItems() as $itemTransfer) {
+            $this->assertNotNull($itemTransfer->getAmountLeadProduct());
+            $this->assertNotNull($itemTransfer->getAmountLeadProduct()->getSku());
+            $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getAmountLeadProduct()->getSku());
+        }
     }
 
     /**
