@@ -13,7 +13,8 @@ use Spryker\Glue\SearchRestApi\SearchRestApiConfig;
 
 class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
 {
-    protected const SEARCH_RESPONSE_SUGGESTIONS_KEY = 'suggestionByType';
+    protected const SEARCH_RESPONSE_COMPLETION_KEY = 'completion';
+    protected const SEARCH_RESPONSE_SUGGESTION_BY_TYPE_KEY = 'suggestionByType';
     protected const SEARCH_RESPONSE_PRODUCT_ABSTRACT_KEY = 'product_abstract';
     protected const SEARCH_RESPONSE_PRODUCT_ABSTRACT_IMAGES_KEY = 'images';
     protected const SEARCH_RESPONSE_CATEGORY_KEY = 'category';
@@ -37,6 +38,21 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
     public function __construct(RestResourceBuilderInterface $restResourceBuilder)
     {
         $this->restResourceBuilder = $restResourceBuilder;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSearchResponseDefaultStructure(): array
+    {
+        return [
+            static::SEARCH_RESPONSE_COMPLETION_KEY => [],
+            static::SEARCH_RESPONSE_SUGGESTION_BY_TYPE_KEY => [
+                static::SEARCH_RESPONSE_PRODUCT_ABSTRACT_KEY => [],
+                static::SEARCH_RESPONSE_CATEGORY_KEY => [],
+                static::SEARCH_RESPONSE_CMS_PAGE_KEY => [],
+            ],
+        ];
     }
 
     /**
@@ -172,7 +188,7 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
         }
 
         $result = $this->mapArrayValuesByKeys(
-            $restSearchResponse[static::SEARCH_RESPONSE_SUGGESTIONS_KEY][$suggestionName],
+            $restSearchResponse[static::SEARCH_RESPONSE_SUGGESTION_BY_TYPE_KEY][$suggestionName],
             $suggestionKeysRequired
         );
 
@@ -205,8 +221,8 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
      */
     protected function checkSuggestionByTypeValues(array $restSearchResponse, string $checkKey): bool
     {
-        return isset($restSearchResponse[static::SEARCH_RESPONSE_SUGGESTIONS_KEY][$checkKey])
-            && is_array($restSearchResponse[static::SEARCH_RESPONSE_SUGGESTIONS_KEY][$checkKey]);
+        return isset($restSearchResponse[static::SEARCH_RESPONSE_SUGGESTION_BY_TYPE_KEY][$checkKey])
+            && is_array($restSearchResponse[static::SEARCH_RESPONSE_SUGGESTION_BY_TYPE_KEY][$checkKey]);
     }
 
     /**

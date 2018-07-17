@@ -16,4 +16,9 @@ interface SuggestionsResourceMapperInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function mapSuggestionsResponseAttributesTransferToRestResponse(array $restSearchResponse): RestResourceInterface;
+
+    /**
+     * @return array
+     */
+    public function getSearchResponseDefaultStructure(): array;
 }
