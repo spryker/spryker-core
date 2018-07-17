@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Glue\SearchRestApi;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,8 +17,8 @@ namespace SprykerTest\Glue\SearchRestApi;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class SearchRestApiProcessorTester extends \Codeception\Actor
+ */
+class SearchRestApiProcessorTester extends Actor
 {
     use _generated\SearchRestApiProcessorTesterActions;
 
