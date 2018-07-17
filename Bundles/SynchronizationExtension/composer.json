@@ -6,7 +6,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/propel-orm": "*"
+  },
+  "suggest": {
+    "spryker/propel-orm": "*"
   },
   "autoload": {
     "psr-4": {

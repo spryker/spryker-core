@@ -12,7 +12,8 @@
     "spryker/propel-orm": "^1.5.0",
     "spryker/storage": "^3.4.0",
     "spryker/store": "^1.7.0",
-    "spryker/synchronization": "^0.2.0 || ^1.0.0"
+    "spryker/synchronization": "^0.2.0 || ^1.0.0",
+    "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/event": "*",
