@@ -8,6 +8,10 @@
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig;
 
 class ProductAlternativeProductLabelWriter implements ProductAlternativeProductLabelWriterInterface
 {
@@ -38,10 +42,10 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig $config
      */
     public function __construct(
-        $productFacade,
-        $productLabelFacade,
-        $productAlternativeFacade,
-        $config
+        ProductAlternativeProductLabelConnectorToProductInterface $productFacade,
+        ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade,
+        ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface $productAlternativeFacade,
+        ProductAlternativeProductLabelConnectorConfig $config
     ) {
         $this->productFacade = $productFacade;
         $this->productLabelFacade = $productLabelFacade;

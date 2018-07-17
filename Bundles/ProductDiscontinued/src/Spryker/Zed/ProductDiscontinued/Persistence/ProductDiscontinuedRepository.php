@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductDiscontinued\Persistence;
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -112,6 +113,8 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
+     * @module Product
+     *
      * @param string $sku
      *
      * @return bool
@@ -124,5 +127,23 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
                 ->filterBySku($sku)
             ->endUse()
             ->exists();
+    }
+
+    /**
+     * @module Product
+     *
+     * @return int[]
+     */
+    public function findProductAbstractIdsWithDiscontinuedConcrete(): array
+    {
+        return $this->getFactory()
+            ->createProductDiscontinuedQuery()
+            ->leftJoinProduct()
+            ->useProductQuery()
+                ->groupByFkProductAbstract()
+            ->endUse()
+            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->find()
+            ->toArray();
     }
 }

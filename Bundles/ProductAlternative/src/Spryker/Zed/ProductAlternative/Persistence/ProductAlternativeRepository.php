@@ -246,4 +246,22 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
 
         return $productAbstractQuery;
     }
+
+    /**
+     * @modules Product
+     *
+     * @return int[]
+     */
+    public function findProductAbstractIdsConcreteConcreteWithAlternative(): array
+    {
+        return $this->getFactory()
+            ->createProductAlternativePropelQuery()
+            ->leftJoinProductConcrete()
+            ->useProductConcreteQuery()
+                ->groupByFkProductAbstract()
+            ->endUse()
+            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->find()
+            ->toArray();
+    }
 }

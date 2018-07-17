@@ -62,4 +62,14 @@ interface ProductAlternativeFacadeInterface
      * @return bool
      */
     public function doAllConcreteProductsHaveAlternatives(array $productIds): bool;
+
+    /**
+     * Specification:
+     * - Finds product abstract ids which concrete products has alternatives.
+     *
+     * @api
+     *
+     * @return int[]
+     */
+    public function findProductAbstractIdsConcreteConcreteWithAlternative(): array;
 }

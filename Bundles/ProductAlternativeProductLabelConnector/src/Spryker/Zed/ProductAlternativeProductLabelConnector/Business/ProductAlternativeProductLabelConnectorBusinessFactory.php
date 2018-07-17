@@ -60,7 +60,6 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
             $this->getProductFacade(),
             $this->getProductLabelFacade(),
             $this->getProductAlternativeFacade(),
-            $this->getRepository(),
             $this->getConfig()
         );
     }

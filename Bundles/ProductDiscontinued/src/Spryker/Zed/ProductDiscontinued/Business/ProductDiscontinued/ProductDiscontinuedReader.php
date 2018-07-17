@@ -56,4 +56,22 @@ class ProductDiscontinuedReader implements ProductDiscontinuedReaderInterface
     ): ProductDiscontinuedCollectionTransfer {
         return $this->productDiscontinuedRepository->findProductDiscontinuedCollection($criteriaFilterTransfer);
     }
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return bool
+     */
+    public function areAllConcreteProductsDiscontinued(array $productIds): bool
+    {
+        return $this->productDiscontinuedRepository->areAllConcreteProductsDiscontinued($productIds);
+    }
+
+    /**
+     * @return int[]
+     */
+    public function findProductAbstractIdsWithDiscontinuedConcrete(): array
+    {
+        return $this->productDiscontinuedRepository->findProductAbstractIdsWithDiscontinuedConcrete();
+    }
 }

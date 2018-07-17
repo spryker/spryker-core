@@ -91,7 +91,8 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
      */
     public function areAllConcreteProductsDiscontinued(array $productIds): bool
     {
-        return $this->getRepository()
+        return $this->getFactory()
+            ->createProductDiscontinuedReader()
             ->areAllConcreteProductsDiscontinued($productIds);
     }
 
@@ -191,6 +192,20 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
         return $this->getFactory()
             ->createWishlistAddItemPreCheck()
             ->checkWishlistItemProductIsNotDiscontinued($wishlistItemTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return int[]
+     */
+    public function findProductAbstractIdsWithDiscontinuedConcrete(): array
+    {
+        return $this->getFactory()
+            ->createProductDiscontinuedReader()
+            ->findProductAbstractIdsWithDiscontinuedConcrete();
     }
 
     /**
