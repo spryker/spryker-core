@@ -24,7 +24,6 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProduc
 
 /**
  * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig getConfig()
- * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence\ProductAlternativeProductLabelConnectorRepositoryInterface getRepository()
  */
 class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBusinessFactory
 {
@@ -66,7 +65,6 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
             $this->getProductAlternativeFacade(),
             $this->getProductDiscontinuedFacade(),
             $this->getavailabilityFacade(),
-            $this->getRepository(),
             $this->getConfig()
         );
     }

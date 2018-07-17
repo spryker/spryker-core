@@ -14,7 +14,6 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\Produc
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface;
-use Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence\ProductAlternativeProductLabelConnectorRepositoryInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig;
 
 class ProductAbstractRelationReader implements ProductAbstractRelationReaderInterface
@@ -45,11 +44,6 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     protected $availabilityFacade;
 
     /**
-     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence\ProductAlternativeProductLabelConnectorRepositoryInterface $productAlternativeProductLabelConnectorRepository
-     */
-    protected $productAlternativeProductLabelConnectorRepository;
-
-    /**
      * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig $config
      */
     protected $config;
@@ -60,7 +54,6 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface $productAlternativeFacade
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeInterface $productDiscontinuedFacade
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToAvailabilityFacadeInterface $availabilityFacade
-     * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence\ProductAlternativeProductLabelConnectorRepositoryInterface $productAlternativeProductLabelConnectorRepository
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig $config
      */
     public function __construct(
@@ -69,7 +62,6 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface $productAlternativeFacade,
         ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeInterface $productDiscontinuedFacade,
         ProductAlternativeProductLabelConnectorToAvailabilityFacadeInterface $availabilityFacade,
-        ProductAlternativeProductLabelConnectorRepositoryInterface $productAlternativeProductLabelConnectorRepository,
         ProductAlternativeProductLabelConnectorConfig $config
     ) {
         $this->productFacade = $productFacade;
@@ -77,7 +69,6 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         $this->productAlternativeFacade = $productAlternativeFacade;
         $this->productDiscontinuedFacade = $productDiscontinuedFacade;
         $this->availabilityFacade = $availabilityFacade;
-        $this->productAlternativeProductLabelConnectorRepository = $productAlternativeProductLabelConnectorRepository;
         $this->config = $config;
     }
 
@@ -106,7 +97,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
 
         $idProductLabel = $productLabelTransfer->getIdProductLabel();
 
-        foreach ($this->productAlternativeProductLabelConnectorRepository->getProductAbstractIdsForAlternative() as $idProductAbstract) {
+        foreach ($this->productAlternativeFacade->findProductAbstractIdsWhichConcreteHasAlternative() as $idProductAbstract) {
             $concreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
 
             if (!$this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($concreteIds)

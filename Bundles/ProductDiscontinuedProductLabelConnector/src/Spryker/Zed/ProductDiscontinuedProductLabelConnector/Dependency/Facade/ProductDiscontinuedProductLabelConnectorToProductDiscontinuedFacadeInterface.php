@@ -15,4 +15,9 @@ interface ProductDiscontinuedProductLabelConnectorToProductDiscontinuedFacadeInt
      * @return bool
      */
     public function areAllConcreteProductsDiscontinued(array $productIds): bool;
+
+    /**
+     * @return int[]
+     */
+    public function findProductAbstractIdsWithDiscontinuedConcrete(): array;
 }

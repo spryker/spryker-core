@@ -9,12 +9,14 @@ namespace Spryker\Zed\ProductDiscontinued\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
@@ -28,7 +30,7 @@ interface ProductDiscontinuedFacadeInterface
 {
     /**
      * Specification:
-     *  - Mark concrete product as discontinued.
+     *  - Marks concrete product as discontinued.
      *
      * @api
      *
@@ -42,7 +44,7 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
-     *  - Mark concrete product as not discontinued.
+     *  - Marks concrete product as not discontinued.
      *
      * @api
      *
@@ -56,7 +58,7 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
-     *  - Find product discontinued by concrete product id.
+     *  - Finds product discontinued by concrete product id.
      *
      * @api
      *
@@ -92,7 +94,7 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
-     *  - Find product discontinued by filters.
+     *  - Finds product discontinued by filters.
      *
      * @api
      *
@@ -145,7 +147,7 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
-     *  - Checks if shopping list item product is not discontinued.
+     *  - Checks if shopping list item is not discontinued.
      *
      * @api
      *
@@ -157,7 +159,7 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
-     *  - Checks if wishlist item product is not discontinued.
+     *  - Checks if wishlist item is not discontinued.
      *
      * @api
      *
@@ -166,4 +168,27 @@ interface ProductDiscontinuedFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer
      */
     public function checkWishlistItemProductIsNotDiscontinued(WishlistItemTransfer $wishlistItemTransfer): WishlistPreAddItemCheckResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Gets list of abstract ids which have related discontinued concrete product.
+     *
+     * @api
+     *
+     * @return int[]
+     */
+    public function findProductAbstractIdsWithDiscontinuedConcrete(): array;
+
+    /**
+     * Specification:
+     * - Checks if the are no discontinued products in checkout.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function checkProductsInCheckoutAreNotDiscontinued(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

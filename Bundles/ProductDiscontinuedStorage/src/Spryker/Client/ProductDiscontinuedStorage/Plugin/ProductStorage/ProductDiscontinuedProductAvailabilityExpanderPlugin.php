@@ -13,12 +13,12 @@ use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInt
 
 /**
  * @method \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageFactory getFactory()
+ * @method \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageClientInterface getClient()
  */
 class ProductDiscontinuedProductAvailabilityExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
     /**
-     * Specification:
-     *  - Sets availability of discontinued product to false.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -30,12 +30,7 @@ class ProductDiscontinuedProductAvailabilityExpanderPlugin extends AbstractPlugi
      */
     public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName)
     {
-        $productDiscontinuedTransfer = $this->getFactory()
-            ->createProductDiscontinuedStorageReader()
-            ->findProductDiscontinuedStorage($productViewTransfer->getSku(), $localeName);
-
-        return $productViewTransfer->setAvailable(
-            $productViewTransfer->getAvailable() && !$productDiscontinuedTransfer
-        );
+        return $this->getClient()
+            ->expandDiscontinuedProductAvailability($productViewTransfer, $localeName);
     }
 }

@@ -15,13 +15,15 @@
   },
   "require-dev": {
     "spryker/cart": "*",
+    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/cart": "If you want to use Cart plugins."
+    "spryker/cart": "If you want to use Cart plugins.",
+    "spryker/checkout": "If you want to use Checkout plugins."
   },
   "autoload": {
     "psr-4": {

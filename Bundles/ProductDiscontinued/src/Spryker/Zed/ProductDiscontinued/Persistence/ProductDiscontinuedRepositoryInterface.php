@@ -54,4 +54,9 @@ interface ProductDiscontinuedRepositoryInterface
      * @return bool
      */
     public function checkIfProductDiscontinuedBySku(string $sku): bool;
+
+    /**
+     * @return int[]
+     */
+    public function findProductAbstractIdsWithDiscontinuedConcrete(): array;
 }

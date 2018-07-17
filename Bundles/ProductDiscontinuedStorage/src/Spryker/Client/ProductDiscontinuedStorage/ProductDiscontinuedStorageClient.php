@@ -66,4 +66,21 @@ class ProductDiscontinuedStorageClient extends AbstractClient implements Product
             ->createDiscontinuedSuperAttributesProductViewExpander()
             ->expandDiscontinuedProductSuperAttributes($productViewTransfer, $localeName);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandDiscontinuedProductAvailability(ProductViewTransfer $productViewTransfer, string $localeName): ProductViewTransfer
+    {
+        return $this->getFactory()
+            ->createDiscontinuedAvailabilityProductViewExpander()
+            ->expandProductVew($productViewTransfer, $localeName);
+    }
 }

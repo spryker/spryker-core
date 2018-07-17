@@ -63,4 +63,30 @@
         <property name="parameters" type="array"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="CheckoutError[]" singular="error" />
+    </transfer>
+
+    <transfer name="WishlistItem">
+        <property name="sku" type="string" />
+    </transfer>
+
+    <transfer name="WishlistPreAddItemCheckResponse">
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="ShoppingListItem">
+        <property name="sku" type="string" />
+    </transfer>
+
+    <transfer name="ShoppingListPreAddItemCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
 </transfers>
