@@ -44,10 +44,8 @@ class SearchResourceMapperTest extends AbstractMapperTest
         $this->assertArrayNotHasKey("id_product_image_set_to_product_image", $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]);
         $this->assertArrayNotHasKey("fk_product_image", $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]);
 
-        $this->assertEquals("2018-07-10 12:04:44.050707", $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]['updatedAt']);
         $this->assertEquals("//images.icecat.biz/img/norm/medium/15743_12554247-9579.jpg", $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]['externalUrlSmall']);
         $this->assertEquals("//images.icecat.biz/img/norm/high/15743_12554247-9579.jpg", $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]['externalUrlLarge']);
-        $this->assertEquals("2018-07-10 12:04:44.050707", $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]['createdAt']);
         $this->assertEquals(0, $this->restSearchAttributesTransfer->getProducts()[0]->getImages()[0]['sortOrder']);
 
         $this->assertEquals("name_asc", $this->restSearchAttributesTransfer->getSort()->getCurrentSortOrder());
