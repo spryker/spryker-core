@@ -29,6 +29,6 @@ class CurrencyValidatorPlugin extends AbstractPlugin implements ValidateRestRequ
      */
     public function validate(Request $request, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
-        return $this->getFactory()->createValidateCurrency()->validate($request, $restRequest);
+        return $this->getFactory()->createCurrencyValidator()->validate($request, $restRequest);
     }
 }

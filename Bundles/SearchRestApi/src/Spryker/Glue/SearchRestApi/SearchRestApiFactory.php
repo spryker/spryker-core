@@ -75,7 +75,7 @@ class SearchRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\SearchRestApi\Processor\Currency\ValidateCurrencyInterface
      */
-    public function createValidateCurrency(): ValidateCurrencyInterface
+    public function createCurrencyValidator(): ValidateCurrencyInterface
     {
         return new ValidateCurrency();
     }

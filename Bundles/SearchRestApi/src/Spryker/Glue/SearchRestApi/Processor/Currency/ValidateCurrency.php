@@ -23,12 +23,11 @@ class ValidateCurrency implements ValidateCurrencyInterface
      */
     public function validate(Request $request, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
-
         $currency = $restRequest->getHttpRequest()->query->get(SearchRestApiConfig::CURRENCY_STRING_PARAMETER);
         if ($currency) {
             $currencies = Store::getInstance()
                 ->getCurrencyIsoCodes();
-            if (!in_array($currency, $currencies)) {
+            if (!\in_array($currency, $currencies, true)) {
                 return $this->createErrorMessageTransfer(
                     SearchRestApiConfig::RESPONSE_DETAIL_INVALID_REQUEST_CURRENCY,
                     Response::HTTP_BAD_REQUEST,
