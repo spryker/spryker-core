@@ -34,11 +34,15 @@ interface ProductMeasurementUnitStorageFacadeInterface
     public function publishProductConcreteMeasurementUnit(array $productIds): void;
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function findAllProductMeasurementUnitTransfers();
 
     /**
+     * @api
+     *
      * @param int[] $productMeasurementUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
@@ -46,11 +50,15 @@ interface ProductMeasurementUnitStorageFacadeInterface
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds);
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
     public function getSalesUnits();
 
     /**
+     * @api
+     *
      * @param int[] $salesUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]

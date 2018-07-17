@@ -21,7 +21,6 @@ interface ProductQuantityStorageFacadeInterface
      */
     public function publishProductQuantity(array $productIds): void;
 
-
     /**
      * Specification:
      * - Retrieves all product quantity transfers.

@@ -43,6 +43,8 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function findAllProductMeasurementUnitTransfers()
@@ -51,6 +53,8 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int[] $productMeasurementUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
@@ -61,6 +65,8 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function getSalesUnits()
@@ -69,6 +75,8 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
     }
 
     /**
+     * @api
+     *
      * @param int[] $salesUnitsIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
