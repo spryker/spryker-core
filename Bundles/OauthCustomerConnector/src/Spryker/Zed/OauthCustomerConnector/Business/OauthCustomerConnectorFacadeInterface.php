@@ -16,11 +16,11 @@ use Generated\Shared\Transfer\OauthUserTransfer;
 interface OauthCustomerConnectorFacadeInterface
 {
     /**
-     * @api
-     *
      * Specification:
      *  - Authenticates customer.
      *  - Reads customer data and provides it for access token.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
      *
@@ -29,10 +29,10 @@ interface OauthCustomerConnectorFacadeInterface
     public function getCustomer(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer;
 
     /**
-     * @api
-     *
      * Specification:
      *  - Reads customer scopes.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthScopeRequestTransfer $oauthScopeRequestTransfer
      *
@@ -41,30 +41,30 @@ interface OauthCustomerConnectorFacadeInterface
     public function getScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array;
 
     /**
-     * @api
-     *
      * Specification:
      *  - Installs initial oauth data.
+     *
+     * @api
      *
      * @return void
      */
     public function installCustomerOauthData(): void;
 
     /**
-     * @api
-     *
      * Specification:
      *  - Reads customer client secret.
+     *
+     * @api
      *
      * @return string
      */
     public function getCustomerOauthClientSecret(): string;
 
     /**
-     * @api
-     *
      * Specification:
      *  - Reads customer client identifier.
+     *
+     * @api
      *
      * @return string
      */

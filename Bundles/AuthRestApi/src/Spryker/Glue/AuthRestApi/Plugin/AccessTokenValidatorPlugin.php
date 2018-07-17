@@ -18,9 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
 class AccessTokenValidatorPlugin extends AbstractPlugin implements ValidateRestRequestPluginInterface
 {
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

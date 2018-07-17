@@ -17,9 +17,9 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustomerConnectorFacadeInterface
 {
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
      *
@@ -31,9 +31,9 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthScopeRequestTransfer $oauthScopeRequestTransfer
      *
@@ -45,9 +45,9 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @return void
      */
@@ -57,9 +57,9 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @return string
      */
@@ -69,9 +69,9 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @return string
      */

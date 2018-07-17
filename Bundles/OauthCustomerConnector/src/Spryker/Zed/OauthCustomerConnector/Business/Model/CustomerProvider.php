@@ -10,6 +10,7 @@ namespace Spryker\Zed\OauthCustomerConnector\Business\Model;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
 use Spryker\Zed\OauthCustomerConnector\Dependency\Facade\OauthCustomerConnectorToCustomerFacadeInterface;
+use Spryker\Zed\OauthCustomerConnector\Dependency\Service\OauthCustomerConnectorToUtilEncodingServiceInterface;
 
 class CustomerProvider implements CustomerProviderInterface
 {
@@ -19,11 +20,20 @@ class CustomerProvider implements CustomerProviderInterface
     protected $customerFacade;
 
     /**
-     * @param \Spryker\Zed\OauthCustomerConnector\Dependency\Facade\OauthCustomerConnectorToCustomerFacadeInterface $customerFacade
+     * @var \Spryker\Zed\OauthCustomerConnector\Dependency\Service\OauthCustomerConnectorToUtilEncodingServiceInterface
      */
-    public function __construct(OauthCustomerConnectorToCustomerFacadeInterface $customerFacade)
-    {
+    protected $utilEncodingService;
+
+    /**
+     * @param \Spryker\Zed\OauthCustomerConnector\Dependency\Facade\OauthCustomerConnectorToCustomerFacadeInterface $customerFacade
+     * @param \Spryker\Zed\OauthCustomerConnector\Dependency\Service\OauthCustomerConnectorToUtilEncodingServiceInterface $utilEncodingService
+     */
+    public function __construct(
+        OauthCustomerConnectorToCustomerFacadeInterface $customerFacade,
+        OauthCustomerConnectorToUtilEncodingServiceInterface $utilEncodingService
+    ) {
         $this->customerFacade = $customerFacade;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -43,7 +53,7 @@ class CustomerProvider implements CustomerProviderInterface
 
         if ($isAuthorized) {
             $customerTransfer = $this->customerFacade->getCustomer($customerTransfer);
-            $customerIdentifier = json_encode(
+            $customerIdentifier = $this->utilEncodingService->encodeJson(
                 [
                     'customer_reference' => $customerTransfer->getCustomerReference(),
                     'id_customer' => $customerTransfer->getIdCustomer(),

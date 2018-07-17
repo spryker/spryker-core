@@ -16,6 +16,7 @@ use Spryker\Zed\OauthCustomerConnector\Business\Model\ScopeProvider;
 use Spryker\Zed\OauthCustomerConnector\Business\Model\ScopeProviderInterface;
 use Spryker\Zed\OauthCustomerConnector\Dependency\Facade\OauthCustomerConnectorToCustomerFacadeInterface;
 use Spryker\Zed\OauthCustomerConnector\Dependency\Facade\OauthCustomerConnectorToOauthFacadeInterface;
+use Spryker\Zed\OauthCustomerConnector\Dependency\Service\OauthCustomerConnectorToUtilEncodingServiceInterface;
 use Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig;
 use Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorDependencyProvider;
 
@@ -29,7 +30,10 @@ class OauthCustomerConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerProvider(): CustomerProviderInterface
     {
-        return new CustomerProvider($this->getCustomerFacade());
+        return new CustomerProvider(
+            $this->getCustomerFacade(),
+            $this->getUtilEncodingService()
+        );
     }
 
     /**
@@ -70,5 +74,13 @@ class OauthCustomerConnectorBusinessFactory extends AbstractBusinessFactory
     public function getModuleConfig(): OauthCustomerConnectorConfig
     {
         return $this->getConfig();
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCustomerConnector\Dependency\Service\OauthCustomerConnectorToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): OauthCustomerConnectorToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(OauthCustomerConnectorDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }
