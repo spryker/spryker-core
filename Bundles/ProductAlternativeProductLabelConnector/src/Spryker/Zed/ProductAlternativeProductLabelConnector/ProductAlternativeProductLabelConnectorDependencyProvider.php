@@ -13,17 +13,16 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\Produc
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductBridge;
-use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelBridge;
 
 class ProductAlternativeProductLabelConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
     public const FACADE_PRODUCT_ALTERNATIVE = 'FACADE_PRODUCT_ALTERNATIVE';
-    public const FACADE_PRODUCT_DISCONTINUED = 'FACADE_PRODUCT_DISCONTINUED';
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const PRODUCT_CONCRETE_DISCONTINUED_CHECK_PLUGINS = 'PRODUCT_CONCRETE_DISCONTINUED_CHECK_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -36,9 +35,9 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
         $container = $this->addProductLabelFacade($container);
         $container = $this->addProductFacade($container);
         $container = $this->addProductAlternativeFacade($container);
-        $container = $this->addProductDiscontinuedFacade($container);
         $container = $this->addAvailabilityFacade($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addProductConcreteDiscontinuedCheckPlugins($container);
 
         return $container;
     }
@@ -112,11 +111,11 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductDiscontinuedFacade(Container $container): Container
+    protected function addAvailabilityFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_DISCONTINUED] = function (Container $container) {
-            return new ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeBridge(
-                $container->getLocator()->productDiscontinued()->facade()
+        $container[static::FACADE_AVAILABILITY] = function (Container $container) {
+            return new ProductAlternativeProductLabelConnectorToAvailabilityFacadeBridge(
+                $container->getLocator()->availability()->facade()
             );
         };
 
@@ -128,14 +127,20 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addAvailabilityFacade(Container $container): Container
+    protected function addProductConcreteDiscontinuedCheckPlugins(Container $container)
     {
-        $container[static::FACADE_AVAILABILITY] = function (Container $container) {
-            return new ProductAlternativeProductLabelConnectorToAvailabilityFacadeBridge(
-                $container->getLocator()->availability()->facade()
-            );
+        $container[static::PRODUCT_CONCRETE_DISCONTINUED_CHECK_PLUGINS] = function () {
+            return $this->getProductConcreteDiscontinuedCheckPlugins();
         };
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\ProductConcreteDiscontinuedCheckPluginInterface[]
+     */
+    protected function getProductConcreteDiscontinuedCheckPlugins()
+    {
+        return [];
     }
 }
