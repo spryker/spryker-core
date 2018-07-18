@@ -65,9 +65,7 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
         $storeTransfer = $minimumOrderValueTransfer->getStore();
         $currencyTransfer = $minimumOrderValueTransfer->getCurrency();
 
-        $minimumOrderValueTypeTransfer
-            ->requireIdMinimumOrderValueType()
-            ->requireThresholdGroup();
+        $minimumOrderValueTypeTransfer->requireIdMinimumOrderValueType()->requireThresholdGroup();
         $storeTransfer->requireIdStore();
         $currencyTransfer->requireIdCurrency();
 
