@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductVolume\Dependency\Facade;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 
 interface PriceProductVolumeToPriceProductFacadeInterface
 {
@@ -18,4 +19,11 @@ interface PriceProductVolumeToPriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer[]
      */
     public function findProductAbstractPricesWithoutPriceExtraction(int $idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int|null
+     */
+    public function findIdProductAbstractForPriceProduct(PriceProductTransfer $priceProductTransfer): ?int;
 }

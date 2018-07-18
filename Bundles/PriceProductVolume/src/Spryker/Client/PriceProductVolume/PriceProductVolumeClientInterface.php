@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductStorageExtension\Dependency\Plugin;
+namespace Spryker\Client\PriceProductVolume;
 
-interface PriceProductStoragePricesExtractorPluginInterface
+interface PriceProductVolumeClientInterface
 {
     /**
      * Specification:
@@ -19,9 +19,7 @@ interface PriceProductStoragePricesExtractorPluginInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractProductPricesForProductAbstract(
-        array $priceProductTransfers
-    ): array;
+    public function extractProductPricesForProductAbstract(array $priceProductTransfers): array;
 
     /**
      * Specification:
@@ -35,8 +33,5 @@ interface PriceProductStoragePricesExtractorPluginInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractProductPricesForProductConcrete(
-        int $idProductConcrete,
-        array $priceProductTransfers
-    ): array;
+    public function extractProductPricesForProductConcrete(int $idProductConcrete, array $priceProductTransfers): array;
 }

@@ -16,9 +16,6 @@ use Spryker\Zed\PriceProductVolume\Dependency\Facade\PriceProductVolumeToPricePr
 use Spryker\Zed\PriceProductVolume\Dependency\Service\PriceProductVolumeToUtilEncodingServiceInterface;
 use Spryker\Zed\PriceProductVolume\PriceProductVolumeDependencyProvider;
 
-/**
- * @method \Spryker\Zed\PriceProductVolume\Persistence\PriceProductVolumeRepositoryInterface getRepository()
- */
 class PriceProductVolumeBusinessFactory extends AbstractBusinessFactory
 {
     /**
@@ -38,7 +35,6 @@ class PriceProductVolumeBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductReader(): PriceProductReaderInterface
     {
         return new PriceProductReader(
-            $this->getRepository(),
             $this->getPriceProductFacade()
         );
     }

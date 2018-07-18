@@ -390,4 +390,16 @@ interface PriceProductFacadeInterface
         int $idProductAbstract,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ): array;
+
+    /**
+     * Specification:
+     * - Reads information about id product abstract based on product concrete id or sku
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int|null
+     */
+    public function findIdProductAbstractForPriceProduct(PriceProductTransfer $priceProductTransfer): ?int;
 }

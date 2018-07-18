@@ -14,10 +14,6 @@ use Spryker\Zed\PriceProductVolume\Dependency\Service\PriceProductVolumeToUtilEn
 
 class VolumePriceExtractor implements VolumePriceExtractorInterface
 {
-    protected const VOLUME_PRICE_QUANTITY = 'quantity';
-    protected const VOLUME_PRICE_NET_PRICE = 'net_price';
-    protected const VOLUME_PRICE_GROSS_PRICE = 'gross_price';
-
     /**
      * @var \Spryker\Zed\PriceProductVolume\Dependency\Service\PriceProductVolumeToUtilEncodingServiceInterface
      */

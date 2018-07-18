@@ -5,15 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductVolume\Plugin\PriceProductStorageExtension;
+namespace Spryker\Client\PriceProductVolume;
 
-use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method \Spryker\Client\PriceProductVolume\PriceProductVolumeClientInterface getClient()
+ * @method \Spryker\Client\PriceProductVolume\PriceProductVolumeFactory getFactory()
  */
-class PriceProductVolumeExtractorPlugin extends AbstractPlugin implements PriceProductStoragePricesExtractorPluginInterface
+class PriceProductVolumeClient extends AbstractClient implements PriceProductVolumeClientInterface
 {
     /**
      * {@inheritdoc}
@@ -26,7 +25,8 @@ class PriceProductVolumeExtractorPlugin extends AbstractPlugin implements PriceP
      */
     public function extractProductPricesForProductAbstract(array $priceProductTransfers): array
     {
-        return $this->getClient()
+        return $this->getFactory()
+            ->createVolumePriceExtractor()
             ->extractProductPricesForProductAbstract($priceProductTransfers);
     }
 
@@ -42,7 +42,8 @@ class PriceProductVolumeExtractorPlugin extends AbstractPlugin implements PriceP
      */
     public function extractProductPricesForProductConcrete(int $idProductConcrete, array $priceProductTransfers): array
     {
-        return $this->getClient()
+        return $this->getFactory()
+            ->createVolumePriceExtractor()
             ->extractProductPricesForProductConcrete($idProductConcrete, $priceProductTransfers);
     }
 }

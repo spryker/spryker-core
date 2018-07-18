@@ -264,4 +264,22 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
 
         return $priceProductTransfers;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int|null
+     */
+    public function findIdProductAbstractForPriceProduct(PriceProductTransfer $priceProductTransfer): ?int
+    {
+        if ($priceProductTransfer->getIdProduct()) {
+            return $this->productFacade->getProductAbstractIdByConcreteId($priceProductTransfer->getIdProduct());
+        }
+
+        if ($priceProductTransfer->getSkuProduct()) {
+            return $this->productFacade->getProductAbstractIdByConcreteSku($priceProductTransfer->getSkuProduct());
+        }
+
+        return null;
+    }
 }
