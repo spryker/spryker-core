@@ -30,13 +30,13 @@ interface PriceProductStoragePricesExtractorPluginInterface
      *
      * @api
      *
-     * @param int $idProductAbstract
+     * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function extractProductPricesForProductConcrete(
-        int $idProductAbstract,
+        int $idProductConcrete,
         array $priceProductTransfers
     ): array;
 }

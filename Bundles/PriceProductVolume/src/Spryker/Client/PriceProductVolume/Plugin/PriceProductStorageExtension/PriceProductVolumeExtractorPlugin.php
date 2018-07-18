@@ -36,15 +36,15 @@ class PriceProductVolumeExtractorPlugin extends AbstractPlugin implements PriceP
      *
      * @api
      *
-     * @param int $idProductAbstract
+     * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function extractProductPricesForProductConcrete(int $idProductAbstract, array $priceProductTransfers): array
+    public function extractProductPricesForProductConcrete(int $idProductConcrete, array $priceProductTransfers): array
     {
         return $this->getFactory()
             ->createVolumePriceExtractor()
-            ->extractProductPricesForProductConcrete($idProductAbstract, $priceProductTransfers);
+            ->extractProductPricesForProductConcrete($idProductConcrete, $priceProductTransfers);
     }
 }
