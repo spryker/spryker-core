@@ -232,15 +232,33 @@ class PriceManager implements PriceManagerInterface
         ItemTransfer $itemTransfer,
         QuoteTransfer $quoteTransfer
     ) {
-        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+        $priceProductFilterTransfer =
+            $this->mapItemTransferToPriceProductFilterTransfer(
+                new PriceProductFilterTransfer(),
+                $itemTransfer
+            )
             ->setPriceMode($quoteTransfer->getPriceMode())
             ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
-            ->setSku($itemTransfer->getSku())
             ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
 
         if ($this->isPriceProductDimensionEnabled($priceProductFilterTransfer)) {
             $priceProductFilterTransfer->setQuote($quoteTransfer);
         }
+
+        return $priceProductFilterTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
+     */
+    protected function mapItemTransferToPriceProductFilterTransfer(
+        PriceProductFilterTransfer $priceProductFilterTransfer,
+        ItemTransfer $itemTransfer
+    ): PriceProductFilterTransfer {
+        $priceProductFilterTransfer->fromArray($itemTransfer->toArray(), true);
 
         return $priceProductFilterTransfer;
     }

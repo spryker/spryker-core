@@ -85,11 +85,28 @@ class PriceProductValidator implements PriceProductValidatorInterface
      */
     protected function createPriceProductFilter(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode)
     {
-        return (new PriceProductFilterTransfer())
+        return $this->mapItemTransferToPriceProductFilterTransfer(
+            (new PriceProductFilterTransfer()),
+            $itemTransfer
+        )
             ->setPriceMode($priceMode)
             ->setCurrencyIsoCode($currencyIsoCode)
-            ->setSku($itemTransfer->getSku())
             ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
+     */
+    protected function mapItemTransferToPriceProductFilterTransfer(
+        PriceProductFilterTransfer $priceProductFilterTransfer,
+        ItemTransfer $itemTransfer
+    ): PriceProductFilterTransfer {
+        $priceProductFilterTransfer->fromArray($itemTransfer->toArray(), true);
+
+        return $priceProductFilterTransfer;
     }
 
     /**
