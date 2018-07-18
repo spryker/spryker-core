@@ -50,12 +50,12 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @var \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface
      */
-    private $attributeEncoder;
+    protected $attributeEncoder;
 
     /**
      * @var \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface
      */
-    private $productTransferMapper;
+    protected $productTransferMapper;
 
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
