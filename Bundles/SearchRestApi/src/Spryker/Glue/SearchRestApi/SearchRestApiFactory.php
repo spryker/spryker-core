@@ -15,6 +15,7 @@ use Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapper;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapperInterface;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SuggestionsResourceMapper;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SuggestionsResourceMapperInterface;
+use Spryker\Shared\Kernel\Store;
 
 class SearchRestApiFactory extends AbstractFactory
 {
@@ -29,7 +30,7 @@ class SearchRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    public function getStore(): Store
     {
         return $this->getProvidedDependency(SearchRestApiDependencyProvider::STORE);
     }
