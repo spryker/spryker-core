@@ -11,40 +11,39 @@ interface ProductPackagingUnitStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Queries all ProductPackaging by productAbstractIds
-     * - Stores data as json encoded to storage table
-     * - Sends a copy of data to queue based on module config
+     * - Saves the provided product abstract IDs related ProductAbstractPackaging objects to storage table.
+     * - Sends a copy of data to synchronization queue.
      *
      * @api
      *
-     * @param array $idProductAbstracts
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function publishProductAbstractPackaging(array $idProductAbstracts): void;
+    public function publishProductAbstractPackaging(array $productAbstractIds): void;
 
     /**
      * Specification:
      * - Finds and deletes ProductPackaging storage entities by productAbstractIds
-     * - Sends delete message to queue based on module config
+     * - Sends delete message to synchronization queue.
      *
      * @api
      *
-     * @param array $idProductAbstracts
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function unpublishProductAbstractPackaging(array $idProductAbstracts): void;
+    public function unpublishProductAbstractPackaging(array $productAbstractIds): void;
 
     /**
-     *  Specification:
-     * - Queries all productAbstractIds by productPackagingUnitTypeId
+     * Specification:
+     * - Retrieves the list of product abstract IDs which are associated with any of the provided packaging unit type IDs.
      *
      * @api
      *
-     * @param array $productPackagingUnitTypeIds
+     * @param int[] $productPackagingUnitTypeIds
      *
-     * @return array
+     * @return int[]
      */
     public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 }

@@ -19,15 +19,15 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param array $idProductAbstracts
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function publishProductAbstractPackaging(array $idProductAbstracts): void
+    public function publishProductAbstractPackaging(array $productAbstractIds): void
     {
         $this->getFactory()
             ->createProductPackagingStorageWriter()
-            ->publish($idProductAbstracts);
+            ->publish($productAbstractIds);
     }
 
     /**
@@ -35,15 +35,15 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param array $idProductAbstracts
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function unpublishProductAbstractPackaging(array $idProductAbstracts): void
+    public function unpublishProductAbstractPackaging(array $productAbstractIds): void
     {
         $this->getFactory()
             ->createProductPackagingStorageWriter()
-            ->unpublish($idProductAbstracts);
+            ->unpublish($productAbstractIds);
     }
 
     /**
@@ -51,9 +51,9 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param array $productPackagingUnitTypeIds
+     * @param int[] $productPackagingUnitTypeIds
      *
-     * @return array
+     * @return int[]
      */
     public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {

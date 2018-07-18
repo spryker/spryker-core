@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer;
 interface ProductPackagingUnitStorageEntityManagerInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer
      *
      * @return void
@@ -22,8 +20,6 @@ interface ProductPackagingUnitStorageEntityManagerInterface
     public function saveProductAbstractPackagingStorageEntity(ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer): void;
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer $productAbstractPackagingStorageEntity
      *
      * @return void
