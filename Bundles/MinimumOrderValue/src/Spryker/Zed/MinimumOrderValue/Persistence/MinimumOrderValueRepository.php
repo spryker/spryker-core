@@ -30,7 +30,7 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
 
         $minimumOrderValueTypeTransfer = $this->getFactory()
             ->createMinimumOrderValueMapper()
-            ->mapMinimumOrderValueTypeTransfer(
+            ->mapMinimumOrderValueTypeEntityToTransfer(
                 $minimumOrderValueTypeEntity,
                 new MinimumOrderValueTypeTransfer()
             );

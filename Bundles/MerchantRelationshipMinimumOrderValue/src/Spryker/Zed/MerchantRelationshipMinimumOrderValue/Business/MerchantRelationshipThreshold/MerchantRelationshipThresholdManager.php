@@ -7,13 +7,9 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
-use Generated\Shared\Transfer\MerchantRelationshipTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\MerchantRelationshipMinimumOrderValueEntityManagerInterface;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyInvalidArgumentException;
 
 class MerchantRelationshipThresholdManager implements MerchantRelationshipThresholdManagerInterface
 {
@@ -40,39 +36,25 @@ class MerchantRelationshipThresholdManager implements MerchantRelationshipThresh
     }
 
     /**
-     * @param string $strategyKey
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param int $thresholdValue
-     * @param int|null $fee
-     *
-     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyInvalidArgumentException
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
     public function setMerchantRelationshipThreshold(
-        string $strategyKey,
-        MerchantRelationshipTransfer $merchantRelationshipTransfer,
-        StoreTransfer $storeTransfer,
-        CurrencyTransfer $currencyTransfer,
-        int $thresholdValue,
-        ?int $fee = null
+        MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {
-        if (!$this->minimumOrderValueFacade->validateStrategy($strategyKey, $thresholdValue, $fee)) {
-            throw new StrategyInvalidArgumentException();
-        }
+        $this->minimumOrderValueFacade->validateStrategy(
+            $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueType(),
+            $merchantRelationshipMinimumOrderValueTransfer->getValue(),
+            $merchantRelationshipMinimumOrderValueTransfer->getFee()
+        );
 
-        $minimumOrderValueTypeTransfer = $this->minimumOrderValueFacade->getMinimumOrderValueType($strategyKey);
+        $merchantRelationshipMinimumOrderValueTransfer->setMinimumOrderValueType(
+            $this->minimumOrderValueFacade
+                ->getMinimumOrderValueType($merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueType())
+        );
 
         return $this->entityManager
-            ->setMerchantRelationshipThreshold(
-                $minimumOrderValueTypeTransfer,
-                $merchantRelationshipTransfer,
-                $storeTransfer,
-                $currencyTransfer,
-                $thresholdValue,
-                $fee
-            );
+            ->setMerchantRelationshipThreshold($merchantRelationshipMinimumOrderValueTransfer);
     }
 }

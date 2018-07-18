@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueDataImport\Business\Model\DataImportStep;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueDataImport\Business\Model\DataSet\MerchantRelationshipMinimumOrderValueDataSetInterface;
@@ -79,7 +83,7 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
         }
 
         if ($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::STRATEGY] && $dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::THRESHOLD]) {
-            $this->merchantRelationshipMinimumOrderValueFacade->setMerchantRelationshipThreshold(
+            $merchantRelationshipMinimumOrderValueTransfer = $this->createMerchantRelationshipMinimumOrderValueTransfer(
                 $dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::STRATEGY],
                 $merchantRelationshipTransfer,
                 $storeTransfer,
@@ -87,6 +91,40 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
                 (int)$dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::THRESHOLD],
                 (int)$dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::FEE]
             );
+
+            $this->merchantRelationshipMinimumOrderValueFacade->setMerchantRelationshipThreshold(
+                $merchantRelationshipMinimumOrderValueTransfer
+            );
         }
+    }
+
+    /**
+     * @param string $strategyKey
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     * @param int $thresholdValue
+     * @param int|null $fee
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
+     */
+    protected function createMerchantRelationshipMinimumOrderValueTransfer(
+        string $strategyKey,
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer,
+        int $thresholdValue,
+        ?int $fee = null
+    ): MerchantRelationshipMinimumOrderValueTransfer {
+        return (new MerchantRelationshipMinimumOrderValueTransfer())
+            ->setMerchantRelationship($merchantRelationshipTransfer)
+            ->setStore($storeTransfer)
+            ->setCurrency($currencyTransfer)
+            ->setValue($thresholdValue)
+            ->setFee($fee)
+            ->setMinimumOrderValueType(
+                (new MinimumOrderValueTypeTransfer())
+                    ->setKey($strategyKey)
+            );
     }
 }

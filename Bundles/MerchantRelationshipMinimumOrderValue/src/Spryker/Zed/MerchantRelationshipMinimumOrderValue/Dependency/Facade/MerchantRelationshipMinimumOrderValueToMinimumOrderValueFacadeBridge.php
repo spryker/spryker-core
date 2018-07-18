@@ -25,27 +25,29 @@ class MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeBridge imple
     }
 
     /**
-     * @param string $strategyKey
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
      */
-    public function getMinimumOrderValueType(string $strategyKey): MinimumOrderValueTypeTransfer
-    {
-        return $this->minimumOrderValueFacade->getMinimumOrderValueType($strategyKey);
+    public function getMinimumOrderValueType(
+        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
+    ): MinimumOrderValueTypeTransfer {
+        return $this->minimumOrderValueFacade->getMinimumOrderValueType($minimumOrderValueTypeTransfer);
     }
 
     /**
-     * @param string $strategyKey
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
      * @param int $thresholdValue
      * @param int|null $fee
      *
      * @return bool
      */
     public function validateStrategy(
-        string $strategyKey,
+        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
         int $thresholdValue,
         ?int $fee = null
     ): bool {
-        return $this->minimumOrderValueFacade->validateStrategy($strategyKey, $thresholdValue, $fee);
+        return $this->minimumOrderValueFacade
+            ->validateStrategy($minimumOrderValueTypeTransfer, $thresholdValue, $fee);
     }
 }

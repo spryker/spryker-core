@@ -12,21 +12,23 @@ use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 interface MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface
 {
     /**
-     * @param string $strategyKey
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
      */
-    public function getMinimumOrderValueType(string $strategyKey): MinimumOrderValueTypeTransfer;
+    public function getMinimumOrderValueType(
+        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
+    ): MinimumOrderValueTypeTransfer;
 
     /**
-     * @param string $strategyKey
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
      * @param int $thresholdValue
      * @param int|null $fee
      *
      * @return bool
      */
     public function validateStrategy(
-        string $strategyKey,
+        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
         int $thresholdValue,
         ?int $fee = null
     ): bool;

@@ -21,14 +21,14 @@ class SoftThresholdWithFlexibleFeeStrategy extends MinimumOrderValueAbstractStra
     }
 
     /**
-     * @param int $value
+     * @param int $thresholdValue
      * @param int|null $fee
      *
      * @return bool
      */
-    public function validate(int $value, ?int $fee = 0): bool
+    public function validate(int $thresholdValue, ?int $fee = null): bool
     {
-        if ($value < 1 || $fee < 1) {
+        if ($thresholdValue < 1 || $fee < 1) {
             return false;
         }
 

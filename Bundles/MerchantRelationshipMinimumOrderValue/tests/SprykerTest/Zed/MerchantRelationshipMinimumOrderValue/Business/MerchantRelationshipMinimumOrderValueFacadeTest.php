@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\MerchantRelationshipMinimumOrderValue\Business;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\SpyMerchantRelationshipEntityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
@@ -48,43 +50,53 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
 
         // Action
         $hardThreshold1 = $this->getFacade()->setMerchantRelationshipThreshold(
-            static::HARD_STRATEGY_KEY,
-            $merchantRelationshipTransfer,
-            $storeTransferDE,
-            $currencyTransferEUR,
-            100
+            $this->createMerchantRelationshipMinimumOrderValueTransfer(
+                $this->createMinimumOrderValueTypeTransfer(static::HARD_STRATEGY_KEY),
+                $merchantRelationshipTransfer,
+                $storeTransferDE,
+                $currencyTransferEUR,
+                100
+            )
         );
 
         $hardThreshold2 = $this->getFacade()->setMerchantRelationshipThreshold(
-            static::HARD_STRATEGY_KEY,
-            $merchantRelationshipTransfer,
-            $storeTransferDE,
-            $currencyTransferEUR,
-            200
+            $this->createMerchantRelationshipMinimumOrderValueTransfer(
+                $this->createMinimumOrderValueTypeTransfer(static::HARD_STRATEGY_KEY),
+                $merchantRelationshipTransfer,
+                $storeTransferDE,
+                $currencyTransferEUR,
+                200
+            )
         );
 
         $softThreshold1 = $this->getFacade()->setMerchantRelationshipThreshold(
-            static::SOFT_STRATEGY_KEY,
-            $merchantRelationshipTransfer,
-            $storeTransferDE,
-            $currencyTransferEUR,
-            200
+            $this->createMerchantRelationshipMinimumOrderValueTransfer(
+                $this->createMinimumOrderValueTypeTransfer(static::SOFT_STRATEGY_KEY),
+                $merchantRelationshipTransfer,
+                $storeTransferDE,
+                $currencyTransferEUR,
+                200
+            )
         );
 
         $softThreshold2 = $this->getFacade()->setMerchantRelationshipThreshold(
-            static::SOFT_STRATEGY_KEY,
-            $merchantRelationshipTransfer,
-            $storeTransferUS,
-            $currencyTransferEUR,
-            200
+            $this->createMerchantRelationshipMinimumOrderValueTransfer(
+                $this->createMinimumOrderValueTypeTransfer(static::SOFT_STRATEGY_KEY),
+                $merchantRelationshipTransfer,
+                $storeTransferUS,
+                $currencyTransferEUR,
+                200
+            )
         );
 
         $softThreshold3 = $this->getFacade()->setMerchantRelationshipThreshold(
-            static::SOFT_STRATEGY_KEY,
-            $merchantRelationshipTransfer,
-            $storeTransferUS,
-            $currencyTransferUSD,
-            200
+            $this->createMerchantRelationshipMinimumOrderValueTransfer(
+                $this->createMinimumOrderValueTypeTransfer(static::SOFT_STRATEGY_KEY),
+                $merchantRelationshipTransfer,
+                $storeTransferUS,
+                $currencyTransferUSD,
+                200
+            )
         );
 
         $this->assertEquals($hardThreshold1->getIdMerchantRelationshipMinimumOrderValue(), $hardThreshold2->getIdMerchantRelationshipMinimumOrderValue());
@@ -94,6 +106,44 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
         $this->assertNotEquals($softThreshold2->getIdMerchantRelationshipMinimumOrderValue(), $softThreshold3->getIdMerchantRelationshipMinimumOrderValue());
 
         $this->tester->cleanupMerchantRelationshipMinimumOrderValues();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     * @param int $thresholdValue
+     * @param int|null $fee
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
+     */
+    protected function createMerchantRelationshipMinimumOrderValueTransfer(
+        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer,
+        int $thresholdValue,
+        ?int $fee = null
+    ): MerchantRelationshipMinimumOrderValueTransfer {
+        return (new MerchantRelationshipMinimumOrderValueTransfer())
+            ->setMinimumOrderValueType($minimumOrderValueTypeTransfer)
+            ->setMerchantRelationship($merchantRelationshipTransfer)
+            ->setStore($storeTransfer)
+            ->setCurrency($currencyTransfer)
+            ->setValue($thresholdValue)
+            ->setFee($fee);
+    }
+
+    /**
+     * @param string $strategyKey
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
+     */
+    protected function createMinimumOrderValueTypeTransfer(string $strategyKey): MinimumOrderValueTypeTransfer
+    {
+        return (new MinimumOrderValueTypeTransfer())
+            ->setKey($strategyKey);
     }
 
     /**

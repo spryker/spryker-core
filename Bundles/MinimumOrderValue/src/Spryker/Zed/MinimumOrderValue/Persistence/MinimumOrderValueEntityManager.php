@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Persistence;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValue;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -41,7 +39,7 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
 
         $this->getFactory()
             ->createMinimumOrderValueMapper()
-            ->mapMinimumOrderValueTypeTransfer(
+            ->mapMinimumOrderValueTypeEntityToTransfer(
                 $minimumOrderValueTypeEntity,
                 $minimumOrderValueTypeTransfer
             );
@@ -50,22 +48,26 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param int $thresholdValue
-     * @param int|null $fee
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
     public function setStoreThreshold(
-        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
-        StoreTransfer $storeTransfer,
-        CurrencyTransfer $currencyTransfer,
-        int $thresholdValue,
-        ?int $fee = null
+        MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): MinimumOrderValueTransfer {
-        $minimumOrderValueTypeTransfer->requireIdMinimumOrderValueType()->requireThresholdGroup();
+        $minimumOrderValueTransfer
+            ->requireMinimumOrderValueType()
+            ->requireStore()
+            ->requireCurrency()
+            ->requireValue();
+
+        $minimumOrderValueTypeTransfer = $minimumOrderValueTransfer->getMinimumOrderValueType();
+        $storeTransfer = $minimumOrderValueTransfer->getStore();
+        $currencyTransfer = $minimumOrderValueTransfer->getCurrency();
+
+        $minimumOrderValueTypeTransfer
+            ->requireIdMinimumOrderValueType()
+            ->requireThresholdGroup();
         $storeTransfer->requireIdStore();
         $currencyTransfer->requireIdCurrency();
 
@@ -85,15 +87,15 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
         }
 
         $minimumOrderValueEntity
-            ->setValue($thresholdValue)
-            ->setFee($fee)
+            ->setValue($minimumOrderValueTransfer->getValue())
+            ->setFee($minimumOrderValueTransfer->getFee())
             ->setFkMinOrderValueType(
                 $minimumOrderValueTypeTransfer->getIdMinimumOrderValueType()
             )->save();
 
         $minimumOrderValueTransfer = $this->getFactory()
             ->createMinimumOrderValueMapper()
-            ->mapMinimumOrderValueTransfer(
+            ->mapMinimumOrderValueEntityToTransfer(
                 $minimumOrderValueEntity,
                 new MinimumOrderValueTransfer()
             );

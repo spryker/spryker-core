@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
-use Generated\Shared\Transfer\MerchantRelationshipTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -24,12 +21,7 @@ class MerchantRelationshipMinimumOrderValueFacade extends AbstractFacade impleme
      *
      * @api
      *
-     * @param string $strategyKey
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param int $thresholdValue
-     * @param int|null $fee
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
      * @throws \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Strategies\Exception\StrategyNotFoundException
      * @throws \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Strategies\Exception\StrategyInvalidArgumentException
@@ -37,22 +29,12 @@ class MerchantRelationshipMinimumOrderValueFacade extends AbstractFacade impleme
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
     public function setMerchantRelationshipThreshold(
-        string $strategyKey,
-        MerchantRelationshipTransfer $merchantRelationshipTransfer,
-        StoreTransfer $storeTransfer,
-        CurrencyTransfer $currencyTransfer,
-        int $thresholdValue,
-        ?int $fee = null
+        MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {
         return $this->getFactory()
             ->createMerchantRelationshipThresholdManager()
             ->setMerchantRelationshipThreshold(
-                $strategyKey,
-                $merchantRelationshipTransfer,
-                $storeTransfer,
-                $currencyTransfer,
-                $thresholdValue,
-                $fee
+                $merchantRelationshipMinimumOrderValueTransfer
             );
     }
 }

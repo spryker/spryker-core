@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\MinimumOrderValueDataImport\Business\Model\DataImportStep;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MinimumOrderValueDataImport\Business\Model\DataSet\MinimumOrderValueDataSetInterface;
@@ -64,12 +68,42 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
         }
 
         if ($dataSet[MinimumOrderValueDataSetInterface::STRATEGY] && $dataSet[MinimumOrderValueDataSetInterface::THRESHOLD]) {
-            $this->minimumOrderValueFacade->setStoreThreshold(
+            $minimumOrderValueTransfer = $this->createMinimumOrderValueTransfer(
                 $dataSet[MinimumOrderValueDataSetInterface::STRATEGY],
                 $storeTransfer,
                 $currencyTransfer,
-                (int)$dataSet[MinimumOrderValueDataSetInterface::THRESHOLD]
+                (int)$dataSet[MinimumOrderValueDataSetInterface::THRESHOLD],
+                (int)$dataSet[MinimumOrderValueDataSetInterface::FEE]
             );
+
+            $this->minimumOrderValueFacade->setStoreThreshold($minimumOrderValueTransfer);
         }
+    }
+
+    /**
+     * @param string $strategyKey
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     * @param int $thresholdValue
+     * @param int|null $fee
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     */
+    protected function createMinimumOrderValueTransfer(
+        string $strategyKey,
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer,
+        int $thresholdValue,
+        ?int $fee = null
+    ): MinimumOrderValueTransfer {
+        return (new MinimumOrderValueTransfer())
+            ->setStore($storeTransfer)
+            ->setCurrency($currencyTransfer)
+            ->setValue($thresholdValue)
+            ->setFee($fee)
+            ->setMinimumOrderValueType(
+                (new MinimumOrderValueTypeTransfer())
+                    ->setKey($strategyKey)
+            );
     }
 }

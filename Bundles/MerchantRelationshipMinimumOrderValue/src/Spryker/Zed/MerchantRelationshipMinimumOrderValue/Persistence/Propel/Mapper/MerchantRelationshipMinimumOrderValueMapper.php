@@ -18,7 +18,7 @@ class MerchantRelationshipMinimumOrderValueMapper implements MerchantRelationshi
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
-    public function mapMerchantRelationshipMinimumOrderValueTransfer(
+    public function mapMerchantRelationshipMinimumOrderValueEntityToTransfer(
         SpyMerchantRelationshipMinimumOrderValue $merchantRelationshipMinimumOrderValueEntity,
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {

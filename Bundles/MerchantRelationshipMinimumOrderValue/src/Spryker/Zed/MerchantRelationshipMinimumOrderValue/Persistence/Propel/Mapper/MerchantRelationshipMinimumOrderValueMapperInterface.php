@@ -18,7 +18,7 @@ interface MerchantRelationshipMinimumOrderValueMapperInterface
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
-    public function mapMerchantRelationshipMinimumOrderValueTransfer(
+    public function mapMerchantRelationshipMinimumOrderValueEntityToTransfer(
         SpyMerchantRelationshipMinimumOrderValue $minimumOrderValueEntity,
         MerchantRelationshipMinimumOrderValueTransfer $minimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer;
