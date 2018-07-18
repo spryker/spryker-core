@@ -145,17 +145,15 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      */
     protected function areAllConcretesUnavailableOrDiscontinued(array $concreteIds): bool
     {
-        $isPassed = true;
-
         foreach ($concreteIds as $concreteId) {
             if ($this->availabilityFacade->isProductConcreteIsAvailable($concreteId)
-                && !$this->productDiscontinuedFacade->isConcreteDiscontinued($concreteId)
+                && !$this->productDiscontinuedFacade->areAllConcreteProductsDiscontinued([$concreteId])
             ) {
-                $isPassed = false;
+                return false;
             }
         }
 
-        return $isPassed;
+        return true;
     }
 
     /**
