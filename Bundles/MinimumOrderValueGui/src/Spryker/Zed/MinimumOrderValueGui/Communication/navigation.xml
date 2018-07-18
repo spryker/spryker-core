@@ -1,25 +1,19 @@
 <?xml version="1.0"?>
 <config>
-<sales>
-    <pages>
-        <manual-order-entry-gui>
-            <label>Minimum Order Value</label>
-            <title>Minimum Order Value</title>
-            <uri>/minimum-order-value-gui</uri>
-            <icon>fa-shopping-cart</icon>
-            <pages>
-                <order-create>
-                    <label>Order</label>
-                    <title>Order</title>
-                    <bundle>minimum-order-value-gui</bundle>
-                    <controller>index</controller>
-                    <action>index</action>
-                    <visible>0</visible>
-                </order-create>
-            </pages>
-        </manual-order-entry-gui>
+    <threshold>
+        <label>Threshold</label>
+        <title>Threshold</title>
+        <uri>/minimum-order-value-gui</uri>
+        <icon>fa-angle-double-right</icon>
+        <pages>
+            <global-threshold>
+                <label>Global threshold</label>
+                <title>Global threshold</title>
+                <uri>/minimum-order-value-gui/global</uri>
+                <icon>fa-angle-double-right</icon>
+            </global-threshold>
 
-    </pages>
-</sales>
+        </pages>
+    </threshold>
 </config>
 

@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Controller;
 
+use Exception;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\MinimumOrderValueGui\Communication\MinimumOrderValueGuiCommunicationFactory getFactory()
  */
-class IndexController extends AbstractController
+class GlobalController extends AbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -22,6 +23,22 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        return [];
+        $globalThresholdForm = $this->getFactory()->createGlobalThresholdForm($request);
+
+        $globalThresholdForm->handleRequest($request);
+
+        if ($globalThresholdForm->isSubmitted() && $globalThresholdForm->isValid()) {
+            try {
+                $this->addSuccessMessage(sprintf(
+                    'The Global Threshold is saved successfully.'
+                ));
+            } catch (Exception $exception) {
+                $this->addErrorMessage($exception->getMessage());
+            }
+        }
+
+        return $this->viewResponse([
+            'globalThresholdForm' => $globalThresholdForm->createView(),
+        ]);
     }
 }
