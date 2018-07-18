@@ -240,11 +240,11 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $bundledProductAvailabilityEntity
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailability|null $bundledProductAvailabilityEntity
      *
      * @return bool
      */
-    protected function skipBundledItem(SpyAvailability $bundledProductAvailabilityEntity)
+    protected function skipBundledItem(?SpyAvailability $bundledProductAvailabilityEntity)
     {
         return ($bundledProductAvailabilityEntity === null || $bundledProductAvailabilityEntity->getIsNeverOutOfStock());
     }
