@@ -25,9 +25,9 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
      *
      * @return \Generated\Shared\Transfer\OauthUserTransfer
      */
-    public function getCustomer(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer
+    public function getCustomerOauthUser(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer
     {
-        return $this->getFactory()->createCustomerProvider()->getCustomer($oauthUserTransfer);
+        return $this->getFactory()->createCustomerProvider()->getCustomerOauthUser($oauthUserTransfer);
     }
 
     /**

@@ -12,6 +12,9 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeader
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @method \Spryker\Glue\AuthRestApi\AuthRestApiFactory getFactory()
+ */
 class FormatAuthenticationErrorResponseHeadersPlugin extends AbstractPlugin implements FormatResponseHeadersPluginInterface
 {
     /**
@@ -30,33 +33,8 @@ class FormatAuthenticationErrorResponseHeadersPlugin extends AbstractPlugin impl
         RestResponseInterface $restResponse,
         RestRequestInterface $restRequest
     ): Response {
-
-        if (count($restResponse->getErrors()) === 0) {
-            return $httpResponse;
-        }
-
-        if (!$this->hasAuthorizationError($restResponse)) {
-            return $httpResponse;
-        }
-
-        $httpResponse->headers->set('WWW-Authenticate', 'Bearer realm="Access to shop API"');
-
-        return $httpResponse;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return bool
-     */
-    protected function hasAuthorizationError(RestResponseInterface $restResponse): bool
-    {
-        foreach ($restResponse->getErrors() as $restErrorMessageTransfer) {
-            if ($restErrorMessageTransfer->getStatus() === Response::HTTP_UNAUTHORIZED) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->getFactory()
+            ->createAuthenticationErrorResponseHeadersFormatter()
+            ->format($httpResponse, $restResponse);
     }
 }

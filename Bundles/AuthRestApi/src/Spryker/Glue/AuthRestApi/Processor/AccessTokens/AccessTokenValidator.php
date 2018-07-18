@@ -44,14 +44,6 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
             return null;
         }
 
-        if ($isProtected === null) {
-            return $this->createErrorMessageTransfer(
-                'Protected resource.',
-                Response::HTTP_FORBIDDEN,
-                AuthRestApiConfig::RESPONSE_CODE_FORBIDDEN
-            );
-        }
-
         $authorizationToken = $request->headers->get('Authorization');
         if (!$authorizationToken) {
             return $this->createErrorMessageTransfer(

@@ -14,6 +14,7 @@ use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenValidator;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenValidatorInterface;
 use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensReader;
 use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensReaderInterface;
+use Spryker\Glue\AuthRestApi\Processor\ResponseFormatter\AuthenticationErrorResponseHeadersFormatter;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -51,6 +52,14 @@ class AuthRestApiFactory extends AbstractFactory
     public function createAccessTokenValidator(): AccessTokenValidatorInterface
     {
         return new AccessTokenValidator($this->getOauthClient());
+    }
+
+    /**
+     * @return \Spryker\Glue\AuthRestApi\Processor\ResponseFormatter\AuthenticationErrorResponseHeadersFormatter
+     */
+    public function createAuthenticationErrorResponseHeadersFormatter(): AuthenticationErrorResponseHeadersFormatter
+    {
+        return new AuthenticationErrorResponseHeadersFormatter();
     }
 
     /**

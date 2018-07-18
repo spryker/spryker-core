@@ -26,7 +26,7 @@ interface OauthCustomerConnectorFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OauthUserTransfer
      */
-    public function getCustomer(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer;
+    public function getCustomerOauthUser(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer;
 
     /**
      * Specification:
@@ -42,7 +42,8 @@ interface OauthCustomerConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Installs initial oauth data.
+     *  - Installs oauth client data.
+     *  - Installs oauth scope data.
      *
      * @api
      *

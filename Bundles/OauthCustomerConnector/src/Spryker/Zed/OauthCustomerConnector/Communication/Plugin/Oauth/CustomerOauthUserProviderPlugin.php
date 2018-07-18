@@ -18,9 +18,9 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterfac
 class CustomerOauthUserProviderPlugin extends AbstractPlugin implements OauthUserProviderPluginInterface
 {
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
      *
@@ -40,9 +40,9 @@ class CustomerOauthUserProviderPlugin extends AbstractPlugin implements OauthUse
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
      *
@@ -50,6 +50,6 @@ class CustomerOauthUserProviderPlugin extends AbstractPlugin implements OauthUse
      */
     public function getUser(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer
     {
-        return $this->getFacade()->getCustomer($oauthUserTransfer);
+        return $this->getFacade()->getCustomerOauthUser($oauthUserTransfer);
     }
 }

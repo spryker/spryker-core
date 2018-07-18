@@ -38,7 +38,7 @@ class OauthCustomerConnectorFacadeTest extends Unit
         $oauthUserTransfer->setUsername('spencor.hopkin@spryker.com')
             ->setPassword('change123');
 
-        $oauthUserTransfer = $this->getOauthCustomerConnectorFacade()->getCustomer($oauthUserTransfer);
+        $oauthUserTransfer = $this->getOauthCustomerConnectorFacade()->getCustomerOauthUser($oauthUserTransfer);
 
         $this->assertTrue($oauthUserTransfer->getIsSuccess());
     }
@@ -52,7 +52,7 @@ class OauthCustomerConnectorFacadeTest extends Unit
         $oauthUserTransfer->setUsername('spencor.hopkin@spryker.com')
             ->setPassword('change1233');
 
-        $oauthUserTransfer = $this->getOauthCustomerConnectorFacade()->getCustomer($oauthUserTransfer);
+        $oauthUserTransfer = $this->getOauthCustomerConnectorFacade()->getCustomerOauthUser($oauthUserTransfer);
 
         $this->assertFalse($oauthUserTransfer->getIsSuccess());
     }

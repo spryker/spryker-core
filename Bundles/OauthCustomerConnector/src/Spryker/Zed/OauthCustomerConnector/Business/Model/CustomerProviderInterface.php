@@ -16,5 +16,5 @@ interface CustomerProviderInterface
      *
      * @return \Generated\Shared\Transfer\OauthUserTransfer
      */
-    public function getCustomer(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer;
+    public function getCustomerOauthUser(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer;
 }
