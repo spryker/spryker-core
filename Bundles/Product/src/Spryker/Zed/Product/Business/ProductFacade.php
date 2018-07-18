@@ -825,9 +825,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns the abstract product ID of the given concrete product ID if it exists.
-     * - Throws exception if no abstract product is found.
+     * {@inheritdoc}
      *
      * @api
      *
