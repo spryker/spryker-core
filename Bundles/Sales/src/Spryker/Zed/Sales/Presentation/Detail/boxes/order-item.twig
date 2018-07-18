@@ -43,9 +43,6 @@
   {% embed '@Sales/Detail/boxes/item-measurement-unit.twig' with {orderItem: orderItem} %}{% endembed %}
 </td>
 <td>
-    {{ orderItem.quantity }}
-</td>
-<td>
     <div>
       {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumPrice, priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0)} %} {% endembed %}
     </div>
