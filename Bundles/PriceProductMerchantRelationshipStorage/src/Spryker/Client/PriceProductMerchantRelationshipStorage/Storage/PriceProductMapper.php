@@ -24,7 +24,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected $priceProductMerchantRelationshipStorageConfig;
 
     /**
-     * @param \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig
+     * @param \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig $priceProductMerchantRelationshipStorageConfig
      */
     public function __construct(PriceProductMerchantRelationshipStorageConfig $priceProductMerchantRelationshipStorageConfig)
     {
