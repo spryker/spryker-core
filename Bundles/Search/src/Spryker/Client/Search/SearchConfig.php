@@ -46,6 +46,7 @@ class SearchConfig extends AbstractBundleConfig
         }
 
         $config['protocol'] = ucfirst($this->get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT));
+        $config['transport'] = $this->get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT);
         $config['port'] = $this->get(SearchConstants::ELASTICA_PARAMETER__PORT);
         $config['host'] = $this->get(SearchConstants::ELASTICA_PARAMETER__HOST);
 

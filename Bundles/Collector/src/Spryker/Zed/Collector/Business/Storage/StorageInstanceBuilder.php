@@ -174,6 +174,7 @@ class StorageInstanceBuilder
         }
 
         $config['protocol'] = ucfirst(Config::get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT));
+        $config['transport'] = Config::get(SearchConstants::ELASTICA_PARAMETER__TRANSPORT);
         $config['port'] = Config::get(SearchConstants::ELASTICA_PARAMETER__PORT);
         $config['host'] = Config::get(SearchConstants::ELASTICA_PARAMETER__HOST);
 
