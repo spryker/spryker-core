@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Mail;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface MailConstants
 {
     const MAILCATCHER_GUI = 'MAILCATCHER_GUI';
