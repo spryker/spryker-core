@@ -31,6 +31,11 @@ class SuggestionsResourceMapperTest extends Unit
     protected $tester;
 
     /**
+     * @var array
+     */
+    protected $restSearchSuggestionsResponseMock;
+
+    /**
      * @return void
      */
     public function testRestResponseAttributesIsInstanceOfRestSearchSuggestionsAttributesTransfer(): void
@@ -118,11 +123,6 @@ class SuggestionsResourceMapperTest extends Unit
             ->enableProxyingToOriginalMethods()
             ->getMock();
     }
-
-    /**
-     * @var array
-     */
-    protected $restSearchSuggestionsResponseMock;
 
     /**
      * @return array
