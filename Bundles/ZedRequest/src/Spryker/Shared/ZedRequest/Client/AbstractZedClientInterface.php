@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\ZedRequest\Client;
 
+/**
+ * @method call(string $url, \Spryker\Shared\Kernel\Transfer\TransferInterface $object, array $requestOptions = null)
+ */
 interface AbstractZedClientInterface
 {
     /**

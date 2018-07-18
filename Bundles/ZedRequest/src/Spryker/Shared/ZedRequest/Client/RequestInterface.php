@@ -9,6 +9,9 @@ namespace Spryker\Shared\ZedRequest\Client;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
+/**
+ * @method toArray(array $values)
+ */
 interface RequestInterface
 {
     /**
