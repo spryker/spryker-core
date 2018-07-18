@@ -17,6 +17,7 @@ use Symfony\Component\Process\Process;
 class CreatePostgreSqlDatabase implements CreateDatabaseInterface
 {
     protected const SHELL_CHARACTERS_PATTERN = '/\$|`/i';
+
     /**
      * @return void
      */
