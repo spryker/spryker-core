@@ -9,6 +9,9 @@ namespace Spryker\Shared\Collector;
 
 use Spryker\Shared\Propel\PropelConstants;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface CollectorConstants
 {
     /**

@@ -115,10 +115,16 @@
         <property name="state" type="ItemState" />
         <property name="canceledAmount" type="int"/>
         <property name="stateHistory" type="ItemState[]" />
+        <property name="isOrdered" type="bool" />
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item" />
     </transfer>
 
     <transfer name="Expense">
         <property name="unitGrossPrice" type="int" />
+        <property name="isOrdered" type="bool" />
     </transfer>
 
     <transfer name="TaxSet">

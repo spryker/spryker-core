@@ -622,4 +622,19 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
             ->createCategoryTemplateReader()
             ->findCategoryTemplateByName($name);
     }
+
+    /**
+     * @api
+     *
+     * @param string $name
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return bool
+     */
+    public function hasFirstLevelChildrenByName(string $name, CategoryTransfer $categoryTransfer): bool
+    {
+        return $this->getFactory()
+            ->createCategoryNodeChecker()
+            ->hasFirstLevelChildrenByName($name, $categoryTransfer);
+    }
 }

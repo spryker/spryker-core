@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Flysystem;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface FlysystemConstants
 {
     const FILESYSTEM_SERVICE = 'FILESYSTEM:FILESYSTEM_SERVICE';

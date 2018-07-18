@@ -8,7 +8,6 @@ namespace  Spryker\Zed\CmsGui\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
-use Spryker\Zed\CmsGui\CmsGuiConfig;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -32,7 +31,9 @@ class CreatePageController extends AbstractController
     {
         $this->getFactory()
             ->getCmsFacade()
-            ->syncTemplate(CmsGuiConfig::CMS_FOLDER_PATH);
+            ->syncTemplate(
+                $this->getCmsFolderPath()
+            );
 
         $pageTabs = $this->getFactory()->createPageTabs();
 
@@ -100,5 +101,15 @@ class CreatePageController extends AbstractController
     protected function createTemplateErrorForm()
     {
         return new FormError("Selected template doesn't exist anymore");
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCmsFolderPath(): string
+    {
+        return $this->getFactory()
+            ->getConfig()
+            ->getCmsFolderPath();
     }
 }

@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Acl;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface AclConstants
 {
     const ACL_DEFAULT_RULES = 'ACL_DEFAULT_RULES';
