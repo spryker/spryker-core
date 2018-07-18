@@ -86,9 +86,9 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected function createPriceProductFilter(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode)
     {
         return $this->mapItemTransferToPriceProductFilterTransfer(
-                (new PriceProductFilterTransfer()),
-                $itemTransfer
-            )
+            (new PriceProductFilterTransfer()),
+            $itemTransfer
+        )
             ->setPriceMode($priceMode)
             ->setCurrencyIsoCode($currencyIsoCode)
             ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
