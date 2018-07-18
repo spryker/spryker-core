@@ -70,6 +70,6 @@ class MinimumOrderValueTypeInstaller implements MinimumOrderValueTypeInstallerIn
     ): MinimumOrderValueTypeTransfer {
         return (new MinimumOrderValueTypeTransfer())
             ->setKey($minimumOrderValueStrategy->getKey())
-            ->setGroup($minimumOrderValueStrategy->getGroup());
+            ->setThresholdGroup($minimumOrderValueStrategy->getGroup());
     }
 }
