@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductQuantity\Communication\Plugin\CartExtension;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
-use Spryker\Zed\Cart\Dependency\TerminationAwareCartPreCheckPluginInterface;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\TerminationAwareCartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**

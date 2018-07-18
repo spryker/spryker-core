@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductCartConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Cart\Dependency\PreReloadItemsPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
