@@ -15,11 +15,4 @@ interface ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeInte
      * @return bool
      */
     public function areAllConcreteProductsDiscontinued(array $productIds): bool;
-
-    /**
-     * @param int $idProduct
-     *
-     * @return bool
-     */
-    public function isConcreteDiscontinued(int $idProduct): bool;
 }

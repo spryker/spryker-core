@@ -31,14 +31,4 @@ class ProductAlternativeProductLabelConnectorToProductDiscontinuedFacadeBridge i
     {
         return $this->productDiscontinuedFacade->areAllConcreteProductsDiscontinued($productIds);
     }
-
-    /**
-     * @param int $idProduct
-     *
-     * @return bool
-     */
-    public function isConcreteDiscontinued(int $idProduct): bool
-    {
-        return $this->productDiscontinuedFacade->isConcreteDiscontinued($idProduct);
-    }
 }
