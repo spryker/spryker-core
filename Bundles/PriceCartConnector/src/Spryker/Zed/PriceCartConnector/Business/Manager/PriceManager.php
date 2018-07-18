@@ -239,6 +239,7 @@ class PriceManager implements PriceManagerInterface
                 new PriceProductFilterTransfer(),
                 $itemTransfer
             )
+            ->setStoreName($this->findStoreName($quoteTransfer))
             ->setPriceMode($quoteTransfer->getPriceMode())
             ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
             ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
@@ -273,5 +274,19 @@ class PriceManager implements PriceManagerInterface
     protected function isPriceProductDimensionEnabled(PriceProductFilterTransfer $priceProductFilterTransfer): bool
     {
         return property_exists($priceProductFilterTransfer, 'quote');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return null|string
+     */
+    protected function findStoreName(QuoteTransfer $quoteTransfer): ?string
+    {
+        if ($quoteTransfer->getStore() === null) {
+            return null;
+        }
+
+        return $quoteTransfer->getStore()->getName();
     }
 }
