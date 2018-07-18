@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductSearchConfigStorage\Communication\Plugin\Event;
 
-use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductSearchConfigStorage\ProductSearchConfigStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
@@ -68,6 +67,6 @@ class ProductSearchConfigEventResourceQueryContainerPlugin extends AbstractPlugi
      */
     public function getIdColumnName(): ?string
     {
-        return SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT;
+        return null;
     }
 }
