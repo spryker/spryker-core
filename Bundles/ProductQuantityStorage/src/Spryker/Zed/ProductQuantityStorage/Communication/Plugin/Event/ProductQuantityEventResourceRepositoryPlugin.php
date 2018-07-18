@@ -39,7 +39,7 @@ class ProductQuantityEventResourceRepositoryPlugin extends AbstractPlugin implem
      *
      * @param int[] $ids
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function getData(array $ids = []): array
     {

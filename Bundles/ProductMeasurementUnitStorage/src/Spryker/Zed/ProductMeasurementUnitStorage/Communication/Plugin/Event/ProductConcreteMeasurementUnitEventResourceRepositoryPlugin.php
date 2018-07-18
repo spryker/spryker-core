@@ -39,7 +39,7 @@ class ProductConcreteMeasurementUnitEventResourceRepositoryPlugin extends Abstra
      *
      * @param int[] $ids
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function getData(array $ids = []): array
     {

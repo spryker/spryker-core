@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\SynchronizationQueueMessageTransfer;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
 class RepositoryExporter implements ExporterInterface
 {
@@ -66,11 +65,11 @@ class RepositoryExporter implements ExporterInterface
 
     /**
      * @param array $ids
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface $plugin
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface $plugin
      *
      * @return void
      */
-    protected function exportData(array $ids, SynchronizationDataRepositoryPluginInterface $plugin): void
+    protected function exportData(array $ids, SynchronizationDataPluginInterface $plugin): void
     {
         $synchronizationEntities = $plugin->getData($ids);
         $count = count($synchronizationEntities);

@@ -34,7 +34,7 @@ class ProductQuantityStorageFacade extends AbstractFacade implements ProductQuan
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function findProductQuantityTransfers(): array
     {
@@ -49,7 +49,7 @@ class ProductQuantityStorageFacade extends AbstractFacade implements ProductQuan
      *
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function findProductQuantityByProductIdsTransfers(array $productIds): array
     {

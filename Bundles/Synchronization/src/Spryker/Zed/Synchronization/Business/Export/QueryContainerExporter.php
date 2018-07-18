@@ -12,7 +12,6 @@ use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
 
 class QueryContainerExporter implements ExporterInterface
 {
@@ -68,11 +67,11 @@ class QueryContainerExporter implements ExporterInterface
 
     /**
      * @param int[] $ids
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface $plugin
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface $plugin
      *
      * @return void
      */
-    protected function exportData(array $ids, SynchronizationDataQueryContainerPluginInterface $plugin): void
+    protected function exportData(array $ids, SynchronizationDataPluginInterface $plugin): void
     {
         $query = $plugin->queryData($ids);
         $count = $query->count();

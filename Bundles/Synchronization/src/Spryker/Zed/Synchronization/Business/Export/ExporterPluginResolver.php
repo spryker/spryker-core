@@ -60,7 +60,7 @@ class ExporterPluginResolver
     /**
      * @param string[] $resources
      *
-     * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]
+     * @return array
      */
     protected function getResolvedPluginsByResources(array $resources): array
     {
@@ -81,7 +81,7 @@ class ExporterPluginResolver
     /**
      * @param string[] $resources
      *
-     * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]
+     * @return array
      */
     protected function getEffectivePlugins(array $resources): array
     {
@@ -116,7 +116,7 @@ class ExporterPluginResolver
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[] $effectivePlugins
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[] $pluginsPerExporter
      *
-     * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]
+     * @return array
      */
     protected function extractEffectivePlugins($effectivePlugins, $pluginsPerExporter): array
     {

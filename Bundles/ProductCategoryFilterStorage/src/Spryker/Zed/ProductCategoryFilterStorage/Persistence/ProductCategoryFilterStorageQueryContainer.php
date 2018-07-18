@@ -20,7 +20,7 @@ class ProductCategoryFilterStorageQueryContainer extends AbstractQueryContainer 
      *
      * @param array $idCategories
      *
-     * @return $this|\Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorageQuery
+     * @return \Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorageQuery
      */
     public function queryProductCategoryFilterStorageByFkCategories(array $idCategories)
     {
@@ -34,7 +34,7 @@ class ProductCategoryFilterStorageQueryContainer extends AbstractQueryContainer 
      *
      * @param int[] $productCategoryFilterIds
      *
-     * @return $this|\Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
+     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
      */
     public function queryProductCategoryByCategoryFilterIds(array $productCategoryFilterIds): SpyProductCategoryFilterQuery
     {
@@ -49,7 +49,7 @@ class ProductCategoryFilterStorageQueryContainer extends AbstractQueryContainer 
      *
      * @param array $categoryIds
      *
-     * @return $this|\Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
+     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
      */
     public function queryProductCategoryByIdCategories(array $categoryIds)
     {

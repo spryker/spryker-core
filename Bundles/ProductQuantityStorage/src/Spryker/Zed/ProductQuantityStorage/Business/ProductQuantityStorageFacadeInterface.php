@@ -27,7 +27,7 @@ interface ProductQuantityStorageFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function findProductQuantityTransfers(): array;
 
@@ -39,7 +39,7 @@ interface ProductQuantityStorageFacadeInterface
      *
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function findProductQuantityByProductIdsTransfers(array $productIds): array;
 }
