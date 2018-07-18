@@ -108,9 +108,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
                 continue;
             }
 
-            if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))
-                && $this->areAllConcretesUnavailableOrDiscontinued($concreteIds)
-            ) {
+            if ($this->checkIfNeedToAddRelation($idProductLabel, $idProductAbstract, $concreteIds)) {
                 $idsToAssign[] = $idProductAbstract;
             }
         }
@@ -120,6 +118,24 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
             $idsToAssign,
             $idsToDeAssign
         )];
+    }
+
+    /**
+     * @param int $idProductLabel
+     * @param int $idProductAbstract
+     * @param array $concreteIds
+     *
+     * @return bool
+     */
+    protected function checkIfNeedToAddRelation(int $idProductLabel, int $idProductAbstract, array $concreteIds): bool
+    {
+        if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))
+            && $this->areAllConcretesUnavailableOrDiscontinued($concreteIds)
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

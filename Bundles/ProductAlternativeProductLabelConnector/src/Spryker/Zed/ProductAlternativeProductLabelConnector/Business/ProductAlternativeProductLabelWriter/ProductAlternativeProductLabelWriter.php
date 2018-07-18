@@ -93,11 +93,27 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
             return;
         }
 
+        if ($this->checkIfNeedToAddRelation($idProductLabel, $idProductAbstract, $concreteIds)) {
+            $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
+        }
+    }
+
+    /**
+     * @param int $idProductLabel
+     * @param int $idProductAbstract
+     * @param array $concreteIds
+     *
+     * @return bool
+     */
+    protected function checkIfNeedToAddRelation(int $idProductLabel, int $idProductAbstract, array $concreteIds): bool
+    {
         if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))
             && $this->areAllConcretesUnavailableOrDiscontinued($concreteIds)
         ) {
-            $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
+            return true;
         }
+
+        return false;
     }
 
     /**
