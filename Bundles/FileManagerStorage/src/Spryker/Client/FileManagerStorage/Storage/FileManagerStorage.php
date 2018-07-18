@@ -45,7 +45,7 @@ class FileManagerStorage implements FileManagerStorageInterface
      * @param int $idFile
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\FileStorageDataTransfer
+     * @return null|\Generated\Shared\Transfer\FileStorageDataTransfer
      */
     public function findFileById(int $idFile, string $localeName)
     {
@@ -54,7 +54,7 @@ class FileManagerStorage implements FileManagerStorageInterface
         $fileContent = $this->storageClient->get($storageKey);
 
         if ($fileContent === null) {
-            return $fileStorageDataTransfer;
+            return $fileContent;
         }
 
         $fileStorageDataTransfer->fromArray(($fileContent), true);
