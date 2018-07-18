@@ -823,4 +823,22 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
             ->createAttributeEncoder()
             ->decodeAttributes($attributes);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return int
+     */
+    public function getProductAbstractIdByConcreteId(int $idProductConcrete): int
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->getProductAbstractIdByConcreteId($idProductConcrete);
+    }
 }
