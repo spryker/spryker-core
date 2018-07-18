@@ -23,7 +23,7 @@ class SuggestionsResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createSuggestionsReader()
+            ->createCatalogReader()
             ->catalogSuggestionsSearch($restRequest);
     }
 }

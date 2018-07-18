@@ -13,8 +13,21 @@ use Spryker\Shared\Kernel\Store;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ValidateCurrency implements ValidateCurrencyInterface
+class CurrencyValidator implements CurrencyValidatorInterface
 {
+    /**
+     * @var \Spryker\Shared\Kernel\Store \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @param \Spryker\Shared\Kernel\Store $store
+     */
+    public function __construct(Store $store)
+    {
+        $this->store = $store;
+    }
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -25,36 +38,16 @@ class ValidateCurrency implements ValidateCurrencyInterface
     {
         $currency = $restRequest->getHttpRequest()->query->get(SearchRestApiConfig::CURRENCY_STRING_PARAMETER);
         if ($currency) {
-            $currencies = Store::getInstance()
+            $currencies = $this->store
                 ->getCurrencyIsoCodes();
             if (!\in_array($currency, $currencies, true)) {
-                return $this->createErrorMessageTransfer(
-                    SearchRestApiConfig::RESPONSE_DETAIL_INVALID_REQUEST_CURRENCY,
-                    Response::HTTP_BAD_REQUEST,
-                    SearchRestApiConfig::RESPONSE_CODE_INVALID_REQUEST_CURRENCY
-                );
+                return (new RestErrorMessageTransfer())
+                    ->setCode(SearchRestApiConfig::RESPONSE_CODE_INVALID_CURRENCY)
+                    ->setStatus(Response::HTTP_BAD_REQUEST)
+                    ->setDetail(SearchRestApiConfig::RESPONSE_DETAIL_INVALID_CURRENCY);
             }
         }
 
         return null;
-    }
-
-    /**
-     * @param string $detail
-     * @param int $status
-     * @param string $code
-     *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
-    protected function createErrorMessageTransfer(
-        string $detail,
-        int $status,
-        string $code
-    ): RestErrorMessageTransfer {
-
-        return (new RestErrorMessageTransfer())
-            ->setDetail($detail)
-            ->setStatus($status)
-            ->setCode($code);
     }
 }

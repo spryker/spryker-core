@@ -18,9 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
 class CurrencyValidatorPlugin extends AbstractPlugin implements ValidateRestRequestPluginInterface
 {
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -29,6 +29,8 @@ class CurrencyValidatorPlugin extends AbstractPlugin implements ValidateRestRequ
      */
     public function validate(Request $request, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
-        return $this->getFactory()->createCurrencyValidator()->validate($request, $restRequest);
+        return $this->getFactory()
+            ->createCurrencyValidator()
+            ->validate($request, $restRequest);
     }
 }

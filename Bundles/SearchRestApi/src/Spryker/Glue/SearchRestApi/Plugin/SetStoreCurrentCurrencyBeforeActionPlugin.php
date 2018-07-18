@@ -19,9 +19,9 @@ use Spryker\Shared\Kernel\Store;
 class SetStoreCurrentCurrencyBeforeActionPlugin extends AbstractPlugin implements ControllerBeforeActionPluginInterface
 {
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param string $action
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

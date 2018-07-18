@@ -13,8 +13,8 @@ class SearchRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_SEARCH = 'search';
     public const RESOURCE_SUGGESTIONS = 'search-suggestions';
 
-    public const RESPONSE_CODE_INVALID_REQUEST_CURRENCY = '501';
-    public const RESPONSE_DETAIL_INVALID_REQUEST_CURRENCY = 'Invalid request currency';
+    public const RESPONSE_CODE_INVALID_CURRENCY = '501';
+    public const RESPONSE_DETAIL_INVALID_CURRENCY = 'Invalid currency';
 
     public const CURRENCY_STRING_PARAMETER = 'currency';
 }

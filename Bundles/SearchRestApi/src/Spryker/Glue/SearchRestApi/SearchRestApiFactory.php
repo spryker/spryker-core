@@ -9,10 +9,8 @@ namespace Spryker\Glue\SearchRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToCatalogClientInterface;
 use Spryker\Glue\SearchRestApi\Processor\Catalog\CatalogReader;
-use Spryker\Glue\SearchRestApi\Processor\Catalog\SuggestionsReader;
-use Spryker\Glue\SearchRestApi\Processor\Catalog\SuggestionsReaderInterface;
-use Spryker\Glue\SearchRestApi\Processor\Currency\ValidateCurrency;
-use Spryker\Glue\SearchRestApi\Processor\Currency\ValidateCurrencyInterface;
+use Spryker\Glue\SearchRestApi\Processor\Currency\CurrencyValidator;
+use Spryker\Glue\SearchRestApi\Processor\Currency\CurrencyValidatorInterface;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapper;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapperInterface;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SuggestionsResourceMapper;
@@ -26,6 +24,14 @@ class SearchRestApiFactory extends AbstractFactory
     public function getCatalogClient(): SearchRestApiToCatalogClientInterface
     {
         return $this->getProvidedDependency(SearchRestApiDependencyProvider::CLIENT_CATALOG_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(SearchRestApiDependencyProvider::STORE);
     }
 
     /**
@@ -56,27 +62,18 @@ class SearchRestApiFactory extends AbstractFactory
         return new CatalogReader(
             $this->getCatalogClient(),
             $this->getResourceBuilder(),
-            $this->createSearchResourceMapper()
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\SearchRestApi\Processor\Catalog\SuggestionsReaderInterface
-     */
-    public function createSuggestionsReader(): SuggestionsReaderInterface
-    {
-        return new SuggestionsReader(
-            $this->getCatalogClient(),
-            $this->getResourceBuilder(),
+            $this->createSearchResourceMapper(),
             $this->createSuggestionsResourceMapper()
         );
     }
 
     /**
-     * @return \Spryker\Glue\SearchRestApi\Processor\Currency\ValidateCurrencyInterface
+     * @return \Spryker\Glue\SearchRestApi\Processor\Currency\CurrencyValidatorInterface
      */
-    public function createCurrencyValidator(): ValidateCurrencyInterface
+    public function createCurrencyValidator(): CurrencyValidatorInterface
     {
-        return new ValidateCurrency();
+        return new CurrencyValidator(
+            $this->getStore()
+        );
     }
 }
