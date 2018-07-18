@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\ZedRequest;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface ZedRequestConstants
 {
     const AUTH_ZED_ENABLED = 'AUTH_ZED_ENABLED';
