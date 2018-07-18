@@ -52,7 +52,7 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria[]
      */
-    public function getData($ids = []): array
+    public function getData(array $ids = []): array
     {
         $synchronizationDataTransfers = [];
         $productQuantityTransfers = $this->getRepository()->findProductQuantityStorageEntitiesByProductIds($ids);

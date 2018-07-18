@@ -52,7 +52,7 @@ class ProductMeasurementUnitSynchronizationDataPlugin extends AbstractPlugin imp
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
      */
-    public function getData($ids = []): array
+    public function getData(array $ids = []): array
     {
         $synchronizationDataTransfers = [];
         $productMeasurementUnitTransfers = $this->getRepository()->findProductMeasurementUnitStorageEntities($ids);

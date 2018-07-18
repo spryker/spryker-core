@@ -52,7 +52,7 @@ class ProductConcreteMeasurementUnitSynchronizationDataPlugin extends AbstractPl
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
      */
-    public function getData($ids = []): array
+    public function getData(array $ids = []): array
     {
         $synchronizationDataTransfers = [];
         $productConcreteMeasurementUnitTransfers = $this->getRepository()->findProductConcreteMeasurementUnitStorageEntities($ids);
