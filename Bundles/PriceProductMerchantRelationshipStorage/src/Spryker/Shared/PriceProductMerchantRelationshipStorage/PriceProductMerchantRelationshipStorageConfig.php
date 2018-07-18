@@ -19,6 +19,16 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractSharedConfig
     protected const PRICE_DIMENSION_MERCHANT_RELATIONSHIP = 'PRICE_DIMENSION_MERCHANT_RELATIONSHIP';
 
     /**
+     * @see \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA
+     */
+    public const PRICE_DATA = 'priceData';
+
+    /**
+     * @see \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     */
+    public const PRICE_GROSS_MODE = 'GROSS_MODE';
+
+    /**
      * @return string
      */
     public function getPriceDimensionMerchantRelationship(): string

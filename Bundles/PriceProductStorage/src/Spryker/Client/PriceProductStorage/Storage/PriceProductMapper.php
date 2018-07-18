@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Shared\PriceProduct\PriceProductConfig;
+use Spryker\Shared\PriceProductStorage\PriceProductStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 
 class PriceProductMapper implements PriceProductMapperInterface
@@ -49,22 +49,22 @@ class PriceProductMapper implements PriceProductMapperInterface
         $priceProductTransfer = null;
 
         foreach ($prices as $priceMode => $priceTypes) {
-            if ($priceMode === PriceProductConfig::PRICE_DATA) {
+            if ($priceMode === PriceProductStorageConfig::PRICE_DATA) {
                 continue;
             }
 
             foreach ($priceTypes as $priceAttribute => $priceValue) {
                 $priceProductTransfer = $this->findProductTransferInCollection($currencyCode, $priceAttribute, $priceProductTransfers);
 
-                if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
+                if ($priceMode === PriceProductStorageConfig::PRICE_GROSS_MODE) {
                     $priceProductTransfer->getMoneyValue()->setGrossAmount($priceValue);
-                    $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductConfig::PRICE_DATA]);
+                    $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductStorageConfig::PRICE_DATA]);
 
                     continue;
                 }
 
                 $priceProductTransfer->getMoneyValue()->setNetAmount($priceValue);
-                $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductConfig::PRICE_DATA]);
+                $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductStorageConfig::PRICE_DATA]);
             }
         }
     }

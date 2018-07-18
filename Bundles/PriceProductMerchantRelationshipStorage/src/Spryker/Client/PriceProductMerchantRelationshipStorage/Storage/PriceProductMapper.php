@@ -12,12 +12,24 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Shared\PriceProduct\PriceProductConfig;
-use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
+use Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig;
 
 class PriceProductMapper implements PriceProductMapperInterface
 {
     protected const INDEX_SEPARATOR = '-';
+
+    /**
+     * @var \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig
+     */
+    protected $priceProductMerchantRelationshipStorageConfig;
+
+    /**
+     * @param \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig
+     */
+    public function __construct(PriceProductMerchantRelationshipStorageConfig $priceProductMerchantRelationshipStorageConfig)
+    {
+        $this->priceProductMerchantRelationshipStorageConfig = $priceProductMerchantRelationshipStorageConfig;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
@@ -32,7 +44,7 @@ class PriceProductMapper implements PriceProductMapperInterface
         foreach ($priceProductStorageTransfer->getPrices() as $idMerchantRelationship => $pricesPerMerchantRelationship) {
             foreach ($pricesPerMerchantRelationship as $currencyCode => $prices) {
                 foreach ($prices as $priceMode => $priceTypes) {
-                    if ($priceMode === PriceProductConfig::PRICE_DATA) {
+                    if ($priceMode === PriceProductMerchantRelationshipStorageConfig::PRICE_DATA) {
                         continue;
                     }
 
@@ -44,7 +56,7 @@ class PriceProductMapper implements PriceProductMapperInterface
                             $priceProductTransfers
                         );
 
-                        if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
+                        if ($priceMode === PriceProductMerchantRelationshipStorageConfig::PRICE_GROSS_MODE) {
                             $priceProductTransfer->getMoneyValue()->setGrossAmount($priceAmount);
                             continue;
                         }
@@ -78,7 +90,7 @@ class PriceProductMapper implements PriceProductMapperInterface
             $priceProductTransfers[$index] = (new PriceProductTransfer())
                 ->setPriceDimension(
                     (new PriceProductDimensionTransfer())
-                        ->setType(PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP)
+                        ->setType($this->priceProductMerchantRelationshipStorageConfig->getPriceDimensionMerchantRelationship())
                         ->setIdMerchantRelationship($idMerchantRelationship)
                 )
                 ->setMoneyValue(

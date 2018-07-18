@@ -15,6 +15,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductSearchConfig extends AbstractBundleConfig
 {
     /**
+     * @see \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA
+     */
+    public const PRICE_DATA = 'priceData';
+
+    /**
      * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
      */
     public function getAvailableProductSearchFilterConfigs()
