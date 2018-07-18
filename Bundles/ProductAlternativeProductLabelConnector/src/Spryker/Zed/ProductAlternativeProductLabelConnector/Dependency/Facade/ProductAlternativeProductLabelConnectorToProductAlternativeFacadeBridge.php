@@ -23,20 +23,20 @@ class ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge im
     }
 
     /**
-     * @param int[] $productIds
-     *
-     * @return bool
-     */
-    public function doAllConcreteProductsHaveAlternatives(array $productIds): bool
-    {
-        return $this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($productIds);
-    }
-
-    /**
      * @return int[]
      */
     public function findProductAbstractIdsWhichConcreteHasAlternative(): array
     {
         return $this->productAlternativeFacade->findProductAbstractIdsWhichConcreteHasAlternative();
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return bool
+     */
+    public function isProductApplicableForLabelAlternative(int $idProduct): bool
+    {
+        return $this->productAlternativeFacade->isProductApplicableForLabelAlternative($idProduct);
     }
 }

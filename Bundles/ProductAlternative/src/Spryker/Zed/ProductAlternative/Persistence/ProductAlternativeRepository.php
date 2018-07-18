@@ -66,23 +66,6 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     }
 
     /**
-     * @modules Product
-     *
-     * @param int[] $productIds
-     *
-     * @return bool
-     */
-    public function doAllConcreteProductsHaveAlternatives(array $productIds): bool
-    {
-        return ($this->getFactory()
-            ->createProductAlternativePropelQuery()
-            ->select(SpyProductAlternativeTableMap::COL_FK_PRODUCT)
-            ->filterByFkProduct_In($productIds)
-            ->groupByFkProduct()
-            ->count() === count($productIds));
-    }
-
-    /**
      * {@inheritdoc}
      *
      * @api

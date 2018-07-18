@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin;
 
-interface ProductConcreteDiscontinuedCheckPluginInterface
+interface ProductApplicableLabelAlternativePluginInterface
 {
     /**
      * Specification:
      * - Executed before adding of label "Alternatives available" to product.
-     * - Checks if concrete products are discontinued.
+     * - Checks if concrete product is applicable for adding of label "Alternatives available".
      *
      * @api
      *
@@ -20,5 +20,5 @@ interface ProductConcreteDiscontinuedCheckPluginInterface
      *
      * @return bool
      */
-    public function checkConcreteProductDiscontinued(int $idProduct): bool;
+    public function check(int $idProduct): bool;
 }

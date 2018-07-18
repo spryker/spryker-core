@@ -47,8 +47,6 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
             $this->getProductFacade(),
             $this->getProductLabelFacade(),
             $this->getProductAlternativeFacade(),
-            $this->getProductConcreteDiscontinuedCheckPlugins(),
-            $this->getAvailabilityFacade(),
             $this->getConfig()
         );
     }
@@ -62,8 +60,6 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
             $this->getProductFacade(),
             $this->getProductLabelFacade(),
             $this->getProductAlternativeFacade(),
-            $this->getProductConcreteDiscontinuedCheckPlugins(),
-            $this->getAvailabilityFacade(),
             $this->getConfig()
         );
     }
@@ -93,26 +89,10 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToAvailabilityFacadeInterface
-     */
-    public function getAvailabilityFacade(): ProductAlternativeProductLabelConnectorToAvailabilityFacadeBridge
-    {
-        return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_AVAILABILITY);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeInterface
      */
     public function getLocaleFacade(): ProductAlternativeProductLabelConnectorToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\ProductConcreteDiscontinuedCheckPluginInterface[]
-     */
-    public function getProductConcreteDiscontinuedCheckPlugins(): array
-    {
-        return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::PRODUCT_CONCRETE_DISCONTINUED_CHECK_PLUGINS);
     }
 }

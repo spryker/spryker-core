@@ -53,15 +53,15 @@ interface ProductAlternativeFacadeInterface
 
     /**
      * Specification:
-     * - Checks if all given products have alternatives.
+     * - Checks if given product applicable for label "Alternative available" adding.
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param int $idProduct
      *
      * @return bool
      */
-    public function doAllConcreteProductsHaveAlternatives(array $productIds): bool;
+    public function isProductApplicableForLabelAlternative(int $idProduct): bool;
 
     /**
      * Specification:

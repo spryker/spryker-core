@@ -29,13 +29,6 @@ interface ProductAlternativeRepositoryInterface
     public function findProductAlternativeByIdProductAlternative(int $idProductAlternative): ?ProductAlternativeTransfer;
 
     /**
-     * @param int[] $productIds
-     *
-     * @return bool
-     */
-    public function doAllConcreteProductsHaveAlternatives(array $productIds): bool;
-
-    /**
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *

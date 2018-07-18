@@ -55,7 +55,7 @@ interface AvailabilityFacadeInterface
      *
      * @return bool
      */
-    public function isProductConcreteIsAvailable(int $idProductConcrete): bool;
+    public function isProductConcreteUnAvailable(int $idProductConcrete): bool;
 
     /**
      * Specification:

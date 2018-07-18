@@ -86,16 +86,12 @@ class Sellable implements SellableInterface
      *
      * @return bool
      */
-    public function isProductConcreteIsAvailable(int $idProductConcrete): bool
+    public function isProductConcreteUnAvailable(int $idProductConcrete): bool
     {
         $stockProductTransfers = $this->stockFacade->getStockProductsByIdProduct($idProductConcrete);
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
-        if (empty($stockProductTransfers)) {
-            return false;
-        }
-
-        return $this->calculateStock($stockProductTransfers[0]->getSku(), $storeTransfer) > 0;
+        return $this->calculateStock($stockProductTransfers[0]->getSku(), $storeTransfer) <= 0;
     }
 
     /**

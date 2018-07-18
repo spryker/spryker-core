@@ -33,18 +33,26 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     protected $productFacade;
 
     /**
+     * @var \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\ProductApplicableLabelAlternativePluginInterface[]
+     */
+    protected $productApplicableLabelAlternativePluginInterface;
+
+    /**
      * @param \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface $productAlternativeRepository
      * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\ProductApplicableLabelAlternativePluginInterface[] $productApplicableLabelAlternativePluginInterface
      */
     public function __construct(
         ProductAlternativeRepositoryInterface $productAlternativeRepository,
         ProductAlternativeToLocaleFacadeInterface $localeFacade,
-        ProductAlternativeToProductFacadeInterface $productFacade
+        ProductAlternativeToProductFacadeInterface $productFacade,
+        array $productApplicableLabelAlternativePluginInterface
     ) {
         $this->productAlternativeRepository = $productAlternativeRepository;
         $this->localeFacade = $localeFacade;
         $this->productFacade = $productFacade;
+        $this->productApplicableLabelAlternativePluginInterface = $productApplicableLabelAlternativePluginInterface;
     }
 
     /**
@@ -64,14 +72,22 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     }
 
     /**
-     * @param int[] $productIds
+     * @param int $idProduct
      *
      * @return bool
      */
-    public function doAllConcreteProductsHaveAlternatives(array $productIds): bool
+    public function isProductApplicableForLabelAlternative(int $idProduct): bool
     {
-        return $this->productAlternativeRepository
-            ->doAllConcreteProductsHaveAlternatives($productIds);
+        //file_put_contents('test4444.txt', print_r($idProduct . '    ', 1), 8);
+        foreach ($this->productApplicableLabelAlternativePluginInterface as $productApplicableLabelAlternativePlugin) {
+            if ($productApplicableLabelAlternativePlugin->check($idProduct)
+                && $this->productAlternativeRepository->findProductAlternativeByIdProductAlternative($idProduct)
+            ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
