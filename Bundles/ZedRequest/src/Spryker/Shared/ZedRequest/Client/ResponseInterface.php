@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 /**
- * @method toArray()
+ * @method array toArray()
  */
 interface ResponseInterface
 {
