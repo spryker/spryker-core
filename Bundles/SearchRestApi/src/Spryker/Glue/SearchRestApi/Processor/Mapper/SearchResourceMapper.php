@@ -9,14 +9,11 @@ namespace Spryker\Glue\SearchRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\RestSearchAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SearchRestApi\SearchRestApiConfig;
 use Spryker\Shared\Kernel\Store;
 
 class SearchResourceMapper implements SearchResourceMapperInterface
 {
-    protected const QUERY_STRING_PARAMETER = 'q';
-
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
@@ -28,26 +25,6 @@ class SearchResourceMapper implements SearchResourceMapperInterface
     public function __construct(RestResourceBuilderInterface $restResourceBuilder)
     {
         $this->restResourceBuilder = $restResourceBuilder;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return string
-     */
-    public function mapRestSearchAttributesTransferToSearchString(RestRequestInterface $restRequest): string
-    {
-        return $restRequest->getHttpRequest()->query->get(static::QUERY_STRING_PARAMETER, '');
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return array
-     */
-    public function mapRestSearchAttributesTransferToSearchRequestParameters(RestRequestInterface $restRequest): array
-    {
-        return $restRequest->getHttpRequest()->query->all();
     }
 
     /**

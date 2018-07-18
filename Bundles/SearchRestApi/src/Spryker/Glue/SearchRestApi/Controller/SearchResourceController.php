@@ -22,6 +22,8 @@ class SearchResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createCatalogReader()->catalogSearch($restRequest);
+        return $this->getFactory()
+            ->createCatalogReader()
+            ->catalogSearch($restRequest);
     }
 }

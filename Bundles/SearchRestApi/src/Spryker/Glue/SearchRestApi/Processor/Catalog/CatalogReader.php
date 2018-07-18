@@ -11,9 +11,12 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToCatalogClientInterface;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapperInterface;
+use Spryker\Glue\SearchRestApi\Processor\Mapper\SuggestionsResourceMapperInterface;
 
 class CatalogReader implements CatalogReaderInterface
 {
+    protected const QUERY_STRING_PARAMETER = 'q';
+
     /**
      * @var \Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToCatalogClientInterface
      */
@@ -30,18 +33,26 @@ class CatalogReader implements CatalogReaderInterface
     protected $searchResourceMapper;
 
     /**
+     * @var \Spryker\Glue\SearchRestApi\Processor\Mapper\SuggestionsResourceMapperInterface
+     */
+    protected $suggestionsResourceMapper;
+
+    /**
      * @param \Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToCatalogClientInterface $catalogClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapperInterface $searchResourceMapper
+     * @param \Spryker\Glue\SearchRestApi\Processor\Mapper\SuggestionsResourceMapperInterface $suggestionsResourceMapper
      */
     public function __construct(
         SearchRestApiToCatalogClientInterface $catalogClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        SearchResourceMapperInterface $searchResourceMapper
+        SearchResourceMapperInterface $searchResourceMapper,
+        SuggestionsResourceMapperInterface $suggestionsResourceMapper
     ) {
         $this->catalogClient = $catalogClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->searchResourceMapper = $searchResourceMapper;
+        $this->suggestionsResourceMapper = $suggestionsResourceMapper;
     }
 
     /**
@@ -53,12 +64,65 @@ class CatalogReader implements CatalogReaderInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $searchString = $this->searchResourceMapper->mapRestSearchAttributesTransferToSearchString($restRequest);
-        $requestParameters = $this->searchResourceMapper->mapRestSearchAttributesTransferToSearchRequestParameters($restRequest);
+        $searchString = $this->getQueryStringFromRequest($restRequest);
+        $requestParameters = $this->getAllRequestParameters($restRequest);
         $restSearchResponseAttributesTransfer = $this->catalogClient->catalogSearch($searchString, $requestParameters);
-
         $restResource = $this->searchResourceMapper->mapSearchResponseAttributesTransferToRestResponse($restSearchResponseAttributesTransfer);
 
         return $response->addResource($restResource);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function catalogSuggestionsSearch(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $response = $this->restResourceBuilder->createRestResponse();
+        $searchString = $this->getQueryStringFromRequest($restRequest);
+        if (empty($searchString)) {
+            return $this->buildEmptyResponse($response);
+        }
+
+        $requestParameters = $this->getAllRequestParameters($restRequest);
+        $restSuggestionsAttributeTransfer = $this->catalogClient->catalogSuggestSearch($searchString, $requestParameters);
+        $restResource = $this->suggestionsResourceMapper->mapSuggestionsResponseAttributesTransferToRestResponse($restSuggestionsAttributeTransfer);
+
+        return $response->addResource($restResource);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return string
+     */
+    protected function getQueryStringFromRequest(RestRequestInterface $restRequest): string
+    {
+        return $restRequest->getHttpRequest()->query->get(static::QUERY_STRING_PARAMETER, '');
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return array
+     */
+    protected function getAllRequestParameters(RestRequestInterface $restRequest): array
+    {
+        return $restRequest->getHttpRequest()->query->all();
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function buildEmptyResponse(RestResponseInterface $response): RestResponseInterface
+    {
+        $resource = $this->suggestionsResourceMapper->mapSuggestionsResponseAttributesTransferToRestResponse(
+            $this->suggestionsResourceMapper->getSearchResponseDefaultStructure()
+        );
+
+        return $response->addResource($resource);
     }
 }

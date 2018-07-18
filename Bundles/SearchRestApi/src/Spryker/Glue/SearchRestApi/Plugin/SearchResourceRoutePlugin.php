@@ -18,6 +18,8 @@ use Spryker\Glue\SearchRestApi\SearchRestApiConfig;
 class SearchResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
@@ -27,12 +29,14 @@ class SearchResourceRoutePlugin extends AbstractPlugin implements ResourceRouteP
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addGet('get');
+            ->addGet('get', false);
 
         return $resourceRouteCollection;
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -43,6 +47,8 @@ class SearchResourceRoutePlugin extends AbstractPlugin implements ResourceRouteP
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -53,6 +59,8 @@ class SearchResourceRoutePlugin extends AbstractPlugin implements ResourceRouteP
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
