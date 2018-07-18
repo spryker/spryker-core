@@ -77,7 +77,7 @@ class ProductBundleCartActiveCheckTest extends Unit
     }
 
     /**
-     * @return object|\Spryker\Zed\ProductBundle\Business\ProductBundle\Active\PreCheck\ProductBundleCartActiveCheckInterface
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Active\PreCheck\ProductBundleCartActiveCheckInterface
      */
     protected function createProductBundleCartActiveCheck()
     {
@@ -87,7 +87,7 @@ class ProductBundleCartActiveCheckTest extends Unit
     }
 
     /**
-     * @return object|\Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
+     * @return \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
      */
     protected function createProductRepositoryStub()
     {
