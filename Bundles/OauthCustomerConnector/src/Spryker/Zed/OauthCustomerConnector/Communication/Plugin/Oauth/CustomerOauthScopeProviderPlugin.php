@@ -15,7 +15,7 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterfa
  * @method \Spryker\Zed\OauthCustomerConnector\Business\OauthCustomerConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig getConfig()
  */
-class CustomerScopeProviderPlugin extends AbstractPlugin implements OauthScopeProviderPluginInterface
+class CustomerOauthScopeProviderPlugin extends AbstractPlugin implements OauthScopeProviderPluginInterface
 {
     /**
      * @api

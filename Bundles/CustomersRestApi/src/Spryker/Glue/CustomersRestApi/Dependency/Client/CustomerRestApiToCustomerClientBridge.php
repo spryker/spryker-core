@@ -26,7 +26,7 @@ class CustomerRestApiToCustomerClientBridge implements CustomerRestApiToCustomer
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return null|\Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findCustomerById(CustomerTransfer $customerTransfer): ?CustomerTransfer
     {
@@ -34,7 +34,7 @@ class CustomerRestApiToCustomerClientBridge implements CustomerRestApiToCustomer
     }
 
     /**
-     * @return null|\Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer(): ?CustomerTransfer
     {

@@ -28,6 +28,6 @@ class AccessTokenValidatorPlugin extends AbstractPlugin implements ValidateRestR
      */
     public function validate(Request $request, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
-        return $this->getFactory()->createValidateAccessToken()->validate($request, $restRequest);
+        return $this->getFactory()->createAccessTokenValidator()->validate($request, $restRequest);
     }
 }

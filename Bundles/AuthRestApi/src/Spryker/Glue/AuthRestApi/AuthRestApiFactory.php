@@ -10,8 +10,8 @@ namespace Spryker\Glue\AuthRestApi;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokensReader;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokensReaderInterface;
-use Spryker\Glue\AuthRestApi\Processor\AccessTokens\ValidateAccessToken;
-use Spryker\Glue\AuthRestApi\Processor\AccessTokens\ValidateAccessTokenInterface;
+use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenValidator;
+use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenValidatorInterface;
 use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensReader;
 use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensReaderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -46,11 +46,11 @@ class AuthRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\ValidateAccessTokenInterface
+     * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenValidatorInterface
      */
-    public function createValidateAccessToken(): ValidateAccessTokenInterface
+    public function createAccessTokenValidator(): AccessTokenValidatorInterface
     {
-        return new ValidateAccessToken($this->getOauthClient());
+        return new AccessTokenValidator($this->getOauthClient());
     }
 
     /**

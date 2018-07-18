@@ -15,7 +15,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ValidateAccessToken implements ValidateAccessTokenInterface
+class AccessTokenValidator implements AccessTokenValidatorInterface
 {
     /**
      * @var \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface

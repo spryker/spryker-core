@@ -14,5 +14,5 @@ interface CustomerRestApiToSessionClientInterface
      *
      * @return void
      */
-    public function set($key, $value): void;
+    public function set($key, $value);
 }

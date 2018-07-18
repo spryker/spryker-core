@@ -7,10 +7,9 @@
 
 namespace Spryker\Shared\AuthRestApi;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\AbstractSharedConfig;
+use Spryker\Shared\Kernel\AbstractBundleConfig;
 
-class AuthRestApiConfig extends AbstractSharedConfig
+class AuthRestApiConfig extends AbstractBundleConfig
 {
     /**
      * The client secret used to authenticate Oauth client requests, to create use "password_hash('your password', PASSWORD_BCRYPT)".
@@ -19,7 +18,7 @@ class AuthRestApiConfig extends AbstractSharedConfig
      */
     public function getClientSecret(): string
     {
-        return Config::getInstance()->get(AuthRestApiConstants::OAUTH_CLIENT_SECRET);
+        return $this->get(AuthRestApiConstants::OAUTH_CLIENT_SECRET);
     }
 
     /**
@@ -29,6 +28,6 @@ class AuthRestApiConfig extends AbstractSharedConfig
      */
     public function getClientId(): string
     {
-        return Config::getInstance()->get(AuthRestApiConstants::OAUTH_CLIENT_IDENTIFIER);
+        return $this->get(AuthRestApiConstants::OAUTH_CLIENT_IDENTIFIER);
     }
 }

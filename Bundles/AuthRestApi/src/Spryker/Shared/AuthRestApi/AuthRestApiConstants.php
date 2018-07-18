@@ -13,6 +13,8 @@ interface AuthRestApiConstants
      * Specification:
      *  - The identifier of OAUTH client to use when requesting for access tokens.
      *
+     * @api
+     *
      * @see \Spryker\Shared\OauthCustomerConnector\OauthCustomerConnectorConstants::OAUTH_CLIENT_IDENTIFIER
      */
     public const OAUTH_CLIENT_IDENTIFIER = 'OAUTH_CLIENT_IDENTIFIER';
@@ -20,6 +22,8 @@ interface AuthRestApiConstants
     /**
      * Specification:
      *  - The secret of OAUTH client to use when requesting for access tokens.
+     *
+     * @api
      *
      * @see \Spryker\Shared\OauthCustomerConnector\OauthCustomerConnectorConstants::OAUTH_CLIENT_SECRET
      */

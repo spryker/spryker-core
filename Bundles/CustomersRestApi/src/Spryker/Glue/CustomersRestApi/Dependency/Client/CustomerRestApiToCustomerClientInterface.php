@@ -13,12 +13,12 @@ interface CustomerRestApiToCustomerClientInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return null|\Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findCustomerById(CustomerTransfer $customerTransfer): ?CustomerTransfer;
+    public function findCustomerById(CustomerTransfer $customerTransfer);
 
     /**
-     * @return null|\Generated\Shared\Transfer\CustomerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer(): ?CustomerTransfer;
+    public function getCustomer();
 }
