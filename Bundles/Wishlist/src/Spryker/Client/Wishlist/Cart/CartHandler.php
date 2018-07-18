@@ -96,15 +96,15 @@ class CartHandler implements CartHandlerInterface
      */
     public function moveCollectionToCart(WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer)
     {
-        $itemTransfers = [];
-
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->setQuote($this->cartClient->getQuote());
         foreach ($wishlistMoveToCartRequestCollectionTransfer->getRequests() as $wishlistMoveToCartRequestTransfer) {
             $this->assertRequestTransfer($wishlistMoveToCartRequestTransfer);
-            $itemTransfers[] = $this->createItemTransfer($wishlistMoveToCartRequestTransfer->getSku());
+            $cartChangeTransfer->addItem(
+                $this->createItemTransfer($wishlistMoveToCartRequestTransfer->getSku())
+            );
         }
-
-        $wishlistCartChangeTransfer = (new CartChangeTransfer())->setItems($itemTransfers);
-        $quoteTransfer = $this->cartClient->addValidItems($wishlistCartChangeTransfer);
+        $quoteTransfer = $this->cartClient->addValidItems($cartChangeTransfer);
 
         $failedToMoveRequestCollectionTransfer = $this->getWishlistRequestCollectionToCartDiff(
             $wishlistMoveToCartRequestCollectionTransfer,

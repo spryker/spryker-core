@@ -34,4 +34,9 @@ interface WishlistToCartInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addValidItems(CartChangeTransfer $cartChangeTransfer, array $params = []): QuoteTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote();
 }
