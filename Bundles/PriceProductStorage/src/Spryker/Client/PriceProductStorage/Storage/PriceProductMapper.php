@@ -27,23 +27,46 @@ class PriceProductMapper implements PriceProductMapperInterface
     public function mapPriceProductStorageTransferToPriceProductTransfers(PriceProductStorageTransfer $priceProductStorageTransfer): array
     {
         $priceProductTransfers = [];
-
         foreach ($priceProductStorageTransfer->getPrices() as $currencyCode => $prices) {
-            foreach ($prices as $priceMode => $priceTypes) {
-                foreach ($priceTypes as $priceType => $priceAmount) {
-                    $priceProductTransfer = $this->findProductTransferInCollection($currencyCode, $priceType, $priceProductTransfers);
-
-                    if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
-                        $priceProductTransfer->getMoneyValue()->setGrossAmount($priceAmount);
-                        continue;
-                    }
-
-                    $priceProductTransfer->getMoneyValue()->setNetAmount($priceAmount);
-                }
-            }
+            $this->getPriceProductTransfersFromPriceData($priceProductTransfers, $prices, $currencyCode);
         }
 
         return array_values($priceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array $prices
+     * @param string $currencyCode
+     *
+     * @return void
+     */
+    protected function getPriceProductTransfersFromPriceData(
+        array &$priceProductTransfers,
+        array $prices,
+        string $currencyCode
+    ): void {
+        $priceProductTransfer = null;
+
+        foreach ($prices as $priceMode => $priceTypes) {
+            if ($priceMode === PriceProductConfig::PRICE_DATA) {
+                continue;
+            }
+
+            foreach ($priceTypes as $priceAttribute => $priceValue) {
+                $priceProductTransfer = $this->findProductTransferInCollection($currencyCode, $priceAttribute, $priceProductTransfers);
+
+                if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
+                    $priceProductTransfer->getMoneyValue()->setGrossAmount($priceValue);
+                    $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductConfig::PRICE_DATA]);
+
+                    continue;
+                }
+
+                $priceProductTransfer->getMoneyValue()->setNetAmount($priceValue);
+                $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductConfig::PRICE_DATA]);
+            }
+        }
     }
 
     /**
