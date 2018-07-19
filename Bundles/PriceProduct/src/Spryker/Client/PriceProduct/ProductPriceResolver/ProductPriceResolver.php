@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\PriceProduct\ProductPriceResolver;
 
+
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
@@ -18,7 +19,7 @@ use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInter
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface;
 use Spryker\Client\PriceProduct\PriceProductConfig;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
-use Spryker\Shared\PriceProduct\PriceProductConfig as PriceProductPriceProductConfig;
+use Spryker\Shared\PriceProduct\PriceProductConfig as SharedPriceProductConfig;
 
 class ProductPriceResolver implements ProductPriceResolverInterface
 {
@@ -220,6 +221,10 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         foreach ($priceMap as $currencyCode => $prices) {
             foreach ($prices as $priceMode => $priceTypes) {
                 foreach ($priceTypes as $priceType => $priceAmount) {
+                    if ($priceMode === SharedPriceProductConfig::PRICE_DATA) {
+                        continue;
+                    }
+
                     $index = implode(static::PRICE_KEY_SEPARATOR, [
                         $currencyCode,
                         $priceType,
@@ -229,7 +234,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
                         $priceProductTransfers[$index] = (new PriceProductTransfer())
                             ->setPriceDimension(
                                 (new PriceProductDimensionTransfer())
-                                    ->setType(PriceProductPriceProductConfig::PRICE_DIMENSION_DEFAULT)
+                                    ->setType($this->priceProductConfig->getPriceDimensionDefault())
                             )
                             ->setMoneyValue(
                                 (new MoneyValueTransfer())
