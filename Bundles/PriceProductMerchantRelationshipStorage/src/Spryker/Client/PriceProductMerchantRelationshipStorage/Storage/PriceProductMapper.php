@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig;
+use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig as SharedPriceProductMerchantRelationshipStorageConfig;
 
 class PriceProductMapper implements PriceProductMapperInterface
 {
@@ -44,7 +45,7 @@ class PriceProductMapper implements PriceProductMapperInterface
         foreach ($priceProductStorageTransfer->getPrices() as $idMerchantRelationship => $pricesPerMerchantRelationship) {
             foreach ($pricesPerMerchantRelationship as $currencyCode => $prices) {
                 foreach ($prices as $priceMode => $priceTypes) {
-                    if ($priceMode === PriceProductMerchantRelationshipStorageConfig::PRICE_DATA) {
+                    if ($priceMode === SharedPriceProductMerchantRelationshipStorageConfig::PRICE_DATA) {
                         continue;
                     }
 
@@ -56,7 +57,7 @@ class PriceProductMapper implements PriceProductMapperInterface
                             $priceProductTransfers
                         );
 
-                        if ($priceMode === PriceProductMerchantRelationshipStorageConfig::PRICE_GROSS_MODE) {
+                        if ($priceMode === SharedPriceProductMerchantRelationshipStorageConfig::PRICE_GROSS_MODE) {
                             $priceProductTransfer->getMoneyValue()->setGrossAmount($priceAmount);
                             continue;
                         }
