@@ -66,7 +66,7 @@ interface AvailabilityToStockInterface
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
-    public function getStockProductsByIdProduct(int $idProductConcrete): array;
+    public function getStockProductsByIdProduct(int $idProductConcrete);
 
     /**
      * @return array
