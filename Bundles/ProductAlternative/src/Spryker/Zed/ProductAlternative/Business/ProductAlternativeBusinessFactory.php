@@ -47,7 +47,7 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getLocaleFacade(),
             $this->getProductFacade(),
-            $this->getProductApplicableLabelAlternativePlugins()
+            $this->getAlternativeProductApplicablePlugins()
         );
     }
 
@@ -97,8 +97,8 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface[]
      */
-    protected function getProductApplicableLabelAlternativePlugins(): array
+    protected function getAlternativeProductApplicablePlugins(): array
     {
-        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::PLUGINS_PRODUCT_APPLICABLE_LABEL_ALTERNATIVE);
+        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE);
     }
 }

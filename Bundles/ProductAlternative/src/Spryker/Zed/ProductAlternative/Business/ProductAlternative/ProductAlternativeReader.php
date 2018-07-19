@@ -35,24 +35,24 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     /**
      * @var \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface[]
      */
-    protected $productApplicableLabelAlternativePluginInterface;
+    protected $alternativeProductApplicablePlugins;
 
     /**
      * @param \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface $productAlternativeRepository
      * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface $productFacade
-     * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface[] $productApplicableLabelAlternativePluginInterface
+     * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface[] $alternativeProductApplicablePlugins
      */
     public function __construct(
         ProductAlternativeRepositoryInterface $productAlternativeRepository,
         ProductAlternativeToLocaleFacadeInterface $localeFacade,
         ProductAlternativeToProductFacadeInterface $productFacade,
-        array $productApplicableLabelAlternativePluginInterface
+        array $alternativeProductApplicablePlugins
     ) {
         $this->productAlternativeRepository = $productAlternativeRepository;
         $this->localeFacade = $localeFacade;
         $this->productFacade = $productFacade;
-        $this->productApplicableLabelAlternativePluginInterface = $productApplicableLabelAlternativePluginInterface;
+        $this->alternativeProductApplicablePlugins = $alternativeProductApplicablePlugins;
     }
 
     /**
@@ -89,8 +89,8 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
      */
     public function isAlternativeProductApplicable(int $idProduct): bool
     {
-        foreach ($this->productApplicableLabelAlternativePluginInterface as $productApplicableLabelAlternativePlugin) {
-            if ($productApplicableLabelAlternativePlugin->check($idProduct)) {
+        foreach ($this->alternativeProductApplicablePlugins as $alternativeProductApplicablePlugin) {
+            if ($alternativeProductApplicablePlugin->check($idProduct)) {
                 return true;
             }
         }

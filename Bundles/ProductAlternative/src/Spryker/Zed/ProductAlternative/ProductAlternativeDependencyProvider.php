@@ -20,7 +20,7 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const PLUGINS_POST_PRODUCT_ALTERNATIVE_CREATE = 'PLUGINS_POST_PRODUCT_ALTERNATIVE_CREATE';
     public const PLUGINS_POST_PRODUCT_ALTERNATIVE_DELETE = 'PLUGINS_POST_PRODUCT_ALTERNATIVE_DELETE';
-    public const PLUGINS_PRODUCT_APPLICABLE_LABEL_ALTERNATIVE = 'PLUGINS_PRODUCT_APPLICABLE_LABEL_ALTERNATIVE';
+    public const PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE = 'PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE';
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
     public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'QUERY_PRODUCT_ABSTRACT';
 
@@ -36,7 +36,7 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addProductFacade($container);
         $container = $this->addPostProductAlternativeCreatePlugins($container);
         $container = $this->addPostProductAlternativeDeletePlugins($container);
-        $container = $this->addProductApplicableLabelAlternativePlugins($container);
+        $container = $this->addAlternativeProductApplicablePlugins($container);
 
         return $container;
     }
@@ -148,10 +148,10 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductApplicableLabelAlternativePlugins(Container $container): Container
+    protected function addAlternativeProductApplicablePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_APPLICABLE_LABEL_ALTERNATIVE] = function () {
-            return $this->getProductApplicableLabelAlternativePlugins();
+        $container[static::PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE] = function () {
+            return $this->getAlternativeProductApplicablePlugins();
         };
 
         return $container;
@@ -176,7 +176,7 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
     /**
      * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface[]
      */
-    protected function getProductApplicableLabelAlternativePlugins(): array
+    protected function getAlternativeProductApplicablePlugins(): array
     {
         return [];
     }
