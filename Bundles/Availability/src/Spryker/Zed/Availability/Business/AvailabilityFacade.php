@@ -64,11 +64,11 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @return bool
      */
-    public function isProductConcreteUnAvailable(int $idProductConcrete): bool
+    public function isProductConcreteAvailable(int $idProductConcrete): bool
     {
         return $this->getFactory()
             ->createSellableModel()
-            ->isProductConcreteUnAvailable($idProductConcrete);
+            ->isProductConcreteAvailable($idProductConcrete);
     }
 
     /**

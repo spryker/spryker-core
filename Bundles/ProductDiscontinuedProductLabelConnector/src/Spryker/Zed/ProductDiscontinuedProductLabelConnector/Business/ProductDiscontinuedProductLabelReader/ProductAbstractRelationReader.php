@@ -74,22 +74,18 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      */
     protected function getRelationsData(ProductLabelTransfer $productLabelTransfer): array
     {
-        $idsToAssign = [];
-        $idsToDeAssign = [];
-
         $idProductLabel = $productLabelTransfer->getIdProductLabel();
+        $labeledProductAbstractIds = $this->productLabelFacade->findProductAbstractRelationsByIdProductLabel($idProductLabel);
+        $idsToAssign = [];
+        $idsToDeAssign = $labeledProductAbstractIds;
 
         foreach ($this->productDiscontinuedFacade->findProductAbstractIdsWithDiscontinuedConcrete() as $idProductAbstract) {
             $concreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
-
-            if (!$this->productDiscontinuedFacade->areAllConcreteProductsDiscontinued($concreteIds)) {
-                $idsToDeAssign[] = $idProductAbstract;
-
-                continue;
-            }
-
-            if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))) {
-                $idsToAssign[] = $idProductAbstract;
+            if ($this->productDiscontinuedFacade->areAllConcreteProductsDiscontinued($concreteIds)) {
+                if (!in_array($idProductAbstract, $labeledProductAbstractIds)) {
+                    $idsToAssign[] = $idProductAbstract;
+                }
+                $idsToDeAssign = array_diff($idsToDeAssign, [$idProductAbstract]);
             }
         }
 

@@ -15,9 +15,16 @@ interface ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInter
     public function findProductAbstractIdsWhichConcreteHasAlternative(): array;
 
     /**
-     * @param int $idProduct
+     * @param int[] $productIds
      *
      * @return bool
      */
-    public function isProductApplicableForLabelAlternative(int $idProduct): bool;
+    public function doAllConcreteProductsHaveAlternatives(array $productIds): bool;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function isAlternativeProductApplicable(int $idProductConcrete): bool;
 }

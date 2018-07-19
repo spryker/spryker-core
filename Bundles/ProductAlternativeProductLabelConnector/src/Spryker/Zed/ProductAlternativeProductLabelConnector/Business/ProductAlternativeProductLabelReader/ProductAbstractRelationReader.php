@@ -74,22 +74,17 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      */
     protected function getRelationsData(ProductLabelTransfer $productLabelTransfer): array
     {
-        $idsToAssign = [];
-        $idsToDeAssign = [];
-
         $idProductLabel = $productLabelTransfer->getIdProductLabel();
+        $labeledProductAbstractIds = $this->productLabelFacade->findProductAbstractRelationsByIdProductLabel($idProductLabel);
+        $idsToAssign = [];
+        $idsToDeAssign = $labeledProductAbstractIds;
 
         foreach ($this->productAlternativeFacade->findProductAbstractIdsWhichConcreteHasAlternative() as $idProductAbstract) {
-            $concreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
-
-            if (!$this->areAllConcretesUnavailableOrDiscontinued($concreteIds)
-            ) {
-                $idsToDeAssign[] = $idProductAbstract;
-
-                continue;
-            }
-            if ($this->toAddLabelAlternative($idProductLabel, $idProductAbstract, $concreteIds)) {
-                $idsToAssign[] = $idProductAbstract;
+            if ($this->isProductAlternativeLabelApplicable($idProductAbstract)) {
+                if (!in_array($idProductAbstract, $labeledProductAbstractIds)) {
+                    $idsToAssign[] = $idProductAbstract;
+                }
+                $idsToDeAssign = array_diff($idsToDeAssign, [$idProductAbstract]);
             }
         }
 
@@ -101,40 +96,6 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     }
 
     /**
-     * @param int $idProductLabel
-     * @param int $idProductAbstract
-     * @param array $concreteIds
-     *
-     * @return bool
-     */
-    protected function toAddLabelAlternative(int $idProductLabel, int $idProductAbstract, array $concreteIds): bool
-    {
-        if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))
-            && $this->areAllConcretesUnavailableOrDiscontinued($concreteIds)
-        ) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param int[] $concreteIds
-     *
-     * @return bool
-     */
-    protected function areAllConcretesUnavailableOrDiscontinued(array $concreteIds): bool
-    {
-        foreach ($concreteIds as $concreteId) {
-            if (!$this->productAlternativeFacade->isProductApplicableForLabelAlternative($concreteId)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
     protected function findProductAlternativeProductLabel(): ?ProductLabelTransfer
@@ -142,6 +103,27 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         return $this->productLabelFacade->findLabelByLabelName(
             $this->config->getProductAlternativesLabelName()
         );
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    protected function isProductAlternativeLabelApplicable(int $idProductAbstract): bool
+    {
+        $productConcreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
+        if (!$this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($productConcreteIds)) {
+            return false;
+        }
+
+        foreach ($productConcreteIds as $idProductConcrete) {
+            if (!$this->productAlternativeFacade->isAlternativeProductApplicable($idProductConcrete)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

@@ -67,46 +67,31 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
         }
 
         $idProductLabel = $productLabelTransfer->getIdProductLabel();
-        $concreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
-
-        if (!$this->areAllConcretesUnavailableOrDiscontinued($concreteIds)) {
+        if (!$this->isProductAlternativeLabelApplicable($idProductAbstract)) {
             $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
 
             return;
         }
 
-        if ($this->toAddLabelAlternative($idProductLabel, $idProductAbstract, $concreteIds)) {
+        if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))) {
             $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
         }
     }
 
     /**
-     * @param int $idProductLabel
      * @param int $idProductAbstract
-     * @param array $concreteIds
      *
      * @return bool
      */
-    protected function toAddLabelAlternative(int $idProductLabel, int $idProductAbstract, array $concreteIds): bool
+    protected function isProductAlternativeLabelApplicable(int $idProductAbstract): bool
     {
-        if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))
-            && $this->areAllConcretesUnavailableOrDiscontinued($concreteIds)
-        ) {
-            return true;
+        $productConcreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
+        if (!$this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($productConcreteIds)) {
+            return false;
         }
 
-        return false;
-    }
-
-    /**
-     * @param int[] $concreteIds
-     *
-     * @return bool
-     */
-    protected function areAllConcretesUnavailableOrDiscontinued(array $concreteIds): bool
-    {
-        foreach ($concreteIds as $concreteId) {
-            if (!$this->productAlternativeFacade->isProductApplicableForLabelAlternative($concreteId)) {
+        foreach ($productConcreteIds as $idProductConcrete) {
+            if (!$this->productAlternativeFacade->isAlternativeProductApplicable($idProductConcrete)) {
                 return false;
             }
         }

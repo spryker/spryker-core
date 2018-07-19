@@ -40,7 +40,7 @@ interface SellableInterface
      *
      * @return bool
      */
-    public function isProductConcreteUnAvailable(int $idProductConcrete): bool;
+    public function isProductConcreteAvailable(int $idProductConcrete): bool;
 
     /**
      * @param string $sku

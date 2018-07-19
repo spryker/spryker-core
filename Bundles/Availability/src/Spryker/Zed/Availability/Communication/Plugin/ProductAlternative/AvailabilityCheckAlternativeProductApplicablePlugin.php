@@ -8,13 +8,13 @@
 namespace Spryker\Zed\Availability\Communication\Plugin\ProductAlternative;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\ProductApplicableLabelAlternativePluginInterface;
+use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface;
 
 /**
  * @method \Spryker\Zed\Availability\Business\AvailabilityBusinessFactory getFactory()
  * @method \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface getFacade()
  */
-class AvailableProductCheckLabelAlternativePlugin extends AbstractPlugin implements ProductApplicableLabelAlternativePluginInterface
+class AvailabilityCheckAlternativeProductApplicablePlugin extends AbstractPlugin implements AlternativeProductApplicablePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -27,6 +27,6 @@ class AvailableProductCheckLabelAlternativePlugin extends AbstractPlugin impleme
      */
     public function check(int $idProduct): bool
     {
-        return $this->getFacade()->isProductConcreteUnAvailable($idProduct);
+        return $this->getFacade()->isProductConcreteAvailable($idProduct);
     }
 }

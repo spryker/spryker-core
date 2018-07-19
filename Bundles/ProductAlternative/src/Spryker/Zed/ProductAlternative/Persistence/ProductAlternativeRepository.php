@@ -18,6 +18,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -44,27 +45,6 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     }
 
     /**
-     * @param int $idProductConcrete
-     *
-     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
-     */
-    public function findProductAlternativeByProductConcreteId(int $idProductConcrete): ?ProductAlternativeTransfer
-    {
-        $alternativeProductEntity = $this->getFactory()
-            ->createProductAlternativePropelQuery()
-            ->filterByFkProduct($idProductConcrete)
-            ->findOne();
-
-        if (!$alternativeProductEntity) {
-            return null;
-        }
-
-        return $this->getFactory()
-            ->createProductAlternativeMapper()
-            ->mapProductAlternativeTransfer($alternativeProductEntity);
-    }
-
-    /**
      * @param int $idProductAlternative
      *
      * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
@@ -83,6 +63,23 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
         return $this->getFactory()
             ->createProductAlternativeMapper()
             ->mapProductAlternativeTransfer($alternativeProductEntity);
+    }
+
+    /**
+     * @modules Product
+     *
+     * @param int[] $productIds
+     *
+     * @return bool
+     */
+    public function doAllConcreteProductsHaveAlternatives(array $productIds): bool
+    {
+        return ($this->getFactory()
+            ->createProductAlternativePropelQuery()
+            ->select(SpyProductAlternativeTableMap::COL_FK_PRODUCT)
+            ->filterByFkProduct_In($productIds)
+            ->groupByFkProduct()
+            ->count() === count($productIds));
     }
 
     /**

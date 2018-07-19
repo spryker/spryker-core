@@ -174,7 +174,7 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\ProductApplicableLabelAlternativePluginInterface[]
+     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface[]
      */
     protected function getProductApplicableLabelAlternativePlugins(): array
     {

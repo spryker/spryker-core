@@ -8,13 +8,13 @@
 namespace Spryker\Zed\ProductDiscontinued\Communication\Plugin\ProductAlternative;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\ProductApplicableLabelAlternativePluginInterface;
+use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedBusinessFactory getFactory()
  * @method \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacadeInterface getFacade()
  */
-class DiscontinuedProductCheckLabelAlternativePlugin extends AbstractPlugin implements ProductApplicableLabelAlternativePluginInterface
+class DiscontinuedCheckAlternativeProductApplicablePlugin extends AbstractPlugin implements AlternativeProductApplicablePluginInterface
 {
     /**
      * {@inheritdoc}

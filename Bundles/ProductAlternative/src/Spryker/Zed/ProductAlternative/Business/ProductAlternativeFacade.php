@@ -71,15 +71,31 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      *
      * @api
      *
-     * @param int $idProduct
+     * @param int[] $productIds
      *
      * @return bool
      */
-    public function isProductApplicableForLabelAlternative(int $idProduct): bool
+    public function doAllConcreteProductsHaveAlternatives(array $productIds): bool
     {
         return $this->getFactory()
             ->createProductAlternativeReader()
-            ->isProductApplicableForLabelAlternative($idProduct);
+            ->doAllConcreteProductsHaveAlternatives($productIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function isAlternativeProductApplicable(int $idProductConcrete): bool
+    {
+        return $this->getFactory()
+            ->createProductAlternativeReader()
+            ->isAlternativeProductApplicable($idProductConcrete);
     }
 
     /**

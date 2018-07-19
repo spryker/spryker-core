@@ -100,12 +100,4 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
 
         return $container;
     }
-
-    /**
-     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\ProductApplicableLabelAlternativePluginInterface[]
-     */
-    protected function getProductConcreteDiscontinuedCheckPlugins()
-    {
-        return [];
-    }
 }
