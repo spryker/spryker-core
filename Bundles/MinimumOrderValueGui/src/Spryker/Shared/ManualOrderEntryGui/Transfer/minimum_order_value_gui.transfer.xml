@@ -5,5 +5,6 @@
 
     <transfer name="GlobalThreshold">
         <property name="storeCurrency" type="string" />
+        <property name="hardValue" type="int" />
     </transfer>
 </transfers>
