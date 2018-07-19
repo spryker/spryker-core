@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\ProductPackagingUnitStorage;
 
-class ProductPackagingUnitStorageConstants
+class ProductPackagingUnitStorageConfig
 {
     /**
      * Specification:
@@ -15,7 +15,7 @@ class ProductPackagingUnitStorageConstants
      *
      * @api
      */
-    const PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+    public const PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:
@@ -23,7 +23,7 @@ class ProductPackagingUnitStorageConstants
      *
      * @api
      */
-    const PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
+    public const PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 
     /**
      * Specification:
@@ -31,5 +31,5 @@ class ProductPackagingUnitStorageConstants
      *
      * @api
      */
-    const PRODUCT_PACKAGING_UNIT_RESOURCE_NAME = 'product_abstract_packaging';
+    public const PRODUCT_PACKAGING_UNIT_RESOURCE_NAME = 'product_abstract_packaging';
 }

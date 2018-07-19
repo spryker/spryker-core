@@ -62,7 +62,7 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT] = function (Container $container) {
+        $container[static::PROPEL_QUERY_PRODUCT] = function () {
             return SpyProductQuery::create();
         };
 
