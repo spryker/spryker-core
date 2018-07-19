@@ -24,34 +24,37 @@ use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPac
 
 class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    protected const PRODUCTS_HEAP_LIMIT = 500;
-    protected const CONCRETE_PRODUCT_ID = 'CONCRETE_PRODUCT_ID';
-    protected const ABSTRACT_PRODUCT_ID = 'ABSTRACT_PRODUCT_ID';
+    protected const PRODUCT_HEAP_LIMIT = 500;
+    protected const PRODUCT_CONCRETE_ID = 'PRODUCT_CONCRETE_ID';
+    protected const PRODUCT_ABSTRACT_ID = 'PRODUCT_ABSTRACT_ID';
 
     /**
-     * @var array
+     * @var int[] Keys are product packaging unit type names.
      */
-    protected static $productPackagingUnitTypeHeap = [];
+    protected static $idProductPackagingUnitTypeHeap = [];
 
     /**
-     * @var array
+     * @var array Keys are product SKUs, values are a set of product abstract ID and product concrete ID.
      */
-    protected static $productsHeap = [];
+    protected static $productHeap = [];
 
     /**
      * @var int
      */
-    protected static $productsHeapSize = 0;
+    protected static $productHeapSize = 0;
 
     /**
      * ProductPackagingUnitWriterStep constructor.
      */
     public function __construct()
     {
-        $this->initProductPackagingUnitTypeHeap();
+        $this->initIdProductPackagingUnitTypeHeap();
     }
 
     /**
+     * @module Product
+     * @module ProductPackagingUnit
+     *
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @return void
@@ -67,12 +70,15 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
             ->useProductPackagingUnitTypeQuery(null, Criteria::LEFT_JOIN)
                 ->filterByName($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_TYPE_NAME])
             ->endUse()
-            ->findOne();
+            ->leftJoinWithSpyProductPackagingUnitAmount()
+            ->find()
+            ->getFirst();
 
         if ($productPackagingUnitEntity === null) {
             $productPackagingUnitEntity = new SpyProductPackagingUnit();
         }
-        $productConcreteId = $this->getProductConcreteIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]);
+
+        $productConcreteId = $this->getIdProductBySku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]);
         $this->persistLeadProduct($dataSet, $productConcreteId);
 
         $productPackagingUnitEntity
@@ -81,14 +87,14 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
         if ($productPackagingUnitEntity->isNew()) {
             $productPackagingUnitEntity
                 ->setFkProduct($productConcreteId)
-                ->setFkProductPackagingUnitType($this->getproductPackagingUnitTypeIdByname($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_TYPE_NAME]));
+                ->setFkProductPackagingUnitType($this->getIdProductPackagingUnitTypeByName($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_TYPE_NAME]));
         }
 
         $productPackagingUnitEntity->save();
 
         $this->persistAmount($dataSet, $productPackagingUnitEntity);
 
-        $this->addPublishEvents(ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_PUBLISH, $this->getProductAbstractIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]));
+        $this->addPublishEvents(ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_PUBLISH, $this->getIdProductAbstractByProductSku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]));
     }
 
     /**
@@ -103,8 +109,8 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
             return;
         }
 
-        $productPackagingLeadProductEntity = SpyProductPackagingLeadProductQuery::create()
-            ->filterByFkProductAbstract($this->getProductAbstractIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]))
+        $productPackagingLeadProductEntity = $this->getProductPackagingLeadProductQuery()
+            ->filterByFkProductAbstract($this->getIdProductAbstractByProductSku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]))
             ->findOneOrCreate();
 
         $productPackagingLeadProductEntity
@@ -204,61 +210,61 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      *
      * @return int
      */
-    protected function getproductPackagingUnitTypeIdByname(string $name): int
+    protected function getIdProductPackagingUnitTypeByName(string $name): int
     {
-        if (isset(static::$productPackagingUnitTypeHeap[$name])) {
-            return static::$productPackagingUnitTypeHeap[$name];
+        if (isset(static::$idProductPackagingUnitTypeHeap[$name])) {
+            return static::$idProductPackagingUnitTypeHeap[$name];
         }
 
-        throw new EntityNotFoundException(sprintf("Product Packaging Unit Type '%s' not found", $name));
+        throw new EntityNotFoundException(sprintf("Product packaging unit type '%s' was not found", $name));
     }
 
     /**
-     * @param string $sku
+     * @param string $productSku
      *
      * @return int
      */
-    protected function getProductConcreteIdByConcreteSku(string $sku): int
+    protected function getIdProductBySku(string $productSku): int
     {
-        $this->getProductConcreteBySku($sku);
+        $this->addProductToProductHeapBySku($productSku);
 
-        return static::$productsHeap[$sku][static::CONCRETE_PRODUCT_ID];
+        return static::$productHeap[$productSku][static::PRODUCT_CONCRETE_ID];
     }
 
     /**
-     * @param string $sku
+     * @param string $productSku
      *
      * @return int
      */
-    protected function getProductAbstractIdByConcreteSku(string $sku): int
+    protected function getIdProductAbstractByProductSku(string $productSku): int
     {
-        $this->getProductConcreteBySku($sku);
+        $this->addProductToProductHeapBySku($productSku);
 
-        return static::$productsHeap[$sku][static::ABSTRACT_PRODUCT_ID];
+        return static::$productHeap[$productSku][static::PRODUCT_ABSTRACT_ID];
     }
 
     /**
-     * @param string $sku
+     * @param string $productSku
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
      * @return void
      */
-    protected function getProductConcreteBySku(string $sku): void
+    protected function addProductToProductHeapBySku(string $productSku): void
     {
-        if (isset(static::$productsHeap[$sku])) {
+        if (isset(static::$productHeap[$productSku])) {
             return;
         }
 
-        $productEntity = SpyProductQuery::create()
-            ->filterBySku($sku)
+        $productEntity = $this->getProductQuery()
+            ->filterBySku($productSku)
             ->findOne();
 
         if ($productEntity === null) {
-            throw new EntityNotFoundException(sprintf("Concrete Product with sku '%s' not found", $sku));
+            throw new EntityNotFoundException(sprintf("Product concrete with SKU '%s' was not found", $productSku));
         }
 
-        $this->cacheProductConcrete($productEntity);
+        $this->addProductToProductHeap($productEntity);
     }
 
     /**
@@ -266,39 +272,79 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      *
      * @return void
      */
-    protected function cacheProductConcrete(SpyProduct $productEntity): void
+    protected function addProductToProductHeap(SpyProduct $productEntity): void
     {
-        if (static::$productsHeapSize >= static::PRODUCTS_HEAP_LIMIT) {
-            static::$productsHeapSize = 0;
-            static::$productsHeap = [];
+        if (static::$productHeapSize >= static::PRODUCT_HEAP_LIMIT) {
+            $this->clearProductHeap();
         }
 
-        static::$productsHeapSize++;
-        static::$productsHeap[$productEntity->getSku()] = [
-            static::CONCRETE_PRODUCT_ID => $productEntity->getIdProduct(),
-            static::ABSTRACT_PRODUCT_ID => $productEntity->getFkProductAbstract(),
+        static::$productHeapSize++;
+        static::$productHeap[$productEntity->getSku()] = [
+            static::PRODUCT_CONCRETE_ID => $productEntity->getIdProduct(),
+            static::PRODUCT_ABSTRACT_ID => $productEntity->getFkProductAbstract(),
         ];
     }
 
     /**
      * @return void
      */
-    protected function initProductPackagingUnitTypeHeap()
+    protected function clearProductHeap()
     {
-        $productPackagingUnitTypeEntities = SpyProductPackagingUnitTypeQuery::create()->find();
+        static::$productHeapSize = 0;
+        static::$productHeap = [];
+    }
+
+    /**
+     * @return void
+     */
+    protected function initIdProductPackagingUnitTypeHeap()
+    {
+        $productPackagingUnitTypeEntities = $this->getProductPackagingUnitTypeQuery()->find();
 
         foreach ($productPackagingUnitTypeEntities as $packagingUnitTypeEntity) {
-            static::$productPackagingUnitTypeHeap[$packagingUnitTypeEntity->getName()] = $packagingUnitTypeEntity->getIdProductPackagingUnitType();
+            static::$idProductPackagingUnitTypeHeap[$packagingUnitTypeEntity->getName()] = $packagingUnitTypeEntity->getIdProductPackagingUnitType();
         }
 
         unset($productPackagingUnitTypeEntities);
     }
 
     /**
+     * @module ProductPackagingUnit
+     *
+     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery
+     */
+    protected function getProductPackagingLeadProductQuery(): SpyProductPackagingLeadProductQuery
+    {
+        return SpyProductPackagingLeadProductQuery::create();
+    }
+
+    /**
+     * @module Product
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function getProductQuery(): SpyProductQuery
+    {
+        return SpyProductQuery::create();
+    }
+
+    /**
+     * @module ProductPackagingUnit
+     *
      * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery
      */
     protected function getProductPackagingUnitQuery(): SpyProductPackagingUnitQuery
     {
         return SpyProductPackagingUnitQuery::create();
+    }
+
+    /**
+     * @module ProductPackagingUnit
+     *
+     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery
+     */
+    protected function getProductPackagingUnitTypeQuery(): SpyProductPackagingUnitTypeQuery
+    {
+        return SpyProductPackagingUnitTypeQuery::create();
     }
 }
