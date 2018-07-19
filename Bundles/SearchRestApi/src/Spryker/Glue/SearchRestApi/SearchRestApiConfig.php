@@ -17,4 +17,5 @@ class SearchRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_INVALID_CURRENCY = 'Invalid currency';
 
     public const CURRENCY_STRING_PARAMETER = 'currency';
+    public const QUERY_STRING_PARAMETER = 'q';
 }
