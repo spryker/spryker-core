@@ -33,8 +33,13 @@ class OrderItemExpander implements OrderItemExpanderInterface
             ->getProductMeasurementUnit()
             ->getName();
 
+        $amountMeasurementUnitCode = $itemTransfer->getAmountSalesUnit()
+            ->getProductMeasurementUnit()
+            ->getCode();
+
         $salesOrderItemEntity->setAmountBaseMeasurementUnitName($amountBaseMeasurementUnitName);
         $salesOrderItemEntity->setAmountMeasurementUnitName($amountMeasurementUnitName);
+        $salesOrderItemEntity->setAmountMeasurementUnitCode($amountMeasurementUnitCode);
 
         $salesOrderItemEntity->setAmountMeasurementUnitPrecision($itemTransfer->getAmountSalesUnit()->getPrecision());
         $salesOrderItemEntity->setAmountMeasurementUnitConversion($itemTransfer->getAmountSalesUnit()->getConversion());
