@@ -220,11 +220,11 @@ class ProductPriceResolver implements ProductPriceResolverInterface
 
         foreach ($priceMap as $currencyCode => $prices) {
             foreach ($prices as $priceMode => $priceTypes) {
-                foreach ($priceTypes as $priceType => $priceAmount) {
-                    if ($priceMode === SharedPriceProductConfig::PRICE_DATA) {
-                        continue;
-                    }
+                if ($priceMode === SharedPriceProductConfig::PRICE_DATA) {
+                    continue;
+                }
 
+                foreach ($priceTypes as $priceType => $priceAmount) {
                     $index = implode(static::PRICE_KEY_SEPARATOR, [
                         $currencyCode,
                         $priceType,
