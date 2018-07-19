@@ -12,8 +12,6 @@ use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnit
 use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstallerInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpander;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpanderInterface;
-use Spryker\Zed\ProductMeasurementUnit\Business\Model\Item\ItemMeasurementUnitDataTranslationExpander;
-use Spryker\Zed\ProductMeasurementUnit\Business\Model\Item\ItemMeasurementUnitDataTranslationExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderExpander;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitGroupKeyGenerator;
@@ -22,6 +20,8 @@ use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUni
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitReaderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValue;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValueInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpander;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface;
@@ -118,11 +118,11 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\Item\ItemMeasurementUnitDataTranslationExpanderInterface
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpanderInterface
      */
-    public function createItemMeasurementUnitDataTranslationExpander(): ItemMeasurementUnitDataTranslationExpanderInterface
+    public function createItemMeasurementUnitDataTranslationExpander(): ProductMeasurementUnitTranslationExpanderInterface
     {
-        return new ItemMeasurementUnitDataTranslationExpander(
+        return new ProductMeasurementUnitTranslationExpander(
             $this->getGlossaryFacade()
         );
     }

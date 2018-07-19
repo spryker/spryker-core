@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductMeasurementUnit\Business\ProductMeasurementUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductMeasurementUnit\Communication\ProductMeasurementUnitCommunicationFactory getFactory()
  */
-class MeasurementUnitDataTranslationPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
+class QuantitySalesUnitTranslationItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
@@ -24,7 +24,7 @@ class MeasurementUnitDataTranslationPlugin extends AbstractPlugin implements Ite
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer)
     {
-        $this->getFacade()->expandItemsWithMeasurementUnitDataTranslation($cartChangeTransfer);
+        $this->getFacade()->expandCartChangeItemsWithProductMeasurementUnitTranslation($cartChangeTransfer);
 
         return $cartChangeTransfer;
     }

@@ -11,7 +11,9 @@ use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
@@ -64,8 +66,16 @@ class ProductMeasurementUnitBusinessTester extends Actor
         $sku,
         $quantity = 1
     ): CartChangeTransfer {
+        $productMeasurementUnit = (new ProductMeasurementUnitTransfer())
+            ->setName('SalesUnitName');
+        $productMeasurementBaseUnit = (new ProductMeasurementBaseUnitTransfer())
+            ->setProductMeasurementUnit(
+                (new ProductMeasurementUnitTransfer())->setName('BaseUnitName')
+            );
         $quantitySalesUnit = new ProductMeasurementSalesUnitTransfer();
-        $quantitySalesUnit->setIdProductMeasurementSalesUnit($idProductMeasurementSalesUnit);
+        $quantitySalesUnit->setIdProductMeasurementSalesUnit($idProductMeasurementSalesUnit)
+            ->setProductMeasurementUnit($productMeasurementUnit)
+            ->setProductMeasurementBaseUnit($productMeasurementBaseUnit);
         $cartChangeTransfer->addItem(
             (new ItemTransfer())
                 ->setSku($sku)

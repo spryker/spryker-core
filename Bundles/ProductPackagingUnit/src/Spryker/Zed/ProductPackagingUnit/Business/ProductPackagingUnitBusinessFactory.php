@@ -280,7 +280,9 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderItemExpander(): OrderItemExpanderInterface
     {
-        return new OrderItemExpander();
+        return new OrderItemExpander(
+            $this->getGlossaryFacade()
+        );
     }
 
     /**

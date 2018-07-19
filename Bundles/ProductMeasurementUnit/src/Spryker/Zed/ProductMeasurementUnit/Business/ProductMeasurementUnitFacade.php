@@ -169,10 +169,10 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItemsWithMeasurementUnitDataTranslation(CartChangeTransfer $cartChangeTransfer)
+    public function expandCartChangeItemsWithProductMeasurementUnitTranslation(CartChangeTransfer $cartChangeTransfer)
     {
         return $this->getFactory()
             ->createItemMeasurementUnitDataTranslationExpander()
-            ->expandItems($cartChangeTransfer);
+            ->expandCartChangeItems($cartChangeTransfer);
     }
 }
