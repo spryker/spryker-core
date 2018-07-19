@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\PriceProduct\ProductPriceResolver;
 
-
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
