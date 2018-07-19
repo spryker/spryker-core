@@ -10,11 +10,32 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
 
 class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityPreCheck implements ProductPackagingUnitCartPreCheckInterface
 {
     public const CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED = 'cart.pre.check.availability.failed.lead.product';
+
+    /**
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface
+     */
+    protected $productPackagingUnitReader;
+
+    /**
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
+     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
+     */
+    public function __construct(
+        ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade,
+        ProductPackagingUnitReaderInterface $productPackagingUnitReader
+    ) {
+        parent::__construct($availabilityFacade);
+        $this->productPackagingUnitReader = $productPackagingUnitReader;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -25,16 +46,18 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
         $cartErrorMessages = new ArrayObject();
         $this->assertQuote($cartChangeTransfer);
         $storeTransfer = $cartChangeTransfer->getQuote()->getStore();
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getAmountLeadProduct() || !$itemTransfer->getAmount()) {
+        $cartItems = clone $cartChangeTransfer->getItems();
+        foreach ($cartItems as $itemTransfer) {
+            if (!$itemTransfer->getAmount()) {
                 continue;
             }
 
-            $this->assertAmountPackagingUnitExpanded($itemTransfer);
+            $itemTransfer->requireSku();
+            $this->expandItemWithLeadProduct($itemTransfer);
 
             $isPackagingUnitLeadProductSellable = $this->isPackagingUnitLeadProductSellable(
                 $itemTransfer,
-                $cartChangeTransfer->getItems(),
+                $cartItems,
                 $storeTransfer
             );
 
@@ -59,6 +82,23 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
         $cartChangeTransfer->requireQuote();
 
         $cartChangeTransfer->getQuote()->requireStore();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function expandItemWithLeadProduct(ItemTransfer $itemTransfer)
+    {
+        $productPackagingLeadProductTransfer = $this->productPackagingUnitReader
+            ->findProductPackagingLeadProductByProductPackagingSku($itemTransfer->getSku());
+
+        if ($productPackagingLeadProductTransfer) {
+            $itemTransfer->setAmountLeadProduct($productPackagingLeadProductTransfer);
+        }
+
+        return $itemTransfer;
     }
 
     /**

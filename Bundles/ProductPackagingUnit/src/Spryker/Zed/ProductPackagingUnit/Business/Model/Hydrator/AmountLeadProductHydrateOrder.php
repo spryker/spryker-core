@@ -112,7 +112,7 @@ class AmountLeadProductHydrateOrder implements AmountLeadProductHydrateOrderInte
     {
         return (new ProductPackagingLeadProductTransfer())
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
-            ->setProduct($productConcreteTransfer);
+            ->setSku($productConcreteTransfer->getSku());
     }
 
     /**

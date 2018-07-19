@@ -72,7 +72,7 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
             return;
         }
 
-        $this->updateStockForLeadProduct($productPackagingLeadProductTransfer->getProduct()->getSku());
+        $this->updateStockForLeadProduct($productPackagingLeadProductTransfer->getSku());
     }
 
     /**

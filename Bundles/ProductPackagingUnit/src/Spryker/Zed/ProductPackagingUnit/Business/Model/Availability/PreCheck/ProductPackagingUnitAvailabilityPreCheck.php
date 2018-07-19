@@ -29,21 +29,6 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function assertAmountPackagingUnitExpanded(ItemTransfer $itemTransfer): void
-    {
-        $itemTransfer
-            ->requireSku()
-            ->requireAmountLeadProduct()
-            ->requireAmount();
-
-        $itemTransfer->getAmountLeadProduct();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $item
      * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
@@ -52,7 +37,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
      */
     protected function isPackagingUnitLeadProductSellable(ItemTransfer $item, Traversable $items, StoreTransfer $storeTransfer): bool
     {
-        $itemLeadProductSku = $item->getAmountLeadProduct()->getProduct()->getSku();
+        $itemLeadProductSku = $item->getAmountLeadProduct()->getSku();
         $accumulatedItemLeadProductQuantity = $this->getAccumulatedQuantityForLeadProduct($items, $itemLeadProductSku);
 
         return $this->isProductSellableForStore(
