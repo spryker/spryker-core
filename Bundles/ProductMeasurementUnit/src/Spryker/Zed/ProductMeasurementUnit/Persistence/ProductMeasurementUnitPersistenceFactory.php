@@ -58,7 +58,7 @@ class ProductMeasurementUnitPersistenceFactory extends AbstractPersistenceFactor
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function createSalesOrderItemQuery(): SpySalesOrderItemQuery
+    public function getSalesOrderItemQuery(): SpySalesOrderItemQuery
     {
         return $this->getProvidedDependency(ProductMeasurementUnitDependencyProvider::PROPEL_QUERY_SALES_ORDER_ITEM);
     }
