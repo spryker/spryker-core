@@ -18,10 +18,8 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
 {
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
     public const FACADE_PRODUCT_ALTERNATIVE = 'FACADE_PRODUCT_ALTERNATIVE';
-    public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
-    public const PRODUCT_CONCRETE_DISCONTINUED_CHECK_PLUGINS = 'PRODUCT_CONCRETE_DISCONTINUED_CHECK_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,7 +33,6 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
         $container = $this->addProductFacade($container);
         $container = $this->addProductAlternativeFacade($container);
         $container = $this->addLocaleFacade($container);
-        $container = $this->addProductConcreteDiscontinuedCheckPlugins($container);
 
         return $container;
     }
@@ -99,20 +96,6 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
             return new ProductAlternativeProductLabelConnectorToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductConcreteDiscontinuedCheckPlugins(Container $container)
-    {
-        $container[static::PRODUCT_CONCRETE_DISCONTINUED_CHECK_PLUGINS] = function () {
-            return $this->getProductConcreteDiscontinuedCheckPlugins();
         };
 
         return $container;
