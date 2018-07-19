@@ -176,7 +176,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     protected function getDataExpanderPlugins()
     {
         return [
-//            self::PLUGIN_PRODUCT_PRICE_PAGE_DATA => new PricePageDataExpanderPlugin(),
+            self::PLUGIN_PRODUCT_PRICE_PAGE_DATA => new PricePageDataExpanderPlugin(),
 //            self::PLUGIN_PRODUCT_CATEGORY_PAGE_DATA => new ProductCategoryPageDataExpanderPlugin(),
 //            self::PLUGIN_PRODUCT_IMAGE_PAGE_DATA => new ProductImagePageDataExpanderPlugin(),
         ];
@@ -188,7 +188,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     protected function getMapExpanderPlugins()
     {
         return [
-//            new PricePageMapExpanderPlugin(),
+            new PricePageMapExpanderPlugin(),
 //            new ProductCategoryPageMapExpanderPlugin(),
 //            new ProductImagePageMapExpanderPlugin(),
         ];

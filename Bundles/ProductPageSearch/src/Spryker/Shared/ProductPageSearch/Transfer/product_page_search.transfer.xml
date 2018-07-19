@@ -31,6 +31,12 @@
 
     <transfer name="ProductPageLoad">
         <property name="productAbstractIds" type="array" />
+        <property name="payloadTransfers" type="array" />
+    </transfer>
+
+    <transfer name="ProductPayload">
+        <property name="idProductAbstract" type="int" />
+        <property name="price" type="array" />
     </transfer>
 
 </transfers>

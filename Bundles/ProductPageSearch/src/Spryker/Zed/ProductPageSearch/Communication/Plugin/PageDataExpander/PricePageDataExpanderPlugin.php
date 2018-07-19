@@ -36,9 +36,10 @@ class PricePageDataExpanderPlugin extends AbstractPlugin implements ProductPageD
             ->setSku($productData['SpyProductAbstract']['sku'])
             ->setStoreName($productAbstractPageSearchTransfer->getStore());
 
-        //TODO SLOW PART
-        $price = (int)$this->getFactory()->getPriceProductFacade()->findPriceFor($priceFilter);
-        //TODO SLOW PART
+        //TODO REMOVE SLOW PART
+        $price = $productData['price'][$productAbstractPageSearchTransfer->getStore()];
+//        $price = (int)$this->getFactory()->getPriceProductFacade()->findPriceFor($priceFilter);
+        //TODO REMOVE SLOW PART
         $groupedStorePrices = $this->getGroupedStorePrices($productData['SpyProductAbstract']['id_product_abstract'], $productAbstractPageSearchTransfer->getStore());
 
         $productAbstractPageSearchTransfer->setPrice($price);

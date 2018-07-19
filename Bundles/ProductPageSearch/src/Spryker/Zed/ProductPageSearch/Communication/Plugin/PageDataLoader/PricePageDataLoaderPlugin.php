@@ -6,13 +6,12 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataLoader;
 
-
-use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
+use Generated\Shared\Transfer\ProductPayloadTransfer;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
-use Spryker\Shared\Kernel\Store;
+use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 
 class PricePageDataLoaderPlugin implements ProductPageDataLoaderPluginInterface
@@ -21,21 +20,13 @@ class PricePageDataLoaderPlugin implements ProductPageDataLoaderPluginInterface
     /**
      * @param ProductPageLoadTransfer $loadTransfer
      *
-     * @return array
+     * @return void
      */
-    public function loadProductPageData(ProductPageLoadTransfer $loadTransfer)
+    public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
     {
-        // Hacked
-        $idCurrentStore = 1;
-        $idDefaultCurrencyCode = 88;
+        $payloadTransfers = $this->setProductPrices($loadTransfer->getProductAbstractIds(), $loadTransfer->getPayloadTransfers());
 
-        $query = SpyPriceProductStoreQuery::create()
-            ->filterByFkStore($idCurrentStore)
-            ->filterByFkCurrency($idDefaultCurrencyCode)
-        ;
-        // TODO add price dimension logic
-
-        return [];
+        $loadTransfer->setPayloadTransfers($payloadTransfers);
     }
 
     /**
@@ -47,49 +38,46 @@ class PricePageDataLoaderPlugin implements ProductPageDataLoaderPluginInterface
     }
 
     /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param array $productAbstractIds
+     * @param array  $payloadTransfers
      *
-     * @return int|null
+     * @return array
      */
-    protected function findProductPrice(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?int
+    protected function setProductPrices(array $productAbstractIds, array $payloadTransfers): array
     {
+        //TODO check PriceProductCriteriaBuilder::getCurrencyFromFilter()
+        $idDefaultCurrencyCode = 93;
 
-        // Find PriceProductConcretes
-        $priceProductConcrete = $this->priceProductConcreteReader
-            ->findPriceForProductConcrete($sku, $priceProductCriteriaTransfer);
+        //TODO move this to query container
+        $query = SpyPriceProductStoreQuery::create()
+            ->filterByFkCurrency($idDefaultCurrencyCode)
+            ->joinWithStore()
+            ->usePriceProductQuery()
+                ->filterByFkProductAbstract_In($productAbstractIds)
+            ->endUse()
+            ->withColumn(SpyStoreTableMap::COL_NAME, 'store_name')
+            ->withColumn(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT, 'id_product_abstract')
+            ->withColumn(SpyPriceProductStoreTableMap::COL_GROSS_PRICE, 'GROSS_PRICE')
+            ->withColumn(SpyPriceProductStoreTableMap::COL_NET_PRICE, 'NET_PRICE')
+            ->select(['id_product_abstract', 'GROSS_PRICE', 'NET_PRICE'])
+        ;
 
-        // foreach priceProductConcretes check MoneyValue
-        if ($priceProductConcrete !== null) {
-            return $this->getPriceByPriceMode($priceProductConcrete->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
+        // TODO add price dimension plugin logic here
+        $prices = $query->find();
+
+        foreach ($prices as $price) {
+            if (isset($payloadTransfers[$price['id_product_abstract']])) {
+                // TODO PriceMode should come from PriceConfig
+                $priceWithStore = [];
+                if ($payloadTransfers[$price['id_product_abstract']]->getPrice()) {
+                    $priceWithStore = $payloadTransfers[$price['id_product_abstract']]->getPrice();
+                }
+                
+                $priceWithStore[$price['store_name']] = $price['GROSS_PRICE'];
+                $payloadTransfers[$price['id_product_abstract']]->setPrice($priceWithStore);
+            }
         }
 
-        if ($this->productFacade->hasProductConcrete($sku)) {
-            $sku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
-        }
-
-        $priceProductAbstract = $this->priceProductAbstractReader
-            ->findPriceForProductAbstract($sku, $priceProductCriteriaTransfer);
-
-        if (!$priceProductAbstract) {
-            return null;
-        }
-
-        return $this->getPriceByPriceMode($priceProductAbstract->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     * @param string $priceMode
-     *
-     * @return int|null
-     */
-    protected function getPriceByPriceMode(MoneyValueTransfer $moneyValueTransfer, string $priceMode): ?int
-    {
-        if ($priceMode === 'NET_MODE') {
-            return $moneyValueTransfer->getNetAmount();
-        }
-
-        return $moneyValueTransfer->getGrossAmount();
+        return $payloadTransfers;
     }
 }
