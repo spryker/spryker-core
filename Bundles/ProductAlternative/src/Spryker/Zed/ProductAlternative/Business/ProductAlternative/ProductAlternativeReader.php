@@ -78,10 +78,9 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
      */
     public function isProductApplicableForLabelAlternative(int $idProduct): bool
     {
-        //file_put_contents('test4444.txt', print_r($idProduct . '    ', 1), 8);
         foreach ($this->productApplicableLabelAlternativePluginInterface as $productApplicableLabelAlternativePlugin) {
             if ($productApplicableLabelAlternativePlugin->check($idProduct)
-                && $this->productAlternativeRepository->findProductAlternativeByIdProductAlternative($idProduct)
+                && $this->productAlternativeRepository->findProductAlternativeByProductConcreteId($idProduct)
             ) {
                 return true;
             }

@@ -18,7 +18,6 @@ use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -42,6 +41,27 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
         return $this->getFactory()
             ->createProductAlternativeMapper()
             ->mapProductAlternativeCollectionTransfer($productAlternativeEntities);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    public function findProductAlternativeByProductConcreteId(int $idProductConcrete): ?ProductAlternativeTransfer
+    {
+        $alternativeProductEntity = $this->getFactory()
+            ->createProductAlternativePropelQuery()
+            ->filterByFkProduct($idProductConcrete)
+            ->findOne();
+
+        if (!$alternativeProductEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createProductAlternativeMapper()
+            ->mapProductAlternativeTransfer($alternativeProductEntity);
     }
 
     /**

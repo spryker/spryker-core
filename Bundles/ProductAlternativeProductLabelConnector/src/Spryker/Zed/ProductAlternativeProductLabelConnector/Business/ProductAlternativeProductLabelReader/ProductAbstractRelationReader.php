@@ -88,7 +88,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
 
                 continue;
             }
-            if ($this->checkIfNeedToAddLabelAlternative($idProductLabel, $idProductAbstract, $concreteIds)) {
+            if ($this->toAddLabelAlternative($idProductLabel, $idProductAbstract, $concreteIds)) {
                 $idsToAssign[] = $idProductAbstract;
             }
         }
@@ -107,7 +107,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      *
      * @return bool
      */
-    protected function checkIfNeedToAddLabelAlternative(int $idProductLabel, int $idProductAbstract, array $concreteIds): bool
+    protected function toAddLabelAlternative(int $idProductLabel, int $idProductAbstract, array $concreteIds): bool
     {
         if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))
             && $this->areAllConcretesUnavailableOrDiscontinued($concreteIds)

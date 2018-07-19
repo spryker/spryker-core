@@ -75,7 +75,7 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
             return;
         }
 
-        if ($this->checkIfNeedToAddLabelAlternative($idProductLabel, $idProductAbstract, $concreteIds)) {
+        if ($this->toAddLabelAlternative($idProductLabel, $idProductAbstract, $concreteIds)) {
             $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
         }
     }
@@ -87,7 +87,7 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
      *
      * @return bool
      */
-    protected function checkIfNeedToAddLabelAlternative(int $idProductLabel, int $idProductAbstract, array $concreteIds): bool
+    protected function toAddLabelAlternative(int $idProductLabel, int $idProductAbstract, array $concreteIds): bool
     {
         if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))
             && $this->areAllConcretesUnavailableOrDiscontinued($concreteIds)

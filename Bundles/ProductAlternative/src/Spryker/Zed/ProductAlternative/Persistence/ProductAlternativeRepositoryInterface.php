@@ -22,6 +22,13 @@ interface ProductAlternativeRepositoryInterface
     public function getProductAlternativesForProductConcrete(int $idProductConcrete): ProductAlternativeCollectionTransfer;
 
     /**
+     * @param int $idProductConcrete
+     *
+     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    public function findProductAlternativeByProductConcreteId(int $idProductConcrete): ?ProductAlternativeTransfer;
+
+    /**
      * @param int $idProductAlternative
      *
      * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
