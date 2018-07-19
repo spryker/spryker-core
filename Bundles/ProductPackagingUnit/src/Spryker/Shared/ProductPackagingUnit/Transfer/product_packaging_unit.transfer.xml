@@ -32,7 +32,7 @@
 
     <transfer name="ProductPackagingLeadProduct">
         <property name="idProductAbstract" type="int"/>
-        <property name="sku" type="string"/>
+        <property name="product" type="ProductConcrete"/>
     </transfer>
 
     <transfer name="Item">

@@ -683,7 +683,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
         //Assert
         $this->assertSame($itemTransfer->getAmount() / $itemTransfer->getQuantity(), $salesOrderItemEntity->getAmount());
-        $this->assertSame($itemTransfer->getAmountLeadProduct()->getSku(), $salesOrderItemEntity->getAmountSku());
+        $this->assertSame($itemTransfer->getAmountLeadProduct()->getProduct()->getSku(), $salesOrderItemEntity->getAmountSku());
     }
 
     /**
@@ -908,7 +908,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
         foreach ($cartChange->getItems() as $itemTransfer) {
             $this->assertInstanceOf(ProductPackagingLeadProductTransfer::class, $itemTransfer->getAmountLeadProduct());
-            $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getAmountLeadProduct()->getSku());
+            $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getAmountLeadProduct()->getProduct()->getSku());
         }
     }
 }
