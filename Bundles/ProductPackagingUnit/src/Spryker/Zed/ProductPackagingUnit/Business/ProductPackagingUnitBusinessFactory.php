@@ -164,7 +164,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitCartPreCheck(): ProductPackagingUnitCartPreCheckInterface
     {
         return new ProductPackagingUnitCartPreCheck(
-            $this->getAvailabilityFacade()
+            $this->getAvailabilityFacade(),
+            $this->createProductPackagingUnitReader()
         );
     }
 
