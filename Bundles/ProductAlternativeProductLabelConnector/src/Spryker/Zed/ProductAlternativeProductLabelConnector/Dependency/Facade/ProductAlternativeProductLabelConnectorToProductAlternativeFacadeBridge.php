@@ -23,6 +23,14 @@ class ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge im
     }
 
     /**
+     * @return int[]
+     */
+    public function findProductAbstractIdsWhichConcreteHasAlternative(): array
+    {
+        return $this->productAlternativeFacade->findProductAbstractIdsWhichConcreteHasAlternative();
+    }
+
+    /**
      * @param int[] $productIds
      *
      * @return bool
@@ -33,10 +41,12 @@ class ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge im
     }
 
     /**
-     * @return int[]
+     * @param int $idProductConcrete
+     *
+     * @return bool
      */
-    public function findProductAbstractIdsWhichConcreteHasAlternative(): array
+    public function isAlternativeProductApplicable(int $idProductConcrete): bool
     {
-        return $this->productAlternativeFacade->findProductAbstractIdsWhichConcreteHasAlternative();
+        return $this->productAlternativeFacade->isAlternativeProductApplicable($idProductConcrete);
     }
 }

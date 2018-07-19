@@ -10,6 +10,11 @@ namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade;
 interface ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface
 {
     /**
+     * @return int[]
+     */
+    public function findProductAbstractIdsWhichConcreteHasAlternative(): array;
+
+    /**
      * @param int[] $productIds
      *
      * @return bool
@@ -17,7 +22,9 @@ interface ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInter
     public function doAllConcreteProductsHaveAlternatives(array $productIds): bool;
 
     /**
-     * @return int[]
+     * @param int $idProductConcrete
+     *
+     * @return bool
      */
-    public function findProductAbstractIdsWhichConcreteHasAlternative(): array;
+    public function isAlternativeProductApplicable(int $idProductConcrete): bool;
 }

@@ -65,6 +65,18 @@ interface ProductAlternativeFacadeInterface
 
     /**
      * Specification:
+     * - Checks if alternative products should be shown for product concrete.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function isAlternativeProductApplicable(int $idProductConcrete): bool;
+
+    /**
+     * Specification:
      * - Finds product abstract ids which concrete products has alternatives.
      *
      * @api

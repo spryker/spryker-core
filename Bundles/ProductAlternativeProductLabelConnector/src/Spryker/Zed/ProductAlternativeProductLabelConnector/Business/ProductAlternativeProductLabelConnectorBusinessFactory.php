@@ -22,7 +22,6 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProduc
 
 /**
  * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig getConfig()
- * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence\ProductAlternativeProductLabelConnectorRepositoryInterface getRepository()
  */
 class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBusinessFactory
 {

@@ -54,4 +54,11 @@ interface ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface
      * @return int[]
      */
     public function findActiveLabelIdsByIdProductAbstract(int $idsProductAbstract);
+
+    /**
+     * @param int $idProductLabel
+     *
+     * @return int[]
+     */
+    public function findProductAbstractRelationsByIdProductLabel(int $idProductLabel);
 }

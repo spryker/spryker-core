@@ -26,6 +26,13 @@ interface ProductAlternativeReaderInterface
     public function doAllConcreteProductsHaveAlternatives(array $productIds): bool;
 
     /**
+     * @param int $idProduct
+     *
+     * @return bool
+     */
+    public function isAlternativeProductApplicable(int $idProduct): bool;
+
+    /**
      * @return int[]
      */
     public function findProductAbstractIdsWhichConcreteHasAlternative(): array;

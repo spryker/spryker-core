@@ -67,9 +67,7 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
         }
 
         $idProductLabel = $productLabelTransfer->getIdProductLabel();
-        $concreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
-
-        if (!$this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($concreteIds)) {
+        if (!$this->isProductAlternativeLabelApplicable($idProductAbstract)) {
             $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
 
             return;
@@ -78,6 +76,27 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
         if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))) {
             $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
         }
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    protected function isProductAlternativeLabelApplicable(int $idProductAbstract): bool
+    {
+        $productConcreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
+        if (!$this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($productConcreteIds)) {
+            return false;
+        }
+
+        foreach ($productConcreteIds as $idProductConcrete) {
+            if (!$this->productAlternativeFacade->isAlternativeProductApplicable($idProductConcrete)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

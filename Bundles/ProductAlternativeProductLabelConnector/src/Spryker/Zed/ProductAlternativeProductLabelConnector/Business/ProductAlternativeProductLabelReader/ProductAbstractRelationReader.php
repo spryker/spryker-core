@@ -74,22 +74,17 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
      */
     protected function getRelationsData(ProductLabelTransfer $productLabelTransfer): array
     {
-        $idsToAssign = [];
-        $idsToDeAssign = [];
-
         $idProductLabel = $productLabelTransfer->getIdProductLabel();
+        $labeledProductAbstractIds = $this->productLabelFacade->findProductAbstractRelationsByIdProductLabel($idProductLabel);
+        $idsToAssign = [];
+        $idsToDeAssign = $labeledProductAbstractIds;
 
         foreach ($this->productAlternativeFacade->findProductAbstractIdsWhichConcreteHasAlternative() as $idProductAbstract) {
-            $concreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
-
-            if (!$this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($concreteIds)) {
-                $idsToDeAssign[] = $idProductAbstract;
-
-                continue;
-            }
-
-            if (!in_array($idProductLabel, $this->productLabelFacade->findActiveLabelIdsByIdProductAbstract($idProductAbstract))) {
-                $idsToAssign[] = $idProductAbstract;
+            if ($this->isProductAlternativeLabelApplicable($idProductAbstract)) {
+                if (!in_array($idProductAbstract, $labeledProductAbstractIds)) {
+                    $idsToAssign[] = $idProductAbstract;
+                }
+                $idsToDeAssign = array_diff($idsToDeAssign, [$idProductAbstract]);
             }
         }
 
@@ -108,6 +103,27 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         return $this->productLabelFacade->findLabelByLabelName(
             $this->config->getProductAlternativesLabelName()
         );
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    protected function isProductAlternativeLabelApplicable(int $idProductAbstract): bool
+    {
+        $productConcreteIds = $this->productFacade->findProductConcreteIdsByAbstractProductId($idProductAbstract);
+        if (!$this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($productConcreteIds)) {
+            return false;
+        }
+
+        foreach ($productConcreteIds as $idProductConcrete) {
+            if (!$this->productAlternativeFacade->isAlternativeProductApplicable($idProductConcrete)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
