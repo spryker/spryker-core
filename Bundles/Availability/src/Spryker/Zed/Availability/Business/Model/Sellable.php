@@ -90,8 +90,11 @@ class Sellable implements SellableInterface
     {
         $stockProductTransfers = $this->stockFacade->getStockProductsByIdProduct($idProductConcrete);
         $storeTransfer = $this->storeFacade->getCurrentStore();
+        if (!count($stockProductTransfers)) {
+            return false;
+        }
 
-        return $this->calculateStock($stockProductTransfers[0]->getSku(), $storeTransfer) <= 0;
+        return $this->calculateIsProductSellable($stockProductTransfers[0]->getSku(), 1, $storeTransfer);
     }
 
     /**

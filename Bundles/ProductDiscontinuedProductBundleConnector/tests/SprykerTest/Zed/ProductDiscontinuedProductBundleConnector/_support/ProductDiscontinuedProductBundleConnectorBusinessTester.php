@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductDiscontinuedProductBundleConnector;
 
 use Codeception\Actor;
+use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacadeInterface;
 
 /**
  * Inherited Methods
@@ -20,7 +21,8 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductDiscontinuedProductBundleConnectorFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -28,7 +30,11 @@ class ProductDiscontinuedProductBundleConnectorBusinessTester extends Actor
 {
     use _generated\ProductDiscontinuedProductBundleConnectorBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @return \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacadeInterface
+     */
+    public function getProductDiscontinued(): ProductDiscontinuedFacadeInterface
+    {
+        return $this->getLocator()->productDiscontinued()->facade();
+    }
 }

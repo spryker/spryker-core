@@ -27,6 +27,6 @@ class AvailabilityCheckAlternativeProductApplicablePlugin extends AbstractPlugin
      */
     public function check(int $idProduct): bool
     {
-        return $this->getFacade()->isProductConcreteAvailable($idProduct);
+        return !$this->getFacade()->isProductConcreteAvailable($idProduct);
     }
 }
