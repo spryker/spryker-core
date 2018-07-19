@@ -55,8 +55,6 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
                 continue;
             }
 
-            $itemTransfer->requireSku();
-
             $isPackagingUnitLeadProductSellable = $this->isPackagingUnitLeadProductSellable(
                 $itemTransfer,
                 $quoteTransfer->getItems(),
