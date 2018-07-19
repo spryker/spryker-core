@@ -176,13 +176,13 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
     protected function filterServerData(array $serverData): array
     {
         switch ($this->getConfig()->getServerVariablesFilterStrategy()) {
-            case ApiConstants::SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST:
+            case ApiConstants::API_ENV_SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST:
                 $serverData = array_intersect_key($serverData, array_flip($this->getConfig()->getServerVariablesWhitelist()));
                 break;
-            case ApiConstants::SERVER_VARIABLE_FILTER_STRATEGY_BLACKLIST:
+            case ApiConstants::API_ENV_SERVER_VARIABLE_FILTER_STRATEGY_BLACKLIST:
                 $serverData = array_diff_key($serverData, array_flip($this->getConfig()->getServerVariablesBlacklist()));
                 break;
-            case ApiConstants::SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK:
+            case ApiConstants::API_ENV_SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK:
                 $serverVariablesCallback = $this->getConfig()->getServerVariablesCallback();
                 $serverData = (array)$serverVariablesCallback($serverData);
                 break;
