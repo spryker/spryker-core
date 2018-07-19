@@ -220,7 +220,7 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @throw SkippedTestError
+     * @throws \PHPUnit\Framework\SkippedTestError
      *
      * @return void
      */
