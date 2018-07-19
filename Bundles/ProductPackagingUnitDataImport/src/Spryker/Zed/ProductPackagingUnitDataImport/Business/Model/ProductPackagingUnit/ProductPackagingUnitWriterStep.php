@@ -62,33 +62,33 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
 
         $productPackagingUnitEntity = $this->getProductPackagingUnitQuery()
             ->useProductQuery()
-                ->filterBySku($dataSet[ProductPackagingUnitDataSetInterface::CONCRETE_SKU])
+                ->filterBySku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU])
             ->endUse()
             ->useProductPackagingUnitTypeQuery(null, Criteria::LEFT_JOIN)
-                ->filterByName($dataSet[ProductPackagingUnitDataSetInterface::TYPE_NAME])
+                ->filterByName($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_TYPE_NAME])
             ->endUse()
             ->findOne();
 
         if ($productPackagingUnitEntity === null) {
             $productPackagingUnitEntity = new SpyProductPackagingUnit();
         }
-        $productConcreteId = $this->getProductConcreteIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::CONCRETE_SKU]);
+        $productConcreteId = $this->getProductConcreteIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]);
         $this->persistLeadProduct($dataSet, $productConcreteId);
 
         $productPackagingUnitEntity
-            ->setHasLeadProduct($dataSet[ProductPackagingUnitDataSetInterface::HAS_LEAD_PRODUCT]);
+            ->setHasLeadProduct($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_HAS_LEAD_PRODUCT]);
 
         if ($productPackagingUnitEntity->isNew()) {
             $productPackagingUnitEntity
                 ->setFkProduct($productConcreteId)
-                ->setFkProductPackagingUnitType($this->getproductPackagingUnitTypeIdByname($dataSet[ProductPackagingUnitDataSetInterface::TYPE_NAME]));
+                ->setFkProductPackagingUnitType($this->getproductPackagingUnitTypeIdByname($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_TYPE_NAME]));
         }
 
         $productPackagingUnitEntity->save();
 
         $this->persistAmount($dataSet, $productPackagingUnitEntity);
 
-        $this->addPublishEvents(ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_PUBLISH, $this->getProductAbstractIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::CONCRETE_SKU]));
+        $this->addPublishEvents(ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_PUBLISH, $this->getProductAbstractIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]));
     }
 
     /**
@@ -99,12 +99,12 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected function persistLeadProduct(DataSetInterface $dataSet, int $productConcreteId): void
     {
-        if (!$dataSet[ProductPackagingUnitDataSetInterface::IS_LEAD_PRODUCT]) {
+        if (!$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT]) {
             return;
         }
 
         $productPackagingLeadProductEntity = SpyProductPackagingLeadProductQuery::create()
-            ->filterByFkProductAbstract($this->getProductAbstractIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::CONCRETE_SKU]))
+            ->filterByFkProductAbstract($this->getProductAbstractIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]))
             ->findOneOrCreate();
 
         $productPackagingLeadProductEntity
@@ -119,11 +119,11 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected function normalizeDataSet(DataSetInterface $dataSet): DataSetInterface
     {
-        $dataSet[ProductPackagingUnitDataSetInterface::IS_LEAD_PRODUCT] = (bool)$dataSet[ProductPackagingUnitDataSetInterface::IS_LEAD_PRODUCT];
-        $dataSet[ProductPackagingUnitDataSetInterface::HAS_LEAD_PRODUCT] = (bool)$dataSet[ProductPackagingUnitDataSetInterface::HAS_LEAD_PRODUCT];
+        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT] = (bool)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT];
+        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_HAS_LEAD_PRODUCT] = (bool)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_HAS_LEAD_PRODUCT];
 
-        if ($dataSet[ProductPackagingUnitDataSetInterface::IS_LEAD_PRODUCT]) {
-            $dataSet[ProductPackagingUnitDataSetInterface::HAS_LEAD_PRODUCT] = false;
+        if ($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT]) {
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_HAS_LEAD_PRODUCT] = false;
         }
 
         $dataSet = $this->normalizeAmount($dataSet);
@@ -138,26 +138,26 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected function normalizeAmount(DataSetInterface $dataSet): DataSetInterface
     {
-        $isVariable = (bool)$dataSet[ProductPackagingUnitDataSetInterface::IS_VARIABLE];
-        $dataSet[ProductPackagingUnitDataSetInterface::IS_VARIABLE] = $isVariable;
+        $isVariable = (bool)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE];
+        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE] = $isVariable;
 
-        $dataSet[ProductPackagingUnitDataSetInterface::DEFAULT_AMOUNT] = (int)$dataSet[ProductPackagingUnitDataSetInterface::DEFAULT_AMOUNT];
-        $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MIN] = (int)$dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MIN];
-        $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MAX] = (int)$dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MAX];
-        $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_INTERVAL] = (int)$dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_INTERVAL];
+        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] = (int)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT];
+        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN] = (int)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN];
+        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MAX] = (int)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MAX];
+        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] = (int)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL];
 
-        if ($isVariable && $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_INTERVAL] === 0) {
-            $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_INTERVAL] = 1;
+        if ($isVariable && $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] === 0) {
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] = 1;
         }
 
-        if ($isVariable && $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MIN] === 0) {
-            $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MIN] = $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_INTERVAL];
+        if ($isVariable && $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN] === 0) {
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN] = $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL];
         }
 
         if (!$isVariable) {
-            $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MIN] = null;
-            $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MAX] = null;
-            $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_INTERVAL] = null;
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN] = null;
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MAX] = null;
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] = null;
         }
 
         return $dataSet;
@@ -171,12 +171,12 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected function persistAmount(DataSetInterface $dataSet, SpyProductPackagingUnit $productPackagingUnitEntity): void
     {
-        $haveAmount = $dataSet[ProductPackagingUnitDataSetInterface::DEFAULT_AMOUNT] > 1 ||
-            $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MIN] > 0 ||
-            $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MAX] > 0 ||
-            $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_INTERVAL] > 0;
+        $haveAmount = $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] > 1 ||
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN] > 0 ||
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MAX] > 0 ||
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] > 0;
 
-        if (!$haveAmount || $dataSet[ProductPackagingUnitDataSetInterface::IS_LEAD_PRODUCT]) {
+        if (!$haveAmount || $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT]) {
             return;
         }
 
@@ -189,11 +189,11 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
         }
 
         $productPackagingUnitAmountEntity
-            ->setIsVariable($dataSet[ProductPackagingUnitDataSetInterface::IS_VARIABLE])
-            ->setDefaultAmount($dataSet[ProductPackagingUnitDataSetInterface::DEFAULT_AMOUNT])
-            ->setAmountMin($dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MIN])
-            ->setAmountMax($dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MAX])
-            ->setAmountInterval($dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_INTERVAL])
+            ->setIsVariable($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE])
+            ->setDefaultAmount($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT])
+            ->setAmountMin($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN])
+            ->setAmountMax($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MAX])
+            ->setAmountInterval($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL])
             ->save();
     }
 
