@@ -137,7 +137,7 @@ class ApiConfig extends AbstractBundleConfig
      */
     public function getServerVariablesFilterStrategy(): string
     {
-        return $this->get(ApiConstants::ENV_SERVER_VARIABLE_FILTER_STRATEGY);
+        return $this->get(ApiConstants::ENV_SERVER_VARIABLE_FILTER_STRATEGY, ApiConstants::ENV_SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK);
     }
 
     /**
@@ -145,7 +145,7 @@ class ApiConfig extends AbstractBundleConfig
      */
     public function getServerVariablesWhitelist(): array
     {
-        return $this->get(ApiConstants::ENV_SERVER_VARIABLE_WHITELIST);
+        return $this->get(ApiConstants::ENV_SERVER_VARIABLE_WHITELIST, ['REQUEST_URI']);
     }
 
     /**
@@ -153,7 +153,7 @@ class ApiConfig extends AbstractBundleConfig
      */
     public function getServerVariablesBlacklist(): array
     {
-        return $this->get(ApiConstants::ENV_SERVER_VARIABLE_BLACKLIST);
+        return $this->get(ApiConstants::ENV_SERVER_VARIABLE_BLACKLIST, []);
     }
 
     /**
@@ -161,6 +161,8 @@ class ApiConfig extends AbstractBundleConfig
      */
     public function getServerVariablesCallback(): callable
     {
-        return $this->get(ApiConstants::ENV_SERVER_VARIABLE_CALLBACK);
+        return $this->get(ApiConstants::ENV_SERVER_VARIABLE_CALLBACK, function ($server) {
+            return $server;
+        });
     }
 }
