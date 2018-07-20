@@ -266,8 +266,8 @@ class OrderStateMachine implements OrderStateMachineInterface
         $orderItemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent($orderItems, $processes, $sourceStateBuffer);
         $this->triggerOnEnterEvents($orderItemsWithOnEnterEvent, $data);
 
-        $orderItemsWithTimeoutEvents = $this->filterItemsWithTimeoutEvent($orderItems, $processes);
-        $this->initTimeoutEvents($orderItemsWithTimeoutEvents);
+        $orderItemsWithTimeoutEvent = $this->filterItemsWithTimeoutEvent($orderItems, $processes);
+        $this->saveTimeoutEvents($orderItemsWithTimeoutEvent);
 
         return $this->returnData;
     }
@@ -952,10 +952,10 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @return void
      */
-    protected function initTimeoutEvents(array $orderItemsWithTimeoutEvent)
+    protected function saveTimeoutEvents(array $orderItemsWithTimeoutEvent)
     {
         foreach ($orderItemsWithTimeoutEvent as $eventId => $orderItems) {
-            $this->initTimeoutEvent($eventId, $orderItems);
+            $this->saveTimeoutEvent($eventId, $orderItems);
         }
     }
 
@@ -963,12 +963,12 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param string $eventId
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      *
-     * @return array
+     * @return void
      */
-    protected function initTimeoutEvent($eventId, array $orderItems)
+    protected function saveTimeoutEvent($eventId, array $orderItems)
     {
         if ($this->checkForEventRepetitions($eventId) === false) {
-            return [];
+            return;
         }
 
         $processes = $this->getProcesses($orderItems);
@@ -979,8 +979,6 @@ class OrderStateMachine implements OrderStateMachineInterface
         foreach ($orderGroup as $groupedOrderItems) {
             $this->saveOrderItemsTimeout($groupedOrderItems, $processes, $sourceStateBuffer);
         }
-
-        return $this->returnData;
     }
 
     /**
