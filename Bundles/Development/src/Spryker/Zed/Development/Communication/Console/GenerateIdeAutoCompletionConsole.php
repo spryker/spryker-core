@@ -45,9 +45,11 @@ class GenerateIdeAutoCompletionConsole extends Console
         ];
 
         foreach ($dependingCommands as $commandName) {
-            if ($this->getApplication()->has($commandName)) {
-                $this->runDependingCommand($commandName);
+            if (!$this->getApplication()->has($commandName)) {
+                $this->showCommandNotFoundMessage($commandName);
+                continue;
             }
+            $this->runDependingCommand($commandName);
 
             if ($this->hasError()) {
                 return $this->getLastExitCode();
@@ -55,5 +57,17 @@ class GenerateIdeAutoCompletionConsole extends Console
         }
 
         return $this->getLastExitCode();
+    }
+
+    /**
+     * @param string $commandName
+     *
+     * @return void
+     */
+    protected function showCommandNotFoundMessage(string $commandName): void
+    {
+        $message = "Can not find $commandName in your project." . PHP_EOL;
+        $message .= "You can fix this by adding the missing command to your project ConsoleDependencyProvider.";
+        $this->output->writeln("<error>$message</error>");
     }
 }
