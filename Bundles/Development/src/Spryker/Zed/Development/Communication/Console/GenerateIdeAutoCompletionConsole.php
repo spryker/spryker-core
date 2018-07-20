@@ -68,6 +68,6 @@ class GenerateIdeAutoCompletionConsole extends Console
     {
         $message = "Can not find $commandName in your project." . PHP_EOL;
         $message .= "You can fix this by adding the missing command to your project ConsoleDependencyProvider.";
-        $this->output->writeln("<error>$message</error>");
+        $this->output->writeln("<comment>$message</comment>");
     }
 }
