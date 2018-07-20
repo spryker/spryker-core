@@ -48,12 +48,17 @@ class OrderItemExpander implements OrderItemExpanderInterface
             ->getProductMeasurementUnit()
             ->getName();
 
+        $amountMeasurementUnitCode = $itemTransfer->getAmountSalesUnit()
+            ->getProductMeasurementUnit()
+            ->getCode();
+
         $salesOrderItemEntity->setAmountBaseMeasurementUnitName(
             $this->translate($amountBaseMeasurementUnitName)
         );
         $salesOrderItemEntity->setAmountMeasurementUnitName(
             $this->translate($amountMeasurementUnitName)
         );
+        $salesOrderItemEntity->setAmountMeasurementUnitCode($amountMeasurementUnitCode);
 
         $salesOrderItemEntity->setAmountMeasurementUnitPrecision($itemTransfer->getAmountSalesUnit()->getPrecision());
         $salesOrderItemEntity->setAmountMeasurementUnitConversion($itemTransfer->getAmountSalesUnit()->getConversion());
@@ -90,7 +95,7 @@ class OrderItemExpander implements OrderItemExpanderInterface
             return $salesOrderItemEntity;
         }
 
-        $packagingUnitLeadProductSku = $itemTransfer->getAmountLeadProduct()->getSku();
+        $packagingUnitLeadProductSku = $itemTransfer->getAmountLeadProduct()->getProduct()->getSku();
         $packagingUnitAmount = $itemTransfer->getAmount();
 
         $packagingUnitLeadProductAmount = (int)($packagingUnitAmount / $itemTransfer->getQuantity());

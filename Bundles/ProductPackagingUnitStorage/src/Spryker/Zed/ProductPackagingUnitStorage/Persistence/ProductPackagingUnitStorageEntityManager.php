@@ -17,8 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class ProductPackagingUnitStorageEntityManager extends AbstractEntityManager implements ProductPackagingUnitStorageEntityManagerInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer
      *
      * @return void
@@ -36,8 +34,6 @@ class ProductPackagingUnitStorageEntityManager extends AbstractEntityManager imp
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer $productAbstractPackagingStorageEntity
      *
      * @return void

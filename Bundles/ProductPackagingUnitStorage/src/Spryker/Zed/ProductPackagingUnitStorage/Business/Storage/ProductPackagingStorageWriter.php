@@ -34,14 +34,14 @@ class ProductPackagingStorageWriter implements ProductPackagingStorageWriterInte
     }
 
     /**
-     * @param array $idProductAbstracts
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function publish(array $idProductAbstracts): void
+    public function publish(array $productAbstractIds): void
     {
         $productAbstractPackagingTransfers = $this->productAbstractPackagingUnitStorageReader
-            ->getProductAbstractPackagingStorageTransfer($idProductAbstracts);
+            ->getProductAbstractPackagingStorageTransfer($productAbstractIds);
 
         $this->storeData($productAbstractPackagingTransfers);
     }
@@ -59,14 +59,14 @@ class ProductPackagingStorageWriter implements ProductPackagingStorageWriterInte
     }
 
     /**
-     * @param int[] $idProductAbstracts
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
-    public function unpublish(array $idProductAbstracts): void
+    public function unpublish(array $productAbstractIds): void
     {
         $productAbstractPackagingStorageEntities = $this->productAbstractPackagingUnitStorageReader
-            ->getProductAbstractPackagingUnitStorageEntities($idProductAbstracts);
+            ->getProductAbstractPackagingUnitStorageEntities($productAbstractIds);
 
         foreach ($productAbstractPackagingStorageEntities as $productAbstractPackagingStorageEntity) {
             $this->productPackagingUnitStorageEntityManager->deleteProductAbstractPackagingStorageEntity($productAbstractPackagingStorageEntity);

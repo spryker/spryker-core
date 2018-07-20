@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductPackagingUnitStorage\Dependency\QueryContainer\ProductPackagingUnitStorageToProductQueryContainerInterface;
 use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependencyProvider;
 
 /**
@@ -26,10 +26,10 @@ class ProductPackagingUnitStoragePersistenceFactory extends AbstractPersistenceF
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnitStorage\Dependency\QueryContainer\ProductPackagingUnitStorageToProductQueryContainerInterface
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function getProductQueryContainer(): ProductPackagingUnitStorageToProductQueryContainerInterface
+    public function getSpyProductQuery(): SpyProductQuery
     {
-        return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::QUERY_CONTAINER_PRODUCT);
+        return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::PROPEL_QUERY_PRODUCT);
     }
 }

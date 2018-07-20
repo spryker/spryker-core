@@ -29,21 +29,6 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return void
-     */
-    protected function assertAmountPackagingUnitExpanded(ItemTransfer $itemTransfer): void
-    {
-        $itemTransfer
-            ->requireSku()
-            ->requireAmountLeadProduct()
-            ->requireAmount();
-
-        $itemTransfer->getAmountLeadProduct();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $item
      * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
@@ -82,7 +67,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
                 continue;
             }
 
-            if ($item->getAmountLeadProduct()->getSku() === $leadProductSku) { // Item in cart has the searched lead product
+            if ($item->getAmountLeadProduct()->getProduct()->getSku() === $leadProductSku) { // Item in cart has the searched lead product
                 $quantity += $item->getAmount();
             }
         }

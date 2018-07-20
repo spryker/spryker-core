@@ -31,7 +31,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     protected $productPackagingUnitFacade;
 
     /**
-     * @uses \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES.
+     * @see \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES.
      *
      * default values for packaging unit storage values.
      */
@@ -53,15 +53,15 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     }
 
     /**
-     * @param int[] $idProductAbstracts
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer[]
      */
-    public function getProductAbstractPackagingStorageTransfer(array $idProductAbstracts): array
+    public function getProductAbstractPackagingStorageTransfer(array $productAbstractIds): array
     {
         $productAbstractPackagingStoreTransfers = [];
 
-        foreach ($idProductAbstracts as $idProductAbstract) {
+        foreach ($productAbstractIds as $idProductAbstract) {
             $packageProductConcreteEntityTransfers = $this->getPackageProductsByAbstractId($idProductAbstract);
 
             if ($packageProductConcreteEntityTransfers) {
@@ -78,14 +78,14 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     }
 
     /**
-     * @param int[] $idProductAbstracts
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function getProductAbstractPackagingUnitStorageEntities(array $idProductAbstracts): array
+    public function getProductAbstractPackagingUnitStorageEntities(array $productAbstractIds): array
     {
         return $this->productPackagingUnitStorageRepository
-            ->findProductAbstractPackagingUnitStorageByProductAbstractIds($idProductAbstracts);
+            ->findProductAbstractPackagingUnitStorageByProductAbstractIds($productAbstractIds);
     }
 
     /**
@@ -96,7 +96,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     protected function getPackageProductsByAbstractId(int $idProductAbstract): array
     {
         return $this->productPackagingUnitStorageRepository
-            ->findPackagingProductsByAbstractId($idProductAbstract);
+            ->findPackagingProductsByProductAbstractId($idProductAbstract);
     }
 
     /**

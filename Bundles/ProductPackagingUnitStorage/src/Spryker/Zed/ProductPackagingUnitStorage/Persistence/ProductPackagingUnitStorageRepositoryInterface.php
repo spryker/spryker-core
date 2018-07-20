@@ -10,18 +10,16 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 interface ProductPackagingUnitStorageRepositoryInterface
 {
     /**
-     * @api
-     *
-     * @param int[] $idProductAbstracts
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function findProductAbstractPackagingUnitStorageByProductAbstractIds(array $idProductAbstracts): array;
+    public function findProductAbstractPackagingUnitStorageByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
-    public function findPackagingProductsByAbstractId(int $idProductAbstract): array;
+    public function findPackagingProductsByProductAbstractId(int $idProductAbstract): array;
 }

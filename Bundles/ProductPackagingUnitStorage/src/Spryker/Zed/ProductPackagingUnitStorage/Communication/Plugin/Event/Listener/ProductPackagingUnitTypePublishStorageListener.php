@@ -27,21 +27,21 @@ class ProductPackagingUnitTypePublishStorageListener extends AbstractPlugin impl
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $idProductPackagingTypes = $this->getFactory()
+        $productPackagingTypeIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        $idProductAbstracts = $this->getFacade()->findProductAbstractIdsByProductPackagingUnitTypeIds($idProductPackagingTypes);
+        $productAbstractIds = $this->getFacade()->findProductAbstractIdsByProductPackagingUnitTypeIds($productPackagingTypeIds);
 
         $publishEvents = $this->getPublishEvents();
 
         if (in_array($eventName, $publishEvents)) {
-            $this->getFacade()->publishProductAbstractPackaging($idProductAbstracts);
+            $this->getFacade()->publishProductAbstractPackaging($productAbstractIds);
 
             return;
         }
 
-        $this->getFacade()->unpublishProductAbstractPackaging($idProductAbstracts);
+        $this->getFacade()->unpublishProductAbstractPackaging($productAbstractIds);
     }
 
     /**

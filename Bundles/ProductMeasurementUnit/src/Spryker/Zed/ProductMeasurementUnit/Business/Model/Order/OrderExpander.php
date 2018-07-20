@@ -72,7 +72,10 @@ class OrderExpander implements OrderExpanderInterface
         $productMeasurementBaseUnitTransfer = $this->createProductMeasurementBaseUnitTransfer($spySalesOrderItemEntityTransfer);
         $productMeasurementSalesUnitTransfer->setProductMeasurementBaseUnit($productMeasurementBaseUnitTransfer);
 
-        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($spySalesOrderItemEntityTransfer->getQuantityMeasurementUnitName());
+        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer(
+            $spySalesOrderItemEntityTransfer->getQuantityMeasurementUnitName(),
+            $spySalesOrderItemEntityTransfer->getQuantityMeasurementUnitCode()
+        );
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 
         return $productMeasurementSalesUnitTransfer;
@@ -80,13 +83,18 @@ class OrderExpander implements OrderExpanderInterface
 
     /**
      * @param string|null $productMeasurementUnitName
+     * @param string|null $productMeasurementUnitCode
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
      */
-    protected function createProductMeasurementUnitTransfer(?string $productMeasurementUnitName = null): ProductMeasurementUnitTransfer
+    protected function createProductMeasurementUnitTransfer(?string $productMeasurementUnitName, ?string $productMeasurementUnitCode = null): ProductMeasurementUnitTransfer
     {
         $productMeasurementUnitTransfer = new ProductMeasurementUnitTransfer();
-        $productMeasurementUnitTransfer->setName($productMeasurementUnitName);
+        $productMeasurementUnitTransfer->setName($productMeasurementUnitName ?: '');
+
+        if ($productMeasurementUnitCode !== null) {
+            $productMeasurementUnitTransfer->setCode($productMeasurementUnitCode);
+        }
 
         return $productMeasurementUnitTransfer;
     }

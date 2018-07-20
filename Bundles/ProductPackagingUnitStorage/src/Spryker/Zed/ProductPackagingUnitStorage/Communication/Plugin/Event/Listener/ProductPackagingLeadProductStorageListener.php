@@ -28,19 +28,19 @@ class ProductPackagingLeadProductStorageListener extends AbstractPlugin implemen
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $idProductProductPackagingType = $this->getFactory()
+        $productAbstractIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyProductPackagingLeadProductTableMap::COL_FK_PRODUCT_ABSTRACT);
 
         $publishEvents = $this->getPublishEvents();
 
         if (in_array($eventName, $publishEvents)) {
-            $this->getFacade()->publishProductAbstractPackaging($idProductProductPackagingType);
+            $this->getFacade()->publishProductAbstractPackaging($productAbstractIds);
 
             return;
         }
 
-        $this->getFacade()->unpublishProductAbstractPackaging($idProductProductPackagingType);
+        $this->getFacade()->unpublishProductAbstractPackaging($productAbstractIds);
     }
 
     /**
