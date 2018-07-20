@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Synchronization\Business;
 
 use Codeception\Test\Unit;
 use Elastica\Exception\NotFoundException;
+use PHPUnit\Framework\SkippedTestError;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Synchronization\AvailabilitySynchronizationDataPlugin;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Synchronization\CategoryPageSynchronizationDataPlugin;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Synchronization\CategoryNodeSynchronizationDataPlugin;
@@ -65,6 +66,10 @@ use Spryker\Zed\UrlStorage\Communication\Plugin\Synchronization\UrlSynchronizati
  */
 class SynchronizationFacadeTest extends Unit
 {
+    protected const PARAM_PROJECT = 'PROJECT';
+
+    protected const PROJECT_SUITE = 'suite';
+
     /**
      * @var \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface
      */
@@ -215,16 +220,22 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
+     * @throws \PHPUnit\Framework\SkippedTestError
+     *
      * @return void
      */
     public function testExecuteResolvedPluginsBySources()
     {
+        if (!$this->isSuiteProject()) {
+            throw new SkippedTestError('Warning: not in suite environment');
+        }
+
         $container = new Container();
         $container[SynchronizationDependencyProvider::CLIENT_QUEUE] = function (Container $container) {
             $queueMock = $this->createQueueClientBridge();
             $synchronizationPlugins = $this->createSynchronizationDataPlugins();
 
-            if (count($synchronizationPlugins)) {
+            if (count($synchronizationPlugins) && $this->isSuiteProject()) {
                 $queueMock->expects($this->atLeastOnce())->method('sendMessages');
                 return $queueMock;
             }
@@ -240,6 +251,18 @@ class SynchronizationFacadeTest extends Unit
 
         $this->prepareFacade($container);
         $this->synchronizationFacade->executeResolvedPluginsBySources([]);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSuiteProject(): bool
+    {
+        if (getenv(static::PARAM_PROJECT) === static::PROJECT_SUITE) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
