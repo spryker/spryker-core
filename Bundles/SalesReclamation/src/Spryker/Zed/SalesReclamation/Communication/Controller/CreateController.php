@@ -53,7 +53,7 @@ class CreateController extends AbstractController
 
         if ($reclamationTransfer) {
             $this->addSuccessMessage(sprintf(
-                'Reclamation id:%s for order %s sucessfully created',
+                'Reclamation id:%s for order %s successfully created',
                 $reclamationTransfer->getIdSalesReclamation(),
                 $orderTransfer->getOrderReference()
             ));
