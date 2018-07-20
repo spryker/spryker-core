@@ -104,10 +104,11 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      */
     public function getIndexedProductConcreteIdToSkusByProductIds(array $productIds): array
     {
-        return $this->getFactory()
-            ->getProductPropelQuery()
-            ->filterByIdProduct_In($productIds)
-            ->addAsColumn(ProductConcreteTransfer::SKU, SpyProductTableMap::COL_SKU)
+        $productQuery = $this->getFactory()
+            ->getProductPropelQuery();
+        $productQuery->filterByIdProduct_In($productIds)
+            ->addAsColumn(ProductConcreteTransfer::SKU, SpyProductTableMap::COL_SKU);
+        return $productQuery
             ->select([SpyProductTableMap::COL_ID_PRODUCT, ProductConcreteTransfer::SKU])
             ->find()
             ->toArray(SpyProductTableMap::COL_ID_PRODUCT);
@@ -122,11 +123,11 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      */
     public function getIndexedProductAbstractIdToSkusByProductIds(array $productIds): array
     {
-        return $this->getFactory()
-            ->getProductAbstractPropelQuery()
-            ->filterByIdProductAbstract_In($productIds)
-            ->addAsColumn(ProductAbstractTransfer::SKU, SpyProductAbstractTableMap::COL_SKU)
-            ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductAbstractTransfer::SKU])
+        $productAbstractQuery = $this->getFactory()
+            ->getProductAbstractPropelQuery();
+        $productAbstractQuery->filterByIdProductAbstract_In($productIds)
+            ->addAsColumn(ProductAbstractTransfer::SKU, SpyProductAbstractTableMap::COL_SKU);
+        return $productAbstractQuery->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductAbstractTransfer::SKU])
             ->find()
             ->toArray(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
     }

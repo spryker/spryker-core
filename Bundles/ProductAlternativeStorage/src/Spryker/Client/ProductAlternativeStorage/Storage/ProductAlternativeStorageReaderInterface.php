@@ -14,7 +14,7 @@ interface ProductAlternativeStorageReaderInterface
     /**
      * @param string $concreteSku
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer|null
+     * @return \Generated\Shared\Transfer\ProductAlternativeStorageTransfer|null
      */
     public function findProductAlternativeStorage(string $concreteSku): ?ProductAlternativeStorageTransfer;
 }

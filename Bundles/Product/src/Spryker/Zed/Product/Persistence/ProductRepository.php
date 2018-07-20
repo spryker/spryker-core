@@ -41,8 +41,8 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         );
 
         $productAbstractQuery = $this->getFactory()
-            ->createProductAbstractQuery()
-            ->leftJoinSpyProductAbstractLocalizedAttributes()
+            ->createProductAbstractQuery();
+        $productAbstractQuery->leftJoinSpyProductAbstractLocalizedAttributes()
             ->addJoinCondition(
                 'SpyProductAbstractLocalizedAttributes',
                 sprintf('SpyProductAbstractLocalizedAttributes.fk_locale = %d', $localeTransfer->getIdLocale())
@@ -50,8 +50,8 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME)
             ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::KEY_FILTERED_PRODUCTS_RESULT)
             ->where('lower(' . SpyProductAbstractLocalizedAttributesTableMap::COL_NAME . ') like ?', '%' . mb_strtolower($search) . '%')
-            ->addOr($skuLikeCriteria)
-            ->limit($limit)
+            ->addOr($skuLikeCriteria);
+        $productAbstractQuery->limit($limit)
             ->select([
                 static::KEY_FILTERED_PRODUCTS_RESULT,
                 static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME,
@@ -79,8 +79,8 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         );
 
         $productConcreteQuery = $this->getFactory()
-            ->createProductQuery()
-            ->leftJoinSpyProductLocalizedAttributes()
+            ->createProductQuery();
+        $productConcreteQuery->leftJoinSpyProductLocalizedAttributes()
             ->addJoinCondition(
                 'SpyProductLocalizedAttributes',
                 sprintf('SpyProductLocalizedAttributes.fk_locale = %d', $localeTransfer->getIdLocale())
@@ -88,8 +88,8 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME)
             ->withColumn(SpyProductTableMap::COL_SKU, static::KEY_FILTERED_PRODUCTS_RESULT)
             ->where('lower(' . SpyProductLocalizedAttributesTableMap::COL_NAME . ') like ?', '%' . mb_strtolower($search) . '%')
-            ->addOr($skuLikeCriteria)
-            ->limit($limit)
+            ->addOr($skuLikeCriteria);
+        $productConcreteQuery->limit($limit)
             ->select([
                 static::KEY_FILTERED_PRODUCTS_RESULT,
                 static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME,
@@ -126,10 +126,11 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
     {
-        $productConcreteIds = $this->getFactory()
-            ->createProductQuery()
-            ->select([SpyProductTableMap::COL_ID_PRODUCT])
+        $productConcreteQuery = $this->getFactory()
+            ->createProductQuery();
+        $productConcreteIds = $productConcreteQuery
             ->filterByFkProductAbstract($idProductAbstract)
+            ->select([SpyProductTableMap::COL_ID_PRODUCT])
             ->find();
 
         if (!$productConcreteIds) {

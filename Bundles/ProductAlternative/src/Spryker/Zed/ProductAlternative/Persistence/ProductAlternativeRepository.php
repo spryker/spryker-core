@@ -76,9 +76,9 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     {
         return ($this->getFactory()
             ->createProductAlternativePropelQuery()
-            ->select(SpyProductAlternativeTableMap::COL_FK_PRODUCT)
             ->filterByFkProduct_In($productIds)
             ->groupByFkProduct()
+            ->select(SpyProductAlternativeTableMap::COL_FK_PRODUCT)
             ->count() === count($productIds));
     }
 
@@ -96,8 +96,10 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
         int $idProductAbstract,
         LocaleTransfer $localeTransfer
     ): ProductAlternativeListItemTransfer {
-        $productAbstractData = $this->prepareProductAbstractQuery($idProductAbstract, $localeTransfer)
-            ->clearSelectColumns()
+        $productAbstractQuery = $this->prepareProductAbstractQuery($idProductAbstract, $localeTransfer);
+        $productAbstractQuery->groupByIdProductAbstract()
+            ->clearSelectColumns();
+        $productAbstractData = $productAbstractQuery
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductAlternativeListItemTransfer::ID_PRODUCT)
             ->withColumn(SpyProductAbstractTableMap::COL_SKU, ProductAlternativeListItemTransfer::SKU)
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, ProductAlternativeListItemTransfer::NAME)
@@ -108,7 +110,6 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
                  ProductAlternativeListItemTransfer::NAME,
                  ProductAlternativeListItemTransfer::CATEGORIES,
             ])
-            ->groupByIdProductAbstract()
             ->findOne();
 
         return $this->getFactory()
@@ -129,9 +130,10 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
         int $idProduct,
         LocaleTransfer $localeTransfer
     ): ProductAlternativeListItemTransfer {
-        $productConcreteData = $this->prepareProductQuery($idProduct, $localeTransfer)
-            ->clearSelectColumns()
-            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, ProductAlternativeListItemTransfer::ID_PRODUCT)
+        $productConcreteQuery = $this->prepareProductQuery($idProduct, $localeTransfer);
+        $productConcreteQuery->groupByIdProduct()
+            ->clearSelectColumns();
+        $productConcreteData = $productConcreteQuery->withColumn(SpyProductTableMap::COL_ID_PRODUCT, ProductAlternativeListItemTransfer::ID_PRODUCT)
             ->withColumn(SpyProductTableMap::COL_SKU, ProductAlternativeListItemTransfer::SKU)
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductAlternativeListItemTransfer::NAME)
             ->withColumn('GROUP_CONCAT(' . SpyCategoryAttributeTableMap::COL_NAME . ')', ProductAlternativeListItemTransfer::CATEGORIES)
@@ -143,7 +145,6 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
                 ProductAlternativeListItemTransfer::CATEGORIES,
                 ProductAlternativeListItemTransfer::STATUS,
             ])
-            ->groupByIdProduct()
             ->findOne();
 
         return $this->getFactory()
@@ -162,8 +163,8 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     protected function prepareProductQuery(int $idProduct, LocaleTransfer $localeTransfer): SpyProductQuery
     {
         $productQuery = $this->getFactory()
-            ->createProductPropelQuery()
-            ->filterByIdProduct($idProduct)
+            ->createProductPropelQuery();
+        $productQuery->filterByIdProduct($idProduct)
             ->joinSpyProductLocalizedAttributes(null, Criteria::LEFT_JOIN)
             ->addJoinCondition(
                 'SpyProductLocalizedAttributes',
@@ -211,8 +212,8 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     protected function prepareProductAbstractQuery(int $idProductAbstract, LocaleTransfer $localeTransfer): SpyProductAbstractQuery
     {
         $productAbstractQuery = $this->getFactory()
-            ->createProductAbstractPropelQuery()
-            ->filterByIdProductAbstract($idProductAbstract)
+            ->createProductAbstractPropelQuery();
+        $productAbstractQuery->filterByIdProductAbstract($idProductAbstract)
             ->joinSpyProductAbstractLocalizedAttributes(null, Criteria::LEFT_JOIN)
             ->addJoinCondition(
                 'SpyProductAbstractLocalizedAttributes',
@@ -256,7 +257,6 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     {
         return $this->getFactory()
             ->createProductAlternativePropelQuery()
-            ->leftJoinProductConcrete()
             ->useProductConcreteQuery()
                 ->groupByFkProductAbstract()
             ->endUse()

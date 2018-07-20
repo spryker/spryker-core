@@ -27,15 +27,17 @@ class ProductDiscontinuedProductBundleConnectorRepository extends AbstractReposi
      */
     public function findRelatedBundleProductsIds(int $idProductDiscontinue): array
     {
-        $productIds = $this->getFactory()
-            ->createProductDiscontinuedPropelQuery()
+        $productDiscontinuedPropelQuery = $this->getFactory()
+            ->createProductDiscontinuedPropelQuery();
+        $productDiscontinuedPropelQuery
             ->filterByIdProductDiscontinued($idProductDiscontinue)
             ->addJoin(
                 SpyProductDiscontinuedTableMap::COL_FK_PRODUCT,
                 SpyProductBundleTableMap::COL_FK_BUNDLED_PRODUCT,
                 Criteria::LEFT_JOIN
             )
-            ->addAsColumn(ProductDiscontinuedTransfer::FK_PRODUCT, SpyProductBundleTableMap::COL_FK_PRODUCT)
+            ->addAsColumn(ProductDiscontinuedTransfer::FK_PRODUCT, SpyProductBundleTableMap::COL_FK_PRODUCT);
+        $productIds = $productDiscontinuedPropelQuery
             ->select([ProductDiscontinuedTransfer::FK_PRODUCT])
             ->find()
             ->toArray();
