@@ -12,6 +12,7 @@ use Spryker\Zed\Cart\Business\Model\QuoteChangeObserver;
 use Spryker\Zed\Cart\Business\Model\QuoteChangeObserverInterface;
 use Spryker\Zed\Cart\Business\Model\QuoteValidator;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
+use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -56,9 +57,12 @@ class CartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
      */
-    public function createStorageProvider()
+    public function createStorageProvider(): StorageProviderInterface
     {
-        return new NonPersistentProvider();
+        return new NonPersistentProvider(
+            $this->getCartAddItemStrategies(),
+            $this->getCartRemoveItemStrategies()
+        );
     }
 
     /**
@@ -139,5 +143,21 @@ class CartBusinessFactory extends AbstractBusinessFactory
     protected function getQuoteChangeObserverPlugins(): array
     {
         return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_QUOTE_CHANGE_OBSERVER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemOperationStrategyInterface[]
+     */
+    protected function getCartAddItemStrategies(): array
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::CART_ADD_ITEM_STRATEGIES);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemOperationStrategyInterface[]
+     */
+    protected function getCartRemoveItemStrategies(): array
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::CART_REMOVE_ITEM_STRATEGIES);
     }
 }

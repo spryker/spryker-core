@@ -24,6 +24,8 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     const CART_PRE_RELOAD_PLUGINS = 'cart pre reload plugins';
     const CART_TERMINATION_PLUGINS = 'CART_TERMINATION_PLUGINS';
     const PLUGINS_QUOTE_CHANGE_OBSERVER = 'PLUGINS_QUOTE_CHANGE_OBSERVER';
+    const CART_ADD_ITEM_STRATEGIES = 'CART_ADD_ITEM_STRATEGIES';
+    const CART_REMOVE_ITEM_STRATEGIES = 'CART_REMOVE_ITEM_STRATEGIES';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -41,6 +43,8 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPreReloadPlugins($container);
         $container = $this->addTerminationPlugins($container);
         $container = $this->addQuoteChangeObserverPlugins($container);
+        $container = $this->addCartAddItemStrategies($container);
+        $container = $this->addCartRemoveItemStrategies($container);
 
         return $container;
     }
@@ -168,6 +172,34 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface[]
+     */
+    protected function addCartAddItemStrategies(Container $container): Container
+    {
+        $container[static::CART_ADD_ITEM_STRATEGIES] = function (Container $container) {
+            return $this->getCartAddItemStrategies($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface[]
+     */
+    protected function addCartRemoveItemStrategies(Container $container): Container
+    {
+        $container[static::CART_REMOVE_ITEM_STRATEGIES] = function (Container $container) {
+            return $this->getCartRemoveItemStrategies($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
      */
     protected function getExpanderPlugins(Container $container)
@@ -231,6 +263,26 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface[]
      */
     protected function getQuoteChangeObserverPlugins(Container $container): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemOperationStrategyInterface[]
+     */
+    protected function getCartAddItemStrategies(Container $container): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemOperationStrategyInterface[]
+     */
+    protected function getCartRemoveItemStrategies(Container $container): array
     {
         return [];
     }

@@ -39,7 +39,7 @@ class NonPersistentProviderTest extends Unit
     protected function setUp()
     {
         parent::setUp();
-        $this->provider = new NonPersistentProvider();
+        $this->provider = new NonPersistentProvider([], []);
     }
 
     //@todo test with more then 1 item
