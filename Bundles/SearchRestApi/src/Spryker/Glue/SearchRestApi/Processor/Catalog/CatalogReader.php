@@ -155,7 +155,7 @@ class CatalogReader implements CatalogReaderInterface
     protected function getCurrency($restRequest): string
     {
         $currency = $this->getRequestParameter($restRequest, SearchRestApiConfig::CURRENCY_STRING_PARAMETER);
-        if ($currency === null) {
+        if (empty($currency)) {
             return $this->store->getDefaultCurrencyCode();
         }
 
@@ -175,7 +175,7 @@ class CatalogReader implements CatalogReaderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createInvalidCurrencyResponse()
+    protected function createInvalidCurrencyResponse(): RestResponseInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
