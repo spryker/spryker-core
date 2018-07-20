@@ -1007,8 +1007,6 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected function saveOrderItemsTimeout(array $orderItems, array $processes, array $sourceStateBuffer)
     {
         $currentTime = new DateTime('now');
-        $timeoutModel = clone $this->timeout;
-
         foreach ($orderItems as $orderItem) {
             $process = $processes[$orderItem->getProcess()->getName()];
 
@@ -1017,8 +1015,8 @@ class OrderStateMachine implements OrderStateMachineInterface
             $targetState = $process->getStateFromAllProcesses($targetStateId);
 
             if ($targetState->hasTimeoutEvent()) {
-                $timeoutModel->dropOldTimeout($process, $sourceStateId, $orderItem);
-                $timeoutModel->setNewTimeout($process, $orderItem, $currentTime);
+                $this->timeout->dropOldTimeout($process, $sourceStateId, $orderItem);
+                $this->timeout->setNewTimeout($process, $orderItem, $currentTime);
             }
         }
     }
