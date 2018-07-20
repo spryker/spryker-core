@@ -45,7 +45,9 @@ class GenerateIdeAutoCompletionConsole extends Console
         ];
 
         foreach ($dependingCommands as $commandName) {
-            $this->runDependingCommand($commandName);
+            if ($this->getApplication()->has($commandName)) {
+                $this->runDependingCommand($commandName);
+            }
 
             if ($this->hasError()) {
                 return $this->getLastExitCode();
