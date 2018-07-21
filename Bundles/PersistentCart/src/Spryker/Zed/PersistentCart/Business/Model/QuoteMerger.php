@@ -49,10 +49,10 @@ class QuoteMerger implements QuoteMergerInterface
      */
     protected function mergeItems(QuoteTransfer $targetQuote, QuoteTransfer $sourceQuote): QuoteTransfer
     {
-        $cartChangeTransfer = $this->createCartChangeTransfer($sourceQuote, $sourceQuote);
+        $cartChangeTransfer = $this->createCartChangeTransfer($targetQuote, $sourceQuote);
         $this->cartFacade->add($cartChangeTransfer);
 
-        return $targetQuote;
+        return $cartChangeTransfer->getQuote();
     }
 
     /**

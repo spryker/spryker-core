@@ -136,9 +136,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuoteMerger(): QuoteMergerInterface
     {
-        return new QuoteMerger(
-            $this->getCartFacade()
-        );
+        return new QuoteMerger($this->getCartFacade());
     }
 
     /**
