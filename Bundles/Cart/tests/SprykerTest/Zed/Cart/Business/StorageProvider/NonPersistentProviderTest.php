@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
+use SprykerTest\Zed\Cart\Business\Mocks\CartItemAddTripleStrategy;
 
 /**
  * Auto-generated group annotations
@@ -41,8 +42,6 @@ class NonPersistentProviderTest extends Unit
         parent::setUp();
         $this->provider = new NonPersistentProvider([], []);
     }
-
-    //@todo test with more then 1 item
 
     /**
      * @return void
@@ -303,6 +302,50 @@ class NonPersistentProviderTest extends Unit
         $change->setQuote($quoteTransfer);
 
         $this->provider->removeItems($change);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWithCustomCartAddItemStrategy(): void
+    {
+        $provider = new NonPersistentProvider([
+            new CartItemAddTripleStrategy(),
+        ], [
+        ]);
+
+        $existingItemId = '123';
+        $newItemId = '321';
+        $existingItemQuantity = 1;
+        $newFirstItemQuantity = 3;
+        $newSecondItemQuantity = 4;
+
+        $quoteTransfer = $this->createQuoteWithItem($existingItemId, $existingItemQuantity);
+        $orignalItemTransfer = $quoteTransfer->getItems()->offsetGet(0);
+
+        $newFirstItem = $this->createItem($newItemId, $newFirstItemQuantity);
+        $newSecondItem = $this->createItem($newItemId, $newSecondItemQuantity);
+        $change = new CartChangeTransfer();
+        $change->addItem($newFirstItem);
+        $change->addItem($newSecondItem);
+        $change->setQuote($quoteTransfer);
+
+        $changedCart = $provider->addItems($change);
+        $changedItems = $changedCart->getItems();
+        $this->assertCount(2, $changedItems);
+
+        $skuIndex = [];
+        foreach ($changedItems as $key => $changedItem) {
+            $skuIndex[$changedItem->getId()] = $key;
+        }
+
+        $addedItem = $changedItems[$skuIndex[$newItemId]];
+        $this->assertSame($newItemId, $addedItem->getId());
+        $this->assertSame(($newFirstItemQuantity + $newSecondItemQuantity) * 3, $addedItem->getQuantity());
+
+        $existingItem = $changedItems[$skuIndex[$existingItemId]];
+        $this->assertSame($existingItemId, $existingItem->getId());
+        $this->assertSame($existingItemQuantity, $existingItem->getQuantity());
     }
 
     /**
