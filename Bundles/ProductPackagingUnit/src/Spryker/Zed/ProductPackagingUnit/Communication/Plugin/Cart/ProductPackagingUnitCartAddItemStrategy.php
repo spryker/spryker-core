@@ -5,25 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Cart\Business\Mocks;
+namespace Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartItemOperationStrategyInterface;
 
-class CartItemAddTripleStrategy implements CartItemOperationStrategyInterface
+class ProductPackagingUnitCartAddItemStrategy extends ProductPackagingUnitAbstractCartItemOperationStrategy implements CartItemOperationStrategyInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isApplicaple(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): bool
-    {
-        return true;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -32,14 +21,14 @@ class CartItemAddTripleStrategy implements CartItemOperationStrategyInterface
      */
     public function excute(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $itemTransfer->setQuantity(
-            $itemTransfer->getQuantity() * 3
-        );
-
         foreach ($quoteTransfer->getItems() as $currentItemTransfer) {
             if ($this->getItemIdentifier($currentItemTransfer) === $this->getItemIdentifier($itemTransfer)) {
                 $currentItemTransfer->setQuantity(
                     $currentItemTransfer->getQuantity() + $itemTransfer->getQuantity()
+                );
+
+                $currentItemTransfer->setAmount(
+                    $currentItemTransfer->getAmount() + $itemTransfer->getAmount()
                 );
 
                 return $quoteTransfer;
@@ -49,15 +38,5 @@ class CartItemAddTripleStrategy implements CartItemOperationStrategyInterface
         $quoteTransfer->getItems()->append($itemTransfer);
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return string
-     */
-    protected function getItemIdentifier(ItemTransfer $itemTransfer)
-    {
-        return $itemTransfer->getGroupKey() ?: $itemTransfer->getSku();
     }
 }

@@ -59,16 +59,16 @@ class NonPersistentProvider implements StorageProviderInterface
      */
     protected function addItem(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer)
     {
+        $this->isValidQuantity($itemTransfer);
         foreach ($this->cartAddItemStrategies as $cartAddItemStrategy) {
             if ($cartAddItemStrategy->isApplicaple($itemTransfer, $quoteTransfer)) {
                 $cartAddItemStrategy->excute($itemTransfer, $quoteTransfer);
+
                 return;
             }
         }
 
-        $this->isValidQuantity($itemTransfer);
         $cartIndex = $this->createCartIndex($quoteTransfer->getItems());
-
         $itemIdentifier = $this->getItemIdentifier($itemTransfer);
         if (isset($cartIndex[$itemIdentifier])) {
             $this->increaseExistingItem($quoteTransfer->getItems(), $cartIndex[$itemIdentifier], $itemTransfer);
@@ -99,15 +99,16 @@ class NonPersistentProvider implements StorageProviderInterface
      */
     protected function removeItem(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer)
     {
+        $this->isValidQuantity($itemTransfer);
         foreach ($this->cartRemoveItemStrategies as $cartRemoveItemStrategy) {
             if ($cartRemoveItemStrategy->isApplicaple($itemTransfer, $quoteTransfer)) {
                 $cartRemoveItemStrategy->excute($itemTransfer, $quoteTransfer);
+
                 return;
             }
         }
-        $this->isValidQuantity($itemTransfer);
-        $cartIndex = $this->createCartIndex($quoteTransfer->getItems());
 
+        $cartIndex = $this->createCartIndex($quoteTransfer->getItems());
         $itemIdentifier = $this->getItemIdentifier($itemTransfer);
         if (isset($cartIndex[$itemIdentifier])) {
             $this->decreaseExistingItem($quoteTransfer->getItems(), $itemIdentifier, $itemTransfer, $cartIndex);
@@ -137,7 +138,7 @@ class NonPersistentProvider implements StorageProviderInterface
      */
     protected function getItemIdentifier(ItemTransfer $itemTransfer)
     {
-        return $itemTransfer->getGroupKey() ? $itemTransfer->getGroupKey() : $itemTransfer->getSku();
+        return $itemTransfer->getGroupKey() ?: $itemTransfer->getSku();
     }
 
     /**
@@ -153,7 +154,7 @@ class NonPersistentProvider implements StorageProviderInterface
         $existingItemTransfer = null;
         $itemIndex = null;
         foreach ($existingItems as $index => $currentItemTransfer) {
-            if ($currentItemTransfer->getGroupKey() === $itemIdentifier) {
+            if ($this->getItemIdentifier($currentItemTransfer) === $itemIdentifier) {
                 $existingItemTransfer = $currentItemTransfer;
                 $itemIndex = $index;
                 break;
