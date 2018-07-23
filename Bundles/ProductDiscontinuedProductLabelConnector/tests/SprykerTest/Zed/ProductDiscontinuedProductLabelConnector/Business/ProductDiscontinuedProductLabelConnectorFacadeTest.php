@@ -34,9 +34,11 @@ class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductsToAssignShouldReturnValidResults()
+    public function testFindProductsToAssignShouldReturnValidResults(): void
     {
         // Arrange
+        $this->tester->ensureTableProductDiscontinuedNoteIsEmpty();
+        $this->tester->ensureTableProductDiscontinuedIsEmpty();
         $this->tester->haveProductLabel([
             ProductLabelTransfer::NAME => self::TEST_DISCONTINUED_LABEL,
         ]);
@@ -61,7 +63,7 @@ class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAbstractProductWithDiscontinuedLabel()
+    public function testUpdateAbstractProductWithDiscontinuedLabel(): void
     {
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
