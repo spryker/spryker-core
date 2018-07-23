@@ -13,7 +13,7 @@ use Spryker\Shared\Kernel\Store;
 
 class SearchRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_CATALOG_CLIENT = 'CLIENT_CATALOG_CLIENT';
+    public const CLIENT_CATALOG = 'CLIENT_CATALOG';
     public const STORE = 'STORE';
 
     /**
@@ -36,7 +36,7 @@ class SearchRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCatalogClient(Container $container): Container
     {
-        $container[static::CLIENT_CATALOG_CLIENT] = function (Container $container) {
+        $container[static::CLIENT_CATALOG] = function (Container $container) {
             return new SearchRestApiToCatalogClientBridge($container->getLocator()->catalog()->client());
         };
 

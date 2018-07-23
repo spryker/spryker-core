@@ -20,5 +20,5 @@ interface SuggestionsResourceMapperInterface
     /**
      * @return array
      */
-    public function getSearchResponseDefaultStructure(): array;
+    public function getEmptySearchResponse(): array;
 }

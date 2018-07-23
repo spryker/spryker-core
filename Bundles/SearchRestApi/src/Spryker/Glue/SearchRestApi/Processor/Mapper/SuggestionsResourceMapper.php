@@ -43,7 +43,7 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
     /**
      * @return array
      */
-    public function getSearchResponseDefaultStructure(): array
+    public function getEmptySearchResponse(): array
     {
         return [
             static::SEARCH_RESPONSE_COMPLETION_KEY => [],

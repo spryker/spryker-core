@@ -141,7 +141,7 @@ class CatalogReader implements CatalogReaderInterface
     protected function createEmptyResponse(RestResponseInterface $response): RestResponseInterface
     {
         $resource = $this->suggestionsResourceMapper->mapSuggestionsResponseAttributesTransferToRestResponse(
-            $this->suggestionsResourceMapper->getSearchResponseDefaultStructure()
+            $this->suggestionsResourceMapper->getEmptySearchResponse()
         );
 
         return $response->addResource($resource);

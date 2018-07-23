@@ -9,6 +9,7 @@ namespace Spryker\Glue\SearchRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToCatalogClientInterface;
 use Spryker\Glue\SearchRestApi\Processor\Catalog\CatalogReader;
+use Spryker\Glue\SearchRestApi\Processor\Catalog\CatalogReaderInterface;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapper;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapperInterface;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SuggestionsResourceMapper;
@@ -22,7 +23,7 @@ class SearchRestApiFactory extends AbstractFactory
      */
     public function getCatalogClient(): SearchRestApiToCatalogClientInterface
     {
-        return $this->getProvidedDependency(SearchRestApiDependencyProvider::CLIENT_CATALOG_CLIENT);
+        return $this->getProvidedDependency(SearchRestApiDependencyProvider::CLIENT_CATALOG);
     }
 
     /**
@@ -54,9 +55,9 @@ class SearchRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\SearchRestApi\Processor\Catalog\CatalogReader
+     * @return \Spryker\Glue\SearchRestApi\Processor\Catalog\CatalogReaderInterface
      */
-    public function createCatalogReader(): CatalogReader
+    public function createCatalogReader(): CatalogReaderInterface
     {
         return new CatalogReader(
             $this->getCatalogClient(),
