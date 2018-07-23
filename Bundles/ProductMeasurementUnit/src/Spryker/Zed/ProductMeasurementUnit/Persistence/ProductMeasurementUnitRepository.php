@@ -158,14 +158,9 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      */
     public function querySalesOrderItemsByIdSalesOrder($idOrder): array
     {
-        $q = $this->getFactory()
-            ->getSalesOrderItemQuery();
-        $salesOrderItemEntities = $q
-            ->find();
-        $q = $this->getFactory()
+        $salesOrderItemEntities = $this->getFactory()
             ->getSalesOrderItemQuery()
-            ->filterByFkSalesOrder($idOrder);
-        $salesOrderItemEntities = $q
+            ->filterByFkSalesOrder($idOrder)
             ->find();
 
         $spySalesOrderItemEntityTransfers = [];

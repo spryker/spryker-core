@@ -313,4 +313,36 @@ class ProductMeasurementUnitFacadeTest extends Unit
 
         $this->assertInstanceOf(CartChangeTransfer::class, $cartChangeTransfer);
     }
+
+    /**
+     * @return void
+     */
+    public function testTranslateProductMeasurementSalesUnit(): void
+    {
+        // Assign
+        $code = 'MYCODE' . random_int(1, 100);
+        $productTransfer = $this->tester->haveProduct();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+
+        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+            $productTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+
+        $spyProductMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
+            $productTransfer->getIdProductConcrete(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+        );
+
+        $productMeasurementSalesUnitTransfer = $this->tester
+            ->createProductMeasurementSalesUnitTransfer($spyProductMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit());
+
+        $productMeasurementSalesUnitTransfer = $this->productMeasurementUnitFacade
+            ->translateProductMeasurementSalesUnit($productMeasurementSalesUnitTransfer);
+
+        $this->assertInstanceOf(ProductMeasurementSalesUnitTransfer::class, $productMeasurementSalesUnitTransfer);
+    }
 }
