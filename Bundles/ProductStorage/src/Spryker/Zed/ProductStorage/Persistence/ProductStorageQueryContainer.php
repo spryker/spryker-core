@@ -195,4 +195,16 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
             ->select(SpyProductTableMap::COL_ID_PRODUCT)
             ->filterByFkProductAbstract_In($productAbstractIds);
     }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryProducts()
+    {
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProduct();
+    }
 }

@@ -14,8 +14,24 @@ class UrlStorageConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return true;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getUrlSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getUrlRedirectSynchronizationPoolName(): ?string
+    {
+        return null;
     }
 }
