@@ -14,7 +14,7 @@ interface ProductPageDataLoaderPluginInterface
     /**
      * @param ProductPageLoadTransfer $loadTransfer
      *
-     * @return void
+     * @return ProductPageLoadTransfer
      */
     public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer);
 

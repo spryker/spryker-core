@@ -137,7 +137,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             ->setPayloadTransfers($payloadTransfers);
 
         foreach ($this->productPageDataLoaderPlugins as $productPageDataLoaderPlugin) {
-            $productPageDataLoaderPlugin->expandProductPageDataTransfer($productPageLoadTransfer);
+            $productPageLoadTransfer = $productPageDataLoaderPlugin->expandProductPageDataTransfer($productPageLoadTransfer);
         }
 
         $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);

@@ -7,26 +7,32 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataLoader;
 
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
-use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
-use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
-use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
-use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
+use Generated\Shared\Transfer\ProductPayloadTransfer;
+use Orm\Zed\ProductImage\Persistence\Base\SpyProductImageSet;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
-class ImagePageDataLoaderPlugin implements ProductPageDataLoaderPluginInterface
+/**
+ * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
+ */
+class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
 {
 
     /**
      * @param ProductPageLoadTransfer $loadTransfer
      *
-     * @return void
+     * @return ProductPageLoadTransfer
      */
     public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
     {
         $payloadTransfers = $this->setProductImages($loadTransfer->getProductAbstractIds(), $loadTransfer->getPayloadTransfers());
-
         $loadTransfer->setPayloadTransfers($payloadTransfers);
+
+        return $loadTransfer;
     }
 
     /**
@@ -39,45 +45,34 @@ class ImagePageDataLoaderPlugin implements ProductPageDataLoaderPluginInterface
 
     /**
      * @param array $productAbstractIds
-     * @param array  $payloadTransfers
+     * @param ProductPayloadTransfer[]  $payloadTransfers
      *
      * @return array
      */
     protected function setProductImages(array $productAbstractIds, array $payloadTransfers): array
     {
-        //TODO check PriceProductCriteriaBuilder::getCurrencyFromFilter()
-        $idDefaultCurrencyCode = 93;
-
-        //TODO move this to query container
-        $query = SpyPriceProductStoreQuery::create()
-            ->filterByFkCurrency($idDefaultCurrencyCode)
-            ->joinWithStore()
-            ->usePriceProductQuery()
-                ->filterByFkProductAbstract_In($productAbstractIds)
-                ->joinWithPriceType()
-            ->endUse()
-            ->withColumn(SpyStoreTableMap::COL_NAME, 'store_name')
-            ->withColumn(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT, 'id_product_abstract')
-            ->withColumn(SpyPriceProductStoreTableMap::COL_GROSS_PRICE, 'GROSS_PRICE')
-            ->withColumn(SpyPriceProductStoreTableMap::COL_NET_PRICE, 'NET_PRICE')
-            ->withColumn(SpyPriceTypeTableMap::COL_NAME, 'price_type')
-            ->select(['id_product_abstract', 'GROSS_PRICE', 'NET_PRICE', 'price_type'])
+        $query = SpyProductImageSetQuery::create()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->joinWithSpyProductImageSetToProductImage()
+            ->joinWith('SpyProductImageSetToProductImage.SpyProductImage')
         ;
 
-        $prices = $query->find();
-        // TODO add price dimension plugin logic here
-
-        foreach ($prices as $price) {
-            if (isset($payloadTransfers[$price['id_product_abstract']])) {
-                // TODO PriceMode should come from PriceConfig
-                $priceWithStore = [];
-                if ($payloadTransfers[$price['id_product_abstract']]->getPrice()) {
-                    $priceWithStore = $payloadTransfers[$price['id_product_abstract']]->getPrice();
-                }
-                
-                $priceWithStore[$price['store_name']][] = $price['GROSS_PRICE'];
-                $payloadTransfers[$price['id_product_abstract']]->setPrice($priceWithStore);
-            }
+        $imageSets = [];
+        $imageSetCollection = $query->find();
+        foreach ($imageSetCollection as $imageSetItem) {
+            $imageSets[$imageSetItem->getFkProductAbstract()][$imageSetItem->getFkLocale()][] = $imageSetItem;
         }
+
+        foreach ($payloadTransfers as $payloadTransfer) {
+            if (!isset($imageSets[$payloadTransfer->getIdProductAbstract()])) {
+                continue;
+            }
+
+            $images = $imageSets[$payloadTransfer->getIdProductAbstract()];
+            $payloadTransfer->setImages($images);
+
+        }
+
+        return $payloadTransfers;
     }
 }

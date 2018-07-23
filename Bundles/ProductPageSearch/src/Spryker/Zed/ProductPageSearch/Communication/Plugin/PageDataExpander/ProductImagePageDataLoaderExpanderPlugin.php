@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander;
 
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface;
 
@@ -26,25 +28,26 @@ class ProductImagePageDataLoaderExpanderPlugin extends AbstractPlugin implements
      */
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
     {
-        $images = $this->generateImages($productData['id_image_set']);
+        $images = [];
+
+        //TODO move EXPANDED_DATA to shared constant
+        $imageSets = $productData['EXPANDED_DATA']->getImages();
+        $imageSetsByLocale = $imageSets[$productData['fk_locale']];
+        /** @var SpyProductImageSet[] $imageSetsByLocale */
+        foreach ($imageSetsByLocale as $imageSet) {
+            $images = array_merge($images, $this->generateImages($imageSet->getSpyProductImageSetToProductImages()));
+        }
+
         $productAbstractPageSearchTransfer->setProductImages($images);
     }
 
     /**
-     * @param int $idImageSet
+     * @param SpyProductImageSetToProductImage[] $imagesCollection
      *
      * @return array
      */
-    protected function generateImages($idImageSet)
+    protected function generateImages($imagesCollection)
     {
-        if ($idImageSet === null) {
-            return [];
-        }
-
-        $imagesCollection = $this->getFactory()->getProductImageQueryContainer()
-            ->queryImagesByIdProductImageSet($idImageSet)
-            ->find();
-
         $result = [];
 
         foreach ($imagesCollection as $image) {
