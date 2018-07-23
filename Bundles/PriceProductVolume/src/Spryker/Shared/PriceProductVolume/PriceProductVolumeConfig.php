@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\PriceProductVolume;
 
-interface PriceProductVolumeConfig
+use Spryker\Shared\Kernel\AbstractSharedConfig;
+
+class PriceProductVolumeConfig extends AbstractSharedConfig
 {
     public const VOLUME_PRICE_TYPE = 'volume_prices';
     public const VOLUME_PRICE_QUANTITY = 'quantity';

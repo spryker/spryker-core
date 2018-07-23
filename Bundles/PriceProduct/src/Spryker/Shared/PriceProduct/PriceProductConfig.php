@@ -42,6 +42,14 @@ class PriceProductConfig extends AbstractSharedConfig
     public const PRICE_DATA = 'priceData';
 
     /**
+     * List of price modes
+     */
+    public const PRICE_MODES = [
+        'NET_MODE',
+        'GROSS_MODE',
+    ];
+
+    /**
      * @return string
      */
     public function getPriceTypeDefaultName(): string

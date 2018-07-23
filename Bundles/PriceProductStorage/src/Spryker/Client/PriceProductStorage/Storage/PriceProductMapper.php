@@ -48,12 +48,11 @@ class PriceProductMapper implements PriceProductMapperInterface
     ): void {
         $priceProductTransfer = null;
 
-        foreach ($prices as $priceMode => $priceTypes) {
-            if ($priceMode === PriceProductStorageConfig::PRICE_DATA) {
+        foreach (PriceProductStorageConfig::PRICE_MODES as $priceMode) {
+            if (!isset($prices[$priceMode])) {
                 continue;
             }
-
-            foreach ($priceTypes as $priceAttribute => $priceValue) {
+            foreach ($prices[$priceMode] as $priceAttribute => $priceValue) {
                 $priceProductTransfer = $this->findProductTransferInCollection($currencyCode, $priceAttribute, $priceProductTransfers);
 
                 if ($priceMode === PriceProductStorageConfig::PRICE_GROSS_MODE) {
