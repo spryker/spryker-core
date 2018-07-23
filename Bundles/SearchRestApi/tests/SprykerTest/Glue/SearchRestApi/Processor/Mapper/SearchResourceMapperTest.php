@@ -39,7 +39,7 @@ class SearchResourceMapperTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -50,7 +50,7 @@ class SearchResourceMapperTest extends Unit
     /**
      * @return void
      */
-    public function testMapperWillReturnRestResponseWithNotEmptyAttributesData()
+    public function testMapperWillReturnRestResponseWithNotEmptyAttributesData(): void
     {
         $this->restSearchAttributesTransfer = $this
             ->searchResourceMapper
@@ -89,7 +89,7 @@ class SearchResourceMapperTest extends Unit
     /**
      * @return void
      */
-    public function testMapperWillReturnRestResponseWithEmptyAttributesData()
+    public function testMapperWillReturnRestResponseWithEmptyAttributesData(): void
     {
         $this->restSearchAttributesTransfer = $this
             ->searchResourceMapper
@@ -102,7 +102,7 @@ class SearchResourceMapperTest extends Unit
     /**
      * @return array
      */
-    protected function mockRestSearchResponseTransfer()
+    protected function mockRestSearchResponseTransfer(): array
     {
         $mockRestSearchResponse = [];
         $mockRestSearchResponse['products'] = $this->mockProducts();
@@ -116,7 +116,7 @@ class SearchResourceMapperTest extends Unit
     /**
      * @return array
      */
-    protected function mockEmptyRestSearchResponseTransfer()
+    protected function mockEmptyRestSearchResponseTransfer(): array
     {
         $mockRestSearchResponse = [];
         $mockRestSearchResponse['products'] = [];
@@ -130,7 +130,7 @@ class SearchResourceMapperTest extends Unit
     /**
      * @return array
      */
-    protected function mockProducts()
+    protected function mockProducts(): array
     {
         $products = [];
         $products[] = [
@@ -163,7 +163,7 @@ class SearchResourceMapperTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\SortSearchResultTransfer
      */
-    protected function mockSort()
+    protected function mockSort(): SortSearchResultTransfer
     {
         $sort = new SortSearchResultTransfer();
         $sort->setSortParamNames([
@@ -182,7 +182,7 @@ class SearchResourceMapperTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\PaginationSearchResultTransfer
      */
-    protected function mockPagination()
+    protected function mockPagination(): PaginationSearchResultTransfer
     {
         $pagination = new PaginationSearchResultTransfer();
         $pagination->setNumFound(3);
