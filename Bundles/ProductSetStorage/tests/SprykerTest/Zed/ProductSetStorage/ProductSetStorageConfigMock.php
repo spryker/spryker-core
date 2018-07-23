@@ -14,7 +14,7 @@ class ProductSetStorageConfigMock extends ProductSetStorageConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return false;
     }

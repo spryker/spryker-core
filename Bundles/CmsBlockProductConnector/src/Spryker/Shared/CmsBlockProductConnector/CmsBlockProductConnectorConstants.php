@@ -9,6 +9,9 @@ namespace Spryker\Shared\CmsBlockProductConnector;
 
 use Spryker\Shared\CmsBlock\CmsBlockConfig;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface CmsBlockProductConnectorConstants
 {
     const OPTION_NAME = 'product_abstract';

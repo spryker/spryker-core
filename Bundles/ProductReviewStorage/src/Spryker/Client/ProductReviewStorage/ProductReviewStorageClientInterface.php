@@ -13,6 +13,9 @@ namespace Spryker\Client\ProductReviewStorage;
 interface ProductReviewStorageClientInterface
 {
     /**
+     * Specification:
+     *  - Return product review storage data by product abstract id.
+     *
      * @api
      *
      * @param int $idProductAbstract
