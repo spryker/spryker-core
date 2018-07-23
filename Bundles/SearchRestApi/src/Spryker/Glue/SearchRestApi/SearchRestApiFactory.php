@@ -9,8 +9,6 @@ namespace Spryker\Glue\SearchRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\SearchRestApi\Dependency\Client\SearchRestApiToCatalogClientInterface;
 use Spryker\Glue\SearchRestApi\Processor\Catalog\CatalogReader;
-use Spryker\Glue\SearchRestApi\Processor\Currency\CurrencyValidator;
-use Spryker\Glue\SearchRestApi\Processor\Currency\CurrencyValidatorInterface;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapper;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapperInterface;
 use Spryker\Glue\SearchRestApi\Processor\Mapper\SuggestionsResourceMapper;
@@ -64,16 +62,7 @@ class SearchRestApiFactory extends AbstractFactory
             $this->getCatalogClient(),
             $this->getResourceBuilder(),
             $this->createSearchResourceMapper(),
-            $this->createSuggestionsResourceMapper()
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\SearchRestApi\Processor\Currency\CurrencyValidatorInterface
-     */
-    public function createCurrencyValidator(): CurrencyValidatorInterface
-    {
-        return new CurrencyValidator(
+            $this->createSuggestionsResourceMapper(),
             $this->getStore()
         );
     }
