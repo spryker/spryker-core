@@ -42,7 +42,7 @@ class ConcreteSkuToIdProductStep implements DataImportStepInterface
                 throw new EntityNotFoundException(sprintf('Could not find product by sku %s', $concreteSku));
             }
 
-            $this->idProductCache[$concreteSku] = $idProduct;
+            $this->idProductCache[$concreteSku] = (int)$idProduct;
         }
 
         $dataSet[ProductDiscontinuedDataSetInterface::ID_PRODUCT] = $this->idProductCache[$concreteSku];

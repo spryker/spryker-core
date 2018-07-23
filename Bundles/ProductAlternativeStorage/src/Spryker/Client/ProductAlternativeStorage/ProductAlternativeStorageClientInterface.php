@@ -54,4 +54,33 @@ interface ProductAlternativeStorageClientInterface
      * @return bool
      */
     public function isAlternativeProductApplicable(ProductViewTransfer $productViewTransfer): bool;
+
+    /**
+     * Specification:
+     *  - Gets alternative products for concrete product by sku.
+     *  - Abstract alternatives replaced with mapped concretes.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function getConcreteAlternativeProducts(ProductViewTransfer $productViewTransfer, string $localeName): array;
+
+    /**
+     * Specification:
+     *  - Gets alternative products for product.
+     *  - If productViewTransfer has idProductConcrete returns alternative for given concrete sku only.
+     *  - If productViewTransfer has not idProductConcrete returns alternative for all concretes of given abstract product sku.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function getAlternativeProducts(ProductViewTransfer $productViewTransfer, string $localeName): array;
 }

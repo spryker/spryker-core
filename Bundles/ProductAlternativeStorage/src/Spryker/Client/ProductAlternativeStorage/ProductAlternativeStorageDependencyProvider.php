@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductAlternativeStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductAlternativeStorage\Dependency\Client\ProductAlternativeStorageToProductStorageClientBridge;
 use Spryker\Client\ProductAlternativeStorage\Dependency\Client\ProductAlternativeStorageToStorageClientBridge;
 use Spryker\Client\ProductAlternativeStorage\Dependency\Service\ProductAlternativeStorageToSynchronizationServiceBridge;
 
@@ -17,6 +18,7 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE_CHECK = 'PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE_CHECK';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -28,6 +30,7 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
+        $container = $this->addProductStorageClient($container);
         $container = $this->addAlternativeProductApplicableCheckPlugins($container);
 
         return $container;
@@ -42,6 +45,22 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
     {
         $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new ProductAlternativeStorageToStorageClientBridge($container->getLocator()->storage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+            return new ProductAlternativeStorageToProductStorageClientBridge(
+                $container->getLocator()->productStorage()->client()
+            );
         };
 
         return $container;
