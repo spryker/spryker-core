@@ -47,7 +47,7 @@ class AmountSalesUnitHydrateOrder implements AmountSalesUnitHydrateOrderInterfac
                 $spySalesOrderItemEntityTransfer->getIdSalesOrderItem()
             );
 
-            if (!$itemTransfer) {
+            if (!$itemTransfer || $spySalesOrderItemEntityTransfer->getAmountMeasurementUnitName() === null) {
                 continue;
             }
 
