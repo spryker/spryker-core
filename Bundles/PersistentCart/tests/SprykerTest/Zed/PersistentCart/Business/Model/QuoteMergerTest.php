@@ -47,9 +47,9 @@ class QuoteMergerTest extends Unit
     protected function setUp()
     {
         parent::setUp();
-        $facttory = $this->createPersistentCartBusinessFactoryMock();
+        $factory = $this->createPersistentCartBusinessFactoryMock();
         $this->merger = new QuoteMerger(
-            $facttory->getCartFacade()
+            $factory->getCartFacade()
         );
     }
 

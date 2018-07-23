@@ -19,7 +19,7 @@ class CartItemAddTripleStrategy implements CartOperationStrategyInterface
      *
      * @return bool
      */
-    public function isApplicaple(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): bool
+    public function isApplicable(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): bool
     {
         return true;
     }
@@ -30,7 +30,7 @@ class CartItemAddTripleStrategy implements CartOperationStrategyInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function excute(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function execute(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $itemTransfer->setQuantity(
             $itemTransfer->getQuantity() * 3

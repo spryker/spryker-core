@@ -172,7 +172,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface[]
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCartAddItemStrategies(Container $container): Container
     {
@@ -186,7 +186,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface[]
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCartRemoveItemStrategies(Container $container): Container
     {

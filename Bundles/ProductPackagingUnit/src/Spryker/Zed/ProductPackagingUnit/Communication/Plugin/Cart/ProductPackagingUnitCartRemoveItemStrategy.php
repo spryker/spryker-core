@@ -19,7 +19,7 @@ class ProductPackagingUnitCartRemoveItemStrategy extends ProductPackagingUnitAbs
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function excute(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function execute(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemIndex => $currentItemTransfer) {
             if ($this->getItemIdentifier($currentItemTransfer) === $this->getItemIdentifier($itemTransfer)) {

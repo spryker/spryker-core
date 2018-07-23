@@ -18,7 +18,7 @@ abstract class ProductPackagingUnitAbstractCartItemOperationStrategy
      *
      * @return bool
      */
-    public function isApplicaple(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): bool
+    public function isApplicable(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): bool
     {
         return (bool)$itemTransfer->getAmount();
     }

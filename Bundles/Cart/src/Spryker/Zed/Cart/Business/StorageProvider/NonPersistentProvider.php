@@ -61,8 +61,8 @@ class NonPersistentProvider implements StorageProviderInterface
     {
         $this->isValidQuantity($itemTransfer);
         foreach ($this->cartAddItemStrategies as $cartAddItemStrategy) {
-            if ($cartAddItemStrategy->isApplicaple($itemTransfer, $quoteTransfer)) {
-                $cartAddItemStrategy->excute($itemTransfer, $quoteTransfer);
+            if ($cartAddItemStrategy->isApplicable($itemTransfer, $quoteTransfer)) {
+                $cartAddItemStrategy->execute($itemTransfer, $quoteTransfer);
 
                 return;
             }
@@ -72,9 +72,11 @@ class NonPersistentProvider implements StorageProviderInterface
         $itemIdentifier = $this->getItemIdentifier($itemTransfer);
         if (isset($cartIndex[$itemIdentifier])) {
             $this->increaseExistingItem($quoteTransfer->getItems(), $cartIndex[$itemIdentifier], $itemTransfer);
-        } else {
-            $quoteTransfer->getItems()->append($itemTransfer);
+
+            return;
         }
+
+        $quoteTransfer->getItems()->append($itemTransfer);
     }
 
     /**
@@ -101,8 +103,8 @@ class NonPersistentProvider implements StorageProviderInterface
     {
         $this->isValidQuantity($itemTransfer);
         foreach ($this->cartRemoveItemStrategies as $cartRemoveItemStrategy) {
-            if ($cartRemoveItemStrategy->isApplicaple($itemTransfer, $quoteTransfer)) {
-                $cartRemoveItemStrategy->excute($itemTransfer, $quoteTransfer);
+            if ($cartRemoveItemStrategy->isApplicable($itemTransfer, $quoteTransfer)) {
+                $cartRemoveItemStrategy->execute($itemTransfer, $quoteTransfer);
 
                 return;
             }
