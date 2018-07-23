@@ -18,7 +18,7 @@ class Creator implements CreatorInterface
     /**
      * @var \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface
      */
-    private $reclamationManager;
+    protected $reclamationManager;
 
     /**
      * @param \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface $reclamationManager

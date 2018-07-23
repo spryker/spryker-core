@@ -12,7 +12,7 @@ class SalesReclamationToUtilDateTimeServiceBridge implements SalesReclamationToU
     /**
      * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
      */
-    private $utilDateTimeService;
+    protected $utilDateTimeService;
 
     /**
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
