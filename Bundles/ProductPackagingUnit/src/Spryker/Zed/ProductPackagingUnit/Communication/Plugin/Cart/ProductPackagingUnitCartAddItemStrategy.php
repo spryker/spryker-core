@@ -9,9 +9,9 @@ namespace Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\CartExtension\Dependency\Plugin\CartItemOperationStrategyInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface;
 
-class ProductPackagingUnitCartAddItemStrategy extends ProductPackagingUnitAbstractCartItemOperationStrategy implements CartItemOperationStrategyInterface
+class ProductPackagingUnitCartAddItemStrategy extends ProductPackagingUnitAbstractCartItemOperationStrategy implements CartOperationStrategyInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer

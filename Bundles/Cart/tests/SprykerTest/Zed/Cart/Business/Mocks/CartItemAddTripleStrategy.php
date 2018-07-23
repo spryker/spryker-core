@@ -9,9 +9,9 @@ namespace SprykerTest\Zed\Cart\Business\Mocks;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\CartExtension\Dependency\Plugin\CartItemOperationStrategyInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface;
 
-class CartItemAddTripleStrategy implements CartItemOperationStrategyInterface
+class CartItemAddTripleStrategy implements CartOperationStrategyInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer

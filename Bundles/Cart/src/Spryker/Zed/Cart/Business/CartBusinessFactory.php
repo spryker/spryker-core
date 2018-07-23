@@ -146,7 +146,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemOperationStrategyInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface[]
      */
     protected function getCartAddItemStrategies(): array
     {
@@ -154,7 +154,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemOperationStrategyInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface[]
      */
     protected function getCartRemoveItemStrategies(): array
     {

@@ -16,18 +16,18 @@ use Traversable;
 class NonPersistentProvider implements StorageProviderInterface
 {
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemOperationStrategyInterface[]
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface[]
      */
     protected $cartAddItemStrategies;
 
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemOperationStrategyInterface[]
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface[]
      */
     protected $cartRemoveItemStrategies;
 
     /**
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemOperationStrategyInterface[] $cartAddItemStrategies
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemOperationStrategyInterface[] $cartRemoveItemStrategies
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface[] $cartAddItemStrategies
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface[] $cartRemoveItemStrategies
      */
     public function __construct(
         array $cartAddItemStrategies,

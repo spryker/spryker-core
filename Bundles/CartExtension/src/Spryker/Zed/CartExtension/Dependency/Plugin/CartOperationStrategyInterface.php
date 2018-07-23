@@ -10,11 +10,11 @@ namespace Spryker\Zed\CartExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CartItemOperationStrategyInterface
+interface CartOperationStrategyInterface
 {
     /**
      * Specification:
-     * - Checks if strategy is applicaple for the give item and quote.
+     * - Checks if strategy is applicaple for the given item and quote.
      *
      * @api
      *

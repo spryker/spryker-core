@@ -270,7 +270,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemOperationStrategyInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface[]
      */
     protected function getCartAddItemStrategies(Container $container): array
     {
@@ -280,7 +280,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartItemOperationStrategyInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface[]
      */
     protected function getCartRemoveItemStrategies(Container $container): array
     {
