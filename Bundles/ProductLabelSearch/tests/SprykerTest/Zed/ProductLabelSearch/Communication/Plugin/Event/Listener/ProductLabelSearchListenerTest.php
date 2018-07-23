@@ -28,6 +28,11 @@ use Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainer;
 class ProductLabelSearchListenerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\ProductLabelSearch\ProductLabelSearchCommunicationTester
+     */
+    protected $tester;
+
+    /**
      * @throws \PHPUnit\Framework\SkippedTestError
      *
      * @return void
@@ -46,7 +51,8 @@ class ProductLabelSearchListenerTest extends Unit
     public function testQueryProductLabelByProductLabelIds()
     {
         $productLabelSearchQueryContainer = new ProductLabelSearchQueryContainer();
-        $result = $productLabelSearchQueryContainer->queryProductLabelByProductLabelIds([1])->count();
+        $labelId = $this->tester->getLocator()->productLabel()->facade()->findLabelByLabelName('Standard label')->getIdProductLabel();
+        $result = $productLabelSearchQueryContainer->queryProductLabelByProductLabelIds([$labelId])->count();
 
         $this->assertSame(48, $result);
     }
