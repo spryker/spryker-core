@@ -97,20 +97,6 @@ class IndexInstallerTest extends Unit
     }
 
     /**
-     * @return string[]
-     */
-    protected function getBlacklistSettingsForIndexUpdate()
-    {
-        return [
-            'index.number_of_shards',
-            'index.codec',
-            'index.routing_partition_size',
-            'index.shard.check_on_startup',
-            'analysis',
-        ];
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer[] $indexDefinitions
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
