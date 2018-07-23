@@ -47,7 +47,7 @@ class OrderExpander implements OrderExpanderInterface
                 $salesOrderItemEntityTransfer->getIdSalesOrderItem()
             );
 
-            if ($itemTransfer === null || $spySalesOrderItemEntityTransfer->getQuantityMeasurementUnitName() === null) {
+            if ($itemTransfer === null || $salesOrderItemEntityTransfer->getQuantityMeasurementUnitName() === null) {
                 continue;
             }
 
