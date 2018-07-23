@@ -10,8 +10,8 @@ namespace Spryker\Zed\SalesReclamation\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaver;
 use Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaverInterface;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\Creator;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\CreatorInterface;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\EntityManager;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\EntityManagerInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\Hydrator;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\HydratorInterface;
 use Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface;
@@ -26,11 +26,11 @@ use Spryker\Zed\SalesReclamation\SalesReclamationDependencyProvider;
 class SalesReclamationBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\CreatorInterface
+     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\EntityManagerInterface
      */
-    public function createReclamationCreator(): CreatorInterface
+    public function createReclamationCreator(): EntityManagerInterface
     {
-        return new Creator(
+        return new EntityManager(
             $this->getEntityManager()
         );
     }

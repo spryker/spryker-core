@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesReclamation\Business\Reclamation;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 
-interface CreatorInterface
+interface EntityManagerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
