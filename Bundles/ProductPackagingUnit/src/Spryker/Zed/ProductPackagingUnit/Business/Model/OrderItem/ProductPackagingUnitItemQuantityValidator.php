@@ -22,11 +22,7 @@ class ProductPackagingUnitItemQuantityValidator implements ProductPackagingUnitI
             return true;
         }
 
-        if ($this->isNonSplittableItem($itemTransfer)) {
-            return false;
-        }
-
-        return true;
+        return !$this->isNonSplittableItem($itemTransfer);
     }
 
     /**
