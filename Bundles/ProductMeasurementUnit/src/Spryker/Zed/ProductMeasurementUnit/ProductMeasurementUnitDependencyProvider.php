@@ -16,6 +16,7 @@ use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnit
 class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION = 'SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION';
+
     public const FACADE_EVENT = 'FACADE_EVENT';
 
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
@@ -84,7 +85,7 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addSalesOrderItemQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_SALES_ORDER_ITEM] = function (Container $container) {
+        $container[static::PROPEL_QUERY_SALES_ORDER_ITEM] = function () {
             return SpySalesOrderItemQuery::create();
         };
 

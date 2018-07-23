@@ -15,21 +15,19 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductPackagingUnitStorageRepository extends AbstractRepository implements ProductPackagingUnitStorageRepositoryInterface
 {
     /**
-     * @api
-     *
-     * @param int[] $idProductAbstracts
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function findProductAbstractPackagingUnitStorageByProductAbstractIds(array $idProductAbstracts): array
+    public function findProductAbstractPackagingUnitStorageByProductAbstractIds(array $productAbstractIds): array
     {
-        if (!$idProductAbstracts) {
+        if (!$productAbstractIds) {
             return [];
         }
 
         $query = $this->getFactory()
             ->createSpyProductAbstractPackagingStorageQuery()
-            ->filterByFkProductAbstract_In($idProductAbstracts);
+            ->filterByFkProductAbstract_In($productAbstractIds);
 
         return $this->buildQueryFromCriteria($query)->find();
     }
@@ -41,15 +39,14 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
-    public function findPackagingProductsByAbstractId(int $idProductAbstract): array
+    public function findPackagingProductsByProductAbstractId(int $idProductAbstract): array
     {
         if (!$idProductAbstract) {
             return [];
         }
 
         $query = $this->getFactory()
-            ->getProductQueryContainer()
-            ->queryProduct()
+            ->getSpyProductQuery()
                 ->filterByFkProductAbstract($idProductAbstract)
                 ->filterByIsActive(true)
             ->innerJoinWithSpyProductAbstract()

@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductPackagingUnitStorage\Storage;
 use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
 use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageClientInterface;
-use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConstants;
+use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
 
 class ProductPackagingUnitStorageReader implements ProductPackagingUnitStorageReaderInterface
 {
@@ -44,7 +44,7 @@ class ProductPackagingUnitStorageReader implements ProductPackagingUnitStorageRe
     public function findProductAbstractPackagingById(int $idProductAbstract): ?ProductAbstractPackagingStorageTransfer
     {
         $key = $this->productPackagingUnitStorageKeyGenerator->generateKey(
-            ProductPackagingUnitStorageConstants::PRODUCT_PACKAGING_UNIT_RESOURCE_NAME,
+            ProductPackagingUnitStorageConfig::PRODUCT_PACKAGING_UNIT_RESOURCE_NAME,
             $idProductAbstract
         );
 

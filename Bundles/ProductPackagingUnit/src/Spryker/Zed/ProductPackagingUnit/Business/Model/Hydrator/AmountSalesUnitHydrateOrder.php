@@ -84,21 +84,29 @@ class AmountSalesUnitHydrateOrder implements AmountSalesUnitHydrateOrderInterfac
         $productMeasurementBaseUnitTransfer = $this->createProductMeasurementBaseUnitTransfer($salesOrderItemEntityTransfer);
         $productMeasurementSalesUnitTransfer->setProductMeasurementBaseUnit($productMeasurementBaseUnitTransfer);
 
-        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($salesOrderItemEntityTransfer->getAmountMeasurementUnitName() ?? '');
+        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer(
+            $salesOrderItemEntityTransfer->getAmountMeasurementUnitName(),
+            $salesOrderItemEntityTransfer->getAmountMeasurementUnitCode()
+        );
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 
         return $productMeasurementSalesUnitTransfer;
     }
 
     /**
-     * @param string $productMeasurementUnitName
+     * @param string|null $productMeasurementUnitName
+     * @param string|null $productMeasurementUnitCode
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
      */
-    protected function createProductMeasurementUnitTransfer(string $productMeasurementUnitName): ProductMeasurementUnitTransfer
+    protected function createProductMeasurementUnitTransfer(?string $productMeasurementUnitName, ?string $productMeasurementUnitCode = null): ProductMeasurementUnitTransfer
     {
         $productMeasurementUnitTransfer = new ProductMeasurementUnitTransfer();
-        $productMeasurementUnitTransfer->setName($productMeasurementUnitName);
+        $productMeasurementUnitTransfer->setName($productMeasurementUnitName ?: '');
+
+        if ($productMeasurementUnitCode !== null) {
+            $productMeasurementUnitTransfer->setCode($productMeasurementUnitCode);
+        }
 
         return $productMeasurementUnitTransfer;
     }
