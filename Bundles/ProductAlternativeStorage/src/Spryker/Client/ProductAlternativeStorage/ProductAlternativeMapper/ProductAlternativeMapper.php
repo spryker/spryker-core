@@ -128,8 +128,8 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
         string $localeName
     ): array {
         $productViewTransferList = [];
-        foreach ($productAlternativeStorage->getProductAbstractIds() as $idProduct) {
-            $productViewTransferList[] = $this->findAbstractProductViewTransfer($idProduct, $localeName);
+        foreach ($productAlternativeStorage->getProductAbstractIds() as $idProductAbstract) {
+            $productViewTransferList[] = $this->findAbstractProductViewTransfer($idProductAbstract, $localeName);
         }
 
         foreach ($productAlternativeStorage->getProductConcreteIds() as $idProduct) {
