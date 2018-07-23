@@ -29,6 +29,10 @@ use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig;
 
 /**
@@ -59,6 +63,9 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
     protected const PRICE_MODE_NET = 'NET_MODE';
     protected const PRICE_MODE_GROSS = 'GROSS_MODE';
+
+    protected const ABSTRACT_PRODUCT_SKU = 'ABSTRACT_PRODUCT_SKU';
+    protected const CONCRETE_PRODUCT_SKU = 'CONCRETE_PRODUCT_SKU';
 
     /**
      * @var \SprykerTest\Zed\ProductPackagingUnit\ProductPackagingUnitBusinessTester
@@ -372,7 +379,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             ->addItem(
                 (new ItemTransfer())
                     ->setSku($boxProductConcreteTransfer->getSku())
-                    ->setQuantity(static::ITEM_QUANTITY)
+                    ->setQuantity(1)
                     ->setAmount(6)
                     ->setProductPackagingUnit($productPackagingUnitTransfer)
                     ->setUnitGrossPrice($unitGrossPrice)
@@ -457,7 +464,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function testExpandCartChangeGroupKeyWithAmountSalesUnitNoSalesUnitIsDefined(): void
     {
         // Assign
-        $cartChangeTransfer = $this->tester->createCartChangeTransferWithountAmountSalesUnitForGroupKeyGeneration(static::GROUP_KEY, static::AMOUNT_VALUE);
+        $cartChangeTransfer = $this->tester->createCartChangeTransferWithountAmountSalesUnitForGroupKeyGeneration(static::GROUP_KEY, static::PACKAGE_AMOUNT, static::ITEM_QUANTITY);
 
         // Act
         $cartChangeTransfer = $this->getFacade()->expandCartChangeGroupKeyWithAmount($cartChangeTransfer);
@@ -473,8 +480,8 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function testExpandCartChangeGroupKeyWithAmountSalesUnitIfSalesUnitIsDefined(): void
     {
         // Assign
-        $expectedGroupKey = sprintf(static::GROUP_KEY_FORMAT, static::GROUP_KEY, static::AMOUNT_VALUE, static::SALES_UNIT_ID);
-        $cartChangeTransfer = $this->tester->createCartChangeTransferWithAmountSalesUnitForGroupKeyGeneration(static::GROUP_KEY, static::AMOUNT_VALUE, static::SALES_UNIT_ID);
+        $expectedGroupKey = sprintf(static::GROUP_KEY_FORMAT, static::GROUP_KEY, static::ITEM_QUANTITY, static::SALES_UNIT_ID);
+        $cartChangeTransfer = $this->tester->createCartChangeTransferWithAmountSalesUnitForGroupKeyGeneration(static::GROUP_KEY, static::PACKAGE_AMOUNT, static::ITEM_QUANTITY, static::SALES_UNIT_ID);
 
         // Act
         $cartChangeTransfer = $this->getFacade()->expandCartChangeGroupKeyWithAmount($cartChangeTransfer);
@@ -532,6 +539,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      * @param bool $expectedIsSuccess
      * @param int $defaultAmount
      * @param int $quoteAmount
+     * @param int $quoteQuantity
      * @param int|null $minRestriction
      * @param int|null $maxRestriction
      * @param int|null $intervalRestriction
@@ -543,6 +551,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         bool $expectedIsSuccess,
         int $defaultAmount,
         int $quoteAmount,
+        int $quoteQuantity,
         ?int $minRestriction,
         ?int $maxRestriction,
         ?int $intervalRestriction,
@@ -597,7 +606,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $productMeasurementSalesUnitTransfer = (new ProductMeasurementSalesUnitTransfer())
             ->fromArray($productMeasurementSalesUnitEntityTransfer->toArray(), true);
 
-        $cartChangeTransfer = $this->tester->createCartChangeTransferForProductPackagingUnitValidation($boxProductConcreteTransfer, $productMeasurementSalesUnitTransfer, $quoteAmount, static::ITEM_QUANTITY);
+        $cartChangeTransfer = $this->tester->createCartChangeTransferForProductPackagingUnitValidation($boxProductConcreteTransfer, $productMeasurementSalesUnitTransfer, $quoteAmount, $quoteQuantity);
 
         // Act
         $cartPreCheckResponseTransfer = $this->getFacade()->validateItemAddAmountRestrictions($cartChangeTransfer);
@@ -612,14 +621,14 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function itemAdditionAmounts(): array
     {
         return [
-            [true, 1, 2, 1, null, 1, true], // general rule
-            [true, 1, 7, 7, null, 1, true], // min equals new amount
-            [true, 1, 5, 5, 5,    1, true], // max equals new amount
-            [true, 1, 7, 0, null, 7, true], // interval matches new amount
-            [false, 1, 5, 7, 7,    7, true], // min, max, interval matches new amount
-            [false, 1, 5, 8, null, 1, true], // min above new amount
-            [false, 1, 5, 1, 3,    1, true], // max below new amount
-            [false, 1, 5, 1, null, 3, true], // interval does not match new amount
+            [true, 1, 2, 1, 1, null, 1, true], // general rule
+            [true, 1, 7, 1, 7, null, 1, true], // min equals new amount
+            [true, 1, 5, 1, 5, 5,    1, true], // max equals new amount
+            [true, 1, 7, 1, 0, null, 7, true], // interval matches new amount
+            [false, 1, 5, 1, 7, 7,    7, true], // min, max, interval matches new amount
+            [false, 1, 5, 1, 8, null, 1, true], // min above new amount
+            [false, 1, 5, 1, 1, 3,    1, true], // max below new amount
+            [false, 1, 5, 1, 1, null, 3, true], // interval does not match new amount
         ];
     }
 
@@ -910,5 +919,58 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             $this->assertInstanceOf(ProductPackagingLeadProductTransfer::class, $itemTransfer->getAmountLeadProduct());
             $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getAmountLeadProduct()->getProduct()->getSku());
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsItemQuantitySplittable(): void
+    {
+        // Assign
+        $this->setData(true);
+        $itemTransfer = (new ItemTransfer())->setSku(static::CONCRETE_PRODUCT_SKU);
+
+        //Act
+        $isProductPackagingUnitItemQuantitySplittable = $this->getFacade()->isProductPackagingUnitItemQuantitySplittable($itemTransfer);
+
+        //Assert
+        $this->assertTrue($isProductPackagingUnitItemQuantitySplittable);
+    }
+
+    /**
+     * @param bool $isQuantitySplittable
+     *
+     * @return void
+     */
+    protected function setData(bool $isQuantitySplittable): void
+    {
+        $productAbstract = SpyProductAbstractQuery::create()
+            ->filterBySku(static::ABSTRACT_PRODUCT_SKU)
+            ->findOne();
+
+        if ($productAbstract === null) {
+            $productAbstract = new SpyProductAbstract();
+
+            $productAbstract
+                ->setAttributes('{}')
+                ->setSku(static::ABSTRACT_PRODUCT_SKU);
+        }
+
+        $productAbstract->save();
+
+        $product = SpyProductQuery::create()
+            ->filterBySku(static::CONCRETE_PRODUCT_SKU)
+            ->findOne();
+
+        if ($product === null) {
+            $product = new SpyProduct();
+            $product->setAttributes('{}')
+                ->setSku(static::CONCRETE_PRODUCT_SKU);
+        }
+
+        $product
+            ->setFkProductAbstract($productAbstract->getIdProductAbstract())
+            ->setIsQuantitySplittable($isQuantitySplittable)
+            ->save();
     }
 }
