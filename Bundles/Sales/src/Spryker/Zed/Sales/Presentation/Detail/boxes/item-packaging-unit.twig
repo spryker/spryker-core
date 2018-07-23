@@ -1,4 +1,4 @@
-{% if orderItem.amountLeadProduct is defined and orderItem.amountLeadProduct %}
+{% if orderItem.amountSalesUnit is defined and orderItem.amountSalesUnit %}
     {% set conversion = null %}
     {% if orderItem.amountSalesUnit.conversion %}
         {% set conversion = (1 / orderItem.amountSalesUnit.conversion) | number_format %}
