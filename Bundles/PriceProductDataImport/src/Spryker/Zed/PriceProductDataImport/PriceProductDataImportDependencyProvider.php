@@ -16,6 +16,7 @@ class PriceProductDataImportDependencyProvider extends DataImportDependencyProvi
 {
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
