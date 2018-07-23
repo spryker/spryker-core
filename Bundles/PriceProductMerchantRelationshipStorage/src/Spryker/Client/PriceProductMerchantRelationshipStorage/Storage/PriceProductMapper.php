@@ -44,12 +44,12 @@ class PriceProductMapper implements PriceProductMapperInterface
 
         foreach ($priceProductStorageTransfer->getPrices() as $idMerchantRelationship => $pricesPerMerchantRelationship) {
             foreach ($pricesPerMerchantRelationship as $currencyCode => $prices) {
-                foreach ($prices as $priceMode => $priceTypes) {
-                    if ($priceMode === SharedPriceProductMerchantRelationshipStorageConfig::PRICE_DATA) {
+                foreach (SharedPriceProductMerchantRelationshipStorageConfig::PRICE_MODES as $priceMode) {
+                    if (!isset($prices[$priceMode])) {
                         continue;
                     }
 
-                    foreach ($priceTypes as $priceType => $priceAmount) {
+                    foreach ($prices[$priceMode] as $priceType => $priceAmount) {
                         $priceProductTransfer = $this->findProductTransferInCollection(
                             $idMerchantRelationship,
                             $currencyCode,

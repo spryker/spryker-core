@@ -218,12 +218,12 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         $priceProductTransfers = [];
 
         foreach ($priceMap as $currencyCode => $prices) {
-            foreach ($prices as $priceMode => $priceTypes) {
-                if ($priceMode === SharedPriceProductConfig::PRICE_DATA) {
+            foreach (SharedPriceProductConfig::PRICE_MODES as $priceMode) {
+                if (!isset($prices[$priceMode])) {
                     continue;
                 }
 
-                foreach ($priceTypes as $priceType => $priceAmount) {
+                foreach ($prices[$priceMode] as $priceType => $priceAmount) {
                     $index = implode(static::PRICE_KEY_SEPARATOR, [
                         $currencyCode,
                         $priceType,
