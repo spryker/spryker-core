@@ -39,7 +39,16 @@ interface ProductLabelStorageQueryContainerInterface extends QueryContainerInter
     /**
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
+     *
+     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
+     */
+    public function queryProductLabelProductAbstractByProductAbstractIds(array $productAbstractIds);
+
+    /**
+     * @api
+     *
+     * @param int[] $productAbstractIds
      *
      * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
      */
