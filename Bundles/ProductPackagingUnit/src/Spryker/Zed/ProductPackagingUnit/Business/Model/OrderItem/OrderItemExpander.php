@@ -41,8 +41,6 @@ class OrderItemExpander implements OrderItemExpanderInterface
         $salesOrderItemEntity->setAmountMeasurementUnitName($amountMeasurementUnitName);
         $salesOrderItemEntity->setAmountMeasurementUnitCode($amountMeasurementUnitCode);
 
-        $salesOrderItemEntity->setIsQuantitySplittable(true);
-
         $salesOrderItemEntity->setAmountMeasurementUnitPrecision($itemTransfer->getAmountSalesUnit()->getPrecision());
         $salesOrderItemEntity->setAmountMeasurementUnitConversion($itemTransfer->getAmountSalesUnit()->getConversion());
 
