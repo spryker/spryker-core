@@ -57,13 +57,15 @@ class SuggestionsResourceMapper implements SuggestionsResourceMapperInterface
 
     /**
      * @param array $restSearchResponse
+     * @param string $currency
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function mapSuggestionsResponseAttributesTransferToRestResponse(array $restSearchResponse): RestResourceInterface
+    public function mapSuggestionsResponseAttributesTransferToRestResponse(array $restSearchResponse, string $currency): RestResourceInterface
     {
         $restSuggestionsAttributesTransfer = new RestSearchSuggestionsAttributesTransfer();
         $restSuggestionsAttributesTransfer->fromArray($restSearchResponse, true);
+        $restSuggestionsAttributesTransfer->setCurrency($currency);
 
         $restSuggestionsAttributesTransfer = $this->mapCustomFields($restSuggestionsAttributesTransfer, $restSearchResponse);
 

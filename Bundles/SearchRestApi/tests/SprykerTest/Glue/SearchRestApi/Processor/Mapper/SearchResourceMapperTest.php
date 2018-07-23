@@ -26,6 +26,8 @@ use Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapper;
  */
 class SearchResourceMapperTest extends Unit
 {
+    protected const REQUESTED_CURRENCY = 'CHF';
+
     /**
      * @var \Spryker\Glue\SearchRestApi\Processor\Mapper\SearchResourceMapper
      */
@@ -54,8 +56,13 @@ class SearchResourceMapperTest extends Unit
     {
         $this->restSearchAttributesTransfer = $this
             ->searchResourceMapper
-            ->mapSearchResponseAttributesTransferToRestResponse($this->mockRestSearchResponseTransfer())
+            ->mapSearchResponseAttributesTransferToRestResponse(
+                $this->mockRestSearchResponseTransfer(),
+                static::REQUESTED_CURRENCY
+            )
             ->getAttributes();
+
+        $this->assertEquals(static::REQUESTED_CURRENCY, $this->restSearchAttributesTransfer->getCurrency());
 
         $this->assertEquals(1, $this->restSearchAttributesTransfer->getProducts()->count());
         $this->assertEquals("cameras", $this->restSearchAttributesTransfer->getSpellingSuggestion());
@@ -93,9 +100,13 @@ class SearchResourceMapperTest extends Unit
     {
         $this->restSearchAttributesTransfer = $this
             ->searchResourceMapper
-            ->mapSearchResponseAttributesTransferToRestResponse($this->mockEmptyRestSearchResponseTransfer())
+            ->mapSearchResponseAttributesTransferToRestResponse(
+                $this->mockEmptyRestSearchResponseTransfer(),
+                static::REQUESTED_CURRENCY
+            )
             ->getAttributes();
 
+        $this->assertEquals(static::REQUESTED_CURRENCY, $this->restSearchAttributesTransfer->getCurrency());
         $this->assertEmpty($this->restSearchAttributesTransfer->getProducts());
     }
 

@@ -82,7 +82,7 @@ class CatalogReader implements CatalogReaderInterface
         $searchString = $this->getRequestParameter($restRequest, SearchRestApiConfig::QUERY_STRING_PARAMETER);
         $requestParameters = $this->getAllRequestParameters($restRequest);
         $restSearchResponseAttributesTransfer = $this->catalogClient->catalogSearch($searchString, $requestParameters);
-        $restResource = $this->searchResourceMapper->mapSearchResponseAttributesTransferToRestResponse($restSearchResponseAttributesTransfer);
+        $restResource = $this->searchResourceMapper->mapSearchResponseAttributesTransferToRestResponse($restSearchResponseAttributesTransfer, $currency);
 
         return $response->addResource($restResource);
     }
@@ -103,11 +103,11 @@ class CatalogReader implements CatalogReaderInterface
         $response = $this->restResourceBuilder->createRestResponse();
         $searchString = $this->getRequestParameter($restRequest, SearchRestApiConfig::QUERY_STRING_PARAMETER);
         if (empty($searchString)) {
-            return $this->createEmptyResponse($response);
+            return $this->createEmptyResponse($response, $currency);
         }
         $requestParameters = $this->getAllRequestParameters($restRequest);
         $restSuggestionsAttributeTransfer = $this->catalogClient->catalogSuggestSearch($searchString, $requestParameters);
-        $restResource = $this->suggestionsResourceMapper->mapSuggestionsResponseAttributesTransferToRestResponse($restSuggestionsAttributeTransfer);
+        $restResource = $this->suggestionsResourceMapper->mapSuggestionsResponseAttributesTransferToRestResponse($restSuggestionsAttributeTransfer, $currency);
 
         return $response->addResource($restResource);
     }
@@ -135,13 +135,15 @@ class CatalogReader implements CatalogReaderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
+     * @param string $currency
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createEmptyResponse(RestResponseInterface $response): RestResponseInterface
+    protected function createEmptyResponse(RestResponseInterface $response, string $currency): RestResponseInterface
     {
         $resource = $this->suggestionsResourceMapper->mapSuggestionsResponseAttributesTransferToRestResponse(
-            $this->suggestionsResourceMapper->getEmptySearchResponse()
+            $this->suggestionsResourceMapper->getEmptySearchResponse(),
+            $currency
         );
 
         return $response->addResource($resource);

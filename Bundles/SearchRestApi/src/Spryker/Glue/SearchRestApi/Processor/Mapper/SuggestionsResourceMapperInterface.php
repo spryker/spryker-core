@@ -12,10 +12,11 @@ interface SuggestionsResourceMapperInterface
 {
     /**
      * @param array $restSearchResponse
+     * @param string $currency
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function mapSuggestionsResponseAttributesTransferToRestResponse(array $restSearchResponse): RestResourceInterface;
+    public function mapSuggestionsResponseAttributesTransferToRestResponse(array $restSearchResponse, string $currency): RestResourceInterface;
 
     /**
      * @return array

@@ -25,6 +25,8 @@ use Spryker\Glue\SearchRestApi\Processor\Mapper\SuggestionsResourceMapperInterfa
  */
 class SuggestionsResourceMapperTest extends Unit
 {
+    protected const REQUESTED_CURRENCY = 'CHF';
+
     /**
      * @var \SprykerTest\Glue\SearchRestApi\SearchRestApiProcessorTester
      */
@@ -41,7 +43,7 @@ class SuggestionsResourceMapperTest extends Unit
     public function testRestResponseAttributesIsInstanceOfRestSearchSuggestionsAttributesTransfer(): void
     {
         $mapper = $this->getMapper();
-        $restResponse = $mapper->mapSuggestionsResponseAttributesTransferToRestResponse([]);
+        $restResponse = $mapper->mapSuggestionsResponseAttributesTransferToRestResponse([], static::REQUESTED_CURRENCY);
 
         $this->assertInstanceOf(RestSearchSuggestionsAttributesTransfer::class, $restResponse->getAttributes());
     }
@@ -52,10 +54,11 @@ class SuggestionsResourceMapperTest extends Unit
     public function testEmptySearchSuggestionsResponseWillMapIntoRestResponseWithEmptyAttributes(): void
     {
         $mapper = $this->getMapper();
-        $restResponse = $mapper->mapSuggestionsResponseAttributesTransferToRestResponse([]);
+        $restResponse = $mapper->mapSuggestionsResponseAttributesTransferToRestResponse([], static::REQUESTED_CURRENCY);
 
         $attributes = $restResponse->getAttributes();
 
+        $this->assertEquals(static::REQUESTED_CURRENCY, $restResponse->getAttributes()->getCurrency());
         $this->assertEmpty($attributes->getCompletion());
         $this->assertEmpty($attributes->getProducts());
         $this->assertEmpty($attributes->getCategories());
@@ -67,7 +70,7 @@ class SuggestionsResourceMapperTest extends Unit
      */
     public function testRestSearchSuggestionsResponseIdIsNull(): void
     {
-        $restResponse = $this->getMapper()->mapSuggestionsResponseAttributesTransferToRestResponse([]);
+        $restResponse = $this->getMapper()->mapSuggestionsResponseAttributesTransferToRestResponse([], static::REQUESTED_CURRENCY);
 
         $this->assertNull($restResponse->getId());
     }
@@ -85,8 +88,12 @@ class SuggestionsResourceMapperTest extends Unit
             ->addCmsPagesData()
             ->getData();
 
-        $restResponse = $mapper->mapSuggestionsResponseAttributesTransferToRestResponse($searchSuggestionsResponseDataMock);
+        $restResponse = $mapper->mapSuggestionsResponseAttributesTransferToRestResponse(
+            $searchSuggestionsResponseDataMock,
+            static::REQUESTED_CURRENCY
+        );
 
+        $this->assertEquals(static::REQUESTED_CURRENCY, $restResponse->getAttributes()->getCurrency());
         foreach ($restResponse->getAttributes()->getProducts() as $product) {
             $this->assertArrayHasKey('abstract_sku', $product);
             $this->assertArrayHasKey('abstract_name', $product);

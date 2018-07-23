@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\RestSearchAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\SearchRestApi\SearchRestApiConfig;
-use Spryker\Shared\Kernel\Store;
 
 class SearchResourceMapper implements SearchResourceMapperInterface
 {
@@ -29,13 +28,14 @@ class SearchResourceMapper implements SearchResourceMapperInterface
 
     /**
      * @param array $restSearchResponse
+     * @param string $currency
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function mapSearchResponseAttributesTransferToRestResponse(array $restSearchResponse): RestResourceInterface
+    public function mapSearchResponseAttributesTransferToRestResponse(array $restSearchResponse, string $currency): RestResourceInterface
     {
         $restSearchAttributesTransfer = (new RestSearchAttributesTransfer())->fromArray($restSearchResponse, true);
-        $restSearchAttributesTransfer->setCurrency(Store::getInstance()->getCurrencyIsoCode());
+        $restSearchAttributesTransfer->setCurrency($currency);
 
         return $this->restResourceBuilder->createRestResource(
             SearchRestApiConfig::RESOURCE_SEARCH,
