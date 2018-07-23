@@ -37,11 +37,14 @@ class IndexControllerCest
     }
 
     /**
-     * @return object|\Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface
      */
-    private function getMailFacadeMock()
+    protected function getMailFacadeMock()
     {
-        return Stub::makeEmpty(CustomerToMailInterface::class);
+        /** @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface $mailFacadeMock */
+        $mailFacadeMock = Stub::makeEmpty(CustomerToMailInterface::class);
+
+        return $mailFacadeMock;
     }
 
     /**
@@ -113,7 +116,7 @@ class IndexControllerCest
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    private function getCustomerTransfer()
+    protected function getCustomerTransfer()
     {
         $customerBuilder = new CustomerBuilder();
 

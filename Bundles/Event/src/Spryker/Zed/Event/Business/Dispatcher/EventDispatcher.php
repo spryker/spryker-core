@@ -56,7 +56,7 @@ class EventDispatcher implements EventDispatcherInterface
 
     /**
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
+     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
      *
      * @return void
      */
@@ -88,7 +88,7 @@ class EventDispatcher implements EventDispatcherInterface
 
     /**
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
+     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
      * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
      *
      * @return void

@@ -14,6 +14,9 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductReviewGui\Communication\Controller\UpdateController;
 use Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainer;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface ProductReviewTableConstants
 {
     const TABLE_IDENTIFIER = 'product-review-table';

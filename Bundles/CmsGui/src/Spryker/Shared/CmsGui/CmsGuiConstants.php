@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\CmsGui;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface CmsGuiConstants
 {
     /**
@@ -17,4 +20,12 @@ interface CmsGuiConstants
      * @api
      */
     const CMS_PAGE_PREVIEW_URI = 'CMS_PAGE_PREVIEW_URI';
+
+    /**
+     * Specification:
+     * - Defines the path of CMS templates.
+     *
+     * @api
+     */
+    public const CMS_FOLDER_PATH = 'CMS_FOLDER_PATH';
 }

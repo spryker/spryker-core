@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\ProductManagement;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface ProductManagementConstants
 {
     const PRODUCT_MANAGEMENT_DEFAULT_LOCALE = 'default';
