@@ -7,25 +7,25 @@
 
 namespace Spryker\Zed\PersistentCart\Business\Model;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface;
+use Traversable;
 
 class QuoteMerger implements QuoteMergerInterface
 {
     /**
-     * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
      */
-    protected $cartFacade;
+    protected $cartAddItemStrategyPlugins;
 
     /**
-     * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface $cartFacade
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartAddItemStrategyPlugins
      */
     public function __construct(
-        PersistentCartToCartFacadeInterface $cartFacade
+        array $cartAddItemStrategyPlugins
     ) {
-        $this->cartFacade = $cartFacade;
+        $this->cartAddItemStrategyPlugins = $cartAddItemStrategyPlugins;
     }
 
     /**
@@ -49,22 +49,79 @@ class QuoteMerger implements QuoteMergerInterface
      */
     protected function mergeItems(QuoteTransfer $targetQuote, QuoteTransfer $sourceQuote): QuoteTransfer
     {
-        $cartChangeTransfer = $this->createCartChangeTransfer($targetQuote, $sourceQuote);
-        $this->cartFacade->add($cartChangeTransfer);
+        foreach ($sourceQuote->getItems() as $itemTransfer) {
+            $this->addItem($itemTransfer, $targetQuote);
+        }
 
-        return $cartChangeTransfer->getQuote();
+        return $targetQuote;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $targetQuote
-     * @param \Generated\Shared\Transfer\QuoteTransfer $sourceQuote
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     * @return void
      */
-    protected function createCartChangeTransfer(QuoteTransfer $targetQuote, QuoteTransfer $sourceQuote): CartChangeTransfer
+    protected function addItem(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
     {
-        return (new CartChangeTransfer())
-            ->setQuote($targetQuote)
-            ->setItems($sourceQuote->getItems());
+        foreach ($this->cartAddItemStrategyPlugins as $quoteMergeItemStrategyPlugin) {
+            if ($quoteMergeItemStrategyPlugin->isApplicable($itemTransfer, $quoteTransfer)) {
+                $quoteMergeItemStrategyPlugin->execute($itemTransfer, $quoteTransfer);
+
+                return;
+            }
+        }
+
+        $existingItems = $quoteTransfer->getItems();
+        $cartIndex = $this->createQuoteItemIndex($existingItems);
+        $itemIdentifier = $this->getItemIdentifier($itemTransfer);
+        if (isset($cartIndex[$itemIdentifier])) {
+            $this->increaseExistingItem((array)$existingItems, $cartIndex[$itemIdentifier], $itemTransfer);
+
+            return;
+        }
+
+        $existingItems->append($itemTransfer);
+    }
+
+    /**
+     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
+     *
+     * @return array
+     */
+    protected function createQuoteItemIndex(Traversable $cartItems): array
+    {
+        $cartIndex = [];
+        foreach ($cartItems as $key => $itemTransfer) {
+            $itemIdentifier = $this->getItemIdentifier($itemTransfer);
+            $cartIndex[$itemIdentifier] = $key;
+        }
+
+        return $cartIndex;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string
+     */
+    protected function getItemIdentifier(ItemTransfer $itemTransfer): string
+    {
+        return $itemTransfer->getGroupKey() ?: $itemTransfer->getSku();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $existingItems
+     * @param int $index
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function increaseExistingItem(array $existingItems, int $index, ItemTransfer $itemTransfer): void
+    {
+        $existingItemTransfer = $existingItems[$index];
+        $changedQuantity = $existingItemTransfer->getQuantity() + $itemTransfer->getQuantity();
+
+        $existingItemTransfer->setQuantity($changedQuantity);
     }
 }

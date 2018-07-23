@@ -49,7 +49,7 @@ class QuoteMergerTest extends Unit
         parent::setUp();
         $factory = $this->createPersistentCartBusinessFactoryMock();
         $this->cartMerger = new QuoteMerger(
-            $factory->getCartFacade()
+            $factory->getCartAddItemStrategyPlugins()
         );
     }
 

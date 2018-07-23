@@ -18,23 +18,23 @@ class NonPersistentProvider implements StorageProviderInterface
     /**
      * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
      */
-    protected $cartAddItemStrategies;
+    protected $cartAddItemStrategyPlugins;
 
     /**
      * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
      */
-    protected $cartRemoveItemStrategies;
+    protected $cartRemoveItemStrategyPlugins;
 
     /**
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartAddItemStrategies
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartRemoveItemStrategies
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartAddItemStrategyPlugins
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartRemoveItemStrategyPlugins
      */
     public function __construct(
-        array $cartAddItemStrategies,
-        array $cartRemoveItemStrategies
+        array $cartAddItemStrategyPlugins,
+        array $cartRemoveItemStrategyPlugins
     ) {
-        $this->cartAddItemStrategies = $cartAddItemStrategies;
-        $this->cartRemoveItemStrategies = $cartRemoveItemStrategies;
+        $this->cartAddItemStrategyPlugins = $cartAddItemStrategyPlugins;
+        $this->cartRemoveItemStrategyPlugins = $cartRemoveItemStrategyPlugins;
     }
 
     /**
@@ -60,9 +60,9 @@ class NonPersistentProvider implements StorageProviderInterface
     protected function addItem(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
     {
         $this->isValidQuantity($itemTransfer);
-        foreach ($this->cartAddItemStrategies as $cartAddItemStrategy) {
-            if ($cartAddItemStrategy->isApplicable($itemTransfer, $quoteTransfer)) {
-                $cartAddItemStrategy->execute($itemTransfer, $quoteTransfer);
+        foreach ($this->cartAddItemStrategyPlugins as $cartAddItemStrategyPlugin) {
+            if ($cartAddItemStrategyPlugin->isApplicable($itemTransfer, $quoteTransfer)) {
+                $cartAddItemStrategyPlugin->execute($itemTransfer, $quoteTransfer);
 
                 return;
             }
@@ -102,9 +102,9 @@ class NonPersistentProvider implements StorageProviderInterface
     protected function removeItem(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
     {
         $this->isValidQuantity($itemTransfer);
-        foreach ($this->cartRemoveItemStrategies as $cartRemoveItemStrategy) {
-            if ($cartRemoveItemStrategy->isApplicable($itemTransfer, $quoteTransfer)) {
-                $cartRemoveItemStrategy->execute($itemTransfer, $quoteTransfer);
+        foreach ($this->cartRemoveItemStrategyPlugins as $cartRemoveItemStrategyPlugin) {
+            if ($cartRemoveItemStrategyPlugin->isApplicable($itemTransfer, $quoteTransfer)) {
+                $cartRemoveItemStrategyPlugin->execute($itemTransfer, $quoteTransfer);
 
                 return;
             }
