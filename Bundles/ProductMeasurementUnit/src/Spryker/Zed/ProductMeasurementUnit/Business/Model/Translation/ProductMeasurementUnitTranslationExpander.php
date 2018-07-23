@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeInterface;
 
@@ -39,48 +39,59 @@ class ProductMeasurementUnitTranslationExpander implements ProductMeasurementUni
             if (!$itemTransfer->getQuantitySalesUnit()) {
                 continue;
             }
-
-            $itemTransfer->getQuantitySalesUnit()
-                ->requireProductMeasurementUnit();
-
-            $itemTransfer->getQuantitySalesUnit()
-                ->getProductMeasurementBaseUnit()
-                ->requireProductMeasurementUnit();
-
-            $this->expandSalesUnit($itemTransfer);
-            $this->expandBaseUnit($itemTransfer);
+            $this->translateProductMeasurementSalesUnit($itemTransfer->getQuantitySalesUnit());
         }
 
         return $cartChangeTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     */
+    public function translateProductMeasurementSalesUnit(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer)
+    {
+        $productMeasurementSalesUnitTransfer
+            ->requireProductMeasurementUnit();
+
+        $productMeasurementSalesUnitTransfer
+            ->getProductMeasurementBaseUnit()
+            ->requireProductMeasurementUnit();
+
+        $this->expandSalesUnit($productMeasurementSalesUnitTransfer);
+        $this->expandBaseUnit($productMeasurementSalesUnitTransfer);
+
+        return $productMeasurementSalesUnitTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
      *
      * @return void
      */
-    protected function expandSalesUnit(ItemTransfer $itemTransfer): void
+    protected function expandSalesUnit(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): void
     {
-        $quantityMeasurementUnitName = $itemTransfer->getQuantitySalesUnit()
+        $quantityMeasurementUnitName = $productMeasurementSalesUnitTransfer
             ->getProductMeasurementUnit()
             ->getName();
 
         $localizedQuantityMeasurementUnitName = $this
             ->translate($quantityMeasurementUnitName);
 
-        $itemTransfer->getQuantitySalesUnit()
+        $productMeasurementSalesUnitTransfer
             ->getProductMeasurementUnit()
             ->setName($localizedQuantityMeasurementUnitName);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
      *
      * @return void
      */
-    protected function expandBaseUnit(ItemTransfer $itemTransfer): void
+    protected function expandBaseUnit(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): void
     {
-        $quantityBaseMeasurementUnitName = $itemTransfer->getQuantitySalesUnit()
+        $quantityBaseMeasurementUnitName = $productMeasurementSalesUnitTransfer
             ->getProductMeasurementBaseUnit()
             ->getProductMeasurementUnit()
             ->getName();
@@ -88,7 +99,7 @@ class ProductMeasurementUnitTranslationExpander implements ProductMeasurementUni
         $localizedQuantityBaseMeasurementUnitName = $this
             ->translate($quantityBaseMeasurementUnitName);
 
-        $itemTransfer->getQuantitySalesUnit()
+        $productMeasurementSalesUnitTransfer
             ->getProductMeasurementBaseUnit()
             ->getProductMeasurementUnit()
             ->setName($localizedQuantityBaseMeasurementUnitName);

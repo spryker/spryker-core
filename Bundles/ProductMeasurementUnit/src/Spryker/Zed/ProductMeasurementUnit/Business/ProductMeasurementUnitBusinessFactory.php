@@ -120,7 +120,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpanderInterface
      */
-    public function createItemMeasurementUnitDataTranslationExpander(): ProductMeasurementUnitTranslationExpanderInterface
+    public function createProductMeasurementUnitTranslationExpander(): ProductMeasurementUnitTranslationExpanderInterface
     {
         return new ProductMeasurementUnitTranslationExpander(
             $this->getGlossaryFacade()

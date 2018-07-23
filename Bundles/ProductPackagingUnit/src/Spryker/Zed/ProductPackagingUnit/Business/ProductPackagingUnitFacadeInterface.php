@@ -342,4 +342,16 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderWithAmountLeadProduct(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Expands the items of the CartChangeTransfer with translated ProductPackagingUnit data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandCartChangeItemsWithProductPackagingUnitTranslation(CartChangeTransfer $cartChangeTransfer);
 }

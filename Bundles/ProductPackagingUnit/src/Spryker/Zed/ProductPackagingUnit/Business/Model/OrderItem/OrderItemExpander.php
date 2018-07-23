@@ -9,24 +9,9 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
-use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface;
 
 class OrderItemExpander implements OrderItemExpanderInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface
-     */
-    protected $glossaryFacade;
-
-    /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface $glossaryFacade
-     */
-    public function __construct(ProductPackagingUnitToGlossaryFacadeInterface $glossaryFacade)
-    {
-        $this->glossaryFacade = $glossaryFacade;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
@@ -52,35 +37,14 @@ class OrderItemExpander implements OrderItemExpanderInterface
             ->getProductMeasurementUnit()
             ->getCode();
 
-        $salesOrderItemEntity->setAmountBaseMeasurementUnitName(
-            $this->translate($amountBaseMeasurementUnitName)
-        );
-        $salesOrderItemEntity->setAmountMeasurementUnitName(
-            $this->translate($amountMeasurementUnitName)
-        );
+        $salesOrderItemEntity->setAmountBaseMeasurementUnitName($amountBaseMeasurementUnitName);
+        $salesOrderItemEntity->setAmountMeasurementUnitName($amountMeasurementUnitName);
         $salesOrderItemEntity->setAmountMeasurementUnitCode($amountMeasurementUnitCode);
 
         $salesOrderItemEntity->setAmountMeasurementUnitPrecision($itemTransfer->getAmountSalesUnit()->getPrecision());
         $salesOrderItemEntity->setAmountMeasurementUnitConversion($itemTransfer->getAmountSalesUnit()->getConversion());
 
         return $salesOrderItemEntity;
-    }
-
-    /**
-     * @param string $msg
-     *
-     * @return string
-     */
-    protected function translate(string $msg)
-    {
-        try {
-            $localizedMsg = $this->glossaryFacade
-                ->translate($msg);
-        } catch (MissingTranslationException $e) {
-            $localizedMsg = $msg;
-        }
-
-        return $localizedMsg;
     }
 
     /**
