@@ -10,7 +10,7 @@ namespace Spryker\Zed\CartExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CartOperationStrategyInterface
+interface CartOperationStrategyPluginInterface
 {
     /**
      * Specification:
@@ -27,7 +27,7 @@ interface CartOperationStrategyInterface
 
     /**
      * Specification:
-     * - Excute the cart item operation strategy.
+     * - Executes the cart item operation strategy.
      *
      * @api
      *

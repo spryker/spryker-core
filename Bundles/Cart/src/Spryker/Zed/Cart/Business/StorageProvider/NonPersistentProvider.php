@@ -16,18 +16,18 @@ use Traversable;
 class NonPersistentProvider implements StorageProviderInterface
 {
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface[]
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
      */
     protected $cartAddItemStrategies;
 
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface[]
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
      */
     protected $cartRemoveItemStrategies;
 
     /**
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface[] $cartAddItemStrategies
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface[] $cartRemoveItemStrategies
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartAddItemStrategies
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartRemoveItemStrategies
      */
     public function __construct(
         array $cartAddItemStrategies,
@@ -57,7 +57,7 @@ class NonPersistentProvider implements StorageProviderInterface
      *
      * @return void
      */
-    protected function addItem(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer)
+    protected function addItem(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
     {
         $this->isValidQuantity($itemTransfer);
         foreach ($this->cartAddItemStrategies as $cartAddItemStrategy) {
@@ -99,7 +99,7 @@ class NonPersistentProvider implements StorageProviderInterface
      *
      * @return void
      */
-    protected function removeItem(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer)
+    protected function removeItem(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
     {
         $this->isValidQuantity($itemTransfer);
         foreach ($this->cartRemoveItemStrategies as $cartRemoveItemStrategy) {
@@ -138,7 +138,7 @@ class NonPersistentProvider implements StorageProviderInterface
      *
      * @return string
      */
-    protected function getItemIdentifier(ItemTransfer $itemTransfer)
+    protected function getItemIdentifier(ItemTransfer $itemTransfer): string
     {
         return $itemTransfer->getGroupKey() ?: $itemTransfer->getSku();
     }

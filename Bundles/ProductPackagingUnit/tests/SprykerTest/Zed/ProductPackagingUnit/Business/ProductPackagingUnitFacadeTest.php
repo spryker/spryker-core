@@ -922,13 +922,13 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $itemTransfer = $this->tester->createProductPackagingUnitItemTransfer($itemSku);
 
         // Action
-        $quoteTransfer = $this->getFacade()->addItemstoQuote($itemTransfer, $quoteTransfer);
+        $quoteTransfer = $this->getFacade()->addItemsToQuote($itemTransfer, $quoteTransfer);
 
         //Assert
         $this->assertCount(1, $quoteTransfer->getItems());
 
         // Action
-        $quoteTransfer = $this->getFacade()->addItemstoQuote($itemTransfer, $quoteTransfer);
+        $quoteTransfer = $this->getFacade()->addItemsToQuote($itemTransfer, $quoteTransfer);
 
         //Assert
         $this->assertCount(1, $quoteTransfer->getItems());
@@ -938,7 +938,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         }
 
         // Action
-        $this->getFacade()->removeItemsfromQuote(
+        $this->getFacade()->removeItemsFromQuote(
             $this->tester->createProductPackagingUnitItemTransfer($itemSku),
             $quoteTransfer
         );
@@ -951,7 +951,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         }
 
         // Action
-        $this->getFacade()->removeItemsfromQuote(
+        $this->getFacade()->removeItemsFromQuote(
             $this->tester->createProductPackagingUnitItemTransfer($itemSku),
             $quoteTransfer
         );

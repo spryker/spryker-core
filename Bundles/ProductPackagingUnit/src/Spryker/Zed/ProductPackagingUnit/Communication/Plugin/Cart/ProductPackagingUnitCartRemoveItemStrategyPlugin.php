@@ -9,13 +9,13 @@ namespace Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
  */
-class ProductPackagingUnitCartAddItemStrategy extends ProductPackagingUnitAbstractCartItemOperationStrategy implements CartOperationStrategyInterface
+class ProductPackagingUnitCartRemoveItemStrategyPlugin extends AbstractProductPackagingUnitCartOperationStrategyPlugin implements CartOperationStrategyPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -26,6 +26,6 @@ class ProductPackagingUnitCartAddItemStrategy extends ProductPackagingUnitAbstra
     public function execute(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFacade()
-            ->addItemstoQuote($itemTransfer, $quoteTransfer);
+            ->removeItemsFromQuote($itemTransfer, $quoteTransfer);
     }
 }

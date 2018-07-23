@@ -18,7 +18,7 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItemstoQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function addItemsToQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $currentItemTransfer) {
             if ($this->getItemIdentifier($currentItemTransfer) === $this->getItemIdentifier($itemTransfer)) {
@@ -45,7 +45,7 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeItemsfromQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function removeItemsFromQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemIndex => $currentItemTransfer) {
             if ($this->getItemIdentifier($currentItemTransfer) === $this->getItemIdentifier($itemTransfer)) {
@@ -71,7 +71,7 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
      *
      * @return string
      */
-    protected function getItemIdentifier(ItemTransfer $itemTransfer)
+    protected function getItemIdentifier(ItemTransfer $itemTransfer): string
     {
         return $itemTransfer->getGroupKey() ?: $itemTransfer->getSku();
     }

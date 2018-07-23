@@ -60,8 +60,8 @@ class CartBusinessFactory extends AbstractBusinessFactory
     public function createStorageProvider(): StorageProviderInterface
     {
         return new NonPersistentProvider(
-            $this->getCartAddItemStrategies(),
-            $this->getCartRemoveItemStrategies()
+            $this->getCartAddItemStrategyPlugins(),
+            $this->getCartRemoveItemStrategyPlugins()
         );
     }
 
@@ -146,18 +146,18 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
      */
-    public function getCartAddItemStrategies(): array
+    public function getCartAddItemStrategyPlugins(): array
     {
-        return $this->getProvidedDependency(CartDependencyProvider::CART_ADD_ITEM_STRATEGIES);
+        return $this->getProvidedDependency(CartDependencyProvider::CART_ADD_ITEM_STRATEGY_PLUGINS);
     }
 
     /**
-     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
      */
-    public function getCartRemoveItemStrategies(): array
+    public function getCartRemoveItemStrategyPlugins(): array
     {
-        return $this->getProvidedDependency(CartDependencyProvider::CART_REMOVE_ITEM_STRATEGIES);
+        return $this->getProvidedDependency(CartDependencyProvider::CART_REMOVE_ITEM_STRATEGY_PLUGINS);
     }
 }

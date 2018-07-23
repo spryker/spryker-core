@@ -34,7 +34,7 @@ class QuoteMergerTest extends Unit
     /**
      * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface
      */
-    private $merger;
+    private $cartMerger;
 
     /**
      * @var \SprykerTest\Zed\PersistentCart\PersistentCartBusinessTester
@@ -48,7 +48,7 @@ class QuoteMergerTest extends Unit
     {
         parent::setUp();
         $factory = $this->createPersistentCartBusinessFactoryMock();
-        $this->merger = new QuoteMerger(
+        $this->cartMerger = new QuoteMerger(
             $factory->getCartFacade()
         );
     }
@@ -59,7 +59,7 @@ class QuoteMergerTest extends Unit
     public function testMergeSourceAndTargetQuote(): void
     {
         $quoteMergeRequestTransfer = $this->createQuoteMergeRequestTransfer();
-        $quoteTransfer = $this->merger->merge($quoteMergeRequestTransfer);
+        $quoteTransfer = $this->cartMerger->merge($quoteMergeRequestTransfer);
 
         $changedItems = $quoteTransfer->getItems();
         $this->assertCount(2, $changedItems);
