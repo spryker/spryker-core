@@ -14,6 +14,10 @@ use Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInter
 class CartItemAddTripleStrategy implements CartOperationStrategyPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -25,6 +29,10 @@ class CartItemAddTripleStrategy implements CartOperationStrategyPluginInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

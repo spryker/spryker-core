@@ -18,6 +18,10 @@ use Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInter
 class ProductPackagingUnitCartAddItemStrategyPlugin extends AbstractProductPackagingUnitCartOperationStrategyPlugin implements CartOperationStrategyPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -26,6 +30,6 @@ class ProductPackagingUnitCartAddItemStrategyPlugin extends AbstractProductPacka
     public function execute(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFacade()
-            ->addItemsToQuote($itemTransfer, $quoteTransfer);
+            ->addItemToQuote($itemTransfer, $quoteTransfer);
     }
 }

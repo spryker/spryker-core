@@ -150,7 +150,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
      */
     public function getCartAddItemStrategyPlugins(): array
     {
-        return $this->getProvidedDependency(CartDependencyProvider::CART_ADD_ITEM_STRATEGY_PLUGINS);
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_CART_ADD_ITEM_STRATEGY);
     }
 
     /**
@@ -158,6 +158,6 @@ class CartBusinessFactory extends AbstractBusinessFactory
      */
     public function getCartRemoveItemStrategyPlugins(): array
     {
-        return $this->getProvidedDependency(CartDependencyProvider::CART_REMOVE_ITEM_STRATEGY_PLUGINS);
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_CART_REMOVE_ITEM_STRATEGY);
     }
 }

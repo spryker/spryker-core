@@ -24,8 +24,8 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     const CART_PRE_RELOAD_PLUGINS = 'cart pre reload plugins';
     const CART_TERMINATION_PLUGINS = 'CART_TERMINATION_PLUGINS';
     const PLUGINS_QUOTE_CHANGE_OBSERVER = 'PLUGINS_QUOTE_CHANGE_OBSERVER';
-    const CART_ADD_ITEM_STRATEGY_PLUGINS = 'CART_ADD_ITEM_STRATEGY_PLUGINS';
-    const CART_REMOVE_ITEM_STRATEGY_PLUGINS = 'CART_REMOVE_ITEM_STRATEGY_PLUGINS';
+    const PLUGINS_CART_ADD_ITEM_STRATEGY = 'PLUGINS_CART_ADD_ITEM_STRATEGY';
+    const PLUGINS_CART_REMOVE_ITEM_STRATEGY = 'PLUGINS_CART_REMOVE_ITEM_STRATEGY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,6 +34,8 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+        
         $container = $this->addCalculationFacade($container);
         $container = $this->addMessengerFacade($container);
         $container = $this->addExpanderPlugins($container);
@@ -176,7 +178,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartAddItemStrategyPlugins(Container $container): Container
     {
-        $container[static::CART_ADD_ITEM_STRATEGY_PLUGINS] = function (Container $container) {
+        $container[static::PLUGINS_CART_ADD_ITEM_STRATEGY] = function (Container $container) {
             return $this->getCartAddItemStrategyPlugins($container);
         };
 
@@ -190,7 +192,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartRemoveItemStrategyPlugins(Container $container): Container
     {
-        $container[static::CART_REMOVE_ITEM_STRATEGY_PLUGINS] = function (Container $container) {
+        $container[static::PLUGINS_CART_REMOVE_ITEM_STRATEGY] = function (Container $container) {
             return $this->getCartRemoveItemStrategyPlugins($container);
         };
 

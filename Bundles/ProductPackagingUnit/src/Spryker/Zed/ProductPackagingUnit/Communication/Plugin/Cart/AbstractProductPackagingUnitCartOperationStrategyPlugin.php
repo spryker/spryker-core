@@ -14,6 +14,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 abstract class AbstractProductPackagingUnitCartOperationStrategyPlugin extends AbstractPlugin
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

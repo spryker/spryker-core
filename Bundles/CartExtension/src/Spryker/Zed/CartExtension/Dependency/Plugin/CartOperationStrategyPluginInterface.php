@@ -14,7 +14,7 @@ interface CartOperationStrategyPluginInterface
 {
     /**
      * Specification:
-     * - Checks if strategy is applicaple for the given item and quote.
+     * - Checks if strategy is applicable for the given item and quote.
      *
      * @api
      *

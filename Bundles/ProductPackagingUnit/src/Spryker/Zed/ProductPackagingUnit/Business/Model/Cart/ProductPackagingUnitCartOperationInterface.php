@@ -18,7 +18,7 @@ interface ProductPackagingUnitCartOperationInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItemsToQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function addItemToQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -26,5 +26,5 @@ interface ProductPackagingUnitCartOperationInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeItemsFromQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function removeItemFromQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

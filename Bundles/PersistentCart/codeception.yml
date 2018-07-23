@@ -1,4 +1,4 @@
-namespace: PersistentCart
+namespace: SprykerTest
 actor: Tester
 
 include:

@@ -58,9 +58,13 @@ class QuoteMergerTest extends Unit
      */
     public function testMergeSourceAndTargetQuote(): void
     {
+        // Assign
         $quoteMergeRequestTransfer = $this->createQuoteMergeRequestTransfer();
+
+        // Act
         $quoteTransfer = $this->cartMerger->merge($quoteMergeRequestTransfer);
 
+        // Assert
         $changedItems = $quoteTransfer->getItems();
         $this->assertCount(2, $changedItems);
         $this->assertEquals($quoteTransfer->getCurrency()->getCode(), $quoteMergeRequestTransfer->getTargetQuote()->getCurrency()->getCode());
