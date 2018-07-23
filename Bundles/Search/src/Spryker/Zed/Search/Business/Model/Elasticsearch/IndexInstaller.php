@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
+use Spryker\Zed\Search\SearchConfig;
 
 class IndexInstaller implements SearchInstallerInterface
 {
@@ -36,26 +37,26 @@ class IndexInstaller implements SearchInstallerInterface
     protected $messenger;
 
     /**
-     * @var string[]
+     * @var \Spryker\Zed\Search\SearchConfig
      */
-    protected $indexDefinitionBlacklistedSettings;
+    protected $searchConfig;
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface $indexDefinitionLoader
      * @param \Elastica\Client $elasticaClient
      * @param \Psr\Log\LoggerInterface $messenger
-     * @param string[] $indexDefinitionBlacklistedSettings
+     * @param \Spryker\Zed\Search\SearchConfig $searchConfig
      */
     public function __construct(
         IndexDefinitionLoaderInterface $indexDefinitionLoader,
         Client $elasticaClient,
         LoggerInterface $messenger,
-        array $indexDefinitionBlacklistedSettings = []
+        SearchConfig $searchConfig
     ) {
         $this->indexDefinitionLoader = $indexDefinitionLoader;
         $this->elasticaClient = $elasticaClient;
         $this->messenger = $messenger;
-        $this->indexDefinitionBlacklistedSettings = $indexDefinitionBlacklistedSettings;
+        $this->searchConfig = $searchConfig;
     }
 
     /**
@@ -200,7 +201,9 @@ class IndexInstaller implements SearchInstallerInterface
      */
     protected function removeBlacklistedSettings(array $settings): array
     {
-        foreach ($this->indexDefinitionBlacklistedSettings as $blacklistedSettingPath) {
+        $blacklistSettingsForIndexUpdate = $this->searchConfig->getBlacklistSettingsForIndexUpdate();
+
+        foreach ($blacklistSettingsForIndexUpdate as $blacklistedSettingPath) {
             $settings = $this->removeSettingPath($settings, $blacklistedSettingPath);
         }
 

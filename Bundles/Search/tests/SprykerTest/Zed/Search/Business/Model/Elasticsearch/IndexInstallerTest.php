@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
+use Spryker\Zed\Search\SearchConfig;
 
 /**
  * Auto-generated group annotations
@@ -52,7 +53,7 @@ class IndexInstallerTest extends Unit
             $this->createIndexDefinitionLoaderMock($indexDefinitions),
             $this->createElasticaClientMock($indexMock),
             $this->createMessengerMock(),
-            $this->getIndexDefinitionBlacklistedSettings()
+            $this->createSearchConfigMock()
         );
 
         $installer->install();
@@ -89,7 +90,7 @@ class IndexInstallerTest extends Unit
             $this->createIndexDefinitionLoaderMock($indexDefinitions),
             $this->createElasticaClientMock($indexMock),
             $this->createMessengerMock(),
-            $this->getIndexDefinitionBlacklistedSettings()
+            $this->createSearchConfigMock()
         );
 
         $installer->install();
@@ -98,7 +99,7 @@ class IndexInstallerTest extends Unit
     /**
      * @return string[]
      */
-    protected function getIndexDefinitionBlacklistedSettings()
+    protected function getBlacklistSettingsForIndexUpdate()
     {
         return [
             'index.number_of_shards',
@@ -126,6 +127,19 @@ class IndexInstallerTest extends Unit
             ->willReturn($indexDefinitions);
 
         return $indexDefinitionLoader;
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Search\SearchConfig
+     */
+    protected function createSearchConfigMock()
+    {
+        $searchConfigMock = $this->getMockBuilder(SearchConfig::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getBlacklistSettingsForIndexUpdate'])
+            ->getMock();
+
+        return $searchConfigMock;
     }
 
     /**

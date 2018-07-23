@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SearchConfig extends AbstractBundleConfig
 {
-    protected const INDEX_SETTINGS_BLACKLIST = [
+    protected const BLACKLIST_SETTINGS_FOR_INDEX_UPDATE = [
         'index.number_of_shards',
         'index.codec',
         'index.routing_partition_size',
@@ -68,9 +68,9 @@ class SearchConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getIndexDefinitionBlacklistedSettings(): array
+    public function getBlacklistSettingsForIndexUpdate(): array
     {
-        return static::INDEX_SETTINGS_BLACKLIST;
+        return static::BLACKLIST_SETTINGS_FOR_INDEX_UPDATE;
     }
 
     /**
