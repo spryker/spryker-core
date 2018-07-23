@@ -129,7 +129,7 @@ class ProductLabelStorageWriter implements ProductLabelStorageWriterInterface
      */
     protected function findProductLabelAbstractEntities(array $productAbstractIds)
     {
-        return $this->queryContainer->queryProductLabelProductAbstractByIds($productAbstractIds)->find()->getData();
+        return $this->queryContainer->queryProductLabelProductAbstractByProductAbstractIds($productAbstractIds)->find()->getData();
     }
 
     /**
