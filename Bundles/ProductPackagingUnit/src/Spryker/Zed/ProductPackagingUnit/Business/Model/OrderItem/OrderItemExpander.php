@@ -41,6 +41,8 @@ class OrderItemExpander implements OrderItemExpanderInterface
         $salesOrderItemEntity->setAmountMeasurementUnitName($amountMeasurementUnitName);
         $salesOrderItemEntity->setAmountMeasurementUnitCode($amountMeasurementUnitCode);
 
+        $salesOrderItemEntity->setIsQuantitySplittable(true);
+
         $salesOrderItemEntity->setAmountMeasurementUnitPrecision($itemTransfer->getAmountSalesUnit()->getPrecision());
         $salesOrderItemEntity->setAmountMeasurementUnitConversion($itemTransfer->getAmountSalesUnit()->getConversion());
 
@@ -62,9 +64,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
         $packagingUnitLeadProductSku = $itemTransfer->getAmountLeadProduct()->getProduct()->getSku();
         $packagingUnitAmount = $itemTransfer->getAmount();
 
-        $packagingUnitLeadProductAmount = (int)($packagingUnitAmount / $itemTransfer->getQuantity());
+        $packagingUnitLeadProductAmount = $packagingUnitAmount / $itemTransfer->getQuantity();
 
-        $salesOrderItemEntity->setAmount($packagingUnitLeadProductAmount);
+        $salesOrderItemEntity->setAmount((int)$packagingUnitLeadProductAmount);
         $salesOrderItemEntity->setAmountSku($packagingUnitLeadProductSku);
 
         return $salesOrderItemEntity;

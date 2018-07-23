@@ -60,6 +60,8 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
                 $storeTransfer
             );
 
+            $itemTransfer->setIsQuantitySplittable(true);
+
             if ($itemTransfer->getAmount() > 0 && !$isPackagingUnitLeadProductSellable) {
                 $cartErrorMessages[] = $this->createMessageTransfer(
                     static::CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED,

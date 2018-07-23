@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Business;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
@@ -342,4 +343,31 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderWithAmountLeadProduct(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Splitting order items strategy. Calculates amount per quantity. e.g amount / quantity
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function transformOrderItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Checks if the product packaging unit item is splittable per quantity.
+     * - Returns true if the item is a bundled item.
+     * - Returns false if the product is non-splittable.
+     * - Returns true in any other case.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    public function isProductPackagingUnitItemQuantitySplittable(ItemTransfer $itemTransfer): bool;
 }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Business;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
@@ -408,8 +409,6 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
-     * @@api
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -419,5 +418,37 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
         return $this->getFactory()
             ->createAmountLeadProductHydrateOrder()
             ->expandOrderWithAmountLeadProduct($orderTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function transformOrderItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createOrderItemTransformer()
+            ->transformSplittableItem($itemTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    public function isProductPackagingUnitItemQuantitySplittable(ItemTransfer $itemTransfer): bool
+    {
+        return $this->getFactory()
+            ->createProductPackagingUnitItemQuantityValidator()
+            ->isProductPackagingUnitItemQuantitySplittable($itemTransfer);
     }
 }

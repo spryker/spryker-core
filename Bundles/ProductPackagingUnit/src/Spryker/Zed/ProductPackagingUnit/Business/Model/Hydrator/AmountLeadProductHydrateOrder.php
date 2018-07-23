@@ -78,6 +78,7 @@ class AmountLeadProductHydrateOrder implements AmountLeadProductHydrateOrderInte
         }
 
         $leadProductConcreteTransfer = $this->findProductConcreteBySku($spySalesOrderItemEntityTransfer->getAmountSku());
+
         if (!$leadProductConcreteTransfer) {
             return;
         }

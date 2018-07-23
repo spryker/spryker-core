@@ -28,6 +28,10 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUn
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstallerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemExpander;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemExpanderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemTransformer;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemTransformerInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\ProductPackagingUnitItemQuantityValidator;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\ProductPackagingUnitItemQuantityValidatorInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpander;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitAmountSalesUnitValue;
@@ -369,5 +373,21 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new AmountSalesUnitHydrateOrder(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemTransformerInterface
+     */
+    public function createOrderItemTransformer(): OrderItemTransformerInterface
+    {
+        return new OrderItemTransformer();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\ProductPackagingUnitItemQuantityValidatorInterface
+     */
+    public function createProductPackagingUnitItemQuantityValidator(): ProductPackagingUnitItemQuantityValidatorInterface
+    {
+        return new ProductPackagingUnitItemQuantityValidator();
     }
 }
