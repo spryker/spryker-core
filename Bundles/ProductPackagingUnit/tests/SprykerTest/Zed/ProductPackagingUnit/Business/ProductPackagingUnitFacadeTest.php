@@ -911,4 +911,52 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getAmountLeadProduct()->getProduct()->getSku());
         }
     }
+
+    /**
+     * @return void
+     */
+    public function testAddAndRemoveItemsToAndFromQuote(): void
+    {
+        $itemSku = 'sku_1';
+        $quoteTransfer = $this->tester->createQuoteTransfer();
+        $itemTransfer = $this->tester->createProductPackagingUnitItemTransfer($itemSku);
+
+        // Action
+        $quoteTransfer = $this->getFacade()->addItemstoQuote($itemTransfer, $quoteTransfer);
+
+        //Assert
+        $this->assertCount(1, $quoteTransfer->getItems());
+
+        // Action
+        $quoteTransfer = $this->getFacade()->addItemstoQuote($itemTransfer, $quoteTransfer);
+
+        //Assert
+        $this->assertCount(1, $quoteTransfer->getItems());
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $this->assertEquals(2, $itemTransfer->getQuantity());
+            $this->assertEquals(2, $itemTransfer->getAmount());
+        }
+
+        // Action
+        $this->getFacade()->removeItemsfromQuote(
+            $this->tester->createProductPackagingUnitItemTransfer($itemSku),
+            $quoteTransfer
+        );
+
+        //Assert
+        $this->assertCount(1, $quoteTransfer->getItems());
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $this->assertEquals(1, $itemTransfer->getQuantity());
+            $this->assertEquals(1, $itemTransfer->getAmount());
+        }
+
+        // Action
+        $this->getFacade()->removeItemsfromQuote(
+            $this->tester->createProductPackagingUnitItemTransfer($itemSku),
+            $quoteTransfer
+        );
+
+        //Assert
+        $this->assertCount(0, $quoteTransfer->getItems());
+    }
 }

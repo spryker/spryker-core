@@ -11,6 +11,10 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface;
 
+/**
+ * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
+ */
 class ProductPackagingUnitCartAddItemStrategy extends ProductPackagingUnitAbstractCartItemOperationStrategy implements CartOperationStrategyInterface
 {
     /**
@@ -21,22 +25,7 @@ class ProductPackagingUnitCartAddItemStrategy extends ProductPackagingUnitAbstra
      */
     public function execute(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        foreach ($quoteTransfer->getItems() as $currentItemTransfer) {
-            if ($this->getItemIdentifier($currentItemTransfer) === $this->getItemIdentifier($itemTransfer)) {
-                $currentItemTransfer->setQuantity(
-                    $currentItemTransfer->getQuantity() + $itemTransfer->getQuantity()
-                );
-
-                $currentItemTransfer->setAmount(
-                    $currentItemTransfer->getAmount() + $itemTransfer->getAmount()
-                );
-
-                return $quoteTransfer;
-            }
-        }
-
-        $quoteTransfer->getItems()->append($itemTransfer);
-
-        return $quoteTransfer;
+        return $this->getFacade()
+            ->addItemstoQuote($itemTransfer, $quoteTransfer);
     }
 }

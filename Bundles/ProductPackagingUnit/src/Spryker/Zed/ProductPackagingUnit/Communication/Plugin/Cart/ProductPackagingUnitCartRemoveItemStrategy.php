@@ -11,6 +11,10 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyInterface;
 
+/**
+ * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
+ */
 class ProductPackagingUnitCartRemoveItemStrategy extends ProductPackagingUnitAbstractCartItemOperationStrategy implements CartOperationStrategyInterface
 {
     /**
@@ -21,22 +25,7 @@ class ProductPackagingUnitCartRemoveItemStrategy extends ProductPackagingUnitAbs
      */
     public function execute(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        foreach ($quoteTransfer->getItems() as $itemIndex => $currentItemTransfer) {
-            if ($this->getItemIdentifier($currentItemTransfer) === $this->getItemIdentifier($itemTransfer)) {
-                $newQuantity = $currentItemTransfer->getQuantity() - $itemTransfer->getQuantity();
-                $newAmount = $currentItemTransfer->getAmount() - $itemTransfer->getAmount();
-
-                if ($newQuantity < 1 || $newAmount < 1) {
-                    $quoteTransfer->getItems()->offsetUnset($itemIndex);
-                    break;
-                }
-
-                $currentItemTransfer->setQuantity($newQuantity);
-                $currentItemTransfer->setAmount($newAmount);
-                break;
-            }
-        }
-
-        return $quoteTransfer;
+        return $this->getFacade()
+            ->removeItemsfromQuote($itemTransfer, $quoteTransfer);
     }
 }

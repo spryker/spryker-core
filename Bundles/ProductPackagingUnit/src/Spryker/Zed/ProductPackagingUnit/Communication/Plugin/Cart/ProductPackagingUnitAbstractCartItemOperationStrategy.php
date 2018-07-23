@@ -22,14 +22,4 @@ abstract class ProductPackagingUnitAbstractCartItemOperationStrategy
     {
         return (bool)$itemTransfer->getAmount();
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return string
-     */
-    protected function getItemIdentifier(ItemTransfer $itemTransfer)
-    {
-        return $itemTransfer->getGroupKey() ?: $itemTransfer->getSku();
-    }
 }

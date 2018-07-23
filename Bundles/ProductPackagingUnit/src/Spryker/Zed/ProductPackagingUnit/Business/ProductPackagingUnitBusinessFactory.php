@@ -14,6 +14,8 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\Produc
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCheckoutPreCheckInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\ProductPackagingUnitAvailabilityHandler;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\ProductPackagingUnitAvailabilityHandlerInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Cart\ProductPackagingUnitCartOperation;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Cart\ProductPackagingUnitCartOperationInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\AmountGroupKeyItemExpander;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\AmountGroupKeyItemExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\AmountSalesUnitItemExpander;
@@ -177,6 +179,14 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new ProductPackagingUnitCheckoutPreCheck(
             $this->getAvailabilityFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Cart\ProductPackagingUnitCartOperationInterface
+     */
+    public function createProductPackagingUnitCartOperation(): ProductPackagingUnitCartOperationInterface
+    {
+        return new ProductPackagingUnitCartOperation();
     }
 
     /**
