@@ -16,7 +16,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  */
-class ProductImagePageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
+class ProductImagePageDataLoaderExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
      * @param array $productData

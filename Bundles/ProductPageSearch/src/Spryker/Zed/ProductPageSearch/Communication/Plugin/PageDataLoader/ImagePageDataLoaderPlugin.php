@@ -7,14 +7,14 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataLoader;
 
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
-use Generated\Shared\Transfer\ProductPayloadTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 
-class PricePageDataLoaderPlugin implements ProductPageDataLoaderPluginInterface
+class ImagePageDataLoaderPlugin implements ProductPageDataLoaderPluginInterface
 {
 
     /**
@@ -24,7 +24,7 @@ class PricePageDataLoaderPlugin implements ProductPageDataLoaderPluginInterface
      */
     public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
     {
-        $payloadTransfers = $this->setProductPrices($loadTransfer->getProductAbstractIds(), $loadTransfer->getPayloadTransfers());
+        $payloadTransfers = $this->setProductImages($loadTransfer->getProductAbstractIds(), $loadTransfer->getPayloadTransfers());
 
         $loadTransfer->setPayloadTransfers($payloadTransfers);
     }
@@ -34,7 +34,7 @@ class PricePageDataLoaderPlugin implements ProductPageDataLoaderPluginInterface
      */
     public function getProductPageType()
     {
-        return 'price';
+        return 'image';
     }
 
     /**
@@ -43,7 +43,7 @@ class PricePageDataLoaderPlugin implements ProductPageDataLoaderPluginInterface
      *
      * @return array
      */
-    protected function setProductPrices(array $productAbstractIds, array $payloadTransfers): array
+    protected function setProductImages(array $productAbstractIds, array $payloadTransfers): array
     {
         //TODO check PriceProductCriteriaBuilder::getCurrencyFromFilter()
         $idDefaultCurrencyCode = 93;
@@ -54,16 +54,18 @@ class PricePageDataLoaderPlugin implements ProductPageDataLoaderPluginInterface
             ->joinWithStore()
             ->usePriceProductQuery()
                 ->filterByFkProductAbstract_In($productAbstractIds)
+                ->joinWithPriceType()
             ->endUse()
             ->withColumn(SpyStoreTableMap::COL_NAME, 'store_name')
             ->withColumn(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT, 'id_product_abstract')
             ->withColumn(SpyPriceProductStoreTableMap::COL_GROSS_PRICE, 'GROSS_PRICE')
             ->withColumn(SpyPriceProductStoreTableMap::COL_NET_PRICE, 'NET_PRICE')
-            ->select(['id_product_abstract', 'GROSS_PRICE', 'NET_PRICE'])
+            ->withColumn(SpyPriceTypeTableMap::COL_NAME, 'price_type')
+            ->select(['id_product_abstract', 'GROSS_PRICE', 'NET_PRICE', 'price_type'])
         ;
 
-        // TODO add price dimension plugin logic here
         $prices = $query->find();
+        // TODO add price dimension plugin logic here
 
         foreach ($prices as $price) {
             if (isset($payloadTransfers[$price['id_product_abstract']])) {
@@ -73,11 +75,9 @@ class PricePageDataLoaderPlugin implements ProductPageDataLoaderPluginInterface
                     $priceWithStore = $payloadTransfers[$price['id_product_abstract']]->getPrice();
                 }
                 
-                $priceWithStore[$price['store_name']] = $price['GROSS_PRICE'];
+                $priceWithStore[$price['store_name']][] = $price['GROSS_PRICE'];
                 $payloadTransfers[$price['id_product_abstract']]->setPrice($priceWithStore);
             }
         }
-
-        return $payloadTransfers;
     }
 }

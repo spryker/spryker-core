@@ -10,11 +10,9 @@ namespace Spryker\Zed\ProductPageSearch;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\PricePageDataExpanderPlugin;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\ProductCategoryPageDataExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\ProductImagePageDataExpanderPlugin;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataLoader\PricePageDataLoaderPlugin;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataLoader\ImagePageDataLoaderPlugin;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageMapExpander\PricePageMapExpanderPlugin;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageMapExpander\ProductCategoryPageMapExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageMapExpander\ProductImagePageMapExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Client\ProductPageSearchToCatalogPriceProductConnectorClientBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToCategoryBridge;
@@ -176,9 +174,9 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     protected function getDataExpanderPlugins()
     {
         return [
-            self::PLUGIN_PRODUCT_PRICE_PAGE_DATA => new PricePageDataExpanderPlugin(),
+//            self::PLUGIN_PRODUCT_PRICE_PAGE_DATA => new PricePageDataExpanderPlugin(),
 //            self::PLUGIN_PRODUCT_CATEGORY_PAGE_DATA => new ProductCategoryPageDataExpanderPlugin(),
-//            self::PLUGIN_PRODUCT_IMAGE_PAGE_DATA => new ProductImagePageDataExpanderPlugin(),
+            self::PLUGIN_PRODUCT_IMAGE_PAGE_DATA => new ProductImagePageDataExpanderPlugin(),
         ];
     }
 
@@ -188,16 +186,16 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     protected function getMapExpanderPlugins()
     {
         return [
-            new PricePageMapExpanderPlugin(),
+//            new PricePageMapExpanderPlugin(),
 //            new ProductCategoryPageMapExpanderPlugin(),
-//            new ProductImagePageMapExpanderPlugin(),
+            new ProductImagePageMapExpanderPlugin(),
         ];
     }
 
     protected function getDataLoaderPlugins()
     {
         return [
-            new PricePageDataLoaderPlugin()
+//            new ImagePageDataLoaderPlugin()
         ];
     }
 }

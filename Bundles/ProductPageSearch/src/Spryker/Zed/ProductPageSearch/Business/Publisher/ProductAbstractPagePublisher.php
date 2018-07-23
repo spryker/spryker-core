@@ -347,25 +347,26 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      *
      * @param array $productAbstractLocalizedEntities
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productAbstractPageSearchEntities
-     * @param array $expandedData
+     * @param ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return array
      */
     protected function pairProductAbstractLocalizedEntitiesWithProductAbstractPageSearchEntities(
         array $productAbstractLocalizedEntities,
         array $productAbstractPageSearchEntities,
-        $expandedData
+        ProductPageLoadTransfer $productPageLoadTransfer
     ) {
         $mappedProductAbstractPageSearchEntities = $this->mapProductAbstractPageSearchEntities($productAbstractPageSearchEntities);
 
         $pairs = [];
+        $productPayloadTransfers = $productPageLoadTransfer->getPayloadTransfers();
         foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
             list($pairs, $mappedProductAbstractPageSearchEntities) = $this->pairProductAbstractLocalizedEntityWithProductAbstractPageSearchEntityByStoresAndLocale(
                 $productAbstractLocalizedEntity['fk_product_abstract'],
                 $productAbstractLocalizedEntity['Locale']['locale_name'],
+                $productPayloadTransfers[$productAbstractLocalizedEntity['fk_product_abstract']],
                 $productAbstractLocalizedEntity['SpyProductAbstract']['SpyProductAbstractStores'],
                 $productAbstractLocalizedEntity,
-                $expandedData,
                 $mappedProductAbstractPageSearchEntities,
                 $pairs
             );
@@ -434,9 +435,9 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     /**
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param ProductPayloadTransfer $productPayloadTransfer
      * @param array $productAbstractStores
      * @param array $productAbstractLocalizedEntity
-     * @param array $expandedData
      * @param array $mappedProductAbstractPageSearchEntities
      * @param array $pairs
      *
@@ -445,14 +446,15 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     protected function pairProductAbstractLocalizedEntityWithProductAbstractPageSearchEntityByStoresAndLocale(
         $idProductAbstract,
         $localeName,
+        ProductPayloadTransfer $productPayloadTransfer,
         array $productAbstractStores,
         array $productAbstractLocalizedEntity,
-        array $expandedData,
         array $mappedProductAbstractPageSearchEntities,
         array $pairs
     ) {
         foreach ($productAbstractStores as $productAbstractStore) {
             $storeName = $productAbstractStore['SpyStore']['name'];
+            $productAbstractLocalizedEntity['EXPANDED_DATA'] = $productPayloadTransfer;
 
             $searchEntity = isset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]) ?
                 $mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName] :
@@ -462,8 +464,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
                 static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY => $productAbstractLocalizedEntity,
                 static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY => $searchEntity,
                 static::LOCALE_NAME => $localeName,
-                static::STORE_NAME => $storeName,
-                'EXPANDED_DATA' => $expandedData[$storeName]
+                static::STORE_NAME => $storeName
             ];
 
             unset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]);

@@ -40,7 +40,6 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
      */
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
     {
-        //TODO SLOW PART
         $allParentCategoryIds = [];
         $localeTransfer = (new LocaleTransfer())
             ->setIdLocale($productData['Locale']['id_locale']);
