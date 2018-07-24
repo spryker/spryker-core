@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+
 class PriceProductStorageToPriceProductFacadeBridge implements PriceProductStorageToPriceProductFacadeInterface
 {
     /**
@@ -24,23 +26,25 @@ class PriceProductStorageToPriceProductFacadeBridge implements PriceProductStora
 
     /**
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPrices($idProductAbstract)
+    public function findProductAbstractPrices($idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null)
     {
-        return $this->priceProductFacade->findProductAbstractPrices($idProductAbstract);
+        return $this->priceProductFacade->findProductAbstractPrices($idProductAbstract, $priceProductCriteriaTransfer);
     }
 
     /**
      * @param int $idProductConcrete
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePrices($idProductConcrete, $idProductAbstract)
+    public function findProductConcretePrices($idProductConcrete, $idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null)
     {
-        return $this->priceProductFacade->findProductConcretePrices($idProductConcrete, $idProductAbstract);
+        return $this->priceProductFacade->findProductConcretePrices($idProductConcrete, $idProductAbstract, $priceProductCriteriaTransfer);
     }
 
     /**

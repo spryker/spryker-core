@@ -31,4 +31,14 @@ class ProductQuantityStorageRepository extends AbstractRepository implements Pro
 
         return $this->buildQueryFromCriteria($query)->find();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
+     */
+    public function findAllProductQuantityStorageEntities(): array
+    {
+        $query = $this->getFactory()->createProductQuantityStorageQuery();
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
 }
