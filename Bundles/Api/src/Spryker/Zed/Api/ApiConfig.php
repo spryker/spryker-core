@@ -137,7 +137,7 @@ class ApiConfig extends AbstractBundleConfig
      */
     public function getServerVariablesFilterStrategy(): string
     {
-        return $this->get(ApiConstants::ENV_SERVER_VARIABLE_FILTER_STRATEGY, ApiConstants::ENV_SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK);
+        return $this->get(ApiConstants::ENV_SERVER_VARIABLE_FILTER_STRATEGY, ApiConstants::ENV_SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST);
     }
 
     /**

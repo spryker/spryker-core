@@ -10,7 +10,6 @@ namespace Spryker\Zed\Api\Communication\Plugin;
 use Exception;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
-use Spryker\Shared\Api\ApiConstants;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Communication\Controller\AbstractApiController;
@@ -118,7 +117,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $queryData = $request->query->all();
         $requestTransfer->setQueryData($queryData);
 
-        $serverData = $this->filterServerData($request->server->all());
+        $serverData = $this->getFactory()->createServerVariableFilterer()->filter($request->server->all());
         $requestTransfer->setServerData($serverData);
 
         $headerData = $request->headers->all();
@@ -166,28 +165,5 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
             $responseTransfer->getCode(),
             json_encode($array)
         ));
-    }
-
-    /**
-     * @param array $serverData
-     *
-     * @return array
-     */
-    protected function filterServerData(array $serverData): array
-    {
-        switch ($this->getConfig()->getServerVariablesFilterStrategy()) {
-            case ApiConstants::ENV_SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST:
-                $serverData = array_intersect_key($serverData, array_flip($this->getConfig()->getServerVariablesWhitelist()));
-                break;
-            case ApiConstants::ENV_SERVER_VARIABLE_FILTER_STRATEGY_BLACKLIST:
-                $serverData = array_diff_key($serverData, array_flip($this->getConfig()->getServerVariablesBlacklist()));
-                break;
-            case ApiConstants::ENV_SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK:
-                $serverVariablesCallback = $this->getConfig()->getServerVariablesCallback();
-                $serverData = (array)$serverVariablesCallback($serverData);
-                break;
-        }
-
-        return $serverData;
     }
 }
