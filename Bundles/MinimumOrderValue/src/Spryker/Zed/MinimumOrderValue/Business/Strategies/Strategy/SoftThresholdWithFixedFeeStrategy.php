@@ -26,7 +26,7 @@ class SoftThresholdWithFixedFeeStrategy extends MinimumOrderValueAbstractStrateg
      *
      * @return bool
      */
-    public function validate(int $thresholdValue, ?int $fee = null): bool
+    public function isValid(int $thresholdValue, ?int $fee = null): bool
     {
         if ($thresholdValue < 1 || $fee < 1) {
             return false;

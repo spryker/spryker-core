@@ -27,7 +27,7 @@ interface MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterfac
      *
      * @return bool
      */
-    public function validateStrategy(
+    public function isStrategyValid(
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
         int $thresholdValue,
         ?int $fee = null

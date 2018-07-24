@@ -14,7 +14,7 @@ use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\MerchantRelati
 class MerchantRelationshipThresholdManager implements MerchantRelationshipThresholdManagerInterface
 {
     /**
-     * @var \\Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface
+     * @var \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface
      */
     protected $minimumOrderValueFacade;
 
@@ -43,7 +43,7 @@ class MerchantRelationshipThresholdManager implements MerchantRelationshipThresh
     public function setMerchantRelationshipThreshold(
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {
-        $this->minimumOrderValueFacade->validateStrategy(
+        $this->minimumOrderValueFacade->isStrategyValid(
             $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueType(),
             $merchantRelationshipMinimumOrderValueTransfer->getValue(),
             $merchantRelationshipMinimumOrderValueTransfer->getFee()

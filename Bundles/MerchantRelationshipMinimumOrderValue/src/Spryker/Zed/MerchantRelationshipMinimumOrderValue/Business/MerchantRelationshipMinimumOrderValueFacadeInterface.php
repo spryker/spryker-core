@@ -13,7 +13,7 @@ interface MerchantRelationshipMinimumOrderValueFacadeInterface
 {
     /**
      * Specification:
-     * - Set merchant relationship specfic minimum order value threshold.
+     * - Set merchant relationship specific minimum order value threshold.
      *
      * @api
      *

@@ -9,7 +9,6 @@ namespace Spryker\Zed\MinimumOrderValue\Business;
 
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface MinimumOrderValueFacadeInterface
 {
@@ -69,31 +68,9 @@ interface MinimumOrderValueFacadeInterface
      *
      * @return bool
      */
-    public function validateStrategy(
+    public function isStrategyValid(
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
         int $thresholdValue,
         ?int $fee = null
     ): bool;
-
-    /**
-     * Specification:
-     * - Calculate the surcharge fee for the QuoteTransfer according to the strategy.
-     *
-     * @api
-     *
-     * @param string $strategyKey
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $thresholdValue
-     * @param int|null $fee
-     *
-     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyNotFoundException
-     *
-     * @return int
-     */
-    public function calculateFee(
-        string $strategyKey,
-        QuoteTransfer $quoteTransfer,
-        int $thresholdValue,
-        ?int $fee = null
-    ): int;
 }

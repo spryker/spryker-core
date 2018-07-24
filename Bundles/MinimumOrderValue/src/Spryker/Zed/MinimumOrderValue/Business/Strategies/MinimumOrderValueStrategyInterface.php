@@ -35,5 +35,5 @@ interface MinimumOrderValueStrategyInterface
      *
      * @return bool
      */
-    public function validate(int $thresholdValue, ?int $fee = null): bool;
+    public function isValid(int $thresholdValue, ?int $fee = null): bool;
 }

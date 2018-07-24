@@ -9,7 +9,6 @@ namespace Spryker\Zed\MinimumOrderValue\Business;
 
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -79,7 +78,7 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
      * @param int $thresholdValue
      * @param int|null $fee
      *
@@ -87,7 +86,7 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @return bool
      */
-    public function validateStrategy(
+    public function isStrategyValid(
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
         int $thresholdValue,
         ?int $fee = null
@@ -96,33 +95,6 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
             ->createMinimumOrderValueStrategyResolver()
             ->resolveMinimumOrderValueStrategy($minimumOrderValueTypeTransfer->getKey());
 
-        return $minimumOrderValueStrategy->validate($thresholdValue, $fee);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $strategyKey
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $thresholdValue
-     * @param int|null $fee
-     *
-     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyNotFoundException
-     *
-     * @return int
-     */
-    public function calculateFee(
-        string $strategyKey,
-        QuoteTransfer $quoteTransfer,
-        int $thresholdValue,
-        ?int $fee = null
-    ): int {
-        $minimumOrderValueStrategy = $this->getFactory()
-            ->createMinimumOrderValueStrategyResolver()
-            ->resolveMinimumOrderValueStrategy($strategyKey);
-
-        return $minimumOrderValueStrategy->calculateFee($quoteTransfer, $thresholdValue, $fee);
+        return $minimumOrderValueStrategy->isValid($thresholdValue, $fee);
     }
 }

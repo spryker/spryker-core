@@ -59,7 +59,7 @@ class StoreThresholdManager implements StoreThresholdManagerInterface
                 $minimumOrderValueTransfer->getMinimumOrderValueType()->getKey()
             );
 
-        if (!$minimumOrderValueStrategy->validate(
+        if (!$minimumOrderValueStrategy->isValid(
             $minimumOrderValueTransfer->getValue(),
             $minimumOrderValueTransfer->getFee()
         )) {

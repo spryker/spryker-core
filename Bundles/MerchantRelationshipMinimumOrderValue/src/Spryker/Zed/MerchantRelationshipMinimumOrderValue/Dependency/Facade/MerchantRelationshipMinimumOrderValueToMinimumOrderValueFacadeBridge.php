@@ -42,12 +42,12 @@ class MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeBridge imple
      *
      * @return bool
      */
-    public function validateStrategy(
+    public function isStrategyValid(
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
         int $thresholdValue,
         ?int $fee = null
     ): bool {
         return $this->minimumOrderValueFacade
-            ->validateStrategy($minimumOrderValueTypeTransfer, $thresholdValue, $fee);
+            ->isStrategyValid($minimumOrderValueTypeTransfer, $thresholdValue, $fee);
     }
 }
