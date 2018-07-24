@@ -7,7 +7,7 @@
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/product-discontinued": "^1.0.0",
-    "spryker/product-management-extension": "^1.0.0",
+    "spryker/product-management-extension": "^1.1.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
