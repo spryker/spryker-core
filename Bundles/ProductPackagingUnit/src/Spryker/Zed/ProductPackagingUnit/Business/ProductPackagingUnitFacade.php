@@ -451,4 +451,20 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
             ->createProductPackagingUnitItemQuantityValidator()
             ->isProductPackagingUnitItemQuantitySplittable($itemTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandCartChangeItemsWithProductPackagingUnitTranslation(CartChangeTransfer $cartChangeTransfer)
+    {
+        return $this->getFactory()
+            ->createItemMeasurementUnitDataTranslationExpander()
+            ->expandCartChangeItems($cartChangeTransfer);
+    }
 }

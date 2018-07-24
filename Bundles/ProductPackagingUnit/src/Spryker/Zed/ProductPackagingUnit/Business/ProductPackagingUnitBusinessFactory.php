@@ -54,6 +54,8 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\Pro
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriterInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculator;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculatorInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Translation\ProductPackagingUnitTranslationExpander;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Translation\ProductPackagingUnitTranslationExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Validator\ProductPackagingUnitAmountRestrictionValidator;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Validator\ProductPackagingUnitAmountRestrictionValidatorInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
@@ -362,6 +364,16 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new AmountLeadProductHydrateOrder(
             $this->getRepository(),
             $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Translation\ProductPackagingUnitTranslationExpanderInterface
+     */
+    public function createItemMeasurementUnitDataTranslationExpander(): ProductPackagingUnitTranslationExpanderInterface
+    {
+        return new ProductPackagingUnitTranslationExpander(
+            $this->getProductMeasurementUnitFacade()
         );
     }
 
