@@ -7,9 +7,6 @@
 
 namespace Spryker\Shared\ProductPageSearch;
 
-/**
- * Declares global environment configuration keys. Do not use it for other class constants.
- */
 class ProductPageSearchConstants
 {
     /**
@@ -35,12 +32,4 @@ class ProductPageSearchConstants
      * @api
      */
     const PRODUCT_ABSTRACT_RESOURCE_NAME = 'product_abstract';
-
-    /**
-     * Specification:
-     * - PageLoad data plugin key, this will use for plugins to extract data form array data
-     *
-     * @api
-     */
-    const PRODUCT_ABSTRACT_PAGE_LOAD_DATA = 'PAGE_LOAD_DATA';
 }

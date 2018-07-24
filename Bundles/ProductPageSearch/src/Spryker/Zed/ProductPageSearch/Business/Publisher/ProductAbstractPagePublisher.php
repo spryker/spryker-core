@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Generated\Shared\Transfer\ProductPayloadTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch;
-use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
+use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\ProductPageSearch\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface;
 use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface;
@@ -454,7 +454,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     ) {
         foreach ($productAbstractStores as $productAbstractStore) {
             $storeName = $productAbstractStore['SpyStore']['name'];
-            $productAbstractLocalizedEntity[ProductPageSearchConstants::PRODUCT_ABSTRACT_PAGE_LOAD_DATA] = $productPayloadTransfer;
+            $productAbstractLocalizedEntity[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA] = $productPayloadTransfer;
 
             $searchEntity = isset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]) ?
                 $mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName] :

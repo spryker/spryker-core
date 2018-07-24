@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander;
 
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
-use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
+use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface;
 
@@ -29,7 +29,7 @@ class ProductImagePageDataLoaderExpanderPlugin extends AbstractPlugin implements
     {
         $images = [];
 
-        $imageSets = $productData[ProductPageSearchConstants::PRODUCT_ABSTRACT_PAGE_LOAD_DATA]->getImages();
+        $imageSets = $productData[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA]->getImages();
         $imageSetsByLocale = $imageSets[$productData['fk_locale']];
         /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $imageSetsByLocale */
         foreach ($imageSetsByLocale as $imageSet) {
