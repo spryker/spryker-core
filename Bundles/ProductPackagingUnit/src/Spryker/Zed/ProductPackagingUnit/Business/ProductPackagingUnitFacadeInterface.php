@@ -379,4 +379,34 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandCartChangeItemsWithProductPackagingUnitTranslation(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * Specification:
+     * - Merges $itemTransfer into $quoteTransfer.
+     * - Appends it if it wasn't there.
+     * - Increases quantity and amount if it was in quote items already.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addItemToQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Merges $itemTransfer into $quoteTransfer.
+     * - Decreases quantity and amount if it was in quote items already.
+     * - Removes the item from $quoteTransfer if quantity or amount equaled to zero after merging.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function removeItemFromQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

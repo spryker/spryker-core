@@ -976,4 +976,52 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             ->setIsQuantitySplittable($isQuantitySplittable)
             ->save();
     }
+
+    /**
+     * @return void
+     */
+    public function testAddAndRemoveItemsToAndFromQuote(): void
+    {
+        $itemSku = 'sku_1';
+        $quoteTransfer = $this->tester->createQuoteTransfer();
+        $itemTransfer = $this->tester->createProductPackagingUnitItemTransfer($itemSku);
+
+        // Action
+        $quoteTransfer = $this->getFacade()->addItemToQuote($itemTransfer, $quoteTransfer);
+
+        //Assert
+        $this->assertCount(1, $quoteTransfer->getItems());
+
+        // Action
+        $quoteTransfer = $this->getFacade()->addItemToQuote($itemTransfer, $quoteTransfer);
+
+        //Assert
+        $this->assertCount(1, $quoteTransfer->getItems());
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $this->assertEquals(2, $itemTransfer->getQuantity());
+            $this->assertEquals(2, $itemTransfer->getAmount());
+        }
+
+        // Action
+        $this->getFacade()->removeItemFromQuote(
+            $this->tester->createProductPackagingUnitItemTransfer($itemSku),
+            $quoteTransfer
+        );
+
+        //Assert
+        $this->assertCount(1, $quoteTransfer->getItems());
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $this->assertEquals(1, $itemTransfer->getQuantity());
+            $this->assertEquals(1, $itemTransfer->getAmount());
+        }
+
+        // Action
+        $this->getFacade()->removeItemFromQuote(
+            $this->tester->createProductPackagingUnitItemTransfer($itemSku),
+            $quoteTransfer
+        );
+
+        //Assert
+        $this->assertCount(0, $quoteTransfer->getItems());
+    }
 }
