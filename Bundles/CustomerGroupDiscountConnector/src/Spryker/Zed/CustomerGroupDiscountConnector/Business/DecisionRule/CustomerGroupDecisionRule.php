@@ -63,7 +63,7 @@ class CustomerGroupDecisionRule implements CustomerGroupDecisionRuleInterface
             return false;
         }
 
-        foreach ($customerGroupNamesTransfer->getCustomerGroupNames() as $customerGroupName) {
+        foreach ($customerGroupNames as $customerGroupName) {
             if ($clauseTransfer->getValue() !== $customerGroupName) {
                 continue;
             }
