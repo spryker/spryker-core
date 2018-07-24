@@ -21,7 +21,7 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
- *
+ * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelConnectorFacadeInterface getFacade()
  * @SuppressWarnings(PHPMD)
  */
 class ProductDiscontinuedProductLabelConnectorBusinessTester extends Actor

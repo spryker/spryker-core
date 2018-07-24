@@ -9,9 +9,7 @@ namespace SprykerTest\Zed\ProductAlternativeProductLabelConnector\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAlternativeCreateRequestTransfer;
-use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge;
-use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorDependencyProvider;
 
 /**
@@ -38,13 +36,8 @@ class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
     {
         parent::setUp();
 
+        $this->tester->getFacade()->installProductAlternativeProductLabelConnector();
         $this->mockProductAlternativeFacadeDependency();
-        $bundleConfig = new ProductAlternativeProductLabelConnectorConfig();
-        $this->tester->haveProductLabel(
-            [
-                ProductLabelTransfer::NAME => $bundleConfig->getProductAlternativesLabelName(),
-            ]
-        );
     }
 
     /**

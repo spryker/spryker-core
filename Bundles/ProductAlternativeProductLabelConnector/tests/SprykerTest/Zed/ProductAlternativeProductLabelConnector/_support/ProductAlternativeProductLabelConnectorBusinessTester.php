@@ -22,6 +22,7 @@ use Spryker\Zed\ProductAlternative\Business\ProductAlternativeFacadeInterface;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelConnectorFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */

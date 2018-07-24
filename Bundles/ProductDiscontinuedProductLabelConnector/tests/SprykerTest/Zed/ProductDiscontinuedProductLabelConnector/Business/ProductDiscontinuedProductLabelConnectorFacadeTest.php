@@ -9,8 +9,6 @@ namespace SprykerTest\Zed\ProductDiscontinuedProductLabelConnector\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
-use Generated\Shared\Transfer\ProductLabelTransfer;
-use Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorConfig;
 
 /**
  * Auto-generated group annotations
@@ -35,10 +33,7 @@ class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
-        $bundleConfig = new ProductDiscontinuedProductLabelConnectorConfig();
-        $this->tester->haveProductLabel([
-            ProductLabelTransfer::NAME => $bundleConfig->getProductDiscontinueLabelName(),
-        ]);
+        $this->tester->getFacade()->installProductDiscontinuedProductLabelConnector();
     }
 
     /**
