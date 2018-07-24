@@ -429,11 +429,11 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function transformOrderItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
+    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
         return $this->getFactory()
-            ->createOrderItemTransformer()
-            ->transformSplittableItem($itemTransfer);
+            ->createSplittableOrderItemTransformer()
+            ->transformItem($itemTransfer);
     }
 
     /**

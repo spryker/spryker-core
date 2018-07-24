@@ -32,6 +32,8 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemTransform
 use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\ProductPackagingUnitItemQuantityValidator;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\ProductPackagingUnitItemQuantityValidatorInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\SplittableOrderItemTransformer;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\SplittableOrderItemTransformerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpander;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitAmountSalesUnitValue;
@@ -376,11 +378,11 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemTransformerInterface
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\SplittableOrderItemTransformerInterface
      */
-    public function createOrderItemTransformer(): OrderItemTransformerInterface
+    public function createSplittableOrderItemTransformer(): SplittableOrderItemTransformerInterface
     {
-        return new OrderItemTransformer();
+        return new SplittableOrderItemTransformer();
     }
 
     /**

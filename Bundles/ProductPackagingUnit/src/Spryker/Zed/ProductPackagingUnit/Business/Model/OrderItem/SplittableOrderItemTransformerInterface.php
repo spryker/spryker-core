@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
-interface OrderItemTransformerInterface
+interface SplittableOrderItemTransformerInterface
 {
     /**
      * @see \Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer
@@ -19,5 +19,5 @@ interface OrderItemTransformerInterface
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function transformSplittableItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
+    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
 }

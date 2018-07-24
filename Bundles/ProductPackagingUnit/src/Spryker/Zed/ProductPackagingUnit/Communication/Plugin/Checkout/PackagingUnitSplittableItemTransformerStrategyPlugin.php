@@ -16,7 +16,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginIn
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
  */
-class PackagingUnitSalesOrderItemSplittingStrategyPlugin extends AbstractPlugin implements ItemTransformerStrategyPluginInterface
+class PackagingUnitSplittableItemTransformerStrategyPlugin extends AbstractPlugin implements ItemTransformerStrategyPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -45,6 +45,6 @@ class PackagingUnitSalesOrderItemSplittingStrategyPlugin extends AbstractPlugin 
     public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
         return $this->getFacade()
-            ->transformOrderItem($itemTransfer);
+            ->transformItem($itemTransfer);
     }
 }

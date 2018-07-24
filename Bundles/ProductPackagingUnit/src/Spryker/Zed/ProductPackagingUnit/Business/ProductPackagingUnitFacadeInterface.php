@@ -346,7 +346,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Splitting order items strategy. Calculates amount per quantity. e.g amount / quantity
+     * - Splitting order item if product packaging unit item is splittable.
      *
      * @api
      *
@@ -354,14 +354,11 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function transformOrderItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
+    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
 
     /**
      * Specification:
-     * - Checks if the product packaging unit item is splittable per quantity.
-     * - Returns true if the item is a bundled item.
-     * - Returns false if the product is non-splittable.
-     * - Returns true in any other case.
+     * - Checks if the product packaging unit item is splittable.
      *
      * @api
      *
