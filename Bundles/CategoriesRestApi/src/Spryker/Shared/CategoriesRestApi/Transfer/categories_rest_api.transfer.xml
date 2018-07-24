@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="RestCategoriesTree">
+        <property name="root" type="RestCategoriesAttributes[]"/>
+    </transfer>
+
+    <transfer name="RestCategoriesAttributes">
+        <property name="nodeId" type="int"/>
+        <property name="parentNodeId" type="int"/>
+        <property name="isRoot" type="bool"/>
+        <property name="order" type="int"/>
+        <property name="name" type="string"/>
+        <property name="children" type="RestCategoriesAttributes[]"/>
+    </transfer>
+
+</transfers>
+
