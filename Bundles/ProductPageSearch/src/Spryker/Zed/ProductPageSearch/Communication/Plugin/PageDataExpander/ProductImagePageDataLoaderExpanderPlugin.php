@@ -8,8 +8,7 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander;
 
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
+use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface;
 
@@ -30,10 +29,9 @@ class ProductImagePageDataLoaderExpanderPlugin extends AbstractPlugin implements
     {
         $images = [];
 
-        //TODO move EXPANDED_DATA to shared constant
-        $imageSets = $productData['EXPANDED_DATA']->getImages();
+        $imageSets = $productData[ProductPageSearchConstants::PRODUCT_ABSTRACT_PAGE_LOAD_DATA]->getImages();
         $imageSetsByLocale = $imageSets[$productData['fk_locale']];
-        /** @var SpyProductImageSet[] $imageSetsByLocale */
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $imageSetsByLocale */
         foreach ($imageSetsByLocale as $imageSet) {
             $images = array_merge($images, $this->generateImages($imageSet->getSpyProductImageSetToProductImages()));
         }
@@ -42,7 +40,7 @@ class ProductImagePageDataLoaderExpanderPlugin extends AbstractPlugin implements
     }
 
     /**
-     * @param SpyProductImageSetToProductImage[] $imagesCollection
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage[] $imagesCollection
      *
      * @return array
      */

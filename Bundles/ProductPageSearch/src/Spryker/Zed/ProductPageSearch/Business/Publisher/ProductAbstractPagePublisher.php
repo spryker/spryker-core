@@ -11,10 +11,10 @@ use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Generated\Shared\Transfer\ProductPayloadTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch;
+use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\ProductPageSearch\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface;
 use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface;
-use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface;
 
 class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterface
@@ -30,7 +30,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     protected $queryContainer;
 
     /**
-     * @var ProductPageDataLoaderPluginInterface[]
+     * @var \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataLoaderPluginInterface[]
      */
     protected $productPageDataLoaderPlugins = [];
 
@@ -52,7 +52,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     /**
      * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
-     * @param ProductPageDataLoaderPluginInterface[] $productPageDataLoaderPlugins
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataLoaderPluginInterface[] $productPageDataLoaderPlugins
      * @param \Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface $productPageSearchMapper
      * @param \Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface $productPageSearchWriter
      */
@@ -156,7 +156,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * @param array $productAbstractLocalizedEntities
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productAbstractPageSearchEntities
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
-     * @param ProductPageLoadTransfer $productPageLoadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      * @param bool $isRefresh
      *
      * @return void
@@ -347,7 +347,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      *
      * @param array $productAbstractLocalizedEntities
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productAbstractPageSearchEntities
-     * @param ProductPageLoadTransfer $productPageLoadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return array
      */
@@ -435,7 +435,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     /**
      * @param int $idProductAbstract
      * @param string $localeName
-     * @param ProductPayloadTransfer $productPayloadTransfer
+     * @param \Generated\Shared\Transfer\ProductPayloadTransfer $productPayloadTransfer
      * @param array $productAbstractStores
      * @param array $productAbstractLocalizedEntity
      * @param array $mappedProductAbstractPageSearchEntities
@@ -454,7 +454,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     ) {
         foreach ($productAbstractStores as $productAbstractStore) {
             $storeName = $productAbstractStore['SpyStore']['name'];
-            $productAbstractLocalizedEntity['EXPANDED_DATA'] = $productPayloadTransfer;
+            $productAbstractLocalizedEntity[ProductPageSearchConstants::PRODUCT_ABSTRACT_PAGE_LOAD_DATA] = $productPayloadTransfer;
 
             $searchEntity = isset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]) ?
                 $mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName] :
@@ -464,7 +464,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
                 static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY => $productAbstractLocalizedEntity,
                 static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY => $searchEntity,
                 static::LOCALE_NAME => $localeName,
-                static::STORE_NAME => $storeName
+                static::STORE_NAME => $storeName,
             ];
 
             unset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]);

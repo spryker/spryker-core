@@ -172,7 +172,6 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         $mappedProductAbstractStorageEntities = $this->mapProductAbstractStorageEntities($productAbstractStorageEntities);
 
         $pairs = [];
-        //TODO SLOW PART
         foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
             list($pairs, $mappedProductAbstractStorageEntities) = $this->pairProductAbstractLocalizedEntitiesWithProductAbstractStorageEntitiesByStoresAndLocale(
                 $productAbstractLocalizedEntity['SpyProductAbstract'][static::COL_ID_PRODUCT_ABSTRACT],
@@ -184,7 +183,6 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
             );
         }
 
-        //TODO SLOW PART
         $pairs = $this->pairRemainingProductAbstractStorageEntities($mappedProductAbstractStorageEntities, $pairs);
 
         return $pairs;

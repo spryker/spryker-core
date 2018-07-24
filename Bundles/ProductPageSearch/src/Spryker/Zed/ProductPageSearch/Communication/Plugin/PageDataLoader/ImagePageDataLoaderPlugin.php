@@ -1,31 +1,27 @@
 <?php
+
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataLoader;
 
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
-use Generated\Shared\Transfer\ProductPayloadTransfer;
-use Orm\Zed\ProductImage\Persistence\Base\SpyProductImageSet;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade getFacade()
  */
 class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
 {
-
     /**
-     * @param ProductPageLoadTransfer $loadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
      *
-     * @return ProductPageLoadTransfer
+     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
     public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
     {
@@ -45,17 +41,17 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
 
     /**
      * @param array $productAbstractIds
-     * @param ProductPayloadTransfer[]  $payloadTransfers
+     * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
      *
      * @return array
      */
     protected function setProductImages(array $productAbstractIds, array $payloadTransfers): array
     {
+        // TODO move this to QueryContainer or create Repository
         $query = SpyProductImageSetQuery::create()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->joinWithSpyProductImageSetToProductImage()
-            ->joinWith('SpyProductImageSetToProductImage.SpyProductImage')
-        ;
+            ->joinWith('SpyProductImageSetToProductImage.SpyProductImage');
 
         $imageSets = [];
         $imageSetCollection = $query->find();
@@ -70,7 +66,6 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
 
             $images = $imageSets[$payloadTransfer->getIdProductAbstract()];
             $payloadTransfer->setImages($images);
-
         }
 
         return $payloadTransfers;
