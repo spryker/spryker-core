@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\ProductDiscontinuedProductLabelConnector\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
-use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
+use Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorConfig;
 
 /**
  * Auto-generated group annotations
@@ -24,12 +24,22 @@ use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
  */
 class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
 {
-    protected const TEST_DISCONTINUED_LABEL = 'TEST_DISCONTINUED_LABEL';
-
     /**
      * @var \SprykerTest\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $bundleConfig = new ProductDiscontinuedProductLabelConnectorConfig();
+        $this->tester->haveProductLabel([
+            ProductLabelTransfer::NAME => $bundleConfig->getProductDiscontinueLabelName(),
+        ]);
+    }
 
     /**
      * @return void
@@ -39,9 +49,6 @@ class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
         // Arrange
         $this->tester->ensureTableProductDiscontinuedNoteIsEmpty();
         $this->tester->ensureTableProductDiscontinuedIsEmpty();
-        $this->tester->haveProductLabel([
-            ProductLabelTransfer::NAME => self::TEST_DISCONTINUED_LABEL,
-        ]);
         $productConcreteTransfer = $this->tester->haveProduct();
         $productDiscontinueRequestTransfer = (new ProductDiscontinueRequestTransfer())
             ->setIdProduct($productConcreteTransfer->getIdProductConcrete());
@@ -79,13 +86,5 @@ class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
 
         // Assert
         $this->tester->assertDatabaseTableContainsData();
-    }
-
-    /**
-     * @return \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery
-     */
-    protected function createProductDiscontinuedQuery(): SpyProductDiscontinuedQuery
-    {
-        return SpyProductDiscontinuedQuery::create();
     }
 }

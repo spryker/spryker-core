@@ -10,8 +10,8 @@ namespace SprykerTest\Zed\ProductAlternativeProductLabelConnector\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAlternativeCreateRequestTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
-use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorDependencyProvider;
 
 /**
@@ -26,17 +26,10 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProduc
  */
 class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
 {
-    protected const TEST_ALTERNATIVE_LABEL = 'TEST_ALTERNATIVE_LABEL';
-
     /**
      * @var \SprykerTest\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorBusinessTester
      */
     protected $tester;
-
-    /**
-     * @var \Spryker\Zed\ProductAlternative\Business\ProductAlternativeFacadeInterface
-     */
-    protected $productAlternativeFacade;
 
     /**
      * @return void
@@ -45,8 +38,13 @@ class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
     {
         parent::setUp();
 
-        $this->productAlternativeFacade = $this->tester->getLocator()->productAlternative()->facade();
-        $this->mockProductAlternativeFacade();
+        $this->mockProductAlternativeFacadeDependency();
+        $bundleConfig = new ProductAlternativeProductLabelConnectorConfig();
+        $this->tester->haveProductLabel(
+            [
+                ProductLabelTransfer::NAME => $bundleConfig->getProductAlternativesLabelName(),
+            ]
+        );
     }
 
     /**
@@ -56,16 +54,13 @@ class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
     {
         // Arrange
         $this->tester->ensureTableProductAlternativeIsEmpty();
-        $this->tester->haveProductLabel([
-            ProductLabelTransfer::NAME => self::TEST_ALTERNATIVE_LABEL,
-        ]);
         $productConcreteTransfer = $this->tester->haveProduct();
         $alternativeProductTransfer = $this->tester->haveProduct();
         $productAlternativeCreateRequestTransfer = (new ProductAlternativeCreateRequestTransfer())
             ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
             ->setAlternativeSku($alternativeProductTransfer->getAbstractSku());
         $productConcreteTransfer->addProductAlternativeCreateRequest($productAlternativeCreateRequestTransfer);
-        $this->productAlternativeFacade->persistProductAlternative($productConcreteTransfer);
+        $this->tester->getProductAlternativeFacade()->persistProductAlternative($productConcreteTransfer);
 
         // Act
         $productLabelProductAbstractRelationTransfers = $this->tester->getFacade()
@@ -92,7 +87,7 @@ class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
             ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
             ->setAlternativeSku($alternativeProductTransfer->getAbstractSku());
         $productConcreteTransfer->addProductAlternativeCreateRequest($productAlternativeCreateRequestTransfer);
-        $productAlternativeTransfer = $this->productAlternativeFacade->persistProductAlternative($productConcreteTransfer);
+        $productAlternativeTransfer = $this->tester->getProductAlternativeFacade()->persistProductAlternative($productConcreteTransfer);
         $idProduct = $productAlternativeTransfer->getIdProductConcrete();
 
         // Act
@@ -103,22 +98,14 @@ class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
     }
 
     /**
-     * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
-     */
-    protected function createProductAlternativeQuery(): SpyProductAlternativeQuery
-    {
-        return SpyProductAlternativeQuery::create();
-    }
-
-    /**
      * @return void
      */
-    protected function mockProductAlternativeFacade(): void
+    protected function mockProductAlternativeFacadeDependency(): void
     {
         $productAlternativeFacadeMock = $this->getMockBuilder(
             ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge::class
         )
-            ->setConstructorArgs([$this->productAlternativeFacade])
+            ->setConstructorArgs([$this->tester->getProductAlternativeFacade()])
             ->setMethods(['isAlternativeProductApplicable'])
             ->getMock();
         $productAlternativeFacadeMock

@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductAlternativeProductLabelConnector;
 
 use Codeception\Actor;
+use Spryker\Zed\ProductAlternative\Business\ProductAlternativeFacadeInterface;
 
 /**
  * Inherited Methods
@@ -28,7 +29,11 @@ class ProductAlternativeProductLabelConnectorBusinessTester extends Actor
 {
     use _generated\ProductAlternativeProductLabelConnectorBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @return \Spryker\Zed\ProductAlternative\Business\ProductAlternativeFacadeInterface
+     */
+    public function getProductAlternativeFacade(): ProductAlternativeFacadeInterface
+    {
+        return $this->getLocator()->productAlternative()->facade();
+    }
 }
