@@ -13,6 +13,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductPackagingUnitConfig extends AbstractBundleConfig
 {
     /**
+     * @const int|null Controls the threshold for quantity which above the quantity should not be splitted. Null value inactivates the threshold.
+     */
+    protected const ITEM_NONSPLIT_QUANTITY_THRESHOLD = null;
+
+    /**
      * Default packaging unit type name.
      */
     protected const DEFAULT_PRODUCT_PACKAGING_UNIT_TYPE_NAME = 'packaging_unit_type.item.name';
@@ -53,5 +58,13 @@ class ProductPackagingUnitConfig extends AbstractBundleConfig
     public function getDefaultProductPackagingUnitTypeName(): string
     {
         return static::DEFAULT_PRODUCT_PACKAGING_UNIT_TYPE_NAME;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function findItemQuantityThreshold(): ?int
+    {
+        return static::ITEM_NONSPLIT_QUANTITY_THRESHOLD;
     }
 }

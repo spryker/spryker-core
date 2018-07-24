@@ -24,10 +24,12 @@ class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroup
             return $itemTransfer->getGroupKey();
         }
 
+        $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
+
         return sprintf(
             static::AMOUNT_GROUP_KEY_FORMAT,
             $itemTransfer->getGroupKey(),
-            $itemTransfer->getAmount(),
+            $amountPerQuantity,
             $itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit()
         );
     }

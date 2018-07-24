@@ -52,6 +52,8 @@ class AmountSalesUnitItemExpander implements AmountSalesUnitItemExpanderInterfac
      */
     protected function expandItemWithAmountSalesUnit(ItemTransfer $itemTransfer): ItemTransfer
     {
+        $itemTransfer->getAmountSalesUnit()->requireIdProductMeasurementSalesUnit();
+
         $idProductMeasurementSalesUnit = $itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit();
 
         $productMeasurementUnitTransfer = $this->productPackagingUnitReader
