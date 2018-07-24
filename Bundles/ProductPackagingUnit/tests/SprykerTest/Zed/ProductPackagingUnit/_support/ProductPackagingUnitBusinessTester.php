@@ -155,4 +155,30 @@ class ProductPackagingUnitBusinessTester extends Actor
                     ->setGroupKey($dummyGroupKey)
             );
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createQuoteTransfer(): QuoteTransfer
+    {
+        return (new QuoteTransfer());
+    }
+
+    /**
+     * @param string $sku
+     * @param int|null $itemQuantity
+     * @param int|null $itemAmount
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function createProductPackagingUnitItemTransfer(
+        string $sku,
+        int $itemQuantity = 1,
+        int $itemAmount = 1
+    ): ItemTransfer {
+        return (new ItemTransfer())
+            ->setSku($sku)
+            ->setQuantity($itemQuantity)
+            ->setAmount($itemQuantity);
+    }
 }

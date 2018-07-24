@@ -408,8 +408,6 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
-     * @@api
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -435,5 +433,39 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
         return $this->getFactory()
             ->createItemMeasurementUnitDataTranslationExpander()
             ->expandCartChangeItems($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addItemToQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createProductPackagingUnitCartOperation()
+            ->addItemToQuote($itemTransfer, $quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function removeItemFromQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createProductPackagingUnitCartOperation()
+            ->removeItemFromQuote($itemTransfer, $quoteTransfer);
     }
 }
