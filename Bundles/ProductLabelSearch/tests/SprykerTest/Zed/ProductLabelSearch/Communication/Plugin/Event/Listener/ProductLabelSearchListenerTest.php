@@ -54,7 +54,7 @@ class ProductLabelSearchListenerTest extends Unit
     }
 
     /**
-     * @return Spryker\Zed\ProductLabel\Business\ProductLabelFacade
+     * @return Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
     protected function createProductLabelFacade()
     {
