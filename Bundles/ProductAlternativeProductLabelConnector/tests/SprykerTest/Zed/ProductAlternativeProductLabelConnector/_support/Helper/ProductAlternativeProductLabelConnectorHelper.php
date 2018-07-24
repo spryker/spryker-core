@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductAlternativeProductLabelConnector\Helper;
 
 use Codeception\Module;
+use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
 
 class ProductAlternativeProductLabelConnectorHelper extends Module
@@ -18,6 +19,15 @@ class ProductAlternativeProductLabelConnectorHelper extends Module
     public function ensureDatabaseTableIsEmpty(): void
     {
         $query = $this->getProductLabelProductAbstractQuery();
+        $query->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureTableProductAlternativeIsEmpty(): void
+    {
+        $query = $this->getProductAlternativeQuery();
         $query->deleteAll();
     }
 
@@ -40,5 +50,13 @@ class ProductAlternativeProductLabelConnectorHelper extends Module
     protected function getProductLabelProductAbstractQuery(): SpyProductLabelProductAbstractQuery
     {
         return SpyProductLabelProductAbstractQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
+     */
+    protected function getProductAlternativeQuery(): SpyProductAlternativeQuery
+    {
+        return SpyProductAlternativeQuery::create();
     }
 }

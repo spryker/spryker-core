@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\ProductDiscontinuedProductLabelConnector\Helper;
 
 use Codeception\Module;
+use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedNoteQuery;
+use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
 
 class ProductDiscontinuedProductLabelConnectorHelper extends Module
@@ -18,6 +20,24 @@ class ProductDiscontinuedProductLabelConnectorHelper extends Module
     public function ensureDatabaseTableIsEmpty(): void
     {
         $query = $this->getProductLabelProductAbstractQuery();
+        $query->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureTableProductDiscontinuedIsEmpty(): void
+    {
+        $query = $this->getProductDiscontinuedQuery();
+        $query->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureTableProductDiscontinuedNoteIsEmpty(): void
+    {
+        $query = $this->getProductDiscontinuedNoteQuery();
         $query->deleteAll();
     }
 
@@ -40,5 +60,21 @@ class ProductDiscontinuedProductLabelConnectorHelper extends Module
     protected function getProductLabelProductAbstractQuery(): SpyProductLabelProductAbstractQuery
     {
         return SpyProductLabelProductAbstractQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery
+     */
+    protected function getProductDiscontinuedQuery(): SpyProductDiscontinuedQuery
+    {
+        return SpyProductDiscontinuedQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedNoteQuery
+     */
+    protected function getProductDiscontinuedNoteQuery(): SpyProductDiscontinuedNoteQuery
+    {
+        return SpyProductDiscontinuedNoteQuery::create();
     }
 }
