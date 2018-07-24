@@ -14,8 +14,24 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return true;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getProductAbstractLabelSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getProductLabelDictionarySynchronizationPoolName(): ?string
+    {
+        return null;
     }
 }
