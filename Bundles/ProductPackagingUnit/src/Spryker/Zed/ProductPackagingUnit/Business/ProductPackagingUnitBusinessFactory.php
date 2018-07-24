@@ -388,6 +388,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductPackagingUnitItemQuantityValidator(): ProductPackagingUnitItemQuantityValidatorInterface
     {
-        return new ProductPackagingUnitItemQuantityValidator();
+        return new ProductPackagingUnitItemQuantityValidator(
+            $this->getConfig()
+        );
     }
 }
