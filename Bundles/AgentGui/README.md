@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/agent-gui.svg)](https://travis-ci.org/spryker/agent-gui)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/agent-gui/badge.svg)](https://coveralls.io/github/spryker/agent-gui)
 
-{{ADD DESCRIPTION HERE}}
+Zed Gui for Agent module.
 
 ## Installation
 
