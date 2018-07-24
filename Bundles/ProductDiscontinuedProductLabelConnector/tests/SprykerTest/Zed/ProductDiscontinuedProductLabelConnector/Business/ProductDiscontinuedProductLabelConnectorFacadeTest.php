@@ -56,8 +56,8 @@ class ProductDiscontinuedProductLabelConnectorFacadeTest extends Unit
 
         // Assert
         $this->assertSame(
-            $productConcreteTransfer->getFkProductAbstract(),
-            $productLabelProductAbstractRelationTransfers[0]->getIdsProductAbstractToAssign()[0],
+            (int)$productConcreteTransfer->getFkProductAbstract(),
+            (int)$productLabelProductAbstractRelationTransfers[0]->getIdsProductAbstractToAssign()[0],
             'Product abstract to be assigned does not match expected ID.'
         );
     }
