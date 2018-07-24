@@ -1,6 +1,6 @@
 # SprykGui Module
 
-ADD MODULE DESCRIPTION HERE
+GUI for the spryker/spryk tool. The sprkyer/spryk tool can be used standalone, for optimized usage in Spryker this Module offers a GUI.
 
 ## Installation
 
