@@ -9,13 +9,11 @@ namespace Spryker\Shared\ErrorHandler;
 
 use Spryker\Service\Monitoring\MonitoringService;
 use Spryker\Shared\Log\LoggerTrait;
-use Spryker\Shared\NewRelicApi\NewRelicApiTrait;
 use Throwable;
 
 class ErrorLogger implements ErrorLoggerInterface
 {
     use LoggerTrait;
-    use NewRelicApiTrait;
 
     /**
      * @var self

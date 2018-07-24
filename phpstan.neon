@@ -4,6 +4,9 @@
 parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
+    ignoreErrors:
+        - '#Function .+new_relic.+\(\). not found.#'
+
 services:
     -
         class: PhpStan\DynamicType\FacadeDynamicTypeExtension
