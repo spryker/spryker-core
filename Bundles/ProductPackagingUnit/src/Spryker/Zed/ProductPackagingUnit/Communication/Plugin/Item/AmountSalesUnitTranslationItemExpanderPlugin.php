@@ -24,8 +24,6 @@ class AmountSalesUnitTranslationItemExpanderPlugin extends AbstractPlugin implem
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer)
     {
-        $this->getFacade()->expandCartChangeItemsWithProductPackagingUnitTranslation($cartChangeTransfer);
-
-        return $cartChangeTransfer;
+        return $this->getFacade()->expandCartChangeItemsWithProductPackagingUnitTranslation($cartChangeTransfer);
     }
 }
