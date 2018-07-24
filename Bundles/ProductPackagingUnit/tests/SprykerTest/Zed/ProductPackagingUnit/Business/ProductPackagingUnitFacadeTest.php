@@ -691,7 +691,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         );
 
         //Assert
-        $this->assertSame($itemTransfer->getAmount() / $itemTransfer->getQuantity(), $salesOrderItemEntity->getAmount());
+        $this->assertSame($itemTransfer->getAmount(), $salesOrderItemEntity->getAmount());
         $this->assertSame($itemTransfer->getAmountLeadProduct()->getProduct()->getSku(), $salesOrderItemEntity->getAmountSku());
     }
 
@@ -928,7 +928,10 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     {
         // Assign
         $this->setData(true);
-        $itemTransfer = (new ItemTransfer())->setSku(static::CONCRETE_PRODUCT_SKU);
+        $itemTransfer = (new ItemTransfer())
+            ->setSku(static::CONCRETE_PRODUCT_SKU)
+            ->setAmountSalesUnit(new ProductMeasurementSalesUnitTransfer());
+        ;
 
         //Act
         $isProductPackagingUnitItemQuantitySplittable = $this->getFacade()->isProductPackagingUnitItemQuantitySplittable($itemTransfer);
