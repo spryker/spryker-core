@@ -71,7 +71,6 @@ class Spryk implements SprykInterface
     public function buildSprykView(string $sprykName, array $formData): array
     {
         $normalizedFormData = (new FormDataNormalizer())->normalizeFormData($formData);
-        $formData = $this->normalizeFormData($formData);
         $commandLine = $this->getCommandLine($sprykName, $normalizedFormData);
         $jiraTemplate = $this->getJiraTemplate($sprykName, $commandLine, $normalizedFormData);
 
