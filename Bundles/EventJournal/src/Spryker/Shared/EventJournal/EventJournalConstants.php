@@ -8,7 +8,7 @@
 namespace Spryker\Shared\EventJournal;
 
 /**
- * @deprecated Use Log bundle instead
+ * Declares global environment configuration keys. Do not use it for other class constants.
  */
 interface EventJournalConstants
 {

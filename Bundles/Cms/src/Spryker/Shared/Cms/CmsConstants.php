@@ -9,6 +9,9 @@ namespace Spryker\Shared\Cms;
 
 use Spryker\Shared\Kernel\KernelConstants;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface CmsConstants
 {
     const PROJECT_NAMESPACE = KernelConstants::PROJECT_NAMESPACE;
