@@ -153,4 +153,28 @@ interface ProductMeasurementUnitFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderWithQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Expands the items of the CartChangeTransfer with translated MeasurementUnit data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandCartChangeItemsWithProductMeasurementUnitTranslation(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Translate ProductMeasurementSalesUnit
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     */
+    public function translateProductMeasurementSalesUnit(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): ProductMeasurementSalesUnitTransfer;
 }

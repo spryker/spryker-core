@@ -11,6 +11,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeBridge;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeBridge;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceBridge;
 
 class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyProvider
@@ -18,6 +19,7 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
     public const SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION = 'SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION';
 
     public const FACADE_EVENT = 'FACADE_EVENT';
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
@@ -33,6 +35,7 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addUtilMeasurementUnitConversionService($container);
         $container = $this->addEventFacade($container);
         $container = $this->addSalesOrderItemQuery($container);
+        $container = $this->addGlossaryFacade($container);
 
         return $container;
     }
@@ -87,6 +90,20 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
     {
         $container[static::PROPEL_QUERY_SALES_ORDER_ITEM] = function () {
             return SpySalesOrderItemQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGlossaryFacade(Container $container): Container
+    {
+        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+            return new ProductMeasurementUnitToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
         };
 
         return $container;
