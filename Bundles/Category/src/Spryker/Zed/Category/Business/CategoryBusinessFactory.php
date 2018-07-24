@@ -14,6 +14,7 @@ use Spryker\Zed\Category\Business\Model\Category\Category as CategoryEntityModel
 use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttribute;
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParents;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode;
+use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeChecker;
 use Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateReader;
 use Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateSync;
 use Spryker\Zed\Category\Business\Model\CategoryToucher;
@@ -334,6 +335,16 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createCategoryTemplateReader()
     {
         return new CategoryTemplateReader(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeCheckerInterface
+     */
+    public function createCategoryNodeChecker()
+    {
+        return new CategoryNodeChecker(
             $this->getQueryContainer()
         );
     }

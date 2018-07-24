@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Session;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface SessionConstants
 {
     const SESSION_HANDLER_COUCHBASE = 'couchbase';
