@@ -36,8 +36,9 @@
 
     <transfer name="ProductPayload">
         <property name="idProductAbstract" type="int" />
-        <property name="category" type="array" />
+        <property name="categories" type="array" />
         <property name="images" type="array" />
+        <property name="prices" type="array" />
     </transfer>
 
 </transfers>
