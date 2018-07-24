@@ -14,7 +14,7 @@ class CategoryStorageConfigMock extends CategoryStorageConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return false;
     }
