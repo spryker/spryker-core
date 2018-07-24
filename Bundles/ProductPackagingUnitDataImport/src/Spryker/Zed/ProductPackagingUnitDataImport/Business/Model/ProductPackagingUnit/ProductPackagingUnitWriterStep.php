@@ -14,7 +14,6 @@ use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitAmount;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -68,9 +67,6 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
             ->useProductQuery()
                 ->filterBySku($dataSet[ProductPackagingUnitDataSetInterface::CONCRETE_SKU])
             ->endUse()
-            ->useProductPackagingUnitTypeQuery(null, Criteria::LEFT_JOIN)
-                ->filterByName($dataSet[ProductPackagingUnitDataSetInterface::TYPE_NAME])
-            ->endUse()
             ->findOne();
 
         if ($productPackagingUnitEntity === null) {
@@ -80,12 +76,12 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
         $this->persistLeadProduct($dataSet, $productConcreteId);
 
         $productPackagingUnitEntity
-            ->setHasLeadProduct($dataSet[ProductPackagingUnitDataSetInterface::HAS_LEAD_PRODUCT]);
+            ->setHasLeadProduct($dataSet[ProductPackagingUnitDataSetInterface::HAS_LEAD_PRODUCT])
+            ->setFkProductPackagingUnitType($this->getproductPackagingUnitTypeIdByname($dataSet[ProductPackagingUnitDataSetInterface::TYPE_NAME]));
 
         if ($productPackagingUnitEntity->isNew()) {
             $productPackagingUnitEntity
-                ->setFkProduct($productConcreteId)
-                ->setFkProductPackagingUnitType($this->getproductPackagingUnitTypeIdByname($dataSet[ProductPackagingUnitDataSetInterface::TYPE_NAME]));
+                ->setFkProduct($productConcreteId);
         }
 
         $productPackagingUnitEntity->save();
