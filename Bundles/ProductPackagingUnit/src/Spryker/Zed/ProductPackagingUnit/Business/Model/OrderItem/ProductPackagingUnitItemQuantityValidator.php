@@ -22,6 +22,10 @@ class ProductPackagingUnitItemQuantityValidator implements ProductPackagingUnitI
             return true;
         }
 
+        if ($this->isNonPackagingUnit($itemTransfer)) {
+            return false;
+        }
+
         return !$this->isNonSplittableItem($itemTransfer);
     }
 
@@ -47,5 +51,15 @@ class ProductPackagingUnitItemQuantityValidator implements ProductPackagingUnitI
     protected function isNonSplittableItem(ItemTransfer $itemTransfer): bool
     {
         return $itemTransfer->getIsQuantitySplittable() === false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isNonPackagingUnit(ItemTransfer $itemTransfer): bool
+    {
+        return empty($itemTransfer->getAmountSalesUnit());
     }
 }

@@ -125,7 +125,8 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
 
         foreach ($itemTransfers as $itemTransfer) {
             $productGroupKey = $itemTransfer->getGroupKey();
-            $cartAmountMap[$productGroupKey] = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
+            $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
+            $cartAmountMap[$productGroupKey] = $amountPerQuantity;
 
             if (isset($quoteAmountMapByGroupKey[$productGroupKey])) {
                 $cartAmountMap[$productGroupKey] += $quoteAmountMapByGroupKey[$productGroupKey];
@@ -144,7 +145,8 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     {
         $quoteAmountMap = [];
         foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
-            $quoteAmountMap[$itemTransfer->getGroupKey()] = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
+            $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
+            $quoteAmountMap[$itemTransfer->getGroupKey()] = $amountPerQuantity;
         }
 
         return $quoteAmountMap;

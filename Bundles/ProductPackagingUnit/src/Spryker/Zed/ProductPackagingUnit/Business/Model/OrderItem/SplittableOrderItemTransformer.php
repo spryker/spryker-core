@@ -65,8 +65,7 @@ class SplittableOrderItemTransformer implements SplittableOrderItemTransformerIn
 
         $transformedProductOptionTransfer->fromArray($productOptionTransfer->toArray(), true);
         $transformedProductOptionTransfer
-            ->setQuantity(1)
-            ->setIdProductOptionValue(null);
+            ->setQuantity(1);
 
         return $transformedProductOptionTransfer;
     }
