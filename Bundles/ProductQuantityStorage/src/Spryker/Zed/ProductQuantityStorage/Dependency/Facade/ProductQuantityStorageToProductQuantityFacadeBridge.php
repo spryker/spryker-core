@@ -31,4 +31,12 @@ class ProductQuantityStorageToProductQuantityFacadeBridge implements ProductQuan
     {
         return $this->productQuantityFacade->findProductQuantityTransfersByProductIds($productIds);
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findProductQuantityTransfers(): array
+    {
+        return $this->productQuantityFacade->findProductQuantityTransfers();
+    }
 }
