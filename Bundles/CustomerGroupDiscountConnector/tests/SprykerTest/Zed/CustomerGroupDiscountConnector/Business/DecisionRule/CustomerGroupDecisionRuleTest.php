@@ -8,6 +8,7 @@ namespace SprykerTest\Zed\CustomerGroupDiscountConnector\Business\DecisionRule;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ClauseTransfer;
+use Generated\Shared\Transfer\CustomerGroupNamesTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -28,6 +29,9 @@ use Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDi
  */
 class CustomerGroupDecisionRuleTest extends Unit
 {
+    protected const CUSTOMER_GROUP_NAMES_TEST_GROUP_1 = 'CUSTOMER_GROUP_NAMES_TEST_GROUP_1';
+    protected const CUSTOMER_GROUP_NAMES_TEST_GROUP_2 = 'CUSTOMER_GROUP_NAMES_TEST_GROUP_2';
+
     /**
      * @return void
      */
@@ -71,23 +75,51 @@ class CustomerGroupDecisionRuleTest extends Unit
         $customerTransfer->setIdCustomer(1);
         $quoteTransfer->setCustomer($customerTransfer);
 
-        $clauseTransfer = $this->createClauseTransfer();
-
-        $customerGroupTransfer = $this->createCustomerGroupTransfer();
-        $customerGroupTransfer->setName('test');
+        $customerGroupNamesTransfer = $this->createCustomerGroupNamesTransfer();
+        $customerGroupFacadeMock->expects($this->exactly(2))
+            ->method('getCustomerGroupNamesByIdCustomer')
+            ->willReturn($customerGroupNamesTransfer);
 
         $discountFacadeMock
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('queryStringCompare')
-            ->with($clauseTransfer, $customerGroupTransfer->getName())
-            ->willReturn(true);
+            ->willReturnCallback(function (ClauseTransfer $clauseTransfer, string $customerGroupName) {
+                return $clauseTransfer->getValue() === $customerGroupName
+                    && in_array($customerGroupName, $this->createCustomerGroupNames(), true);
+            });
 
-        $customerGroupFacadeMock->expects($this->once())
-            ->method('findCustomerGroupByIdCustomer')
-            ->willReturn($customerGroupTransfer);
+        $clauseTransfer = $this->createClauseTransfer();
+        $itemTransfer = $this->createItemTransfer();
 
         $customerGroupDecisionRule = $this->createCustomerGroupDecisionRule($discountFacadeMock, $customerGroupFacadeMock);
-        $customerGroupDecisionRule->isSatisfiedBy($quoteTransfer, $this->createItemTransfer(), $clauseTransfer);
+
+        $clauseTransfer->setValue(static::CUSTOMER_GROUP_NAMES_TEST_GROUP_1);
+        $customerGroupDecisionRule->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+
+        $clauseTransfer->setValue(static::CUSTOMER_GROUP_NAMES_TEST_GROUP_2);
+        $customerGroupDecisionRule->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerGroupNamesTransfer
+     */
+    protected function createCustomerGroupNamesTransfer(): CustomerGroupNamesTransfer
+    {
+        return (new CustomerGroupNamesTransfer())
+            ->setCustomerGroupNames(
+                $this->createCustomerGroupNames()
+            );
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function createCustomerGroupNames(): array
+    {
+        return [
+            static::CUSTOMER_GROUP_NAMES_TEST_GROUP_1,
+            static::CUSTOMER_GROUP_NAMES_TEST_GROUP_2,
+        ];
     }
 
     /**
