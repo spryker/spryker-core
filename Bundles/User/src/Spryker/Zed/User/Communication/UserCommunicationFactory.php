@@ -42,7 +42,9 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
         return new UsersTable(
             $this->getQueryContainer(),
             $this->getProvidedDependency(UserDependencyProvider::SERVICE_DATE_FORMATTER),
-            $this->getUsersTableExtenderPlugins()
+            $this->getUserTableActionExpanderPlugins(),
+            $this->getUserTableConfigExpanderPlugins(),
+            $this->getUserTableDataExpanderPlugins()
         );
     }
 
@@ -55,6 +57,14 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     public function createUserForm(array $data = [], array $options = [])
     {
         return $this->getFormFactory()->create(UserForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserFormExpanderPluginInterface[]
+     */
+    public function getFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_FORM_EXPANDER);
     }
 
     /**
@@ -93,10 +103,26 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface[]
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInterface[]
      */
-    protected function getUsersTableExtenderPlugins()
+    protected function getUserTableActionExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USERS_TABLE_EXTENDER);
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_TABLE_ACTION_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableConfigExpanderPluginInterface[]
+     */
+    protected function getUserTableConfigExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_TABLE_CONFIG_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableDataExpanderPluginInterface[]
+     */
+    protected function getUserTableDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_TABLE_DATA_EXPANDER);
     }
 }

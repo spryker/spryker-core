@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\User\Business\Model\Installer;
 use Spryker\Zed\User\Business\Model\User;
 use Spryker\Zed\User\UserDependencyProvider;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @method \Spryker\Zed\User\UserConfig getConfig()
@@ -25,9 +26,26 @@ class UserBusinessFactory extends AbstractBusinessFactory
     {
         return new User(
             $this->getQueryContainer(),
-            $this->getProvidedDependency(UserDependencyProvider::CLIENT_SESSION),
-            $this->getConfig()
+            $this->getSessionClient(),
+            $this->getConfig(),
+            $this->getPostSavePlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\PostSavePluginInterface[]
+     */
+    public function getPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_POST_SAVE);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
+     */
+    public function getSessionClient(): SessionInterface
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::CLIENT_SESSION);
     }
 
     /**
