@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use PHPUnit\Framework\SkippedTestError;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
+use Spryker\Zed\ProductLabel\Business\ProductLabelFacade;
 use Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainer;
 
 /**
@@ -27,11 +28,6 @@ use Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainer;
  */
 class ProductLabelSearchListenerTest extends Unit
 {
-    /**
-     * @var \SprykerTest\Zed\ProductLabelSearch\ProductLabelSearchCommunicationTester
-     */
-    protected $tester;
-
     /**
      * @throws \PHPUnit\Framework\SkippedTestError
      *
@@ -51,9 +47,17 @@ class ProductLabelSearchListenerTest extends Unit
     public function testQueryProductLabelByProductLabelIds()
     {
         $productLabelSearchQueryContainer = new ProductLabelSearchQueryContainer();
-        $labelId = $this->tester->getLocator()->productLabel()->facade()->findLabelByLabelName('Standard label')->getIdProductLabel();
+        $labelId = $this->createProductLabelFacade()->findLabelByLabelName('Standard label')->getIdProductLabel();
         $result = $productLabelSearchQueryContainer->queryProductLabelByProductLabelIds([$labelId])->count();
 
         $this->assertSame(48, $result);
+    }
+
+    /**
+     * @return Spryker\Zed\ProductLabel\Business\ProductLabelFacade
+     */
+    protected function createProductLabelFacade()
+    {
+        return new ProductLabelFacade();
     }
 }

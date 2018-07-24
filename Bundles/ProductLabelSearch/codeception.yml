@@ -1,5 +1,4 @@
-namespace: ProductLabelSearch
-actor: Tester
+namespace: SprykerTest
 
 include:
     - tests/SprykerTest/Zed/ProductLabelSearch
