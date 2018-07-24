@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
+use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Generated\Shared\Transfer\SpySalesReclamationEntityTransfer;
 use Generated\Shared\Transfer\SpySalesReclamationItemEntityTransfer;
 
@@ -63,8 +64,7 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
         if ($createdOrders->count()) {
             $createdOrdersTransfer = new ArrayObject();
             foreach ($createdOrders as $orderEntityTransfer) {
-                $createdOrderTransfer = new OrderTransfer();
-                $createdOrderTransfer->fromArray($orderEntityTransfer->toArray(), true);
+                $createdOrderTransfer = $this->mapOrderEntityToOrderTransfer($orderEntityTransfer);
                 $createdOrdersTransfer->append($createdOrderTransfer);
             }
             $reclamationTransfer->setCreatedOrders($createdOrdersTransfer);
@@ -109,5 +109,18 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
         $reclamationItemTransfer->setStatus($reclamationItemEntityTransfer->getState());
 
         return $reclamationItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $orderEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function mapOrderEntityToOrderTransfer(SpySalesOrderEntityTransfer $orderEntityTransfer): OrderTransfer
+    {
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->fromArray($orderEntityTransfer->toArray(), true);
+
+        return $orderTransfer;
     }
 }

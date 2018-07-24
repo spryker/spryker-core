@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\SalesReclamation\Persistence\Mapper;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
+use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Generated\Shared\Transfer\SpySalesReclamationEntityTransfer;
 use Generated\Shared\Transfer\SpySalesReclamationItemEntityTransfer;
 
@@ -41,4 +43,11 @@ interface SalesReclamationMapperInterface
      * @return \Generated\Shared\Transfer\ReclamationItemTransfer
      */
     public function mapEntityTransferToReclamationItemTransfer(SpySalesReclamationItemEntityTransfer $reclamationItemEntityTransfer): ReclamationItemTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $orderEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function mapOrderEntityToOrderTransfer(SpySalesOrderEntityTransfer $orderEntityTransfer): OrderTransfer;
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesReclamation\Persistence;
 
 use ArrayObject;
+use Generated\Shared\Transfer\OrderCollectionTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\SalesReclamation\Persistence\Mapper\SalesReclamationMapperInterface;
@@ -39,15 +40,33 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
         $spyReclamationsEntityTransfer = $this->buildQueryFromCriteria($query)->find();
         $spyReclamationEntityTransfer = $spyReclamationsEntityTransfer[0];
 
+        return $this->getMapper()->mapEntityTransferToReclamationTransfer($spyReclamationEntityTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderCollectionTransfer
+     */
+    public function findCreatedOrdersByReclamationId(ReclamationTransfer $reclamationTransfer): OrderCollectionTransfer
+    {
+        $reclamationTransfer->requireIdSalesReclamation();
+        $createdOrdersCollectionTransfer = new OrderCollectionTransfer();
+
         $query = $this->getFactory()
             ->createSalesOrderQuery()
             ->filterByFkSalesReclamation($reclamationTransfer->getIdSalesReclamation());
+        /** @var \Generated\Shared\Transfer\SpySalesOrderEntityTransfer[] $createdOrdersEntityTransfer */
         $createdOrdersEntityTransfer = $this->buildQueryFromCriteria($query)->find();
-        if ($createdOrdersEntityTransfer) {
-            $spyReclamationEntityTransfer->setSpySalesOrders(new ArrayObject($createdOrdersEntityTransfer));
+
+        $orders = new ArrayObject();
+        foreach ($createdOrdersEntityTransfer as $createdOrderEntity) {
+            $orders->append($this->getMapper()->mapOrderEntityToOrderTransfer($createdOrderEntity));
         }
 
-        return $this->getMapper()->mapEntityTransferToReclamationTransfer($spyReclamationEntityTransfer);
+        $createdOrdersCollectionTransfer->setOrders($orders);
+
+        return $createdOrdersCollectionTransfer;
     }
 
     /**

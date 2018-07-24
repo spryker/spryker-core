@@ -17,12 +17,12 @@ interface SalesReclamationEntityManagerInterface
     /**
      * @see \Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap::COL_STATE_OPEN
      */
-    public const RECLAMATION_STATE_OPEN = 'open';
+    public const RECLAMATION_STATE_OPEN = 'Open';
 
     /**
      * @see \Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap::COL_STATE_OPEN
      */
-    public const RECLAMATION_ITEM_STATE_OPEN = 'open';
+    public const RECLAMATION_ITEM_STATE_OPEN = 'Open';
 
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer

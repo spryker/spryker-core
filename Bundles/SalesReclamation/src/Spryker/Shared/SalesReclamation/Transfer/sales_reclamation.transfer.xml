@@ -32,4 +32,8 @@
     <transfer name="Order">
         <property name="reclamation" type="Reclamation"/>
     </transfer>
+
+    <transfer name="OrderCollection">
+        <property name="orders" type="Order[]" singular="Order" />
+    </transfer>
 </transfers>

@@ -61,6 +61,11 @@ class Hydrator implements HydratorInterface
             return null;
         }
 
+        $createdOrderCollection = $this->repository->findCreatedOrdersByReclamationId($reclamationTransfer);
+        if ($createdOrderCollection) {
+            $reclamationTransfer->setCreatedOrders($createdOrderCollection->getOrders());
+        }
+
         $orderTransfer = $reclamationTransfer->getOrder();
         $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($orderTransfer->getIdSalesOrder());
         $reclamationTransfer->setOrder($orderTransfer);

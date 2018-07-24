@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReclamation\Persistence;
 
+use Generated\Shared\Transfer\OrderCollectionTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 
 /**
@@ -21,4 +22,13 @@ interface SalesReclamationRepositoryInterface
      * @return \Generated\Shared\Transfer\ReclamationTransfer|null
      */
     public function findReclamationById(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Generated\Shared\Transfer\OrderCollectionTransfer
+     */
+    public function findCreatedOrdersByReclamationId(ReclamationTransfer $reclamationTransfer): OrderCollectionTransfer;
 }
