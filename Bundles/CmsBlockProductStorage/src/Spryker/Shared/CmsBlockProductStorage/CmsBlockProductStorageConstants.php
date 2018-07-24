@@ -7,8 +7,27 @@
 
 namespace Spryker\Shared\CmsBlockProductStorage;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 class CmsBlockProductStorageConstants
 {
+    /**
+     * Specification:
+     * - Queue name as used for processing category messages
+     *
+     * @api
+     */
+    const CMS_BLOCK_PRODUCT_SYNC_STORAGE_QUEUE = 'sync.storage.cms';
+
+    /**
+     * Specification:
+     * - Queue name as used for error category messages
+     *
+     * @api
+     */
+    const CMS_BLOCK_PRODUCT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.cms.error';
+
     /**
      * Specification:
      * - Resource name, this will use for key generating

@@ -1,13 +1,8 @@
-{% if orderItem.amountLeadProduct is defined and orderItem.amountLeadProduct %}
-    {% set conversion = null %}
-    {% if orderItem.amountSalesUnit.conversion %}
-        {% set conversion = (1 / orderItem.amountSalesUnit.conversion) | number_format %}
-    {% endif %}
-
+{% if orderItem.amountSalesUnit is defined and orderItem.amountSalesUnit %}
     x {{ (orderItem.amount / orderItem.quantity) }}
     {{ orderItem.amountSalesUnit.productMeasurementBaseUnit.productMeasurementUnit.name | trans }}
     ( =
-        {{ conversion }}
+        {{ orderItem.amount / orderItem.amountSalesUnit.conversion }}
         {{ orderItem.amountSalesUnit.productMeasurementUnit.name | trans }}
     )
     = {{ orderItem.amount }}

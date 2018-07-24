@@ -23,11 +23,12 @@ class ResourceLocator extends AbstractLocator
      *
      * @param string $bundle
      *
-     * @return \Spryker\Service\Kernel\AbstractService|object
+     * @return \Spryker\Service\Kernel\AbstractService
      */
     public function locate($bundle)
     {
         $restResourceResolver = new ResourceResolver();
+
         return $restResourceResolver->resolve($bundle);
     }
 }

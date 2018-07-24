@@ -38,20 +38,20 @@ class AmountSalesUnitHydrateOrder implements AmountSalesUnitHydrateOrderInterfac
      */
     public function expandOrderWithAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $spySalesOrderItemEntityTransfers = $this->productPackagingUnitRepository
+        $salesOrderItemEntityTransfers = $this->productPackagingUnitRepository
             ->findSalesOrderItemsByIdSalesOrder($orderTransfer->getIdSalesOrder());
 
-        foreach ($spySalesOrderItemEntityTransfers as $spySalesOrderItemEntityTransfer) {
+        foreach ($salesOrderItemEntityTransfers as $salesOrderItemEntityTransfer) {
             $itemTransfer = $this->findItemTransferAmountSalesUnitsBelongTo(
                 $orderTransfer,
-                $spySalesOrderItemEntityTransfer->getIdSalesOrderItem()
+                $salesOrderItemEntityTransfer->getIdSalesOrderItem()
             );
 
-            if (!$itemTransfer) {
+            if (!$itemTransfer || $salesOrderItemEntityTransfer->getAmountMeasurementUnitName() === null) {
                 continue;
             }
 
-            $this->setAmountSalesUnit($itemTransfer, $spySalesOrderItemEntityTransfer);
+            $this->setAmountSalesUnit($itemTransfer, $salesOrderItemEntityTransfer);
         }
 
         return $orderTransfer;
@@ -59,34 +59,34 @@ class AmountSalesUnitHydrateOrder implements AmountSalesUnitHydrateOrderInterfac
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
      *
      * @return void
      */
-    protected function setAmountSalesUnit(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer): void
+    protected function setAmountSalesUnit(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer): void
     {
-        $itemAmountMeasurementUnitTransfer = $this->hydrateItemAmountSalesUnitTransfer($spySalesOrderItemEntityTransfer);
+        $itemAmountMeasurementUnitTransfer = $this->hydrateItemAmountSalesUnitTransfer($salesOrderItemEntityTransfer);
 
         $itemTransfer->setAmountSalesUnit($itemAmountMeasurementUnitTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    protected function hydrateItemAmountSalesUnitTransfer(SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer): ProductMeasurementSalesUnitTransfer
+    protected function hydrateItemAmountSalesUnitTransfer(SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer): ProductMeasurementSalesUnitTransfer
     {
         $productMeasurementSalesUnitTransfer = new ProductMeasurementSalesUnitTransfer();
-        $productMeasurementSalesUnitTransfer->setConversion($spySalesOrderItemEntityTransfer->getAmountMeasurementUnitConversion());
-        $productMeasurementSalesUnitTransfer->setPrecision($spySalesOrderItemEntityTransfer->getAmountMeasurementUnitPrecision());
+        $productMeasurementSalesUnitTransfer->setConversion($salesOrderItemEntityTransfer->getAmountMeasurementUnitConversion());
+        $productMeasurementSalesUnitTransfer->setPrecision($salesOrderItemEntityTransfer->getAmountMeasurementUnitPrecision());
 
-        $productMeasurementBaseUnitTransfer = $this->createProductMeasurementBaseUnitTransfer($spySalesOrderItemEntityTransfer);
+        $productMeasurementBaseUnitTransfer = $this->createProductMeasurementBaseUnitTransfer($salesOrderItemEntityTransfer);
         $productMeasurementSalesUnitTransfer->setProductMeasurementBaseUnit($productMeasurementBaseUnitTransfer);
 
         $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer(
-            $spySalesOrderItemEntityTransfer->getAmountMeasurementUnitName(),
-            $spySalesOrderItemEntityTransfer->getAmountMeasurementUnitCode()
+            $salesOrderItemEntityTransfer->getAmountMeasurementUnitName(),
+            $salesOrderItemEntityTransfer->getAmountMeasurementUnitCode()
         );
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 
@@ -112,14 +112,14 @@ class AmountSalesUnitHydrateOrder implements AmountSalesUnitHydrateOrderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer
      */
-    protected function createProductMeasurementBaseUnitTransfer(SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer): ProductMeasurementBaseUnitTransfer
+    protected function createProductMeasurementBaseUnitTransfer(SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer): ProductMeasurementBaseUnitTransfer
     {
         $productMeasurementBaseUnitTransfer = new ProductMeasurementBaseUnitTransfer();
-        $amountBaseMeasurementUnitName = $spySalesOrderItemEntityTransfer->getAmountBaseMeasurementUnitName() ?? '';
+        $amountBaseMeasurementUnitName = $salesOrderItemEntityTransfer->getAmountBaseMeasurementUnitName() ?? '';
         $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($amountBaseMeasurementUnitName);
         $productMeasurementBaseUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 
