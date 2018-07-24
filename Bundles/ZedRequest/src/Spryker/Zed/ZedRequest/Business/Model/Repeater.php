@@ -66,7 +66,7 @@ class Repeater implements RepeaterInterface
             'module' => $httpRequest->attributes->get('module'),
             'controller' => $httpRequest->attributes->get('controller'),
             'action' => $httpRequest->attributes->get('action'),
-            'params' => $transferObject->toArray(false),
+            'params' => $transferObject->toArray(),
         ];
 
         $moduleControllerAction = sprintf(

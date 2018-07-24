@@ -17,17 +17,20 @@ class ResourceResolver extends AbstractClassResolver
      *
      * @throws \Spryker\Glue\Kernel\ClassResolver\RestResource\RestResourceNotFoundException
      *
-     * @return \Spryker\Service\Kernel\AbstractService|object
+     * @return \Spryker\Service\Kernel\AbstractService
      */
     public function resolve($callerClass)
     {
         $this->setCallerClass($callerClass);
 
-        if ($this->canResolve()) {
-            return $this->getResolvedClassInstance();
+        if (!$this->canResolve()) {
+            throw new RestResourceNotFoundException($this->getClassInfo());
         }
 
-        throw new RestResourceNotFoundException($this->getClassInfo());
+        /** @var \Spryker\Service\Kernel\AbstractService $object */
+        $object = $this->getResolvedClassInstance();
+
+        return $object;
     }
 
     /**
