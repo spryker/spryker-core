@@ -20,7 +20,7 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
      */
-    public function mapMinimumOrderValueTypeTransfer(
+    public function mapMinimumOrderValueTypeEntityToTransfer(
         SpyMinimumOrderValueType $spyMinimumOrderValueType,
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
     ): MinimumOrderValueTypeTransfer {
@@ -37,7 +37,7 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
-    public function mapMinimumOrderValueTransfer(
+    public function mapMinimumOrderValueEntityToTransfer(
         SpyMinimumOrderValue $minimumOrderValueEntity,
         MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): MinimumOrderValueTransfer {

@@ -13,4 +13,5 @@ interface MinimumOrderValueDataSetInterface
     public const CURRENCY = 'currency';
     public const STRATEGY = 'strategy';
     public const THRESHOLD = 'threshold';
+    public const FEE = 'fee';
 }

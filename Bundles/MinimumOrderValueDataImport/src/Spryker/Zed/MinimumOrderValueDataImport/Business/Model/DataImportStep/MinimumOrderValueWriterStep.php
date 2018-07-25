@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\MinimumOrderValueDataImport\Business\Model\DataImportStep;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MinimumOrderValueDataImport\Business\Model\DataSet\MinimumOrderValueDataSetInterface;
@@ -32,6 +36,16 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
     protected $currencyFacade;
 
     /**
+     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    protected static $storesHeap = [];
+
+    /**
+     * @var \Generated\Shared\Transfer\CurrencyTransfer[]
+     */
+    protected static $currenciesHeap = [];
+
+    /**
      * @param \Spryker\Zed\MinimumOrderValueDataImport\Dependency\Facade\MinimumOrderValueDataImportToMinimumOrderValueFacadeInterface $minimumOrderValueFacade
      * @param \Spryker\Zed\MinimumOrderValueDataImport\Dependency\Facade\MinimumOrderValueDataImportToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\MinimumOrderValueDataImport\Dependency\Facade\MinimumOrderValueDataImportToCurrencyFacadeInterface $currencyFacade
@@ -53,23 +67,81 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $storeTransfer = $this->storeFacade->getStoreByName($dataSet[MinimumOrderValueDataSetInterface::STORE]);
+        $storeTransfer = $this->findStoreByName($dataSet[MinimumOrderValueDataSetInterface::STORE]);
         if (!$storeTransfer) {
             return;
         }
 
-        $currencyTransfer = $this->currencyFacade->fromIsoCode($dataSet[MinimumOrderValueDataSetInterface::CURRENCY]);
+        $currencyTransfer = $this->findCurrencyByCode($dataSet[MinimumOrderValueDataSetInterface::CURRENCY]);
         if (!$currencyTransfer) {
             return;
         }
 
         if ($dataSet[MinimumOrderValueDataSetInterface::STRATEGY] && $dataSet[MinimumOrderValueDataSetInterface::THRESHOLD]) {
-            $this->minimumOrderValueFacade->setStoreThreshold(
+            $minimumOrderValueTransfer = $this->createMinimumOrderValueTransfer(
                 $dataSet[MinimumOrderValueDataSetInterface::STRATEGY],
                 $storeTransfer,
                 $currencyTransfer,
-                (int)$dataSet[MinimumOrderValueDataSetInterface::THRESHOLD]
+                (int)$dataSet[MinimumOrderValueDataSetInterface::THRESHOLD],
+                (int)$dataSet[MinimumOrderValueDataSetInterface::FEE]
             );
+
+            $this->minimumOrderValueFacade->setStoreThreshold($minimumOrderValueTransfer);
         }
+    }
+
+    /**
+     * @param string $strategyKey
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     * @param int $thresholdValue
+     * @param int|null $fee
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     */
+    protected function createMinimumOrderValueTransfer(
+        string $strategyKey,
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer,
+        int $thresholdValue,
+        ?int $fee = null
+    ): MinimumOrderValueTransfer {
+        return (new MinimumOrderValueTransfer())
+            ->setStore($storeTransfer)
+            ->setCurrency($currencyTransfer)
+            ->setValue($thresholdValue)
+            ->setFee($fee)
+            ->setMinimumOrderValueType(
+                (new MinimumOrderValueTypeTransfer())
+                    ->setKey($strategyKey)
+            );
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function findStoreByName(string $storeName): StoreTransfer
+    {
+        if (!isset(static::$storesHeap[$storeName])) {
+            static::$storesHeap[$storeName] = $this->storeFacade->getStoreByName($storeName);
+        }
+
+        return static::$storesHeap[$storeName];
+    }
+
+    /**
+     * @param string $isoCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function findCurrencyByCode(string $isoCode): CurrencyTransfer
+    {
+        if (!isset(static::$currenciesHeap[$isoCode])) {
+            static::$currenciesHeap[$isoCode] = $this->currencyFacade->fromIsoCode($isoCode);
+        }
+
+        return static::$currenciesHeap[$isoCode];
     }
 }

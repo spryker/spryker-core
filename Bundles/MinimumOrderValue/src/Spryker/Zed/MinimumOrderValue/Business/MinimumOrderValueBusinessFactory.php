@@ -56,7 +56,7 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyResolverInterface
      */
-    protected function createMinimumOrderValueStrategyResolver(): MinimumOrderValueStrategyResolverInterface
+    public function createMinimumOrderValueStrategyResolver(): MinimumOrderValueStrategyResolverInterface
     {
         return new MinimumOrderValueStrategyResolver(
             $this->getMinimumOrderValueStrategies()

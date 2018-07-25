@@ -13,8 +13,6 @@ use Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValueQuery;
 
 class MinimumOrderValueDataImportHelper extends Module
 {
-    protected const ERROR_MESSAGE_FOUND = 'Found at least one entry in the database table but database table `%s` was expected to be empty.';
-
     protected const ERROR_MESSAGE_EXPECTED = 'Expected at least one entry in the database table `%s` but table is empty.';
 
     /**
