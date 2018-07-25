@@ -5,15 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form;
+namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\GlobalThresholdTransfer;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class GlobalThresholdDataProvider implements FormDataProviderInterface
 {
     public const STORE_CURRENCY_DELIMITER = ';';
+    public const SOFT_TYPE_MESSAGE = 'soft-threshold';
+    public const SOFT_TYPE_FIXED = 'soft-threshold-fixed-fee';
+    public const SOFT_TYPE_FLEXIBLE = 'soft-threshold-flexible-fee';
 
     /**
      * @var \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface
@@ -35,19 +39,19 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
     public function getOptions(): array
     {
         return [
-            'data_class' => GlobalThresholdTransfer::class,
             'allow_extra_fields' => true,
             'csrf_protection' => false,
             GlobalThresholdType::OPTION_STORES_ARRAY => $this->getStoreList(),
+            GlobalThresholdType::OPTION_SOFT_TYPES_ARRAY => $this->getSoftTypesList(),
         ];
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\GlobalThresholdTransfer
+     * @return array
      */
-    public function getData(Request $request): GlobalThresholdTransfer
+    public function getData(Request $request): array
     {
         /*
         if ($quoteTransfer->getManualOrder() === null) {
@@ -64,7 +68,8 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
         }
         */
 
-        return new GlobalThresholdTransfer();
+        return [];
+//        return new GlobalThresholdTransfer();
     }
 
     /**
@@ -89,5 +94,17 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
         }
 
         return $storeList;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSoftTypesList(): array
+    {
+        return [
+            static::SOFT_TYPE_MESSAGE => "Soft Threshold with message",
+            static::SOFT_TYPE_FIXED => "Soft Threshold with fixed fee",
+            static::SOFT_TYPE_FLEXIBLE => "Soft Threshold with flexible fee",
+        ];
     }
 }

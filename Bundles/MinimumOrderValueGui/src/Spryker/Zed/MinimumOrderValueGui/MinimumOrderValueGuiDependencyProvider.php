@@ -10,6 +10,7 @@ namespace Spryker\Zed\MinimumOrderValueGui;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeBridge;
+use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToLocaleBridge;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMinimumOrderValueFacadeBridge;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMoneyFacadeBridge;
 
@@ -18,6 +19,8 @@ class MinimumOrderValueGuiDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const FACADE_MINIMUM_ORDER_VALUE = 'FACADE_MINIMUM_ORDER_VALUE';
     public const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,6 +34,7 @@ class MinimumOrderValueGuiDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addCurrencyFacade($container);
         $container = $this->addMinimumOrderValueFacade($container);
         $container = $this->addMoneyFacade($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -72,6 +76,20 @@ class MinimumOrderValueGuiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::FACADE_MONEY] = function (Container $container) {
             return new MinimumOrderValueGuiToMoneyFacadeBridge($container->getLocator()->money()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
+            return new MinimumOrderValueGuiToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
         return $container;

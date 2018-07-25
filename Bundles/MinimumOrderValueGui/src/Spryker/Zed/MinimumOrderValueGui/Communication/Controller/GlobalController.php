@@ -36,8 +36,10 @@ class GlobalController extends AbstractController
                 $this->addErrorMessage($exception->getMessage());
             }
         }
+        $localeProvider = $this->getFactory()->createLocaleProvider();
 
         return $this->viewResponse([
+            'localeCollection' => $localeProvider->getLocaleCollection(),
             'globalThresholdForm' => $globalThresholdForm->createView(),
         ]);
     }

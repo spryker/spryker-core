@@ -10,13 +10,17 @@ namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form;
 use Generated\Shared\Transfer\GlobalThresholdTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\MinimumOrderValueGui\Communication\MinimumOrderValueGuiCommunicationFactory getFactory()
@@ -25,13 +29,24 @@ class GlobalThresholdType extends AbstractType
 {
     public const TYPE_NAME = 'global-threshold';
 
+    public const PREFIX_HARD = 'hard';
+    public const PREFIX_SOFT = 'soft';
+
     public const FIELD_STORE = 'storeCurrency';
     public const FIELD_HARD_VALUE = 'hardValue';
 
+    public const FIELD_SOFT_STRATEGY = 'softStrategy';
+    public const FIELD_SOFT_VALUE = 'softValue';
+    public const FIELD_SOFT_FIXED_FEE = 'softFixedFee';
+    public const FIELD_SOFT_FLEXIBLE_FEE = 'softFlexibleFee';
+
     public const OPTION_STORES_ARRAY = 'option-stores-array';
+    public const OPTION_SOFT_TYPES_ARRAY = 'option-soft-types-array';
+    public const VALIDATION_GROUP_GENERAL = 'validation_group_general';
 
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
     protected const ERROR_MESSAGE_VALUE = 'Invalid Value.';
+
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -42,7 +57,15 @@ class GlobalThresholdType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addStoreField($builder, $options);
+
         $this->addHardValueField($builder, $options);
+        $this->addLocalizedForms($builder, static::PREFIX_HARD);
+
+        $this->addSoftStrategyField($builder, $options);
+        $this->addSoftValueField($builder, $options);
+        $this->addSoftFixedFeeField($builder, $options);
+        $this->addSoftFlexibleFeeField($builder, $options);
+        $this->addLocalizedForms($builder, static::PREFIX_SOFT);
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
@@ -67,6 +90,26 @@ class GlobalThresholdType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_STORES_ARRAY);
+        $resolver->setRequired(static::OPTION_SOFT_TYPES_ARRAY);
+    }
+
+    /**
+     * @param string $prefix
+     * @param string $localeCode
+     *
+     * @return string
+     */
+    public static function getLocalizedFormName($prefix, $localeCode): string
+    {
+        return $prefix . '_' . $localeCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix(): string
+    {
+        return static::TYPE_NAME;
     }
 
     /**
@@ -110,11 +153,125 @@ class GlobalThresholdType extends AbstractType
     }
 
     /**
-     * @return string
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
      */
-    public function getBlockPrefix(): string
+    protected function addSoftStrategyField(FormBuilderInterface $builder, array $options): self
     {
-        return static::TYPE_NAME;
+        $builder->add(static::FIELD_SOFT_STRATEGY, ChoiceType::class, [
+            'label' => false,
+            'required' => true,
+            'expanded' => true,
+            'choices' => $options[static::OPTION_SOFT_TYPES_ARRAY],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addSoftValueField(FormBuilderInterface $builder, array $options): self
+    {
+        $builder->add(static::FIELD_SOFT_VALUE, TextType::class, [
+            'label' => 'Enter minimum order value',
+            'required' => false,
+            'constraints' => [
+                $this->createMoneyConstraint($options),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addSoftFixedFeeField(FormBuilderInterface $builder, array $options): self
+    {
+        $builder->add(static::FIELD_SOFT_FIXED_FEE, TextType::class, [
+            'label' => 'Enter fixed fee',
+            'required' => false,
+            'constraints' => [
+                $this->createMoneyConstraint($options),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addSoftFlexibleFeeField(FormBuilderInterface $builder, array $options): self
+    {
+        $builder->add(static::FIELD_SOFT_FLEXIBLE_FEE, TextType::class, [
+            'label' => 'Enter flexible fee',
+            'required' => false,
+            'constraints' => [
+                $this->createMoneyConstraint($options),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param string $localizedFormPrefix
+     *
+     * @return $this
+     */
+    protected function addLocalizedForms(FormBuilderInterface $builder, $localizedFormPrefix): self
+    {
+        $localeCollection = $this->getFactory()
+            ->createLocaleProvider()
+            ->getLocaleCollection();
+
+        foreach ($localeCollection as $localeTransfer) {
+            $name = self::getLocalizedFormName($localizedFormPrefix, $localeTransfer->getLocaleName());
+            $this->addLocalizedForm($builder, $name);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param string $name
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addLocalizedForm(FormBuilderInterface $builder, $name, array $options = []): self
+    {
+        $builder
+            ->add($name, LocalizedForm::class, [
+                'label' => false,
+//                'constraints' => [new Callback([
+//                    'callback' => function ($dataToValidate, ExecutionContextInterface $context) {
+//                        $selectedAttributes = array_filter(array_values($dataToValidate));
+//                        if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), LocalizedForm::$errorFieldsDisplayed)) {
+//                            $context->addViolation('Please enter at least Sku and Name of the product in every locale under General');
+//                            LocalizedForm::$errorFieldsDisplayed[$context->getGroup()] = true;
+//                        }
+//                    },
+//                    'groups' => [self::VALIDATION_GROUP_GENERAL],
+//                ])],
+            ]);
+
+        return $this;
     }
 
     /**

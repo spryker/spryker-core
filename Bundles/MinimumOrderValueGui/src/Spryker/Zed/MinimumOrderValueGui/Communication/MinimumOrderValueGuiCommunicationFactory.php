@@ -8,7 +8,8 @@
 namespace Spryker\Zed\MinimumOrderValueGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdDataProvider;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\GlobalThresholdDataProvider;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMinimumOrderValueFacadeInterface;
@@ -39,12 +40,22 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
-     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdDataProvider
+     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\GlobalThresholdDataProvider
      */
     public function createStoreDataProvider(): GlobalThresholdDataProvider
     {
         return new GlobalThresholdDataProvider(
             $this->getCurrencyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider
+     */
+    public function createLocaleProvider()
+    {
+        return new LocaleProvider(
+            $this->getLocaleFacade()
         );
     }
 
@@ -70,5 +81,13 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
     public function getMoneyFacade(): MinimumOrderValueGuiToMoneyFacadeInterface
     {
         return $this->getProvidedDependency(MinimumOrderValueGuiDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToLocaleInterface
+     */
+    public function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(MinimumOrderValueGuiDependencyProvider::FACADE_LOCALE);
     }
 }

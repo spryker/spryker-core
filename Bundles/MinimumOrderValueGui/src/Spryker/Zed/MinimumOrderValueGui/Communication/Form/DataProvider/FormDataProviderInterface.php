@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form;
+namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\GlobalThresholdTransfer;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,9 +15,9 @@ interface FormDataProviderInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\GlobalThresholdTransfer
+     * @return array
      */
-    public function getData(Request $request): GlobalThresholdTransfer;
+    public function getData(Request $request): array;
 
     /**
      * @return array
