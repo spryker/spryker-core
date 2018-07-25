@@ -9,7 +9,7 @@ namespace Spryker\Zed\UserExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\UserTransfer;
 
-interface PostSavePluginInterface
+interface UserPostSavePluginInterface
 {
     /**
      * @api

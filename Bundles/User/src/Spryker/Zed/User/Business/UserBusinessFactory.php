@@ -33,7 +33,7 @@ class UserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\PostSavePluginInterface[]
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface[]
      */
     public function getPostSavePlugins(): array
     {

@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\AgentGui\Communication\Plugin;
 
-use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\UserExtension\Dependency\Plugin\UserTableConfigExpanderPluginInterface;
 
+/**
+ * @method \Spryker\Zed\AgentGui\Communication\AgentGuiCommunicationFactory getFactory()
+ */
 class UserAgentTableConfigExpanderPlugin extends AbstractPlugin implements UserTableConfigExpanderPluginInterface
 {
     /**
@@ -25,33 +27,8 @@ class UserAgentTableConfigExpanderPlugin extends AbstractPlugin implements UserT
      */
     public function expandConfig(TableConfiguration $config): TableConfiguration
     {
-        $this->addAgentHeader($config);
-        $this->setRawAgentColumn($config);
-
-        return $config;
-    }
-
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return void
-     */
-    protected function addAgentHeader(TableConfiguration $config): void
-    {
-        $config->setHeader(array_merge($config->getHeader(), [
-            SpyUserTableMap::COL_IS_AGENT => 'Agent',
-        ]));
-    }
-
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return void
-     */
-    protected function setRawAgentColumn(TableConfiguration $config): void
-    {
-        $config->setRawColumns(array_merge($config->getRawColumns(), [
-            SpyUserTableMap::COL_IS_AGENT,
-        ]));
+        return $this->getFactory()
+            ->createUserAgentTableConfigExpander()
+            ->expandConfig($config);
     }
 }

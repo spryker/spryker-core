@@ -3,7 +3,7 @@
   "description": "AgentGui module",
   "license": "proprietary",
   "require": {
-    "spryker/user-extension": "^1.0",
+    "spryker/user-extension": "1.0.0",
     "spryker/user": "^3.2",
     "spryker/kernel": "^3.22",
     "spryker/gui": "^3.13"

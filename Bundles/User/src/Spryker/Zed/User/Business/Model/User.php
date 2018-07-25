@@ -37,26 +37,26 @@ class User implements UserInterface
     protected $settings;
 
     /**
-     * @var \Spryker\Zed\UserExtension\Dependency\Plugin\PostSavePluginInterface[]
+     * @var \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface[]
      */
-    protected $postSavePlugins;
+    protected $userPostSavePlugins;
 
     /**
      * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $queryContainer
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Spryker\Zed\User\UserConfig $settings
-     * @param \Spryker\Zed\UserExtension\Dependency\Plugin\PostSavePluginInterface[] $postSavePlugins
+     * @param \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface[] $userPostSavePlugins
      */
     public function __construct(
         UserQueryContainerInterface $queryContainer,
         SessionInterface $session,
         UserConfig $settings,
-        array $postSavePlugins
+        array $userPostSavePlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->session = $session;
         $this->settings = $settings;
-        $this->postSavePlugins = $postSavePlugins;
+        $this->userPostSavePlugins = $userPostSavePlugins;
     }
 
     /**
@@ -160,7 +160,7 @@ class User implements UserInterface
      */
     protected function executePostSavePlugins(UserTransfer $userTransfer): UserTransfer
     {
-        foreach ($this->postSavePlugins as $postSavePlugin) {
+        foreach ($this->userPostSavePlugins as $postSavePlugin) {
             $userTransfer = $postSavePlugin->postSave($userTransfer);
         }
 

@@ -9,14 +9,13 @@ namespace Spryker\Zed\AgentGui\Communication\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\UserExtension\Dependency\Plugin\UserFormExpanderPluginInterface;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\AgentGui\Communication\AgentGuiCommunicationFactory getFactory()
+ */
 class UserAgentFormExpanderPlugin extends AbstractPlugin implements UserFormExpanderPluginInterface
 {
-    protected const FIELD_IS_AGENT = 'is_agent';
-    protected const FIELD_IS_AGENT_LABEL = 'Yes, this user is an agent';
-
     /**
      * {@inheritdoc}
      *
@@ -28,19 +27,8 @@ class UserAgentFormExpanderPlugin extends AbstractPlugin implements UserFormExpa
      */
     public function buildForm(FormBuilderInterface $builder): void
     {
-        $this->addIsAgentField($builder);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
-    protected function addIsAgentField(FormBuilderInterface $builder): void
-    {
-        $builder->add(static::FIELD_IS_AGENT, CheckboxType::class, [
-            'label' => static::FIELD_IS_AGENT_LABEL,
-            'required' => false,
-        ]);
+        $this->getFactory()
+            ->createUserAgentFormExpander()
+            ->buildForm($builder);
     }
 }

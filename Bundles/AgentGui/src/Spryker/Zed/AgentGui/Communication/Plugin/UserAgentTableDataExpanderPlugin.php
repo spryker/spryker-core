@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\AgentGui\Communication\Plugin;
 
-use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\UserExtension\Dependency\Plugin\UserTableDataExpanderPluginInterface;
 
+/**
+ * @method \Spryker\Zed\AgentGui\Communication\AgentGuiCommunicationFactory getFactory()
+ */
 class UserAgentTableDataExpanderPlugin extends AbstractPlugin implements UserTableDataExpanderPluginInterface
 {
     /**
@@ -24,18 +26,8 @@ class UserAgentTableDataExpanderPlugin extends AbstractPlugin implements UserTab
      */
     public function expandData(array $item): array
     {
-        return [
-            SpyUserTableMap::COL_IS_AGENT => $this->createIsAgentLabel($item[SpyUserTableMap::COL_IS_AGENT]),
-        ];
-    }
-
-    /**
-     * @param bool|null $isAgent
-     *
-     * @return string
-     */
-    protected function createIsAgentLabel(?bool $isAgent): string
-    {
-        return $isAgent ? '<span class="label label-success" title="Agent">Agent</span>' : '';
+        return $this->getFactory()
+            ->createUserAgentTableDataExpander()
+            ->expandData($item);
     }
 }

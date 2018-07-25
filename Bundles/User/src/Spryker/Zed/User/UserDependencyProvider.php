@@ -131,7 +131,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\PostSavePluginInterface[]
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface[]
      */
     protected function getPostSavePlugins(): array
     {

@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\User\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\UserBuilder;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
@@ -63,7 +64,7 @@ class UserTest extends Unit
      */
     protected function getUserDataTransfer(): UserTransfer
     {
-        return (new UserTransfer())->fromArray($this->mockUserData());
+        return (new UserBuilder())->build();
     }
 
     /**

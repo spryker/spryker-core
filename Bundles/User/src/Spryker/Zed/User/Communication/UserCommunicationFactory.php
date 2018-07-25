@@ -14,6 +14,8 @@ use Spryker\Zed\User\Communication\Form\DataProvider\UserUpdateFormDataProvider;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Communication\Form\UserUpdateForm;
+use Spryker\Zed\User\Communication\Table\PluginExecutor\UserTablePluginExecutor;
+use Spryker\Zed\User\Communication\Table\PluginExecutor\UserTablePluginExecutorInterface;
 use Spryker\Zed\User\Communication\Table\UsersTable;
 use Spryker\Zed\User\UserDependencyProvider;
 
@@ -42,6 +44,16 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
         return new UsersTable(
             $this->getQueryContainer(),
             $this->getProvidedDependency(UserDependencyProvider::SERVICE_DATE_FORMATTER),
+            $this->createUserTablePluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\User\Communication\Table\PluginExecutor\UserTablePluginExecutorInterface
+     */
+    public function createUserTablePluginExecutor(): UserTablePluginExecutorInterface
+    {
+        return new UserTablePluginExecutor(
             $this->getUserTableActionExpanderPlugins(),
             $this->getUserTableConfigExpanderPlugins(),
             $this->getUserTableDataExpanderPlugins()

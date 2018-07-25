@@ -12,5 +12,4 @@ namespace Spryker\Zed\CustomerUserConnectorGui\Communication\Plugin;
  */
 class UsersTableExpanderPlugin extends UserTableActionExpanderPlugin
 {
-
 }
