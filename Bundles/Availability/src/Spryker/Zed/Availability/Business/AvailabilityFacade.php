@@ -60,6 +60,22 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function isProductConcreteAvailable(int $idProductConcrete): bool
+    {
+        return $this->getFactory()
+            ->createSellableModel()
+            ->isProductConcreteAvailable($idProductConcrete);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @deprecated use calculateStockForProductWithStore() instead
      *
      * @param string $sku

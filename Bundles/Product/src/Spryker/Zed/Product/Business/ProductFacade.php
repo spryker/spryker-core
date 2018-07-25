@@ -253,6 +253,22 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
+     * @param int $idConcrete
+     *
+     * @return int|null
+     */
+    public function findProductAbstractIdByConcreteId(int $idConcrete): ?int
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->findProductAbstractIdByConcreteId($idConcrete);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
@@ -822,5 +838,53 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createAttributeEncoder()
             ->decodeAttributes($attributes);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $suggestion
+     *
+     * @return string[]
+     */
+    public function suggestProductAbstract(string $suggestion): array
+    {
+        return $this->getFactory()
+            ->createProductSuggester()
+            ->suggestProductAbstract($suggestion);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $suggestion
+     *
+     * @return string[]
+     */
+    public function suggestProductConcrete(string $suggestion): array
+    {
+        return $this->getFactory()
+            ->createProductSuggester()
+            ->suggestProductConcrete($suggestion);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->findProductConcreteIdsByAbstractProductId($idProductAbstract);
     }
 }

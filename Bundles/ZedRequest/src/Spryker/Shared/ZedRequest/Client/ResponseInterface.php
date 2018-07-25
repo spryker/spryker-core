@@ -10,6 +10,9 @@ namespace Spryker\Shared\ZedRequest\Client;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
+/**
+ * @method array toArray()
+ */
 interface ResponseInterface
 {
     const INFO_MESSAGES = 'infoMessages';
