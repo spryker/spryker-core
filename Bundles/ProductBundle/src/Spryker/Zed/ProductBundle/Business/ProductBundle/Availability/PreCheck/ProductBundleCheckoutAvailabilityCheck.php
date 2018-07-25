@@ -9,14 +9,12 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck
 use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements ProductBundleCheckoutAvailabilityCheckInterface
 {
-    const CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY = 'product.unavailable';
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -27,16 +25,17 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-        $checkoutErrorMessages = $this->getCheckoutAvailabilityFailedItems($quoteTransfer);
+        $checkoutErrorMessages = $this->getAvailabilityErrorMessages(
+            $checkoutResponseTransfer->getErrors(),
+            $this->getCheckoutAvailabilityFailedItems($quoteTransfer)
+        );
 
         if (count($checkoutErrorMessages) === 0) {
             return true;
         }
 
         $checkoutResponseTransfer->setIsSuccess(false);
-        foreach ($checkoutErrorMessages as $checkoutErrorTransfer) {
-            $checkoutResponseTransfer->addError($checkoutErrorTransfer);
-        }
+        $checkoutResponseTransfer->setErrors($checkoutErrorMessages);
 
         return false;
     }
@@ -58,47 +57,59 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         $itemsInCart = $quoteTransfer->getItems();
 
         foreach ($uniqueBundleItems as $bundleItemTransfer) {
-            $bundledItems = $this->findBundledProducts($bundleItemTransfer->getSku());
-            if (!$this->isAllCheckoutBundledItemsAvailable($itemsInCart, $bundledItems, $storeTransfer)) {
-                $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer();
+            $unavailableCheckoutBundledItems = $this->getUnavailableCheckoutBundledItems($itemsInCart, $bundleItemTransfer, $storeTransfer);
+
+            if (!empty($unavailableCheckoutBundledItems)) {
+                foreach ($unavailableCheckoutBundledItems as $unavailableCheckoutBundledItem) {
+                    $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer($unavailableCheckoutBundledItem);
+                }
             }
         }
         return $checkoutErrorMessages;
     }
 
     /**
+     * @param array $parameters
+     *
      * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
-    protected function createCheckoutResponseTransfer()
+    protected function createCheckoutResponseTransfer(array $parameters)
     {
         $checkoutErrorTransfer = new CheckoutErrorTransfer();
-        $checkoutErrorTransfer->setMessage(static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY);
+        $checkoutErrorTransfer->setMessage(static::ERROR_BUNDLE_ITEM_UNAVAILABLE_TRANSLATION_KEY);
+        $checkoutErrorTransfer->setParameters($parameters);
 
         return $checkoutErrorTransfer;
     }
 
     /**
      * @param \ArrayObject $currentCartItems
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundledItems
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return bool
+     * @return array
      */
-    protected function isAllCheckoutBundledItemsAvailable(
+    protected function getUnavailableCheckoutBundledItems(
         ArrayObject $currentCartItems,
-        ObjectCollection $bundledItems,
+        ItemTransfer $itemTransfer,
         StoreTransfer $storeTransfer
     ) {
+        $unavailableCheckoutBundledItems = [];
+        $bundledItems = $this->findBundledProducts($itemTransfer->getSku());
+
         foreach ($bundledItems as $productBundleEntity) {
             $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
 
             $sku = $bundledProductConcreteEntity->getSku();
             if (!$this->checkIfItemIsSellable($currentCartItems, $sku, $storeTransfer)) {
-                return false;
+                $unavailableCheckoutBundledItems[] = [
+                    static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $itemTransfer->getSku(),
+                    static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $sku,
+                ];
             }
         }
 
-        return true;
+        return $unavailableCheckoutBundledItems;
     }
 
     /**
@@ -117,5 +128,87 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         }
 
         return $uniqueBundledItems;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[] $availabilityErrorMessages
+     * @param \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[] $productBundleErrorMessages
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[]
+     */
+    protected function getAvailabilityErrorMessages(ArrayObject $availabilityErrorMessages, ArrayObject $productBundleErrorMessages): ArrayObject
+    {
+        $processedErrorMessages = [];
+
+        foreach ($availabilityErrorMessages as $availabilityErrorMessage) {
+            if (!$this->hasRelatedAvailabilityErrorMessage($availabilityErrorMessage, $productBundleErrorMessages)
+            || $this->isAvailabilityErrorMessage($availabilityErrorMessage)) {
+                $processedErrorMessages[] = $availabilityErrorMessage;
+            }
+        }
+
+        $processedErrorMessages = array_merge(
+            $processedErrorMessages,
+            $productBundleErrorMessages->getArrayCopy()
+        );
+
+        return new ArrayObject($processedErrorMessages);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutErrorTransfer $availabilityErrorMessage
+     *
+     * @return bool
+     */
+    protected function isAvailabilityErrorMessage(CheckoutErrorTransfer $availabilityErrorMessage): bool
+    {
+        return $availabilityErrorMessage->getErrorType() === $this->productBundleConfig->getAvailabilityErrorType();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutErrorTransfer $availabilityErrorMessage
+     * @param \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[] $productBundleErrorMessages
+     *
+     * @return bool
+     */
+    protected function hasRelatedAvailabilityErrorMessage(
+        CheckoutErrorTransfer $availabilityErrorMessage,
+        ArrayObject $productBundleErrorMessages
+    ): bool {
+        $availabilityErrorMessageSku = $this->getAvailabilityErrorMessageSku($availabilityErrorMessage);
+        foreach ($productBundleErrorMessages as $productBundleErrorMessage) {
+            $productBundleErrorMessageSku = $this->getProductBundleErrorMessageProductSku($productBundleErrorMessage);
+
+            if ($availabilityErrorMessageSku === $productBundleErrorMessageSku) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutErrorTransfer $availabilityErrorMessage
+     *
+     * @return string
+     */
+    protected function getAvailabilityErrorMessageSku(CheckoutErrorTransfer $availabilityErrorMessage): string
+    {
+        $availabilityErrorMessageParameters = $availabilityErrorMessage->getParameters();
+        $availabilityProductSkuParameter = $this->productBundleConfig->getAvailabilityProductSkuParameter();
+
+        return $availabilityErrorMessageParameters[$availabilityProductSkuParameter];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutErrorTransfer $productBundleErrorMessage
+     *
+     * @return string
+     */
+    protected function getProductBundleErrorMessageProductSku(CheckoutErrorTransfer $productBundleErrorMessage): string
+    {
+        $productBundleErrorMessageParameters = $productBundleErrorMessage->getParameters();
+
+        return $productBundleErrorMessageParameters[static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU];
     }
 }
