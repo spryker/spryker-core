@@ -13,5 +13,5 @@ interface UtilUuidGeneratorToUuidGeneratorInterface
      *
      * @return string
      */
-    public function uuid5(string $name): string;
+    public function generateUuid5FromObjectId(string $name): string;
 }

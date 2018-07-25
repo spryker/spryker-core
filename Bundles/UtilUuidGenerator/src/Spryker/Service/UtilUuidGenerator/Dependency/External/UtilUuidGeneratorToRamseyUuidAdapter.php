@@ -15,7 +15,7 @@ class UtilUuidGeneratorToRamseyUuidAdapter implements UtilUuidGeneratorToUuidGen
      *
      * @return string
      */
-    public function uuid5(string $name): string
+    public function generateUuid5FromObjectId(string $name): string
     {
         return Uuid::uuid5(Uuid::NAMESPACE_OID, $name)->toString();
     }

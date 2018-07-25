@@ -22,10 +22,10 @@ class UtilUuidGeneratorService extends AbstractService implements UtilUuidGenera
      *
      * @return string
      */
-    public function generateUuid5WithOidNamespace(string $name): string
+    public function generateUuid5FromObjectId(string $name): string
     {
         return $this->getFactory()
             ->getUuidGenerator()
-            ->uuid5($name);
+            ->generateUuid5FromObjectId($name);
     }
 }
