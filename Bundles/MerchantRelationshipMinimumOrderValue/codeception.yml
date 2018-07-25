@@ -1,4 +1,4 @@
-namespace: MerchantRelationshipMinimumOrderValue
+namespace: SprykerTest
 actor: Tester
 paths:
     tests: tests

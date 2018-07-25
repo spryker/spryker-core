@@ -1,4 +1,4 @@
-namespace: MinimumOrderValueDataImport
+namespace: SprykerTest
 actor: Tester
 
 include:

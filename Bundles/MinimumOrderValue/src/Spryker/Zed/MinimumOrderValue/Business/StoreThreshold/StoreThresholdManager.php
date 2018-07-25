@@ -24,18 +24,18 @@ class StoreThresholdManager implements StoreThresholdManagerInterface
     /**
      * @var \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface
      */
-    protected $entityManager;
+    protected $minimumOrderValueEntityManager;
 
     /**
      * @param \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
-     * @param \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface $minimumOrderValueEntityManager
      */
     public function __construct(
         MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver,
-        MinimumOrderValueEntityManagerInterface $entityManager
+        MinimumOrderValueEntityManagerInterface $minimumOrderValueEntityManager
     ) {
         $this->minimumOrderValueStrategyResolver = $minimumOrderValueStrategyResolver;
-        $this->entityManager = $entityManager;
+        $this->minimumOrderValueEntityManager = $minimumOrderValueEntityManager;
     }
 
     /**
@@ -63,10 +63,10 @@ class StoreThresholdManager implements StoreThresholdManagerInterface
             throw new StrategyInvalidArgumentException();
         }
 
-        $minimumOrderValueStrategyTransfer = $this->entityManager
+        $minimumOrderValueStrategyTransfer = $this->minimumOrderValueEntityManager
             ->saveMinimumOrderValueType($minimumOrderValueStrategy->toTransfer());
 
-        return $this->entityManager
+        return $this->minimumOrderValueEntityManager
             ->setStoreThreshold(
                 $minimumOrderValueStrategyTransfer,
                 $storeTransfer,
