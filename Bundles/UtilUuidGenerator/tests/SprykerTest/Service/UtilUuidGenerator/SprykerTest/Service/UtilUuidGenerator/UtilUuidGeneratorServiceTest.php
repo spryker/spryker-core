@@ -35,7 +35,7 @@ class UtilUuidGeneratorServiceTest extends Unit
     {
         $service = $this->getUtilUuidGeneratorService();
 
-        $generatedValue = $service->generateUuid5(static::TEST_VALUE_ENCODED);
+        $generatedValue = $service->generateUuid5FromObjectId(static::TEST_VALUE_ENCODED);
 
         $this->tester->assertSame(static::TEST_VALUE_DECODED, $generatedValue);
     }
@@ -47,8 +47,8 @@ class UtilUuidGeneratorServiceTest extends Unit
     {
         $service = $this->getUtilUuidGeneratorService();
 
-        $firstGeneratedValue = $service->generateUuid5(static::TEST_VALUE_ENCODED);
-        $secondGeneratedValue = $service->generateUuid5(static::TEST_VALUE_ENCODED);
+        $firstGeneratedValue = $service->generateUuid5FromObjectId(static::TEST_VALUE_ENCODED);
+        $secondGeneratedValue = $service->generateUuid5FromObjectId(static::TEST_VALUE_ENCODED);
 
         $this->tester->assertSame($firstGeneratedValue, $secondGeneratedValue);
     }
