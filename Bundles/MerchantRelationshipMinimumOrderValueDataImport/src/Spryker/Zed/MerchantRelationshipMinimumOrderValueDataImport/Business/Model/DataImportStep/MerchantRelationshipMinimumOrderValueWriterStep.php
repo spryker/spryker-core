@@ -22,6 +22,8 @@ use Spryker\Zed\MerchantRelationshipMinimumOrderValueDataImport\Dependency\Facad
 
 class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepInterface
 {
+    protected const MERCHANT_RELATIONSHIPS_HEAP_LIMIT = 200;
+
     /**
      * @var \Spryker\Zed\MerchantRelationshipMinimumOrderValueDataImport\Dependency\Facade\MerchantRelationshipMinimumOrderValueDataImportToMerchantRelationshipMinimumOrderValueFacadeInterface
      */
@@ -41,6 +43,26 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
      * @var \Spryker\Zed\MerchantRelationshipMinimumOrderValueDataImport\Dependency\Facade\MerchantRelationshipMinimumOrderValueDataImportToCurrencyFacadeInterface
      */
     protected $currencyFacade;
+
+    /**
+     * @var \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     */
+    protected static $merchantRelationshipsHeap = [];
+
+    /**
+     * @var int
+     */
+    protected static $merchantRelationshipsHeapSize = 0;
+
+    /**
+     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    protected static $storesHeap = [];
+
+    /**
+     * @var \Generated\Shared\Transfer\CurrencyTransfer[]
+     */
+    protected static $currenciesHeap = [];
 
     /**
      * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValueDataImport\Dependency\Facade\MerchantRelationshipMinimumOrderValueDataImportToMerchantRelationshipMinimumOrderValueFacadeInterface $merchantRelationshipMinimumOrderValueFacade
@@ -67,17 +89,16 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $merchantRelationshipTransfer = $this->merchantRelationshipFacade->getMerchantRelationshipByKey(
-            (new MerchantRelationshipTransfer())
-                ->setMerchantRelationshipKey($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::MERCHANT_RELATIONSHIP_KEY])
+        $merchantRelationshipTransfer = $this->getMerchantRelationshipByKey(
+            $dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::MERCHANT_RELATIONSHIP_KEY]
         );
 
-        $storeTransfer = $this->storeFacade->getStoreByName($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::STORE]);
+        $storeTransfer = $this->findStoreByName($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::STORE]);
         if (!$storeTransfer) {
             return;
         }
 
-        $currencyTransfer = $this->currencyFacade->fromIsoCode($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::CURRENCY]);
+        $currencyTransfer = $this->findCurrencyByCode($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::CURRENCY]);
         if (!$currencyTransfer) {
             return;
         }
@@ -126,5 +147,55 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
                 (new MinimumOrderValueTypeTransfer())
                     ->setKey($strategyKey)
             );
+    }
+
+    /**
+     * @param string $merchantRelationshipKey
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    protected function getMerchantRelationshipByKey(string $merchantRelationshipKey): MerchantRelationshipTransfer
+    {
+        if (static::$merchantRelationshipsHeapSize > static::MERCHANT_RELATIONSHIPS_HEAP_LIMIT) {
+            static::$merchantRelationshipsHeap = [];
+        }
+
+        if (!isset(static::$merchantRelationshipsHeap[$merchantRelationshipKey])) {
+            static::$merchantRelationshipsHeap[$merchantRelationshipKey] = $this->merchantRelationshipFacade->getMerchantRelationshipByKey(
+                (new MerchantRelationshipTransfer())->setMerchantRelationshipKey($merchantRelationshipKey)
+            );
+
+            static::$merchantRelationshipsHeapSize++;
+        }
+
+        return static::$merchantRelationshipsHeap[$merchantRelationshipKey];
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function findStoreByName(string $storeName): StoreTransfer
+    {
+        if (!isset(static::$storesHeap[$storeName])) {
+            static::$storesHeap[$storeName] = $this->storeFacade->getStoreByName($storeName);
+        }
+
+        return static::$storesHeap[$storeName];
+    }
+
+    /**
+     * @param string $isoCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function findCurrencyByCode(string $isoCode): CurrencyTransfer
+    {
+        if (!isset(static::$currenciesHeap[$isoCode])) {
+            static::$currenciesHeap[$isoCode] = $this->currencyFacade->fromIsoCode($isoCode);
+        }
+
+        return static::$currenciesHeap[$isoCode];
     }
 }
