@@ -54,6 +54,11 @@ function CompanyFieldHandler() {
     function toggleOption() {
         const companyId = parseInt(getCompanyId());
         const $parentOption = $(this);
+        const $selectedParentFieldCompanyId = parseInt(getSelectedParentFieldCompanyId());
+
+        if ($selectedParentFieldCompanyId !== companyId) {
+            $parentField.val("");
+        }
 
         if (!$parentOption.val()) {
             return;
@@ -73,6 +78,13 @@ function CompanyFieldHandler() {
      */
     function getCompanyId() {
         return $companyField.val();
+    }
+
+    /**
+     * @returns {string}
+     */
+    function getSelectedParentFieldCompanyId() {
+        return $parentField.find(':selected').data(attributeIdCompany);
     }
 
     function blinkParentField() {
