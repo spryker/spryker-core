@@ -27,7 +27,7 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
     public function filter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
         if ($priceProductFilterTransfer->getQuantity() <= 1) {
-            $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'isNotVolumePrice']);
+            $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'filterVolumePrices']);
 
             return $priceProductTransfers;
         }
@@ -38,7 +38,7 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
         );
 
         if ($minPriceProductTransfer == null) {
-            $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'isNotVolumePrice']);
+            $priceProductTransfers = array_filter($priceProductTransfers, [$this, 'filterVolumePrices']);
 
             return $priceProductTransfers;
         }
@@ -69,11 +69,11 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
         $minPriceProductTransfer = null;
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            if (!$priceProductTransfer->getQuantityToApply()) {
+            if (!$priceProductTransfer->getVolumeQuantity()) {
                 continue;
             }
 
-            if ($priceProductTransfer->getQuantityToApply() <= $filterQuantity) {
+            if ($priceProductTransfer->getVolumeQuantity() <= $filterQuantity) {
                 if ($minPriceProductTransfer == null) {
                     $minPriceProductTransfer = $priceProductTransfer;
 
@@ -95,7 +95,7 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
      */
     protected function resolvePrice(PriceProductTransfer $minPrice, PriceProductTransfer $priceToCompare): PriceProductTransfer
     {
-        if ($minPrice->getQuantityToApply() > $priceToCompare->getQuantityToApply()) {
+        if ($minPrice->getVolumeQuantity() > $priceToCompare->getVolumeQuantity()) {
             return $minPrice;
         }
 
@@ -107,8 +107,8 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
      *
      * @return bool
      */
-    protected function isNotVolumePrice(PriceProductTransfer $priceProductTransfer): bool
+    protected function filterVolumePrices(PriceProductTransfer $priceProductTransfer): bool
     {
-        return !$priceProductTransfer->getQuantityToApply();
+        return $priceProductTransfer->getVolumeQuantity() == null;
     }
 }

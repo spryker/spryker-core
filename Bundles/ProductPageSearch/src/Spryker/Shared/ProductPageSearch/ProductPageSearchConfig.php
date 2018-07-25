@@ -7,10 +7,15 @@
 
 namespace Spryker\Shared\ProductPageSearch;
 
-interface ProductPageSearchConfig
+use Spryker\Shared\Kernel\AbstractBundleConfig;
+
+class ProductPageSearchConfig extends AbstractBundleConfig
 {
     /**
-     * @see \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA
+     * @see \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_MODES
      */
-    public const PRICE_DATA = 'priceData';
+    public const PRICE_MODES = [
+        'NET_MODE',
+        'GROSS_MODE',
+    ];
 }
