@@ -343,6 +343,22 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function updateLeadProductReservation(string $sku): void
+    {
+        $this->getFactory()
+            ->createProductPackagingUnitReservationHandler()
+            ->updateLeadProductReservation($sku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer

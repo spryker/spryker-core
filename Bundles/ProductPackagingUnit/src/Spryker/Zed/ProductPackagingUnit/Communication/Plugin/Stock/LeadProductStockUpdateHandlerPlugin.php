@@ -29,5 +29,8 @@ class LeadProductStockUpdateHandlerPlugin extends AbstractPlugin implements Stoc
     {
         $this->getFacade()
             ->updateLeadProductAvailability($sku);
+
+        $this->getFacade()
+            ->updateLeadProductReservation($sku);
     }
 }

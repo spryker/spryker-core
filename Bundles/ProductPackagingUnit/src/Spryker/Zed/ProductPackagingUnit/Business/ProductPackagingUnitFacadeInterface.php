@@ -295,7 +295,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Updates the availability of a lead product that is related to the provided sibling product sku.
+     * - Updates the lead product availability of the provided product pacakaging unit sku.
      *
      * @api
      *
@@ -304,6 +304,18 @@ interface ProductPackagingUnitFacadeInterface
      * @return void
      */
     public function updateLeadProductAvailability(string $sku): void;
+
+    /**
+     * Specification:
+     * - Updates the lead product reservations of the provided product pacakaging unit sku.
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function updateLeadProductReservation(string $sku): void;
 
     /**
      * Specification:

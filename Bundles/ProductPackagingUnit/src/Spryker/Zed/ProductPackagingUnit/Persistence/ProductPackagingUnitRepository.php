@@ -22,7 +22,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductPackagingUnitRepository extends AbstractRepository implements ProductPackagingUnitRepositoryInterface
 {
-    protected const COL_SUM = 'SumAmount';
+    protected const COL_SUM_AMOUNT = 'SumAmount';
 
     /**
      * @param string $productPackagingUnitTypeName
@@ -297,16 +297,16 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      *
      * @return int
      */
-    public function sumLeadProductAmountsForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): int
+    public function sumLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): int
     {
         $salesOrderItemQuery = $this->getFactory()
             ->createSalesOrderItemQuery()
             ->filterByAmountSku($sku)
             ->useStateQuery()
-            ->filterByName($reservedStateNames, Criteria::IN)
+                ->filterByName($reservedStateNames, Criteria::IN)
             ->endUse()
-            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_AMOUNT . ')', static::COL_SUM)
-            ->select([static::COL_SUM]);
+            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_AMOUNT . ')', static::COL_SUM_AMOUNT)
+            ->select([static::COL_SUM_AMOUNT]);
 
         return (int)$salesOrderItemQuery->findOne();
     }

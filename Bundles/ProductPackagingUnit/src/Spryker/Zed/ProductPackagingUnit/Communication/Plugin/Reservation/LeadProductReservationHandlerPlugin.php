@@ -28,6 +28,10 @@ class LeadProductReservationHandlerPlugin extends AbstractPlugin implements Rese
      */
     public function handle($sku): void
     {
-        $this->getFacade()->updateLeadProductAvailability($sku);
+        $this->getFacade()
+            ->updateLeadProductAvailability($sku);
+
+        $this->getFacade()
+            ->updateLeadProductReservation($sku);
     }
 }

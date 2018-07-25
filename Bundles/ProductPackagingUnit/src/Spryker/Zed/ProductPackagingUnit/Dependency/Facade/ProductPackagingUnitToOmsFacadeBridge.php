@@ -25,21 +25,33 @@ class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOms
     }
 
     /**
-     * @return string[]
-     */
-    public function getReservedStateNames(): array
-    {
-        return $this->omsFacade->getReservedStateNames();
-    }
-
-    /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function getOmsReservedProductQuantityForSku(string $sku, StoreTransfer $storeTransfer): int
+    public function sumReservedProductQuantitiesForSku(string $sku, StoreTransfer $storeTransfer): int
     {
-        return $this->omsFacade->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
+        return $this->omsFacade->sumReservedProductQuantitiesForSku($sku, $storeTransfer);
+    }
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $reservationQuantity
+     *
+     * @return void
+     */
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void
+    {
+        $this->omsFacade->saveReservation($sku, $storeTransfer, $reservationQuantity);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getReservedStateNames(): array
+    {
+        return $this->omsFacade->getReservedStateNames();
     }
 }
