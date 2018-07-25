@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CategoriesRestApi\Plugin;
 
-use Generated\Shared\Transfer\RestCategoriesAttributesTransfer;
+use Generated\Shared\Transfer\RestCategoryTreesAttributesTransfer;
 use Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
@@ -71,6 +71,6 @@ class CategoriesResourceRoutePlugin extends AbstractPlugin implements ResourceRo
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestCategoriesAttributesTransfer::class;
+        return RestCategoryTreesAttributesTransfer::class;
     }
 }

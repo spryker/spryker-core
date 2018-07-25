@@ -6,7 +6,8 @@
     "spryker/category-storage": "*",
     "spryker/glue-application": "*",
     "spryker/glue-application-extension": "*",
-    "spryker/kernel": "*"
+    "spryker/kernel": "*",
+    "spryker/symfony": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
