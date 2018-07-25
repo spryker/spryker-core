@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\AuthRestApi;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface AuthRestApiConstants
 {
     /**
