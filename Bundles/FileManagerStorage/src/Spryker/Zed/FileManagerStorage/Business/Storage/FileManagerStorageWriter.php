@@ -61,11 +61,11 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
      */
     public function publish(array $fileIds)
     {
-        $fileEntityTransfers = $this->repository->findFilesByIds($fileIds);
-        $fileStorageEntityTransfers = $this->repository->findFileStoragesByIds($fileIds);
+        $fileTransfers = $this->repository->findFilesByIds($fileIds);
+        $fileStorageTransfers = $this->repository->findFileStoragesByIds($fileIds);
 
-        return $this->getTransactionHandler()->handleTransaction(function () use ($fileEntityTransfers, $fileStorageEntityTransfers) {
-            return $this->executePublishTransaction($fileEntityTransfers, $fileStorageEntityTransfers);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($fileTransfers, $fileStorageTransfers) {
+            return $this->executePublishTransaction($fileTransfers, $fileStorageTransfers);
         });
     }
 
@@ -76,10 +76,10 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
      */
     public function unpublish(array $fileIds)
     {
-        $fileStorageEntityTransfers = $this->repository->findFileStoragesByIds($fileIds);
+        $fileStorageTransfers = $this->repository->findFileStoragesByIds($fileIds);
 
-        return $this->getTransactionHandler()->handleTransaction(function () use ($fileStorageEntityTransfers) {
-            return $this->executeUnpublishTransaction($fileStorageEntityTransfers);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($fileStorageTransfers) {
+            return $this->executeUnpublishTransaction($fileStorageTransfers);
         });
     }
 
@@ -101,17 +101,17 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[] $fileStorageEntityTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[] $fileStorageTransfers
      *
      * @throws \Spryker\Zed\FileManager\Exception\FileStorageNotFoundException
      *
      * @return bool
      */
-    protected function executeUnpublishTransaction(ArrayObject $fileStorageEntityTransfers)
+    protected function executeUnpublishTransaction(ArrayObject $fileStorageTransfers)
     {
-        foreach ($fileStorageEntityTransfers as $fileStorageEntityTransfer) {
-            if ($this->entityManager->deleteFileStorage($fileStorageEntityTransfer) === false) {
-                throw new FileStorageNotFoundException(sprintf('Target file storage entry with id %s not found', $fileStorageEntityTransfer->getIdFileStorage()));
+        foreach ($fileStorageTransfers as $fileStorageTransfer) {
+            if ($this->entityManager->deleteFileStorage($fileStorageTransfer) === false) {
+                throw new FileStorageNotFoundException(sprintf('Target file storage entry with id %s not found', $fileStorageTransfer->getIdFileStorage()));
             }
         }
 
@@ -129,6 +129,11 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     {
         foreach ($fileTransfers as $fileTransfer) {
             $key = $fileTransfer->getIdFile() . static::KEY_DELIMITER . $localeTransfer->getLocaleName();
+
+            if (!$fileTransfer->getFileInfo()->count() && isset($fileStorageTransfers[$key])) {
+                $this->unpublish([$fileTransfer->getIdFile()]);
+                continue;
+            }
 
             if (empty($fileStorageTransfers[$key])) {
                 $this->createDataSet($fileTransfer, $localeTransfer);
@@ -187,16 +192,16 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
      */
     protected function mapToFileStorageDataTransfer(FileTransfer $fileTransfer, LocaleTransfer $localeTransfer)
     {
-        $fileInfoEntityTransferCollection = $fileTransfer->getFileInfo();
-        $latestFileInfo = $fileInfoEntityTransferCollection[$fileInfoEntityTransferCollection->count() - 1];
+        $fileInfoTransfers = $fileTransfer->getFileInfo();
         $localizedAttributes = $fileTransfer->getLocalizedAttributes();
+        $latestFileInfo = $this->getLatestFileInfo($fileInfoTransfers);
 
         $fileStorageDataTransfer = new FileStorageDataTransfer();
         $fileStorageDataTransfer->fromArray($fileTransfer->toArray(), true);
         $fileStorageDataTransfer->setLocale($localeTransfer->getLocaleName());
         $fileStorageDataTransfer->setType($latestFileInfo->getType());
         $fileStorageDataTransfer->setVersion($latestFileInfo->getVersion());
-        $fileStorageDataTransfer->setVersions($fileInfoEntityTransferCollection);
+        $fileStorageDataTransfer->setVersions($fileInfoTransfers);
         $fileStorageDataTransfer->setSize($latestFileInfo->getSize());
         $fileStorageDataTransfer->setStorageName($latestFileInfo->getStorageName());
         $fileStorageDataTransfer->setStorageFileName($latestFileInfo->getStorageFileName());
@@ -222,5 +227,17 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
         $localizedAttributesForCurrentLocale = $localizedAttributes[$localeTransfer->getIdLocale()];
         $fileStorageTransfer->setAlt($localizedAttributesForCurrentLocale->getAlt());
         $fileStorageTransfer->setTitle($localizedAttributesForCurrentLocale->getTitle());
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\FileInfoTransfer[] $fileInfoTransfers
+     *
+     * @return \Generated\Shared\Transfer\FileInfoTransfer|null
+     */
+    protected function getLatestFileInfo(ArrayObject $fileInfoTransfers)
+    {
+        return array_reduce($fileInfoTransfers->getArrayCopy(), function ($a, $b) {
+            return $a ? ($a->getVersion() > $b->getVersion() ? $a : $b) : $b;
+        });
     }
 }
