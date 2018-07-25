@@ -4,7 +4,7 @@
 
 RamseyUuid module is a 3rd party connector module for "ramsey/uuid" vendor library.
 "ramsey/uuid" is a PHP library for generating RFC 4122 version 1, 3, 4, and 5 universally unique identifiers (UUID).
-RamseyUuid module has a central role in managing dependencies and supports better decoupling 
+RamseyUuid module has a central role in managing dependencies and supports better decoupling. 
 
 ## Installation
 

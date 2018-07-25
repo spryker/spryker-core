@@ -6,12 +6,17 @@
 
 namespace Spryker\Service\UtilUuidGenerator\Dependency\External;
 
-interface UtilUuidGeneratorToUuid5GeneratorInterface
+use Ramsey\Uuid\Uuid;
+
+class UtilUuidGeneratorToRamseyUuidAdapter implements UtilUuidGeneratorToUuidGeneratorInterface
 {
     /**
      * @param string $name
      *
      * @return string
      */
-    public function uuid5(string $name): string;
+    public function uuid5(string $name): string
+    {
+        return Uuid::uuid5(Uuid::NAMESPACE_OID, $name)->toString();
+    }
 }

@@ -8,11 +8,11 @@ namespace Spryker\Service\UtilUuidGenerator;
 
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
-use Spryker\Service\UtilUuidGenerator\Dependency\External\UtilUuidGeneratorToRamseyUuid5Adapter;
+use Spryker\Service\UtilUuidGenerator\Dependency\External\UtilUuidGeneratorToRamseyUuidAdapter;
 
 class UtilUuidGeneratorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const UUID5_GENERATOR = 'UUID5_GENERATOR';
+    public const UUID_GENERATOR = 'UUID_GENERATOR';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container
@@ -34,8 +34,8 @@ class UtilUuidGeneratorDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addUuidGenerator(Container $container): Container
     {
-        $container[static::UUID5_GENERATOR] = function () {
-            return new UtilUuidGeneratorToRamseyUuid5Adapter();
+        $container[static::UUID_GENERATOR] = function () {
+            return new UtilUuidGeneratorToRamseyUuidAdapter();
         };
 
         return $container;

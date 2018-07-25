@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/util-uuid-generator.svg)](https://travis-ci.org/spryker/util-uuid-generator)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/util-uuid-generator/badge.svg)](https://coveralls.io/github/spryker/util-uuid-generator)
 
-UtilUuidGenerator provides uuid generation functionality
+UtilUuidGenerator provides uuid generation functionality.
 
 ## Installation
 

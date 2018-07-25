@@ -9,7 +9,8 @@ namespace Spryker\Service\UtilUuidGenerator;
 interface UtilUuidGeneratorServiceInterface
 {
     /**
-     * Specification: generates UUID version 5 basing on given resource name
+     * Specification:
+     * - generates UUID version 5 basing on given resource name and OID namespace
      *
      * @api
      *
@@ -17,5 +18,5 @@ interface UtilUuidGeneratorServiceInterface
      *
      * @return string
      */
-    public function generateUuid5(string $name): string;
+    public function generateUuid5WithOidNamespace(string $name): string;
 }

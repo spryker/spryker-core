@@ -14,14 +14,18 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilUuidGeneratorService extends AbstractService implements UtilUuidGeneratorServiceInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $name
      *
      * @return string
      */
-    public function generateUuid5(string $name): string
+    public function generateUuid5WithOidNamespace(string $name): string
     {
-        $uuidGenerator = $this->getFactory()->getUuid5Generator();
-
-        return $uuidGenerator->uuid5($name);
+        return $this->getFactory()
+            ->getUuidGenerator()
+            ->uuid5($name);
     }
 }

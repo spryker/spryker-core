@@ -7,15 +7,15 @@
 namespace Spryker\Service\UtilUuidGenerator;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
-use Spryker\Service\UtilUuidGenerator\Dependency\External\UtilUuidGeneratorToUuid5GeneratorInterface;
+use Spryker\Service\UtilUuidGenerator\Dependency\External\UtilUuidGeneratorToUuidGeneratorInterface;
 
 class UtilUuidGeneratorServiceFactory extends AbstractServiceFactory
 {
     /**
-     * @return \Spryker\Service\UtilUuidGenerator\Dependency\External\UtilUuidGeneratorToUuid5GeneratorInterface
+     * @return \Spryker\Service\UtilUuidGenerator\Dependency\External\UtilUuidGeneratorToUuidGeneratorInterface
      */
-    public function getUuid5Generator(): UtilUuidGeneratorToUuid5GeneratorInterface
+    public function getUuidGenerator(): UtilUuidGeneratorToUuidGeneratorInterface
     {
-        return $this->getProvidedDependency(UtilUuidGeneratorDependencyProvider::UUID5_GENERATOR);
+        return $this->getProvidedDependency(UtilUuidGeneratorDependencyProvider::UUID_GENERATOR);
     }
 }
