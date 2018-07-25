@@ -9,7 +9,7 @@ namespace Spryker\Zed\MinimumOrderValue\Business\Installer;
 
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface;
+use Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface;
 use Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface;
 
 class MinimumOrderValueTypeInstaller implements MinimumOrderValueTypeInstallerInterface
@@ -17,7 +17,7 @@ class MinimumOrderValueTypeInstaller implements MinimumOrderValueTypeInstallerIn
     use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface[]
+     * @var \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface[]
      */
     protected $minimumOrderValueStrategies;
 
@@ -27,7 +27,7 @@ class MinimumOrderValueTypeInstaller implements MinimumOrderValueTypeInstallerIn
     protected $minimumOrderValueEntityManager;
 
     /**
-     * @param \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface[] $minimumOrderValueStrategies
+     * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface[] $minimumOrderValueStrategies
      * @param \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface $minimumOrderValueEntityManager
      */
     public function __construct(
@@ -61,7 +61,7 @@ class MinimumOrderValueTypeInstaller implements MinimumOrderValueTypeInstallerIn
     }
 
     /**
-     * @param \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface $minimumOrderValueStrategy
+     * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface $minimumOrderValueStrategy
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
      */

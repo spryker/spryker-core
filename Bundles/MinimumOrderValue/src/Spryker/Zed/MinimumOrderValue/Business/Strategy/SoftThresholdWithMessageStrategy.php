@@ -5,10 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\Strategies\Strategy;
-
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueAbstractStrategy;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface;
+namespace Spryker\Zed\MinimumOrderValue\Business\Strategy;
 
 class SoftThresholdWithMessageStrategy extends MinimumOrderValueAbstractStrategy implements MinimumOrderValueStrategyInterface
 {

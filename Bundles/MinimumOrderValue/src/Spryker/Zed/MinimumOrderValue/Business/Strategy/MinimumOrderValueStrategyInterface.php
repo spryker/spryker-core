@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\Strategies;
+namespace Spryker\Zed\MinimumOrderValue\Business\Strategy;
 
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 

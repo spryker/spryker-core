@@ -1,4 +1,4 @@
-namespace: MerchantRelationshipMinimumOrderValueDataImport
+namespace: SprykerTest
 actor: Tester
 
 include:

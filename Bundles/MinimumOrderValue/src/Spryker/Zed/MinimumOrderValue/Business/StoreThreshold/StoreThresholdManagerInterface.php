@@ -14,7 +14,7 @@ interface StoreThresholdManagerInterface
     /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
-     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyNotFoundException
+     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */

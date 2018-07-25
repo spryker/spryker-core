@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface;
+use Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface;
 
 /**
  * Auto-generated group annotations
@@ -123,7 +123,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
     }
 
     /**
-     * @expectedException \Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyNotFoundException
+     * @expectedException \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
      *
      * @return void
      */

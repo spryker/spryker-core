@@ -5,19 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\Strategies\Strategy;
+namespace Spryker\Zed\MinimumOrderValue\Business\Strategy;
 
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueAbstractStrategy;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface;
-
-class SoftThresholdWithFixedFeeStrategy extends MinimumOrderValueAbstractStrategy implements MinimumOrderValueStrategyInterface
+class HardThresholdStrategy extends MinimumOrderValueAbstractStrategy implements MinimumOrderValueStrategyInterface
 {
-    protected const STRATEGY_KEY = 'soft-threshold-fixed-fee';
+    protected const STRATEGY_KEY = 'hard-threshold';
 
     public function __construct()
     {
         $this->setKey(static::STRATEGY_KEY);
-        $this->setGroup(static::GROUP_SOFT);
+        $this->setGroup(static::GROUP_HARD);
     }
 
     /**
@@ -28,7 +25,7 @@ class SoftThresholdWithFixedFeeStrategy extends MinimumOrderValueAbstractStrateg
      */
     public function isValid(int $thresholdValue, ?int $fee = null): bool
     {
-        if ($thresholdValue < 1 || $fee < 1) {
+        if ($thresholdValue < 1) {
             return false;
         }
 

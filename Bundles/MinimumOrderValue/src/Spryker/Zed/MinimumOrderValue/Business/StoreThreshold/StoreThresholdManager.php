@@ -8,14 +8,14 @@
 namespace Spryker\Zed\MinimumOrderValue\Business\StoreThreshold;
 
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyInvalidArgumentException;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyResolverInterface;
+use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyInvalidArgumentException;
+use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface;
 
 class StoreThresholdManager implements StoreThresholdManagerInterface
 {
     /**
-     * @var \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyResolverInterface
+     * @var \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface
      */
     protected $minimumOrderValueStrategyResolver;
 
@@ -25,7 +25,7 @@ class StoreThresholdManager implements StoreThresholdManagerInterface
     protected $minimumOrderValueEntityManager;
 
     /**
-     * @param \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
+     * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
      * @param \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface $minimumOrderValueEntityManager
      */
     public function __construct(
@@ -39,7 +39,7 @@ class StoreThresholdManager implements StoreThresholdManagerInterface
     /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
-     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategies\Exception\StrategyInvalidArgumentException
+     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyInvalidArgumentException
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
@@ -69,7 +69,7 @@ class StoreThresholdManager implements StoreThresholdManagerInterface
         if (!$minimumOrderValueTransfer
             ->getMinimumOrderValueType()
             ->getIdMinimumOrderValueType()) {
-            $minimumOrderValueTypeTransfer = $this->entityManager
+            $minimumOrderValueTypeTransfer = $this->minimumOrderValueEntityManager
                 ->saveMinimumOrderValueType($minimumOrderValueStrategy->toTransfer());
 
             $minimumOrderValueTransfer->setMinimumOrderValueType(
@@ -77,6 +77,6 @@ class StoreThresholdManager implements StoreThresholdManagerInterface
             );
         }
 
-        return $this->entityManager->setStoreThreshold($minimumOrderValueTransfer);
+        return $this->minimumOrderValueEntityManager->setStoreThreshold($minimumOrderValueTransfer);
     }
 }

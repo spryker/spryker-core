@@ -23,8 +23,8 @@ class MerchantRelationshipMinimumOrderValueFacade extends AbstractFacade impleme
      *
      * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
-     * @throws \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Strategies\Exception\StrategyNotFoundException
-     * @throws \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Strategies\Exception\StrategyInvalidArgumentException
+     * @throws \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
+     * @throws \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Strategy\Exception\StrategyInvalidArgumentException
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */

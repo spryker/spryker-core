@@ -5,14 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\Strategies\Strategy;
+namespace Spryker\Zed\MinimumOrderValue\Business\Strategy;
 
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueAbstractStrategy;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface;
-
-class SoftThresholdWithFlexibleFeeStrategy extends MinimumOrderValueAbstractStrategy implements MinimumOrderValueStrategyInterface
+class SoftThresholdWithFixedFeeStrategy extends MinimumOrderValueAbstractStrategy implements MinimumOrderValueStrategyInterface
 {
-    protected const STRATEGY_KEY = 'soft-threshold-flexible-fee';
+    protected const STRATEGY_KEY = 'soft-threshold-fixed-fee';
 
     public function __construct()
     {

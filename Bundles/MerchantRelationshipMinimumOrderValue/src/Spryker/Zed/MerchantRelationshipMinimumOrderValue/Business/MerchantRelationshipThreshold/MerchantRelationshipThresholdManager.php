@@ -21,18 +21,18 @@ class MerchantRelationshipThresholdManager implements MerchantRelationshipThresh
     /**
      * @var \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\MerchantRelationshipMinimumOrderValueEntityManagerInterface
      */
-    protected $entityManager;
+    protected $merchantRelationshipMinimumOrderValueEntityManager;
 
     /**
      * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface $minimumOrderValueFacade
-     * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\MerchantRelationshipMinimumOrderValueEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\MerchantRelationshipMinimumOrderValueEntityManagerInterface $merchantRelationshipMinimumOrderValueEntityManager
      */
     public function __construct(
         MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface $minimumOrderValueFacade,
-        MerchantRelationshipMinimumOrderValueEntityManagerInterface $entityManager
+        MerchantRelationshipMinimumOrderValueEntityManagerInterface $merchantRelationshipMinimumOrderValueEntityManager
     ) {
         $this->minimumOrderValueFacade = $minimumOrderValueFacade;
-        $this->entityManager = $entityManager;
+        $this->merchantRelationshipMinimumOrderValueEntityManager = $merchantRelationshipMinimumOrderValueEntityManager;
     }
 
     /**
@@ -54,7 +54,7 @@ class MerchantRelationshipThresholdManager implements MerchantRelationshipThresh
                 ->getMinimumOrderValueType($merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueType())
         );
 
-        return $this->entityManager
+        return $this->merchantRelationshipMinimumOrderValueEntityManager
             ->setMerchantRelationshipThreshold($merchantRelationshipMinimumOrderValueTransfer);
     }
 }
