@@ -16,4 +16,7 @@ class CategoriesRestApiConfig extends AbstractBundleConfig
 
     const CONTROLLER_CATEGORIES = 'category-tree-resource';
     const CONTROLLER_CATEGORY = 'category-resource';
+
+    const RESPONSE_CODE_INVALID_CATEGORY_ID = 501;
+    const RESPONSE_DETAILS_INVALID_CATEGORY_ID = 'Can\'t find category node with the given id.';
 }

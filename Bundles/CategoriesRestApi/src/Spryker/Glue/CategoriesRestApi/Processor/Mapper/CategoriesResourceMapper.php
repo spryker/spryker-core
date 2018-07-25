@@ -8,8 +8,8 @@
 namespace Spryker\Glue\CategoriesRestApi\Processor\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\RestCategoriesAttributesTransfer;
 use Generated\Shared\Transfer\RestCategoriesTreeTransfer;
+use Generated\Shared\Transfer\RestCategoryTreesAttributesTransfer;
 
 class CategoriesResourceMapper implements CategoriesResourceMapperInterface
 {
@@ -22,7 +22,7 @@ class CategoriesResourceMapper implements CategoriesResourceMapperInterface
     {
         $rootCategories = new ArrayObject();
         foreach ($categoriesResource as $categoriesResourceItem) {
-            $categoriesResourceTransfer = (new RestCategoriesAttributesTransfer())
+            $categoriesResourceTransfer = (new RestCategoryTreesAttributesTransfer())
                 ->fromArray(
                     $categoriesResourceItem->toArray(),
                     true

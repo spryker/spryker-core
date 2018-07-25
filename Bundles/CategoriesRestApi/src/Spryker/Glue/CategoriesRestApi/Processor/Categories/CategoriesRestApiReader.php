@@ -7,12 +7,14 @@
 
 namespace Spryker\Glue\CategoriesRestApi\Processor\Categories;
 
-use Generated\Shared\Transfer\RestCategoryAttributesTransfer;
+use Generated\Shared\Transfer\RestCategoryNodesAttributesTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig;
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class CategoriesRestApiReader implements CategoriesRestApiReaderInterface
 {
@@ -77,20 +79,40 @@ class CategoriesRestApiReader implements CategoriesRestApiReaderInterface
      */
     public function readCategory(int $nodeId, string $locale): RestResponseInterface
     {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
         $categoryResource = $this->categoryStorageClient->getCategoryNodeById($nodeId, $locale);
-        $categoryTransfer = (new RestCategoryAttributesTransfer())
+
+        if (empty($categoryResource->getNodeId())) {
+            return $this->createErrorResponse($restResponse);
+        }
+
+        $categoryTransfer = (new RestCategoryNodesAttributesTransfer())
             ->fromArray(
                 $categoryResource->toArray(),
                 true
             );
 
-        $restResponse = $this->restResourceBuilder->createRestResponse();
         return $restResponse->addResource(
             $this->restResourceBuilder->createRestResource(
                 CategoriesRestApiConfig::RESOURCE_CATEGORY,
-                null,
+                $nodeId,
                 $categoryTransfer
             )
         );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createErrorResponse(RestResponseInterface $restResponse)
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CategoriesRestApiConfig::RESPONSE_CODE_INVALID_CATEGORY_ID)
+            ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
+            ->setDetail(CategoriesRestApiConfig::RESPONSE_DETAILS_INVALID_CATEGORY_ID);
+
+        return $restResponse->addError($restErrorTransfer);
     }
 }
