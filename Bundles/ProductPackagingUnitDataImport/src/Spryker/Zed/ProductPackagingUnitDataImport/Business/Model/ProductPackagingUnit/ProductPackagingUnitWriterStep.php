@@ -278,8 +278,8 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
         $productConcreteId = $this->getIdProductBySku($productSku);
 
         static::$productMeasurementSalesUnitHeap[$productConcreteId] = $this->getProductMeasurementSalesUnitQuery()
-            ->filterByFkProduct($productConcreteId)
-            ->exists();
+            ->filterByFkProduct($productConcreteId)->exists();
+        static::$productMeasurementSalesUnitHeapSize++;
 
         if (static::$productMeasurementSalesUnitHeap[$productConcreteId]) {
             return;
