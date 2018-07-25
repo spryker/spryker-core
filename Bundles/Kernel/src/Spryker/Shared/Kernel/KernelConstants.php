@@ -31,5 +31,5 @@ interface KernelConstants
     /**
      * @const URL_WHITELIST A set of whitelist urls, that every external url is checked against, before redirect.
      */
-    public const URL_WHITELIST = 'URL_WHITELIST';
+    public const URL_WHITELIST = 'KERNEL:URL_WHITELIST';
 }
