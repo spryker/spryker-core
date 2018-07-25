@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Config;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface ConfigConstants
 {
     const ENABLE_WEB_PROFILER = 'CONFIG:ENABLE_WEB_PROFILER';

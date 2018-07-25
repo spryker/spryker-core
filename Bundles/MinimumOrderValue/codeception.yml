@@ -1,4 +1,4 @@
-namespace: MinimumOrderValue
+namespace: SprykerTest
 actor: Tester
 
 include:

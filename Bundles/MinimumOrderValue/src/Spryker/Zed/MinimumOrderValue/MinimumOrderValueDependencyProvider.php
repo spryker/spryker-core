@@ -25,6 +25,8 @@ class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container[self::MINIMUM_ORDER_VALUE_STRATEGIES] = function (Container $container) {
             return $this->getMinimumOrderValueStrategies($container);
         };

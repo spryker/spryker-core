@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Persistence;
 
-use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -15,26 +14,4 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MinimumOrderValueRepository extends AbstractRepository implements MinimumOrderValueRepositoryInterface
 {
-    /**
-     * @param string $minimumOrderValueTypeName
-     *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
-     */
-    public function findMinimumOrderValueTypeByName(
-        string $minimumOrderValueTypeName
-    ): MinimumOrderValueTypeTransfer {
-        $minimumOrderValueTypeEntity = $this->getFactory()
-            ->createMinimumOrderValueTypeQuery()
-            ->filterByName($minimumOrderValueTypeName)
-            ->findOne();
-
-        $minimumOrderValueTypeTransfer = $this->getFactory()
-            ->createMinimumOrderValueMapper()
-            ->mapMinimumOrderValueTypeEntityToTransfer(
-                $minimumOrderValueTypeEntity,
-                new MinimumOrderValueTypeTransfer()
-            );
-
-        return $minimumOrderValueTypeTransfer;
-    }
 }

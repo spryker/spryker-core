@@ -24,18 +24,18 @@ class MinimumOrderValueTypeInstaller implements MinimumOrderValueTypeInstallerIn
     /**
      * @var \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface
      */
-    protected $entityManager;
+    protected $minimumOrderValueEntityManager;
 
     /**
      * @param \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface[] $minimumOrderValueStrategies
-     * @param \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface $minimumOrderValueEntityManager
      */
     public function __construct(
         array $minimumOrderValueStrategies,
-        MinimumOrderValueEntityManagerInterface $entityManager
+        MinimumOrderValueEntityManagerInterface $minimumOrderValueEntityManager
     ) {
         $this->minimumOrderValueStrategies = $minimumOrderValueStrategies;
-        $this->entityManager = $entityManager;
+        $this->minimumOrderValueEntityManager = $minimumOrderValueEntityManager;
     }
 
     /**
@@ -54,7 +54,7 @@ class MinimumOrderValueTypeInstaller implements MinimumOrderValueTypeInstallerIn
     protected function executeInstallTransaction(): void
     {
         foreach ($this->minimumOrderValueStrategies as $minimumOrderValueStrategy) {
-            $this->entityManager->saveMinimumOrderValueType(
+            $this->minimumOrderValueEntityManager->saveMinimumOrderValueType(
                 $this->createMinimumOrderValueTypeTransfer($minimumOrderValueStrategy)
             );
         }

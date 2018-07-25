@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\CmsPageSearch;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 class CmsPageSearchConstants
 {
     /**
@@ -31,5 +34,5 @@ class CmsPageSearchConstants
      *
      * @api
      */
-    const CMS_PAGE_RESOURCE_NAME = 'cms_page';
+    const CMS_PAGE_RESOURCE_NAME = 'cms_page_search';
 }
