@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\ProductPacka
 
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnitQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitAmount;
@@ -24,17 +25,21 @@ use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPac
 
 class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    protected const PRODUCT_HEAP_LIMIT = 500;
+    protected const HEAP_LIMIT = 500;
     protected const PRODUCT_CONCRETE_ID = 'PRODUCT_CONCRETE_ID';
     protected const PRODUCT_ABSTRACT_ID = 'PRODUCT_ABSTRACT_ID';
 
     /**
-     * @var int[] Keys are product packaging unit type names.
+     * - Keys are product packaging unit type names.
+     *
+     * @var int[]
      */
     protected static $idProductPackagingUnitTypeHeap = [];
 
     /**
-     * @var array Keys are product SKUs, values are a set of product abstract ID and product concrete ID.
+     * - Keys are product SKUs, values are a set of product abstract ID and product concrete ID.
+     *
+     * @var array
      */
     protected static $productHeap = [];
 
@@ -42,6 +47,18 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      * @var int
      */
     protected static $productHeapSize = 0;
+
+    /**
+     * - Keys are product Ids, values boolean representing if this product have a MeasurementSalesUnit or not.
+     *
+     * @var bool[]
+     */
+    protected static $productMeasurementSalesUnitHeap = [];
+
+    /**
+     * @var int
+     */
+    protected static $productMeasurementSalesUnitHeapSize = 0;
 
     /**
      * ProductPackagingUnitWriterStep constructor.
@@ -77,6 +94,8 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
         if ($productPackagingUnitEntity === null) {
             $productPackagingUnitEntity = new SpyProductPackagingUnit();
         }
+
+        $this->assertHaveProductMeasurementSalesUnit($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]);
 
         $productConcreteId = $this->getIdProductBySku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]);
         $this->persistLeadProduct($dataSet, $productConcreteId);
@@ -250,6 +269,32 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      *
      * @return void
      */
+    protected function assertHaveProductMeasurementSalesUnit(string $productSku): void
+    {
+        if (static::$productMeasurementSalesUnitHeapSize >= static::HEAP_LIMIT) {
+            $this->clearProductMeasurementSalesUnitHeap();
+        }
+
+        $productConcreteId = $this->getIdProductBySku($productSku);
+
+        static::$productMeasurementSalesUnitHeap[$productConcreteId] = $this->getProductMeasurementSalesUnitQuery()
+            ->filterByFkProduct($productConcreteId)
+            ->exists();
+
+        if (static::$productMeasurementSalesUnitHeap[$productConcreteId]) {
+            return;
+        }
+
+        throw new EntityNotFoundException(sprintf("Product measurement sales unit was not found for SKU '%s'", $productSku));
+    }
+
+    /**
+     * @param string $productSku
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return void
+     */
     protected function addProductToProductHeapBySku(string $productSku): void
     {
         if (isset(static::$productHeap[$productSku])) {
@@ -274,7 +319,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected function addProductToProductHeap(SpyProduct $productEntity): void
     {
-        if (static::$productHeapSize >= static::PRODUCT_HEAP_LIMIT) {
+        if (static::$productHeapSize >= static::HEAP_LIMIT) {
             $this->clearProductHeap();
         }
 
@@ -292,6 +337,15 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     {
         static::$productHeapSize = 0;
         static::$productHeap = [];
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearProductMeasurementSalesUnitHeap()
+    {
+        static::$productMeasurementSalesUnitHeapSize = 0;
+        static::$productMeasurementSalesUnitHeap = [];
     }
 
     /**
@@ -346,5 +400,13 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     protected function getProductPackagingUnitTypeQuery(): SpyProductPackagingUnitTypeQuery
     {
         return SpyProductPackagingUnitTypeQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnitQuery
+     */
+    protected function getProductMeasurementSalesUnitQuery(): SpyProductMeasurementSalesUnitQuery
+    {
+        return SpyProductMeasurementSalesUnitQuery::create();
     }
 }
