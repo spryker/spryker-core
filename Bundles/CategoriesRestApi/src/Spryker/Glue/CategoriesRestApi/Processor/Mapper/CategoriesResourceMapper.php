@@ -1,9 +1,8 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: poidenko
- * Date: 7/24/18
- * Time: 12:55 PM
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\CategoriesRestApi\Processor\Mapper;
@@ -28,7 +27,7 @@ class CategoriesResourceMapper implements CategoriesResourceMapperInterface
             $categoriesResourceItem = $this->traverseCategoriesTree($categoriesResourceItem);
             $rootCategories->append($categoriesResourceItem);
         }
-        $categoriesTreeTransfer->setRoot($rootCategories);
+        $categoriesTreeTransfer->setCategoryNodesStorage($rootCategories);
 
         return $categoriesTreeTransfer;
     }
@@ -42,6 +41,7 @@ class CategoriesResourceMapper implements CategoriesResourceMapperInterface
     {
         $categoriesTransfer = new RestCategoriesAttributesTransfer();
         $categoriesTransfer->fromArray($categoriesResourceItem->toArray(), true);
+        $categoriesTransfer->setIsRoot(false);
 
         if ($categoriesResourceItem->getChildren()) {
             $childrenCategories = new ArrayObject();
