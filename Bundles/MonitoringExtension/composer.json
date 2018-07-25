@@ -1,14 +1,9 @@
 {
-  "name": "spryker/new-relic-api",
-  "description": "NewRelicApi module",
+  "name": "spryker/monitoring-extension",
+  "description": "MonitoringExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/monitoring-extension": "^1.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "php": ">=7.1"
   },
   "autoload": {
     "psr-4": {
