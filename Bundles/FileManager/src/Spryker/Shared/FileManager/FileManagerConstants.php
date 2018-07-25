@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\FileManager;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface FileManagerConstants
 {
     public const STORAGE_NAME = 'FILE_MANAGER:STORAGE_NAME';
