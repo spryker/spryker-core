@@ -9,6 +9,6 @@ namespace Spryker\Client\Currency\Exception;
 
 use Exception;
 
-class CurrencyDoesNotExistException extends Exception
+class CurrencyNotExistsException extends Exception
 {
 }

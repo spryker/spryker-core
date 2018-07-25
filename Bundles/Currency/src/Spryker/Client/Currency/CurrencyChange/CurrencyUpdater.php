@@ -8,13 +8,12 @@
 namespace Spryker\Client\Currency\CurrencyChange;
 
 use Spryker\Client\Currency\Dependency\Client\CurrencyToStoreClientInterface;
-use Spryker\Client\Currency\Exception\CurrencyDoesNotExistException;
+use Spryker\Client\Currency\Exception\CurrencyNotExistsException;
 use Spryker\Shared\Currency\Builder\CurrencyBuilderInterface;
 use Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface;
 
 class CurrencyUpdater implements CurrencyUpdaterInterface
 {
-    public const ERROR_CURRENCY_DOES_NOT_EXIST = 'The provided currency has not been found in current store.';
     /**
      * @var \Spryker\Shared\Currency\Builder\CurrencyBuilderInterface
      */
@@ -74,7 +73,7 @@ class CurrencyUpdater implements CurrencyUpdaterInterface
     /**
      * @param string $currencyIsoCode
      *
-     * @throws \Spryker\Client\Currency\Exception\CurrencyDoesNotExistException
+     * @throws \Spryker\Client\Currency\Exception\CurrencyNotExistsException
      *
      * @return void
      */
@@ -82,7 +81,7 @@ class CurrencyUpdater implements CurrencyUpdaterInterface
     {
         $currencyIsoCodes = $this->storeClient->getCurrentStore()->getAvailableCurrencyIsoCodes();
         if (!in_array($currencyIsoCode, $currencyIsoCodes)) {
-            throw new CurrencyDoesNotExistException(static::ERROR_CURRENCY_DOES_NOT_EXIST);
+            throw new CurrencyNotExistsException('The provided currency has not been found in current store.');
         }
     }
 }
