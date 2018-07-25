@@ -11,7 +11,9 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class CategoriesRestApiConfig extends AbstractBundleConfig
 {
-    const RESOURCE_CATEGORIES = 'categories';
+    const RESOURCE_CATEGORIES = 'category-trees';
+    const RESOURCE_CATEGORY = 'category-nodes';
 
-    const CONTROLLER_CATEGORIES = 'categories-resource';
+    const CONTROLLER_CATEGORIES = 'category-tree-resource';
+    const CONTROLLER_CATEGORY = 'category-resource';
 }

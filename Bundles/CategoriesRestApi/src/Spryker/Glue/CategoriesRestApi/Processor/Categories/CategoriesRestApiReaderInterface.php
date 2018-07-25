@@ -17,4 +17,12 @@ interface CategoriesRestApiReaderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function readCategoriesTree(string $locale): RestResponseInterface;
+
+    /**
+     * @param int $nodeId
+     * @param string $locale
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function readCategory(int $nodeId, string $locale): RestResponseInterface;
 }
