@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\ProductValidity;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface ProductValidityConstants
 {
 }
