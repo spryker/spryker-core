@@ -157,6 +157,7 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
     protected function getMerchantRelationshipByKey(string $merchantRelationshipKey): MerchantRelationshipTransfer
     {
         if (static::$merchantRelationshipsHeapSize > static::MERCHANT_RELATIONSHIPS_HEAP_LIMIT) {
+            static::$merchantRelationshipsHeapSize = 0;
             static::$merchantRelationshipsHeap = [];
         }
 
