@@ -18,8 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CartBundleActivePreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface
 {
     /**
-     *
      * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
