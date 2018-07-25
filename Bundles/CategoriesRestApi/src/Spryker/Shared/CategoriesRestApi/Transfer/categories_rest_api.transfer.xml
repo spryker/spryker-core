@@ -4,7 +4,7 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCategoriesTree">
-        <property name="root" type="RestCategoriesAttributes[]"/>
+        <property name="categoryNodesStorage" type="RestCategoriesAttributes[]"/>
     </transfer>
 
     <transfer name="RestCategoriesAttributes">
