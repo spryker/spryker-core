@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CategoriesRestApi\Processor\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Generated\Shared\Transfer\RestCategoriesAttributesTransfer;
 use Generated\Shared\Transfer\RestCategoriesTreeTransfer;
 
@@ -21,36 +20,15 @@ class CategoriesResourceMapper implements CategoriesResourceMapperInterface
      */
     public function mapCategoriesResourceToRestCategoriesTransfer(ArrayObject $categoriesResource): RestCategoriesTreeTransfer
     {
-        $categoriesTreeTransfer = new RestCategoriesTreeTransfer();
         $rootCategories = new ArrayObject();
         foreach ($categoriesResource as $categoriesResourceItem) {
-            $categoriesResourceItem = $this->traverseCategoriesTree($categoriesResourceItem);
-            $rootCategories->append($categoriesResourceItem);
+            $categoriesResourceTransfer = (new RestCategoriesAttributesTransfer())
+                ->fromArray(
+                    $categoriesResourceItem->toArray(),
+                    true
+                );
+            $rootCategories->append($categoriesResourceTransfer);
         }
-        $categoriesTreeTransfer->setCategoryNodesStorage($rootCategories);
-
-        return $categoriesTreeTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer $categoriesResourceItem
-     *
-     * @return \Generated\Shared\Transfer\RestCategoriesAttributesTransfer
-     */
-    protected function traverseCategoriesTree(CategoryNodeStorageTransfer $categoriesResourceItem)
-    {
-        $categoriesTransfer = new RestCategoriesAttributesTransfer();
-        $categoriesTransfer->fromArray($categoriesResourceItem->toArray(), true);
-        $categoriesTransfer->setIsRoot(false);
-
-        if ($categoriesResourceItem->getChildren()) {
-            $childrenCategories = new ArrayObject();
-            foreach ($categoriesResourceItem->getChildren() as $categoriesChildItem) {
-                $childrenCategories->append($this->traverseCategoriesTree($categoriesChildItem));
-            }
-            $categoriesTransfer->setChildren($childrenCategories);
-        }
-
-        return $categoriesTransfer;
+        return (new RestCategoriesTreeTransfer())->setCategoryNodesStorage($rootCategories);
     }
 }

@@ -14,7 +14,7 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\CategoriesRestApi\CategoriesRestApiFactory getFactory()
  */
-class CategoriesResourceController extends AbstractController
+class CategoryResourceController extends AbstractController
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -26,6 +26,6 @@ class CategoriesResourceController extends AbstractController
     ): RestResponseInterface {
         return $this->getFactory()
             ->createCategoriesReader()
-            ->readCategoriesTree($restRequest->getMetadata()->getLocale());
+            ->readCategory($restRequest->getResource()->getId(), $restRequest->getMetadata()->getLocale());
     }
 }

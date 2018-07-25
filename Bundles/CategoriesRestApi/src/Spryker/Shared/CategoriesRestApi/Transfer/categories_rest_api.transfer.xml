@@ -9,11 +9,20 @@
 
     <transfer name="RestCategoriesAttributes">
         <property name="nodeId" type="int"/>
+        <property name="order" type="int"/>
+        <property name="name" type="string"/>
+        <property name="children" type="RestCategoriesAttributes[]"/>
+    </transfer>
+
+    <transfer name="RestCategoryAttributes">
+        <property name="nodeId" type="int"/>
         <property name="parentNodeId" type="int"/>
         <property name="isRoot" type="bool"/>
         <property name="order" type="int"/>
         <property name="name" type="string"/>
-        <property name="children" type="RestCategoriesAttributes[]"/>
+        <property name="metaTitle" type="string"/>
+        <property name="metaKeywords" type="string"/>
+        <property name="metaDescription" type="string"/>
     </transfer>
 
 </transfers>

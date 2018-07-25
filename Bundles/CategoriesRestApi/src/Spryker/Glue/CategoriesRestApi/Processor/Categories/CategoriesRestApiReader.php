@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CategoriesRestApi\Processor\Categories;
 
+use Generated\Shared\Transfer\RestCategoryAttributesTransfer;
 use Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig;
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapperInterface;
@@ -54,17 +55,41 @@ class CategoriesRestApiReader implements CategoriesRestApiReaderInterface
      */
     public function readCategoriesTree(string $locale): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
         $categoriesResource = $this->categoryStorageClient->getCategories($locale);
+        $categoriesTransfer = $this->categoriesResourceMapper
+            ->mapCategoriesResourceToRestCategoriesTransfer($categoriesResource);
 
-        $categoriesTransfer = $this->categoriesResourceMapper->mapCategoriesResourceToRestCategoriesTransfer($categoriesResource);
-
+        $restResponse = $this->restResourceBuilder->createRestResponse();
         return $restResponse->addResource(
             $this->restResourceBuilder->createRestResource(
                 CategoriesRestApiConfig::RESOURCE_CATEGORIES,
                 null,
                 $categoriesTransfer
+            )
+        );
+    }
+
+    /**
+     * @param int $nodeId
+     * @param string $locale
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function readCategory(int $nodeId, string $locale): RestResponseInterface
+    {
+        $categoryResource = $this->categoryStorageClient->getCategoryNodeById($nodeId, $locale);
+        $categoryTransfer = (new RestCategoryAttributesTransfer())
+            ->fromArray(
+                $categoryResource->toArray(),
+                true
+            );
+
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+        return $restResponse->addResource(
+            $this->restResourceBuilder->createRestResource(
+                CategoriesRestApiConfig::RESOURCE_CATEGORY,
+                null,
+                $categoryTransfer
             )
         );
     }
