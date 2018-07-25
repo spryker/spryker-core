@@ -37,18 +37,26 @@ class User implements UserInterface
     protected $settings;
 
     /**
+     * @var \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface[]
+     */
+    protected $userPostSavePlugins;
+
+    /**
      * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $queryContainer
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Spryker\Zed\User\UserConfig $settings
+     * @param \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface[] $userPostSavePlugins
      */
     public function __construct(
         UserQueryContainerInterface $queryContainer,
         SessionInterface $session,
-        UserConfig $settings
+        UserConfig $settings,
+        array $userPostSavePlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->session = $session;
         $this->settings = $settings;
+        $this->userPostSavePlugins = $userPostSavePlugins;
     }
 
     /**
@@ -76,6 +84,24 @@ class User implements UserInterface
         $transferUser->setPassword($password);
 
         return $this->save($transferUser);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @throws \Spryker\Zed\User\Business\Exception\UsernameExistsException
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function createUser(UserTransfer $userTransfer): UserTransfer
+    {
+        $userCheck = $this->hasUserByUsername($userTransfer->getUsername());
+
+        if ($userCheck === true) {
+            throw new UsernameExistsException();
+        }
+
+        return $this->save($userTransfer);
     }
 
     /**
@@ -112,24 +138,31 @@ class User implements UserInterface
             $userEntity = new SpyUser();
         }
 
-        $userEntity->setFirstName($userTransfer->getFirstName());
-        $userEntity->setLastName($userTransfer->getLastName());
-        $userEntity->setUsername($userTransfer->getUsername());
-        if ($userTransfer->getStatus() !== null) {
-            $userEntity->setStatus($userTransfer->getStatus());
-        }
+        $userEntity->fromArray($userTransfer->modifiedToArray());
 
-        if ($userTransfer->getLastLogin() !== null) {
-            $userEntity->setLastLogin($userTransfer->getLastLogin());
-        }
-
+        $userEntity->resetModified(SpyUserTableMap::COL_PASSWORD);
         $password = $userTransfer->getPassword();
-        if (!empty($password) && $this->isRawPassword($userTransfer->getPassword())) {
-            $userEntity->setPassword($this->encryptPassword($userTransfer->getPassword()));
+        if (!empty($password) && $this->isRawPassword($password)) {
+            $userEntity->setPassword($this->encryptPassword($password));
         }
 
         $userEntity->save();
         $userTransfer = $this->entityToTransfer($userEntity);
+        $userTransfer = $this->executePostSavePlugins($userTransfer);
+
+        return $userTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function executePostSavePlugins(UserTransfer $userTransfer): UserTransfer
+    {
+        foreach ($this->userPostSavePlugins as $postSavePlugin) {
+            $userTransfer = $postSavePlugin->postSave($userTransfer);
+        }
 
         return $userTransfer;
     }
@@ -260,7 +293,7 @@ class User implements UserInterface
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @return \Orm\Zed\User\Persistence\SpyUser
      */
     public function getEntityUserById($id)
     {

@@ -66,6 +66,8 @@ interface UserFacadeInterface
     /**
      * @api
      *
+     * @deprecated Use \Spryker\Zed\User\Business\UserFacadeInterface::createUser instead.
+     *
      * @param string $firstName
      * @param string $lastName
      * @param string $username
@@ -74,6 +76,19 @@ interface UserFacadeInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function addUser($firstName, $lastName, $username, $password);
+
+    /**
+     * Specification:
+     *  - Creates user from user transfer
+     *  - Throws exception if username exist.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function createUser(UserTransfer $userTransfer): UserTransfer;
 
     /**
      * @api
