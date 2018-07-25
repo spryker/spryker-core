@@ -135,6 +135,8 @@
     "spryker/messenger": "*",
     "spryker/money": "*",
     "spryker/monolog": "*",
+    "spryker/monitoring": "*",
+    "spryker/monitoring-extension": "*",
     "spryker/navigation": "*",
     "spryker/navigation-collector": "*",
     "spryker/navigation-gui": "*",
