@@ -1,5 +1,7 @@
 namespace: CategoriesRestApi
 actor: Tester
+include:
+    - tests/SprykerTest/Glue/CategoriesRestApi
 paths:
     tests: tests
     log: tests/_output
