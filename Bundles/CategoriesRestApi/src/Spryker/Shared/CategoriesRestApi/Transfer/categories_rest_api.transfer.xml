@@ -15,6 +15,7 @@
     </transfer>
 
     <transfer name="RestCategoryNodesAttributes">
+        <property name="nodeId" type="int"/>
         <property name="name" type="string"/>
         <property name="metaTitle" type="string"/>
         <property name="metaKeywords" type="string"/>
