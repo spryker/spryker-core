@@ -153,7 +153,7 @@ class GatewayController extends AbstractGatewayController
                 ->getAddress($addressTransfer);
         } catch (AddressNotFoundException $e) {
             $this->setSuccess(false);
-            $addressTransfer = null;
+            $addressTransfer = new AddressTransfer();
         }
 
         return $addressTransfer;
