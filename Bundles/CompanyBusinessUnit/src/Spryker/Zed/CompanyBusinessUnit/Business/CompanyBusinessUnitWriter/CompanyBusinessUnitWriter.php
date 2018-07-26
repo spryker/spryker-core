@@ -148,10 +148,26 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     protected function executeUpdateTransaction(CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer): CompanyBusinessUnitResponseTransfer
     {
         $companyBusinessUnitTransfer = $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer();
+
+        if ($this->isCompanyBusinessUnitCycleDependencyExist($companyBusinessUnitTransfer)) {
+            $companyBusinessUnitResponseTransfer->setIsSuccessful(false);
+            return $companyBusinessUnitResponseTransfer;
+        }
+
         $companyBusinessUnitTransfer = $this->entityManager->saveCompanyBusinessUnit($companyBusinessUnitTransfer);
         $companyBusinessUnitTransfer = $this->pluginExecutor->executePostSavePlugins($companyBusinessUnitTransfer);
         $companyBusinessUnitResponseTransfer->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer);
 
         return $companyBusinessUnitResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return bool
+     */
+    protected function isCompanyBusinessUnitCycleDependencyExist(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool
+    {
+        return $companyBusinessUnitTransfer->getFkParentCompanyBusinessUnit() == $companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
     }
 }
