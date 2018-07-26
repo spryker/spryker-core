@@ -34,11 +34,11 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
                 $companyUnitAddressTransfer,
                 new SpyCompanyUnitAddressEntityTransfer()
             );
-
         $entityTransfer = $this->save($entityTransfer);
-        $companyUnitAddressTransfer->setIdCompanyUnitAddress(
-            $entityTransfer->getIdCompanyUnitAddress()
-        );
+        $idCompanyUnitAddress = $entityTransfer->getIdCompanyUnitAddress();
+        $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
+
+        $this->saveAddressToBusinessUnitRelations($companyUnitAddressTransfer, $idCompanyUnitAddress);
 
         return $companyUnitAddressTransfer;
     }
@@ -94,5 +94,28 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
             ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->filterByFkCompanyUnitAddress_In($idAddresses)
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param int $idCompanyUnitAddress
+     *
+     * @return void
+     */
+    protected function saveAddressToBusinessUnitRelations(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer,
+        int $idCompanyUnitAddress
+    ): void {
+        $businessUnitCollection = $companyUnitAddressTransfer->getCompanyBusinessUnitCollection();
+        if (empty($businessUnitCollection) || empty($businessUnitCollection->getCompanyBusinessUnits())) {
+            return;
+        }
+        foreach ($businessUnitCollection->getCompanyBusinessUnits() as $companyBusinessUnit) {
+            $entityTransfer = new SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer();
+            $entityTransfer
+                ->setFkCompanyBusinessUnit($companyBusinessUnit->getIdCompanyBusinessUnit())
+                ->setFkCompanyUnitAddress($idCompanyUnitAddress);
+            $this->save($entityTransfer);
+        }
     }
 }
