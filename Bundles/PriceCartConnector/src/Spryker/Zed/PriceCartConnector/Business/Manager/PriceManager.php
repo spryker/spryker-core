@@ -203,11 +203,13 @@ class PriceManager implements PriceManagerInterface
         if ($priceMode === $this->getNetPriceModeIdentifier()) {
             $itemTransfer->setOriginUnitNetPrice($price);
             $itemTransfer->setOriginUnitGrossPrice(0);
+            $itemTransfer->setSumGrossPrice(0);
             return;
         }
 
         $itemTransfer->setOriginUnitNetPrice(0);
         $itemTransfer->setOriginUnitGrossPrice($price);
+        $itemTransfer->setSumNetPrice(0);
     }
 
     /**
@@ -231,8 +233,9 @@ class PriceManager implements PriceManagerInterface
     protected function createPriceProductFilter(
         ItemTransfer $itemTransfer,
         QuoteTransfer $quoteTransfer
-    ) {
+    ): PriceProductFilterTransfer {
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setStoreName($this->findStoreName($quoteTransfer))
             ->setPriceMode($quoteTransfer->getPriceMode())
             ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
             ->setSku($itemTransfer->getSku())
@@ -253,5 +256,19 @@ class PriceManager implements PriceManagerInterface
     protected function isPriceProductDimensionEnabled(PriceProductFilterTransfer $priceProductFilterTransfer): bool
     {
         return property_exists($priceProductFilterTransfer, 'quote');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return null|string
+     */
+    protected function findStoreName(QuoteTransfer $quoteTransfer): ?string
+    {
+        if ($quoteTransfer->getStore() === null) {
+            return null;
+        }
+
+        return $quoteTransfer->getStore()->getName();
     }
 }

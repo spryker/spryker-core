@@ -128,7 +128,6 @@ class MerchantFacadeTest extends Unit
     {
         $merchantTransfer = $this->tester->haveMerchant();
         $merchantTransfer
-            ->setIdMerchant(null)
             ->setMerchantKey(null)
             ->setName(null);
 

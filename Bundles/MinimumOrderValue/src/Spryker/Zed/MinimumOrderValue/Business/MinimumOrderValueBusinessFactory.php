@@ -12,8 +12,8 @@ use Spryker\Zed\MinimumOrderValue\Business\Installer\MinimumOrderValueTypeInstal
 use Spryker\Zed\MinimumOrderValue\Business\Installer\MinimumOrderValueTypeInstallerInterface;
 use Spryker\Zed\MinimumOrderValue\Business\StoreThreshold\StoreThresholdManager;
 use Spryker\Zed\MinimumOrderValue\Business\StoreThreshold\StoreThresholdManagerInterface;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyResolver;
-use Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyResolverInterface;
+use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolver;
+use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\MinimumOrderValueDependencyProvider;
 
 /**
@@ -35,7 +35,7 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyInterface[]
+     * @return \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface[]
      */
     public function getMinimumOrderValueStrategies(): array
     {
@@ -54,9 +54,9 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MinimumOrderValue\Business\Strategies\MinimumOrderValueStrategyResolverInterface
+     * @return \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface
      */
-    protected function createMinimumOrderValueStrategyResolver(): MinimumOrderValueStrategyResolverInterface
+    public function createMinimumOrderValueStrategyResolver(): MinimumOrderValueStrategyResolverInterface
     {
         return new MinimumOrderValueStrategyResolver(
             $this->getMinimumOrderValueStrategies()

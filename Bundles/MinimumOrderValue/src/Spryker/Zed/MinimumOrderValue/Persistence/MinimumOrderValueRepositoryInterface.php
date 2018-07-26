@@ -7,16 +7,6 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Persistence;
 
-use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
-
 interface MinimumOrderValueRepositoryInterface
 {
-    /**
-     * @param string $minimumOrderValueTypeName
-     *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
-     */
-    public function findMinimumOrderValueTypeByName(
-        string $minimumOrderValueTypeName
-    ): MinimumOrderValueTypeTransfer;
 }
