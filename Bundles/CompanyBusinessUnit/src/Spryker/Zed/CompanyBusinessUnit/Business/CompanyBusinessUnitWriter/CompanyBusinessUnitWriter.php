@@ -149,7 +149,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     {
         $companyBusinessUnitTransfer = $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer();
 
-        if ($this->isCompanyBusinessUnitCycleDependencyExist($companyBusinessUnitTransfer)) {
+        if ($this->companyBusinessUnitCycleDependencyExists($companyBusinessUnitTransfer)) {
             $companyBusinessUnitResponseTransfer->setIsSuccessful(false);
             return $companyBusinessUnitResponseTransfer;
         }
@@ -166,7 +166,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
      *
      * @return bool
      */
-    protected function isCompanyBusinessUnitCycleDependencyExist(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool
+    protected function companyBusinessUnitCycleDependencyExists(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool
     {
         return $companyBusinessUnitTransfer->getFkParentCompanyBusinessUnit() == $companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
     }
