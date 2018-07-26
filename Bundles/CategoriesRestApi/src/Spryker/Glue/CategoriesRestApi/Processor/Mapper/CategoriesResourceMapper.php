@@ -14,11 +14,11 @@ use Generated\Shared\Transfer\RestCategoryTreesAttributesTransfer;
 class CategoriesResourceMapper implements CategoriesResourceMapperInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoriesResource
+     * @param array $categoriesResource
      *
      * @return \Generated\Shared\Transfer\RestCategoriesTreeTransfer
      */
-    public function mapCategoriesResourceToRestCategoriesTransfer(ArrayObject $categoriesResource): RestCategoriesTreeTransfer
+    public function mapCategoriesResourceToRestCategoriesTransfer(array $categoriesResource): RestCategoriesTreeTransfer
     {
         $rootCategories = new ArrayObject();
         foreach ($categoriesResource as $categoriesResourceItem) {

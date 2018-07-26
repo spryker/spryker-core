@@ -26,6 +26,6 @@ class CategoryResourceController extends AbstractController
     ): RestResponseInterface {
         return $this->getFactory()
             ->createCategoriesReader()
-            ->readCategory($restRequest->getResource()->getId(), $restRequest->getMetadata()->getLocale());
+            ->readCategory((int)$restRequest->getResource()->getId(), $restRequest->getMetadata()->getLocale());
     }
 }

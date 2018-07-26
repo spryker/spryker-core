@@ -59,7 +59,7 @@ class CategoriesRestApiReader implements CategoriesRestApiReaderInterface
     {
         $categoriesResource = $this->categoryStorageClient->getCategories($locale);
         $categoriesTransfer = $this->categoriesResourceMapper
-            ->mapCategoriesResourceToRestCategoriesTransfer($categoriesResource);
+            ->mapCategoriesResourceToRestCategoriesTransfer((array)$categoriesResource);
 
         $restResponse = $this->restResourceBuilder->createRestResponse();
         return $restResponse->addResource(
@@ -95,7 +95,7 @@ class CategoriesRestApiReader implements CategoriesRestApiReaderInterface
         return $restResponse->addResource(
             $this->restResourceBuilder->createRestResource(
                 CategoriesRestApiConfig::RESOURCE_CATEGORY,
-                $nodeId,
+                (string)$categoryTransfer->getNodeId(),
                 $categoryTransfer
             )
         );

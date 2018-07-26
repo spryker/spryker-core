@@ -67,25 +67,19 @@ class CategoriesRestApiResourceMapperTest extends Unit
     }
 
     /**
-     * @return \ArrayObject
+     * @return array
      */
     protected function mockCategoryClientEmptyResponseTransfer()
     {
-        $mockRestCategoryTreesResponse = new ArrayObject();
-        $mockRestCategoryTreesResponse->append(new CategoryNodeStorageTransfer());
-
-        return $mockRestCategoryTreesResponse;
+        return [new CategoryNodeStorageTransfer()];
     }
 
     /**
-     * @return \ArrayObject
+     * @return array
      */
     protected function mockCategoryClientResponseTransfer()
     {
-        $mockRestCategoryTreesResponse = new ArrayObject();
-        $mockRestCategoryTreesResponse->append($this->mockCategoryTransfer());
-
-        return $mockRestCategoryTreesResponse;
+        return [$this->mockCategoryTransfer()];
     }
 
     /**
