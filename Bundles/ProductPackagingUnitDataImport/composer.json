@@ -12,7 +12,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/installer": "*",
     "spryker/testify": "*"
   },
   "autoload": {
