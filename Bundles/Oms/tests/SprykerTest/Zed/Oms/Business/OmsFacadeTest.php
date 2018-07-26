@@ -128,9 +128,9 @@ class OmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetReservedStateNames()
+    public function testGetReservedStateNames(): void
     {
-        $expect = [
+        $expected = [
             'new',
             'payment pending',
             'paid',
@@ -142,13 +142,13 @@ class OmsFacadeTest extends Unit
         $stateNames = $this->createOmsFacade()->getReservedStateNames();
 
         // Assert
-        $this->assertSame($expect, $stateNames);
+        $this->assertSame($expected, $stateNames);
     }
 
     /**
      * @return void
      */
-    public function testSaveReservation()
+    public function testSaveReservation(): void
     {
         $omsFacade = $this->createOmsFacade();
         $storeTransfer = (new StoreTransfer())->setIdStore(1)->setName('DE');
