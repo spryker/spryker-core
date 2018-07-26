@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class AmountSalesUnitHydrateOrder implements AmountSalesUnitHydrateOrderInterface
@@ -23,12 +24,20 @@ class AmountSalesUnitHydrateOrder implements AmountSalesUnitHydrateOrderInterfac
     protected $productPackagingUnitRepository;
 
     /**
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface
+     */
+    protected $productMeasurementUnitFacade;
+
+    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade
      */
     public function __construct(
-        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
+        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository,
+        ProductPackagingUnitToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade
     ) {
         $this->productPackagingUnitRepository = $productPackagingUnitRepository;
+        $this->productMeasurementUnitFacade = $productMeasurementUnitFacade;
     }
 
     /**
@@ -89,6 +98,8 @@ class AmountSalesUnitHydrateOrder implements AmountSalesUnitHydrateOrderInterfac
             $salesOrderItemEntityTransfer->getAmountMeasurementUnitCode()
         );
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
+
+        $this->productMeasurementUnitFacade->translateProductMeasurementSalesUnit($productMeasurementSalesUnitTransfer);
 
         return $productMeasurementSalesUnitTransfer;
     }
