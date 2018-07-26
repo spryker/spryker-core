@@ -10,9 +10,9 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/gui": "*",
     "spryker/product-list": "*",
-    "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
