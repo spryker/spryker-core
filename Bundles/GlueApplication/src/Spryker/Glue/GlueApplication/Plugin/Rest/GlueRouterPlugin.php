@@ -25,7 +25,7 @@ class GlueRouterPlugin extends AbstractPlugin implements RequestMatcherInterface
     public function matchRequest(Request $request)
     {
         return $this->getFactory()
-            ->createResourceRouter()
+            ->createRestResourceRouter()
             ->matchRequest($request);
     }
 

@@ -6,7 +6,7 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\JsonApi;
 
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class RestResource implements RestResourceInterface
 {
@@ -31,16 +31,16 @@ class RestResource implements RestResourceInterface
     protected $relationships = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\Transfer\TransferInterface|null
+     * @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
      */
     protected $attributes;
 
     /**
      * @param string $type
      * @param string|null $id
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $attributes
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $attributes
      */
-    public function __construct(string $type, ?string $id = null, ?TransferInterface $attributes = null)
+    public function __construct(string $type, ?string $id = null, ?AbstractTransfer $attributes = null)
     {
         $this->type = $type;
         $this->id = $id;
@@ -127,9 +127,9 @@ class RestResource implements RestResourceInterface
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
      */
-    public function getAttributes(): ?TransferInterface
+    public function getAttributes(): ?AbstractTransfer
     {
         return $this->attributes;
     }
@@ -155,7 +155,7 @@ class RestResource implements RestResourceInterface
         ];
 
         if ($this->attributes) {
-            $response[RestResourceInterface::RESOURCE_ATTRIBUTES] = $this->attributes->toArray(true);
+            $response[RestResourceInterface::RESOURCE_ATTRIBUTES] = $this->attributes->toArray(true, true);
         }
 
         if ($this->links) {

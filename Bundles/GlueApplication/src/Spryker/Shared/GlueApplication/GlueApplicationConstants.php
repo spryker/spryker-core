@@ -7,21 +7,24 @@
 
 namespace Spryker\Shared\GlueApplication;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface GlueApplicationConstants
 {
     /**
-     * @api
-     *
      * Specification:
-     *   The domain name used for glue application
+     *   The domain name used for glue application.
+     *
+     * @api
      */
     public const GLUE_APPLICATION_DOMAIN = 'GLUE_APPLICATION_DOMAIN';
 
     /**
-     * @api
-     *
      *  Specification:
-     *    Is rest debug is enabled, will show exception stack traces instead of 500 errors
+     *    If rest debug is enabled, will show exception stack traces instead of 500 errors.
+     *
+     * @api
      */
     public const GLUE_APPLICATION_REST_DEBUG = 'GLUE_APPLICATION_REST_DEBUG';
 }

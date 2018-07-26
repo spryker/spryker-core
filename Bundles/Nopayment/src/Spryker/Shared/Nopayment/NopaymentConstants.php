@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Nopayment;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface NopaymentConstants
 {
     const NO_PAYMENT_METHODS = 'NO_PAYMENT_METHODS';

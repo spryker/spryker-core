@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/customers-rest-api.svg)](https://travis-ci.org/spryker/customers-rest-api)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/customers-rest-api/badge.svg)](https://coveralls.io/github/spryker/customers-rest-api)
 
-CustomersRestApi allows registering customers using REST.
+CustomersRestApi module provides plugin to extends GlueApplication functionality. Given plugin set up customer data to session. CustomersRestApi allows registering customers using REST.
 
 ## Installation
 

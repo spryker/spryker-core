@@ -6,12 +6,14 @@
 
 namespace Spryker\Glue\CustomersRestApi;
 
+use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToSessionClientBridge;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
 class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     /**
@@ -21,7 +23,22 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = $this->addSessionClient($container);
         $container = $this->addCustomerClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addSessionClient(Container $container): Container
+    {
+        $container[static::CLIENT_SESSION] = function (Container $container) {
+            return new CustomerRestApiToSessionClientBridge($container->getLocator()->session()->client());
+        };
 
         return $container;
     }

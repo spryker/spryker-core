@@ -5,8 +5,7 @@
   "require": {
     "php": ">=7.1",
     "phpdocumentor/graphviz": "^1.0.4",
-    "paragonie/random_compat": "^2.0.10",
-    "everon/criteria-builder": "^1.1.0",
+    "everon/criteria-builder": "^1.1.5",
     "moneyphp/money": "^3.0.0",
     "fzaninotto/faker": "^1.6"
   },
@@ -136,6 +135,8 @@
     "spryker/messenger": "*",
     "spryker/money": "*",
     "spryker/monolog": "*",
+    "spryker/monitoring": "*",
+    "spryker/monitoring-extension": "*",
     "spryker/navigation": "*",
     "spryker/navigation-collector": "*",
     "spryker/navigation-gui": "*",

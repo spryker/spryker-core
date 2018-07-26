@@ -6,18 +6,18 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\JsonApi;
 
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 interface RestResourceBuilderInterface
 {
     /**
      * @param string $type
      * @param string|null $id
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $attributeTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $attributeTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function createRestResource(string $type, ?string $id = null, ?TransferInterface $attributeTransfer = null): RestResourceInterface;
+    public function createRestResource(string $type, ?string $id = null, ?AbstractTransfer $attributeTransfer = null): RestResourceInterface;
 
     /**
      * @param int $totalItems
