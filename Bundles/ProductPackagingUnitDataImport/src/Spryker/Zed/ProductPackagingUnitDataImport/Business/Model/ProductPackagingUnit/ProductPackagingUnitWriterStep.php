@@ -62,27 +62,18 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $dataSet = $this->normalizeDataSet($dataSet);
+        $productPackagingUnitTypeId = $this->getproductPackagingUnitTypeIdByname($dataSet[ProductPackagingUnitDataSetInterface::TYPE_NAME]);
+        $productConcreteId = $this->getProductConcreteIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::CONCRETE_SKU]);
 
         $productPackagingUnitEntity = $this->getProductPackagingUnitQuery()
-            ->useProductQuery()
-                ->filterBySku($dataSet[ProductPackagingUnitDataSetInterface::CONCRETE_SKU])
-            ->endUse()
-            ->findOne();
+            ->filterByFkProduct($productConcreteId)
+            ->findOneOrCreate();
 
-        if ($productPackagingUnitEntity === null) {
-            $productPackagingUnitEntity = new SpyProductPackagingUnit();
-        }
-        $productConcreteId = $this->getProductConcreteIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::CONCRETE_SKU]);
         $this->persistLeadProduct($dataSet, $productConcreteId);
 
         $productPackagingUnitEntity
             ->setHasLeadProduct($dataSet[ProductPackagingUnitDataSetInterface::HAS_LEAD_PRODUCT])
-            ->setFkProductPackagingUnitType($this->getproductPackagingUnitTypeIdByname($dataSet[ProductPackagingUnitDataSetInterface::TYPE_NAME]));
-
-        if ($productPackagingUnitEntity->isNew()) {
-            $productPackagingUnitEntity
-                ->setFkProduct($productConcreteId);
-        }
+            ->setFkProductPackagingUnitType($productPackagingUnitTypeId);
 
         $productPackagingUnitEntity->save();
 
