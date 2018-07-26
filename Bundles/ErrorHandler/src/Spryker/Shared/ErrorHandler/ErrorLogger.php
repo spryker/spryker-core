@@ -7,14 +7,13 @@
 
 namespace Spryker\Shared\ErrorHandler;
 
+use Spryker\Service\Monitoring\MonitoringService;
 use Spryker\Shared\Log\LoggerTrait;
-use Spryker\Shared\NewRelicApi\NewRelicApiTrait;
 use Throwable;
 
 class ErrorLogger implements ErrorLoggerInterface
 {
     use LoggerTrait;
-    use NewRelicApiTrait;
 
     /**
      * @var self
@@ -42,10 +41,10 @@ class ErrorLogger implements ErrorLoggerInterface
     {
         try {
             $message = $this->buildMessage($exception);
-            $this->createNewRelicApi()->noticeError($message, $exception);
+            $this->createMonitoringService()->setError($message, $exception);
             $this->getLogger()->critical($message, ['exception' => $exception]);
         } catch (Throwable $internalException) {
-            $this->createNewRelicApi()->noticeError($internalException->getMessage(), $exception);
+            $this->createMonitoringService()->setError($internalException->getMessage(), $exception);
         }
     }
 
@@ -54,7 +53,7 @@ class ErrorLogger implements ErrorLoggerInterface
      *
      * @return string
      */
-    protected function buildMessage($exception)
+    protected function buildMessage(Throwable $exception)
     {
         return sprintf(
             '%s - %s in "%s::%d"',
@@ -63,5 +62,13 @@ class ErrorLogger implements ErrorLoggerInterface
             $exception->getFile(),
             $exception->getLine()
         );
+    }
+
+    /**
+     * @return \Spryker\Service\Monitoring\MonitoringServiceInterface
+     */
+    protected function createMonitoringService()
+    {
+        return new MonitoringService();
     }
 }
