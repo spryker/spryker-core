@@ -4,7 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/PropelOrm": "^1.6.2",
+    "spryker/propel-orm": "^1.6.2",
     "spryker/kernel": "^3.22.0",
     "spryker/oms": "^8.2.0",
     "spryker/sales": "^8.10.0",

@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Testify;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 class TestifyConstants
 {
     const BOOTSTRAP_CLASS_YVES = 'TESTIFY_CONSTANTS:BOOTSTRAP_CLASS_YVES';
