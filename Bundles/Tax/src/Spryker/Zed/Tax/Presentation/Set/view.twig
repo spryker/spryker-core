@@ -5,7 +5,7 @@
 
 {% block action %}
     {{ editActionButton(url('/tax/set/edit', {'id-tax-set': taxSet.idTaxSet}), 'Edit' | trans) }}
-    {{ removeActionButton(url('/tax/set/delete', {'id-tax-set': taxSet.idTaxSet}), 'Delete' | trans) }}
+    {{ removeActionButton(url('/tax/delete-set', {'id-tax-set': taxSet.idTaxSet}), 'Delete' | trans) }}
     {{ backActionButton('/tax/set/list', 'Back to Tax Sets' | trans) }}
 {% endblock %}
 

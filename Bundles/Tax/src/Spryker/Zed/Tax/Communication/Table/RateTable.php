@@ -163,7 +163,7 @@ class RateTable extends AbstractTable
     protected function createDeleteButton(SpyTaxRate $taxRateEntity)
     {
         $deleteTaxRateUrl = Url::generate(
-            '/tax/rate/delete',
+            '/tax/delete-rate',
             [
                 self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
             ]

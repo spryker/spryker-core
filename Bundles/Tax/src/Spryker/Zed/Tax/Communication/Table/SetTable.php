@@ -152,7 +152,7 @@ class SetTable extends AbstractTable
     protected function createDeleteButton(SpyTaxSet $taxSetEntity)
     {
         $deleteTaxSetUrl = Url::generate(
-            '/tax/set/delete',
+            '/tax/delete-set',
             [
                 self::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),
             ]
