@@ -10,12 +10,12 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class CategoriesRestApiConfig extends AbstractBundleConfig
 {
-    const RESOURCE_CATEGORIES = 'category-trees';
-    const RESOURCE_CATEGORY = 'category-nodes';
+    public const RESOURCE_CATEGORIES = 'category-trees';
+    public const RESOURCE_CATEGORY = 'category-nodes';
 
-    const CONTROLLER_CATEGORIES = 'category-tree-resource';
-    const CONTROLLER_CATEGORY = 'category-resource';
+    public const CONTROLLER_CATEGORIES = 'category-tree-resource';
+    public const CONTROLLER_CATEGORY = 'category-resource';
 
-    const RESPONSE_CODE_INVALID_CATEGORY_ID = '501';
-    const RESPONSE_DETAILS_INVALID_CATEGORY_ID = 'Can\'t find category node with the given id.';
+    public const RESPONSE_CODE_INVALID_CATEGORY_ID = '501';
+    public const RESPONSE_DETAILS_INVALID_CATEGORY_ID = 'Can\'t find category node with the given id.';
 }

@@ -11,11 +11,6 @@ use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 interface CategoriesRestApiToCategoryStorageClientInterface
 {
     /**
-     * Specification:
-     *  - Return category node storage data by locale name.
-     *
-     * @api
-     *
      * @param string $locale
      *
      * @return array
@@ -23,11 +18,6 @@ interface CategoriesRestApiToCategoryStorageClientInterface
     public function getCategories(string $locale);
 
     /**
-     * Specification:
-     *  - Return category node storage data by id category node and locale name.
-     *
-     * @api
-     *
      * @param int $idCategoryNode
      * @param string $localeName
      *
