@@ -35,11 +35,12 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         $companyUnitAddressTransfer->requireIdCompanyUnitAddress();
         $query = $this->getFactory()
             ->createCompanyUnitAddressQuery()
-                ->filterByIdCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress())
-                ->innerJoinWithSpyCompanyUnitAddressToCompanyBusinessUnit()
-                ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
-                    ->leftJoinWithCompanyBusinessUnit()
-                ->endUse();
+            ->filterByIdCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress())
+            ->innerJoinWithCountry()
+            ->innerJoinWithSpyCompanyUnitAddressToCompanyBusinessUnit()
+            ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithCompanyBusinessUnit()
+            ->endUse();
 
         $entityTransfer = $this->buildQueryFromCriteria($query)->find();
 
@@ -66,7 +67,8 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     ): CompanyUnitAddressCollectionTransfer {
 
         $query = $this->getFactory()
-            ->createCompanyUnitAddressQuery();
+            ->createCompanyUnitAddressQuery()
+            ->innerJoinWithCountry();
 
         if ($criteriaFilterTransfer->getIdCompany() !== null) {
             $query->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
