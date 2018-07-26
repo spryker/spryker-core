@@ -25,7 +25,7 @@ class UtilMeasurementUnitConversionConfig extends AbstractBundleConfig
         'KILO' => [
             'KILO' => 1,
             'GRAM' => 1000,
-            'TONE' => 1000,
+            'TONE' => 0.001,
             'GBOU' => 35.274,
             'USOU' => 35.274,
             'PUND' => 2.2046,
