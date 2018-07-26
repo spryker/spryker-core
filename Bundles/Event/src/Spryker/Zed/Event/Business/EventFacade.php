@@ -21,15 +21,15 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
      * @api
      *
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
      * @return void
      */
-    public function trigger($eventName, TransferInterface $eventTransfer)
+    public function trigger($eventName, TransferInterface $transfer)
     {
         $this->getFactory()
             ->createEventDispatcher()
-            ->trigger($eventName, $eventTransfer);
+            ->trigger($eventName, $transfer);
     }
 
     /**
@@ -38,15 +38,15 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
      * @api
      *
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
      *
      * @return void
      */
-    public function triggerBulk($eventName, array $eventTransfers): void
+    public function triggerBulk($eventName, array $transfers): void
     {
         $this->getFactory()
             ->createEventDispatcher()
-            ->triggerBulk($eventName, $eventTransfers);
+            ->triggerBulk($eventName, $transfers);
     }
 
     /**

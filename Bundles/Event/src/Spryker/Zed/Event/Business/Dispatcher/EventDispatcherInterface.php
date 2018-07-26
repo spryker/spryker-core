@@ -13,17 +13,17 @@ interface EventDispatcherInterface
 {
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
      * @return void
      */
-    public function trigger(string $eventName, TransferInterface $eventTransfer);
+    public function trigger(string $eventName, TransferInterface $transfer);
 
     /**
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
      *
      * @return void
      */
-    public function triggerBulk(string $eventName, array $eventTransfers): void;
+    public function triggerBulk(string $eventName, array $transfers): void;
 }

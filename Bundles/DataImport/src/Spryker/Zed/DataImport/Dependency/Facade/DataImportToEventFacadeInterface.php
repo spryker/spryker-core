@@ -21,9 +21,9 @@ interface DataImportToEventFacadeInterface
 
     /**
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
      *
      * @return void
      */
-    public function triggerBulk(string $eventName, array $eventTransfers): void;
+    public function triggerBulk(string $eventName, array $transfers): void;
 }

@@ -73,13 +73,13 @@ class EventQueueConsumer implements EventQueueConsumerInterface
             }
 
             try {
-                $eventTransfer = $this->mapEventTransfer($eventQueueSentMessageBodyTransfer);
-                $bulkListener[$eventQueueSentMessageBodyTransfer->getListenerClassName()][$eventQueueSentMessageBodyTransfer->getEventName()][static::EVENT_TRANSFERS][] = $eventTransfer;
+                $transfer = $this->mapEventTransfer($eventQueueSentMessageBodyTransfer);
+                $bulkListener[$eventQueueSentMessageBodyTransfer->getListenerClassName()][$eventQueueSentMessageBodyTransfer->getEventName()][static::EVENT_TRANSFERS][] = $transfer;
                 $bulkListener[$eventQueueSentMessageBodyTransfer->getListenerClassName()][$eventQueueSentMessageBodyTransfer->getEventName()][static::EVENT_MESSAGES][] = $queueMessageTransfer;
 
                 $listener = $this->createEventListener($eventQueueSentMessageBodyTransfer->getListenerClassName());
                 if ($listener instanceof EventHandlerInterface) {
-                    $listener->handle($eventTransfer, $eventQueueSentMessageBodyTransfer->getEventName());
+                    $listener->handle($transfer, $eventQueueSentMessageBodyTransfer->getEventName());
                 }
 
                 $this->logConsumerAction(
@@ -127,8 +127,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
 
         foreach ($eventItems as $eventName => $eventItem) {
             try {
-                $uniqueTransfers = $this->removeDuplicates($eventItem[static::EVENT_TRANSFERS]);
-                $listener->handleBulk($uniqueTransfers, $eventName);
+                $listener->handleBulk($eventItem[static::EVENT_TRANSFERS], $eventName);
             } catch (Throwable $throwable) {
                 $errorMessage = sprintf(
                     'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".',
@@ -141,22 +140,6 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                 $this->handleFailedMessages($eventItem, $errorMessage);
             }
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return \Generated\Shared\Transfer\EventEntityTransfer[]
-     */
-    protected function removeDuplicates(array $eventTransfers): array
-    {
-        $uniqueEventTransfers = [];
-        foreach ($eventTransfers as $eventTransfer) {
-            $uniqueId = md5($eventTransfer->getId() . json_encode($eventTransfer->getForeignKeys()));
-            $uniqueEventTransfers[$uniqueId] = $eventTransfer;
-        }
-
-        return $uniqueEventTransfers;
     }
 
     /**
@@ -357,14 +340,14 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     /**
      * @param \Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer $eventQueueSentMessageBodyTransfer
      *
-     * @return \Generated\Shared\Transfer\EventEntityTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     protected function mapEventTransfer(EventQueueSendMessageBodyTransfer $eventQueueSentMessageBodyTransfer)
     {
-        /** @var \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer */
-        $eventTransfer = $this->createEventTransfer($eventQueueSentMessageBodyTransfer->getTransferClassName());
-        $eventTransfer->fromArray($eventQueueSentMessageBodyTransfer->getTransferData(), true);
+        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer */
+        $transfer = $this->createEventTransfer($eventQueueSentMessageBodyTransfer->getTransferClassName());
+        $transfer->fromArray($eventQueueSentMessageBodyTransfer->getTransferData(), true);
 
-        return $eventTransfer;
+        return $transfer;
     }
 }

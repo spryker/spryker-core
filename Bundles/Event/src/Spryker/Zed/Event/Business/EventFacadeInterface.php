@@ -17,32 +17,32 @@ interface EventFacadeInterface
     /**
      * Specification:
      * - Handles all events by registered by give $eventName
-     * - Passes eventTransfer to each listener
+     * - Passes transfer object to each listener
      * - If listener is queueable then it will put into queue system.
      *
      * @api
      *
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
      * @return void
      */
-    public function trigger($eventName, TransferInterface $eventTransfer);
+    public function trigger($eventName, TransferInterface $transfer);
 
     /**
      * Specification:
      * - Handles all events by registered by give $eventName
-     * - Passes array of eventTransfer to each listener
+     * - Passes array of transfer object to each listener
      * - If listener is queueable then it will put into queue system.
      *
      * @api
      *
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
      *
      * @return void
      */
-    public function triggerBulk($eventName, array $eventTransfers): void;
+    public function triggerBulk($eventName, array $transfers): void;
 
     /**
      * Specification:
