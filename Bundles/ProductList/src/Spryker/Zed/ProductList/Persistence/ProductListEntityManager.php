@@ -36,10 +36,15 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
         $productListEntity->save();
         $productListTransfer->fromArray($productListEntity->toArray(), true);
 
-        $productListCategoryRelationTransfer->setIdProductList($productListTransfer->getIdProductList());
-        $productListProductConcreteRelationTransfer->setIdProductList($productListTransfer->getIdProductList());
-        $productListTransfer->setProductListCategoryRelation($productListCategoryRelationTransfer);
-        $productListTransfer->setProductListProductConcreteRelation($productListProductConcreteRelationTransfer);
+        if ($productListCategoryRelationTransfer) {
+            $productListCategoryRelationTransfer->setIdProductList($productListTransfer->getIdProductList());
+            $productListTransfer->setProductListCategoryRelation($productListCategoryRelationTransfer);
+        }
+
+        if ($productListProductConcreteRelationTransfer) {
+            $productListProductConcreteRelationTransfer->setIdProductList($productListTransfer->getIdProductList());
+            $productListTransfer->setProductListProductConcreteRelation($productListProductConcreteRelationTransfer);
+        }
 
         return $productListTransfer;
     }
