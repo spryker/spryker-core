@@ -92,7 +92,7 @@ class BasePreCheck
 
             $sku = $bundledProductConcreteEntity->getSku();
             $totalBundledItemQuantity = $productBundleEntity->getQuantity() * $itemTransfer->getQuantity();
-            if (!$this->checkIfItemIsSellable($items, $sku, $storeTransfer, $totalBundledItemQuantity) || !$bundledProductConcreteEntity->getIsActive()) {
+            if (!$this->checkIfItemIsSellable($items, $sku, $storeTransfer, $totalBundledItemQuantity, $bundledProductConcreteEntity->getIsActive())) {
                 $unavailableBundleItems[] = [
                     static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $itemTransfer->getSku(),
                     static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $sku,
@@ -108,6 +108,7 @@ class BasePreCheck
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param int $itemQuantity
+     * @param bool $isItemActive
      *
      * @return bool
      */
@@ -115,8 +116,13 @@ class BasePreCheck
         ArrayObject $items,
         $sku,
         StoreTransfer $storeTransfer,
-        $itemQuantity = 0
+        $itemQuantity = 0,
+        $isItemActive = true
     ) {
+        if (!$isItemActive) {
+            return false;
+        }
+
         $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku($items, $sku);
         $currentItemQuantity += $itemQuantity;
 
