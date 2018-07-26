@@ -53,26 +53,6 @@ class CategoriesRestApiResourceReaderTest extends Unit
      */
     protected function setUp(): void
     {
-        $mockCategoryClientBridge = $this->createPartialMock(
-            CategoriesRestApiToCategoryStorageClientBridge::class,
-            ['getCategoryNodeById', 'getCategories']
-        );
-        $mockCategoryClientBridge->method('getCategoryNodeById')
-            ->willReturn(
-                $this->getCategoryTransfer(),
-                $this->getCategoryEmptyTransfer()
-            );
-        $mockCategoryClientBridge->method('getCategories')
-            ->willReturn(
-                $this->getCategoryTree()
-            );
-
-        $this->categoriesRestApiReader = new CategoriesRestApiReader(
-            new RestResourceBuilder(),
-            $mockCategoryClientBridge,
-            new CategoriesResourceMapper()
-        );
-
         parent::setUp();
     }
 
@@ -82,6 +62,8 @@ class CategoriesRestApiResourceReaderTest extends Unit
     public function testReadCategoriesTreeWillReturnValidRestResponseObject(): void
     {
         $deLocale = 'de_de';
+
+        $this->createCategoryTreeReader();
 
         $categoriesTreeRestResponse = $this->categoriesRestApiReader->readCategoriesTree($deLocale);
 
@@ -97,6 +79,8 @@ class CategoriesRestApiResourceReaderTest extends Unit
     public function testReadCategoriesNodeWillReturnValidRestResponseObject(): void
     {
         $deLocale = 'de_de';
+
+        $this->createCategoryReader($this->getCategoryTransfer());
 
         $categoriesTreeRestResponse = $this->categoriesRestApiReader->readCategory($this->categoryNodeData['node_id'], $deLocale);
 
@@ -126,21 +110,14 @@ class CategoriesRestApiResourceReaderTest extends Unit
     {
         $deLocale = 'de_de';
 
+        $this->createCategoryReader($this->getCategoryEmptyTransfer());
+
         $this->categoriesRestApiReader->readCategory($this->categoryNodeData['node_id'], $deLocale);
         $categoriesTreeRestResponse = $this->categoriesRestApiReader->readCategory($this->categoryNodeData['node_id'], $deLocale);
 
         $this->assertInstanceOf('\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface', $categoriesTreeRestResponse);
         $this->assertNotEmpty($categoriesTreeRestResponse->getErrors());
         $this->assertEmpty($categoriesTreeRestResponse->getResources());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
-     */
-    protected function getCategoryTransfer()
-    {
-        return (new CategoryNodeStorageTransfer())
-            ->fromArray($this->categoryNodeData);
     }
 
     /**
@@ -154,8 +131,62 @@ class CategoriesRestApiResourceReaderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
+    protected function getCategoryTransfer()
+    {
+        return (new CategoryNodeStorageTransfer())
+            ->fromArray($this->categoryNodeData);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
+     */
     protected function getCategoryEmptyTransfer()
     {
         return (new CategoryNodeStorageTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer $returnTransfer
+     *
+     * @return void
+     */
+    protected function createCategoryReader(CategoryNodeStorageTransfer $returnTransfer)
+    {
+        $mockCategoryClientBridge = $this->createPartialMock(
+            CategoriesRestApiToCategoryStorageClientBridge::class,
+            ['getCategoryNodeById']
+        );
+
+        $mockCategoryClientBridge->method('getCategoryNodeById')
+            ->willReturn(
+                $returnTransfer
+            );
+
+        $this->categoriesRestApiReader = new CategoriesRestApiReader(
+            new RestResourceBuilder(),
+            $mockCategoryClientBridge,
+            new CategoriesResourceMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CategoriesRestApi\Processor\Categories\CategoriesRestApiReader
+     */
+    protected function createCategoryTreeReader()
+    {
+        $mockCategoryClientBridge = $this->createPartialMock(
+            CategoriesRestApiToCategoryStorageClientBridge::class,
+            ['getCategories']
+        );
+        $mockCategoryClientBridge->method('getCategories')
+            ->willReturn(
+                $this->getCategoryTree()
+            );
+
+        return $this->categoriesRestApiReader = new CategoriesRestApiReader(
+            new RestResourceBuilder(),
+            $mockCategoryClientBridge,
+            new CategoriesResourceMapper()
+        );
     }
 }
