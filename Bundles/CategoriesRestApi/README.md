@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/categories-rest-api.svg)](https://travis-ci.org/spryker/categories-rest-api)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/categories-rest-api/badge.svg)](https://coveralls.io/github/spryker/categories-rest-api)
 
-{{ADD DESCRIPTION HERE}}
+CategoriesRestApi module provides rest API endpoints to fetch categories tree and category node by node id.
 
 ## Installation
 
