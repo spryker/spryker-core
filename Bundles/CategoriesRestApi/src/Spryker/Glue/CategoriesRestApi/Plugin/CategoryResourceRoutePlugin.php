@@ -15,44 +15,28 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CategoryResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * @api
-     *
-     * Specification:
-     *  - Configuration for resource routing, how http methods map to controller actions, is action is protected, also possible
-     * to add additional contextual data for action for later access when processing controller action.
-     *
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
-     *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
+     * {@inheritDoc}
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection->addGet('get', false);
+        $resourceRouteCollection->addGet(
+            CategoriesRestApiConfig::RESOURCE_CATEGORY_NODES_ACTION_NAME,
+            CategoriesRestApiConfig::RESOURCE_CATEGORY_NODES_IS_PROTECTED
+        );
 
         return $resourceRouteCollection;
     }
 
     /**
-     * @api
-     *
-     * Specification:
-     *  - Resource name this plugins handles, must be plural string. This name also is matched with request path where resource
-     * is provided.
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getResourceType(): string
     {
-        return CategoriesRestApiConfig::RESOURCE_CATEGORY;
+        return CategoriesRestApiConfig::RESOURCE_CATEGORY_NODES;
     }
 
     /**
-     * @api
-     *
-     * Specification:
-     *  - Module controller name, separated by dashes. cart-items-resource would point to CartItemsResourceController
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getController(): string
     {
@@ -60,13 +44,7 @@ class CategoryResourceRoutePlugin extends AbstractPlugin implements ResourceRout
     }
 
     /**
-     * @api
-     *
-     * Specification:
-     *  - This method should return FQCN to transfer object. This object it will be automatically populated from POST/PATCH
-     * requests, and passed to REST controller actions as first argument. It is also used when creating JSONAPI resource objects.
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getResourceAttributesClassName(): string
     {

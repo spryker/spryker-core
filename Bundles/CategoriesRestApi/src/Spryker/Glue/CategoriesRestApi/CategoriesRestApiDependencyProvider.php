@@ -12,7 +12,7 @@ use Spryker\Glue\Kernel\Container;
 
 class CategoriesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CATEGORY_STORAGE_CLIENT = 'CATEGORY_STORAGE_CLIENT';
+    public const CLIENT_CATEGORY_STORAGE = 'CLIENT_CATEGORY_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -21,7 +21,7 @@ class CategoriesRestApiDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideDependencies(Container $container): Container
     {
-        $container[static::CATEGORY_STORAGE_CLIENT] = function () use ($container) {
+        $container[static::CLIENT_CATEGORY_STORAGE] = function () use ($container) {
             return new CategoriesRestApiToCategoryStorageClientBridge(
                 $container->getLocator()->categoryStorage()->client()
             );

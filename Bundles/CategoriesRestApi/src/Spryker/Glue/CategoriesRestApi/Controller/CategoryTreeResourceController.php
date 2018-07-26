@@ -20,9 +20,8 @@ class CategoryTreeResourceController extends AbstractController
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getAction(
-        RestRequestInterface $restRequest
-    ): RestResponseInterface {
+    public function getAction(RestRequestInterface $restRequest): RestResponseInterface
+    {
         return $this->getFactory()
             ->createCategoriesReader()
             ->readCategoriesTree($restRequest->getMetadata()->getLocale());

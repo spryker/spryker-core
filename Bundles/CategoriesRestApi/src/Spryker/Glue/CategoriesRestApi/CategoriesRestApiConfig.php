@@ -10,8 +10,14 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class CategoriesRestApiConfig extends AbstractBundleConfig
 {
-    public const RESOURCE_CATEGORIES = 'category-trees';
-    public const RESOURCE_CATEGORY = 'category-nodes';
+    public const RESOURCE_CATEGORY_TREES_ACTION_NAME = 'get';
+    public const RESOURCE_CATEGORY_TREES_IS_PROTECTED = false;
+
+    public const RESOURCE_CATEGORY_NODES_ACTION_NAME = 'get';
+    public const RESOURCE_CATEGORY_NODES_IS_PROTECTED = false;
+
+    public const RESOURCE_CATEGORY_TREES = 'category-trees';
+    public const RESOURCE_CATEGORY_NODES = 'category-nodes';
 
     public const CONTROLLER_CATEGORIES = 'category-tree-resource';
     public const CONTROLLER_CATEGORY = 'category-resource';

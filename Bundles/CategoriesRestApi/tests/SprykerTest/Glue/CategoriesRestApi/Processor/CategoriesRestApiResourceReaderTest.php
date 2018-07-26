@@ -6,7 +6,6 @@
 
 namespace SprykerTest\Glue\CategoriesRestApi\Processor;
 
-use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig;
@@ -67,7 +66,7 @@ class CategoriesRestApiResourceReaderTest extends Unit
         $categoriesTreeRestResponse = $this->categoriesRestApiReader->readCategoriesTree($deLocale);
 
         $this->assertInstanceOf('\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface', $categoriesTreeRestResponse);
-        $this->assertEquals(CategoriesRestApiConfig::RESOURCE_CATEGORIES, $categoriesTreeRestResponse->getResources()[0]->getType());
+        $this->assertEquals(CategoriesRestApiConfig::RESOURCE_CATEGORY_TREES, $categoriesTreeRestResponse->getResources()[0]->getType());
         $this->assertNull($categoriesTreeRestResponse->getResources()[0]->getId());
         $this->assertNotEmpty($categoriesTreeRestResponse->getResources()[0]->getAttributes());
     }
@@ -85,7 +84,7 @@ class CategoriesRestApiResourceReaderTest extends Unit
 
         $this->assertInstanceOf('\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface', $categoriesTreeRestResponse);
         $this->assertEmpty($categoriesTreeRestResponse->getErrors());
-        $this->assertEquals(CategoriesRestApiConfig::RESOURCE_CATEGORY, $categoriesTreeRestResponse->getResources()[0]->getType());
+        $this->assertEquals(CategoriesRestApiConfig::RESOURCE_CATEGORY_NODES, $categoriesTreeRestResponse->getResources()[0]->getType());
         $this->assertEquals($this->categoryNodeData['node_id'], $categoriesTreeRestResponse->getResources()[0]->getId());
         $this->assertNotEmpty($categoriesTreeRestResponse->getResources()[0]->getAttributes());
 
@@ -120,11 +119,11 @@ class CategoriesRestApiResourceReaderTest extends Unit
     }
 
     /**
-     * @return \ArrayObject
+     * @return array
      */
     protected function getCategoryTree()
     {
-        return new ArrayObject([$this->getCategoryTransfer()]);
+        return [$this->getCategoryTransfer()];
     }
 
     /**

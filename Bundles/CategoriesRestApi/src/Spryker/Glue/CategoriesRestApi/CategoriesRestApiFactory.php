@@ -32,7 +32,7 @@ class CategoriesRestApiFactory extends AbstractFactory
      */
     protected function getCategoryStorageClient(): CategoriesRestApiToCategoryStorageClientInterface
     {
-        return $this->getProvidedDependency(CategoriesRestApiDependencyProvider::CATEGORY_STORAGE_CLIENT);
+        return $this->getProvidedDependency(CategoriesRestApiDependencyProvider::CLIENT_CATEGORY_STORAGE);
     }
 
     /**

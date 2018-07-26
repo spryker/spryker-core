@@ -6,8 +6,6 @@
 
 namespace Spryker\Glue\CategoriesRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
-
 interface CategoriesRestApiToCategoryStorageClientInterface
 {
     /**
@@ -23,5 +21,5 @@ interface CategoriesRestApiToCategoryStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById(int $idCategoryNode, string $localeName): CategoryNodeStorageTransfer;
+    public function getCategoryNodeById(int $idCategoryNode, string $localeName);
 }

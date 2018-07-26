@@ -58,16 +58,17 @@ class CategoriesRestApiReader implements CategoriesRestApiReaderInterface
     {
         $categoriesResource = $this->categoryStorageClient->getCategories($locale);
         $categoriesTransfer = $this->categoriesResourceMapper
-            ->mapCategoriesResourceToRestCategoriesTransfer($categoriesResource);
+            ->mapCategoriesResourceToRestCategoriesTransfer((array)$categoriesResource);
 
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        return $restResponse->addResource(
-            $this->restResourceBuilder->createRestResource(
-                CategoriesRestApiConfig::RESOURCE_CATEGORIES,
+        $restResource = $this
+            ->restResourceBuilder
+            ->createRestResource(
+                CategoriesRestApiConfig::RESOURCE_CATEGORY_TREES,
                 null,
                 $categoriesTransfer
-            )
-        );
+            );
+        return $restResponse->addResource($restResource);
     }
 
     /**
@@ -91,13 +92,15 @@ class CategoriesRestApiReader implements CategoriesRestApiReaderInterface
                 true
             );
 
-        return $restResponse->addResource(
-            $this->restResourceBuilder->createRestResource(
-                CategoriesRestApiConfig::RESOURCE_CATEGORY,
+        $restResource = $this
+            ->restResourceBuilder
+            ->createRestResource(
+                CategoriesRestApiConfig::RESOURCE_CATEGORY_NODES,
                 (string)$categoryTransfer->getNodeId(),
                 $categoryTransfer
-            )
-        );
+            );
+
+        return $restResponse->addResource($restResource);
     }
 
     /**
@@ -105,7 +108,7 @@ class CategoriesRestApiReader implements CategoriesRestApiReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createErrorResponse(RestResponseInterface $restResponse)
+    protected function createErrorResponse(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CategoriesRestApiConfig::RESPONSE_CODE_INVALID_CATEGORY_ID)
