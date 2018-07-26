@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Tax\Communication\Controller;
 
-use Propel\Runtime\Exception\PropelException;
-use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,7 +17,6 @@ class DeleteSetController extends AbstractController
 {
     protected const PARAM_REQUEST_ID_TAX_SET = 'id-tax-set';
     protected const PARAM_TEMPLATE_ID_TAX_SET = 'idTaxSet';
-    protected const URL_LIST_TAX_SET = '/tax/set/list';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -29,14 +26,6 @@ class DeleteSetController extends AbstractController
     public function indexAction(Request $request)
     {
         $idTaxSet = $this->castId($request->query->get(static::PARAM_REQUEST_ID_TAX_SET));
-
-        try {
-            $this->getFacade()->getTaxSet($idTaxSet);
-        } catch (PropelException $exception) {
-            $this->addErrorMessage('Tax Set does not exist');
-
-            return $this->redirectResponse(Url::generate(static::URL_LIST_TAX_SET)->build());
-        }
 
         return $this->viewResponse([
             static::PARAM_TEMPLATE_ID_TAX_SET => $idTaxSet,
