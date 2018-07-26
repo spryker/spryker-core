@@ -41,18 +41,26 @@ class Writer implements WriterInterface
     protected $productFacade;
 
     /**
+     * @var \Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[]
+     */
+    protected $addItemPreCheckPlugins;
+
+    /**
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Wishlist\Business\Model\ReaderInterface $reader
      * @param \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface|null $productFacade
+     * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[] $addItemPreCheckPlugins
      */
     public function __construct(
         WishlistQueryContainerInterface $queryContainer,
         ReaderInterface $reader,
-        ?WishlistToProductInterface $productFacade = null
+        ?WishlistToProductInterface $productFacade = null,
+        array $addItemPreCheckPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->reader = $reader;
         $this->productFacade = $productFacade;
+        $this->addItemPreCheckPlugins = $addItemPreCheckPlugins;
     }
 
     /**
@@ -264,7 +272,7 @@ class Writer implements WriterInterface
     {
         $this->assertWishlistItemUpdateRequest($wishlistItemTransfer);
 
-        if ($this->productFacade && !$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSku())) {
+        if (!$this->preAddItemCheck($wishlistItemTransfer) || ($this->productFacade && !$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSku()))) {
             return $wishlistItemTransfer;
         }
 
@@ -469,5 +477,22 @@ class Writer implements WriterInterface
             ->filterByIdWishlist($wishlistTransfer->getIdWishlist(), Criteria::NOT_EQUAL);
 
         return $query->count() === 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return bool
+     */
+    protected function preAddItemCheck(WishlistItemTransfer $wishlistItemTransfer): bool
+    {
+        foreach ($this->addItemPreCheckPlugins as $preAddItemCheckPlugin) {
+            $shoppingListPreAddItemCheckResponseTransfer = $preAddItemCheckPlugin->check($wishlistItemTransfer);
+            if (!$shoppingListPreAddItemCheckResponseTransfer->getIsSuccess()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
