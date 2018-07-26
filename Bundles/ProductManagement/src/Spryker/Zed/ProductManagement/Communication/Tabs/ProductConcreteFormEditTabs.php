@@ -13,6 +13,21 @@ use Generated\Shared\Transfer\TabsViewTransfer;
 class ProductConcreteFormEditTabs extends ProductFormEditTabs
 {
     /**
+     * @var array|\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface[]
+     */
+    protected $productConcreteFormEditTabsExpanderPlugins;
+
+    /**
+     * ProductConcreteFormEditTabs constructor.
+     *
+     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface[] $productConcreteFormEditTabsExpanderPlugins
+     */
+    public function __construct(array $productConcreteFormEditTabsExpanderPlugins = [])
+    {
+        $this->productConcreteFormEditTabsExpanderPlugins = $productConcreteFormEditTabsExpanderPlugins;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
      * @return \Generated\Shared\Transfer\TabsViewTransfer
@@ -26,7 +41,7 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
             ->addAssigneBundledProductsTab($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);
 
-        return $tabsViewTransfer;
+        return $this->executeExpanderPlugins($tabsViewTransfer);
     }
 
     /**
@@ -117,5 +132,19 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
         $tabsViewTransfer->addTab($tabItemTransfer);
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\TabsViewTransfer
+     */
+    protected function executeExpanderPlugins(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
+    {
+        foreach ($this->productConcreteFormEditTabsExpanderPlugins as $concreteFormEditTabsExpanderPlugin) {
+            $tabsViewTransfer = $concreteFormEditTabsExpanderPlugin->expand($tabsViewTransfer);
+        }
+
+        return $tabsViewTransfer;
     }
 }
