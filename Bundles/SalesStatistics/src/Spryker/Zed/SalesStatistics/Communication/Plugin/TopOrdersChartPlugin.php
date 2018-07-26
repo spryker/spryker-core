@@ -9,12 +9,15 @@ namespace Spryker\Zed\SalesStatistics\Communication\Plugin;
 
 use Generated\Shared\Transfer\ChartDataTransfer;
 use Spryker\Shared\Chart\ChartConfig;
+use Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface;
+use Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\SalesStatistics\Communication\SalesStatisticsCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesStatistics\Business\SalesStatisticsFacadeInterface getFacade()
  */
-class TopOrdersChartPlugin extends AbstactChartPlugin
+class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterface, DashboardPluginInterface
 {
     public const COUNT_PRODUCT = 10;
     public const NAME = 'top-orders';
@@ -22,6 +25,14 @@ class TopOrdersChartPlugin extends AbstactChartPlugin
     public const OPTIONS = [
         'orientation' => 'h',
     ];
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return static::NAME;
+    }
 
     /**
      * @param string|null $dataIdentifier
@@ -40,5 +51,18 @@ class TopOrdersChartPlugin extends AbstactChartPlugin
         $data->setTitle(static::TITLE);
 
         return $data;
+    }
+
+    /**
+     * @return string
+     */
+    public function render(): string
+    {
+        return $this->getFactory()
+            ->getTwigEnvironment()
+            ->createTemplate(
+                sprintf("{{ chart('%s','%s') }}", static::NAME, static::NAME)
+            )
+            ->render([]);
     }
 }

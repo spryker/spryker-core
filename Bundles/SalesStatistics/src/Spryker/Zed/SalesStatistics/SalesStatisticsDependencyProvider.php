@@ -53,7 +53,7 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesOrderQuery(Container $container): Container
     {
-        $container[static::PROPEL_SALES_ORDER_QUERY] = function (Container $container) {
+        $container[static::PROPEL_SALES_ORDER_QUERY] = function () {
             return SpySalesOrderQuery::create();
         };
 
@@ -67,7 +67,7 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesOrderItemQuery(Container $container): Container
     {
-        $container[static::PROPEL_SALES_ORDER_ITEM_QUERY] = function (Container $container) {
+        $container[static::PROPEL_SALES_ORDER_ITEM_QUERY] = function () {
             return SpySalesOrderItemQuery::create();
         };
 

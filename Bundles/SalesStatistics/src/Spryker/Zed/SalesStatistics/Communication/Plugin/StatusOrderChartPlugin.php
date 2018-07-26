@@ -9,15 +9,26 @@ namespace Spryker\Zed\SalesStatistics\Communication\Plugin;
 
 use Generated\Shared\Transfer\ChartDataTransfer;
 use Spryker\Shared\Chart\ChartConfig;
+use Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface;
+use Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\SalesStatistics\Communication\SalesStatisticsCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesStatistics\Business\SalesStatisticsFacadeInterface getFacade()
  */
-class StatusOrderChartPlugin extends AbstactChartPlugin
+class StatusOrderChartPlugin extends AbstractPlugin implements ChartPluginInterface, DashboardPluginInterface
 {
     public const NAME = 'status-orders';
     public const TITLE = 'Status orders';
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return static::NAME;
+    }
 
     /**
      * @param string|null $dataIdentifier
@@ -34,5 +45,18 @@ class StatusOrderChartPlugin extends AbstactChartPlugin
         $data->setTitle(static::TITLE);
 
         return $data;
+    }
+
+    /**
+     * @return string
+     */
+    public function render(): string
+    {
+        return $this->getFactory()
+            ->getTwigEnvironment()
+            ->createTemplate(
+                sprintf("{{ chart('%s','%s') }}", static::NAME, static::NAME)
+            )
+            ->render([]);
     }
 }

@@ -10,8 +10,7 @@ namespace Spryker\Zed\SalesStatistics\Persistence;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\SalesStatistics\Persistence\Mapper\SalesStatisticsMapper;
-use Spryker\Zed\SalesStatistics\Persistence\Mapper\SalesStatisticsMapperInterface;
+use Spryker\Zed\SalesStatistics\Persistence\Propel\Mapper\SalesStatisticsMapper;
 use Spryker\Zed\SalesStatistics\SalesStatisticsDependencyProvider;
 
 /**
@@ -36,9 +35,9 @@ class SalesStatisticsPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesStatistics\Persistence\Mapper\SalesStatisticsMapperInterface
+     * @return \Spryker\Zed\SalesStatistics\Persistence\Propel\Mapper\SalesStatisticsMapper
      */
-    public function createSalesStatisticsMapper(): SalesStatisticsMapperInterface
+    public function createSalesStatisticsMapper(): SalesStatisticsMapper
     {
         return new SalesStatisticsMapper();
     }

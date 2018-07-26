@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesStatistics\Persistence\Mapper;
+namespace Spryker\Zed\SalesStatistics\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ChartDataTraceTransfer;
 use Spryker\Zed\SalesStatistics\Persistence\SalesStatisticsRepository;
 
-class SalesStatisticsMapper implements SalesStatisticsMapperInterface
+class SalesStatisticsMapper
 {
     public const DECIMAL = 100;
 
@@ -22,11 +22,10 @@ class SalesStatisticsMapper implements SalesStatisticsMapperInterface
     public function mapCountStatisticToTransfer(array $statistic): ChartDataTraceTransfer
     {
         $chartDataTraceTransfer = new ChartDataTraceTransfer();
-        if ($statistic) {
-            foreach ($statistic as $statisticItem) {
-                $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::DATE]);
-                $chartDataTraceTransfer->addValue($statisticItem[SalesStatisticsRepository::COUNT]);
-            }
+
+        foreach ($statistic as $statisticItem) {
+            $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::DATE]);
+            $chartDataTraceTransfer->addValue($statisticItem[SalesStatisticsRepository::COUNT]);
         }
 
         return $chartDataTraceTransfer;
@@ -40,11 +39,9 @@ class SalesStatisticsMapper implements SalesStatisticsMapperInterface
     public function mapStatusOrderStatisticToTransfer(array $statistic): ChartDataTraceTransfer
     {
         $chartDataTraceTransfer = new ChartDataTraceTransfer();
-        if ($statistic) {
-            foreach ($statistic as $statisticItem) {
-                $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::STATUS_NAME]);
-                $chartDataTraceTransfer->addValue($statisticItem[SalesStatisticsRepository::TOTAL] / static::DECIMAL);
-            }
+        foreach ($statistic as $statisticItem) {
+            $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::STATUS_NAME]);
+            $chartDataTraceTransfer->addValue($statisticItem[SalesStatisticsRepository::TOTAL] / static::DECIMAL);
         }
 
         return $chartDataTraceTransfer;
@@ -58,11 +55,9 @@ class SalesStatisticsMapper implements SalesStatisticsMapperInterface
     public function mapTopOrderStatisticToTransfer(array $statistic): ChartDataTraceTransfer
     {
         $chartDataTraceTransfer = new ChartDataTraceTransfer();
-        if ($statistic) {
-            foreach ($statistic as $statisticItem) {
-                $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::COUNT]);
-                $chartDataTraceTransfer->addValue($statisticItem[SalesStatisticsRepository::ITEM_NAME]);
-            }
+        foreach ($statistic as $statisticItem) {
+            $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::COUNT]);
+            $chartDataTraceTransfer->addValue($statisticItem[SalesStatisticsRepository::ITEM_NAME]);
         }
 
         return $chartDataTraceTransfer;
