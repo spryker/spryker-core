@@ -40,7 +40,7 @@ interface MinimumOrderValueFacadeInterface
 
     /**
      * Specification:
-     * - Get minimum order value trategy for a given key.
+     * - Get minimum order value strategy for a given key.
      *
      * @api
      *
@@ -53,6 +53,22 @@ interface MinimumOrderValueFacadeInterface
     public function getMinimumOrderValueType(
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
     ): MinimumOrderValueTypeTransfer;
+
+    /**
+     * Specification:
+     * - Get Global Thresholds by Store and Currency.
+     *
+     * @api
+     *
+     * @param int $storeId
+     * @param int $currencyId
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     */
+    public function getGlobalThresholdsByStoreAndCurrency(
+        int $storeId,
+        int $currencyId
+    ): array;
 
     /**
      * Specification:

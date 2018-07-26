@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Persistence\Propel\Mapper;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValue;
 use Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValueType;
 
@@ -41,8 +45,53 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
         SpyMinimumOrderValue $minimumOrderValueEntity,
         MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): MinimumOrderValueTransfer {
+//        $tt = $minimumOrderValueEntity->toArray();
+//        $curr = $minimumOrderValueEntity->getCurrency();
+//        $ty = $minimumOrderValueEntity->getMinimumOrderValueType();
+//        $mess = $minimumOrderValueEntity->getSpyMinimumOrderValueLocalizedMessages();
+
         $minimumOrderValueTransfer->fromArray($minimumOrderValueEntity->toArray(), true)
             ->setIdMinimumOrderValue($minimumOrderValueEntity->getIdMinOrderValue());
+
+        if (!$minimumOrderValueTransfer->getCurrency()) {
+            $minimumOrderValueTransfer->setCurrency(new CurrencyTransfer());
+        }
+        $minimumOrderValueTransfer->setCurrency(
+            $minimumOrderValueTransfer->getCurrency()->fromArray(
+                $minimumOrderValueEntity->getCurrency()->toArray(),
+                true
+            )
+        );
+
+        if (!$minimumOrderValueTransfer->getStore()) {
+            $minimumOrderValueTransfer->setStore(new StoreTransfer());
+        }
+        $minimumOrderValueTransfer->setStore(
+            $minimumOrderValueTransfer->getStore()->fromArray(
+                $minimumOrderValueEntity->getStore()->toArray(),
+                true
+            )
+        );
+
+        if (!$minimumOrderValueTransfer->getMinimumOrderValueType()) {
+            $minimumOrderValueTransfer->setMinimumOrderValueType(new MinimumOrderValueTypeTransfer());
+        }
+        $minimumOrderValueTransfer->setMinimumOrderValueType(
+            $minimumOrderValueTransfer->getMinimumOrderValueType()->fromArray(
+                $minimumOrderValueEntity->getMinimumOrderValueType()->toArray(),
+                true
+            )
+        );
+
+        $minimumOrderValueTransfer->setLocalizedMessages(new ArrayObject());
+        foreach ($minimumOrderValueEntity->getSpyMinimumOrderValueLocalizedMessages() as $minimumOrderValueLocalizedMessageEntity) {
+            $minimumOrderValueTransfer->addLocalizedMessage(
+                (new MinimumOrderValueLocalizedMessageTransfer())->fromArray(
+                    $minimumOrderValueLocalizedMessageEntity->toArray(),
+                    true
+                )
+            );
+        }
 
         return $minimumOrderValueTransfer;
     }

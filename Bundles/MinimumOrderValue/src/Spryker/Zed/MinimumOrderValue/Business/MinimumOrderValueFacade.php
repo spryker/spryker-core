@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueBusinessFactory getFactory()
  * @method \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueRepositoryInterface getRepository()()
  */
 class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValueFacadeInterface
 {
@@ -71,6 +72,24 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
 
         return $this->getEntityManager()
             ->saveMinimumOrderValueType($minimumOrderValueStrategy->toTransfer());
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $storeId
+     * @param int $currencyId
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     */
+    public function getGlobalThresholdsByStoreAndCurrency(
+        int $storeId,
+        int $currencyId
+    ): array {
+        return $this->getRepository()
+            ->getGlobalThresholdsByStoreAndCurrency($storeId, $currencyId);
     }
 
     /**

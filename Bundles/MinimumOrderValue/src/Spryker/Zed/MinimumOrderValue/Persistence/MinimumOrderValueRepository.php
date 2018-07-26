@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Persistence;
 
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -14,4 +15,37 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MinimumOrderValueRepository extends AbstractRepository implements MinimumOrderValueRepositoryInterface
 {
+    /**
+     * @param int $storeId
+     * @param int $currencyId
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     */
+    public function getGlobalThresholdsByStoreAndCurrency(int $storeId, int $currencyId): array
+    {
+        $minOrderValueEntities = $this->getFactory()
+            ->createMinimumOrderValueQuery()
+            ->filterByFkStore($storeId)
+            ->filterByFkCurrency($currencyId)
+            ->joinWithMinimumOrderValueType()
+            ->joinWithStore()
+            ->joinWithCurrency()
+            ->leftJoinWithSpyMinimumOrderValueLocalizedMessage()
+            ->find();
+
+        $orderSourceTransfers = [];
+
+        $mapper = $this->getFactory()->createMinimumOrderValueMapper();
+
+        foreach ($minOrderValueEntities as $minOrderValueEntity) {
+            $orderSourceTransfer = $mapper->mapMinimumOrderValueEntityToTransfer(
+                $minOrderValueEntity,
+                new MinimumOrderValueTransfer()
+            );
+
+            $orderSourceTransfers[] = $orderSourceTransfer;
+        }
+
+        return $orderSourceTransfers;
+    }
 }
