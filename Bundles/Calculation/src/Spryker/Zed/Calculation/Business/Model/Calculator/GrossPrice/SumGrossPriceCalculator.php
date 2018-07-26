@@ -16,6 +16,8 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 class SumGrossPriceCalculator implements CalculatorInterface
 {
     /**
+     * For already ordered entities, sum prices are acting as source of truth.
+     *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
@@ -27,13 +29,17 @@ class SumGrossPriceCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $expenses
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
      *
      * @return void
      */
     protected function calculateSumGrossPriceForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
+            if ($expenseTransfer->getIsOrdered() === true) {
+                continue;
+            }
+
             $expenseTransfer->setSumGrossPrice($expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity());
         }
     }
@@ -47,8 +53,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
     {
         $this->assertItemRequirements($itemTransfer);
 
-        if (!$itemTransfer->getUnitGrossPrice()) {
-            $itemTransfer->setSumGrossPrice(0);
+        if ($itemTransfer->getIsOrdered() === true) {
             return;
         }
 
@@ -86,6 +91,11 @@ class SumGrossPriceCalculator implements CalculatorInterface
             $this->addCalculatedItemGrossAmounts($itemTransfer);
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 $this->assertProductOptionPriceCalculationRequirements($productOptionTransfer);
+
+                if ($productOptionTransfer->getIsOrdered() === true) {
+                    continue;
+                }
+
                 $productOptionTransfer->setSumGrossPrice($productOptionTransfer->getUnitGrossPrice() * $productOptionTransfer->getQuantity());
             }
         }

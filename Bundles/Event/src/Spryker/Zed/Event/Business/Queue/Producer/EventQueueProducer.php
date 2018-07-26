@@ -58,7 +58,7 @@ class EventQueueProducer implements EventQueueProducerInterface
 
     /**
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
+     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
      * @param string $listener
      * @param string|null $queuePoolName
      *
@@ -93,7 +93,7 @@ class EventQueueProducer implements EventQueueProducerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
+     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
      * @param string $listenerClassName
      * @param string $eventName
      *

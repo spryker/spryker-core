@@ -71,7 +71,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     {
         $uniqueEvents = $this->getUniqueEvents();
         foreach ($uniqueEvents as $event => $ids) {
-            $uniqueIds = array_unique($ids);
+            $uniqueIds = array_unique($ids, SORT_REGULAR);
             $events = [];
             foreach ($uniqueIds as $id) {
                 $events[] = (new EventEntityTransfer())->setId($id);
@@ -94,7 +94,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     {
         $uniqueArray = [];
         foreach (static::$importedEntityEvents as $event => $ids) {
-            $uniqueArray[$event] = array_unique($ids);
+            $uniqueArray[$event] = array_unique($ids, SORT_REGULAR);
         }
 
         return $uniqueArray;

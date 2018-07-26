@@ -6,6 +6,9 @@
 
 namespace Spryker\Shared\Tax;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface TaxConstants
 {
     const DEFAULT_TAX_RATE = 'DEFAULT_TAX_RATE';

@@ -357,10 +357,11 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     /**
      * @param \Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer $eventQueueSentMessageBodyTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\EventEntityTransfer
      */
     protected function mapEventTransfer(EventQueueSendMessageBodyTransfer $eventQueueSentMessageBodyTransfer)
     {
+        /** @var \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer */
         $eventTransfer = $this->createEventTransfer($eventQueueSentMessageBodyTransfer->getTransferClassName());
         $eventTransfer->fromArray($eventQueueSentMessageBodyTransfer->getTransferData(), true);
 

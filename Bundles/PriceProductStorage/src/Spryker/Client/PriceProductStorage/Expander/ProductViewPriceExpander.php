@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\PriceProductStorage\Expander;
 
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface;
@@ -51,63 +53,74 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
      */
     public function expandProductViewPriceData(ProductViewTransfer $productViewTransfer)
     {
-        $productViewPriceData = $this->getProductViewPrices($productViewTransfer);
-        $currentProductPriceTransfer = $this->priceProductClient->resolveProductPrice(
-            $productViewPriceData
+        $priceProductAbstractTransfers = $this->getPriceAbstractData($productViewTransfer);
+        $currentProductAbstractPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
+            $priceProductAbstractTransfers,
+            $this->getPriceProductFilterFromProductView($productViewTransfer)
         );
 
-        $productViewTransfer->setPrices($currentProductPriceTransfer->getPrices());
-        $productViewTransfer->setPrice($currentProductPriceTransfer->getPrice());
+        $priceProductConcreteTransfers = $this->getPriceConcreteData($productViewTransfer);
+        if (!$priceProductConcreteTransfers) {
+            return $productViewTransfer
+                ->setPrice($currentProductAbstractPriceTransfer->getPrice())
+                ->setPrices($currentProductAbstractPriceTransfer->getPrices());
+        }
 
-        return $productViewTransfer;
+        $currentProductConcretePriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
+            $priceProductConcreteTransfers,
+            $this->getPriceProductFilterFromProductView($productViewTransfer)
+        );
+
+        if (!$currentProductConcretePriceTransfer->getPrice()) {
+            return $productViewTransfer
+                ->setPrice($currentProductAbstractPriceTransfer->getPrice())
+                ->setPrices($currentProductAbstractPriceTransfer->getPrices());
+        }
+
+        $currentProductPriceTransfer = (new CurrentProductPriceTransfer())->fromArray(
+            array_replace_recursive(
+                $currentProductAbstractPriceTransfer->toArray(),
+                $currentProductConcretePriceTransfer->toArray()
+            )
+        );
+
+        return $productViewTransfer
+            ->setPrice($currentProductPriceTransfer->getPrice())
+            ->setPrices($currentProductPriceTransfer->getPrices());
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function getProductViewPrices(ProductViewTransfer $productViewTransfer)
+    protected function getPriceAbstractData(ProductViewTransfer $productViewTransfer): array
     {
-        $priceProductAbstractStorageTransfer = $this->getPriceAbstractData($productViewTransfer);
-        if (!$priceProductAbstractStorageTransfer) {
+        return $this->priceAbstractStorageReader->findPriceProductAbstractTransfers($productViewTransfer->getIdProductAbstract());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function getPriceConcreteData(ProductViewTransfer $productViewTransfer): array
+    {
+        if (!$productViewTransfer->getIdProductConcrete()) {
             return [];
         }
 
-        $priceProductConcreteStorageTransfer = $this->getPriceConcreteData($productViewTransfer);
-        if (!$priceProductConcreteStorageTransfer) {
-            return $priceProductAbstractStorageTransfer->getPrices();
-        }
-
-        $productViewPriceData = array_replace_recursive(
-            $priceProductAbstractStorageTransfer->getPrices(),
-            $priceProductConcreteStorageTransfer->getPrices()
-        );
-
-        return $productViewPriceData;
+        return $this->priceConcreteStorageReader->findPriceProductConcreteTransfers($productViewTransfer->getIdProductConcrete());
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    protected function getPriceAbstractData(ProductViewTransfer $productViewTransfer)
+    protected function getPriceProductFilterFromProductView(ProductViewTransfer $productViewTransfer): PriceProductFilterTransfer
     {
-        return $this->priceAbstractStorageReader->findPriceAbstractStorageTransfer($productViewTransfer->getIdProductAbstract());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
-     */
-    protected function getPriceConcreteData(ProductViewTransfer $productViewTransfer)
-    {
-        if (!$productViewTransfer->getIdProductConcrete()) {
-            return null;
-        }
-
-        return $this->priceConcreteStorageReader->findPriceConcreteStorageTransfer($productViewTransfer->getIdProductConcrete());
+        return (new PriceProductFilterTransfer())
+            ->setQuantity($productViewTransfer->getQuantity());
     }
 }

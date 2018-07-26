@@ -77,6 +77,29 @@ interface ProductConcreteManagerInterface
     public function getProductAbstractIdByConcreteSku($sku);
 
     /**
+     * @param int $idConcrete
+     *
+     * @return null|int
+     */
+    public function findProductAbstractIdByConcreteId(int $idConcrete): ?int;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
+
+    /**
+     * @param string $idProductConcrete
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return int
+     */
+    public function getProductAbstractIdByConcreteId(string $idProductConcrete): int;
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *

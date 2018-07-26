@@ -6,6 +6,7 @@ include:
     - tests/SprykerTest/Shared/Kernel
     - tests/SprykerTest/Yves/Kernel
     - tests/SprykerTest/Zed/Kernel
+    - tests/SprykerTest/Glue/Kernel
 
 paths:
     tests: tests
