@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\PriceProductMerchantRelationshipDataImport\Helper;
 use Codeception\Module;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery;
+use Propel\Runtime\Map\RelationMap;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class PriceProductMerchantRelationshipDataImportHelper extends Module
@@ -21,8 +22,28 @@ class PriceProductMerchantRelationshipDataImportHelper extends Module
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
-        $this->getPriceProductMerchantRelationshipQuery()->deleteAll();
-        $this->getMerchantRelationshipQuery()->deleteAll();
+        $relations = $this->getMerchantRelationshipQuery()->getTableMap()->getRelations();
+
+        $query = $this->getMerchantRelationshipQuery();
+        $results = $query->find();
+        // @todo rewrite this.
+        foreach ($relations as $relationMap) {
+            $relationType = $relationMap->getType();
+
+            foreach ($results as $result) {
+                if ($relationType == RelationMap::ONE_TO_MANY) {
+                    $relationName = $relationMap->getPluralName();
+                    $method = 'get' . $relationName;
+                    $childRecords = $result->$method();
+
+                    foreach ($childRecords as $childRecord) {
+                        $childRecord->delete();
+                    }
+                }
+            }
+        }
+
+        $query->deleteAll();
     }
 
     /**
