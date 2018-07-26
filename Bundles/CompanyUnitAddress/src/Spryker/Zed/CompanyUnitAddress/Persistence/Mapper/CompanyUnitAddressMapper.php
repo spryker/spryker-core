@@ -52,6 +52,7 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
                 $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnitTransfer);
             }
         }
+
         return $companyBusinessUnitCollectionTransfer;
     }
 

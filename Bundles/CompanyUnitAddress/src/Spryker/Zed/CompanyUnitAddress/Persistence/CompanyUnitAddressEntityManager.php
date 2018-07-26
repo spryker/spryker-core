@@ -107,9 +107,11 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
         int $idCompanyUnitAddress
     ): void {
         $businessUnitCollection = $companyUnitAddressTransfer->getCompanyBusinessUnitCollection();
-        if (empty($businessUnitCollection) || empty($businessUnitCollection->getCompanyBusinessUnits())) {
+
+        if (!$businessUnitCollection || !$businessUnitCollection->getCompanyBusinessUnits()) {
             return;
         }
+
         foreach ($businessUnitCollection->getCompanyBusinessUnits() as $companyBusinessUnit) {
             $entityTransfer = new SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer();
             $entityTransfer
