@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
@@ -299,6 +300,26 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testUpdateProductPackagingUnitLeadProductAvailability(): void
     {
+        $boxProductConcreteTransfer = $this->createProductPackagingUnitProductConcrete();
+
+        $this->getFacade()->updateLeadProductAvailability($boxProductConcreteTransfer->getSku());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateProductPackagingUnitLeadProductReservation(): void
+    {
+        $boxProductConcreteTransfer = $this->createProductPackagingUnitProductConcrete();
+
+        $this->getFacade()->updateLeadProductReservation($boxProductConcreteTransfer->getSku());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function createProductPackagingUnitProductConcrete(): ProductConcreteTransfer
+    {
         $itemProductConcreteTransfer = $this->tester->haveProduct();
         $boxProductConcreteTransfer = $this->tester->haveProduct([
             SpyProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
@@ -327,7 +348,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             SpyProductPackagingUnitAmountEntityTransfer::DEFAULT_AMOUNT => static::PACKAGE_AMOUNT,
         ]);
 
-        $this->getFacade()->updateLeadProductAvailability($boxProductConcreteTransfer->getSku());
+        return $boxProductConcreteTransfer;
     }
 
     /**

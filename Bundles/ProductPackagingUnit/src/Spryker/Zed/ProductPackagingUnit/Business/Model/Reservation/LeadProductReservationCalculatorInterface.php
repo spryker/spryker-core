@@ -17,5 +17,5 @@ interface LeadProductReservationCalculatorInterface
      *
      * @return int
      */
-    public function calculateStockForLeadProduct(string $leadProductSku, StoreTransfer $storeTransfer): int;
+    public function calculateReservedAmountForLeadProduct(string $leadProductSku, StoreTransfer $storeTransfer): int;
 }

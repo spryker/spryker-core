@@ -107,5 +107,5 @@ interface ProductPackagingUnitRepositoryInterface
      *
      * @return int
      */
-    public function sumLeadProductAmountsForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): int;
+    public function sumLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): int;
 }

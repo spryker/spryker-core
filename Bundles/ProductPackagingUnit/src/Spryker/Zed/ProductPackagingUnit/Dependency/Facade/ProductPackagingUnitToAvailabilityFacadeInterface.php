@@ -13,11 +13,11 @@ interface ProductPackagingUnitToAvailabilityFacadeInterface
 {
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    public function isProductSellable(string $sku, int $quantity): bool;
+    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): bool;
 
     /**
      * @param string $sku

@@ -9,22 +9,14 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class LeadProductReservationCalculator implements LeadProductReservationCalculatorInterface
 {
-    protected const COL_SUM = 'SumAmount';
-
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface
      */
     protected $omsFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeInterface
-     */
-    protected $stockFacade;
 
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface
@@ -33,16 +25,13 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface $omsFacade
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeInterface $stockFacade
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
      */
     public function __construct(
         ProductPackagingUnitToOmsFacadeInterface $omsFacade,
-        ProductPackagingUnitToStockFacadeInterface $stockFacade,
         ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
     ) {
         $this->omsFacade = $omsFacade;
-        $this->stockFacade = $stockFacade;
         $this->productPackagingUnitRepository = $productPackagingUnitRepository;
     }
 
@@ -52,21 +41,16 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
      *
      * @return int
      */
-    public function calculateStockForLeadProduct(string $leadProductSku, StoreTransfer $storeTransfer): int
+    public function calculateReservedAmountForLeadProduct(string $leadProductSku, StoreTransfer $storeTransfer): int
     {
-        $physicalItems = $this->stockFacade->calculateProductStockForStore($leadProductSku, $storeTransfer);
-        $reservedItems = $this->omsFacade->getOmsReservedProductQuantityForSku($leadProductSku, $storeTransfer);
-        $leadProductReservedAmount = $this->productPackagingUnitRepository
-            ->sumLeadProductAmountsForAllSalesOrderItemsBySku($leadProductSku, $this->getReservedStateNames());
+        $reservedStateNames = $this->omsFacade->getReservedStateNames();
 
-        return $physicalItems - $reservedItems - $leadProductReservedAmount;
-    }
+        $sumReservedLeadProductAmount = $this->productPackagingUnitRepository
+            ->sumLeadProductAmountForAllSalesOrderItemsBySku($leadProductSku, $reservedStateNames);
 
-    /**
-     * @return string[]
-     */
-    protected function getReservedStateNames(): array
-    {
-        return $this->omsFacade->getReservedStateNames();
+        $sumReservedLeadProductQuantity = $this->omsFacade
+            ->sumReservedProductQuantitiesForSku($leadProductSku, $storeTransfer);
+
+        return $sumReservedLeadProductAmount + $sumReservedLeadProductQuantity;
     }
 }

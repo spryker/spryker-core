@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Availability;
+namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface;
 
-class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAvailabilityHandlerInterface
+class ProductPackagingUnitReservationHandler implements ProductPackagingUnitReservationHandlerInterface
 {
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
@@ -21,9 +21,14 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
     protected $packagingUnitReader;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculatorInterface
      */
-    protected $availabilityFacade;
+    protected $leadProductReservationCalculator;
+
+    /**
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface
+     */
+    protected $omsFacade;
 
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface
@@ -32,16 +37,19 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $packagingUnitReader
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
+     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculatorInterface $leadProductReservationCalculator
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface $omsFacade
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductPackagingUnitReaderInterface $packagingUnitReader,
-        ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade,
+        LeadProductReservationCalculatorInterface $leadProductReservationCalculator,
+        ProductPackagingUnitToOmsFacadeInterface $omsFacade,
         ProductPackagingUnitToStoreFacadeInterface $storeFacade
     ) {
         $this->packagingUnitReader = $packagingUnitReader;
-        $this->availabilityFacade = $availabilityFacade;
+        $this->leadProductReservationCalculator = $leadProductReservationCalculator;
+        $this->omsFacade = $omsFacade;
         $this->storeFacade = $storeFacade;
     }
 
@@ -50,7 +58,7 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
      *
      * @return void
      */
-    public function updateProductPackagingUnitLeadProductAvailability(string $sku): void
+    public function updateLeadProductReservation(string $sku): void
     {
         $productPackagingUnitTransfer = $this->findProductPackagingUnitBySku($sku);
 
@@ -63,7 +71,7 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
             return;
         }
 
-        $this->updateAvailabilityForLeadProduct($productPackagingLeadProductTransfer->getProduct()->getSku());
+        $this->updateReservationForLeadProduct($productPackagingLeadProductTransfer->getProduct()->getSku());
     }
 
     /**
@@ -71,7 +79,7 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
      *
      * @return void
      */
-    protected function updateAvailabilityForLeadProduct(string $leadProductSku): void
+    protected function updateReservationForLeadProduct(string $leadProductSku): void
     {
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
 
@@ -80,10 +88,11 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
 
         foreach ($stores as $storeName) {
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
-            $stock = $this->availabilityFacade
-                ->calculateStockForProductWithStore($leadProductSku, $storeTransfer);
 
-            $this->availabilityFacade->saveProductAvailabilityForStore($leadProductSku, $stock, $storeTransfer);
+            $reservationQuantity = $this->leadProductReservationCalculator
+                ->calculateReservedAmountForLeadProduct($leadProductSku, $storeTransfer);
+
+            $this->omsFacade->saveReservation($leadProductSku, $storeTransfer, $reservationQuantity);
         }
     }
 
@@ -104,8 +113,9 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    protected function findProductPackagingLeadProductByProductPackagingSku(string $productPackagingUnitSku): ?ProductPackagingLeadProductTransfer
-    {
+    protected function findProductPackagingLeadProductByProductPackagingSku(
+        string $productPackagingUnitSku
+    ): ?ProductPackagingLeadProductTransfer {
         return $this->packagingUnitReader
             ->findProductPackagingLeadProductByProductPackagingSku($productPackagingUnitSku);
     }
