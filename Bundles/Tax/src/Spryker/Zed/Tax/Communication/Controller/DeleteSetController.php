@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Tax\Communication\Controller;
 
-use Exception;
+use Propel\Runtime\Exception\PropelException;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +32,7 @@ class DeleteSetController extends AbstractController
 
         try {
             $this->getFacade()->getTaxSet($idTaxSet);
-        } catch (Exception $exception) {
+        } catch (PropelException $exception) {
             $this->addErrorMessage('Tax Set does not exist');
 
             return $this->redirectResponse(Url::generate(static::URL_LIST_TAX_SET)->build());
