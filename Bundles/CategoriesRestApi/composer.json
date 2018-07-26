@@ -3,11 +3,11 @@
   "description": "CategoriesRestApi module",
   "license": "proprietary",
   "require": {
-    "spryker/category-storage": "*",
-    "spryker/glue-application": "*",
-    "spryker/glue-application-extension": "*",
-    "spryker/kernel": "*",
-    "spryker/symfony": "*"
+    "spryker/category-storage": "^1.0.0",
+    "spryker/glue-application": "^1.0.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/kernel": "^3.22.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
