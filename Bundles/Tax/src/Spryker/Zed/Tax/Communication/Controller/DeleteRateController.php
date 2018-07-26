@@ -21,7 +21,6 @@ class DeleteRateController extends AbstractController
 {
     protected const PARAM_REQUEST_ID_TAX_RATE = 'id-tax-rate';
     protected const PARAM_TEMPLATE_ID_TAX_RATE = 'idTaxRate';
-
     protected const URL_LIST_TAX_RATE = '/tax/rate/list';
 
     /**

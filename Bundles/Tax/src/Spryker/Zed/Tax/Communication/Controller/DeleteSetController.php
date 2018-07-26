@@ -21,7 +21,6 @@ class DeleteSetController extends AbstractController
 {
     protected const PARAM_REQUEST_ID_TAX_SET = 'id-tax-set';
     protected const PARAM_TEMPLATE_ID_TAX_SET = 'idTaxSet';
-
     protected const URL_LIST_TAX_SET = '/tax/set/list';
 
     /**
