@@ -2,9 +2,8 @@ parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
     ignoreErrors:
-    - '#Call to an undefined method .+Criteria::.+\(\).#'
-    - '#Method .+Criteria::addJoinObject\(\) invoked with 2 parameters, 1 required.#'
-    - '#Method .+CategoryQueryContainerInterface::queryCategory\(\) invoked with 2 parameters, 1 required.#'
+    - '#Call to an undefined method .+SpyStateMachineEventTimeoutQuery::filterByName\(\).#'
+    - '#Method .+StateMachineQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
 
 services:
     -

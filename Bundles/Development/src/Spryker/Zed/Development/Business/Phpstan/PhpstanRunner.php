@@ -355,16 +355,14 @@ class PhpstanRunner implements PhpstanRunnerInterface
     /**
      * @param string $buffer
      *
-     * @return bool
+     * @return void
      */
-    protected function addErrors($buffer)
+    protected function addErrors(string $buffer): void
     {
         preg_match('#\[ERROR\] Found (\d+) error#i', $buffer, $matches);
         if (!$matches) {
-            return false;
+            return;
         }
         $this->errorCount += (int)$matches[1];
-
-        return true;
     }
 }
