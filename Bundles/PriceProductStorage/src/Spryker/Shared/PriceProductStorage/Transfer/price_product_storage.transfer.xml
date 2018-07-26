@@ -12,4 +12,7 @@
         <property name="prices" type="array"/>
     </transfer>
 
+    <transfer name="MoneyValue">
+        <property name="priceData" type="string" />
+    </transfer>
 </transfers>
