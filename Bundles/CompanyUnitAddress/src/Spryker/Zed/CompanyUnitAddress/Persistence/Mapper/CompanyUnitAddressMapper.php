@@ -30,7 +30,7 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
             true
         );
 
-        if($unitAddressEntityTransfer->getCountry()) {
+        if ($unitAddressEntityTransfer->getCountry()) {
             $companyUnitAddressTransfer->setIso2Code($unitAddressEntityTransfer->getCountry()->getIso2Code());
         }
 
