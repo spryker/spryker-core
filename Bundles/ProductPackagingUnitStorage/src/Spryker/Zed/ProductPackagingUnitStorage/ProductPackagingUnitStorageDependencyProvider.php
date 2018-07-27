@@ -26,6 +26,8 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addEventBehaviorFacade($container);
 
         return $container;
@@ -38,6 +40,8 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addProductPackagingUnitFacade($container);
 
         return $container;

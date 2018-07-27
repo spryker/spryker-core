@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\ProductPackagingUnitStorage;
 
-class ProductPackagingUnitStorageConfig
+use Spryker\Shared\Kernel\AbstractBundleConfig;
+
+class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
 {
     /**
      * Specification:

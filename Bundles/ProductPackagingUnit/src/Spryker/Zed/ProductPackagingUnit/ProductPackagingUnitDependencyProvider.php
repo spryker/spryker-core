@@ -40,6 +40,8 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addLocaleFacade($container);
         $container = $this->addGlossaryFacade($container);
         $container = $this->addProductMeasurementUnitFacade($container);
@@ -60,6 +62,8 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
+        $container = parent::providePersistenceLayerDependencies($container);
+
         $container = $this->addSalesOrderItemQuery($container);
 
         return $container;

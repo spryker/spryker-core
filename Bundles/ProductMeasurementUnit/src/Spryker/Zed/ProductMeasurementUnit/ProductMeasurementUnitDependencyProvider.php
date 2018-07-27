@@ -48,6 +48,7 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
+
         $container = $this->addSalesOrderItemQuery($container);
 
         return $container;

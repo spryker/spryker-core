@@ -29,6 +29,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/sales": "If you want to use sales plugins: ^8.12.0",
     "spryker/cart": "If you want to use cart plugins: ^5.2.0",
     "spryker/checkout": "If you want to use checkout plugins: ^4.0.0",
     "spryker/installer": "If you want to use Installer plugins: ^4.0.0.",

@@ -14,8 +14,8 @@ use Spryker\Client\ProductPackagingUnitStorage\Dependency\Service\ProductPackagi
 
 class ProductPackagingUnitStorageDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -24,6 +24,8 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractDependencyPr
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
+        $container = parent::provideServiceLayerDependencies($container);
+
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
 

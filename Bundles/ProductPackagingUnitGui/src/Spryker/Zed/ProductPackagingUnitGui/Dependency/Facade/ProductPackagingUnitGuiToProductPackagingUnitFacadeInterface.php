@@ -12,21 +12,11 @@ use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 interface ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
 {
     /**
-     * Specification:
-     * - Retrieve infrastructural packaging unit type list as an array of strings.
-     *
-     * @api
-     *
      * @return string[]
      */
     public function getInfrastructuralProductPackagingUnitTypeNames(): array;
 
     /**
-     * Specification:
-     *  - Retrieves a product packaging unit type by ProductPackagingUnitTypeTransfer::idProductPackagingUnitType in the transfer.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
@@ -36,11 +26,6 @@ interface ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
     ): ProductPackagingUnitTypeTransfer;
 
     /**
-     * Specification:
-     *  - Retrieves a product packaging unit type by ProductPackagingUnitTypeTransfer::name in the transfer.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
@@ -50,11 +35,6 @@ interface ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
     ): ?ProductPackagingUnitTypeTransfer;
 
     /**
-     * Specification:
-     *  - Retrieves product packaging units count for a given product packaging unit type.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return int
@@ -64,11 +44,6 @@ interface ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
     ): int;
 
     /**
-     * Specification:
-     *  - Creates product packaging unit type.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
@@ -78,11 +53,6 @@ interface ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
     ): ProductPackagingUnitTypeTransfer;
 
     /**
-     * Specification:
-     *  - Updates product packaging unit type.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
@@ -92,11 +62,6 @@ interface ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
     ): ProductPackagingUnitTypeTransfer;
 
     /**
-     * Specification:
-     *  - Deletes a product packaging unit type.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return bool

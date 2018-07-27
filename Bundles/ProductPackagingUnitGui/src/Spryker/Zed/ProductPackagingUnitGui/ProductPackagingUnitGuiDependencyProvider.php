@@ -29,6 +29,8 @@ class ProductPackagingUnitGuiDependencyProvider extends AbstractBundleDependency
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addProductPackagingUnitFacade($container);
         $container = $this->addLocaleFacade($container);
 
