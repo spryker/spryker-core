@@ -50,7 +50,7 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @param int[] $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria[]
+     * @return SynchronizationDataTransfer[]
      */
     public function getData(array $ids = []): array
     {
