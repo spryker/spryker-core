@@ -67,11 +67,11 @@ class CategoriesRestApiResourceMapperTest extends Unit
         $restCategoriesTreeTransfer = (new CategoriesResourceMapper())
             ->mapCategoriesResourceToRestCategoriesTransfer($this->mockCategoryClientResponseTransfer());
 
-        $this->assertEquals('Test category', $restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getName());
-        $this->assertEquals(90, $restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getOrder());
-        $this->assertEquals(4, $restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getNodeId());
+        $this->assertEquals($this->categoryTreeData['name'], $restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getName());
+        $this->assertEquals($this->categoryTreeData['order'], $restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getOrder());
+        $this->assertEquals($this->categoryTreeData['node_id'], $restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getNodeId());
         $this->assertNotEmpty($restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getChildren());
-        $this->assertEquals(2, $restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getChildren()->count());
+        $this->assertEquals($this->categoryTreeData['children']->count(), $restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getChildren()->count());
     }
 
     /**
@@ -120,7 +120,7 @@ class CategoriesRestApiResourceMapperTest extends Unit
     {
         $children = new ArrayObject();
 
-        $children->append($this->categoryChildrenNodes);
+        $children->append($this->categoryChildrenNodes[0]);
 
         return $children;
     }
