@@ -36,7 +36,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class DataImportBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterPluginCollectionInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
     public function getImporter()
     {
