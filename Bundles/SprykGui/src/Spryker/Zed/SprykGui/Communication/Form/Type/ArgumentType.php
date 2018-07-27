@@ -20,6 +20,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ArgumentType extends AbstractType
 {
+    const ARGUMENT_CHOICES = 'argumentChoices';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -28,11 +30,11 @@ class ArgumentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired([
-            'argumentCollectionTransfer',
+            static::ARGUMENT_CHOICES,
         ]);
 
         $resolver->setDefaults([
-//            'data_class' => ArgumentTransfer::class,
+            'data_class' => ArgumentTransfer::class,
         ]);
     }
 
@@ -44,10 +46,10 @@ class ArgumentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $argumentCollectionTransfer = $options['argumentCollectionTransfer'];
+        $argumentCollectionTransfer = $options[static::ARGUMENT_CHOICES];
 
-        $builder->add('argument', ChoiceType::class, [
-            'choices' => $argumentCollectionTransfer->getArguments(),
+        $builder->add('innerArgument', ChoiceType::class, [
+            'choices' => $argumentCollectionTransfer,
             'choice_label' => function (ArgumentTransfer $argumentTransfer) {
                 return $argumentTransfer->getName();
             },
@@ -55,49 +57,16 @@ class ArgumentType extends AbstractType
                 return ['data-proposal' => $argumentTransfer->getVariable()];
             },
             'placeholder' => '',
+            'label' => 'Type',
             'attr' => [
                 'class' => 'type-selector',
             ],
         ]);
 
         $builder->add('variable', TextType::class);
+        $builder->add('defaultValue', TextType::class);
         $builder->add('isOptional', CheckboxType::class, [
             'required' => false,
         ]);
-
-//        $builder->get('variable')->addEventListener(
-//            FormEvents::POST_SUBMIT,
-//            function (FormEvent $event) use ($argumentCollectionTransfer) {
-//                $form = $event->getForm();
-//                $variable = $event->getData();
-//                $parentForm = $form->getParent();
-//
-//                $parentArgumentTransfer = $parentForm->getData();
-//                $argumentField = $parentForm->get('name');
-//                $argumentTransfer = $argumentField->getData();
-//
-//                if ($argumentTransfer instanceof ArgumentTransfer) {
-//                    $argumentTransfer->setVariable($variable);
-//                }
-//                $parentForm->remove('variable');
-//            }
-//        );
-//
-//        $builder->get('isOptional')->addEventListener(
-//            FormEvents::SUBMIT,
-//            function (FormEvent $event) use ($argumentCollectionTransfer) {
-//                $form = $event->getForm();
-//                $isOptional = $event->getData();
-//                $parentForm = $form->getParent();
-//
-//                $argumentField = $parentForm->get('name');
-//                $argumentTransfer = $argumentField->getData();
-//
-//                if ($argumentTransfer instanceof ArgumentTransfer) {
-//                    $argumentTransfer->setIsOptional($isOptional);
-//                }
-//                $parentForm->remove('isOptional');
-//            }
-//        );
     }
 }

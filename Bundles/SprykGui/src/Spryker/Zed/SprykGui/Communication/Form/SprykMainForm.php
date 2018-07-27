@@ -19,6 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
  */
 class SprykMainForm extends AbstractType
 {
@@ -75,44 +76,21 @@ class SprykMainForm extends AbstractType
 
         $this->addNextButton($builder);
 
-//        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($options, $builder) {
-//            $formData = $event->getData();
-//            $form = $event->getForm();
-//            if (isset($formData['module'])) {
-//                $moduleTransfer = $formData['module'];
-//                if ($moduleTransfer->getName() && ($moduleTransfer->getOrganization() && $moduleTransfer->getOrganization()->getName())) {
-//
-//                    $sprykDetailsForm = $builder->getFormFactory()
-//                        ->createNamedBuilder('sprykDetails', SprykDetailsForm::class, $formData, $options)
-//                        ->getForm();
-//
-//                    $form->add($sprykDetailsForm);
-//
-//                    $this->addRunSprykButton($form);
-//                    $this->addCreateTemplateButton($form);
-//
-//                    return;
-//                }
-//            }
-//
-//
-//        });
-
         $builder->get('module')->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($options, $builder) {
             $form = $event->getForm()->getParent();
-            $formData = $event->getForm()->getParent()->getData();
             $moduleTransfer = $event->getForm()->getData();
             if ($moduleTransfer instanceof ModuleTransfer) {
                 if ($moduleTransfer->getName() && ($moduleTransfer->getOrganization() && $moduleTransfer->getOrganization()->getName())) {
-                    $options['module'] = $moduleTransfer;
-                    $options['auto_initialize'] = false;
-
-//                    $form->remove('module');
                     $form->remove('next');
 
+                    $sprykDataProvider = $this->getFactory()->createSprykFormDataProvider();
                     $sprykDetailsForm = $builder->getFormFactory()
-                        ->createNamedBuilder('sprykDetails', SprykDetailsForm::class, $formData, $options)
-                        ->getForm();
+                        ->createNamedBuilder(
+                            'sprykDetails',
+                            SprykDetailsForm::class,
+                            $sprykDataProvider->getData($options[static::SPRYK], $moduleTransfer),
+                            $sprykDataProvider->getOptions($options[static::SPRYK], $moduleTransfer)
+                        )->getForm();
 
                     $form->add($sprykDetailsForm);
 
