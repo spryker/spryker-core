@@ -17,8 +17,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/chart": "Use dependency for implement chart plugin",
-    "spryker/dashboard": "Use dependency for implement chart plugin"
+    "spryker/chart": "If you want to use Chart Plugins. Minimum required version: 1.0.0.",
+    "spryker/dashboard": "If you want to use Dashboard. Minimum required version: 1.0.0."
   },
   "autoload": {
     "psr-4": {

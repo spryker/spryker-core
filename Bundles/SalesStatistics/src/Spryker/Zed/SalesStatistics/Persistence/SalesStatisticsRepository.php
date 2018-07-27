@@ -62,6 +62,14 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
     }
 
     /**
+     * @example
+     * [
+     *  [
+     *   'item_name' => 'exported'
+     *   'count' => 1
+     *  ],
+     * ]
+     *
      * @param int $countProduct
      *
      * @return array
@@ -79,6 +87,14 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
     }
 
     /**
+     * @example
+     * [
+     *  [
+     *   'status_name' => 'exported'
+     *   'total' => 1
+     *  ],
+     * ]
+     *
      * @return array
      */
     protected function getDataStatusOrderStatistic(): array
@@ -93,6 +109,14 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
     }
 
     /**
+     * @example
+     * [
+     *  [
+     *   'date' => '2018-07-26'
+     *   'count' => 1
+     *  ],
+     * ]
+     *
      * @param string $date
      *
      * @return array
