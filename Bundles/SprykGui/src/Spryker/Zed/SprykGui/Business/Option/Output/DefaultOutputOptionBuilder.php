@@ -33,7 +33,7 @@ class DefaultOutputOptionBuilder implements OptionBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
-     * @return \Generated\Shared\Transfer\ReturnTypeCollectionTransfer
+     * @return \Generated\Shared\Transfer\ModuleTransfer
      */
     public function build(ModuleTransfer $moduleTransfer): ModuleTransfer
     {

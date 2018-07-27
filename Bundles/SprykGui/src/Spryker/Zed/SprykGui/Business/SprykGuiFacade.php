@@ -121,9 +121,9 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
      *
      * @api
      *
-     * @param string $className
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
-     * @return \Generated\Shared\Transfer\ClassInformationTransfer
+     * @return \Generated\Shared\Transfer\ClassInformationCollectionTransfer
      */
     public function getZedBusinessModels(ModuleTransfer $moduleTransfer): ClassInformationCollectionTransfer
     {
