@@ -277,14 +277,14 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'];
+            return '\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'] . '|null';
         }
 
         if ($this->isTypeTransferObject($property)) {
-            return '\Generated\Shared\Transfer\\' . $property['type'];
+            return '\Generated\Shared\Transfer\\' . $property['type'] . '|null';
         }
 
-        return $property['type'];
+        return $property['type'] . '|null';
     }
 
     /**
@@ -486,14 +486,14 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'];
+            return '\\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'] . '|null';
         }
 
         if ($this->isTypeTransferObject($property)) {
-            return '\Generated\Shared\Transfer\\' . $property['type'];
+            return '\Generated\Shared\Transfer\\' . $property['type'] . '|null';
         }
 
-        return $property['type'];
+        return $property['type'] . '|null';
     }
 
     /**

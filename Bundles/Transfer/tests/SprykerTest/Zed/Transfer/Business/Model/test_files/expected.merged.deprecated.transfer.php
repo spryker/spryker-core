@@ -43,7 +43,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     const PROJECT_LEVEL_DEPRECATED_FIELD = 'projectLevelDeprecatedField';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $scalarField;
 
@@ -53,17 +53,17 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     protected $arrayField = [];
 
     /**
-     * @var \Generated\Shared\Transfer\DeprecatedFooBarTransfer
+     * @var \Generated\Shared\Transfer\DeprecatedFooBarTransfer|null
      */
     protected $transferField;
 
     /**
-     * @var \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]
+     * @var \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]|null
      */
     protected $transferCollectionField;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $projectLevelDeprecatedField;
 
@@ -146,7 +146,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated scalarField is deprecated.
      *
-     * @return string
+     * @return string|null
      */
     public function getScalarField()
     {
@@ -253,7 +253,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated transferField is deprecated.
      *
-     * @return \Generated\Shared\Transfer\DeprecatedFooBarTransfer
+     * @return \Generated\Shared\Transfer\DeprecatedFooBarTransfer|null
      */
     public function getTransferField()
     {
@@ -296,7 +296,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated transferCollectionField is deprecated.
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]|null
      */
     public function getTransferCollectionField()
     {
@@ -356,7 +356,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated Deprecated on project level.
      *
-     * @return string
+     * @return string|null
      */
     public function getProjectLevelDeprecatedField()
     {

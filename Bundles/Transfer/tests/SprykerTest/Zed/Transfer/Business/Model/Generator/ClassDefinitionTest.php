@@ -55,7 +55,7 @@ class ClassDefinitionTest extends Unit
         $this->assertTrue(is_array($properties));
 
         $given = $properties['property1'];
-        $expected = $this->getProperty('property1', 'string');
+        $expected = $this->getProperty('property1', 'string|null');
         $this->assertEquals($expected, $given);
     }
 
@@ -103,11 +103,11 @@ class ClassDefinitionTest extends Unit
         $this->assertTrue(is_array($properties));
 
         $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'string');
+        $expectedProperty = $this->getProperty('property1', 'string|null');
         $this->assertEquals($expectedProperty, $givenProperty);
 
         $givenProperty = $properties['property2'];
-        $expectedProperty = $this->getProperty('property2', 'string');
+        $expectedProperty = $this->getProperty('property2', 'string|null');
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
@@ -164,7 +164,7 @@ class ClassDefinitionTest extends Unit
 
         $properties = $classDefinition->getProperties();
         $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'Type[]', null, '\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]');
+        $expectedProperty = $this->getProperty('property1', 'Type[]', null, '\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]|null');
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
@@ -185,7 +185,7 @@ class ClassDefinitionTest extends Unit
 
         $properties = $classDefinition->getProperties();
         $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'Type', null, '\Generated\Shared\Transfer\TypeTransfer');
+        $expectedProperty = $this->getProperty('property1', 'Type', null, '\Generated\Shared\Transfer\TypeTransfer|null');
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
@@ -209,7 +209,7 @@ class ClassDefinitionTest extends Unit
         $this->assertEquals($expectedSetter, $givenSetter);
 
         $givenGetter = $methods['getProperty1'];
-        $expectedGetter = $this->getGetMethod('getProperty1', 'property1', null, 'string', null, 'PROPERTY1');
+        $expectedGetter = $this->getGetMethod('getProperty1', 'property1', null, 'string|null', null, 'PROPERTY1');
         $this->assertEquals($expectedGetter, $givenGetter);
     }
 
@@ -274,7 +274,7 @@ class ClassDefinitionTest extends Unit
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperty1'];
-        $expected = $this->getGetMethod('getProperty1', 'property1', null, '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'PROPERTY1', $bundles);
+        $expected = $this->getGetMethod('getProperty1', 'property1', null, '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]|null', null, 'PROPERTY1', $bundles);
         $this->assertEquals($expected, $given);
 
         $given = $methods['addProperty1'];
@@ -303,7 +303,7 @@ class ClassDefinitionTest extends Unit
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperties'];
-        $expected = $this->getGetMethod('getProperties', 'properties', null, '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'PROPERTIES');
+        $expected = $this->getGetMethod('getProperties', 'properties', null, '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]|null', null, 'PROPERTIES');
         $this->assertEquals($expected, $given);
 
         $given = $methods['addProperty'];

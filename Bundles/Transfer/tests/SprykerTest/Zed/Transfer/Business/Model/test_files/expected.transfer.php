@@ -24,17 +24,17 @@ class CatFaceTransfer extends AbstractTransfer
     const TYPED_ARRAY = 'typedArray';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $name;
 
     /**
-     * @var \Generated\Shared\Transfer\ItemTransfer
+     * @var \Generated\Shared\Transfer\ItemTransfer|null
      */
     protected $item;
 
     /**
-     * @var \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @var \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]|null
      */
     protected $items;
 
@@ -106,7 +106,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return string
+     * @return string|null
      */
     public function getName()
     {
@@ -143,7 +143,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
     public function getItem()
     {
@@ -180,7 +180,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]|null
      */
     public function getItems()
     {

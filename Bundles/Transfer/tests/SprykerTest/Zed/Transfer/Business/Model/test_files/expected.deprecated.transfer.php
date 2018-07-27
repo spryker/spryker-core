@@ -38,7 +38,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     const TRANSFER_COLLECTION_FIELD = 'transferCollectionField';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $scalarField;
 
@@ -48,12 +48,12 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     protected $arrayField = [];
 
     /**
-     * @var \Generated\Shared\Transfer\DeprecatedFooBarTransfer
+     * @var \Generated\Shared\Transfer\DeprecatedFooBarTransfer|null
      */
     protected $transferField;
 
     /**
-     * @var \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]
+     * @var \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]|null
      */
     protected $transferCollectionField;
 
@@ -127,7 +127,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated scalarField is deprecated.
      *
-     * @return string
+     * @return string|null
      */
     public function getScalarField()
     {
@@ -234,7 +234,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated transferField is deprecated.
      *
-     * @return \Generated\Shared\Transfer\DeprecatedFooBarTransfer
+     * @return \Generated\Shared\Transfer\DeprecatedFooBarTransfer|null
      */
     public function getTransferField()
     {
@@ -277,7 +277,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated transferCollectionField is deprecated.
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]|null
      */
     public function getTransferCollectionField()
     {
