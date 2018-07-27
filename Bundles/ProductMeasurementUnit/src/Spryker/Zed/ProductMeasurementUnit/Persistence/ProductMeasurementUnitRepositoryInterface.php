@@ -53,11 +53,11 @@ interface ProductMeasurementUnitRepositoryInterface
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
 
     /**
-     * @param int $idOrder
+     * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer[]
      */
-    public function querySalesOrderItemsByIdSalesOrder($idOrder): array;
+    public function querySalesOrderItemsByIdSalesOrder($idSalesOrder): array;
 
     /**
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]

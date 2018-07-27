@@ -156,7 +156,7 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
-     * - Translate ProductMeasurementSalesUnit
+     * - Translate the glossary keys of name attributes of ProductMeasurementSalesUnit transfer.
      *
      * @api
      *
@@ -164,5 +164,7 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    public function translateProductMeasurementSalesUnit(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): ProductMeasurementSalesUnitTransfer;
+    public function translateProductMeasurementSalesUnit(
+        ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
+    ): ProductMeasurementSalesUnitTransfer;
 }

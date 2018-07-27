@@ -15,7 +15,7 @@ interface ProductPackagingUnitToOmsFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return void
+     * @return int
      */
     public function sumReservedProductQuantitiesForSku(string $sku, StoreTransfer $storeTransfer): int;
 

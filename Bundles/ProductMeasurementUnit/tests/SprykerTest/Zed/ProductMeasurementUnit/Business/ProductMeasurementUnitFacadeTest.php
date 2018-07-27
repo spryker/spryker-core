@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductMeasurementUnit\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
@@ -276,42 +275,6 @@ class ProductMeasurementUnitFacadeTest extends Unit
             ->expandOrderWithQuantitySalesUnit($orderTransfer);
 
         $this->assertInstanceOf(OrderTransfer::class, $orderTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandCartChangeItemsWithProductMeasurementUnitTranslation(): void
-    {
-        // Assign
-        $code = 'MYCODE' . random_int(1, 100);
-        $productTransfer = $this->tester->haveProduct();
-        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
-            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
-        ]);
-
-        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
-            $productTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
-        );
-
-        $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
-            $productTransfer->getIdProductConcrete(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
-        );
-
-        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
-        $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer(
-            $cartChangeTransfer,
-            $productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit(),
-            $productTransfer->getSku()
-        );
-
-        $cartChangeTransfer = $this->productMeasurementUnitFacade
-            ->expandCartChangeItemsWithProductMeasurementUnitTranslation($cartChangeTransfer);
-
-        $this->assertInstanceOf(CartChangeTransfer::class, $cartChangeTransfer);
     }
 
     /**

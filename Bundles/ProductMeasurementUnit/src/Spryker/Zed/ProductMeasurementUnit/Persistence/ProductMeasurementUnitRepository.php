@@ -183,15 +183,15 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param int $idOrder
+     * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer[]
      */
-    public function querySalesOrderItemsByIdSalesOrder($idOrder): array
+    public function querySalesOrderItemsByIdSalesOrder($idSalesOrder): array
     {
         $salesOrderItemEntities = $this->getFactory()
             ->getSalesOrderItemQuery()
-            ->filterByFkSalesOrder($idOrder)
+            ->filterByFkSalesOrder($idSalesOrder)
             ->find();
 
         $spySalesOrderItemEntityTransfers = [];

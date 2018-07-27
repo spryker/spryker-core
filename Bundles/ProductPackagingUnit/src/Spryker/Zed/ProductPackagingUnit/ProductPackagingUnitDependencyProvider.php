@@ -64,7 +64,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
-        $container = $this->addSalesOrderItemQuery($container);
+        $container = $this->addSalesOrderItemPropelQuery($container);
 
         return $container;
     }
@@ -186,7 +186,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesOrderItemQuery(Container $container): Container
+    protected function addSalesOrderItemPropelQuery(Container $container): Container
     {
         $container[static::PROPEL_QUERY_SALES_ORDER_ITEM] = function (Container $container) {
             return SpySalesOrderItemQuery::create();

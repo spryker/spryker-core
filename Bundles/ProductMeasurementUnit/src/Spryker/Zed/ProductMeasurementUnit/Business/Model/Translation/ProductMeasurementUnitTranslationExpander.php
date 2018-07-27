@@ -32,8 +32,9 @@ class ProductMeasurementUnitTranslationExpander implements ProductMeasurementUni
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    public function translateProductMeasurementSalesUnit(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer)
-    {
+    public function translateProductMeasurementSalesUnit(
+        ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
+    ): ProductMeasurementSalesUnitTransfer {
         $productMeasurementSalesUnitTransfer
             ->requireProductMeasurementUnit();
 
@@ -92,11 +93,10 @@ class ProductMeasurementUnitTranslationExpander implements ProductMeasurementUni
      *
      * @return string
      */
-    protected function translate(string $msg)
+    protected function translate(string $msg): string
     {
         try {
-            $localizedMsg = $this->glossaryFacade
-                ->translate($msg);
+            $localizedMsg = $this->glossaryFacade->translate($msg);
         } catch (MissingTranslationException $e) {
             $localizedMsg = $msg;
         }
