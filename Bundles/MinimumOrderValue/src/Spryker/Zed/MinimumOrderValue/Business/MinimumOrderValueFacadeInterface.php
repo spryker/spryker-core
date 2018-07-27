@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface MinimumOrderValueFacadeInterface
 {
@@ -40,7 +42,7 @@ interface MinimumOrderValueFacadeInterface
 
     /**
      * Specification:
-     * - Get minimum order value trategy for a given key.
+     * - Get minimum order value strategy for a given key.
      *
      * @api
      *
@@ -53,6 +55,22 @@ interface MinimumOrderValueFacadeInterface
     public function getMinimumOrderValueType(
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
     ): MinimumOrderValueTypeTransfer;
+
+    /**
+     * Specification:
+     * - Get Global Thresholds by Store and Currency.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     */
+    public function getGlobalThresholdsByStoreAndCurrency(
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer
+    ): array;
 
     /**
      * Specification:

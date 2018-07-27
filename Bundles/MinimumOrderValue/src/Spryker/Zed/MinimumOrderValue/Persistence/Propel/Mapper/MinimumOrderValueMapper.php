@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Persistence\Propel\Mapper;
 
+use ArrayObject;
+use Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValue;
@@ -43,6 +45,26 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
     ): MinimumOrderValueTransfer {
         $minimumOrderValueTransfer->fromArray($minimumOrderValueEntity->toArray(), true)
             ->setIdMinimumOrderValue($minimumOrderValueEntity->getIdMinOrderValue());
+
+        if (!$minimumOrderValueTransfer->getMinimumOrderValueType()) {
+            $minimumOrderValueTransfer->setMinimumOrderValueType(new MinimumOrderValueTypeTransfer());
+        }
+        $minimumOrderValueTransfer->setMinimumOrderValueType(
+            $minimumOrderValueTransfer->getMinimumOrderValueType()->fromArray(
+                $minimumOrderValueEntity->getMinimumOrderValueType()->toArray(),
+                true
+            )
+        );
+
+        $minimumOrderValueTransfer->setLocalizedMessages(new ArrayObject());
+        foreach ($minimumOrderValueEntity->getSpyMinimumOrderValueLocalizedMessages() as $minimumOrderValueLocalizedMessageEntity) {
+            $minimumOrderValueTransfer->addLocalizedMessage(
+                (new MinimumOrderValueLocalizedMessageTransfer())->fromArray(
+                    $minimumOrderValueLocalizedMessageEntity->toArray(),
+                    true
+                )
+            );
+        }
 
         return $minimumOrderValueTransfer;
     }
