@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Spryker\Zed\Glossary\Business\Exception\MissingTranslationException;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeInterface;
@@ -26,23 +25,6 @@ class ProductMeasurementUnitTranslationExpander implements ProductMeasurementUni
         ProductMeasurementUnitToGlossaryFacadeInterface $glossaryFacade
     ) {
         $this->glossaryFacade = $glossaryFacade;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    public function expandCartChangeItems(CartChangeTransfer $cartChangeTransfer)
-    {
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getQuantitySalesUnit()) {
-                continue;
-            }
-            $this->translateProductMeasurementSalesUnit($itemTransfer->getQuantitySalesUnit());
-        }
-
-        return $cartChangeTransfer;
     }
 
     /**

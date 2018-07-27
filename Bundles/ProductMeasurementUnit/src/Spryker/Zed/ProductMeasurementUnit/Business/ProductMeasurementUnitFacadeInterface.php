@@ -156,18 +156,6 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
-     * - Expands the items of the CartChangeTransfer with translated MeasurementUnit data.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    public function expandCartChangeItemsWithProductMeasurementUnitTranslation(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
-
-    /**
-     * Specification:
      * - Translate ProductMeasurementSalesUnit
      *
      * @api

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface;
 
 class OrderExpander implements OrderExpanderInterface
@@ -23,12 +24,20 @@ class OrderExpander implements OrderExpanderInterface
     protected $productMeasurementUnitRepository;
 
     /**
+     * @var \Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpanderInterface
+     */
+    protected $productMeasurementUnitTranslationExpander;
+
+    /**
      * @param \Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface $productMeasurementUnitRepository
+     * @param \Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpanderInterface $productMeasurementUnitTranslationExpander
      */
     public function __construct(
-        ProductMeasurementUnitRepositoryInterface $productMeasurementUnitRepository
+        ProductMeasurementUnitRepositoryInterface $productMeasurementUnitRepository,
+        ProductMeasurementUnitTranslationExpanderInterface $productMeasurementUnitTranslationExpander
     ) {
         $this->productMeasurementUnitRepository = $productMeasurementUnitRepository;
+        $this->productMeasurementUnitTranslationExpander = $productMeasurementUnitTranslationExpander;
     }
 
     /**
@@ -51,8 +60,9 @@ class OrderExpander implements OrderExpanderInterface
                 continue;
             }
 
-            $quantitySalesUnit = $this->hydrateQuantitySalesUnitTransfer($salesOrderItemEntityTransfer);
-            $itemTransfer->setQuantitySalesUnit($quantitySalesUnit);
+            $itemTransfer->setQuantitySalesUnit(
+                $this->hydrateQuantitySalesUnitTransfer($salesOrderItemEntityTransfer)
+            );
         }
 
         return $orderTransfer;
@@ -77,6 +87,8 @@ class OrderExpander implements OrderExpanderInterface
             $salesOrderItemEntityTransfer->getQuantityMeasurementUnitCode()
         );
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
+
+        $this->productMeasurementUnitTranslationExpander->translateProductMeasurementSalesUnit($productMeasurementSalesUnitTransfer);
 
         return $productMeasurementSalesUnitTransfer;
     }

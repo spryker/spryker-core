@@ -113,7 +113,8 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     public function createOrderExpander(): OrderExpanderInterface
     {
         return new OrderExpander(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createProductMeasurementUnitTranslationExpander()
         );
     }
 
