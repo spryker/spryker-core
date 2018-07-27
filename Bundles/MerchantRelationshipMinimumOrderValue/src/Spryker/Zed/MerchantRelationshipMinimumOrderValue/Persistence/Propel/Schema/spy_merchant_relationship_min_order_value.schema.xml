@@ -10,9 +10,7 @@
         <column name="id_merchant_relationship_min_order_value" required="true" type="INTEGER" primaryKey="true"
                 autoIncrement="true"/>
         <column name="fk_merchant_relationship" type="INTEGER" required="true"/>
-        <column name="fk_min_order_value_attribute" type="INTEGER" required="true"/>
         <column name="fk_min_order_value_type" type="INTEGER" required="true"/>
-        <column name="threshold_group" type="VARCHAR" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
         <column name="fk_currency" type="INTEGER" required="true"/>
         <column name="value" type="INTEGER" required="true"/>
@@ -40,13 +38,6 @@
                      phpName="Store">
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
-
-        <unique name="spy_mer_rel_min_order_value-unique-threshold_group-store-currency-fk_merchant_relationship">
-            <unique-column name="threshold_group"/>
-            <unique-column name="fk_store"/>
-            <unique-column name="fk_currency"/>
-            <unique-column name="fk_merchant_relationship"/>
-        </unique>
     </table>
 
 </database>

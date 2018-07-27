@@ -1,5 +1,9 @@
-namespace: MerchantRelationshipMinimumOrderValue
+namespace: SprykerTest
 actor: Tester
+
+include:
+    - tests/SprykerTest/Zed/MerchantRelationshipMinimumOrderValue
+
 paths:
     tests: tests
     log: tests/_output

@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Persistence;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 
 interface MinimumOrderValueEntityManagerInterface
 {
@@ -22,19 +20,11 @@ interface MinimumOrderValueEntityManagerInterface
     public function saveMinimumOrderValueType(MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer): MinimumOrderValueTypeTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param int $value
-     * @param int|null $fee
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
     public function setStoreThreshold(
-        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
-        StoreTransfer $storeTransfer,
-        CurrencyTransfer $currencyTransfer,
-        int $value,
-        ?int $fee = null
+        MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): MinimumOrderValueTransfer;
 }

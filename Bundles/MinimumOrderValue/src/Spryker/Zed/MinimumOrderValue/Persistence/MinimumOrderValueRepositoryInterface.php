@@ -7,16 +7,19 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Persistence;
 
-use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface MinimumOrderValueRepositoryInterface
 {
     /**
-     * @param string $minimumOrderValueTypeName
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
      */
-    public function findMinimumOrderValueTypeByName(
-        string $minimumOrderValueTypeName
-    ): MinimumOrderValueTypeTransfer;
+    public function getGlobalThresholdsByStoreAndCurrency(
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer
+    ): array;
 }

@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Persistence;
 
-use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -16,25 +18,36 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MinimumOrderValueRepository extends AbstractRepository implements MinimumOrderValueRepositoryInterface
 {
     /**
-     * @param string $minimumOrderValueTypeName
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
      */
-    public function findMinimumOrderValueTypeByName(
-        string $minimumOrderValueTypeName
-    ): MinimumOrderValueTypeTransfer {
-        $minimumOrderValueTypeEntity = $this->getFactory()
-            ->createMinimumOrderValueTypeQuery()
-            ->filterByName($minimumOrderValueTypeName)
-            ->findOne();
+    public function getGlobalThresholdsByStoreAndCurrency(
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer
+    ): array {
+        $minOrderValueEntities = $this->getFactory()
+            ->createMinimumOrderValueQuery()
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->filterByFkCurrency($currencyTransfer->getIdCurrency())
+            ->joinWithMinimumOrderValueType()
+            ->leftJoinWithSpyMinimumOrderValueLocalizedMessage()
+            ->find();
 
-        $minimumOrderValueTypeTransfer = $this->getFactory()
-            ->createMinimumOrderValueMapper()
-            ->mapMinimumOrderValueTypeTransfer(
-                $minimumOrderValueTypeEntity,
-                new MinimumOrderValueTypeTransfer()
+        $orderSourceTransfers = [];
+
+        $mapper = $this->getFactory()->createMinimumOrderValueMapper();
+
+        foreach ($minOrderValueEntities as $minOrderValueEntity) {
+            $orderSourceTransfer = $mapper->mapMinimumOrderValueEntityToTransfer(
+                $minOrderValueEntity,
+                new MinimumOrderValueTransfer()
             );
 
-        return $minimumOrderValueTypeTransfer;
+            $orderSourceTransfers[] = $orderSourceTransfer;
+        }
+
+        return $orderSourceTransfers;
     }
 }
