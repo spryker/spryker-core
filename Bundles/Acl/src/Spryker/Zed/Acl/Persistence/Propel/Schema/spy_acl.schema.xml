@@ -52,6 +52,12 @@
         <foreign-key name="spy_acl_user_has_group-fk_acl_group" foreignTable="spy_acl_group" onDelete="CASCADE">
             <reference local="fk_acl_group" foreign="id_acl_group"/>
         </foreign-key>
+        <index name="index-spy_acl_user_has_group-fk_user">
+            <index-column name="fk_user"/>
+        </index>
+        <index name="index-spy_acl_user_has_group-fk_acl_group">
+            <index-column name="fk_acl_group"/>
+        </index>
     </table>
 
     <table name="spy_acl_groups_has_roles" isCrossRef="true">
