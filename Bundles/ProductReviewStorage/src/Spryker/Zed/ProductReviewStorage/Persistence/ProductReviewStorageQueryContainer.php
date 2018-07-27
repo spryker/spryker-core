@@ -55,4 +55,25 @@ class ProductReviewStorageQueryContainer extends AbstractQueryContainer implemen
             ->select([static::FIELD_FK_PRODUCT_ABSTRACT, static::FIELD_AVERAGE_RATING, static::FIELD_COUNT])
             ->groupBy(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT);
     }
+
+    /**
+     * @api
+     *
+     * @param int[] $productReviewsIds
+     *
+     * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
+     */
+    public function queryProductReviewsByIds(array $productReviewsIds)
+    {
+        return $this->getFactory()
+            ->getProductReviewQuery()
+            ->queryProductReview()
+            ->filterByIdProductReview_In($productReviewsIds)
+            ->filterByStatus(SpyProductReviewTableMap::COL_STATUS_APPROVED)
+            ->withColumn(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_FK_PRODUCT_ABSTRACT)
+            ->withColumn(sprintf('AVG(%s)', SpyProductReviewTableMap::COL_RATING), static::FIELD_AVERAGE_RATING)
+            ->withColumn(sprintf('COUNT(%s)', SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT), static::FIELD_COUNT)
+            ->select([static::FIELD_FK_PRODUCT_ABSTRACT, static::FIELD_AVERAGE_RATING, static::FIELD_COUNT])
+            ->groupBy(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT);
+    }
 }

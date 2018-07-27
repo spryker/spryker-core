@@ -427,7 +427,9 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductConcreteFormEditTabs()
     {
-        return new ProductConcreteFormEditTabs();
+        return new ProductConcreteFormEditTabs(
+            $this->getProductConcreteFormEditTabsExpanderPlugins()
+        );
     }
 
     /**
@@ -526,5 +528,13 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductFormTransferMapperExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface[]
+     */
+    public function getProductConcreteFormEditTabsExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER);
     }
 }

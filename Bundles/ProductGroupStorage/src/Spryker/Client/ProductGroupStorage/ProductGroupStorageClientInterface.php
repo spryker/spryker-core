@@ -10,6 +10,9 @@ namespace Spryker\Client\ProductGroupStorage;
 interface ProductGroupStorageClientInterface
 {
     /**
+     * Specification:
+     *  - Return product group storage data by product abstract id.
+     *
      * @api
      *
      * @param int $idProductAbstract

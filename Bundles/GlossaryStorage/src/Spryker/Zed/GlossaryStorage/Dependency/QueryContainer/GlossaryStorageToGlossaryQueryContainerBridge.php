@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\GlossaryStorage\Dependency\QueryContainer;
 
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
+
 class GlossaryStorageToGlossaryQueryContainerBridge implements GlossaryStorageToGlossaryQueryContainerInterface
 {
     /**
@@ -28,5 +30,13 @@ class GlossaryStorageToGlossaryQueryContainerBridge implements GlossaryStorageTo
     public function queryTranslations()
     {
         return $this->glossaryQueryContainer->queryTranslations();
+    }
+
+    /**
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
+     */
+    public function queryKeys(): SpyGlossaryKeyQuery
+    {
+        return $this->glossaryQueryContainer->queryKeys();
     }
 }

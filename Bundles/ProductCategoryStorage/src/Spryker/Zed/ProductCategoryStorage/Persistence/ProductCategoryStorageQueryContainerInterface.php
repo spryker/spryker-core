@@ -23,6 +23,15 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
     /**
      * @api
      *
+     * @param int[] $productCategoryIds
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryProductCategoryByIds($productCategoryIds);
+
+    /**
+     * @api
+     *
      * @param int $idNode
      * @param int $idLocale
      * @param bool $excludeRootNode
