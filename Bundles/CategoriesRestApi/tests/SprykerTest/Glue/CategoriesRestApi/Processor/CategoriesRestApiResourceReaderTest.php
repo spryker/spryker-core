@@ -10,7 +10,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig;
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientBridge;
-use Spryker\Glue\CategoriesRestApi\Processor\Categories\CategoriesRestApiReader;
+use Spryker\Glue\CategoriesRestApi\Processor\Categories\CategoryReader;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapper;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 
@@ -48,9 +48,9 @@ class CategoriesRestApiResourceReaderTest extends Unit
      */
     public function testReadCategoriesTreeWillReturnValidRestResponseObject(): void
     {
-        $categoriesRestApiReader = $this->createCategoryTreeReader();
+        $categoryReader = $this->createCategoryTreeReader();
 
-        $categoriesTreeRestResponse = $categoriesRestApiReader->readCategoriesTree(static::DE_LOCALE);
+        $categoriesTreeRestResponse = $categoryReader->readCategoriesTree(static::DE_LOCALE);
 
         $this->assertInstanceOf('\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface', $categoriesTreeRestResponse);
         $this->assertEquals(CategoriesRestApiConfig::RESOURCE_CATEGORY_TREES, $categoriesTreeRestResponse->getResources()[0]->getType());
@@ -63,9 +63,9 @@ class CategoriesRestApiResourceReaderTest extends Unit
      */
     public function testReadCategoriesNodeWillReturnValidRestResponseObject(): void
     {
-        $categoriesRestApiReader = $this->createCategoryReader($this->getCategoryTransfer());
+        $categoryReader = $this->createCategoryReader($this->getCategoryTransfer());
 
-        $categoriesTreeRestResponse = $categoriesRestApiReader->readCategory($this->categoryNodeData['node_id'], static::DE_LOCALE);
+        $categoriesTreeRestResponse = $categoryReader->readCategory($this->categoryNodeData['node_id'], static::DE_LOCALE);
 
         $this->assertInstanceOf('\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface', $categoriesTreeRestResponse);
         $this->assertEmpty($categoriesTreeRestResponse->getErrors());
@@ -91,10 +91,10 @@ class CategoriesRestApiResourceReaderTest extends Unit
      */
     public function testReadCategoriesNodeWillReturnValidRestResponseObjectWhenCategoryIsNotFound(): void
     {
-        $categoriesRestApiReader = $this->createCategoryReader($this->getCategoryEmptyTransfer());
+        $categoryReader = $this->createCategoryReader($this->getCategoryEmptyTransfer());
 
-        $categoriesRestApiReader->readCategory($this->categoryNodeData['node_id'], static::DE_LOCALE);
-        $categoriesTreeRestResponse = $categoriesRestApiReader->readCategory($this->categoryNodeData['node_id'], static::DE_LOCALE);
+        $categoryReader->readCategory($this->categoryNodeData['node_id'], static::DE_LOCALE);
+        $categoriesTreeRestResponse = $categoryReader->readCategory($this->categoryNodeData['node_id'], static::DE_LOCALE);
 
         $this->assertInstanceOf('\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface', $categoriesTreeRestResponse);
         $this->assertNotEmpty($categoriesTreeRestResponse->getErrors());
@@ -129,7 +129,7 @@ class CategoriesRestApiResourceReaderTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer $returnTransfer
      *
-     * @return \Spryker\Glue\CategoriesRestApi\Processor\Categories\CategoriesRestApiReader
+     * @return \Spryker\Glue\CategoriesRestApi\Processor\Categories\CategoryReader
      */
     protected function createCategoryReader(CategoryNodeStorageTransfer $returnTransfer)
     {
@@ -143,17 +143,17 @@ class CategoriesRestApiResourceReaderTest extends Unit
                 $returnTransfer
             );
 
-        $categoriesRestApiReader = new CategoriesRestApiReader(
+        $categoryReader = new CategoryReader(
             new RestResourceBuilder(),
             $mockCategoryClientBridge,
             new CategoriesResourceMapper()
         );
 
-        return $categoriesRestApiReader;
+        return $categoryReader;
     }
 
     /**
-     * @return \Spryker\Glue\CategoriesRestApi\Processor\Categories\CategoriesRestApiReader
+     * @return \Spryker\Glue\CategoriesRestApi\Processor\Categories\CategoryReader
      */
     protected function createCategoryTreeReader()
     {
@@ -166,12 +166,12 @@ class CategoriesRestApiResourceReaderTest extends Unit
                 $this->getCategoryTree()
             );
 
-        $categoriesRestApiReader = new CategoriesRestApiReader(
+        $categoryReader = new CategoryReader(
             new RestResourceBuilder(),
             $mockCategoryClientBridge,
             new CategoriesResourceMapper()
         );
 
-        return $categoriesRestApiReader;
+        return $categoryReader;
     }
 }
