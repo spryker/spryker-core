@@ -8,7 +8,7 @@ namespace Spryker\Glue\CategoriesRestApi\Processor\Categories;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-interface CategoryReaderInterface
+interface CategoriesReaderInterface
 {
     /**
      * @param string $locale
