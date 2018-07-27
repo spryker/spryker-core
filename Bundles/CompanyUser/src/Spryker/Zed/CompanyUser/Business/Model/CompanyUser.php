@@ -218,6 +218,7 @@ class CompanyUser implements CompanyUserInterface
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
         $companyUserTransfer = $this->companyUserEntityManager->saveCompanyUser($companyUserTransfer);
         $companyUserTransfer->setCustomer($companyUserResponseTransfer->getCompanyUser()->getCustomer());
+        $companyUserTransfer->setCompanyRoleCollection($companyUserResponseTransfer->getCompanyUser()->getCompanyRoleCollection());
         $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
         $companyUserResponseTransfer = $this->companyUserPluginExecutor->executePostSavePlugins($companyUserResponseTransfer);
 
