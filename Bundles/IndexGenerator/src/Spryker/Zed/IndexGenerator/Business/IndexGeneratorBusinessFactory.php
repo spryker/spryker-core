@@ -43,7 +43,7 @@ class IndexGeneratorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\IndexGenerator\SchemaFinder\MergedSchemaFinderInterface
+     * @return \Spryker\Zed\IndexGenerator\Business\SchemaFinder\MergedSchemaFinderInterface
      */
     protected function createFinder(): MergedSchemaFinderInterface
     {
