@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\SynchronizationExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
-
 interface SynchronizationDataRepositoryPluginInterface extends SynchronizationDataPluginInterface
 {
     /**
@@ -20,7 +18,7 @@ interface SynchronizationDataRepositoryPluginInterface extends SynchronizationDa
      *
      * @param int[] $ids
      *
-     * @return SynchronizationDataTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
     public function getData(array $ids = []);
 }

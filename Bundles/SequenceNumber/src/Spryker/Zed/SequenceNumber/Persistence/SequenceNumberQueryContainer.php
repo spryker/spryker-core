@@ -25,9 +25,9 @@ class SequenceNumberQueryContainer extends AbstractQueryContainer implements Seq
     }
 
     /**
-     * @deprecated This is not used anymore.
-     *
      * @api
+     *
+     * @deprecated This is not used anymore.
      *
      * @param int $idSalesOrder
      *
