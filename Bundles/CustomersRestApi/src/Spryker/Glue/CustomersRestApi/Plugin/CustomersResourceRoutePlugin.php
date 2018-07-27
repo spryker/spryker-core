@@ -27,7 +27,7 @@ class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addPost('post');
+            ->addPost('post', false);
 
         return $resourceRouteCollection;
     }

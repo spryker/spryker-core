@@ -13,7 +13,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/glue-application": "*",
     "spryker/testify": "*"
   },
   "suggest": {
