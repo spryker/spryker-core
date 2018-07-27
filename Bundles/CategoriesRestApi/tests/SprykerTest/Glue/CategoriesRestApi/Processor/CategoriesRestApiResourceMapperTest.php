@@ -23,15 +23,39 @@ use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapper;
 class CategoriesRestApiResourceMapperTest extends Unit
 {
     /**
-     * @var \Generated\Shared\Transfer\RestCategoriesTreeTransfer
+     * @var array
      */
-    protected $restCategoriesTreeTransfer;
+    protected $categoryTreeData = [
+        "node_id" => 4,
+        "order" => 90,
+        "name" => "Test category",
+    ];
+
+    /**
+     * @var array
+     */
+    protected $categoryChildrenNodes = [
+        [
+            "node_id" => 5,
+            "order" => 30,
+            "name" => "Test child category",
+        ],
+        [
+            "node_id" => 4,
+            "order" => 40,
+            "name" => "Test second child category",
+        ],
+    ];
 
     /**
      * @return void
      */
-    protected function setUp(): void
+    protected function setUp()
     {
+        if (empty($this->categoryTreeData['children'])) {
+            $this->categoryTreeData['children'] = $this->mockChildren();
+        }
+
         parent::setUp();
     }
 
@@ -40,14 +64,14 @@ class CategoriesRestApiResourceMapperTest extends Unit
      */
     public function testMapperWillReturnRestResponseWithNotEmptyAttributesData(): void
     {
-        $this->restCategoriesTreeTransfer = (new CategoriesResourceMapper())
+        $restCategoriesTreeTransfer = (new CategoriesResourceMapper())
             ->mapCategoriesResourceToRestCategoriesTransfer($this->mockCategoryClientResponseTransfer());
 
-        $this->assertEquals('Test category', $this->restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getName());
-        $this->assertEquals(90, $this->restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getOrder());
-        $this->assertEquals(4, $this->restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getNodeId());
-        $this->assertNotEmpty($this->restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getChildren());
-        $this->assertEquals(2, $this->restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getChildren()->count());
+        $this->assertEquals('Test category', $restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getName());
+        $this->assertEquals(90, $restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getOrder());
+        $this->assertEquals(4, $restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getNodeId());
+        $this->assertNotEmpty($restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getChildren());
+        $this->assertEquals(2, $restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getChildren()->count());
     }
 
     /**
@@ -55,14 +79,14 @@ class CategoriesRestApiResourceMapperTest extends Unit
      */
     public function testMapperWillReturnRestResponseWithEmptyData(): void
     {
-        $this->restCategoriesTreeTransfer = (new CategoriesResourceMapper())
+        $restCategoriesTreeTransfer = (new CategoriesResourceMapper())
             ->mapCategoriesResourceToRestCategoriesTransfer($this->mockCategoryClientEmptyResponseTransfer());
 
-        $this->assertNull($this->restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getName());
-        $this->assertNull($this->restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getOrder());
-        $this->assertNull($this->restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getNodeId());
-        $this->assertEmpty($this->restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getChildren());
-        $this->assertEquals(0, $this->restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getChildren()->count());
+        $this->assertNull($restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getName());
+        $this->assertNull($restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getOrder());
+        $this->assertNull($restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getNodeId());
+        $this->assertEmpty($restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getChildren());
+        $this->assertEquals(0, $restCategoriesTreeTransfer->getCategoryNodesStorage()[0]->getChildren()->count());
     }
 
     /**
@@ -86,12 +110,7 @@ class CategoriesRestApiResourceMapperTest extends Unit
      */
     protected function mockCategoryTransfer()
     {
-        return (new CategoryNodeStorageTransfer())->fromArray([
-            "node_id" => 4,
-            "order" => 90,
-            "name" => "Test category",
-            "children" => $this->mockChildren(),
-        ]);
+        return (new CategoryNodeStorageTransfer())->fromArray($this->categoryTreeData);
     }
 
     /**
@@ -101,18 +120,7 @@ class CategoriesRestApiResourceMapperTest extends Unit
     {
         $children = new ArrayObject();
 
-        $children->append([
-            [
-                "node_id" => 5,
-                "order" => 30,
-                "name" => "Test child category",
-            ],
-            [
-                "node_id" => 4,
-                "order" => 40,
-                "name" => "Test second child category",
-            ],
-        ]);
+        $children->append($this->categoryChildrenNodes);
 
         return $children;
     }

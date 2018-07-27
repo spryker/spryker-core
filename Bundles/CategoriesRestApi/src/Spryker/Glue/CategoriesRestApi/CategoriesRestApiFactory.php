@@ -13,6 +13,9 @@ use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapper;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
+/**
+ * @method \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface getResourceBuilder()
+ */
 class CategoriesRestApiFactory extends AbstractFactory
 {
     /**

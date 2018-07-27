@@ -33,8 +33,6 @@ class CategoriesRestApiReader implements CategoriesRestApiReaderInterface
     protected $categoriesResourceMapper;
 
     /**
-     * CategoriesRestApiReader constructor.
-     *
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface $categoryStorageClient
      * @param \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapperInterface $categoriesResourceMapper
@@ -68,6 +66,7 @@ class CategoriesRestApiReader implements CategoriesRestApiReaderInterface
                 null,
                 $categoriesTransfer
             );
+
         return $restResponse->addResource($restResource);
     }
 
