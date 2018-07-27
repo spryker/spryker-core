@@ -14,6 +14,8 @@ use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpan
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderExpander;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderExpanderInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderItemExpander;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderItemExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitGroupKeyGenerator;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitGroupKeyGeneratorInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitReader;
@@ -116,6 +118,14 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductMeasurementUnitTranslationExpander()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderItemExpanderInterface
+     */
+    public function createOrderItemExpander(): OrderItemExpanderInterface
+    {
+        return new OrderItemExpander();
     }
 
     /**

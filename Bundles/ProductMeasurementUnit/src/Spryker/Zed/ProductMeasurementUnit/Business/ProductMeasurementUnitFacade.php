@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -200,6 +201,25 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
         return $this->getFactory()
             ->createOrderExpander()
             ->expandOrderWithQuantitySalesUnit($orderTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
+     */
+    public function expandSalesOrderItem(
+        ItemTransfer $itemTransfer,
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+    ): SpySalesOrderItemEntityTransfer {
+        return $this->getFactory()
+            ->createOrderItemExpander()
+            ->expandOrderItem($itemTransfer, $salesOrderItemEntity);
     }
 
     /**

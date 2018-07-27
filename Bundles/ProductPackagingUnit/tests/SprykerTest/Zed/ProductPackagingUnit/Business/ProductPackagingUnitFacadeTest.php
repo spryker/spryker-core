@@ -723,8 +723,13 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     {
         // Assign
         $salesOrderEntity = $this->tester->create();
-        $orderTransfer = (new OrderTransfer())->fromArray($salesOrderEntity->toArray(), true);
+        $productMeasurementUnit = $this->tester->haveProductMeasurementUnit();
+        foreach ($salesOrderEntity->getItems() as $salesOrderItem) {
+            $salesOrderItem->setAmountMeasurementUnitName($productMeasurementUnit->getName());
+            $salesOrderItem->save();
+        }
 
+        $orderTransfer = (new OrderTransfer())->fromArray($salesOrderEntity->toArray(), true);
         foreach ($salesOrderEntity->getItems() as $salesOrderItem) {
             $itemTransfer = (new ItemTransfer())->fromArray($salesOrderItem->toArray(), true);
             $orderTransfer->addItem($itemTransfer);
