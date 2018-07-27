@@ -16,6 +16,12 @@ class CategoriesResourceRoutePlugin extends AbstractPlugin implements ResourceRo
 {
     /**
      * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
+     *
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
@@ -29,6 +35,10 @@ class CategoriesResourceRoutePlugin extends AbstractPlugin implements ResourceRo
 
     /**
      * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
      */
     public function getResourceType(): string
     {
@@ -37,6 +47,10 @@ class CategoriesResourceRoutePlugin extends AbstractPlugin implements ResourceRo
 
     /**
      * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
      */
     public function getController(): string
     {
@@ -45,6 +59,10 @@ class CategoriesResourceRoutePlugin extends AbstractPlugin implements ResourceRo
 
     /**
      * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
      */
     public function getResourceAttributesClassName(): string
     {
