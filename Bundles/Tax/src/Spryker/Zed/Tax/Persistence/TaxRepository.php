@@ -16,19 +16,30 @@ class TaxRepository extends AbstractRepository implements TaxRepositoryInterface
 {
     /**
      * @param string $name
-     * @param int|null $idTaxSet
      *
      * @return bool
      */
-    public function isTaxSetNameUnique(string $name, ?int $idTaxSet = null): bool
+    public function isTaxSetNameUnique(string $name): bool
     {
         $query = $this->getFactory()
             ->createTaxSetQuery()
             ->filterByName($name);
 
-        if ($idTaxSet) {
-            $query = $query->filterByIdTaxSet($idTaxSet, Criteria::NOT_EQUAL);
-        }
+        return !$query->exists();
+    }
+
+    /**
+     * @param string $name
+     * @param int $idTaxSet
+     *
+     * @return bool
+     */
+    public function isTaxSetNameAndIdUnique(string $name, int $idTaxSet): bool
+    {
+        $query = $this->getFactory()
+            ->createTaxSetQuery()
+            ->filterByName($name)
+            ->filterByIdTaxSet($idTaxSet, Criteria::NOT_EQUAL);
 
         return !$query->exists();
     }

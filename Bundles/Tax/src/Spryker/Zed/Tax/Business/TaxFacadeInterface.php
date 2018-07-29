@@ -334,15 +334,25 @@ interface TaxFacadeInterface
     /**
      * Specification:
      *  - Check if tax set with a given name exist
-     *  - When the second argument is specified,
-     *    then Tax Set with specified ID will be excluded from the check (useful for update operation)
      *
      * @api
      *
      * @param string $name
-     * @param int|null $idTaxSet
      *
      * @return bool
      */
-    public function taxSetWithSuchNameExists(string $name, ?int $idTaxSet = null): bool;
+    public function taxSetWithSameNameExists(string $name): bool;
+
+    /**
+     * Specification:
+     *  - Check if tax set with a given Name and Id exist
+     *
+     * @api
+     *
+     * @param string $name
+     * @param int $idTaxSet
+     *
+     * @return bool
+     */
+    public function taxSetWithSameNameAndIdExists(string $name, int $idTaxSet): bool;
 }

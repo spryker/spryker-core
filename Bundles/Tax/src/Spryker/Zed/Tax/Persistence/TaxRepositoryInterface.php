@@ -10,9 +10,16 @@ interface TaxRepositoryInterface
 {
     /**
      * @param string $name
-     * @param int|null $idTaxSet
      *
      * @return bool
      */
-    public function isTaxSetNameUnique(string $name, ?int $idTaxSet = null): bool;
+    public function isTaxSetNameUnique(string $name): bool;
+
+    /**
+     * @param string $name
+     * @param int $idTaxSet
+     *
+     * @return bool
+     */
+    public function isTaxSetNameAndIdUnique(string $name, int $idTaxSet): bool;
 }

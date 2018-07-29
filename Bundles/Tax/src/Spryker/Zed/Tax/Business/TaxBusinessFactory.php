@@ -21,7 +21,7 @@ use Spryker\Zed\Tax\TaxDependencyProvider;
 /**
  * @method \Spryker\Zed\Tax\TaxConfig getConfig()
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface getRepository()()
+ * @method \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface getRepository()
  */
 class TaxBusinessFactory extends AbstractBusinessFactory
 {

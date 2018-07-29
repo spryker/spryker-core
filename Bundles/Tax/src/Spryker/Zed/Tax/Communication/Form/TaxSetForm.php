@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
  * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface getRepository()()
+ * @method \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface getRepository()
  */
 class TaxSetForm extends AbstractType
 {
@@ -160,7 +160,9 @@ class TaxSetForm extends AbstractType
         return new Callback([
             'callback' => function ($name, ExecutionContextInterface $context) {
                 $idTaxSet = $context->getObject()->getParent()->getData()->getIdTaxSet();
-                if ($this->getFacade()->taxSetWithSuchNameExists($name, $idTaxSet)) {
+                if (empty($idTaxSet) && $this->getFacade()->taxSetWithSameNameExists($name) ||
+                    !empty($idTaxSet) && $this->getFacade()->taxSetWithSameNameAndIdExists($name, $idTaxSet)
+                ) {
                     $context->addViolation('Tax Set with name "%name%" already exists.', [
                         '%name%' => $name,
                     ]);

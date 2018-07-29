@@ -121,15 +121,31 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      * @api
      *
      * @param string $name
-     * @param int|null $idTaxSet
      *
      * @return bool
      */
-    public function taxSetWithSuchNameExists(string $name, ?int $idTaxSet = null): bool
+    public function taxSetWithSameNameExists(string $name): bool
     {
         return $this->getFactory()
             ->createReaderModel()
-            ->taxSetWithSuchNameExists($name, $idTaxSet);
+            ->taxSetWithSameNameExists($name);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $name
+     * @param int $idTaxSet
+     *
+     * @return bool
+     */
+    public function taxSetWithSameNameAndIdExists(string $name, int $idTaxSet): bool
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->taxSetWithSameNameAndIdExists($name, $idTaxSet);
     }
 
     /**
