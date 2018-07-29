@@ -122,7 +122,7 @@ class CompanyUnitAddressTable extends AbstractTable
             static::COL_COMPANY_RELATION => 'Company',
             static::COL_ADDRESS1 => 'Address',
             static::COL_ADDRESS2 => 'Number',
-            static::COL_ADDRESS3 => 'Additional address',
+            static::COL_ADDRESS3 => 'Addition to address',
         ];
 
         $externalData = $this->companyUnitAddressTablePluginsExecutor->executeTableHeaderExpanderPlugins();

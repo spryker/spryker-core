@@ -7,12 +7,35 @@
 
 namespace Spryker\Client\PriceProduct\ProductPriceResolver;
 
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
+
 interface ProductPriceResolverInterface
 {
     /**
+     * @deprecated Please use resolveTransfer() instead
+     *
      * @param array $priceMap
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolve(array $priceMap);
+
+    /**
+     * @param array $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveTransfer(array $priceProductTransfers): CurrentProductPriceTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveProductPriceTransferByPriceProductFilter(
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): CurrentProductPriceTransfer;
 }

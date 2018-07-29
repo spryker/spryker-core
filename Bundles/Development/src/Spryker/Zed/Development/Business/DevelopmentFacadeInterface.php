@@ -236,6 +236,13 @@ interface DevelopmentFacadeInterface
     public function generateServiceIdeAutoCompletion();
 
     /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateGlueIdeAutoCompletion();
+
+    /**
      * Run the architecture sniffer against the given module and returns the violations
      *
      * @api

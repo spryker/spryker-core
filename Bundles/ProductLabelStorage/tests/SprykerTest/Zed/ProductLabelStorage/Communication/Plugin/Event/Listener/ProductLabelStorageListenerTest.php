@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductLabelStorage\Communication\Plugin\Event\Listene
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuery;
 use PHPUnit\Framework\SkippedTestError;
@@ -107,12 +108,13 @@ class ProductLabelStorageListenerTest extends Unit
         $productLabelDictionaryStorageListener->handleBulk($eventTransfers, ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE);
 
         // Assert
+        $labelsCount = SpyProductLabelQuery::create()->count();
         $labelDictionaryStorageCount = SpyProductLabelDictionaryStorageQuery::create()->count();
         $this->assertSame(2, $labelDictionaryStorageCount);
         $spyProductLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()->findOne();
         $this->assertNotNull($spyProductLabelDictionaryStorage);
         $data = $spyProductLabelDictionaryStorage->getData();
-        $this->assertSame(3, count($data['items']));
+        $this->assertSame($labelsCount, count($data['items']));
     }
 
     /**
