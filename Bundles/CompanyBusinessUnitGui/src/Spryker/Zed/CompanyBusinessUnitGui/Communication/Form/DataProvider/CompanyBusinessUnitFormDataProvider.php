@@ -113,9 +113,11 @@ class CompanyBusinessUnitFormDataProvider
         $idCompany = $this->findCompanyBusinessUnitTransfer($idCompanyBusinessUnit)->getFkCompany();
 
         foreach ($businessUnitCollection as $businessUnit) {
-            if ($idCompany && $businessUnit->getFkCompany() !== $idCompany ||
-                $idCompanyBusinessUnit === $businessUnit->getIdCompanyBusinessUnit()
-            ) {
+            if ($idCompany && $businessUnit->getFkCompany() !== $idCompany) {
+                continue;
+            }
+
+            if ($idCompanyBusinessUnit === $businessUnit->getIdCompanyBusinessUnit()) {
                 continue;
             }
 
