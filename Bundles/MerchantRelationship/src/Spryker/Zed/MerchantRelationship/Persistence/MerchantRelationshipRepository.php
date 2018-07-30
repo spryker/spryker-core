@@ -28,6 +28,7 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
      */
     public function getMerchantRelationshipById(int $idMerchantRelationship): ?MerchantRelationshipTransfer
     {
+        /** @var \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship|null $spyMerchantRelation */
         $spyMerchantRelation = $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->filterByIdMerchantRelationship($idMerchantRelationship)
