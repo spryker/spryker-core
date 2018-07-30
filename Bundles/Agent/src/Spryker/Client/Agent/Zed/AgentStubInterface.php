@@ -17,5 +17,5 @@ interface AgentStubInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\UserTransfer
      */
-    public function getAgentByUsername(UserTransfer $userTransfer): TransferInterface;
+    public function findAgentByUsername(UserTransfer $userTransfer): TransferInterface;
 }

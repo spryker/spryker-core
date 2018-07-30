@@ -22,5 +22,5 @@ interface AgentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getAgentByUsername(string $username): UserTransfer;
+    public function findAgentByUsername(string $username): UserTransfer;
 }

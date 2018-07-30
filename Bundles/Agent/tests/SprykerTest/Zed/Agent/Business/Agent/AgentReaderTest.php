@@ -5,27 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Agent\Business\AgentFinder;
+namespace SprykerTest\Zed\Agent\Business\Agent;
 
 use Codeception\Test\Unit;
 use Codeception\Util\Stub;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\Agent\Business\AgentFinder\AgentFinder;
-use Spryker\Zed\Agent\Business\AgentFinder\AgentFinderInterface;
+use Spryker\Zed\Agent\Business\Agent\AgentReader;
+use Spryker\Zed\Agent\Business\Agent\AgentReaderInterface;
 use Spryker\Zed\Agent\Persistence\AgentRepositoryInterface;
 
 /**
  * Auto-generated group annotations
- *
  * @group SprykerTest
  * @group Zed
  * @group Agent
  * @group Business
- * @group AgentFinder
- * @group AgentFinderTest
+ * @group Agent
+ * @group AgentReaderTest
  * Add your own group annotations below this line
  */
-class AgentFinderTest extends Unit
+class AgentReaderTest extends Unit
 {
     protected const EXITING_AGENT = 'agent@spryker.com';
     protected const NON_EXITING_AGENT = 'non-agent@spryker.com';
@@ -35,8 +34,8 @@ class AgentFinderTest extends Unit
      */
     public function testGetExitingAgentByUsername(): void
     {
-        $agentFinder = $this->createAgentFinder();
-        $userTransfer = $agentFinder->getAgentByUsername(static::EXITING_AGENT);
+        $agentFinder = $this->createAgentReader();
+        $userTransfer = $agentFinder->findAgentByUsername(static::EXITING_AGENT);
 
         $this->assertNotEmpty($userTransfer->getIdUser());
     }
@@ -46,18 +45,18 @@ class AgentFinderTest extends Unit
      */
     public function testGetNonExitingAgentByUsername(): void
     {
-        $agentFinder = $this->createAgentFinder();
-        $userTransfer = $agentFinder->getAgentByUsername(static::NON_EXITING_AGENT);
+        $agentFinder = $this->createAgentReader();
+        $userTransfer = $agentFinder->findAgentByUsername(static::NON_EXITING_AGENT);
 
         $this->assertEmpty($userTransfer->getIdUser());
     }
 
     /**
-     * @return \Spryker\Zed\Agent\Business\AgentFinder\AgentFinderInterface
+     * @return \Spryker\Zed\Agent\Business\Agent\AgentReaderInterface
      */
-    protected function createAgentFinder(): AgentFinderInterface
+    protected function createAgentReader(): AgentReaderInterface
     {
-        return new AgentFinder(
+        return new AgentReader(
             $this->createAgentRepositoryStub()
         );
     }

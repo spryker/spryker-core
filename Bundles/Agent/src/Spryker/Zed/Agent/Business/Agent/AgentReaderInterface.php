@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Agent\Business\AgentFinder;
+namespace Spryker\Zed\Agent\Business\Agent;
 
 use Generated\Shared\Transfer\UserTransfer;
 
-interface AgentFinderInterface
+interface AgentReaderInterface
 {
     /**
      * @param string $username
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getAgentByUsername(string $username): UserTransfer;
+    public function findAgentByUsername(string $username): UserTransfer;
 }

@@ -31,8 +31,8 @@ class AgentStub implements AgentStubInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\UserTransfer
      */
-    public function getAgentByUsername(UserTransfer $userTransfer): TransferInterface
+    public function findAgentByUsername(UserTransfer $userTransfer): TransferInterface
     {
-        return $this->zedStubClient->call('/agent/gateway/get-agent-by-username', $userTransfer);
+        return $this->zedStubClient->call('/agent/gateway/find-agent-by-username', $userTransfer);
     }
 }

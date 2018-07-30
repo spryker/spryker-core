@@ -24,11 +24,11 @@ class AgentClient extends AbstractClient implements AgentClientInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getAgentByUsername(UserTransfer $userTransfer): UserTransfer
+    public function findAgentByUsername(UserTransfer $userTransfer): UserTransfer
     {
         return $this->getFactory()
             ->createZedStub()
-            ->getAgentByUsername($userTransfer);
+            ->findAgentByUsername($userTransfer);
     }
 
     /**

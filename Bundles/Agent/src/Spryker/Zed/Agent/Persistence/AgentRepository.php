@@ -8,11 +8,9 @@
 namespace Spryker\Zed\Agent\Persistence;
 
 use Generated\Shared\Transfer\UserTransfer;
+use Orm\Zed\User\Persistence\SpyUserQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
-/**
- * @method \Spryker\Zed\Agent\Persistence\AgentPersistenceFactory getFactory()
- */
 class AgentRepository extends AbstractRepository implements AgentRepositoryInterface
 {
     /**
@@ -22,8 +20,7 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
      */
     public function findAgentByUsername(string $username): UserTransfer
     {
-        $userEntity = $this->getFactory()
-            ->createUserQuery()
+        $userEntity = SpyUserQuery::create()
             ->filterByIsAgent(true)
             ->filterByUsername($username)
             ->findOne();

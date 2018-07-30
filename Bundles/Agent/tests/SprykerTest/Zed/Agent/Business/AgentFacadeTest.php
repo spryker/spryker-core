@@ -29,6 +29,11 @@ use Spryker\Zed\User\Business\UserFacadeInterface;
 class AgentFacadeTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\Agent\AgentBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testGetExitingAgentByUsername(): void
@@ -36,7 +41,7 @@ class AgentFacadeTest extends Unit
         $userTransfer = $this->registerAgent();
 
         $agentFromAgentFacade = $this->getAgentFacade()
-            ->getAgentByUsername($userTransfer->getUsername());
+            ->findAgentByUsername($userTransfer->getUsername());
 
         $this->assertNotEmpty($agentFromAgentFacade->getIdUser());
         $this->assertTrue($agentFromAgentFacade->getIsAgent());
@@ -48,7 +53,7 @@ class AgentFacadeTest extends Unit
     public function testGetNonExitingAgentByUsername(): void
     {
         $agentFromAgentFacade = $this->getAgentFacade()
-            ->getAgentByUsername(
+            ->findAgentByUsername(
                 $this->createAgent()->getUsername()
             );
 

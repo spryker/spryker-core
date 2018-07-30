@@ -20,9 +20,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getAgentByUsernameAction(UserTransfer $userTransfer): UserTransfer
+    public function findAgentByUsernameAction(UserTransfer $userTransfer): UserTransfer
     {
         return $this->getFacade()
-            ->getAgentByUsername($userTransfer->getUsername());
+            ->findAgentByUsername($userTransfer->getUsername());
     }
 }

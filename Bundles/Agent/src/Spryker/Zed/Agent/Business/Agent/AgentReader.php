@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Agent\Business\AgentFinder;
+namespace Spryker\Zed\Agent\Business\Agent;
 
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Agent\Persistence\AgentRepositoryInterface;
 
-class AgentFinder implements AgentFinderInterface
+class AgentReader implements AgentReaderInterface
 {
     /**
      * @var \Spryker\Zed\Agent\Persistence\AgentRepositoryInterface
@@ -30,17 +30,8 @@ class AgentFinder implements AgentFinderInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getAgentByUsername(string $username): UserTransfer
+    public function findAgentByUsername(string $username): UserTransfer
     {
-        return $this->getAgentRepository()
-            ->findAgentByUsername($username);
-    }
-
-    /**
-     * @return \Spryker\Zed\Agent\Persistence\AgentRepositoryInterface
-     */
-    protected function getAgentRepository(): AgentRepositoryInterface
-    {
-        return $this->agentRepository;
+        return $this->agentRepository->findAgentByUsername($username);
     }
 }
