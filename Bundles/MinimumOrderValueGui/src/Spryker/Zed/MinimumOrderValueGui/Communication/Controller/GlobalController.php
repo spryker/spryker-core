@@ -9,6 +9,7 @@ namespace Spryker\Zed\MinimumOrderValueGui\Communication\Controller;
 
 use Exception;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,11 +29,18 @@ class GlobalController extends AbstractController
         $minimumOrderValueTransfers = $this->getDefaultMinimumOrderValueTransfer();
 
         $globalThresholdForm = $this->getFactory()->createGlobalThresholdForm($minimumOrderValueTransfers);
-        $globalThresholdForm->setData(['hard_value'=>333.44, 'global-threshold[hardValue]'=>77.88, 'soft_strategy'=>'option-soft-types-array']);
         $globalThresholdForm->handleRequest($request);
 
         if ($globalThresholdForm->isSubmitted() && $globalThresholdForm->isValid()) {
             try {
+                $minimumOrderValueTransfer = $this->getFactory()
+                    ->createGlobalThresholdFormMapper()
+                    ->map($globalThresholdForm->getData(), new MinimumOrderValueTransfer());
+
+                $minimumOrderValueTransfer = $this->getFactory()
+                    ->getMinimumOrderValueFacade()
+                    ->setStoreThreshold($minimumOrderValueTransfer);
+
                 $this->addSuccessMessage(sprintf(
                     'The Global Threshold is saved successfully.'
                 ));

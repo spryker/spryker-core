@@ -13,6 +13,15 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface MinimumOrderValueGuiToMinimumOrderValueFacadeInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     */
+    public function setStoreThreshold(
+        MinimumOrderValueTransfer $minimumOrderValueTransfer
+    ): MinimumOrderValueTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *

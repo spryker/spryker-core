@@ -26,6 +26,17 @@ class MinimumOrderValueGuiToMinimumOrderValueFacadeBridge implements MinimumOrde
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     */
+    public function setStoreThreshold(
+        MinimumOrderValueTransfer $minimumOrderValueTransfer
+    ): MinimumOrderValueTransfer {
+        return $this->minimumOrderValueFacade->setStoreThreshold($minimumOrderValueTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *

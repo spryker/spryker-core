@@ -63,20 +63,6 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
      */
     public function getData(array $minimumOrderValueTransfers): array
     {
-        /*
-        if ($quoteTransfer->getManualOrder() === null) {
-            $quoteTransfer->setManualOrder(new ManualOrderTransfer());
-        }
-
-        if ($quoteTransfer->getStore() !== null
-            && $quoteTransfer->getCurrency() !== null
-        ) {
-            $storeName = $quoteTransfer->getStore()->getName();
-            $currencyCode = $quoteTransfer->getCurrency()->getCode();
-
-            $quoteTransfer->getManualOrder()->setStoreCurrency($storeName . StoreFormHandler::STORE_CURRENCY_DELIMITER . $currencyCode);
-        }
-        */
         $data = [];
         foreach ($minimumOrderValueTransfers as $minimumOrderValueTransfer) {
             $data[GlobalThresholdType::FIELD_STORE_CURRENCY] = $this->getStoreCurrencyFieldValue(
@@ -116,8 +102,6 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
 
         return $storeList;
     }
-
-
 
     /**
      * @return array
