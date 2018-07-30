@@ -15,7 +15,7 @@ abstract class SharedResourceKeyBuilder implements KeyBuilderInterface
     use KeyBuilderTrait;
 
     /**
-     * @param array $identifier
+     * @param string $identifier
      *
      * @return string
      */

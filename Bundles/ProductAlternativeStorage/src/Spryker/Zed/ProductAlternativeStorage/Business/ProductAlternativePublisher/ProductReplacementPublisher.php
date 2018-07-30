@@ -61,7 +61,7 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
     }
 
     /**
-     * @param string[] $indexedSkus
+     * @param array $indexedSkus
      *
      * @return void
      */
@@ -76,7 +76,7 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
     }
 
     /**
-     * @param string[] $indexedSkus
+     * @param array $indexedSkus
      *
      * @return void
      */

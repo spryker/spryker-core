@@ -42,7 +42,7 @@ class ExportSynchronizedDataConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $resources = [];
-        if ($input && $input->getArgument(static::RESOURCE)) {
+        if ($input->getArgument(static::RESOURCE)) {
             $resourceString = $input->getArgument(static::RESOURCE);
             $resources = explode(',', $resourceString);
         }
