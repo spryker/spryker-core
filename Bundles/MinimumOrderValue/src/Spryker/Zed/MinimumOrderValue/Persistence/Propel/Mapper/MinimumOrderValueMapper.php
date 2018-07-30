@@ -8,9 +8,11 @@
 namespace Spryker\Zed\MinimumOrderValue\Persistence\Propel\Mapper;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValue;
 use Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValueType;
 
@@ -52,6 +54,26 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
         $minimumOrderValueTransfer->setMinimumOrderValueType(
             $minimumOrderValueTransfer->getMinimumOrderValueType()->fromArray(
                 $minimumOrderValueEntity->getMinimumOrderValueType()->toArray(),
+                true
+            )
+        );
+
+        if (!$minimumOrderValueTransfer->getCurrency()) {
+            $minimumOrderValueTransfer->setCurrency(new CurrencyTransfer());
+        }
+        $minimumOrderValueTransfer->setCurrency(
+            $minimumOrderValueTransfer->getCurrency()->fromArray(
+                $minimumOrderValueEntity->getCurrency()->toArray(),
+                true
+            )
+        );
+
+        if (!$minimumOrderValueTransfer->getStore()) {
+            $minimumOrderValueTransfer->setStore(new StoreTransfer());
+        }
+        $minimumOrderValueTransfer->setStore(
+            $minimumOrderValueTransfer->getStore()->fromArray(
+                $minimumOrderValueEntity->getStore()->toArray(),
                 true
             )
         );

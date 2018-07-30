@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\GlobalThresholdTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class GlobalThresholdDataProvider implements FormDataProviderInterface
 {
@@ -47,11 +47,11 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer[] $minimumOrderValueTransfers
      *
      * @return array
      */
-    public function getData(Request $request): array
+    public function getData(array $minimumOrderValueTransfers): array
     {
         /*
         if ($quoteTransfer->getManualOrder() === null) {
@@ -67,9 +67,20 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
             $quoteTransfer->getManualOrder()->setStoreCurrency($storeName . StoreFormHandler::STORE_CURRENCY_DELIMITER . $currencyCode);
         }
         */
+        $data = [];
+        foreach ($minimumOrderValueTransfers as $minimumOrderValueTransfer) {
+            $data[GlobalThresholdType::FIELD_STORE_CURRENCY] = $this->getStoreCurrencyFieldValue(
+                $minimumOrderValueTransfer->getStore(),
+                $minimumOrderValueTransfer->getCurrency()
+            );
+            $thresholdStrategyDataProvider = $this->createThresholdStrategyDataProvider(
+                $minimumOrderValueTransfer->getMinimumOrderValueType()->getKey()
+            );
+            $data = $thresholdStrategyDataProvider->getData($data, $minimumOrderValueTransfer);
 
-        return [];
-//        return new GlobalThresholdTransfer();
+        }
+
+        return $data;
     }
 
     /**
@@ -89,12 +100,14 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
                     . $currencyTransfer->getName()
                     . ' [' . $currencyTransfer->getCode() . ']';
 
-                $storeList[$storeTransfer->getName() . static::STORE_CURRENCY_DELIMITER . $currencyTransfer->getCode()] = $row;
+                $storeList[$this->getStoreCurrencyFieldValue($storeTransfer, $currencyTransfer)] = $row;
             }
         }
 
         return $storeList;
     }
+
+
 
     /**
      * @return array
@@ -106,5 +119,30 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
             static::SOFT_TYPE_FIXED => "Soft Threshold with fixed fee",
             static::SOFT_TYPE_FLEXIBLE => "Soft Threshold with flexible fee",
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return string
+     */
+    protected function getStoreCurrencyFieldValue(
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer
+    ): string {
+        return $storeTransfer->getName() . static::STORE_CURRENCY_DELIMITER . $currencyTransfer->getCode();
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdStrategyDataProviderInterface
+     */
+    protected function createThresholdStrategyDataProvider(string $key)
+    {
+        $providerClassName = "ThresholdStrategy\\" . implode('', explode('-', ucwords($key, '-'))) . "DataProvider";
+
+        return new $providerClassName();
     }
 }

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+
 class MinimumOrderValueGuiToMinimumOrderValueFacadeBridge implements MinimumOrderValueGuiToMinimumOrderValueFacadeInterface
 {
     /**
@@ -20,5 +23,18 @@ class MinimumOrderValueGuiToMinimumOrderValueFacadeBridge implements MinimumOrde
     public function __construct($minimumOrderValueFacade)
     {
         $this->minimumOrderValueFacade = $minimumOrderValueFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     */
+    public function getGlobalThresholdsByStoreAndCurrency(
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer
+    ): array {
+        return $this->minimumOrderValueFacade->getGlobalThresholdsByStoreAndCurrency($storeTransfer, $currencyTransfer);
     }
 }

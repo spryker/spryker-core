@@ -32,7 +32,7 @@ class GlobalThresholdType extends AbstractType
     public const PREFIX_HARD = 'hard';
     public const PREFIX_SOFT = 'soft';
 
-    public const FIELD_STORE = 'storeCurrency';
+    public const FIELD_STORE_CURRENCY = 'storeCurrency';
     public const FIELD_HARD_VALUE = 'hardValue';
 
     public const FIELD_SOFT_STRATEGY = 'softStrategy';
@@ -56,7 +56,7 @@ class GlobalThresholdType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addStoreField($builder, $options);
+        $this->addStoreCurrencyField($builder, $options);
 
         $this->addHardValueField($builder, $options);
         $this->addLocalizedForms($builder, static::PREFIX_HARD);
@@ -118,11 +118,11 @@ class GlobalThresholdType extends AbstractType
      *
      * @return $this
      */
-    protected function addStoreField(FormBuilderInterface $builder, array $options): self
+    protected function addStoreCurrencyField(FormBuilderInterface $builder, array $options): self
     {
         $storesList = $options[static::OPTION_STORES_ARRAY];
 
-        $builder->add(static::FIELD_STORE, Select2ComboBoxType::class, [
+        $builder->add(static::FIELD_STORE_CURRENCY, Select2ComboBoxType::class, [
             'label' => 'Store and Currency',
             'choices' => array_flip($storesList),
             'choices_as_values' => true,
@@ -164,7 +164,7 @@ class GlobalThresholdType extends AbstractType
             'label' => false,
             'required' => true,
             'expanded' => true,
-            'choices' => $options[static::OPTION_SOFT_TYPES_ARRAY],
+            'choices' => array_flip($options[static::OPTION_SOFT_TYPES_ARRAY]),
         ]);
 
         return $this;

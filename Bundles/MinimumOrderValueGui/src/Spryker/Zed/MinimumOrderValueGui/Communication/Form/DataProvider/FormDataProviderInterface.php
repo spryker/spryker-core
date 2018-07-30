@@ -13,11 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 interface FormDataProviderInterface
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param array $defaultData
      *
      * @return array
      */
-    public function getData(Request $request): array;
+    public function getData(array $defaultData): array;
 
     /**
      * @return array

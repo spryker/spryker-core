@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 class MinimumOrderValueGuiToCurrencyFacadeBridge implements MinimumOrderValueGuiToCurrencyFacadeInterface
 {
     /**
@@ -25,8 +27,26 @@ class MinimumOrderValueGuiToCurrencyFacadeBridge implements MinimumOrderValueGui
     /**
      * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
      */
-    public function getAllStoresWithCurrencies()
+    public function getAllStoresWithCurrencies(): array
     {
         return $this->currencyFacade->getAllStoresWithCurrencies();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getCurrent(): CurrencyTransfer
+    {
+        return $this->currencyFacade->getCurrent();
+    }
+
+    /**
+     * @param string $isoCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function fromIsoCode($isoCode): CurrencyTransfer
+    {
+        return $this->currencyFacade->fromIsoCode($isoCode);
     }
 }

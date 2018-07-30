@@ -14,6 +14,7 @@ use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMinimumOrderValueFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMoneyFacadeInterface;
+use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToStoreFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\MinimumOrderValueGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,17 +25,17 @@ use Symfony\Component\HttpFoundation\Request;
 class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer[] $minimumOrderValueTransfers
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createGlobalThresholdForm(Request $request): FormInterface
+    public function createGlobalThresholdForm(array $minimumOrderValueTransfers): FormInterface
     {
         $formDataProvider = $this->createStoreDataProvider();
 
         return $this->getFormFactory()->create(
             GlobalThresholdType::class,
-            $formDataProvider->getData($request),
+            $formDataProvider->getData($minimumOrderValueTransfers),
             $formDataProvider->getOptions()
         );
     }
@@ -65,6 +66,14 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
     public function getCurrencyFacade(): MinimumOrderValueGuiToCurrencyFacadeInterface
     {
         return $this->getProvidedDependency(MinimumOrderValueGuiDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToStoreFacadeInterface
+     */
+    public function getStoreFacade(): MinimumOrderValueGuiToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(MinimumOrderValueGuiDependencyProvider::FACADE_STORE);
     }
 
     /**

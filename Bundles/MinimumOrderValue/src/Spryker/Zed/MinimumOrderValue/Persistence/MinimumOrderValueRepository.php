@@ -32,6 +32,8 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
             ->filterByFkStore($storeTransfer->getIdStore())
             ->filterByFkCurrency($currencyTransfer->getIdCurrency())
             ->joinWithMinimumOrderValueType()
+            ->joinWithStore()
+            ->joinWithCurrency()
             ->leftJoinWithSpyMinimumOrderValueLocalizedMessage()
             ->find();
 

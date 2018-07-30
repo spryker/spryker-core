@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Controller;
 
 use Exception;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,8 +25,10 @@ class GlobalController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $globalThresholdForm = $this->getFactory()->createGlobalThresholdForm($request);
+        $minimumOrderValueTransfers = $this->getDefaultMinimumOrderValueTransfer();
 
+        $globalThresholdForm = $this->getFactory()->createGlobalThresholdForm($minimumOrderValueTransfers);
+        $globalThresholdForm->setData(['hard_value'=>333.44, 'global-threshold[hardValue]'=>77.88, 'soft_strategy'=>'option-soft-types-array']);
         $globalThresholdForm->handleRequest($request);
 
         if ($globalThresholdForm->isSubmitted() && $globalThresholdForm->isValid()) {
@@ -42,5 +46,45 @@ class GlobalController extends AbstractController
             'localeCollection' => $localeProvider->getLocaleCollection(),
             'globalThresholdForm' => $globalThresholdForm->createView(),
         ]);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     */
+    protected function getDefaultMinimumOrderValueTransfer(): array
+    {
+        $minimumOrderValueFacade = $this->getFactory()->getMinimumOrderValueFacade();
+
+        $currentStore = $this->getCurrentStore();
+        $currentCurrency = $this->getCurrentCurrency();
+
+        return $minimumOrderValueFacade->getGlobalThresholdsByStoreAndCurrency($currentStore, $currentCurrency);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function getCurrentCurrency(): CurrencyTransfer
+    {
+        $currentCurrency = $this->getFactory()
+            ->getCurrencyFacade()
+            ->getCurrent();
+        $currentCurrency = $this->getFactory()
+            ->getCurrencyFacade()
+            ->fromIsoCode($currentCurrency->getCode());
+
+        return $currentCurrency;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getCurrentStore(): StoreTransfer
+    {
+        $currentStore = $this->getFactory()
+            ->getStoreFacade()
+            ->getCurrentStore();
+
+        return $currentStore;
     }
 }

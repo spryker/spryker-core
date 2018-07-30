@@ -7,6 +7,19 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface MinimumOrderValueGuiToMinimumOrderValueFacadeInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     */
+    public function getGlobalThresholdsByStoreAndCurrency(
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer
+    ): array;
 }
