@@ -91,13 +91,11 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
                 $minimumOrderValueTypeTransfer->getIdMinimumOrderValueType()
             )->save();
 
-        $minimumOrderValueTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createMinimumOrderValueMapper()
             ->mapMinimumOrderValueEntityToTransfer(
                 $minimumOrderValueEntity,
                 new MinimumOrderValueTransfer()
             );
-
-        return $minimumOrderValueTransfer;
     }
 }

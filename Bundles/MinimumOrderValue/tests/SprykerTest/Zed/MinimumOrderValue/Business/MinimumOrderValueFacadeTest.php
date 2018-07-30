@@ -46,9 +46,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         $this->getFacade()->installMinimumOrderValueTypes();
 
         // Assert
-        $config = $this->createMinimumOrderValueConfigMock();
-        $factory = $this->createMinimumOrderValueBusinessFactoryMock($config);
-        $this->tester->assertMinimumOrderValueTypeTableHasRecords(count($factory->getMinimumOrderValueStrategies()));
+        $config = $this->createMinimumOrderValueConfig();
+        $this->tester->assertMinimumOrderValueTypeTableHasRecords(count($config->getMinimumOrderValueStrategies()));
     }
 
     /**
@@ -175,9 +174,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
     protected function findMinimumOrderValueTypeTransferForGroup(
         string $strategyGroup
     ): ?MinimumOrderValueTypeTransfer {
-        $config = $this->createMinimumOrderValueConfigMock();
-        $factory = $this->createMinimumOrderValueBusinessFactoryMock($config);
-        foreach ($factory->getMinimumOrderValueStrategies() as $minimumOrderValueStrategy) {
+        $config = $this->createMinimumOrderValueConfig();
+        foreach ($config->getMinimumOrderValueStrategies() as $minimumOrderValueStrategy) {
             if ($strategyGroup === $minimumOrderValueStrategy->getGroup()) {
                 return $minimumOrderValueStrategy->toTransfer();
             }

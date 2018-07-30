@@ -9,7 +9,7 @@ namespace Spryker\Zed\MinimumOrderValue\Business\StoreThreshold;
 
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 
-interface StoreThresholdManagerInterface
+interface StoreThresholdWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer

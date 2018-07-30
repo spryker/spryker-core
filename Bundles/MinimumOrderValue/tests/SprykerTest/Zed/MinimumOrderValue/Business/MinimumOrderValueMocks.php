@@ -16,17 +16,16 @@ use Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig;
 abstract class MinimumOrderValueMocks extends Test
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig
      */
     protected $config;
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig
+     * @return \Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig
      */
-    protected function createMinimumOrderValueConfigMock(): MockObject
+    protected function createMinimumOrderValueConfig(): MinimumOrderValueConfig
     {
-        return $this->getMockBuilder(MinimumOrderValueConfig::class)
-            ->getMock();
+        return new MinimumOrderValueConfig();
     }
 
     /**

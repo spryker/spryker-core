@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRel
 
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 
-interface MerchantRelationshipThresholdManagerInterface
+interface MerchantRelationshipThresholdWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer

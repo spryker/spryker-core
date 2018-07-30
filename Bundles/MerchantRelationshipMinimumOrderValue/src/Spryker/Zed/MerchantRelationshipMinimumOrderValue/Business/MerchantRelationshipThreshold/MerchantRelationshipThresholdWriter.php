@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\MerchantRelationshipMinimumOrderValueEntityManagerInterface;
 
-class MerchantRelationshipThresholdManager implements MerchantRelationshipThresholdManagerInterface
+class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresholdWriterInterface
 {
     /**
      * @var \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface

@@ -12,7 +12,7 @@ use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyInvalidArg
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface;
 
-class StoreThresholdManager implements StoreThresholdManagerInterface
+class StoreThresholdWriter implements StoreThresholdWriterInterface
 {
     /**
      * @var \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface

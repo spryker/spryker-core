@@ -50,7 +50,7 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
         MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): MinimumOrderValueTransfer {
         return $this->getFactory()
-            ->createStoreThresholdManager()
+            ->createStoreThresholdWriter()
             ->setStoreThreshold($minimumOrderValueTransfer);
     }
 
@@ -90,7 +90,8 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array {
-        return $this->getRepository()
+        return $this->getFactory()
+            ->createStoreThresholdReader()
             ->getGlobalThresholdsByStoreAndCurrency($storeTransfer, $currencyTransfer);
     }
 
