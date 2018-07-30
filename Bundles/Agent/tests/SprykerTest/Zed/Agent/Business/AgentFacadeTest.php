@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\Agent\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\UserBuilder;
 use Generated\Shared\Transfer\UserTransfer;
-use Spryker\Zed\Agent\Business\AgentFacade;
 use Spryker\Zed\Agent\Business\AgentFacadeInterface;
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Business\UserFacadeInterface;
@@ -85,7 +84,10 @@ class AgentFacadeTest extends Unit
      */
     protected function getAgentFacade(): AgentFacadeInterface
     {
-        return new AgentFacade();
+        /** @var \Spryker\Zed\Agent\Business\AgentFacadeInterface $facade */
+        $facade = $this->tester->getFacade();
+
+        return $facade;
     }
 
     /**

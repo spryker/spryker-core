@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Agent\Persistence\AgentRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Agent\AgentConfig getConfig()
  */
 class AgentBusinessFactory extends AbstractBusinessFactory
 {
