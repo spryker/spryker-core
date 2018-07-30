@@ -8,7 +8,7 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
-use Generated\Shared\Transfer\RestRegisterCustomerAttributesTransfer;
+use Generated\Shared\Transfer\RestCustomersResponseAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -23,20 +23,19 @@ class CustomersResourceMapper implements CustomersResourceMapperInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      */
-    public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder
-    ) {
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    {
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestRegisterCustomerAttributesTransfer $restRegisterCustomerAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function mapCustomerAttributesToCustomerTransfer(RestRegisterCustomerAttributesTransfer $restRegisterCustomerAttributesTransfer): CustomerTransfer
+    public function mapCustomerAttributesToCustomerTransfer(RestCustomersAttributesTransfer $restCustomersAttributesTransfer): CustomerTransfer
     {
-        return (new CustomerTransfer())->fromArray($restRegisterCustomerAttributesTransfer->toArray(), true);
+        return (new CustomerTransfer())->fromArray($restCustomersAttributesTransfer->toArray(), true);
     }
 
     /**
@@ -46,11 +45,12 @@ class CustomersResourceMapper implements CustomersResourceMapperInterface
      */
     public function mapCustomerToCustomersRestResource(CustomerTransfer $customerTransfer): RestResourceInterface
     {
-        $restRegisterCustomerAttributesTransfer = (new RestCustomersAttributesTransfer())->fromArray($customerTransfer->toArray(), true);
+        $restCustomersResponseAttributesTransfer = (new RestCustomersResponseAttributesTransfer())->fromArray($customerTransfer->toArray(), true);
+
         return $this->restResourceBuilder->createRestResource(
-            CustomersRestApiConfig::RESOURCE_REGISTER_CUSTOMERS,
-            (string)$customerTransfer->getIdCustomer(),
-            $restRegisterCustomerAttributesTransfer
+            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
+            $customerTransfer->getCustomerReference(),
+            $restCustomersResponseAttributesTransfer
         );
     }
 }

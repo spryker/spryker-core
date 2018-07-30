@@ -8,8 +8,8 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
 use Exception;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestRegisterCustomerAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface;
@@ -52,15 +52,15 @@ class CustomersWriter implements CustomersWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestRegisterCustomerAttributesTransfer $restRegisterCustomerAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function registerCustomer(RestRegisterCustomerAttributesTransfer $restRegisterCustomerAttributesTransfer): RestResponseInterface
+    public function registerCustomer(RestCustomersAttributesTransfer $restCustomersAttributesTransfer): RestResponseInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $customerTransfer = $this->customersResourceMapper->mapCustomerAttributesToCustomerTransfer($restRegisterCustomerAttributesTransfer);
+        $customerTransfer = $this->customersResourceMapper->mapCustomerAttributesToCustomerTransfer($restCustomersAttributesTransfer);
         try {
             $customerResponseTransfer = $this->customerClient->registerCustomer($customerTransfer);
 
@@ -124,6 +124,7 @@ class CustomersWriter implements CustomersWriterInterface
             }
             $response->addError($this->createErrorCustomerCantRegisterCustomerMessage($error->getMessage()));
         }
+
         return $response;
     }
 }

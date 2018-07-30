@@ -6,7 +6,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Plugin;
 
-use Generated\Shared\Transfer\RestRegisterCustomerAttributesTransfer;
+use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
@@ -39,7 +39,7 @@ class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      */
     public function getResourceType(): string
     {
-        return CustomersRestApiConfig::RESOURCE_REGISTER_CUSTOMERS;
+        return CustomersRestApiConfig::RESOURCE_CUSTOMERS;
     }
 
     /**
@@ -59,6 +59,6 @@ class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestRegisterCustomerAttributesTransfer::class;
+        return RestCustomersAttributesTransfer::class;
     }
 }

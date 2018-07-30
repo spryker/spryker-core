@@ -10,7 +10,6 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class CustomersRestApiConfig extends AbstractBundleConfig
 {
-    public const RESOURCE_REGISTER_CUSTOMERS = 'register-customer';
     public const RESOURCE_CUSTOMERS = 'customers';
 
     public const RESPONSE_CODE_CUSTOMER_ALREADY_EXISTS = '400';

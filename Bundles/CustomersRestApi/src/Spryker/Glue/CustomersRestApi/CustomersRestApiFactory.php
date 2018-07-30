@@ -6,8 +6,8 @@
 
 namespace Spryker\Glue\CustomersRestApi;
 
-use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToSessionClientInterface;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
+use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToSessionClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriter;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriterInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapper;
@@ -31,7 +31,7 @@ class CustomersRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface
      */
-    protected function getCustomerClient(): CustomersRestApiToCustomerClientInterface
+    public function getCustomerClient(): CustomersRestApiToCustomerClientInterface
     {
         return $this->getProvidedDependency(CustomersRestApiDependencyProvider::CLIENT_CUSTOMER);
     }
@@ -39,7 +39,7 @@ class CustomersRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface
      */
-    protected function createCustomersResourceMapper(): CustomersResourceMapperInterface
+    public function createCustomersResourceMapper(): CustomersResourceMapperInterface
     {
         return new CustomersResourceMapper(
             $this->getResourceBuilder()
@@ -47,9 +47,9 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToSessionClientInterface
+     * @return \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToSessionClientInterface
      */
-    public function getSessionClient(): CustomerRestApiToSessionClientInterface
+    public function getSessionClient(): CustomersRestApiToSessionClientInterface
     {
         return $this->getProvidedDependency(CustomersRestApiDependencyProvider::CLIENT_SESSION);
     }

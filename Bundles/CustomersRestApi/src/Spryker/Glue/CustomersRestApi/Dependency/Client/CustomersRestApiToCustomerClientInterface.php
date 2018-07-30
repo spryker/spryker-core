@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CustomersRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomersRestApiToCustomerClientInterface
@@ -17,5 +16,5 @@ interface CustomersRestApiToCustomerClientInterface
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function registerCustomer(CustomerTransfer $customerTransfer): CustomerResponseTransfer;
+    public function registerCustomer(CustomerTransfer $customerTransfer);
 }
