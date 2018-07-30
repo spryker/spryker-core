@@ -20,8 +20,9 @@
     </transfer>
 
     <transfer name="MinimumOrderValueLocalizedMessage">
-        <property name="message" type="string" />
+        <property name="fkLocale" type="int" />
         <property name="localeCode" type="string" />
+        <property name="message" type="string" />
     </transfer>
 
 </transfers>

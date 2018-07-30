@@ -15,9 +15,19 @@ use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCur
 class GlobalThresholdDataProvider implements FormDataProviderInterface
 {
     public const STORE_CURRENCY_DELIMITER = ';';
-    public const SOFT_TYPE_MESSAGE = 'soft-threshold';
-    public const SOFT_TYPE_FIXED = 'soft-threshold-fixed-fee';
-    public const SOFT_TYPE_FLEXIBLE = 'soft-threshold-flexible-fee';
+
+    /**
+     * @uses \Spryker\Zed\MinimumOrderValue\Business\Strategy\SoftThresholdWithMessageStrategy::STRATEGY_KEY
+     */
+    public const SOFT_TYPE_STRATEGY_MESSAGE = 'soft-threshold';
+    /**
+     * @uses \Spryker\Zed\MinimumOrderValue\Business\Strategy\SoftThresholdWithFixedFeeStrategy::STRATEGY_KEY
+     */
+    public const SOFT_TYPE_STRATEGY_FIXED = 'soft-threshold-fixed-fee';
+    /**
+     * @uses \Spryker\Zed\MinimumOrderValue\Business\Strategy\SoftThresholdWithFlexibleFeeStrategy::STRATEGY_KEY
+     */
+    public const SOFT_TYPE_STRATEGY_FLEXIBLE = 'soft-threshold-flexible-fee';
 
     /**
      * @var \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface
@@ -73,7 +83,7 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
                 $minimumOrderValueTransfer->getStore(),
                 $minimumOrderValueTransfer->getCurrency()
             );
-            $thresholdStrategyDataProvider = $this->createThresholdStrategyDataProvider(
+            $thresholdStrategyDataProvider = $this->createThresholdStrategyDataProviderByKey(
                 $minimumOrderValueTransfer->getMinimumOrderValueType()->getKey()
             );
             $data = $thresholdStrategyDataProvider->getData($data, $minimumOrderValueTransfer);
@@ -115,9 +125,9 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
     protected function getSoftTypesList(): array
     {
         return [
-            static::SOFT_TYPE_MESSAGE => "Soft Threshold with message",
-            static::SOFT_TYPE_FIXED => "Soft Threshold with fixed fee",
-            static::SOFT_TYPE_FLEXIBLE => "Soft Threshold with flexible fee",
+            static::SOFT_TYPE_STRATEGY_MESSAGE => "Soft Threshold with message",
+            static::SOFT_TYPE_STRATEGY_FIXED => "Soft Threshold with fixed fee",
+            static::SOFT_TYPE_STRATEGY_FLEXIBLE => "Soft Threshold with flexible fee",
         ];
     }
 
@@ -139,9 +149,11 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
      *
      * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdStrategyDataProviderInterface
      */
-    protected function createThresholdStrategyDataProvider(string $key)
+    protected function createThresholdStrategyDataProviderByKey(string $key)
     {
-        $providerClassName = "ThresholdStrategy\\" . implode('', explode('-', ucwords($key, '-'))) . "DataProvider";
+        $providerClassName = "Spryker\\Zed\\MinimumOrderValueGui\\Communication\\Form\\DataProvider\\ThresholdStrategy\\"
+            . implode('', explode('-', ucwords($key, '-')))
+            . "DataProvider";
 
         return new $providerClassName();
     }

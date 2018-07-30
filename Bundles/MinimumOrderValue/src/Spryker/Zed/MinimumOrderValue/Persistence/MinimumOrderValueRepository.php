@@ -34,11 +34,13 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
             ->joinWithMinimumOrderValueType()
             ->joinWithStore()
             ->joinWithCurrency()
+            ->useSpyMinimumOrderValueLocalizedMessageQuery()
+                ->leftJoinWithLocale()
+            ->endUse()
             ->leftJoinWithSpyMinimumOrderValueLocalizedMessage()
             ->find();
 
         $orderSourceTransfers = [];
-
         $mapper = $this->getFactory()->createMinimumOrderValueMapper();
 
         foreach ($minOrderValueEntities as $minOrderValueEntity) {

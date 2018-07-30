@@ -80,12 +80,12 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
 
         $minimumOrderValueTransfer->setLocalizedMessages(new ArrayObject());
         foreach ($minimumOrderValueEntity->getSpyMinimumOrderValueLocalizedMessages() as $minimumOrderValueLocalizedMessageEntity) {
-            $minimumOrderValueTransfer->addLocalizedMessage(
-                (new MinimumOrderValueLocalizedMessageTransfer())->fromArray(
-                    $minimumOrderValueLocalizedMessageEntity->toArray(),
-                    true
-                )
+            $localizedMessageTransfer = (new MinimumOrderValueLocalizedMessageTransfer())->fromArray(
+                $minimumOrderValueLocalizedMessageEntity->toArray(),
+                true
             );
+            $localizedMessageTransfer->setLocaleCode($minimumOrderValueLocalizedMessageEntity->getLocale()->getLocaleName());
+            $minimumOrderValueTransfer->addLocalizedMessage($localizedMessageTransfer);
         }
 
         return $minimumOrderValueTransfer;
