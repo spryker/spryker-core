@@ -31,7 +31,7 @@ EOD;
     private $config;
 
     /**
-     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
      */
     private $productFacade;
 

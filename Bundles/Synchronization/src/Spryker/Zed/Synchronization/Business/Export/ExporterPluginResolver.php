@@ -16,7 +16,7 @@ class ExporterPluginResolver
     public const QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS = 'query_container';
 
     /**
-     * @var \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface[]
+     * @var array
      */
     protected $synchronizationDataPlugins;
 

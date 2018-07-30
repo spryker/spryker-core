@@ -39,11 +39,11 @@ use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpander;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpanderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductReader\PriceProductReaderPluginExecutor;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Reader;
 use Spryker\Zed\PriceProduct\Business\Model\ReaderInterface;
-
 use Spryker\Zed\PriceProduct\Business\Model\Writer;
 use Spryker\Zed\PriceProduct\Business\Model\WriterInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
@@ -140,6 +140,16 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductReader\PriceProductReaderPluginExecutor
+     */
+    public function createPriceProductReaderPluginExecutor(): PriceProductReaderPluginExecutor
+    {
+        return new PriceProductReaderPluginExecutor(
+            $this->getPriceProductPricesExtractorPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpanderInterface
      */
     public function createPriceProductExpander(): PriceProductExpanderInterface
@@ -170,7 +180,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getRepository(),
             $this->getPriceProductService(),
-            $this->createPriceProductExpander()
+            $this->createPriceProductExpander(),
+            $this->createPriceProductReaderPluginExecutor()
         );
     }
 
@@ -199,7 +210,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getRepository(),
             $this->getPriceProductService(),
-            $this->createPriceProductExpander()
+            $this->createPriceProductExpander(),
+            $this->createPriceProductReaderPluginExecutor()
         );
     }
 
@@ -367,5 +379,13 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function getPriceProductDimensionExpanderStrategyPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface[]
+     */
+    public function getPriceProductPricesExtractorPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR);
     }
 }

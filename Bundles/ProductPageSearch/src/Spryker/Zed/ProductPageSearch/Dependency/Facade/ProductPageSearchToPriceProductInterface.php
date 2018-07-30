@@ -31,4 +31,11 @@ interface ProductPageSearchToPriceProductInterface
      * @return array
      */
     public function groupPriceProductCollection(array $priceProductTransfers);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPricesWithoutPriceExtraction($idProductAbstract);
 }

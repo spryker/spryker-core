@@ -8,6 +8,7 @@
 namespace Spryker\Client\PriceProduct;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 /**
  * @method \Spryker\Client\PriceProduct\PriceProductFactory getFactory()
@@ -75,4 +76,22 @@ interface PriceProductClientInterface
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveProductPriceTransfer(array $priceProductTransfers): CurrentProductPriceTransfer;
+
+    /**
+     * Specification:
+     *  - Resolves current product price as per current customer state, it will try to resolve price based on customer selected currency and price mode.
+     *  - Uses price product filter to resolve product price
+     *  - Defaults to price mode defined in environment configuration if customer not yet selected.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveProductPriceTransferByPriceProductFilter(
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): CurrentProductPriceTransfer;
 }
