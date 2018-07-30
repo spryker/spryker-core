@@ -131,7 +131,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
 
         foreach ($packageProductConcreteEntityTransfers as $packageProductConcreteEntityTransfer) {
             $productConcretePackagingStorageTransfer = $this->createProductConcretePackagingStorageTransfer($packageProductConcreteEntityTransfer);
-            $hasProductPackagingUnit = $packageProductConcreteEntityTransfer->getSpyProductPackagingUnits()->count();
+            $hasProductPackagingUnit = $packageProductConcreteEntityTransfer->getSpyProductPackagingUnits()->count() > 0;
 
             if (!$hasProductPackagingUnit) {
                 $this->getDefaultParameters($productConcretePackagingStorageTransfer, $hasProductPackagingUnit);

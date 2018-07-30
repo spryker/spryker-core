@@ -17,7 +17,7 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    public const PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+    public const PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE = 'sync.storage.packaging';
 
     /**
      * Specification:
@@ -25,7 +25,7 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    public const PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
+    public const PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.packaging.error';
 
     /**
      * Specification:
