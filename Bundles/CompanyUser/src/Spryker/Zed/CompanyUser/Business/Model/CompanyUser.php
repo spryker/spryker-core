@@ -188,10 +188,13 @@ class CompanyUser implements CompanyUserInterface
             return $companyUserResponseTransfer;
         }
 
+        $roleCollection = $companyUserResponseTransfer->getCompanyUser()->getCompanyRoleCollection();
+
         $companyUserResponseTransfer = $this->companyUserPluginExecutor->executePreSavePlugins($companyUserResponseTransfer);
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
         $companyUserTransfer = $this->companyUserEntityManager->saveCompanyUser($companyUserTransfer);
         $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
+        $companyUserResponseTransfer->getCompanyUser()->setCompanyRoleCollection($roleCollection);
         $companyUserResponseTransfer = $this->companyUserPluginExecutor->executePostSavePlugins($companyUserResponseTransfer);
         $companyUserResponseTransfer = $this->companyUserPluginExecutor->executePostCreatePlugins($companyUserResponseTransfer);
 
