@@ -70,7 +70,7 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
-            return new CategoryPageSearchToCategoryQueryContainerBridge($container->getLocator()->Category()->queryContainer());
+            return new CategoryPageSearchToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
         };
 
         $container[static::QUERY_CONTAINER_LOCALE] = function (Container $container) {
