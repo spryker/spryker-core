@@ -67,7 +67,7 @@ class CompanyBusinessUnitCreator implements CompanyBusinessUnitCreatorInterface
 
         $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())
                 ->setFkCompany($companyTransfer->getIdCompany())
-                ->setName($this->companyBusinessUnitConfig->getCompanyBusinessUnitDefaultName());
+                ->setName($companyTransfer->getName());
 
         $companyBusinessUnitResponseTransfer = $this->create($companyBusinessUnitTransfer);
 
