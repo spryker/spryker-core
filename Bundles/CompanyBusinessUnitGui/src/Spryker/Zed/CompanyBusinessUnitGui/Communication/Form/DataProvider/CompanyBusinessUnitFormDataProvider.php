@@ -117,7 +117,7 @@ class CompanyBusinessUnitFormDataProvider
                 continue;
             }
 
-            if ($idCompanyBusinessUnit === $businessUnit->getIdCompanyBusinessUnit()) {
+            if ($idCompanyBusinessUnit == $businessUnit->getIdCompanyBusinessUnit()) {
                 continue;
             }
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
@@ -169,6 +170,41 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
      */
     protected function companyBusinessUnitCycleDependencyExists(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool
     {
-        return $companyBusinessUnitTransfer->getFkParentCompanyBusinessUnit() == $companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
+        $businessUnitId = (int)$companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
+        $parentBusinessUnitId = $companyBusinessUnitTransfer->getFkParentCompanyBusinessUnit();
+
+        return $this->existCycleDependency($businessUnitId, $businessUnitId, $parentBusinessUnitId);
+    }
+
+    /**
+     * @param int $defaultBusinessUnitId
+     * @param int $businessUnitId
+     * @param int $parentBusinessUnitId
+     *
+     * @return bool
+     */
+    protected function existCycleDependency($defaultBusinessUnitId, $businessUnitId, $parentBusinessUnitId): bool
+    {
+        $companyBusinessUnitCriteriaFilterTransfer = new CompanyBusinessUnitCriteriaFilterTransfer();
+        $companyBusinessUnitsCollection = $this->repository->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
+        $companyBusinessUnits = (array)$companyBusinessUnitsCollection->getCompanyBusinessUnits();
+
+        if ($defaultBusinessUnitId == $parentBusinessUnitId && $businessUnitId) {
+            return true;
+        }
+
+        if (!$businessUnitId) {
+            return false;
+        }
+
+        $companyBusinessUnit = array_filter($companyBusinessUnits, function ($companyBusinessUnit) use ($parentBusinessUnitId) {
+            return $companyBusinessUnit->getIdCompanyBusinessUnit() == $parentBusinessUnitId;
+        });
+
+        if (!empty($companyBusinessUnit)) {
+            $parentBusinessUnitId = array_values($companyBusinessUnit)[0]->getFkParentCompanyBusinessUnit();
+        }
+
+        return $this->existCycleDependency($defaultBusinessUnitId, $parentBusinessUnitId, $businessUnitId);
     }
 }
