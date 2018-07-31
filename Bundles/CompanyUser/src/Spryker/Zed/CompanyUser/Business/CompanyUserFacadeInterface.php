@@ -153,9 +153,9 @@ interface CompanyUserFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function enableCustomer(CompanyUserTransfer $companyUserTransfer): CompanyResponseTransfer;
+    public function enableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 
     /**
      * Specification:
@@ -167,7 +167,7 @@ interface CompanyUserFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyResponseTransfer;
+    public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 }
