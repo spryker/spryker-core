@@ -44,17 +44,34 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {
         $this->minimumOrderValueFacade->isStrategyValid(
-            $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueType(),
-            $merchantRelationshipMinimumOrderValueTransfer->getValue(),
-            $merchantRelationshipMinimumOrderValueTransfer->getFee()
+            $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()
         );
 
-        $merchantRelationshipMinimumOrderValueTransfer->setMinimumOrderValueType(
-            $this->minimumOrderValueFacade
-                ->getMinimumOrderValueType($merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueType())
-        );
+        $this->hydrateMinimumOrderValueType($merchantRelationshipMinimumOrderValueTransfer);
 
         return $this->merchantRelationshipMinimumOrderValueEntityManager
             ->setMerchantRelationshipThreshold($merchantRelationshipMinimumOrderValueTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
+     */
+    protected function hydrateMinimumOrderValueType(
+        MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
+    ): MerchantRelationshipMinimumOrderValueTransfer {
+        $minimumOrderValueTypeTransfer = $this->minimumOrderValueFacade
+            ->getMinimumOrderValueTypeByKey(
+                $merchantRelationshipMinimumOrderValueTransfer
+                    ->getMinimumOrderValue()
+                    ->getMinimumOrderValueType()
+            );
+
+        $merchantRelationshipMinimumOrderValueTransfer
+            ->getMinimumOrderValue()
+            ->setMinimumOrderValueType($minimumOrderValueTypeTransfer);
+
+        return $merchantRelationshipMinimumOrderValueTransfer;
     }
 }
