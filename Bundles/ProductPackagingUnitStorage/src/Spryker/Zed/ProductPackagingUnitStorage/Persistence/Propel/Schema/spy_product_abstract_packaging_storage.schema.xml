@@ -10,7 +10,6 @@
         <column name="fk_product_abstract" type="INTEGER" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
         <column name="key" type="VARCHAR" required="true"/>
-        <column name="store" type="VARCHAR" required="true"/>
         <index name="spy_product_abstract_packaging_storage-fk_product_abstract">
             <index-column name="fk_product_abstract"/>
         </index>

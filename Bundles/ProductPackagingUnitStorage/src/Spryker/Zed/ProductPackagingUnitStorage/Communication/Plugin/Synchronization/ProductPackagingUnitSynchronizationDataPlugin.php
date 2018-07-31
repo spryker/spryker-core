@@ -40,7 +40,7 @@ class ProductPackagingUnitSynchronizationDataPlugin extends AbstractPlugin imple
      */
     public function hasStore(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -68,7 +68,6 @@ class ProductPackagingUnitSynchronizationDataPlugin extends AbstractPlugin imple
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
             $synchronizationDataTransfer->setData($productAbstractPackagingUnitTransfer->getData());
             $synchronizationDataTransfer->setKey($productAbstractPackagingUnitTransfer->getKey());
-            $synchronizationDataTransfer->setStore($productAbstractPackagingUnitTransfer->getStore());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
