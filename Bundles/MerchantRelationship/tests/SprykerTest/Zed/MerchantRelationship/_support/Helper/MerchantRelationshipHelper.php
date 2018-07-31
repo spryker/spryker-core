@@ -12,11 +12,13 @@ use Generated\Shared\DataBuilder\MerchantRelationshipBuilder;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class MerchantRelationshipHelper extends Module
 {
     use LocatorHelperTrait;
+    use DataCleanupHelperTrait;
 
     /**
      * @param array $seedData
@@ -28,7 +30,32 @@ class MerchantRelationshipHelper extends Module
         $merchantRelationship = (new MerchantRelationshipBuilder($seedData))->build();
         $merchantRelationship->setIdMerchantRelationship(null);
 
-        return $this->getLocator()->merchantRelationship()->facade()->createMerchantRelationship($merchantRelationship);
+        $merchantRelationshipTransfer = $this->getLocator()
+            ->merchantRelationship()
+            ->facade()
+            ->createMerchantRelationship($merchantRelationship);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantRelationshipTransfer) {
+            $this->cleanupMerchantRelationship($merchantRelationshipTransfer);
+        });
+
+        return $merchantRelationshipTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return void
+     */
+    protected function cleanupMerchantRelationship(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer
+    ): void {
+        $this->debug(sprintf('Deleting Merchant Relationship: %d', $merchantRelationshipTransfer->getIdMerchantRelationship()));
+
+        $this->getLocator()
+            ->merchantRelationship()
+            ->facade()
+            ->deleteMerchantRelationship($merchantRelationshipTransfer);
     }
 
     /**
