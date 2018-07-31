@@ -59,4 +59,14 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
 
         return $this->buildQueryFromCriteria($query)->find();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     */
+    public function findAllProductAbstractPackagingUnitStorageEntities(): array
+    {
+        $query = $this->getFactory()->createSpyProductAbstractPackagingStorageQuery();
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
 }

@@ -12,12 +12,14 @@
         <property name="amountMax" type="int"/>
         <property name="amountInterval" type="int"/>
         <property name="hasLeadProduct" type="bool"/>
+        <property name="key" type="string" />
     </transfer>
 
     <transfer name="ProductAbstractPackagingStorage">
         <property name="idProductAbstract" type="int"/>
         <property name="leadProduct" type="int"/>
         <property name="types" type="ProductConcretePackagingStorage[]"/>
+        <property name="key" type="string" />
     </transfer>
 
 </transfers>

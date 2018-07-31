@@ -22,4 +22,9 @@ interface ProductPackagingUnitStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
     public function findPackagingProductsByProductAbstractId(int $idProductAbstract): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     */
+    public function findAllProductAbstractPackagingUnitStorageEntities(): array;
 }
