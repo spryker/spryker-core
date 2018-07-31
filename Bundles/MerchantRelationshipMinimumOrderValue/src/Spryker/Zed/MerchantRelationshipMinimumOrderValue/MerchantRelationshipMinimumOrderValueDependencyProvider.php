@@ -22,6 +22,8 @@ class MerchantRelationshipMinimumOrderValueDependencyProvider extends AbstractBu
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addMinimumOrderValueFacade($container);
 
         return $container;

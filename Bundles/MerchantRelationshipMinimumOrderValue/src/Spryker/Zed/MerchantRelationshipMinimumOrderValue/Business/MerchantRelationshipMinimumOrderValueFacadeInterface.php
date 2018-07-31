@@ -20,6 +20,7 @@ interface MerchantRelationshipMinimumOrderValueFacadeInterface
      * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
      * @throws \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
+     * @throws \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Strategy\Exception\StrategyInvalidArgumentException
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */

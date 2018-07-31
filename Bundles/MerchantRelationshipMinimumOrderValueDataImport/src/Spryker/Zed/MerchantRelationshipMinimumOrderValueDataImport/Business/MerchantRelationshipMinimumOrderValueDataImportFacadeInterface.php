@@ -14,7 +14,7 @@ interface MerchantRelationshipMinimumOrderValueDataImportFacadeInterface
 {
     /**
      * Specification:
-     * - Imports packaging unit amounts data from the specified file.
+     * - Imports merchant relationship specific minimum order threshold data from the specified file.
      * - Iterates over the data sets and imports the data into persistence.
      *
      * @api
