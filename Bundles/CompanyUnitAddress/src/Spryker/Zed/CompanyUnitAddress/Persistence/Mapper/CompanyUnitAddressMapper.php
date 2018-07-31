@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUnitAddress\Persistence\Mapper;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer;
 
@@ -28,7 +30,34 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
             true
         );
 
+        if ($unitAddressEntityTransfer->getCountry()) {
+            $companyUnitAddressTransfer->setIso2Code($unitAddressEntityTransfer->getCountry()->getIso2Code());
+        }
+
+        $companyBusinessUnitCollectionTransfer = $this->mapCompanyBusinessUnitCollection($unitAddressEntityTransfer);
+        $companyUnitAddressTransfer->setCompanyBusinessUnitCollection($companyBusinessUnitCollectionTransfer);
+
         return $companyUnitAddressTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer $spyCompanyUnitAddressEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
+     */
+    protected function mapCompanyBusinessUnitCollection(SpyCompanyUnitAddressEntityTransfer $spyCompanyUnitAddressEntityTransfer): CompanyBusinessUnitCollectionTransfer
+    {
+        $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
+        foreach ($spyCompanyUnitAddressEntityTransfer->getSpyCompanyUnitAddressToCompanyBusinessUnits() as $spyCompanyUnitAddressToCompanyBusinessUnits) {
+            $spyCompanyBusinessUnitEntityTransfer = $spyCompanyUnitAddressToCompanyBusinessUnits->getCompanyBusinessUnit();
+            $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())
+                ->fromArray($spyCompanyBusinessUnitEntityTransfer->toArray(), true);
+            if ($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()) {
+                $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnitTransfer);
+            }
+        }
+
+        return $companyBusinessUnitCollectionTransfer;
     }
 
     /**
