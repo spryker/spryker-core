@@ -32,8 +32,9 @@ class ProductPackagingUnitItemQuantityValidator implements ProductPackagingUnitI
      */
     public function isProductPackagingUnitItemQuantitySplittable(ItemTransfer $itemTransfer): bool
     {
+        // Packaging unit module does not handle bundled items
         if ($this->isBundledItem($itemTransfer)) {
-            return true;
+            return false;
         }
 
         if ($this->isNonPackagingUnit($itemTransfer)) {
