@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form;
 
-use Generated\Shared\Transfer\GlobalThresholdTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -17,9 +16,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\MinimumOrderValueGui\Communication\MinimumOrderValueGuiCommunicationFactory getFactory()
@@ -258,16 +255,6 @@ class GlobalThresholdType extends AbstractType
         $builder
             ->add($name, LocalizedForm::class, [
                 'label' => false,
-//                'constraints' => [new Callback([
-//                    'callback' => function ($dataToValidate, ExecutionContextInterface $context) {
-//                        $selectedAttributes = array_filter(array_values($dataToValidate));
-//                        if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), LocalizedForm::$errorFieldsDisplayed)) {
-//                            $context->addViolation('Please enter at least Sku and Name of the product in every locale under General');
-//                            LocalizedForm::$errorFieldsDisplayed[$context->getGroup()] = true;
-//                        }
-//                    },
-//                    'groups' => [self::VALIDATION_GROUP_GENERAL],
-//                ])],
             ]);
 
         return $this;
@@ -316,9 +303,26 @@ class GlobalThresholdType extends AbstractType
         $moneyFacade = $this->getFactory()->getMoneyFacade();
         $data = $event->getData();
 
-        if ($data instanceof GlobalThresholdTransfer) {
-            $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data->getHardValue());
-            $data->setHardValue($moneyFloat);
+        if (is_array($data)) {
+            if (isset($data[static::FIELD_HARD_VALUE])) {
+                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_HARD_VALUE]);
+                $data[static::FIELD_HARD_VALUE] = $moneyFloat;
+            }
+
+            if (isset($data[static::FIELD_SOFT_VALUE])) {
+                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_SOFT_VALUE]);
+                $data[static::FIELD_SOFT_VALUE] = $moneyFloat;
+            }
+
+            if (isset($data[static::FIELD_SOFT_FLEXIBLE_FEE])) {
+                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_SOFT_FLEXIBLE_FEE]);
+                $data[static::FIELD_SOFT_FLEXIBLE_FEE] = $moneyFloat;
+            }
+
+            if (isset($data[static::FIELD_SOFT_FIXED_FEE])) {
+                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_SOFT_FIXED_FEE]);
+                $data[static::FIELD_SOFT_FIXED_FEE] = $moneyFloat;
+            }
 
             $event->setData($data);
         }
@@ -335,9 +339,26 @@ class GlobalThresholdType extends AbstractType
         $moneyFacade = $this->getFactory()->getMoneyFacade();
         $data = $event->getData();
 
-        if ($data instanceof GlobalThresholdTransfer) {
-            $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data->getHardValue());
-            $data->setHardValue($moneyInt);
+        if (is_array($data)) {
+            if (isset($data[static::FIELD_HARD_VALUE])) {
+                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_HARD_VALUE]);
+                $data[static::FIELD_HARD_VALUE] = $moneyInt;
+            }
+
+            if (isset($data[static::FIELD_SOFT_VALUE])) {
+                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_SOFT_VALUE]);
+                $data[static::FIELD_SOFT_VALUE] = $moneyInt;
+            }
+
+            if (isset($data[static::FIELD_SOFT_FLEXIBLE_FEE])) {
+                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_SOFT_FLEXIBLE_FEE]);
+                $data[static::FIELD_SOFT_FLEXIBLE_FEE] = $moneyInt;
+            }
+
+            if (isset($data[static::FIELD_SOFT_FIXED_FEE])) {
+                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_SOFT_FIXED_FEE]);
+                $data[static::FIELD_SOFT_FIXED_FEE] = $moneyInt;
+            }
 
             $event->setData($data);
         }

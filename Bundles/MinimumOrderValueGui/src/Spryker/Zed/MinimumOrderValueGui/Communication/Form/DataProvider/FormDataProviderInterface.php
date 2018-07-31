@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\GlobalThresholdTransfer;
-use Symfony\Component\HttpFoundation\Request;
-
 interface FormDataProviderInterface
 {
     /**

@@ -8,13 +8,16 @@
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
-use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\GlobalThresholdDataProvider;
+use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConstants;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\LocalizedForm;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface;
 
-class GlobalThresholdFormMapper
+abstract class AbstractGlobalThresholdFormMapper
 {
     /**
      * @var \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface
@@ -22,12 +25,20 @@ class GlobalThresholdFormMapper
     protected $currencyFacade;
 
     /**
+     * @var \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider
+     */
+    protected $localeProvider;
+
+    /**
      * @param \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface $currencyFacade
+     * @param \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider $localeProvider
      */
     public function __construct(
-        MinimumOrderValueGuiToCurrencyFacadeInterface $currencyFacade
+        MinimumOrderValueGuiToCurrencyFacadeInterface $currencyFacade,
+        LocaleProvider $localeProvider
     ) {
         $this->currencyFacade = $currencyFacade;
+        $this->localeProvider = $localeProvider;
     }
 
     /**
@@ -36,10 +47,12 @@ class GlobalThresholdFormMapper
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
-    public function map(array $data, MinimumOrderValueTransfer $minimumOrderValueTransfer): MinimumOrderValueTransfer
-    {
+    protected function setStoreAndCurrencyToMinimumOrderValueTransfer(
+        array $data,
+        MinimumOrderValueTransfer $minimumOrderValueTransfer
+    ): MinimumOrderValueTransfer {
         list($storeName, $currencyCode) = explode(
-            GlobalThresholdDataProvider::STORE_CURRENCY_DELIMITER,
+            MinimumOrderValueGuiConstants::STORE_CURRENCY_DELIMITER,
             $data[GlobalThresholdType::FIELD_STORE_CURRENCY]
         );
         $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
@@ -102,5 +115,31 @@ class GlobalThresholdFormMapper
         }
 
         return false;
+    }
+
+    /**
+     * @param array $data
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param string $localizedFormPrefix
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     */
+    protected function setLocalizedMessagesToMinimumOrderValueTransfer(
+        array $data,
+        MinimumOrderValueTransfer $minimumOrderValueTransfer,
+        string $localizedFormPrefix
+    ): MinimumOrderValueTransfer {
+        $localeCollection = $this->localeProvider->getLocaleCollection();
+        foreach ($localeCollection as $localeTransfer) {
+            $localizedFieldName = GlobalThresholdType::getLocalizedFormName($localizedFormPrefix, $localeTransfer->getLocaleName());
+            $localizedMessage = (new MinimumOrderValueLocalizedMessageTransfer())
+                ->setlocaleCode($localeTransfer->getLocaleName())
+                ->setFkLocale($localeTransfer->getIdLocale())
+                ->setMessage($data[$localizedFieldName][LocalizedForm::FIELD_MESSAGE]);
+
+            $minimumOrderValueTransfer->addLocalizedMessage($localizedMessage);
+        }
+
+        return $minimumOrderValueTransfer;
     }
 }

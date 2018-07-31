@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -33,13 +34,22 @@ class GlobalController extends AbstractController
 
         if ($globalThresholdForm->isSubmitted() && $globalThresholdForm->isValid()) {
             try {
-                $minimumOrderValueTransfer = $this->getFactory()
-                    ->createGlobalThresholdFormMapper()
-                    ->map($globalThresholdForm->getData(), new MinimumOrderValueTransfer());
+                $data = $globalThresholdForm->getData();
+                $hardMinimumOrderValueTransfer = $this->getFactory()
+                    ->createGlobalHardThresholdFormMapper()
+                    ->map($data, new MinimumOrderValueTransfer());
 
-                $minimumOrderValueTransfer = $this->getFactory()
+                $softMinimumOrderValueTransfer = $this->getFactory()
+                    ->createGlobalSoftThresholdFormMapperByStrategy($data[GlobalThresholdType::FIELD_SOFT_STRATEGY])
+                    ->map($data, new MinimumOrderValueTransfer());
+
+                $hardMinimumOrderValueTransfer = $this->getFactory()
                     ->getMinimumOrderValueFacade()
-                    ->setStoreThreshold($minimumOrderValueTransfer);
+                    ->setStoreThreshold($hardMinimumOrderValueTransfer);
+
+                $softMinimumOrderValueTransfer = $this->getFactory()
+                    ->getMinimumOrderValueFacade()
+                    ->setStoreThreshold($softMinimumOrderValueTransfer);
 
                 $this->addSuccessMessage(sprintf(
                     'The Global Threshold is saved successfully.'

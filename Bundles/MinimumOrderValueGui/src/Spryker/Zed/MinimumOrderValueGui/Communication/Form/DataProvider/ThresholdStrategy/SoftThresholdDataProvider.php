@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy;
 
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConstants;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\GlobalThresholdDataProvider;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\LocalizedForm;
@@ -23,7 +24,7 @@ class SoftThresholdDataProvider implements ThresholdStrategyDataProviderInterfac
     public function getData(array $data, MinimumOrderValueTransfer $minimumOrderValueTransfer): array
     {
         $data[GlobalThresholdType::FIELD_SOFT_VALUE] = $minimumOrderValueTransfer->getValue();
-        $data[GlobalThresholdType::FIELD_SOFT_STRATEGY] = GlobalThresholdDataProvider::SOFT_TYPE_STRATEGY_MESSAGE;
+        $data[GlobalThresholdType::FIELD_SOFT_STRATEGY] = MinimumOrderValueGuiConstants::SOFT_TYPE_STRATEGY_MESSAGE;
 
         foreach ($minimumOrderValueTransfer->getLocalizedMessages() as $localizedMessage) {
             $localizedFormName = GlobalThresholdType::getLocalizedFormName(GlobalThresholdType::PREFIX_SOFT, $localizedMessage->getLocaleCode());

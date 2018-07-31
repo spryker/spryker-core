@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MinimumOrderValueGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 class MinimumOrderValueGuiToMinimumOrderValueFacadeBridge implements MinimumOrderValueGuiToMinimumOrderValueFacadeInterface

@@ -9,26 +9,12 @@ namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConstants;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface;
 
 class GlobalThresholdDataProvider implements FormDataProviderInterface
 {
-    public const STORE_CURRENCY_DELIMITER = ';';
-
-    /**
-     * @uses \Spryker\Zed\MinimumOrderValue\Business\Strategy\SoftThresholdWithMessageStrategy::STRATEGY_KEY
-     */
-    public const SOFT_TYPE_STRATEGY_MESSAGE = 'soft-threshold';
-    /**
-     * @uses \Spryker\Zed\MinimumOrderValue\Business\Strategy\SoftThresholdWithFixedFeeStrategy::STRATEGY_KEY
-     */
-    public const SOFT_TYPE_STRATEGY_FIXED = 'soft-threshold-fixed-fee';
-    /**
-     * @uses \Spryker\Zed\MinimumOrderValue\Business\Strategy\SoftThresholdWithFlexibleFeeStrategy::STRATEGY_KEY
-     */
-    public const SOFT_TYPE_STRATEGY_FLEXIBLE = 'soft-threshold-flexible-fee';
-
     /**
      * @var \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface
      */
@@ -109,9 +95,9 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
     protected function getSoftTypesList(): array
     {
         return [
-            static::SOFT_TYPE_STRATEGY_MESSAGE => "Soft Threshold with message",
-            static::SOFT_TYPE_STRATEGY_FIXED => "Soft Threshold with fixed fee",
-            static::SOFT_TYPE_STRATEGY_FLEXIBLE => "Soft Threshold with flexible fee",
+            MinimumOrderValueGuiConstants::SOFT_TYPE_STRATEGY_MESSAGE => "Soft Threshold with message",
+            MinimumOrderValueGuiConstants::SOFT_TYPE_STRATEGY_FIXED => "Soft Threshold with fixed fee",
+            MinimumOrderValueGuiConstants::SOFT_TYPE_STRATEGY_FLEXIBLE => "Soft Threshold with flexible fee",
         ];
     }
 
@@ -125,7 +111,7 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): string {
-        return $storeTransfer->getName() . static::STORE_CURRENCY_DELIMITER . $currencyTransfer->getCode();
+        return $storeTransfer->getName() . MinimumOrderValueGuiConstants::STORE_CURRENCY_DELIMITER . $currencyTransfer->getCode();
     }
 
     /**
