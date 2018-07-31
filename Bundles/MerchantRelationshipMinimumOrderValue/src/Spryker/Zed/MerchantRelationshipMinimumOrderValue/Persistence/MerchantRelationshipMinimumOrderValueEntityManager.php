@@ -24,7 +24,7 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
     public function setMerchantRelationshipThreshold(
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {
-        $this->assertRequireAttributes($merchantRelationshipMinimumOrderValueTransfer);
+        $this->assertRequiredAttributes($merchantRelationshipMinimumOrderValueTransfer);
 
         $minimumOrderValueTransfer = $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue();
 
@@ -71,7 +71,7 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
      *
      * @return void
      */
-    protected function assertRequireAttributes(MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): void
+    protected function assertRequiredAttributes(MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): void
     {
         $merchantRelationshipMinimumOrderValueTransfer
             ->requireMerchantRelationship()

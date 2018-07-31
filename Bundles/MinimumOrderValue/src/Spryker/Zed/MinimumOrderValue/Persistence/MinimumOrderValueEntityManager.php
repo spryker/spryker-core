@@ -54,7 +54,7 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
      */
     public function setStoreThreshold(MinimumOrderValueTransfer $minimumOrderValueTransfer): MinimumOrderValueTransfer
     {
-        $this->assertRequireAttributes($minimumOrderValueTransfer);
+        $this->assertRequiredAttributes($minimumOrderValueTransfer);
 
         $minimumOrderValueTypeTransfer = $minimumOrderValueTransfer->getMinimumOrderValueType();
         $storeTransfer = $minimumOrderValueTransfer->getStore();
@@ -95,7 +95,7 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
      *
      * @return void
      */
-    protected function assertRequireAttributes(MinimumOrderValueTransfer $minimumOrderValueTransfer): void
+    protected function assertRequiredAttributes(MinimumOrderValueTransfer $minimumOrderValueTransfer): void
     {
         $minimumOrderValueTransfer
             ->requireValue()
