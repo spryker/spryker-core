@@ -366,7 +366,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
+    public function transformSplittableItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
 
     /**
      * Specification:

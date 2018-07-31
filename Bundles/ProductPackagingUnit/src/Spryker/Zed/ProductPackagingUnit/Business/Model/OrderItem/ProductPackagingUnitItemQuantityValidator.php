@@ -8,21 +8,21 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesQuantityFacadeInterface;
 
 class ProductPackagingUnitItemQuantityValidator implements ProductPackagingUnitItemQuantityValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesQuantityFacadeInterface
      */
-    protected $config;
+    protected $salesQuantityFacade;
 
     /**
-     * @param \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig $config
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesQuantityFacadeInterface $salesQuantityFacade
      */
-    public function __construct(ProductPackagingUnitConfig $config)
+    public function __construct(ProductPackagingUnitToSalesQuantityFacadeInterface $salesQuantityFacade)
     {
-        $this->config = $config;
+        $this->salesQuantityFacade = $salesQuantityFacade;
     }
 
     /**
@@ -37,24 +37,30 @@ class ProductPackagingUnitItemQuantityValidator implements ProductPackagingUnitI
             return false;
         }
 
-        if ($this->isNonPackagingUnit($itemTransfer)) {
+        if (!$this->isPackagingUnit($itemTransfer)) {
             return false;
         }
 
-        if ($this->isNonSplittableQuantityThresholdExceeded($itemTransfer)) {
+        if (!$this->isSplittableQuantityThresholdExceeded($itemTransfer)) {
             return false;
         }
 
-        return !$this->isNonSplittableItem($itemTransfer);
+        return $this->isSplittableItem($itemTransfer);
     }
 
     /**
+     * @uses ItemTransfer::getBundleItemIdentifier()
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return bool
      */
     protected function isBundledItem(ItemTransfer $itemTransfer): bool
     {
+        if (!method_exists($itemTransfer, 'getBundleItemIdentifier')) {
+            return false;
+        }
+
         if ($itemTransfer->getRelatedBundleItemIdentifier() || $itemTransfer->getBundleItemIdentifier()) {
             return true;
         }
@@ -67,9 +73,9 @@ class ProductPackagingUnitItemQuantityValidator implements ProductPackagingUnitI
      *
      * @return bool
      */
-    protected function isNonSplittableItem(ItemTransfer $itemTransfer): bool
+    protected function isSplittableItem(ItemTransfer $itemTransfer): bool
     {
-        return $itemTransfer->getIsQuantitySplittable() === false;
+        return $itemTransfer->getIsQuantitySplittable() ?? true;
     }
 
     /**
@@ -77,9 +83,9 @@ class ProductPackagingUnitItemQuantityValidator implements ProductPackagingUnitI
      *
      * @return bool
      */
-    protected function isNonPackagingUnit(ItemTransfer $itemTransfer): bool
+    protected function isPackagingUnit(ItemTransfer $itemTransfer): bool
     {
-        return empty($itemTransfer->getAmountSalesUnit());
+        return !empty($itemTransfer->getAmountSalesUnit());
     }
 
     /**
@@ -87,18 +93,8 @@ class ProductPackagingUnitItemQuantityValidator implements ProductPackagingUnitI
      *
      * @return bool
      */
-    protected function isNonSplittableQuantityThresholdExceeded(ItemTransfer $itemTransfer)
+    protected function isSplittableQuantityThresholdExceeded(ItemTransfer $itemTransfer)
     {
-        $threshold = $this->config->findItemQuantityThreshold();
-
-        if ($threshold === null) {
-            return false;
-        }
-
-        if ($itemTransfer->getQuantity() >= $threshold) {
-            return true;
-        }
-
-        return false;
+        return $this->salesQuantityFacade->isItemQuantitySplittable($itemTransfer);
     }
 }

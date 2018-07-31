@@ -45,6 +45,6 @@ class PackagingUnitSplittableItemTransformerStrategyPlugin extends AbstractPlugi
     public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
         return $this->getFacade()
-            ->transformItem($itemTransfer);
+            ->transformSplittableItem($itemTransfer);
     }
 }

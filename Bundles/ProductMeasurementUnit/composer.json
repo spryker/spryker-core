@@ -23,7 +23,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/sales": "If you want to use sales plugins: ^8.12.0",
+    "spryker/sales": "If you want to display the measurement unit information in Zed UI: ^8.12.0",
     "spryker/cart": "If you want to use cart plugins: ^4.0.0",
     "spryker/installer": "If you want to use ProductMeasurementUnitInstallerPlugin. Minimum required version: ^4.0.0."
   },

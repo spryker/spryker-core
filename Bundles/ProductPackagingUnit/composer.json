@@ -17,6 +17,7 @@
     "spryker/propel-orm": "^1.1.0",
     "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
     "spryker/sales-extension": "^1.1.0",
+    "spryker/sales-quantity": "^1.0.0",
     "spryker/store": "^1.7.0",
     "spryker/util-text": "^1.0.0"
   },
@@ -29,11 +30,11 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/sales": "If you want to use sales plugins: ^8.12.0",
-    "spryker/cart": "If you want to use cart plugins: ^5.2.0",
+    "spryker/sales": "If you want to display the measurement unit information in Zed UI: ^8.12.0",
+    "spryker/cart": "If you want to use CartOperationStrategyPluginInterface: ^5.2.0",
     "spryker/checkout": "If you want to use checkout plugins: ^4.0.0",
     "spryker/installer": "If you want to use Installer plugins: ^4.0.0.",
-    "spryker/persistent-cart": "If you want to use cart plugins: ^1.1.0",
+    "spryker/persistent-cart": "If you want to use CartOperationStrategyPluginInterface: ^1.1.0",
     "spryker/stock": "If you want to use stock plugins: ^5.0.0"
   },
   "autoload": {
