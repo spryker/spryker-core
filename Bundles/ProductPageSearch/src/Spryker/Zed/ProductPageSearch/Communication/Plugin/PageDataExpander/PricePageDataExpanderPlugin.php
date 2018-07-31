@@ -51,7 +51,7 @@ class PricePageDataExpanderPlugin extends AbstractPlugin implements ProductPageD
      */
     protected function getGroupedStorePrices($idProductAbstract, $storeName)
     {
-        $priceProductCollection = $this->getFactory()->getPriceProductFacade()->findProductAbstractPrices($idProductAbstract);
+        $priceProductCollection = $this->getFactory()->getPriceProductFacade()->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract);
         $storePriceProductCollection = $this->filterPriceProductCollectionByStore($priceProductCollection, $storeName);
 
         return $this->getFactory()->getPriceProductFacade()->groupPriceProductCollection($storePriceProductCollection);
