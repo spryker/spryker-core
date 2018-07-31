@@ -183,6 +183,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Zend\\' => 'spryker/zend',
             'phpDocumentor\\GraphViz\\' => 'spryker/graphviz',
             'Egulias\\EmailValidator\\' => 'spryker/egulias',
+            'Ramsey\\Uuid' => 'spryker/ramsey-uuid',
         ];
     }
 
@@ -208,6 +209,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             '/zendframework/' => 'spryker/zend',
             'phpdocumentor/graphviz' => 'spryker/graphviz',
             'egulias/email-validator' => 'spryker/egulias',
+            'ramsey/uuid' => 'spryker/ramsey-uuid',
         ];
     }
 
