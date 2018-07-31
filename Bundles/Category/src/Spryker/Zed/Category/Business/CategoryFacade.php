@@ -463,7 +463,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * @param int $idNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getChildren($idNode, LocaleTransfer $localeTransfer)
     {
@@ -621,5 +621,20 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
         return $this->getFactory()
             ->createCategoryTemplateReader()
             ->findCategoryTemplateByName($name);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $name
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return bool
+     */
+    public function hasFirstLevelChildrenByName(string $name, CategoryTransfer $categoryTransfer): bool
+    {
+        return $this->getFactory()
+            ->createCategoryNodeChecker()
+            ->hasFirstLevelChildrenByName($name, $categoryTransfer);
     }
 }

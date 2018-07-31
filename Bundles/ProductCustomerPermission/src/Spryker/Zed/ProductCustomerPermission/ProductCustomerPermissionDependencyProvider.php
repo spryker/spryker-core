@@ -18,6 +18,7 @@ class ProductCustomerPermissionDependencyProvider extends AbstractBundleDependen
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *

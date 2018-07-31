@@ -357,7 +357,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      *
      * @return void
      */
-    protected function addErrors($buffer)
+    protected function addErrors(string $buffer): void
     {
         preg_match('#\[ERROR\] Found (\d+) error#i', $buffer, $matches);
         if (!$matches) {

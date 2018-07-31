@@ -75,7 +75,7 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
-     * @return string[]
+     * @return array
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems)
     {
@@ -210,7 +210,7 @@ class Finder implements FinderInterface
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
      * @param array $sourceStates
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array
      */
     public function filterItemsWithOnEnterEvent(
         array $stateMachineItems,

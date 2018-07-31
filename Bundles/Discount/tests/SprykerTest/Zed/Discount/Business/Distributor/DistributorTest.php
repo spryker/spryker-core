@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformer;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 
 /**
@@ -481,6 +482,25 @@ class DistributorTest extends Unit
      */
     protected function createDistributor()
     {
-        return new Distributor();
+        return new Distributor(
+            $this->createDiscountableItemTransformer(),
+            $this->createDiscountableItemTransformerStrategyPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface
+     */
+    protected function createDiscountableItemTransformer()
+    {
+        return new DiscountableItemTransformer();
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[]
+     */
+    protected function createDiscountableItemTransformerStrategyPlugins(): array
+    {
+        return [];
     }
 }
