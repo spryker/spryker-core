@@ -278,6 +278,75 @@ class CompanyUserFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testEnableCompanyUser(): void
+    {
+        $companyUserTransfer = $this->getCompanyUserTransfer(false);
+
+        $companyUserResponseTransfer = $this->getFacade()
+            ->enableCompanyUser($companyUserTransfer);
+
+        $this->assertTrue($companyUserResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUnableToEnableActiveCompanyUser(): void
+    {
+        $companyUserTransfer = $this->getCompanyUserTransfer();
+
+        $companyUserResponseTransfer = $this->getFacade()
+            ->enableCompanyUser($companyUserTransfer);
+
+        $this->assertFalse($companyUserResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDisableCompanyUser(): void
+    {
+        $companyUserTransfer = $this->getCompanyUserTransfer();
+
+        $companyUserResponseTransfer = $this->getFacade()
+            ->disableCompanyUser($companyUserTransfer);
+
+        $this->assertTrue($companyUserResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUnableToDisableInactiveCompanyUser(): void
+    {
+        $companyUserTransfer = $this->getCompanyUserTransfer(false);
+
+        $companyUserResponseTransfer = $this->getFacade()
+            ->disableCompanyUser($companyUserTransfer);
+
+        $this->assertFalse($companyUserResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @param bool $isActive
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    protected function getCompanyUserTransfer(bool $isActive = true): CompanyUserTransfer
+    {
+        $companyTransfer = $this->tester->haveCompany();
+        $customerTransfer = $this->tester->haveCustomer();
+
+        return $this->tester->haveCompanyUser([
+            'customer' => $customerTransfer,
+            'fk_company' => $companyTransfer->getIdCompany(),
+            'is_active' => $isActive,
+        ]);
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getFacade()
