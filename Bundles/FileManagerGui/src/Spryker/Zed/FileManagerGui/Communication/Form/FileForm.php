@@ -43,9 +43,6 @@ class FileForm extends AbstractType
     protected const ERROR_FILE_MISSED_EDIT_MESSAGE = 'Upload a file or specify a new file name';
     protected const ERROR_FILE_MISSED_ADD_MESSAGE = 'Upload a file';
     protected const ERROR_FILE_NAME_MISSED_ADD_MESSAGE = 'Specify a file name or use real one';
-    protected const ERROR_FILE_NAME_UNSUPPORTED_SYMBLOS = 'File name should contain only ASCII symbols';
-
-    protected const ENCODING_FIELD_FILE_NAME = 'ASCII';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -98,10 +95,6 @@ class FileForm extends AbstractType
                     $context->addViolation(static::ERROR_FILE_NAME_MISSED_ADD_MESSAGE);
                 }
             }
-
-            if (!$this->validateFileNameEncoding($formData[static::FIELD_FILE_NAME])) {
-                $context->addViolation(static::ERROR_FILE_NAME_UNSUPPORTED_SYMBLOS);
-            }
         };
 
         $builder->add(static::FIELD_FILE_NAME, TextType::class, [
@@ -134,21 +127,7 @@ class FileForm extends AbstractType
      */
     protected function addUploadedFileField(FormBuilderInterface $builder, array $options)
     {
-        /**
-         * @var \Generated\Shared\Transfer\FileTransfer $formData
-         */
         $formData = $builder->getData();
-
-        $uploadedFileNameCallback = function ($object, ExecutionContextInterface $context) use ($formData) {
-            if ($formData->getUseRealName() !== true || $formData->getFileUpload() === null) {
-                return;
-            }
-
-            if (!$this->validateFileNameEncoding($formData->getFileUpload()->getClientOriginalName())) {
-                $context->addViolation(static::ERROR_FILE_NAME_UNSUPPORTED_SYMBLOS);
-            }
-        };
-
         $builder->add(static::FILED_FILE_UPLOAD, FileType::class, [
             'required' => empty($formData[static::FIELD_ID_FILE]),
             'constraints' => [
@@ -157,7 +136,6 @@ class FileForm extends AbstractType
                     'mimeTypes' => $options[static::OPTION_ALLOWED_MIME_TYPES],
                     'mimeTypesMessage' => static::ERROR_MIME_TYPE_MESSAGE,
                 ]),
-                new Callback($uploadedFileNameCallback),
             ],
         ]);
 
@@ -217,16 +195,6 @@ class FileForm extends AbstractType
         ]);
 
         return $this;
-    }
-
-    /**
-     * @param string|null $fileName
-     *
-     * @return bool
-     */
-    protected function validateFileNameEncoding($fileName)
-    {
-        return mb_detect_encoding((string)$fileName, static::ENCODING_FIELD_FILE_NAME, true) !== false;
     }
 
     /**
