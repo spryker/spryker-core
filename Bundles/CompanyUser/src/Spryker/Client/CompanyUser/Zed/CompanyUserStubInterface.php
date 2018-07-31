@@ -50,4 +50,18 @@ interface CompanyUserStubInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
     public function getCompanyUserById(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function enableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 }
