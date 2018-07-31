@@ -54,6 +54,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     {
         $query = $this->getFactory()
             ->createCompanyUserQuery()
+            ->filterByIsActive(true)
             ->filterByFkCustomer($idCustomer)
             ->joinCompany()
             ->useCompanyQuery()
