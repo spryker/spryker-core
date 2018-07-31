@@ -7,29 +7,26 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade;
 
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 
 interface MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
-     *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
-     */
-    public function getMinimumOrderValueType(
-        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
-    ): MinimumOrderValueTypeTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
-     * @param int $thresholdValue
-     * @param int|null $fee
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @return bool
      */
     public function isStrategyValid(
-        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
-        int $thresholdValue,
-        ?int $fee = null
+        MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
+     */
+    public function getMinimumOrderValueTypeByKey(
+        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
+    ): MinimumOrderValueTypeTransfer;
 }

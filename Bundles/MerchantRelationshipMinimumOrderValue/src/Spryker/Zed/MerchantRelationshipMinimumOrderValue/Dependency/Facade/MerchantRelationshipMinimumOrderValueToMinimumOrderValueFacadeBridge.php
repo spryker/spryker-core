@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade;
 
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 
 class MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeBridge implements MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface
@@ -25,29 +26,24 @@ class MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeBridge imple
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
-     *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
-     */
-    public function getMinimumOrderValueType(
-        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
-    ): MinimumOrderValueTypeTransfer {
-        return $this->minimumOrderValueFacade->getMinimumOrderValueType($minimumOrderValueTypeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
-     * @param int $thresholdValue
-     * @param int|null $fee
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @return bool
      */
     public function isStrategyValid(
-        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
-        int $thresholdValue,
-        ?int $fee = null
+        MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): bool {
-        return $this->minimumOrderValueFacade
-            ->isStrategyValid($minimumOrderValueTypeTransfer, $thresholdValue, $fee);
+        return $this->minimumOrderValueFacade->isStrategyValid($minimumOrderValueTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
+     */
+    public function getMinimumOrderValueTypeByKey(
+        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
+    ): MinimumOrderValueTypeTransfer {
+        return $this->minimumOrderValueFacade->getMinimumOrderValueTypeByKey($minimumOrderValueTypeTransfer);
     }
 }

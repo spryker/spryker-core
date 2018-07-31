@@ -24,22 +24,14 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
     public function setMerchantRelationshipThreshold(
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {
-        $merchantRelationshipMinimumOrderValueTransfer
-            ->requireMinimumOrderValueType()
-            ->requireMerchantRelationship()
-            ->requireStore()
-            ->requireCurrency()
-            ->requireValue();
+        $this->assertRequireAttributes($merchantRelationshipMinimumOrderValueTransfer);
 
-        $minimumOrderValueTypeTransfer = $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueType();
+        $minimumOrderValueTransfer = $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue();
+
         $merchantRelationshipTransfer = $merchantRelationshipMinimumOrderValueTransfer->getMerchantRelationship();
-        $storeTransfer = $merchantRelationshipMinimumOrderValueTransfer->getStore();
-        $currencyTransfer = $merchantRelationshipMinimumOrderValueTransfer->getCurrency();
-
-        $minimumOrderValueTypeTransfer->requireIdMinimumOrderValueType()->requireThresholdGroup();
-        $merchantRelationshipTransfer->requireIdMerchantRelationship();
-        $storeTransfer->requireIdStore();
-        $currencyTransfer->requireIdCurrency();
+        $minimumOrderValueTypeTransfer = $minimumOrderValueTransfer->getMinimumOrderValueType();
+        $storeTransfer = $minimumOrderValueTransfer->getStore();
+        $currencyTransfer = $minimumOrderValueTransfer->getCurrency();
 
         $merchantRelationshipMinimumOrderValueEntity = $this->getFactory()
             ->createMerchantRelationshipMinimumOrderValueQuery()
@@ -58,8 +50,8 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
         }
 
         $merchantRelationshipMinimumOrderValueEntity
-            ->setValue($merchantRelationshipMinimumOrderValueTransfer->getValue())
-            ->setFee($merchantRelationshipMinimumOrderValueTransfer->getFee())
+            ->setValue($minimumOrderValueTransfer->getValue())
+            ->setFee($minimumOrderValueTransfer->getFee())
             ->setFkMerchantRelationship(
                 $merchantRelationshipTransfer->getIdMerchantRelationship()
             )->setFkMinOrderValueType(
@@ -72,5 +64,36 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
                 $merchantRelationshipMinimumOrderValueEntity,
                 new MerchantRelationshipMinimumOrderValueTransfer()
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
+     *
+     * @return void
+     */
+    protected function assertRequireAttributes(MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): void
+    {
+        $merchantRelationshipMinimumOrderValueTransfer
+            ->requireMerchantRelationship()
+            ->requireMinimumOrderValue();
+
+        $merchantRelationshipMinimumOrderValueTransfer->getMerchantRelationship()
+            ->requireIdMerchantRelationship();
+
+        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()
+            ->requireMinimumOrderValueType()
+            ->requireStore()
+            ->requireCurrency()
+            ->requireValue();
+
+        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getStore()
+            ->requireIdStore();
+
+        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getCurrency()
+            ->getIdCurrency();
+
+        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()
+            ->requireKey()
+            ->requireThresholdGroup();
     }
 }

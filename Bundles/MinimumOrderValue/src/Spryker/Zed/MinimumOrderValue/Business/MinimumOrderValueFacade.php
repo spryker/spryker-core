@@ -65,15 +65,12 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
-    public function getMinimumOrderValueType(
+    public function getMinimumOrderValueTypeByKey(
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
     ): MinimumOrderValueTypeTransfer {
-        $minimumOrderValueStrategy = $this->getFactory()
-            ->createMinimumOrderValueStrategyResolver()
-            ->resolveMinimumOrderValueStrategy($minimumOrderValueTypeTransfer->getKey());
-
-        return $this->getEntityManager()
-            ->saveMinimumOrderValueType($minimumOrderValueStrategy->toTransfer());
+        return $this->getFactory()
+            ->createMinimumOrderValueTypeReader()
+            ->getMinimumOrderValueTypeByKey($minimumOrderValueTypeTransfer);
     }
 
     /**
@@ -100,23 +97,19 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
-     * @param int $thresholdValue
-     * @param int|null $fee
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
      *
      * @return bool
      */
     public function isStrategyValid(
-        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
-        int $thresholdValue,
-        ?int $fee = null
+        MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): bool {
         $minimumOrderValueStrategy = $this->getFactory()
             ->createMinimumOrderValueStrategyResolver()
-            ->resolveMinimumOrderValueStrategy($minimumOrderValueTypeTransfer->getKey());
+            ->resolveMinimumOrderValueStrategy($minimumOrderValueTransfer->getMinimumOrderValueType()->getKey());
 
-        return $minimumOrderValueStrategy->isValid($thresholdValue, $fee);
+        return $minimumOrderValueStrategy->isValid($minimumOrderValueTransfer->getValue(), $minimumOrderValueTransfer->getFee());
     }
 }

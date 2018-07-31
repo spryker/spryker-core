@@ -52,7 +52,7 @@ interface MinimumOrderValueFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
-    public function getMinimumOrderValueType(
+    public function getMinimumOrderValueTypeByKey(
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
     ): MinimumOrderValueTypeTransfer;
 
@@ -78,17 +78,13 @@ interface MinimumOrderValueFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
-     * @param int $thresholdValue
-     * @param int|null $fee
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
      *
      * @return bool
      */
     public function isStrategyValid(
-        MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
-        int $thresholdValue,
-        ?int $fee = null
+        MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): bool;
 }

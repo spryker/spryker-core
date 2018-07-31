@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\MerchantRelationshipMinimumOrderValue\Business;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\SpyMerchantRelationshipEntityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -127,12 +128,15 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
         ?int $fee = null
     ): MerchantRelationshipMinimumOrderValueTransfer {
         return (new MerchantRelationshipMinimumOrderValueTransfer())
-            ->setMinimumOrderValueType($minimumOrderValueTypeTransfer)
             ->setMerchantRelationship($merchantRelationshipTransfer)
-            ->setStore($storeTransfer)
-            ->setCurrency($currencyTransfer)
-            ->setValue($thresholdValue)
-            ->setFee($fee);
+            ->setMinimumOrderValue(
+                (new MinimumOrderValueTransfer())
+                    ->setMinimumOrderValueType($minimumOrderValueTypeTransfer)
+                    ->setStore($storeTransfer)
+                    ->setCurrency($currencyTransfer)
+                    ->setValue($thresholdValue)
+                    ->setFee($fee)
+            );
     }
 
     /**
