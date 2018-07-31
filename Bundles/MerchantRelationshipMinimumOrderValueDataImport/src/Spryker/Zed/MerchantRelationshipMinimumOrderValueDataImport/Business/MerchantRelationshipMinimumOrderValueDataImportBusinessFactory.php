@@ -47,7 +47,7 @@ class MerchantRelationshipMinimumOrderValueDataImportBusinessFactory extends Dat
     /**
      * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValueDataImport\Dependency\Facade\MerchantRelationshipMinimumOrderValueDataImportToMerchantRelationshipMinimumOrderValueFacadeInterface
      */
-    protected function getMerchantRelationshipMinimumOrderValueFacade(): MerchantRelationshipMinimumOrderValueDataImportToMerchantRelationshipMinimumOrderValueFacadeInterface
+    public function getMerchantRelationshipMinimumOrderValueFacade(): MerchantRelationshipMinimumOrderValueDataImportToMerchantRelationshipMinimumOrderValueFacadeInterface
     {
         return $this->getProvidedDependency(MerchantRelationshipMinimumOrderValueDataImportDependencyProvider::FACADE_MERCHANT_RELATIONSHIP_MINIMUM_ORDER_VALUE);
     }
@@ -55,7 +55,7 @@ class MerchantRelationshipMinimumOrderValueDataImportBusinessFactory extends Dat
     /**
      * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValueDataImport\Dependency\Facade\MerchantRelationshipMinimumOrderValueDataImportToMerchantRelationshipFacadeInterface
      */
-    protected function getMerchantRelationshipFacade(): MerchantRelationshipMinimumOrderValueDataImportToMerchantRelationshipFacadeInterface
+    public function getMerchantRelationshipFacade(): MerchantRelationshipMinimumOrderValueDataImportToMerchantRelationshipFacadeInterface
     {
         return $this->getProvidedDependency(MerchantRelationshipMinimumOrderValueDataImportDependencyProvider::FACADE_MERCHANT_RELATIONSHIP);
     }
@@ -63,7 +63,7 @@ class MerchantRelationshipMinimumOrderValueDataImportBusinessFactory extends Dat
     /**
      * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValueDataImport\Dependency\Facade\MerchantRelationshipMinimumOrderValueDataImportToStoreFacadeInterface
      */
-    protected function getStoreFacade(): MerchantRelationshipMinimumOrderValueDataImportToStoreFacadeInterface
+    public function getStoreFacade(): MerchantRelationshipMinimumOrderValueDataImportToStoreFacadeInterface
     {
         return $this->getProvidedDependency(MerchantRelationshipMinimumOrderValueDataImportDependencyProvider::FACADE_STORE);
     }
@@ -71,7 +71,7 @@ class MerchantRelationshipMinimumOrderValueDataImportBusinessFactory extends Dat
     /**
      * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValueDataImport\Dependency\Facade\MerchantRelationshipMinimumOrderValueDataImportToCurrencyFacadeInterface
      */
-    protected function getCurrencyFacade(): MerchantRelationshipMinimumOrderValueDataImportToCurrencyFacadeInterface
+    public function getCurrencyFacade(): MerchantRelationshipMinimumOrderValueDataImportToCurrencyFacadeInterface
     {
         return $this->getProvidedDependency(MerchantRelationshipMinimumOrderValueDataImportDependencyProvider::FACADE_CURRENCY);
     }

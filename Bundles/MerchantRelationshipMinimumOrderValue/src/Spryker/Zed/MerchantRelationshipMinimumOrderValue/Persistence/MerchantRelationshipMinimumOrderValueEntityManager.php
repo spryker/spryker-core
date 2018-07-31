@@ -66,13 +66,11 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
                 $minimumOrderValueTypeTransfer->getIdMinimumOrderValueType()
             )->save();
 
-        $merchantRelationshipMinimumOrderValueTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createMerchantRelationshipMinimumOrderValueMapper()
             ->mapMerchantRelationshipMinimumOrderValueEntityToTransfer(
                 $merchantRelationshipMinimumOrderValueEntity,
                 new MerchantRelationshipMinimumOrderValueTransfer()
             );
-
-        return $merchantRelationshipMinimumOrderValueTransfer;
     }
 }

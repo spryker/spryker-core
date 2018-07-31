@@ -82,6 +82,23 @@ class Sellable implements SellableInterface
     }
 
     /**
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function isProductConcreteAvailable(int $idProductConcrete): bool
+    {
+        $stockProductTransfers = $this->stockFacade->getStockProductsByIdProduct($idProductConcrete);
+        if (empty($stockProductTransfers)) {
+            return false;
+        }
+
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+
+        return $this->calculateIsProductSellable($stockProductTransfers[0]->getSku(), 1, $storeTransfer);
+    }
+
+    /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

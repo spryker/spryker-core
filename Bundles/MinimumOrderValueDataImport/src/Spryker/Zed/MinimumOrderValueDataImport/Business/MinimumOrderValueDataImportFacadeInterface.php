@@ -14,7 +14,7 @@ interface MinimumOrderValueDataImportFacadeInterface
 {
     /**
      * Specification:
-     * - Imports packaging unit amounts data from the specified file.
+     * - Imports minimum order threshold data from the specified file.
      * - Iterates over the data sets and imports the data into persistence.
      *
      * @api

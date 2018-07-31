@@ -8,8 +8,8 @@
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdManager;
-use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdManagerInterface;
+use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdWriter;
+use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdWriterInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\MerchantRelationshipMinimumOrderValueDependencyProvider;
 
@@ -28,11 +28,11 @@ class MerchantRelationshipMinimumOrderValueBusinessFactory extends AbstractBusin
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdManagerInterface
+     * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdWriterInterface
      */
-    public function createMerchantRelationshipThresholdManager(): MerchantRelationshipThresholdManagerInterface
+    public function createMerchantRelationshipThresholdWriter(): MerchantRelationshipThresholdWriterInterface
     {
-        return new MerchantRelationshipThresholdManager(
+        return new MerchantRelationshipThresholdWriter(
             $this->getMinimumOrderValueFacade(),
             $this->getEntityManager()
         );

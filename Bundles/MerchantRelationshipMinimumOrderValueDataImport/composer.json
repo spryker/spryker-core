@@ -1,5 +1,5 @@
 {
-  "name": "spryker/minimum-order-value-data-import",
+  "name": "spryker/merchant-relationship-minimum-order-value-data-import",
   "description": "MerchantRelationshipMinimumOrderValueDataImport module",
   "license": "MIT",
   "require": {

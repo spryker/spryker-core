@@ -10,11 +10,12 @@ namespace Spryker\Zed\MinimumOrderValue\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MinimumOrderValue\Business\Installer\MinimumOrderValueTypeInstaller;
 use Spryker\Zed\MinimumOrderValue\Business\Installer\MinimumOrderValueTypeInstallerInterface;
-use Spryker\Zed\MinimumOrderValue\Business\StoreThreshold\StoreThresholdManager;
-use Spryker\Zed\MinimumOrderValue\Business\StoreThreshold\StoreThresholdManagerInterface;
+use Spryker\Zed\MinimumOrderValue\Business\StoreThreshold\StoreThresholdReader;
+use Spryker\Zed\MinimumOrderValue\Business\StoreThreshold\StoreThresholdReaderInterface;
+use Spryker\Zed\MinimumOrderValue\Business\StoreThreshold\StoreThresholdWriter;
+use Spryker\Zed\MinimumOrderValue\Business\StoreThreshold\StoreThresholdWriterInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolver;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
-use Spryker\Zed\MinimumOrderValue\MinimumOrderValueDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface getEntityManager()
@@ -29,25 +30,27 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     public function createMinimumOrderValueTypeInstaller(): MinimumOrderValueTypeInstallerInterface
     {
         return new MinimumOrderValueTypeInstaller(
-            $this->getMinimumOrderValueStrategies(),
+            $this->getConfig()->getMinimumOrderValueStrategies(),
             $this->getEntityManager()
         );
     }
 
     /**
-     * @return \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface[]
+     * @return \Spryker\Zed\MinimumOrderValue\Business\StoreThreshold\StoreThresholdReaderInterface
      */
-    public function getMinimumOrderValueStrategies(): array
+    public function createStoreThresholdReader(): StoreThresholdReaderInterface
     {
-        return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::MINIMUM_ORDER_VALUE_STRATEGIES);
+        return new StoreThresholdReader(
+            $this->getRepository()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\MinimumOrderValue\Business\StoreThreshold\StoreThresholdManagerInterface
+     * @return \Spryker\Zed\MinimumOrderValue\Business\StoreThreshold\StoreThresholdWriterInterface
      */
-    public function createStoreThresholdManager(): StoreThresholdManagerInterface
+    public function createStoreThresholdWriter(): StoreThresholdWriterInterface
     {
-        return new StoreThresholdManager(
+        return new StoreThresholdWriter(
             $this->createMinimumOrderValueStrategyResolver(),
             $this->getEntityManager()
         );
@@ -59,7 +62,7 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     public function createMinimumOrderValueStrategyResolver(): MinimumOrderValueStrategyResolverInterface
     {
         return new MinimumOrderValueStrategyResolver(
-            $this->getMinimumOrderValueStrategies()
+            $this->getConfig()->getMinimumOrderValueStrategies()
         );
     }
 }

@@ -32,7 +32,7 @@ class MerchantRelationshipMinimumOrderValueFacade extends AbstractFacade impleme
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {
         return $this->getFactory()
-            ->createMerchantRelationshipThresholdManager()
+            ->createMerchantRelationshipThresholdWriter()
             ->setMerchantRelationshipThreshold(
                 $merchantRelationshipMinimumOrderValueTransfer
             );
