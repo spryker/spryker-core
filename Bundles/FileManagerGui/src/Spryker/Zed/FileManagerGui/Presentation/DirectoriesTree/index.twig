@@ -17,15 +17,7 @@
     <div class="row">
         <div class="col-lg-6">
             <div id="file-directory-tree">
-                <ul>
-                    <li id="file-directory-tree-node-0"
-                        class="jstree-open"
-                        data-jstree='{"type":"navigation"}'
-                    >
-                        File Directories Tree
-                        {% include '@FileManagerGui/DirectoriesTree/_partials/nodes.twig' with {nodes: fileDirectoryTree.nodes} %}
-                    </li>
-                </ul>
+                {% include '@FileManagerGui/DirectoriesTree/tree.twig' %}
             </div>
             <div>
                 <input type="button" id="file-directory-tree-save-btn" class="btn btn-primary pull-left m-r-sm"

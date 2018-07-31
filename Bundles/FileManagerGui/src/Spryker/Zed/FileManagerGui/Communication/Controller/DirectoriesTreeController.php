@@ -22,15 +22,25 @@ class DirectoriesTreeController extends AbstractController
      */
     public function indexAction()
     {
-        $fileDirectoryTreeTransfer = $this->getFactory()
-            ->getFileManagerFacade()
-            ->findFileDirectoryTree();
+        $fileDirectoryTreeTransfer = $this->getFileDirectoryTreeTransfer();
 
         $fileTable = $this->getFactory()
             ->createFileTable();
 
         return [
             'files' => $fileTable->render(),
+            'fileDirectoryTree' => $fileDirectoryTreeTransfer,
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function treeAction()
+    {
+        $fileDirectoryTreeTransfer = $this->getFileDirectoryTreeTransfer();
+
+        return [
             'fileDirectoryTree' => $fileDirectoryTreeTransfer,
         ];
     }
@@ -63,5 +73,15 @@ class DirectoriesTreeController extends AbstractController
             'success' => true,
             'message' => 'File Directory tree updated successfully.',
         ]);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\FileDirectoryTreeTransfer
+     */
+    protected function getFileDirectoryTreeTransfer()
+    {
+        return $this->getFactory()
+            ->getFileManagerFacade()
+            ->findFileDirectoryTree();
     }
 }

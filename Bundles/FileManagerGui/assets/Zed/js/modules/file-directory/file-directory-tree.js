@@ -45,18 +45,6 @@ function initialize() {
 }
 
 /**
- * @returns {Function}
- */
-function createTreeLoadHandler() {
-    return function (response) {
-        $treeContent.html(response);
-
-        initJsTree();
-        $treeContainer.removeClass('hidden');
-    }
-}
-
-/**
  * @return {void}
  */
 function initJsTree() {
@@ -144,6 +132,10 @@ function onTreeSaveOrderClick() {
     };
 
     $.post(config.fileDirectoryTreeHierarchyUpdateUrl, params, function (response) {
+        if (response.success) {
+            reinitializeTree();
+        }
+
         window.sweetAlert({
             title: response.success ? "Success" : "Error",
             text: response.message,
@@ -153,6 +145,32 @@ function onTreeSaveOrderClick() {
         $treeOrderSaveBtn.attr('disabled', 'disabled');
     }).always(function () {
         $treeUpdateProgressBar.addClass('hidden');
+    });
+}
+
+function reinitializeTree($tree) {
+    var $tree = $('#file-directory-tree');
+
+    $tree.jstree("destroy").empty();
+
+    $tree.each(function () {
+        for (var i = this.attributes.length - 1; i >= 0; i--) {
+
+            if (this.attributes[i].name !== 'id') {
+                $(this).removeAttr(this.attributes[i].name);
+            }
+        }
+    });
+
+    $.ajax({
+        url: '/file-manager-gui/directories-tree/tree',
+        type: "GET",
+        success: function (response) {
+            $tree.html(response);
+            initJsTree();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+        }
     });
 }
 
