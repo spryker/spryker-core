@@ -176,6 +176,56 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function enableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())
+            ->setCompanyUser($companyUserTransfer)
+            ->setIsSuccessful(false);
+
+        $existingCompanyUser = $this->companyUserRepository->findCompanyUserByIdCompanyUser($companyUserTransfer);
+
+        if (!$existingCompanyUser || $existingCompanyUser->getIsActive()) {
+            return $companyUserResponseTransfer;
+        }
+
+        $existingCompanyUser->setIsActive(true);
+        $this->companyUserEntityManager->saveCompanyUser($existingCompanyUser);
+
+        return $companyUserResponseTransfer
+            ->setCompanyUser($existingCompanyUser)
+            ->setIsSuccessful(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())
+            ->setCompanyUser($companyUserTransfer)
+            ->setIsSuccessful(false);
+
+        $existingCompanyUser = $this->companyUserRepository->findCompanyUserByIdCompanyUser($companyUserTransfer);
+
+        if (!$existingCompanyUser || !$existingCompanyUser->getIsActive()) {
+            return $companyUserResponseTransfer;
+        }
+
+        $existingCompanyUser->setIsActive(false);
+        $this->companyUserEntityManager->saveCompanyUser($existingCompanyUser);
+
+        return $companyUserResponseTransfer
+            ->setCompanyUser($existingCompanyUser)
+            ->setIsSuccessful(true);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
