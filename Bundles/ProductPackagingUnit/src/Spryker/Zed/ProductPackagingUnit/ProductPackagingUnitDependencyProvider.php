@@ -16,6 +16,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLoc
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeBridge;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesQuantityFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUtilTextServiceBridge;
 
@@ -28,6 +29,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_OMS = 'FACADE_OMS';
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_SALES_QUANTITY = 'FACADE_SALES_QUANTITY';
 
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
@@ -49,6 +51,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addOmsFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addProductFacade($container);
+        $container = $this->addSalesQuantityFacade($container);
 
         $container = $this->addUtilTextService($container);
 
@@ -175,6 +178,22 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductPackagingUnitToProductFacadeBridge(
                 $container->getLocator()->product()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesQuantityFacade(Container $container): Container
+    {
+        $container[static::FACADE_SALES_QUANTITY] = function (Container $container) {
+            return new ProductPackagingUnitToSalesQuantityFacadeBridge(
+                $container->getLocator()->salesQuantity()->facade()
             );
         };
 
