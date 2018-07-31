@@ -38,12 +38,12 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
     /**
      * @var \Generated\Shared\Transfer\StoreTransfer[]
      */
-    protected static $storesHeap = [];
+    protected $storesHeap = [];
 
     /**
      * @var \Generated\Shared\Transfer\CurrencyTransfer[]
      */
-    protected static $currenciesHeap = [];
+    protected $currenciesHeap = [];
 
     /**
      * @param \Spryker\Zed\MinimumOrderValueDataImport\Dependency\Facade\MinimumOrderValueDataImportToMinimumOrderValueFacadeInterface $minimumOrderValueFacade
@@ -124,11 +124,11 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
      */
     protected function findStoreByName(string $storeName): StoreTransfer
     {
-        if (!isset(static::$storesHeap[$storeName])) {
-            static::$storesHeap[$storeName] = $this->storeFacade->getStoreByName($storeName);
+        if (!isset($this->storesHeap[$storeName])) {
+            $this->storesHeap[$storeName] = $this->storeFacade->getStoreByName($storeName);
         }
 
-        return static::$storesHeap[$storeName];
+        return $this->storesHeap[$storeName];
     }
 
     /**
@@ -138,10 +138,10 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
      */
     protected function findCurrencyByCode(string $isoCode): CurrencyTransfer
     {
-        if (!isset(static::$currenciesHeap[$isoCode])) {
-            static::$currenciesHeap[$isoCode] = $this->currencyFacade->fromIsoCode($isoCode);
+        if (!isset($this->currenciesHeap[$isoCode])) {
+            $this->currenciesHeap[$isoCode] = $this->currencyFacade->fromIsoCode($isoCode);
         }
 
-        return static::$currenciesHeap[$isoCode];
+        return $this->currenciesHeap[$isoCode];
     }
 }
