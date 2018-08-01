@@ -32,4 +32,8 @@ var softThresholdStrategyToggle = function() {
 $(document).ready(function () {
     softThresholdStrategyToggle();
     $('input[name="global-threshold[softStrategy]"]').click(softThresholdStrategyToggle);
+
+    $('#global-threshold_storeCurrency').change(function() {
+        window.location.href = '/minimum-order-value-gui/global?store_currency='+$(this).val();
+    })
 });

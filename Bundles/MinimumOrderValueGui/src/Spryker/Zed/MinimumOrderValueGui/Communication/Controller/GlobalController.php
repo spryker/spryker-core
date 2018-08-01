@@ -10,7 +10,9 @@ namespace Spryker\Zed\MinimumOrderValueGui\Communication\Controller;
 use Exception;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\StoreCurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,9 +29,10 @@ class GlobalController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $minimumOrderValueTransfers = $this->getDefaultMinimumOrderValueTransfer();
+        $storeCurrencyTransfer = $this->getStoreCurrencyByRequest($request);
+        $minimumOrderValueTransfers = $this->getMinimumOrderValueTransfers($storeCurrencyTransfer);
 
-        $globalThresholdForm = $this->getFactory()->createGlobalThresholdForm($minimumOrderValueTransfers);
+        $globalThresholdForm = $this->getFactory()->createGlobalThresholdForm($minimumOrderValueTransfers, $storeCurrencyTransfer);
         $globalThresholdForm->handleRequest($request);
 
         if ($globalThresholdForm->isSubmitted() && $globalThresholdForm->isValid()) {
@@ -67,16 +70,18 @@ class GlobalController extends AbstractController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreCurrencyTransfer $storeCurrencyTransfer
+     *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
      */
-    protected function getDefaultMinimumOrderValueTransfer(): array
+    protected function getMinimumOrderValueTransfers(StoreCurrencyTransfer $storeCurrencyTransfer): array
     {
         $minimumOrderValueFacade = $this->getFactory()->getMinimumOrderValueFacade();
 
-        $currentStore = $this->getCurrentStore();
-        $currentCurrency = $this->getCurrentCurrency();
-
-        return $minimumOrderValueFacade->getGlobalThresholdsByStoreAndCurrency($currentStore, $currentCurrency);
+        return $minimumOrderValueFacade->getGlobalThresholdsByStoreAndCurrency(
+            $storeCurrencyTransfer->getStore(),
+            $storeCurrencyTransfer->getCurrency()
+        );
     }
 
     /**
@@ -104,5 +109,34 @@ class GlobalController extends AbstractController
             ->getCurrentStore();
 
         return $currentStore;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
+     */
+    protected function getStoreCurrencyByRequest(Request $request): StoreCurrencyTransfer
+    {
+        $storeCurrency = $request->query->get(MinimumOrderValueGuiConstants::STORE_CURRENCY_URL_KEY);
+        $storeTransfer = null;
+        $currencyTransfer = null;
+
+        if ($storeCurrency !== null) {
+            $storeCurrencyTransfer = $this->getFactory()
+                ->createStoreCurrencyFinder()
+                ->findStoreCurrencyByString($storeCurrency);
+            $storeTransfer = $storeCurrencyTransfer->getStore();
+            $currencyTransfer = $storeCurrencyTransfer->getCurrency();
+        }
+        if (!$storeTransfer
+            || !$currencyTransfer
+        ) {
+            $storeTransfer = $this->getCurrentStore();
+            $currencyTransfer = $this->getCurrentCurrency();
+        }
+        return (new StoreCurrencyTransfer())
+            ->setStore($storeTransfer)
+            ->setCurrency($currencyTransfer);
     }
 }

@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Communication;
 
+use Generated\Shared\Transfer\StoreCurrencyTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\GlobalThresholdDataProvider;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalHardThresholdFormMapper;
-use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalSoftThresholdFormMapper;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalThresholdFormMapperInterface;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Model\StoreCurrencyFinder;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMinimumOrderValueFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMoneyFacadeInterface;
@@ -28,16 +29,19 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
 {
     /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer[] $minimumOrderValueTransfers
+     * @param \Generated\Shared\Transfer\StoreCurrencyTransfer $storeCurrencyTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createGlobalThresholdForm(array $minimumOrderValueTransfers): FormInterface
-    {
+    public function createGlobalThresholdForm(
+        array $minimumOrderValueTransfers,
+        StoreCurrencyTransfer $storeCurrencyTransfer
+    ): FormInterface {
         $formDataProvider = $this->createGlobalThresholdFormDataProvider();
 
         return $this->getFormFactory()->create(
             GlobalThresholdType::class,
-            $formDataProvider->getData($minimumOrderValueTransfers),
+            $formDataProvider->getData($minimumOrderValueTransfers, $storeCurrencyTransfer),
             $formDataProvider->getOptions()
         );
     }
@@ -63,13 +67,23 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
+     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Model\StoreCurrencyFinder
+     */
+    public function createStoreCurrencyFinder(): StoreCurrencyFinder
+    {
+        return new StoreCurrencyFinder(
+            $this->getCurrencyFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalThresholdFormMapperInterface
      */
     public function createGlobalHardThresholdFormMapper(): GlobalThresholdFormMapperInterface
     {
         return new GlobalHardThresholdFormMapper(
-            $this->getCurrencyFacade(),
-            $this->createLocaleProvider()
+            $this->createLocaleProvider(),
+            $this->createStoreCurrencyFinder()
         );
     }
 
@@ -86,8 +100,8 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
             . "FormMapper";
 
         return new $mapClassName(
-            $this->getCurrencyFacade(),
-            $this->createLocaleProvider()
+            $this->createLocaleProvider(),
+            $this->createStoreCurrencyFinder()
         );
     }
 

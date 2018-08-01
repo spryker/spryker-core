@@ -15,30 +15,31 @@ use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConstants;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\LocalizedForm;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Model\StoreCurrencyFinder;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface;
 
 abstract class AbstractGlobalThresholdFormMapper
 {
-    /**
-     * @var \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface
-     */
-    protected $currencyFacade;
-
     /**
      * @var \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider
      */
     protected $localeProvider;
 
     /**
-     * @param \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface $currencyFacade
+     * @var \Spryker\Zed\MinimumOrderValueGui\Communication\Model\StoreCurrencyFinder
+     */
+    protected $storeCurrencyFinder;
+
+    /**
      * @param \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider $localeProvider
+     * @param \Spryker\Zed\MinimumOrderValueGui\Communication\Model\StoreCurrencyFinder $storeCurrencyFinder
      */
     public function __construct(
-        MinimumOrderValueGuiToCurrencyFacadeInterface $currencyFacade,
-        LocaleProvider $localeProvider
+        LocaleProvider $localeProvider,
+        StoreCurrencyFinder $storeCurrencyFinder
     ) {
-        $this->currencyFacade = $currencyFacade;
         $this->localeProvider = $localeProvider;
+        $this->storeCurrencyFinder = $storeCurrencyFinder;
     }
 
     /**
@@ -51,71 +52,76 @@ abstract class AbstractGlobalThresholdFormMapper
         array $data,
         MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): MinimumOrderValueTransfer {
-        list($storeName, $currencyCode) = explode(
-            MinimumOrderValueGuiConstants::STORE_CURRENCY_DELIMITER,
-            $data[GlobalThresholdType::FIELD_STORE_CURRENCY]
-        );
-        $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
+        $storeCurrencyTransfer =$this->storeCurrencyFinder->findStoreCurrencyByString($data[GlobalThresholdType::FIELD_STORE_CURRENCY]);
 
-        foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
-            if ($this->setStoreToMinimumOrderValueTransfer($minimumOrderValueTransfer, $storeWithCurrencyTransfer, $storeName, $currencyCode)) {
-                break;
-            }
-        }
+        $minimumOrderValueTransfer->setStore($storeCurrencyTransfer->getStore());
+        $minimumOrderValueTransfer->setCurrency($storeCurrencyTransfer->getCurrency());
+
+//        list($storeName, $currencyCode) = explode(
+//            MinimumOrderValueGuiConstants::STORE_CURRENCY_DELIMITER,
+//            $data[GlobalThresholdType::FIELD_STORE_CURRENCY]
+//        );
+//        $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
+//
+//        foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
+//            if ($this->setStoreToMinimumOrderValueTransfer($minimumOrderValueTransfer, $storeWithCurrencyTransfer, $storeName, $currencyCode)) {
+//                break;
+//            }
+//        }
 
         return $minimumOrderValueTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
-     * @param \Generated\Shared\Transfer\StoreWithCurrencyTransfer $storeWithCurrencyTransfer
-     * @param string $storeName
-     * @param string $currencyCode
-     *
-     * @return bool
-     */
-    protected function setStoreToMinimumOrderValueTransfer(
-        MinimumOrderValueTransfer $minimumOrderValueTransfer,
-        StoreWithCurrencyTransfer $storeWithCurrencyTransfer,
-        $storeName,
-        $currencyCode
-    ): bool {
-        $storeTransfer = $storeWithCurrencyTransfer->getStore();
-        if ($storeName === $storeTransfer->getName()) {
-            $minimumOrderValueTransfer->setStore($storeTransfer);
+//    /**
+//     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+//     * @param \Generated\Shared\Transfer\StoreWithCurrencyTransfer $storeWithCurrencyTransfer
+//     * @param string $storeName
+//     * @param string $currencyCode
+//     *
+//     * @return bool
+//     */
+//    protected function setStoreToMinimumOrderValueTransfer(
+//        MinimumOrderValueTransfer $minimumOrderValueTransfer,
+//        StoreWithCurrencyTransfer $storeWithCurrencyTransfer,
+//        $storeName,
+//        $currencyCode
+//    ): bool {
+//        $storeTransfer = $storeWithCurrencyTransfer->getStore();
+//        if ($storeName === $storeTransfer->getName()) {
+//            $minimumOrderValueTransfer->setStore($storeTransfer);
+//
+//            foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
+//                if ($this->setCurrencyToMinimumOrderValueTransfer($minimumOrderValueTransfer, $currencyCode, $currencyTransfer)) {
+//                    break;
+//                }
+//            }
+//
+//            return true;
+//        }
+//
+//        return false;
+//    }
 
-            foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
-                if ($this->setCurrencyToMinimumOrderValueTransfer($minimumOrderValueTransfer, $currencyCode, $currencyTransfer)) {
-                    break;
-                }
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
-     * @param string $currencyCode
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     *
-     * @return bool
-     */
-    protected function setCurrencyToMinimumOrderValueTransfer(
-        MinimumOrderValueTransfer $minimumOrderValueTransfer,
-        $currencyCode,
-        CurrencyTransfer $currencyTransfer
-    ): bool {
-        if ($currencyCode === $currencyTransfer->getCode()) {
-            $minimumOrderValueTransfer->setCurrency($currencyTransfer);
-
-            return true;
-        }
-
-        return false;
-    }
+//    /**
+//     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+//     * @param string $currencyCode
+//     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+//     *
+//     * @return bool
+//     */
+//    protected function setCurrencyToMinimumOrderValueTransfer(
+//        MinimumOrderValueTransfer $minimumOrderValueTransfer,
+//        $currencyCode,
+//        CurrencyTransfer $currencyTransfer
+//    ): bool {
+//        if ($currencyCode === $currencyTransfer->getCode()) {
+//            $minimumOrderValueTransfer->setCurrency($currencyTransfer);
+//
+//            return true;
+//        }
+//
+//        return false;
+//    }
 
     /**
      * @param array $data
