@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\MerchantRelationshipDataImport\Business\Model;
@@ -45,7 +45,7 @@ class MerchantRelationshipWriterStep implements DataImportStepInterface
     {
         SpyMerchantRelationshipToCompanyBusinessUnitQuery::create()
             ->filterByFkMerchantRelationship($idMerchantRelationship)
-            ->deleteAll();
+            ->delete();
 
         foreach ($dataSet[MerchantRelationshipDataSetInterface::ID_COMPANY_BUSINESS_UNIT_ASSIGNEE_COLLECTION] as $idCompanyBusinessUnit) {
             (new SpyMerchantRelationshipToCompanyBusinessUnit())

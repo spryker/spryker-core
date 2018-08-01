@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Kernel;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface KernelConstants
 {
     const BACKTRACE_USER_PATH = 'BACKTRACE_USER_PATH';

@@ -43,7 +43,7 @@ class CustomerDataHelper extends Module
     /**
      * @return \Spryker\Zed\Customer\Business\CustomerFacadeInterface
      */
-    private function getCustomerFacade(): CustomerFacadeInterface
+    protected function getCustomerFacade(): CustomerFacadeInterface
     {
         $customerToMailBridge = new CustomerToMailBridge($this->getMailFacadeMock());
         $this->getDependencyHelper()->setDependency(CustomerDependencyProvider::FACADE_MAIL, $customerToMailBridge);
@@ -52,10 +52,13 @@ class CustomerDataHelper extends Module
     }
 
     /**
-     * @return \Spryker\Zed\Mail\Business\MailFacadeInterface|object
+     * @return \Spryker\Zed\Mail\Business\MailFacadeInterface
      */
-    private function getMailFacadeMock()
+    protected function getMailFacadeMock()
     {
-        return Stub::makeEmpty(MailFacadeInterface::class);
+        /** @var \Spryker\Zed\Mail\Business\MailFacadeInterface $mailFacadeMock */
+        $mailFacadeMock = Stub::makeEmpty(MailFacadeInterface::class);
+
+        return $mailFacadeMock;
     }
 }

@@ -128,7 +128,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      * @param array $alreadyDumpedObjects List of objects to skip to avoid recursion
      * @param boolean|bool $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
-     * @return array an associative array containing the field names (as keys) and field values
+     * @return array|string An associative array containing the field names (as keys) and field values
      */
     public function toArray(
         $keyType = TableMap::TYPE_FIELDNAME,

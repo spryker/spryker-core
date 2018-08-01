@@ -15,6 +15,8 @@ use Spryker\Zed\Availability\AvailabilityConfig;
 
 class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
 {
+    protected const CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY = 'product.unavailable';
+
     /**
      * @var \Spryker\Zed\Availability\Business\Model\SellableInterface
      */
@@ -54,7 +56,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
             if ($this->isProductSellable($sku, $quantity, $storeTransfer) === true) {
                 continue;
             }
-            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse);
+            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $sku);
             $isPassed = false;
         }
 
@@ -104,15 +106,22 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param string $sku
      *
      * @return void
      */
-    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse)
+    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse, string $sku)
     {
         $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
         $checkoutErrorTransfer
             ->setErrorCode($this->availabilityConfig->getProductUnavailableErrorCode())
-            ->setMessage('product.unavailable');
+            ->setMessage(static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY)
+            ->setErrorType(
+                $this->availabilityConfig->getAvailabilityErrorType()
+            )
+            ->setParameters([
+                $this->availabilityConfig->getAvailabilityProductSkuParameter() => $sku,
+            ]);
 
         $checkoutResponse
             ->addError($checkoutErrorTransfer)

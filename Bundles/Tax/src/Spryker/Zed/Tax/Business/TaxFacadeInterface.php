@@ -265,7 +265,7 @@ interface TaxFacadeInterface
      * @param float $taxRate
      * @param bool $round
      *
-     * @return int
+     * @return float
      */
     public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate, $round = false);
 
