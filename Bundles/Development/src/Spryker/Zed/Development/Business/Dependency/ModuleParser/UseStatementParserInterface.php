@@ -5,15 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Development\Business\DependencyTree\ViolationChecker;
+namespace Spryker\Zed\Development\Business\Dependency\ModuleParser;
 
-/**
- * @deprecated This is not used anymore.
- */
-interface DependencyViolationCheckerInterface
+interface UseStatementParserInterface
 {
     /**
+     * @param string $module
+     *
      * @return array
      */
-    public function getDependencyViolations();
+    public function getUseStatements(string $module): array;
 }
