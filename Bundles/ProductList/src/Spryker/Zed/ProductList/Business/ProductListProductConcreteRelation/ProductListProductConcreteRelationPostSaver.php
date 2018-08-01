@@ -33,8 +33,10 @@ class ProductListProductConcreteRelationPostSaver implements ProductListPostSave
      */
     public function postSave(ProductListTransfer $productListTransfer): ProductListTransfer
     {
+        /** @var \Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer|null $productListProductConcreteRelationTransfer */
+        $productListProductConcreteRelationTransfer = $productListTransfer->getProductListProductConcreteRelation();
 
-        if ($productListTransfer->getProductListProductConcreteRelation()) {
+        if ($productListProductConcreteRelationTransfer) {
             $productListTransfer = $this->saveProductListProductConcreteRelation(
                 $productListTransfer,
                 $productListTransfer->getProductListProductConcreteRelation()

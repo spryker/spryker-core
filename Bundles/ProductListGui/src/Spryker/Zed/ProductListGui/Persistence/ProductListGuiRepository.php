@@ -126,7 +126,8 @@ class ProductListGuiRepository extends AbstractRepository implements ProductList
      */
     public function findProductConcreteDataByIds(array $productIds): array
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
+        $productQuery = $this->getFactory()
             ->getProductQuery()
             ->joinSpyProductLocalizedAttributes()
             ->useSpyProductLocalizedAttributesQuery()
@@ -141,7 +142,9 @@ class ProductListGuiRepository extends AbstractRepository implements ProductList
                     SpyProductTableMap::COL_SKU,
                     SpyProductLocalizedAttributesTableMap::COL_NAME,
                 ]
-            )
+            );
+
+        return $productQuery
             ->filterByIdProduct_In($productIds)
             ->find()
             ->toArray();
@@ -156,10 +159,13 @@ class ProductListGuiRepository extends AbstractRepository implements ProductList
     {
         $idLocale = $this->getIdLocale();
         $idCategoryNode = $categoryNodeEntity->getIdCategoryNode();
-        $pathTokens = $this->queryCategoryPath($idCategoryNode, $idLocale)
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryPathQuery */
+        $categoryPathQuery = $this->queryCategoryPath($idCategoryNode, $idLocale)
             ->clearSelectColumns()
-            ->addSelectColumn('name')
-            ->find();
+            ->addSelectColumn('name');
+
+        /** @var string[] $pathTokens */
+        $pathTokens = $categoryPathQuery->find();
 
         return implode('/', $pathTokens);
     }
@@ -171,7 +177,8 @@ class ProductListGuiRepository extends AbstractRepository implements ProductList
      */
     protected function queryCategory($idLocale): SpyCategoryQuery
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery */
+        $categoryQuery = $this->getFactory()
             ->getCategoryPropelQuery()
             ->joinAttribute()
             ->innerJoinNode()
@@ -180,6 +187,8 @@ class ProductListGuiRepository extends AbstractRepository implements ProductList
                 $idLocale,
                 Criteria::EQUAL
             );
+
+        return $categoryQuery;
     }
 
     /**

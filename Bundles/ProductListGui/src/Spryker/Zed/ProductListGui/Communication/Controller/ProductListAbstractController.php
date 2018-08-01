@@ -30,7 +30,7 @@ class ProductListAbstractController extends AbstractController
      */
     protected function createProductListAggregateForm(Request $request): FormInterface
     {
-        $idProductList = $request->query->getInt(static::URL_PARAM_ID_PRODUCT_LIST, null);
+        $idProductList = $request->query->getInt(static::URL_PARAM_ID_PRODUCT_LIST);
         $aggregateFormDataProvider = $this
             ->getFactory()
             ->createProductListAggregateFormDataProvider();

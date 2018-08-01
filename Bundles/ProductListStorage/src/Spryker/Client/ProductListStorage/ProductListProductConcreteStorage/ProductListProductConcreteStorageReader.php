@@ -62,7 +62,7 @@ class ProductListProductConcreteStorageReader implements ProductListProductConcr
     protected function generateKey(int $idProductConcrete): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setReference($idProductConcrete);
+            ->setReference((string)$idProductConcrete);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductListStorageConfig::PRODUCT_LIST_CONCRETE_RESOURCE_NAME)

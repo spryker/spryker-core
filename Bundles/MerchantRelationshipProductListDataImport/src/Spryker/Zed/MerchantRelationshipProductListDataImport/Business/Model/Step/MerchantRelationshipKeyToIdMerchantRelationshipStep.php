@@ -38,9 +38,10 @@ class MerchantRelationshipKeyToIdMerchantRelationshipStep implements DataImportS
         }
 
         if (!isset($this->idMerchantRelationshipCache[$merchantRelationshipKey])) {
-            $idMerchantRelationship = SpyMerchantRelationshipQuery::create()
-                ->select(SpyMerchantRelationshipTableMap::COL_ID_MERCHANT_RELATIONSHIP)
-                ->findOneByMerchantRelationshipKey($merchantRelationshipKey);
+            /** @var \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery $merchantRelationshipQuery */
+            $merchantRelationshipQuery = SpyMerchantRelationshipQuery::create()->select(SpyMerchantRelationshipTableMap::COL_ID_MERCHANT_RELATIONSHIP);
+            /** @var int|null $idMerchantRelationship */
+            $idMerchantRelationship = $merchantRelationshipQuery->findOneByMerchantRelationshipKey($merchantRelationshipKey);
 
             if (!$idMerchantRelationship) {
                 throw new EntityNotFoundException(sprintf('Could not find Merchant Relationship by key "%s"', $merchantRelationshipKey));

@@ -48,14 +48,14 @@ class ProductListImporter implements ProductListImporterInterface
     ): ProductListProductConcreteRelationTransfer {
         $productTable = $this->csvService->readUploadedFile($productsConcreteCsv);
 
-        $productSkus = [];
+        $productsSku = [];
         foreach ($productTable as $productRow) {
-            $productSkus[] = $productRow[0];
+            $productsSku[] = $productRow[0];
         }
 
-        $productIds = $this->repository->findProductIdsByProductConcreteSku($productSkus);
+        $productIds = $this->repository->findProductIdsByProductConcreteSku($productsSku);
 
-        $productIds = array_merge((array)$productConcreteRelationTransfer->getProductIds(), $productIds);
+        $productIds = array_merge($productConcreteRelationTransfer->getProductIds() ?: [], $productIds);
         $productConcreteRelationTransfer->setProductIds($productIds);
 
         return $productConcreteRelationTransfer;

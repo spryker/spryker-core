@@ -26,7 +26,7 @@ class ProductListProductConcreteStorageListener extends AbstractPlugin implement
      *
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
      *
      * @return void
@@ -39,7 +39,7 @@ class ProductListProductConcreteStorageListener extends AbstractPlugin implement
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
      *
      * @return int[]

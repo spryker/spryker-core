@@ -87,7 +87,7 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
         $productConcreteProductListsStorageTransfer = $this->getProductConcreteProductListsStorageTransfer($idProductConcrete);
         if ($productConcreteProductListsStorageTransfer->getIdBlacklists() || $productConcreteProductListsStorageTransfer->getIdWhitelists()) {
             $productConcreteProductListStorageEntity->setFkProduct($idProductConcrete)
-                ->setData($productConcreteProductListsStorageTransfer->toArray());
+                ->setData(json_encode($productConcreteProductListsStorageTransfer->toArray()));
 
             $this->productListStorageEntityManager->saveProductConcreteProductListStorage($productConcreteProductListStorageEntity);
 

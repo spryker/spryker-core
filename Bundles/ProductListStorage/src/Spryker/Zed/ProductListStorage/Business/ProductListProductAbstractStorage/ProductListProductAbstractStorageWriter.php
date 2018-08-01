@@ -77,7 +77,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
         $productAbstractProductListsStorageTransfer = $this->getProductAbstractProductListsStorageTransfer($idProductAbstract);
         if ($productAbstractProductListsStorageTransfer->getIdWhitelists() || $productAbstractProductListsStorageTransfer->getIdBlacklists()) {
             $productAbstractProductListStorageEntity->setFkProductAbstract($idProductAbstract)
-                ->setData($productAbstractProductListsStorageTransfer->toArray());
+                ->setData(json_encode($productAbstractProductListsStorageTransfer->toArray()));
 
             $this->productListStorageEntityManager->saveProductAbstractProductListStorage($productAbstractProductListStorageEntity);
 

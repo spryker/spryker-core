@@ -27,7 +27,7 @@ class ProductListMapper implements ProductListMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\SpyProductListEntityTransfer $spyProductListEntityTransfer
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $productListTransfer
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */

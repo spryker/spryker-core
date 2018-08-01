@@ -26,9 +26,12 @@ class ProductListStorageRepository extends AbstractRepository implements Product
      */
     public function findProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
+        $productQuery = $this->getFactory()
             ->getProductPropelQuery()
-            ->select(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->select(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
+
+        return $productQuery
             ->filterByIdProduct_In($productConcreteIds)
             ->find()
             ->toArray();
@@ -43,9 +46,12 @@ class ProductListStorageRepository extends AbstractRepository implements Product
      */
     public function findProductConcreteIdsByProductAbstractIds(array $productAbstractIds): array
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
+        $productQuery = $this->getFactory()
             ->getProductPropelQuery()
-            ->select(SpyProductTableMap::COL_ID_PRODUCT)
+            ->select(SpyProductTableMap::COL_ID_PRODUCT);
+
+        return $productQuery
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->distinct()
             ->find()
@@ -115,9 +121,12 @@ class ProductListStorageRepository extends AbstractRepository implements Product
      */
     public function findProductAbstractIdsByCategoryIds(array $categoryIds): array
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery $productCategoryQuery */
+        $productCategoryQuery = $this->getFactory()
             ->getProductCategoryPropelQuery()
-            ->select(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->select(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT);
+
+        return $productCategoryQuery
             ->filterByFkCategory_In($categoryIds)
             ->distinct()
             ->find()

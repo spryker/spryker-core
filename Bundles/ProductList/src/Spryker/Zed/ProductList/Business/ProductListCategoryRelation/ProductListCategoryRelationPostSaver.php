@@ -34,7 +34,10 @@ class ProductListCategoryRelationPostSaver implements ProductListPostSaverInterf
      */
     public function postSave(ProductListTransfer $productListTransfer): ProductListTransfer
     {
-        if ($productListTransfer->getProductListCategoryRelation()) {
+        /** @var \Generated\Shared\Transfer\ProductListCategoryRelationTransfer|null $productListCategoryRelationTransfer */
+        $productListCategoryRelationTransfer = $productListTransfer->getProductListCategoryRelation();
+
+        if ($productListCategoryRelationTransfer) {
             $productListTransfer = $this->saveProductListCategoryRelation(
                 $productListTransfer,
                 $productListTransfer->getProductListCategoryRelation()

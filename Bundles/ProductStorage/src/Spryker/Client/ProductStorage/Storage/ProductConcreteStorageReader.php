@@ -65,7 +65,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      */
     public function findProductConcreteStorageData($idProductConcrete, $localeName): ?array
     {
-        if ($this->isProductConcreteRestricted($idProductConcrete)) {
+        if (!$idProductConcrete || $this->isProductConcreteRestricted($idProductConcrete)) {
             return null;
         }
 

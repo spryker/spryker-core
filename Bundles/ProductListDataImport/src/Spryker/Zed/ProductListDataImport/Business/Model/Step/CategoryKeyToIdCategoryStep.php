@@ -49,9 +49,12 @@ class CategoryKeyToIdCategoryStep implements DataImportStepInterface
     protected function getIdCategoryByKey(string $categoryKey): int
     {
         if (!isset($this->idCategoryCache[$categoryKey])) {
-            $idCategory = SpyCategoryQuery::create()
-                ->select(SpyCategoryTableMap::COL_ID_CATEGORY)
-                ->findOneByCategoryKey($categoryKey);
+            /** @var \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery */
+            $categoryQuery = SpyCategoryQuery::create()
+                ->select(SpyCategoryTableMap::COL_ID_CATEGORY);
+
+            /** @var int|null $idCategory */
+            $idCategory = $categoryQuery->findOneByCategoryKey($categoryKey);
 
             if (!$idCategory) {
                 throw new EntityNotFoundException(sprintf('Could not find Category by key "%s"', $categoryKey));

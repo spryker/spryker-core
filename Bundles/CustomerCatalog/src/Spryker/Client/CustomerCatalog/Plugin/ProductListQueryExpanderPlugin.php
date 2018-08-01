@@ -123,8 +123,15 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
      */
     protected function findCustomerProductListCollection(): ?CustomerProductListCollectionTransfer
     {
-        if ($this->getCustomer() && $this->getCustomer()->getCustomerProductListCollection()) {
-            return $this->getCustomer()->getCustomerProductListCollection();
+        $customer = $this->getCustomer();
+
+        if ($customer) {
+            /** @var \Generated\Shared\Transfer\CustomerProductListCollectionTransfer|null $customerProductListCollectionTransfer */
+            $customerProductListCollectionTransfer = $this->getCustomer()->getCustomerProductListCollection();
+
+            if ($customerProductListCollectionTransfer) {
+                return $this->getCustomer()->getCustomerProductListCollection();
+            }
         }
 
         return null;

@@ -26,6 +26,7 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
      */
     public function getProductListCollectionByIdCompanyBusinessUnit(int $idCompanyBusinessUnit): ProductListCollectionTransfer
     {
+        /** @var \Orm\Zed\ProductList\Persistence\SpyProductList[] $productListEntities */
         $productListEntities = $this->getFactory()
             ->getProductListQuery()
             ->useSpyMerchantRelationshipQuery()

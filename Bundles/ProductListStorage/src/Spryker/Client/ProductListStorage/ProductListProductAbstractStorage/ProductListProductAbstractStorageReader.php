@@ -62,7 +62,7 @@ class ProductListProductAbstractStorageReader implements ProductListProductAbstr
     protected function generateKey(int $idProductAbstract): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setReference($idProductAbstract);
+            ->setReference((string)$idProductAbstract);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductListStorageConfig::PRODUCT_LIST_ABSTRACT_RESOURCE_NAME)

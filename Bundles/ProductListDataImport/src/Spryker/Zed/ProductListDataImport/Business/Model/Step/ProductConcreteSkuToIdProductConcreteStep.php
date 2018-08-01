@@ -49,9 +49,11 @@ class ProductConcreteSkuToIdProductConcreteStep implements DataImportStepInterfa
     protected function getIdProductConcreteBySku(string $productConcreteSku): int
     {
         if (!isset($this->idProductConcreteCache[$productConcreteSku])) {
-            $idProductConcrete = SpyProductQuery::create()
-                ->select(SpyProductTableMap::COL_ID_PRODUCT)
-                ->findOneBySku($productConcreteSku);
+            /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
+            $productQuery = SpyProductQuery::create()->select(SpyProductTableMap::COL_ID_PRODUCT);
+
+            /** @var int|null $idProductConcrete */
+            $idProductConcrete = $productQuery->findOneBySku($productConcreteSku);
 
             if (!$idProductConcrete) {
                 throw new EntityNotFoundException(sprintf('Could not find Product Concrete by sku "%s"', $productConcreteSku));

@@ -42,9 +42,16 @@ class ProductAbstractRestrictionReader implements ProductAbstractRestrictionRead
     public function isProductAbstractRestricted(int $idProductAbstract): bool
     {
         $customer = $this->customerClient->getCustomer();
-        if (!$customer || !$customer->getCustomerProductListCollection()) {
+        if (!$customer) {
             return false;
         }
+
+        /** @var \Generated\Shared\Transfer\CustomerProductListCollectionTransfer|null $customerProductListCollectionTransfer */
+        $customerProductListCollectionTransfer = $customer->getCustomerProductListCollection();
+        if (!$customerProductListCollectionTransfer) {
+            return false;
+        }
+
         $customerWhitelistIds = $customer->getCustomerProductListCollection()->getWhitelistIds() ?: [];
         $customerBlacklistIds = $customer->getCustomerProductListCollection()->getBlacklistIds() ?: [];
 

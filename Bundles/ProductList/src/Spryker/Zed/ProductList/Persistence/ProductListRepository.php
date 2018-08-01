@@ -30,11 +30,14 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      */
     public function getRelatedCategoryIdsByIdProductList(int $idProductList): array
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\ProductList\Persistence\SpyProductListCategoryQuery $productListCategoryQuery */
+        $productListCategoryQuery = $this->getFactory()
             ->createProductListCategoryQuery()
-            ->select(SpyProductListCategoryTableMap::COL_FK_CATEGORY)
-            ->findByFkProductList($idProductList)
-            ->toArray();
+            ->select(SpyProductListCategoryTableMap::COL_FK_CATEGORY);
+
+        return $productListCategoryQuery
+                ->findByFkProductList($idProductList)
+                ->toArray();
     }
 
     /**
@@ -44,9 +47,12 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      */
     public function getRelatedProductConcreteIdsByIdProductList(int $idProductList): array
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery $productListProductConcreteQuery */
+        $productListProductConcreteQuery = $this->getFactory()
             ->createProductListProductConcreteQuery()
-            ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT)
+            ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT);
+
+        return $productListProductConcreteQuery
             ->findByFkProductList($idProductList)
             ->toArray();
     }
@@ -119,9 +125,12 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      */
     protected function getConcreteProductWhiteOrBlacklistIds(int $idProductConcrete, string $listType): array
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery $productListProductConcreteQuery */
+        $productListProductConcreteQuery = $this->getFactory()
             ->createProductListProductConcreteQuery()
-            ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST)
+            ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST);
+
+        return $productListProductConcreteQuery
             ->filterByFkProduct($idProductConcrete)
             ->useSpyProductListQuery(null, Criteria::LEFT_JOIN)
                 ->filterByType($listType)
@@ -140,9 +149,12 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      */
     protected function getCategoryBlacklistIdsByIdAbstractProduct(int $idProductAbstract): array
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\ProductList\Persistence\SpyProductListCategoryQuery $productListCategoryQuery */
+        $productListCategoryQuery = $this->getFactory()
             ->createProductListCategoryQuery()
-            ->select(SpyProductListCategoryTableMap::COL_FK_PRODUCT_LIST)
+            ->select(SpyProductListCategoryTableMap::COL_FK_PRODUCT_LIST);
+
+        return $productListCategoryQuery
             ->useSpyCategoryQuery()
                 ->useSpyProductCategoryQuery()
                     ->filterByFkProductAbstract($idProductAbstract)
@@ -164,9 +176,12 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     {
         $countConcreteProduct = SpyProductQuery::create()->filterByFkProductAbstract($idProductAbstract)->count();
 
-        return $this->getFactory()
+        /** @var \Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery $productListProductConcreteQuery */
+        $productListProductConcreteQuery = $this->getFactory()
             ->createProductListProductConcreteQuery()
-            ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST)
+            ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST);
+
+        return $productListProductConcreteQuery
             ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkProductAbstract($idProductAbstract)
             ->endUse()
@@ -188,9 +203,12 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     {
         $countConcreteProduct = SpyProductQuery::create()->filterByFkProductAbstract($idProductAbstract)->count();
 
-        return $this->getFactory()
+        /** @var \Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery $productListProductConcreteQuery */
+        $productListProductConcreteQuery = $this->getFactory()
             ->createProductListProductConcreteQuery()
-            ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST)
+            ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST);
+
+        return $productListProductConcreteQuery
             ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkProductAbstract($idProductAbstract)
             ->endUse()
@@ -210,9 +228,12 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      */
     protected function getCategoryWhitelistIdsByIdAbstractProduct(int $idProductAbstract): array
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\ProductList\Persistence\SpyProductListCategoryQuery $productListCategoryQuery */
+        $productListCategoryQuery = $this->getFactory()
             ->createProductListCategoryQuery()
-            ->select(SpyProductListCategoryTableMap::COL_FK_PRODUCT_LIST)
+            ->select(SpyProductListCategoryTableMap::COL_FK_PRODUCT_LIST);
+
+        return $productListCategoryQuery
             ->useSpyCategoryQuery()
                 ->useSpyProductCategoryQuery()
                     ->filterByFkProductAbstract($idProductAbstract)

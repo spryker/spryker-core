@@ -25,9 +25,12 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
      */
     public function findProductAbstractIdsByConcreteIds(array $productConcreteIds): array
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
+        $productQuery = $this->getFactory()
             ->getProductQuery()
-            ->select(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->select(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
+
+        return $productQuery
             ->filterByIdProduct_In($productConcreteIds)
             ->find()
             ->toArray();
@@ -42,9 +45,12 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
      */
     public function findProductAbstractIdsByCategoryIds(array $categoryIds): array
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery $productCategoryQuery */
+        $productCategoryQuery = $this->getFactory()
             ->getProductCategoryPropelQuery()
-            ->select(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->select(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT);
+
+        return $productCategoryQuery
             ->filterByFkCategory_In($categoryIds)
             ->distinct()
             ->find()

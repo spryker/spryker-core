@@ -24,7 +24,9 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
      */
     public function saveProductList(ProductListTransfer $productListTransfer): ProductListTransfer
     {
+        /** @var \Generated\Shared\Transfer\ProductListCategoryRelationTransfer|null $productListCategoryRelationTransfer */
         $productListCategoryRelationTransfer = $productListTransfer->getProductListCategoryRelation();
+        /** @var \Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer|null $productListProductConcreteRelationTransfer */
         $productListProductConcreteRelationTransfer = $productListTransfer->getProductListProductConcreteRelation();
 
         $productListEntity = $this->getFactory()

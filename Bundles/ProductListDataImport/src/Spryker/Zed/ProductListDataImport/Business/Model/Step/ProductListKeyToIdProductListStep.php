@@ -49,9 +49,11 @@ class ProductListKeyToIdProductListStep implements DataImportStepInterface
     protected function getIdProductListByKey(string $productListKey): int
     {
         if (!isset($this->idProductListCache[$productListKey])) {
-            $idProductList = SpyProductListQuery::create()
-                ->select(SpyProductListTableMap::COL_ID_PRODUCT_LIST)
-                ->findOneByKey($productListKey);
+            /** @var \Orm\Zed\ProductList\Persistence\SpyProductListQuery $productListQuery */
+            $productListQuery = SpyProductListQuery::create()->select(SpyProductListTableMap::COL_ID_PRODUCT_LIST);
+
+            /** @var int|null $idProductList */
+            $idProductList = $productListQuery->findOneByKey($productListKey);
 
             if (!$idProductList) {
                 throw new EntityNotFoundException(sprintf('Could not find Product List by key "%s"', $productListKey));
