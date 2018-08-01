@@ -43,7 +43,6 @@ class GlobalThresholdType extends AbstractType
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
     protected const ERROR_MESSAGE_VALUE = 'Invalid Value.';
 
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options

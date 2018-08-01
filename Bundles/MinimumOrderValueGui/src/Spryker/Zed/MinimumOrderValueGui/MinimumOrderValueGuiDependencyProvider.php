@@ -23,7 +23,6 @@ class MinimumOrderValueGuiDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
 
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *

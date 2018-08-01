@@ -18,9 +18,6 @@ class LocalizedForm extends AbstractType
 {
     public const FIELD_MESSAGE = 'message';
 
-    //@todo @artem check if this needed
-    public static $errorFieldsDisplayed = [];
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options

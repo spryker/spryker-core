@@ -9,7 +9,6 @@ namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\Thres
 
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConstants;
-use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\GlobalThresholdDataProvider;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\LocalizedForm;
 

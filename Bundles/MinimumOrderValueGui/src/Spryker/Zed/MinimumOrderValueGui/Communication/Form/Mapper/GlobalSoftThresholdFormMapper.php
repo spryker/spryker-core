@@ -12,9 +12,7 @@ use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConstants;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 
-class GlobalSoftThresholdFormMapper
-    extends AbstractGlobalThresholdFormMapper
-    implements GlobalThresholdFormMapperInterface
+class GlobalSoftThresholdFormMapper extends AbstractGlobalThresholdFormMapper implements GlobalThresholdFormMapperInterface
 {
     /**
      * @param array $data
