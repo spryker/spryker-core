@@ -293,7 +293,7 @@ class CompanyUserFacadeTest extends Test
     /**
      * @return void
      */
-    public function testUnableToEnableActiveCompanyUser(): void
+    public function testActiveCompanyUserCannotBeEnabled(): void
     {
         $companyUserTransfer = $this->getCompanyUserTransfer();
 
@@ -319,7 +319,7 @@ class CompanyUserFacadeTest extends Test
     /**
      * @return void
      */
-    public function testUnableToDisableInactiveCompanyUser(): void
+    public function testInactiveCompanyUserCannotBeDisabled(): void
     {
         $companyUserTransfer = $this->getCompanyUserTransfer(false);
 
