@@ -37,7 +37,6 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
     {
         return [
             'allow_extra_fields' => true,
-            'csrf_protection' => false,
             GlobalThresholdType::OPTION_STORES_ARRAY => $this->getStoreList(),
             GlobalThresholdType::OPTION_SOFT_TYPES_ARRAY => $this->getSoftTypesList(),
         ];

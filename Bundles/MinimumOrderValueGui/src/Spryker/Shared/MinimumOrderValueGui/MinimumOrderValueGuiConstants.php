@@ -9,7 +9,6 @@ namespace Spryker\Shared\MinimumOrderValueGui;
 
 interface MinimumOrderValueGuiConstants
 {
-    public const MINIMUM_ORDER_VALUE_DEFAULT_LOCALE = 'default';
     public const STORE_CURRENCY_DELIMITER = ';';
     public const STORE_CURRENCY_URL_KEY = 'store_currency';
 

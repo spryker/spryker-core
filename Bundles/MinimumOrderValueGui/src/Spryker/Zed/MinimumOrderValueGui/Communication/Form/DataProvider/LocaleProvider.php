@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConstants;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToLocaleInterface;
 
 class LocaleProvider
@@ -27,18 +25,11 @@ class LocaleProvider
     }
 
     /**
-     * @param bool $includeDefault
-     *
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getLocaleCollection($includeDefault = false)
+    public function getLocaleCollection()
     {
         $result = [];
-
-        if ($includeDefault) {
-            $result[] = (new LocaleTransfer())
-                ->setLocaleName(MinimumOrderValueGuiConstants::MINIMUM_ORDER_VALUE_DEFAULT_LOCALE);
-        }
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeCode => $localeTransfer) {
             $result[] = $localeTransfer;
