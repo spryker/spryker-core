@@ -26,7 +26,7 @@ class CustomersReader implements CustomersReaderInterface
     /**
      * @var \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerClientInterface
      */
-    protected $customerRestApiToCustomerClient;
+    protected $customerClient;
 
     /**
      * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface
@@ -35,16 +35,16 @@ class CustomersReader implements CustomersReaderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerClientInterface $customerRestApiToCustomerClient
+     * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface $customersResourceMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        CustomerRestApiToCustomerClientInterface $customerRestApiToCustomerClient,
+        CustomerRestApiToCustomerClientInterface $customerClient,
         CustomersResourceMapperInterface $customersResourceMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->customerRestApiToCustomerClient = $customerRestApiToCustomerClient;
+        $this->customerClient = $customerClient;
         $this->customersResourceMapper = $customersResourceMapper;
     }
 
@@ -61,21 +61,22 @@ class CustomersReader implements CustomersReaderInterface
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setCustomerReference($customerReference);
 
-        $customer = $this->customerRestApiToCustomerClient->findCustomerByReference($customerTransfer);
+        $customer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        if ($customer && $customer->getAnonymizedAt() === null) {
-            $customersResource = $this->customersResourceMapper->mapCustomerTransferTransferToRestResponse($customer);
-            $response->addResource($customersResource);
+        if (!$customer || ($customer && $customer->getAnonymizedAt() !== null)) {
+            $restErrorTransfer = (new RestErrorMessageTransfer())
+                ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
+                ->setStatus(Response::HTTP_NOT_FOUND)
+                ->setDetail('Customer not found');
+
+            $response = $this->restResourceBuilder->createRestResponse();
+            $response->addError($restErrorTransfer);
 
             return $response;
         }
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail('Customer not found');
 
-        $response = $this->restResourceBuilder->createRestResponse();
-        $response->addError($restErrorTransfer);
+        $customersResource = $this->customersResourceMapper->mapCustomerTransferToRestResource($customer);
+        $response->addResource($customersResource);
 
         return $response;
     }

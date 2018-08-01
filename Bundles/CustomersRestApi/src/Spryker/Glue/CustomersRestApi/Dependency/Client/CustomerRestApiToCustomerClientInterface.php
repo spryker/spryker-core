@@ -27,5 +27,5 @@ interface CustomerRestApiToCustomerClientInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findCustomerByReference(CustomerTransfer $customerTransfer);
+    public function findCustomerByReference($customerTransfer);
 }

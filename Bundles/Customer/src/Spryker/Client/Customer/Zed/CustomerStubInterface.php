@@ -150,5 +150,5 @@ interface CustomerStubInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findByReference(CustomerTransfer $customerTransfer);
+    public function findByReference(CustomerTransfer $customerTransfer): ?CustomerTransfer;
 }

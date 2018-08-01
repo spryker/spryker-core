@@ -32,7 +32,7 @@ class CustomersResourceMapper implements CustomersResourceMapperInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function mapCustomerTransferTransferToRestResponse(CustomerTransfer $customerTransfer): RestResourceInterface
+    public function mapCustomerTransferToRestResource(CustomerTransfer $customerTransfer): RestResourceInterface
     {
         $restCustomersAttributesTransfer = (new RestCustomersInfoAttributesTransfer())
             ->fromArray($customerTransfer->toArray(), true);
