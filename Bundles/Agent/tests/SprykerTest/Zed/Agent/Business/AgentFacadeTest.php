@@ -8,9 +8,14 @@
 namespace SprykerTest\Zed\Agent\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\DataBuilder\UserBuilder;
+use Generated\Shared\Transfer\CustomerQueryTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Agent\Business\AgentFacadeInterface;
+use Spryker\Zed\Customer\Business\CustomerFacade;
+use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Business\UserFacadeInterface;
 
@@ -60,6 +65,36 @@ class AgentFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testFindCustomersByQuery(): void
+    {
+        $customerTransfer = $this->registerCustomer();
+        $customerQueryTransfer = new CustomerQueryTransfer();
+        $customerQueryTransfer->setQuery($customerTransfer->getFirstName());
+
+        $customerAutocompleteResponseTransfer = $this->getAgentFacade()
+            ->findCustomersByQuery($customerQueryTransfer);
+
+        $this->assertGreaterThan(0, $customerAutocompleteResponseTransfer->getCustomers()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindNonExitingCustomersByQuery(): void
+    {
+        $customerTransfer = $this->createCustomer();
+        $customerQueryTransfer = new CustomerQueryTransfer();
+        $customerQueryTransfer->setQuery($customerTransfer->getFirstName());
+
+        $customerAutocompleteResponseTransfer = $this->getAgentFacade()
+            ->findCustomersByQuery($customerQueryTransfer);
+
+        $this->assertEquals(0, $customerAutocompleteResponseTransfer->getCustomers()->count());
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     protected function registerAgent(): UserTransfer
@@ -96,5 +131,31 @@ class AgentFacadeTest extends Unit
     protected function getUserFacade(): UserFacadeInterface
     {
         return new UserFacade();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function registerCustomer(): CustomerTransfer
+    {
+        return $this->getCustomerFacade()
+            ->registerCustomer($this->createCustomer())
+            ->getCustomerTransfer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function createCustomer(): CustomerTransfer
+    {
+        return (new CustomerBuilder())->build();
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\CustomerFacadeInterface
+     */
+    protected function getCustomerFacade(): CustomerFacadeInterface
+    {
+        return new CustomerFacade();
     }
 }

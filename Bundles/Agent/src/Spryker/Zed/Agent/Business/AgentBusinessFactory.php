@@ -9,6 +9,8 @@ namespace Spryker\Zed\Agent\Business;
 
 use Spryker\Zed\Agent\Business\Agent\AgentReader;
 use Spryker\Zed\Agent\Business\Agent\AgentReaderInterface;
+use Spryker\Zed\Agent\Business\Customer\CustomerReader;
+use Spryker\Zed\Agent\Business\Customer\CustomerReaderInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -23,6 +25,16 @@ class AgentBusinessFactory extends AbstractBusinessFactory
     public function createAgentReader(): AgentReaderInterface
     {
         return new AgentReader(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Agent\Business\Customer\CustomerReaderInterface
+     */
+    public function createCustomerReader(): CustomerReaderInterface
+    {
+        return new CustomerReader(
             $this->getRepository()
         );
     }

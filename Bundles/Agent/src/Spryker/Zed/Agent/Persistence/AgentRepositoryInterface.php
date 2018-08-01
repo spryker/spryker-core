@@ -17,4 +17,12 @@ interface AgentRepositoryInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function findAgentByUsername(string $username): UserTransfer;
+
+    /**
+     * @param string $query
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer[]
+     */
+    public function findCustomersByQuery(string $query, int $limit): array;
 }

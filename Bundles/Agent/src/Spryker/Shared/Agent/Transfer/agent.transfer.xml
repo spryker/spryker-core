@@ -6,4 +6,13 @@
     <transfer name="User">
         <property name="isAgent" type="bool"/>
     </transfer>
+
+    <transfer name="CustomerAutocompleteResponse">
+        <property name="customers" type="Customer[]" singular="Customer"/>
+    </transfer>
+
+    <transfer name="CustomerQuery">
+        <property name="query" type="string"/>
+        <property name="limit" type="int"/>
+    </transfer>
 </transfers>
