@@ -40,7 +40,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     /**
      * @var int[]
      */
-    protected static $companyBUIdStack = [];
+    protected static $companyBusinessIdCache = [];
 
     /**
      * @var int
@@ -206,10 +206,10 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         $companyBusinessUnitsCollection = $this->repository->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
         $companyBusinessUnits = (array)$companyBusinessUnitsCollection->getCompanyBusinessUnits();
 
-        static::$companyBUIdStack[] = $businessUnitId;
+        static::$companyBusinessIdCache[] = $businessUnitId;
 
         // deep cycle dependency like if A is the parent of B and B is the parent of C and C is the parent of D, then D cannot be the parent of B or A
-        if ($businessUnitId == $this->entryParentBusinessUnitId && in_array($parentBusinessUnitId, static::$companyBUIdStack)) {
+        if ($businessUnitId == $this->entryParentBusinessUnitId && in_array($parentBusinessUnitId, static::$companyBusinessIdCache)) {
             return true;
         }
 
