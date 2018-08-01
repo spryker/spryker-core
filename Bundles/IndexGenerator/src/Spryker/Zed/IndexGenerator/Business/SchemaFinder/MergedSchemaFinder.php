@@ -7,21 +7,22 @@
 
 namespace Spryker\Zed\IndexGenerator\Business\SchemaFinder;
 
+use Spryker\Zed\IndexGenerator\IndexGeneratorConfig;
 use Symfony\Component\Finder\Finder;
 
 class MergedSchemaFinder implements MergedSchemaFinderInterface
 {
     /**
-     * @var string
+     * @var \Spryker\Zed\IndexGenerator\IndexGeneratorConfig
      */
-    protected $pathToMergedSchemas;
+    protected $config;
 
     /**
-     * @param string $pathToMergedSchemas
+     * @param \Spryker\Zed\IndexGenerator\IndexGeneratorConfig $config
      */
-    public function __construct(string $pathToMergedSchemas)
+    public function __construct(IndexGeneratorConfig $config)
     {
-        $this->pathToMergedSchemas = $pathToMergedSchemas;
+        $this->config = $config;
     }
 
     /**
@@ -30,7 +31,7 @@ class MergedSchemaFinder implements MergedSchemaFinderInterface
     public function findMergedSchemas(): Finder
     {
         $finder = new Finder();
-        $finder->files()->in($this->pathToMergedSchemas);
+        $finder->files()->in($this->config->getPathToMergedSchemas());
 
         return $finder;
     }

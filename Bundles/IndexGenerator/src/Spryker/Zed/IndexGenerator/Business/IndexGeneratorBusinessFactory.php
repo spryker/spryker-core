@@ -48,7 +48,7 @@ class IndexGeneratorBusinessFactory extends AbstractBusinessFactory
     protected function createFinder(): MergedSchemaFinderInterface
     {
         return new MergedSchemaFinder(
-            $this->getConfig()->getPathToMergedSchemas()
+            $this->getConfig()
         );
     }
 }

@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class IndexGeneratorConsole extends Console
 {
     protected const COMMAND_NAME = 'propel:index-generator:generate';
-    protected const DESCRIPTION = 'Generates propel files with index definition for each foreign key';
+    protected const DESCRIPTION = 'Generates propel files with index definition for each foreign key, this is only relevant for postgres.';
 
     /**
      * @return void
