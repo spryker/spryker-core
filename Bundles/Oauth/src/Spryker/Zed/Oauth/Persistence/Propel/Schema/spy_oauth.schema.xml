@@ -12,7 +12,7 @@
         <column name="expirity_date" type="TIMESTAMP" required="true"/>
 
         <foreign-key name="spy_oauth_access_token-identifier" foreignTable="spy_oauth_client" phpName="OauthClient" refPhpName="OauthAccessToken">
-            <reference local="fk_oauth_client" foreign="id_oauth_client"/>
+            <reference local="fk_oauth_client" foreign="identifier"/>
         </foreign-key>
 
         <behavior name="timestampable"/>
