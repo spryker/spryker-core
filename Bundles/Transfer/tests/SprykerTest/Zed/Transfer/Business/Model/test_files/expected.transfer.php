@@ -91,7 +91,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return $this
      */

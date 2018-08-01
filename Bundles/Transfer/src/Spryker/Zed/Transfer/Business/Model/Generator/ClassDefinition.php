@@ -322,7 +322,7 @@ class ClassDefinition implements ClassDefinitionInterface
             return '\Generated\Shared\Transfer\\' . $property['type'];
         }
 
-        return $property['type'];
+        return $property['type'] . '|null';
     }
 
     /**

@@ -205,7 +205,7 @@ class ClassDefinitionTest extends Unit
         $methods = $classDefinition->getMethods();
 
         $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string', null, null, 'PROPERTY1', [], false);
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false);
         $this->assertEquals($expectedSetter, $givenSetter);
 
         $givenGetter = $methods['getProperty1'];
@@ -228,7 +228,7 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string', null, null, 'PROPERTY1', [], false);
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false);
 
         $this->assertEquals($expectedSetter, $givenSetter);
     }

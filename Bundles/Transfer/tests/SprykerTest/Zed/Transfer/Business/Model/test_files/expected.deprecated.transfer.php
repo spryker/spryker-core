@@ -110,7 +110,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated scalarField is deprecated.
      *
-     * @param string $scalarField
+     * @param string|null $scalarField
      *
      * @return $this
      */

@@ -76,7 +76,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return $this
      */
@@ -113,7 +113,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test|Test2
      *
-     * @param int $bla
+     * @param int|null $bla
      *
      * @return $this
      */

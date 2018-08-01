@@ -129,7 +129,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated scalarField is deprecated.
      *
-     * @param string $scalarField
+     * @param string|null $scalarField
      *
      * @return $this
      */
@@ -339,7 +339,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated Deprecated on project level.
      *
-     * @param string $projectLevelDeprecatedField
+     * @param string|null $projectLevelDeprecatedField
      *
      * @return $this
      */
