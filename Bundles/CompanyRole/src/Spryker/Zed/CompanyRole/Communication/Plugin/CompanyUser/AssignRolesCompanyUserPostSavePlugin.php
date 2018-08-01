@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanyRole\Communication\Plugin\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -30,24 +29,10 @@ class AssignRolesCompanyUserPostSavePlugin extends AbstractPlugin implements Com
     {
         $companyUser = $companyUserResponseTransfer->getCompanyUser();
 
-        if ($this->companyUserHasRoleCollection($companyUser)) {
+        if ($companyUser->getCompanyRoleCollection()->getRoles()->count()) {
             $this->getFacade()->saveCompanyUser($companyUser);
         }
 
         return $companyUserResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return bool
-     */
-    protected function companyUserHasRoleCollection(CompanyUserTransfer $companyUserTransfer): bool
-    {
-        if ($companyUserTransfer->getCompanyRoleCollection() !== null) {
-            return true;
-        }
-
-        return false;
     }
 }
