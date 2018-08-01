@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
@@ -36,6 +35,21 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
      * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface
      */
     protected $pluginExecutor;
+
+    /**
+     * @var int[]
+     */
+    protected static $companyBUIdStack = [];
+
+    /**
+     * @var int
+     */
+    protected $entryBusinessUnitId;
+
+    /**
+     * @var int
+     */
+    protected $entryParentBusinessUnitId;
 
     /**
      * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository
@@ -173,38 +187,52 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         $businessUnitId = (int)$companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
         $parentBusinessUnitId = $companyBusinessUnitTransfer->getFkParentCompanyBusinessUnit();
 
-        return $this->existCycleDependency($businessUnitId, $businessUnitId, $parentBusinessUnitId);
+        $this->entryBusinessUnitId = $businessUnitId;
+        $this->entryParentBusinessUnitId = $parentBusinessUnitId;
+
+        return $this->existCycleDependency($businessUnitId, $parentBusinessUnitId);
     }
 
     /**
-     * @param int $defaultBusinessUnitId
      * @param int $businessUnitId
      * @param int $parentBusinessUnitId
      *
      * @return bool
      */
-    protected function existCycleDependency($defaultBusinessUnitId, $businessUnitId, $parentBusinessUnitId): bool
+    protected function existCycleDependency($businessUnitId, $parentBusinessUnitId): bool
     {
         $companyBusinessUnitCriteriaFilterTransfer = new CompanyBusinessUnitCriteriaFilterTransfer();
         $companyBusinessUnitsCollection = $this->repository->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
         $companyBusinessUnits = (array)$companyBusinessUnitsCollection->getCompanyBusinessUnits();
 
-        if ($defaultBusinessUnitId == $parentBusinessUnitId && $businessUnitId) {
+        static::$companyBUIdStack[] = $businessUnitId;
+
+        // deep cycle dependency like if A is the parent of B and B is the parent of C and C is the parent of D, then D cannot be the parent of B or A
+        if ($businessUnitId == $this->entryParentBusinessUnitId && in_array($parentBusinessUnitId, static::$companyBUIdStack)) {
             return true;
         }
 
+        // no cycle dependency found
         if (!$businessUnitId) {
             return false;
         }
 
-        $companyBusinessUnit = array_filter($companyBusinessUnits, function ($companyBusinessUnit) use ($parentBusinessUnitId) {
-            return $companyBusinessUnit->getIdCompanyBusinessUnit() == $parentBusinessUnitId;
+        $companyBusinessUnit = array_filter($companyBusinessUnits, function ($companyBusinessUnit) use ($businessUnitId) {
+            return $companyBusinessUnit->getFkParentCompanyBusinessUnit() == $businessUnitId;
         });
 
         if (!empty($companyBusinessUnit)) {
+            $businessUnitId = array_values($companyBusinessUnit)[0]->getIdCompanyBusinessUnit();
             $parentBusinessUnitId = array_values($companyBusinessUnit)[0]->getFkParentCompanyBusinessUnit();
+        } else {
+            $businessUnitId = $parentBusinessUnitId = null;
         }
 
-        return $this->existCycleDependency($defaultBusinessUnitId, $parentBusinessUnitId, $businessUnitId);
+        // simple cycle dependency like if A is the parent of B then B cannot be the parent of A
+        if ($this->entryBusinessUnitId == $parentBusinessUnitId && $this->entryParentBusinessUnitId == $businessUnitId) {
+            return true;
+        }
+
+        return $this->existCycleDependency($businessUnitId, $parentBusinessUnitId);
     }
 }
