@@ -189,7 +189,9 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
      */
     public function enableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        return $this->getFactory()->createCompanyUser()->enableCompanyUser($companyUserTransfer);
+        return $this->getFactory()
+            ->createCompanyUserStatusHandler()
+            ->enableCompanyUser($companyUserTransfer);
     }
 
     /**
@@ -203,6 +205,8 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
      */
     public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        return $this->getFactory()->createCompanyUser()->disableCompanyUser($companyUserTransfer);
+        return $this->getFactory()
+            ->createCompanyUserStatusHandler()
+            ->disableCompanyUser($companyUserTransfer);
     }
 }
