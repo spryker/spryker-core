@@ -28,16 +28,6 @@ class AssignRolesCompanyUserPostCreatePlugin extends AbstractPlugin implements C
      */
     public function postCreate(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
-        return $this->assignRoleToCompanyUser($companyUserResponseTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
-     */
-    protected function assignRoleToCompanyUser(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
-    {
         $companyUser = $companyUserResponseTransfer->getCompanyUser();
 
         if ($this->companyUserHasRoleCollection($companyUser)) {

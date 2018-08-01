@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanyRole\Communication\Plugin\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -40,34 +39,16 @@ class AssignDefaultCompanyUserRolePlugin extends AbstractPlugin implements Compa
      */
     protected function assignDefaultRoleToCompanyUser(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
+        $defaultCompanyRole = $this->getFacade()->getDefaultCompanyRole();
+        $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
-
-        $companyRoleCollectionTransfer = $companyUserTransfer->getCompanyRoleCollection();
-
-        if ($companyRoleCollectionTransfer !== null) {
-            $companyUserTransfer = $this->assignDefaultRole($companyUserTransfer);
-        } else {
-            $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
+        if ($companyUserTransfer->getCompanyRoleCollection() === null) {
             $companyUserTransfer->setCompanyRoleCollection($companyRoleCollectionTransfer);
-            $companyUserTransfer = $this->assignDefaultRole($companyUserTransfer);
         }
-
+        $companyUserTransfer->getCompanyRoleCollection()->addRole($defaultCompanyRole);
         $this->getFacade()->saveCompanyUser($companyUserTransfer);
         $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
 
         return $companyUserResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
-    protected function assignDefaultRole(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
-    {
-        $defaultCompanyRole = $this->getFacade()->getDefaultCompanyRole();
-        $companyUserTransfer->getCompanyRoleCollection()->addRole($defaultCompanyRole);
-
-        return $companyUserTransfer;
     }
 }
