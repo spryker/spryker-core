@@ -10,6 +10,10 @@
         <column name="file_name" type="varchar"/>
         <column name="fk_file" type="integer"/>
 
+        <index name="spy_file_storage-fk_file">
+            <index-column name="fk_file"/>
+        </index>
+
         <id-method-parameter value="spy_file_storage_pk_seq"/>
 
         <behavior name="synchronization">
