@@ -10,6 +10,7 @@ namespace Spryker\Zed\IndexGenerator\Business\ForeignKeysProvider;
 use Generated\Shared\Transfer\ForeignKeyFileTransfer;
 use Generated\Shared\Transfer\ForeignKeyTableTransfer;
 use SimpleXMLElement;
+use Spryker\Zed\IndexGenerator\Business\Exception\FailedToLoadXmlException;
 use Spryker\Zed\IndexGenerator\Business\SchemaFinder\MergedSchemaFinderInterface;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -59,10 +60,10 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
      */
     protected function processEntityDefinitionFile(SplFileInfo $fileInfo): ?ForeignKeyFileTransfer
     {
-        $xmlElement = simplexml_load_string($fileInfo->getContents());
-        $foreignKeyFileTransfer = $this->createForeignKeyFileTransfer($xmlElement, $fileInfo);
+        $simpleXmlElement = $this->loadSimpleXmlElement($fileInfo);
+        $foreignKeyFileTransfer = $this->createForeignKeyFileTransfer($simpleXmlElement, $fileInfo);
 
-        foreach ($this->getTableXmlElements($xmlElement) as $tableXmlElement) {
+        foreach ($this->getTableXmlElements($simpleXmlElement) as $tableXmlElement) {
             if ($this->isTableExcluded($tableXmlElement)) {
                 continue;
             }
@@ -74,6 +75,23 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
         }
 
         return $foreignKeyFileTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
+     *
+     * @throws \Spryker\Zed\IndexGenerator\Business\Exception\FailedToLoadXmlException
+     *
+     * @return \SimpleXMLElement
+     */
+    protected function loadSimpleXmlElement(SplFileInfo $fileInfo): SimpleXMLElement
+    {
+        $simpleXmlElement = simplexml_load_string($fileInfo->getContents());
+        if ($simpleXmlElement === false) {
+            throw new FailedToLoadXmlException(sprintf('Could not load xml from file "%s"', $fileInfo->getFilename()));
+        }
+
+        return $simpleXmlElement;
     }
 
     /**
@@ -135,8 +153,14 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
     protected function getForeignKeyColumnNames(SimpleXMLElement $tableXmlElement): array
     {
         $foreignKeyColumnNames = [];
-        foreach ($tableXmlElement->xpath('foreign-key/reference') as $reference) {
-            $foreignKeyColumnNames[] = (string)$reference['local'];
+        $foreignKeyReferencesXmlElement = $tableXmlElement->xpath('foreign-key/reference');
+
+        if ($foreignKeyReferencesXmlElement === false) {
+            return $foreignKeyColumnNames;
+        }
+
+        foreach ($foreignKeyReferencesXmlElement as $referenceXmlElement) {
+            $foreignKeyColumnNames[] = (string)$referenceXmlElement['local'];
         }
 
         return $foreignKeyColumnNames;
@@ -150,8 +174,13 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
     protected function getIndexedColumnNames(SimpleXMLElement $tableXmlElement): array
     {
         $indexedColumnNames = [];
-        foreach ($tableXmlElement->xpath('index/index-column') as $indexColumn) {
-            $indexedColumnNames[] = (string)$indexColumn['name'];
+        $indexColumnXmlElements = $tableXmlElement->xpath('index/index-column');
+
+        if ($indexColumnXmlElements === false) {
+            return $indexedColumnNames;
+        }
+        foreach ($indexColumnXmlElements as $indexColumnXmlElement) {
+            $indexedColumnNames[] = (string)$indexColumnXmlElement['name'];
         }
 
         return $indexedColumnNames;
