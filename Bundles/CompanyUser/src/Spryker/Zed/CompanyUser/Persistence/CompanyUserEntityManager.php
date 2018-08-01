@@ -30,9 +30,11 @@ class CompanyUserEntityManager extends AbstractEntityManager implements CompanyU
             ->mapCompanyUserTransferToEntityTransfer($companyUserTransfer);
         $entityTransfer = $this->save($entityTransfer);
 
-        return $this->getFactory()
+        $newCompanyUserTransfer = $this->getFactory()
             ->createCompanyUserMapper()
             ->mapEntityTransferToCompanyUserTransfer($entityTransfer);
+
+        return $this->mergeCompanyUserTransfers($companyUserTransfer, $newCompanyUserTransfer);
     }
 
     /**
@@ -48,5 +50,26 @@ class CompanyUserEntityManager extends AbstractEntityManager implements CompanyU
             ->createCompanyUserQuery()
             ->filterByIdCompanyUser($idCompanyUser)
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $oldCompanyUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $newCompanyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    protected function mergeCompanyUserTransfers(
+        CompanyUserTransfer $oldCompanyUserTransfer,
+        CompanyUserTransfer $newCompanyUserTransfer
+    ): CompanyUserTransfer {
+        $oldCompanyUserTransferArray = $oldCompanyUserTransfer->modifiedToArray();
+        $newCompanyUserTransferArray = $newCompanyUserTransfer->modifiedToArray();
+
+        $mergedCompanyUserTransferArray = array_merge($oldCompanyUserTransferArray, $newCompanyUserTransferArray);
+
+        $mergedCompanyUserTransfer = (new CompanyUserTransfer())
+            ->fromArray($mergedCompanyUserTransferArray);
+
+        return $mergedCompanyUserTransfer;
     }
 }
