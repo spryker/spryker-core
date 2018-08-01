@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
