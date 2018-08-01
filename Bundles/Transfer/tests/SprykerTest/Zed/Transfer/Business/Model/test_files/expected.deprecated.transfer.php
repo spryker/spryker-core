@@ -186,7 +186,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated arrayField is deprecated.
      *
-     * @param array $arrayField
+     * @param mixed $arrayField
      *
      * @return $this
      */

@@ -339,7 +339,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isArray($property)) {
-            return 'array';
+            return 'mixed';
         }
 
         if ($this->isCollection($property)) {
