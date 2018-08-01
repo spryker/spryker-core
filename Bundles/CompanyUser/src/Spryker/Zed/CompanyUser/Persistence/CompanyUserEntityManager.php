@@ -49,4 +49,33 @@ class CompanyUserEntityManager extends AbstractEntityManager implements CompanyU
             ->filterByIdCompanyUser($idCompanyUser)
             ->delete();
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function updateCompanyUserStatus(
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserTransfer {
+        $companyUserEntity = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->filterByIdCompanyUser(
+                $companyUserTransfer->getIdCompanyUser()
+            )->findOne();
+
+        if (!$companyUserEntity) {
+            return $companyUserTransfer;
+        }
+
+        $companyUserEntity->setIsActive(
+            $companyUserTransfer->getIsActive()
+        );
+
+        $companyUserEntity->save();
+
+        return $this->getFactory()
+            ->createCompanyUserMapper()
+            ->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntity);
+    }
 }

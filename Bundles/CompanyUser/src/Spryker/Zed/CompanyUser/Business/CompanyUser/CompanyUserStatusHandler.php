@@ -43,6 +43,8 @@ class CompanyUserStatusHandler implements CompanyUserStatusHandlerInterface
      */
     public function enableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
+        $companyUserTransfer->requireIdCompanyUser();
+
         $companyUserResponseTransfer = (new CompanyUserResponseTransfer())
             ->setCompanyUser($companyUserTransfer)
             ->setIsSuccessful(false);
@@ -53,11 +55,11 @@ class CompanyUserStatusHandler implements CompanyUserStatusHandlerInterface
             return $companyUserResponseTransfer;
         }
 
-        $existingCompanyUser->setIsActive(true);
-        $this->companyUserEntityManager->saveCompanyUser($existingCompanyUser);
+        $companyUserTransfer->setIsActive(true);
+        $this->companyUserEntityManager->updateCompanyUserStatus($companyUserTransfer);
 
         return $companyUserResponseTransfer
-            ->setCompanyUser($existingCompanyUser)
+            ->setCompanyUser($companyUserTransfer)
             ->setIsSuccessful(true);
     }
 
@@ -68,6 +70,8 @@ class CompanyUserStatusHandler implements CompanyUserStatusHandlerInterface
      */
     public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
+        $companyUserTransfer->requireIdCompanyUser();
+
         $companyUserResponseTransfer = (new CompanyUserResponseTransfer())
             ->setCompanyUser($companyUserTransfer)
             ->setIsSuccessful(false);
@@ -78,11 +82,11 @@ class CompanyUserStatusHandler implements CompanyUserStatusHandlerInterface
             return $companyUserResponseTransfer;
         }
 
-        $existingCompanyUser->setIsActive(false);
-        $this->companyUserEntityManager->saveCompanyUser($existingCompanyUser);
+        $companyUserTransfer->setIsActive(false);
+        $this->companyUserEntityManager->updateCompanyUserStatus($companyUserTransfer);
 
         return $companyUserResponseTransfer
-            ->setCompanyUser($existingCompanyUser)
+            ->setCompanyUser($companyUserTransfer)
             ->setIsSuccessful(true);
     }
 }
