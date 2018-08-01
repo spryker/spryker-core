@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\IndexGenerator\Business\IndexGenerator;
 
-interface IndexGeneratorInterface
+interface PostgresIndexGeneratorInterface
 {
     /**
      * @return void

@@ -15,9 +15,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\IndexGenerator\Business\IndexGeneratorFacadeInterface getFacade()
  */
-class IndexGeneratorConsole extends Console
+class PostgresIndexGeneratorConsole extends Console
 {
-    protected const COMMAND_NAME = 'propel:index-generator:generate';
+    protected const COMMAND_NAME = 'propel:postgres-index-generator:generate';
     protected const DESCRIPTION = 'Generates propel files with index definition for each foreign key, this is only relevant for postgres.';
 
     /**

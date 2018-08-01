@@ -13,7 +13,7 @@ use Spryker\Zed\IndexGenerator\Business\ForeignKeysProvider\ForeignKeysProviderI
 use Spryker\Zed\IndexGenerator\IndexGeneratorConfig;
 use Symfony\Component\Finder\Finder;
 
-class IndexGenerator implements IndexGeneratorInterface
+class PostgresPostgresIndexGenerator implements PostgresIndexGeneratorInterface
 {
     const POSTGRES_INDEX_NAME_MAX_LENGTH = 63;
 

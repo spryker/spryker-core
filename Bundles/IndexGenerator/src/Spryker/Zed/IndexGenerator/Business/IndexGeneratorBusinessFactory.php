@@ -9,8 +9,8 @@ namespace Spryker\Zed\IndexGenerator\Business;
 
 use Spryker\Zed\IndexGenerator\Business\ForeignKeysProvider\ForeignKeysProvider;
 use Spryker\Zed\IndexGenerator\Business\ForeignKeysProvider\ForeignKeysProviderInterface;
-use Spryker\Zed\IndexGenerator\Business\IndexGenerator\IndexGenerator;
-use Spryker\Zed\IndexGenerator\Business\IndexGenerator\IndexGeneratorInterface;
+use Spryker\Zed\IndexGenerator\Business\IndexGenerator\PostgresIndexGeneratorInterface;
+use Spryker\Zed\IndexGenerator\Business\IndexGenerator\PostgresPostgresIndexGenerator;
 use Spryker\Zed\IndexGenerator\Business\SchemaFinder\MergedSchemaFinder;
 use Spryker\Zed\IndexGenerator\Business\SchemaFinder\MergedSchemaFinderInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -21,11 +21,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class IndexGeneratorBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\IndexGenerator\Business\IndexGenerator\IndexGeneratorInterface
+     * @return \Spryker\Zed\IndexGenerator\Business\IndexGenerator\PostgresIndexGeneratorInterface
      */
-    public function createIndexGenerator(): IndexGeneratorInterface
+    public function createPostgresIndexGenerator(): PostgresIndexGeneratorInterface
     {
-        return new IndexGenerator(
+        return new PostgresPostgresIndexGenerator(
             $this->getConfig(),
             $this->createForeignKeysProvider()
         );
