@@ -188,10 +188,68 @@ class IndexInstaller implements SearchInstallerInterface
         }
 
         $settings = $indexDefinitionTransfer->getSettings();
+        $indexState = $this->getIndexState($index);
         if ($settings) {
+            $settings = $this->filterSettingsByIndexState($indexState, $settings);
             $settings = $this->removeBlacklistedSettings($settings);
-            $index->setSettings($settings);
+            if ($this->existSettingsForUpdate($settings)) {
+                $index->setSettings($settings);
+            }
         }
+    }
+
+    /**
+     * @param string[] $settings
+     *
+     * @return bool
+     */
+    protected function existSettingsForUpdate(array $settings): bool
+    {
+        $settings = array_filter($settings, function ($setting) {
+            return !empty($setting);
+        });
+
+        return !empty($settings);
+    }
+
+    /**
+     * @param string $indexState
+     * @param string[] $settings
+     *
+     * @return string[]
+     */
+    protected function filterSettingsByIndexState(string $indexState, array $settings): array
+    {
+        $notUpdatableIndexes = [];
+
+        if ($indexState === SearchConfig::INDEX_OPEN_STATE) {
+            $notUpdatableIndexes = $this->searchConfig->getStaticIndexes();
+        }
+
+        if ($indexState === SearchConfig::INDEX_CLOSE_STATE) {
+            $notUpdatableIndexes = $this->searchConfig->getDynamicIndexes();
+        }
+
+        foreach ($notUpdatableIndexes as $notUpdatableIndexSettingPath) {
+            $settings = $this->removeSettingPath($settings, $notUpdatableIndexSettingPath);
+        }
+
+        return $settings;
+    }
+
+    /**
+     * @param \Elastica\Index $index
+     *
+     * @return null|string
+     */
+    protected function getIndexState(Index $index): ?string
+    {
+        $clusterState = $index->getClient()->getCluster()->getState();
+        if (isset($clusterState['metadata']['indices'][$index->getName()]['state'])) {
+            return $clusterState['metadata']['indices'][$index->getName()]['state'];
+        }
+
+        return null;
     }
 
     /**
