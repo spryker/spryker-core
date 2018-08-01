@@ -17,4 +17,11 @@
         <property name="registered" type="string" />
     </transfer>
 
+    <transfer name="RestCustomersInfoAttributes">
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
+        <property name="salutation" type="string" />
+        <property name="email" type="string" />
+    </transfer>
+
 </transfers>

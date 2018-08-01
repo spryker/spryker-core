@@ -8,6 +8,10 @@ namespace Spryker\Glue\CustomersRestApi;
 
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToSessionClientInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReader;
+use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapper;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CustomersRestApiFactory extends AbstractFactory
@@ -26,5 +30,27 @@ class CustomersRestApiFactory extends AbstractFactory
     public function getCustomerClient(): CustomerRestApiToCustomerClientInterface
     {
         return $this->getProvidedDependency(CustomersRestApiDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface
+     */
+    public function createCustomerResourceMapper(): CustomersResourceMapperInterface
+    {
+        return new CustomersResourceMapper(
+            $this->getResourceBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface
+     */
+    public function createCustomerReader(): CustomersReaderInterface
+    {
+        return new CustomersReader(
+            $this->getResourceBuilder(),
+            $this->getCustomerClient(),
+            $this->createCustomerResourceMapper()
+        );
     }
 }

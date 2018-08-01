@@ -359,4 +359,17 @@ interface CustomerClientInterface
      * @return void
      */
     public function markCustomerAsDirty();
+
+    /**
+     * Specification:
+     * - Retrieves customer information using provided customer reference.
+     * - Returns null if customer was not found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerByReference(CustomerTransfer $customerTransfer);
 }

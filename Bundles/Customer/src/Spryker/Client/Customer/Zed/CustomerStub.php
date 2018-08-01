@@ -272,4 +272,17 @@ class CustomerStub implements CustomerStubInterface
 
         return $customerTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findByReference(CustomerTransfer $customerTransfer)
+    {
+        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
+        $customerTransfer = $this->zedStub->call('/customer/gateway/find-by-reference', $customerTransfer);
+
+        return $customerTransfer;
+    }
 }
