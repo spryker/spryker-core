@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Transliterator;
 
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
@@ -24,6 +25,7 @@ class DownloadFileController extends AbstractController
     protected const CONTENT_DISPOSITION = 'Content-Disposition';
     protected const CONTENT_TYPE = 'Content-Type';
     protected const MESSAGE_FILE_UNAVAILABLE = 'File was not found';
+    protected const TRANSLITERATOR_RULE = 'Any-Latin;Latin-ASCII;';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -58,7 +60,12 @@ class DownloadFileController extends AbstractController
         $response = new Response($fileManagerDataTransfer->getContent());
         $fileName = $fileManagerDataTransfer->getFile()->getFileName();
         $contentType = $fileManagerDataTransfer->getFileInfo()->getType();
-        $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
+
+        $disposition = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $fileName,
+            Transliterator::create(static::TRANSLITERATOR_RULE)->transliterate($fileName)
+        );
 
         $response->headers->set(static::CONTENT_DISPOSITION, $disposition);
         $response->headers->set(static::CONTENT_TYPE, $contentType);
