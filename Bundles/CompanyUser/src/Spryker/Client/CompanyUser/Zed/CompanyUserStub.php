@@ -128,10 +128,11 @@ class CompanyUserStub implements CompanyUserStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\CompanyUserResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function enableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
+        /** @var \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer */
         $companyUserResponseTransfer = $this->zedRequestClient->call(
             '/company-user/gateway/enable-company-user',
             $companyUserTransfer
@@ -143,10 +144,11 @@ class CompanyUserStub implements CompanyUserStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\CompanyUserResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
+        /** @var \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer */
         $companyUserResponseTransfer = $this->zedRequestClient->call(
             '/company-user/gateway/disable-company-user',
             $companyUserTransfer
