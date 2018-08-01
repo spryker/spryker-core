@@ -138,9 +138,14 @@ class User implements UserInterface
             $userEntity = new SpyUser();
         }
 
-        $userEntity->fromArray($userTransfer->modifiedToArray());
+        $modifiedUser = $userTransfer->modifiedToArray();
 
-        $userEntity->resetModified(SpyUserTableMap::COL_PASSWORD);
+        if ($modifiedUser[UserTransfer::PASSWORD]) {
+            unset($modifiedUser[UserTransfer::PASSWORD]);
+        }
+
+        $userEntity->fromArray($modifiedUser);
+
         $password = $userTransfer->getPassword();
         if (!empty($password) && $this->isRawPassword($password)) {
             $userEntity->setPassword($this->encryptPassword($password));
