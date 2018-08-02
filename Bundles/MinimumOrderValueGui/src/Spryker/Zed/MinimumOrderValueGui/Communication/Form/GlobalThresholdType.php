@@ -94,7 +94,7 @@ class GlobalThresholdType extends AbstractType
      *
      * @return string
      */
-    public static function getLocalizedFormName($prefix, $localeCode): string
+    public static function getLocalizedFormName(string $prefix, string $localeCode): string
     {
         return $prefix . '_' . $localeCode;
     }
@@ -228,7 +228,7 @@ class GlobalThresholdType extends AbstractType
      *
      * @return $this
      */
-    protected function addLocalizedForms(FormBuilderInterface $builder, $localizedFormPrefix): self
+    protected function addLocalizedForms(FormBuilderInterface $builder, string $localizedFormPrefix): self
     {
         $localeCollection = $this->getFactory()
             ->createLocaleProvider()
@@ -249,7 +249,7 @@ class GlobalThresholdType extends AbstractType
      *
      * @return $this
      */
-    protected function addLocalizedForm(FormBuilderInterface $builder, $name, array $options = []): self
+    protected function addLocalizedForm(FormBuilderInterface $builder, string $name, array $options = []): self
     {
         $builder
             ->add($name, LocalizedForm::class, [

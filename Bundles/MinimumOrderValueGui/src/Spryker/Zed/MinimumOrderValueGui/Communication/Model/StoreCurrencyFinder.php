@@ -34,7 +34,7 @@ class StoreCurrencyFinder
      *
      * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
      */
-    public function findStoreCurrencyByString(string $storeCurrency)
+    public function findStoreCurrencyByString(string $storeCurrency): StoreCurrencyTransfer
     {
         list($storeName, $currencyCode) = explode(
             MinimumOrderValueGuiConstants::STORE_CURRENCY_DELIMITER,
@@ -44,7 +44,7 @@ class StoreCurrencyFinder
         $storeCurrencyTransfer = new StoreCurrencyTransfer();
 
         foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
-            if ($this->setStoreToStoreCurrencyTransfer($storeCurrencyTransfer, $storeWithCurrencyTransfer, $storeName, $currencyCode)) {
+            if ($this->isSetStoreToStoreCurrencyTransfer($storeCurrencyTransfer, $storeWithCurrencyTransfer, $storeName, $currencyCode)) {
                 break;
             }
         }
@@ -60,7 +60,7 @@ class StoreCurrencyFinder
      *
      * @return bool
      */
-    protected function setStoreToStoreCurrencyTransfer(
+    protected function isSetStoreToStoreCurrencyTransfer(
         StoreCurrencyTransfer $storeCurrencyTransfer,
         StoreWithCurrencyTransfer $storeWithCurrencyTransfer,
         $storeName,
@@ -71,7 +71,7 @@ class StoreCurrencyFinder
             $storeCurrencyTransfer->setStore($storeTransfer);
 
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
-                if ($this->setCurrencyToStoreCurrencyTransfer($storeCurrencyTransfer, $currencyCode, $currencyTransfer)) {
+                if ($this->isSetCurrencyToStoreCurrencyTransfer($storeCurrencyTransfer, $currencyCode, $currencyTransfer)) {
                     break;
                 }
             }
@@ -89,7 +89,7 @@ class StoreCurrencyFinder
      *
      * @return bool
      */
-    protected function setCurrencyToStoreCurrencyTransfer(
+    protected function isSetCurrencyToStoreCurrencyTransfer(
         StoreCurrencyTransfer $storeCurrencyTransfer,
         $currencyCode,
         CurrencyTransfer $currencyTransfer
