@@ -210,7 +210,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
 
         $dependencyModulesCollectionTransfer = $dependencyCollectionTransfer->getDependencyModules();
 
-        $dependencyCollectionTransfer->setDependencyModule(new ArrayObject());
+        $dependencyCollectionTransfer->setDependencyModules(new ArrayObject());
         foreach ($dependencyModulesCollectionTransfer as $moduleDependencyTransfer) {
             if (!in_array($moduleDependencyTransfer->getModule(), $excluded)) {
                 $dependencyCollectionTransfer->addDependencyModule($moduleDependencyTransfer);
