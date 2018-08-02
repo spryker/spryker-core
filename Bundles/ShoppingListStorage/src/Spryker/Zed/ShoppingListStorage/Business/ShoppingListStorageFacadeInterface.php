@@ -9,4 +9,12 @@ namespace Spryker\Zed\ShoppingListStorage\Business;
 
 interface ShoppingListStorageFacadeInterface
 {
+    /**
+     * @api
+     *
+     * @param string $customer_reference
+     *
+     * @return void
+     */
+    public function publish(string $customer_reference): void;
 }

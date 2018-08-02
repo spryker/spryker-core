@@ -10,8 +10,19 @@ namespace Spryker\Zed\ShoppingListStorage\Business;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
+ * @api
+ *
  * @method \Spryker\Zed\ShoppingListStorage\Business\ShoppingListStorageBusinessFactory getFactory()
  */
 class ShoppingListStorageFacade extends AbstractFacade implements ShoppingListStorageFacadeInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function publish(string $customer_reference): void
+    {
+        // TODO: Implement publish() method.
+    }
 }
