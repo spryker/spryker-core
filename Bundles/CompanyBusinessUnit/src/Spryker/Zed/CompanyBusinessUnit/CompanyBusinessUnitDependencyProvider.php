@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\CompanyBusinessUnit;
 
+use Spryker\Zed\CompanyBusinessUnit\Dependency\Facade\CompanyBusinessUnitToCompanyUserFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE = 'PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE';
+    public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,6 +25,7 @@ class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addCompanyBusinessUnitPostSavePlugins($container);
+        $container = $this->addCompanyUserFacade($container);
 
         return $container;
     }
@@ -47,5 +50,19 @@ class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProv
     protected function getCompanyBusinessUnitPostSavePlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserFacade(Container $container): Container
+    {
+        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+            return new CompanyBusinessUnitToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());
+        };
+
+        return $container;
     }
 }
