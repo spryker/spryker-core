@@ -297,4 +297,20 @@ class GatewayController extends AbstractGatewayController
 
         return $customerTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function findByReferenceAction(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        $customerTransfer = $this->getFacade()->findByReference($customerTransfer->getCustomerReference());
+
+        if ($customerTransfer === null) {
+            return new CustomerTransfer();
+        }
+
+        return $customerTransfer;
+    }
 }
