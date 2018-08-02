@@ -171,11 +171,12 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
      */
     protected function getName($idCategory, LocaleTransfer $localeTransfer)
     {
-        if (static::$categoryName === null) {
+        $idLocale = $localeTransfer->getIdLocale();
+        if (static::$categoryName === null || !isset(static::$categoryName[$idLocale])) {
             $this->loadNames($localeTransfer);
         }
 
-        return isset(static::$categoryName[$idCategory]) ? static::$categoryName[$idCategory] : null;
+        return isset(static::$categoryName[$idLocale][$idCategory]) ? static::$categoryName[$idLocale][$idCategory] : null;
     }
 
     /**
@@ -185,7 +186,9 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
      */
     protected function loadNames(LocaleTransfer $localeTransfer)
     {
-        static::$categoryName = [];
+        if (!static::$categoryName) {
+            static::$categoryName = [];
+        }
 
         $categoryAttributes = $this
             ->getQueryContainer()
@@ -196,7 +199,7 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
             ->find();
 
         foreach ($categoryAttributes as $categoryAttributeEntity) {
-            static::$categoryName[$categoryAttributeEntity->getFkCategory()] = $categoryAttributeEntity->getName();
+            static::$categoryName[$localeTransfer->getIdLocale()][$categoryAttributeEntity->getFkCategory()] = $categoryAttributeEntity->getName();
         }
     }
 
