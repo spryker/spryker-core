@@ -48,7 +48,10 @@ class ProductNewFactory extends AbstractFactory
      */
     public function getConfig()
     {
-        return parent::getConfig();
+        /** @var \Spryker\Client\ProductNew\ProductNewConfig $config */
+        $config = parent::getConfig();
+
+        return $config;
     }
 
     /**

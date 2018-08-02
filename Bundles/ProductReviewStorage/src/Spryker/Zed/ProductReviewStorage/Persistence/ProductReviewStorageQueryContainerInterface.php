@@ -28,4 +28,13 @@ interface ProductReviewStorageQueryContainerInterface extends QueryContainerInte
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */
     public function queryProductReviewsByIdProductAbstracts(array $productAbstractIds);
+
+    /**
+     * @api
+     *
+     * @param int[] $productReviewsIds
+     *
+     * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
+     */
+    public function queryProductReviewsByIds(array $productReviewsIds);
 }
