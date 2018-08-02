@@ -39,8 +39,9 @@ class RestRequestValidatorCollector implements RestRequestValidatorCollectorInte
                 throw new SchemaFileNotFound('Schema-File does not exist: ' . $moduleValidationSchema);
             }
             $parsedConfiguration = Yaml::parseFile($moduleValidationSchema->getPathname());
-            $moduleName = key($parsedConfiguration);
-            $resultingConfig[$moduleName][] = $parsedConfiguration[$moduleName];
+            foreach ($parsedConfiguration as $resourceName => $resourceValidatorConfiguration) {
+                $resultingConfig[$resourceName][] = $resourceValidatorConfiguration;
+            }
         }
 
         return $resultingConfig;

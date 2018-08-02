@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Merger;
 
-use function array_merge_recursive;
+use function array_key_exists;
 
 class RestRequestValidatorMerger implements RestRequestValidatorMergerInterface
 {
@@ -18,18 +18,40 @@ class RestRequestValidatorMerger implements RestRequestValidatorMergerInterface
     public function merge(array $validatorSchema): array
     {
         $validatorSchemaMerged = [];
-        foreach ($validatorSchema as $moduleName => $validationSchemas) {
-            if (count($validationSchemas) === 1) {
-                $validatorSchemaMerged[$moduleName] = reset($validationSchemas);
+        foreach ($validatorSchema as $resourceName => $validationConfigs) {
+            if (count($validationConfigs) === 1) {
+                $validatorSchemaMerged[$resourceName] = reset($validationConfigs);
             } else {
-                $validatorSchemaMerged[$moduleName] = [];
-                foreach ($validationSchemas as $validationSchema) {
-                    $validatorSchemaMerged[$moduleName]
-                        = array_merge_recursive($validatorSchemaMerged[$moduleName], $validationSchema);
-                }
+                $validatorSchemaMerged[$resourceName] = $this->mergeOverwrittenValidatorConfig($validationConfigs);
             }
         }
 
         return $validatorSchemaMerged;
+    }
+
+    /**
+     * @param array $validationConfigs
+     *
+     * @return array
+     */
+    protected function mergeOverwrittenValidatorConfig(array $validationConfigs): array
+    {
+        $resultingConfiguration = [];
+
+        foreach ($validationConfigs as $validationSchemaScoped) {
+            foreach ($validationSchemaScoped as $actionName => $fieldsConfig) {
+                if (!array_key_exists($actionName, $resultingConfiguration)) {
+                    $resultingConfiguration[$actionName] = $fieldsConfig;
+                } else {
+                    foreach ($fieldsConfig as $fieldName => $validatorsList) {
+                        if (array_key_exists($fieldName, $resultingConfiguration[$actionName])) {
+                            $resultingConfiguration[$actionName][$fieldName] = $validatorsList;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $resultingConfiguration;
     }
 }
