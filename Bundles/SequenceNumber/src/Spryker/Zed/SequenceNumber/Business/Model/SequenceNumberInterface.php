@@ -10,7 +10,7 @@ namespace Spryker\Zed\SequenceNumber\Business\Model;
 interface SequenceNumberInterface
 {
     /**
-     * @return int
+     * @return string
      */
     public function generate();
 }

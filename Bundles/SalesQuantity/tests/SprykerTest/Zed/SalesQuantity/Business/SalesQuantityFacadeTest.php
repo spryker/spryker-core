@@ -18,6 +18,8 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Zed\SalesQuantity\Business\SalesQuantityBusinessFactory;
+use Spryker\Zed\SalesQuantity\SalesQuantityConfig;
 
 /**
  * Auto-generated group annotations
@@ -41,14 +43,31 @@ class SalesQuantityFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @return \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface
+     * @var \Spryker\Zed\SalesQuantity\SalesQuantityConfig|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getFacade()
-    {
-        /** @var \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface $facade */
-        $facade = $this->tester->getFacade();
+    protected $configMock;
 
-        return $facade;
+    /**
+     * @var \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface
+     */
+    protected $facade;
+
+    /**
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->configMock = $this->getMockBuilder(SalesQuantityConfig::class)->getMock();
+
+        /** @var \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacade $facade */
+        $this->facade = $this->tester->getFacade();
+
+        $this->facade->setFactory(
+            (new SalesQuantityBusinessFactory())
+                ->setConfig($this->configMock)
+        );
     }
 
     /**
@@ -57,7 +76,7 @@ class SalesQuantityFacadeTest extends Unit
     public function testTransformNonSplittableItemShouldNotSplitItems(): void
     {
         $itemTransfer = (new ItemTransfer())->setQuantity(static::QUANTITY);
-        $itemCollectionTransfer = $this->getFacade()->transformNonSplittableItem($itemTransfer);
+        $itemCollectionTransfer = $this->facade->transformNonSplittableItem($itemTransfer);
 
         $this->assertSame($itemCollectionTransfer->getItems()->count(), 1);
 
@@ -75,7 +94,7 @@ class SalesQuantityFacadeTest extends Unit
         $item = (new ItemTransfer())->setSku(static::CONCRETE_PRODUCT_SKU);
         $cartChangeTransfer = (new CartChangeTransfer())->setItems(new ArrayObject($item));
 
-        $resultCartChangeTransfer = $this->getFacade()->expandCartChangeWithIsQuantitySplittable($cartChangeTransfer);
+        $resultCartChangeTransfer = $this->facade->expandCartChangeWithIsQuantitySplittable($cartChangeTransfer);
 
         foreach ($resultCartChangeTransfer->getItems() as $itemTransfer) {
             $this->assertSame($itemTransfer->getIsQuantitySplittable(), true);
@@ -83,7 +102,7 @@ class SalesQuantityFacadeTest extends Unit
 
         $this->setData(false);
 
-        $resultCartChangeTransfer = $this->getFacade()->expandCartChangeWithIsQuantitySplittable($cartChangeTransfer);
+        $resultCartChangeTransfer = $this->facade->expandCartChangeWithIsQuantitySplittable($cartChangeTransfer);
 
         foreach ($resultCartChangeTransfer->getItems() as $itemTransfer) {
             $this->assertSame($itemTransfer->getIsQuantitySplittable(), false);
@@ -98,7 +117,7 @@ class SalesQuantityFacadeTest extends Unit
         $discountableItemTransfer = $this->createDiscountableItemTransfer();
         $discountableItemTransformerTransfer = $this->createDiscountableItemTransformerTransfer($discountableItemTransfer);
 
-        $this->getFacade()->transformNonSplittableDiscountableItem($discountableItemTransformerTransfer);
+        $this->facade->transformNonSplittableDiscountableItem($discountableItemTransformerTransfer);
 
         $this->assertSame($discountableItemTransfer->getOriginalItemCalculatedDiscounts()->count(), 1);
 
@@ -107,6 +126,116 @@ class SalesQuantityFacadeTest extends Unit
             $this->assertSame($resultedDiscountableItemTransfer->getSumAmount(), 50);
             $this->assertSame($resultedDiscountableItemTransfer->getQuantity(), static::QUANTITY);
         }
+    }
+
+    /**
+     * @see SalesQuantityConfig::findItemQuantityThreshold()
+     *
+     * @return void
+     */
+    public function testIsItemQuantitySplittableReturnsTrueForItemsWithBundleItemIdentifier()
+    {
+        // Assign
+        $threshold = 5;
+        $this->configMock->expects($this->any())->method('findItemQuantityThreshold')->willReturn($threshold);
+
+        $expectedResult = true;
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setIsQuantitySplittable(false);
+        $itemTransfer->setBundleItemIdentifier('test-id');
+        $itemTransfer->setQuantity($threshold);
+
+        // Act
+        $actualResult = $this->facade->isItemQuantitySplittable($itemTransfer);
+
+        // Assert
+        $this->assertSame($expectedResult, $actualResult);
+    }
+
+    /**
+     * @see SalesQuantityConfig::findItemQuantityThreshold()
+     *
+     * @return void
+     */
+    public function testIsItemQuantitySplittableReturnsTrueForItemsWithRelatedBundleItemIdentifier()
+    {
+        // Assign
+        $threshold = 5;
+        $this->configMock->expects($this->any())->method('findItemQuantityThreshold')->willReturn($threshold);
+        $expectedResult = true;
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setIsQuantitySplittable(false);
+        $itemTransfer->setRelatedBundleItemIdentifier('test-id');
+        $itemTransfer->setQuantity($threshold);
+
+        // Act
+        $actualResult = $this->facade->isItemQuantitySplittable($itemTransfer);
+
+        // Assert
+        $this->assertSame($expectedResult, $actualResult);
+    }
+
+    /**
+     * @see SalesQuantityConfig::findItemQuantityThreshold()
+     *
+     * @return void
+     */
+    public function testIsItemQuantitySplittableReturnsFalseForNonSplittableItems()
+    {
+        // Assign
+        $threshold = null;
+        $this->configMock->expects($this->any())->method('findItemQuantityThreshold')->willReturn($threshold);
+        $expectedResult = false;
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setIsQuantitySplittable(false);
+
+        // Act
+        $actualResult = $this->facade->isItemQuantitySplittable($itemTransfer);
+
+        // Assert
+        $this->assertSame($expectedResult, $actualResult);
+    }
+
+    /**
+     * @see SalesQuantityConfig::findItemQuantityThreshold()
+     *
+     * @dataProvider thresholds
+     *
+     * @param bool $expectedResult
+     * @param int $quantity
+     * @param int|null $threshold
+     *
+     * @return void
+     */
+    public function testIsItemQuantitySplittableRespectsThreshold($expectedResult, $quantity, $threshold)
+    {
+        // Assign
+        $this->configMock->expects($this->any())->method('findItemQuantityThreshold')->willReturn($threshold);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity($quantity);
+
+        // Act
+        $actualResult = $this->facade->isItemQuantitySplittable($itemTransfer);
+
+        // Assert
+        $this->assertSame($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return array
+     */
+    public function thresholds()
+    {
+        return [
+            [true,  5, null],
+            [true,  5, 6],
+            [false, 5, 5],
+            [false, 5, 4],
+        ];
     }
 
     /**

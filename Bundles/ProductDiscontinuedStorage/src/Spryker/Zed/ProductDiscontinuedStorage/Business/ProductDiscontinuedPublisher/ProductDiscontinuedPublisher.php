@@ -94,7 +94,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
 
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
-     * @param \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[] $indexProductDiscontinuedStorageEntities
+     * @param array $indexProductDiscontinuedStorageEntities
      * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
      *
      * @return void
@@ -167,7 +167,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
     /**
      * @param \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[] $productDiscontinuedStorageEntities
      *
-     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
+     * @return array
      */
     protected function indexProductDiscontinuedStorageEntities(array $productDiscontinuedStorageEntities): array
     {
