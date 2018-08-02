@@ -26,7 +26,7 @@ class PriceProductMerchantRelationshipDataImportHelper extends Module
 
         $query = $this->getMerchantRelationshipQuery();
         $results = $query->find();
-        // @todo rewrite this.
+
         foreach ($relations as $relationMap) {
             $relationType = $relationMap->getType();
 
