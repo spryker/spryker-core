@@ -165,7 +165,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     {
         $companyBusinessUnitTransfer = $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer();
 
-        if ($this->companyBusinessUnitCycleDependencyExists($companyBusinessUnitTransfer)) {
+        if ($this->isCompanyBusinessUnitCycleDependencyExists($companyBusinessUnitTransfer)) {
             $companyBusinessUnitResponseTransfer->setIsSuccessful(false);
 
             return $companyBusinessUnitResponseTransfer;
@@ -183,15 +183,15 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
      *
      * @return bool
      */
-    protected function companyBusinessUnitCycleDependencyExists(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool
+    protected function isCompanyBusinessUnitCycleDependencyExists(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool
     {
         $businessUnitId = (int)$companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
-        $parentBusinessUnitId = $companyBusinessUnitTransfer->getFkParentCompanyBusinessUnit();
+        $parentBusinessUnitId = (int)$companyBusinessUnitTransfer->getFkParentCompanyBusinessUnit();
 
         $this->entryBusinessUnitId = $businessUnitId;
         $this->entryParentBusinessUnitId = $parentBusinessUnitId;
 
-        return $this->existCycleDependency($businessUnitId, $parentBusinessUnitId);
+        return $this->isCycleDependencyExists($businessUnitId, $parentBusinessUnitId);
     }
 
     /**
@@ -200,7 +200,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
      *
      * @return bool
      */
-    protected function existCycleDependency($businessUnitId, $parentBusinessUnitId): bool
+    protected function isCycleDependencyExists($businessUnitId, $parentBusinessUnitId): bool
     {
         $companyBusinessUnitCriteriaFilterTransfer = new CompanyBusinessUnitCriteriaFilterTransfer();
         $companyBusinessUnitsCollection = $this->repository->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
@@ -209,7 +209,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         static::$companyBusinessUnitIdCache[] = $businessUnitId;
 
         // deep cycle dependency like if A is the parent of B and B is the parent of C and C is the parent of D, then D cannot be the parent of B or A
-        if ($businessUnitId == $this->entryParentBusinessUnitId && in_array($parentBusinessUnitId, static::$companyBusinessUnitIdCache)) {
+        if ($businessUnitId === $this->entryParentBusinessUnitId && in_array($parentBusinessUnitId, static::$companyBusinessUnitIdCache)) {
             return true;
         }
 
@@ -230,10 +230,10 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         }
 
         // simple cycle dependency like if A is the parent of B then B cannot be the parent of A
-        if ($this->entryBusinessUnitId == $parentBusinessUnitId && $this->entryParentBusinessUnitId == $businessUnitId) {
+        if ($this->entryBusinessUnitId === $parentBusinessUnitId && $this->entryParentBusinessUnitId === $businessUnitId) {
             return true;
         }
 
-        return $this->existCycleDependency($businessUnitId, $parentBusinessUnitId);
+        return $this->isCycleDependencyExists($businessUnitId, $parentBusinessUnitId);
     }
 }
