@@ -308,7 +308,6 @@ class GatewayController extends AbstractGatewayController
         $customerTransfer = $this->getFacade()->findByReference($customerTransfer->getCustomerReference());
 
         if ($customerTransfer === null) {
-            $this->setSuccess(false);
             return new CustomerTransfer();
         }
 

@@ -63,7 +63,7 @@ class CustomersReader implements CustomersReaderInterface
 
         $customer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        if (!$customer || $customer->getAnonymizedAt() !== null) {
+        if (!$customer) {
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
                 ->setStatus(Response::HTTP_NOT_FOUND)
