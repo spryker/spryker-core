@@ -9,7 +9,18 @@ namespace Spryker\Zed\RestRequestValidator\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorBuilder;
 use Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorBuilderInterface;
+use Spryker\Zed\RestRequestValidator\Business\Cacher\RestRequestValidatorCacher;
+use Spryker\Zed\RestRequestValidator\Business\Cacher\RestRequestValidatorCacherInterface;
+use Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCollector;
+use Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCollectorInterface;
+use Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinder;
+use Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinderInterface;
+use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorMerger;
+use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorMergerInterface;
 
+/**
+ * @method \Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig getConfig()
+ */
 class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
 {
     /**
@@ -17,6 +28,45 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
      */
     public function createRestRequestValidatorBuilder(): RestRequestValidatorBuilderInterface
     {
-        return new RestRequestValidatorBuilder();
+        return new RestRequestValidatorBuilder(
+            $this->createValidatorCollector(),
+            $this->createValidatorMerger(),
+            $this->createValidatorCacher()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCollectorInterface
+     */
+    protected function createValidatorCollector(): RestRequestValidatorCollectorInterface
+    {
+        return new RestRequestValidatorCollector($this->createSchemaFinder());
+    }
+
+    /**
+     * @return \Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorMergerInterface
+     */
+    protected function createValidatorMerger(): RestRequestValidatorMergerInterface
+    {
+        return new RestRequestValidatorMerger();
+    }
+
+    /**
+     * @return \Spryker\Zed\RestRequestValidator\Business\Cacher\RestRequestValidatorCacherInterface
+     */
+    protected function createValidatorCacher(): RestRequestValidatorCacherInterface
+    {
+        return new RestRequestValidatorCacher($this->getConfig()->getValidationSchemaCacheFile());
+    }
+
+    /**
+     * @return \Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinderInterface
+     */
+    protected function createSchemaFinder(): RestRequestValidatorSchemaFinderInterface
+    {
+        return new RestRequestValidatorSchemaFinder(
+            $this->getConfig()->getValidationSchemaPathPattern(),
+            $this->getConfig()->getValidationSchemaFileNamePattern()
+        );
     }
 }

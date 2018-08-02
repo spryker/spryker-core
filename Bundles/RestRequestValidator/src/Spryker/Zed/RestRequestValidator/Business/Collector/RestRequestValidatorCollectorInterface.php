@@ -4,10 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\RestRequestValidator;
+namespace Spryker\Zed\RestRequestValidator\Business\Collector;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
-
-class RestRequestValidator extends AbstractBundleConfig
+interface RestRequestValidatorCollectorInterface
 {
+    /**
+     * @return array
+     */
+    public function collect(): array;
 }

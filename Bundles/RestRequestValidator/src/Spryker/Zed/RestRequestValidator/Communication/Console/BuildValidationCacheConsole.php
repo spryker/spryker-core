@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorFacadeInterface getFacade()
+ * @method \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorFacadeInterface getFacade()
  */
 class BuildValidationCacheConsole extends Console
 {
