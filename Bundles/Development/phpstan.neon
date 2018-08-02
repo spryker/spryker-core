@@ -1,11 +1,10 @@
 parameters:
-    bootstrap: ./phpstan-bootstrap.php
+    bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
     ignoreErrors:
     - '#Constant T_SEMICOLON not found.#'
     - '#Constant T_OPEN_PARENTHESIS not found.#'
     - '#Constant T_OPEN_SQUARE_BRACKET not found.#'
-    - '#PHP_CodeSniffer#'
 
 services:
     -
