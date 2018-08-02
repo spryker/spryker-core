@@ -206,20 +206,18 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         $companyBusinessUnitsCollection = $this->repository->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
         $companyBusinessUnits = (array)$companyBusinessUnitsCollection->getCompanyBusinessUnits();
 
-        static::$companyBusinessUnitIdCache[] = $businessUnitId;
+        static::$companyBusinessUnitIdCache[$businessUnitId] = $businessUnitId;
 
-        // deep cycle dependency like if A is the parent of B and B is the parent of C and C is the parent of D, then D cannot be the parent of B or A
-        if ($businessUnitId === $this->entryParentBusinessUnitId && in_array($parentBusinessUnitId, static::$companyBusinessUnitIdCache)) {
-            return true;
-        }
-
-        // no cycle dependency found
         if (!$businessUnitId) {
             return false;
         }
 
+        if ($this->isDeepCycleDependencyExists($businessUnitId, $parentBusinessUnitId)) {
+            return true;
+        }
+
         $companyBusinessUnit = array_filter($companyBusinessUnits, function ($companyBusinessUnit) use ($businessUnitId) {
-            return $companyBusinessUnit->getFkParentCompanyBusinessUnit() == $businessUnitId;
+            return (int)$companyBusinessUnit->getFkParentCompanyBusinessUnit() === $businessUnitId;
         });
 
         if (!empty($companyBusinessUnit)) {
@@ -229,11 +227,37 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
             $businessUnitId = $parentBusinessUnitId = null;
         }
 
-        // simple cycle dependency like if A is the parent of B then B cannot be the parent of A
-        if ($this->entryBusinessUnitId === $parentBusinessUnitId && $this->entryParentBusinessUnitId === $businessUnitId) {
+        if ($this->isSimpleCycleDependencyExist($businessUnitId, $parentBusinessUnitId)) {
             return true;
         }
 
         return $this->isCycleDependencyExists($businessUnitId, $parentBusinessUnitId);
+    }
+
+    /**
+     * Deep cycle dependency verification, like if A is the parent of B and B is the parent of C and C is
+     * the parent of D, then D cannot be the parent of B or A
+     *
+     * @param int $businessUnitId
+     * @param int $parentBusinessUnitId
+     *
+     * @return bool
+     */
+    protected function isDeepCycleDependencyExists($businessUnitId, $parentBusinessUnitId): bool
+    {
+        return $businessUnitId === $this->entryParentBusinessUnitId && isset(static::$companyBusinessUnitIdCache[$parentBusinessUnitId]);
+    }
+
+    /**
+     *  Simple cycle dependency verification, like if A is the parent of B then B cannot be the parent of A
+     *
+     * @param int $businessUnitId
+     * @param int $parentBusinessUnitId
+     *
+     * @return bool
+     */
+    protected function isSimpleCycleDependencyExist($businessUnitId, $parentBusinessUnitId): bool
+    {
+        return $this->entryBusinessUnitId === $parentBusinessUnitId && $this->entryParentBusinessUnitId === $businessUnitId;
     }
 }
