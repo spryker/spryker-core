@@ -22,16 +22,13 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param int $idMerchantRelationship
-     *
-     * @throws \Spryker\Zed\MerchantRelationship\Business\Exception\MerchantRelationshipNotFoundException
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
     public function getMerchantRelationshipById(int $idMerchantRelationship): ?MerchantRelationshipTransfer
     {
+        /** @var \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship|null $spyMerchantRelation */
         $spyMerchantRelation = $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->filterByIdMerchantRelationship($idMerchantRelationship)
@@ -48,8 +45,6 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @param int $idMerchantRelationship
      *
@@ -68,8 +63,6 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param string $candidate
      *
      * @return bool
@@ -85,8 +78,6 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @return int
      */
     public function getMaxMerchantRelationshipId(): int
@@ -101,5 +92,37 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
                 static::COL_MAX_ID,
             ])
             ->findOne();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     */
+    public function getAssignedMerchantRelationshipsByIdCompanyBusinessUnit(int $idCompanyBusinessUnit): array
+    {
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship[] $merchantRelationshipEntities */
+        $merchantRelationshipEntities = $this->getFactory()
+            ->createMerchantRelationshipQuery()
+            ->useSpyMerchantRelationshipToCompanyBusinessUnitQuery()
+                ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->endUse()
+            ->find();
+
+        if ($merchantRelationshipEntities->isEmpty()) {
+            return [];
+        }
+
+        $merchantRelationshipCollection = [];
+
+        foreach ($merchantRelationshipEntities as $merchantRelationshipEntity) {
+            $merchantRelationshipCollection[] = $this->getFactory()
+                ->createPropelMerchantRelationshipMapper()
+                ->mapEntityToMerchantRelationshipTransfer($merchantRelationshipEntity, new MerchantRelationshipTransfer());
+        }
+
+        return $merchantRelationshipCollection;
     }
 }

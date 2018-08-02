@@ -17,7 +17,7 @@ interface UtilDateTimeServiceInterface
      *
      * @api
      *
-     * @param string $date
+     * @param \DateTime|string $date
      *
      * @return string
      */
@@ -29,7 +29,7 @@ interface UtilDateTimeServiceInterface
      *
      * @api
      *
-     * @param string $date
+     * @param \DateTime|string $date
      *
      * @return string
      */
@@ -41,7 +41,7 @@ interface UtilDateTimeServiceInterface
      *
      * @api
      *
-     * @param string $date
+     * @param \DateTime|string $date
      *
      * @return string
      */

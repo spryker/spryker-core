@@ -10,18 +10,22 @@ namespace Spryker\Zed\ShoppingList;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeBridge;
+use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeBridge;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPermissionFacadeBridge;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeBridge;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeBridge;
 
 class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+    public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_PERMISSION = 'FACADE_PERMISSION';
-    public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
     public const FACADE_PERSISTENT_CART = 'FACADE_PERSISTENT_CART';
 
     public const PLUGINS_ITEM_EXPANDER = 'PLUGINS_ITEM_EXPANDER';
+    public const PLUGINS_QUOTE_ITEM_EXPANDER = 'PLUGINS_QUOTE_ITEM_EXPANDER';
+    public const PLUGINS_ADD_ITEM_PRE_CHECK = 'PLUGINS_ADD_ITEM_PRE_CHECK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,6 +34,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = $this->addMessengerFacade($container);
         $container = $this->addProductFacade($container);
         $container = $this->addPermissionFacade($container);
         $container = $this->addPersistentCartFacade($container);
@@ -37,16 +42,10 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyUserFacade($container);
 
         $container = $this->addItemExpanderPlugins($container);
+        $container = $this->addQuoteItemExpanderPlugins($container);
+        $container = $this->addAddItemPreCheckPlugins($container);
 
         return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\ShoppingList\Dependency\Plugin\ItemExpanderPluginInterface[]
-     */
-    protected function getItemExpanderPlugins(): array
-    {
-        return [];
     }
 
     /**
@@ -110,6 +109,20 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addMessengerFacade(Container $container): Container
+    {
+        $container[static::FACADE_MESSENGER] = function (Container $container) {
+            return new ShoppingListToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addItemExpanderPlugins(Container $container): Container
     {
         $container[static::PLUGINS_ITEM_EXPANDER] = function () {
@@ -117,5 +130,57 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteItemExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_ITEM_EXPANDER] = function () {
+            return $this->getQuoteItemExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAddItemPreCheckPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_ADD_ITEM_PRE_CHECK] = function () {
+            return $this->getAddItemPreCheckPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
+     */
+    protected function getItemExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[]
+     */
+    protected function getAddItemPreCheckPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface[]
+     */
+    protected function getQuoteItemExpanderPlugins(): array
+    {
+        return [];
     }
 }

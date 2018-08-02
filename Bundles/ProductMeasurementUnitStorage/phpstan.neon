@@ -1,6 +1,5 @@
 parameters:
     ignoreErrors:
-        - '%Parameter #[0-9]* \$[a-zA-Z]* of method [a-zA-Z\\]*::[a-zA-Z]*\(\) expects [a-zA-Z\\\<\>\|]*, [a-zA-Z\\\<\>\|]* given.%'
 
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 

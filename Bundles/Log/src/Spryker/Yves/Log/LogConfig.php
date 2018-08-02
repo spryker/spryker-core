@@ -49,7 +49,7 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
+     * @return int|string
      */
     public function getLogLevel()
     {
