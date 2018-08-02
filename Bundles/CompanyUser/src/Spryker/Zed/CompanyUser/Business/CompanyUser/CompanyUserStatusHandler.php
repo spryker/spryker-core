@@ -55,11 +55,11 @@ class CompanyUserStatusHandler implements CompanyUserStatusHandlerInterface
             return $companyUserResponseTransfer;
         }
 
-        $companyUserTransfer->setIsActive(true);
-        $this->companyUserEntityManager->updateCompanyUserStatus($companyUserTransfer);
+        $existingCompanyUser->setIsActive(true);
+        $this->companyUserEntityManager->updateCompanyUserStatus($existingCompanyUser);
 
         return $companyUserResponseTransfer
-            ->setCompanyUser($companyUserTransfer)
+            ->setCompanyUser($existingCompanyUser)
             ->setIsSuccessful(true);
     }
 
@@ -82,11 +82,11 @@ class CompanyUserStatusHandler implements CompanyUserStatusHandlerInterface
             return $companyUserResponseTransfer;
         }
 
-        $companyUserTransfer->setIsActive(false);
-        $this->companyUserEntityManager->updateCompanyUserStatus($companyUserTransfer);
+        $existingCompanyUser->setIsActive(false);
+        $this->companyUserEntityManager->updateCompanyUserStatus($existingCompanyUser);
 
         return $companyUserResponseTransfer
-            ->setCompanyUser($companyUserTransfer)
+            ->setCompanyUser($existingCompanyUser)
             ->setIsSuccessful(true);
     }
 }
