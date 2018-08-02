@@ -16,9 +16,9 @@ interface AgentStubInterface
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer|null
      */
-    public function findAgentByUsername(UserTransfer $userTransfer): UserTransfer;
+    public function findAgentByUsername(UserTransfer $userTransfer): ?UserTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer

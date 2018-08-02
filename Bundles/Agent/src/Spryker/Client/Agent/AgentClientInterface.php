@@ -16,15 +16,15 @@ interface AgentClientInterface
     /**
      * Specification:
      * - Returns UserTransfer with an agent.
-     * - If username is not exist, an empty transfer will be returned.
+     * - If username is not exist, null will be returned.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer|null
      */
-    public function findAgentByUsername(UserTransfer $userTransfer): UserTransfer;
+    public function findAgentByUsername(UserTransfer $userTransfer): ?UserTransfer;
 
     /**
      * Specification:
@@ -44,7 +44,7 @@ interface AgentClientInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
      */
-    public function getAgent(): ?UserTransfer;
+    public function findLoggedInAgent(): ?UserTransfer;
 
     /**
      * Specification:

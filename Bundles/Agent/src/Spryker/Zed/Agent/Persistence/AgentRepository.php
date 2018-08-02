@@ -10,20 +10,22 @@ namespace Spryker\Zed\Agent\Persistence;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Orm\Zed\User\Persistence\SpyUserQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
+/**
+ * @method \Spryker\Zed\Agent\Persistence\AgentPersistenceFactory getFactory()
+ */
 class AgentRepository extends AbstractRepository implements AgentRepositoryInterface
 {
     /**
      * @param string $username
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer|null
      */
-    public function findAgentByUsername(string $username): UserTransfer
+    public function findAgentByUsername(string $username): ?UserTransfer
     {
-        $userEntity = SpyUserQuery::create()
+        $userEntity = $this->getFactory()
+            ->getUserQuery()
             ->filterByIsAgent(true)
             ->filterByUsername($username)
             ->findOne();
@@ -31,7 +33,7 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
         $userTransfer = new UserTransfer();
 
         if ($userEntity === null) {
-            return $userTransfer;
+            return null;
         }
 
         return $userTransfer->fromArray($userEntity->toArray(), true);
@@ -47,7 +49,8 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
     {
         $queryPattern = $query . '%';
 
-        $customers = SpyCustomerQuery::create()
+        $customers = $this->getFactory()
+            ->getCustomerQuery()
             ->select([
                 SpyCustomerTableMap::COL_ID_CUSTOMER,
                 SpyCustomerTableMap::COL_FIRST_NAME,

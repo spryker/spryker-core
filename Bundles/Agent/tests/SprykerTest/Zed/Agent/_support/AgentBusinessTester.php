@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Agent;
 
 use Codeception\Actor;
+use Spryker\Zed\Agent\Business\AgentFacadeInterface;
 
 /**
  * Inherited Methods
@@ -31,4 +32,15 @@ class AgentBusinessTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return \Spryker\Zed\Agent\Business\AgentFacadeInterface
+     */
+    public function getAgentFacade(): AgentFacadeInterface
+    {
+        /** @var \Spryker\Zed\Agent\Business\AgentFacadeInterface $facade */
+        $facade = $this->getFacade();
+
+        return $facade;
+    }
 }

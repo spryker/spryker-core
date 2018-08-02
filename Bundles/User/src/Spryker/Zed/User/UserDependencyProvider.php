@@ -14,6 +14,7 @@ use Spryker\Zed\User\Dependency\Plugin\GroupPlugin;
 class UserDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_GROUP = 'group plugin';
+    public const PLUGINS_USERS_TABLE_EXTENDER = 'PLUGINS_USERS_TABLE_EXTENDER';
     public const PLUGINS_USER_TABLE_ACTION_EXPANDER = 'PLUGINS_USERS_TABLE_ACTION_EXPANDER';
     public const PLUGINS_USER_TABLE_CONFIG_EXPANDER = 'PLUGINS_USER_TABLE_CONFIG_EXPANDER';
     public const PLUGINS_USER_TABLE_DATA_EXPANDER = 'PLUGINS_USER_TABLE_DATA_EXPANDER';
@@ -48,6 +49,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUserTableConfigExpanderPlugins($container);
         $container = $this->addUserTableDataExpanderPlugins($container);
         $container = $this->addUserFormExpanderPlugins($container);
+        $container = $this->addUsersTableExtenderPlugins($container);
 
         return $container;
     }
@@ -101,17 +103,40 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserTableActionExpanderPlugins(Container $container)
     {
-        $container[static::PLUGINS_USER_TABLE_ACTION_EXPANDER] = function (Container $container) {
-            return $this->getUserTableActionExpanderPlugins();
+        $container[static::PLUGINS_USER_TABLE_ACTION_EXPANDER] = function () {
+            return array_merge(
+                $this->getUserTableActionExpanderPlugins(),
+                $this->getUsersTableExtenderPlugins()
+            );
         };
 
         return $container;
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUsersTableExtenderPlugins(Container $container)
+    {
+        return $this->addUserTableActionExpanderPlugins($container);
+    }
+
+    /**
      * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInterface[]
      */
     protected function getUserTableActionExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Use \Spryker\Zed\User\UserDependencyProvider::getUserTableActionExpanderPlugins instead.
+     *
+     * @return \Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface[]
+     */
+    protected function getUsersTableExtenderPlugins()
     {
         return [];
     }

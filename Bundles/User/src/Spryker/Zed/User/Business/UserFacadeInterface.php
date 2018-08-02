@@ -79,7 +79,8 @@ interface UserFacadeInterface
 
     /**
      * Specification:
-     *  - Creates user from user transfer
+     *  - Creates user from user transfer.
+     *  - Executes user post save plugins.
      *  - Throws exception if username exist.
      *
      * @api

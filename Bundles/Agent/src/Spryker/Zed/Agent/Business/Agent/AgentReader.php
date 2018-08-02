@@ -28,9 +28,9 @@ class AgentReader implements AgentReaderInterface
     /**
      * @param string $username
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @return \Generated\Shared\Transfer\UserTransfer|null
      */
-    public function findAgentByUsername(string $username): UserTransfer
+    public function findAgentByUsername(string $username): ?UserTransfer
     {
         return $this->agentRepository->findAgentByUsername($username);
     }

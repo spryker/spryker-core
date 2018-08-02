@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CollectionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Orm\Zed\User\Persistence\SpyUser;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\User\Business\Exception\UsernameExistsException;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
@@ -40,6 +41,8 @@ class User implements UserInterface
      * @var \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface[]
      */
     protected $userPostSavePlugins;
+
+    use TransactionTrait;
 
     /**
      * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $queryContainer
@@ -131,6 +134,18 @@ class User implements UserInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function save(UserTransfer $userTransfer)
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($userTransfer): UserTransfer {
+            return $this->executeSaveTransaction($userTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function executeSaveTransaction(UserTransfer $userTransfer): UserTransfer
     {
         if ($userTransfer->getIdUser() !== null) {
             $userEntity = $this->getEntityUserById($userTransfer->getIdUser());
