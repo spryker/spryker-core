@@ -40,7 +40,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     /**
      * @var int[]
      */
-    protected static $companyBusinessUnitIdCache = [];
+    protected static $companyBusinessUnitIdCollection = [];
 
     /**
      * @var int
@@ -206,7 +206,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         $companyBusinessUnitsCollection = $this->repository->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
         $companyBusinessUnits = (array)$companyBusinessUnitsCollection->getCompanyBusinessUnits();
 
-        static::$companyBusinessUnitIdCache[$businessUnitId] = $businessUnitId;
+        static::$companyBusinessUnitIdCollection[$businessUnitId] = $businessUnitId;
 
         if (!$businessUnitId) {
             return false;
@@ -245,7 +245,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
      */
     protected function isDeepCycleDependencyExists($businessUnitId, $parentBusinessUnitId): bool
     {
-        return $businessUnitId === $this->entryParentBusinessUnitId && isset(static::$companyBusinessUnitIdCache[$parentBusinessUnitId]);
+        return $businessUnitId === $this->entryParentBusinessUnitId && isset(static::$companyBusinessUnitIdCollection[$parentBusinessUnitId]);
     }
 
     /**
