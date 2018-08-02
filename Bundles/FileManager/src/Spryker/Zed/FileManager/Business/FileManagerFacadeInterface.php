@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
 
+/**
+ * @method \Spryker\Zed\FileManager\Business\FileManagerBusinessFactory getFactory()
+ */
 interface FileManagerFacadeInterface
 {
     /**
