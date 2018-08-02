@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Cacher;
 
+use Spryker\Zed\RestRequestValidator\Business\Exception\SchemaCouldNotBeWritten;
 use Symfony\Component\Yaml\Yaml;
 
 class RestRequestValidatorCacher implements RestRequestValidatorCacherInterface
@@ -26,10 +27,27 @@ class RestRequestValidatorCacher implements RestRequestValidatorCacherInterface
     /**
      * @param array $validatorConfig
      *
+     * @throws \Spryker\Zed\RestRequestValidator\Business\Exception\SchemaCouldNotBeWritten
+     *
      * @return void
      */
     public function store(array $validatorConfig): void
     {
+        if (!$this->checkPathExistsOrCreate($this->cacheFile)) {
+            throw new SchemaCouldNotBeWritten(
+                'Could not write schema validation cache. Please check the paths are writable.'
+            );
+        }
         file_put_contents($this->cacheFile, Yaml::dump($validatorConfig));
+    }
+
+    /**
+     * @param string $cacheFile
+     *
+     * @return bool
+     */
+    protected function checkPathExistsOrCreate(string $cacheFile): bool
+    {
+        return true;
     }
 }
