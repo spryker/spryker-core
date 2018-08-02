@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MinimumOrderValue\Business;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -39,19 +40,19 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyInvalidArgumentException
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
      */
-    public function setStoreThreshold(
-        MinimumOrderValueTransfer $minimumOrderValueTransfer
-    ): MinimumOrderValueTransfer {
+    public function setGlobalThreshold(
+        GlobalMinimumOrderValueTransfer $minimumOrderValueTransfer
+    ): GlobalMinimumOrderValueTransfer {
         return $this->getFactory()
             ->createStoreThresholdWriter()
-            ->setStoreThreshold($minimumOrderValueTransfer);
+            ->setGlobalThreshold($minimumOrderValueTransfer);
     }
 
     /**
@@ -63,7 +64,7 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
      */
     public function getMinimumOrderValueTypeByKey(
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
@@ -81,7 +82,7 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer[]
      */
     public function getGlobalThresholdsByStoreAndCurrency(
         StoreTransfer $storeTransfer,
@@ -106,10 +107,9 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
     public function isStrategyValid(
         MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): bool {
-        $minimumOrderValueStrategy = $this->getFactory()
+        return $this->getFactory()
             ->createMinimumOrderValueStrategyResolver()
-            ->resolveMinimumOrderValueStrategy($minimumOrderValueTransfer->getMinimumOrderValueType()->getKey());
-
-        return $minimumOrderValueStrategy->isValid($minimumOrderValueTransfer->getValue(), $minimumOrderValueTransfer->getFee());
+            ->resolveMinimumOrderValueStrategy($minimumOrderValueTransfer->getMinimumOrderValueType()->getKey())
+            ->isValid($minimumOrderValueTransfer);
     }
 }

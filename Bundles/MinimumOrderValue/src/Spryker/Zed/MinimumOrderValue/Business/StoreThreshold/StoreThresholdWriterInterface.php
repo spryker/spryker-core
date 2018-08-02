@@ -7,18 +7,18 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business\StoreThreshold;
 
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 
 interface StoreThresholdWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
      */
-    public function setStoreThreshold(
-        MinimumOrderValueTransfer $minimumOrderValueTransfer
-    ): MinimumOrderValueTransfer;
+    public function setGlobalThreshold(
+        GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+    ): GlobalMinimumOrderValueTransfer;
 }

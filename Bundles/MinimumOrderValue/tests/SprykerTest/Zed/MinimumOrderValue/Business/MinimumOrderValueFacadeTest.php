@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MinimumOrderValue\Business;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -69,8 +70,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         $currencyTransferUSD = (new CurrencyTransfer())->setIdCurrency(2)->setCode('USD');
 
         // Action
-        $hardThreshold1 = $this->getFacade()->setStoreThreshold(
-            $this->createMinimumOrderValueTransfer(
+        $hardThreshold1 = $this->getFacade()->setGlobalThreshold(
+            $this->createGlobalMinimumOrderValueTransfer(
                 $minimumOrderValueHardTypeTransfer,
                 $storeTransferDE,
                 $currencyTransferEUR,
@@ -78,8 +79,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
             )
         );
 
-        $hardThreshold2 = $this->getFacade()->setStoreThreshold(
-            $this->createMinimumOrderValueTransfer(
+        $hardThreshold2 = $this->getFacade()->setGlobalThreshold(
+            $this->createGlobalMinimumOrderValueTransfer(
                 $minimumOrderValueHardTypeTransfer,
                 $storeTransferDE,
                 $currencyTransferEUR,
@@ -87,8 +88,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
             )
         );
 
-        $softThreshold1 = $this->getFacade()->setStoreThreshold(
-            $this->createMinimumOrderValueTransfer(
+        $softThreshold1 = $this->getFacade()->setGlobalThreshold(
+            $this->createGlobalMinimumOrderValueTransfer(
                 $minimumOrderValueSoftStrategy,
                 $storeTransferDE,
                 $currencyTransferEUR,
@@ -96,8 +97,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
             )
         );
 
-        $softThreshold2 = $this->getFacade()->setStoreThreshold(
-            $this->createMinimumOrderValueTransfer(
+        $softThreshold2 = $this->getFacade()->setGlobalThreshold(
+            $this->createGlobalMinimumOrderValueTransfer(
                 $minimumOrderValueSoftStrategy,
                 $storeTransferUS,
                 $currencyTransferEUR,
@@ -105,8 +106,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
             )
         );
 
-        $softThreshold3 = $this->getFacade()->setStoreThreshold(
-            $this->createMinimumOrderValueTransfer(
+        $softThreshold3 = $this->getFacade()->setGlobalThreshold(
+            $this->createGlobalMinimumOrderValueTransfer(
                 $minimumOrderValueSoftStrategy,
                 $storeTransferUS,
                 $currencyTransferUSD,
@@ -114,6 +115,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
             )
         );
 
+        // Assert
         $this->assertEquals($hardThreshold1->getIdMinimumOrderValue(), $hardThreshold2->getIdMinimumOrderValue());
         $this->assertNotEquals($hardThreshold1->getIdMinimumOrderValue(), $softThreshold1->getIdMinimumOrderValue());
         $this->assertNotEquals($softThreshold1->getIdMinimumOrderValue(), $softThreshold2->getIdMinimumOrderValue());
@@ -128,12 +130,14 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
      */
     public function testSetStoreInvalidThresholdKeyThrowsException(): void
     {
+        // Prepare
         $storeTransferUS = (new StoreTransfer())->setIdStore(2)->setName('US');
         $currencyTransferUSD = (new CurrencyTransfer())->setIdCurrency(2)->setCode('USD');
         $minimumOrderValueTypeTransferWithWrongKey = (new MinimumOrderValueTypeTransfer())->setKey('xxxx');
 
-        $this->getFacade()->setStoreThreshold(
-            $this->createMinimumOrderValueTransfer(
+        // Action
+        $this->getFacade()->setGlobalThreshold(
+            $this->createGlobalMinimumOrderValueTransfer(
                 $minimumOrderValueTypeTransferWithWrongKey,
                 $storeTransferUS,
                 $currencyTransferUSD,
@@ -149,21 +153,23 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
      * @param int $thresholdValue
      * @param int|null $fee
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
      */
-    protected function createMinimumOrderValueTransfer(
+    protected function createGlobalMinimumOrderValueTransfer(
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
         int $thresholdValue,
         ?int $fee = null
-    ): MinimumOrderValueTransfer {
-        return (new MinimumOrderValueTransfer())
-            ->setMinimumOrderValueType($minimumOrderValueTypeTransfer)
-            ->setStore($storeTransfer)
-            ->setCurrency($currencyTransfer)
-            ->setValue($thresholdValue)
-            ->setFee($fee);
+    ): GlobalMinimumOrderValueTransfer {
+        return (new GlobalMinimumOrderValueTransfer())
+            ->setMinimumOrderValue(
+                (new MinimumOrderValueTransfer())
+                    ->setMinimumOrderValueType($minimumOrderValueTypeTransfer)
+                    ->setValue($thresholdValue)
+                    ->setFee($fee)
+            )->setStore($storeTransfer)
+            ->setCurrency($currencyTransfer);
     }
 
     /**

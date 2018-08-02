@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MinimumOrderValue\Persistence\Propel\Mapper;
 
 use ArrayObject;
+use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
@@ -35,30 +36,32 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
 
     /**
      * @param \Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValue $minimumOrderValueEntity
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
      */
-    public function mapMinimumOrderValueEntityToTransfer(
+    public function mapGlobalMinimumOrderValueEntityToTransfer(
         SpyMinimumOrderValue $minimumOrderValueEntity,
-        MinimumOrderValueTransfer $minimumOrderValueTransfer
-    ): MinimumOrderValueTransfer {
-        $minimumOrderValueTransfer->fromArray($minimumOrderValueEntity->toArray(), true)
-            ->setIdMinimumOrderValue($minimumOrderValueEntity->getIdMinOrderValue());
+        GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+    ): GlobalMinimumOrderValueTransfer {
+        $globalMinimumOrderValueTransfer->fromArray($minimumOrderValueEntity->toArray(), true)
+            ->setMinimumOrderValue(
+                (new MinimumOrderValueTransfer())->fromArray($minimumOrderValueEntity->toArray(), true)
+            )->setIdMinimumOrderValue($minimumOrderValueEntity->getIdMinOrderValue());
 
-        if (!$minimumOrderValueTransfer->getMinimumOrderValueType()) {
-            $minimumOrderValueTransfer->setMinimumOrderValueType(new MinimumOrderValueTypeTransfer());
+        if (!$globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()) {
+            $globalMinimumOrderValueTransfer->getMinimumOrderValue()->setMinimumOrderValueType(new MinimumOrderValueTypeTransfer());
         }
-        $minimumOrderValueTransfer->setMinimumOrderValueType(
-            $minimumOrderValueTransfer->getMinimumOrderValueType()->fromArray(
+        $globalMinimumOrderValueTransfer->getMinimumOrderValue()->setMinimumOrderValueType(
+            $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()->fromArray(
                 $minimumOrderValueEntity->getMinimumOrderValueType()->toArray(),
                 true
             )
         );
 
-        $minimumOrderValueTransfer->setLocalizedMessages(new ArrayObject());
+        $globalMinimumOrderValueTransfer->getMinimumOrderValue()->setLocalizedMessages(new ArrayObject());
         foreach ($minimumOrderValueEntity->getSpyMinimumOrderValueLocalizedMessages() as $minimumOrderValueLocalizedMessageEntity) {
-            $minimumOrderValueTransfer->addLocalizedMessage(
+            $globalMinimumOrderValueTransfer->getMinimumOrderValue()->addLocalizedMessage(
                 (new MinimumOrderValueLocalizedMessageTransfer())->fromArray(
                     $minimumOrderValueLocalizedMessageEntity->toArray(),
                     true
@@ -66,6 +69,6 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
             );
         }
 
-        return $minimumOrderValueTransfer;
+        return $globalMinimumOrderValueTransfer;
     }
 }

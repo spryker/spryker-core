@@ -30,8 +30,8 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
 
         $merchantRelationshipTransfer = $merchantRelationshipMinimumOrderValueTransfer->getMerchantRelationship();
         $minimumOrderValueTypeTransfer = $minimumOrderValueTransfer->getMinimumOrderValueType();
-        $storeTransfer = $minimumOrderValueTransfer->getStore();
-        $currencyTransfer = $minimumOrderValueTransfer->getCurrency();
+        $storeTransfer = $merchantRelationshipMinimumOrderValueTransfer->getStore();
+        $currencyTransfer = $merchantRelationshipMinimumOrderValueTransfer->getCurrency();
 
         $merchantRelationshipMinimumOrderValueEntity = $this->getFactory()
             ->createMerchantRelationshipMinimumOrderValueQuery()
@@ -74,6 +74,8 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
     protected function assertRequiredAttributes(MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): void
     {
         $merchantRelationshipMinimumOrderValueTransfer
+            ->requireStore()
+            ->requireCurrency()
             ->requireMerchantRelationship()
             ->requireMinimumOrderValue();
 
@@ -82,14 +84,12 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
 
         $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()
             ->requireMinimumOrderValueType()
-            ->requireStore()
-            ->requireCurrency()
             ->requireValue();
 
-        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getStore()
+        $merchantRelationshipMinimumOrderValueTransfer->getStore()
             ->requireIdStore();
 
-        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getCurrency()
+        $merchantRelationshipMinimumOrderValueTransfer->getCurrency()
             ->getIdCurrency();
 
         $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()
