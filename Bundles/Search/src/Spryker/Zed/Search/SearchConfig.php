@@ -15,6 +15,7 @@ class SearchConfig extends AbstractBundleConfig
     protected const BLACKLIST_SETTINGS_FOR_INDEX_UPDATE = [
         'index.number_of_shards',
         'index.routing_partition_size',
+        'analysis',
     ];
 
     protected const STATIC_INDEX_SETTINGS = [
@@ -22,7 +23,6 @@ class SearchConfig extends AbstractBundleConfig
         'index.shard.check_on_startup',
         'index.codec',
         'index.routing_partition_size',
-        'analysis',
     ];
 
     protected const DYNAMIC_INDEX_SETTINGS = [

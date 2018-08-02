@@ -236,17 +236,19 @@ class IndexInstaller implements SearchInstallerInterface
      */
     protected function filterSettingsByIndexState(string $indexState, array $settings): array
     {
-        $notUpdatableIndexes = [];
+        $notUpdatableIndexSettings = [];
 
         if ($indexState === SearchConfig::INDEX_OPEN_STATE) {
-            $notUpdatableIndexes = $this->searchConfig->getStaticIndexSettings();
+            $notUpdatableIndexSettings = $this->searchConfig->getStaticIndexSettings();
+            $this->messenger->info('Index is open, updating dynamic settings.');
         }
 
         if ($indexState === SearchConfig::INDEX_CLOSE_STATE) {
-            $notUpdatableIndexes = $this->searchConfig->getDynamicIndexSettings();
+            $notUpdatableIndexSettings = $this->searchConfig->getDynamicIndexSettings();
+            $this->messenger->info('Index is closed, updating static settings.');
         }
 
-        foreach ($notUpdatableIndexes as $notUpdatableIndexSettingPath) {
+        foreach ($notUpdatableIndexSettings as $notUpdatableIndexSettingPath) {
             $settings = $this->removeSettingPath($settings, $notUpdatableIndexSettingPath);
         }
 
