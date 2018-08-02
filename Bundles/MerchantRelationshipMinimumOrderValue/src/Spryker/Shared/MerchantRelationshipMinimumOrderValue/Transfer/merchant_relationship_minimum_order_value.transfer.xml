@@ -7,5 +7,7 @@
         <property name="idMerchantRelationshipMinimumOrderValue" type="int"/>
         <property name="merchantRelationship" type="MerchantRelationship"/>
         <property name="minimumOrderValue" type="MinimumOrderValue"/>
+        <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 </transfers>
