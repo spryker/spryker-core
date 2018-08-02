@@ -146,7 +146,7 @@ class Builder implements BuilderInterface
     protected function recursiveMerge($fromXmlElement, $intoXmlNode, $prefix = null)
     {
         $xmlElements = $fromXmlElement->children();
-        if (!isset($xmlElements)) {
+        if (!$xmlElements) {
             return;
         }
 

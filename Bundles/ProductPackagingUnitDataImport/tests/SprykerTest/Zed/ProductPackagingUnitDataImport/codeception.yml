@@ -25,5 +25,6 @@ suites:
              - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
              - \SprykerTest\Shared\Propel\Helper\TransactionHelper
              - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+             - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitTypeHelper
              - \SprykerTest\Zed\ProductPackagingUnitDataImport\Helper\ProductPackagingUnitTypeDataImportHelper
              - \SprykerTest\Zed\ProductPackagingUnitDataImport\Helper\ProductPackagingUnitDataImportHelper
