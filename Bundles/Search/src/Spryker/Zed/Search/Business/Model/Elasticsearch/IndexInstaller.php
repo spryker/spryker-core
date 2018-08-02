@@ -89,6 +89,7 @@ class IndexInstaller implements SearchInstallerInterface
             $this->importMappingsToNewIndex($indexDefinitionTransfer, $index);
         } else {
             $this->importMappingsToExistingIndex($indexDefinitionTransfer, $index);
+            $this->updateIndexSettings($indexDefinitionTransfer, $index);
         }
     }
 
@@ -186,15 +187,30 @@ class IndexInstaller implements SearchInstallerInterface
         foreach ($indexDefinitionTransfer->getMappings() as $mappingName => $mappingData) {
             $this->sendMapping($index, $mappingName, $mappingData);
         }
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer $indexDefinitionTransfer
+     * @param \Elastica\Index $index
+     *
+     * @return void
+     */
+    protected function updateIndexSettings(
+        ElasticsearchIndexDefinitionTransfer $indexDefinitionTransfer,
+        Index $index
+    ): void {
         $settings = $indexDefinitionTransfer->getSettings();
         $indexState = $this->getIndexState($index);
-        if ($settings) {
-            $settings = $this->filterSettingsByIndexState($indexState, $settings);
-            $settings = $this->removeBlacklistedSettings($settings);
-            if ($this->existSettingsForUpdate($settings)) {
-                $index->setSettings($settings);
-            }
+
+        if (!$settings) {
+            return;
+        }
+
+        $settings = $this->filterSettingsByIndexState($indexState, $settings);
+        $settings = $this->removeBlacklistedSettings($settings);
+
+        if ($this->isSettingsForUpdateExists($settings)) {
+            $index->setSettings($settings);
         }
     }
 
@@ -203,7 +219,7 @@ class IndexInstaller implements SearchInstallerInterface
      *
      * @return bool
      */
-    protected function existSettingsForUpdate(array $settings): bool
+    protected function isSettingsForUpdateExists(array $settings): bool
     {
         $settings = array_filter($settings, function ($setting) {
             return !empty($setting);
@@ -223,11 +239,11 @@ class IndexInstaller implements SearchInstallerInterface
         $notUpdatableIndexes = [];
 
         if ($indexState === SearchConfig::INDEX_OPEN_STATE) {
-            $notUpdatableIndexes = $this->searchConfig->getStaticIndexes();
+            $notUpdatableIndexes = $this->searchConfig->getStaticIndexSettings();
         }
 
         if ($indexState === SearchConfig::INDEX_CLOSE_STATE) {
-            $notUpdatableIndexes = $this->searchConfig->getDynamicIndexes();
+            $notUpdatableIndexes = $this->searchConfig->getDynamicIndexSettings();
         }
 
         foreach ($notUpdatableIndexes as $notUpdatableIndexSettingPath) {

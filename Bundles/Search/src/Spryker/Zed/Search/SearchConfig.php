@@ -15,17 +15,17 @@ class SearchConfig extends AbstractBundleConfig
     protected const BLACKLIST_SETTINGS_FOR_INDEX_UPDATE = [
         'index.number_of_shards',
         'index.routing_partition_size',
-        'analysis',
     ];
 
-    protected const STATIC_INDEXES = [
+    protected const STATIC_INDEX_SETTINGS = [
         'index.number_of_shards',
         'index.shard.check_on_startup',
         'index.codec',
         'index.routing_partition_size',
+        'analysis',
     ];
 
-    protected const DYNAMIC_INDEXES = [
+    protected const DYNAMIC_INDEX_SETTINGS = [
         'index.number_of_replicas',
         'index.auto_expand_replicas',
         'index.refresh_interval',
@@ -109,17 +109,17 @@ class SearchConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getDynamicIndexes()
+    public function getStaticIndexSettings()
     {
-        return static::DYNAMIC_INDEXES;
+        return static::STATIC_INDEX_SETTINGS;
     }
 
     /**
      * @return string[]
      */
-    public function getStaticIndexes()
+    public function getDynamicIndexSettings()
     {
-        return static::STATIC_INDEXES;
+        return static::DYNAMIC_INDEX_SETTINGS;
     }
 
     /**
