@@ -27,6 +27,10 @@ use TypeError;
  */
 class CompanyUserFacadeTest extends Test
 {
+    protected const CUSTOMER_FIELD_CUSTOMER_TRANSFER = 'customer';
+    protected const FK_COMPANY_FIELD_CUSTOMER_TRANSFER = 'fk_company';
+    protected const IS_ACTIVE_FIELD_CUSTOMER_TRANSFER = 'is_active';
+
     /**
      * @var \SprykerTest\Zed\CompanyUser\CompanyUserBusinessTester
      */
@@ -282,11 +286,14 @@ class CompanyUserFacadeTest extends Test
      */
     public function testEnableCompanyUser(): void
     {
+        // Arrange
         $companyUserTransfer = $this->getCompanyUserTransfer(false);
 
+        // Act
         $companyUserResponseTransfer = $this->getFacade()
             ->enableCompanyUser($companyUserTransfer);
 
+        // Assert
         $this->assertTrue($companyUserResponseTransfer->getIsSuccessful());
     }
 
@@ -295,11 +302,14 @@ class CompanyUserFacadeTest extends Test
      */
     public function testActiveCompanyUserCannotBeEnabled(): void
     {
+        // Arrange
         $companyUserTransfer = $this->getCompanyUserTransfer();
 
+        // Act
         $companyUserResponseTransfer = $this->getFacade()
             ->enableCompanyUser($companyUserTransfer);
 
+        // Assert
         $this->assertFalse($companyUserResponseTransfer->getIsSuccessful());
     }
 
@@ -308,11 +318,14 @@ class CompanyUserFacadeTest extends Test
      */
     public function testDisableCompanyUser(): void
     {
+        // Arrange
         $companyUserTransfer = $this->getCompanyUserTransfer();
 
+        // Act
         $companyUserResponseTransfer = $this->getFacade()
             ->disableCompanyUser($companyUserTransfer);
 
+        // Assert
         $this->assertTrue($companyUserResponseTransfer->getIsSuccessful());
     }
 
@@ -321,11 +334,14 @@ class CompanyUserFacadeTest extends Test
      */
     public function testInactiveCompanyUserCannotBeDisabled(): void
     {
+        // Arrange
         $companyUserTransfer = $this->getCompanyUserTransfer(false);
 
+        // Act
         $companyUserResponseTransfer = $this->getFacade()
             ->disableCompanyUser($companyUserTransfer);
 
+        // Assert
         $this->assertFalse($companyUserResponseTransfer->getIsSuccessful());
     }
 
@@ -340,9 +356,9 @@ class CompanyUserFacadeTest extends Test
         $customerTransfer = $this->tester->haveCustomer();
 
         return $this->tester->haveCompanyUser([
-            'customer' => $customerTransfer,
-            'fk_company' => $companyTransfer->getIdCompany(),
-            'is_active' => $isActive,
+            static::CUSTOMER_FIELD_CUSTOMER_TRANSFER => $customerTransfer,
+            static::FK_COMPANY_FIELD_CUSTOMER_TRANSFER => $companyTransfer->getIdCompany(),
+            static::IS_ACTIVE_FIELD_CUSTOMER_TRANSFER => $isActive,
         ]);
     }
 

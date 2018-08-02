@@ -132,13 +132,11 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      */
     public function findCompanyUserByIdCompanyUser(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer
     {
-        $query = $this->getFactory()
+        $companyUserEntityTransfer = $this->getFactory()
             ->createCompanyUserQuery()
             ->filterByIdCompanyUser(
                 $companyUserTransfer->getIdCompanyUser()
-            );
-
-        $companyUserEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+            )->findOne();
 
         if (!$companyUserEntityTransfer) {
             return null;
@@ -146,7 +144,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
 
         return $this->getFactory()
             ->createCompanyUserMapper()
-            ->mapEntityTransferToCompanyUserTransfer($companyUserEntityTransfer);
+            ->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntityTransfer);
     }
 
     /**
