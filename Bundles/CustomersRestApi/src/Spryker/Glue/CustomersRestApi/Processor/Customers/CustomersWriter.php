@@ -6,7 +6,6 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
-use Throwable;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -16,6 +15,7 @@ use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterf
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 class CustomersWriter implements CustomersWriterInterface
 {
