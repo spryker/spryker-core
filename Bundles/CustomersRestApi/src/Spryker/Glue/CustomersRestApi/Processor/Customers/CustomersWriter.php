@@ -6,7 +6,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
-use Exception;
+use Throwable;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -67,7 +67,7 @@ class CustomersWriter implements CustomersWriterInterface
             if (!$customerResponseTransfer->getIsSuccess()) {
                 return $this->createErrorResponse($customerResponseTransfer, $response);
             }
-        } catch (Exception $ex) {
+        } catch (Throwable $ex) {
             return $response->addError($this->createErrorCustomerCantRegisterCustomer());
         }
         $restResource = $this->customersResourceMapper->mapCustomerToCustomersRestResource($customerResponseTransfer->getCustomerTransfer());

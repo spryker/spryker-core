@@ -27,9 +27,6 @@
         <property name="gender" type="string" />
         <property name="dateOfBirth" type="string" />
         <property name="salutation" type="string" />
-        <property name="createdAt" type="string" />
-        <property name="updatedAt" type="string" />
-        <property name="registered" type="string" />
     </transfer>
 
 </transfers>
