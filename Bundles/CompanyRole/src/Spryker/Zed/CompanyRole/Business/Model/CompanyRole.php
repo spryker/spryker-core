@@ -12,8 +12,10 @@ use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Zed\CompanyRole\CompanyRoleConfig;
+use Spryker\Zed\CompanyRole\Dependency\Facade\CompanyRoleToPermissionFacadeInterface;
 use Spryker\Zed\CompanyRole\Persistence\CompanyRoleEntityManagerInterface;
 use Spryker\Zed\CompanyRole\Persistence\CompanyRoleRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -45,21 +47,29 @@ class CompanyRole implements CompanyRoleInterface
     protected $companyRoleConfig;
 
     /**
+     * @var \Spryker\Zed\CompanyRole\Dependency\Facade\CompanyRoleToPermissionFacadeInterface
+     */
+    protected $permissionFacade;
+
+    /**
      * @param \Spryker\Zed\CompanyRole\Persistence\CompanyRoleRepositoryInterface $repository
      * @param \Spryker\Zed\CompanyRole\Persistence\CompanyRoleEntityManagerInterface $entityManager
      * @param \Spryker\Zed\CompanyRole\Business\Model\CompanyRolePermissionWriterInterface $permissionWriter
      * @param \Spryker\Zed\CompanyRole\CompanyRoleConfig $companyRoleConfig
+     * @param \Spryker\Zed\CompanyRole\Dependency\Facade\CompanyRoleToPermissionFacadeInterface $permissionFacade
      */
     public function __construct(
         CompanyRoleRepositoryInterface $repository,
         CompanyRoleEntityManagerInterface $entityManager,
         CompanyRolePermissionWriterInterface $permissionWriter,
-        CompanyRoleConfig $companyRoleConfig
+        CompanyRoleConfig $companyRoleConfig,
+        CompanyRoleToPermissionFacadeInterface $permissionFacade
     ) {
         $this->repository = $repository;
         $this->entityManager = $entityManager;
         $this->permissionWriter = $permissionWriter;
         $this->companyRoleConfig = $companyRoleConfig;
+        $this->permissionFacade = $permissionFacade;
     }
 
     /**
@@ -83,9 +93,19 @@ class CompanyRole implements CompanyRoleInterface
     {
         $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
 
+        foreach ($this->companyRoleConfig->getCompanyRoles() as $roleName => $rolePermissions) {
+            $roleTransfer = (new CompanyRoleTransfer())
+                ->setFkCompany($companyTransfer->getIdCompany())
+                ->setName($roleName)
+                ->setPermissionCollection($this->prepareCompanyRolePermissions($rolePermissions));
+
+            $this->create($roleTransfer);
+        }
+
         $companyRoleTransfer = (new CompanyRoleTransfer())
             ->setFkCompany($companyTransfer->getIdCompany())
             ->setName($this->companyRoleConfig->getDefaultAdminRoleName())
+            ->setPermissionCollection($this->prepareCompanyRolePermissions($this->companyRoleConfig->getAdminRolePermissions()))
             ->setIsDefault(true);
 
         $companyRoleResponseTransfer = $this->create($companyRoleTransfer);
@@ -99,6 +119,26 @@ class CompanyRole implements CompanyRoleInterface
         }
 
         return $companyResponseTransfer;
+    }
+
+    /**
+     * @param string[] $rolePermissions
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    protected function prepareCompanyRolePermissions(array $rolePermissions): PermissionCollectionTransfer
+    {
+        $allPermissions = $this->permissionFacade->findAll()->getPermissions();
+
+        $needPermissions = new PermissionCollectionTransfer();
+
+        foreach ($allPermissions as $permission) {
+            if (in_array($permission->getKey(), $rolePermissions)) {
+                $needPermissions->addPermission($permission);
+            }
+        }
+
+        return $needPermissions;
     }
 
     /**

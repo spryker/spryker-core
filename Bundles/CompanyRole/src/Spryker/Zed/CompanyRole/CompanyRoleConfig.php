@@ -11,11 +11,29 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CompanyRoleConfig extends AbstractBundleConfig
 {
+    protected const DEFAULT_ADMIN_ROLE_NAME = 'Administrator';
+
     /**
      * @return string
      */
     public function getDefaultAdminRoleName(): string
     {
-        return 'Admin';
+        return static::DEFAULT_ADMIN_ROLE_NAME;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAdminRolePermissions(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getCompanyRoles(): array
+    {
+        return [];
     }
 }
