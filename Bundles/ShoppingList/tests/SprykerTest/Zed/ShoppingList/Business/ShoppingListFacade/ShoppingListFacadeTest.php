@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
@@ -66,6 +67,11 @@ class ShoppingListFacadeTest extends Unit
     protected $readOnlyPermissionGroup;
 
     /**
+     * @var \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
+     */
+    protected $fullAccessPermissionGroup;
+
+    /**
      * @var \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     protected $product;
@@ -90,6 +96,12 @@ class ShoppingListFacadeTest extends Unit
 
         $this->readOnlyPermissionGroup = $this->tester
             ->haveShoppingListPermissionGroup(ShoppingListConfig::PERMISSION_GROUP_READ_ONLY, [
+                ReadShoppingListPermissionPlugin::KEY,
+            ]);
+
+        $this->readOnlyPermissionGroup = $this->tester
+            ->haveShoppingListPermissionGroup(ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS, [
+                ReadShoppingListPermissionPlugin::KEY,
                 WriteShoppingListPermissionPlugin::KEY,
             ]);
 
@@ -244,7 +256,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerCanShareShoppingListWithBusinnessUnit()
+    public function testCustomerCanShareShoppingListWithBusinessUnit()
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -267,6 +279,35 @@ class ShoppingListFacadeTest extends Unit
             $shoppingListTransfer->getIdShoppingList(),
             $sharedShoppingListTransfer->getIdShoppingList(),
             'Any user from business unit should be able to load shopping list shared with it.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCustomerCanShareShoppingList()
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListCompanyUserTransfer = (new ShoppingListCompanyUserTransfer)
+            ->setIdCompanyUser($this->ownerCompanyUserTransfer->getIdCompanyUser())
+            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->setIdShoppingListPermissionGroup($this->tester->getFacade()->getShoppingListPermissionGroup()->getIdShoppingListPermissionGroup());
+        $shoppingListTransfer->addCompanyUsers($shoppingListCompanyUserTransfer);
+
+        // Act
+        $shoppingListResponseTransfer = $this->tester->getFacade()->shareShoppingList($shoppingListTransfer);
+        $sharedShoppingListTransfer = (new ShoppingListTransfer())
+            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->setIdCompanyUser($this->ownerCompanyUserTransfer->getIdCompanyUser());
+        $sharedShoppingListTransfer = $this->tester->getFacade()->getShoppingList($sharedShoppingListTransfer);
+
+        // Assert
+        $this->assertTrue($shoppingListResponseTransfer->getIsSuccess(), 'Owner should be able to share his shopping list.');
+        $this->assertSame(
+            $shoppingListTransfer->getIdShoppingList(),
+            $sharedShoppingListTransfer->getIdShoppingList(),
+            'Any company user or business unit should be able to load shopping list shared with it.'
         );
     }
 

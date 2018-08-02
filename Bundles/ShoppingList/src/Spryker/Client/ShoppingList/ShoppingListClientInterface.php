@@ -9,15 +9,17 @@ namespace Spryker\Client\ShoppingList;
 
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
-use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
@@ -112,6 +114,32 @@ interface ShoppingListClientInterface
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
     public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer;
+
+    /**
+     * Specification:
+     *  - Makes Zed request.
+     *  - Load shopping list company business units by shopping list id.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
+     */
+    public function getShoppingListCompanyBusinessUnitCollection(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer;
+
+    /**
+     * Specification:
+     *  - Makes Zed request.
+     *  - Load shopping list company users by shopping list id.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
+     */
+    public function getShoppingListCompanyUserCollection(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyUserCollectionTransfer;
 
     /**
      * Specification:
@@ -225,7 +253,7 @@ interface ShoppingListClientInterface
     /**
      * Specification:
      *  - Makes Zed request.
-     *  - Get shopping list permission groups.
+     *  - Get shopping list permission group.
      *  - Updates customer permissions.
      *
      * @api
@@ -237,14 +265,26 @@ interface ShoppingListClientInterface
     /**
      * Specification:
      *  - Makes Zed request.
+     *  - Get shopping list permission groups.
+     *  - Updates customer permissions.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
+     */
+    public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer;
+
+    /**
+     * Specification:
+     *  - Makes Zed request.
      *  - Share shopping list with company users from business unit or exact company user.
      *  - Updates customer permissions.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function shareShoppingList(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+    public function shareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer;
 }

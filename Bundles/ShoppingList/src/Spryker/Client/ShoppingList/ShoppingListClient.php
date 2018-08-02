@@ -9,15 +9,17 @@ namespace Spryker\Client\ShoppingList;
 
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
-use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -134,6 +136,46 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
         $shoppingListTransfer = $this->getZedStub()->getShoppingList($shoppingListTransfer);
+
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
+
+        return $shoppingListTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
+     */
+    public function getShoppingListCompanyBusinessUnitCollection(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer
+    {
+        $shoppingListTransfer = $this
+            ->getZedStub()
+            ->getShoppingListCompanyBusinessUnitCollection($shoppingListTransfer);
+
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
+
+        return $shoppingListTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
+     */
+    public function getShoppingListCompanyUserCollection(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyUserCollectionTransfer
+    {
+        $shoppingListTransfer = $this
+            ->getZedStub()
+            ->getShoppingListCompanyUserCollection($shoppingListTransfer);
 
         $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
 
@@ -278,20 +320,25 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
+     */
+    public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer
+    {
+        return $this->getZedStub()->getShoppingListPermissionGroups();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function shareShoppingList(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
+    public function shareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
     {
-        if ($shoppingListShareRequestTransfer->getIdCompanyBusinessUnit()) {
-            return $this->getZedStub()->shareShoppingListWithCompanyBusinessUnit($shoppingListShareRequestTransfer);
-        }
-        if ($shoppingListShareRequestTransfer->getIdCompanyUser()) {
-            return $this->getZedStub()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
-        }
-
-        return (new ShoppingListShareResponseTransfer)->setIsSuccess(false);
+        return $this->getZedStub()->shareShoppingList($shoppingListTransfer);
     }
 
     /**

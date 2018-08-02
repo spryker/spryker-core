@@ -112,6 +112,85 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function shareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
+    {
+        $shoppingListCompanyUsers = $shoppingListTransfer->getCompanyUsers();
+        $shoppingListCompanyBusinessUnits = $shoppingListTransfer->getCompanyBusinessUnits();
+
+        foreach ($shoppingListCompanyUsers as $shoppingListCompanyUserTransfer) {
+            $this->shareShoppingListCompanyUser($shoppingListCompanyUserTransfer);
+        }
+
+        foreach ($shoppingListCompanyBusinessUnits as $shoppingListCompanyBusinessUnitTransfer) {
+            $this->shareShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
+        }
+
+        return (new ShoppingListShareResponseTransfer())->setIsSuccess(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
+     *
+     * @return void
+     */
+    protected function shareShoppingListCompanyUser(ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer)
+    {
+        $shoppingListCompanyUserTransfer->requireIdCompanyUser()
+            ->requireIdShoppingList();
+
+        $existingShoppingListCompanyUser = $this->shoppingListRepository->findShoppingListCompanyUser($shoppingListCompanyUserTransfer);
+
+        if (!$existingShoppingListCompanyUser || !$existingShoppingListCompanyUser->getIdShoppingListCompanyUser()) {
+            if (!$shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup()) {
+                return;
+            }
+        }
+
+        if (!$shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup()) {
+            $this->shoppingListEntityManager->deleteShoppingListCompanyUser($shoppingListCompanyUserTransfer);
+            return;
+        }
+
+        if (!$existingShoppingListCompanyUser ||
+            $existingShoppingListCompanyUser->getIdShoppingListPermissionGroup() !== $shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup()) {
+            $this->shoppingListEntityManager->saveShoppingListCompanyUser($shoppingListCompanyUserTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
+     *
+     * @return void
+     */
+    protected function shareShoppingListCompanyBusinessUnit(ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer)
+    {
+        $shoppingListCompanyBusinessUnitTransfer->requireIdCompanyBusinessUnit()
+            ->requireIdShoppingList();
+
+        $existingShoppingListCompanyBusinessUnit = $this->shoppingListRepository->findShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
+
+        if (!$existingShoppingListCompanyBusinessUnit || !$existingShoppingListCompanyBusinessUnit->getIdShoppingListCompanyBusinessUnit()) {
+            if (!$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()) {
+                return;
+            }
+        }
+
+        if (!$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()) {
+            $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
+            return;
+        }
+
+        if (!$existingShoppingListCompanyBusinessUnit ||
+            $existingShoppingListCompanyBusinessUnit->getIdShoppingListPermissionGroup() !== $shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()) {
+            $this->shoppingListEntityManager->saveShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
