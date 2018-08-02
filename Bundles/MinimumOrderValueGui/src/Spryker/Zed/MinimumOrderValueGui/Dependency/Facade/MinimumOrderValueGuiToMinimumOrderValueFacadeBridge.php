@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MinimumOrderValueGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 class MinimumOrderValueGuiToMinimumOrderValueFacadeBridge implements MinimumOrderValueGuiToMinimumOrderValueFacadeInterface
@@ -27,21 +27,21 @@ class MinimumOrderValueGuiToMinimumOrderValueFacadeBridge implements MinimumOrde
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
      */
-    public function setStoreThreshold(
-        MinimumOrderValueTransfer $minimumOrderValueTransfer
-    ): MinimumOrderValueTransfer {
-        return $this->minimumOrderValueFacade->setStoreThreshold($minimumOrderValueTransfer);
+    public function setGlobalThreshold(
+        GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+    ): GlobalMinimumOrderValueTransfer {
+        return $this->minimumOrderValueFacade->setGlobalThreshold($globalMinimumOrderValueTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer[]
      */
     public function getGlobalThresholdsByStoreAndCurrency(
         StoreTransfer $storeTransfer,
