@@ -11,9 +11,13 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use ReflectionClass;
+use Spryker\Zed\CompanyBusinessUnitDataImport\Business\CompanyBusinessUnitDataImportBusinessFactory;
+use Spryker\Zed\CompanyBusinessUnitDataImport\Business\CompanyBusinessUnitDataImportFacade;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Communication\Plugin\CompanyBusinessUnitDataImportPlugin;
 use Spryker\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportConfig;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
 
 /**
  * Auto-generated group annotations
@@ -51,6 +55,13 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer->setThrowException(true);
 
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
+
+        $pluginReflection = new ReflectionClass($companyBusinessUnitDataImportPlugin);
+
+        $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
+        $facadePropertyReflection->setAccessible(true);
+        $facadePropertyReflection->setValue($companyBusinessUnitDataImportPlugin, $this->getFacadeMock());
+
         $dataImporterReportTransfer = $companyBusinessUnitDataImportPlugin->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
@@ -74,6 +85,13 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
 
         $this->expectException(DataImportException::class);
         $this->expectExceptionMessage(static::EXCEPTION_DATA_IMPORT_COMPANY_NO_FOUND_MESSAGE);
+
+        $pluginReflection = new ReflectionClass($companyBusinessUnitDataImportPlugin);
+
+        $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
+        $facadePropertyReflection->setAccessible(true);
+        $facadePropertyReflection->setValue($companyBusinessUnitDataImportPlugin, $this->getFacadeMock());
+
         $companyBusinessUnitDataImportPlugin->import($dataImportConfigurationTransfer);
     }
 
@@ -93,7 +111,41 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
 
         $this->expectException(DataImportException::class);
         $this->expectExceptionMessage('Could not find company business unit by key "invalid parent"');
+
+        $pluginReflection = new ReflectionClass($companyBusinessUnitDataImportPlugin);
+
+        $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
+        $facadePropertyReflection->setAccessible(true);
+        $facadePropertyReflection->setValue($companyBusinessUnitDataImportPlugin, $this->getFacadeMock());
+
         $companyBusinessUnitDataImportPlugin->import($dataImportConfigurationTransfer);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitDataImport\Business\CompanyBusinessUnitDataImportFacade
+     */
+    public function getFacadeMock()
+    {
+        $factoryMock = $this->getMockBuilder(CompanyBusinessUnitDataImportBusinessFactory::class)
+            ->setMethods(
+                [
+                    'createTransactionAwareDataSetStepBroker',
+                    'getConfig',
+                ]
+            )
+            ->getMock();
+
+        $factoryMock
+            ->method('createTransactionAwareDataSetStepBroker')
+            ->willReturn(new DataSetStepBroker());
+
+        $factoryMock->method('getConfig')
+            ->willReturn(new CompanyBusinessUnitDataImportConfig());
+
+        $facade = new CompanyBusinessUnitDataImportFacade();
+        $facade->setFactory($factoryMock);
+
+        return $facade;
     }
 
     /**

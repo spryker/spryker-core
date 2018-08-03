@@ -11,11 +11,16 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use ReflectionClass;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
+use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\PriceProductMerchantRelationshipDataImportBusinessFactory;
+use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\PriceProductMerchantRelationshipDataImportFacade;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Communication\Plugin\PriceProductMerchantRelationshipDataImportPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\PriceProductMerchantRelationshipDataImportConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductMerchantRelationshipDataImport
@@ -61,6 +66,12 @@ class PriceProductMerchantRelationshipDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer->setThrowException(true);
 
         $PriceProductMerchantRelationshipDataImportPlugin = new PriceProductMerchantRelationshipDataImportPlugin();
+        $pluginReflection = new ReflectionClass($PriceProductMerchantRelationshipDataImportPlugin);
+
+        $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
+        $facadePropertyReflection->setAccessible(true);
+        $facadePropertyReflection->setValue($PriceProductMerchantRelationshipDataImportPlugin, $this->getFacadeMock());
+
         $dataImporterReportTransfer = $PriceProductMerchantRelationshipDataImportPlugin->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
@@ -95,5 +106,32 @@ class PriceProductMerchantRelationshipDataImportPluginTest extends Unit
             'fkMerchant' => $idMerchant,
             'fkCompanyBusinessUnit' => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
         ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\PriceProductMerchantRelationshipDataImportFacade
+     */
+    public function getFacadeMock()
+    {
+        $factoryMock = $this->getMockBuilder(PriceProductMerchantRelationshipDataImportBusinessFactory::class)
+            ->setMethods(
+                [
+                    'createTransactionAwareDataSetStepBroker',
+                    'getConfig',
+                ]
+            )
+            ->getMock();
+
+        $factoryMock
+            ->method('createTransactionAwareDataSetStepBroker')
+            ->willReturn(new DataSetStepBroker());
+
+        $factoryMock->method('getConfig')
+            ->willReturn(new PriceProductMerchantRelationshipDataImportConfig());
+
+        $facade = new PriceProductMerchantRelationshipDataImportFacade();
+        $facade->setFactory($factoryMock);
+
+        return $facade;
     }
 }
