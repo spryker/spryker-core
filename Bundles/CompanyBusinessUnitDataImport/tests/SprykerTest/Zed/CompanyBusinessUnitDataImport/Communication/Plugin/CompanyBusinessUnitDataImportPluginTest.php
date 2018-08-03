@@ -21,6 +21,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyBusinessUnitDataImport
@@ -101,7 +102,7 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
     public function testImportThrowsExceptionWhenParentBusinessUnitNotFound(): void
     {
         $this->tester->ensureDatabaseTableIsEmpty();
-
+        $this->tester->haveActiveCompany(['key' => 'spryker']);
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
             self::IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_PARENT_CSV
         );
