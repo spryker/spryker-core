@@ -20,9 +20,14 @@ class ShoppingListStorageFacade extends AbstractFacade implements ShoppingListSt
      * {@inheritDoc}
      *
      * @api
+     *
+     * @param array $customer_reference
+     *
+     * @return void
      */
-    public function publish(string $customer_reference): void
+    public function publish(array $customer_reference): void
     {
         // TODO: Implement publish() method.
+        file_put_contents('publish.txt', var_export($customer_reference, true), \FILE_APPEND);
     }
 }
