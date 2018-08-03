@@ -8,13 +8,14 @@
 namespace Spryker\Client\SharedCart\Plugin;
 
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\AwareConfigurationPermissionPluginInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 use Spryker\Shared\SharedCart\SharedCartConfig;
 
 /**
  * For Client PermissionDependencyProvider::getPermissionPlugins() registration
  */
-class WriteSharedCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
+class WriteSharedCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface, AwareConfigurationPermissionPluginInterface
 {
     public const KEY = 'WriteSharedCartPermissionPlugin';
 

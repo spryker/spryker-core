@@ -9,6 +9,7 @@ namespace Spryker\Zed\Permission\Business\PermissionFinder;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\AwareConfigurationPermissionPluginInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 
@@ -54,6 +55,10 @@ class PermissionFinder implements PermissionFinderInterface
 
             if ($permissionPlugin instanceof ExecutablePermissionPluginInterface) {
                 $permissionTransfer->setConfigurationSignature($permissionPlugin->getConfigurationSignature());
+            }
+
+            if ($permissionPlugin instanceof AwareConfigurationPermissionPluginInterface) {
+                $permissionTransfer->setIsAwareConfiguration(true);
             }
 
             $permissionCollectionTransfer->addPermission($permissionTransfer);
