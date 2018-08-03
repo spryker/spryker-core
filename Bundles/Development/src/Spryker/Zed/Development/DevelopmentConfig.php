@@ -29,6 +29,14 @@ class DevelopmentConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @return string[]
+     */
+    public function getInternalNamespaces(): array
+    {
+        return ['Spryker', 'SprykerEco', 'SprykerSdk', 'SprykerShop', 'Orm'];
+    }
+
+    /**
      * Gets path to application root directory.
      *
      * @return string

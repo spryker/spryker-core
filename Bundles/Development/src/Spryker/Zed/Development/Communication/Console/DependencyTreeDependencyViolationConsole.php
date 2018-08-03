@@ -91,7 +91,7 @@ class DependencyTreeDependencyViolationConsole extends Console
                 }
 
                 if ($composerDependency['isOptional'] && $composerDependency['composerRequire']) {
-                    $violations[] = $composerDependency['src'] . ' is optional but in require';
+                     $violations[] = $composerDependency['src'] . ' is optional but in require';
                 }
 
                 $name = null;
