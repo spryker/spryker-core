@@ -27,9 +27,9 @@ use TypeError;
  */
 class CompanyUserFacadeTest extends Test
 {
-    protected const CUSTOMER_FIELD_CUSTOMER_TRANSFER = 'customer';
-    protected const FK_COMPANY_FIELD_CUSTOMER_TRANSFER = 'fk_company';
-    protected const IS_ACTIVE_FIELD_CUSTOMER_TRANSFER = 'is_active';
+    protected const CUSTOMER_COLUMN_COMPANY_USER = 'customer';
+    protected const FK_COMPANY_COLUMN_COMPANY_USER = 'fk_company';
+    protected const IS_ACTIVE_COLUMN_COMPANY_USER = 'is_active';
 
     /**
      * @var \SprykerTest\Zed\CompanyUser\CompanyUserBusinessTester
@@ -356,9 +356,9 @@ class CompanyUserFacadeTest extends Test
         $customerTransfer = $this->tester->haveCustomer();
 
         return $this->tester->haveCompanyUser([
-            static::CUSTOMER_FIELD_CUSTOMER_TRANSFER => $customerTransfer,
-            static::FK_COMPANY_FIELD_CUSTOMER_TRANSFER => $companyTransfer->getIdCompany(),
-            static::IS_ACTIVE_FIELD_CUSTOMER_TRANSFER => $isActive,
+            static::CUSTOMER_COLUMN_COMPANY_USER => $customerTransfer,
+            static::FK_COMPANY_COLUMN_COMPANY_USER => $companyTransfer->getIdCompany(),
+            static::IS_ACTIVE_COLUMN_COMPANY_USER => $isActive,
         ]);
     }
 
