@@ -31,7 +31,7 @@ class Writer implements WriterInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Stock\Business\Model\Reader
+     * @var \Spryker\Zed\Stock\Business\Model\ReaderInterface
      */
     protected $reader;
 

@@ -32,6 +32,9 @@ class AvailabilityStub implements AvailabilityStubInterface
      */
     public function findProductConcreteAvailability(ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer)
     {
-        return $this->zedRequestClient->call('/availability/gateway/find-product-concrete-availability', $productConcreteAvailabilityRequestTransfer);
+        /** @var \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityRequestTransfer */
+        $productConcreteAvailabilityRequestTransfer = $this->zedRequestClient->call('/availability/gateway/find-product-concrete-availability', $productConcreteAvailabilityRequestTransfer);
+
+        return $productConcreteAvailabilityRequestTransfer;
     }
 }
