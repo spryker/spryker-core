@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Permission\Plugin\PermissionExtension;
+namespace Spryker\Zed\CheckoutPermissionConnector\Communication\Plugin;
 
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
@@ -30,7 +30,7 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
      */
     public function can(array $configuration, $centAmount = null): bool
     {
-        if (is_null($centAmount)) {
+        if (null === $centAmount) {
             return false;
         }
 
