@@ -5,17 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\CheckoutPermissionConnector\Communication\Plugin;
+namespace SprykerTest\Client\CheckoutPermissionConnector\Plugin;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\CheckoutPermissionConnector\Communication\Plugin\PlaceOrderWithAmountUpToPermissionPlugin;
+use Spryker\Client\CheckoutPermissionConnector\Plugin\PlaceOrderWithAmountUpToPermissionPlugin;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
- * @group Zed
+ * @group Client
  * @group CheckoutPermissionConnector
- * @group Communication
  * @group Plugin
  * @group PlaceOrderWithAmountUpToPermissionPluginTest
  * Add your own group annotations below this line

@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\CompanyBusinessUnitDataImport
+namespace: SprykerTest\Client\CheckoutPermissionConnector
 
 paths:
     tests: .
@@ -12,9 +12,8 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Communication:
-        path: Communication
+    CheckoutPermissionConnector:
+        path: CheckoutPermissionConnector
         class_name: PlaceOrderWithAmountUpToPermissionPluginTest
         modules:
             enabled:
-                - Asserts
