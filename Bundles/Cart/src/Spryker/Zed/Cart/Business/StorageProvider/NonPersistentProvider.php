@@ -7,13 +7,36 @@
 
 namespace Spryker\Zed\Cart\Business\StorageProvider;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption;
+use Traversable;
 
 class NonPersistentProvider implements StorageProviderInterface
 {
+    /**
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
+     */
+    protected $cartAddItemStrategyPlugins;
+
+    /**
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
+     */
+    protected $cartRemoveItemStrategyPlugins;
+
+    /**
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartAddItemStrategyPlugins
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartRemoveItemStrategyPlugins
+     */
+    public function __construct(
+        array $cartAddItemStrategyPlugins,
+        array $cartRemoveItemStrategyPlugins
+    ) {
+        $this->cartAddItemStrategyPlugins = $cartAddItemStrategyPlugins;
+        $this->cartRemoveItemStrategyPlugins = $cartRemoveItemStrategyPlugins;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -21,22 +44,39 @@ class NonPersistentProvider implements StorageProviderInterface
      */
     public function addItems(CartChangeTransfer $cartChangeTransfer)
     {
-        $existingItems = $cartChangeTransfer->getQuote()->getItems();
-        $cartIndex = $this->createCartIndex($existingItems);
-
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $this->isValidQuantity($itemTransfer);
-
-            $itemIdentifier = $this->getItemIdentifier($itemTransfer);
-            if (isset($cartIndex[$itemIdentifier])) {
-                $this->increaseExistingItem($existingItems, $cartIndex[$itemIdentifier], $itemTransfer);
-            } else {
-                $existingItems->append($itemTransfer);
-                $cartIndex = $this->createCartIndex($existingItems);
-            }
+            $this->addItem($itemTransfer, $cartChangeTransfer->getQuote());
         }
 
         return $cartChangeTransfer->getQuote();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addItem(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
+    {
+        $this->isValidQuantity($itemTransfer);
+        foreach ($this->cartAddItemStrategyPlugins as $cartAddItemStrategyPlugin) {
+            if ($cartAddItemStrategyPlugin->isApplicable($itemTransfer, $quoteTransfer)) {
+                $cartAddItemStrategyPlugin->execute($itemTransfer, $quoteTransfer);
+
+                return;
+            }
+        }
+
+        $cartIndex = $this->createCartIndex($quoteTransfer->getItems());
+        $itemIdentifier = $this->getItemIdentifier($itemTransfer);
+        if (isset($cartIndex[$itemIdentifier])) {
+            $this->increaseExistingItem($quoteTransfer->getItems(), $cartIndex[$itemIdentifier], $itemTransfer);
+
+            return;
+        }
+
+        $quoteTransfer->getItems()->append($itemTransfer);
     }
 
     /**
@@ -46,27 +86,43 @@ class NonPersistentProvider implements StorageProviderInterface
      */
     public function removeItems(CartChangeTransfer $cartChangeTransfer)
     {
-        $existingItems = $cartChangeTransfer->getQuote()->getItems();
-        $cartIndex = $this->createCartIndex($existingItems);
-
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $this->isValidQuantity($itemTransfer);
-
-            $itemIdentifier = $this->getItemIdentifier($itemTransfer);
-            if (isset($cartIndex[$itemIdentifier])) {
-                $this->decreaseExistingItem($existingItems, $itemIdentifier, $itemTransfer, $cartIndex);
-            }
+            $this->removeItem($itemTransfer, $cartChangeTransfer->getQuote());
         }
 
         return $cartChangeTransfer->getQuote();
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function removeItem(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
+    {
+        $this->isValidQuantity($itemTransfer);
+        foreach ($this->cartRemoveItemStrategyPlugins as $cartRemoveItemStrategyPlugin) {
+            if ($cartRemoveItemStrategyPlugin->isApplicable($itemTransfer, $quoteTransfer)) {
+                $cartRemoveItemStrategyPlugin->execute($itemTransfer, $quoteTransfer);
+
+                return;
+            }
+        }
+
+        $cartIndex = $this->createCartIndex($quoteTransfer->getItems());
+        $itemIdentifier = $this->getItemIdentifier($itemTransfer);
+        if (isset($cartIndex[$itemIdentifier])) {
+            $this->decreaseExistingItem($quoteTransfer->getItems(), $itemIdentifier, $itemTransfer, $cartIndex);
+        }
+    }
+
+    /**
+     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
      *
      * @return array
      */
-    protected function createCartIndex(ArrayObject $cartItems)
+    protected function createCartIndex(Traversable $cartItems)
     {
         $cartIndex = [];
         foreach ($cartItems as $key => $itemTransfer) {
@@ -82,25 +138,25 @@ class NonPersistentProvider implements StorageProviderInterface
      *
      * @return string
      */
-    protected function getItemIdentifier(ItemTransfer $itemTransfer)
+    protected function getItemIdentifier(ItemTransfer $itemTransfer): string
     {
-        return $itemTransfer->getGroupKey() ? $itemTransfer->getGroupKey() : $itemTransfer->getSku();
+        return $itemTransfer->getGroupKey() ?: $itemTransfer->getSku();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $existingItems
+     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $existingItems
      * @param string $itemIdentifier
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $cartIndex
      *
      * @return void
      */
-    protected function decreaseExistingItem($existingItems, $itemIdentifier, $itemTransfer, array $cartIndex)
+    protected function decreaseExistingItem(Traversable $existingItems, $itemIdentifier, $itemTransfer, array $cartIndex)
     {
         $existingItemTransfer = null;
         $itemIndex = null;
         foreach ($existingItems as $index => $currentItemTransfer) {
-            if ($currentItemTransfer->getGroupKey() === $itemIdentifier) {
+            if ($this->getItemIdentifier($currentItemTransfer) === $itemIdentifier) {
                 $existingItemTransfer = $currentItemTransfer;
                 $itemIndex = $index;
                 break;
@@ -122,13 +178,13 @@ class NonPersistentProvider implements StorageProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $existingItems
+     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $existingItems
      * @param int $index
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
-    protected function increaseExistingItem($existingItems, $index, $itemTransfer)
+    protected function increaseExistingItem(Traversable $existingItems, $index, $itemTransfer)
     {
         $existingItemTransfer = $existingItems[$index];
         $changedQuantity = $existingItemTransfer->getQuantity() + $itemTransfer->getQuantity();

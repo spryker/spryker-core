@@ -60,10 +60,10 @@ class Reservation implements ReservationInterface
         $currentStoreReservationAmount = $this->sumReservedProductQuantitiesForSku($sku);
 
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-        $this->saveReservation($sku, $currentStoreTransfer->getIdStore(), $currentStoreReservationAmount);
+        $this->saveReservation($sku, $currentStoreTransfer, $currentStoreReservationAmount);
         foreach ($currentStoreTransfer->getStoresWithSharedPersistence() as $storeName) {
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
-            $this->saveReservation($sku, $storeTransfer->getIdStore(), $currentStoreReservationAmount);
+            $this->saveReservation($sku, $storeTransfer, $currentStoreReservationAmount);
         }
 
         $this->handleReservationPlugins($sku);
@@ -134,6 +134,19 @@ class Reservation implements ReservationInterface
     }
 
     /**
+     * @return string[]
+     */
+    public function getReservedStateNames()
+    {
+        $stateNames = [];
+        foreach ($this->activeProcessFetcher->getReservedStatesFromAllActiveProcesses() as $reservedState) {
+            $stateNames[] = $reservedState->getName();
+        }
+
+        return $stateNames;
+    }
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
@@ -166,15 +179,17 @@ class Reservation implements ReservationInterface
 
     /**
      * @param string $sku
-     * @param int $idStore
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param int $reservationQuantity
      *
      * @return void
      */
-    protected function saveReservation($sku, $idStore, $reservationQuantity)
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void
     {
+        $storeTransfer->requireIdStore();
+
         $reservationEntity = $this->queryContainer
-            ->queryProductReservationBySkuAndStore($sku, $idStore)
+            ->queryProductReservationBySkuAndStore($sku, $storeTransfer->getIdStore())
             ->findOneOrCreate();
 
         $reservationEntity->setReservationQuantity($reservationQuantity);
