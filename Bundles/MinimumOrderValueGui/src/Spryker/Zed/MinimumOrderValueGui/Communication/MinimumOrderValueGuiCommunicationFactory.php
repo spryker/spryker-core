@@ -8,11 +8,16 @@
 namespace Spryker\Zed\MinimumOrderValueGui\Communication;
 
 use Generated\Shared\Transfer\StoreCurrencyTransfer;
+use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConstants;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Exception\MissingGlobalThresholdFormMapperException;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\GlobalThresholdDataProvider;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalHardThresholdFormMapper;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalSoftThresholdFixedFeeFormMapper;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalSoftThresholdFlexibleFeeFormMapper;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalSoftThresholdFormMapper;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalThresholdFormMapperInterface;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Model\StoreCurrencyFinder;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface;
@@ -90,16 +95,55 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
     /**
      * @param string $softStrategy
      *
+     * @throws \Spryker\Zed\MinimumOrderValueGui\Communication\Exception\MissingGlobalThresholdFormMapperException
+     *
      * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalThresholdFormMapperInterface
      */
     public function createGlobalSoftThresholdFormMapperByStrategy(string $softStrategy): GlobalThresholdFormMapperInterface
     {
-        $mapClassName = "Spryker\\Zed\\MinimumOrderValueGui\\Communication\\Form\\Mapper\\"
-            . "Global"
-            . implode('', explode('-', ucwords($softStrategy, '-')))
-            . "FormMapper";
+        switch ($softStrategy) {
+            case MinimumOrderValueGuiConstants::SOFT_TYPE_STRATEGY_MESSAGE:
+                return $this->createGlobalSoftThresholdFormMapper();
 
-        return new $mapClassName(
+            case MinimumOrderValueGuiConstants::SOFT_TYPE_STRATEGY_FIXED:
+                return $this->createGlobalSoftThresholdFixedFeeFormMapper();
+
+            case MinimumOrderValueGuiConstants::SOFT_TYPE_STRATEGY_FLEXIBLE:
+                return $this->createGlobalSoftThresholdFlexibleFeeFormMapper();
+
+            default:
+                throw new MissingGlobalThresholdFormMapperException();
+        }
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalThresholdFormMapperInterface
+     */
+    public function createGlobalSoftThresholdFormMapper(): GlobalThresholdFormMapperInterface
+    {
+        return new GlobalSoftThresholdFormMapper(
+            $this->createLocaleProvider(),
+            $this->createStoreCurrencyFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalThresholdFormMapperInterface
+     */
+    public function createGlobalSoftThresholdFixedFeeFormMapper(): GlobalThresholdFormMapperInterface
+    {
+        return new GlobalSoftThresholdFixedFeeFormMapper(
+            $this->createLocaleProvider(),
+            $this->createStoreCurrencyFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalThresholdFormMapperInterface
+     */
+    public function createGlobalSoftThresholdFlexibleFeeFormMapper(): GlobalThresholdFormMapperInterface
+    {
+        return new GlobalSoftThresholdFlexibleFeeFormMapper(
             $this->createLocaleProvider(),
             $this->createStoreCurrencyFinder()
         );

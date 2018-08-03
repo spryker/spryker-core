@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Controller;
 
-use Exception;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\StoreCurrencyTransfer;
@@ -36,30 +35,26 @@ class GlobalController extends AbstractController
         $globalThresholdForm->handleRequest($request);
 
         if ($globalThresholdForm->isSubmitted() && $globalThresholdForm->isValid()) {
-            try {
-                $data = $globalThresholdForm->getData();
-                $hardMinimumOrderValueTransfer = $this->getFactory()
-                    ->createGlobalHardThresholdFormMapper()
-                    ->map($data, new MinimumOrderValueTransfer());
+            $data = $globalThresholdForm->getData();
+            $hardMinimumOrderValueTransfer = $this->getFactory()
+                ->createGlobalHardThresholdFormMapper()
+                ->map($data, new MinimumOrderValueTransfer());
 
-                $softMinimumOrderValueTransfer = $this->getFactory()
-                    ->createGlobalSoftThresholdFormMapperByStrategy($data[GlobalThresholdType::FIELD_SOFT_STRATEGY])
-                    ->map($data, new MinimumOrderValueTransfer());
+            $softMinimumOrderValueTransfer = $this->getFactory()
+                ->createGlobalSoftThresholdFormMapperByStrategy($data[GlobalThresholdType::FIELD_SOFT_STRATEGY])
+                ->map($data, new MinimumOrderValueTransfer());
 
-                $hardMinimumOrderValueTransfer = $this->getFactory()
-                    ->getMinimumOrderValueFacade()
-                    ->setStoreThreshold($hardMinimumOrderValueTransfer);
+            $hardMinimumOrderValueTransfer = $this->getFactory()
+                ->getMinimumOrderValueFacade()
+                ->setStoreThreshold($hardMinimumOrderValueTransfer);
 
-                $softMinimumOrderValueTransfer = $this->getFactory()
-                    ->getMinimumOrderValueFacade()
-                    ->setStoreThreshold($softMinimumOrderValueTransfer);
+            $softMinimumOrderValueTransfer = $this->getFactory()
+                ->getMinimumOrderValueFacade()
+                ->setStoreThreshold($softMinimumOrderValueTransfer);
 
-                $this->addSuccessMessage(sprintf(
-                    'The Global Threshold is saved successfully.'
-                ));
-            } catch (Exception $exception) {
-                $this->addErrorMessage($exception->getMessage());
-            }
+            $this->addSuccessMessage(sprintf(
+                'The Global Threshold is saved successfully.'
+            ));
         }
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
