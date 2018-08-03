@@ -13,9 +13,17 @@ class ShoppingListStorageConstants
 {
     /**
      * Specification:
-     * - Queue name as used for processing category messages
+     * - Queue name as used for processing shopping list messages
      *
      * @api
      */
     const SHOPPING_LIST_SYNC_STORAGE_QUEUE = 'sync.storage.shopping_list';
+
+    /**
+     * Specification:
+     * - Queue name as used for processing shopping list messages
+     *
+     * @api
+     */
+    const SHOPPING_LIST_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.shopping_list.error';
 }
