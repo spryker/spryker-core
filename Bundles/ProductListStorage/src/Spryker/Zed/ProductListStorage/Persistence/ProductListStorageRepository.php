@@ -61,7 +61,7 @@ class ProductListStorageRepository extends AbstractRepository implements Product
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractProductListStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
      */
     public function findProductAbstractProductListStorageEntities(array $productAbstractIds): array
     {
@@ -73,13 +73,13 @@ class ProductListStorageRepository extends AbstractRepository implements Product
             ->createProductAbstractProductListStorageQuery()
             ->filterByFkProductAbstract_In($productAbstractIds);
 
-        return $this->buildQueryFromCriteria($productAbstractProductListStorageQuery)->find();
+        return $productAbstractProductListStorageQuery->find()->toArray();
     }
 
     /**
      * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductConcreteProductListStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
      */
     public function findProductConcreteProductListStorageEntities(array $productConcreteIds): array
     {
@@ -91,7 +91,7 @@ class ProductListStorageRepository extends AbstractRepository implements Product
             ->createProductConcreteProductListStorageQuery()
             ->filterByFkProduct_In($productConcreteIds);
 
-        return $this->buildQueryFromCriteria($productConcreteProductListStorageQuery)->find();
+        return $productConcreteProductListStorageQuery->find()->toArray();
     }
 
     /**

@@ -26,14 +26,14 @@ interface ProductListStorageRepositoryInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractProductListStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
      */
     public function findProductAbstractProductListStorageEntities(array $productAbstractIds): array;
 
     /**
      * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductConcreteProductListStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
      */
     public function findProductConcreteProductListStorageEntities(array $productConcreteIds): array;
 

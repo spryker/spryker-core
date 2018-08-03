@@ -23,7 +23,6 @@ use Spryker\Zed\ProductListStorage\ProductListStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface getRepository()
- * @method \Spryker\Zed\ProductListStorage\Persistence\ProductListStorageEntitymanagerInterface getEntityManager()
  * @method \Spryker\Zed\ProductListStorage\ProductListStorageConfig getConfig()
  */
 class ProductListStorageBusinessFactory extends AbstractBusinessFactory
@@ -36,7 +35,7 @@ class ProductListStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductListProductAbstractStorageWriter(
             $this->getProductListFacade(),
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getConfig()->isSendingToQueue()
         );
     }
 
@@ -49,7 +48,7 @@ class ProductListStorageBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractReader(),
             $this->getProductListFacade(),
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getConfig()->isSendingToQueue()
         );
     }
 

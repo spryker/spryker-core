@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\MerchantRelationshipProductList
+namespace: SprykerTest\Zed\ProductListStorage
 
 paths:
     tests: .
@@ -13,8 +13,8 @@ coverage:
 
 suites:
     Business:
-        path: Business
-        class_name: MerchantRelationshipProductListBusinessTester
+        path: Communication
+        class_name: ProductListStorageCommunicationTester
         modules:
             enabled:
                 - Asserts
@@ -22,7 +22,5 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
-                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
-                - \SprykerTest\Zed\MerchantRelationship\Helper\MerchantRelationshipHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Propel\Helper\ConnectionHelper

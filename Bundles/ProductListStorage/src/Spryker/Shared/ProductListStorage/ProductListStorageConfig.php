@@ -13,6 +13,22 @@ class ProductListStorageConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
+     * - Queue name as used for processing price messages
+     *
+     * @api
+     */
+    const PRODUCT_LIST_ABSTRACT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+
+    /**
+     * Specification:
+     * - Queue name as used for processing price messages
+     *
+     * @api
+     */
+    const PRODUCT_LIST_CONCRETE_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+
+    /**
+     * Specification:
      * - Key generation resource name of product abstract lists.
      *
      * @api
