@@ -88,8 +88,12 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         foreach ($spyProductAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
             if (isset($productCategories[$productAbstractLocalizedEntity->getFkProductAbstract()])) {
                 $mappings = $productCategories[$productAbstractLocalizedEntity->getFkProductAbstract()];
-                $localizedCategory = $this->generateProductCategoryLocalizedData($mappings, $productAbstractLocalizedEntity->getFkLocale());
-                $categories[$productAbstractLocalizedEntity->getFkProductAbstract()][$productAbstractLocalizedEntity->getFkLocale()] = $localizedCategory;
+                $localizedCategories = [];
+                foreach ($mappings as $mapping) {
+                    $localizedCategories = array_merge($localizedCategories, $this->generateProductCategoryLocalizedData($mapping, $productAbstractLocalizedEntity->getFkLocale()));
+                }
+
+                $categories[$productAbstractLocalizedEntity->getFkProductAbstract()][$productAbstractLocalizedEntity->getFkLocale()] = $localizedCategories;
             }
         }
 
@@ -202,7 +206,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
 
         $productCategoryMappings = [];
         foreach ($productCategories as $mapping) {
-            $productCategoryMappings[$mapping->getFkProductAbstract()] = $mapping;
+            $productCategoryMappings[$mapping->getFkProductAbstract()][] = $mapping;
         }
 
         return $productCategoryMappings;
