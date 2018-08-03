@@ -38,13 +38,13 @@ interface AgentClientInterface
 
     /**
      * Specification:
-     * - Returns UserTransfer if an agent logged in, null otherwise.
+     * - Returns UserTransfer of agent which logged in.
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function findLoggedInAgent(): ?UserTransfer;
+    public function getAgent(): UserTransfer;
 
     /**
      * Specification:

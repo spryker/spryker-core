@@ -52,9 +52,9 @@ class AgentClient extends AbstractClient implements AgentClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function findLoggedInAgent(): ?UserTransfer
+    public function getAgent(): UserTransfer
     {
         return $this->getFactory()
             ->createAgentSession()

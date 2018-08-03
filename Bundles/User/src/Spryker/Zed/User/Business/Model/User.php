@@ -101,7 +101,9 @@ class User implements UserInterface
         $userCheck = $this->hasUserByUsername($userTransfer->getUsername());
 
         if ($userCheck === true) {
-            throw new UsernameExistsException();
+            throw new UsernameExistsException(
+                sprintf('Username %s already exist.', $userTransfer->getUsername())
+            );
         }
 
         return $this->save($userTransfer);

@@ -36,9 +36,9 @@ class AgentSession implements AgentSessionInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\UserTransfer|null
+     * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getAgent(): ?UserTransfer
+    public function getAgent(): UserTransfer
     {
         return $this->getSessionClient()->get(static::SESSION_KEY);
     }
