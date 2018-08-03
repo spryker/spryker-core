@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Client\ZedRequest\ZedRequestClient;
@@ -152,6 +153,22 @@ class CompanyUserStub implements CompanyUserStubInterface
         $companyUserResponseTransfer = $this->zedRequestClient->call(
             '/company-user/gateway/disable-company-user',
             $companyUserTransfer
+        );
+
+        return $companyUserResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function findCompanyUserByCustomerId(CustomerTransfer $customerTransfer): CompanyUserResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer */
+        $companyUserResponseTransfer = $this->zedRequestClient->call(
+            '/company-user/gateway/find-company-user-by-customer-id',
+            $customerTransfer
         );
 
         return $companyUserResponseTransfer;
