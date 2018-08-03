@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Business;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -296,4 +297,17 @@ interface DevelopmentFacadeInterface
      * @return int
      */
     public function runPhpstan(InputInterface $input, OutputInterface $output);
+
+    /**
+     * Specification:
+     * - Validates that Abstract classes for database table exist.
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     * @param string|null $module
+     *
+     * @return bool
+     */
+    public function runPropelAbstractValidation(LoggerInterface $messenger, ?string $module): bool;
 }

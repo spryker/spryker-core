@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Business;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -387,5 +388,18 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function runPhpstan(InputInterface $input, OutputInterface $output)
     {
         return $this->getFactory()->createPhpstanRunner()->run($input, $output);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     * @param string|null $module
+     *
+     * @return bool
+     */
+    public function runPropelAbstractValidation(LoggerInterface $messenger, ?string $module): bool
+    {
+        return $this->getFactory()->createPropelAbstractValidator()->validate($messenger, $module);
     }
 }
