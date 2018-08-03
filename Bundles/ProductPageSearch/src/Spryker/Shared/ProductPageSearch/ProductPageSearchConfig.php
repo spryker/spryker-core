@@ -7,10 +7,18 @@
 
 namespace Spryker\Shared\ProductPageSearch;
 
-use Spryker\Shared\Kernel\AbstractSharedConfig;
+use Spryker\Shared\Kernel\AbstractBundleConfig;
 
-class ProductPageSearchConfig extends AbstractSharedConfig
+class ProductPageSearchConfig extends AbstractBundleConfig
 {
+    /**
+     * @see \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_MODES
+     */
+    public const PRICE_MODES = [
+        'NET_MODE',
+        'GROSS_MODE',
+    ];
+
     /**
      * Specification:
      * - This constant is used for extracting data from plugin array

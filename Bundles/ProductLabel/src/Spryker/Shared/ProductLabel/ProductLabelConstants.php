@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\ProductLabel;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 class ProductLabelConstants
 {
     const RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER = 1;

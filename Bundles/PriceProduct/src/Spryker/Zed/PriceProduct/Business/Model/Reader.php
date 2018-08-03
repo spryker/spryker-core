@@ -411,4 +411,25 @@ class Reader implements ReaderInterface
 
         return $priceProductDimensionTransfer;
     }
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePricesWithoutPriceExtraction(
+        int $idProductConcrete,
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array {
+        $abstractPriceProductTransfers = $this->priceProductAbstractReader
+            ->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
+
+        $concretePriceProductTransfers = $this->priceProductConcreteReader
+            ->findProductConcretePricesWithoutPriceExtraction($idProductConcrete, $priceProductCriteriaTransfer);
+
+        return $this->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
+    }
 }
