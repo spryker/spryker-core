@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper;
 
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConstants;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
@@ -16,25 +16,25 @@ class GlobalHardThresholdFormMapper extends AbstractGlobalThresholdFormMapper im
 {
     /**
      * @param array $data
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
      */
-    public function map(array $data, MinimumOrderValueTransfer $minimumOrderValueTransfer): MinimumOrderValueTransfer
+    public function map(array $data, GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer): GlobalMinimumOrderValueTransfer
     {
-        $minimumOrderValueTransfer = $this->setStoreAndCurrencyToMinimumOrderValueTransfer($data, $minimumOrderValueTransfer);
-        $minimumOrderValueTransfer = $this->setLocalizedMessagesToMinimumOrderValueTransfer(
+        $globalMinimumOrderValueTransfer = $this->setStoreAndCurrencyToGlobalMinimumOrderValueTransfer($data, $globalMinimumOrderValueTransfer);
+        $globalMinimumOrderValueTransfer = $this->setLocalizedMessagesToGlobalMinimumOrderValueTransfer(
             $data,
-            $minimumOrderValueTransfer,
+            $globalMinimumOrderValueTransfer,
             GlobalThresholdType::PREFIX_HARD
         );
 
-        $minimumOrderValueTransfer->setValue($data[GlobalThresholdType::FIELD_HARD_VALUE]);
+        $globalMinimumOrderValueTransfer->getMinimumOrderValue()->setValue($data[GlobalThresholdType::FIELD_HARD_VALUE]);
         $minimumOrderValueTypeTransfer = (new MinimumOrderValueTypeTransfer())
             ->setKey(MinimumOrderValueGuiConstants::HARD_TYPE_STRATEGY)
             ->setThresholdGroup(MinimumOrderValueGuiConstants::GROUP_HARD);
-        $minimumOrderValueTransfer->setMinimumOrderValueType($minimumOrderValueTypeTransfer);
+        $globalMinimumOrderValueTransfer->getMinimumOrderValue()->setMinimumOrderValueType($minimumOrderValueTypeTransfer);
 
-        return $minimumOrderValueTransfer;
+        return $globalMinimumOrderValueTransfer;
     }
 }

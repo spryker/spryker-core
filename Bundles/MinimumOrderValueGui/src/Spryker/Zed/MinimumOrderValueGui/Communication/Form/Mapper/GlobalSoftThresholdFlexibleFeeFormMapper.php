@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper;
 
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConstants;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
@@ -16,27 +16,27 @@ class GlobalSoftThresholdFlexibleFeeFormMapper extends AbstractGlobalThresholdFo
 {
     /**
      * @param array $data
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
      */
-    public function map(array $data, MinimumOrderValueTransfer $minimumOrderValueTransfer): MinimumOrderValueTransfer
+    public function map(array $data, GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer): GlobalMinimumOrderValueTransfer
     {
-        $minimumOrderValueTransfer = $this->setStoreAndCurrencyToMinimumOrderValueTransfer($data, $minimumOrderValueTransfer);
-        $minimumOrderValueTransfer = $this->setLocalizedMessagesToMinimumOrderValueTransfer(
+        $globalMinimumOrderValueTransfer = $this->setStoreAndCurrencyToGlobalMinimumOrderValueTransfer($data, $globalMinimumOrderValueTransfer);
+        $globalMinimumOrderValueTransfer = $this->setLocalizedMessagesToGlobalMinimumOrderValueTransfer(
             $data,
-            $minimumOrderValueTransfer,
+            $globalMinimumOrderValueTransfer,
             GlobalThresholdType::PREFIX_SOFT
         );
 
-        $minimumOrderValueTransfer->setValue($data[GlobalThresholdType::FIELD_SOFT_VALUE]);
-        $minimumOrderValueTransfer->setFee($data[GlobalThresholdType::FIELD_SOFT_FLEXIBLE_FEE]);
+        $globalMinimumOrderValueTransfer->getMinimumOrderValue()->setValue($data[GlobalThresholdType::FIELD_SOFT_VALUE]);
+        $globalMinimumOrderValueTransfer->getMinimumOrderValue()->setFee($data[GlobalThresholdType::FIELD_SOFT_FLEXIBLE_FEE]);
 
         $minimumOrderValueTypeTransfer = (new MinimumOrderValueTypeTransfer())
             ->setKey(MinimumOrderValueGuiConstants::SOFT_TYPE_STRATEGY_FLEXIBLE)
             ->setThresholdGroup(MinimumOrderValueGuiConstants::GROUP_SOFT);
-        $minimumOrderValueTransfer->setMinimumOrderValueType($minimumOrderValueTypeTransfer);
+        $globalMinimumOrderValueTransfer->getMinimumOrderValue()->setMinimumOrderValueType($minimumOrderValueTypeTransfer);
 
-        return $minimumOrderValueTransfer;
+        return $globalMinimumOrderValueTransfer;
     }
 }

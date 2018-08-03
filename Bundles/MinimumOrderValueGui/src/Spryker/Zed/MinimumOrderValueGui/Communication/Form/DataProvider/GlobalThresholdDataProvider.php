@@ -43,28 +43,28 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer[] $minimumOrderValueTransfers
+     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer[] $globalMinimumOrderValueTransfers
      * @param \Generated\Shared\Transfer\StoreCurrencyTransfer $storeCurrencyTransfer
      *
      * @return array
      */
     public function getData(
-        array $minimumOrderValueTransfers,
+        array $globalMinimumOrderValueTransfers,
         StoreCurrencyTransfer $storeCurrencyTransfer
     ): array {
         $data = [];
-        foreach ($minimumOrderValueTransfers as $minimumOrderValueTransfer) {
+        foreach ($globalMinimumOrderValueTransfers as $globalMinimumOrderValueTransfer) {
             $data[GlobalThresholdType::FIELD_STORE_CURRENCY] = $this->getStoreCurrencyFieldValue(
-                $minimumOrderValueTransfer->getStore(),
-                $minimumOrderValueTransfer->getCurrency()
+                $globalMinimumOrderValueTransfer->getStore(),
+                $globalMinimumOrderValueTransfer->getCurrency()
             );
             $thresholdStrategyDataProvider = $this->createThresholdStrategyDataProviderByKey(
-                $minimumOrderValueTransfer->getMinimumOrderValueType()->getKey()
+                $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()->getKey()
             );
-            $data = $thresholdStrategyDataProvider->getData($data, $minimumOrderValueTransfer);
+            $data = $thresholdStrategyDataProvider->getData($data, $globalMinimumOrderValueTransfer);
         }
 
-        if (empty($minimumOrderValueTransfers)) {
+        if (empty($globalMinimumOrderValueTransfers)) {
             $data[GlobalThresholdType::FIELD_STORE_CURRENCY] = $this->getStoreCurrencyFieldValue(
                 $storeCurrencyTransfer->getStore(),
                 $storeCurrencyTransfer->getCurrency()

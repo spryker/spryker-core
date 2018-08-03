@@ -16,7 +16,7 @@ interface StoreThresholdReaderInterface
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer[]
      */
     public function getGlobalThresholdsByStoreAndCurrency(
         StoreTransfer $storeTransfer,

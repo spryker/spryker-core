@@ -5,17 +5,9 @@
 
     <transfer name="MerchantRelationshipMinimumOrderValue">
         <property name="idMerchantRelationshipMinimumOrderValue" type="int"/>
-        <property name="minimumOrderValueType" type="MinimumOrderValueType"/>
         <property name="merchantRelationship" type="MerchantRelationship"/>
+        <property name="minimumOrderValue" type="MinimumOrderValue"/>
         <property name="store" type="Store"/>
-        <property name="value" type="int"/>
-        <property name="fee" type="int"/>
         <property name="currency" type="Currency"/>
-        <property name="localizedMessages" type="MerchantRelationshipMinimumOrderValueLocalizedMessage[]" singular="localizedMessage" />
-    </transfer>
-
-    <transfer name="MerchantRelationshipMinimumOrderValueLocalizedMessage">
-        <property name="message" type="string" />
-        <property name="localeCode" type="string" />
     </transfer>
 </transfers>
