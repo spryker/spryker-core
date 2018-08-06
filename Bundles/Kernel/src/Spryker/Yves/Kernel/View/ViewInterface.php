@@ -15,4 +15,9 @@ interface ViewInterface extends ArrayAccess
      * @return string|null
      */
     public function getTemplate();
+
+    /**
+     * @return array
+     */
+    public function getData(): array;
 }

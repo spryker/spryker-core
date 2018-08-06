@@ -11,7 +11,9 @@ use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
@@ -64,8 +66,8 @@ class ProductMeasurementUnitBusinessTester extends Actor
         $sku,
         $quantity = 1
     ): CartChangeTransfer {
-        $quantitySalesUnit = new ProductMeasurementSalesUnitTransfer();
-        $quantitySalesUnit->setIdProductMeasurementSalesUnit($idProductMeasurementSalesUnit);
+        $quantitySalesUnit = $this->createProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
+
         $cartChangeTransfer->addItem(
             (new ItemTransfer())
                 ->setSku($sku)
@@ -74,5 +76,28 @@ class ProductMeasurementUnitBusinessTester extends Actor
         );
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param int $idProductMeasurementSalesUnit
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     */
+    public function createProductMeasurementSalesUnitTransfer(
+        int $idProductMeasurementSalesUnit
+    ): ProductMeasurementSalesUnitTransfer {
+        $productMeasurementUnit = (new ProductMeasurementUnitTransfer())
+            ->setName('SalesUnitName');
+        $productMeasurementBaseUnit = (new ProductMeasurementBaseUnitTransfer())
+            ->setProductMeasurementUnit(
+                (new ProductMeasurementUnitTransfer())->setName('BaseUnitName')
+            );
+
+        $quantitySalesUnit = new ProductMeasurementSalesUnitTransfer();
+        $quantitySalesUnit->setIdProductMeasurementSalesUnit($idProductMeasurementSalesUnit)
+            ->setProductMeasurementUnit($productMeasurementUnit)
+            ->setProductMeasurementBaseUnit($productMeasurementBaseUnit);
+
+        return $quantitySalesUnit;
     }
 }
