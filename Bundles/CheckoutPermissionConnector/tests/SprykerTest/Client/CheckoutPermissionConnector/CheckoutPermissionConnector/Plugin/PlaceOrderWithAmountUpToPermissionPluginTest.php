@@ -26,7 +26,7 @@ class PlaceOrderWithAmountUpToPermissionPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCanWithNullAmount(): void
+    public function testCanReturnsFalseWhenAmountIsNotProvided(): void
     {
         $configuration[static::FIELD_CENT_AMOUNT] = 10;
         $centAmount = null;
@@ -41,7 +41,7 @@ class PlaceOrderWithAmountUpToPermissionPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCanWithEmptyConfiguration(): void
+    public function testCanReturnsFalseWhenConfigurationIsMissing(): void
     {
         $configuration = [];
         $centAmount = 100;
@@ -56,7 +56,7 @@ class PlaceOrderWithAmountUpToPermissionPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCanWithHigherCentAmount(): void
+    public function testCanReturnsFalseWhenConfiguredAmountIsExceeded(): void
     {
         $configuration[static::FIELD_CENT_AMOUNT] = 10;
         $centAmount = 100;
@@ -71,7 +71,7 @@ class PlaceOrderWithAmountUpToPermissionPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCanWithLowerCentAmount(): void
+    public function testCanReturnsTrueWhenAmountIsBelowConfiguredValue(): void
     {
         $configuration[static::FIELD_CENT_AMOUNT] = 100;
         $centAmount = 10;
