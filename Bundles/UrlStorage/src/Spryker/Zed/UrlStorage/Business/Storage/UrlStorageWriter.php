@@ -128,7 +128,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     /**
      * @param array $data
      *
-     * @throws \Spryker\Zed\UrlStorage\Communication\Plugin\Event\Exception\MissingResourceException
+     * @throws \Spryker\Zed\UrlStorage\Business\Exception\MissingResourceException
      *
      * @return array
      */

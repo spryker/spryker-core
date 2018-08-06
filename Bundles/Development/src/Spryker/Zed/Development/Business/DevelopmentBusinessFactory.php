@@ -1076,6 +1076,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return [
             $this->createIdeAutoCompletionFacadeMethodBuilder(),
             $this->createIdeAutoCompletionQueryContainerMethodBuilder(),
+            $this->createIdeAutoCompletionClientMethodBuilder(),
             $this->createIdeAutoCompletionServiceMethodBuilder(),
         ];
     }
@@ -1099,6 +1100,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return [
             $this->createIdeAutoCompletionClientMethodBuilder(),
+            $this->createIdeAutoCompletionServiceMethodBuilder(),
         ];
     }
 

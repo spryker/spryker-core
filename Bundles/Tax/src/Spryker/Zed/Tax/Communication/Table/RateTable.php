@@ -23,7 +23,7 @@ class RateTable extends AbstractTable
     const COUNTRY_NOT_AVAILABLE = 'N/A';
 
     /**
-     * @var \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
+     * @var \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
      */
     protected $taxRateQuery;
 
