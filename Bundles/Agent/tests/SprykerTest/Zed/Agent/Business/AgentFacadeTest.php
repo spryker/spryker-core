@@ -42,8 +42,8 @@ class AgentFacadeTest extends Unit
         $agentFromAgentFacade = $this->tester->getAgentFacade()
             ->findAgentByUsername($userTransfer->getUsername());
 
-        $this->assertNotEmpty($agentFromAgentFacade->getIdUser());
-        $this->assertTrue($agentFromAgentFacade->getIsAgent());
+        $this->assertNotEmpty($agentFromAgentFacade->getAgent());
+        $this->assertTrue($agentFromAgentFacade->getIsAgentFound());
     }
 
     /**
@@ -56,7 +56,7 @@ class AgentFacadeTest extends Unit
                 $this->tester->createAgent()->getUsername()
             );
 
-        $this->assertEmpty($agentFromAgentFacade->getIdUser());
+        $this->assertFalse($agentFromAgentFacade->getIsAgentFound());
     }
 
     /**
