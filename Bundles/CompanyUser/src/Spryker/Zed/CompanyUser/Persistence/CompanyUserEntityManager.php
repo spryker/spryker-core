@@ -32,13 +32,9 @@ class CompanyUserEntityManager extends AbstractEntityManager implements CompanyU
             ->mapCompanyUserTransferToEntityTransfer($companyUserTransfer);
         $entityTransfer = $this->save($entityTransfer);
 
-        $newCompanyUserTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createCompanyUserMapper()
             ->mapEntityTransferToCompanyUserTransfer($entityTransfer);
-
-        return (new CompanyUserTransfer())->fromArray(
-            $newCompanyUserTransfer->modifiedToArray()
-        );
     }
 
     /**
