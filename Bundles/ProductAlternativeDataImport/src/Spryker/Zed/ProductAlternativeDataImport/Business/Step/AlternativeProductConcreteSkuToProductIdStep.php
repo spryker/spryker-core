@@ -46,6 +46,7 @@ class AlternativeProductConcreteSkuToProductIdStep implements DataImportStepInte
         $productConcreteSku = $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_CONCRETE_SKU];
 
         if (!isset($this->idProductConcreteCache[$productConcreteSku])) {
+            /** @var \Orm\Zed\Product\Persistence\SpyProduct|null $productConcreteEntity */
             $productConcreteEntity = SpyProductQuery::create()->findOneBySku($productConcreteSku);
             if (!$productConcreteEntity) {
                 throw new EntityNotFoundException(

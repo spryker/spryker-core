@@ -10,7 +10,9 @@ namespace Spryker\Zed\SprykGui\Business\Spryk;
 use Generated\Shared\Transfer\ArgumentCollectionTransfer;
 use Generated\Shared\Transfer\ArgumentTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\ReturnTypeTransfer;
 use Spryker\Zed\SprykGui\Business\Graph\GraphBuilderInterface;
+use Spryker\Zed\SprykGui\Business\Spryk\Form\FormDataNormalizer;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
 use Symfony\Component\Process\Process;
 use Zend\Filter\FilterChain;
@@ -68,9 +70,9 @@ class Spryk implements SprykInterface
      */
     public function buildSprykView(string $sprykName, array $formData): array
     {
-        $formData = $this->normalizeFormData($formData);
-        $commandLine = $this->getCommandLine($sprykName, $formData);
-        $jiraTemplate = $this->getJiraTemplate($sprykName, $commandLine, $formData);
+        $normalizedFormData = (new FormDataNormalizer())->normalizeFormData($formData);
+        $commandLine = $this->getCommandLine($sprykName, $normalizedFormData);
+        $jiraTemplate = $this->getJiraTemplate($sprykName, $commandLine, $normalizedFormData);
 
         return [
             'commandLine' => $commandLine,
@@ -98,14 +100,16 @@ class Spryk implements SprykInterface
                 continue;
             }
 
-            if (isset($formData['constructorArguments'])) {
-            }
-
             if ($key === 'sprykDetails') {
                 foreach ($value as $sprykDetailKey => $sprykDetailValue) {
                     if (isset($normalizedFormData[$sprykDetailKey])) {
                         continue;
                     }
+
+                    if ($sprykDetailValue instanceof ReturnTypeTransfer) {
+                        $sprykDetailValue = $sprykDetailValue->getType();
+                    }
+
                     $normalizedFormData[$sprykDetailKey] = $sprykDetailValue;
                 }
                 continue;
@@ -164,7 +168,7 @@ class Spryk implements SprykInterface
             $organized[$application][$sprykName] = [
                 'humanized' => $this->createHumanizeFilter()->filter($sprykName),
                 'description' => $sprykDefinition['description'],
-                'priority' => isset($sprykDefinition['priority'])?$sprykDefinition['priority']:'',
+                'priority' => isset($sprykDefinition['priority']) ? $sprykDefinition['priority'] : '',
             ];
 
             ksort($organized[$application]);
@@ -215,8 +219,8 @@ class Spryk implements SprykInterface
         $commandLine = '';
         foreach ($commandLineArguments as $argumentKey => $argumentValue) {
             $argumentValues = (array)$argumentValue;
-            foreach ($argumentValues as $argumentValue) {
-                $commandLine .= sprintf(' --%s=%s', $argumentKey, escapeshellarg($argumentValue));
+            foreach ($argumentValues as $innerArgumentValue) {
+                $commandLine .= sprintf(' --%s=%s', $argumentKey, escapeshellarg($innerArgumentValue));
             }
         }
 
