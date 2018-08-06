@@ -44,6 +44,7 @@ class PermissionMapper
     ) {
         $permissionTransfer->fromArray($permissionEntity->toArray(), true);
         $permissionTransfer->setConfigurationSignature(\json_decode($permissionEntity->getConfigurationSignature(), true));
+        $permissionTransfer->setIsAwareConfiguration($permissionEntity->getIsAwareConfiguration());
 
         return $permissionTransfer;
     }
@@ -58,6 +59,7 @@ class PermissionMapper
     {
         $permissionEntity->setKey($permissionTransfer->getKey());
         $permissionEntity->setConfigurationSignature(\json_encode($permissionTransfer->getConfigurationSignature()));
+        $permissionEntity->setIsAwareConfiguration($permissionTransfer->getIsAwareConfiguration());
 
         return $permissionEntity;
     }

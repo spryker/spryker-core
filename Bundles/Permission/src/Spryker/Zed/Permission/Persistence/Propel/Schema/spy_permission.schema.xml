@@ -5,6 +5,7 @@
         <column name="id_permission" required="true" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="key" required="true" type="VARCHAR" size="255" />
         <column name="configuration_signature" type="LONGVARCHAR" />
+        <column name="is_aware_configuration" type="BOOLEAN" required="true" default="false"/>
 
         <unique name="spy_permission-key">
             <unique-column name="key" />
