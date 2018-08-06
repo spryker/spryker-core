@@ -15,7 +15,6 @@ use Spryker\Zed\SalesReclamation\Persistence\Mapper\SalesReclamationMapperInterf
 
 /**
  * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationPersistenceFactory getFactory()
- *
  */
 class SalesReclamationRepository extends AbstractRepository implements SalesReclamationRepositoryInterface
 {
@@ -31,13 +30,19 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
         $query = $this->getFactory()
             ->createSalesReclamationQuery()
             ->leftJoinWithSpySalesReclamationItem()
-            ->useSpySalesReclamationItemQuery()
+                ->useSpySalesReclamationItemQuery()
                 ->leftJoinWithOrderItem()
             ->endUse()
             ->leftJoinWithOrder()
             ->filterByIdSalesReclamation($reclamationTransfer->getIdSalesReclamation());
+
+        $query = $this->buildQueryFromCriteria($query);
+        if (!$query->count()) {
+            return null;
+        }
+
         /** @var \Generated\Shared\Transfer\SpySalesReclamationEntityTransfer[] $spyReclamationsEntityTransfer */
-        $spyReclamationsEntityTransfer = $this->buildQueryFromCriteria($query)->find();
+        $spyReclamationsEntityTransfer = $query->find();
         $spyReclamationEntityTransfer = $spyReclamationsEntityTransfer[0];
 
         return $this->getMapper()->mapEntityTransferToReclamationTransfer($spyReclamationEntityTransfer);
