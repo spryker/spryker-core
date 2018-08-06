@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Development\Business;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -304,10 +303,10 @@ interface DevelopmentFacadeInterface
      *
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $messenger
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string|null $module
      *
      * @return bool
      */
-    public function runPropelAbstractValidation(LoggerInterface $messenger, ?string $module): bool;
+    public function runPropelAbstractValidation(OutputInterface $output, ?string $module): bool;
 }

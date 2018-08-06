@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\Development\Business\Propel;
 
-use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 interface PropelAbstractClassValidatorInterface
 {
     /**
-     * @param \Psr\Log\LoggerInterface $messenger
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param null|string $module
      *
      * @return bool
      */
-    public function validate(LoggerInterface $messenger, ?string $module): bool;
+    public function validate(OutputInterface $output, ?string $module): bool;
 }

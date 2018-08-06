@@ -50,7 +50,7 @@ class PropelAbstractValidateConsole extends Console
 
         $this->info($message);
 
-        $result = $this->getFacade()->runPropelAbstractValidation($this->getMessenger(), $module);
+        $result = $this->getFacade()->runPropelAbstractValidation($output, $module);
         if ($result) {
             return static::CODE_SUCCESS;
         }

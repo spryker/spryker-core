@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Development\Business\Propel;
 
 use Exception;
-use Psr\Log\LoggerInterface;
 use SimpleXMLElement;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\FilterChain;
@@ -18,31 +18,31 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterface
 {
     /**
-     * @param \Psr\Log\LoggerInterface $messenger
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param null|string $module
      *
      * @return bool
      */
-    public function validate(LoggerInterface $messenger, ?string $module): bool
+    public function validate(OutputInterface $output, ?string $module): bool
     {
         if ($module === null) {
-            return $this->validateModules($messenger);
+            return $this->validateModules($output);
         }
 
-        return $this->validateModule($messenger, $module);
+        return $this->validateModule($output, $module);
     }
 
     /**
-     * @param \Psr\Log\LoggerInterface $messenger
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return bool
      */
-    protected function validateModules(LoggerInterface $messenger): bool
+    protected function validateModules(OutputInterface $output): bool
     {
         $modules = $this->getModuleNames();
         $isValid = true;
         foreach ($modules as $module) {
-            $isModuleValid = $this->validateModule($messenger, $module);
+            $isModuleValid = $this->validateModule($output, $module);
             if (!$isModuleValid) {
                 $isValid = false;
             }
@@ -71,12 +71,12 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
     }
 
     /**
-     * @param \Psr\Log\LoggerInterface $messenger
+     * @param \Symfony\Component\Console\Output\OutputInterface $messenger
      * @param string $module
      *
      * @return bool
      */
-    protected function validateModule(LoggerInterface $messenger, string $module): bool
+    protected function validateModule(OutputInterface $messenger, string $module): bool
     {
         if (!$this->hasSchemaDirectory($module)) {
             return true;
@@ -131,7 +131,7 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
     }
 
     /**
-     * @param \Psr\Log\LoggerInterface $messenger
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string $module
      * @param \Symfony\Component\Finder\SplFileInfo $schemaFile
      *
@@ -139,7 +139,7 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
      *
      * @return bool
      */
-    protected function abstractForTablesExist(LoggerInterface $messenger, string $module, SplFileInfo $schemaFile): bool
+    protected function abstractForTablesExist(OutputInterface $output, string $module, SplFileInfo $schemaFile): bool
     {
         $isValid = true;
         $simpleXmlElement = simplexml_load_file($schemaFile->getPathname());
@@ -154,7 +154,9 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
 
         $schemaModule = $this->getModuleFromSchemaNamespace($simpleXmlElement);
         if ($schemaModule !== $module) {
-            $messenger->debug(sprintf('Current schema file found in "%s" belongs to "%s", validation skipped.', $module, $schemaModule));
+            if ($output->isVerbose()) {
+                $output->writeln(sprintf('<fg=yellow>Current schema file found in "<fg=green>%s</>" belongs to "<fg=green>%s</>", validation skipped.</>', $module, $schemaModule));
+            }
 
             return $isValid;
         }
@@ -166,16 +168,15 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
             $abstractEntityClass = sprintf('Spryker\\Zed\\%s\\Persistence\\Propel\\Abstract%s', $module, $phpName);
             if (!class_exists($abstractEntityClass)) {
                 $isValid = false;
-                $messenger->error(sprintf('%s does not exists, please create one.', $abstractEntityClass));
-                $messenger->info(sprintf('vendor/bin/console spryk:run AddZedPersistencePropelAbstractEntity  --module=\'%1$s\' --targetModule=\'%1$s\' --tableName=\'%s\'', $module, $tableName));
+                $output->writeln(sprintf('<fg=red>%s does not exists, please create one.</>', $abstractEntityClass));
+                $output->writeln(sprintf('<fg=green>vendor/bin/console spryk:run AddZedPersistencePropelAbstractEntity  --module=\'%1$s\' --targetModule=\'%1$s\' --tableName=\'%2$s\' -n</>', $module, $tableName));
             }
 
             $abstractQueryClass = sprintf('Spryker\\Zed\\%s\\Persistence\\Propel\\Abstract%sQuery', $module, $phpName);
             if (!class_exists($abstractQueryClass)) {
                 $isValid = false;
-                $messenger->error(sprintf('%s does not exists, please create one.', $abstractQueryClass));
-                $messenger->info(sprintf('vendor/bin/console spryk:run AddZedPersistencePropelAbstractQuery  --module=\'%1$s\' --targetModule=\'%1$s\' --tableName=\'%s\'', $module, $tableName));
-
+                $output->writeln(sprintf('<fg=red>%s does not exists, please create one.</>', $abstractQueryClass));
+                $output->writeln(sprintf('<fg=green>vendor/bin/console spryk:run AddZedPersistencePropelAbstractQuery  --module=\'%1$s\' --targetModule=\'%1$s\' --tableName=\'%2$s\' -n</>', $module, $tableName));
             }
         }
 

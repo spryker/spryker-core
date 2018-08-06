@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Development\Business;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
-use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -391,15 +390,17 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $messenger
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string|null $module
      *
      * @return bool
      */
-    public function runPropelAbstractValidation(LoggerInterface $messenger, ?string $module): bool
+    public function runPropelAbstractValidation(OutputInterface $output, ?string $module): bool
     {
-        return $this->getFactory()->createPropelAbstractValidator()->validate($messenger, $module);
+        return $this->getFactory()->createPropelAbstractValidator()->validate($output, $module);
     }
 }
