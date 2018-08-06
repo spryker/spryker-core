@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\ProductAttribute\Persistence\Propel;
 
-use Orm\Zed\ProductAttribute\Persistence\Base\SpyProductManagementAttributeQuery as BaseSpyProductManagementAttributeQuery;
+use Orm\Zed\ProductAttribute\Persistence\Base\SpyProductManagementAttributeValueQuery as BaseSpyProductManagementAttributeValueQuery;
 
 /**
- * @deprecated Please use AbstractSpyProductManagementAttributeQuery instead.
- *
- * Skeleton subclass for representing a row from the 'spy_product_management_attribute' table.
+ * Skeleton subclass for performing query and update operations on the 'spy_product_management_attribute_value' table.
  *
  *
  *
@@ -20,6 +18,6 @@ use Orm\Zed\ProductAttribute\Persistence\Base\SpyProductManagementAttributeQuery
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyProductAttributeQuery extends BaseSpyProductManagementAttributeQuery
+abstract class AbstractSpyProductManagementAttributeValueQuery extends BaseSpyProductManagementAttributeValueQuery
 {
-}
+} // SpyProductManagementAttributeValueQuery
