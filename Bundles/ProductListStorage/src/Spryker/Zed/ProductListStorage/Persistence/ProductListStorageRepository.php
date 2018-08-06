@@ -119,7 +119,7 @@ class ProductListStorageRepository extends AbstractRepository implements Product
      *
      * @return array
      */
-    public function findProductAbstractIdsByCategoryIds(array $categoryIds): array
+    public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
     {
         /** @var \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery $productCategoryQuery */
         $productCategoryQuery = $this->getFactory()

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Cart\Dependency;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface as SprykerCartPreCheckPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\Cart\Dependency\Plugin\CartPreCheckPluginInterface instead.
+ * @deprecated Use \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface instead.
  */
 interface CartPreCheckPluginInterface extends SprykerCartPreCheckPluginInterface
 {

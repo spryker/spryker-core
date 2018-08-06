@@ -11,5 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductListGuiConfig extends AbstractBundleConfig
 {
-    public const REDIRECT_URL_DEFAULT = '/product-list-gui';
+    protected const REDIRECT_URL_DEFAULT = '/product-list-gui';
+
+    /**
+     * @return string
+     */
+    public function getDefaultRedirectUrl(): string
+    {
+        return static::REDIRECT_URL_DEFAULT;
+    }
 }

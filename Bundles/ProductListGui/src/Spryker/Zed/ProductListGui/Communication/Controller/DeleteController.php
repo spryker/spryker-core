@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductListTransfer;
-use Spryker\Zed\ProductListGui\ProductListGuiConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -39,10 +38,15 @@ class DeleteController extends ProductListAbstractController
      */
     public function confirmAction(Request $request)
     {
+        $defaultRedirectUrl = $this->getFactory()
+            ->getConfig()
+            ->getDefaultRedirectUrl();
+
         $redirectUrl = $request->query->get(
             static::URL_PARAM_REDIRECT_URL,
-            ProductListGuiConfig::REDIRECT_URL_DEFAULT
+            $defaultRedirectUrl
         );
+
         $idProductList = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_LIST));
         $productListTransfer = (new ProductListTransfer())->setIdProductList($idProductList);
 

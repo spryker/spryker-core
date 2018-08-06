@@ -71,11 +71,11 @@ class ProductListStorageFacade extends AbstractFacade implements ProductListStor
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByCategoryIds(array $categoryIds): array
+    public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
     {
         return $this->getFactory()
             ->createProductAbstractReader()
-            ->findProductAbstractIdsByCategoryIds($categoryIds);
+            ->getProductAbstractIdsByCategoryIds($categoryIds);
     }
 
     /**

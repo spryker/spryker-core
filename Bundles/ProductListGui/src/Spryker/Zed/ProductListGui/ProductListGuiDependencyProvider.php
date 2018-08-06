@@ -258,7 +258,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderInterface[]
+     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderPluginInterface[]
      */
     protected function getProductListTableActionExpanderPlugins(): array
     {

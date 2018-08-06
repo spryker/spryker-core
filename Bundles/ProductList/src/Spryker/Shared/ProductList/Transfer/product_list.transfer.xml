@@ -22,4 +22,9 @@
         <property name="productIds" type="int[]"/>
     </transfer>
 
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
 </transfers>

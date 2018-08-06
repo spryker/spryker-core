@@ -40,8 +40,8 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByCategoryIds(array $categoryIds): array
+    public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
     {
-        return $this->productListStorageRepository->findProductAbstractIdsByCategoryIds($categoryIds);
+        return $this->productListStorageRepository->getProductAbstractIdsByCategoryIds($categoryIds);
     }
 }

@@ -21,5 +21,5 @@ interface ProductAbstractReaderInterface
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByCategoryIds(array $categoryIds): array;
+    public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
-use Spryker\Zed\ProductListGui\ProductListGuiConfig;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -37,7 +36,11 @@ class CreateController extends ProductListAbstractController
                 $productListTransfer->getTitle()
             ));
 
-            return $this->redirectResponse(ProductListGuiConfig::REDIRECT_URL_DEFAULT);
+            $defaultRedirectUrl = $this->getFactory()
+                ->getConfig()
+                ->getDefaultRedirectUrl();
+
+            return $this->redirectResponse($defaultRedirectUrl);
         }
 
         return $this->viewResponse($this->prepareTemplateVariables($productListAggregateForm));

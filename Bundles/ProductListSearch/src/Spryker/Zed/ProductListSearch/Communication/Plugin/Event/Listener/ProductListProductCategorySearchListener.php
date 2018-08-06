@@ -40,7 +40,7 @@ class ProductListProductCategorySearchListener extends AbstractPlugin implements
             ->getEventTransferForeignKeys($eventTransfers, SpyProductListCategoryTableMap::COL_FK_CATEGORY);
 
         $this->getFactory()->getProductPageSearchFacade()->refresh(
-            $this->getFacade()->findProductAbstractIdsByCategoryIds($categoryIds),
+            $this->getFacade()->getProductAbstractIdsByCategoryIds($categoryIds),
             [ProductListSearchConfig::PLUGIN_PRODUCT_LIST_DATA]
         );
     }

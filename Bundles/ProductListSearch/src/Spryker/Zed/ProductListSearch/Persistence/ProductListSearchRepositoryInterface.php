@@ -14,12 +14,12 @@ interface ProductListSearchRepositoryInterface
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByConcreteIds(array $productConcreteIds): array;
+    public function getProductAbstractIdsByConcreteIds(array $productConcreteIds): array;
 
     /**
      * @param array $categoryIds
      *
      * @return array
      */
-    public function findProductAbstractIdsByCategoryIds(array $categoryIds): array;
+    public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
 }

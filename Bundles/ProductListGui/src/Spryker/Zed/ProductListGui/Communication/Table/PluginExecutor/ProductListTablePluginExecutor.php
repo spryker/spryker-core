@@ -12,7 +12,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class ProductListTablePluginExecutor implements ProductListTablePluginExecutorInterface
 {
     /**
-     * @var array|\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderInterface[]
+     * @var array|\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderPluginInterface[]
      */
     protected $productListTableActionExpanderPlugins;
 
@@ -34,7 +34,7 @@ class ProductListTablePluginExecutor implements ProductListTablePluginExecutorIn
     /**
      * ProductListTablePluginExecutor constructor.
      *
-     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderInterface[] $productListTableActionExpanderPlugins
+     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderPluginInterface[] $productListTableActionExpanderPlugins
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableConfigExpanderPluginInterface[] $productListTableConfigExpanderPlugins
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface[] $productListTableDataExpanderPlugins
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableHeaderExpanderPluginInterface[] $productListTableHeaderExpanderPlugins

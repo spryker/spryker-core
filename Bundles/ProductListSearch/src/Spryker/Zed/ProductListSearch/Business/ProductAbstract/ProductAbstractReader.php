@@ -30,9 +30,9 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByConcreteIds(array $productConcreteIds): array
+    public function getProductAbstractIdsByConcreteIds(array $productConcreteIds): array
     {
-        return $this->productListSearchRepository->findProductAbstractIdsByConcreteIds($productConcreteIds);
+        return $this->productListSearchRepository->getProductAbstractIdsByConcreteIds($productConcreteIds);
     }
 
     /**
@@ -40,8 +40,8 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByCategoryIds(array $categoryIds): array
+    public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
     {
-        return $this->productListSearchRepository->findProductAbstractIdsByCategoryIds($categoryIds);
+        return $this->productListSearchRepository->getProductAbstractIdsByCategoryIds($categoryIds);
     }
 }

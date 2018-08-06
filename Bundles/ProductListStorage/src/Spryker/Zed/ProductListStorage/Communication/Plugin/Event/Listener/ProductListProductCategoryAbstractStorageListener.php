@@ -35,7 +35,7 @@ class ProductListProductCategoryAbstractStorageListener extends AbstractPlugin i
     {
         $this->preventTransaction();
 
-        $productAbstractIds = $this->getFacade()->findProductAbstractIdsByCategoryIds(
+        $productAbstractIds = $this->getFacade()->getProductAbstractIdsByCategoryIds(
             $this->getProductListCategoryIds($eventTransfers, $eventName)
         );
 

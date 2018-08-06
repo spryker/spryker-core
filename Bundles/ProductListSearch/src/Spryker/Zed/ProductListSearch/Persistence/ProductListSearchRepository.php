@@ -23,7 +23,7 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByConcreteIds(array $productConcreteIds): array
+    public function getProductAbstractIdsByConcreteIds(array $productConcreteIds): array
     {
         /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
         $productQuery = $this->getFactory()
@@ -43,7 +43,7 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByCategoryIds(array $categoryIds): array
+    public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
     {
         /** @var \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery $productCategoryQuery */
         $productCategoryQuery = $this->getFactory()

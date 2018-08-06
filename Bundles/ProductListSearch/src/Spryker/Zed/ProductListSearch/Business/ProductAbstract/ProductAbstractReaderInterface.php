@@ -14,12 +14,12 @@ interface ProductAbstractReaderInterface
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByConcreteIds(array $productConcreteIds): array;
+    public function getProductAbstractIdsByConcreteIds(array $productConcreteIds): array;
 
     /**
      * @param int[] $categoryIds
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByCategoryIds(array $categoryIds): array;
+    public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
 }

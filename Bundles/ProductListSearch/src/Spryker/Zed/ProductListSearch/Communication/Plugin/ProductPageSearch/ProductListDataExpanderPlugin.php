@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductListSearch\Communication\Plugin\PageDataExpander;
+namespace Spryker\Zed\ProductListSearch\Communication\Plugin\ProductPageSearch;
 
 use Generated\Shared\Transfer\ProductListMapTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
