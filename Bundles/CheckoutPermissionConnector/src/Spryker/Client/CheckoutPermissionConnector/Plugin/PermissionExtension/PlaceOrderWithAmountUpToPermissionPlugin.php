@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CheckoutPermissionConnector\Plugin;
+namespace Spryker\Client\CheckoutPermissionConnector\Plugin\PermissionExtension;
 
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 

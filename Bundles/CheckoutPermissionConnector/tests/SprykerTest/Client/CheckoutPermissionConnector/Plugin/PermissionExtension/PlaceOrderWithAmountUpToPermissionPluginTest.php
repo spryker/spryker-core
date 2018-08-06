@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Client\CheckoutPermissionConnector\Plugin;
+namespace SprykerTest\Client\CheckoutPermissionConnector\Plugin\PermissionExtension;
 
 use Codeception\Test\Unit;
-use Spryker\Client\CheckoutPermissionConnector\Plugin\PlaceOrderWithAmountUpToPermissionPlugin;
+use Spryker\Client\CheckoutPermissionConnector\Plugin\PermissionExtension\PlaceOrderWithAmountUpToPermissionPlugin;
 
 /**
  * Auto-generated group annotations
@@ -16,6 +16,7 @@ use Spryker\Client\CheckoutPermissionConnector\Plugin\PlaceOrderWithAmountUpToPe
  * @group Client
  * @group CheckoutPermissionConnector
  * @group Plugin
+ * @group PermissionExtension
  * @group PlaceOrderWithAmountUpToPermissionPluginTest
  * Add your own group annotations below this line
  */

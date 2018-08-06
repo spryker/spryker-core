@@ -13,7 +13,7 @@ coverage:
 
 suites:
     CheckoutPermissionConnector:
-        path: CheckoutPermissionConnector
+        path: /
         class_name: PlaceOrderWithAmountUpToPermissionPluginTest
         modules:
             enabled:
