@@ -163,7 +163,7 @@ class PostgresPostgresIndexGenerator implements PostgresIndexGeneratorInterface
      */
     protected function getIndexName(string $tableName, string $indexColumnName): string
     {
-        $indexName = 'index-' . $tableName . '-' . $indexColumnName;
+        $indexName = sprintf('index-%s-%s', $tableName, $indexColumnName);
 
         if ($this->isLongerThanIndexNameMaxLength($indexName)) {
             $hash = substr(md5($indexName), 0, 12);
@@ -190,7 +190,7 @@ class PostgresPostgresIndexGenerator implements PostgresIndexGeneratorInterface
     {
         $targetDirectory = $this->config->getTargetDirectory();
         if (!is_dir($targetDirectory)) {
-            mkdir($targetDirectory, 0777, true);
+            mkdir($targetDirectory, $this->config->getPermissionMode(), true);
         }
 
         return $targetDirectory;

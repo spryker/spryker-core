@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\IndexGenerator;
 
+use Spryker\Shared\IndexGenerator\IndexGeneratorConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -45,5 +46,13 @@ class IndexGeneratorConfig extends AbstractBundleConfig
     public function getPathToMergedSchemas(): string
     {
         return implode(DIRECTORY_SEPARATOR, [APPLICATION_SOURCE_DIR, 'Orm', 'Propel', APPLICATION_STORE, 'Schema']);
+    }
+
+    /**
+     * @return int
+     */
+    public function getPermissionMode(): int
+    {
+        return $this->get(IndexGeneratorConstants::PERMISSION_MODE, 0770);
     }
 }
