@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -15,6 +14,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 /**
  * @method \Spryker\Zed\ShoppingListStorage\Business\ShoppingListStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ShoppingListStorage\Communication\ShoppingListStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepository getRepository()
  */
 class ShoppingListStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
@@ -31,10 +31,11 @@ class ShoppingListStorageListener extends AbstractPlugin implements EventBulkHan
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $customer_reference = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventTransfers, SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE);
+        $shippingListIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $customer_references = $this->getRepository()->getCustomerReferencesByShippingListIds($shippingListIds);
 
-        $this->getFacade()->publish($customer_reference);
+        foreach ($customer_references as $customer_reference) {
+            $this->getFacade()->publish($customer_reference);
+        }
     }
 }

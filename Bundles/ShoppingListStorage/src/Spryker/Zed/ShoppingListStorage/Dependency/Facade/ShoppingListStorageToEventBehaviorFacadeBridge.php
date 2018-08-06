@@ -32,4 +32,14 @@ class ShoppingListStorageToEventBehaviorFacadeBridge implements ShoppingListStor
     {
         return $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, $foreignKeyColumnName);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return array
+     */
+    public function getEventTransferIds(array $eventTransfers)
+    {
+        return $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+    }
 }

@@ -16,4 +16,11 @@ interface ShoppingListStorageToEventBehaviorFacadeInterface
      * @return mixed
      */
     public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return array
+     */
+    public function getEventTransferIds(array $eventTransfers);
 }
