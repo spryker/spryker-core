@@ -258,16 +258,19 @@ class IndexInstaller implements SearchInstallerInterface
     /**
      * @param \Elastica\Index $index
      *
-     * @return null|string
+     * @return string
      */
-    protected function getIndexState(Index $index): ?string
+    protected function getIndexState(Index $index): string
     {
-        $clusterState = $index->getClient()->getCluster()->getState();
-        if (isset($clusterState['metadata']['indices'][$index->getName()]['state'])) {
-            return $clusterState['metadata']['indices'][$index->getName()]['state'];
+        if ($index->getClient()) {
+            $clusterState = $index->getClient()->getCluster()->getState();
+
+            if (isset($clusterState['metadata']['indices'][$index->getName()]['state'])) {
+                return $clusterState['metadata']['indices'][$index->getName()]['state'];
+            }
         }
 
-        return null;
+        return '';
     }
 
     /**
