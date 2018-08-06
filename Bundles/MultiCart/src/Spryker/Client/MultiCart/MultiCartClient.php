@@ -8,6 +8,7 @@
 namespace Spryker\Client\MultiCart;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -190,5 +191,17 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
         return $this->getFactory()
             ->createCartUpdater()
             ->clearQuote($quoteTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    {
+        return $this->getFactory()->createCartReader()->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
     }
 }
