@@ -152,20 +152,4 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
             ->createCompanyBusinessUnitAssigner()
             ->assignDefaultBusinessUnitToCompanyUser($companyUserResponseTransfer);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
-     */
-    public function getCompanyUserCollection(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): array
-    {
-        return $this->getFactory()
-            ->createCompanyUserCollectionGetter()
-            ->getCompanyUserCollection($companyBusinessUnitTransfer);
-    }
 }

@@ -10,9 +10,23 @@ namespace Spryker\Zed\ShoppingListStorage\Persistence;
 interface ShoppingListStorageRepositoryInterface
 {
     /**
-     * @param array $shippingListIds
+     * @param int[] $shippingListIds
      *
-     * @return array
+     * @return string[]
      */
     public function getCustomerReferencesByShippingListIds(array $shippingListIds): array;
+
+    /**
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
+
+    /**
+     * @param int[] $companyUserIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
 }

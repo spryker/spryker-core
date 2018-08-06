@@ -31,16 +31,12 @@ class ShoppingListCompanyUserStorageListener extends AbstractPlugin implements E
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $fk_company_user = $this->getFactory()
+        $companyUserIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyShoppingListCompanyUserTableMap::COL_FK_COMPANY_USER);
 
-        $customerReference = $this->getFactory()
-            ->getCompanyUserFacade()
-            ->getCompanyUserById($fk_company_user)
-            ->getCustomer()
-            ->getCustomerReference();
+        $customerReferences = $this->getFacade()->getCustomerReferencesByCompanyUserIds($companyUserIds);
 
-        $this->getFacade()->publish($customerReference);
+        $this->getFacade()->publish($customerReferences);
     }
 }

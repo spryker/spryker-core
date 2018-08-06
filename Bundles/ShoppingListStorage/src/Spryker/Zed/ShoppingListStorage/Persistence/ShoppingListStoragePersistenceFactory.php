@@ -17,7 +17,7 @@ class ShoppingListStoragePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery
      */
-    public function createShippingListQuery(): SpyShoppingListQuery
+    public function createShippingListPropelQuery(): SpyShoppingListQuery
     {
         return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::PROPEL_QUERY_SHOPPING_LIST);
     }
@@ -27,6 +27,14 @@ class ShoppingListStoragePersistenceFactory extends AbstractPersistenceFactory
      */
     public function createShoppingListCustomerStorageQuery()
     {
-        return new SpyShoppingListCustomerStorageQuery();
+        return SpyShoppingListCustomerStorageQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
+     */
+    public function createCompanyUserPropelQuery()
+    {
+        return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::PROPEL_QUERY_COMPANY_USER);
     }
 }

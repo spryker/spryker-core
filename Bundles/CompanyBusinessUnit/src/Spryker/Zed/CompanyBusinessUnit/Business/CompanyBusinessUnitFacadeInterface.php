@@ -123,16 +123,4 @@ interface CompanyBusinessUnitFacadeInterface
     public function assignDefaultBusinessUnitToCompanyUser(
         CompanyUserResponseTransfer $companyUserResponseTransfer
     ): CompanyUserResponseTransfer;
-
-    /**
-     * Specification:
-     * - Return CompanyUserTransfer[] by CompanyBusinessUnitTransfer::idCompanyBusinessUnit in the transfer
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
-     */
-    public function getCompanyUserCollection(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): array;
 }

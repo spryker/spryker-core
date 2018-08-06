@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyBusinessUnitTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -32,18 +31,11 @@ class ShoppingListCompanyBusinessUnitStorageListener extends AbstractPlugin impl
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $idCompanyBusinessUnit = $this->getFactory()
+        $companyBusinessUnitIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyShoppingListCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT);
 
-        $companyUsers = $this->getFactory()
-            ->getCompanyBusinessUnitFacade()
-            ->getCompanyUserCollection((new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($idCompanyBusinessUnit));
-
-        $customer_references = [];
-        foreach ($companyUsers as $companyUser) {
-            $customer_references[] = $companyUser->getCustomer()->getCustomerReference();
-        }
+        $customer_references = $this->getFacade()->getCustomerReferencesByCompanyBusinessUnitIds($companyBusinessUnitIds);
 
         $this->getFacade()->publish($customer_references);
     }

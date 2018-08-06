@@ -73,20 +73,4 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(CompanyBusinessUnitDependencyProvider::PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE);
     }
-
-    /**
-     * @return \Spryker\Zed\CompanyBusinessUnit\Dependency\Facade\CompanyBusinessUnitToCompanyUserFacadeInterface
-     */
-    public function getCompanyUser()
-    {
-        return $this->getProvidedDependency(CompanyBusinessUnitDependencyProvider::FACADE_COMPANY_USER);
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyUserExtractor
-     */
-    public function createCompanyUserCollectionGetter(): CompanyUserExtractor
-    {
-        return new CompanyUserExtractor($this);
-    }
 }

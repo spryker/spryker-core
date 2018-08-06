@@ -12,6 +12,33 @@ interface ShoppingListStorageFacadeInterface
     /**
      * @api
      *
+     * @param int[] $shoppingListIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array;
+
+    /**
+     * @api
+     *
+     * @param int[] $companyUserIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
+
+    /**
+     * @api
+     *
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
+
+    /**
+     * @api
+     *
      * @param array $customer_reference
      *
      * @return void

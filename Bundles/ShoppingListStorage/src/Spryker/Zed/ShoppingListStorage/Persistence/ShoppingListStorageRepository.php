@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -15,23 +17,49 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ShoppingListStorageRepository extends AbstractRepository implements ShoppingListStorageRepositoryInterface
 {
     /**
-     * @param array $shippingListIds
+     * @param int[] $shippingListIds
      *
-     * @return array
+     * @return string[]
      */
     public function getCustomerReferencesByShippingListIds(array $shippingListIds): array
     {
-        $query = $this->getFactory()
-            ->createShippingListQuery()
-            ->filterByIdShoppingList_In($shippingListIds);
+        return $this->getFactory()
+            ->createShippingListPropelQuery()
+            ->filterByIdShoppingList_In($shippingListIds)
+            ->select([SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE])
+            ->find()
+            ->toArray();
+    }
 
-        /** @var \Generated\Shared\Transfer\SpyShoppingListEntityTransfer[] $shoppingListEntityTransfers */
-        $shoppingListEntityTransfers = $this->buildQueryFromCriteria($query)->find();
+    /**
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
+    {
+        return $this->getFactory()
+            ->createCompanyUserPropelQuery()
+            ->joinWithCustomer()
+            ->filterByFkCompanyBusinessUnit_In($companyBusinessUnitIds)
+            ->select(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)
+            ->find()
+            ->toArray();
+    }
 
-        $customerReferences = [];
-        foreach ($shoppingListEntityTransfers as $shoppingListEntityTransfer) {
-            $customerReferences[] = $shoppingListEntityTransfer->getCustomerReference();
-        }
-        return $customerReferences;
+    /**
+     * @param int[] $companyUserIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array
+    {
+        return $this->getFactory()
+            ->createCompanyUserPropelQuery()
+            ->joinWithCustomer()
+            ->filterByIdCompanyUser_In($companyUserIds)
+            ->select(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)
+            ->find()
+            ->toArray();
     }
 }
