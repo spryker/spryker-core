@@ -18,7 +18,7 @@
     "spryker/propel-orm": "^1.0.0"
   },
   "suggest": {
-    "spryker/event": "*",
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
     "spryker/propel-orm": "*",
     "spryker/shopping-list": "*"
   },
