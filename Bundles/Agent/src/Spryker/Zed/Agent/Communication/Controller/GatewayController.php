@@ -9,6 +9,7 @@ namespace Spryker\Zed\Agent\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\CustomerQueryTransfer;
+use Generated\Shared\Transfer\FindAgentResponseTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -20,9 +21,9 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
+     * @return \Generated\Shared\Transfer\FindAgentResponseTransfer
      */
-    public function findAgentByUsernameAction(UserTransfer $userTransfer): ?UserTransfer
+    public function findAgentByUsernameAction(UserTransfer $userTransfer): FindAgentResponseTransfer
     {
         return $this->getFacade()
             ->findAgentByUsername($userTransfer->getUsername());

@@ -9,22 +9,22 @@ namespace Spryker\Zed\Agent\Business;
 
 use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\CustomerQueryTransfer;
-use Generated\Shared\Transfer\UserTransfer;
+use Generated\Shared\Transfer\FindAgentResponseTransfer;
 
 interface AgentFacadeInterface
 {
     /**
      * Specification:
-     * - Returns UserTransfer with an agent.
-     * - If username is not exist, null will be returned.
+     * - Returns FindAgentResponseTransfer with an agent inside.
+     * - If username is not exist, FindAgentResponseTransfer::isAgentFound will be false.
      *
      * @api
      *
      * @param string $username
      *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
+     * @return \Generated\Shared\Transfer\FindAgentResponseTransfer
      */
-    public function findAgentByUsername(string $username): ?UserTransfer;
+    public function findAgentByUsername(string $username): FindAgentResponseTransfer;
 
     /**
      * Specification:

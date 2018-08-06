@@ -9,6 +9,7 @@ namespace Spryker\Client\Agent\Zed;
 
 use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\CustomerQueryTransfer;
+use Generated\Shared\Transfer\FindAgentResponseTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface AgentStubInterface
@@ -16,9 +17,9 @@ interface AgentStubInterface
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
+     * @return \Generated\Shared\Transfer\FindAgentResponseTransfer
      */
-    public function findAgentByUsername(UserTransfer $userTransfer): ?UserTransfer;
+    public function findAgentByUsername(UserTransfer $userTransfer): FindAgentResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer

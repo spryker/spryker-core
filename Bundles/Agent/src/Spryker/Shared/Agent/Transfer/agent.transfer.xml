@@ -15,4 +15,9 @@
         <property name="query" type="string"/>
         <property name="limit" type="int"/>
     </transfer>
+
+    <transfer name="FindAgentResponseTransfer">
+        <property name="agent" type="User"/>
+        <property name="isAgentFound" type="bool"/>
+    </transfer>
 </transfers>

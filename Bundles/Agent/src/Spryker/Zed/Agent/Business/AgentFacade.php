@@ -9,7 +9,7 @@ namespace Spryker\Zed\Agent\Business;
 
 use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\CustomerQueryTransfer;
-use Generated\Shared\Transfer\UserTransfer;
+use Generated\Shared\Transfer\FindAgentResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -24,9 +24,9 @@ class AgentFacade extends AbstractFacade implements AgentFacadeInterface
      *
      * @param string $username
      *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
+     * @return \Generated\Shared\Transfer\FindAgentResponseTransfer
      */
-    public function findAgentByUsername(string $username): ?UserTransfer
+    public function findAgentByUsername(string $username): FindAgentResponseTransfer
     {
         return $this->getFactory()
             ->createAgentReader()

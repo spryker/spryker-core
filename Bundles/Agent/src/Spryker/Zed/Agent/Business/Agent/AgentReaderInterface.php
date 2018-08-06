@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Agent\Business\Agent;
 
-use Generated\Shared\Transfer\UserTransfer;
+use Generated\Shared\Transfer\FindAgentResponseTransfer;
 
 interface AgentReaderInterface
 {
     /**
      * @param string $username
      *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
+     * @return \Generated\Shared\Transfer\FindAgentResponseTransfer
      */
-    public function findAgentByUsername(string $username): ?UserTransfer;
+    public function findAgentByUsername(string $username): FindAgentResponseTransfer;
 }

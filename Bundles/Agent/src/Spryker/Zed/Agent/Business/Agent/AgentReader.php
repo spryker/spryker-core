@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Agent\Business\Agent;
 
-use Generated\Shared\Transfer\UserTransfer;
+use Generated\Shared\Transfer\FindAgentResponseTransfer;
 use Spryker\Zed\Agent\Persistence\AgentRepositoryInterface;
 
 class AgentReader implements AgentReaderInterface
@@ -28,10 +28,19 @@ class AgentReader implements AgentReaderInterface
     /**
      * @param string $username
      *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
+     * @return \Generated\Shared\Transfer\FindAgentResponseTransfer
      */
-    public function findAgentByUsername(string $username): ?UserTransfer
+    public function findAgentByUsername(string $username): FindAgentResponseTransfer
     {
-        return $this->agentRepository->findAgentByUsername($username);
+        $userTransfer = $this->agentRepository->findAgentByUsername($username);
+        $findAgentResponseTransfer = new FindAgentResponseTransfer();
+
+        $findAgentResponseTransfer->setIsAgentFound($userTransfer !== null);
+
+        if ($findAgentResponseTransfer->getIsAgentFound()) {
+            $findAgentResponseTransfer->setAgent($userTransfer);
+        }
+
+        return $findAgentResponseTransfer;
     }
 }

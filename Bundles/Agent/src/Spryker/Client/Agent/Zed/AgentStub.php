@@ -9,32 +9,33 @@ namespace Spryker\Client\Agent\Zed;
 
 use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\CustomerQueryTransfer;
+use Generated\Shared\Transfer\FindAgentResponseTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Agent\Dependency\Client\AgentToZedRequestClientInterface;
 
 class AgentStub implements AgentStubInterface
 {
     /**
-     * @var \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     * @var \Spryker\Client\Agent\Dependency\Client\AgentToZedRequestClientInterface
      */
-    protected $zedStubClient;
+    protected $zedRequestClient;
 
     /**
-     * @param \Spryker\Client\Agent\Dependency\Client\AgentToZedRequestClientInterface $zedStubClient
+     * @param \Spryker\Client\Agent\Dependency\Client\AgentToZedRequestClientInterface $zedRequestClient
      */
-    public function __construct(AgentToZedRequestClientInterface $zedStubClient)
+    public function __construct(AgentToZedRequestClientInterface $zedRequestClient)
     {
-        $this->zedStubClient = $zedStubClient;
+        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
+     * @return \Generated\Shared\Transfer\FindAgentResponseTransfer
      */
-    public function findAgentByUsername(UserTransfer $userTransfer): ?UserTransfer
+    public function findAgentByUsername(UserTransfer $userTransfer): FindAgentResponseTransfer
     {
-        return $this->zedStubClient->call('/agent/gateway/find-agent-by-username', $userTransfer);
+        return $this->zedRequestClient->call('/agent/gateway/find-agent-by-username', $userTransfer);
     }
 
     /**
@@ -44,6 +45,6 @@ class AgentStub implements AgentStubInterface
      */
     public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer
     {
-        return $this->zedStubClient->call('/agent/gateway/find-customers-by-query', $customerQueryTransfer);
+        return $this->zedRequestClient->call('/agent/gateway/find-customers-by-query', $customerQueryTransfer);
     }
 }
