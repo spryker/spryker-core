@@ -68,6 +68,28 @@ class IndexInstallerTest extends Unit
      */
     public function testIndexInstallerDoesNotCreatesIndexesIfTheyExist()
     {
+        $indexMock = $this->getMockBuilder(Index::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['exists', 'create', 'setSettings'])
+            ->getMock();
+
+        $indexMock->method('exists')->willReturn(true);
+        $indexMock->expects($this->never())->method('create');
+
+        $indexMock->method('setSettings')->willReturn(new Response(''));
+        $indexMock->expects($this->once())->method('setSettings');
+
+        $indexInstallerMock = $this->createIndexInstallerMock($indexMock);
+        $indexInstallerMock->install();
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Elastica\Index $indexMock
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface
+     */
+    protected function createIndexInstallerMock($indexMock)
+    {
         $indexDefinitions = [
             $this->createIndexDefinition('foo', [
                 'index' => [
@@ -76,24 +98,15 @@ class IndexInstallerTest extends Unit
             ]),
         ];
 
-        $indexMock = $this->getMockBuilder(Index::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['exists', 'create', 'setSettings'])
+        return $this->getMockBuilder(IndexInstaller::class)
+            ->setConstructorArgs([
+                $this->createIndexDefinitionLoaderMock($indexDefinitions),
+                $this->createElasticaClientMock($indexMock),
+                $this->createMessengerMock(),
+                $this->createSearchConfigMock(),
+            ])
+            ->setMethods(['getIndexState'])
             ->getMock();
-
-        $indexMock->method('exists')->willReturn(true);
-        $indexMock->expects($this->never())->method('create');
-        $indexMock->method('setSettings')->willReturn(new Response(''));
-        $indexMock->expects($this->once())->method('setSettings');
-
-        $installer = new IndexInstaller(
-            $this->createIndexDefinitionLoaderMock($indexDefinitions),
-            $this->createElasticaClientMock($indexMock),
-            $this->createMessengerMock(),
-            $this->createSearchConfigMock()
-        );
-
-        $installer->install();
     }
 
     /**
@@ -137,7 +150,7 @@ class IndexInstallerTest extends Unit
     {
         $elasticaClientMock = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getIndex'])
+            ->setMethods(['getIndex', 'getCluster'])
             ->getMock();
 
         $elasticaClientMock
@@ -148,7 +161,7 @@ class IndexInstallerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockBuilder|\Psr\Log\LoggerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
     protected function createMessengerMock()
     {
