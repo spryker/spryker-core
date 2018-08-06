@@ -71,12 +71,12 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
     }
 
     /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $messenger
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string $module
      *
      * @return bool
      */
-    protected function validateModule(OutputInterface $messenger, string $module): bool
+    protected function validateModule(OutputInterface $output, string $module): bool
     {
         if (!$this->hasSchemaDirectory($module)) {
             return true;
@@ -86,7 +86,7 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
         $isModuleValid = true;
 
         foreach ($moduleSchemaFileFinder as $schemaFile) {
-            $isValid = $this->abstractForTablesExist($messenger, $module, $schemaFile);
+            $isValid = $this->abstractClassesForTablesExist($output, $module, $schemaFile);
             if (!$isValid) {
                 $isModuleValid = false;
             }
@@ -139,7 +139,7 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
      *
      * @return bool
      */
-    protected function abstractForTablesExist(OutputInterface $output, string $module, SplFileInfo $schemaFile): bool
+    protected function abstractClassesForTablesExist(OutputInterface $output, string $module, SplFileInfo $schemaFile): bool
     {
         $isValid = true;
         $simpleXmlElement = simplexml_load_file($schemaFile->getPathname());
@@ -161,6 +161,20 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
             return $isValid;
         }
 
+        return $this->abstractClassesForTableExists($simpleXmlTableElements, $module, $output);
+    }
+
+    /**
+     * @param \SimpleXMLElement[] $simpleXmlTableElements
+     * @param string $module
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return bool
+     */
+    protected function abstractClassesForTableExists(array $simpleXmlTableElements, string $module, OutputInterface $output): bool
+    {
+        $isValid = true;
+
         foreach ($simpleXmlTableElements as $simpleXmlTableElement) {
             $phpName = $this->getPhpNameFromSimpleXmlTableElement($simpleXmlTableElement);
             $tableName = $this->getTableNameFromSimpleXmlTableElement($simpleXmlTableElement);
@@ -168,7 +182,7 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
             $abstractEntityClass = sprintf('Spryker\\Zed\\%s\\Persistence\\Propel\\Abstract%s', $module, $phpName);
             if (!class_exists($abstractEntityClass)) {
                 $isValid = false;
-                $output->writeln(sprintf('<fg=red>%s does not exists, please create one.</>', $abstractEntityClass));
+                $output->writeln(sprintf('<fg=yellow>%s</> <fg=red>does not exists, please create one.</>', $abstractEntityClass));
                 $output->writeln(sprintf('<fg=green>vendor/bin/console spryk:run AddZedPersistencePropelAbstractEntity  --module=\'%1$s\' --targetModule=\'%1$s\' --tableName=\'%2$s\' -n</>', $module, $tableName));
             }
 
