@@ -5,16 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShoppingListStorage\Business;
+namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
-interface ShoppingListStorageFacadeInterface
+interface ShoppingListStorageEntityManagerInterface
 {
     /**
-     * @api
-     *
-     * @param array $customer_reference
+     * @param string $customerReference
      *
      * @return void
      */
-    public function publish(array $customer_reference): void;
+    public function saveShoppingListCustomerStorage(string $customerReference): void;
 }

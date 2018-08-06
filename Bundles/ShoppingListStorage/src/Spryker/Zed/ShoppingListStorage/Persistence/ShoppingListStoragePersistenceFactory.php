@@ -8,12 +8,10 @@
 namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
+use Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ShoppingListStorage\ShoppingListStorageDependencyProvider;
 
-/**
- * @method \Spryker\Zed\ShoppingListStorage\ShoppingListStorageConfig getConfig()
- */
 class ShoppingListStoragePersistenceFactory extends AbstractPersistenceFactory
 {
     /**
@@ -22,5 +20,13 @@ class ShoppingListStoragePersistenceFactory extends AbstractPersistenceFactory
     public function createShippingListQuery(): SpyShoppingListQuery
     {
         return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::PROPEL_QUERY_SHOPPING_LIST);
+    }
+
+    /**
+     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorageQuery
+     */
+    public function createShoppingListCustomerStorageQuery()
+    {
+        return new SpyShoppingListCustomerStorageQuery();
     }
 }

@@ -11,4 +11,14 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 class ShoppingListStorageBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\ShoppingListStorage\Business\ShoppingListCustomerStorageWriter
+     */
+    public function createShoppingListCustomerStorageWriter()
+    {
+        return new ShoppingListCustomerStorageWriter(
+            $this->getEntityManager(),
+            $this->getRepository()
+        );
+    }
 }

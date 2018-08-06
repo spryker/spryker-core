@@ -34,8 +34,6 @@ class ShoppingListStorageListener extends AbstractPlugin implements EventBulkHan
         $shippingListIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
         $customer_references = $this->getRepository()->getCustomerReferencesByShippingListIds($shippingListIds);
 
-        foreach ($customer_references as $customer_reference) {
-            $this->getFacade()->publish($customer_reference);
-        }
+        $this->getFacade()->publish($customer_references);
     }
 }
