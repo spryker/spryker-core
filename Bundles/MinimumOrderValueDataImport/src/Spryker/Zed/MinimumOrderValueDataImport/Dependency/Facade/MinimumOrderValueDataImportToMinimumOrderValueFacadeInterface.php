@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\MinimumOrderValueDataImport\Dependency\Facade;
 
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 
 interface MinimumOrderValueDataImportToMinimumOrderValueFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $minimumOrderValueTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
      */
-    public function setStoreThreshold(
-        MinimumOrderValueTransfer $minimumOrderValueTransfer
-    ): MinimumOrderValueTransfer;
+    public function setGlobalThreshold(
+        GlobalMinimumOrderValueTransfer $minimumOrderValueTransfer
+    ): GlobalMinimumOrderValueTransfer;
 }

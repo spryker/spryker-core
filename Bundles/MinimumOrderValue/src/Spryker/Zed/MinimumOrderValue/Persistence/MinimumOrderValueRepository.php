@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MinimumOrderValue\Persistence;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -51,13 +50,13 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer[]
      */
     public function getGlobalThresholdsByStoreAndCurrency(
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array {
-        $minimumOrderValueEntities = $this->getFactory()
+        $globalMinimumOrderValueEntities = $this->getFactory()
             ->createMinimumOrderValueQuery()
             ->filterByFkStore($storeTransfer->getIdStore())
             ->filterByFkCurrency($currencyTransfer->getIdCurrency())
@@ -65,19 +64,19 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
             ->leftJoinWithSpyMinimumOrderValueLocalizedMessage()
             ->find();
 
-        $minimumOrderValueTransfers = [];
+        $globalMinimumOrderValueTransfers = [];
 
-        $mapper = $this->getFactory()->createMinimumOrderValueMapper();
+        $minimumOrderValueMapper = $this->getFactory()->createMinimumOrderValueMapper();
 
-        foreach ($minimumOrderValueEntities as $minOrderValueEntity) {
-            $minimumOrderValueTransfer = $mapper->mapMinimumOrderValueEntityToTransfer(
-                $minOrderValueEntity,
-                new MinimumOrderValueTransfer()
+        foreach ($globalMinimumOrderValueEntities as $globalMinOrderValueEntity) {
+            $globalMinimumOrderValueTransfer = $minimumOrderValueMapper->mapGlobalMinimumOrderValueEntityToTransfer(
+                $globalMinOrderValueEntity,
+                new GlobalMinimumOrderValueTransfer()
             );
 
-            $minimumOrderValueTransfers[] = $minimumOrderValueTransfer;
+            $globalMinimumOrderValueTransfers[] = $globalMinimumOrderValueTransfer;
         }
 
-        return $minimumOrderValueTransfers;
+        return $globalMinimumOrderValueTransfers;
     }
 }

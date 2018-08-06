@@ -129,11 +129,11 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
     ): MerchantRelationshipMinimumOrderValueTransfer {
         return (new MerchantRelationshipMinimumOrderValueTransfer())
             ->setMerchantRelationship($merchantRelationshipTransfer)
+            ->setStore($storeTransfer)
+            ->setCurrency($currencyTransfer)
             ->setMinimumOrderValue(
                 (new MinimumOrderValueTransfer())
                     ->setMinimumOrderValueType($minimumOrderValueTypeTransfer)
-                    ->setStore($storeTransfer)
-                    ->setCurrency($currencyTransfer)
                     ->setValue($thresholdValue)
                     ->setFee($fee)
             );

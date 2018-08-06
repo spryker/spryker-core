@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business\StoreThreshold;
 
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyInvalidArgumentException;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface;
@@ -37,46 +37,44 @@ class StoreThresholdWriter implements StoreThresholdWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyInvalidArgumentException
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
      */
-    public function setStoreThreshold(
-        MinimumOrderValueTransfer $minimumOrderValueTransfer
-    ): MinimumOrderValueTransfer {
-        $minimumOrderValueTransfer
-            ->requireMinimumOrderValueType()
-            ->requireValue();
+    public function setGlobalThreshold(
+        GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+    ): GlobalMinimumOrderValueTransfer {
+        $globalMinimumOrderValueTransfer->requireMinimumOrderValue();
 
-        $minimumOrderValueTransfer
+        $globalMinimumOrderValueTransfer
+            ->getMinimumOrderValue()
             ->getMinimumOrderValueType()
             ->requireKey();
 
         $minimumOrderValueStrategy = $this->minimumOrderValueStrategyResolver
             ->resolveMinimumOrderValueStrategy(
-                $minimumOrderValueTransfer->getMinimumOrderValueType()->getKey()
+                $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()->getKey()
             );
 
-        if (!$minimumOrderValueStrategy->isValid(
-            $minimumOrderValueTransfer->getValue(),
-            $minimumOrderValueTransfer->getFee()
-        )) {
+        if (!$minimumOrderValueStrategy->isValid($globalMinimumOrderValueTransfer->getMinimumOrderValue())) {
             throw new StrategyInvalidArgumentException();
         }
 
-        if (!$minimumOrderValueTransfer
+        if (!$globalMinimumOrderValueTransfer->getMinimumOrderValue()
             ->getMinimumOrderValueType()
-            ->getIdMinimumOrderValueType()) {
+            ->getIdMinimumOrderValueType()
+        ) {
             $minimumOrderValueTypeTransfer = $this->minimumOrderValueEntityManager
                 ->saveMinimumOrderValueType($minimumOrderValueStrategy->toTransfer());
 
-            $minimumOrderValueTransfer->setMinimumOrderValueType(
-                $minimumOrderValueTypeTransfer
-            );
+            $globalMinimumOrderValueTransfer->getMinimumOrderValue()
+                ->setMinimumOrderValueType(
+                    $minimumOrderValueTypeTransfer
+                );
         }
 
-        return $this->minimumOrderValueEntityManager->setStoreThreshold($minimumOrderValueTransfer);
+        return $this->minimumOrderValueEntityManager->setGlobalThreshold($globalMinimumOrderValueTransfer);
     }
 }

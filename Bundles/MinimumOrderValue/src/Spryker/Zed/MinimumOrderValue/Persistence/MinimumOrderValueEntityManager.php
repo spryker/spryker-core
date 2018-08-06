@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Persistence;
 
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValue;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -48,17 +48,17 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
      */
-    public function setStoreThreshold(MinimumOrderValueTransfer $minimumOrderValueTransfer): MinimumOrderValueTransfer
+    public function setGlobalThreshold(GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer): GlobalMinimumOrderValueTransfer
     {
-        $this->assertRequiredAttributes($minimumOrderValueTransfer);
+        $this->assertRequiredAttributes($globalMinimumOrderValueTransfer);
 
-        $minimumOrderValueTypeTransfer = $minimumOrderValueTransfer->getMinimumOrderValueType();
-        $storeTransfer = $minimumOrderValueTransfer->getStore();
-        $currencyTransfer = $minimumOrderValueTransfer->getCurrency();
+        $minimumOrderValueTypeTransfer = $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType();
+        $storeTransfer = $globalMinimumOrderValueTransfer->getStore();
+        $currencyTransfer = $globalMinimumOrderValueTransfer->getCurrency();
 
         $minimumOrderValueEntity = $this->getFactory()
             ->createMinimumOrderValueQuery()
@@ -76,41 +76,44 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
         }
 
         $minimumOrderValueEntity
-            ->setValue($minimumOrderValueTransfer->getValue())
-            ->setFee($minimumOrderValueTransfer->getFee())
+            ->setValue($globalMinimumOrderValueTransfer->getMinimumOrderValue()->getValue())
+            ->setFee($globalMinimumOrderValueTransfer->getMinimumOrderValue()->getFee())
             ->setFkMinOrderValueType(
                 $minimumOrderValueTypeTransfer->getIdMinimumOrderValueType()
             )->save();
 
         return $this->getFactory()
             ->createMinimumOrderValueMapper()
-            ->mapMinimumOrderValueEntityToTransfer(
+            ->mapGlobalMinimumOrderValueEntityToTransfer(
                 $minimumOrderValueEntity,
-                new MinimumOrderValueTransfer()
+                new GlobalMinimumOrderValueTransfer()
             );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
      *
      * @return void
      */
-    protected function assertRequiredAttributes(MinimumOrderValueTransfer $minimumOrderValueTransfer): void
+    protected function assertRequiredAttributes(GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer): void
     {
-        $minimumOrderValueTransfer
-            ->requireValue()
-            ->requireMinimumOrderValueType()
+        $globalMinimumOrderValueTransfer
+            ->requireMinimumOrderValue()
             ->requireStore()
             ->requireCurrency();
 
-        $minimumOrderValueTransfer->getMinimumOrderValueType()
+        $globalMinimumOrderValueTransfer->getMinimumOrderValue()
+            ->requireValue()
+            ->requireMinimumOrderValueType();
+
+        $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()
             ->requireIdMinimumOrderValueType()
             ->requireThresholdGroup();
 
-        $minimumOrderValueTransfer->getStore()
+        $globalMinimumOrderValueTransfer->getStore()
             ->requireIdStore();
 
-        $minimumOrderValueTransfer->getCurrency()
+        $globalMinimumOrderValueTransfer->getCurrency()
             ->requireIdCurrency();
     }
 }

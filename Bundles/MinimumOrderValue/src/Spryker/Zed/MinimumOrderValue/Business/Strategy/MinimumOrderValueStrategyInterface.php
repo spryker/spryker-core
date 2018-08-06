@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business\Strategy;
 
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 
 interface MinimumOrderValueStrategyInterface
@@ -30,10 +31,9 @@ interface MinimumOrderValueStrategyInterface
     public function toTransfer(): MinimumOrderValueTypeTransfer;
 
     /**
-     * @param int $thresholdValue
-     * @param int|null $fee
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @return bool
      */
-    public function isValid(int $thresholdValue, ?int $fee = null): bool;
+    public function isValid(MinimumOrderValueTransfer $minimumOrderValueTransfer): bool;
 }
