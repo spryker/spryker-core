@@ -20,7 +20,7 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
 
     /**
      * {@inheritdoc}
-     * - Returns true if provided cent amount is lower equal than the provided expected value.
+     * - Returns true if provided cent amount is higher than the provided expected value.
      * - Returns false in case the cent amount or expected value is not provided.
      *
      * @param array $configuration
