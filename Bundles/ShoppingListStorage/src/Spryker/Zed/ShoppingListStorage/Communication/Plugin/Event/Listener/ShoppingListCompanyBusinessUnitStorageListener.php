@@ -40,9 +40,11 @@ class ShoppingListCompanyBusinessUnitStorageListener extends AbstractPlugin impl
             ->getCompanyBusinessUnitFacade()
             ->getCompanyUserCollection((new CompanyBusinessUnitTransfer())->setIdCompanyBusinessUnit($idCompanyBusinessUnit));
 
+        $customer_references = [];
         foreach ($companyUsers as $companyUser) {
-            $customer_reference = $companyUser->getCustomer()->getCustomerReference();
-            $this->getFacade()->publish($customer_reference);
+            $customer_references[] = $companyUser->getCustomer()->getCustomerReference();
         }
+
+        $this->getFacade()->publish($customer_references);
     }
 }

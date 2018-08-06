@@ -47,7 +47,7 @@ class CompanyUserExtractor
 
         $businessUnitCompanyUserList = [];
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUserTransfer) {
-            if ($companyBusinessUnitTransfer->getIdCompanyBusinessUnit() === $companyUserTransfer->getFkCompanyBusinessUnit()) {
+            if (in_array($companyUserTransfer->getFkCompanyBusinessUnit(), $companyBusinessUnitTransfer->getIdCompanyBusinessUnit())) {
                 $businessUnitCompanyUserList[] = $companyUserTransfer;
             }
         }
