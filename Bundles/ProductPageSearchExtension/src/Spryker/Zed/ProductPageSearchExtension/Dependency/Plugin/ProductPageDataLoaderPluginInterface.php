@@ -5,11 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPageSearch\Dependency\Plugin;
+namespace Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 
-// TODO move it to Extension module
 interface ProductPageDataLoaderPluginInterface
 {
     /**

@@ -8,19 +8,16 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataLoader;
 
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade getFacade()
  */
 class CategoryPageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
 {
-    const VIRT_COLUMN_ID_CATEGORY_NODE = 'id_category_node';
-
     /**
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
      *
@@ -50,13 +47,7 @@ class CategoryPageDataLoaderPlugin extends AbstractPlugin implements ProductPage
      */
     protected function setProductCategories(array $productAbstractIds, array $payloadTransfers): array
     {
-        $query = SpyProductCategoryQuery::create()
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->useSpyCategoryQuery()
-                ->useNodeQuery()
-                    ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::VIRT_COLUMN_ID_CATEGORY_NODE)
-                ->endUse()
-            ->endUse();
+        $query = $this->getQueryContainer()->queryProductCategoriesByProductAbstractIds($productAbstractIds);
 
         $productCategoryEntities = $query->find();
         $formattedProductCategories = [];

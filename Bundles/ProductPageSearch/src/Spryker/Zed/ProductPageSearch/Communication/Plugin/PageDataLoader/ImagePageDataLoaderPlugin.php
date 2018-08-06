@@ -8,12 +8,12 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataLoader;
 
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade getFacade()
  */
 class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
@@ -47,11 +47,7 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
      */
     protected function setProductImages(array $productAbstractIds, array $payloadTransfers): array
     {
-        // TODO move this to QueryContainer or create Repository
-        $query = SpyProductImageSetQuery::create()
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->joinWithSpyProductImageSetToProductImage()
-            ->joinWith('SpyProductImageSetToProductImage.SpyProductImage');
+        $query = $this->getQueryContainer()->queryAllProductImageSetsByProductAbstractIds($productAbstractIds);
 
         $imageSets = [];
         $imageSetCollection = $query->find();

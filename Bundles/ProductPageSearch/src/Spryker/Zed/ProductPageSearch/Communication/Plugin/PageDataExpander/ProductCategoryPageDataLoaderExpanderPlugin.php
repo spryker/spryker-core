@@ -9,17 +9,10 @@ namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
-use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface;
-use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
@@ -105,7 +98,7 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
             ->queryCategoryNode($localeTransfer->getIdLocale())
             ->find();
 
-        $categoryEntities = $this->loadCategories()->find();
+        $categoryEntities = $this->getQueryContainer()->queryAllCategoriesWithAttributesAndOrderByDescendant()->find();
         $formattedCategoriesByLocaleAndNodeIds = $this->formatCategoriesWithLocaleAndNodIds($categoryEntities);
 
         foreach ($categoryNodes as $categoryNodeEntity) {
@@ -240,37 +233,6 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
             $sortedCategories[$idCategoryNode]['all_node_parents'] = $allNodeParents;
         }
         $productAbstractPageSearchTransfer->setSortedCategories($sortedCategories);
-    }
-
-    /**
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    protected function loadCategories()
-    {
-        $nodeQuery = SpyCategoryNodeQuery::create();
-
-        $nodeQuery
-            ->useClosureTableQuery()
-                ->orderByFkCategoryNodeDescendant(Criteria::DESC)
-                ->orderByDepth(Criteria::DESC)
-                ->filterByDepth(null, Criteria::NOT_EQUAL)
-            ->endUse()
-            ->useCategoryQuery()
-                ->useAttributeQuery()
-                ->endUse()
-            ->endUse();
-
-        $nodeQuery
-            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, 'fk_category')
-            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node')
-            ->withColumn(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, 'fk_category_node_descendant')
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
-            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, 'category_key')
-            ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, 'fk_locale');
-
-        $nodeQuery->setFormatter(new PropelArraySetFormatter());
-
-        return $nodeQuery;
     }
 
     /**
