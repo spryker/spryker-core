@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\StoreCurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConstants;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
+use Spryker\Zed\MinimumOrderValueGui\Communication\MinimumOrderValueGuiCommunicationFactory;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface;
 
 class GlobalThresholdDataProvider implements FormDataProviderInterface
@@ -22,12 +23,20 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
     protected $currencyFacade;
 
     /**
+     * @var \Spryker\Zed\MinimumOrderValueGui\Communication\MinimumOrderValueGuiCommunicationFactory
+     */
+    protected $minimumOrderValueGuiCommunicationFactory;
+
+    /**
      * @param \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface $currencyFacade
+     * @param \Spryker\Zed\MinimumOrderValueGui\Communication\MinimumOrderValueGuiCommunicationFactory $minimumOrderValueGuiCommunicationFactory
      */
     public function __construct(
-        MinimumOrderValueGuiToCurrencyFacadeInterface $currencyFacade
+        MinimumOrderValueGuiToCurrencyFacadeInterface $currencyFacade,
+        MinimumOrderValueGuiCommunicationFactory $minimumOrderValueGuiCommunicationFactory
     ) {
         $this->currencyFacade = $currencyFacade;
+        $this->minimumOrderValueGuiCommunicationFactory = $minimumOrderValueGuiCommunicationFactory;
     }
 
     /**
@@ -58,9 +67,10 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
                 $globalMinimumOrderValueTransfer->getStore(),
                 $globalMinimumOrderValueTransfer->getCurrency()
             );
-            $thresholdStrategyDataProvider = $this->createThresholdStrategyDataProviderByKey(
-                $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()->getKey()
-            );
+            $thresholdStrategyDataProvider = $this->minimumOrderValueGuiCommunicationFactory
+                ->createThresholdDataProviderByStrategy(
+                    $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()->getKey()
+                );
             $data = $thresholdStrategyDataProvider->getData($data, $globalMinimumOrderValueTransfer);
         }
 
@@ -121,19 +131,5 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
         CurrencyTransfer $currencyTransfer
     ): string {
         return $storeTransfer->getName() . MinimumOrderValueGuiConstants::STORE_CURRENCY_DELIMITER . $currencyTransfer->getCode();
-    }
-
-    /**
-     * @param string $key
-     *
-     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdStrategyDataProviderInterface
-     */
-    protected function createThresholdStrategyDataProviderByKey(string $key)
-    {
-        $providerClassName = "Spryker\\Zed\\MinimumOrderValueGui\\Communication\\Form\\DataProvider\\ThresholdStrategy\\"
-            . implode('', explode('-', ucwords($key, '-')))
-            . "DataProvider";
-
-        return new $providerClassName();
     }
 }

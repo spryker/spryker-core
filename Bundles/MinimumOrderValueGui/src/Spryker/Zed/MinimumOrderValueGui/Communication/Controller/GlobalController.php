@@ -8,8 +8,6 @@
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Controller;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\StoreCurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConstants;
@@ -39,11 +37,11 @@ class GlobalController extends AbstractController
             $data = $globalThresholdForm->getData();
             $hardGlobalMinimumOrderValueTransfer = $this->getFactory()
                 ->createGlobalHardThresholdFormMapper()
-                ->map($data, (new GlobalMinimumOrderValueTransfer())->setMinimumOrderValue(new MinimumOrderValueTransfer()));
+                ->map($data, $this->getFactory()->createGlobalMinimumOrderValueTransfer());
 
             $softGlobalMinimumOrderValueTransfer = $this->getFactory()
                 ->createGlobalSoftThresholdFormMapperByStrategy($data[GlobalThresholdType::FIELD_SOFT_STRATEGY])
-                ->map($data, (new GlobalMinimumOrderValueTransfer())->setMinimumOrderValue(new MinimumOrderValueTransfer()));
+                ->map($data, $this->getFactory()->createGlobalMinimumOrderValueTransfer());
 
             $hardGlobalMinimumOrderValueTransfer = $this->getFactory()
                 ->getMinimumOrderValueFacade()

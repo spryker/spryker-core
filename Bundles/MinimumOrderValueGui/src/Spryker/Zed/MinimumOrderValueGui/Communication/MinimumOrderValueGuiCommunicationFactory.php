@@ -7,12 +7,20 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Communication;
 
+use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\StoreCurrencyTransfer;
 use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConstants;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Exception\MissingGlobalThresholdFormMapperException;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Exception\MissingThresholdDataProviderException;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\GlobalThresholdDataProvider;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\HardThresholdDataProvider;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\SoftThresholdDataProvider;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\SoftThresholdFixedFeeDataProvider;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\SoftThresholdFlexibleFeeDataProvider;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdStrategyDataProviderInterface;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalHardThresholdFormMapper;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalSoftThresholdFixedFeeFormMapper;
@@ -57,7 +65,8 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
     public function createGlobalThresholdFormDataProvider(): GlobalThresholdDataProvider
     {
         return new GlobalThresholdDataProvider(
-            $this->getCurrencyFacade()
+            $this->getCurrencyFacade(),
+            $this
         );
     }
 
@@ -147,6 +156,82 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
             $this->createLocaleProvider(),
             $this->createStoreCurrencyFinder()
         );
+    }
+
+    /**
+     * @param string $strategy
+     *
+     * @throws \Spryker\Zed\MinimumOrderValueGui\Communication\Exception\MissingThresholdDataProviderException
+     *
+     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdStrategyDataProviderInterface
+     */
+    public function createThresholdDataProviderByStrategy(string $strategy)
+    {
+        switch ($strategy) {
+            case MinimumOrderValueGuiConstants::HARD_TYPE_STRATEGY:
+                return $this->createHardThresholdDataProvider();
+
+            case MinimumOrderValueGuiConstants::SOFT_TYPE_STRATEGY_MESSAGE:
+                return $this->createSoftThresholdDataProvider();
+
+            case MinimumOrderValueGuiConstants::SOFT_TYPE_STRATEGY_FIXED:
+                return $this->createSoftThresholdFixedFeeDataProvider();
+
+            case MinimumOrderValueGuiConstants::SOFT_TYPE_STRATEGY_FLEXIBLE:
+                return $this->createSoftThresholdFlexibleFeeDataProvider();
+
+            default:
+                throw new MissingThresholdDataProviderException();
+        }
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdStrategyDataProviderInterface
+     */
+    public function createHardThresholdDataProvider(): ThresholdStrategyDataProviderInterface
+    {
+        return new HardThresholdDataProvider();
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdStrategyDataProviderInterface
+     */
+    public function createSoftThresholdDataProvider(): ThresholdStrategyDataProviderInterface
+    {
+        return new SoftThresholdDataProvider();
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdStrategyDataProviderInterface
+     */
+    public function createSoftThresholdFixedFeeDataProvider(): ThresholdStrategyDataProviderInterface
+    {
+        return new SoftThresholdFixedFeeDataProvider();
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdStrategyDataProviderInterface
+     */
+    public function createSoftThresholdFlexibleFeeDataProvider(): ThresholdStrategyDataProviderInterface
+    {
+        return new SoftThresholdFlexibleFeeDataProvider();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
+     */
+    public function createGlobalMinimumOrderValueTransfer(): GlobalMinimumOrderValueTransfer
+    {
+        return (new GlobalMinimumOrderValueTransfer())
+            ->setMinimumOrderValue($this->createMinimumOrderValueTransfer());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     */
+    public function createMinimumOrderValueTransfer(): MinimumOrderValueTransfer
+    {
+        return new MinimumOrderValueTransfer();
     }
 
     /**
