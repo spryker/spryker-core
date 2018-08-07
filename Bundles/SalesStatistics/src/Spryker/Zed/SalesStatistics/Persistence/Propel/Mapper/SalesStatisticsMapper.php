@@ -41,7 +41,10 @@ class SalesStatisticsMapper
         $chartDataTraceTransfer = new ChartDataTraceTransfer();
         foreach ($statistic as $statisticItem) {
             $chartDataTraceTransfer->addLabel($statisticItem[SalesStatisticsRepository::STATUS_NAME]);
-            $chartDataTraceTransfer->addValue($statisticItem[SalesStatisticsRepository::TOTAL] / static::DECIMAL);
+            /** @TODO Needs to fix */
+            /** @var array $total */
+            $total = $statisticItem[SalesStatisticsRepository::TOTAL] / static::DECIMAL;
+            $chartDataTraceTransfer->addValue($total);
         }
 
         return $chartDataTraceTransfer;
