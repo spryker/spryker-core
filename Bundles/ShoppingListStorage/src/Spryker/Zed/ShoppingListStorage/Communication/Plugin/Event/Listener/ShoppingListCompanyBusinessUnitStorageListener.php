@@ -21,6 +21,8 @@ class ShoppingListCompanyBusinessUnitStorageListener extends AbstractPlugin impl
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers

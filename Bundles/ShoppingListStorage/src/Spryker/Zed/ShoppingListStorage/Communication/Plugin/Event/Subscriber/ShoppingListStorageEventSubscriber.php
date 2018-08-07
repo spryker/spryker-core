@@ -22,35 +22,101 @@ use Spryker\Zed\ShoppingListStorage\Dependency\ShoppingListEvents;
 class ShoppingListStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
+    {
+        $this->addShoppingListCreateListener($eventCollection);
+        $this->addShoppingListDeleteListener($eventCollection);
+        $this->addShoppingListCompanyUserCreateListener($eventCollection);
+        $this->addShoppingListCompanyUserDeleteListener($eventCollection);
+        $this->addShoppingListCompanyBusinerrUnitCreateListener($eventCollection);
+        $this->addShoppingListCompanyBusinerrUnitUpdateListener($eventCollection);
+
+        return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addShoppingListCreateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_CREATE,
             new ShoppingListStorageListener()
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addShoppingListDeleteListener(EventCollectionInterface $eventCollection): void
+    {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_DELETE,
             new ShoppingListStorageListener()
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addShoppingListCompanyUserCreateListener(EventCollectionInterface $eventCollection): void
+    {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_COMPANY_USER_CREATE,
             new ShoppingListCompanyUserStorageListener()
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addShoppingListCompanyUserDeleteListener(EventCollectionInterface $eventCollection): void
+    {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_COMPANY_USER_DELETE,
             new ShoppingListCompanyUserStorageListener()
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addShoppingListCompanyBusinerrUnitCreateListener(EventCollectionInterface $eventCollection): void
+    {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_COMPANY_BUSINESS_UNIT_CREATE,
             new ShoppingListCompanyBusinessUnitStorageListener()
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addShoppingListCompanyBusinerrUnitUpdateListener(EventCollectionInterface $eventCollection): void
+    {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_COMPANY_BUSINESS_UNIT_UPDATE,
             new ShoppingListCompanyBusinessUnitStorageListener()
         );
-
-        return $eventCollection;
     }
 }
