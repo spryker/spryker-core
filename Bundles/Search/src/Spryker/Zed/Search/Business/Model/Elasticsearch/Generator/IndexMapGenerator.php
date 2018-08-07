@@ -92,7 +92,7 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
         $fileContent = $this->twig->render('class.php.twig', $templateData);
 
         if (!is_dir($this->targetBaseDirectory)) {
-            mkdir($this->targetBaseDirectory, 0755, true);
+            mkdir($this->targetBaseDirectory, 0777, true);
         }
 
         file_put_contents($this->targetBaseDirectory . $fileName, $fileContent);

@@ -39,7 +39,7 @@ class FilesystemCacheWriter implements CacheWriterInterface
 
         $directory = dirname($this->cacheFilePath);
         if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
+            mkdir($directory, 0777, true);
         }
 
         file_put_contents($this->cacheFilePath, $cacheFileContent);

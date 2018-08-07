@@ -209,7 +209,7 @@ class ModuleBuilder
     {
         $path = $this->getDirectoryName($namespace) . $this->getModuleName($module, $namespace) . DIRECTORY_SEPARATOR;
         if (!is_dir($path)) {
-            mkdir($path, 0770, true);
+            mkdir($path, 0777, true);
         }
 
         $filesystem = new Filesystem();
