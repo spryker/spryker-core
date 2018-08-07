@@ -167,6 +167,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
 
         if ($this->isCompanyBusinessUnitCycleDependencyExists($companyBusinessUnitTransfer)) {
             $companyBusinessUnitResponseTransfer->setIsSuccessful(false);
+            $companyBusinessUnitResponseTransfer->setIsCycleDependencyErrorExist(true);
 
             return $companyBusinessUnitResponseTransfer;
         }

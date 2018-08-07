@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -27,6 +28,8 @@ class EditCompanyBusinessUnitController extends AbstractController
 
     protected const MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_UPDATE = 'Company Business Unit "%s" has been updated.';
     protected const MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_UPDATE = 'Company Business Unit "%s" has not been updated.';
+    protected const MESSAGE_CYCLE_DEPENDENCY_ERROR_COMPANY_BUSINESS_UNIT_UPDATE = 'Company Business Unit "%s" has not been updated.
+     A Business Unit cannot be set as a child to an own child Business Unit, please check the Business Unit hierarchy.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -54,7 +57,7 @@ class EditCompanyBusinessUnitController extends AbstractController
 
             if (!$companyResponseTransfer->getIsSuccessful()) {
                 $this->addErrorMessage(sprintf(
-                    static::MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_UPDATE,
+                    $this->getErrorMessage($companyResponseTransfer),
                     $companyBusinessUnitTransfer->getName()
                 ));
 
@@ -76,5 +79,17 @@ class EditCompanyBusinessUnitController extends AbstractController
             'form' => $form->createView(),
             'idCompany' => $idCompanyBusinessUnit,
         ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyResponseTransfer
+     *
+     * @return string
+     */
+    protected function getErrorMessage(CompanyBusinessUnitResponseTransfer $companyResponseTransfer): string
+    {
+        return $companyResponseTransfer->getIsCycleDependencyErrorExist() ?
+            static::MESSAGE_CYCLE_DEPENDENCY_ERROR_COMPANY_BUSINESS_UNIT_UPDATE :
+            static::MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_UPDATE;
     }
 }
