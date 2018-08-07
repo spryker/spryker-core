@@ -8,6 +8,7 @@
 namespace Spryker\Client\SharedCart;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
+use Spryker\Shared\SharedCart\SharedCartConfig as SharedCartConfigConstants;
 
 class SharedCartConfig extends AbstractBundleConfig
 {
@@ -16,7 +17,7 @@ class SharedCartConfig extends AbstractBundleConfig
      */
     public function getOwnerPermission(): string
     {
-        return 'owner';
+        return SharedCartConfigConstants::PERMISSION_GROUP_OWNER_ACCESS;
     }
 
     /**
@@ -24,7 +25,7 @@ class SharedCartConfig extends AbstractBundleConfig
      */
     public function getFullPermission(): string
     {
-        return 'full';
+        return SharedCartConfigConstants::PERMISSION_GROUP_FULL_ACCESS;
     }
 
     /**
@@ -32,6 +33,6 @@ class SharedCartConfig extends AbstractBundleConfig
      */
     public function getReadPermission(): string
     {
-        return 'read';
+        return SharedCartConfigConstants::PERMISSION_GROUP_READ_ONLY;
     }
 }
