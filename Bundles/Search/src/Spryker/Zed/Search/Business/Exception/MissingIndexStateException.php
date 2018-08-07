@@ -9,6 +9,6 @@ namespace Spryker\Zed\Search\Business\Exception;
 
 use Exception;
 
-class IndexStateException extends Exception
+class MissingIndexStateException extends Exception
 {
 }
