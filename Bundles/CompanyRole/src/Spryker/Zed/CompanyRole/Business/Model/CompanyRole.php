@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\CompanyRole\Business\Model;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
@@ -93,31 +93,43 @@ class CompanyRole implements CompanyRoleInterface
     public function createByCompany(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {
         $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
-        $companyRoleResponseTransfer = new CompanyRoleResponseTransfer();
 
         $companyRoles = $this->companyRoleConfig->getCompanyRoles();
         if (!empty($companyRoles)) {
-            $allPermissions = $this->permissionFacade->findAll()->getPermissions();
-
-            foreach ($companyRoles as $roleTransfer) {
-                $roleTransfer->setFkCompany($companyTransfer->getIdCompany());
-
-                $preparedPermissionCollection = $this->prepareCompanyRolePermissions(
-                    $roleTransfer->getPermissionCollection(),
-                    $allPermissions
-                );
-                $roleTransfer->setPermissionCollection($preparedPermissionCollection);
-
-                $companyRoleResponseTransfer = $this->create($roleTransfer);
-            }
-        }
-
-        if ($companyRoleResponseTransfer->getIsSuccessful()) {
             return $companyResponseTransfer;
         }
 
-        foreach ($companyRoleResponseTransfer->getMessages() as $messageTransfer) {
-            $companyResponseTransfer->addMessage($messageTransfer);
+        return $this->createRoles($companyResponseTransfer, $companyRoles, $companyTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer[] $companyRoleTransfers
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    protected function createRoles(
+        CompanyResponseTransfer $companyResponseTransfer,
+        array $companyRoleTransfers,
+        CompanyTransfer $companyTransfer
+    ): CompanyResponseTransfer {
+        $allPermissionCollectionTransfer = $this->permissionFacade->findAll();
+
+        foreach ($companyRoleTransfers as $companyRoleTransfer) {
+            $companyRoleTransfer->setFkCompany($companyTransfer->getIdCompany());
+
+            $preparedPermissionCollection = $this->prepareCompanyRolePermissions(
+                $companyRoleTransfer->getPermissionCollection(),
+                $allPermissionCollectionTransfer
+            );
+            $companyRoleTransfer->setPermissionCollection($preparedPermissionCollection);
+
+            $companyRoleResponseTransfer = $this->create($companyRoleTransfer);
+
+            foreach ($companyRoleResponseTransfer->getMessages() as $messageTransfer) {
+                $companyResponseTransfer->addMessage($messageTransfer);
+            }
         }
 
         return $companyResponseTransfer;
@@ -125,20 +137,20 @@ class CompanyRole implements CompanyRoleInterface
 
     /**
      * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $companyRolePermissionCollectionTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $allPermissionTransfers
+     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $allPermissionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     protected function prepareCompanyRolePermissions(
         PermissionCollectionTransfer $companyRolePermissionCollectionTransfer,
-        ArrayObject $allPermissionTransfers
+        PermissionCollectionTransfer $allPermissionCollectionTransfer
     ): PermissionCollectionTransfer {
         $needPermissionCollectionTransfer = new PermissionCollectionTransfer();
 
-        foreach ($companyRolePermissionCollectionTransfer->getPermissions() as $permission) {
-            foreach ($allPermissionTransfers as $existPermission) {
-                if ($permission->getKey() === $existPermission->getKey()) {
-                    $needPermissionCollectionTransfer->addPermission($existPermission);
+        foreach ($companyRolePermissionCollectionTransfer->getPermissions() as $permissionTransfer) {
+            foreach ($allPermissionCollectionTransfer->getPermissions() as $existingPermissionTransfer) {
+                if ($permissionTransfer->getKey() === $existingPermissionTransfer->getKey()) {
+                    $needPermissionCollectionTransfer->addPermission($existingPermissionTransfer);
                 }
             }
         }

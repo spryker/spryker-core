@@ -37,7 +37,9 @@ class CompanyRoleConfig extends AbstractBundleConfig
      */
     public function getCompanyRoles(): array
     {
-        return [];
+        return [
+            $this->getAdministratorRole(),
+        ];
     }
 
     /**

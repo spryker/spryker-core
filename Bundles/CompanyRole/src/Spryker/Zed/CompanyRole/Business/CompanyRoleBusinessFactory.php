@@ -60,7 +60,7 @@ class CompanyRoleBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CompanyRole\Dependency\Facade\CompanyRoleToPermissionFacadeInterface
      */
-    protected function getPermissionFacade(): CompanyRoleToPermissionFacadeInterface
+    public function getPermissionFacade(): CompanyRoleToPermissionFacadeInterface
     {
         return $this->getProvidedDependency(CompanyRoleDependencyProvider::FACADE_PERMISSION);
     }
