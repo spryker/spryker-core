@@ -7,7 +7,7 @@
 ]%}
 
 {% if widget_title is not defined %}
-    {% set widget_title = ('Edit Product Concrete' | trans) ~ ': ' ~ currentProduct.sku %}
+    {% set widget_title = ('Add Product Concrete' | trans) %}
 {% endif %}
 
 {% if submit_title is not defined %}
@@ -21,21 +21,7 @@
 {% block action %}
     {{ backActionButton('/product-management', 'List Products' | trans) }}
 
-    {% if currentProduct.is_active == 0 %}
-        {{ viewActionButton(
-             url('/product-management/variant/activate-product-variant', {
-                    'id-product': idProduct,
-                    'id-product-abstract': idProductAbstract}), 'Activate' | trans) }}
-    {% else %}
-        {{ removeActionButton(
-            url('/product-management/variant/deactivate-product-variant', {
-                'id-product': idProduct,
-                'id-product-abstract': idProductAbstract}), 'Deactivate' | trans) }}
-     {% endif %}
-
-    {#{{ editActionButton('/product-attribute-gui/view/product?id-product=' ~ idProduct, 'Manage Attributes' | trans) }}#}
-
-    {#{{ backActionButton('/product-management/edit?id-product-abstract=' ~ idProductAbstract, 'Edit Product Abstract' | trans) }}#}
+    {{ backActionButton('/product-management/edit?id-product-abstract=' ~ productAbstract.idProductAbstract, 'Edit Product Abstract' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -44,16 +30,14 @@
 
         {{ form_errors(form) }}
 
-        {{ tabs(productConcreteFormEditTabs, {
+        {{ tabs(productConcreteFormAddTabs, {
             'form': form,
             'currentLocale': currentLocale,
             'localeCollection': localeCollection,
             'attributeLocaleCollection': attributeLocaleCollection,
             'submit_title': submit_title,
-            'idProduct': idProduct,
-            'idProductAbstract': idProductAbstract,
-            'bundledProductTable' : bundledProductTable,
-            'currentProduct' : currentProduct
+            'idProductAbstract': productAbstract.idProductAbstract,
+            'bundledProductTable' : bundledProductTable
         }) }}
 
     {{ form_end(form) }}

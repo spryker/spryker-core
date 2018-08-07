@@ -10,9 +10,11 @@ namespace Spryker\Zed\ProductManagement\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\Price\ProductMoneyCollectionDataProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductConcreteFormAddDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductConcreteFormEditDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAddDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEditDataProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
@@ -23,6 +25,7 @@ use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductGroupTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\VariantTable;
+use Spryker\Zed\ProductManagement\Communication\Tabs\ProductConcreteFormAddTabs;
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductConcreteFormEditTabs;
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormAddTabs;
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormEditTabs;
@@ -56,6 +59,17 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createProductFormEdit(array $formData, array $formOptions = [])
     {
         return $this->getFormFactory()->create(ProductFormEdit::class, $formData, $formOptions);
+    }
+
+    /**
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createProductVariantFormAdd(array $formData, array $formOptions = [])
+    {
+        return $this->getFormFactory()->create(ProductConcreteFormAdd::class, $formData, $formOptions);
     }
 
     /**
@@ -112,6 +126,31 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductTaxCollection(),
             $this->getConfig()->getImageUrlPrefix(),
             $this->getStore()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductConcreteFormAddDataProvider
+     */
+    public function createProductVariantFormAddDataProvider()
+    {
+        $currentLocale = $this->getLocaleFacade()->getCurrentLocale();
+
+        return new ProductConcreteFormAddDataProvider(
+            $this->getCategoryQueryContainer(),
+            $this->getQueryContainer(),
+            $this->getProductQueryContainer(),
+            $this->getStockQueryContainer(),
+            $this->getProductFacade(),
+            $this->getProductImageFacade(),
+            $this->createLocaleProvider(),
+            $currentLocale,
+            $this->getProductAttributeCollection(),
+            $this->getProductTaxCollection(),
+            $this->getConfig()->getImageUrlPrefix(),
+            $this->getStore(),
+            $this->createProductStockHelper()
+            //            $this->getProductConcreteFormAddDataProviderExpanderPlugins()
         );
     }
 
@@ -420,6 +459,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createProductFormEditTabs()
     {
         return new ProductFormEditTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createProductConcreteFormAddTabs()
+    {
+        return new ProductConcreteFormAddTabs();
     }
 
     /**
