@@ -44,7 +44,7 @@ class SearchCloseIndexConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($input->hasOption(static::OPTION_ALL)) {
+        if ($input->getOption(static::OPTION_ALL)) {
             return $this->closeAll();
         }
 
