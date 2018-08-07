@@ -62,6 +62,8 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
     }
 
     /**
+     * @module Sales
+     *
      * @example
      * [
      *  [
@@ -87,6 +89,8 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
     }
 
     /**
+     * @module Sales
+     *
      * @example
      * [
      *  [
@@ -109,6 +113,8 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
     }
 
     /**
+     * @module Sales
+     *
      * @example
      * [
      *  [
