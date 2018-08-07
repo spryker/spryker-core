@@ -27,10 +27,6 @@ class ShoppingListStorageToCompanyUserFacadeBridge implements ShoppingListStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
@@ -41,10 +37,6 @@ class ShoppingListStorageToCompanyUserFacadeBridge implements ShoppingListStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer

@@ -12,23 +12,13 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 interface ShoppingListStorageToCompanyBusinessUnitFacadeInterface
 {
     /**
-     * Specification:
-     * - Finds a company business unit by CompanyBusinessUnitTransfer::idCompanyBusinessUnit in the transfer
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+    public function getCompanyBusinessUnitById($companyBusinessUnitTransfer): CompanyBusinessUnitTransfer;
 
     /**
-     * Specification:
-     * - Return CompanyUserTransfer[] by CompanyBusinessUnitTransfer::idCompanyBusinessUnit in the transfer
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]

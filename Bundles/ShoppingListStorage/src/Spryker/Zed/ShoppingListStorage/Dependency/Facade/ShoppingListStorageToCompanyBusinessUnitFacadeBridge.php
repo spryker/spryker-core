@@ -25,24 +25,16 @@ class ShoppingListStorageToCompanyBusinessUnitFacadeBridge implements ShoppingLi
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function getCompanyBusinessUnitById($companyBusinessUnitTransfer)
+    public function getCompanyBusinessUnitById($companyBusinessUnitTransfer): CompanyBusinessUnitTransfer
     {
         return $this->companyBusinessUnitFacade->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]

@@ -14,12 +14,6 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 interface ShoppingListStorageToCompanyUserFacadeInterface
 {
     /**
-     * Specification:
-     * - Retrieves company user by id
-     * - Hydrates company field
-     *
-     * @api
-     *
      * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
@@ -27,11 +21,6 @@ interface ShoppingListStorageToCompanyUserFacadeInterface
     public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer;
 
     /**
-     * Specification:
-     * - Retrieves company users collection.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer

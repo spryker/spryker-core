@@ -15,12 +15,12 @@ interface ShoppingListStorageToEventBehaviorFacadeInterface
      *
      * @return mixed
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
+    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName): array;
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return array
      */
-    public function getEventTransferIds(array $eventTransfers);
+    public function getEventTransferIds(array $eventTransfers): array;
 }
