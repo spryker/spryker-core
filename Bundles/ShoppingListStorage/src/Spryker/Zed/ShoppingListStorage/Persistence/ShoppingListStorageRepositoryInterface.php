@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
+use Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage;
+
 interface ShoppingListStorageRepositoryInterface
 {
     /**
@@ -29,4 +31,11 @@ interface ShoppingListStorageRepositoryInterface
      * @return string[]
      */
     public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage
+     */
+    public function findShoppingListCustomerStorageEntitiesByCustomerReference(string $customerReference): SpyShoppingListCustomerStorage;
 }

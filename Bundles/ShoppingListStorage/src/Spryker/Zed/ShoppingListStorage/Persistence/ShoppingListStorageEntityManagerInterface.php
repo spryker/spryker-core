@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
+use Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage;
+
 interface ShoppingListStorageEntityManagerInterface
 {
     /**
-     * @param string $customerReference
+     * @param \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage $shoppingListCustomerStorageEntity
      *
      * @return void
      */
-    public function saveShoppingListCustomerStorage(string $customerReference): void;
+    public function saveShoppingListCustomerStorage(SpyShoppingListCustomerStorage $shoppingListCustomerStorageEntity): void;
 }

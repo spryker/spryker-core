@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
+use Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -61,5 +62,15 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
             ->select(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findShoppingListCustomerStorageEntitiesByCustomerReference(string $customerReference): SpyShoppingListCustomerStorage
+    {
+        return $this->getFactory()->createShoppingListCustomerStorageQuery()
+            ->filterByCustomerReference($customerReference)
+            ->findOneOrCreate();
     }
 }

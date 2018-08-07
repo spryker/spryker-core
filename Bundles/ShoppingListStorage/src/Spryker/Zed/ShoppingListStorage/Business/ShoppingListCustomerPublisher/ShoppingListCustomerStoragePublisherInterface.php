@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShoppingListStorage\Business\Model;
+namespace Spryker\Zed\ShoppingListStorage\Business\ShoppingListCustomerPublisher;
 
-interface ShoppingListCustomerStorageWriterInterface
+interface ShoppingListCustomerStoragePublisherInterface
 {
     /**
-     * @param array $customerReferences
+     * @param string[] $customerReferences
      *
      * @return void
      */

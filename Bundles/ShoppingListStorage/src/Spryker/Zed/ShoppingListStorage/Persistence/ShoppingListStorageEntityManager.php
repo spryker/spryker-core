@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
-use Generated\Shared\Transfer\ShoppingListCustomerStorageTransfer;
+use Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -16,20 +16,12 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class ShoppingListStorageEntityManager extends AbstractEntityManager implements ShoppingListStorageEntityManagerInterface
 {
     /**
-     * @param string $customerReference
+     * @param \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage $shoppingListCustomerStorageEntity
      *
      * @return void
      */
-    public function saveShoppingListCustomerStorage(string $customerReference): void
+    public function saveShoppingListCustomerStorage(SpyShoppingListCustomerStorage $shoppingListCustomerStorageEntity): void
     {
-        $shoppingListCustomerStorage = $this->getFactory()
-            ->createShoppingListCustomerStorageQuery()
-            ->filterByCustomerReference($customerReference)
-            ->findOneOrCreate();
-
-        $shoppingListCustomerStorageTransfer = new ShoppingListCustomerStorageTransfer();
-        $shoppingListCustomerStorageTransfer->setUpdatedAt(time());
-        $shoppingListCustomerStorage->setData($shoppingListCustomerStorageTransfer->toArray());
-        $shoppingListCustomerStorage->save();
+        $shoppingListCustomerStorageEntity->save();
     }
 }

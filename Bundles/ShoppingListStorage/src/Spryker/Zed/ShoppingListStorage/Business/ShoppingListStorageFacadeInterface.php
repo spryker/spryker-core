@@ -10,6 +10,9 @@ namespace Spryker\Zed\ShoppingListStorage\Business;
 interface ShoppingListStorageFacadeInterface
 {
     /**
+     * Specification:
+     * - Gets array of Customer References by ShoppingList Ids
+     *
      * @api
      *
      * @param int[] $shoppingListIds
@@ -19,6 +22,9 @@ interface ShoppingListStorageFacadeInterface
     public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array;
 
     /**
+     * Specification:
+     * - Gets array of Customer References by CompanyUser Ids
+     *
      * @api
      *
      * @param int[] $companyUserIds
@@ -28,6 +34,9 @@ interface ShoppingListStorageFacadeInterface
     public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
 
     /**
+     * Specification:
+     * - Gets array of Customer References by CompanyBusinessUnit Ids
+     *
      * @api
      *
      * @param int[] $companyBusinessUnitIds
@@ -37,11 +46,14 @@ interface ShoppingListStorageFacadeInterface
     public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
 
     /**
+     * Specification:
+     * - Saves to the storage new UpdatedAt flag for all provided CustomerReferences
+     *
      * @api
      *
-     * @param string[] $customerReference
+     * @param string[] $customerReferences
      *
      * @return void
      */
-    public function publish(array $customerReference): void;
+    public function publish(array $customerReferences): void;
 }
