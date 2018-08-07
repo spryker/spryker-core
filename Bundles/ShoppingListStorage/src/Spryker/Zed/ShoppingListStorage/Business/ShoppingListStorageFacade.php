@@ -28,7 +28,7 @@ class ShoppingListStorageFacade extends AbstractFacade implements ShoppingListSt
      */
     public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array
     {
-        return $this->getRepository()->getCustomerReferencesByShippingListIds($shoppingListIds);
+        return $this->getRepository()->getCustomerReferencesByShoppingListIds($shoppingListIds);
     }
 
     /**

@@ -18,15 +18,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ShoppingListStorageRepository extends AbstractRepository implements ShoppingListStorageRepositoryInterface
 {
     /**
-     * @param int[] $shippingListIds
+     * @param int[] $shoppingListIds
      *
      * @return string[]
      */
-    public function getCustomerReferencesByShippingListIds(array $shippingListIds): array
+    public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array
     {
         return $this->getFactory()
-            ->createShippingListPropelQuery()
-            ->filterByIdShoppingList_In($shippingListIds)
+            ->createShoppingListPropelQuery()
+            ->filterByIdShoppingList_In($shoppingListIds)
             ->select([SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE])
             ->find()
             ->toArray();
@@ -65,7 +65,9 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     }
 
     /**
-     * @inheritDoc
+     * @param string $customerReference
+     *
+     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage
      */
     public function findShoppingListCustomerStorageEntitiesByCustomerReference(string $customerReference): SpyShoppingListCustomerStorage
     {

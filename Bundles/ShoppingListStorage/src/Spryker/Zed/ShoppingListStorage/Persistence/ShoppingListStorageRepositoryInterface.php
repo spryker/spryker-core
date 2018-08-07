@@ -12,11 +12,11 @@ use Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage;
 interface ShoppingListStorageRepositoryInterface
 {
     /**
-     * @param int[] $shippingListIds
+     * @param int[] $shoppingListIds
      *
      * @return string[]
      */
-    public function getCustomerReferencesByShippingListIds(array $shippingListIds): array;
+    public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array;
 
     /**
      * @param int[] $companyBusinessUnitIds

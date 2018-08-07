@@ -35,8 +35,8 @@ class ShoppingListStorageListener extends AbstractPlugin implements EventBulkHan
         $this->preventTransaction();
         $shoppingListIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        $customerReference = $this->getFacade()->getCustomerReferencesByShoppingListIds($shoppingListIds);
+        $customerReferences = $this->getFacade()->getCustomerReferencesByShoppingListIds($shoppingListIds);
 
-        $this->getFacade()->publish($customerReference);
+        $this->getFacade()->publish($customerReferences);
     }
 }

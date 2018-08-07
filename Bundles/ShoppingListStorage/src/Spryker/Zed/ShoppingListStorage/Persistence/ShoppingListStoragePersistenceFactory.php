@@ -18,7 +18,7 @@ class ShoppingListStoragePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery
      */
-    public function createShippingListPropelQuery(): SpyShoppingListQuery
+    public function createShoppingListPropelQuery(): SpyShoppingListQuery
     {
         return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::PROPEL_QUERY_SHOPPING_LIST);
     }
