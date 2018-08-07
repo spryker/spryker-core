@@ -54,7 +54,7 @@ class AddressesReader implements AddressesReaderInterface
      */
     public function readByIdentifier(string $customerReference): RestResponseInterface
     {
-        $response = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setCustomerReference($customerReference);
@@ -67,10 +67,9 @@ class AddressesReader implements AddressesReaderInterface
                 ->setStatus(Response::HTTP_NOT_FOUND)
                 ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
 
-            $response = $this->restResourceBuilder->createRestResponse();
-            $response->addError($restErrorTransfer);
+            $restResponse->addError($restErrorTransfer);
 
-            return $response;
+            return $restResponse;
         }
         /**
          * @var \Generated\Shared\Transfer\AddressesTransfer $addresses
@@ -83,15 +82,14 @@ class AddressesReader implements AddressesReaderInterface
                 ->setStatus(Response::HTTP_NOT_FOUND)
                 ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_ADDRESSES_NOT_FOUND);
 
-            $response = $this->restResourceBuilder->createRestResponse();
-            $response->addError($restErrorTransfer);
+            $restResponse->addError($restErrorTransfer);
 
-            return $response;
+            return $restResponse;
         }
 
         $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource($addresses, $customer);
-        $response->addResource($addressesResource);
+        $restResponse->addResource($addressesResource);
 
-        return $response;
+        return $restResponse;
     }
 }

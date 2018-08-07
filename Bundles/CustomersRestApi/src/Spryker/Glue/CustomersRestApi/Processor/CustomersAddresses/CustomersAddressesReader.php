@@ -54,6 +54,7 @@ class CustomersAddressesReader implements CustomersAddressesReaderInterface
         if (count($addresses->getAddresses())) {
             return $this->addressesResourceMapper->mapAddressTransferToRestResource($addresses, $customerTransfer);
         }
+
         return null;
     }
 }

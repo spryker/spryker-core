@@ -35,8 +35,8 @@
         <property name="city" type="string" />
         <property name="country" type="string" />
         <property name="phone" type="string" />
-        <property name="isDefaultShippingAddress" type="string" />
-        <property name="isDefaultBillingAddress" type="string" />
+        <property name="isDefaultShippingAddress" type="bool" />
+        <property name="isDefaultBillingAddress" type="bool" />
     </transfer>
 
     <transfer name="RestAddresses">
