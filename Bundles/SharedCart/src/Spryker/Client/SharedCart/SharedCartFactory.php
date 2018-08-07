@@ -21,9 +21,6 @@ use Spryker\Client\SharedCart\Zed\SharedCartStub;
 use Spryker\Client\SharedCart\Zed\SharedCartStubInterface;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
-/**
- * @method \Spryker\Client\SharedCart\SharedCartConfig getConfig()
- */
 class SharedCartFactory extends AbstractFactory
 {
     /**
@@ -45,8 +42,7 @@ class SharedCartFactory extends AbstractFactory
     public function createPermissionResolver(): PermissionResolverInterface
     {
         return new PermissionResolver(
-            $this->getCustomerClient(),
-            $this->getConfig()
+            $this->getCustomerClient()
         );
     }
 
