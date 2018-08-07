@@ -11,9 +11,9 @@ use Elastica\Client;
 use Elastica\Index;
 use Elastica\Request;
 use Elastica\Type\Mapping;
-use Exception;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Psr\Log\LoggerInterface;
+use Spryker\Zed\Search\Business\Exception\IndexStateException;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
 use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 use Spryker\Zed\Search\SearchConfig;
@@ -259,7 +259,7 @@ class IndexInstaller implements SearchInstallerInterface
     /**
      * @param \Elastica\Index $index
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\Search\Business\Exception\IndexStateException
      *
      * @return string
      */
@@ -273,7 +273,7 @@ class IndexInstaller implements SearchInstallerInterface
             }
         }
 
-        throw new Exception('Can not determine index state.');
+        throw new IndexStateException('Can not determine index state.');
     }
 
     /**
