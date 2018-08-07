@@ -112,6 +112,8 @@ class IndexInstallerTest extends Unit
     }
 
     /**
+     * @uses IndexDefinitionLoaderInterface::loadIndexDefinitions()
+     *
      * @param \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer[] $indexDefinitions
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
@@ -146,7 +148,7 @@ class IndexInstallerTest extends Unit
     }
 
     /**
-     * @uses Client::getCluster()
+     * @uses Client::getIndex()
      *
      * @param \PHPUnit_Framework_MockObject_MockObject|\Elastica\Index $indexMock
      *
@@ -156,7 +158,7 @@ class IndexInstallerTest extends Unit
     {
         $elasticaClientMock = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getIndex', 'getCluster'])
+            ->setMethods(['getIndex'])
             ->getMock();
 
         $elasticaClientMock
