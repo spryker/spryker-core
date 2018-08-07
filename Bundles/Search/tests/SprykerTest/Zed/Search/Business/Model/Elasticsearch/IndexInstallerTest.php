@@ -84,6 +84,8 @@ class IndexInstallerTest extends Unit
     }
 
     /**
+     * @uses IndexInstaller::getIndexState()
+     *
      * @param \PHPUnit\Framework\MockObject\MockObject|\Elastica\Index $indexMock
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface
@@ -129,6 +131,8 @@ class IndexInstallerTest extends Unit
     }
 
     /**
+     * @uses SearchConfig::getBlacklistSettingsForIndexUpdate()
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Search\SearchConfig
      */
     protected function createSearchConfigMock()
@@ -142,6 +146,8 @@ class IndexInstallerTest extends Unit
     }
 
     /**
+     * @uses Client::getCluster()
+     *
      * @param \PHPUnit_Framework_MockObject_MockObject|\Elastica\Index $indexMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Elastica\Client

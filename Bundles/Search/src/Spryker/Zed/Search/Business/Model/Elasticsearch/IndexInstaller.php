@@ -273,7 +273,7 @@ class IndexInstaller implements SearchInstallerInterface
             }
         }
 
-        throw new Exception('Can`t determine index state.');
+        throw new Exception('Can not determine index state.');
     }
 
     /**
