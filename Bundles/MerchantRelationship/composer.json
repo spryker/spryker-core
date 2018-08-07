@@ -4,15 +4,23 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/cart-extension": "^2.0.0",
     "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
     "spryker/company-user-extension": "^1.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/merchant": "^1.0.0",
+    "spryker/persistent-cart-extension": "^1.0.0",
     "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
+    "spryker/cart": "*",
+    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/cart": "If you want to use cart plugins: ^4.0.0",
+    "spryker/checkout": "If you want to use checkout plugins: ^4.0.0"
   },
   "autoload": {
     "psr-4": {

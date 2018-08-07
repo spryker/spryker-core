@@ -17,4 +17,8 @@
         <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship" />
     </transfer>
 
+    <transfer name="Item">
+        <property name="idMerchantRelationship" type="int" />
+    </transfer>
+
 </transfers>
