@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductListGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductListAggregateFormTransfer;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListAggregateFormType;
-use Spryker\Zed\ProductListGui\Persistence\ProductListGuiRepositoryInterface;
 
 class ProductListAggregateFormDataProvider
 {
@@ -24,11 +23,6 @@ class ProductListAggregateFormDataProvider
     protected $productListCategoryRelationFormDataProvider;
 
     /**
-     * @var \Spryker\Zed\ProductListGui\Persistence\ProductListGuiRepositoryInterface
-     */
-    protected $productListGuiRepository;
-
-    /**
      * @var \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListOwnerTypeFormExpanderPluginInterface[]
      */
     protected $productListOwnerTypeFormExpanderPlugins;
@@ -36,20 +30,17 @@ class ProductListAggregateFormDataProvider
     /**
      * ProductListAggregateFormDataProvider constructor.
      *
-     * @param \Spryker\Zed\ProductListGui\Persistence\ProductListGuiRepositoryInterface $productListGuiRepository
      * @param \Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListFormDataProvider $productListFormDataProvider
      * @param \Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListCategoryRelationFormDataProvider $productListCategoryRelationFormDataProvider
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListOwnerTypeFormExpanderPluginInterface[] $productListOwnerTypeFormExpanderPlugins
      */
     public function __construct(
-        ProductListGuiRepositoryInterface $productListGuiRepository,
         ProductListFormDataProvider $productListFormDataProvider,
         ProductListCategoryRelationFormDataProvider $productListCategoryRelationFormDataProvider,
         array $productListOwnerTypeFormExpanderPlugins = []
     ) {
         $this->productListFormDataProvider = $productListFormDataProvider;
         $this->productListCategoryRelationFormDataProvider = $productListCategoryRelationFormDataProvider;
-        $this->productListGuiRepository = $productListGuiRepository;
         $this->productListOwnerTypeFormExpanderPlugins = $productListOwnerTypeFormExpanderPlugins;
     }
 

@@ -10,8 +10,9 @@ namespace Spryker\Zed\ProductListGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\ProductListCategoryRelationTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListAggregateFormType;
+use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToCategoryFacadeInterface;
+use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeInterface;
-use Spryker\Zed\ProductListGui\Persistence\ProductListGuiRepositoryInterface;
 
 class ProductListCategoryRelationFormDataProvider
 {
@@ -21,22 +22,30 @@ class ProductListCategoryRelationFormDataProvider
     protected $productListFacade;
 
     /**
-     * @var \Spryker\Zed\ProductListGui\Persistence\ProductListGuiRepositoryInterface
+     * @var \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToCategoryFacadeInterface
      */
-    protected $productListGuiRepository;
+    protected $categoryFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInterface
+     */
+    protected $localeFacade;
 
     /**
      * @module ProductCategory
      *
      * @param \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeInterface $productListFacade
-     * @param \Spryker\Zed\ProductListGui\Persistence\ProductListGuiRepositoryInterface $productListGuiRepository
+     * @param \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToCategoryFacadeInterface $categoryFacade
+     * @param \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         ProductListGuiToProductListFacadeInterface $productListFacade,
-        ProductListGuiRepositoryInterface $productListGuiRepository
+        ProductListGuiToCategoryFacadeInterface $categoryFacade,
+        ProductListGuiToLocaleFacadeInterface $localeFacade
     ) {
         $this->productListFacade = $productListFacade;
-        $this->productListGuiRepository = $productListGuiRepository;
+        $this->categoryFacade = $categoryFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -67,8 +76,17 @@ class ProductListCategoryRelationFormDataProvider
      */
     public function getOptions(): array
     {
+        $categoryCollectionTransfer = $this->categoryFacade->getAllCategoryCollection($this->localeFacade->getCurrentLocale());
+        $categoryOptions = [];
+
+        foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {
+            foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
+                $categoryOptions[$nodeTransfer->getPath()] = $categoryTransfer->getIdCategory();
+            }
+        }
+
         return [
-            ProductListAggregateFormType::OPTION_CATEGORY_IDS => $this->productListGuiRepository->getCategoriesWithPaths(),
+            ProductListAggregateFormType::OPTION_CATEGORY_IDS => array_flip($categoryOptions),
         ];
     }
 }

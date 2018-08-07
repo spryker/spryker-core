@@ -29,7 +29,9 @@ use Spryker\Zed\ProductListGui\Communication\Table\ProductListTable;
 use Spryker\Zed\ProductListGui\Communication\Tabs\AssignedProductConcreteRelationTabs;
 use Spryker\Zed\ProductListGui\Communication\Tabs\AvailableProductConcreteRelationTabs;
 use Spryker\Zed\ProductListGui\Communication\Tabs\ProductListAggregationTabs;
+use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToCategoryFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInterface;
+use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Service\ProductListGuiToUtilCsvServiceInterface;
 use Spryker\Zed\ProductListGui\ProductListGuiDependencyProvider;
@@ -37,7 +39,6 @@ use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\ProductListGui\ProductListGuiConfig getConfig()
- * @method \Spryker\Zed\ProductListGui\Persistence\ProductListGuiRepositoryInterface getRepository()()
  */
 class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -139,7 +140,8 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductListCategoryRelationFormDataProvider(
             $this->getProductListFacade(),
-            $this->getRepository()
+            $this->getCategoryFacade(),
+            $this->getLocaleFacade()
         );
     }
 
@@ -149,7 +151,6 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createProductListAggregateFormDataProvider()
     {
         return new ProductListAggregateFormDataProvider(
-            $this->getRepository(),
             $this->createProductListFormDataProvider(),
             $this->createProductListCategoryRelationFormDataProvider(),
             $this->getProductListOwnerTypeFormExpanderPlugins()
@@ -165,13 +166,29 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToCategoryFacadeInterface
+     */
+    public function getCategoryFacade(): ProductListGuiToCategoryFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductListGuiDependencyProvider::FACADE_CATEGORY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductFacadeInterface
+     */
+    public function getProductFacade(): ProductListGuiToProductFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductListGuiDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductListGui\Communication\Exporter\ProductListExporterInterface
      */
     public function createProductListExporter(): ProductListExporterInterface
     {
         return new ProductListExporter(
             $this->getUtilCsvService(),
-            $this->getRepository()
+            $this->getProductFacade()
         );
     }
 
@@ -182,7 +199,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductListImporter(
             $this->getUtilCsvService(),
-            $this->getRepository()
+            $this->getProductFacade()
         );
     }
 

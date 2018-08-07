@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductListGui\Communication\Importer;
 
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
+use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Service\ProductListGuiToUtilCsvServiceInterface;
-use Spryker\Zed\ProductListGui\Persistence\ProductListGuiRepositoryInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProductListImporter implements ProductListImporterInterface
@@ -20,20 +20,20 @@ class ProductListImporter implements ProductListImporterInterface
     protected $csvService;
 
     /**
-     * @var \Spryker\Zed\ProductListGui\Persistence\ProductListGuiRepositoryInterface
+     * @var \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductFacadeInterface
      */
-    protected $repository;
+    protected $productFacade;
 
     /**
      * @param \Spryker\Zed\ProductListGui\Dependency\Service\ProductListGuiToUtilCsvServiceInterface $csvService
-     * @param \Spryker\Zed\ProductListGui\Persistence\ProductListGuiRepositoryInterface $repository
+     * @param \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductFacadeInterface $productFacade
      */
     public function __construct(
         ProductListGuiToUtilCsvServiceInterface $csvService,
-        ProductListGuiRepositoryInterface $repository
+        ProductListGuiToProductFacadeInterface $productFacade
     ) {
         $this->csvService = $csvService;
-        $this->repository = $repository;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -53,7 +53,8 @@ class ProductListImporter implements ProductListImporterInterface
             $productsSku[] = $productRow[0];
         }
 
-        $productIds = $this->repository->findProductIdsByProductConcreteSku($productsSku);
+        $productIds = $this->productFacade->getProductConcreteIdsByConcreteSkus($productsSku);
+        $productIds = array_values($productIds);
 
         $productIds = array_merge($productConcreteRelationTransfer->getProductIds() ?: [], $productIds);
         $productConcreteRelationTransfer->setProductIds($productIds);

@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductListGui\Communication\Exporter;
 
 use Generated\Shared\Transfer\CsvFileTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
+use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Service\ProductListGuiToUtilCsvServiceInterface;
-use Spryker\Zed\ProductListGui\Persistence\ProductListGuiRepositoryInterface;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ProductListExporter implements ProductListExporterInterface
@@ -24,20 +24,20 @@ class ProductListExporter implements ProductListExporterInterface
     protected $csvService;
 
     /**
-     * @var \Spryker\Zed\ProductListGui\Persistence\ProductListGuiRepositoryInterface
+     * @var \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductFacadeInterface
      */
-    protected $repository;
+    protected $productFacade;
 
     /**
      * @param \Spryker\Zed\ProductListGui\Dependency\Service\ProductListGuiToUtilCsvServiceInterface $csvService
-     * @param \Spryker\Zed\ProductListGui\Persistence\ProductListGuiRepositoryInterface $repository
+     * @param \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductFacadeInterface $productFacade
      */
     public function __construct(
         ProductListGuiToUtilCsvServiceInterface $csvService,
-        ProductListGuiRepositoryInterface $repository
+        ProductListGuiToProductFacadeInterface $productFacade
     ) {
         $this->csvService = $csvService;
-        $this->repository = $repository;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -54,7 +54,9 @@ class ProductListExporter implements ProductListExporterInterface
             return $this->csvService->exportFile($csvFileTransfer);
         }
 
-        $productsSku = $this->repository->findProductSkuByIdProductConcrete($productIds);
+        $productsSku = $this->productFacade->getProductConcreteSkusByConcreteIds($productIds);
+        $productsSku = array_keys($productsSku);
+
         $productsSku = $this->prepareDataForExport($productsSku);
         $csvFileTransfer = $this->createCsvFileTransfer($productListTransfer->getTitle(), $productsSku);
 
