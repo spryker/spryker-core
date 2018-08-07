@@ -17,7 +17,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/chart": "If you want to use Chart Plugins. Minimum required version: 1.0.0.",
+    "spryker/chart": "If you want to use Chart Plugins. Minimum required version: 1.0.1.",
     "spryker/dashboard": "If you want to use Dashboard. Minimum required version: 1.0.0."
   },
   "autoload": {
