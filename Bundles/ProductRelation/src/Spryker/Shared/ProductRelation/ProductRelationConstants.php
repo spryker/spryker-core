@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\ProductRelation;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface ProductRelationConstants
 {
     const RESOURCE_TYPE_PRODUCT_RELATION = 'product_relation';

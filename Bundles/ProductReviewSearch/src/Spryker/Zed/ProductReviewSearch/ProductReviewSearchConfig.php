@@ -14,8 +14,16 @@ class ProductReviewSearchConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return true;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getProductReviewSynchronizationPoolName(): ?string
+    {
+        return null;
     }
 }

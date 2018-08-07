@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockStorage\Persistence;
 
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -52,5 +53,19 @@ class CmsBlockStorageQueryContainer extends AbstractQueryContainer implements Cm
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $cmsBlockIds
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     */
+    public function queryCmsBlockByIds(array $cmsBlockIds): SpyCmsBlockQuery
+    {
+        return $this->getFactory()
+            ->createCmsBlockQuery()
+            ->filterByIdCmsBlock_In($cmsBlockIds);
     }
 }

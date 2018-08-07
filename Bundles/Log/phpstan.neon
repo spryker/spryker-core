@@ -2,7 +2,6 @@ parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
     ignoreErrors:
-        - '#Parameter \#1 $level of method Monolog\\Handler\\AbstractHandler::\_\_construct\(\) expects int, int|string given.#'
 
 services:
     -
