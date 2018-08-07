@@ -35,6 +35,7 @@ class ConcreteSkuToIdProductStep implements DataImportStepInterface
             /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
             $productQuery = SpyProductQuery::create()
                 ->select(SpyProductTableMap::COL_ID_PRODUCT);
+            /** @var string|int|null $idProduct */
             $idProduct = $productQuery
                 ->findOneBySku($concreteSku);
 

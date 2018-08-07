@@ -64,7 +64,7 @@ class CategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
-            return new CategoryStorageToCategoryQueryContainerBridge($container->getLocator()->Category()->queryContainer());
+            return new CategoryStorageToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
         };
 
         $container[static::QUERY_CONTAINER_LOCALE] = function (Container $container) {
