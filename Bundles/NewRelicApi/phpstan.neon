@@ -2,7 +2,7 @@ parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
     ignoreErrors:
-    - '#Function newrelic_.+ not found.#'
+        - '#Function newrelic_.+ not found.#'
 
 services:
     -

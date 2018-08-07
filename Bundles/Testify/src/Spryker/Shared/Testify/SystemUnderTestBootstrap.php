@@ -29,7 +29,7 @@ class SystemUnderTestBootstrap
     const TEST_ENVIRONMENT = 'devtest';
 
     /**
-     * @var \Spryker\Shared\Testify\SystemUnderTestBootstrap
+     * @var \Spryker\Shared\Testify\SystemUnderTestBootstrap|null
      */
     protected static $instance;
 
