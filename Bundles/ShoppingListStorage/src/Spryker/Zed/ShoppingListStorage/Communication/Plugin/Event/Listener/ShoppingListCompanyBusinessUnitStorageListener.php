@@ -35,8 +35,8 @@ class ShoppingListCompanyBusinessUnitStorageListener extends AbstractPlugin impl
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyShoppingListCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT);
 
-        $customer_references = $this->getFacade()->getCustomerReferencesByCompanyBusinessUnitIds($companyBusinessUnitIds);
+        $customerReference = $this->getFacade()->getCustomerReferencesByCompanyBusinessUnitIds($companyBusinessUnitIds);
 
-        $this->getFacade()->publish($customer_references);
+        $this->getFacade()->publish($customerReference);
     }
 }

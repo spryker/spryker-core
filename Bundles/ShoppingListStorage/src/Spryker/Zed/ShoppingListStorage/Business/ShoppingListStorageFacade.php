@@ -64,12 +64,12 @@ class ShoppingListStorageFacade extends AbstractFacade implements ShoppingListSt
      *
      * @api
      *
-     * @param array $customer_reference
+     * @param array $customerReference
      *
      * @return void
      */
-    public function publish(array $customer_references): void
+    public function publish(array $customerReferences): void
     {
-        $this->getFactory()->createShoppingListCustomerStorageWriter()->publish($customer_references);
+        $this->getFactory()->createShoppingListCustomerStorageWriter()->publish($customerReferences);
     }
 }

@@ -39,9 +39,9 @@ interface ShoppingListStorageFacadeInterface
     /**
      * @api
      *
-     * @param array $customer_reference
+     * @param array $customerReference
      *
      * @return void
      */
-    public function publish(array $customer_reference): void;
+    public function publish(array $customerReference): void;
 }
