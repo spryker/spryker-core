@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\StoreThreshold;
+namespace Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold;
 
 use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyInvalidArgumentException;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface;
 
-class StoreThresholdWriter implements StoreThresholdWriterInterface
+class GlobalThresholdWriter implements GlobalThresholdWriterInterface
 {
     /**
      * @var \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface

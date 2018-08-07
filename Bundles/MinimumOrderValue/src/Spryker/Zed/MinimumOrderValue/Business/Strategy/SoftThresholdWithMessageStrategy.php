@@ -9,7 +9,7 @@ namespace Spryker\Zed\MinimumOrderValue\Business\Strategy;
 
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 
-class SoftThresholdWithMessageStrategy extends MinimumOrderValueAbstractStrategy implements MinimumOrderValueStrategyInterface
+class SoftThresholdWithMessageStrategy extends AbstractMinimumOrderValueStrategy implements MinimumOrderValueStrategyInterface
 {
     protected const STRATEGY_KEY = 'soft-threshold';
 
@@ -31,5 +31,15 @@ class SoftThresholdWithMessageStrategy extends MinimumOrderValueAbstractStrategy
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     *
+     * @return int|null
+     */
+    public function calculateFee(MinimumOrderValueTransfer $minimumOrderValueTransfer): ?int
+    {
+        return null;
     }
 }

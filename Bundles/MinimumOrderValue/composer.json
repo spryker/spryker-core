@@ -7,14 +7,20 @@
     "spryker/currency": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
+    "spryker/messenger": "^3.1.0",
+    "spryker/minimum-order-value-extension": "^1.0.0",
     "spryker/store": "^1.0.0"
   },
   "require-dev": {
+    "spryker/cart": "*",
+    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/cart": "If you want to use Cart plugins: ^4.0.0.",
+    "spryker/checkout": "If you want to use Checkout plugins: ^3.0.0.",
     "spryker/installer": "If you want to use Installer plugins: ^4.0.0."
   },
   "autoload": {
