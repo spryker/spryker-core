@@ -21,6 +21,7 @@ use Spryker\Zed\Tax\TaxDependencyProvider;
 /**
  * @method \Spryker\Zed\Tax\TaxConfig getConfig()
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface getRepository()
  */
 class TaxBusinessFactory extends AbstractBusinessFactory
 {
@@ -30,7 +31,8 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     public function createReaderModel()
     {
         return new TaxReader(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getRepository()
         );
     }
 
@@ -41,6 +43,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     {
         return new TaxWriter(
             $this->getQueryContainer(),
+            $this->getRepository(),
             $this->getTaxChangePlugins()
         );
     }
