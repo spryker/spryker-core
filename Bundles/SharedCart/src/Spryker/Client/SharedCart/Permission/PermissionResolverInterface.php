@@ -9,7 +9,7 @@ namespace Spryker\Client\SharedCart\Permission;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface PermissionCalculatorInterface
+interface PermissionResolverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

@@ -10,10 +10,10 @@ namespace Spryker\Client\SharedCart\Permission;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface;
+use Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin;
 use Spryker\Client\SharedCart\SharedCartConfig;
-use Spryker\Shared\SharedCart\SharedCartConfig as SharedCartConfigConstants;
 
-class PermissionCalculator implements PermissionCalculatorInterface
+class PermissionResolver implements PermissionResolverInterface
 {
     use PermissionAwareTrait;
 
@@ -48,16 +48,18 @@ class PermissionCalculator implements PermissionCalculatorInterface
     {
         $customerTransfer = $this->customerClient->getCustomer();
 
-        if ($customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()) {
-            return $this->config->getOwnerPermission();
-        }
+        if ($customerTransfer) {
+            if ($customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()) {
+                return $this->config->getOwnerPermission();
+            }
 
-        $writeAllowed = $this->can(
-            SharedCartConfigConstants::PERMISSION_GROUP_FULL_ACCESS,
-            $quoteTransfer->getIdQuote()
-        );
-        if ($writeAllowed) {
-            return $this->config->getFullPermission();
+            $writeAllowed = $this->can(
+                WriteSharedCartPermissionPlugin::KEY,
+                $quoteTransfer->getIdQuote()
+            );
+            if ($writeAllowed) {
+                return $this->config->getFullPermission();
+            }
         }
 
         return $this->config->getReadPermission();

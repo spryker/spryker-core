@@ -71,7 +71,7 @@ class SharedCartClient extends AbstractClient implements SharedCartClientInterfa
     public function getQuoteAccessLevel(QuoteTransfer $quoteTransfer): string
     {
         return $this->getFactory()
-            ->createPermissionCalculator()
+            ->createPermissionResolver()
             ->getQuoteAccessLevel($quoteTransfer);
     }
 }
