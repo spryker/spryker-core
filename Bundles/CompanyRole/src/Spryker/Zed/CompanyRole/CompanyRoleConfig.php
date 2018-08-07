@@ -30,7 +30,7 @@ class CompanyRoleConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer[]
      */
     public function getCompanyRoles(): array
     {

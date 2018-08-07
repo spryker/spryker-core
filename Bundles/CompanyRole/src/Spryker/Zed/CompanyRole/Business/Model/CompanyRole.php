@@ -92,23 +92,16 @@ class CompanyRole implements CompanyRoleInterface
     public function createByCompany(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {
         $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
+        $companyRoleResponseTransfer = new CompanyRoleResponseTransfer();
 
-        foreach ($this->companyRoleConfig->getCompanyRoles() as $roleName => $rolePermissions) {
-            $roleTransfer = (new CompanyRoleTransfer())
-                ->setFkCompany($companyTransfer->getIdCompany())
-                ->setName($roleName)
-                ->setPermissionCollection($this->prepareCompanyRolePermissions($rolePermissions));
+        foreach ($this->companyRoleConfig->getCompanyRoles() as $roleTransfer) {
+            $roleTransfer->setFkCompany($companyTransfer->getIdCompany());
 
-            $this->create($roleTransfer);
+            $preparedPermissionCollection = $this->prepareCompanyRolePermissions($roleTransfer->getPermissionCollection());
+            $roleTransfer->setPermissionCollection($preparedPermissionCollection);
+
+            $companyRoleResponseTransfer = $this->create($roleTransfer);
         }
-
-        $companyRoleTransfer = (new CompanyRoleTransfer())
-            ->setFkCompany($companyTransfer->getIdCompany())
-            ->setName($this->companyRoleConfig->getDefaultAdminRoleName())
-            ->setPermissionCollection($this->prepareCompanyRolePermissions($this->companyRoleConfig->getAdminRolePermissions()))
-            ->setIsDefault(true);
-
-        $companyRoleResponseTransfer = $this->create($companyRoleTransfer);
 
         if ($companyRoleResponseTransfer->getIsSuccessful()) {
             return $companyResponseTransfer;
@@ -122,19 +115,21 @@ class CompanyRole implements CompanyRoleInterface
     }
 
     /**
-     * @param string[] $rolePermissions
+     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollection
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    protected function prepareCompanyRolePermissions(array $rolePermissions): PermissionCollectionTransfer
+    protected function prepareCompanyRolePermissions(PermissionCollectionTransfer $permissionCollection): PermissionCollectionTransfer
     {
         $allPermissions = $this->permissionFacade->findAll()->getPermissions();
 
         $needPermissions = new PermissionCollectionTransfer();
 
-        foreach ($allPermissions as $permission) {
-            if (in_array($permission->getKey(), $rolePermissions)) {
-                $needPermissions->addPermission($permission);
+        foreach ($permissionCollection->getPermissions() as $permission) {
+            foreach ($allPermissions as $existPermission) {
+                if ($permission->getKey() === $existPermission->getKey()) {
+                    $needPermissions->addPermission($existPermission);
+                }
             }
         }
 
