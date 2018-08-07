@@ -257,6 +257,10 @@ abstract class AbstractController
     {
         $whitelistedDomains = Config::getInstance()->get(KernelConstants::DOMAIN_WHITELIST, []);
 
+        if (empty($whitelistedDomains)) {
+            return true;
+        }
+
         foreach ($whitelistedDomains as $whitelistedDomain) {
             if ($this->extractDomainFromUrl($absoluteUrl) === $whitelistedDomain) {
                 return true;
