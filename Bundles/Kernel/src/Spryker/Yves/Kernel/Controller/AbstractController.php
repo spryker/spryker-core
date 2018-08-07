@@ -255,14 +255,24 @@ abstract class AbstractController
      */
     protected function isUrlWhitelisted(string $absoluteUrl): bool
     {
-        $whitelistUrls = Config::getInstance()->get(KernelConstants::URL_WHITELIST, []);
+        $whitelistedDomains = Config::getInstance()->get(KernelConstants::DOMAIN_WHITELIST, []);
 
-        foreach ($whitelistUrls as $whitelistUrl) {
-            if (strpos($absoluteUrl, $whitelistUrl) === 0) {
+        foreach ($whitelistedDomains as $whitelistedDomain) {
+            if ($this->extractDomainFromUrl($absoluteUrl) === $whitelistedDomain) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return string
+     */
+    protected function extractDomainFromUrl(string $url): string
+    {
+        return parse_url($url, PHP_URL_HOST);
     }
 }
