@@ -96,10 +96,10 @@ class CompanyRole implements CompanyRoleInterface
 
         $companyRoles = $this->companyRoleConfig->getCompanyRoles();
         if (!empty($companyRoles)) {
-            return $companyResponseTransfer;
+            $companyResponseTransfer = $this->createRoles($companyResponseTransfer, $companyRoles, $companyTransfer);
         }
 
-        return $this->createRoles($companyResponseTransfer, $companyRoles, $companyTransfer);
+        return $companyResponseTransfer;
     }
 
     /**
