@@ -15,10 +15,15 @@ use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterf
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface;
+use Spryker\Client\SharedCart\Permission\PermissionCalculator;
+use Spryker\Client\SharedCart\Permission\PermissionCalculatorInterface;
 use Spryker\Client\SharedCart\Zed\SharedCartStub;
 use Spryker\Client\SharedCart\Zed\SharedCartStubInterface;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
+/**
+ * @method \Spryker\Client\SharedCart\SharedCartConfig getConfig()
+ */
 class SharedCartFactory extends AbstractFactory
 {
     /**
@@ -31,6 +36,17 @@ class SharedCartFactory extends AbstractFactory
             $this->getMultiCartClient(),
             $this->getPersistentCartClient(),
             $this->getMessengerClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\SharedCart\Permission\PermissionCalculatorInterface
+     */
+    public function createPermissionCalculator(): PermissionCalculatorInterface
+    {
+        return new PermissionCalculator(
+            $this->getCustomerClient(),
+            $this->getConfig()
         );
     }
 
