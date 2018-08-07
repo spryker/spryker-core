@@ -172,6 +172,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         }
 
         return $currentProductPriceTransfer
+            ->setPriceDimension($priceProductTransfer->getPriceDimension())
             ->setPrice($price)
             ->setPrices($prices);
     }

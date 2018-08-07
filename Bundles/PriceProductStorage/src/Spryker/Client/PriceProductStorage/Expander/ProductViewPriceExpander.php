@@ -62,6 +62,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
         $priceProductConcreteTransfers = $this->getPriceConcreteData($productViewTransfer);
         if (!$priceProductConcreteTransfers) {
             return $productViewTransfer
+                ->setPriceDimension($currentProductAbstractPriceTransfer->getPriceDimension())
                 ->setPrice($currentProductAbstractPriceTransfer->getPrice())
                 ->setPrices($currentProductAbstractPriceTransfer->getPrices());
         }
@@ -73,6 +74,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
 
         if (!$currentProductConcretePriceTransfer->getPrice()) {
             return $productViewTransfer
+                ->setPriceDimension($currentProductAbstractPriceTransfer->getPriceDimension())
                 ->setPrice($currentProductAbstractPriceTransfer->getPrice())
                 ->setPrices($currentProductAbstractPriceTransfer->getPrices());
         }
@@ -85,6 +87,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
         );
 
         return $productViewTransfer
+            ->setPriceDimension($currentProductAbstractPriceTransfer->getPriceDimension())
             ->setPrice($currentProductPriceTransfer->getPrice())
             ->setPrices($currentProductPriceTransfer->getPrices());
     }

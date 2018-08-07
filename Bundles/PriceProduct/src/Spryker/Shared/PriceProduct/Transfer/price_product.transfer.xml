@@ -65,6 +65,7 @@
     <transfer name="CurrentProductPrice">
         <property name="price" type="int" />
         <property name="prices" type="array" singular="price" />
+        <property name="priceDimension" type="PriceProductDimension" />
     </transfer>
 
 </transfers>
