@@ -94,13 +94,21 @@ class CompanyRole implements CompanyRoleInterface
         $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
         $companyRoleResponseTransfer = new CompanyRoleResponseTransfer();
 
-        foreach ($this->companyRoleConfig->getCompanyRoles() as $roleTransfer) {
-            $roleTransfer->setFkCompany($companyTransfer->getIdCompany());
+        $companyRoles = $this->companyRoleConfig->getCompanyRoles();
+        if (!empty($companyRoles)) {
+            $allPermissions = $this->permissionFacade->findAll()->getPermissions();
 
-            $preparedPermissionCollection = $this->prepareCompanyRolePermissions($roleTransfer->getPermissionCollection());
-            $roleTransfer->setPermissionCollection($preparedPermissionCollection);
+            foreach ($allPermissions as $roleTransfer) {
+                $roleTransfer->setFkCompany($companyTransfer->getIdCompany());
 
-            $companyRoleResponseTransfer = $this->create($roleTransfer);
+                $preparedPermissionCollection = $this->prepareCompanyRolePermissions(
+                    $roleTransfer->getPermissionCollection(),
+                    $allPermissions
+                );
+                $roleTransfer->setPermissionCollection($preparedPermissionCollection);
+
+                $companyRoleResponseTransfer = $this->create($roleTransfer);
+            }
         }
 
         if ($companyRoleResponseTransfer->getIsSuccessful()) {
@@ -115,17 +123,18 @@ class CompanyRole implements CompanyRoleInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollection
+     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissions
+     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $allPermissions
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    protected function prepareCompanyRolePermissions(PermissionCollectionTransfer $permissionCollection): PermissionCollectionTransfer
-    {
-        $allPermissions = $this->permissionFacade->findAll()->getPermissions();
-
+    protected function prepareCompanyRolePermissions(
+        PermissionCollectionTransfer $permissions,
+        PermissionCollectionTransfer $allPermissions
+    ): PermissionCollectionTransfer {
         $needPermissions = new PermissionCollectionTransfer();
 
-        foreach ($permissionCollection->getPermissions() as $permission) {
+        foreach ($permissions->getPermissions() as $permission) {
             foreach ($allPermissions as $existPermission) {
                 if ($permission->getKey() === $existPermission->getKey()) {
                     $needPermissions->addPermission($existPermission);
