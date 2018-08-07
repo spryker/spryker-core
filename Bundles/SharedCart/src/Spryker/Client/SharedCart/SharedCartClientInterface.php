@@ -63,5 +63,5 @@ interface SharedCartClientInterface
      *
      * @return string
      */
-    public function calculatePermission(QuoteTransfer $quoteTransfer): string;
+    public function getQuoteAccessLevel(QuoteTransfer $quoteTransfer): string;
 }

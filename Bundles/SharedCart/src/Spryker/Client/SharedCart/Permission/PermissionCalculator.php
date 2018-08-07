@@ -44,7 +44,7 @@ class PermissionCalculator implements PermissionCalculatorInterface
      *
      * @return string
      */
-    public function calculatePermission(QuoteTransfer $quoteTransfer): string
+    public function getQuoteAccessLevel(QuoteTransfer $quoteTransfer): string
     {
         $customerTransfer = $this->customerClient->getCustomer();
 
