@@ -27,12 +27,4 @@ class ShoppingListStorageConstants
      * @api
      */
     const SHOPPING_LIST_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.shopping_list.error';
-
-    /**
-     * Specification:
-     * - Name of the key where timestamp value is stored
-     *
-     * @api
-     */
-    public const SHOPPING_LIST_STORAGE_DATA_KEY = 'updated_at';
 }

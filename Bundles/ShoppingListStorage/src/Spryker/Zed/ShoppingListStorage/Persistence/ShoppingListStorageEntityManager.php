@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
-use DateTime;
-use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConstants;
+use Generated\Shared\Transfer\ShoppingListCustomerStorageTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -28,9 +27,9 @@ class ShoppingListStorageEntityManager extends AbstractEntityManager implements 
             ->filterByCustomerReference($customerReference)
             ->findOneOrCreate();
 
-        $shoppingListCustomerStorage->setData([
-            ShoppingListStorageConstants::SHOPPING_LIST_STORAGE_DATA_KEY => $now = (new DateTime())->getTimestamp(),
-        ]);
+        $shoppingListCustomerStorageTransfer = new ShoppingListCustomerStorageTransfer();
+        $shoppingListCustomerStorageTransfer->setUpdatedAt(time());
+        $shoppingListCustomerStorage->setData($shoppingListCustomerStorageTransfer->toArray());
         $shoppingListCustomerStorage->save();
     }
 }
