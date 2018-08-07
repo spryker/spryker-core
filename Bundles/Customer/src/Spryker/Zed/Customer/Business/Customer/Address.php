@@ -10,6 +10,7 @@ namespace Spryker\Zed\Customer\Business\Customer;
 use Exception;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
@@ -150,7 +151,7 @@ class Address implements AddressInterface
             ->filterByFkCustomer($customerTransfer->getIdCustomer())
             ->find();
 
-        return $this->entityCollectionToTransferCollection($entities);
+        return $this->entityCollectionToTransferCollection($entities, $customerTransfer);
     }
 
     /**
@@ -279,14 +280,30 @@ class Address implements AddressInterface
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $entities
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
-    protected function entityCollectionToTransferCollection(ObjectCollection $entities)
+    protected function entityCollectionToTransferCollection(ObjectCollection $entities, CustomerTransfer $customerTransfer)
     {
         $addressTransferCollection = new AddressesTransfer();
+        /**
+         * @var \Orm\Zed\Customer\Persistence\SpyCustomerAddress $entity
+         */
         foreach ($entities->getData() as $entity) {
-            $addressTransferCollection->addAddress($this->entityToAddressTransfer($entity));
+            $addressTransfer = $this->entityToAddressTransfer($entity);
+
+            $countryTransfer = new CountryTransfer();
+            $countryTransfer->fromArray($entity->getCountry()->toArray());
+            $addressTransfer->setCountry($countryTransfer);
+
+            $addressTransfer->setIsDefaultBilling(
+                $entity->getIdCustomerAddress() === $customerTransfer->getDefaultBillingAddress()
+            );
+            $addressTransfer->setIsDefaultShipping(
+                $entity->getIdCustomerAddress() === $customerTransfer->getDefaultShippingAddress()
+            );
+            $addressTransferCollection->addAddress($addressTransfer);
         }
 
         return $addressTransferCollection;

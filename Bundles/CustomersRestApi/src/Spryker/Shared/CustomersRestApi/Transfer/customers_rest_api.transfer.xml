@@ -24,4 +24,23 @@
         <property name="email" type="string" />
     </transfer>
 
+    <transfer name="RestAddressAttributes">
+        <property name="salutation" type="string" />
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
+        <property name="street" type="string" />
+        <property name="number" type="string" />
+        <property name="additionToAddress" type="string" />
+        <property name="zipCode" type="string" />
+        <property name="city" type="string" />
+        <property name="country" type="string" />
+        <property name="phone" type="string" />
+        <property name="isDefaultShippingAddress" type="string" />
+        <property name="isDefaultBillingAddress" type="string" />
+    </transfer>
+
+    <transfer name="RestAddresses">
+        <property name="addresses" type="RestAddressAttributes[]" singular="Address" />
+    </transfer>
+
 </transfers>
