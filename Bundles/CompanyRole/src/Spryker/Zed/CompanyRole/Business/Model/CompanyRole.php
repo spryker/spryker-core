@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyRole\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
@@ -98,7 +99,7 @@ class CompanyRole implements CompanyRoleInterface
         if (!empty($companyRoles)) {
             $allPermissions = $this->permissionFacade->findAll()->getPermissions();
 
-            foreach ($allPermissions as $roleTransfer) {
+            foreach ($companyRoles as $roleTransfer) {
                 $roleTransfer->setFkCompany($companyTransfer->getIdCompany());
 
                 $preparedPermissionCollection = $this->prepareCompanyRolePermissions(
@@ -123,26 +124,26 @@ class CompanyRole implements CompanyRoleInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissions
-     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $allPermissions
+     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $companyRolePermissionCollectionTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $allPermissionTransfers
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     protected function prepareCompanyRolePermissions(
-        PermissionCollectionTransfer $permissions,
-        PermissionCollectionTransfer $allPermissions
+        PermissionCollectionTransfer $companyRolePermissionCollectionTransfer,
+        ArrayObject $allPermissionTransfers
     ): PermissionCollectionTransfer {
-        $needPermissions = new PermissionCollectionTransfer();
+        $needPermissionCollectionTransfer = new PermissionCollectionTransfer();
 
-        foreach ($permissions->getPermissions() as $permission) {
-            foreach ($allPermissions as $existPermission) {
+        foreach ($companyRolePermissionCollectionTransfer->getPermissions() as $permission) {
+            foreach ($allPermissionTransfers as $existPermission) {
                 if ($permission->getKey() === $existPermission->getKey()) {
-                    $needPermissions->addPermission($existPermission);
+                    $needPermissionCollectionTransfer->addPermission($existPermission);
                 }
             }
         }
 
-        return $needPermissions;
+        return $needPermissionCollectionTransfer;
     }
 
     /**

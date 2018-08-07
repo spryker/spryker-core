@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\CompanyRole;
 
+use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CompanyRoleConfig extends AbstractBundleConfig
@@ -35,5 +38,37 @@ class CompanyRoleConfig extends AbstractBundleConfig
     public function getCompanyRoles(): array
     {
         return [];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     */
+    protected function getAdministratorRole(): CompanyRoleTransfer
+    {
+        return $administratorRoleTransfer = (new CompanyRoleTransfer())
+            ->setName(static::DEFAULT_ADMIN_ROLE_NAME)
+            ->setIsDefault(true)
+            ->setPermissionCollection($this->createPermissionCollectionFromPermissionKeys(
+                $this->getAdminRolePermissions()
+            ));
+    }
+
+    /**
+     * @param string[] $rolePermissionKeys
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    protected function createPermissionCollectionFromPermissionKeys(array $rolePermissionKeys): PermissionCollectionTransfer
+    {
+        $permissions = new PermissionCollectionTransfer();
+
+        foreach ($rolePermissionKeys as $permissionKey) {
+            $permission = (new PermissionTransfer())
+                ->setKey($permissionKey);
+
+            $permissions->addPermission($permission);
+        }
+
+        return $permissions;
     }
 }
