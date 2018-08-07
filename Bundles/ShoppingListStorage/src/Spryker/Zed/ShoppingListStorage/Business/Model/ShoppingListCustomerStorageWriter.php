@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShoppingListStorage\Business;
+namespace Spryker\Zed\ShoppingListStorage\Business\Model;
 
-class ShoppingListCustomerStorageWriter
+class ShoppingListCustomerStorageWriter implements ShoppingListCustomerStorageWriterInterface
 {
     /**
      * @var \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageEntityManager
@@ -15,20 +15,13 @@ class ShoppingListCustomerStorageWriter
     protected $getEntityManager;
 
     /**
-     * @var \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepository
-     */
-    protected $getRepository;
-
-    /**
      * ShoppingListCustomerStorageWriter constructor.
      *
      * @param \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageEntityManager $getEntityManager
-     * @param \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepository $getRepository
      */
-    public function __construct($getEntityManager, $getRepository)
+    public function __construct($getEntityManager)
     {
         $this->getEntityManager = $getEntityManager;
-        $this->getRepository = $getRepository;
     }
 
     /**
