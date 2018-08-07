@@ -31,7 +31,7 @@ interface ProductOptionStorageClientInterface
      *
      * @param int $idAbstractProduct
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
      */
     public function getProductOptionsForCurrentStore($idAbstractProduct);
 }
