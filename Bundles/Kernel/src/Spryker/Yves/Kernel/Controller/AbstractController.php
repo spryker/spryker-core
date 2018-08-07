@@ -273,6 +273,11 @@ abstract class AbstractController
      */
     protected function extractDomainFromUrl(string $url): string
     {
-        return parse_url($url, PHP_URL_HOST);
+        $urlDomain = parse_url($url, PHP_URL_HOST);
+        if ($urlDomain === false) {
+            return '';
+        }
+
+        return $urlDomain;
     }
 }

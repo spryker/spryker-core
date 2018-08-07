@@ -32,7 +32,7 @@ interface KernelConstants
     const AUTO_LOADER_CACHE_FILE_NO_LOCK = 'AUTO_LOADER_CACHE_FILE_NO_LOCK';
 
     /**
-     * @const DOMAIN_WHITELIST A set of whitelist domains, that every external url is checked against, before redirect.
+     * A set of whitelist domains, that every external url is checked against, before redirect.
      */
     public const DOMAIN_WHITELIST = 'KERNEL:DOMAIN_WHITELIST';
 }
