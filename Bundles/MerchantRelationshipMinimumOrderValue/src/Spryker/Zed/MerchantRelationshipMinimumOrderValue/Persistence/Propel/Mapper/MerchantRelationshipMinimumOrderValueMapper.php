@@ -8,7 +8,9 @@
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Orm\Zed\MerchantRelationshipMinimumOrderValue\Persistence\SpyMerchantRelationshipMinimumOrderValue;
 
 class MerchantRelationshipMinimumOrderValueMapper implements MerchantRelationshipMinimumOrderValueMapperInterface
@@ -23,10 +25,19 @@ class MerchantRelationshipMinimumOrderValueMapper implements MerchantRelationshi
         SpyMerchantRelationshipMinimumOrderValue $merchantRelationshipMinimumOrderValueEntity,
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {
+        $minimumOrderValueTypeEntity = $merchantRelationshipMinimumOrderValueEntity->getMinimumOrderValueType();
+
         $merchantRelationshipMinimumOrderValueTransfer->fromArray($merchantRelationshipMinimumOrderValueEntity->toArray(), true)
             ->setIdMerchantRelationshipMinimumOrderValue($merchantRelationshipMinimumOrderValueEntity->getIdMerchantRelationshipMinOrderValue())
             ->setMinimumOrderValue(
                 (new MinimumOrderValueTransfer())->fromArray($merchantRelationshipMinimumOrderValueEntity->toArray(), true)
+                    ->setMinimumOrderValueType(
+                        (new MinimumOrderValueTypeTransfer())->fromArray($minimumOrderValueTypeEntity->toArray(), true)
+                            ->setIdMinimumOrderValueType($minimumOrderValueTypeEntity->getIdMinOrderValueType())
+                    )
+            )->setMerchantRelationship(
+                (new MerchantRelationshipTransfer())
+                    ->fromArray($merchantRelationshipMinimumOrderValueEntity->getMerchantRelationship()->toArray(), true)
             );
 
         return $merchantRelationshipMinimumOrderValueTransfer;

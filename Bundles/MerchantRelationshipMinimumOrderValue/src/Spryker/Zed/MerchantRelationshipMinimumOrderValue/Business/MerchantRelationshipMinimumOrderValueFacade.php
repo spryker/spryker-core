@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business;
 
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,6 +17,22 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class MerchantRelationshipMinimumOrderValueFacade extends AbstractFacade implements MerchantRelationshipMinimumOrderValueFacadeInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     */
+    public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
+    {
+        return $this->getFactory()
+            ->createMerchantRelationshipThresholdReader()
+            ->findApplicableThresholds($quoteTransfer);
+    }
+
     /**
      * {@inheritdoc}
      *
