@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MinimumOrderValue\Persistence;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
