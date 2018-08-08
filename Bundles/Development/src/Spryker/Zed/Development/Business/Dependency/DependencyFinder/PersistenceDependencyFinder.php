@@ -12,6 +12,8 @@ use Spryker\Zed\Development\Business\Dependency\SchemaParser\PropelSchemaParserI
 
 class PersistenceDependencyFinder implements DependencyFinderInterface
 {
+    public const TYPE_PERSISTENCE = 'persistence';
+
     /**
      * @var \Spryker\Zed\Development\Business\Dependency\SchemaParser\PropelSchemaParserInterface
      */
@@ -26,20 +28,33 @@ class PersistenceDependencyFinder implements DependencyFinderInterface
     }
 
     /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return static::TYPE_PERSISTENCE;
+    }
+
+    /**
      * @param string $module
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
+     * @param string|null $dependencyType
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    public function findDependencies(string $module, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
+    public function findDependencies(string $module, DependencyContainerInterface $dependencyContainer, ?string $dependencyType = null): DependencyContainerInterface
     {
+        if ($dependencyType !== null && $dependencyType !== $this->getType()) {
+            return $dependencyContainer;
+        }
+
         $foreignIdColumnNames = $this->propelSchemaParser->getForeignColumnNames($module);
 
         foreach ($foreignIdColumnNames as $foreignIdColumnName) {
             $dependentModule = $this->propelSchemaParser->getModuleNameByForeignReference($foreignIdColumnName, $module);
             $dependencyContainer->addDependency(
                 $dependentModule,
-                'spryker (persistence)'
+                $this->getType()
             );
         }
 

@@ -13,8 +13,9 @@ interface ModuleDependencyParserInterface
 {
     /**
      * @param string $module
+     * @param string|null $dependencyType
      *
      * @return \Generated\Shared\Transfer\DependencyCollectionTransfer
      */
-    public function parseOutgoingDependencies(string $module): DependencyCollectionTransfer;
+    public function parseOutgoingDependencies(string $module, ?string $dependencyType = null): DependencyCollectionTransfer;
 }

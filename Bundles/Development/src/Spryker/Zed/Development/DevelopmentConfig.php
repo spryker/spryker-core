@@ -45,6 +45,18 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string[]
+     */
+    public function getTwigPathPatterns(): array
+    {
+        return [
+            $this->getPathToCore() . '%1$s/src/Spryker/Zed/%1$s/Presentation/',
+            $this->getPathToCore() . '%1$s/src/Spryker/Yves/%1$s/Theme/',
+            $this->getPathToShop() . '%1$s/src/SprykerShop/Yves/%1$s/Theme/',
+        ];
+    }
+
+    /**
      * Gets path to application root directory.
      *
      * @return string

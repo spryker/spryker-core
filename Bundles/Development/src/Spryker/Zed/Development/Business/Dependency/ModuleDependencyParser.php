@@ -35,15 +35,17 @@ class ModuleDependencyParser implements ModuleDependencyParserInterface
 
     /**
      * @param string $module
+     * @param string|null $dependencyType
      *
      * @return \Generated\Shared\Transfer\DependencyCollectionTransfer
      */
-    public function parseOutgoingDependencies(string $module): DependencyCollectionTransfer
+    public function parseOutgoingDependencies(string $module, ?string $dependencyType = null): DependencyCollectionTransfer
     {
-        $this->dependencyContainer->initialize($module);
+        $dependencyContainer = $this->dependencyContainer->initialize($module);
         $dependencyContainer = $this->dependencyFinder->findDependencies(
             $module,
-            $this->dependencyContainer->initialize($module)
+            $dependencyContainer,
+            $dependencyType
         );
 
         return $dependencyContainer->getDependencyCollection();

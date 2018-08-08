@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
+namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder;
 
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
+use Symfony\Component\Finder\SplFileInfo;
 
-interface DependencyFinderInterface
+interface TwigDependencyFinderInterface
 {
     /**
      * @return string
@@ -18,10 +19,10 @@ interface DependencyFinderInterface
 
     /**
      * @param string $module
+     * @param \Symfony\Component\Finder\SplFileInfo $twigFileInfo
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
-     * @param string|null $dependencyType
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    public function findDependencies(string $module, DependencyContainerInterface $dependencyContainer, ?string $dependencyType = null): DependencyContainerInterface;
+    public function checkDependencyInFile(string $module, SplFileInfo $twigFileInfo, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface;
 }

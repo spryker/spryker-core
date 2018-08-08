@@ -32,6 +32,9 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ExternalDepende
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\InternalDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\LocatorDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\PersistenceDependencyFinder;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TemplateFunctionDependencyFinder;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface;
 use Spryker\Zed\Development\Business\Dependency\Manager;
 use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParser;
 use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface;
@@ -39,6 +42,21 @@ use Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParser;
 use Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParserInterface;
 use Spryker\Zed\Development\Business\Dependency\SchemaParser\PropelSchemaParser;
 use Spryker\Zed\Development\Business\Dependency\SchemaParser\PropelSchemaParserInterface;
+use Spryker\Zed\Development\Business\Dependency\TwigFileFinder\TwigFileFinder;
+use Spryker\Zed\Development\Business\Dependency\TwigFileFinder\TwigFileFinderInterface;
+use Spryker\Zed\Development\Business\Dependency\Validator\DependencyValidator;
+use Spryker\Zed\Development\Business\Dependency\Validator\DependencyValidatorInterface;
+use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleComposite;
+use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleDevelopmentOnlyDependency;
+use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInRequireAndRequireDev;
+use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInSourceNotInRequire;
+use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface;
+use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInTestNotInRequireDev;
+use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleIsOptionalButInRequire;
+use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleIsOptionalButNotInRequireDev;
+use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleIsOptionalButNotSuggested;
+use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleNotInSourceButInRequire;
+use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleNotInTestButInRequireDev;
 use Spryker\Zed\Development\Business\DependencyTree\AdjacencyMatrixBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\ComposerDependencyParser;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\BundleToViewFilter;
@@ -207,6 +225,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createExternalDependencyFinder(),
             $this->createLocatorDependencyFinder(),
             $this->createPersistenceDependencyFinder(),
+            $this->createTwigDependencyFinder(),
         ]);
     }
 
@@ -270,6 +289,43 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new UseStatementParser(
             $this->createDependencyTreeFinder()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface
+     */
+    public function createTwigDependencyFinder(): DependencyFinderInterface
+    {
+        return new TwigDependencyFinder(
+            $this->createTwigFinder(),
+            $this->getTwigDependencyFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\TwigFileFinder\TwigFileFinderInterface
+     */
+    public function createTwigFinder(): TwigFileFinderInterface
+    {
+        return new TwigFileFinder($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface[]
+     */
+    public function getTwigDependencyFinder(): array
+    {
+        return [
+            $this->createTemplateFunctionDependencyFinder(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface
+     */
+    public function createTemplateFunctionDependencyFinder(): TwigDependencyFinderInterface
+    {
+        return new TemplateFunctionDependencyFinder();
     }
 
     /**
@@ -342,6 +398,108 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getPathToCore(),
             $this->getConfig()->getApplications()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Validator\DependencyValidatorInterface
+     */
+    public function createDependencyValidator(): DependencyValidatorInterface
+    {
+        return new DependencyValidator(
+            $this->createModuleDependencyParser(),
+            $this->createComposerDependencyParser(),
+            $this->createDependencyValidationRules()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface
+     */
+    public function createDependencyValidationRules(): ValidationRuleInterface
+    {
+        return new ValidationRuleComposite([
+            $this->createValidationRuleDevelopmentOnlyDependency(),
+            $this->createValidationRuleInSourceNotInRequire(),
+            $this->createValidationRuleNotInSourceButInRequire(),
+            $this->createValidationRuleInTestNotInRequireDev(),
+            $this->createValidationRuleNotInTestButInRequireDev(),
+            $this->createValidationRuleIsOptionalButInRequire(),
+            $this->createValidationRuleIsOptionalButNotInRequireDev(),
+            $this->createValidationRuleIsOptionalButNotSuggested(),
+            $this->createValidationRuleInRequireAndRequireDev(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface
+     */
+    public function createValidationRuleDevelopmentOnlyDependency(): ValidationRuleInterface
+    {
+        return new ValidationRuleDevelopmentOnlyDependency();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface
+     */
+    public function createValidationRuleInSourceNotInRequire(): ValidationRuleInterface
+    {
+        return new ValidationRuleInSourceNotInRequire();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface
+     */
+    public function createValidationRuleNotInSourceButInRequire(): ValidationRuleInterface
+    {
+        return new ValidationRuleNotInSourceButInRequire();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface
+     */
+    public function createValidationRuleInTestNotInRequireDev(): ValidationRuleInterface
+    {
+        return new ValidationRuleInTestNotInRequireDev();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface
+     */
+    public function createValidationRuleNotInTestButInRequireDev(): ValidationRuleInterface
+    {
+        return new ValidationRuleNotInTestButInRequireDev();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface
+     */
+    public function createValidationRuleIsOptionalButInRequire(): ValidationRuleInterface
+    {
+        return new ValidationRuleIsOptionalButInRequire();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface
+     */
+    public function createValidationRuleIsOptionalButNotInRequireDev(): ValidationRuleInterface
+    {
+        return new ValidationRuleIsOptionalButNotInRequireDev();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface
+     */
+    public function createValidationRuleIsOptionalButNotSuggested(): ValidationRuleInterface
+    {
+        return new ValidationRuleIsOptionalButNotSuggested();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface
+     */
+    public function createValidationRuleInRequireAndRequireDev(): ValidationRuleInterface
+    {
+        return new ValidationRuleInRequireAndRequireDev();
     }
 
     /**

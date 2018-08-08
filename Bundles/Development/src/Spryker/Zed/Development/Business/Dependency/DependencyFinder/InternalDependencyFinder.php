@@ -13,6 +13,8 @@ use Spryker\Zed\Development\DevelopmentConfig;
 
 class InternalDependencyFinder extends AbstractFileDependencyFinder
 {
+    public const TYPE_INTERNAL = 'internal';
+
     /**
      * @var \Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParserInterface
      */
@@ -34,20 +36,33 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
     }
 
     /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return static::TYPE_INTERNAL;
+    }
+
+    /**
      * @param string $module
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
+     * @param string|null $dependencyType
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    public function findDependencies(string $module, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
+    public function findDependencies(string $module, DependencyContainerInterface $dependencyContainer, ?string $dependencyType = null): DependencyContainerInterface
     {
+        if ($dependencyType !== null && $dependencyType !== $this->getType()) {
+            return $dependencyContainer;
+        }
+
         $dependencyModules = $this->getDependencyModules($module);
 
         foreach ($dependencyModules as $filePath => $modules) {
             foreach ($modules as $dependentModule) {
                 $dependencyContainer->addDependency(
                     $dependentModule,
-                    'spryker',
+                    $this->getType(),
                     $this->isOptional($filePath, $dependentModule),
                     $this->isTestFile($filePath)
                 );

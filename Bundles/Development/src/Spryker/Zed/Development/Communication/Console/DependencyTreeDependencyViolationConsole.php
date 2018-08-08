@@ -25,7 +25,10 @@ class DependencyTreeDependencyViolationConsole extends Console
 {
     const COMMAND_NAME = 'dev:dependency:find-violations';
     const ARGUMENT_MODULE = 'module';
+    const OPTION_DEPENDENCY_TYPE = 'dependency-type';
+    const OPTION_DEPENDENCY_TYPE_SHORT = 'd';
     const OPTION_FIX = 'fix';
+    const OPTION_FIX_SHORT = 'fix';
 
     const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
 
@@ -40,7 +43,8 @@ class DependencyTreeDependencyViolationConsole extends Console
             ->setName(static::COMMAND_NAME)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->addArgument(static::ARGUMENT_MODULE, InputArgument::OPTIONAL, 'Module to run checks for.')
-            ->addOption(static::OPTION_FIX, 'f', InputOption::VALUE_NONE, 'Fix all findings (only adding for now).')
+            ->addOption(static::OPTION_DEPENDENCY_TYPE, static::OPTION_DEPENDENCY_TYPE_SHORT, InputOption::VALUE_REQUIRED, 'Runs only one specific dependency type check.')
+            ->addOption(static::OPTION_FIX, static::OPTION_FIX_SHORT, InputOption::VALUE_NONE, 'Fix all findings (only adding for now).')
             ->setDescription('Find dependency violations in the dependency tree (Spryker core dev only).');
     }
 

@@ -25,15 +25,24 @@ class DependencyFinderComposite implements DependencyFinderInterface
     }
 
     /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return 'all';
+    }
+
+    /**
      * @param string $module
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
+     * @param string|null $dependencyType
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    public function findDependencies(string $module, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
+    public function findDependencies(string $module, DependencyContainerInterface $dependencyContainer, ?string $dependencyType = null): DependencyContainerInterface
     {
         foreach ($this->dependencyFinder as $dependencyFinder) {
-            $dependencyContainer = $dependencyFinder->findDependencies($module, $dependencyContainer);
+            $dependencyContainer = $dependencyFinder->findDependencies($module, $dependencyContainer, $dependencyType);
         }
 
         return $dependencyContainer;

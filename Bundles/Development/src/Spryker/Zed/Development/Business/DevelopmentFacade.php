@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Development\Business;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
+use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -102,12 +104,13 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @api
      *
      * @param string $module
+     * @param string|null $dependencyType
      *
      * @return \Generated\Shared\Transfer\DependencyCollectionTransfer
      */
-    public function showOutgoingDependenciesForModule(string $module): DependencyCollectionTransfer
+    public function showOutgoingDependenciesForModule(string $module, ?string $dependencyType = null): DependencyCollectionTransfer
     {
-        return $this->getFactory()->createModuleDependencyParser()->parseOutgoingDependencies($module);
+        return $this->getFactory()->createModuleDependencyParser()->parseOutgoingDependencies($module, $dependencyType);
     }
 
     /**
@@ -394,6 +397,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @api
      *
+<<<<<<< HEAD
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string|null $module
      *
@@ -402,5 +406,14 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function runPropelAbstractValidation(OutputInterface $output, ?string $module): bool
     {
         return $this->getFactory()->createPropelAbstractValidator()->validate($output, $module);
+=======
+     * @param \Generated\Shared\Transfer\DependencyValidationRequestTransfer $dependencyValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\DependencyValidationResponseTransfer
+     */
+    public function validateModuleDependencies(DependencyValidationRequestTransfer $dependencyValidationRequestTransfer): DependencyValidationResponseTransfer
+    {
+        return $this->getFactory()->createDependencyValidator()->validate($dependencyValidationRequestTransfer);
+>>>>>>> te-36 added dependency violation finder for twig dependencies, refactored dependency violation finder console
     }
 }

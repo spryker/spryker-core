@@ -55,7 +55,7 @@
         <property name="name" type="string"/>
         <property name="isDev" type="bool"/>
         <property name="isOptional" type="bool"/>
-    </transfer>
+    </transfer>n
 
     <transfer name="BridgeBuilderData">
         <property name="vendor" type="string"/>
@@ -69,6 +69,33 @@
         <property name="toModuleLayer" type="string"/>
         <property name="toType" type="string"/>
         <property name="methods" type="string[]"/>
+    </transfer>
+
+    <transfer name="DependencyValidationRequest">
+        <property name="module" type="string"/>
+        <property name="dependencyType" type="string"/>
+    </transfer>
+
+    <transfer name="DependencyValidationResponse">
+        <property name="moduleDependencies" type="ModuleDependency[]" singular="moduleDependency"/>
+    </transfer>
+
+    <transfer name="ModuleDependency">
+        <property name="module" type="string"/>
+        <property name="isValid" type="bool"/>
+        <property name="isSrcDependency" type="bool"/>
+        <property name="isTestDependency" type="bool"/>
+        <property name="isSuggested" type="bool"/>
+        <property name="isOptionalDependency" type="bool"/>
+        <property name="isOwnExtensionModule" type="bool"/>
+        <property name="isInComposerRequire" type="bool"/>
+        <property name="isInComposerRequireDev" type="bool"/>
+        <property name="dependencyTypes" type="string[]"/>
+        <property name="validationMessages" type="ValidationMessage[]" singular="validationMessage"/>
+    </transfer>
+
+    <transfer name="ValidationMessage">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

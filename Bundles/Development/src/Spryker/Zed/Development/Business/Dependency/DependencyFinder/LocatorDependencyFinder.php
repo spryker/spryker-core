@@ -13,6 +13,8 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class LocatorDependencyFinder implements DependencyFinderInterface
 {
+    public const TYPE_LOCATOR = 'locator';
+
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface
      */
@@ -27,19 +29,32 @@ class LocatorDependencyFinder implements DependencyFinderInterface
     }
 
     /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return static::TYPE_LOCATOR;
+    }
+
+    /**
      * @param string $module
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
+     * @param string|null $dependencyType
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    public function findDependencies(string $module, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
+    public function findDependencies(string $module, DependencyContainerInterface $dependencyContainer, ?string $dependencyType = null): DependencyContainerInterface
     {
+        if ($dependencyType !== null && $dependencyType !== $this->getType()) {
+            return $dependencyContainer;
+        }
+
         $dependencyModules = $this->getDependencyModules($module);
 
         foreach ($dependencyModules as $module) {
             $dependencyContainer->addDependency(
                 $module,
-                'spryker (locator)'
+                $this->getType()
             );
         }
 

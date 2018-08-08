@@ -15,6 +15,8 @@ use Zend\Filter\Word\SeparatorToCamelCase;
 
 class ExternalDependencyFinder extends AbstractFileDependencyFinder
 {
+    public const TYPE_EXTERNAL = 'external';
+
     /**
      * @var \Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParserInterface
      */
@@ -36,20 +38,33 @@ class ExternalDependencyFinder extends AbstractFileDependencyFinder
     }
 
     /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return static::TYPE_EXTERNAL;
+    }
+
+    /**
      * @param string $module
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
+     * @param string|null $dependencyType
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    public function findDependencies(string $module, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
+    public function findDependencies(string $module, DependencyContainerInterface $dependencyContainer, ?string $dependencyType = null): DependencyContainerInterface
     {
+        if ($dependencyType !== null && $dependencyType !== $this->getType()) {
+            return $dependencyContainer;
+        }
+
         $dependencyModules = $this->getDependencyModules($module);
 
         foreach ($dependencyModules as $filePath => $modules) {
             foreach ($modules as $dependentModule) {
                 $dependencyContainer->addDependency(
                     $dependentModule,
-                    'external',
+                    $this->getType(),
                     $this->isPluginFile($filePath),
                     $this->isTestFile($filePath)
                 );

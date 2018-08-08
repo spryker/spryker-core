@@ -68,6 +68,8 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
                 continue;
             }
             $dependencies[] = [
+                'dependencyModule' => $moduleName,
+                'types' => $this->getDependencyTypes($moduleName, $dependencyCollectionTransfer),
                 'isOptional' => $this->getIsOptional($moduleName, $dependencyCollectionTransfer),
                 'src' => in_array($moduleName, $moduleNamesInSrc) ? $moduleName : '',
                 'tests' => in_array($moduleName, $moduleNamesInTests) ? $moduleName : '',
@@ -101,6 +103,28 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
         }
 
         return $isOptional;
+    }
+
+    /**
+     * @param string $moduleName
+     * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $moduleDependencyCollectionTransfer
+     *
+     * @return string[]
+     */
+    protected function getDependencyTypes($moduleName, DependencyCollectionTransfer $moduleDependencyCollectionTransfer): array
+    {
+        $dependencyTypes = [];
+        foreach ($moduleDependencyCollectionTransfer->getDependencyModules() as $moduleDependencyTransfer) {
+            if ($moduleDependencyTransfer->getModule() !== $moduleName) {
+                continue;
+            }
+
+            foreach ($moduleDependencyTransfer->getDependencies() as $dependencyTransfer) {
+                $dependencyTypes[$dependencyTransfer->getType()] = $dependencyTransfer->getType();
+            }
+        }
+
+        return $dependencyTypes;
     }
 
     /**
