@@ -20,5 +20,4 @@ use Orm\Zed\ShoppingListNote\Persistence\Base\SpyShoppingListItemNote as BaseSpy
  */
 class AbstractSpyShoppingListItemNote extends BaseSpyShoppingListItemNote
 {
-
 }

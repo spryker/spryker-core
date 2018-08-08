@@ -23,7 +23,7 @@ class ShoppingListNotePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListItemNoteMapperInterface
+     * @return \Spryker\Zed\ShoppingListNote\Persistence\Propel\Mapper\ShoppingListItemNoteMapperInterface
      */
     public function createShoppingListItemNoteMapper(): ShoppingListItemNoteMapperInterface
     {

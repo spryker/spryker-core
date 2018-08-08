@@ -8,22 +8,21 @@
 namespace Spryker\Zed\ShoppingListNote\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
-use Generated\Shared\Transfer\SpyShoppingListItemNoteEntityTransfer;
 use Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote;
 
 class ShoppingListItemNoteMapper implements ShoppingListItemNoteMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyShoppingListItemNoteEntityTransfer $shoppingListItemNoteEntityTransfer
+     * @param \Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote $shoppingListItemNote
      * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer
      */
     public function mapShoppingListItemNoteTransfer(
-        SpyShoppingListItemNoteEntityTransfer $shoppingListItemNoteEntityTransfer,
+        SpyShoppingListItemNote $shoppingListItemNote,
         ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
-    ): ShoppingListItemNoteTransfer{
-        return $shoppingListItemNoteTransfer->fromArray($shoppingListItemNoteEntityTransfer->modifiedToArray(), true);
+    ): ShoppingListItemNoteTransfer {
+        return $shoppingListItemNoteTransfer->fromArray($shoppingListItemNote->toArray(), true);
     }
 
     /**

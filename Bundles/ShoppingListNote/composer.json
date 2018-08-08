@@ -3,6 +3,9 @@
   "description": "ShoppingListNote module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.0.0",
+    "spryker/shopping-list": "^1.0.0",
+    "spryker/shopping-list-extension": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 /**
  * @method \Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNotePersistenceFactory getFactory()
  */
-class ShoppingListNoteRepository extends AbstractRepository  implements ShoppingListNoteRepositoryInterface
+class ShoppingListNoteRepository extends AbstractRepository implements ShoppingListNoteRepositoryInterface
 {
     /**
      * @param int $idShoppingListItem
@@ -22,19 +22,18 @@ class ShoppingListNoteRepository extends AbstractRepository  implements Shopping
      */
     public function findShoppingListItemNoteByFkShoppingListItem(int $idShoppingListItem): ?ShoppingListItemNoteTransfer
     {
-        $shoppingListItemNoteQuery = $this
+        $shoppingListItemNote = $this
             ->getFactory()
             ->createShoppingListItemNoteQuery()
-            ->filterByFkShoppingListItem($idShoppingListItem);
+            ->filterByFkShoppingListItem($idShoppingListItem)
+            ->findOne();
 
-        $shoppingListItemNoteEntityTransfer = $this->buildQueryFromCriteria($shoppingListItemNoteQuery)->find();
-
-        if ($shoppingListItemNoteEntityTransfer) {
-            return $this->getFactory()
-                ->createShoppingListItemNoteMapper()
-                ->mapShoppingListItemNoteTransfer($shoppingListItemNoteEntityTransfer, new ShoppingListItemNoteTransfer());
+        if (!$shoppingListItemNote) {
+            return null;
         }
 
-        return null;
+        return $this->getFactory()
+            ->createShoppingListItemNoteMapper()
+            ->mapShoppingListItemNoteTransfer($shoppingListItemNote, new ShoppingListItemNoteTransfer());
     }
 }
