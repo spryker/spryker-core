@@ -10,6 +10,7 @@ namespace Spryker\Client\SharedCart;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -56,5 +57,21 @@ class SharedCartClient extends AbstractClient implements SharedCartClientInterfa
     public function removeShareCart(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createCartSharer()->removeShareCart($shareCartRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string
+     */
+    public function getQuoteAccessLevel(QuoteTransfer $quoteTransfer): string
+    {
+        return $this->getFactory()
+            ->createPermissionResolver()
+            ->getQuoteAccessLevel($quoteTransfer);
     }
 }
