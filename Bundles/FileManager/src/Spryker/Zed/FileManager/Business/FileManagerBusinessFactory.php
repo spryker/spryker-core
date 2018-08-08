@@ -28,6 +28,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\FileManager\FileManagerConfig getConfig()
+ * @method \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface getRepository()
  */
 class FileManagerBusinessFactory extends AbstractBusinessFactory
 {
