@@ -19,4 +19,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_CUSTOMER_ADDRESSES_NOT_FOUND = '403';
     public const RESPONSE_DETAILS_CUSTOMER_ADDRESSES_NOT_FOUND = 'Customer does not have addresses.';
+
+    public const RESPONSE_CODE_ADDRESS_NOT_FOUND = '404';
+    public const RESPONSE_DETAILS_ADDRESS_NOT_FOUND = 'Address not found.';
 }

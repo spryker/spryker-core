@@ -23,10 +23,18 @@ class AddressesResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
+        if ($restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)) {
+            return $this->getFactory()
+                ->createAddressesReader()
+                ->readByCustomerReference(
+                    $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId()
+                );
+        }
+
         return $this->getFactory()
             ->createAddressesReader()
-            ->readByIdentifier(
-                $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId()
+            ->readByUuid(
+                $restRequest->getResource()->getId()
             );
     }
 }

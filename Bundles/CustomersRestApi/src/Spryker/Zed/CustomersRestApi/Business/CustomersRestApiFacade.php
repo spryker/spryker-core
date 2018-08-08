@@ -6,10 +6,12 @@
 
 namespace Spryker\Zed\CustomersRestApi\Business;
 
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+
 /**
  * @method \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiBusinessFactory getFactory()
  */
-class CustomersRestApiFacade implements CustomersRestApiFacadeInterface
+class CustomersRestApiFacade extends AbstractFacade implements CustomersRestApiFacadeInterface
 {
     /**
      * {@inheritdoc}

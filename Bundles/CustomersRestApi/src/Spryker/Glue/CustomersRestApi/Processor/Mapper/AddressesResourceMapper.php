@@ -7,7 +7,6 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -30,21 +29,18 @@ class AddressesResourceMapper implements AddressesResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function mapAddressTransferToRestResource(
-        AddressTransfer $addressTransfer,
-        CustomerTransfer $customerTransfer
-    ): RestResourceInterface {
+    public function mapAddressTransferToRestResource(AddressTransfer $addressTransfer): RestResourceInterface
+    {
         $restAddressAttributesTransfer = (new RestAddressAttributesTransfer())
             ->fromArray($addressTransfer->toArray(), true)
             ->setCountry($addressTransfer->getCountry()->getName());
 
         return $this->restResourceBuilder->createRestResource(
             CustomersRestApiConfig::RESOURCE_ADDRESSES,
-            $addressTransfer->getIdCustomerAddress(),
+            $addressTransfer->getUuid(),
             $restAddressAttributesTransfer
         );
     }

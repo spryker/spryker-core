@@ -372,4 +372,16 @@ interface CustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findCustomerByReference(CustomerTransfer $customerTransfer): ?CustomerTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves address by uuid from persistent storage.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function findAddressByUuid(AddressTransfer $addressTransfer): AddressTransfer;
 }

@@ -6,6 +6,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Addresses;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
@@ -52,7 +53,7 @@ class AddressesReader implements AddressesReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readByIdentifier(string $customerReference): RestResponseInterface
+    public function readByCustomerReference(string $customerReference): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
@@ -88,9 +89,39 @@ class AddressesReader implements AddressesReaderInterface
         }
 
         foreach ($addresses->getAddresses() as $address) {
-            $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource($address, $customer);
+            $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource($address);
             $restResponse->addResource($addressesResource);
         }
+
+        return $restResponse;
+    }
+
+    /**
+     * @param string $uuid
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function readByUuid(string $uuid): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $addressTransfer = new AddressTransfer();
+        $addressTransfer->setUuid($uuid);
+
+        $address = $this->customerClient->findAddressByUuid($addressTransfer);
+
+        if (!$address) {
+            $restErrorTransfer = (new RestErrorMessageTransfer())
+                ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_NOT_FOUND)
+                ->setStatus(Response::HTTP_NOT_FOUND)
+                ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_ADDRESS_NOT_FOUND);
+
+            $restResponse->addError($restErrorTransfer);
+
+            return $restResponse;
+        }
+
+        $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource($address);
+        $restResponse->addResource($addressesResource);
 
         return $restResponse;
     }

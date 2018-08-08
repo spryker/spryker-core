@@ -27,6 +27,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = $this->addSessionClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addAddressesRepository($container);
 
         return $container;
     }

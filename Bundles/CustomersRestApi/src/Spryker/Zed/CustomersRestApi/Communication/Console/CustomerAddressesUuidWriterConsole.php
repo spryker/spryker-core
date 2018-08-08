@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacadeInterface getFacade()
  */
-class CustomerAddressesUuidWriter extends Console
+class CustomerAddressesUuidWriterConsole extends Console
 {
     const COMMAND_NAME = 'customer-addresses:uuid:generate';
     const COMMAND_DESCRIPTION = 'Generates UUIDs for the existing customers addresses that do not have one.';

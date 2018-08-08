@@ -15,5 +15,12 @@ interface AddressesReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readByIdentifier(string $customerReference): RestResponseInterface;
+    public function readByCustomerReference(string $customerReference): RestResponseInterface;
+
+    /**
+     * @param string $uuid
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function readByUuid(string $uuid): RestResponseInterface;
 }

@@ -7,7 +7,7 @@
 namespace Spryker\Zed\CustomersRestApi\Persistence;
 
 use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
-use Spryker\Glue\CustomersRestApi\CustomersRestApiDependencyProvider;
+use Spryker\Zed\CustomersRestApi\CustomersRestApiDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**

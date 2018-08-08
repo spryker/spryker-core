@@ -521,4 +521,20 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     {
         return $this->getFactory()->createCustomerOrderHydrator()->hydrateOrderTransfer($orderTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findAddressByUuid(AddressTransfer $addressTransfer): ?AddressTransfer
+    {
+        return $this->getFactory()
+        ->createAddress()
+        ->findAddressByUuid($addressTransfer);
+    }
 }

@@ -297,12 +297,7 @@ class Address implements AddressInterface
             $countryTransfer->fromArray($entity->getCountry()->toArray());
             $addressTransfer->setCountry($countryTransfer);
 
-            $addressTransfer->setIsDefaultBilling(
-                $entity->getIdCustomerAddress() === $customerTransfer->getDefaultBillingAddress()
-            );
-            $addressTransfer->setIsDefaultShipping(
-                $entity->getIdCustomerAddress() === $customerTransfer->getDefaultShippingAddress()
-            );
+            $this->setDefaultAddressFlags($addressTransfer);
             $addressTransferCollection->addAddress($addressTransfer);
         }
 
@@ -628,5 +623,25 @@ class Address implements AddressInterface
         }
 
         $customerEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function findAddressByUuid(AddressTransfer $addressTransfer): AddressTransfer
+    {
+        $address = $this->queryContainer->queryAddressByUuid($addressTransfer->getUuid())->findOne();
+
+        $addressTransfer = $this->entityToAddressTransfer($address);
+
+        $countryTransfer = new CountryTransfer();
+        $countryTransfer->fromArray($address->getCountry()->toArray());
+        $addressTransfer->setCountry($countryTransfer);
+
+        $this->setDefaultAddressFlags($addressTransfer);
+
+        return $addressTransfer;
     }
 }
