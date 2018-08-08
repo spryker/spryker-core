@@ -217,13 +217,13 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
             return true;
         }
 
-        $companyBusinessUnit = array_filter($companyBusinessUnits, function ($companyBusinessUnit) use ($businessUnitId) {
+        $filteredCompanyBusinessUnits = array_filter($companyBusinessUnits, function ($companyBusinessUnit) use ($businessUnitId) {
             return (int)$companyBusinessUnit->getFkParentCompanyBusinessUnit() === $businessUnitId;
         });
 
-        if (!empty($companyBusinessUnit)) {
-            $businessUnitId = array_values($companyBusinessUnit)[0]->getIdCompanyBusinessUnit();
-            $parentBusinessUnitId = array_values($companyBusinessUnit)[0]->getFkParentCompanyBusinessUnit();
+        if (!empty($filteredCompanyBusinessUnits)) {
+            $businessUnitId = array_values($filteredCompanyBusinessUnits)[0]->getIdCompanyBusinessUnit();
+            $parentBusinessUnitId = array_values($filteredCompanyBusinessUnits)[0]->getFkParentCompanyBusinessUnit();
         } else {
             $businessUnitId = $parentBusinessUnitId = null;
         }
