@@ -47,7 +47,7 @@ class CompanyRoleConfig extends AbstractBundleConfig
      */
     protected function getAdministratorRole(): CompanyRoleTransfer
     {
-        return $administratorRoleTransfer = (new CompanyRoleTransfer())
+        return (new CompanyRoleTransfer())
             ->setName(static::DEFAULT_ADMIN_ROLE_NAME)
             ->setIsDefault(true)
             ->setPermissionCollection($this->createPermissionCollectionFromPermissionKeys(
