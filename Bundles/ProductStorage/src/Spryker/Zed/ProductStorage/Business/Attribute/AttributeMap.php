@@ -18,6 +18,8 @@ use Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface
 
 class AttributeMap implements AttributeMapInterface
 {
+    public const KEY_ID_PRODUCT_ABSTRACT_FK_LOCALE = '%d_%d';
+
     /**
      * @var \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface
      */
@@ -32,8 +34,6 @@ class AttributeMap implements AttributeMapInterface
      * @var array|null
      */
     protected static $superAttributesCache = null;
-
-    public const KEY_ID_PRODUCT_ABSTRACT_FK_LOCALE = '%d_%d';
 
     /**
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
@@ -59,20 +59,20 @@ class AttributeMap implements AttributeMapInterface
     }
 
     /**
-     * @param array $idsProductAbstract
-     * @param array $idsLocale
+     * @param array $productAbstractIds
+     * @param array $localeIds
      *
      * @throws \Spryker\Zed\ProductStorage\Exception\InvalidArgumentException
      *
      * @return array
      */
-    public function generateAttributeMapBulk(array $idsProductAbstract, array $idsLocale): array
+    public function generateAttributeMapBulk(array $productAbstractIds, array $localeIds): array
     {
-        if (count($idsProductAbstract) !== count($idsLocale)) {
+        if (count($productAbstractIds) !== count($localeIds)) {
             throw new InvalidArgumentException('Arrays should be paired.');
         }
 
-        $concreteProducts = $this->getConcreteProductsBulk($idsProductAbstract, $idsLocale);
+        $concreteProducts = $this->getConcreteProductsBulk($productAbstractIds, $localeIds);
         $indexedConcreteProducts = $this->getIndexedConcreteProducts($concreteProducts);
 
         $attributeMapBulk = [];
@@ -197,15 +197,15 @@ class AttributeMap implements AttributeMapInterface
     }
 
     /**
-     * @param int[] $idsProductAbstract
-     * @param int[] $idsLocale
+     * @param int[] $productAbstractIds
+     * @param int[] $localeIds
      *
      * @return array
      */
-    protected function getConcreteProductsBulk(array $idsProductAbstract, array $idsLocale): array
+    protected function getConcreteProductsBulk(array $productAbstractIds, array $localeIds): array
     {
         return $this->queryContainer
-            ->queryConcreteProductBulk($idsProductAbstract, $idsLocale)
+            ->queryConcreteProductBulk($productAbstractIds, $localeIds)
             ->find()
             ->toArray(null, false, TableMap::TYPE_CAMELNAME);
     }
