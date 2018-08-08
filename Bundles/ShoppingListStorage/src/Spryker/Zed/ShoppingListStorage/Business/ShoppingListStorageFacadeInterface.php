@@ -11,7 +11,7 @@ interface ShoppingListStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Gets array of Customer References by ShoppingList Ids
+     * - Gets array of Customer References by ShoppingList Ids.
      *
      * @api
      *
@@ -23,7 +23,7 @@ interface ShoppingListStorageFacadeInterface
 
     /**
      * Specification:
-     * - Gets array of Customer References by CompanyUser Ids
+     * - Gets array of Customer References by CompanyUser Ids.
      *
      * @api
      *
@@ -35,7 +35,7 @@ interface ShoppingListStorageFacadeInterface
 
     /**
      * Specification:
-     * - Gets array of Customer References by CompanyBusinessUnit Ids
+     * - Gets array of Customer References by CompanyBusinessUnit Ids.
      *
      * @api
      *
@@ -47,7 +47,8 @@ interface ShoppingListStorageFacadeInterface
 
     /**
      * Specification:
-     * - Saves to the storage new UpdatedAt flag for all provided CustomerReferences
+     * - Finds or Create Entity in SpyShoppingListCustomerStorage for all provided CustomerReferences,
+     *   and updates them with new UpdatedAt flag.
      *
      * @api
      *

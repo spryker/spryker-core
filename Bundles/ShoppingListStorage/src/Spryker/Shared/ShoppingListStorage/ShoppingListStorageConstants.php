@@ -14,7 +14,7 @@ class ShoppingListStorageConstants
 {
     /**
      * Specification:
-     * - Queue name as used for processing shopping list messages
+     * - Queue name as used for processing shopping list messages.
      *
      * @api
      */
@@ -22,7 +22,7 @@ class ShoppingListStorageConstants
 
     /**
      * Specification:
-     * - Queue name as used for processing shopping list messages
+     * - Queue name as used for processing shopping list messages.
      *
      * @api
      */
