@@ -72,7 +72,9 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
 
         foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
             $idAbstractAttributes = $spyProductAbstractLocalizedEntity->getIdAbstractAttributes();
-            $imageSets[$idAbstractAttributes] = $productAbstractImageSetsBulk[$spyProductAbstractLocalizedEntity->getFkProductAbstract()][$spyProductAbstractLocalizedEntity->getFkLocale()];
+            $imageSets[$idAbstractAttributes] = $this->generateProductAbstractImageSets(
+                $productAbstractImageSetsBulk[$spyProductAbstractLocalizedEntity->getFkProductAbstract()][$spyProductAbstractLocalizedEntity->getFkLocale()]
+            );
         }
 
         $spyProductAbstractImageStorageEntities = $this->findProductAbstractImageStorageEntitiesByProductAbstractIds($productAbstractIds);
@@ -167,23 +169,20 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     }
 
     /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
+     * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSetEntityTransfers
      *
      * @return \ArrayObject
      */
-    protected function generateProductAbstractImageSets($idProductAbstract, $idLocale)
+    protected function generateProductAbstractImageSets(array $productImageSetEntityTransfers)
     {
-        $imageSetTransfers = $this->productImageFacade->getCombinedAbstractImageSets(
-            $idProductAbstract,
-            $idLocale
-        );
-
         $imageSets = new ArrayObject();
-        foreach ($imageSetTransfers as $imageSetTransfer) {
+
+        foreach ($productImageSetEntityTransfers as $productImageSetEntityTransfer) {
             $imageSet = (new ProductImageSetStorageTransfer())
-                ->setName($imageSetTransfer->getName());
-            foreach ($imageSetTransfer->getProductImages() as $productImageTransfer) {
+                ->setName($productImageSetEntityTransfer->getName());
+            foreach ($productImageSetEntityTransfer->getSpyProductImageSetToProductImages() as $productImageSetToProductImageTransfer) {
+                $productImageTransfer = $productImageSetToProductImageTransfer->getSpyProductImage();
+
                 $imageSet->addImage((new ProductImageStorageTransfer())
                     ->setIdProductImage($productImageTransfer->getIdProductImage())
                     ->setExternalUrlLarge($productImageTransfer->getExternalUrlLarge())
