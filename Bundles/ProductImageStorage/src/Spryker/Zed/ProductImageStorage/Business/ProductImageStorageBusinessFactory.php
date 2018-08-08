@@ -27,6 +27,7 @@ class ProductImageStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductAbstractImageStorageWriter(
             $this->getProductImageFacade(),
             $this->getQueryContainer(),
+            $this->getRepository(),
             $this->getConfig()->isSendingToQueue()
         );
     }
@@ -39,8 +40,8 @@ class ProductImageStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductConcreteImageStorageWriter(
             $this->getProductImageFacade(),
             $this->getQueryContainer(),
-            $this->getConfig()->isSendingToQueue(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getConfig()->isSendingToQueue()
         );
     }
 

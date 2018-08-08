@@ -32,31 +32,31 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     protected $queryContainer;
 
     /**
-     * @var bool
-     */
-    protected $isSendingToQueue = true;
-
-    /**
      * @var \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageRepositoryInterface
      */
     protected $repository;
 
     /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
      * @param \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface $productImageFacade
      * @param \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface $queryContainer
-     * @param bool $isSendingToQueue
      * @param \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageRepositoryInterface $repository
+     * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductImageStorageToProductImageInterface $productImageFacade,
         ProductImageStorageQueryContainerInterface $queryContainer,
-        $isSendingToQueue,
-        ProductImageStorageRepositoryInterface $repository
+        ProductImageStorageRepositoryInterface $repository,
+        $isSendingToQueue
     ) {
         $this->productImageFacade = $productImageFacade;
         $this->queryContainer = $queryContainer;
-        $this->isSendingToQueue = $isSendingToQueue;
         $this->repository = $repository;
+        $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
@@ -176,18 +176,18 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     }
 
     /**
-     * @param int[] $idsProduct
+     * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][] [id_product_attributes => image_set[]]
      */
-    protected function getCombinedImageSets(array $idsProduct): array
+    protected function getCombinedImageSets(array $productIds): array
     {
-        $productLocalizedAttributes = $this->repository->getProductLocalizedAttributesWithProductByIdProductIn($idsProduct);
+        $productLocalizedAttributes = $this->repository->getProductLocalizedAttributesWithProductByIdProductIn($productIds);
 
-        $fksProduct = array_column($productLocalizedAttributes, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT);
-        $fksProductAbstract = array_column($productLocalizedAttributes, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
+        $productFks = array_column($productLocalizedAttributes, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT);
+        $productAbstractFks = array_column($productLocalizedAttributes, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
 
-        $productImageSets = $this->repository->getProductImageSetsByFkProductInOrFkAbstractProductIn($fksProduct, $fksProductAbstract);
+        $productImageSets = $this->repository->getProductImageSetsByFkProductInOrFkAbstractProductIn($productFks, $productAbstractFks);
 
         list($productImageSetsIndexedByFkProductAbstract, $productImageSetsIndexedByFkProduct)
             = $this->indexImageSetsByProductAbstractAndProduct($productImageSets);

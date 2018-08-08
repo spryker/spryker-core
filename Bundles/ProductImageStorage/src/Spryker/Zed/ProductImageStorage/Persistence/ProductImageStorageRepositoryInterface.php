@@ -10,17 +10,24 @@ namespace Spryker\Zed\ProductImageStorage\Persistence;
 interface ProductImageStorageRepositoryInterface
 {
     /**
-     * @param array $idsProduct
+     * @param int[] $productIds
      *
      * @return array
      */
-    public function getProductLocalizedAttributesWithProductByIdProductIn(array $idsProduct): array;
+    public function getProductLocalizedAttributesWithProductByIdProductIn(array $productIds): array;
 
     /**
-     * @param array $fksProduct
-     * @param array $fksProductAbstract
+     * @param int[] $productFks
+     * @param int[] $productAbstractFks
      *
      * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
      */
-    public function getProductImageSetsByFkProductInOrFkAbstractProductIn(array $fksProduct, array $fksProductAbstract): array;
+    public function getProductImageSetsByFkProductInOrFkAbstractProductIn(array $productFks, array $productAbstractFks): array;
+
+    /**
+     * @param int[] $productAbstractFks
+     *
+     * @return array
+     */
+    public function getProductImageSetsByFkAbstractProductIn(array $productAbstractFks): array;
 }
