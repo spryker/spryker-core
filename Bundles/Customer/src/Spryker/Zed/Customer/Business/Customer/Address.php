@@ -151,7 +151,7 @@ class Address implements AddressInterface
             ->filterByFkCustomer($customerTransfer->getIdCustomer())
             ->find();
 
-        return $this->entityCollectionToTransferCollection($entities, $customerTransfer);
+        return $this->entityCollectionToTransferCollection($entities);
     }
 
     /**
@@ -280,11 +280,10 @@ class Address implements AddressInterface
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $entities
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
-    protected function entityCollectionToTransferCollection(ObjectCollection $entities, CustomerTransfer $customerTransfer)
+    protected function entityCollectionToTransferCollection(ObjectCollection $entities)
     {
         $addressTransferCollection = new AddressesTransfer();
         /**
