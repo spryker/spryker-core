@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\Decorator;
+namespace Spryker\Zed\MinimumOrderValue\Business\Applier;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface ThresholdDecoratorInterface
+interface ThresholdApplierInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -19,7 +19,7 @@ interface ThresholdDecoratorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decorateQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function applyOnQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -29,5 +29,5 @@ interface ThresholdDecoratorInterface
      *
      * @return bool
      */
-    public function decorateCheckoutResponse(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+    public function applyOnCheckoutResponse(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

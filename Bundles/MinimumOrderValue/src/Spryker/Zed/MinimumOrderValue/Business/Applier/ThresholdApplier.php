@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\Decorator;
+namespace Spryker\Zed\MinimumOrderValue\Business\Applier;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -17,7 +17,7 @@ use Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInt
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface;
 
-class ThresholdDecorator implements ThresholdDecoratorInterface
+class ThresholdApplier implements ThresholdApplierInterface
 {
     /**
      * @uses CalculationPriceMode::PRICE_MODE_NET
@@ -62,7 +62,7 @@ class ThresholdDecorator implements ThresholdDecoratorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function decorateQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function applyOnQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $minimumOrderValueTransfers = $this->minimumOrderValueDataSourceStrategy->findApplicableThresholds($quoteTransfer);
 
@@ -91,7 +91,7 @@ class ThresholdDecorator implements ThresholdDecoratorInterface
      *
      * @return bool
      */
-    public function decorateCheckoutResponse(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    public function applyOnCheckoutResponse(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         $minimumOrderValueTransfers = $this->minimumOrderValueDataSourceStrategy->findApplicableThresholds($quoteTransfer);
 

@@ -8,10 +8,10 @@
 namespace Spryker\Zed\MinimumOrderValue\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MinimumOrderValue\Business\Applier\ThresholdApplier;
+use Spryker\Zed\MinimumOrderValue\Business\Applier\ThresholdApplierInterface;
 use Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategy;
 use Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategyInterface;
-use Spryker\Zed\MinimumOrderValue\Business\Decorator\ThresholdDecorator;
-use Spryker\Zed\MinimumOrderValue\Business\Decorator\ThresholdDecoratorInterface;
 use Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdReader;
 use Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdReaderInterface;
 use Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdWriter;
@@ -86,11 +86,11 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MinimumOrderValue\Business\Decorator\ThresholdDecoratorInterface
+     * @return \Spryker\Zed\MinimumOrderValue\Business\Applier\ThresholdApplierInterface
      */
-    public function createThresholdDecorator(): ThresholdDecoratorInterface
+    public function createThresholdApplier(): ThresholdApplierInterface
     {
-        return new ThresholdDecorator(
+        return new ThresholdApplier(
             $this->createThresholdDataSourceStrategy(),
             $this->createMinimumOrderValueStrategyResolver(),
             $this->getMessengerFacade()

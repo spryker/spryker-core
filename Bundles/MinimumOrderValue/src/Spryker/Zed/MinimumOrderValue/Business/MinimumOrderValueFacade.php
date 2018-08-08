@@ -108,8 +108,8 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
         return $this->getFactory()
-            ->createThresholdDecorator()
-            ->decorateQuote($quoteTransfer);
+            ->createThresholdApplier()
+            ->applyOnQuote($quoteTransfer);
     }
 
     /**
@@ -127,8 +127,8 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool {
         return $this->getFactory()
-            ->createThresholdDecorator()
-            ->decorateCheckoutResponse($quoteTransfer, $checkoutResponseTransfer);
+            ->createThresholdApplier()
+            ->applyOnCheckoutResponse($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
