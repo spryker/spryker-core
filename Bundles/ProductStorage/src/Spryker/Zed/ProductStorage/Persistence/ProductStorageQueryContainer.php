@@ -166,6 +166,34 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
     /**
      * @api
      *
+     * @param array $idsProductAbstract
+     * @param array $idsLocale
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryConcreteProductBulk(array $idsProductAbstract, array $idsLocale)
+    {
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProduct()
+            ->select([
+                SpyProductTableMap::COL_ID_PRODUCT,
+                SpyProductTableMap::COL_ATTRIBUTES,
+                SpyProductTableMap::COL_SKU,
+                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+            ])
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES, 'localized_attributes')
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, 'fk_locale')
+            ->useSpyProductLocalizedAttributesQuery()
+                ->filterByFkLocale_In($idsLocale)
+            ->endUse()
+            ->filterByFkProductAbstract_In($idsProductAbstract)
+            ->filterByIsActive(true);
+    }
+
+    /**
+     * @api
+     *
      * @param array $attributeKeys
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery

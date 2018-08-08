@@ -9,9 +9,11 @@ namespace Spryker\Zed\ProductStorage\Business\Attribute;
 
 use Generated\Shared\Transfer\AttributeMapStorageTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface;
+use Spryker\Zed\ProductStorage\Exception\InvalidArgumentException;
 use Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface;
 
 class AttributeMap implements AttributeMapInterface
@@ -25,6 +27,13 @@ class AttributeMap implements AttributeMapInterface
      * @var \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface
      */
     protected $queryContainer;
+
+    /**
+     * @var array|null
+     */
+    protected static $superAttributesCache = null;
+
+    public const KEY_ID_PRODUCT_ABSTRACT_FK_LOCALE = '%d_%d';
 
     /**
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
@@ -45,6 +54,42 @@ class AttributeMap implements AttributeMapInterface
     public function generateAttributeMap($idProductAbstract, $idLocale)
     {
         $concreteProducts = $this->getConcreteProducts($idProductAbstract, $idLocale);
+
+        return $this->generateAttributeMapByConcreteProducts($concreteProducts);
+    }
+
+    /**
+     * @param array $idsProductAbstract
+     * @param array $idsLocale
+     *
+     * @throws \Spryker\Zed\ProductStorage\Exception\InvalidArgumentException
+     *
+     * @return array
+     */
+    public function generateAttributeMapBulk(array $idsProductAbstract, array $idsLocale): array
+    {
+        if (count($idsProductAbstract) !== count($idsLocale)) {
+            throw new InvalidArgumentException('Arrays should be paired.');
+        }
+
+        $concreteProducts = $this->getConcreteProductsBulk($idsProductAbstract, $idsLocale);
+        $indexedConcreteProducts = $this->getIndexedConcreteProducts($concreteProducts);
+
+        $attributeMapBulk = [];
+        foreach ($indexedConcreteProducts as $key => $concreteProducts) {
+            $attributeMapBulk[$key] = $this->generateAttributeMapByConcreteProducts($concreteProducts);
+        }
+
+        return $attributeMapBulk;
+    }
+
+    /**
+     * @param array $concreteProducts
+     *
+     * @return \Generated\Shared\Transfer\AttributeMapStorageTransfer
+     */
+    protected function generateAttributeMapByConcreteProducts(array $concreteProducts): AttributeMapStorageTransfer
+    {
         $concreteProductIds = $this->filterConcreteProductIds($concreteProducts);
         $productAttributes = $this->getProductAttributes($concreteProducts);
         $superAttributes = $this->getSuperAttributes($productAttributes);
@@ -76,6 +121,50 @@ class AttributeMap implements AttributeMapInterface
     }
 
     /**
+     * @param array $concreteProducts
+     *
+     * @return array
+     */
+    protected function getIndexedConcreteProducts(array $concreteProducts): array
+    {
+        $indexedConcreteProducts = [];
+        foreach ($concreteProducts as $concreteProduct) {
+            $idProductAbstract = $concreteProduct[SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT];
+            $idLocale = $concreteProduct['fk_locale'];
+            $key = $this->getProductAbstractLocaleKey($idProductAbstract, $idLocale);
+
+            $indexedConcreteProducts[$key][] = $concreteProduct;
+        }
+
+        return $indexedConcreteProducts;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     * @param array $attributeMapBulk
+     *
+     * @return \Generated\Shared\Transfer\AttributeMapStorageTransfer
+     */
+    public function getConcreteProductsFromBulk(int $idProductAbstract, int $idLocale, array $attributeMapBulk): AttributeMapStorageTransfer
+    {
+        $key = $this->getProductAbstractLocaleKey($idProductAbstract, $idLocale);
+
+        return $attributeMapBulk[$key];
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return string
+     */
+    protected function getProductAbstractLocaleKey(int $idProductAbstract, int $idLocale): string
+    {
+        return sprintf(static::KEY_ID_PRODUCT_ABSTRACT_FK_LOCALE, $idProductAbstract, $idLocale);
+    }
+
+    /**
      * @param array $concreteProductIds
      * @param array $superAttributes
      * @param array $attributeVariants
@@ -103,6 +192,20 @@ class AttributeMap implements AttributeMapInterface
     {
         return $this->queryContainer
             ->queryConcreteProduct($idProductAbstract, $idLocale)
+            ->find()
+            ->toArray(null, false, TableMap::TYPE_CAMELNAME);
+    }
+
+    /**
+     * @param int[] $idsProductAbstract
+     * @param int[] $idsLocale
+     *
+     * @return array
+     */
+    protected function getConcreteProductsBulk(array $idsProductAbstract, array $idsLocale): array
+    {
+        return $this->queryContainer
+            ->queryConcreteProductBulk($idsProductAbstract, $idsLocale)
             ->find()
             ->toArray(null, false, TableMap::TYPE_CAMELNAME);
     }
@@ -143,14 +246,33 @@ class AttributeMap implements AttributeMapInterface
     {
         $uniqueAttributeKeys = $this->filterUniqueAttributeKeys($productAttributes);
 
-        $superAttributes = $this->queryContainer
-            ->queryProductAttributeKeyByKey(array_keys($uniqueAttributeKeys))
-            ->find()
-            ->toArray();
+        if (static::$superAttributesCache === null) {
+            $superAttributeList = $this->queryContainer
+                ->queryProductAttributeKey()
+                ->select(SpyProductAttributeKeyTableMap::COL_KEY)
+                ->find()
+                ->toArray();
+
+            static::$superAttributesCache = array_flip($superAttributeList);
+        }
+
+        $superAttributes = $this->filterSuperAttributes(array_keys($uniqueAttributeKeys));
 
         $superAttributes = array_flip($superAttributes);
 
         return $superAttributes;
+    }
+
+    /**
+     * @param array $productAttributes
+     *
+     * @return array
+     */
+    protected function filterSuperAttributes(array $productAttributes): array
+    {
+        return array_filter($productAttributes, function (string $attribute) {
+            return isset(static::$superAttributesCache[$attribute]);
+        });
     }
 
     /**
