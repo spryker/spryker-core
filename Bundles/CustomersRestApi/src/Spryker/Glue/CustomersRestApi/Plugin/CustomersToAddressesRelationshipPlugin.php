@@ -27,12 +27,9 @@ class CustomersToAddressesRelationshipPlugin extends AbstractPlugin implements R
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            $addresses = $this->getFactory()
+            $this->getFactory()
                 ->createCustomersAddressesReader()
-                ->readByIdentifier($restRequest->getResource()->getId());
-            if ($addresses) {
-                $resource->addRelationship($addresses);
-            }
+                ->readByIdentifier($restRequest->getResource()->getId(), $resource);
         }
     }
 

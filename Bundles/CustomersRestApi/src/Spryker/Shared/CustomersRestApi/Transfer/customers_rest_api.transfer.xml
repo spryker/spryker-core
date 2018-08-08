@@ -28,19 +28,15 @@
         <property name="salutation" type="string" />
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
-        <property name="street" type="string" />
-        <property name="number" type="string" />
-        <property name="additionToAddress" type="string" />
+        <property name="address1" type="string" />
+        <property name="address2" type="string" />
+        <property name="address3" type="string" />
         <property name="zipCode" type="string" />
         <property name="city" type="string" />
         <property name="country" type="string" />
         <property name="phone" type="string" />
-        <property name="isDefaultShippingAddress" type="bool" />
-        <property name="isDefaultBillingAddress" type="bool" />
-    </transfer>
-
-    <transfer name="RestAddresses">
-        <property name="addresses" type="RestAddressAttributes[]" singular="Address" />
+        <property name="isDefaultShipping" type="bool" />
+        <property name="isDefaultBilling" type="bool" />
     </transfer>
 
 </transfers>

@@ -87,8 +87,10 @@ class AddressesReader implements AddressesReaderInterface
             return $restResponse;
         }
 
-        $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource($addresses, $customer);
-        $restResponse->addResource($addressesResource);
+        foreach ($addresses->getAddresses() as $address) {
+            $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource($address, $customer);
+            $restResponse->addResource($addressesResource);
+        }
 
         return $restResponse;
     }

@@ -6,6 +6,7 @@
 
 namespace Spryker\Glue\CustomersRestApi;
 
+use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerClientBridge;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToSessionClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
@@ -15,6 +16,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
 {
     public const CLIENT_SESSION = 'CLIENT_SESSION';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const SPY_CUSTOMER_ADDRESS = 'SPY_CUSTOMER_ADDRESS';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -52,6 +54,20 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new CustomerRestApiToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addAddressesRepository(Container $container): Container
+    {
+        $container[static::SPY_CUSTOMER_ADDRESS] = function () {
+            return SpyCustomerAddressQuery::create();
         };
 
         return $container;
