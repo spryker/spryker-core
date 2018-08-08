@@ -9,7 +9,6 @@ namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -74,12 +73,28 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     /**
      * @param array $customerReferences
      *
-     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]
      */
-    public function findShoppingListCustomerStorageEntitiesByCustomerReferences(array $customerReferences): ObjectCollection
+    public function findShoppingListCustomerStorageEntitiesByCustomerReferences(array $customerReferences): array
     {
-        return $shoppingListCustomerStorageEntities = $this->getFactory()->createShoppingListCustomerStoragePropelQuery()
+        return $this->getFactory()
+            ->createShoppingListCustomerStoragePropelQuery()
             ->filterByCustomerReference_In($customerReferences)
-            ->find();
+            ->find()
+            ->toKeyIndex('customerReference');
+    }
+
+    /**
+     * @param string[] $customerReferences
+     *
+     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingList[]
+     */
+    public function findShoppingListEntitiesByCustomerReferences(array $customerReferences): array
+    {
+        return $this->getFactory()
+            ->getShoppingListPropelQuery()
+            ->filterByCustomerReference_In($customerReferences)
+            ->find()
+            ->toKeyIndex('customerReference');
     }
 }

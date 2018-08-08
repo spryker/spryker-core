@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ShoppingListStorage\Business\ShoppingListCustomerPublisher;
 
 use Generated\Shared\Transfer\ShoppingListCustomerStorageTransfer;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingList;
 use Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageEntityManagerInterface;
 use Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepositoryInterface;
 
@@ -46,47 +46,48 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
      */
     public function publish(array $customerReferences): void
     {
-        $shoppingListCustomerStorageCollection = $this->shoppingListStorageRepository
+        $spyShoppingListEntities = $this->shoppingListStorageRepository
+            ->findShoppingListEntitiesByCustomerReferences($customerReferences);
+        $spyShoppingListCustomerStorageEntities = $this->shoppingListStorageRepository
             ->findShoppingListCustomerStorageEntitiesByCustomerReferences($customerReferences);
-        $this->appendToShoppingListCustomerStorageCollectionIfNotExists($shoppingListCustomerStorageCollection, $customerReferences);
 
-        foreach ($shoppingListCustomerStorageCollection as $shoppingListCustomerStorage) {
-            $shoppingListCustomerStorageTransfer = new ShoppingListCustomerStorageTransfer();
-            $shoppingListCustomerStorageTransfer->setUpdatedAt(time());
-            $shoppingListCustomerStorage->setData($shoppingListCustomerStorageTransfer->toArray());
+        $this->storeData($spyShoppingListEntities, $spyShoppingListCustomerStorageEntities);
+    }
 
-            $this->storeData($shoppingListCustomerStorage);
+    /**
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingList[] $spyShoppingListEntities
+     * @param \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[] $shoppingListCustomerStorageEntities
+     *
+     * @return void
+     */
+    protected function storeData(array $spyShoppingListEntities, array $shoppingListCustomerStorageEntities): void
+    {
+        foreach ($spyShoppingListEntities as $customerReference => $spyShoppingListEntity) {
+            if (isset($shoppingListCustomerStorageEntities[$customerReference])) {
+                $this->storeDataSet($spyShoppingListEntity, $shoppingListCustomerStorageEntities[$customerReference]);
+                continue;
+            }
+
+            $this->storeDataSet($spyShoppingListEntity);
         }
     }
 
     /**
-     * @param \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage $shoppingListCustomerStorage
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingList $spyShoppingListEntity
+     * @param null|\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage $shoppingListCustomerStorageEntity
      *
      * @return void
      */
-    protected function storeData(SpyShoppingListCustomerStorage $shoppingListCustomerStorage): void
+    protected function storeDataSet(SpyShoppingList $spyShoppingListEntity, ?SpyShoppingListCustomerStorage $shoppingListCustomerStorageEntity = null)
     {
-        $this->shoppingListStorageEntityManager->saveShoppingListCustomerStorage($shoppingListCustomerStorage);
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $shoppingListCustomerStorageCollection
-     * @param array $customerReferences
-     *
-     * @return void
-     */
-    protected function appendToShoppingListCustomerStorageCollectionIfNotExists(ObjectCollection $shoppingListCustomerStorageCollection, array $customerReferences): void
-    {
-        $existingCustomerReferences = $shoppingListCustomerStorageCollection->toKeyValue(
-            'idShoppingListCustomerStorage',
-            'customerReference'
-        );
-
-        foreach (array_diff($customerReferences, $existingCustomerReferences) as $customerReference) {
-            $shoppingListCustomerStorageEntity = (new SpyShoppingListCustomerStorage())
-                ->setCustomerReference($customerReference);
-            $this->storeData($shoppingListCustomerStorageEntity);
-            $shoppingListCustomerStorageCollection->append($shoppingListCustomerStorageEntity);
+        if (!isset($shoppingListCustomerStorageEntity)) {
+            $shoppingListCustomerStorageEntity = new SpyShoppingListCustomerStorage();
         }
+        $shoppingListCustomerStorageEntity->setCustomerReference($spyShoppingListEntity->getCustomerReference());
+        $shoppingListCustomerStorageTransfer = new ShoppingListCustomerStorageTransfer();
+        $shoppingListCustomerStorageTransfer->setUpdatedAt(time());
+        $shoppingListCustomerStorageEntity->setData($shoppingListCustomerStorageTransfer->toArray());
+
+        $this->shoppingListStorageEntityManager->saveShoppingListCustomerStorage($shoppingListCustomerStorageEntity);
     }
 }

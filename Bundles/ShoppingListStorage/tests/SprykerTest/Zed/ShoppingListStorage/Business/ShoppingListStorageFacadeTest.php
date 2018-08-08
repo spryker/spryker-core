@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,7 +7,6 @@
 
 namespace SprykerTest\Zed\ShoppingListStorage\Business\ShoppingListStorageFacade;
 
-//use Spryker\Zed\ShoppingListStorage\Business\ShoppingListStorageFacade;
 use Codeception\Test\Unit;
 
 /**
@@ -28,12 +28,13 @@ class ShoppingListStorageFacadeTest extends Unit
     public function testGetCustomerReferencesByCompanyUserIds()
     {
         // TODO: temporary disable until P&S is able to handle storage tests
+//        $this->markTestSkipped('These tests temporary skipped until P&S is able to handle storage tests');
         // Assign
 
         // Act
 
         // Assert
-        $this->assertTrue(true);
+        $this->assertTrue(0);
     }
 
     /**
@@ -42,12 +43,12 @@ class ShoppingListStorageFacadeTest extends Unit
     public function testPublish()
     {
         // TODO: temporary empty until P&S is able to handle storage tests
+        $this->markTestSkipped('These tests temporary skipped until P&S is able to handle storage tests');
         // Assign
 
         // Act
 
         // Assert
-        $this->assertTrue(true);
     }
 
     /**
@@ -56,12 +57,12 @@ class ShoppingListStorageFacadeTest extends Unit
     public function testGetCustomerReferencesByShoppingListIds()
     {
         // TODO: temporary empty until P&S is able to handle storage tests
+        $this->markTestSkipped('These tests temporary skipped until P&S is able to handle storage tests');
         // Assign
 
         // Act
 
         // Assert
-        $this->assertTrue(true);
     }
 
     /**
@@ -70,11 +71,11 @@ class ShoppingListStorageFacadeTest extends Unit
     public function testGetCustomerReferencesByCompanyBusinessUnitIds()
     {
         // TODO: temporary empty until P&S is able to handle storage tests
+        $this->markTestSkipped('These tests temporary skipped until P&S is able to handle storage tests');
         // Assign
 
         // Act
 
         // Assert
-        $this->assertTrue(true);
     }
 }

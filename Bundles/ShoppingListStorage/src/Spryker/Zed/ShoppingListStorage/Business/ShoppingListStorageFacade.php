@@ -28,7 +28,7 @@ class ShoppingListStorageFacade extends AbstractFacade implements ShoppingListSt
      */
     public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array
     {
-        return $this->getRepository()->getCustomerReferencesByShoppingListIds($shoppingListIds);
+        return $this->getFactory()->createShoppingListStorage()->getCustomerReferencesByShoppingListIds($shoppingListIds);
     }
 
     /**
@@ -42,7 +42,7 @@ class ShoppingListStorageFacade extends AbstractFacade implements ShoppingListSt
      */
     public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
     {
-        return $this->getRepository()->getCustomerReferencesByCompanyBusinessUnitIds($companyBusinessUnitIds);
+        return $this->getFactory()->createShoppingListStorage()->getCustomerReferencesByCompanyBusinessUnitIds($companyBusinessUnitIds);
     }
 
     /**
@@ -56,7 +56,7 @@ class ShoppingListStorageFacade extends AbstractFacade implements ShoppingListSt
      */
     public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array
     {
-        return $this->getRepository()->getCustomerReferencesByCompanyUserIds($companyUserIds);
+        return $this->getFactory()->createShoppingListStorage()->getCustomerReferencesByCompanyUserIds($companyUserIds);
     }
 
     /**

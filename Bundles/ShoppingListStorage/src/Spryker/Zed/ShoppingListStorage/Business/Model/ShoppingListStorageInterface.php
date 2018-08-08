@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShoppingListStorage\Persistence;
+namespace Spryker\Zed\ShoppingListStorage\Business\Model;
 
-interface ShoppingListStorageRepositoryInterface
+interface ShoppingListStorageInterface
 {
     /**
      * @param int[] $shoppingListIds
@@ -29,18 +29,4 @@ interface ShoppingListStorageRepositoryInterface
      * @return string[]
      */
     public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
-
-    /**
-     * @param string[] $customerReference
-     *
-     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]
-     */
-    public function findShoppingListCustomerStorageEntitiesByCustomerReferences(array $customerReference): array;
-
-    /**
-     * @param string[] $customerReferences
-     *
-     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingList[]
-     */
-    public function findShoppingListEntitiesByCustomerReferences(array $customerReferences): array;
 }
