@@ -94,7 +94,6 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
         }
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSets
      *
@@ -209,7 +208,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     /**
      * @param array $productAbstractIds
      *
-     * @return SpyProductAbstractImageStorage[][]
+     * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorage[][]
      */
     protected function findProductAbstractImageStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {
