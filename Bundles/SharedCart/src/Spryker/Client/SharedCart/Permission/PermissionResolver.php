@@ -40,18 +40,16 @@ class PermissionResolver implements PermissionResolverInterface
     {
         $customerTransfer = $this->customerClient->getCustomer();
 
-        if ($customerTransfer) {
-            if ($customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()) {
-                return SharedCartConfig::PERMISSION_GROUP_OWNER_ACCESS;
-            }
+        if ($customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()) {
+            return SharedCartConfig::PERMISSION_GROUP_OWNER_ACCESS;
+        }
 
-            $writeAllowed = $this->can(
-                WriteSharedCartPermissionPlugin::KEY,
-                $quoteTransfer->getIdQuote()
-            );
-            if ($writeAllowed) {
-                return SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS;
-            }
+        $writeAllowed = $this->can(
+            WriteSharedCartPermissionPlugin::KEY,
+            $quoteTransfer->getIdQuote()
+        );
+        if ($writeAllowed) {
+            return SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS;
         }
 
         return SharedCartConfig::PERMISSION_GROUP_READ_ONLY;
