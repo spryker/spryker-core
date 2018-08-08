@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Business\Model;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Category\Business\Model\Category\CategoryInterface;
@@ -206,7 +207,7 @@ class Category
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryCollection(LocaleTransfer $localeTransfer)
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
         return $this->category->getAllCategoryCollection($localeTransfer);
     }

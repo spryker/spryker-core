@@ -73,7 +73,14 @@ class ProductListStorageRepository extends AbstractRepository implements Product
             ->createProductAbstractProductListStorageQuery()
             ->filterByFkProductAbstract_In($productAbstractIds);
 
-        return $productAbstractProductListStorageQuery->find()->toArray();
+        $productAbstractProductListStorageCollection = $productAbstractProductListStorageQuery->find();
+
+        $result = [];
+        foreach ($productAbstractProductListStorageCollection as $spyProductAbstractProductListStorage) {
+            $result[] = $spyProductAbstractProductListStorage;
+        }
+
+        return $result;
     }
 
     /**
@@ -91,7 +98,14 @@ class ProductListStorageRepository extends AbstractRepository implements Product
             ->createProductConcreteProductListStorageQuery()
             ->filterByFkProduct_In($productConcreteIds);
 
-        return $productConcreteProductListStorageQuery->find()->toArray();
+        $productConcreteProductListStorageCollection = $productConcreteProductListStorageQuery->find();
+
+        $result = [];
+        foreach ($productConcreteProductListStorageCollection as $spyProductConcreteProductListStorage) {
+            $result[] = $spyProductConcreteProductListStorage;
+        }
+
+        return $result;
     }
 
     /**
