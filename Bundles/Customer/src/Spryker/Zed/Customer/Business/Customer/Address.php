@@ -633,6 +633,10 @@ class Address implements AddressInterface
     {
         $address = $this->queryContainer->queryAddressByUuid($addressTransfer->getUuid())->findOne();
 
+        if (!$address) {
+            return new AddressTransfer();
+        }
+
         $addressTransfer = $this->entityToAddressTransfer($address);
 
         $countryTransfer = new CountryTransfer();
