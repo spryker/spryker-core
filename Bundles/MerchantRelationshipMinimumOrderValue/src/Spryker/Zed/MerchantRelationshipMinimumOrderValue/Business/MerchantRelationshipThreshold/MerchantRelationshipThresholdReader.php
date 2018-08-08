@@ -106,7 +106,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
         $cartMerchantRelationshipIds = [];
         foreach ($customerMerchantRelationships as $merchantRelationshipTransfer) {
             if (isset($itemMerchantRelationshipSubTotals[$merchantRelationshipTransfer->getIdMerchantRelationship()])) {
-                $cartMerchantRelationshipIds[$merchantRelationshipTransfer->getIdMerchantRelationship()] = $merchantRelationshipTransfer->get;
+                $cartMerchantRelationshipIds[$merchantRelationshipTransfer->getIdMerchantRelationship()] = $merchantRelationshipTransfer->getIdMerchantRelationship();
             }
         }
 
