@@ -80,6 +80,7 @@ class QuoteShareTest extends Unit
         $quoteTransfer = $this->tester->createQuote($customerTransfer1);
 
         $customerTransfer2 = $this->tester->haveCustomer();
+        $this->tester->createCompanyUser($customerTransfer2);
 
         // Act
         $actualQuoteResponseTransfer = $this->tester->getLocator()->persistentCart()->facade()->findQuote($quoteTransfer->getIdQuote(), $customerTransfer2);
