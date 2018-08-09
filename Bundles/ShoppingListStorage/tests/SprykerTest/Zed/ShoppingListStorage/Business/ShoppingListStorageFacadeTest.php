@@ -28,13 +28,12 @@ class ShoppingListStorageFacadeTest extends Unit
     public function testGetCustomerReferencesByCompanyUserIds()
     {
         // TODO: temporary disable until P&S is able to handle storage tests
-//        $this->markTestSkipped('These tests temporary skipped until P&S is able to handle storage tests');
+        $this->markTestSkipped('These tests temporary skipped until P&S is able to handle storage tests');
         // Assign
 
         // Act
 
         // Assert
-        $this->assertTrue(0);
     }
 
     /**
