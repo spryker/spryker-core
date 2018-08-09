@@ -25,8 +25,7 @@ class ShoppingListItemNoteExpanderPlugin extends AbstractPlugin implements ItemE
      */
     public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        $shoppingListItemNoteTransfer = $this
-            ->getFacade()
+        $shoppingListItemNoteTransfer = $this->getFacade()
             ->getShoppingListItemNoteByIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
         $shoppingListItemTransfer->setNote($shoppingListItemNoteTransfer);
 

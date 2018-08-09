@@ -18,6 +18,6 @@ use Orm\Zed\ShoppingListNote\Persistence\Base\SpyShoppingListItemNote as BaseSpy
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class AbstractSpyShoppingListItemNote extends BaseSpyShoppingListItemNote
+abstract class AbstractSpyShoppingListItemNote extends BaseSpyShoppingListItemNote
 {
 }

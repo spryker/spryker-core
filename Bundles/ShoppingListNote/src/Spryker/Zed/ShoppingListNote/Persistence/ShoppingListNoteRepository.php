@@ -22,8 +22,7 @@ class ShoppingListNoteRepository extends AbstractRepository implements ShoppingL
      */
     public function findShoppingListItemNoteByFkShoppingListItem(int $idShoppingListItem): ?ShoppingListItemNoteTransfer
     {
-        $shoppingListItemNote = $this
-            ->getFactory()
+        $shoppingListItemNote = $this->getFactory()
             ->createShoppingListItemNoteQuery()
             ->filterByFkShoppingListItem($idShoppingListItem)
             ->findOne();

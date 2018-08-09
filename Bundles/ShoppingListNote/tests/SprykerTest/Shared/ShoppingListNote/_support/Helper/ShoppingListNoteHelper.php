@@ -23,18 +23,8 @@ class ShoppingListNoteHelper extends Module
      */
     public function haveShoppingListItem(array $seed = []): ShoppingListItemTransfer
     {
-        $shoppingListItemTransfer = $this->buildShoppingListItem($seed);
+        $shoppingListItemTransfer = (new ShoppingListItemBuilder($seed))->build();
 
         return $this->getLocator()->shoppingList()->facade()->addItem($shoppingListItemTransfer);
-    }
-
-    /**
-     * @param array $seed
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
-     */
-    public function buildShoppingListItem(array $seed = []): ShoppingListItemTransfer
-    {
-        return (new ShoppingListItemBuilder($seed))->build();
     }
 }

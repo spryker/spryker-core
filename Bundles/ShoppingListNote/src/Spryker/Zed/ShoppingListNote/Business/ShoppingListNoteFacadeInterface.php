@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 interface ShoppingListNoteFacadeInterface
 {
     /**
+     * Specification:
+     *  - Get shopping list item note by shopping list id.
+     *
      * @api
      *
      * @param int $idShoppingListItem
@@ -21,6 +24,9 @@ interface ShoppingListNoteFacadeInterface
     public function getShoppingListItemNoteByIdShoppingListItem(int $idShoppingListItem): ?ShoppingListItemNoteTransfer;
 
     /**
+     * Specification:
+     *  - Add note to shopping list item.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
@@ -30,6 +36,9 @@ interface ShoppingListNoteFacadeInterface
     public function saveShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): ?ShoppingListItemNoteTransfer;
 
     /**
+     * Specification:
+     *  - Delete note from shopping list item.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer

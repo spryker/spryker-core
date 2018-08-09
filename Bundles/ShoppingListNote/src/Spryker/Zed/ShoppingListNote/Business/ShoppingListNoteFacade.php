@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idShoppingListItem
@@ -28,6 +30,8 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
@@ -40,6 +44,8 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
