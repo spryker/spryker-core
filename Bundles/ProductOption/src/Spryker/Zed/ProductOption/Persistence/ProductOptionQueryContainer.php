@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOption\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -99,6 +100,21 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         return $this->getFactory()
             ->createProductOptionValueQuery()
             ->filterByIdProductOptionValue($idProductOptionValue);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     */
+    public function queryProductOptionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer)
+    {
+        //todo: check and create repository if needed
+        return $this->getFactory()
+            ->createProductOptionValueQuery()
+            ->filterByIdProductOptionValue_In($productOptionCriteriaTransfer->getIds());
     }
 
     /**
