@@ -212,6 +212,7 @@ class MerchantRelationshipFacadeTest extends Unit
 
         return $this->tester->haveMerchantRelationship([
             'fkMerchant' => $merchant->getIdMerchant(),
+            'merchant' => $merchant,
             'fkCompanyBusinessUnit' => $companyBusinessUnitOwner->getIdCompanyBusinessUnit(),
             'merchantRelationshipKey' => $merchantRelationshipKey,
             'ownerCompanyBusinessUnit' => $companyBusinessUnitOwner,

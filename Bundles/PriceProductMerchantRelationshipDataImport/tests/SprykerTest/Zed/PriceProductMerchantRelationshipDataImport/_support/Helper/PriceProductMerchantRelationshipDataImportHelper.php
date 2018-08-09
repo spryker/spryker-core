@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\PriceProductMerchantRelationshipDataImport\Helper;
 use Codeception\Module;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Map\RelationMap;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class PriceProductMerchantRelationshipDataImportHelper extends Module
@@ -21,8 +23,30 @@ class PriceProductMerchantRelationshipDataImportHelper extends Module
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
-        $this->getPriceProductMerchantRelationshipQuery()->deleteAll();
-        $this->getMerchantRelationshipQuery()->deleteAll();
+        $this->cleanTableRelations($this->getMerchantRelationshipQuery());
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param array $processedEntities
+     *
+     * @return void
+     */
+    protected function cleanTableRelations(ModelCriteria $query, array $processedEntities = []): void
+    {
+        $relations = $query->getTableMap()->getRelations();
+
+        foreach ($relations as $relationMap) {
+            $relationType = $relationMap->getType();
+            $fullyQualifiedQueryModel = $relationMap->getLocalTable()->getClassname() . 'Query';
+            if ($relationType == RelationMap::ONE_TO_MANY && !in_array($fullyQualifiedQueryModel, $processedEntities)) {
+                $processedEntities[] = $fullyQualifiedQueryModel;
+                $fullyQualifiedQueryModelObject = $fullyQualifiedQueryModel::create();
+                $this->cleanTableRelations($fullyQualifiedQueryModelObject, $processedEntities);
+            }
+        }
+
+        $query->deleteAll();
     }
 
     /**
