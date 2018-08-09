@@ -25,4 +25,10 @@ interface DevelopmentConstants
      * @see \Spryker\Shared\Kernel\KernelConstants::CORE_NAMESPACES
      */
     const CORE_NAMESPACES = 'CORE_NAMESPACES';
+
+    /**
+     * Specification:
+     * - Sets the permission mode for generated files/directories.
+     */
+    const PERMISSION_MODE = 'DEVELOPMENT:PERMISSION_MODE';
 }

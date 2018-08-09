@@ -17,11 +17,18 @@ class FilesystemCacheWriter implements CacheWriterInterface
     protected $cacheFilePath;
 
     /**
-     * @param string $cacheFilePath
+     * @var int
      */
-    public function __construct($cacheFilePath)
+    protected $permissionMode;
+
+    /**
+     * @param string $cacheFilePath
+     * @param int $permissionMode
+     */
+    public function __construct(string $cacheFilePath, int $permissionMode)
     {
         $this->cacheFilePath = $cacheFilePath;
+        $this->permissionMode = $permissionMode;
     }
 
     /**
@@ -39,7 +46,7 @@ class FilesystemCacheWriter implements CacheWriterInterface
 
         $directory = dirname($this->cacheFilePath);
         if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
+            mkdir($directory, $this->permissionMode, true);
         }
 
         file_put_contents($this->cacheFilePath, $cacheFileContent);

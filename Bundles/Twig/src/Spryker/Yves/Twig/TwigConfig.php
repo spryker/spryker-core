@@ -99,4 +99,12 @@ class TwigConfig extends AbstractBundleConfig
     {
         return $this->get(TwigConstants::YVES_PATH_CACHE_ENABLED, true);
     }
+
+    /**
+     * @return int
+     */
+    public function getPermissionMode(): int
+    {
+        return $this->get(TwigConstants::PERMISSION_MODE, 0777);
+    }
 }

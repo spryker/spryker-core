@@ -52,4 +52,10 @@ interface ZedRequestConstants
      * @api
      */
     const CLIENT_OPTIONS = 'ZED_REQUEST:CLIENT_OPTIONS';
+
+    /**
+     * Specification:
+     * - Sets the permission mode for generated files/directories.
+     */
+    const PERMISSION_MODE = 'ZED_REQUEST:PERMISSION_MODE';
 }

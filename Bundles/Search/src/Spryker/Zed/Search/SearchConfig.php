@@ -129,4 +129,12 @@ class SearchConfig extends AbstractBundleConfig
     {
         return realpath(__DIR__ . '/../../../../../');
     }
+
+    /**
+     * @return int
+     */
+    public function getPermissionMode(): int
+    {
+        return $this->get(SearchConstants::PERMISSION_MODE, 0777);
+    }
 }

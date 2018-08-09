@@ -93,7 +93,7 @@ class Repeater implements RepeaterInterface
 
         $directory = dirname($filePath);
         if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
+            mkdir($directory, $this->getConfig()->getPermissionMode(), true);
         }
 
         file_put_contents($filePath, $string);

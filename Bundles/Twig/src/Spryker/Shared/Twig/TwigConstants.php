@@ -70,4 +70,12 @@ interface TwigConstants
      * @api
      */
     const ZED_PATH_CACHE_ENABLED = 'ZED_PATH_CACHE_ENABLED';
+
+    /**
+     * Specification:
+     * - Sets the permission mode for generated files/directories.
+     *
+     * @api
+     */
+    const PERMISSION_MODE = 'TWIG:PERMISSION_MODE';
 }
