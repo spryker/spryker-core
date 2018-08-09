@@ -67,6 +67,7 @@ class AgentFacadeTest extends Unit
         $customerTransfer = $this->registerCustomer();
         $customerQueryTransfer = new CustomerQueryTransfer();
         $customerQueryTransfer->setQuery($customerTransfer->getFirstName());
+        $customerQueryTransfer->setLimit(5);
 
         $customerAutocompleteResponseTransfer = $this->tester->getAgentFacade()
             ->findCustomersByQuery($customerQueryTransfer);
