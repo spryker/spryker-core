@@ -11,8 +11,7 @@ interface ShoppingListStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Selects CustomerReferences from ShoppingList;
-     * - Returns array of CustomerReferences.
+     * - Gets CustomerReferences from ShoppingList by Id of ShoppingList;
      *
      * @api
      *
@@ -24,8 +23,7 @@ interface ShoppingListStorageFacadeInterface
 
     /**
      * Specification:
-     * - Selects CustomerReferences from CompanyUser joined with Customer by IdCompanyUser;
-     * - Returns array of CustomerReferences.
+     * - Gets CustomerReferences from CompanyUser with Customer by Id of CompanyUser;
      *
      * @api
      *
@@ -37,8 +35,7 @@ interface ShoppingListStorageFacadeInterface
 
     /**
      * Specification:
-     * - Selects CustomerReferences from CompanyUser joined with Customer by FkCompanyBusinessUnit;
-     * - Returns array of CustomerReferences.
+     * - Gets CustomerReferences from CompanyUser with Customer by related to CompanyUser id of CompanyBusinessUnit;
      *
      * @api
      *
@@ -50,9 +47,8 @@ interface ShoppingListStorageFacadeInterface
 
     /**
      * Specification:
-     * - Gets actual ShoppingLists by customerReferences and makes ShoppingListCustomerStorage
-     * - Fills Data with ShoppingListCustomerStorageTransfer where set UpdatedAt to current timestamp.
-     * - Stores SpyShoppingListCustomerStorage;
+     * - Updated and Stores ShoppingListCustomerStorage by CustomerReferences
+     *   with a Data needed for further synchronization.
      *
      * @api
      *
