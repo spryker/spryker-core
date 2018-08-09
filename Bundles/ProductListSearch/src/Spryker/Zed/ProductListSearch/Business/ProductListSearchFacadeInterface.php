@@ -15,11 +15,11 @@ interface ProductListSearchFacadeInterface
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param int[] $concreteIds
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByConcreteIds(array $productConcreteIds): array;
+    public function getProductAbstractIdsByConcreteIds(array $concreteIds): array;
 
     /**
      * Specification:

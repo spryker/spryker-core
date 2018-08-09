@@ -26,13 +26,13 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param int[] $concreteIds
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByConcreteIds(array $productConcreteIds): array
+    public function getProductAbstractIdsByConcreteIds(array $concreteIds): array
     {
-        return $this->productListSearchRepository->getProductAbstractIdsByConcreteIds($productConcreteIds);
+        return $this->productListSearchRepository->getProductAbstractIdsByConcreteIds($concreteIds);
     }
 
     /**

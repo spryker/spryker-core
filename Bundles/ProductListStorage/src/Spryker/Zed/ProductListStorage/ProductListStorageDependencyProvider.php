@@ -17,8 +17,8 @@ use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProduct
 
 class ProductListStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PROPEL_PRODUCT_QUERY = 'PROPEL_PRODUCT_QUERY';
-    public const PROPEL_PRODUCT_CATEGORY_QUERY = 'PROPEL_PRODUCT_CATEGORY_QUERY';
+    public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
+    public const PROPEL_QUERY_PRODUCT_CATEGORY = 'PROPEL_QUERY_PRODUCT_CATEGORY';
 
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
@@ -102,7 +102,7 @@ class ProductListStorageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_PRODUCT_QUERY] = function () {
+        $container[static::PROPEL_QUERY_PRODUCT] = function () {
             return SpyProductQuery::create();
         };
 
@@ -116,7 +116,7 @@ class ProductListStorageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductCategoryPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_PRODUCT_CATEGORY_QUERY] = function () {
+        $container[static::PROPEL_QUERY_PRODUCT_CATEGORY] = function () {
             return SpyProductCategoryQuery::create();
         };
 

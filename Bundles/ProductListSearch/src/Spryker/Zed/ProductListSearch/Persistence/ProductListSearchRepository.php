@@ -19,11 +19,11 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
     /**
      * @uses SpyProductQuery
      *
-     * @param int[] $productConcreteIds
+     * @param int[] $concreteIds
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByConcreteIds(array $productConcreteIds): array
+    public function getProductAbstractIdsByConcreteIds(array $concreteIds): array
     {
         /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
         $productQuery = $this->getFactory()
@@ -31,7 +31,7 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
             ->select(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
 
         return $productQuery
-            ->filterByIdProduct_In($productConcreteIds)
+            ->filterByIdProduct_In($concreteIds)
             ->find()
             ->toArray();
     }

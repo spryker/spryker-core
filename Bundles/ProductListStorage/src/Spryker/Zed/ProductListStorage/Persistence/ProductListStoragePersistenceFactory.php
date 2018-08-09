@@ -41,7 +41,7 @@ class ProductListStoragePersistenceFactory extends AbstractPersistenceFactory
      */
     public function getProductPropelQuery(): SpyProductQuery
     {
-        return $this->getProvidedDependency(ProductListStorageDependencyProvider::PROPEL_PRODUCT_QUERY);
+        return $this->getProvidedDependency(ProductListStorageDependencyProvider::PROPEL_QUERY_PRODUCT);
     }
 
     /**
@@ -49,7 +49,7 @@ class ProductListStoragePersistenceFactory extends AbstractPersistenceFactory
      */
     public function getProductCategoryPropelQuery(): SpyProductCategoryQuery
     {
-        return $this->getProvidedDependency(ProductListStorageDependencyProvider::PROPEL_PRODUCT_CATEGORY_QUERY);
+        return $this->getProvidedDependency(ProductListStorageDependencyProvider::PROPEL_QUERY_PRODUCT_CATEGORY);
     }
 
     /**

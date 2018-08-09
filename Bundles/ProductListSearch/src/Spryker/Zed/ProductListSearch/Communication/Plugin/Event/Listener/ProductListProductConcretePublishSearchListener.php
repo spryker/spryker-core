@@ -32,10 +32,10 @@ class ProductListProductConcretePublishSearchListener extends AbstractPlugin imp
     public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
-        $productConcreteIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $concreteIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         $this->getFactory()->getProductPageSearchFacade()->publish(
-            $this->getFacade()->getProductAbstractIdsByConcreteIds($productConcreteIds)
+            $this->getFacade()->getProductAbstractIdsByConcreteIds($concreteIds)
         );
     }
 }

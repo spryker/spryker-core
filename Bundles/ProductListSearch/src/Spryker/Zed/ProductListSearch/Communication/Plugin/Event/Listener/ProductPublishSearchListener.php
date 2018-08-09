@@ -33,8 +33,8 @@ class ProductPublishSearchListener extends AbstractPlugin implements EventBulkHa
     {
         $this->preventTransaction();
 
-        $productConcreteIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
-        $productAbstractIds = $this->getFacade()->getProductAbstractIdsByConcreteIds($productConcreteIds);
+        $concreteIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productAbstractIds = $this->getFacade()->getProductAbstractIdsByConcreteIds($concreteIds);
 
         $this->getFactory()->getProductPageSearchFacade()->publish($productAbstractIds);
     }

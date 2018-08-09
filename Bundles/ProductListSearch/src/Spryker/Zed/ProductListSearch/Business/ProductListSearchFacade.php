@@ -19,15 +19,15 @@ class ProductListSearchFacade extends AbstractFacade implements ProductListSearc
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param int[] $concreteIds
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByConcreteIds(array $productConcreteIds): array
+    public function getProductAbstractIdsByConcreteIds(array $concreteIds): array
     {
         return $this->getFactory()
             ->createProductAbstractReader()
-            ->getProductAbstractIdsByConcreteIds($productConcreteIds);
+            ->getProductAbstractIdsByConcreteIds($concreteIds);
     }
 
     /**

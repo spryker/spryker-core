@@ -10,11 +10,11 @@ namespace Spryker\Zed\ProductListSearch\Persistence;
 interface ProductListSearchRepositoryInterface
 {
     /**
-     * @param int[] $productConcreteIds
+     * @param int[] $concreteIds
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByConcreteIds(array $productConcreteIds): array;
+    public function getProductAbstractIdsByConcreteIds(array $concreteIds): array;
 
     /**
      * @param array $categoryIds
