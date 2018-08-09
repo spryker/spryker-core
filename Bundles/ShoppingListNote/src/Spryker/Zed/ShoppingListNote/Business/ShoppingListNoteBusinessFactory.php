@@ -16,6 +16,7 @@ use Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote\ShoppingListItemN
 /**
  * @method \Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ShoppingListNote\ShoppingListNoteConfig getConfig()
  */
 class ShoppingListNoteBusinessFactory extends AbstractBusinessFactory
 {

@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ShoppingListNote\Persistence\Propel\Mapper\ShoppingListItemNoteMapper;
 use Spryker\Zed\ShoppingListNote\Persistence\Propel\Mapper\ShoppingListItemNoteMapperInterface;
 
+/**
+ * @method \Spryker\Zed\ShoppingListNote\ShoppingListNoteConfig getConfig()
+ */
 class ShoppingListNotePersistenceFactory extends AbstractPersistenceFactory
 {
     /**
