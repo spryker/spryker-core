@@ -31,6 +31,10 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
         );
         $entityTransfer = $this->save($entityTransfer);
 
+        if (!$entityTransfer->getFkParentCompanyBusinessUnit()) {
+            $this->clearParentBusinessUnitByCompanyBusinessUnitId($entityTransfer->getIdCompanyBusinessUnit());
+        }
+
         return $this->getMapper()->mapEntityTransferToBusinessUnitTransfer(
             $entityTransfer,
             $companyBusinessUnitTransfer
@@ -60,6 +64,19 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
         $this->getFactory()
             ->createCompanyBusinessUnitQuery()
             ->filterByFkParentCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->update(['FkParentCompanyBusinessUnit' => null]);
+    }
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return void
+     */
+    public function clearParentBusinessUnitByCompanyBusinessUnitId(int $idCompanyBusinessUnit): void
+    {
+        $this->getFactory()
+            ->createCompanyBusinessUnitQuery()
+            ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit)
             ->update(['FkParentCompanyBusinessUnit' => null]);
     }
 
