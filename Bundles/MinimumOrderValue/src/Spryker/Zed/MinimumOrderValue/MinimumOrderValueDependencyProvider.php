@@ -50,7 +50,7 @@ class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMessengerFacade(Container $container)
+    protected function addMessengerFacade(Container $container): Container
     {
         $container[static::FACADE_MESSENGER] = function (Container $container) {
             return new MinimumOrderValueToMessengerFacadeBridge($container->getLocator()->messenger()->facade());

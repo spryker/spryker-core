@@ -177,7 +177,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         $quoteTransfer = $this->tester->createTestQuoteTransfer();
 
         // Action
-        $this->getFacade()->cartPostSaveMinimumOrderValueCheck($quoteTransfer);
+        $this->getFacade()->cartMinimumOrderValuePostSave($quoteTransfer);
     }
 
     /**

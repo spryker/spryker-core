@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 
 class MerchantRelationshipCartChangeExpander implements MerchantRelationshipCartChangeExpanderInterface
 {
-    public const URL_PARAM_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
+    protected const URL_PARAM_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer

@@ -16,6 +16,7 @@ use Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrateg
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface;
+use Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig;
 
 class ThresholdApplier implements ThresholdApplierInterface
 {
@@ -38,6 +39,11 @@ class ThresholdApplier implements ThresholdApplierInterface
     protected $minimumOrderValueStrategyResolver;
 
     /**
+     * @var \Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig
+     */
+    protected $config;
+
+    /**
      * @var \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface
      */
     protected $messengerFacade;
@@ -45,15 +51,18 @@ class ThresholdApplier implements ThresholdApplierInterface
     /**
      * @param \Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategyInterface $minimumOrderValueDataSourceStrategy
      * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
+     * @param \Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig $config
      * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface $messengerFacade
      */
     public function __construct(
         ThresholdDataSourceStrategyInterface $minimumOrderValueDataSourceStrategy,
         MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver,
+        MinimumOrderValueConfig $config,
         MinimumOrderValueToMessengerFacadeInterface $messengerFacade
     ) {
         $this->minimumOrderValueDataSourceStrategy = $minimumOrderValueDataSourceStrategy;
         $this->minimumOrderValueStrategyResolver = $minimumOrderValueStrategyResolver;
+        $this->config = $config;
         $this->messengerFacade = $messengerFacade;
     }
 
@@ -91,7 +100,7 @@ class ThresholdApplier implements ThresholdApplierInterface
      *
      * @return bool
      */
-    public function applyOnCheckoutResponse(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    public function applicableForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         $minimumOrderValueTransfers = $this->minimumOrderValueDataSourceStrategy->findApplicableThresholds($quoteTransfer);
 
@@ -119,10 +128,10 @@ class ThresholdApplier implements ThresholdApplierInterface
      */
     protected function addExpenseToQuote(QuoteTransfer $quoteTransfer, MinimumOrderValueTransfer $minimumOrderValueTransfer): void
     {
+        $this->assertRequiredAttributes($minimumOrderValueTransfer);
         $minimumOrderValueTransferStrategy = $this->minimumOrderValueStrategyResolver
             ->resolveMinimumOrderValueStrategy($minimumOrderValueTransfer->getMinimumOrderValueType()->getKey());
 
-        $minimumOrderValueTransfer->requireSubTotal();
         if (!$minimumOrderValueTransferStrategy->isApplicable($minimumOrderValueTransfer)) {
             return;
         }
@@ -159,40 +168,35 @@ class ThresholdApplier implements ThresholdApplierInterface
      */
     protected function addMinimumOrderValueExpenseToQuote(QuoteTransfer $quoteTransfer, int $calculatedFees): void
     {
+        $quoteTransfer->addExpense(
+            $this->createExpenseByPriceMode($calculatedFees, $quoteTransfer->getPriceMode())
+        );
+    }
+
+    /**
+     * @param int $expensePrice
+     * @param string $priceMode
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    protected function createExpenseByPriceMode(int $expensePrice, string $priceMode): ExpenseTransfer
+    {
         $expenseTransfer = (new ExpenseTransfer())
             ->setName(static::THRESHOLD_EXPENSE_NAME)
             ->setType(static::THRESHOLD_EXPENSE_TYPE)
             ->setQuantity(1);
 
-        $quoteTransfer->addExpense(
-            $this->setExpensePrice(
-                $expenseTransfer,
-                $calculatedFees,
-                $quoteTransfer->getPriceMode()
-            )
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
-     * @param int $price
-     * @param string $priceMode
-     *
-     * @return \Generated\Shared\Transfer\ExpenseTransfer
-     */
-    protected function setExpensePrice(ExpenseTransfer $expenseTransfer, int $price, string $priceMode): ExpenseTransfer
-    {
-        if ($priceMode === static::PRICE_MODE_NET) {
+        if ($priceMode === $this->config->getNetPriceMode()) {
             $expenseTransfer->setUnitGrossPrice(0);
             $expenseTransfer->setSumGrossPrice(0);
-            $expenseTransfer->setUnitNetPrice($price);
+            $expenseTransfer->setUnitNetPrice($expensePrice);
 
             return $expenseTransfer;
         }
 
         $expenseTransfer->setUnitNetPrice(0);
         $expenseTransfer->setSumNetPrice(0);
-        $expenseTransfer->setUnitGrossPrice($price);
+        $expenseTransfer->setUnitGrossPrice($expensePrice);
 
         return $expenseTransfer;
     }
@@ -209,10 +213,10 @@ class ThresholdApplier implements ThresholdApplierInterface
         CheckoutResponseTransfer $checkoutResponseTransfer,
         MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): void {
+        $this->assertRequiredAttributes($minimumOrderValueTransfer);
         $minimumOrderValueTransferStrategy = $this->minimumOrderValueStrategyResolver
             ->resolveMinimumOrderValueStrategy($minimumOrderValueTransfer->getMinimumOrderValueType()->getKey());
 
-        $minimumOrderValueTransfer->requireSubTotal();
         if (!$minimumOrderValueTransferStrategy->isApplicable($minimumOrderValueTransfer)) {
             return;
         }
@@ -252,6 +256,22 @@ class ThresholdApplier implements ThresholdApplierInterface
                 return;
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     *
+     * @return void
+     */
+    protected function assertRequiredAttributes(MinimumOrderValueTransfer $minimumOrderValueTransfer): void
+    {
+        $minimumOrderValueTransfer
+            ->requireMinimumOrderValueType()
+            ->requireSubTotal()
+            ->requireValue();
+
+        $minimumOrderValueTransfer->getMinimumOrderValueType()
+            ->requireKey();
     }
 
     /**

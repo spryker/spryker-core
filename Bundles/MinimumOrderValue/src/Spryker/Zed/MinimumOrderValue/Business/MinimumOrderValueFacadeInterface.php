@@ -87,7 +87,7 @@ interface MinimumOrderValueFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function cartPostSaveMinimumOrderValueCheck(
+    public function cartMinimumOrderValuePostSave(
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer;
 

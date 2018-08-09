@@ -101,7 +101,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
      *
      * @return int[]
      */
-    public function getCartMerchantRelationshipIds(array $customerMerchantRelationships, array $itemMerchantRelationshipSubTotals)
+    public function getCartMerchantRelationshipIds(array $customerMerchantRelationships, array $itemMerchantRelationshipSubTotals): array
     {
         $cartMerchantRelationshipIds = [];
         foreach ($customerMerchantRelationships as $merchantRelationshipTransfer) {

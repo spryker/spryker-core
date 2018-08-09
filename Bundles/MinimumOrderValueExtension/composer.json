@@ -7,8 +7,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/minimum-order-value": "*",
     "spryker/kernel": "*",
+    "spryker/minimum-order-value": "*",
     "spryker/symfony": "*",
     "spryker/testify": "*"
   },

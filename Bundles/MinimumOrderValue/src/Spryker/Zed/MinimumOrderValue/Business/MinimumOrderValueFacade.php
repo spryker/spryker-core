@@ -104,7 +104,7 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function cartPostSaveMinimumOrderValueCheck(
+    public function cartMinimumOrderValuePostSave(
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
         return $this->getFactory()
@@ -128,7 +128,7 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
     ): bool {
         return $this->getFactory()
             ->createThresholdApplier()
-            ->applyOnCheckoutResponse($quoteTransfer, $checkoutResponseTransfer);
+            ->applicableForCheckout($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**

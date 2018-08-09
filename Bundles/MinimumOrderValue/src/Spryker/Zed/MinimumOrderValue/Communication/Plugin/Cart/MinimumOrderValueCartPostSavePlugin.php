@@ -28,6 +28,6 @@ class MinimumOrderValueCartPostSavePlugin extends AbstractPlugin implements Post
      */
     public function postSave(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFacade()->cartPostSaveMinimumOrderValueCheck($quoteTransfer);
+        return $this->getFacade()->cartMinimumOrderValuePostSave($quoteTransfer);
     }
 }

@@ -29,5 +29,5 @@ interface ThresholdApplierInterface
      *
      * @return bool
      */
-    public function applyOnCheckoutResponse(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+    public function applicableForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

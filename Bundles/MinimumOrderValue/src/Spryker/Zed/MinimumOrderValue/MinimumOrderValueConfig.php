@@ -16,6 +16,11 @@ use Spryker\Zed\MinimumOrderValue\Business\Strategy\SoftThresholdWithMessageStra
 class MinimumOrderValueConfig extends AbstractBundleConfig
 {
     /**
+     * @uses CalculationPriceMode::PRICE_MODE_NET
+     */
+    protected const PRICE_MODE_NET = 'NET_MODE';
+
+    /**
      * @return \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface[]
      */
     public function getMinimumOrderValueStrategies(): array
@@ -26,5 +31,13 @@ class MinimumOrderValueConfig extends AbstractBundleConfig
             new SoftThresholdWithFixedFeeStrategy(),
             new SoftThresholdWithFlexibleFeeStrategy(),
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getNetPriceMode(): string
+    {
+        return static::PRICE_MODE_NET;
     }
 }
