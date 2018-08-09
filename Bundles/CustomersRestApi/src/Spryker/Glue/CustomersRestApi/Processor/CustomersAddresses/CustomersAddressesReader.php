@@ -52,7 +52,7 @@ class CustomersAddressesReader implements CustomersAddressesReaderInterface
         if (count($addresses->getAddresses())) {
             foreach ($addresses->getAddresses() as $address) {
                 $restResource->addRelationship(
-                    $this->addressesResourceMapper->mapAddressTransferToRestResource($address, $customerTransfer)
+                    $this->addressesResourceMapper->mapAddressTransferToRestResource($address, $customerReference)
                 );
             }
         }

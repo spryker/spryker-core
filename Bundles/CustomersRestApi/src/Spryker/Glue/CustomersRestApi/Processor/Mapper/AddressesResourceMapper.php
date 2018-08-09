@@ -29,19 +29,30 @@ class AddressesResourceMapper implements AddressesResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param string $customerReference
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function mapAddressTransferToRestResource(AddressTransfer $addressTransfer): RestResourceInterface
+    public function mapAddressTransferToRestResource(AddressTransfer $addressTransfer, string $customerReference): RestResourceInterface
     {
         $restAddressAttributesTransfer = (new RestAddressAttributesTransfer())
             ->fromArray($addressTransfer->toArray(), true)
             ->setCountry($addressTransfer->getCountry()->getName());
 
-        return $this->restResourceBuilder->createRestResource(
+        $restResource = $this->restResourceBuilder->createRestResource(
             CustomersRestApiConfig::RESOURCE_ADDRESSES,
             $addressTransfer->getUuid(),
             $restAddressAttributesTransfer
         );
+        $restResourceSelfLink = sprintf(
+            '%s/%s/%s/%s',
+            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
+            $customerReference,
+            CustomersRestApiConfig::RESOURCE_ADDRESSES,
+            $addressTransfer->getUuid()
+        );
+        $restResource->addLink('self', $restResourceSelfLink);
+
+        return $restResource;
     }
 }

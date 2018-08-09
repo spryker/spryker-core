@@ -19,8 +19,9 @@ interface AddressesReaderInterface
 
     /**
      * @param string $uuid
+     * @param string $customerReference
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readByUuid(string $uuid): RestResponseInterface;
+    public function readByUuid(string $uuid, string $customerReference): RestResponseInterface;
 }

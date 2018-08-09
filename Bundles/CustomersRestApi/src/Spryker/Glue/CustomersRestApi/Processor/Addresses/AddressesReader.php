@@ -89,7 +89,11 @@ class AddressesReader implements AddressesReaderInterface
         }
 
         foreach ($addresses->getAddresses() as $address) {
-            $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource($address);
+            $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource(
+                $address,
+                $customerTransfer->getCustomerReference()
+            );
+
             $restResponse->addResource($addressesResource);
         }
 
@@ -98,10 +102,11 @@ class AddressesReader implements AddressesReaderInterface
 
     /**
      * @param string $uuid
+     * @param string $customerReference
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readByUuid(string $uuid): RestResponseInterface
+    public function readByUuid(string $uuid, string $customerReference): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $addressTransfer = new AddressTransfer();
@@ -120,7 +125,7 @@ class AddressesReader implements AddressesReaderInterface
             return $restResponse;
         }
 
-        $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource($address);
+        $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource($address, $customerReference);
         $restResponse->addResource($addressesResource);
 
         return $restResponse;

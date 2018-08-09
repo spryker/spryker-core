@@ -10,9 +10,10 @@ use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
-class AddressesResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+class AddressesResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -65,5 +66,17 @@ class AddressesResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     public function getResourceAttributesClassName(): string
     {
         return RestCustomersAttributesTransfer::class;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getParentResourceType(): string
+    {
+        return CustomersRestApiConfig::RESOURCE_CUSTOMERS;
     }
 }
