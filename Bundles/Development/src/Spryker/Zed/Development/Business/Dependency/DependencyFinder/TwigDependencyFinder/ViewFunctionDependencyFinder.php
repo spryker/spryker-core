@@ -11,9 +11,9 @@ use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyCo
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder;
 use Symfony\Component\Finder\SplFileInfo;
 
-class TemplateFunctionDependencyFinder implements TwigDependencyFinderInterface
+class ViewFunctionDependencyFinder implements TwigDependencyFinderInterface
 {
-    protected const TEMPLATE_FUNCTION_PATTERN = '/template\(\'(.*?),\s\'(.*?)\'/';
+    protected const TEMPLATE_FUNCTION_PATTERN = '/view\(\'(.*?),\s\'(.*?)\'/';
 
     /**
      * @param string $module

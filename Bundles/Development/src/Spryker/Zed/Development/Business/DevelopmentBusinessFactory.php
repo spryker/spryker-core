@@ -33,8 +33,12 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\InternalDepende
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\LocatorDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\PersistenceDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\AtomFunctionDependencyFinder;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\MoleculeFunctionDependencyFinder;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\OrganismFunctionDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TemplateFunctionDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\ViewFunctionDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\Manager;
 use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParser;
 use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface;
@@ -316,8 +320,36 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function getTwigDependencyFinder(): array
     {
         return [
+            $this->createAtomFunctionDependencyFinder(),
+            $this->createMoleculeFunctionDependencyFinder(),
+            $this->createOrganismFunctionDependencyFinder(),
             $this->createTemplateFunctionDependencyFinder(),
+            $this->createViewFunctionDependencyFinder(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface
+     */
+    public function createAtomFunctionDependencyFinder(): TwigDependencyFinderInterface
+    {
+        return new AtomFunctionDependencyFinder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface
+     */
+    public function createMoleculeFunctionDependencyFinder(): TwigDependencyFinderInterface
+    {
+        return new MoleculeFunctionDependencyFinder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface
+     */
+    public function createOrganismFunctionDependencyFinder(): TwigDependencyFinderInterface
+    {
+        return new OrganismFunctionDependencyFinder();
     }
 
     /**
@@ -326,6 +358,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createTemplateFunctionDependencyFinder(): TwigDependencyFinderInterface
     {
         return new TemplateFunctionDependencyFinder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface
+     */
+    public function createViewFunctionDependencyFinder(): TwigDependencyFinderInterface
+    {
+        return new ViewFunctionDependencyFinder();
     }
 
     /**
