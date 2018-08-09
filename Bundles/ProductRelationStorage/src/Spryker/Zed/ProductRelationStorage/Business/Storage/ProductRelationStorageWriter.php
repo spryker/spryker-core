@@ -11,11 +11,14 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer;
 use Generated\Shared\Transfer\ProductRelationStorageTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
+use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTypeTableMap;
 use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorage;
 use Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface;
+use Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageRepositoryInterface;
 
 class ProductRelationStorageWriter implements ProductRelationStorageWriterInterface
 {
@@ -25,17 +28,32 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageRepositoryInterface
+     */
+    protected $repository;
+
+    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
 
     /**
+     * @var array
+     */
+    protected static $relationProductsCache = [];
+
+    /**
      * @param \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageRepositoryInterface $repository
      * @param bool $isSendingToQueue
      */
-    public function __construct(ProductRelationStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
-    {
+    public function __construct(
+        ProductRelationStorageQueryContainerInterface $queryContainer,
+        ProductRelationStorageRepositoryInterface $repository,
+        $isSendingToQueue
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->repository = $repository;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -47,6 +65,11 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     public function publish(array $productAbstractIds)
     {
         $productRelationEntities = $this->findProductRelationAbstractEntities($productAbstractIds);
+
+        static::$relationProductsCache = $this->getRelationProductsCache(
+            $this->getIdsFromProductRelationEntities($productRelationEntities)
+        );
+
         $productRelations = [];
         foreach ($productRelationEntities as $productRelationEntity) {
             $productRelations[$productRelationEntity->getFkProductAbstract()][] = $productRelationEntity;
@@ -69,6 +92,51 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
         foreach ($spyProductAbstractRelationStorageEntities as $spyProductAbstractRelationStorageEntity) {
             $spyProductAbstractRelationStorageEntity->delete();
         }
+    }
+
+    /**
+     * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelation[] $productRelationEntities
+     *
+     * @return array
+     */
+    protected function getIdsFromProductRelationEntities(array $productRelationEntities): array
+    {
+        $productRelationIds = [];
+        foreach ($productRelationEntities as $productRelationEntity) {
+            $productRelationIds[] = $productRelationEntity->getIdProductRelation();
+        }
+
+        return $productRelationIds;
+    }
+
+    /**
+     * @param array $relationIds
+     *
+     * @return array
+     */
+    protected function getRelationProductsCache(array $relationIds): array
+    {
+        $relationProducts = $this->repository->getProductRelationsWithProductAbstractByIdRelationIn($relationIds);
+
+        return $this->mapRelationProductsCache($relationProducts);
+    }
+
+    /**
+     * @param array $relationProducts
+     *
+     * @return array
+     */
+    protected function mapRelationProductsCache(array $relationProducts): array
+    {
+        $mappedRelationProducts = [];
+        foreach ($relationProducts as $relationProduct) {
+            $idProductRelation = $relationProduct[SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION];
+            $idLocale = $relationProduct[SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE];
+
+            $mappedRelationProducts[$idProductRelation][$idLocale][] = $relationProduct;
+        }
+
+        return $mappedRelationProducts;
     }
 
     /**
@@ -139,14 +207,11 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      */
     protected function getProductRelationStorageTransfers(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $productRelations)
     {
-        $allProductRelations = [];
-        foreach ($productRelations as $idProductAbstract => $productRelation) {
-            if ($spyProductAbstractLocalizedEntity->getFkProductAbstract() === $idProductAbstract) {
-                $allProductRelations = array_merge($allProductRelations, $productRelation);
-            }
-        }
+        $result = $this->findRelatedProductAbstract(
+            $productRelations[$spyProductAbstractLocalizedEntity->getFkProductAbstract()],
+            $spyProductAbstractLocalizedEntity->getFkLocale()
+        );
 
-        $result = $this->findRelatedProductAbstract($allProductRelations, $spyProductAbstractLocalizedEntity->getFkLocale());
         $productRelationStorageTransfers = new ArrayObject();
         foreach ($result as $key => $value) {
             $productRelationStorageTransfer = new ProductRelationStorageTransfer();
@@ -197,12 +262,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      */
     protected function findRelationProducts($idProductRelation, $idLocale)
     {
-        return $this->queryContainer
-            ->queryProductRelationWithProductAbstractByIdRelationAndLocale(
-                $idProductRelation,
-                $idLocale
-            )
-            ->find();
+        return static::$relationProductsCache[$idProductRelation][$idLocale] ?? [];
     }
 
     /**
