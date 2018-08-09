@@ -152,6 +152,24 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @param int $idShoppingList
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function findShoppingListItemsByIdShoppingList(int $idShoppingList): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListsItemQuery = $this->getFactory()
+            ->createShoppingListItemQuery()
+            ->filterByFkShoppingList($idShoppingList);
+
+        $shoppingListsItemEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListsItemQuery)->find();
+
+        return $this->getFactory()
+            ->createShoppingListItemMapper()
+            ->mapItemCollectionTransfer($shoppingListsItemEntityTransferCollection);
+    }
+
+    /**
      * @param array $shoppingListItemIds
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer

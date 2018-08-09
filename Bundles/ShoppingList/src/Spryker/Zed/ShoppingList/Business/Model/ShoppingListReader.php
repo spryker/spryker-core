@@ -77,6 +77,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
             return new ShoppingListTransfer();
         }
 
+        $shoppingListItemCollectionTransfer = $this->shoppingListRepository->findShoppingListItemsByIdShoppingList($shoppingListTransfer->getIdShoppingList());
+        $this->expandProducts($shoppingListItemCollectionTransfer);
+        $shoppingListTransfer->setItems($shoppingListItemCollectionTransfer->getItems());
+
         return $shoppingListTransfer;
     }
 
@@ -103,7 +107,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
         $shoppingListOverviewRequestTransfer->setShoppingList($shoppingListTransfer);
         $shoppingListOverviewResponseTransfer = $this->shoppingListRepository->findShoppingListPaginatedItems($shoppingListOverviewRequestTransfer);
-        $shoppingListOverviewResponseTransfer = $this->expandProducts($shoppingListOverviewResponseTransfer);
+        $this->expandProducts($shoppingListOverviewResponseTransfer->getItemsCollection());
 
         $customerTransfer = new CustomerTransfer();
         $requestCompanyUserTransfer = $this->companyUserFacade->getCompanyUserById($shoppingListOverviewRequestTransfer->getShoppingList()->getIdCompanyUser());
@@ -272,13 +276,13 @@ class ShoppingListReader implements ShoppingListReaderInterface
     /**
      * TODO: switch from loop -> query to SKU IN query (create facade function + add to bridge)
      *
-     * @param \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    protected function expandProducts(ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer): ShoppingListOverviewResponseTransfer
+    protected function expandProducts(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
     {
-        foreach ($shoppingListOverviewResponseTransfer->getItemsCollection()->getItems() as $item) {
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $item) {
             $idProduct = $this->productFacade->findProductConcreteIdBySku($item->getSku());
             $item->setIdProduct($idProduct);
 
@@ -287,7 +291,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
             }
         }
 
-        return $shoppingListOverviewResponseTransfer;
+        return $shoppingListItemCollectionTransfer;
     }
 
     /**
