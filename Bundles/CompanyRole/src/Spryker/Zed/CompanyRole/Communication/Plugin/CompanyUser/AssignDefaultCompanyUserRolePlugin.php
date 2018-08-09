@@ -39,6 +39,12 @@ class AssignDefaultCompanyUserRolePlugin extends AbstractPlugin implements Compa
      */
     protected function assignDefaultRoleToCompanyUser(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
+        if ($companyUserResponseTransfer->getCompanyUser()->getCompanyRoleCollection() !== null &&
+            $companyUserResponseTransfer->getCompanyUser()->getCompanyRoleCollection()->getRoles()->count()
+        ) {
+            return $companyUserResponseTransfer;
+        }
+
         $defaultCompanyRole = $this->getFacade()->getDefaultCompanyRole();
         $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
