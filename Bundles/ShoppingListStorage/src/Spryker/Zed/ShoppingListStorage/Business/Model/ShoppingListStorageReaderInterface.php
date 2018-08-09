@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Business\Model;
 
-interface ShoppingListStorageInterface
+interface ShoppingListStorageReaderInterface
 {
     /**
      * @param int[] $shoppingListIds

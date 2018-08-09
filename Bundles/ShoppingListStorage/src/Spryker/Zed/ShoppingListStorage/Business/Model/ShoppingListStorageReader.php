@@ -9,7 +9,7 @@ namespace Spryker\Zed\ShoppingListStorage\Business\Model;
 
 use Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepositoryInterface;
 
-class ShoppingListStorage implements ShoppingListStorageInterface
+class ShoppingListStorageReader implements ShoppingListStorageReaderInterface
 {
     /**
      * @var \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepositoryInterface
