@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
@@ -93,26 +91,6 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $shoppingListTransfer->setCompanyUsers($shoppingListCompanyUsers);
 
         return $shoppingListTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
-     */
-    public function getShoppingListCompanyBusinessUnitCollection(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer
-    {
-        return $this->getShoppingListCompanyBusinessUnitsByIdShoppingList($shoppingListTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
-     */
-    public function getShoppingListCompanyUserCollection(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyUserCollectionTransfer
-    {
-        return $this->getShoppingListCompanyUsersByIdShoppingList($shoppingListTransfer);
     }
 
     /**
@@ -326,26 +304,6 @@ class ShoppingListReader implements ShoppingListReaderInterface
     protected function getCustomerShoppingListCollectionByReference(string $customerReference): ShoppingListCollectionTransfer
     {
         return $this->shoppingListRepository->findCustomerShoppingLists($customerReference);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
-     */
-    protected function getShoppingListCompanyBusinessUnitsByIdShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer
-    {
-        return $this->shoppingListRepository->findShoppingListCompanyBusinessUnitsByShoppingListId($shoppingListTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
-     */
-    protected function getShoppingListCompanyUsersByIdShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyUserCollectionTransfer
-    {
-        return $this->shoppingListRepository->findShoppingListCompanyUsersByShoppingListId($shoppingListTransfer);
     }
 
     /**

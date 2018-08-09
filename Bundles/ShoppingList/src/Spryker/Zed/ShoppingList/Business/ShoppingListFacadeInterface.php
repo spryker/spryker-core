@@ -10,8 +10,6 @@ namespace Spryker\Zed\ShoppingList\Business;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
@@ -100,30 +98,6 @@ interface ShoppingListFacadeInterface
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
     public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer;
-
-    /**
-     * Specification:
-     *  - Load shopping list company business units by shopping list id.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
-     */
-    public function getShoppingListCompanyBusinessUnitCollection(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer;
-
-    /**
-     * Specification:
-     *  - Load shopping list company users by shopping list id.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
-     */
-    public function getShoppingListCompanyUserCollection(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyUserCollectionTransfer;
 
     /**
      * Specification:

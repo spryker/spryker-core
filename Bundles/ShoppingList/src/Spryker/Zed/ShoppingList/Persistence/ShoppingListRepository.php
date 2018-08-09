@@ -10,9 +10,7 @@ namespace Spryker\Zed\ShoppingList\Persistence;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
@@ -234,29 +232,6 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer|null
-     */
-    public function findShoppingListCompanyBusinessUnit(ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer): ?ShoppingListCompanyBusinessUnitTransfer
-    {
-        $shoppingListCompanyBusinessUnitsQuery = $this->getFactory()
-            ->createShoppingListCompanyBusinessUnitQuery()
-            ->filterByFkShoppingList($shoppingListCompanyBusinessUnitTransfer->getIdShoppingList())
-            ->filterByFkCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit());
-
-        $shoppingListCompanyBusinessUnitEntityTransfer = $this->buildQueryFromCriteria($shoppingListCompanyBusinessUnitsQuery)->findOne();
-
-        if (!$shoppingListCompanyBusinessUnitEntityTransfer) {
-            return null;
-        }
-
-        return $this->getFactory()
-            ->createShoppingListCompanyBusinessUnitMapper()
-            ->mapCompanyBusinessUnitTransfer($shoppingListCompanyBusinessUnitEntityTransfer, new ShoppingListCompanyBusinessUnitTransfer());
-    }
-
-    /**
      * @param int $idShoppingList
      * @param int $idCompanyUser
      *
@@ -270,29 +245,6 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->filterByFkCompanyUser($idCompanyUser);
 
         return $this->buildQueryFromCriteria($shoppingListCompanyUserEntityQuery)->exists();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer|null
-     */
-    public function findShoppingListCompanyUser(ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer): ?ShoppingListCompanyUserTransfer
-    {
-        $shoppingListCompanyUsersQuery = $this->getFactory()
-            ->createShoppingListCompanyUserQuery()
-            ->filterByFkShoppingList($shoppingListCompanyUserTransfer->getIdShoppingList())
-            ->filterByFkCompanyUser($shoppingListCompanyUserTransfer->getIdCompanyUser());
-
-        $shoppingListCompanyUserEntityTransfer = $this->buildQueryFromCriteria($shoppingListCompanyUsersQuery)->findOne();
-
-        if (!$shoppingListCompanyUserEntityTransfer) {
-            return null;
-        }
-
-        return $this->getFactory()
-            ->createShoppingListCompanyUserMapper()
-            ->mapCompanyUserTransfer($shoppingListCompanyUserEntityTransfer, new ShoppingListCompanyUserTransfer());
     }
 
     /**

@@ -9,8 +9,6 @@ namespace Spryker\Zed\ShoppingList\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
@@ -88,26 +86,6 @@ class GatewayController extends AbstractGatewayController
     public function getShoppingListAction(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
         return $this->getFacade()->getShoppingList($shoppingListTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
-     */
-    public function getShoppingListCompanyBusinessUnitCollectionAction(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer
-    {
-        return $this->getFacade()->getShoppingListCompanyBusinessUnitCollection($shoppingListTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
-     */
-    public function getShoppingListCompanyUserCollectionAction(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyUserCollectionTransfer
-    {
-        return $this->getFacade()->getShoppingListCompanyUserCollection($shoppingListTransfer);
     }
 
     /**

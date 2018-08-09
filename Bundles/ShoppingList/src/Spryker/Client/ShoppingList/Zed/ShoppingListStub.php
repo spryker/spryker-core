@@ -9,8 +9,6 @@ namespace Spryker\Client\ShoppingList\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
@@ -119,38 +117,6 @@ class ShoppingListStub implements ShoppingListStubInterface
         $shoppingListTransfer = $this->zedRequestClient->call('/shopping-list/gateway/get-shopping-list', $shoppingListTransfer);
 
         return $shoppingListTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
-     */
-    public function getShoppingListCompanyBusinessUnitCollection(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer
-    {
-        /** @var \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer $shoppingListCompanyBusinessUnitCollectionTransfer */
-        $shoppingListCompanyBusinessUnitCollectionTransfer = $this->zedRequestClient->call(
-            '/shopping-list/gateway/get-shopping-list-company-business-unit-collection',
-            $shoppingListTransfer
-        );
-
-        return $shoppingListCompanyBusinessUnitCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
-     */
-    public function getShoppingListCompanyUserCollection(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyUserCollectionTransfer
-    {
-        /** @var \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer $shoppingListCompanyUserCollectionTransfer */
-        $shoppingListCompanyUserCollectionTransfer = $this->zedRequestClient->call(
-            '/shopping-list/gateway/get-shopping-list-company-user-collection',
-            $shoppingListTransfer
-        );
-
-        return $shoppingListCompanyUserCollectionTransfer;
     }
 
     /**

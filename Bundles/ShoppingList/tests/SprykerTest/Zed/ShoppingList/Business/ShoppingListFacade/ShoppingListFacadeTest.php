@@ -16,11 +16,11 @@ use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Shared\ShoppingList\ShoppingListConfig;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ReadShoppingListPermissionPlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionStoragePlugin;
@@ -41,6 +41,9 @@ class ShoppingListFacadeTest extends Unit
 {
     protected const ERROR_DUPLICATE_NAME_SHOPPING_LIST = 'customer.account.shopping_list.error.duplicate_name';
 
+    protected const FAKE_PERMISSION_READ_ONLY = 'FAKE_READ_ONLY';
+    protected const FAKE_PERMISSION_FULL_ACCESS = 'FAKE_FULL_ACCESS';
+
     /**
      * @var \SprykerTest\Zed\ShoppingList\ShoppingListBusinessTester
      */
@@ -60,16 +63,6 @@ class ShoppingListFacadeTest extends Unit
      * @var \Generated\Shared\Transfer\ShoppingListTransfer
      */
     protected $shoppingList;
-
-    /**
-     * @var \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
-     */
-    protected $readOnlyPermissionGroup;
-
-    /**
-     * @var \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
-     */
-    protected $fullAccessPermissionGroup;
 
     /**
      * @var \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -93,22 +86,6 @@ class ShoppingListFacadeTest extends Unit
         ]);
 
         $this->tester->getLocator()->permission()->facade()->syncPermissionPlugins();
-
-        $this->readOnlyPermissionGroup = $this->tester
-            ->haveShoppingListPermissionGroup(ShoppingListConfig::PERMISSION_GROUP_READ_ONLY, [
-                ReadShoppingListPermissionPlugin::KEY,
-            ]);
-
-        $this->readOnlyPermissionGroup = $this->tester
-            ->haveShoppingListPermissionGroup(ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS, [
-                ReadShoppingListPermissionPlugin::KEY,
-                WriteShoppingListPermissionPlugin::KEY,
-            ]);
-
-        $this->tester->haveShoppingListPermissionGroup(ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS, [
-            ReadShoppingListPermissionPlugin::KEY,
-            WriteShoppingListPermissionPlugin::KEY,
-        ]);
 
         $companyTransfer = $this->tester->createCompany();
         $companyTransferBusinessUnit = $this->tester->createCompanyBusinessUnit($companyTransfer);
@@ -512,5 +489,51 @@ class ShoppingListFacadeTest extends Unit
 
         // Assert
         $this->assertNull($resultShoppingListItemTransfer->getIdShoppingListItem(), 'Abstract product should not be able to be added to shopping list.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldReturnShoppingListPermissionGroupCollection()
+    {
+        // Arrange
+        $this->tester->haveShoppingListPermissionGroup(self::FAKE_PERMISSION_READ_ONLY, [
+            ReadShoppingListPermissionPlugin::KEY,
+        ]);
+        $this->tester->haveShoppingListPermissionGroup(self::FAKE_PERMISSION_FULL_ACCESS, [
+            ReadShoppingListPermissionPlugin::KEY,
+            WriteShoppingListPermissionPlugin::KEY,
+        ]);
+
+        // Act
+        $resultShoppingListPermissionGroupCollection = $this->tester->getFacade()->getShoppingListPermissionGroups();
+
+        // Assert
+        $this->assertInstanceOf(
+            ShoppingListPermissionGroupCollectionTransfer::class,
+            $resultShoppingListPermissionGroupCollection
+        );
+
+        $shoppingListPermissionGroupNames = $this->getPermissionGroupNamesFromCollection($resultShoppingListPermissionGroupCollection);
+
+        $this->assertContains(self::FAKE_PERMISSION_READ_ONLY, $shoppingListPermissionGroupNames);
+        $this->assertContains(self::FAKE_PERMISSION_FULL_ACCESS, $shoppingListPermissionGroupNames);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer $shoppingListPermissionGroupCollectionTransfer
+     *
+     * @return string[]
+     */
+    protected function getPermissionGroupNamesFromCollection(
+        ShoppingListPermissionGroupCollectionTransfer $shoppingListPermissionGroupCollectionTransfer
+    ): array {
+        $shoppingListPermissionGroupNames = [];
+
+        foreach ($shoppingListPermissionGroupCollectionTransfer->getPermissionGroups() as $shoppingListPermissionGroupTransfer) {
+            $shoppingListPermissionGroupNames[] = $shoppingListPermissionGroupTransfer->getName();
+        }
+
+        return $shoppingListPermissionGroupNames;
     }
 }
