@@ -33,9 +33,7 @@ class CategoryFacadeTest extends Unit
      */
     public function testReadWithRootCategoryReturnsCategoryTransfer()
     {
-        $categoryFacade = $this->createCategoryFacade();
-
-        $this->assertInstanceOf(CategoryTransfer::class, $categoryFacade->read($this->getRootCategoryId()));
+        $this->assertInstanceOf(CategoryTransfer::class, $this->getFacade()->read($this->getRootCategoryId()));
     }
 
     /**
@@ -43,9 +41,7 @@ class CategoryFacadeTest extends Unit
      */
     public function testReadWithNonRootCategoryReturnsCategoryTransfer()
     {
-        $categoryFacade = $this->createCategoryFacade();
-
-        $this->assertInstanceOf(CategoryTransfer::class, $categoryFacade->read($this->getNonRootCategoryId()));
+        $this->assertInstanceOf(CategoryTransfer::class, $this->getFacade()->read($this->getNonRootCategoryId()));
     }
 
     /**
@@ -53,8 +49,7 @@ class CategoryFacadeTest extends Unit
      */
     public function testDeleteByIdCategory()
     {
-        $categoryFacade = $this->createCategoryFacade();
-        $rootCategoryNodeTransfer = $categoryFacade->getNodeById(static::CATEGORY_NODE_ID_ROOT);
+        $rootCategoryNodeTransfer = $this->getFacade()->getNodeById(static::CATEGORY_NODE_ID_ROOT);
 
         //create initial category (inside root)
         $categoryTransfer1 = $this->tester->haveCategory([
@@ -75,10 +70,10 @@ class CategoryFacadeTest extends Unit
         $categoryTransfer1->setExtraParents(new ArrayObject([
             $categoryTransfer2->getCategoryNode(),
         ]));
-        $categoryFacade->update($categoryTransfer1);
+        $this->getFacade()->update($categoryTransfer1);
 
         //test on delete
-        $categoryFacade->delete($categoryTransfer2->getIdCategory());
+        $this->getFacade()->delete($categoryTransfer2->getIdCategory());
 
         $resultNodes = $this->getCategoryNodeQuery()
             ->filterByFkParentCategoryNode($categoryTransfer1->getCategoryNode()->getIdCategoryNode())
@@ -86,6 +81,17 @@ class CategoryFacadeTest extends Unit
 
         $this->assertEquals(1, $resultNodes->count(), 'If parent already contains a moving child category OR it is the same category, then they should be skipped');
         $this->assertEquals($categoryTransfer3->getCategoryNode()->getIdCategoryNode(), $resultNodes->getFirst()->getIdCategoryNode());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAllCategoryCollectionRetrievesCategoriesWillReturnCategoryRelationTransfer()
+    {
+        $localeTransfer = $this->tester->haveLocale(['localeName' => 'de_DE']);
+        /** @var \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer */
+        $categoryCollectionTransfer = $this->tester->getFacade()->getAllCategoryCollection($localeTransfer);
+        $this->assertGreaterThan(0, count($categoryCollectionTransfer->getCategories()));
     }
 
     /**
@@ -115,8 +121,8 @@ class CategoryFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Category\Business\CategoryFacadeInterface
      */
-    protected function createCategoryFacade()
+    protected function getFacade()
     {
-        return $this->tester->getLocator()->category()->facade();
+        return $this->tester->getFacade();
     }
 }

@@ -10,3 +10,5 @@ test-company,Test Company,true,approved
 Ottom_ltd,Ottom_ltd,true,approved
 27_Rif_Group,27_Rif_Group,true,approved
 test-company-2,Test Company 2,true,approved
+restricted-company-1,Restricted 1,true,approved
+restricted-company-2,Restricted 2,true,approved
