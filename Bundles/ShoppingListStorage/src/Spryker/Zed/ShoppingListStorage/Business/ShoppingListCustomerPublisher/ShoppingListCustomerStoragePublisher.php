@@ -16,6 +16,12 @@ use Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepositoryInt
 class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStoragePublisherInterface
 {
     /**
+     * The name on the customer_reference column related to Propel's ObjectCollection.
+     * There is no equivalent replacement in *TableMap constants.
+     */
+    public const COL_CUSTOMER_REFERENCE = 'customerReference';
+
+    /**
      * @var \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageEntityManagerInterface
      */
     protected $shoppingListStorageEntityManager;
@@ -48,10 +54,10 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
     {
         $shoppingListEntities = $this->shoppingListStorageRepository
             ->findShoppingListEntitiesByCustomerReferences($customerReferences)
-            ->toKeyIndex('customerReference');
+            ->toKeyIndex(static::COL_CUSTOMER_REFERENCE);
         $shoppingListCustomerStorageEntities = $this->shoppingListStorageRepository
             ->findShoppingListCustomerStorageEntitiesByCustomerReferences($customerReferences)
-            ->toKeyIndex('customerReference');
+            ->toKeyIndex(static::COL_CUSTOMER_REFERENCE);
 
         $this->storeData($shoppingListEntities, $shoppingListCustomerStorageEntities);
     }
