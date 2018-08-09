@@ -111,7 +111,7 @@ class AddController extends AbstractController
         $form = $this
             ->getFactory()
             ->createProductVariantFormAdd(
-                $dataProvider->getData($idProductAbstract),
+                $dataProvider->getData($productAbstractTransfer),
                 $dataProvider->getOptions($idProductAbstract, ProductManagementConfig::PRODUCT_TYPE_REGULAR)
             )
             ->handleRequest($request);

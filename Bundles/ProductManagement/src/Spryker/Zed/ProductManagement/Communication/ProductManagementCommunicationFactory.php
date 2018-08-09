@@ -149,8 +149,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductTaxCollection(),
             $this->getConfig()->getImageUrlPrefix(),
             $this->getStore(),
-            $this->createProductStockHelper()
-            //            $this->getProductConcreteFormAddDataProviderExpanderPlugins()
+            $this->createProductStockHelper(),
+            $this->getProductAttributeFacade()
         );
     }
 

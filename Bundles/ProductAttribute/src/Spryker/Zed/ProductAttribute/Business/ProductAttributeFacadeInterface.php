@@ -308,4 +308,16 @@ interface ProductAttributeFacadeInterface
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     public function getProductAttributeCollection();
+
+    /**
+     * Specification:
+     * - Returns list of unique super attributes from give concrete products
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    public function getUniqueSuperAttributesFromConcreteProducts(array $productConcreteTransfers): array;
 }

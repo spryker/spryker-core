@@ -9,12 +9,13 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Everon\Component\Collection\Collection;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
@@ -30,6 +31,13 @@ class ProductConcreteFormAddDataProvider extends AbstractProductFormDataProvider
     protected $productStockHelper;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeInterface
+     */
+    protected $productAttributeFacade;
+
+    /**
+     * @paran ProductManagementToProductAttributeInterface $productAttributeFacade
+     *
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
@@ -43,6 +51,7 @@ class ProductConcreteFormAddDataProvider extends AbstractProductFormDataProvider
      * @param string $imageUrlPrefix
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface $store
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface $productStockHelper
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeInterface $productAttributeFacade
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -57,7 +66,8 @@ class ProductConcreteFormAddDataProvider extends AbstractProductFormDataProvider
         array $taxCollection,
         $imageUrlPrefix,
         ProductManagementToStoreInterface $store,
-        ProductStockHelperInterface $productStockHelper
+        ProductStockHelperInterface $productStockHelper,
+        ProductManagementToProductAttributeInterface $productAttributeFacade
     ) {
         parent::__construct(
             $categoryQueryContainer,
@@ -76,6 +86,7 @@ class ProductConcreteFormAddDataProvider extends AbstractProductFormDataProvider
 
         $this->attributeTransferCollection = new Collection($attributeCollection);
         $this->productStockHelper = $productStockHelper;
+        $this->productAttributeFacade = $productAttributeFacade;
     }
 
     /**
@@ -115,14 +126,18 @@ class ProductConcreteFormAddDataProvider extends AbstractProductFormDataProvider
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return array
      */
-    public function getData($idProductAbstract)
+    public function getData(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $productTransfer = new ProductConcreteTransfer();
         $formData = $this->getDefaultFormFields();
+
+        $productConcreteTransfers = $this->productFacade->getConcreteProductsByAbstractProductId($productAbstractTransfer->getIdProductAbstract());
+        $superAttributes = $this->productAttributeFacade->getUniqueSuperAttributesFromConcreteProducts($productConcreteTransfers);
+//        dump($superAttributes);
+//        die;
 
         return $formData;
     }
