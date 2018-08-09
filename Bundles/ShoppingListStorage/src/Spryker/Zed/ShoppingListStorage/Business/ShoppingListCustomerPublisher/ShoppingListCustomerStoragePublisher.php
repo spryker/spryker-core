@@ -47,9 +47,11 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
     public function publish(array $customerReferences): void
     {
         $spyShoppingListEntities = $this->shoppingListStorageRepository
-            ->findShoppingListEntitiesByCustomerReferences($customerReferences);
+            ->findShoppingListEntitiesByCustomerReferences($customerReferences)
+            ->toKeyIndex('customerReference');
         $spyShoppingListCustomerStorageEntities = $this->shoppingListStorageRepository
-            ->findShoppingListCustomerStorageEntitiesByCustomerReferences($customerReferences);
+            ->findShoppingListCustomerStorageEntitiesByCustomerReferences($customerReferences)
+            ->toKeyIndex('customerReference');
 
         $this->storeData($spyShoppingListEntities, $spyShoppingListCustomerStorageEntities);
     }

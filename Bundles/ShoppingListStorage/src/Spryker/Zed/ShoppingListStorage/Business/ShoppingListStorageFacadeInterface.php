@@ -11,7 +11,10 @@ interface ShoppingListStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Gets array of Customer References by ShoppingList Ids.
+     * - Uses ShoppingList Propel Query;
+     * - Filters by IdShoppingList using first param as data;
+     * - Selects CustomerReference column that persists in ShoppingList;
+     * - Returns array of CustomerReferences.
      *
      * @api
      *
@@ -23,7 +26,10 @@ interface ShoppingListStorageFacadeInterface
 
     /**
      * Specification:
-     * - Gets array of Customer References by CompanyUser Ids.
+     * - Uses CompanyUser Propel Query joined with Customer;
+     * - Filters it by IdCompanyUser using first param as data;
+     * - Selects CustomerReference column that persists in Customer;
+     * - Returns array of CustomerReferences.
      *
      * @api
      *
@@ -35,7 +41,10 @@ interface ShoppingListStorageFacadeInterface
 
     /**
      * Specification:
-     * - Gets array of Customer References by CompanyBusinessUnit Ids.
+     * - Uses CompanyUser Propel Query joined with Customer;
+     * - Filters it by FkCompanyBusinessUnit using first param as data;
+     * - Selects CustomerReference column that persists in Customer;
+     * - Returns array of CustomerReferences.
      *
      * @api
      *
@@ -47,8 +56,15 @@ interface ShoppingListStorageFacadeInterface
 
     /**
      * Specification:
-     * - Finds or Create Entity in SpyShoppingListCustomerStorage for all provided CustomerReferences,
-     *   and updates them with new UpdatedAt flag.
+     * - Uses ShoppingList Propel Query;
+     * - Gets actual ShoppingList filtered by CustomerReference using first param;
+     * - Uses ShoppingListCustomerStorage Propel Query;
+     * - Gets stored ShoppingListCustomerStorage filtered CustomerReference using first param;
+     * - Goes by actual ShoppingList with matching records in stored ShoppingListCustomerStorage by CustomerReference;
+     * - Creates record in ShoppingListCustomerStorage if no matches found;
+     * - Fills Data of SpyShoppingListCustomerStorage by ShoppingListCustomerStorageTransfer with set UpdatedAt by
+     *   current timestamp.
+     * - saves SpyShoppingListCustomerStorage;
      *
      * @api
      *

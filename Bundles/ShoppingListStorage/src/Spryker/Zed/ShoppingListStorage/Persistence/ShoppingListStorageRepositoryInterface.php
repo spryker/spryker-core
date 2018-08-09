@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
+use Propel\Runtime\Collection\ObjectCollection;
+
 interface ShoppingListStorageRepositoryInterface
 {
     /**
@@ -33,14 +35,14 @@ interface ShoppingListStorageRepositoryInterface
     /**
      * @param string[] $customerReference
      *
-     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]
+     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findShoppingListCustomerStorageEntitiesByCustomerReferences(array $customerReference): array;
+    public function findShoppingListCustomerStorageEntitiesByCustomerReferences(array $customerReference): ObjectCollection;
 
     /**
      * @param string[] $customerReferences
      *
-     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingList[]
+     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingList[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findShoppingListEntitiesByCustomerReferences(array $customerReferences): array;
+    public function findShoppingListEntitiesByCustomerReferences(array $customerReferences): ObjectCollection;
 }
