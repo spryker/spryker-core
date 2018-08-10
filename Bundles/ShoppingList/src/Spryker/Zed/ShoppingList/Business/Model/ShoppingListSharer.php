@@ -13,15 +13,21 @@ use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 
 class ShoppingListSharer implements ShoppingListSharerInterface
 {
-    use PermissionAwareTrait;
+    use PermissionAwareTrait, TransactionTrait;
 
     protected const CANNOT_UPDATE_SHOPPING_LIST = 'customer.account.shopping_list.error.cannot_update';
     protected const CANNOT_RESHARE_SHOPPING_LIST = 'customer.account.shopping_list.share.share_shopping_list_fail';
+
+    /**
+     * @var \Propel\Runtime\Connection\ConnectionInterface
+     */
+    protected $databaseConnection;
 
     /**
      * @var \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface
@@ -118,10 +124,22 @@ class ShoppingListSharer implements ShoppingListSharerInterface
      */
     public function updateShareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
     {
+        $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListTransfer) {
+            $this->executeUpdateShareShoppingListTransaction($shoppingListTransfer);
+        });
+
+        return (new ShoppingListShareResponseTransfer)->setIsSuccess(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    protected function executeUpdateShareShoppingListTransaction(ShoppingListTransfer $shoppingListTransfer): void
+    {
         $this->updateShareShoppingListCompanyUsers($shoppingListTransfer);
         $this->updateShareShoppingListCompanyBusinessUnits($shoppingListTransfer);
-
-        return (new ShoppingListShareResponseTransfer())->setIsSuccess(true);
     }
 
     /**
@@ -132,8 +150,6 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     protected function updateShareShoppingListCompanyUsers(ShoppingListTransfer $shoppingListTransfer): void
     {
         $sharedShoppingListCompanyUserIds = [];
-        $shoppingListCompanyUsers = $shoppingListTransfer->getCompanyUsers();
-
         $sharedShoppingListCompanyUserCollection = $this->shoppingListRepository
             ->findShoppingListCompanyUsersByShoppingListId($shoppingListTransfer);
 
@@ -142,8 +158,29 @@ class ShoppingListSharer implements ShoppingListSharerInterface
                 $sharedShoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup();
         }
 
-        foreach ($shoppingListCompanyUsers as $shoppingListCompanyUserTransfer) {
+        foreach ($shoppingListTransfer->getSharedCompanyUsers() as $shoppingListCompanyUserTransfer) {
             $this->updateShareShoppingListCompanyUser($shoppingListCompanyUserTransfer, $sharedShoppingListCompanyUserIds);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    protected function updateShareShoppingListCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer): void
+    {
+        $sharedShoppingListCompanyBusinessUnitIds = [];
+        $sharedShoppingListCompanyBusinessUnitCollection = $this->shoppingListRepository
+            ->findShoppingListCompanyBusinessUnitsByShoppingListId($shoppingListTransfer);
+
+        foreach ($sharedShoppingListCompanyBusinessUnitCollection->getCompanyBusinessUnits() as $sharedShoppingListCompanyBusinessUnitTransfer) {
+            $sharedShoppingListCompanyBusinessUnitIds[$sharedShoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit()] =
+                $sharedShoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup();
+        }
+
+        foreach ($shoppingListTransfer->getSharedCompanyBusinessUnits() as $shoppingListCompanyBusinessUnitTransfer) {
+            $this->updateShareShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer, $sharedShoppingListCompanyBusinessUnitIds);
         }
     }
 
@@ -157,16 +194,10 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer,
         array $sharedShoppingListCompanyUserIds
     ): void {
-        if (!array_key_exists($shoppingListCompanyUserTransfer->getIdShoppingListCompanyUser(), $sharedShoppingListCompanyUserIds)) {
-            if (!$shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup()) {
-                return;
-            }
+        $isExists = array_key_exists($shoppingListCompanyUserTransfer->getIdShoppingListCompanyUser(), $sharedShoppingListCompanyUserIds);
 
-            $this->shoppingListEntityManager->saveShoppingListCompanyUser($shoppingListCompanyUserTransfer);
-            return;
-        }
-
-        if ($sharedShoppingListCompanyUserIds[$shoppingListCompanyUserTransfer->getIdShoppingListCompanyUser()] ===
+        if (!$isExists && !$shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup() ||
+            $isExists && $sharedShoppingListCompanyUserIds[$shoppingListCompanyUserTransfer->getIdShoppingListCompanyUser()] ===
             $shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup()
         ) {
             return;
@@ -174,32 +205,10 @@ class ShoppingListSharer implements ShoppingListSharerInterface
 
         if (!$shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup()) {
             $this->shoppingListEntityManager->deleteShoppingListCompanyUser($shoppingListCompanyUserTransfer);
-        } else {
-            $this->shoppingListEntityManager->saveShoppingListCompanyUser($shoppingListCompanyUserTransfer);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return void
-     */
-    protected function updateShareShoppingListCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer): void
-    {
-        $sharedShoppingListCompanyBusinessUnitIds = [];
-        $shoppingListCompanyBusinessUnits = $shoppingListTransfer->getCompanyBusinessUnits();
-
-        $sharedShoppingListCompanyBusinessUnitCollection = $this->shoppingListRepository
-            ->findShoppingListCompanyBusinessUnitsByShoppingListId($shoppingListTransfer);
-
-        foreach ($sharedShoppingListCompanyBusinessUnitCollection->getCompanyBusinessUnits() as $sharedShoppingListCompanyBusinessUnitTransfer) {
-            $sharedShoppingListCompanyBusinessUnitIds[$sharedShoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit()] =
-                $sharedShoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup();
+            return;
         }
 
-        foreach ($shoppingListCompanyBusinessUnits as $shoppingListCompanyBusinessUnitTransfer) {
-            $this->updateShareShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer, $sharedShoppingListCompanyBusinessUnitIds);
-        }
+        $this->shoppingListEntityManager->saveShoppingListCompanyUser($shoppingListCompanyUserTransfer);
     }
 
     /**
@@ -212,16 +221,10 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer,
         array $sharedShoppingListCompanyBusinessUnitIds
     ): void {
-        if (!array_key_exists($shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit(), $sharedShoppingListCompanyBusinessUnitIds)) {
-            if (!$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()) {
-                return;
-            }
+        $isExists = array_key_exists($shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit(), $sharedShoppingListCompanyBusinessUnitIds);
 
-            $this->shoppingListEntityManager->saveShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
-            return;
-        }
-
-        if ($sharedShoppingListCompanyBusinessUnitIds[$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit()] ===
+        if (!$isExists && !$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup() ||
+            $isExists && $sharedShoppingListCompanyBusinessUnitIds[$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit()] ===
             $shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()
         ) {
             return;
@@ -229,9 +232,10 @@ class ShoppingListSharer implements ShoppingListSharerInterface
 
         if (!$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()) {
             $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
-        } else {
-            $this->shoppingListEntityManager->saveShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
+            return;
         }
+
+        $this->shoppingListEntityManager->saveShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
     }
 
     /**

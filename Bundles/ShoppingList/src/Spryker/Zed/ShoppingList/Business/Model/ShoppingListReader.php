@@ -87,8 +87,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
             ->findShoppingListCompanyUsersByShoppingListId($shoppingListTransfer)
             ->getCompanyUsers();
 
-        $shoppingListTransfer->setCompanyBusinessUnits($shoppingListCompanyBusinessUnits);
-        $shoppingListTransfer->setCompanyUsers($shoppingListCompanyUsers);
+        $shoppingListTransfer
+            ->setSharedCompanyUsers($shoppingListCompanyUsers)
+            ->setSharedCompanyBusinessUnits($shoppingListCompanyBusinessUnits);
 
         return $shoppingListTransfer;
     }

@@ -13,8 +13,10 @@
         <property name="numberOfItems" type="int" />
         <property name="owner" type="string" />
         <property name="idCompanyUser" type="int" />
-        <property name="companyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" />
-        <property name="companyUsers" type="ShoppingListCompanyUser[]" />
+        <property name="companyUsers" type="CompanyUser[]" />
+        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" />
+        <property name="sharedCompanyUsers" type="ShoppingListCompanyUser[]" />
+        <property name="sharedCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" />
     </transfer>
 
     <transfer name="ShoppingListCollection">
@@ -115,19 +117,17 @@
     </transfer>
 
     <transfer name="ShoppingListCompanyBusinessUnit">
+        <property name="idShoppingListCompanyBusinessUnit" type="int" />
         <property name="idShoppingList" type="int" />
         <property name="idShoppingListPermissionGroup" type="int" />
         <property name="idCompanyBusinessUnit" type="int" />
-        <property name="idShoppingListCompanyBusinessUnit" type="int" />
-        <property name="companyBusinessUnitName" type="string" />
     </transfer>
 
     <transfer name="ShoppingListCompanyUser">
+        <property name="idShoppingListCompanyUser" type="int" />
         <property name="idShoppingList" type="int" />
         <property name="idShoppingListPermissionGroup" type="int" />
         <property name="idCompanyUser" type="int" />
-        <property name="idShoppingListCompanyUser" type="int" />
-        <property name="customerFullName" type="string" />
     </transfer>
 
     <transfer name="ItemCollection">
