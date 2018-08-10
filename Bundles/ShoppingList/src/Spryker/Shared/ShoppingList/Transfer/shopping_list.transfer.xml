@@ -13,6 +13,7 @@
         <property name="numberOfItems" type="int" />
         <property name="owner" type="string" />
         <property name="idCompanyUser" type="int" />
+        <property name="items" type="ShoppingListItem[]" />
     </transfer>
 
     <transfer name="ShoppingListCollection">

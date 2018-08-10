@@ -71,6 +71,8 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @module Customer
+     *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return null|\Generated\Shared\Transfer\ShoppingListTransfer
@@ -79,6 +81,9 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     {
         $shoppingListQuery = $this->getFactory()->createShoppingListQuery()
             ->leftJoinWithSpyShoppingListItem()
+            ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
             ->filterByIdShoppingList($shoppingListTransfer->getIdShoppingList());
 
         $shoppingListEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListQuery)->find();
@@ -144,6 +149,24 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->useSpyShoppingListQuery()
             ->filterByIdShoppingList_In($shoppingListIds)
             ->endUse();
+        $shoppingListsItemEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListsItemQuery)->find();
+
+        return $this->getFactory()
+            ->createShoppingListItemMapper()
+            ->mapItemCollectionTransfer($shoppingListsItemEntityTransferCollection);
+    }
+
+    /**
+     * @param int $idShoppingList
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function findShoppingListItemsByIdShoppingList(int $idShoppingList): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListsItemQuery = $this->getFactory()
+            ->createShoppingListItemQuery()
+            ->filterByFkShoppingList($idShoppingList);
+
         $shoppingListsItemEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListsItemQuery)->find();
 
         return $this->getFactory()
@@ -242,6 +265,8 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @module Customer
+     *
      * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
@@ -266,6 +291,8 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @module Customer
+     *
      * @param int $idCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
@@ -290,6 +317,8 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @module Customer
+     *
      * @param string $customerReference
      *
      * @return $this|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery
