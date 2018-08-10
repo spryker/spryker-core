@@ -71,6 +71,8 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @module Customer
+     *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return null|\Generated\Shared\Transfer\ShoppingListTransfer
@@ -263,6 +265,8 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @module Customer
+     *
      * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
@@ -287,6 +291,8 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @module Customer
+     *
      * @param int $idCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
@@ -311,6 +317,8 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @module Customer
+     *
      * @param string $customerReference
      *
      * @return $this|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery

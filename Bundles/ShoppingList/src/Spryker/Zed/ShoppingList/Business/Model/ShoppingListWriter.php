@@ -213,9 +213,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
      */
     protected function executeRemoveShoppingListTransaction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
-            $this->shoppingListItemOperation->deleteShoppingListItem($shoppingListItemTransfer);
-        }
+        $this->shoppingListItemOperation->clearShoppingList($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListCompanyUsers($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnits($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListByName($shoppingListTransfer);
