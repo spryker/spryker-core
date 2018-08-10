@@ -9,15 +9,20 @@
     "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.17.0",
     "spryker/shopping-list": "^1.0.0",
+    "spryker/key-builder": "*",
+    "spryker/locale": "*",
+    "spryker/storage": "*",
     "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/shopping-list-session": "*"
   },
   "suggest": {
-    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+    "spryker/shopping-list-session": "*"
   },
   "autoload": {
     "psr-4": {

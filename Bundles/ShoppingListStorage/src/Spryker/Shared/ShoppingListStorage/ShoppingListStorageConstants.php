@@ -10,7 +10,7 @@ namespace Spryker\Shared\ShoppingListStorage;
 /**
  * Declares global environment configuration keys. Do not use it for other class constants.
  */
-class ShoppingListStorageConstants
+interface ShoppingListStorageConstants
 {
     /**
      * Specification:

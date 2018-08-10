@@ -15,9 +15,9 @@ use Spryker\Zed\ShoppingListStorage\Dependency\Facade\ShoppingListStorageToEvent
 
 class ShoppingListStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    public const PROPEL_QUERY_SHOPPING_LIST = 'PROPEL_QUERY_SHOPPING_LIST';
-    public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
+    public const FACADE_EVENT_BEHAVIOR = 'SHOPPING_LIST_STORAGE:FACADE_EVENT_BEHAVIOR';
+    public const PROPEL_QUERY_SHOPPING_LIST = 'SHOPPING_LIST_STORAGE:PROPEL_QUERY_SHOPPING_LIST';
+    public const PROPEL_QUERY_COMPANY_USER = 'SHOPPING_LIST_STORAGE:PROPEL_QUERY_COMPANY_USER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
