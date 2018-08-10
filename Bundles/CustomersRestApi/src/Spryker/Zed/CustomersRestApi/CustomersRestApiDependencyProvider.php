@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Container;
 
 class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SPY_CUSTOMER_ADDRESS = 'SPY_CUSTOMER_ADDRESS';
+    public const PROPEL_QUERY_CUSTOMER_ADDRESS = 'PROPEL_QUERY_CUSTOMER_ADDRESS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -21,7 +21,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
-        $container = $this->addAddressesRepository($container);
+        $container = $this->addCustomerAddressPropelQuery($container);
 
         return $container;
     }
@@ -31,9 +31,9 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addAddressesRepository(Container $container): Container
+    protected function addCustomerAddressPropelQuery(Container $container): Container
     {
-        $container[static::SPY_CUSTOMER_ADDRESS] = function () {
+        $container[static::PROPEL_QUERY_CUSTOMER_ADDRESS] = function () {
             return SpyCustomerAddressQuery::create();
         };
 

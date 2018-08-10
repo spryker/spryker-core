@@ -20,6 +20,6 @@ class CustomersRestApiPersistenceFactory extends AbstractPersistenceFactory
      */
     public function getAddressesQuery(): SpyCustomerAddressQuery
     {
-        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::SPY_CUSTOMER_ADDRESS);
+        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::PROPEL_QUERY_CUSTOMER_ADDRESS);
     }
 }

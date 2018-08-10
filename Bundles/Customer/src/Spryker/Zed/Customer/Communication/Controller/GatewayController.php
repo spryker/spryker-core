@@ -323,10 +323,6 @@ class GatewayController extends AbstractGatewayController
     {
         $addressTransfer = $this->getFacade()->findAddressByUuid($addressTransfer);
 
-        if ($addressTransfer === null) {
-            return new AddressTransfer();
-        }
-
         return $addressTransfer;
     }
 }

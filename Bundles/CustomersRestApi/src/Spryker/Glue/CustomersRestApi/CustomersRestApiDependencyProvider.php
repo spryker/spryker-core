@@ -16,7 +16,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
 {
     public const CLIENT_SESSION = 'CLIENT_SESSION';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    public const SPY_CUSTOMER_ADDRESS = 'SPY_CUSTOMER_ADDRESS';
+    public const PROPEL_QUERY_CUSTOMER_ADDRESS = 'PROPEL_QUERY_CUSTOMER_ADDRESS';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -27,7 +27,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = $this->addSessionClient($container);
         $container = $this->addCustomerClient($container);
-        $container = $this->addAddressesRepository($container);
+        $container = $this->addCustomerAddressPropelQuery($container);
 
         return $container;
     }
@@ -65,9 +65,9 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addAddressesRepository(Container $container): Container
+    protected function addCustomerAddressPropelQuery(Container $container): Container
     {
-        $container[static::SPY_CUSTOMER_ADDRESS] = function () {
+        $container[static::PROPEL_QUERY_CUSTOMER_ADDRESS] = function () {
             return SpyCustomerAddressQuery::create();
         };
 

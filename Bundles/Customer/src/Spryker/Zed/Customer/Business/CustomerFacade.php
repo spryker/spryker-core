@@ -529,9 +529,9 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function findAddressByUuid(AddressTransfer $addressTransfer): ?AddressTransfer
+    public function findAddressByUuid(AddressTransfer $addressTransfer): AddressTransfer
     {
         return $this->getFactory()
         ->createAddress()
