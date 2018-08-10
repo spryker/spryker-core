@@ -105,7 +105,8 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     {
         return new ThresholdDataSourceStrategy(
             $this->getMinimumOrderValueDataSourceStrategies(),
-            $this->createGlobalThresholdReader()
+            $this->createGlobalThresholdReader(),
+            $this->getConfig()
         );
     }
 

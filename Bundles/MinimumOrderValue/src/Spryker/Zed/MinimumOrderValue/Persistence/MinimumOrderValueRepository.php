@@ -59,8 +59,8 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
     ): array {
         $globalMinimumOrderValueEntities = $this->getFactory()
             ->createMinimumOrderValueQuery()
-            ->filterByFkStore($storeTransfer->getIdStore())
-            ->filterByFkCurrency($currencyTransfer->getIdCurrency())
+            ->filterByStoreTransfer($storeTransfer)
+            ->filterByCurrencyTransfer($currencyTransfer)
             ->joinWithMinimumOrderValueType()
             ->leftJoinWithSpyMinimumOrderValueLocalizedMessage()
             ->find();

@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\MerchantRelationshipMinimumOrderValue\Persistence\SpyMerchantRelationshipMinimumOrderValue;
 
 class MerchantRelationshipMinimumOrderValueMapper implements MerchantRelationshipMinimumOrderValueMapperInterface
@@ -35,6 +37,10 @@ class MerchantRelationshipMinimumOrderValueMapper implements MerchantRelationshi
                         (new MinimumOrderValueTypeTransfer())->fromArray($minimumOrderValueTypeEntity->toArray(), true)
                             ->setIdMinimumOrderValueType($minimumOrderValueTypeEntity->getIdMinOrderValueType())
                     )
+            )->setStore(
+                (new StoreTransfer())->fromArray($merchantRelationshipMinimumOrderValueEntity->getStore()->toArray(), true)
+            )->setCurrency(
+                (new CurrencyTransfer())->fromArray($merchantRelationshipMinimumOrderValueEntity->getCurrency()->toArray(), true)
             )->setMerchantRelationship(
                 (new MerchantRelationshipTransfer())
                     ->fromArray($merchantRelationshipMinimumOrderValueEntity->getMerchantRelationship()->toArray(), true)

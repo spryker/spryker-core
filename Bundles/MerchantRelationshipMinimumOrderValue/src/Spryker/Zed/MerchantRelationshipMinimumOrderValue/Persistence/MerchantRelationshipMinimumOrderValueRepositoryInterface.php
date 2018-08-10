@@ -7,12 +7,21 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface MerchantRelationshipMinimumOrderValueRepositoryInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      * @param int[] $merchantRelationshipIds
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[]
      */
-    public function findThresholdsForMerchantRelationshipIds(array $merchantRelationshipIds): array;
+    public function findThresholdsForMerchantRelationshipIds(
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer,
+        array $merchantRelationshipIds
+    ): array;
 }

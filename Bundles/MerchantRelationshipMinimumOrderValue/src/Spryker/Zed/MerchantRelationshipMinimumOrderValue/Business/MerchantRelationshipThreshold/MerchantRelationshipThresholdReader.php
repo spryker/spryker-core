@@ -43,7 +43,11 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
         $cartMerchantRelationshipIds = $this->getCartMerchantRelationshipIds($customerMerchantRelationships, $itemMerchantRelationshipSubTotals);
 
         $merchantRelationshipMinimumOrderValueTransfers = $this->merchantRelationshipMinimumOrderValueRepository
-            ->findThresholdsForMerchantRelationshipIds($cartMerchantRelationshipIds);
+            ->findThresholdsForMerchantRelationshipIds(
+                $quoteTransfer->getStore(),
+                $quoteTransfer->getCurrency(),
+                $cartMerchantRelationshipIds
+            );
 
         return $this->getMinimumOrderValueTransfers($merchantRelationshipMinimumOrderValueTransfers, $itemMerchantRelationshipSubTotals);
     }
@@ -56,7 +60,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     protected function getCustomerMerchantRelationships(QuoteTransfer $quoteTransfer): array
     {
         if ($this->haveCustomerMerchantRelationships($quoteTransfer)) {
-            return $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getCompanyBusinessUnit()->getMerchantRelationships();
+            return $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getCompanyBusinessUnit()->getMerchantRelationships()->getArrayCopy();
         }
 
         return [];
@@ -84,12 +88,13 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     {
         $itemMerchantRelationshipSubTotals = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getIdMerchantRelationship()) {
+            if (!$itemTransfer->getPriceProduct() || !$itemTransfer->getPriceProduct()->getPriceDimension()) {
                 continue;
             }
 
-            $itemMerchantRelationshipSubTotals[$itemTransfer->getIdMerchantRelationship()] = $itemMerchantRelationshipSubTotals[$itemTransfer->getIdMerchantRelationship()] ?? 0;
-            $itemMerchantRelationshipSubTotals[$itemTransfer->getIdMerchantRelationship()] += $itemTransfer->getSumSubtotalAggregation();
+            $itemIdMerchantRelationship = $itemTransfer->getPriceProduct()->getPriceDimension()->getIdMerchantRelationship();
+            $itemMerchantRelationshipSubTotals[$itemIdMerchantRelationship] = $itemMerchantRelationshipSubTotals[$itemIdMerchantRelationship] ?? 0;
+            $itemMerchantRelationshipSubTotals[$itemIdMerchantRelationship] += $itemTransfer->getSumSubtotalAggregation();
         }
 
         return $itemMerchantRelationshipSubTotals;

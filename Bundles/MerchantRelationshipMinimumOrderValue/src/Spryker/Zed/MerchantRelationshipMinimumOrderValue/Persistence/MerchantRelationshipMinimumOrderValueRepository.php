@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -16,12 +18,17 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantRelationshipMinimumOrderValueRepository extends AbstractRepository implements MerchantRelationshipMinimumOrderValueRepositoryInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      * @param int[] $merchantRelationshipIds
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[]
      */
-    public function findThresholdsForMerchantRelationshipIds(array $merchantRelationshipIds): array
-    {
+    public function findThresholdsForMerchantRelationshipIds(
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer,
+        array $merchantRelationshipIds
+    ): array {
         if (empty($merchantRelationshipIds)) {
             return [];
         }
@@ -29,6 +36,8 @@ class MerchantRelationshipMinimumOrderValueRepository extends AbstractRepository
         $merchantRelationshipMinimumOrderValueEntities = $this->getFactory()
             ->createMerchantRelationshipMinimumOrderValueQuery()
             ->filterByFkMerchantRelationship_In($merchantRelationshipIds)
+            ->filterByStoreTransfer($storeTransfer)
+            ->filterByCurrencyTransfer($currencyTransfer)
             ->joinMerchantRelationship()
             ->joinMinimumOrderValueType()
             ->find();

@@ -9,11 +9,12 @@ namespace Spryker\Client\MerchantRelationship;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @method \Spryker\Client\MerchantRelationship\MerchantRelationshipFactory getFactory()
  */
-class MerchantRelationshipClient implements MerchantRelationshipClientInterface
+class MerchantRelationshipClient extends AbstractClient implements MerchantRelationshipClientInterface
 {
     /**
      * {@inheritdoc}

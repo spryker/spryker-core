@@ -25,7 +25,6 @@ class ThresholdApplier implements ThresholdApplierInterface
      */
     protected const PRICE_MODE_NET = 'NET_MODE';
 
-    protected const THRESHOLD_EXPENSE_NAME = 'minimum-order-value.expense.name';
     protected const THRESHOLD_EXPENSE_TYPE = 'THRESHOLD_EXPENSE_TYPE';
 
     /**
@@ -114,7 +113,7 @@ class ThresholdApplier implements ThresholdApplierInterface
         }
 
         foreach ($minimumOrderValueTransfers as $minimumOrderValueTransfer) {
-            $this->addMessageToCheckoutResponse($quoteTransfer, $checkoutResponseTransfer, $minimumOrderValueTransfer);
+            $this->addErrorMessageToCheckoutResponse($quoteTransfer, $checkoutResponseTransfer, $minimumOrderValueTransfer);
         }
 
         return $checkoutResponseTransfer->getErrors()->count() === 0;
@@ -142,7 +141,7 @@ class ThresholdApplier implements ThresholdApplierInterface
             return;
         }
 
-        $this->addMinimumOrderValueExpenseToQuote($quoteTransfer, $calculatedFees);
+        $this->addMinimumOrderValueExpenseToQuote($minimumOrderValueTransfer, $quoteTransfer, $calculatedFees);
     }
 
     /**
@@ -161,28 +160,36 @@ class ThresholdApplier implements ThresholdApplierInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $calculatedFees
      *
      * @return void
      */
-    protected function addMinimumOrderValueExpenseToQuote(QuoteTransfer $quoteTransfer, int $calculatedFees): void
-    {
+    protected function addMinimumOrderValueExpenseToQuote(
+        MinimumOrderValueTransfer $minimumOrderValueTransfer,
+        QuoteTransfer $quoteTransfer,
+        int $calculatedFees
+    ): void {
         $quoteTransfer->addExpense(
-            $this->createExpenseByPriceMode($calculatedFees, $quoteTransfer->getPriceMode())
+            $this->createExpenseByPriceMode($minimumOrderValueTransfer, $calculatedFees, $quoteTransfer->getPriceMode())
         );
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      * @param int $expensePrice
      * @param string $priceMode
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    protected function createExpenseByPriceMode(int $expensePrice, string $priceMode): ExpenseTransfer
-    {
+    protected function createExpenseByPriceMode(
+        MinimumOrderValueTransfer $minimumOrderValueTransfer,
+        int $expensePrice,
+        string $priceMode
+    ): ExpenseTransfer {
         $expenseTransfer = (new ExpenseTransfer())
-            ->setName(static::THRESHOLD_EXPENSE_NAME)
+            ->setName($minimumOrderValueTransfer->getMinimumOrderValueType()->getKey())
             ->setType(static::THRESHOLD_EXPENSE_TYPE)
             ->setQuantity(1);
 
@@ -208,7 +215,7 @@ class ThresholdApplier implements ThresholdApplierInterface
      *
      * @return void
      */
-    protected function addMessageToCheckoutResponse(
+    protected function addErrorMessageToCheckoutResponse(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer,
         MinimumOrderValueTransfer $minimumOrderValueTransfer

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\Propel;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\MerchantRelationshipMinimumOrderValue\Persistence\Base\SpyMerchantRelationshipMinimumOrderValueQuery as BaseSpyMerchantRelationshipMinimumOrderValueQuery;
 
 /**
@@ -21,4 +23,35 @@ use Orm\Zed\MerchantRelationshipMinimumOrderValue\Persistence\Base\SpyMerchantRe
  */
 abstract class AbstractSpyMerchantRelationshipMinimumOrderValueQuery extends BaseSpyMerchantRelationshipMinimumOrderValueQuery
 {
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return $this|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery|\Propel\Runtime\ActiveQuery\Criteria
+     */
+    public function filterByStoreTransfer(StoreTransfer $storeTransfer)
+    {
+        return $this->_if($storeTransfer->getIdStore())
+                ->filterByFkStore($storeTransfer->getIdStore())
+            ->_else()
+                ->useStoreQuery()
+                    ->filterByName($storeTransfer->getName())
+                ->endUse()
+            ->_endif();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return $this|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery|\Propel\Runtime\ActiveQuery\Criteria
+     */
+    public function filterByCurrencyTransfer(CurrencyTransfer $currencyTransfer)
+    {
+        return $this->_if($currencyTransfer->getIdCurrency())
+                ->filterByFkCurrency($currencyTransfer->getIdCurrency())
+            ->_else()
+                ->useCurrencyQuery()
+                    ->filterByCode($currencyTransfer->getCode())
+                ->endUse()
+            ->_endif();
+    }
 }

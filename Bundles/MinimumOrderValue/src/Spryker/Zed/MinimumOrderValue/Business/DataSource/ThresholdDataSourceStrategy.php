@@ -10,6 +10,7 @@ namespace Spryker\Zed\MinimumOrderValue\Business\DataSource;
 use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdReaderInterface;
+use Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig;
 
 class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterface
 {
@@ -24,15 +25,23 @@ class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterfac
     protected $storeThresholdReader;
 
     /**
+     * @var \Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdReaderInterface
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueDataSourceStrategyPluginInterface[] $minimumOrderValueDataSourceStrategyPlugins
      * @param \Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdReaderInterface $storeThresholdReader
+     * @param \Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig $config
      */
     public function __construct(
         array $minimumOrderValueDataSourceStrategyPlugins,
-        GlobalThresholdReaderInterface $storeThresholdReader
+        GlobalThresholdReaderInterface $storeThresholdReader,
+        MinimumOrderValueConfig $config
     ) {
         $this->minimumOrderValueDataSourceStrategyPlugins = $minimumOrderValueDataSourceStrategyPlugins;
         $this->storeThresholdReader = $storeThresholdReader;
+        $this->config = $config;
     }
 
     /**
@@ -61,14 +70,13 @@ class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterfac
     public function findGlobalApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {
         $quoteTransfer
-            ->requireTotals()
             ->requireStore()
             ->requireCurrency();
 
         $globalMinimumOrderValueTransfers = $this->storeThresholdReader
             ->getGlobalThresholdsByStoreAndCurrency($quoteTransfer->getStore(), $quoteTransfer->getCurrency());
 
-        $cartSubTotal = $quoteTransfer->getTotals()->getSubtotal();
+        $cartSubTotal = $this->getCartSubtotal($quoteTransfer);
 
         return array_map(function (GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer) use ($cartSubTotal) {
             $minimumOrderValueTransfer = $globalMinimumOrderValueTransfer->getMinimumOrderValue();
@@ -76,5 +84,25 @@ class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterfac
 
             return $minimumOrderValueTransfer;
         }, $globalMinimumOrderValueTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int
+     */
+    protected function getCartSubtotal(QuoteTransfer $quoteTransfer): int
+    {
+        $cartSubTotal = 0;
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($quoteTransfer->getPriceMode() === $this->config->getNetPriceMode()) {
+                $cartSubTotal += ($itemTransfer->getUnitNetPrice() * $itemTransfer->getQuantity());
+                continue;
+            }
+
+            $cartSubTotal += ($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity());
+        }
+
+        return $cartSubTotal;
     }
 }
