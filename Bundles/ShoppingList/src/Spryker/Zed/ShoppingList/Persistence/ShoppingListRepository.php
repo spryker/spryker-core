@@ -17,8 +17,6 @@ use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
-use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyBusinessUnitTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyUserTableMap;
@@ -26,8 +24,6 @@ use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListItemTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListCompanyBusinessUnitMapper;
-use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListCompanyUserMapper;
 use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapper;
 
 /**
@@ -368,11 +364,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     {
         $shoppingListsCompanyBusinessUnitQuery = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
-            ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
-            ->addJoin(SpyShoppingListCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT, SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT, Criteria::LEFT_JOIN)
-            ->withColumn(SpyCompanyBusinessUnitTableMap::COL_NAME, ShoppingListCompanyBusinessUnitMapper::FIELD_COMPANY_BUSINESS_UNIT_NAME)
-            ->orderBy(ShoppingListCompanyBusinessUnitMapper::FIELD_COMPANY_BUSINESS_UNIT_NAME)
-            ->joinWithSpyShoppingListPermissionGroup();
+            ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList());
 
         $shoppingListsCompanyBusinessUnitEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListsCompanyBusinessUnitQuery)->find();
 
@@ -390,13 +382,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     {
         $shoppingListsCompanyUserQuery = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
-            ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
-            ->addJoin(SpyShoppingListCompanyUserTableMap::COL_FK_COMPANY_USER, SpyCompanyUserTableMap::COL_ID_COMPANY_USER, Criteria::LEFT_JOIN)
-            ->addJoin(SpyCompanyUserTableMap::COL_FK_CUSTOMER, SpyCustomerTableMap::COL_ID_CUSTOMER, Criteria::LEFT_JOIN)
-            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListCompanyUserMapper::FIELD_FIRST_NAME)
-            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListCompanyUserMapper::FIELD_LAST_NAME)
-            ->orderBy(ShoppingListCompanyUserMapper::FIELD_FIRST_NAME)
-            ->joinWithSpyShoppingListPermissionGroup();
+            ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList());
 
         $shoppingListsCompanyUserEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListsCompanyUserQuery)->find();
 

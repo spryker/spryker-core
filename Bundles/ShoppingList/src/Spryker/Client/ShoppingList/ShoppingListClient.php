@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -290,13 +291,34 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function shareShoppingList(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
+    {
+        if ($shoppingListShareRequestTransfer->getIdCompanyBusinessUnit()) {
+            return $this->getZedStub()->shareShoppingListWithCompanyBusinessUnit($shoppingListShareRequestTransfer);
+        }
+        if ($shoppingListShareRequestTransfer->getIdCompanyUser()) {
+            return $this->getZedStub()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
+        }
+
+        return (new ShoppingListShareResponseTransfer)->setIsSuccess(false);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function shareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
+    public function updateShareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
     {
-        return $this->getZedStub()->shareShoppingList($shoppingListTransfer);
+        return $this->getZedStub()->updateShareShoppingList($shoppingListTransfer);
     }
 
     /**

@@ -227,7 +227,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Share shopping list.
+     *  - Update share shopping list with company business units and company users.
      *
      * @api
      *
@@ -235,7 +235,7 @@ interface ShoppingListFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function shareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer;
+    public function updateShareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer;
 
     /**
      * Specification:

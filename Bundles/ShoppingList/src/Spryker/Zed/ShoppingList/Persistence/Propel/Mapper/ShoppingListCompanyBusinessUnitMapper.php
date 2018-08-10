@@ -14,32 +14,16 @@ use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit;
 
 class ShoppingListCompanyBusinessUnitMapper implements ShoppingListCompanyBusinessUnitMapperInterface
 {
-    public const FIELD_COMPANY_BUSINESS_UNIT_NAME = 'company_business_unit_name';
-
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer[] $companyBusinessUnitEntityTransferCollection
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
      */
-    public function mapCompanyBusinessUnitCollectionTransfer(
-        array $companyBusinessUnitEntityTransferCollection
-    ): ShoppingListCompanyBusinessUnitCollectionTransfer {
+    public function mapCompanyBusinessUnitCollectionTransfer(array $companyBusinessUnitEntityTransferCollection): ShoppingListCompanyBusinessUnitCollectionTransfer
+    {
         $shoppingListCompanyBusinessUnitCollectionTransfer = new ShoppingListCompanyBusinessUnitCollectionTransfer();
-
         foreach ($companyBusinessUnitEntityTransferCollection as $companyBusinessUnitEntityTransfer) {
-            $shoppingListCompanyBusinessUnitTransfer = $this->mapCompanyBusinessUnitTransfer(
-                $companyBusinessUnitEntityTransfer,
-                new ShoppingListCompanyBusinessUnitTransfer()
-            );
-
-            $virtualPropertiesCollection = $companyBusinessUnitEntityTransfer->virtualProperties();
-
-            if (isset($virtualPropertiesCollection[static::FIELD_COMPANY_BUSINESS_UNIT_NAME])) {
-                $shoppingListCompanyBusinessUnitTransfer->setCompanyBusinessUnitName(
-                    $virtualPropertiesCollection[static::FIELD_COMPANY_BUSINESS_UNIT_NAME]
-                );
-            }
-
+            $shoppingListCompanyBusinessUnitTransfer = $this->mapCompanyBusinessUnitTransfer($companyBusinessUnitEntityTransfer, new ShoppingListCompanyBusinessUnitTransfer());
             $shoppingListCompanyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
         }
 

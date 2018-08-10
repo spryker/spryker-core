@@ -14,33 +14,16 @@ use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser;
 
 class ShoppingListCompanyUserMapper implements ShoppingListCompanyUserMapperInterface
 {
-    public const FIELD_FIRST_NAME = 'first_name';
-    public const FIELD_LAST_NAME = 'last_name';
-
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer[] $companyUserEntityTransferCollection
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
      */
-    public function mapCompanyUserCollectionTransfer(
-        array $companyUserEntityTransferCollection
-    ): ShoppingListCompanyUserCollectionTransfer {
+    public function mapCompanyUserCollectionTransfer(array $companyUserEntityTransferCollection): ShoppingListCompanyUserCollectionTransfer
+    {
         $shoppingListCompanyUserCollectionTransfer = new ShoppingListCompanyUserCollectionTransfer();
-
         foreach ($companyUserEntityTransferCollection as $companyUserEntityTransfer) {
-            $shoppingListCompanyUserTransfer = $this->mapCompanyUserTransfer(
-                $companyUserEntityTransfer,
-                new ShoppingListCompanyUserTransfer()
-            );
-
-            $virtualPropertiesCollection = $companyUserEntityTransfer->virtualProperties();
-
-            if (isset($virtualPropertiesCollection[static::FIELD_FIRST_NAME]) || isset($virtualPropertiesCollection[static::FIELD_LAST_NAME])) {
-                $shoppingListCompanyUserTransfer->setCustomerFullName(
-                    $virtualPropertiesCollection[static::FIELD_FIRST_NAME] . ' ' . $virtualPropertiesCollection[static::FIELD_LAST_NAME]
-                );
-            }
-
+            $shoppingListCompanyUserTransfer = $this->mapCompanyUserTransfer($companyUserEntityTransfer, new ShoppingListCompanyUserTransfer());
             $shoppingListCompanyUserCollectionTransfer->addCompanyUser($shoppingListCompanyUserTransfer);
         }
 

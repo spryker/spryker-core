@@ -290,9 +290,9 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function shareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
+    public function updateShareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
     {
-        return $this->getFactory()->createShoppingListSharer()->shareShoppingList($shoppingListTransfer);
+        return $this->getFactory()->createShoppingListSharer()->updateShareShoppingList($shoppingListTransfer);
     }
 
     /**

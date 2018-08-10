@@ -273,7 +273,7 @@ class ShoppingListFacadeTest extends Unit
         $shoppingListTransfer->addCompanyUsers($shoppingListCompanyUserTransfer);
 
         // Act
-        $shoppingListResponseTransfer = $this->tester->getFacade()->shareShoppingList($shoppingListTransfer);
+        $shoppingListResponseTransfer = $this->tester->getFacade()->updateShareShoppingList($shoppingListTransfer);
         $sharedShoppingListTransfer = (new ShoppingListTransfer())
             ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
             ->setIdCompanyUser($this->ownerCompanyUserTransfer->getIdCompanyUser());

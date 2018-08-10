@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
@@ -226,7 +227,6 @@ interface ShoppingListClientInterface
      * Specification:
      *  - Makes Zed request.
      *  - Get shopping list permission group.
-     *  - Updates customer permissions.
      *
      * @api
      *
@@ -238,7 +238,6 @@ interface ShoppingListClientInterface
      * Specification:
      *  - Makes Zed request.
      *  - Get shopping list permission groups.
-     *  - Updates customer permissions.
      *
      * @api
      *
@@ -254,9 +253,22 @@ interface ShoppingListClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function shareShoppingList(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Makes Zed request.
+     *  - Update share shopping list with company users from business unit or exact company user.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function shareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer;
+    public function updateShareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer;
 }
