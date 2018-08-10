@@ -10,7 +10,6 @@
     <transfer name="ProductView">
         <property name="price" type="int"/>
         <property name="prices" type="array"/>
-        <property name="priceDimension" type="PriceProductDimension" />
     </transfer>
 
     <transfer name="MoneyValue">
