@@ -213,7 +213,9 @@ class ShoppingListWriter implements ShoppingListWriterInterface
      */
     protected function executeRemoveShoppingListTransaction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        $this->shoppingListEntityManager->deleteShoppingListItems($shoppingListTransfer);
+        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
+            $this->shoppingListItemOperation->deleteShoppingListItem($shoppingListItemTransfer);
+        }
         $this->shoppingListEntityManager->deleteShoppingListCompanyUsers($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnits($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListByName($shoppingListTransfer);
@@ -222,19 +224,19 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     }
 
     /**
-     * @param ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return ShoppingListTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
     protected function executeSaveShoppingListTransaction(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
         $shoppingListTransfer = $this->shoppingListEntityManager->saveShoppingList($shoppingListTransfer);
 
-        if (!$shoppingListTransfer->getItemCollection() || !$shoppingListTransfer->getItemCollection()->getItems()) {
+        if (!$shoppingListTransfer->getItems()->count() === 0) {
             return $shoppingListTransfer;
         }
 
-        foreach ($shoppingListTransfer->getItemCollection()->getItems() as $shoppingListItemTransfer) {
+        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
             $this->shoppingListItemOperation->saveShoppingListItem($shoppingListItemTransfer);
         }
 

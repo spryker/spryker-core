@@ -79,6 +79,9 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     {
         $shoppingListQuery = $this->getFactory()->createShoppingListQuery()
             ->leftJoinWithSpyShoppingListItem()
+            ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
             ->filterByIdShoppingList($shoppingListTransfer->getIdShoppingList());
 
         $shoppingListEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListQuery)->find();
