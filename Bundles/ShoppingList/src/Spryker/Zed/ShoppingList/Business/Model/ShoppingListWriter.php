@@ -235,7 +235,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         }
 
         foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
-            $this->shoppingListItemOperation->saveShoppingListItem($shoppingListItemTransfer);
+            $this->shoppingListItemOperation->saveShoppingListItemWithoutPermissionsCheck($shoppingListItemTransfer);
         }
 
         return $shoppingListTransfer;
