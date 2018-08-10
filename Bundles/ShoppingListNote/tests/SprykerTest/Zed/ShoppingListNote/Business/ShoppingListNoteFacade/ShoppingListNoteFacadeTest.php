@@ -176,7 +176,7 @@ class ShoppingListNoteFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testOwnerCanGetShoppingListItemNoteByIdShoppingListItem(): void
+    public function testGetShoppingListItemNoteByIdShoppingListItem(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);

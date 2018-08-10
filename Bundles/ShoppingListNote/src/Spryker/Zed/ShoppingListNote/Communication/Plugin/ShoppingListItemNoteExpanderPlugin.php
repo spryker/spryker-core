@@ -18,6 +18,8 @@ class ShoppingListItemNoteExpanderPlugin extends AbstractPlugin implements ItemE
 {
     /**
      * @inheritdoc
+     * Specification:
+     * - This plugin extend shopping item transfer with shopping item note transfer.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

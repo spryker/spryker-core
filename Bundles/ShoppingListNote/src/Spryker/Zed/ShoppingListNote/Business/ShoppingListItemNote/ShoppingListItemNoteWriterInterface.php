@@ -17,6 +17,7 @@ interface ShoppingListItemNoteWriterInterface
      * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer
      */
     public function saveShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): ?ShoppingListItemNoteTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
      *

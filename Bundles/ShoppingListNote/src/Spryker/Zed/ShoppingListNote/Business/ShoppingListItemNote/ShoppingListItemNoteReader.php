@@ -18,8 +18,6 @@ class ShoppingListItemNoteReader implements ShoppingListItemNoteReaderInterface
     protected $shoppingListNoteRepository;
 
     /**
-     * ShoppingListItemNoteReader constructor.
-     *
      * @param \Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteRepositoryInterface $shoppingListNoteRepository
      */
     public function __construct(ShoppingListNoteRepositoryInterface $shoppingListNoteRepository)

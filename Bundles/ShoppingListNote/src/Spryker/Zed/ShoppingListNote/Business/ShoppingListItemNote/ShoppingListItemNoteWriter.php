@@ -18,8 +18,6 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
     protected $shoppingListNoteEntityManager;
 
     /**
-     * ShoppingListItemNoteWriter constructor.
-     *
      * @param \Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteEntityManagerInterface $shoppingListNoteEntityManager
      */
     public function __construct(ShoppingListNoteEntityManagerInterface $shoppingListNoteEntityManager)
