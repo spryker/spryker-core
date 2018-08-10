@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShoppingListProductOption\Business;
 
+use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,4 +18,35 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ShoppingListProductOptionFacade extends AbstractFacade implements ShoppingListProductOptionFacadeInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return void
+     */
+    public function saveShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    {
+        $this->getFactory()
+            ->createShoppingListProductOptionWriter()
+            ->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idShoppingListItem
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
+     */
+    public function getShoppingListItemProductOptionsByIdShoppingListItem(int $idShoppingListItem): ProductOptionCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createShoppingListItemProductOptionReader()
+            ->getShoppingListItemProductOptionsByIdShoppingListItem($idShoppingListItem);
+    }
 }

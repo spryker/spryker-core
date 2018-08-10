@@ -8,8 +8,10 @@
 namespace Spryker\Zed\ShoppingListProductOption\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ShoppingListProductOption\Business\Model\ShoppingListItemProductOptionReader;
-use Spryker\Zed\ShoppingListProductOption\Business\Model\ShoppingListItemProductOptionReaderInterface;
+use Spryker\Zed\ShoppingListProductOption\Business\Model\ShoppingListProductOptionReader;
+use Spryker\Zed\ShoppingListProductOption\Business\Model\ShoppingListProductOptionReaderInterface;
+use Spryker\Zed\ShoppingListProductOption\Business\Model\ShoppingListProductOptionWriter;
+use Spryker\Zed\ShoppingListProductOption\Business\Model\ShoppingListProductOptionWriterInterface;
 use Spryker\Zed\ShoppingListProductOption\Dependency\Facade\ShoppingListProductOptionToProductOptionFacadeInterface;
 use Spryker\Zed\ShoppingListProductOption\ShoppingListProductOptionDependencyProvider;
 
@@ -22,13 +24,23 @@ use Spryker\Zed\ShoppingListProductOption\ShoppingListProductOptionDependencyPro
 class ShoppingListProductOptionBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ShoppingListProductOption\Business\Model\ShoppingListItemProductOptionReaderInterface
+     * @return \Spryker\Zed\ShoppingListProductOption\Business\Model\ShoppingListProductOptionReaderInterface
      */
-    public function createShoppingListItemProductOptionReader(): ShoppingListItemProductOptionReaderInterface
+    public function createShoppingListItemProductOptionReader(): ShoppingListProductOptionReaderInterface
     {
-        return new ShoppingListItemProductOptionReader(
+        return new ShoppingListProductOptionReader(
             $this->getProductOptionFacade(),
             $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListProductOption\Business\Model\ShoppingListProductOptionWriterInterface
+     */
+    public function createShoppingListProductOptionWriter(): ShoppingListProductOptionWriterInterface
+    {
+        return new ShoppingListProductOptionWriter(
+            $this->getEntityManager()
         );
     }
 

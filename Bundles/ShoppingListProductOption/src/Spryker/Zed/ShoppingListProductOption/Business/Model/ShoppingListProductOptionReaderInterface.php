@@ -9,7 +9,7 @@ namespace Spryker\Zed\ShoppingListProductOption\Business\Model;
 
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
 
-interface ShoppingListItemProductOptionReaderInterface
+interface ShoppingListProductOptionReaderInterface
 {
     /**
      * @param int $idShoppingListItem

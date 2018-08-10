@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
 use Spryker\Zed\ShoppingListProductOption\Dependency\Facade\ShoppingListProductOptionToProductOptionFacadeInterface;
 use Spryker\Zed\ShoppingListProductOption\Persistence\ShoppingListProductOptionRepositoryInterface;
 
-class ShoppingListItemProductOptionReader implements ShoppingListItemProductOptionReaderInterface
+class ShoppingListProductOptionReader implements ShoppingListProductOptionReaderInterface
 {
     /**
      * @var \Spryker\Zed\ShoppingListProductOption\Dependency\Facade\ShoppingListProductOptionToProductOptionFacadeInterface
