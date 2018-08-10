@@ -10,6 +10,8 @@ use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerCli
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToSessionClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReader;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriter;
+use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriterInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -51,6 +53,17 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->getCustomerClient(),
             $this->createCustomerResourceMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriterInterface
+     */
+    public function createCustomerWriter(): CustomersWriterInterface
+    {
+        return new CustomersWriter(
+            $this->getCustomerClient(),
+            $this->getResourceBuilder()
         );
     }
 }

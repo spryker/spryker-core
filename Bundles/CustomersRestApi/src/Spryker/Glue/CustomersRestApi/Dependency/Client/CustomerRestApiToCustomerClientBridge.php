@@ -50,4 +50,14 @@ class CustomerRestApiToCustomerClientBridge implements CustomerRestApiToCustomer
     {
         return $this->customerClient->findCustomerByReference($customerTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function updateCustomer($customerTransfer)
+    {
+        return $this->customerClient->updateCustomer($customerTransfer);
+    }
 }
