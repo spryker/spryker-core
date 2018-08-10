@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductManagement\Communication\Tabs;
 
 class ProductConcreteFormAddTabs extends ProductConcreteFormEditTabs
 {
+    protected const TEMPLATE_TAB_GENERAL = '@ProductManagement/Product/_partials/AddVariant/tab-general.twig';
+
     public function __construct()
     {
         parent::__construct([]);

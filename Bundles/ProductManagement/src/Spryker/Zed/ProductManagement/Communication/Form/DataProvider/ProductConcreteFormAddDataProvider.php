@@ -97,9 +97,13 @@ class ProductConcreteFormAddDataProvider extends AbstractProductFormDataProvider
      */
     public function getOptions($idProductAbstract = null, $type = null)
     {
+        $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+
         $formOptions = parent::getOptions($idProductAbstract);
 
         $formOptions[ProductConcreteFormAdd::OPTION_IS_BUNDLE_ITEM] = $type === ProductManagementConfig::PRODUCT_TYPE_BUNDLE;
+        $formOptions[ProductConcreteFormAdd::OPTION_SUPER_ATTRIBUTES] = $this->getSuperAttributesOption($productAbstractTransfer);
 
         return $formOptions;
     }
@@ -126,19 +130,22 @@ class ProductConcreteFormAddDataProvider extends AbstractProductFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
      * @return array
      */
-    public function getData(ProductAbstractTransfer $productAbstractTransfer)
+    public function getData()
     {
-        $formData = $this->getDefaultFormFields();
+        return $this->getDefaultFormFields();
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    protected function getSuperAttributesOption(ProductAbstractTransfer $productAbstractTransfer)
+    {
         $productConcreteTransfers = $this->productFacade->getConcreteProductsByAbstractProductId($productAbstractTransfer->getIdProductAbstract());
-        $superAttributes = $this->productAttributeFacade->getUniqueSuperAttributesFromConcreteProducts($productConcreteTransfers);
-//        dump($superAttributes);
-//        die;
 
-        return $formData;
+        return $this->productAttributeFacade->getUniqueSuperAttributesFromConcreteProducts($productConcreteTransfers);
     }
 }

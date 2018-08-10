@@ -6,7 +6,8 @@
     {% endfilter %}
 </div>
 
-{{ form_row(form.sku) }}
+{{ form_row(form.sku, { 'id': 'sku-input' }) }}
+{{ form_row(form.sku_autogenerate_checkbox, { 'id': 'sku-autogenerate-checkbox-input' }) }}
 {{ form_row(form.form_product_concrete_super_attributes) }}
 
 {% for localeTransfer in localeCollection %}

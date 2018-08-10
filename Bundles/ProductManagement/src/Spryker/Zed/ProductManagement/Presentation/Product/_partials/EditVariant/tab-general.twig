@@ -7,7 +7,6 @@
 </div>
 
 {{ form_row(form.sku) }}
-{{ form_row(form.form_product_concrete_super_attributes) }}
 
 {% for localeTransfer in localeCollection %}
     {% set formKey = 'general_' ~ localeTransfer.localeName %}

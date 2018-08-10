@@ -12,6 +12,12 @@ use Generated\Shared\Transfer\TabsViewTransfer;
 
 class ProductConcreteFormEditTabs extends ProductFormEditTabs
 {
+    protected const TEMPLATE_TAB_GENERAL = '@ProductManagement/Product/_partials/EditVariant/tab-general.twig';
+    protected const TEMPLATE_TAB_BUNDLED_PRODUCTS = '@ProductManagement/Product/_partials/EditVariant/tab-product-bundles.twig';
+    protected const TEMPLATE_TAB_ATTRIBUTES = '@ProductManagement/Variant/_partials/abstract-attribute-tab.twig';
+    protected const TEMPLATE_TAB_PRICE_AND_STOCK = '@ProductManagement/Variant/_partials/price-tab.twig';
+    protected const TEMPLATE_TAB_VARIANTS = '@ProductManagement/Product/_partials/variant-tab-adding.twig';
+
     /**
      * @var array|\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface[]
      */
@@ -55,7 +61,7 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
         $tabItemTransfer
             ->setName('general')
             ->setTitle('General')
-            ->setTemplate('@ProductManagement/Product/_partials/variant-general-tab.twig');
+            ->setTemplate(static::TEMPLATE_TAB_GENERAL);
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
@@ -73,7 +79,7 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
         $tabItemTransfer
             ->setName('price')
             ->setTitle('Price & Stock')
-            ->setTemplate('@ProductManagement/Variant/_partials/price-tab.twig');
+            ->setTemplate(static::TEMPLATE_TAB_PRICE_AND_STOCK);
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
@@ -91,7 +97,7 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
         $tabItemTransfer
             ->setName('attributes')
             ->setTitle('Attributes')
-            ->setTemplate('@ProductManagement/Variant/_partials/abstract-attribute-tab.twig');
+            ->setTemplate(static::TEMPLATE_TAB_ATTRIBUTES);
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
@@ -109,7 +115,7 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
         $tabItemTransfer
             ->setName('variants')
             ->setTitle('Variants')
-            ->setTemplate('@ProductManagement/Product/_partials/variant-tab-adding.twig');
+            ->setTemplate(static::TEMPLATE_TAB_VARIANTS);
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
@@ -127,7 +133,7 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
         $tabItemTransfer
             ->setName('bundled')
             ->setTitle('Assign bundled products')
-            ->setTemplate('@ProductManagement/Product/_partials/product-bundles-tab.twig');
+            ->setTemplate(static::TEMPLATE_TAB_BUNDLED_PRODUCTS);
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
