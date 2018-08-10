@@ -28,7 +28,9 @@ interface DevelopmentConstants
 
     /**
      * Specification:
-     * - Sets the permission mode for generated files/directories.
+     * - Sets the permission mode for generated directories.
+     *
+     * @api
      */
-    const PERMISSION_MODE = 'DEVELOPMENT:PERMISSION_MODE';
+    const DIRECTORY_PERMISSION = 'DEVELOPMENT:DIRECTORY_PERMISSION';
 }

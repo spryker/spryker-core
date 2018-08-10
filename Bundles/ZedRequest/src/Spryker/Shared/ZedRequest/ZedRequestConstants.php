@@ -55,7 +55,9 @@ interface ZedRequestConstants
 
     /**
      * Specification:
-     * - Sets the permission mode for generated files/directories.
+     * - Sets the permission mode for generated directories.
+     *
+     * @api
      */
-    const PERMISSION_MODE = 'ZED_REQUEST:PERMISSION_MODE';
+    const DIRECTORY_PERMISSION = 'ZED_REQUEST:DIRECTORY_PERMISSION';
 }

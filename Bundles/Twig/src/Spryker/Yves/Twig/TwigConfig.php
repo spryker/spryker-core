@@ -105,6 +105,6 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getPermissionMode(): int
     {
-        return $this->get(TwigConstants::PERMISSION_MODE, 0777);
+        return $this->get(TwigConstants::DIRECTORY_PERMISSION, 0777);
     }
 }

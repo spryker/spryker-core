@@ -73,9 +73,9 @@ interface TwigConstants
 
     /**
      * Specification:
-     * - Sets the permission mode for generated files/directories.
+     * - Sets the permission mode for generated directories.
      *
      * @api
      */
-    const PERMISSION_MODE = 'TWIG:PERMISSION_MODE';
+    const DIRECTORY_PERMISSION = 'TWIG:DIRECTORY_PERMISSION';
 }

@@ -33,7 +33,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getPermissionMode(): int
     {
-        return $this->get(DevelopmentConstants::PERMISSION_MODE, 0777);
+        return $this->get(DevelopmentConstants::DIRECTORY_PERMISSION, 0777);
     }
 
     /**
@@ -318,7 +318,7 @@ class DevelopmentConfig extends AbstractBundleConfig
                 'Generated\%s\Ide',
                 IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
             ),
-            IdeAutoCompletionConstants::PERMISSION_MODE => $this->getPermissionMode(),
+            IdeAutoCompletionConstants::DIRECTORY_PERMISSION => $this->getPermissionMode(),
         ];
     }
 

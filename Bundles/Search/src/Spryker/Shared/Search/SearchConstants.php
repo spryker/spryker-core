@@ -90,9 +90,9 @@ interface SearchConstants
 
     /**
      * Specification:
-     * - Sets the permission mode for generated files/directories.
+     * - Sets the permission mode for generated directories.
      *
      * @api
      */
-    const PERMISSION_MODE = 'SEARCH:PERMISSION_MODE';
+    const DIRECTORY_PERMISSION = 'SEARCH:DIRECTORY_PERMISSION';
 }

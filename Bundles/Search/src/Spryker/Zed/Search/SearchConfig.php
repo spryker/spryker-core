@@ -135,6 +135,6 @@ class SearchConfig extends AbstractBundleConfig
      */
     public function getPermissionMode(): int
     {
-        return $this->get(SearchConstants::PERMISSION_MODE, 0777);
+        return $this->get(SearchConstants::DIRECTORY_PERMISSION, 0777);
     }
 }

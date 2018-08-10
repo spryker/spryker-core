@@ -56,6 +56,6 @@ class ZedRequestConfig extends AbstractBundleConfig
      */
     public function getPermissionMode(): int
     {
-        return $this->get(ZedRequestConstants::PERMISSION_MODE, 0777);
+        return $this->get(ZedRequestConstants::DIRECTORY_PERMISSION, 0777);
     }
 }
