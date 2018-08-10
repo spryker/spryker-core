@@ -16,5 +16,9 @@
         <property name="countries" type="Country[]" />
     </transfer>
 
+    <transfer name="RegionCollection">
+        <property name="regions" type="array" />
+    </transfer>
+
 </transfers>
 

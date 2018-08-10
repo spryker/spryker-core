@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Country\Business;
 
+use Generated\Shared\Transfer\RegionCollectionTransfer;
+
 interface CountryFacadeInterface
 {
     /**
@@ -75,4 +77,13 @@ interface CountryFacadeInterface
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
     public function getPreferredCountryByName($countryName);
+
+    /**
+     * @api
+     *
+     * @param string $iso2Code
+     *
+     * @return \Generated\Shared\Transfer\RegionCollectionTransfer
+     */
+    public function getRegionsByCountryIso2Code($iso2Code);
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="StoresRestAttributes">
+        <property name="timeZone" type="string"/>
+        <property name="currency" type="StoreCurrencyRestAttributes"/>
+        <property name="locales" type="StoreLocaleRestAttributes[]"/>
+        <property name="countries" type="StoreCountryRestAttributes[]"/>
+    </transfer>
+
+    <transfer name="StoreCountryRestAttributes">
+        <property name="iso2Code" type="string"/>
+        <property name="iso3Code" type="string"/>
+        <property name="name" type="string"/>
+        <property name="postalCodeMandatory" type="bool"/>
+        <property name="postalCodeRegex" type="string"/>
+        <property name="regions" type="StoreRegionRestAttributes[]"/>
+    </transfer>
+
+    <transfer name="StoreRegionRestAttributes">
+        <property name="identifier" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="StoreLocaleRestAttributes">
+        <property name="identifier" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="StoreCurrencyRestAttributes">
+        <property name="name" type="string"/>
+        <property name="defaultCurrency" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="currencyIsoCodes" type="array"/>
+    </transfer>
+
+</transfers>

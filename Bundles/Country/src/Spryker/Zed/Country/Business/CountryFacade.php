@@ -107,4 +107,20 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
 
         return $countryTransfer;
     }
+
+    /**
+     * @api
+     *
+     * @param string $iso2Code
+     *
+     * @return string[]
+     */
+    public function getRegionsByCountryIso2Code($iso2Code)
+    {
+        $regions = $this->getFactory()
+            ->createRegionReader()
+            ->getRegionsByCountryIso2Code($iso2Code);
+
+        return $regions;
+    }
 }
