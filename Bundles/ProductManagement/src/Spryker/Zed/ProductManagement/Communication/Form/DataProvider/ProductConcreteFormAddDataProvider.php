@@ -138,6 +138,17 @@ class ProductConcreteFormAddDataProvider extends AbstractProductFormDataProvider
     }
 
     /**
+     * @return array
+     */
+    protected function getDefaultFormFields()
+    {
+        $formData = parent::getDefaultFormFields();
+        $formData[ProductConcreteFormAdd::FORM_PRICE_AND_STOCK] = $this->getDefaultStockFields();
+
+        return $formData;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]

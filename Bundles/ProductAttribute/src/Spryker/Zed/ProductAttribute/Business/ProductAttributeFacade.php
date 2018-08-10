@@ -333,7 +333,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
