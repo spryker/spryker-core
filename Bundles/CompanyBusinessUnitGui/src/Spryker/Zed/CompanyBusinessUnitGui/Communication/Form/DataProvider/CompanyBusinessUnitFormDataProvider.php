@@ -98,6 +98,9 @@ class CompanyBusinessUnitFormDataProvider
     }
 
     /**
+     * Retrieves the list of business units for the same company as the provided business unit.
+     * Excludes the provided business unit from the result.
+     *
      * @param int|null $idCompanyBusinessUnit
      *
      * @return array [[unitKey => idUnit], [unitKey => ['data-id_company' => idCompany]]]

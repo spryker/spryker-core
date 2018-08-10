@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
@@ -22,6 +23,12 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
 
     protected const ERROR_MESSAGE_HAS_RELATED_USERS = 'company.company_business_unit.delete.error.has_users';
 
+    protected const MESSAGE_CYCLE_DEPENDENCY_ERROR_COMPANY_BUSINESS_UNIT_UPDATE = 'Company Business Unit "%s" has not been updated. A Business Unit cannot be set as a child to an own child Business Unit, please check the Business Unit hierarchy.';
+
+    protected const MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_UPDATE = 'Company Business Unit "%s" has been updated.';
+
+    protected const CYCLE_CHECK_DEPTH = 1000;
+
     /**
      * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface
      */
@@ -36,21 +43,6 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
      * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface
      */
     protected $pluginExecutor;
-
-    /**
-     * @var int[]
-     */
-    protected static $companyBusinessUnitIdCollection = [];
-
-    /**
-     * @var int
-     */
-    protected $entryBusinessUnitId;
-
-    /**
-     * @var int
-     */
-    protected $entryParentBusinessUnitId;
 
     /**
      * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository
@@ -76,7 +68,8 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     {
         $companyBusinessUnitResponseTransfer = (new CompanyBusinessUnitResponseTransfer())
             ->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer)
-            ->setIsSuccessful(true);
+            ->setIsSuccessful(true)
+            ->addMessage($this->getSuccessMessageResponseTransfer($companyBusinessUnitTransfer));
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyBusinessUnitResponseTransfer) {
             return $this->executeUpdateTransaction($companyBusinessUnitResponseTransfer);
@@ -167,7 +160,8 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
 
         if ($this->isCompanyBusinessUnitCycleDependencyExists($companyBusinessUnitTransfer)) {
             $companyBusinessUnitResponseTransfer->setIsSuccessful(false);
-            $companyBusinessUnitResponseTransfer->setIsCycleDependencyErrorExist(true);
+            $companyBusinessUnitResponseTransfer->setMessages(new ArrayObject());
+            $companyBusinessUnitResponseTransfer->addMessage($this->getCycleDependencyErrorMessageResponseTransfer($companyBusinessUnitTransfer));
 
             return $companyBusinessUnitResponseTransfer;
         }
@@ -189,9 +183,6 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         $businessUnitId = (int)$companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
         $parentBusinessUnitId = (int)$companyBusinessUnitTransfer->getFkParentCompanyBusinessUnit();
 
-        $this->entryBusinessUnitId = $businessUnitId;
-        $this->entryParentBusinessUnitId = $parentBusinessUnitId;
-
         return $this->isCycleDependencyExists($businessUnitId, $parentBusinessUnitId);
     }
 
@@ -205,60 +196,77 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     {
         $companyBusinessUnitCriteriaFilterTransfer = new CompanyBusinessUnitCriteriaFilterTransfer();
         $companyBusinessUnitsCollection = $this->repository->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
-        $companyBusinessUnits = (array)$companyBusinessUnitsCollection->getCompanyBusinessUnits();
+        $allNodesFiltered = [];
+        $attemptCount = 0;
 
-        static::$companyBusinessUnitIdCollection[$businessUnitId] = $businessUnitId;
-
-        if (!$businessUnitId) {
-            return false;
+        foreach ($companyBusinessUnitsCollection->getCompanyBusinessUnits() as $node) {
+            $allNodesFiltered[$node->getIdCompanyBusinessUnit()] = $node;
         }
 
-        if ($this->isDeepCycleDependencyExists($businessUnitId, $parentBusinessUnitId)) {
-            return true;
-        }
+        $allNodesFiltered[$businessUnitId]->setFkParentCompanyBusinessUnit($parentBusinessUnitId);
+        $visitedNodes = [$businessUnitId];
+        $nodesToCheck = [$businessUnitId];
 
-        $filteredCompanyBusinessUnits = array_filter($companyBusinessUnits, function ($companyBusinessUnit) use ($businessUnitId) {
-            return (int)$companyBusinessUnit->getFkParentCompanyBusinessUnit() === $businessUnitId;
-        });
+        do {
+            $nodesToCheckInNextRound = [];
+            foreach ($allNodesFiltered as $node) {
+                foreach ($nodesToCheck as $nodeToCheck) {
+                    if (!$nodeToCheck) {
+                        return false;
+                    }
 
-        if (!empty($filteredCompanyBusinessUnits)) {
-            $businessUnitId = array_values($filteredCompanyBusinessUnits)[0]->getIdCompanyBusinessUnit();
-            $parentBusinessUnitId = array_values($filteredCompanyBusinessUnits)[0]->getFkParentCompanyBusinessUnit();
-        } else {
-            $businessUnitId = $parentBusinessUnitId = null;
-        }
+                    if ($node->getIdCompanyBusinessUnit() !== $allNodesFiltered[$nodeToCheck]->getIdCompanyBusinessUnit()) {
+                        continue;
+                    }
 
-        if ($this->isSimpleCycleDependencyExist($businessUnitId, $parentBusinessUnitId)) {
-            return true;
-        }
+                    if (in_array($allNodesFiltered[$nodeToCheck]->getFkParentCompanyBusinessUnit(), $visitedNodes)) {
+                        return true;
+                    }
 
-        return $this->isCycleDependencyExists($businessUnitId, $parentBusinessUnitId);
+                    $nodesToCheckInNextRound[] = $allNodesFiltered[$nodeToCheck]->getFkParentCompanyBusinessUnit();
+                    $visitedNodes[] = $allNodesFiltered[$nodeToCheck]->getFkParentCompanyBusinessUnit();
+                }
+            }
+
+            $nodesToCheck = $nodesToCheckInNextRound;
+        } while ($nodesToCheck && $attemptCount++ < static::CYCLE_CHECK_DEPTH);
+
+        return false;
     }
 
     /**
-     * Deep cycle dependency verification, like if A is the parent of B and B is the parent of C and C is
-     * the parent of D, then D cannot be the parent of B or A
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @param int $businessUnitId
-     * @param int $parentBusinessUnitId
-     *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ResponseMessageTransfer
      */
-    protected function isDeepCycleDependencyExists($businessUnitId, $parentBusinessUnitId): bool
+    protected function getSuccessMessageResponseTransfer(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ResponseMessageTransfer
     {
-        return $businessUnitId === $this->entryParentBusinessUnitId && isset(static::$companyBusinessUnitIdCollection[$parentBusinessUnitId]);
+        $responseMessage = new ResponseMessageTransfer();
+        $responseMessage->setText(
+            sprintf(
+                static::MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_UPDATE,
+                $companyBusinessUnitTransfer->getName()
+            )
+        );
+
+        return $responseMessage;
     }
 
     /**
-     *  Simple cycle dependency verification, like if A is the parent of B then B cannot be the parent of A
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @param int $businessUnitId
-     * @param int $parentBusinessUnitId
-     *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ResponseMessageTransfer
      */
-    protected function isSimpleCycleDependencyExist($businessUnitId, $parentBusinessUnitId): bool
+    protected function getCycleDependencyErrorMessageResponseTransfer(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ResponseMessageTransfer
     {
-        return $this->entryBusinessUnitId === $parentBusinessUnitId && $this->entryParentBusinessUnitId === $businessUnitId;
+        $responseMessage = new ResponseMessageTransfer();
+        $responseMessage->setText(
+            sprintf(
+                static::MESSAGE_CYCLE_DEPENDENCY_ERROR_COMPANY_BUSINESS_UNIT_UPDATE,
+                $companyBusinessUnitTransfer->getName()
+            )
+        );
+
+        return $responseMessage;
     }
 }

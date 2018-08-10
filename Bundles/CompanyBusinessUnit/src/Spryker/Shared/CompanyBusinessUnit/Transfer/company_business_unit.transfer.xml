@@ -26,7 +26,6 @@
     <transfer name="CompanyBusinessUnitResponse">
         <property name="companyBusinessUnitTransfer" type="CompanyBusinessUnit"/>
         <property name="isSuccessful" type="bool"/>
-        <property name="isCycleDependencyErrorExist" type="bool"/>
         <property name="messages" type="ResponseMessage[]" singular="message"/>
     </transfer>
 
