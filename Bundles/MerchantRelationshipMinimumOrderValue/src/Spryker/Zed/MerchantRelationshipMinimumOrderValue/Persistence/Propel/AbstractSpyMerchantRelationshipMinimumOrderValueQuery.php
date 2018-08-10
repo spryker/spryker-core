@@ -24,6 +24,8 @@ use Orm\Zed\MerchantRelationshipMinimumOrderValue\Persistence\Base\SpyMerchantRe
 abstract class AbstractSpyMerchantRelationshipMinimumOrderValueQuery extends BaseSpyMerchantRelationshipMinimumOrderValueQuery
 {
     /**
+     * @module Store
+     *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return $this|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery|\Propel\Runtime\ActiveQuery\Criteria
@@ -40,6 +42,8 @@ abstract class AbstractSpyMerchantRelationshipMinimumOrderValueQuery extends Bas
     }
 
     /**
+     * @module Currency
+     *
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return $this|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery|\Propel\Runtime\ActiveQuery\Criteria

@@ -20,11 +20,6 @@ use Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig;
 
 class ThresholdApplier implements ThresholdApplierInterface
 {
-    /**
-     * @uses CalculationPriceMode::PRICE_MODE_NET
-     */
-    protected const PRICE_MODE_NET = 'NET_MODE';
-
     protected const THRESHOLD_EXPENSE_TYPE = 'THRESHOLD_EXPENSE_TYPE';
 
     /**

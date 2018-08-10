@@ -18,6 +18,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantRelationshipMinimumOrderValueRepository extends AbstractRepository implements MerchantRelationshipMinimumOrderValueRepositoryInterface
 {
     /**
+     * @module MerchantRelationship
+     * @module MinimumOrderValue
+     *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      * @param int[] $merchantRelationshipIds

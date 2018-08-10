@@ -61,7 +61,6 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
-     * Specification:
      *  - Searches for persisted price in database by given price filter transfer.
      *  - If currency not set it will use default store currency.
      *  - If store not set it will use default store.

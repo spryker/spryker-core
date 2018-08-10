@@ -162,7 +162,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         $currencyTransfer = $this->tester->createCurrencyTransfer();
 
         // Action
-        $xx = $this->getFacade()->getGlobalThresholdsByStoreAndCurrency(
+        $this->getFacade()->getGlobalThresholdsByStoreAndCurrency(
             $storeTransfer,
             $currencyTransfer
         );
