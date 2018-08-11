@@ -216,31 +216,16 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         $attemptCount = 0;
 
         $visitedNodes = [$entryCompanyBusinessUnitId];
-        $nodesToCheck = [$entryCompanyBusinessUnitId];
+        $nodeToCheck = $entryCompanyBusinessUnitId;
 
         do {
-            $nodesToCheckInNextRound = [];
-            foreach ($allNodes as $node) {
-                foreach ($nodesToCheck as $nodeToCheck) {
-                    if (!$nodeToCheck) {
-                        return false;
-                    }
-
-                    if ($node->getIdCompanyBusinessUnit() !== $allNodes[$nodeToCheck]->getIdCompanyBusinessUnit()) {
-                        continue;
-                    }
-
-                    if (in_array($allNodes[$nodeToCheck]->getFkParentCompanyBusinessUnit(), $visitedNodes)) {
-                        return true;
-                    }
-
-                    $nodesToCheckInNextRound[] = $allNodes[$nodeToCheck]->getFkParentCompanyBusinessUnit();
-                    $visitedNodes[] = $allNodes[$nodeToCheck]->getFkParentCompanyBusinessUnit();
-                }
+            if (in_array($allNodes[$nodeToCheck]->getFkParentCompanyBusinessUnit(), $visitedNodes)) {
+                return true;
             }
 
-            $nodesToCheck = $nodesToCheckInNextRound;
-        } while ($nodesToCheck && $attemptCount++ < static::HIERARCHY_CYCLE_CHECK_DEPTH);
+            $visitedNodes[] = $allNodes[$nodeToCheck]->getFkParentCompanyBusinessUnit();
+            $nodeToCheck = $allNodes[$nodeToCheck]->getFkParentCompanyBusinessUnit();
+        } while ($nodeToCheck && $attemptCount++ < static::HIERARCHY_CYCLE_CHECK_DEPTH);
 
         return false;
     }
