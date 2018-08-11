@@ -8,31 +8,30 @@
 namespace Spryker\Client\ShoppingListSession\Storage;
 
 use Generated\Shared\Transfer\ShoppingListSessionTransfer;
-use Spryker\Client\Session\SessionClientInterface;
+use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface;
+use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToStorageBridgeInterface;
 
-class ShoppingListStorage implements ShoppingListStorageInterface
+class ShoppingListSessionSessionStorage implements ShoppingListSessionStorageInterface
 {
     const SESSION_KEY_SHOPPING_LIST_COLLECTION = 'SESSION_KEY_SHOPPING_LIST_COLLECTION';
 
     /**
-     * @var \Spryker\Client\ShoppingListSession\Storage\ShoppingListStorageInterface
+     * @var \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToStorageBridgeInterface
      */
     protected $shoppingListStorage;
 
     /**
-     * @var \Spryker\Client\Session\SessionClientInterface
+     * @var \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface
      */
     protected $sessionClient;
 
     /**
-     * ShoppingListStorage constructor.
-     *
-     * @param \Spryker\Client\ShoppingListSession\Storage\ShoppingListStorageInterface $shoppingListStorage
-     * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
+     * @param \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToStorageBridgeInterface $shoppingListStorage
+     * @param \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface $sessionClient
      */
     public function __construct(
-        ShoppingListStorageInterface $shoppingListStorage,
-        SessionClientInterface $sessionClient
+        ShoppingListSessionToStorageBridgeInterface $shoppingListStorage,
+        ShoppingListSessionToSessionClientBridgeInterface $sessionClient
     ) {
         $this->shoppingListStorage = $shoppingListStorage;
         $this->sessionClient = $sessionClient;

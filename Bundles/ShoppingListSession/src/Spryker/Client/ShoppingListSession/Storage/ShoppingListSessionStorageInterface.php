@@ -9,7 +9,7 @@ namespace Spryker\Client\ShoppingListSession\Storage;
 
 use Generated\Shared\Transfer\ShoppingListSessionTransfer;
 
-interface ShoppingListStorageInterface
+interface ShoppingListSessionStorageInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShoppingListSessionTransfer $shoppingListSessionTransfer
