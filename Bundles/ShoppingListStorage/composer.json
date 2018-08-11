@@ -12,7 +12,9 @@
     "spryker/key-builder": "*",
     "spryker/locale": "*",
     "spryker/storage": "*",
-    "spryker/propel-orm": "^1.0.0"
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/synchronization": "^0.2.0 || ^1.0.0",
+    "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

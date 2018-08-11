@@ -9,5 +9,5 @@ namespace Spryker\Shared\ShoppingListStorage;
 
 interface ShoppingListStorageConfig
 {
-    public const RESOURCE_TYPE_SHOPPING_LIST = 'shopping_list_storage';
+    public const RESOURCE_TYPE_SHOPPING_LIST = 'shopping_list_customer';
 }

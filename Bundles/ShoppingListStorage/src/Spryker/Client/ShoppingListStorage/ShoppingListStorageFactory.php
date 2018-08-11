@@ -9,6 +9,7 @@ namespace Spryker\Client\ShoppingListStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerInterface;
+use Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceInterface;
 use Spryker\Client\ShoppingListStorage\KeyBuilder\ShoppingListStorageKeyBuilder;
 use Spryker\Client\ShoppingListStorage\Storage\ShoppingListCustomerStorage;
 
@@ -47,16 +48,21 @@ class ShoppingListStorageFactory extends AbstractFactory
     }
 
     /**
-     * @param string $locale
-     *
      * @return \Spryker\Client\ShoppingListStorage\Storage\ShoppingListCustomerStorage
      */
-    public function createShoppingListStorage(string $locale)
+    public function createShoppingListStorage()
     {
         return new ShoppingListCustomerStorage(
             $this->getStorageClient(),
-            $this->createKeyBuilder(),
-            $locale
+            $this->getSynchronizationService()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceInterface
+     */
+    public function getSynchronizationService(): ShoppingListStorageToSynchronizationServiceInterface
+    {
+        return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
 }

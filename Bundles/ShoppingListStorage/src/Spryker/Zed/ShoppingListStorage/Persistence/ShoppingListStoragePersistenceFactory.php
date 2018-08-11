@@ -13,6 +13,9 @@ use Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ShoppingListStorage\ShoppingListStorageDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\ShoppingListStorage\ShoppingListStorageConfig getConfig()
+ */
 class ShoppingListStoragePersistenceFactory extends AbstractPersistenceFactory
 {
     /**

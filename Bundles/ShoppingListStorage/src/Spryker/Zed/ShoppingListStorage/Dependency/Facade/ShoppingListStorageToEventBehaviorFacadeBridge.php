@@ -42,4 +42,15 @@ class ShoppingListStorageToEventBehaviorFacadeBridge implements ShoppingListStor
     {
         return $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array $columns
+     *
+     * @return \Generated\Shared\Transfer\EventEntityTransfer[]
+     */
+    public function getEventTransfersByModifiedColumns(array $eventTransfers, array $columns)
+    {
+        return $this->eventBehaviorFacade->getEventTransfersByModifiedColumns($eventTransfers, $columns);
+    }
 }

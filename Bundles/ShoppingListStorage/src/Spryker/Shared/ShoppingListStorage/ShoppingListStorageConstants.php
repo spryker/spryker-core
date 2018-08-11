@@ -27,4 +27,6 @@ interface ShoppingListStorageConstants
      * @api
      */
     const SHOPPING_LIST_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.shopping_list.error';
+
+    const SHOPPING_LIST_RESOURCE_NAME = 'SHOPPING_LIST_RESOURCE_NAME';
 }

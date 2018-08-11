@@ -7,8 +7,11 @@
 
 namespace Spryker\Client\ShoppingListStorage\Storage;
 
+use Generated\Shared\Transfer\ShoppingListCustomerStorageTransfer;
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageInterface;
-use Spryker\Client\ShoppingListStorage\KeyBuilder\ShoppingListStorageKeyBuilder;
+use Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceInterface;
+use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
 
 class ShoppingListCustomerStorage implements ShoppingListCustomerStorageInterface
 {
@@ -28,20 +31,22 @@ class ShoppingListCustomerStorage implements ShoppingListCustomerStorageInterfac
     protected $locale;
 
     /**
+     * @var \Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceInterface
+     */
+    protected $synchronizationService;
+
+    /**
      * ShoppingListStorage constructor.
      *
      * @param \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageInterface $storage
-     * @param \Spryker\Client\ShoppingListStorage\KeyBuilder\ShoppingListStorageKeyBuilder $keyBuilder
-     * @param string $locale
+     * @param \Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceInterface $synchronizationService
      */
     public function __construct(
         ShoppingListStorageToStorageInterface $storage,
-        ShoppingListStorageKeyBuilder $keyBuilder,
-        string $locale
+        ShoppingListStorageToSynchronizationServiceInterface $synchronizationService
     ) {
         $this->storage = $storage;
-        $this->keyBuilder = $keyBuilder;
-        $this->locale = $locale;
+        $this->synchronizationService = $synchronizationService;
     }
 
     /**
@@ -51,9 +56,39 @@ class ShoppingListCustomerStorage implements ShoppingListCustomerStorageInterfac
      */
     public function getShoppingListCustomerStorageByCustomerReference(string $customerReference)
     {
-        $key = $this->keyBuilder->generateKey($customerReference, $this->locale);
-        $shoppingList = $this->storage->get($key);
+        $key = $this->generateKey($customerReference);
+        $shoppingListStorageData = $this->storage->get($key);
 
-        return $shoppingList;
+        if (!$shoppingListStorageData) {
+            return null;
+        }
+
+        return $this->mapToShoppingListStorage($shoppingListStorageData);
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return mixed
+     */
+    protected function generateKey(string $customerReference)
+    {
+        $synchronizationDataTransfer = (new SynchronizationDataTransfer())
+            ->setReference($customerReference);
+
+        return $this->synchronizationService
+            ->getStorageKeyBuilder(ShoppingListStorageConfig::RESOURCE_TYPE_SHOPPING_LIST)
+            ->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param array $shoppingListStorageData
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCustomerStorageTransfer
+     */
+    protected function mapToShoppingListStorage(array $shoppingListStorageData)
+    {
+        return (new ShoppingListCustomerStorageTransfer())
+            ->fromArray($shoppingListStorageData, true);
     }
 }

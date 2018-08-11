@@ -18,9 +18,9 @@ interface ShoppingListStorageClientInterface
      *
      * @param \Generated\Shared\Transfer\ShoppingListSessionTransfer $shoppingListSession
      *
-     * @return bool
+     * @return bool|null
      */
-    public function isShoppingListCollectionOutdated(ShoppingListSessionTransfer $shoppingListSession): bool;
+    public function isShoppingListCollectionOutdated(ShoppingListSessionTransfer $shoppingListSession): ?bool;
 
     /**
      * Gets Shopping List from storage.

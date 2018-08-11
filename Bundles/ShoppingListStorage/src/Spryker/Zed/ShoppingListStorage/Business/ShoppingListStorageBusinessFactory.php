@@ -15,6 +15,7 @@ use Spryker\Zed\ShoppingListStorage\Business\ShoppingListCustomerPublisher\Shopp
 /**
  * @method \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ShoppingListStorage\ShoppingListStorageConfig getConfig()
  */
 class ShoppingListStorageBusinessFactory extends AbstractBusinessFactory
 {

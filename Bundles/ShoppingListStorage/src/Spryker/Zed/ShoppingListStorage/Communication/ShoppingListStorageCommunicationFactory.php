@@ -11,6 +11,10 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ShoppingListStorage\Dependency\Facade\ShoppingListStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ShoppingListStorage\ShoppingListStorageDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\ShoppingListStorage\ShoppingListStorageConfig getConfig()
+ * @package Spryker\Zed\ShoppingListStorage\Communication
+ */
 class ShoppingListStorageCommunicationFactory extends AbstractCommunicationFactory
 {
     /**

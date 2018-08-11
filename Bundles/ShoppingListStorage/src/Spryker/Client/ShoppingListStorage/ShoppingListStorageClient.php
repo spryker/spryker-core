@@ -29,6 +29,9 @@ class ShoppingListStorageClient extends AbstractClient implements ShoppingListSt
     public function isShoppingListCollectionOutdated(ShoppingListSessionTransfer $shoppingListSession): bool
     {
         $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        if (!$customerTransfer) {
+            return true;
+        }
         $shoppingList = $this->getShoppingListCustomerStorageByCustomerReference($customerTransfer->getCustomerReference());
 
         return $shoppingListSession->getUpdatedAt() < $shoppingList->getUpdatedAt();
@@ -45,10 +48,9 @@ class ShoppingListStorageClient extends AbstractClient implements ShoppingListSt
      */
     public function getShoppingListCustomerStorageByCustomerReference(string $customerReference)
     {
-        $locale = $this->getFactory()->getLocaleClient()->getCurrentLocale();
-        $shoppingListStorage = $this->getFactory()->createShoppingListStorage($locale);
-        $shoppingList = $shoppingListStorage->getShoppingListCustomerStorageByCustomerReference($customerReference);
+        $shoppingListStorage = $this->getFactory()->createShoppingListStorage();
+        $shoppingListCustomerStorage = $shoppingListStorage->getShoppingListCustomerStorageByCustomerReference($customerReference);
 
-        return $shoppingList;
+        return $shoppingListCustomerStorage;
     }
 }
