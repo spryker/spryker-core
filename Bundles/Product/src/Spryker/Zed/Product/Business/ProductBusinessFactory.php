@@ -181,7 +181,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface
      */
-    protected function createSkuGenerator()
+    public function createSkuGenerator()
     {
         return new SkuGenerator($this->getUtilTextService());
     }

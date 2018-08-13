@@ -19,7 +19,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductConcreteSuperAttributesForm extends AbstractType
 {
-    const OPTION_SUPER_ATTRIBUTES = ProductConcreteFormAdd::OPTION_SUPER_ATTRIBUTES;
+    public const OPTION_SUPER_ATTRIBUTES = ProductConcreteFormAdd::OPTION_SUPER_ATTRIBUTES;
+    public const FIELD_DROPDOWN = 'dropdown';
+    public const FIELD_INPUT = 'input';
+    public const FIELD_CHECKBOX = 'checkbox';
 
     /**
      * @retun void
@@ -70,11 +73,13 @@ class ProductConcreteSuperAttributesForm extends AbstractType
         );
 
         $formGoupBuilder->add(
-            'dropdown',
+            static::FIELD_DROPDOWN,
             Select2ComboBoxType::class,
             [
-                'choices' => array_flip($productmanagementAttributeTransfer->getValues()->getArrayCopy()),
-                'choices_as_values' => true,
+                'choices' => $productmanagementAttributeTransfer->getValues()->getArrayCopy(),
+                'choice_label' => function ($choiceValue) {
+                    return $choiceValue;
+                },
                 'label' => $productmanagementAttributeTransfer->getKey(),
                 'required' => false,
                 'attr' => [
@@ -85,7 +90,7 @@ class ProductConcreteSuperAttributesForm extends AbstractType
 
         if ($productmanagementAttributeTransfer->getAllowInput()) {
             $formGoupBuilder->add(
-                'checkbox',
+                static::FIELD_CHECKBOX,
                 CheckboxType::class,
                 [
                     'label' => 'Use custom value',
@@ -96,7 +101,7 @@ class ProductConcreteSuperAttributesForm extends AbstractType
             );
 
             $formGoupBuilder->add(
-                'input',
+                static::FIELD_INPUT,
                 TextType::class,
                 [
                     'label' => false,

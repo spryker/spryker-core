@@ -7,10 +7,15 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ProductConcreteSuperAttributesForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
+use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuUnique;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -25,6 +30,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
     public const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES = 'form_product_concrete_super_attributes';
     public const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES_LABEL = 'Super attributes';
     public const OPTION_SUPER_ATTRIBUTES = 'option_super_attributes';
+    public const OPTION_ID_PRODUCT_ABSTRACT = 'option_id_product_abstract';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -34,8 +40,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this
-            ->addSkuField($builder)
+        $this->addSkuField($builder, $options)
             ->addSkuAutogenerateCheckboxField($builder)
             ->addValidFromField($builder)
             ->addValidToField($builder)
@@ -59,20 +64,36 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
     {
         parent::configureOptions($resolver);
 
+        $resolver->setRequired(static::OPTION_ID_PRODUCT_ABSTRACT);
         $resolver->setRequired(static::OPTION_SUPER_ATTRIBUTES);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addSkuField(FormBuilderInterface $builder)
+    protected function addSkuField(FormBuilderInterface $builder, array $options = [])
     {
-        $builder
-            ->add(static::FIELD_SKU, TextType::class, [
-                'label' => 'SKU',
-            ]);
+        $formData = $builder->getData();
+
+        $builder->add(static::FIELD_SKU, TextType::class, [
+            'label' => 'SKU',
+            'constraints' => [
+                new SkuRegex(),
+                new SkuUnique($this->getFactory()->getProductFacade()),
+            ],
+        ]);
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options) {
+            $formData = $event->getData();
+
+            if (!empty($formData[static::FIELD_SKU_AUTOGENERATE_CHECKBOX])) {
+                $formData[static::FIELD_SKU] = $this->getGeneratedSku($formData, $options);
+                $event->setData($formData);
+            }
+        });
 
         return $this;
     }
@@ -110,5 +131,48 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
         );
 
         return $this;
+    }
+
+    /**
+     * @param array $formData
+     * @param array $options
+     *
+     * @return string|null
+     */
+    protected function getGeneratedSku(array $formData, array $options)
+    {
+        $idProductAbstract = $options[static::OPTION_ID_PRODUCT_ABSTRACT] ?? null;
+
+        if ($idProductAbstract === null) {
+            return null;
+        }
+
+        $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById($idProductAbstract);
+
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setAttributes($this->getTransformedSubmittedSuperAttributes($formData));
+
+        return $this->getFactory()->getProductFacade()->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
+    }
+
+    /**
+     * @param array $formData
+     *
+     * @return array
+     */
+    protected function getTransformedSubmittedSuperAttributes(array $formData)
+    {
+        $attributes = [];
+
+        foreach ($formData[static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES] as $attributeKey => $attributeData) {
+            if (!empty($attributeData[ProductConcreteSuperAttributesForm::FIELD_CHECKBOX])) {
+                $attributes[$attributeKey] = $attributeData[ProductConcreteSuperAttributesForm::FIELD_INPUT] ?? null;
+                continue;
+            }
+
+            $attributes[$attributeKey] = $attributeData[ProductConcreteSuperAttributesForm::FIELD_DROPDOWN] ?? null;
+        }
+
+        return $attributes;
     }
 }

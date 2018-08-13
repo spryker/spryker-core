@@ -102,6 +102,7 @@ class ProductConcreteFormAddDataProvider extends AbstractProductFormDataProvider
 
         $formOptions = parent::getOptions($idProductAbstract);
 
+        $formOptions[ProductConcreteFormAdd::OPTION_ID_PRODUCT_ABSTRACT] = $idProductAbstract;
         $formOptions[ProductConcreteFormAdd::OPTION_IS_BUNDLE_ITEM] = $type === ProductManagementConfig::PRODUCT_TYPE_BUNDLE;
         $formOptions[ProductConcreteFormAdd::OPTION_SUPER_ATTRIBUTES] = $this->getSuperAttributesOption($productAbstractTransfer);
 
