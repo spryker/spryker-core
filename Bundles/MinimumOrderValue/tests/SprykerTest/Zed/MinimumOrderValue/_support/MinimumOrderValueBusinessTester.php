@@ -8,6 +8,10 @@
 namespace SprykerTest\Zed\MinimumOrderValue;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 
 /**
  * Inherited Methods
@@ -29,6 +33,42 @@ class MinimumOrderValueBusinessTester extends Actor
     use _generated\MinimumOrderValueBusinessTesterActions;
 
     /**
-     * Define custom actions here
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
+    public function createTestQuoteTransfer(): QuoteTransfer
+    {
+        return (new QuoteTransfer())
+            ->setTotals($this->createTotalsTransfer())
+            ->setCurrency($this->createCurrencyTransfer())
+            ->setStore($this->createStoreTransfer());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function createStoreTransfer(): StoreTransfer
+    {
+        return (new StoreTransfer())
+            ->setIdStore(1)
+            ->setName('DE');
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function createCurrencyTransfer(): CurrencyTransfer
+    {
+        return (new CurrencyTransfer())
+            ->setIdCurrency(1)
+            ->setCode('EUR');
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\TotalsTransfer
+     */
+    protected function createTotalsTransfer(): TotalsTransfer
+    {
+        return (new TotalsTransfer())
+            ->setSubTotal(0);
+    }
 }

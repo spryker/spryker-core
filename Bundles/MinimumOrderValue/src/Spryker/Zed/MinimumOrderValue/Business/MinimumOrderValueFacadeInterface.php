@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface MinimumOrderValueFacadeInterface
@@ -72,6 +74,39 @@ interface MinimumOrderValueFacadeInterface
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array;
+
+    /**
+     * Specification:
+     * - Checks quote value/values against minimum order value soft thresholds.
+     * - Adds threshold messages using the messenger.
+     * - Adds the fees as Expenses to QuoteTransfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function cartMinimumOrderValuePostSave(
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Checks quote value/values against minimum order value hard thresholds.
+     * - Also adds the messages to CheckoutResponseTransfer, if any
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function checkCheckoutMinimumOrderValue(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool;
 
     /**
      * Specification:

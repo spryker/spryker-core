@@ -7,7 +7,9 @@
 
 namespace SprykerTest\Zed\PriceCartConnector\Business\Fixture;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 
 class PriceProductFacadeStub extends PriceProductFacade
@@ -44,6 +46,26 @@ class PriceProductFacadeStub extends PriceProductFacade
             return null;
         }
         return $this->prices[$priceFilterTransfer->getSku()];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    public function findPriceProductFor(PriceProductFilterTransfer $priceFilterTransfer): ?PriceProductTransfer
+    {
+        $price = $this->findPriceFor($priceFilterTransfer);
+
+        if ($price === null) {
+            return null;
+        }
+
+        return (new PriceProductTransfer())
+            ->setMoneyValue(
+                (new MoneyValueTransfer())
+                    ->setGrossAmount($price)
+            );
     }
 
     /**

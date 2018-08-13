@@ -9,6 +9,7 @@
     "spryker/locale": "^3.0.0",
     "spryker/merchant-relationship": "^1.0.0",
     "spryker/minimum-order-value": "^1.0.0",
+    "spryker/minimum-order-value-extension": "^1.0.0",
     "spryker/store": "^1.0.0"
   },
   "require-dev": {

@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -51,7 +53,7 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
         GlobalMinimumOrderValueTransfer $minimumOrderValueTransfer
     ): GlobalMinimumOrderValueTransfer {
         return $this->getFactory()
-            ->createStoreThresholdWriter()
+            ->createGlobalThresholdWriter()
             ->setGlobalThreshold($minimumOrderValueTransfer);
     }
 
@@ -89,8 +91,44 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
         CurrencyTransfer $currencyTransfer
     ): array {
         return $this->getFactory()
-            ->createStoreThresholdReader()
+            ->createGlobalThresholdReader()
             ->getGlobalThresholdsByStoreAndCurrency($storeTransfer, $currencyTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function cartMinimumOrderValuePostSave(
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        return $this->getFactory()
+            ->createThresholdApplier()
+            ->applyOnQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function checkCheckoutMinimumOrderValue(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool {
+        return $this->getFactory()
+            ->createThresholdApplier()
+            ->applicableForCheckout($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**

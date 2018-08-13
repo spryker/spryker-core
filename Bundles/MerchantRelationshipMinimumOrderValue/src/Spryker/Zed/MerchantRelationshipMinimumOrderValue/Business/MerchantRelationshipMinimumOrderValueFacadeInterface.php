@@ -8,9 +8,24 @@
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business;
 
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface MerchantRelationshipMinimumOrderValueFacadeInterface
 {
+    /**
+     * Specification:
+     * - Finds the applicable thresholds for a given QuoteTransfer.
+     * - Based on quote the customer and the respective merchant relationships.
+     * - Also prepares the minimum order value objects to be provided for the minimum order value strategies.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     */
+    public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array;
+
     /**
      * Specification:
      * - Set merchant relationship specific minimum order value threshold.

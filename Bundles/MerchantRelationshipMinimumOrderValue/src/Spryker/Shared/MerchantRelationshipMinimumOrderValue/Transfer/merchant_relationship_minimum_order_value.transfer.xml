@@ -10,4 +10,8 @@
         <property name="store" type="Store"/>
         <property name="currency" type="Currency"/>
     </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="idMerchantRelationship" type="int" />
+    </transfer>
 </transfers>

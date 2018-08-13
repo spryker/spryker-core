@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\StoreThreshold;
+namespace Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold;
 
 use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 
-interface StoreThresholdWriterInterface
+interface GlobalThresholdWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
