@@ -55,7 +55,7 @@
         <property name="name" type="string"/>
         <property name="isDev" type="bool"/>
         <property name="isOptional" type="bool"/>
-    </transfer>n
+    </transfer>
 
     <transfer name="BridgeBuilderData">
         <property name="vendor" type="string"/>
