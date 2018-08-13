@@ -10,7 +10,15 @@ require('./main');
 $(document).on('ready', function () {
     $('.super-attribute-checkbox-input').on('change', handleSuperAttributeCheckboxChange);
     $('#sku-autogenerate-checkbox-input').on('change', handleSkuAutogenerateCheckboxChange);
+
+    initialize();
 });
+
+function initialize() {
+    $.each($('.super-attribute-checkbox-input'), function (key, checkbox) {
+        $(checkbox).trigger('change');
+    });
+}
 
 function handleSuperAttributeCheckboxChange(e) {
     var $target = $(e.target),

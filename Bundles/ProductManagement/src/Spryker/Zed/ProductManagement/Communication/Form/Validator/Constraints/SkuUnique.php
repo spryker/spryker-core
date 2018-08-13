@@ -15,7 +15,7 @@ class SkuUnique extends Constraint
     /**
      * @var string
      */
-    public $message = 'SKU should be unique. Another product with sku "{{ string }}" already exists';
+    public $message = 'SKU should be unique. Another product with sku "{{ sku }}" already exists';
 
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface

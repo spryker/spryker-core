@@ -37,7 +37,7 @@ class SkuUniqueValidator extends ConstraintValidator
     {
         if ($constraint->getProductFacade()->findProductConcreteIdBySku($value) !== null) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ string }}', $value)
+                ->setParameter('{{ sku }}', $value)
                 ->addViolation();
         }
     }

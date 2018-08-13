@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -19,10 +20,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductConcreteSuperAttributesForm extends AbstractType
 {
-    public const OPTION_SUPER_ATTRIBUTES = ProductConcreteFormAdd::OPTION_SUPER_ATTRIBUTES;
     public const FIELD_DROPDOWN = 'dropdown';
     public const FIELD_INPUT = 'input';
     public const FIELD_CHECKBOX = 'checkbox';
+
+    public const OPTION_SUPER_ATTRIBUTES = ProductConcreteFormAdd::OPTION_SUPER_ATTRIBUTES;
 
     /**
      * @retun void
@@ -38,7 +40,7 @@ class ProductConcreteSuperAttributesForm extends AbstractType
          * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productmanagementAttributeTransfer
          */
         foreach ($options[static::OPTION_SUPER_ATTRIBUTES] as $productmanagementAttributeTransfer) {
-            $this->addInputGroup($builder, $productmanagementAttributeTransfer);
+            $this->addInputGroup($builder, $productmanagementAttributeTransfer, $options);
         }
     }
 
@@ -55,10 +57,11 @@ class ProductConcreteSuperAttributesForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productmanagementAttributeTransfer
+     * @param array $options
      *
      * @return void
      */
-    protected function addInputGroup(FormBuilderInterface $builder, ProductManagementAttributeTransfer $productmanagementAttributeTransfer)
+    protected function addInputGroup(FormBuilderInterface $builder, ProductManagementAttributeTransfer $productmanagementAttributeTransfer, array $options)
     {
         $formGoupBuilder = $builder->create(
             $productmanagementAttributeTransfer->getKey(),
@@ -107,6 +110,9 @@ class ProductConcreteSuperAttributesForm extends AbstractType
                     'label' => false,
                     'attr' => [
                         'class' => 'hidden super-attribute-text-input',
+                    ],
+                    'constraints' => [
+                        new ProductAttributeType($productmanagementAttributeTransfer),
                     ],
                 ]
             );
