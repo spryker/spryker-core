@@ -98,15 +98,15 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     }
 
     /**
-     * @param array $idShoppingListCustomerStorages
+     * @param array $shoppingListCustomerStorageIds
      *
      * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findShoppingListCustomerStorageEntitiesByIds(array $idShoppingListCustomerStorages)
+    public function findShoppingListCustomerStorageEntitiesByIds(array $shoppingListCustomerStorageIds): ObjectCollection
     {
         return $this->getFactory()
             ->createShoppingListCustomerStoragePropelQuery()
-            ->filterByIdShoppingListCustomerStorage_In($idShoppingListCustomerStorages)
+            ->filterByIdShoppingListCustomerStorage_In($shoppingListCustomerStorageIds)
             ->find();
     }
 }

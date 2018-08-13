@@ -16,21 +16,21 @@ use Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToS
 
 class ShoppingListStorageDependencyProvider extends AbstractDependencyProvider
 {
-    public const CLIENT_CUSTOMER = 'CLIENT:SHOPPING_LIST_STORAGE:CLIENT_CUSTOMER';
-    public const KV_STORAGE = 'CLIENT:SHOPPING_LIST_STORAGE:KV_STORAGE';
-    public const CLIENT_LOCALE = 'CLIENT:SHOPPING_LIST_STORAGE:CLIENT_LOCALE';
-    public const SERVICE_SYNCHRONIZATION = 'CLIENT:SHOPPING_LIST_STORAGE:SERVICE_SYNCHRONIZATION';
+    public const SHOPPING_LIST_STORAGE_CUSTOMER_CLIENT = 'SHOPPING_LIST_STORAGE_CUSTOMER_CLIENT';
+    public const SHOPPING_LIST_STORAGE_STORAGE_CLIENT = 'SHOPPING_LIST_STORAGE_STORAGE_CLIENT';
+    public const SHOPPING_LIST_STORAGE_LOCALE_CLIENT = 'SHOPPING_LIST_STORAGE_LOCALE_CLIENT';
+    public const SHOPPING_LIST_STORAGE_SYNCHRONIZATION_SERVICE = 'SHOPPING_LIST_STORAGE_SYNCHRONIZATION_SERVICE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addCustomerClient($container);
-        $container = $this->addKvStorage($container);
+        $container = $this->addStorageClient($container);
         $container = $this->addLocaleClient($container);
         $container = $this->addSynchronizationService($container);
 
@@ -44,7 +44,7 @@ class ShoppingListStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container[static::SHOPPING_LIST_STORAGE_CUSTOMER_CLIENT] = function (Container $container) {
             return new ShoppingListStorageToCustomerBridge($container->getLocator()->customer()->client());
         };
 
@@ -56,9 +56,9 @@ class ShoppingListStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addKvStorage(Container $container)
+    protected function addStorageClient(Container $container): Container
     {
-        $container[static::KV_STORAGE] = function (Container $container) {
+        $container[static::SHOPPING_LIST_STORAGE_STORAGE_CLIENT] = function (Container $container) {
             return new ShoppingListStorageToStorageBridge($container->getLocator()->storage()->client());
         };
 
@@ -72,7 +72,7 @@ class ShoppingListStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addLocaleClient(Container $container): Container
     {
-        $container[static::CLIENT_LOCALE] = function (Container $container) {
+        $container[static::SHOPPING_LIST_STORAGE_LOCALE_CLIENT] = function (Container $container) {
             return new ShoppingListStorageToLocaleBridge($container->getLocator()->locale()->client());
         };
 
@@ -86,7 +86,7 @@ class ShoppingListStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSynchronizationService(Container $container): Container
     {
-        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container[static::SHOPPING_LIST_STORAGE_SYNCHRONIZATION_SERVICE] = function (Container $container) {
             return new ShoppingListStorageToSynchronizationServiceBridge(
                 $container->getLocator()->synchronization()->service()
             );

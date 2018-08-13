@@ -15,7 +15,7 @@ class ShoppingListStorageKeyBuilder extends SharedResourceKeyBuilder
     /**
      * @return string
      */
-    protected function getResourceType()
+    protected function getResourceType(): string
     {
         return ShoppingListStorageConfig::RESOURCE_TYPE_SHOPPING_LIST;
     }

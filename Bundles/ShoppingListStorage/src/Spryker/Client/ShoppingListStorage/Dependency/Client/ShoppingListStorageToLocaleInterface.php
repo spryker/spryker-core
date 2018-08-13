@@ -12,5 +12,5 @@ interface ShoppingListStorageToLocaleInterface
     /**
      * @return string
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): string;
 }

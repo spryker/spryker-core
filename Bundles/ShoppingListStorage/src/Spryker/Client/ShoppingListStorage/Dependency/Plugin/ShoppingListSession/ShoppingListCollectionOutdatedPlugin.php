@@ -18,7 +18,11 @@ use Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCo
 class ShoppingListCollectionOutdatedPlugin extends AbstractPlugin implements ShoppingListCollectionOutdatedPluginInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListSessionTransfer $shoppingListSession
+     *
+     * @return bool
      */
     public function isCollectionOutdated(ShoppingListSessionTransfer $shoppingListSession): bool
     {

@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ShoppingListStorage\Dependency\Service;
 
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
+
 interface ShoppingListStorageToSynchronizationServiceInterface
 {
     /**
@@ -14,5 +16,5 @@ interface ShoppingListStorageToSynchronizationServiceInterface
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
-    public function getStorageKeyBuilder(string $resourceName);
+    public function getStorageKeyBuilder(string $resourceName): SynchronizationKeyGeneratorPluginInterface;
 }

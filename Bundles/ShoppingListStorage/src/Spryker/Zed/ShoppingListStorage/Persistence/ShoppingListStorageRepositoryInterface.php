@@ -47,9 +47,9 @@ interface ShoppingListStorageRepositoryInterface
     public function findShoppingListEntitiesByCustomerReferences(array $customerReferences): ObjectCollection;
 
     /**
-     * @param array $ids
+     * @param array $shoppingListCustomerStorageIds
      *
-     * @return mixed
+     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findShoppingListCustomerStorageEntitiesByIds(array $ids);
+    public function findShoppingListCustomerStorageEntitiesByIds(array $shoppingListCustomerStorageIds): ObjectCollection;
 }

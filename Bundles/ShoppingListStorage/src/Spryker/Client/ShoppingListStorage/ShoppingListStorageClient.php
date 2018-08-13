@@ -7,12 +7,11 @@
 
 namespace Spryker\Client\ShoppingListStorage;
 
+use Generated\Shared\Transfer\ShoppingListCustomerStorageTransfer;
 use Generated\Shared\Transfer\ShoppingListSessionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @api
- *
  * @method \Spryker\Client\ShoppingListStorage\ShoppingListStorageFactory getFactory()
  */
 class ShoppingListStorageClient extends AbstractClient implements ShoppingListStorageClientInterface
@@ -32,9 +31,12 @@ class ShoppingListStorageClient extends AbstractClient implements ShoppingListSt
         if (!$customerTransfer) {
             return true;
         }
-        $shoppingList = $this->getShoppingListCustomerStorageByCustomerReference($customerTransfer->getCustomerReference());
+        $shoppingListCustomerStorageTransfer = $this->getShoppingListCustomerStorageByCustomerReference($customerTransfer->getCustomerReference());
 
-        return $shoppingListSession->getUpdatedAt() < $shoppingList->getUpdatedAt();
+        if (!$shoppingListCustomerStorageTransfer) {
+            return true;
+        }
+        return $shoppingListSession->getUpdatedAt() < $shoppingListCustomerStorageTransfer->getUpdatedAt();
     }
 
     /**
@@ -44,11 +46,11 @@ class ShoppingListStorageClient extends AbstractClient implements ShoppingListSt
      *
      * @param string $customerReference
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\ShoppingListCustomerStorageTransfer|null
      */
-    public function getShoppingListCustomerStorageByCustomerReference(string $customerReference)
+    public function getShoppingListCustomerStorageByCustomerReference(string $customerReference): ?ShoppingListCustomerStorageTransfer
     {
-        $shoppingListStorage = $this->getFactory()->createShoppingListStorage();
+        $shoppingListStorage = $this->getFactory()->createShoppingListCustomerStorage();
         $shoppingListCustomerStorage = $shoppingListStorage->getShoppingListCustomerStorageByCustomerReference($customerReference);
 
         return $shoppingListCustomerStorage;

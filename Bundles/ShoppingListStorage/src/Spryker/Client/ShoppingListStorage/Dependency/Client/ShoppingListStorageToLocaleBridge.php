@@ -25,7 +25,7 @@ class ShoppingListStorageToLocaleBridge implements ShoppingListStorageToLocaleIn
     /**
      * @return string
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): string
     {
         return $this->localeClient->getCurrentLocale();
     }

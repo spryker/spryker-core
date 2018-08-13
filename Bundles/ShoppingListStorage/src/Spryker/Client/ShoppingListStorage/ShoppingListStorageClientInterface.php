@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ShoppingListStorage;
 
+use Generated\Shared\Transfer\ShoppingListCustomerStorageTransfer;
 use Generated\Shared\Transfer\ShoppingListSessionTransfer;
 
 interface ShoppingListStorageClientInterface
@@ -18,9 +19,9 @@ interface ShoppingListStorageClientInterface
      *
      * @param \Generated\Shared\Transfer\ShoppingListSessionTransfer $shoppingListSession
      *
-     * @return bool|null
+     * @return bool
      */
-    public function isShoppingListCollectionOutdated(ShoppingListSessionTransfer $shoppingListSession): ?bool;
+    public function isShoppingListCollectionOutdated(ShoppingListSessionTransfer $shoppingListSession): bool;
 
     /**
      * Gets Shopping List from storage.
@@ -29,7 +30,7 @@ interface ShoppingListStorageClientInterface
      *
      * @param string $customerReference
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\ShoppingListCustomerStorageTransfer|null
      */
-    public function getShoppingListCustomerStorageByCustomerReference(string $customerReference);
+    public function getShoppingListCustomerStorageByCustomerReference(string $customerReference): ?ShoppingListCustomerStorageTransfer;
 }

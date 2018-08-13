@@ -18,15 +18,21 @@ interface ShoppingListStorageConstants
      *
      * @api
      */
-    const SHOPPING_LIST_SYNC_STORAGE_QUEUE = 'sync.storage.shopping_list';
+    public const SHOPPING_LIST_SYNC_STORAGE_QUEUE = 'sync.storage.shopping_list';
 
     /**
      * Specification:
-     * - Queue name as used for processing shopping list messages.
+     * - Queue name as used for processing shopping list error messages.
      *
      * @api
      */
-    const SHOPPING_LIST_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.shopping_list.error';
+    public const SHOPPING_LIST_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.shopping_list.error';
 
-    const SHOPPING_LIST_RESOURCE_NAME = 'SHOPPING_LIST_RESOURCE_NAME';
+    /**
+     * Specification:
+     * - Resource name, this will use for key generating
+     *
+     * @api
+     */
+    public const SHOPPING_LIST_RESOURCE_NAME = 'shopping_list_customer';
 }

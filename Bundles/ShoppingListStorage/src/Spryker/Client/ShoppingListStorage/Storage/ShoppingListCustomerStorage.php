@@ -52,9 +52,9 @@ class ShoppingListCustomerStorage implements ShoppingListCustomerStorageInterfac
     /**
      * @param string $customerReference
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\ShoppingListCustomerStorageTransfer|null
      */
-    public function getShoppingListCustomerStorageByCustomerReference(string $customerReference)
+    public function getShoppingListCustomerStorageByCustomerReference(string $customerReference): ?ShoppingListCustomerStorageTransfer
     {
         $key = $this->generateKey($customerReference);
         $shoppingListStorageData = $this->storage->get($key);
@@ -69,9 +69,9 @@ class ShoppingListCustomerStorage implements ShoppingListCustomerStorageInterfac
     /**
      * @param string $customerReference
      *
-     * @return mixed
+     * @return string
      */
-    protected function generateKey(string $customerReference)
+    protected function generateKey(string $customerReference): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
             ->setReference($customerReference);
@@ -86,7 +86,7 @@ class ShoppingListCustomerStorage implements ShoppingListCustomerStorageInterfac
      *
      * @return \Generated\Shared\Transfer\ShoppingListCustomerStorageTransfer
      */
-    protected function mapToShoppingListStorage(array $shoppingListStorageData)
+    protected function mapToShoppingListStorage(array $shoppingListStorageData): ShoppingListCustomerStorageTransfer
     {
         return (new ShoppingListCustomerStorageTransfer())
             ->fromArray($shoppingListStorageData, true);
