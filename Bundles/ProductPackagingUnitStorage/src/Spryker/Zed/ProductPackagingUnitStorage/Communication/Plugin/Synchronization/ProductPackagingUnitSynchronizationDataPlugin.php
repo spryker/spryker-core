@@ -66,8 +66,8 @@ class ProductPackagingUnitSynchronizationDataPlugin extends AbstractPlugin imple
 
         foreach ($productAbstractPackagingUnitTransfers as $productAbstractPackagingUnitTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($productAbstractPackagingUnitTransfer->getData());
-            $synchronizationDataTransfer->setKey($productAbstractPackagingUnitTransfer->getKey());
+            $synchronizationDataTransfer->setData((string)$productAbstractPackagingUnitTransfer->getData());
+            $synchronizationDataTransfer->setKey((string)$productAbstractPackagingUnitTransfer->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
