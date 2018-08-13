@@ -25,12 +25,6 @@ class ShoppingListSessionToShoppingListBridge implements ShoppingListSessionToSh
     }
 
     /**
-     * Specification:
-     *  - Makes Zed request.
-     *  - Get shopping list collection by customer.
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer

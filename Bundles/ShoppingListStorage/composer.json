@@ -13,6 +13,7 @@
     "spryker/locale": "*",
     "spryker/storage": "*",
     "spryker/propel-orm": "^1.0.0",
+    "spryker/shopping-list-session-extension": "*",
     "spryker/synchronization": "^0.2.0 || ^1.0.0",
     "spryker/synchronization-extension": "^1.0.0"
   },

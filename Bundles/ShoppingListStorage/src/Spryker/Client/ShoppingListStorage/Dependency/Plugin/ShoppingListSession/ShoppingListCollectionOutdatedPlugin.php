@@ -9,7 +9,7 @@ namespace Spryker\Client\ShoppingListStorage\Dependency\Plugin\ShoppingListSessi
 
 use Generated\Shared\Transfer\ShoppingListSessionTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ShoppingListSession\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface;
+use Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface;
 
 /**
  * @method \Spryker\Client\ShoppingListStorage\ShoppingListStorageClientInterface getClient()

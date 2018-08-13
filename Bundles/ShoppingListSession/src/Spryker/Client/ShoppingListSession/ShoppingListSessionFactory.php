@@ -63,7 +63,7 @@ class ShoppingListSessionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ShoppingListSession\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface[]
+     * @return \Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface[]
      */
     protected function getShoppingListCollectionOutdatedPlugins(): array
     {

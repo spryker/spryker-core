@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 interface ShoppingListSessionToShoppingListBridgeInterface
 {
     /**
-     * Specification:
-     *  - Makes Zed request.
-     *  - Get shopping list collection by customer.
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer;
