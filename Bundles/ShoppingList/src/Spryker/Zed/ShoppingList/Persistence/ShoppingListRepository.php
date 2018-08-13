@@ -212,13 +212,12 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function findShoppingListPermissionGroupByName(ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer): ShoppingListPermissionGroupTransfer
     {
-        $shoppingListPermissionGroupQuery = $this->getFactory()
+        $permissionGroupEntityTransfer = $this->getFactory()
             ->createShoppingListPermissionGroupQuery()
-            ->filterByName($shoppingListPermissionGroupTransfer->getName());
+            ->filterByName($shoppingListPermissionGroupTransfer->getName())
+            ->findOne();
 
-        $permissionGroupEntityTransfer = $this->buildQueryFromCriteria($shoppingListPermissionGroupQuery)->findOne();
-
-        return (new ShoppingListPermissionGroupTransfer())->fromArray($permissionGroupEntityTransfer->modifiedToArray(), true);
+        return (new ShoppingListPermissionGroupTransfer())->fromArray($permissionGroupEntityTransfer->toArray(), true);
     }
 
     /**
@@ -389,15 +388,14 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function findShoppingListCompanyBusinessUnitsByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer
     {
-        $shoppingListsCompanyBusinessUnitQuery = $this->getFactory()
+        $shoppingListsCompanyBusinessUnits = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
-            ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList());
-
-        $shoppingListsCompanyBusinessUnitEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListsCompanyBusinessUnitQuery)->find();
+            ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->find();
 
         return $this->getFactory()
             ->createShoppingListCompanyBusinessUnitMapper()
-            ->mapCompanyBusinessUnitCollectionTransfer($shoppingListsCompanyBusinessUnitEntityTransferCollection);
+            ->mapCompanyBusinessUnitCollectionTransfer($shoppingListsCompanyBusinessUnits);
     }
 
     /**
@@ -407,15 +405,14 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function findShoppingListCompanyUsersByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyUserCollectionTransfer
     {
-        $shoppingListsCompanyUserQuery = $this->getFactory()
+        $shoppingListsCompanyUsers = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
-            ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList());
-
-        $shoppingListsCompanyUserEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListsCompanyUserQuery)->find();
+            ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->find();
 
         return $this->getFactory()
             ->createShoppingListCompanyUserMapper()
-            ->mapCompanyUserCollectionTransfer($shoppingListsCompanyUserEntityTransferCollection);
+            ->mapCompanyUserCollectionTransfer($shoppingListsCompanyUsers);
     }
 
     /**

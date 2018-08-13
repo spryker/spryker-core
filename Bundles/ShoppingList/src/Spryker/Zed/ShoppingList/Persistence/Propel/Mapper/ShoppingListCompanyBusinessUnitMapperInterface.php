@@ -9,28 +9,24 @@ namespace Spryker\Zed\ShoppingList\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit;
+use Propel\Runtime\Collection\Collection;
 
 interface ShoppingListCompanyBusinessUnitMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer[] $companyBusinessUnitEntityTransferCollection
+     * @param \Propel\Runtime\Collection\Collection|null $companyBusinessUnitEntityTransferCollection
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
      */
-    public function mapCompanyBusinessUnitCollectionTransfer(array $companyBusinessUnitEntityTransferCollection): ShoppingListCompanyBusinessUnitCollectionTransfer;
+    public function mapCompanyBusinessUnitCollectionTransfer(?Collection $companyBusinessUnitEntityTransferCollection): ShoppingListCompanyBusinessUnitCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer $companyBusinessUnitEntityTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit $shoppingListCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer
      */
-    public function mapCompanyBusinessUnitTransfer(
-        SpyShoppingListCompanyBusinessUnitEntityTransfer $companyBusinessUnitEntityTransfer,
-        ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
-    ): ShoppingListCompanyBusinessUnitTransfer;
+    public function mapCompanyBusinessUnitTransfer(SpyShoppingListCompanyBusinessUnit $shoppingListCompanyBusinessUnit): ShoppingListCompanyBusinessUnitTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer

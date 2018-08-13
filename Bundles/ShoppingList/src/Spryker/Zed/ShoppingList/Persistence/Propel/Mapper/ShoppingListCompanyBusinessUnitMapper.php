@@ -9,45 +9,45 @@ namespace Spryker\Zed\ShoppingList\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit;
+use Propel\Runtime\Collection\Collection;
 
 class ShoppingListCompanyBusinessUnitMapper implements ShoppingListCompanyBusinessUnitMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer[] $companyBusinessUnitEntityTransferCollection
+     * @param null|\Propel\Runtime\Collection\Collection|null $companyBusinessUnitEntityCollection
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
      */
-    public function mapCompanyBusinessUnitCollectionTransfer(array $companyBusinessUnitEntityTransferCollection): ShoppingListCompanyBusinessUnitCollectionTransfer
+    public function mapCompanyBusinessUnitCollectionTransfer(?Collection $companyBusinessUnitEntityCollection): ShoppingListCompanyBusinessUnitCollectionTransfer
     {
         $shoppingListCompanyBusinessUnitCollectionTransfer = new ShoppingListCompanyBusinessUnitCollectionTransfer();
-        foreach ($companyBusinessUnitEntityTransferCollection as $companyBusinessUnitEntityTransfer) {
-            $shoppingListCompanyBusinessUnitTransfer = $this->mapCompanyBusinessUnitTransfer($companyBusinessUnitEntityTransfer, new ShoppingListCompanyBusinessUnitTransfer());
-            $shoppingListCompanyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
+
+        if (!$companyBusinessUnitEntityCollection) {
+            return $shoppingListCompanyBusinessUnitCollectionTransfer;
+        }
+
+        foreach ($companyBusinessUnitEntityCollection as $companyBusinessUnitEntity) {
+            $shoppingListCompanyBusinessUnitCollectionTransfer->addCompanyBusinessUnit(
+                $this->mapCompanyBusinessUnitTransfer($companyBusinessUnitEntity)
+            );
         }
 
         return $shoppingListCompanyBusinessUnitCollectionTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer $companyBusinessUnitEntityTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit $shoppingListCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer
      */
-    public function mapCompanyBusinessUnitTransfer(
-        SpyShoppingListCompanyBusinessUnitEntityTransfer $companyBusinessUnitEntityTransfer,
-        ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
-    ): ShoppingListCompanyBusinessUnitTransfer {
-        $shoppingListCompanyBusinessUnitTransfer->fromArray($companyBusinessUnitEntityTransfer->modifiedToArray(), true);
-
-        $shoppingListCompanyBusinessUnitTransfer
-            ->setIdShoppingList($companyBusinessUnitEntityTransfer->getFkShoppingList())
-            ->setIdCompanyBusinessUnit($companyBusinessUnitEntityTransfer->getFkCompanyBusinessUnit())
-            ->setIdShoppingListPermissionGroup($companyBusinessUnitEntityTransfer->getFkShoppingListPermissionGroup());
-
-        return $shoppingListCompanyBusinessUnitTransfer;
+    public function mapCompanyBusinessUnitTransfer(SpyShoppingListCompanyBusinessUnit $shoppingListCompanyBusinessUnit): ShoppingListCompanyBusinessUnitTransfer
+    {
+        return (new ShoppingListCompanyBusinessUnitTransfer)
+            ->setIdShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnit->getIdShoppingListCompanyBusinessUnit())
+            ->setIdShoppingList($shoppingListCompanyBusinessUnit->getFkShoppingList())
+            ->setIdCompanyBusinessUnit($shoppingListCompanyBusinessUnit->getFkCompanyBusinessUnit())
+            ->setIdShoppingListPermissionGroup($shoppingListCompanyBusinessUnit->getFkShoppingListPermissionGroup());
     }
 
     /**

@@ -9,28 +9,24 @@ namespace Spryker\Zed\ShoppingList\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
-use Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser;
+use Propel\Runtime\Collection\Collection;
 
 interface ShoppingListCompanyUserMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer[] $companyUserEntityTransferCollection
+     * @param null|\Propel\Runtime\Collection\Collection $companyUserEntityCollection
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
      */
-    public function mapCompanyUserCollectionTransfer(array $companyUserEntityTransferCollection): ShoppingListCompanyUserCollectionTransfer;
+    public function mapCompanyUserCollectionTransfer(?Collection $companyUserEntityCollection): ShoppingListCompanyUserCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer $companyUserEntityTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser $shoppingListCompanyUser
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer
      */
-    public function mapCompanyUserTransfer(
-        SpyShoppingListCompanyUserEntityTransfer $companyUserEntityTransfer,
-        ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
-    ): ShoppingListCompanyUserTransfer;
+    public function mapCompanyUserTransfer(SpyShoppingListCompanyUser $shoppingListCompanyUser): ShoppingListCompanyUserTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer

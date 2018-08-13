@@ -9,45 +9,43 @@ namespace Spryker\Zed\ShoppingList\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
-use Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser;
+use Propel\Runtime\Collection\Collection;
 
 class ShoppingListCompanyUserMapper implements ShoppingListCompanyUserMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer[] $companyUserEntityTransferCollection
+     * @param null|\Propel\Runtime\Collection\Collection $companyUserEntityCollection
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
      */
-    public function mapCompanyUserCollectionTransfer(array $companyUserEntityTransferCollection): ShoppingListCompanyUserCollectionTransfer
+    public function mapCompanyUserCollectionTransfer(?Collection $companyUserEntityCollection): ShoppingListCompanyUserCollectionTransfer
     {
         $shoppingListCompanyUserCollectionTransfer = new ShoppingListCompanyUserCollectionTransfer();
-        foreach ($companyUserEntityTransferCollection as $companyUserEntityTransfer) {
-            $shoppingListCompanyUserTransfer = $this->mapCompanyUserTransfer($companyUserEntityTransfer, new ShoppingListCompanyUserTransfer());
-            $shoppingListCompanyUserCollectionTransfer->addCompanyUser($shoppingListCompanyUserTransfer);
+
+        if (!$companyUserEntityCollection) {
+            return $shoppingListCompanyUserCollectionTransfer;
+        }
+
+        foreach ($companyUserEntityCollection as $companyUserEntityTransfer) {
+            $shoppingListCompanyUserCollectionTransfer->addCompanyUser($this->mapCompanyUserTransfer($companyUserEntityTransfer));
         }
 
         return $shoppingListCompanyUserCollectionTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer $companyUserEntityTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser $shoppingListCompanyUser
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer
      */
-    public function mapCompanyUserTransfer(
-        SpyShoppingListCompanyUserEntityTransfer $companyUserEntityTransfer,
-        ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
-    ): ShoppingListCompanyUserTransfer {
-        $shoppingListCompanyUserTransfer->fromArray($companyUserEntityTransfer->modifiedToArray(), true);
-
-        $shoppingListCompanyUserTransfer
-            ->setIdShoppingList($companyUserEntityTransfer->getFkShoppingList())
-            ->setIdCompanyUser($companyUserEntityTransfer->getFkCompanyUser())
-            ->setIdShoppingListPermissionGroup($companyUserEntityTransfer->getFkShoppingListPermissionGroup());
-
-        return $shoppingListCompanyUserTransfer;
+    public function mapCompanyUserTransfer(SpyShoppingListCompanyUser $shoppingListCompanyUser): ShoppingListCompanyUserTransfer
+    {
+        return (new ShoppingListCompanyUserTransfer)
+            ->setIdShoppingListCompanyUser($shoppingListCompanyUser->getIdShoppingListCompanyUser())
+            ->setIdShoppingList($shoppingListCompanyUser->getFkShoppingList())
+            ->setIdCompanyUser($shoppingListCompanyUser->getFkCompanyUser())
+            ->setIdShoppingListPermissionGroup($shoppingListCompanyUser->getFkShoppingListPermissionGroup());
     }
 
     /**
