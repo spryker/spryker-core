@@ -14,6 +14,7 @@ use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerCli
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class AddressesReader implements AddressesReaderInterface
@@ -46,6 +47,25 @@ class AddressesReader implements AddressesReaderInterface
         $this->restResourceBuilder = $restResourceBuilder;
         $this->customerClient = $customerClient;
         $this->addressesResourceMapper = $addressesResourceMapper;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function read(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        if (!$restRequest->getResource()->getId()) {
+            return $this->readByCustomerReference(
+                $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId()
+            );
+        }
+
+        return $this->readByUuid(
+            $restRequest->getResource()->getId(),
+            $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId()
+        );
     }
 
     /**

@@ -7,6 +7,7 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\Addresses;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface AddressesReaderInterface
 {
@@ -24,4 +25,11 @@ interface AddressesReaderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function readByUuid(string $uuid, string $customerReference): RestResponseInterface;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function read(RestRequestInterface $restRequest): RestResponseInterface;
 }

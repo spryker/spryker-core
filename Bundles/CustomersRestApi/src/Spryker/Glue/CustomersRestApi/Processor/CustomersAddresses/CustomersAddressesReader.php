@@ -49,13 +49,12 @@ class CustomersAddressesReader implements CustomersAddressesReaderInterface
 
         $addresses = $this->customerClient->getAddresses($customerTransfer);
 
-        if (count($addresses->getAddresses())) {
-            foreach ($addresses->getAddresses() as $address) {
-                $restResource->addRelationship(
-                    $this->addressesResourceMapper->mapAddressTransferToRestResource($address, $customerReference)
-                );
-            }
+        foreach ($addresses->getAddresses() as $address) {
+            $restResource->addRelationship(
+                $this->addressesResourceMapper->mapAddressTransferToRestResource($address, $customerReference)
+            );
         }
+
         return $restResource;
     }
 }

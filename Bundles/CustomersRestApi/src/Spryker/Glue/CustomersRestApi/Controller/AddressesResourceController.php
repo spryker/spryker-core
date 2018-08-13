@@ -6,7 +6,6 @@
 
 namespace Spryker\Glue\CustomersRestApi\Controller;
 
-use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -23,19 +22,8 @@ class AddressesResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$restRequest->getResource()->getId()) {
-            return $this->getFactory()
-                ->createAddressesReader()
-                ->readByCustomerReference(
-                    $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId()
-                );
-        }
-
         return $this->getFactory()
             ->createAddressesReader()
-            ->readByUuid(
-                $restRequest->getResource()->getId(),
-                $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId()
-            );
+            ->read($restRequest);
     }
 }
