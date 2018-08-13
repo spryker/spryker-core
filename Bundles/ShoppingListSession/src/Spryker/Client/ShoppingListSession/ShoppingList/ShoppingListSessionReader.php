@@ -50,7 +50,7 @@ class ShoppingListSessionReader implements ShoppingListSessionReaderInterface
      */
     public function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer
     {
-        $shoppingListSessionTransfer = $this->shoppingListSessionStorage->getShoppingListCollection();
+        $shoppingListSessionTransfer = $this->shoppingListSessionStorage->findShoppingListCollection();
 
         if (!$shoppingListSessionTransfer ||
             $this->shoppingListSessionPluginsExecutor->executeCollectionOutdatedPlugins($shoppingListSessionTransfer)

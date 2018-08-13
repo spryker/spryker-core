@@ -7,6 +7,17 @@
 
 namespace Spryker\Client\ShoppingListSession;
 
+use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+
 interface ShoppingListSessionClientInterface
 {
+    /**
+     * Specification:
+     *  - Gets Customer Shopping List Collection from Session or from Storage if data became outdated.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    public function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer;
 }

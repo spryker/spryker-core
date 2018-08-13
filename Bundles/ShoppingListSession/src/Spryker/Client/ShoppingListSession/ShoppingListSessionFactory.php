@@ -8,30 +8,33 @@
 namespace Spryker\Client\ShoppingListSession;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface;
+use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListBridgeInterface;
+use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToStorageBridgeInterface;
 use Spryker\Client\ShoppingListSession\ShoppingList\ShoppingListSessionReader;
+use Spryker\Client\ShoppingListSession\ShoppingList\ShoppingListSessionReaderInterface;
 use Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutor;
 use Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutorInterface;
 use Spryker\Client\ShoppingListSession\Storage\ShoppingListSessionSessionStorage;
+use Spryker\Client\ShoppingListSession\Storage\ShoppingListSessionStorageInterface;
 
 class ShoppingListSessionFactory extends AbstractFactory
 {
-    const PLUGINS_SHOPPING_LIST_COLLECTION_OUTDATED = 'PLUGINS_SHOPPING_LIST_COLLECTION_OUTDATED';
-
     /**
      * @return \Spryker\Client\ShoppingListSession\Storage\ShoppingListSessionStorageInterface
      */
-    public function createShoppingListSessionStorage()
+    public function createShoppingListSessionStorage(): ShoppingListSessionStorageInterface
     {
         return new ShoppingListSessionSessionStorage(
-            $this->getStorage(),
+            $this->getStorageClient(),
             $this->getSessionClient()
         );
     }
 
     /**
-     * @return \Spryker\Client\ShoppingListSession\ShoppingList\ShoppingListSessionReader
+     * @return \Spryker\Client\ShoppingListSession\ShoppingList\ShoppingListSessionReaderInterface
      */
-    public function createShoppingListSessionReader()
+    public function createShoppingListSessionReader(): ShoppingListSessionReaderInterface
     {
         return new ShoppingListSessionReader(
             $this->createShoppingListSessionStorage(),
@@ -43,25 +46,25 @@ class ShoppingListSessionFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface
      */
-    public function getSessionClient()
+    public function getSessionClient(): ShoppingListSessionToSessionClientBridgeInterface
     {
-        return $this->getProvidedDependency(ShoppingListSessionDependencyProvider::CLIENT_SESSION);
+        return $this->getProvidedDependency(ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_SESSION_CLIENT);
     }
 
     /**
      * @return \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToStorageBridgeInterface
      */
-    protected function getStorage()
+    protected function getStorageClient(): ShoppingListSessionToStorageBridgeInterface
     {
-        return $this->getProvidedDependency(ShoppingListSessionDependencyProvider::SHOPPING_LIST_STORAGE);
+        return $this->getProvidedDependency(ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_STORAGE_CLIENT);
     }
 
     /**
      * @return \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListBridgeInterface
      */
-    protected function getShoppingListClient()
+    protected function getShoppingListClient(): ShoppingListSessionToShoppingListBridgeInterface
     {
-        return $this->getProvidedDependency(ShoppingListSessionDependencyProvider::CLIENT_SHOPPING_LIST);
+        return $this->getProvidedDependency(ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT);
     }
 
     /**
@@ -69,7 +72,7 @@ class ShoppingListSessionFactory extends AbstractFactory
      */
     protected function getShoppingListCollectionOutdatedPlugins(): array
     {
-        return $this->getProvidedDependency(ShoppingListSessionDependencyProvider::PLUGINS_SHOPPING_LIST_COLLECTION_OUTDATED);
+        return $this->getProvidedDependency(ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_COLLECTION_OUTDATED_PLUGINS);
     }
 
     /**

@@ -15,17 +15,17 @@ use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSt
 
 class ShoppingListSessionDependencyProvider extends AbstractDependencyProvider
 {
-    const SHOPPING_LIST_STORAGE = 'CLIENT:SHOPPING_LIST_SESSION:SHOPPING_LIST_STORAGE';
-    const CLIENT_SESSION = 'CLIENT:SHOPPING_LIST_SESSION:CLIENT_SESSION';
-    const CLIENT_SHOPPING_LIST = 'CLIENT:SHOPPING_LIST_SESSION:CLIENT_SHOPPING_LIST';
-    const PLUGINS_SHOPPING_LIST_COLLECTION_OUTDATED = 'CLIENT:SHOPPING_LIST_SESSION:PLUGINS_SHOPPING_LIST_COLLECTION_OUTDATED';
+    public const SHOPPING_LIST_SESSION_STORAGE_CLIENT = 'SHOPPING_LIST_SESSION_STORAGE_CLIENT';
+    public const SHOPPING_LIST_SESSION_SESSION_CLIENT = 'SHOPPING_LIST_SESSION_SESSION_CLIENT';
+    public const SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT = 'SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT';
+    public const SHOPPING_LIST_SESSION_COLLECTION_OUTDATED_PLUGINS = 'SHOPPING_LIST_SESSION_COLLECTION_OUTDATED_PLUGINS';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addStorageClient($container);
         $container = $this->addSessionClient($container);
@@ -40,9 +40,9 @@ class ShoppingListSessionDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addStorageClient(Container $container)
+    protected function addStorageClient(Container $container): Container
     {
-        $container[static::SHOPPING_LIST_STORAGE] = function (Container $container) {
+        $container[static::SHOPPING_LIST_SESSION_STORAGE_CLIENT] = function (Container $container) {
             return new ShoppingListSessionToStorageBridge($container->getLocator()->storage()->client());
         };
 
@@ -56,7 +56,7 @@ class ShoppingListSessionDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSessionClient(Container $container): Container
     {
-        $container[static::CLIENT_SESSION] = function (Container $container) {
+        $container[static::SHOPPING_LIST_SESSION_SESSION_CLIENT] = function (Container $container) {
             return new ShoppingListSessionToSessionClientBridge($container->getLocator()->session()->client());
         };
 
@@ -70,7 +70,7 @@ class ShoppingListSessionDependencyProvider extends AbstractDependencyProvider
      */
     protected function addShoppingListClient(Container $container): Container
     {
-        $container[static::CLIENT_SHOPPING_LIST] = function (Container $container) {
+        $container[static::SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT] = function (Container $container) {
             return new ShoppingListSessionToShoppingListBridge($container->getLocator()->shoppingList()->client());
         };
 
@@ -84,7 +84,7 @@ class ShoppingListSessionDependencyProvider extends AbstractDependencyProvider
      */
     protected function addShoppingListCollectionOutdatedPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_SHOPPING_LIST_COLLECTION_OUTDATED] = function () {
+        $container[static::SHOPPING_LIST_SESSION_COLLECTION_OUTDATED_PLUGINS] = function () {
             return $this->getShoppingListCollectionOutdatedPlugins();
         };
 

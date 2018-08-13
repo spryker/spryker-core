@@ -16,8 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ShoppingListSessionClient extends AbstractClient implements ShoppingListSessionClientInterface
 {
     /**
-     * Specification:
-     *  - Gets Customer Shopping List Collection from Session or from Storage if data became outdated.
+     * {@inheritdoc}
      *
      * @api
      *

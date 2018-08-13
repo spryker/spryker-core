@@ -13,7 +13,7 @@ use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSt
 
 class ShoppingListSessionSessionStorage implements ShoppingListSessionStorageInterface
 {
-    const SESSION_KEY_SHOPPING_LIST_COLLECTION = 'SESSION_KEY_SHOPPING_LIST_COLLECTION';
+    public const SESSION_KEY_SHOPPING_LIST_COLLECTION = 'SESSION_KEY_SHOPPING_LIST_COLLECTION';
 
     /**
      * @var \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToStorageBridgeInterface
@@ -50,7 +50,7 @@ class ShoppingListSessionSessionStorage implements ShoppingListSessionStorageInt
     /**
      * @return \Generated\Shared\Transfer\ShoppingListSessionTransfer|null
      */
-    public function getShoppingListCollection(): ?ShoppingListSessionTransfer
+    public function findShoppingListCollection(): ?ShoppingListSessionTransfer
     {
         return $this->sessionClient->get(static::SESSION_KEY_SHOPPING_LIST_COLLECTION);
     }
