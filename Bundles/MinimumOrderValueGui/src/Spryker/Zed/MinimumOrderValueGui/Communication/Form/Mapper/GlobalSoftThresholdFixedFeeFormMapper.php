@@ -9,7 +9,7 @@ namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper;
 
 use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
-use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConstants;
+use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConfig;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 
 class GlobalSoftThresholdFixedFeeFormMapper extends AbstractGlobalThresholdFormMapper implements GlobalThresholdFormMapperInterface
@@ -33,8 +33,8 @@ class GlobalSoftThresholdFixedFeeFormMapper extends AbstractGlobalThresholdFormM
         $globalMinimumOrderValueTransfer->getMinimumOrderValue()->setFee($data[GlobalThresholdType::FIELD_SOFT_FIXED_FEE]);
 
         $minimumOrderValueTypeTransfer = (new MinimumOrderValueTypeTransfer())
-            ->setKey(MinimumOrderValueGuiConstants::SOFT_TYPE_STRATEGY_FIXED)
-            ->setThresholdGroup(MinimumOrderValueGuiConstants::GROUP_SOFT);
+            ->setKey(MinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_FIXED)
+            ->setThresholdGroup(MinimumOrderValueGuiConfig::GROUP_SOFT);
         $globalMinimumOrderValueTransfer->getMinimumOrderValue()->setMinimumOrderValueType($minimumOrderValueTypeTransfer);
 
         return $globalMinimumOrderValueTransfer;

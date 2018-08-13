@@ -29,13 +29,7 @@ class LocaleProvider
      */
     public function getLocaleCollection()
     {
-        $result = [];
-
-        foreach ($this->localeFacade->getLocaleCollection() as $localeCode => $localeTransfer) {
-            $result[] = $localeTransfer;
-        }
-
-        return $result;
+        return $this->localeFacade->getLocaleCollection();
     }
 
     /**

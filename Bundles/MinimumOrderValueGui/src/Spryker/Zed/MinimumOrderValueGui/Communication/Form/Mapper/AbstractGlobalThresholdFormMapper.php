@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\LocalizedForm;
-use Spryker\Zed\MinimumOrderValueGui\Communication\Model\StoreCurrencyFinder;
+use Spryker\Zed\MinimumOrderValueGui\Communication\StoreCurrency\StoreCurrencyFinderInterface;
 
 abstract class AbstractGlobalThresholdFormMapper
 {
@@ -22,17 +22,17 @@ abstract class AbstractGlobalThresholdFormMapper
     protected $localeProvider;
 
     /**
-     * @var \Spryker\Zed\MinimumOrderValueGui\Communication\Model\StoreCurrencyFinder
+     * @var \Spryker\Zed\MinimumOrderValueGui\Communication\StoreCurrency\StoreCurrencyFinderInterface
      */
     protected $storeCurrencyFinder;
 
     /**
      * @param \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider $localeProvider
-     * @param \Spryker\Zed\MinimumOrderValueGui\Communication\Model\StoreCurrencyFinder $storeCurrencyFinder
+     * @param \Spryker\Zed\MinimumOrderValueGui\Communication\StoreCurrency\StoreCurrencyFinderInterface $storeCurrencyFinder
      */
     public function __construct(
         LocaleProvider $localeProvider,
-        StoreCurrencyFinder $storeCurrencyFinder
+        StoreCurrencyFinderInterface $storeCurrencyFinder
     ) {
         $this->localeProvider = $localeProvider;
         $this->storeCurrencyFinder = $storeCurrencyFinder;
@@ -48,7 +48,7 @@ abstract class AbstractGlobalThresholdFormMapper
         array $data,
         GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
     ): GlobalMinimumOrderValueTransfer {
-        $storeCurrencyTransfer = $this->storeCurrencyFinder->findStoreCurrencyByString($data[GlobalThresholdType::FIELD_STORE_CURRENCY]);
+        $storeCurrencyTransfer = $this->storeCurrencyFinder->getStoreCurrencyByString($data[GlobalThresholdType::FIELD_STORE_CURRENCY]);
 
         $globalMinimumOrderValueTransfer->setStore($storeCurrencyTransfer->getStore());
         $globalMinimumOrderValueTransfer->setCurrency($storeCurrencyTransfer->getCurrency());

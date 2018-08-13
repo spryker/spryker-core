@@ -10,7 +10,7 @@ namespace Spryker\Shared\MinimumOrderValueGui;
 /**
  * Declares global environment configuration keys. Do not use it for other class constants.
  */
-interface MinimumOrderValueGuiConstants
+interface MinimumOrderValueGuiConfig
 {
     public const STORE_CURRENCY_DELIMITER = ';';
     public const STORE_CURRENCY_URL_KEY = 'store_currency';
