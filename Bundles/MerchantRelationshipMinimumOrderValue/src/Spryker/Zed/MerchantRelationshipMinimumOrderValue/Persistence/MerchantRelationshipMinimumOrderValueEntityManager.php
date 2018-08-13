@@ -62,7 +62,7 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
             ->createMerchantRelationshipMinimumOrderValueMapper()
             ->mapMerchantRelationshipMinimumOrderValueEntityToTransfer(
                 $merchantRelationshipMinimumOrderValueEntity,
-                new MerchantRelationshipMinimumOrderValueTransfer()
+                $merchantRelationshipMinimumOrderValueTransfer
             );
     }
 
