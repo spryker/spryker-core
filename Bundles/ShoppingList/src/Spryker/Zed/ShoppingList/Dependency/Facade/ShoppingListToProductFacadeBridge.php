@@ -49,7 +49,7 @@ class ShoppingListToProductFacadeBridge implements ShoppingListToProductFacadeIn
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getProductConcrete(string $sku): ProductConcreteTransfer
+    public function getProductConcrete($sku)
     {
         return $this->productFacade->getProductConcrete($sku);
     }

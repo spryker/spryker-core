@@ -32,5 +32,5 @@ interface ShoppingListToProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getProductConcrete(string $sku): ProductConcreteTransfer;
+    public function getProductConcrete($sku);
 }
