@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
 use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
@@ -66,7 +67,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
             ->queryProductOptionByProductOptionCriteria($productOptionCriteriaTransfer)
             ->find();
 
-        $productOptionCollectionTransfer = $this->hydrateProductOptionCollectionTransfer($productOptionValueEntities);
+        $productOptionCollectionTransfer = $this->hydrateProductOptionCollectionTransfer($productOptionValueEntities->getArrayCopy());
 
         return $productOptionCollectionTransfer;
     }
@@ -85,7 +86,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
             $productOptionTransfers[] = $this->hydrateProductOptionTransfer($productOptionValueEntity);
         }
 
-        $productOptionCollectionTransfer->setProductOptions($productOptionTransfers);
+        $productOptionCollectionTransfer->setProductOptions(new ArrayObject($productOptionTransfers));
 
         return $productOptionCollectionTransfer;
     }

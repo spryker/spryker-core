@@ -26,6 +26,7 @@ class ShoppingListProductOptionRepository extends AbstractRepository implements 
             ->createSpyShoppingListProductOptionQuery()
             ->filterByFkShoppingListItem($idShoppingListItem)
             ->select([SpyShoppingListProductOptionTableMap::COL_FK_PRODUCT_OPTION_VALUE])
-            ->find();
+            ->find()
+            ->getArrayCopy();
     }
 }
