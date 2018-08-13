@@ -65,6 +65,8 @@ class StoresCurrencyReader implements StoresCurrencyReaderInterface
         $isoCode = $this->store->getCurrencyIsoCode();
         $currency = $this->currencyClient->fromIsoCode($isoCode);
 
+        // need to form response
+
         return $this->restResourceBuilder->createRestResponse();;
     }
 

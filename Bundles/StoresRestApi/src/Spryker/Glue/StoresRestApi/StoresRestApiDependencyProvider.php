@@ -42,7 +42,7 @@ class StoresRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CLIENT_COUNTRY] = function (Container $container) {
             return new StoresRestApiToCountryClientBridge($container->getLocator()->country()->client());
         };
-
+        
         return $container;
     }
 

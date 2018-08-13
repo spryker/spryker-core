@@ -7,11 +7,14 @@
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
 use Generated\Shared\Transfer\CountryTransfer;
+use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
+use Generated\Shared\Transfer\StoreRegionRestAttributesTransfer;
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCountryResourceMapperInterface;
+use Spryker\Glue\StoresRestApi\StoresRestApiConfig;
 use Spryker\Shared\Kernel\Store;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -68,7 +71,11 @@ class StoresCountryReader implements StoresCountryReaderInterface
         $regions = $this->countryClient->getRegionsByCountryIso2Code($countryTransfer);
         $country = $this->countryClient->getCountryByIso2Code($countryTransfer);
 
-        return $this->restResourceBuilder->createRestResponse();
+        $storeCountryAttributesTransfer = new StoreCountryRestAttributesTransfer();
+
+        // need to form response
+
+        //return $this->restResourceBuilder->createRestResponse()->addResource($restResource);
     }
 
     /**

@@ -74,6 +74,7 @@ class StoresReader implements StoresReaderInterface
         $storesCurrencyAttributes = $this->currencyReader->getStoresCurrencyAttributes($restRequest);
         $storesCountryAttributes = $this->countryReader->getStoresCountryAttributes($restRequest);
 
+        // need to form response
         return $this->restResourceBuilder->createRestResponse();
     }
 
