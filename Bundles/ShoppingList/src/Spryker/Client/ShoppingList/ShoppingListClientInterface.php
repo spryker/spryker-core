@@ -72,6 +72,20 @@ interface ShoppingListClientInterface
     /**
      * Specification:
      *  - Makes Zed request.
+     *  - Remove all shopping list items.
+     *  - Get messages from zed request and put them to session.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Makes Zed request.
      *  - Add item to shopping list.
      *  - Updates customer permissions.
      *  - Get messages from zed request and put them to session.

@@ -91,6 +91,24 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        $shoppingListResponseTransfer = $this->getZedStub()->clearShoppingList($shoppingListTransfer);
+
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
+
+        return $shoppingListResponseTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer

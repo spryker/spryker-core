@@ -17,6 +17,7 @@
         <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" />
         <property name="sharedCompanyUsers" type="ShoppingListCompanyUser[]" />
         <property name="sharedCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" />
+        <property name="items" type="ShoppingListItem[]" />
     </transfer>
 
     <transfer name="ShoppingListCollection">

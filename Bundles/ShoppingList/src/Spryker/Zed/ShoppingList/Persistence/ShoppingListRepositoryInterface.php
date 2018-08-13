@@ -58,6 +58,13 @@ interface ShoppingListRepositoryInterface
     public function findShoppingListById(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer;
 
     /**
+     * @param int $idShoppingList
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function findShoppingListItemsByIdShoppingList(int $idShoppingList): ShoppingListItemCollectionTransfer;
+
+    /**
      * @param int[] $shoppingListIds
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer

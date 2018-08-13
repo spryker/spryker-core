@@ -64,6 +64,18 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
+     *  - Remove all shopping list items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
+
+    /**
+     * Specification:
      *  - Add item to shopping list.
      *  - Add create shopping list success message if shopping list created.
      *

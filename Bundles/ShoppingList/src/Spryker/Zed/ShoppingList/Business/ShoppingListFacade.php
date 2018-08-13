@@ -82,6 +82,22 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->getFactory()
+            ->createShoppingListItemOperation()
+            ->clearShoppingList($shoppingListTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
