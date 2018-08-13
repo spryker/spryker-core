@@ -56,7 +56,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return string
+     * @return int|null
      */
     public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
