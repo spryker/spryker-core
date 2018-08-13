@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingListProductOption\Business\Model;
 
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
+use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Spryker\Zed\ShoppingListProductOption\Dependency\Facade\ShoppingListProductOptionToProductOptionFacadeInterface;
 use Spryker\Zed\ShoppingListProductOption\Persistence\ShoppingListProductOptionRepositoryInterface;
 
@@ -45,7 +46,8 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
         $shoppingListItemProductOptionIds = $this->shoppingListProductOptionRepository
             ->findShoppingListItemProductOptionIdsByFkShoppingListItem($idShoppingListItem);
 
-        //todo:implement facade method and return real collection ProductOptionCollectionTransfer
-        return new ProductOptionCollectionTransfer();
+        $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setIds($shoppingListItemProductOptionIds);
+
+        return $this->productOptionFacade->getProductOptionCollectionByCriteria($productOptionCriteriaTransfer);
     }
 }

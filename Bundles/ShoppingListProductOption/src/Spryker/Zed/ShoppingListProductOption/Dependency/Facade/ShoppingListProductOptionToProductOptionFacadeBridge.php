@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ShoppingListProductOption\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
+use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
+
 class ShoppingListProductOptionToProductOptionFacadeBridge implements ShoppingListProductOptionToProductOptionFacadeInterface
 {
     /**
@@ -23,10 +26,13 @@ class ShoppingListProductOptionToProductOptionFacadeBridge implements ShoppingLi
     }
 
     /**
-     * @return void
+     * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function getShoppingListItemProductOptionsByIdShoppingListItem()
+    public function getProductOptionCollectionByCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer
     {
-       //todo: add method
+        return $this->productOptionFacade
+            ->getProductOptionCollectionByCriteria($productOptionCriteriaTransfer);
     }
 }
