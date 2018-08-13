@@ -35,7 +35,7 @@ class PhpInfoController extends AbstractController
         phpinfo();
         $phpInfo = ob_get_clean();
 
-        preg_match("/<body[^>]*>(.*?)<\/body>/is", $phpInfo, $matches);
+        preg_match("/<body[^>]*>(.*?)<\/body>/is", (string)$phpInfo, $matches);
 
         $phpInfoContent = $matches[1];
         $phpInfoContent = str_replace('div class="center"', 'div class="phpinfo-content"', $phpInfoContent);
@@ -52,7 +52,7 @@ class PhpInfoController extends AbstractController
     {
         $maxStringLengthNeeded = strpos($phpInfoContent, '<h2>PHP License</h2>');
 
-        $phpInfoContent = substr($phpInfoContent, 0, $maxStringLengthNeeded);
+        $phpInfoContent = substr($phpInfoContent, 0, (int)$maxStringLengthNeeded);
 
         return $phpInfoContent;
     }
