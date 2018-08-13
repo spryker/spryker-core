@@ -13,6 +13,7 @@
   "require-dev": {
     "spryker/catalog": "*",
     "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/elastica": "*",
     "spryker/search": "*",
     "spryker/testify": "*"

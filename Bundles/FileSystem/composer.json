@@ -10,6 +10,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/flysystem-local-file-system": "*",
+    "spryker/fly-system": "*",
     "spryker/testify": "*"
   },
   "suggest": {

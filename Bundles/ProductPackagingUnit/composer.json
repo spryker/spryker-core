@@ -25,6 +25,7 @@
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
+    "spryker/persistent-cart": "*",
     "spryker/stock": "*",
     "spryker/testify": "*"
   },

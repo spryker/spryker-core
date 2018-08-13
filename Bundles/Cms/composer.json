@@ -21,6 +21,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/cms-block": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
