@@ -59,7 +59,7 @@ class MinimumOrderValueBusinessTester extends Actor
     public function createCurrencyTransfer(): CurrencyTransfer
     {
         return (new CurrencyTransfer())
-            ->setIdCurrency(1)
+            ->setIdCurrency(93)
             ->setCode('EUR');
     }
 

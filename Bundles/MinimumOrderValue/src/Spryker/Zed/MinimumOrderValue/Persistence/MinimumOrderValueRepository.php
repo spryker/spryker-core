@@ -62,7 +62,6 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
             ->filterByStoreTransfer($storeTransfer)
             ->filterByCurrencyTransfer($currencyTransfer)
             ->joinWithMinimumOrderValueType()
-            ->leftJoinWithSpyMinimumOrderValueLocalizedMessage()
             ->find();
 
         $globalMinimumOrderValueTransfers = [];

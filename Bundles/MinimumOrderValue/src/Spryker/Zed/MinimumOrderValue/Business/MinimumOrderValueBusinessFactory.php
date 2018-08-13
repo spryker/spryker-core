@@ -22,7 +22,13 @@ use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueType\MinimumOrderVal
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueType\MinimumOrderValueTypeReaderInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolver;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
+use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationReader;
+use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationReaderInterface;
+use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationWriter;
+use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationWriterInterface;
+use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface;
+use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\MinimumOrderValueDependencyProvider;
 
 /**
@@ -60,7 +66,8 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     public function createGlobalThresholdReader(): GlobalThresholdReaderInterface
     {
         return new GlobalThresholdReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createMinimumOrderValueTranslationReader()
         );
     }
 
@@ -71,7 +78,30 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     {
         return new GlobalThresholdWriter(
             $this->createMinimumOrderValueStrategyResolver(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->createMinimumOrderValueTranslationWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationReaderInterface
+     */
+    public function createMinimumOrderValueTranslationReader(): MinimumOrderValueTranslationReaderInterface
+    {
+        return new MinimumOrderValueTranslationReader(
+            $this->getGlossaryFacade(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationWriterInterface
+     */
+    public function createMinimumOrderValueTranslationWriter(): MinimumOrderValueTranslationWriterInterface
+    {
+        return new MinimumOrderValueTranslationWriter(
+            $this->getGlossaryFacade(),
+            $this->getStoreFacade()
         );
     }
 
@@ -116,6 +146,22 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     public function getMinimumOrderValueDataSourceStrategies(): array
     {
         return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::MINIMUM_ORDER_VALUE_DATA_SOURCE_STRATEGIES);
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface
+     */
+    protected function getGlossaryFacade(): MinimumOrderValueToGlossaryFacadeInterface
+    {
+        return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeInterface
+     */
+    protected function getStoreFacade(): MinimumOrderValueToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::FACADE_STORE);
     }
 
     /**

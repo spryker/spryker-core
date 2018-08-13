@@ -9,6 +9,7 @@ namespace Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationReaderInterface;
 use Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueRepositoryInterface;
 
 class GlobalThresholdReader implements GlobalThresholdReaderInterface
@@ -19,12 +20,20 @@ class GlobalThresholdReader implements GlobalThresholdReaderInterface
     protected $minimumOrderValueRepository;
 
     /**
+     * @var \Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationReaderInterface
+     */
+    protected $translationReader;
+
+    /**
      * @param \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueRepositoryInterface $minimumOrderValueRepository
+     * @param \Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationReaderInterface $translationReader
      */
     public function __construct(
-        MinimumOrderValueRepositoryInterface $minimumOrderValueRepository
+        MinimumOrderValueRepositoryInterface $minimumOrderValueRepository,
+        MinimumOrderValueTranslationReaderInterface $translationReader
     ) {
         $this->minimumOrderValueRepository = $minimumOrderValueRepository;
+        $this->translationReader = $translationReader;
     }
 
     /**
@@ -37,10 +46,16 @@ class GlobalThresholdReader implements GlobalThresholdReaderInterface
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array {
-        return $this->minimumOrderValueRepository
+        $globalMinimumOrderValueTransfers = $this->minimumOrderValueRepository
             ->getGlobalThresholdsByStoreAndCurrency(
                 $storeTransfer,
                 $currencyTransfer
             );
+
+        foreach ($globalMinimumOrderValueTransfers as $globalMinimumOrderValueTransfer) {
+            $this->translationReader->hydrateLocalizedMessages($globalMinimumOrderValueTransfer);
+        }
+
+        return $globalMinimumOrderValueTransfers;
     }
 }

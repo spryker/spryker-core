@@ -86,7 +86,7 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
             ->createMinimumOrderValueMapper()
             ->mapGlobalMinimumOrderValueEntityToTransfer(
                 $minimumOrderValueEntity,
-                new GlobalMinimumOrderValueTransfer()
+                $globalMinimumOrderValueTransfer
             );
     }
 
