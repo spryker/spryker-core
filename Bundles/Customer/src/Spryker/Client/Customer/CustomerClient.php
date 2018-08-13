@@ -234,7 +234,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      */
     public function deleteCustomer(CustomerTransfer $customerTransfer)
     {
-         return $this->getFactory()
+        return $this->getFactory()
             ->createZedCustomerStub()
             ->delete($customerTransfer);
     }
