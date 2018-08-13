@@ -62,14 +62,22 @@ class CustomersWriter implements CustomersWriterInterface
             return $response;
         }
 
-        $this->customerClient->deleteCustomer($customerTransfer);
-        $resource = $this->restResourceBuilder->createRestResource(
-            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
-            $customerTransfer->getCustomerReference(),
-            $restCustomersAttributesTransfer
-        );
+        /**
+         * @var \Generated\Shared\Transfer\CustomerResponseTransfer $result
+         */
+        $result = $this->customerClient->deleteCustomer($customerTransfer);
+        if (!$result->getIsSuccess()) {
+            foreach ($result->getErrors() as $error) {
+                $restErrorTransfer = (new RestErrorMessageTransfer())
+                    ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CAN_NOT_DELETE_CUSTOMER)
+                    ->setStatus(Response::HTTP_BAD_REQUEST)
+                    ->setDetail($error->getMessage());
 
-        $response->addResource($resource);
+                $response->addError($restErrorTransfer);
+            }
+
+            return $response;
+        }
 
         return $response;
     }

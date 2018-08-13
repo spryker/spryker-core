@@ -92,7 +92,7 @@ interface CustomerClientInterface
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function deleteCustomer(CustomerTransfer $customerTransfer);
 

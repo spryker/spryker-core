@@ -71,7 +71,7 @@ interface CustomerStubInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Spryker\Client\ZedRequest\Client\Response
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function delete(CustomerTransfer $customerTransfer);
 

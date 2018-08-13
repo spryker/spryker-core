@@ -14,4 +14,6 @@ class CustomersRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_CUSTOMER_NOT_FOUND = '402';
     public const RESPONSE_DETAILS_CUSTOMER_NOT_FOUND = 'Customer not found.';
+
+    public const RESPONSE_CODE_CAN_NOT_DELETE_CUSTOMER = '405';
 }
