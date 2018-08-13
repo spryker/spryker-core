@@ -10,6 +10,7 @@ namespace Spryker\Client\ShoppingListSession\ShoppingList;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListSessionTransfer;
 use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListBridgeInterface;
+use Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutorInterface;
 use Spryker\Client\ShoppingListSession\Storage\ShoppingListSessionStorageInterface;
 
 class ShoppingListSessionReader implements ShoppingListSessionReaderInterface
@@ -25,23 +26,23 @@ class ShoppingListSessionReader implements ShoppingListSessionReaderInterface
     protected $shoppingListClient;
 
     /**
-     * @var array|\Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface[]
+     * @var \Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutorInterface
      */
-    protected $shoppingListCollectionOutdatedPlugins;
+    protected $shoppingListSessionPluginsExecutor;
 
     /**
      * @param \Spryker\Client\ShoppingListSession\Storage\ShoppingListSessionStorageInterface $shoppingListSessionStorage
      * @param \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListBridgeInterface $shoppingListClient
-     * @param \Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface[] $shoppingListCollectionOutdatedPlugins
+     * @param \Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutorInterface $shoppingListSessionPluginsExecutor
      */
     public function __construct(
         ShoppingListSessionStorageInterface $shoppingListSessionStorage,
         ShoppingListSessionToShoppingListBridgeInterface $shoppingListClient,
-        array $shoppingListCollectionOutdatedPlugins
+        ShoppingListSessionPluginsExecutorInterface $shoppingListSessionPluginsExecutor
     ) {
         $this->shoppingListSessionStorage = $shoppingListSessionStorage;
         $this->shoppingListClient = $shoppingListClient;
-        $this->shoppingListCollectionOutdatedPlugins = $shoppingListCollectionOutdatedPlugins;
+        $this->shoppingListSessionPluginsExecutor = $shoppingListSessionPluginsExecutor;
     }
 
     /**
@@ -51,7 +52,8 @@ class ShoppingListSessionReader implements ShoppingListSessionReaderInterface
     {
         $shoppingListSessionTransfer = $this->shoppingListSessionStorage->getShoppingListCollection();
 
-        if ($shoppingListSessionTransfer === null || $this->isCollectionOutdated($shoppingListSessionTransfer) === true) {
+        if ($shoppingListSessionTransfer === null ||
+            $this->shoppingListSessionPluginsExecutor->executeCollectionOutdatedPlugins($shoppingListSessionTransfer) === true) {
             $customerShoppingListCollectionTransfer = $this->shoppingListClient->getCustomerShoppingListCollection();
             if (!$customerShoppingListCollectionTransfer) {
                 return new ShoppingListCollectionTransfer();
@@ -63,24 +65,5 @@ class ShoppingListSessionReader implements ShoppingListSessionReaderInterface
         }
 
         return $shoppingListSessionTransfer->getShoppingLists();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListSessionTransfer|null $shoppingListSessionTransfer
-     *
-     * @return bool
-     */
-    protected function isCollectionOutdated(?ShoppingListSessionTransfer $shoppingListSessionTransfer = null): bool
-    {
-        if (!$shoppingListSessionTransfer) {
-            return true;
-        }
-        foreach ($this->shoppingListCollectionOutdatedPlugins as $shoppingListCollectionOutdatedPlugin) {
-            if ($shoppingListCollectionOutdatedPlugin->isCollectionOutdated($shoppingListSessionTransfer)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

@@ -9,6 +9,8 @@ namespace Spryker\Client\ShoppingListSession;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ShoppingListSession\ShoppingList\ShoppingListSessionReader;
+use Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutor;
+use Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutorInterface;
 use Spryker\Client\ShoppingListSession\Storage\ShoppingListSessionSessionStorage;
 
 class ShoppingListSessionFactory extends AbstractFactory
@@ -34,7 +36,7 @@ class ShoppingListSessionFactory extends AbstractFactory
         return new ShoppingListSessionReader(
             $this->createShoppingListSessionStorage(),
             $this->getShoppingListClient(),
-            $this->getShoppingListCollectionOutdatedPlugins()
+            $this->createShoppingListCollectionOutdatedPluginsExecutor()
         );
     }
 
@@ -68,5 +70,15 @@ class ShoppingListSessionFactory extends AbstractFactory
     protected function getShoppingListCollectionOutdatedPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListSessionDependencyProvider::PLUGINS_SHOPPING_LIST_COLLECTION_OUTDATED);
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutorInterface
+     */
+    protected function createShoppingListCollectionOutdatedPluginsExecutor(): ShoppingListSessionPluginsExecutorInterface
+    {
+        return new ShoppingListSessionPluginsExecutor(
+            $this->getShoppingListCollectionOutdatedPlugins()
+        );
     }
 }
