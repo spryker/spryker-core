@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\MinimumOrderValue\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
@@ -52,10 +53,13 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
     }
 
     /**
+     * @depends testInstallMinimumOrderValueTypesShouldPersistTypes
+     *
      * @return void
      */
     public function testSetStoreHardAndSoftThresholds(): void
     {
+        // Prepare
         $minimumOrderValueHardTypeTransfer = $this->findMinimumOrderValueTypeTransferForGroup(
             MinimumOrderValueStrategyInterface::GROUP_HARD
         );
@@ -64,9 +68,9 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
             MinimumOrderValueStrategyInterface::GROUP_SOFT
         );
 
-        $storeTransferDE = (new StoreTransfer())->setIdStore(1)->setName('DE');
+        $storeTransferDE = $this->tester->createStoreTransfer();
         $storeTransferUS = (new StoreTransfer())->setIdStore(2)->setName('US');
-        $currencyTransferEUR = (new CurrencyTransfer())->setIdCurrency(1)->setCode('EUR');
+        $currencyTransferEUR = $this->tester->createCurrencyTransfer();
         $currencyTransferUSD = (new CurrencyTransfer())->setIdCurrency(2)->setCode('USD');
 
         // Action
@@ -143,6 +147,52 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
                 $currencyTransferUSD,
                 200
             )
+        );
+    }
+
+    /**
+     * @depends testSetStoreHardAndSoftThresholds
+     *
+     * @return void
+     */
+    public function testGetGlobalThresholdsByStoreAndCurrency(): void
+    {
+        // Prepare
+        $storeTransfer = $this->tester->createStoreTransfer();
+        $currencyTransfer = $this->tester->createCurrencyTransfer();
+
+        // Action
+        $this->getFacade()->getGlobalThresholdsByStoreAndCurrency(
+            $storeTransfer,
+            $currencyTransfer
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCartPostSaveMinimumOrderValueCheck(): void
+    {
+        // Prepare
+        $quoteTransfer = $this->tester->createTestQuoteTransfer();
+
+        // Action
+        $this->getFacade()->cartMinimumOrderValuePostSave($quoteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckCheckoutMinimumOrderValue(): void
+    {
+        // Prepare
+        $quoteTransfer = $this->tester->createTestQuoteTransfer();
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
+        // Action
+        $this->getFacade()->checkCheckoutMinimumOrderValue(
+            $quoteTransfer,
+            $checkoutResponseTransfer
         );
     }
 

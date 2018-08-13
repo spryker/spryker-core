@@ -1,5 +1,5 @@
 store,currency,strategy,threshold,fee,message_en,message_de
-DE,EUR,hard-threshold,400,,,
-DE,EUR,soft-threshold,1000,,,
-DE,CHF,hard-threshold,1200,,,
-DE,CHF,soft-threshold,2000,,,
+DE,EUR,hard-threshold,40000,,,
+DE,EUR,soft-threshold,100000,,,
+DE,CHF,hard-threshold,120000,,,
+DE,CHF,soft-threshold,200000,,,

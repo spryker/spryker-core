@@ -36,4 +36,18 @@ interface MinimumOrderValueStrategyInterface
      * @return bool
      */
     public function isValid(MinimumOrderValueTransfer $minimumOrderValueTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     *
+     * @return bool
+     */
+    public function isApplicable(MinimumOrderValueTransfer $minimumOrderValueTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     *
+     * @return int|null
+     */
+    public function calculateFee(MinimumOrderValueTransfer $minimumOrderValueTransfer): ?int;
 }

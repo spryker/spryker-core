@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdReader;
+use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdReaderInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdWriter;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdWriterInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface;
@@ -15,6 +17,7 @@ use Spryker\Zed\MerchantRelationshipMinimumOrderValue\MerchantRelationshipMinimu
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\MerchantRelationshipMinimumOrderValueEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\MerchantRelationshipMinimumOrderValueRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantRelationshipMinimumOrderValue\MerchantRelationshipMinimumOrderValueConfig getConfig()
  */
 class MerchantRelationshipMinimumOrderValueBusinessFactory extends AbstractBusinessFactory
@@ -25,6 +28,16 @@ class MerchantRelationshipMinimumOrderValueBusinessFactory extends AbstractBusin
     public function getMinimumOrderValueFacade(): MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface
     {
         return $this->getProvidedDependency(MerchantRelationshipMinimumOrderValueDependencyProvider::FACADE_MINIMUM_ORDER_VALUE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdReaderInterface
+     */
+    public function createMerchantRelationshipThresholdReader(): MerchantRelationshipThresholdReaderInterface
+    {
+        return new MerchantRelationshipThresholdReader(
+            $this->getRepository()
+        );
     }
 
     /**

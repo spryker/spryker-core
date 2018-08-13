@@ -13,6 +13,7 @@
         <property name="minimumOrderValueType" type="MinimumOrderValueType"/>
         <property name="value" type="int"/>
         <property name="fee" type="int"/>
+        <property name="subTotal" type="int"/>
         <property name="localizedMessages" type="MinimumOrderValueLocalizedMessage[]" singular="localizedMessage" />
     </transfer>
 
