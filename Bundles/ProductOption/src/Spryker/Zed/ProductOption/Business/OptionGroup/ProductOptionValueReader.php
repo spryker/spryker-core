@@ -107,7 +107,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    protected function hydrateProductOptionTransfer(SpyProductOptionValue $productOptionValueEntity): ProductOptionTransfer
+    protected function hydrateProductOptionTransfer(SpyProductOptionValue $productOptionValueEntity)
     {
         $productOptionTransfer = new ProductOptionTransfer();
         $productOptionTransfer->fromArray($productOptionValueEntity->toArray(), true);
