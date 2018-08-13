@@ -7,10 +7,12 @@
 
 namespace Spryker\Client\ShoppingListSession\ShoppingList;
 
+use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+
 interface ShoppingListSessionReaderInterface
 {
     /**
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
-    public function getCustomerShoppingListCollection();
+    public function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer;
 }

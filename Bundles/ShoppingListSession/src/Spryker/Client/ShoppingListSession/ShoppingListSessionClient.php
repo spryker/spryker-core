@@ -23,7 +23,7 @@ class ShoppingListSessionClient extends AbstractClient implements ShoppingListSe
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
-    public function getCustomerShoppingLists(): ShoppingListCollectionTransfer
+    public function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer
     {
         return $this->getFactory()->createShoppingListSessionReader()->getCustomerShoppingListCollection();
     }

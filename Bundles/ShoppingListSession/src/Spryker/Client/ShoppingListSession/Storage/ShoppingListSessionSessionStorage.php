@@ -52,6 +52,6 @@ class ShoppingListSessionSessionStorage implements ShoppingListSessionStorageInt
      */
     public function getShoppingListCollection(): ?ShoppingListSessionTransfer
     {
-        return $this->sessionClient->get(static::SESSION_KEY_SHOPPING_LIST_COLLECTION/*, new ShoppingListCollectionTransfer()*/);
+        return $this->sessionClient->get(static::SESSION_KEY_SHOPPING_LIST_COLLECTION);
     }
 }
