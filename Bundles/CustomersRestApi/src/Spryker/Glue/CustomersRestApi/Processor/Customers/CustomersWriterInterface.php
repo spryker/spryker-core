@@ -6,15 +6,17 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
-use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
+use Generated\Shared\Transfer\RestCustomersRegularDataTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface CustomersWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomerTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCustomersRegularDataTransfer $restCustomerTransfer
      *
      * @return mixed
      */
-    public function updateCustomer(RestCustomersAttributesTransfer $restCustomerTransfer): RestResponseInterface;
+    public function updateCustomer(RestRequestInterface $restRequest, RestCustomersRegularDataTransfer $restCustomerTransfer): RestResponseInterface;
 }

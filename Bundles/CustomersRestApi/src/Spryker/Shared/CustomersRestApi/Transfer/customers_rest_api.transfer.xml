@@ -24,4 +24,12 @@
         <property name="email" type="string" />
     </transfer>
 
+    <transfer name="RestCustomersRegularData">
+        <property name="customerReference" type="string" />
+        <property name="email" type="string" />
+        <property name="salutation" type="string" />
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
+    </transfer>
+
 </transfers>

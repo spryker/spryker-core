@@ -7,12 +7,14 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
+use Generated\Shared\Transfer\RestCustomersRegularDataTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerClientInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class CustomersWriter implements CustomersWriterInterface
@@ -28,30 +30,40 @@ class CustomersWriter implements CustomersWriterInterface
     protected $restResourceBuilder;
 
     /**
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface
+     */
+    protected $customersResourceMapper;
+
+    /**
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface $customersResourceMapper
      */
     public function __construct(
         CustomerRestApiToCustomerClientInterface $customerClient,
-        RestResourceBuilderInterface $restResourceBuilder
+        RestResourceBuilderInterface $restResourceBuilder,
+        CustomersResourceMapperInterface $customersResourceMapper
     ) {
         $this->customerClient = $customerClient;
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->customersResourceMapper = $customersResourceMapper;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomerTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCustomersRegularDataTransfer $restCustomerTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function updateCustomer(RestCustomersAttributesTransfer $restCustomerTransfer): RestResponseInterface
+    public function updateCustomer(RestRequestInterface $restRequest, RestCustomersRegularDataTransfer $restCustomerTransfer): RestResponseInterface
     {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->fromArray($restCustomerTransfer->toArray(), true);
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $customer = $this->customerClient->findCustomerByReference($customerTransfer);
-        if (!$customer->getIdCustomer()) {
+        $customer = $this->customerClient
+            ->findCustomerByReference((new CustomerTransfer)->setCustomerReference(
+                $restCustomerTransfer->getCustomerReference()
+            ));
+        if (!$customer) {
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
                 ->setStatus(Response::HTTP_NOT_FOUND)
@@ -61,21 +73,24 @@ class CustomersWriter implements CustomersWriterInterface
 
             return $response;
         }
+        $customer->fromArray($restCustomerTransfer->toArray(), true);
 
-        $customerTransfer->fromArray($restCustomerTransfer->toArray(), true);
-        $customerTransfer->setIdCustomer($customer->getIdCustomer());
+        $customerResponseTransfer = $this->customerClient->updateCustomer($customer);
 
-        $customerResponseTransfer = $this->customerClient->updateCustomer($customerTransfer);
-        if ($customerResponseTransfer->getErrors()) {
+        if (!$customerResponseTransfer->getIsSuccess()) {
             $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
+                ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_FAILED_TO_SAVE)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_FAILED_TO_SAVE);
             $response->addError($restErrorTransfer);
         }
 
-        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $resource = $this->customersResourceMapper->mapCustomerTransferToRestResource(
+            $customerResponseTransfer->getCustomerTransfer()
+        );
 
-        return $restResponse;
+        $response->addResource($resource);
+
+        return $response;
     }
 }
