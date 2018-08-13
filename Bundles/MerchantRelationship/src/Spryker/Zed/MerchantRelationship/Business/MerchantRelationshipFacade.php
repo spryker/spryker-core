@@ -88,12 +88,12 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
      *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
-    public function getMerchantRelationshipByKey(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
+    public function findMerchantRelationshipByKey(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer
     {
         return $this->getFactory()
             ->createMerchantRelationshipReader()
-            ->getMerchantRelationshipByKey($merchantRelationshipTransfer);
+            ->findMerchantRelationshipByKey($merchantRelationshipTransfer);
     }
 }

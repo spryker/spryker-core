@@ -10,6 +10,8 @@ namespace Spryker\Zed\MinimumOrderValue\Business\Applier;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategyInterface;
@@ -253,11 +255,22 @@ class ThresholdApplier implements ThresholdApplierInterface
 
         foreach ($minimumOrderValueTransfer->getLocalizedMessages() as $localizedMessageTransfer) {
             if ($localizedMessageTransfer->getLocaleCode() === $quoteTransfer->getCustomer()->getLocale()->getLocaleName()) {
-                $this->messengerFacade->addInfoMessage($localizedMessageTransfer->getMessage());
+                $this->messengerFacade->addInfoMessage($this->createMessageTransfer($localizedMessageTransfer));
 
                 return;
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer $localizedMessageTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createMessageTransfer(MinimumOrderValueLocalizedMessageTransfer $localizedMessageTransfer): MessageTransfer
+    {
+        return (new MessageTransfer())
+            ->setValue($localizedMessageTransfer->getMessage());
     }
 
     /**

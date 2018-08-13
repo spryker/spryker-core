@@ -69,12 +69,12 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $storeTransfer = $this->findStoreByName($dataSet[MinimumOrderValueDataSetInterface::COLUMN_STORE]);
-        if (!$storeTransfer) {
+        if ($storeTransfer === null) {
             return;
         }
 
         $currencyTransfer = $this->findCurrencyByCode($dataSet[MinimumOrderValueDataSetInterface::COLUMN_CURRENCY]);
-        if (!$currencyTransfer) {
+        if ($currencyTransfer === null) {
             return;
         }
 
@@ -124,12 +124,17 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
     /**
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
      */
-    protected function findStoreByName(string $storeName): StoreTransfer
+    protected function findStoreByName(string $storeName): ?StoreTransfer
     {
         if (!isset($this->storesHeap[$storeName])) {
-            $this->storesHeap[$storeName] = $this->storeFacade->getStoreByName($storeName);
+            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
+            if ($storeTransfer === null) {
+                return null;
+            }
+
+            $this->storesHeap[$storeName] = $storeTransfer;
         }
 
         return $this->storesHeap[$storeName];
@@ -138,12 +143,17 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
     /**
      * @param string $isoCode
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
      */
-    protected function findCurrencyByCode(string $isoCode): CurrencyTransfer
+    protected function findCurrencyByCode(string $isoCode): ?CurrencyTransfer
     {
         if (!isset($this->currenciesHeap[$isoCode])) {
-            $this->currenciesHeap[$isoCode] = $this->currencyFacade->fromIsoCode($isoCode);
+            $currencyTransfer = $this->currencyFacade->fromIsoCode($isoCode);
+            if ($currencyTransfer === null) {
+                return null;
+            }
+
+            $this->currenciesHeap[$isoCode] = $currencyTransfer;
         }
 
         return $this->currenciesHeap[$isoCode];

@@ -90,17 +90,20 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $merchantRelationshipTransfer = $this->getMerchantRelationshipByKey(
+        $merchantRelationshipTransfer = $this->findMerchantRelationshipByKey(
             $dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_MERCHANT_RELATIONSHIP_KEY]
         );
+        if ($merchantRelationshipTransfer === null) {
+            return;
+        }
 
         $storeTransfer = $this->findStoreByName($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_STORE]);
-        if (!$storeTransfer) {
+        if ($storeTransfer === null) {
             return;
         }
 
         $currencyTransfer = $this->findCurrencyByCode($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_CURRENCY]);
-        if (!$currencyTransfer) {
+        if ($currencyTransfer === null) {
             return;
         }
 
@@ -156,9 +159,9 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
     /**
      * @param string $merchantRelationshipKey
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
-    protected function getMerchantRelationshipByKey(string $merchantRelationshipKey): MerchantRelationshipTransfer
+    protected function findMerchantRelationshipByKey(string $merchantRelationshipKey): ?MerchantRelationshipTransfer
     {
         if ($this->merchantRelationshipsHeapSize > static::MERCHANT_RELATIONSHIPS_HEAP_LIMIT) {
             $this->merchantRelationshipsHeapSize = 0;
@@ -166,10 +169,15 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
         }
 
         if (!isset($this->merchantRelationshipsHeap[$merchantRelationshipKey])) {
-            $this->merchantRelationshipsHeap[$merchantRelationshipKey] = $this->merchantRelationshipFacade->getMerchantRelationshipByKey(
+            $merchantRelationshipTransfer = $this->merchantRelationshipFacade->findMerchantRelationshipByKey(
                 (new MerchantRelationshipTransfer())->setMerchantRelationshipKey($merchantRelationshipKey)
             );
 
+            if (!$merchantRelationshipTransfer) {
+                return null;
+            }
+
+            $this->merchantRelationshipsHeap[$merchantRelationshipKey] = $merchantRelationshipTransfer;
             $this->merchantRelationshipsHeapSize++;
         }
 
@@ -179,12 +187,17 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
     /**
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
      */
-    protected function findStoreByName(string $storeName): StoreTransfer
+    protected function findStoreByName(string $storeName): ?StoreTransfer
     {
         if (!isset($this->storesHeap[$storeName])) {
-            $this->storesHeap[$storeName] = $this->storeFacade->getStoreByName($storeName);
+            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
+            if ($storeTransfer === null) {
+                return null;
+            }
+
+            $this->storesHeap[$storeName] = $storeTransfer;
         }
 
         return $this->storesHeap[$storeName];
@@ -193,12 +206,17 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
     /**
      * @param string $isoCode
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
      */
-    protected function findCurrencyByCode(string $isoCode): CurrencyTransfer
+    protected function findCurrencyByCode(string $isoCode): ?CurrencyTransfer
     {
         if (!isset($this->currenciesHeap[$isoCode])) {
-            $this->currenciesHeap[$isoCode] = $this->currencyFacade->fromIsoCode($isoCode);
+            $currencyTransfer = $this->currencyFacade->fromIsoCode($isoCode);
+            if ($currencyTransfer === null) {
+                return null;
+            }
+
+            $this->currenciesHeap[$isoCode] = $currencyTransfer;
         }
 
         return $this->currenciesHeap[$isoCode];

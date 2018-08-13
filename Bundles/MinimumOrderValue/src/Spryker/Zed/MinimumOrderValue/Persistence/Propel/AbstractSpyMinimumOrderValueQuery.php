@@ -32,7 +32,7 @@ abstract class AbstractSpyMinimumOrderValueQuery extends BaseSpyMinimumOrderValu
      */
     public function filterByStoreTransfer(StoreTransfer $storeTransfer)
     {
-        return $this->_if($storeTransfer->getIdStore())
+        return $this->_if($storeTransfer->getIdStore() !== null)
                 ->filterByFkStore($storeTransfer->getIdStore())
             ->_else()
                 ->useStoreQuery()
@@ -50,7 +50,7 @@ abstract class AbstractSpyMinimumOrderValueQuery extends BaseSpyMinimumOrderValu
      */
     public function filterByCurrencyTransfer(CurrencyTransfer $currencyTransfer)
     {
-        return $this->_if($currencyTransfer->getIdCurrency())
+        return $this->_if($currencyTransfer->getIdCurrency() !== null)
                 ->filterByFkCurrency($currencyTransfer->getIdCurrency())
             ->_else()
                 ->useCurrencyQuery()

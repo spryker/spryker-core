@@ -24,7 +24,7 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
      */
     public function getMinimumOrderValueTypeByKey(
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer

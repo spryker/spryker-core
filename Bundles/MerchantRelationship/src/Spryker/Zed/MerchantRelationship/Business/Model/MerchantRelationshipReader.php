@@ -50,19 +50,18 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @throws \Spryker\Zed\MerchantRelationship\Business\Exception\MerchantRelationshipNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
-    public function getMerchantRelationshipByKey(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
+    public function findMerchantRelationshipByKey(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer
     {
         $merchantRelationshipTransfer->requireMerchantRelationshipKey();
 
         $merchantRelationshipTransfer = $this->repository->findMerchantRelationshipByKey(
             $merchantRelationshipTransfer->getMerchantRelationshipKey()
         );
+
         if (!$merchantRelationshipTransfer) {
-            throw new MerchantRelationshipNotFoundException();
+            return null;
         }
 
         return $merchantRelationshipTransfer;

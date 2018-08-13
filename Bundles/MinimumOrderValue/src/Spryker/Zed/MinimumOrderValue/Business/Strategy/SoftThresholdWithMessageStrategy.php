@@ -20,7 +20,7 @@ class SoftThresholdWithMessageStrategy extends AbstractMinimumOrderValueStrategy
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @return bool
      */

@@ -38,7 +38,7 @@ class MinimumOrderValueTypeReader implements MinimumOrderValueTypeReaderInterfac
     /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
      */
     public function getMinimumOrderValueTypeByKey(
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer

@@ -122,7 +122,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
      * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[] $merchantRelationshipMinimumOrderValueTransfers
      * @param int[] $itemMerchantRelationshipSubTotals
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
      */
     protected function getMinimumOrderValueTransfers(
         array $merchantRelationshipMinimumOrderValueTransfers,
