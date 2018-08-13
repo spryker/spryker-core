@@ -68,23 +68,23 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $storeTransfer = $this->findStoreByName($dataSet[MinimumOrderValueDataSetInterface::STORE]);
+        $storeTransfer = $this->findStoreByName($dataSet[MinimumOrderValueDataSetInterface::COLUMN_STORE]);
         if (!$storeTransfer) {
             return;
         }
 
-        $currencyTransfer = $this->findCurrencyByCode($dataSet[MinimumOrderValueDataSetInterface::CURRENCY]);
+        $currencyTransfer = $this->findCurrencyByCode($dataSet[MinimumOrderValueDataSetInterface::COLUMN_CURRENCY]);
         if (!$currencyTransfer) {
             return;
         }
 
-        if ($dataSet[MinimumOrderValueDataSetInterface::STRATEGY] && $dataSet[MinimumOrderValueDataSetInterface::THRESHOLD]) {
+        if ($dataSet[MinimumOrderValueDataSetInterface::COLUMN_STRATEGY] && $dataSet[MinimumOrderValueDataSetInterface::COLUMN_THRESHOLD]) {
             $globalMinimumOrderValueTransfer = $this->createGlobalMinimumOrderValueTransfer(
-                $dataSet[MinimumOrderValueDataSetInterface::STRATEGY],
+                $dataSet[MinimumOrderValueDataSetInterface::COLUMN_STRATEGY],
                 $storeTransfer,
                 $currencyTransfer,
-                (int)$dataSet[MinimumOrderValueDataSetInterface::THRESHOLD],
-                (int)$dataSet[MinimumOrderValueDataSetInterface::FEE]
+                (int)$dataSet[MinimumOrderValueDataSetInterface::COLUMN_THRESHOLD],
+                (int)$dataSet[MinimumOrderValueDataSetInterface::COLUMN_FEE]
             );
 
             $this->minimumOrderValueFacade->setGlobalThreshold($globalMinimumOrderValueTransfer);

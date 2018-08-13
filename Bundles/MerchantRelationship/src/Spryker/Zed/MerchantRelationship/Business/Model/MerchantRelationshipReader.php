@@ -58,7 +58,7 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     {
         $merchantRelationshipTransfer->requireMerchantRelationshipKey();
 
-        $merchantRelationshipTransfer = $this->repository->getMerchantRelationshipByKey(
+        $merchantRelationshipTransfer = $this->repository->findMerchantRelationshipByKey(
             $merchantRelationshipTransfer->getMerchantRelationshipKey()
         );
         if (!$merchantRelationshipTransfer) {

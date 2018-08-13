@@ -9,12 +9,12 @@ namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueDataImport\Business\M
 
 interface MerchantRelationshipMinimumOrderValueDataSetInterface
 {
-    public const MERCHANT_RELATIONSHIP_KEY = 'merchant_relation_key';
-    public const STORE = 'store';
-    public const CURRENCY = 'currency';
-    public const STRATEGY = 'strategy';
-    public const THRESHOLD = 'threshold';
-    public const FEE = 'fee';
-    public const MESSAGE_EN = 'message_en';
-    public const MESSAGE_DE = 'message_de';
+    public const COLUMN_MERCHANT_RELATIONSHIP_KEY = 'merchant_relation_key';
+    public const COLUMN_STORE = 'store';
+    public const COLUMN_CURRENCY = 'currency';
+    public const COLUMN_STRATEGY = 'strategy';
+    public const COLUMN_THRESHOLD = 'threshold';
+    public const COLUMN_FEE = 'fee';
+    public const COLUMN_MESSAGE_EN = 'message_en';
+    public const COLUMN_MESSAGE_DE = 'message_de';
 }

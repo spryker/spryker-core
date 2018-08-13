@@ -23,7 +23,7 @@ interface MerchantRelationshipRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
-    public function getMerchantRelationshipByKey(string $merchantRelationshipKey): ?MerchantRelationshipTransfer;
+    public function findMerchantRelationshipByKey(string $merchantRelationshipKey): ?MerchantRelationshipTransfer;
 
     /**
      * @param int $idMerchantRelationship

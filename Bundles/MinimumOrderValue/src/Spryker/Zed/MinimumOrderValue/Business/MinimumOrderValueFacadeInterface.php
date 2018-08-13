@@ -19,7 +19,7 @@ interface MinimumOrderValueFacadeInterface
 {
     /**
      * Specification:
-     * - Add minimum order value strategies to the types persistence.
+     * - Populates the database with minimum order value strategies of `MinimumOrderValueConfig`.
      *
      * @api
      *

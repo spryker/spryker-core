@@ -46,7 +46,7 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
-    public function getMerchantRelationshipByKey(string $merchantRelationshipKey): ?MerchantRelationshipTransfer
+    public function findMerchantRelationshipByKey(string $merchantRelationshipKey): ?MerchantRelationshipTransfer
     {
         $spyMerchantRelation = $this->getFactory()
             ->createMerchantRelationshipQuery()

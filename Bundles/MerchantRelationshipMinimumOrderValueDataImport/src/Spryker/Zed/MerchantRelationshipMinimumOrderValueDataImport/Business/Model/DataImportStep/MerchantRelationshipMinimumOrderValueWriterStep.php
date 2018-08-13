@@ -91,27 +91,27 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
     public function execute(DataSetInterface $dataSet): void
     {
         $merchantRelationshipTransfer = $this->getMerchantRelationshipByKey(
-            $dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::MERCHANT_RELATIONSHIP_KEY]
+            $dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_MERCHANT_RELATIONSHIP_KEY]
         );
 
-        $storeTransfer = $this->findStoreByName($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::STORE]);
+        $storeTransfer = $this->findStoreByName($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_STORE]);
         if (!$storeTransfer) {
             return;
         }
 
-        $currencyTransfer = $this->findCurrencyByCode($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::CURRENCY]);
+        $currencyTransfer = $this->findCurrencyByCode($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_CURRENCY]);
         if (!$currencyTransfer) {
             return;
         }
 
-        if ($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::STRATEGY] && $dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::THRESHOLD]) {
+        if ($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_STRATEGY] && $dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_THRESHOLD]) {
             $merchantRelationshipMinimumOrderValueTransfer = $this->createMerchantRelationshipMinimumOrderValueTransfer(
-                $dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::STRATEGY],
+                $dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_STRATEGY],
                 $merchantRelationshipTransfer,
                 $storeTransfer,
                 $currencyTransfer,
-                (int)$dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::THRESHOLD],
-                (int)$dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::FEE]
+                (int)$dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_THRESHOLD],
+                (int)$dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_FEE]
             );
 
             $this->merchantRelationshipMinimumOrderValueFacade->setMerchantRelationshipThreshold(
