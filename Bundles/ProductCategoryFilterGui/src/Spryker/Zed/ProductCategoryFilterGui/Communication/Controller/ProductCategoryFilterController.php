@@ -89,7 +89,7 @@ class ProductCategoryFilterController extends AbstractController
         }
 
         $nonSearchFilters = $this->getNonSearchFilters(
-            (array)$productCategoryFilterTransfer->getFilters(),
+            ($productCategoryFilterTransfer->getFilters() !== null) ? $productCategoryFilterTransfer->getFilters() : [],
             $searchResultsForCategory[FacetResultFormatterPlugin::NAME]
         );
 
