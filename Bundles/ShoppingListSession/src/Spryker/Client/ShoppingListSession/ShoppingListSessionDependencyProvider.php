@@ -9,6 +9,7 @@ namespace Spryker\Client\ShoppingListSession;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToCustomerClientBridge;
 use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridge;
 use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListBridge;
 use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToStorageBridge;
@@ -19,6 +20,7 @@ class ShoppingListSessionDependencyProvider extends AbstractDependencyProvider
     public const SHOPPING_LIST_SESSION_SESSION_CLIENT = 'SHOPPING_LIST_SESSION_SESSION_CLIENT';
     public const SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT = 'SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT';
     public const SHOPPING_LIST_SESSION_COLLECTION_OUTDATED_PLUGINS = 'SHOPPING_LIST_SESSION_COLLECTION_OUTDATED_PLUGINS';
+    public const SHOPPING_LIST_SESSION_CUSTOMER_CLIENT = 'SHOPPING_LIST_SESSION_CUSTOMER_CLIENT';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -31,6 +33,7 @@ class ShoppingListSessionDependencyProvider extends AbstractDependencyProvider
         $container = $this->addSessionClient($container);
         $container = $this->addShoppingListClient($container);
         $container = $this->addShoppingListCollectionOutdatedPlugins($container);
+        $container = $this->addCustomerClient($container);
 
         return $container;
     }
@@ -97,5 +100,19 @@ class ShoppingListSessionDependencyProvider extends AbstractDependencyProvider
     protected function getShoppingListCollectionOutdatedPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCustomerClient(Container $container): Container
+    {
+        $container[static::SHOPPING_LIST_SESSION_CUSTOMER_CLIENT] = function (Container $container) {
+            return new ShoppingListSessionToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
     }
 }
