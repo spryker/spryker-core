@@ -19,7 +19,7 @@ class ValidationRuleIsOptionalButNotInRequireDev implements ValidationRuleInterf
      */
     public function validateModuleDependency(ModuleDependencyTransfer $moduleDependencyTransfer): ModuleDependencyTransfer
     {
-        if ($moduleDependencyTransfer->getIsOptionalDependency() && !$moduleDependencyTransfer->getIsInComposerRequireDev() && !$moduleDependencyTransfer->getIsOwnExtensionModule() && !$moduleDependencyTransfer->getIsSuggested()) {
+        if ($moduleDependencyTransfer->getIsOptionalDependency() && !$moduleDependencyTransfer->getIsInComposerRequireDev() && !$moduleDependencyTransfer->getIsOwnExtensionModule()) {
             $moduleDependencyTransfer->setIsValid(false);
             $validationMessageTransfer = new ValidationMessageTransfer();
             $validationMessageTransfer->setMessage('Optional dependency should be listed for testing in composer require-dev');
