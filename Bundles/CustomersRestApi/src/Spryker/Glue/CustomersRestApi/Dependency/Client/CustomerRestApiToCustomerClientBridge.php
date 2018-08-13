@@ -54,10 +54,10 @@ class CustomerRestApiToCustomerClientBridge implements CustomerRestApiToCustomer
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Spryker\Client\ZedRequest\Client\Response
      */
-    public function anonymizeCustomer($customerTransfer)
+    public function deleteCustomer($customerTransfer)
     {
-        return $this->customerClient->anonymizeCustomer($customerTransfer);
+        return $this->customerClient->deleteCustomer($customerTransfer);
     }
 }

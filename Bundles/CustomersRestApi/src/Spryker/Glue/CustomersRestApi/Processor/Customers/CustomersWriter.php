@@ -61,7 +61,15 @@ class CustomersWriter implements CustomersWriterInterface
 
             return $response;
         }
-        $this->customerClient->anonymizeCustomer($customerTransfer);
+
+        $this->customerClient->deleteCustomer($customerTransfer);
+        $resource = $this->restResourceBuilder->createRestResource(
+            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
+            $customerTransfer->getCustomerReference(),
+            $restCustomersAttributesTransfer
+        );
+
+        $response->addResource($resource);
 
         return $response;
     }
