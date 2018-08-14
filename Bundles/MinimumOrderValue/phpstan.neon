@@ -1,6 +1,5 @@
 parameters:
     ignoreErrors:
-        - '#Strict comparison using === between [a-zA-Z\\]* and null will always evaluate to false.#'
         - '#Negated boolean is always false.#'
         - '#Result of || is always false.#'
 
