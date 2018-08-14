@@ -11,7 +11,7 @@ interface SwaggerGeneratorFacadeInterface
 {
     /**
      * Specification:
-     *  - Generates swagger_schema.yml file (Name of generated file declaring in configuration file)
+     *  - Generates Open API specification file in YAML format (Name of generated file declaring in configuration file)
      *
      * @api
      *

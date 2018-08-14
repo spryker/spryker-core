@@ -12,12 +12,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\SwaggerGenerator\Business\SwaggerGeneratorFacade getFacade()
+ * @method \Spryker\Zed\SwaggerGenerator\Business\SwaggerGeneratorFacadeInterface getFacade()
  */
 class SwaggerGeneratorConsole extends Console
 {
-    protected const COMMAND_NAME = 'swagger:generate';
-    protected const DESCRIPTION = 'Generates swagger YAML file';
+    protected const COMMAND_NAME = 'api:generate:open-api-specification';
+    protected const DESCRIPTION = 'Generates Open API specification file in YAML format';
 
     /**
      * @return void
