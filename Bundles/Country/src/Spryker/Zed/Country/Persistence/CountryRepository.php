@@ -23,6 +23,10 @@ class CountryRepository extends AbstractRepository implements CountryRepositoryI
      */
     public function getRegionsByCountryIso2Code(string $iso2Code): array
     {
+        if (!$this->findCountryByIso2Code($iso2Code)) {
+            return [];
+        }
+
         return $this->getFactory()
             ->createRegionQuery()
             ->filterByFkCountry($this->findCountryByIso2Code($iso2Code))
@@ -37,9 +41,9 @@ class CountryRepository extends AbstractRepository implements CountryRepositoryI
     /**
      * @param string $iso2Code
      *
-     * @return int
+     * @return int|null
      */
-    protected function findCountryByIso2Code(string $iso2Code): int
+    protected function findCountryByIso2Code(string $iso2Code): ?int
     {
         return $this->getFactory()
             ->createCountryQuery()
