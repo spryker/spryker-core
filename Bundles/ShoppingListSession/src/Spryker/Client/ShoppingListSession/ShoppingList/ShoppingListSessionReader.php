@@ -65,16 +65,37 @@ class ShoppingListSessionReader implements ShoppingListSessionReaderInterface
         }
 
         $shoppingListSessionTransfer = $this->shoppingListSessionStorage->findShoppingListCollection();
-        if (!$shoppingListSessionTransfer ||
-            $this->shoppingListSessionPluginsExecutor->executeCollectionOutdatedPlugins($shoppingListSessionTransfer)
-        ) {
-            $customerShoppingListCollectionTransfer = $this->shoppingListClient->getCustomerShoppingListCollection();
-            $shoppingListSessionTransfer = (new ShoppingListSessionTransfer())
-                ->setUpdatedAt(time())
-                ->setShoppingLists($customerShoppingListCollectionTransfer);
-            $this->shoppingListSessionStorage->setShoppingListCollection($shoppingListSessionTransfer);
+        if ($this->needUpdateShoppingListSession($shoppingListSessionTransfer)) {
+            $shoppingListSessionTransfer = $this->doUpdateShoppingListSession();
         }
 
         return $shoppingListSessionTransfer->getShoppingLists();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListSessionTransfer $shoppingListSessionTransfer
+     *
+     * @return bool
+     */
+    protected function needUpdateShoppingListSession(ShoppingListSessionTransfer $shoppingListSessionTransfer): bool
+    {
+        return (
+            !$shoppingListSessionTransfer
+            || $this->shoppingListSessionPluginsExecutor->executeCollectionOutdatedPlugins($shoppingListSessionTransfer)
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShoppingListSessionTransfer
+     */
+    protected function doUpdateShoppingListSession(): ShoppingListSessionTransfer
+    {
+        $customerShoppingListCollectionTransfer = $this->shoppingListClient->getCustomerShoppingListCollection();
+        $shoppingListSessionTransfer = (new ShoppingListSessionTransfer())
+            ->setUpdatedAt(time())
+            ->setShoppingLists($customerShoppingListCollectionTransfer);
+        $this->shoppingListSessionStorage->setShoppingListCollection($shoppingListSessionTransfer);
+
+        return $shoppingListSessionTransfer;
     }
 }

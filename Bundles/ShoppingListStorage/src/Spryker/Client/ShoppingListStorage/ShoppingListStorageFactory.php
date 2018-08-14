@@ -11,36 +11,13 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerInterface;
 use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageInterface;
 use Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceInterface;
-use Spryker\Client\ShoppingListStorage\KeyBuilder\ShoppingListStorageKeyBuilder;
+use Spryker\Client\ShoppingListStorage\OutdateChecker\ShoppingListCollectionOutdateChecker;
+use Spryker\Client\ShoppingListStorage\OutdateChecker\ShoppingListCollectionOutdateCheckerInterface;
 use Spryker\Client\ShoppingListStorage\Storage\ShoppingListCustomerStorage;
 use Spryker\Client\ShoppingListStorage\Storage\ShoppingListCustomerStorageInterface;
 
 class ShoppingListStorageFactory extends AbstractFactory
 {
-    /**
-     * @return \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerInterface
-     */
-    public function getCustomerClient(): ShoppingListStorageToCustomerInterface
-    {
-        return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::SHOPPING_LIST_STORAGE_CUSTOMER_CLIENT);
-    }
-
-    /**
-     * @return \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageInterface
-     */
-    public function getStorageClient(): ShoppingListStorageToStorageInterface
-    {
-        return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::SHOPPING_LIST_STORAGE_STORAGE_CLIENT);
-    }
-
-    /**
-     * @return \Spryker\Client\ShoppingListStorage\KeyBuilder\ShoppingListStorageKeyBuilder
-     */
-    public function createKeyBuilder(): ShoppingListStorageKeyBuilder
-    {
-        return new ShoppingListStorageKeyBuilder();
-    }
-
     /**
      * @return \Spryker\Client\ShoppingListStorage\Storage\ShoppingListCustomerStorageInterface
      */
@@ -53,10 +30,37 @@ class ShoppingListStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ShoppingListStorage\OutdateChecker\ShoppingListCollectionOutdateCheckerInterface
+     */
+    public function createShoppingListCollectionOutdateChecker(): ShoppingListCollectionOutdateCheckerInterface
+    {
+        return new ShoppingListCollectionOutdateChecker(
+            $this->getCustomerClient(),
+            $this->createShoppingListCustomerStorage()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageInterface
+     */
+    public function getStorageClient(): ShoppingListStorageToStorageInterface
+    {
+        return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::SHOPPING_LIST_STORAGE_STORAGE_CLIENT);
+    }
+
+    /**
      * @return \Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceInterface
      */
     public function getSynchronizationService(): ShoppingListStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::SHOPPING_LIST_STORAGE_SYNCHRONIZATION_SERVICE);
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerInterface
+     */
+    public function getCustomerClient(): ShoppingListStorageToCustomerInterface
+    {
+        return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::SHOPPING_LIST_STORAGE_CUSTOMER_CLIENT);
     }
 }

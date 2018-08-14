@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ShoppingListStorage;
 
-use Generated\Shared\Transfer\ShoppingListCustomerStorageTransfer;
 use Generated\Shared\Transfer\ShoppingListSessionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -27,32 +26,8 @@ class ShoppingListStorageClient extends AbstractClient implements ShoppingListSt
      */
     public function isShoppingListCollectionOutdated(ShoppingListSessionTransfer $shoppingListSession): bool
     {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-        if (!$customerTransfer) {
-            return false;
-        }
-        $shoppingListCustomerStorageTransfer = $this->getShoppingListCustomerStorageByCustomerReference(
-            $customerTransfer->getCustomerReference()
-        );
-        if (!$shoppingListCustomerStorageTransfer) {
-            return false;
-        }
-        return $shoppingListSession->getUpdatedAt() < $shoppingListCustomerStorageTransfer->getUpdatedAt();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCustomerStorageTransfer|null
-     */
-    public function getShoppingListCustomerStorageByCustomerReference(string $customerReference): ?ShoppingListCustomerStorageTransfer
-    {
         return $this->getFactory()
-            ->createShoppingListCustomerStorage()
-            ->getShoppingListCustomerStorageByCustomerReference($customerReference);
+            ->createShoppingListCollectionOutdateChecker()
+            ->isShoppingListCollectionOutdated($shoppingListSession);
     }
 }

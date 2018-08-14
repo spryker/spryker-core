@@ -9,7 +9,6 @@
     "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.17.0",
     "spryker/shopping-list": "^1.0.0",
-    "spryker/key-builder": "^1.0.1",
     "spryker/storage": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/shopping-list-session-extension": "^1.0.0",
