@@ -33,7 +33,7 @@ class RegionReader implements RegionReaderInterface
      */
     public function getRegionsByCountryIso2Code(string $iso2Code): RegionCollectionTransfer
     {
-        $regionCollection = (new RegionCollectionTransfer())->addRegions(
+        $regionCollection = (new RegionCollectionTransfer())->setRegions(
             $this->countryRepository->getRegionsByCountryIso2Code($iso2Code)
         );
 

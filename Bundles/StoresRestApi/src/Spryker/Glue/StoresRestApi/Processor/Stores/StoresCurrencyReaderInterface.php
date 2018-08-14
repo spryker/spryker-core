@@ -8,13 +8,14 @@ namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer;
 
 interface StoresCurrencyReaderInterface
 {
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $isoCode
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     * @return \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer
      */
-    public function getStoresCurrencyAttributes(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getStoresCurrencyAttributes(string $isoCode): StoreCurrencyRestAttributesTransfer;
 }

@@ -6,22 +6,29 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer;
 use Spryker\Glue\StoresRestApi\StoresRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Spryker\Shared\Kernel\Store;
 
 class StoresCurrencyResourceMapper implements StoresCurrencyResourceMapperInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @param CurrencyTransfer $currencyTransfer
+     * @param Store $store
+     *
+     * @return \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer
      */
-    protected $restResourceBuilder;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    public function mapCurrencyToStoresCurrencyRestAttributes(CurrencyTransfer $currencyTransfer, Store $store): StoreCurrencyRestAttributesTransfer
     {
-        $this->restResourceBuilder = $restResourceBuilder;
+        $storesCurrencyAttributes = (new StoreCurrencyRestAttributesTransfer())
+            ->setCurrencyIsoCode($currencyTransfer->getCode())
+            ->setName($currencyTransfer->getName())
+            ->setCurrencyIsoCodes($store->getCurrencyIsoCodes())
+            ->setDefaultCurrency($store->getDefaultCurrencyCode());
+
+        return $storesCurrencyAttributes;
     }
 }

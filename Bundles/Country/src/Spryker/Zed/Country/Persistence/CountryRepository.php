@@ -22,7 +22,7 @@ class CountryRepository extends AbstractRepository implements CountryRepositoryI
      *
      * @return string[]
      */
-    public function getRegionsByCountryIso2Code(string $iso2Code)
+    public function getRegionsByCountryIso2Code(string $iso2Code): array
     {
         return $this->getFactory()
             ->createRegionQuery()
@@ -31,7 +31,8 @@ class CountryRepository extends AbstractRepository implements CountryRepositoryI
                 SpyRegionTableMap::COL_NAME,
                 SpyRegionTableMap::COL_ISO2_CODE,
             ])
-            ->find();
+            ->find()
+            ->toArray();
     }
 
     /**

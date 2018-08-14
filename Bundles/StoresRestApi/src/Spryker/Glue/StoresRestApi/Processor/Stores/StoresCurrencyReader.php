@@ -7,6 +7,8 @@
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer;
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCurrencyClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -56,38 +58,16 @@ class StoresCurrencyReader implements StoresCurrencyReaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $isoCode
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     * @return \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer
      */
-    public function getStoresCurrencyAttributes(RestRequestInterface $restRequest): RestResponseInterface
+    public function getStoresCurrencyAttributes(string $isoCode): StoreCurrencyRestAttributesTransfer
     {
-        $isoCode = $this->store->getCurrencyIsoCode();
-        $currency = $this->currencyClient->fromIsoCode($isoCode);
+        $currencyTransfer = $this->currencyClient->fromIsoCode($isoCode);
 
-        // need to form response
-
-        return $this->restResourceBuilder->createRestResponse();;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string $parameterName
-     *
-     * @return string
-     */
-    protected function getRequestParameter(RestRequestInterface $restRequest, string $parameterName): string
-    {
-        return $restRequest->getHttpRequest()->query->get($parameterName, '');
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return array
-     */
-    protected function getAllRequestParameters(RestRequestInterface $restRequest): array
-    {
-        return $restRequest->getHttpRequest()->query->all();
+        return $this->storesCurrencyResourceMapper->mapCurrencyToStoresCurrencyRestAttributes(
+            $currencyTransfer, $this->store
+        );
     }
 }

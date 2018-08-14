@@ -6,6 +6,10 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer;
+use Generated\Shared\Transfer\StoreLocaleRestAttributesTransfer;
+use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
+use Generated\Shared\Transfer\StoresRestAttributesTransfer;
 use Spryker\Glue\StoresRestApi\StoresRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -13,15 +17,59 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 class StoresResourceMapper implements StoresResourceMapperInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @param Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
+     * @param string $identifier
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    protected $restResourceBuilder;
+    public function mapLocaleToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, string $identifier, string $name): StoresRestAttributesTransfer
+    {
+        $storesLocaleAttributes = (new StoreLocaleRestAttributesTransfer())
+            ->setName($name)
+            ->setIdentifier($identifier);
+
+        $storesRestAttributes->addLocales($storesLocaleAttributes);
+
+        return $storesRestAttributes;
+    }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
+     * @param string $timeZone
+     *
+     * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    public function mapTimeZoneToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, string $timeZone): StoresRestAttributesTransfer
     {
-        $this->restResourceBuilder = $restResourceBuilder;
+        $storesRestAttributes->setTimeZone($timeZone);
+
+        return $storesRestAttributes;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
+     * @param \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer $storeCountryAttributes
+     *
+     * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
+     */
+    public function mapStoreCountryToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, StoreCountryRestAttributesTransfer $storeCountryAttributes): StoresRestAttributesTransfer
+    {
+        $storesRestAttributes->addCountries($storeCountryAttributes);
+
+        return $storesRestAttributes;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
+     * @param \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer $storeCurrencyAttributes
+     *
+     * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
+     */
+    public function mapStoreCurrencyToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, StoreCurrencyRestAttributesTransfer $storeCurrencyAttributes): StoresRestAttributesTransfer
+    {
+        $storesRestAttributes->setCurrency($storeCurrencyAttributes);
+
+        return $storesRestAttributes;
     }
 }

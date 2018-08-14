@@ -59,7 +59,8 @@ class StoresRestApiFactory extends AbstractFactory
             $this->createStoresCurrencyReader(),
             $this->getResourceBuilder(),
             $this->createStoresResourceMapper(),
-            $this->getStore()
+            $this->getStore(),
+            $this->getConfig()
         );
     }
 
@@ -94,9 +95,7 @@ class StoresRestApiFactory extends AbstractFactory
      */
     public function createStoresResourceMapper(): StoresResourceMapperInterface
     {
-        return new StoresResourceMapper(
-            $this->getResourceBuilder()
-        );
+        return new StoresResourceMapper();
     }
 
     /**
@@ -104,9 +103,7 @@ class StoresRestApiFactory extends AbstractFactory
      */
     public function createStoresCountryResourceMapper(): StoresCountryResourceMapperInterface
     {
-        return new StoresCountryResourceMapper(
-            $this->getResourceBuilder()
-        );
+        return new StoresCountryResourceMapper();
     }
 
     /**
@@ -114,8 +111,6 @@ class StoresRestApiFactory extends AbstractFactory
      */
     public function createStoresCurrencyResourceMapper(): StoresCurrencyResourceMapperInterface
     {
-        return new StoresCurrencyResourceMapper(
-            $this->getResourceBuilder()
-        );
+        return new StoresCurrencyResourceMapper();
     }
 }

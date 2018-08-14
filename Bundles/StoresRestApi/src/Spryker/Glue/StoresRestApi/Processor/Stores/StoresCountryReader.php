@@ -7,6 +7,7 @@
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
 use Generated\Shared\Transfer\CountryTransfer;
+use Generated\Shared\Transfer\RegionCollectionTransfer;
 use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
 use Generated\Shared\Transfer\StoreRegionRestAttributesTransfer;
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientInterface;
@@ -58,44 +59,16 @@ class StoresCountryReader implements StoresCountryReaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $iso2Code
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     * @return \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer
      */
-    public function getStoresCountryAttributes(RestRequestInterface $restRequest): RestResponseInterface
+    public function getStoresCountryAttributes(string $iso2Code): StoreCountryRestAttributesTransfer
     {
-        $iso2Code = $this->store->getStoreName();
-        $countryTransfer = new CountryTransfer();
-        $countryTransfer->setIso2Code($iso2Code);
+        $countryTransfer = (new CountryTransfer())->setIso2Code($iso2Code);
+        $countryTransfer = $this->countryClient->getCountryByIso2Code($countryTransfer);
+        $regions = $this->countryClient->getRegionsByCountryIso2Code($countryTransfer)->getRegions();
 
-        $regions = $this->countryClient->getRegionsByCountryIso2Code($countryTransfer);
-        $country = $this->countryClient->getCountryByIso2Code($countryTransfer);
-
-        $storeCountryAttributesTransfer = new StoreCountryRestAttributesTransfer();
-
-        // need to form response
-
-        //return $this->restResourceBuilder->createRestResponse()->addResource($restResource);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string $parameterName
-     *
-     * @return string
-     */
-    protected function getRequestParameter(RestRequestInterface $restRequest, string $parameterName): string
-    {
-        return $restRequest->getHttpRequest()->query->get($parameterName, '');
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return array
-     */
-    protected function getAllRequestParameters(RestRequestInterface $restRequest): array
-    {
-        return $restRequest->getHttpRequest()->query->all();
+        return $this->storesCountryResourceMapper->mapCountryToStoresCountryRestAttributes($countryTransfer, $regions);
     }
 }

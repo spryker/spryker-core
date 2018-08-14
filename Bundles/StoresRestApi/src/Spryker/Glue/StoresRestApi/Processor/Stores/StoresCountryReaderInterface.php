@@ -6,15 +6,17 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
+use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
+use Generated\Shared\Transfer\RegionCollectionTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface StoresCountryReaderInterface
 {
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $iso2Code
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     * @return \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer
      */
-    public function getStoresCountryAttributes(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getStoresCountryAttributes(string $iso2Code): StoreCountryRestAttributesTransfer;
 }
