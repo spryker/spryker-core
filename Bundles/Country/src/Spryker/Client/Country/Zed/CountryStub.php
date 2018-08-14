@@ -9,13 +9,10 @@ namespace Spryker\Client\Country\Zed;
 
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\RegionCollectionTransfer;
-use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class CountryStub implements CountryStubInterface
 {
-    use PermissionAwareTrait;
-
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */

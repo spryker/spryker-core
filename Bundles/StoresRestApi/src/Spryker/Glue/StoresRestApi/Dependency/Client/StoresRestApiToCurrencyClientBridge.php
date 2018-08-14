@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\StoresRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
-
 class StoresRestApiToCurrencyClientBridge implements StoresRestApiToCurrencyClientInterface
 {
     /**
@@ -29,7 +27,7 @@ class StoresRestApiToCurrencyClientBridge implements StoresRestApiToCurrencyClie
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode($isoCode): CurrencyTransfer
+    public function fromIsoCode($isoCode)
     {
         return $this->currencyClient->fromIsoCode($isoCode);
     }
