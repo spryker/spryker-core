@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ProductConcreteSuperAttributeForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeNotBlank;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeUniqueCombination;
+use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductMoneyNotBlank;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuUnique;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -160,6 +164,31 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
                     ]
                 );
         }
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
+    {
+        $builder->add(
+            static::FIELD_PRICES,
+            ProductMoneyCollectionType::class,
+            [
+                'entry_options' => [
+                    'data_class' => PriceProductTransfer::class,
+                ],
+                'entry_type' => ProductMoneyType::class,
+                'constraints' => [
+                    new ProductMoneyNotBlank(),
+                ],
+            ]
+        );
 
         return $this;
     }
