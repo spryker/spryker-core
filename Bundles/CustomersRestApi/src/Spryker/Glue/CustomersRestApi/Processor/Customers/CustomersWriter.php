@@ -62,9 +62,6 @@ class CustomersWriter implements CustomersWriterInterface
             return $response;
         }
 
-        /**
-         * @var \Generated\Shared\Transfer\CustomerResponseTransfer $result
-         */
         $result = $this->customerClient->deleteCustomer($customerTransfer);
         if (!$result->getIsSuccess()) {
             foreach ($result->getErrors() as $error) {

@@ -59,7 +59,7 @@ class CustomersRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriterInterface
      */
-    public function createCustomerWriter(): CustomersWriterInterface
+    public function createCustomersWriter(): CustomersWriterInterface
     {
         return new CustomersWriter(
             $this->getCustomerClient(),

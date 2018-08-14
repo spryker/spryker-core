@@ -37,7 +37,7 @@ class CustomersResourceController extends AbstractController
     public function deleteAction(RestRequestInterface $restRequest, RestCustomersAttributesTransfer $restCustomersAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCustomerWriter()
+            ->createCustomersWriter()
             ->deleteCustomer($restCustomersAttributesTransfer);
     }
 }
