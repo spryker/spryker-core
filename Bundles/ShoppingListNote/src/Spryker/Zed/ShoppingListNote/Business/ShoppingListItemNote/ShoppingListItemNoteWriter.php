@@ -50,6 +50,7 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
      */
     public function deleteShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void
     {
+        $shoppingListItemNoteTransfer->requireIdShoppingListItemNote();
         $this->shoppingListNoteEntityManager->deleteShoppingListItemNote($shoppingListItemNoteTransfer);
     }
 }
