@@ -45,12 +45,12 @@ class ShoppingListToProductFacadeBridge implements ShoppingListToProductFacadeIn
     }
 
     /**
-     * @param string $sku
+     * @param string $concreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getProductConcrete($sku)
+    public function getProductConcrete($concreteSku)
     {
-        return $this->productFacade->getProductConcrete($sku);
+        return $this->productFacade->getProductConcrete($concreteSku);
     }
 }

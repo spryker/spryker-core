@@ -19,7 +19,7 @@ interface ShoppingListToProductFacadeInterface
     public function hasProductConcrete($sku): bool;
 
     /**
-     * //todo: check and remove if possible
+     * @deprecated Will be removed with next major release
      *
      * @param string $sku
      *
@@ -28,9 +28,9 @@ interface ShoppingListToProductFacadeInterface
     public function findProductConcreteIdBySku($sku): ?int;
 
     /**
-     * @param string $sku
+     * @param string $concreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getProductConcrete($sku);
+    public function getProductConcrete($concreteSku);
 }

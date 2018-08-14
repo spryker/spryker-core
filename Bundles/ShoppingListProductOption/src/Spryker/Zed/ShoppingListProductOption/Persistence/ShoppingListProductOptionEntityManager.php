@@ -22,14 +22,9 @@ class ShoppingListProductOptionEntityManager extends AbstractEntityManager imple
      */
     public function saveShoppingListItemProductOptions(int $idShoppingListItem, array $idProductOptions): void
     {
-        $shoppingListProductOptionEntity = $this->getFactory()
-            ->createSpyShoppingListProductOptionQuery()
-            ->filterByFkShoppingListItem($idShoppingListItem)
-            ->filterByFkProductOptionValue_In($idProductOptions)
-            ->findOneOrCreate();
-
-        //todo: add save
-        //todo: check and return $shoppingListProductOptionEntity itself if needed
+        foreach ($idProductOptions as $idProductOption) {
+            $this->saveShoppingListItemProductOption($idShoppingListItem, $idProductOption);
+        }
     }
 
     /**
@@ -43,5 +38,22 @@ class ShoppingListProductOptionEntityManager extends AbstractEntityManager imple
             ->createSpyShoppingListProductOptionQuery()
             ->filterByFkShoppingListItem($idShoppingListItem)
             ->delete();
+    }
+
+    /**
+     * @param int $idShoppingListItem
+     * @param int $idProductOption
+     *
+     * @return void
+     */
+    protected function saveShoppingListItemProductOption(int $idShoppingListItem, int $idProductOption): void
+    {
+        $shoppingListProductOption = $this->getFactory()
+            ->createSpyShoppingListProductOptionQuery()
+            ->filterByFkShoppingListItem($idShoppingListItem)
+            ->filterByFkProductOptionValue($idProductOption)
+            ->findOneOrCreate();
+
+        $shoppingListProductOption->save();
     }
 }
