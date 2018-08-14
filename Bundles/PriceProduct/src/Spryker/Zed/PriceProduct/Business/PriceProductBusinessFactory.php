@@ -346,7 +346,10 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
      */
     public function getModuleConfig(): PriceProductConfig
     {
-        return parent::getConfig();
+        /** @var \Spryker\Zed\PriceProduct\PriceProductConfig $config */
+        $config = parent::getConfig();
+
+        return $config;
     }
 
     /**
@@ -366,7 +369,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[]
      */
     public function getPriceDimensionConcreteSaverPlugins(): array
     {
