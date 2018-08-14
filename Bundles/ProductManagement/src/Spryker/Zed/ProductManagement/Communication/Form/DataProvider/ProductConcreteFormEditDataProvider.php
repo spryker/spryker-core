@@ -158,6 +158,8 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
         $productTransfer = $this->productFacade->findProductConcreteById($idProduct);
 
+        $formData[ProductConcreteFormEdit::FIELD_ID_PRODUCT_CONCRETE] = $productTransfer->getIdProductConcrete();
+
         if ($productAbstractTransfer) {
             $formData = $this->appendVariantGeneralAndSeoData($productAbstractTransfer, $productTransfer, $formData);
             $formData = $this->appendVariantPriceAndStock($productAbstractTransfer, $productTransfer, $formData);

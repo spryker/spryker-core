@@ -16,6 +16,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyT
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,6 +38,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     const FIELD_VALID_TO = 'valid_to';
 
     const FORM_ASSIGNED_BUNDLED_PRODUCTS = 'assigned_bundled_products';
+    const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES = 'form_product_concrete_super_attributes';
     const BUNDLED_PRODUCTS_TO_BE_REMOVED = 'product_bundles_to_be_removed';
 
     const OPTION_IS_BUNDLE_ITEM = 'is_bundle_item';
@@ -52,6 +54,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     {
         $this
             ->addSkuField($builder)
+            ->addSuperAttributesForm($builder, $options)
             ->addValidFromField($builder)
             ->addValidToField($builder)
             ->addProductAbstractIdHiddenField($builder)
@@ -304,6 +307,41 @@ class ProductConcreteFormEdit extends ProductFormAdd
     }
 
     /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addSuperAttributesForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(
+            static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES,
+            FormType::class,
+            [
+                'compound' => true,
+                'label' => 'Super attributes',
+            ]
+        );
+
+        foreach ($this->getProductConcreteSuperAttributes($builder->getData()[static::FIELD_ID_PRODUCT_CONCRETE]) as $attributeKey => $attributeValue) {
+            $builder->get(static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES)
+                ->add(
+                    $attributeKey,
+                    TextType::class,
+                    [
+                        'label' => $attributeKey,
+                        'data' => $attributeValue,
+                        'attr' => [
+                            'readonly' => true,
+                        ],
+                    ]
+                );
+        }
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     protected function createGeneralForm()
@@ -368,5 +406,25 @@ class ProductConcreteFormEdit extends ProductFormAdd
         }
 
         return $this;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return array
+     */
+    protected function getProductConcreteSuperAttributes(int $idProductConcrete)
+    {
+        $superAttributes = [];
+
+        $productConcreteTransfer = $this->getFactory()->getProductFacade()->findProductConcreteById($idProductConcrete);
+        $productConcreteAttributes = $productConcreteTransfer->getAttributes();
+        $superAttributesTransfers = $this->getFactory()->getProductAttributeFacade()->getUniqueSuperAttributesFromConcreteProducts([$productConcreteTransfer]);
+
+        foreach ($superAttributesTransfers as $productManagementAttributeTransfer) {
+            $superAttributes[$productManagementAttributeTransfer->getKey()] = $productConcreteAttributes[$productManagementAttributeTransfer->getKey()];
+        }
+
+        return $superAttributes;
     }
 }
