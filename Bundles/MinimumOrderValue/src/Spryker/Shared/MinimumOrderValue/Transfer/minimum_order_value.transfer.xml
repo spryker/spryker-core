@@ -14,7 +14,7 @@
         <property name="value" type="int"/>
         <property name="fee" type="int"/>
         <property name="subTotal" type="int"/>
-        <property name="localizedMessages" type="MinimumOrderValueLocalizedMessage[]" singular="localizedMessage" />
+        <property name="messageGlossaryKey" type="string"/>
     </transfer>
 
     <transfer name="GlobalMinimumOrderValue">
@@ -22,6 +22,7 @@
         <property name="minimumOrderValue" type="MinimumOrderValue"/>
         <property name="store" type="Store"/>
         <property name="currency" type="Currency"/>
+        <property name="localizedMessages" type="MinimumOrderValueLocalizedMessage[]" singular="localizedMessage" />
     </transfer>
 
     <transfer name="MinimumOrderValueLocalizedMessage">

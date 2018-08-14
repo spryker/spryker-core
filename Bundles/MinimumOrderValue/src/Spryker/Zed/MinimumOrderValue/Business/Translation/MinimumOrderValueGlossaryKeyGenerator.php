@@ -8,35 +8,24 @@
 namespace Spryker\Zed\MinimumOrderValue\Business\Translation;
 
 use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface;
-use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeInterface;
 
-class AbstractMinimumOrderValueTranslationManager
+class MinimumOrderValueGlossaryKeyGenerator implements MinimumOrderValueGlossaryKeyGeneratorInterface
 {
     protected const MINIMUM_ORDER_VALUE_GLOSSARY_PREFIX = 'minimum-order-value';
     protected const MINIMUM_ORDER_VALUE_GLOSSARY_MESSAGE = 'message';
 
     /**
-     * @var \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface
+     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+     *
+     * @return void
      */
-    protected $glossaryFacade;
+    public function assignMessageGlossaryKey(GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer): void
+    {
+        $this->assertRequired($globalMinimumOrderValueTransfer);
 
-    /**
-     * @var \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
-     * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface $glossaryFacade
-     * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeInterface $storeFacade
-     */
-    public function __construct(
-        MinimumOrderValueToGlossaryFacadeInterface $glossaryFacade,
-        MinimumOrderValueToStoreFacadeInterface $storeFacade
-    ) {
-        $this->glossaryFacade = $glossaryFacade;
-        $this->storeFacade = $storeFacade;
+        $globalMinimumOrderValueTransfer->getMinimumOrderValue()->setMessageGlossaryKey(
+            $this->generateMessageGlossaryKey($globalMinimumOrderValueTransfer)
+        );
     }
 
     /**
@@ -44,10 +33,8 @@ class AbstractMinimumOrderValueTranslationManager
      *
      * @return string
      */
-    protected function generateGlossaryKey(GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer): string
+    protected function generateMessageGlossaryKey(GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer): string
     {
-        $this->assertRequired($globalMinimumOrderValueTransfer);
-
         return strtolower(implode(
             '.',
             [
@@ -58,17 +45,6 @@ class AbstractMinimumOrderValueTranslationManager
                 static::MINIMUM_ORDER_VALUE_GLOSSARY_MESSAGE,
             ]
         ));
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function createLocaleTransfer(string $localeName): LocaleTransfer
-    {
-        return (new LocaleTransfer())
-            ->setLocaleName($localeName);
     }
 
     /**

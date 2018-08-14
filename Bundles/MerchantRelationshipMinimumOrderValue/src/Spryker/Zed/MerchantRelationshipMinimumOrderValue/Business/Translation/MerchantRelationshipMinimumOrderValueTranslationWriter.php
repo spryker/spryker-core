@@ -7,12 +7,27 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation;
 
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
-use Generated\Shared\Transfer\TranslationTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface;
 
-class MerchantRelationshipMinimumOrderValueTranslationWriter extends AbstractMerchantRelationshipMinimumOrderValueTranslationManager implements MerchantRelationshipMinimumOrderValueTranslationWriterInterface
+class MerchantRelationshipMinimumOrderValueTranslationWriter implements MerchantRelationshipMinimumOrderValueTranslationWriterInterface
 {
+    /**
+     * @var \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface
+     */
+    protected $glossaryFacade;
+
+    /**
+     * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface $glossaryFacade
+     */
+    public function __construct(
+        MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface $glossaryFacade
+    ) {
+        $this->glossaryFacade = $glossaryFacade;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
@@ -20,37 +35,31 @@ class MerchantRelationshipMinimumOrderValueTranslationWriter extends AbstractMer
      */
     public function saveLocalizedMessages(MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): MerchantRelationshipMinimumOrderValueTransfer
     {
-        foreach ($merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getLocalizedMessages() as $minimumOrderValueLocalizedMessageTransfer) {
-            $this->saveTranslation(
-                $this->generateGlossaryKey($merchantRelationshipMinimumOrderValueTransfer),
-                $this->createLocaleTransfer($minimumOrderValueLocalizedMessageTransfer->getLocaleCode()),
-                $minimumOrderValueLocalizedMessageTransfer->getMessage()
-            );
+        $translations = [];
+        foreach ($merchantRelationshipMinimumOrderValueTransfer->getLocalizedMessages() as $minimumOrderValueLocalizedMessageTransfer) {
+            $translations[$minimumOrderValueLocalizedMessageTransfer->getLocaleCode()] = $minimumOrderValueLocalizedMessageTransfer->getMessage();
         }
+
+        $keyTranslationTransfer = $this->createKeyTranslationTransfer(
+            $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue(),
+            $translations
+        );
+
+        $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
 
         return $merchantRelationshipMinimumOrderValueTransfer;
     }
 
     /**
-     * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string $value
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param array $translations
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer
+     * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */
-    protected function saveTranslation(
-        string $keyName,
-        LocaleTransfer $localeTransfer,
-        string $value
-    ): TranslationTransfer {
-        if (!$this->glossaryFacade->hasKey($keyName)) {
-            $this->glossaryFacade->createKey($keyName);
-        }
-
-        if ($this->glossaryFacade->hasTranslation($keyName, $localeTransfer)) {
-            return $this->glossaryFacade->updateTranslation($keyName, $localeTransfer, $value);
-        }
-
-        return $this->glossaryFacade->createTranslation($keyName, $localeTransfer, $value);
+    protected function createKeyTranslationTransfer(MinimumOrderValueTransfer $minimumOrderValueTransfer, array $translations): KeyTranslationTransfer
+    {
+        return (new KeyTranslationTransfer())
+            ->setGlossaryKey($minimumOrderValueTransfer->getMessageGlossaryKey())
+            ->setLocales($translations);
     }
 }

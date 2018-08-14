@@ -7,36 +7,25 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
-use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface;
-use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToStoreFacadeInterface;
 
-class AbstractMerchantRelationshipMinimumOrderValueTranslationManager
+class MerchantRelationshipMinimumOrderValueGlossaryKeyGenerator implements MerchantRelationshipMinimumOrderValueGlossaryKeyGeneratorInterface
 {
     protected const MINIMUM_ORDER_VALUE_GLOSSARY_PREFIX = 'merchant-relationship-minimum-order-value';
     protected const MINIMUM_ORDER_VALUE_GLOSSARY_MESSAGE = 'message';
 
     /**
-     * @var \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
+     *
+     * @return void
      */
-    protected $glossaryFacade;
+    public function assignMessageGlossaryKey(MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): void
+    {
+        $this->assertRequired($merchantRelationshipMinimumOrderValueTransfer);
 
-    /**
-     * @var \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
-     * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface $glossaryFacade
-     * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToStoreFacadeInterface $storeFacade
-     */
-    public function __construct(
-        MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface $glossaryFacade,
-        MerchantRelationshipMinimumOrderValueToStoreFacadeInterface $storeFacade
-    ) {
-        $this->glossaryFacade = $glossaryFacade;
-        $this->storeFacade = $storeFacade;
+        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->setMessageGlossaryKey(
+            $this->generateMessageGlossaryKey($merchantRelationshipMinimumOrderValueTransfer)
+        );
     }
 
     /**
@@ -44,10 +33,8 @@ class AbstractMerchantRelationshipMinimumOrderValueTranslationManager
      *
      * @return string
      */
-    protected function generateGlossaryKey(MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): string
+    protected function generateMessageGlossaryKey(MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): string
     {
-        $this->assertRequired($merchantRelationshipMinimumOrderValueTransfer);
-
         return strtolower(implode(
             '.',
             [
@@ -59,17 +46,6 @@ class AbstractMerchantRelationshipMinimumOrderValueTranslationManager
                 static::MINIMUM_ORDER_VALUE_GLOSSARY_MESSAGE,
             ]
         ));
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function createLocaleTransfer(string $localeName): LocaleTransfer
-    {
-        return (new LocaleTransfer())
-            ->setLocaleName($localeName);
     }
 
     /**

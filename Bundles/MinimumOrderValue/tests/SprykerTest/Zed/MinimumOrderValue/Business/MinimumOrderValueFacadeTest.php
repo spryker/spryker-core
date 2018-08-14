@@ -48,11 +48,9 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
     }
 
     /**
-     * @depends testInstallMinimumOrderValueTypesShouldPersistTypes
-     *
      * @return void
      */
-    public function testSetStoreHardAndSoftThresholds(): void
+    public function testSetGlobalHardAndSoftThresholds(): void
     {
         // Prepare
         $minimumOrderValueHardTypeTransfer = $this->findMinimumOrderValueTypeTransferForGroup(
@@ -166,7 +164,6 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         );
 
         $globalMinimumOrderValueTransfer
-            ->getMinimumOrderValue()
             ->addLocalizedMessage(
                 (new MinimumOrderValueLocalizedMessageTransfer())
                     ->setLocaleCode('en_US')
@@ -179,12 +176,11 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         );
 
         // Assert
-        $this->assertNotEmpty($softThreshold->getMinimumOrderValue()->getLocalizedMessages());
+        $this->assertNotEmpty($softThreshold->getMinimumOrderValue()->getMessageGlossaryKey());
+        $this->assertCount(1, $softThreshold->getLocalizedMessages());
     }
 
     /**
-     * @depends testSetStoreHardAndSoftThresholds
-     *
      * @return void
      */
     public function testGetGlobalThresholdsByStoreAndCurrency(): void
@@ -193,6 +189,28 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         $storeTransfer = $this->tester->createStoreTransfer();
         $currencyTransfer = $this->tester->createCurrencyTransfer();
 
+        $minimumOrderValueSoftStrategy = $this->findMinimumOrderValueTypeTransferForGroup(
+            MinimumOrderValueStrategyInterface::GROUP_SOFT
+        );
+
+        $globalMinimumOrderValueTransfer = $this->createGlobalMinimumOrderValueTransfer(
+            $minimumOrderValueSoftStrategy,
+            $storeTransfer,
+            $currencyTransfer,
+            200
+        );
+
+        $globalMinimumOrderValueTransfer
+            ->addLocalizedMessage(
+                (new MinimumOrderValueLocalizedMessageTransfer())
+                    ->setLocaleCode('en_US')
+                    ->setMessage('Test message')
+            );
+
+        $softThreshold = $this->getFacade()->setGlobalThreshold(
+            $globalMinimumOrderValueTransfer
+        );
+
         // Action
         $globalThresholds = $this->getFacade()->getGlobalThresholdsByStoreAndCurrency(
             $storeTransfer,
@@ -200,9 +218,9 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         );
 
         // Assert
-        $this->assertNotEmpty($globalThresholds);
+        $this->assertCount(1, $globalThresholds);
         foreach ($globalThresholds as $globalThreshold) {
-            $this->assertNotNull($globalThreshold->getMinimumOrderValue()->getLocalizedMessages());
+            $this->assertCount(2, $globalThreshold->getLocalizedMessages());
         }
     }
 

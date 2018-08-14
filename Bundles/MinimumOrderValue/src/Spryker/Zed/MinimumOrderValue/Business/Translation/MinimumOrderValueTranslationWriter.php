@@ -8,11 +8,26 @@
 namespace Spryker\Zed\MinimumOrderValue\Business\Translation;
 
 use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\TranslationTransfer;
+use Generated\Shared\Transfer\KeyTranslationTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface;
 
-class MinimumOrderValueTranslationWriter extends AbstractMinimumOrderValueTranslationManager implements MinimumOrderValueTranslationWriterInterface
+class MinimumOrderValueTranslationWriter implements MinimumOrderValueTranslationWriterInterface
 {
+    /**
+     * @var \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface
+     */
+    protected $glossaryFacade;
+
+    /**
+     * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface $glossaryFacade
+     */
+    public function __construct(
+        MinimumOrderValueToGlossaryFacadeInterface $glossaryFacade
+    ) {
+        $this->glossaryFacade = $glossaryFacade;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
      *
@@ -20,37 +35,31 @@ class MinimumOrderValueTranslationWriter extends AbstractMinimumOrderValueTransl
      */
     public function saveLocalizedMessages(GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer): GlobalMinimumOrderValueTransfer
     {
-        foreach ($globalMinimumOrderValueTransfer->getMinimumOrderValue()->getLocalizedMessages() as $minimumOrderValueLocalizedMessageTransfer) {
-            $this->saveTranslation(
-                $this->generateGlossaryKey($globalMinimumOrderValueTransfer),
-                $this->createLocaleTransfer($minimumOrderValueLocalizedMessageTransfer->getLocaleCode()),
-                $minimumOrderValueLocalizedMessageTransfer->getMessage()
-            );
+        $translations = [];
+        foreach ($globalMinimumOrderValueTransfer->getLocalizedMessages() as $minimumOrderValueLocalizedMessageTransfer) {
+            $translations[$minimumOrderValueLocalizedMessageTransfer->getLocaleCode()] = $minimumOrderValueLocalizedMessageTransfer->getMessage();
         }
+
+        $keyTranslationTransfer = $this->createKeyTranslationTransfer(
+            $globalMinimumOrderValueTransfer->getMinimumOrderValue(),
+            $translations
+        );
+
+        $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
 
         return $globalMinimumOrderValueTransfer;
     }
 
     /**
-     * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string $value
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param array $translations
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer
+     * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */
-    protected function saveTranslation(
-        string $keyName,
-        LocaleTransfer $localeTransfer,
-        string $value
-    ): TranslationTransfer {
-        if (!$this->glossaryFacade->hasKey($keyName)) {
-            $this->glossaryFacade->createKey($keyName);
-        }
-
-        if ($this->glossaryFacade->hasTranslation($keyName, $localeTransfer)) {
-            return $this->glossaryFacade->updateTranslation($keyName, $localeTransfer, $value);
-        }
-
-        return $this->glossaryFacade->createTranslation($keyName, $localeTransfer, $value);
+    protected function createKeyTranslationTransfer(MinimumOrderValueTransfer $minimumOrderValueTransfer, array $translations): KeyTranslationTransfer
+    {
+        return (new KeyTranslationTransfer())
+            ->setGlossaryKey($minimumOrderValueTransfer->getMessageGlossaryKey())
+            ->setLocales($translations);
     }
 }

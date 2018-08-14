@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold;
 
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
+use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueGlossaryKeyGeneratorInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueTranslationWriterInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\MerchantRelationshipMinimumOrderValueEntityManagerInterface;
@@ -25,6 +26,11 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
     protected $merchantRelationshipMinimumOrderValueEntityManager;
 
     /**
+     * @var \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueGlossaryKeyGeneratorInterface
+     */
+    protected $glossaryKeyGenerator;
+
+    /**
      * @var \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueTranslationWriterInterface
      */
     protected $translationWriter;
@@ -32,15 +38,18 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
     /**
      * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface $minimumOrderValueFacade
      * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\MerchantRelationshipMinimumOrderValueEntityManagerInterface $merchantRelationshipMinimumOrderValueEntityManager
+     * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueGlossaryKeyGeneratorInterface $glossaryKeyGenerator
      * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueTranslationWriterInterface $translationWriter
      */
     public function __construct(
         MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface $minimumOrderValueFacade,
         MerchantRelationshipMinimumOrderValueEntityManagerInterface $merchantRelationshipMinimumOrderValueEntityManager,
+        MerchantRelationshipMinimumOrderValueGlossaryKeyGeneratorInterface $glossaryKeyGenerator,
         MerchantRelationshipMinimumOrderValueTranslationWriterInterface $translationWriter
     ) {
         $this->minimumOrderValueFacade = $minimumOrderValueFacade;
         $this->merchantRelationshipMinimumOrderValueEntityManager = $merchantRelationshipMinimumOrderValueEntityManager;
+        $this->glossaryKeyGenerator = $glossaryKeyGenerator;
         $this->translationWriter = $translationWriter;
     }
 
@@ -58,6 +67,7 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
 
         $this->hydrateMinimumOrderValueType($merchantRelationshipMinimumOrderValueTransfer);
 
+        $this->glossaryKeyGenerator->assignMessageGlossaryKey($merchantRelationshipMinimumOrderValueTransfer);
         $this->merchantRelationshipMinimumOrderValueEntityManager
             ->setMerchantRelationshipThreshold($merchantRelationshipMinimumOrderValueTransfer);
 

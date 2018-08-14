@@ -12,6 +12,8 @@ use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelations
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdReaderInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdWriter;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdWriterInterface;
+use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueGlossaryKeyGenerator;
+use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueGlossaryKeyGeneratorInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueTranslationReader;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueTranslationReaderInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueTranslationWriter;
@@ -71,8 +73,17 @@ class MerchantRelationshipMinimumOrderValueBusinessFactory extends AbstractBusin
         return new MerchantRelationshipThresholdWriter(
             $this->getMinimumOrderValueFacade(),
             $this->getEntityManager(),
+            $this->createMerchantRelationshipMinimumOrderValueGlossaryKeyGenerator(),
             $this->createMerchantRelationshipMinimumOrderValueTranslationWriter()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueGlossaryKeyGeneratorInterface
+     */
+    public function createMerchantRelationshipMinimumOrderValueGlossaryKeyGenerator(): MerchantRelationshipMinimumOrderValueGlossaryKeyGeneratorInterface
+    {
+        return new MerchantRelationshipMinimumOrderValueGlossaryKeyGenerator();
     }
 
     /**
@@ -92,8 +103,7 @@ class MerchantRelationshipMinimumOrderValueBusinessFactory extends AbstractBusin
     public function createMerchantRelationshipMinimumOrderValueTranslationWriter(): MerchantRelationshipMinimumOrderValueTranslationWriterInterface
     {
         return new MerchantRelationshipMinimumOrderValueTranslationWriter(
-            $this->getGlossaryFacade(),
-            $this->getStoreFacade()
+            $this->getGlossaryFacade()
         );
     }
 }

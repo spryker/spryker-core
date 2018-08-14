@@ -10,9 +10,33 @@ namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer;
+use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface;
+use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToStoreFacadeInterface;
 
-class MerchantRelationshipMinimumOrderValueTranslationReader extends AbstractMerchantRelationshipMinimumOrderValueTranslationManager implements MerchantRelationshipMinimumOrderValueTranslationReaderInterface
+class MerchantRelationshipMinimumOrderValueTranslationReader implements MerchantRelationshipMinimumOrderValueTranslationReaderInterface
 {
+    /**
+     * @var \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface
+     */
+    protected $glossaryFacade;
+
+    /**
+     * @var \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToStoreFacadeInterface $storeFacade
+     */
+    public function __construct(
+        MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface $glossaryFacade,
+        MerchantRelationshipMinimumOrderValueToStoreFacadeInterface $storeFacade
+    ) {
+        $this->glossaryFacade = $glossaryFacade;
+        $this->storeFacade = $storeFacade;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
@@ -44,11 +68,11 @@ class MerchantRelationshipMinimumOrderValueTranslationReader extends AbstractMer
         string $localeIsoCode
     ): void {
         $translationTransfer = $this->findTranslationValue(
-            $this->generateGlossaryKey($merchantRelationshipMinimumOrderValueTransfer),
+            $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getMessageGlossaryKey(),
             $this->createLocaleTransfer($localeIsoCode)
         );
 
-        foreach ($merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getLocalizedMessages() as $minimumOrderValueLocalizedMessageTransfer) {
+        foreach ($merchantRelationshipMinimumOrderValueTransfer->getLocalizedMessages() as $minimumOrderValueLocalizedMessageTransfer) {
             if ($minimumOrderValueLocalizedMessageTransfer->getLocaleCode() === $localeIsoCode) {
                 $minimumOrderValueLocalizedMessageTransfer->setMessage($translationTransfer ? $translationTransfer->getValue() : null);
 
@@ -61,6 +85,17 @@ class MerchantRelationshipMinimumOrderValueTranslationReader extends AbstractMer
                 ->setLocaleCode($localeIsoCode)
                 ->setMessage($translationTransfer ? $translationTransfer->getValue() : null)
         );
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function createLocaleTransfer(string $localeName): LocaleTransfer
+    {
+        return (new LocaleTransfer())
+            ->setLocaleName($localeName);
     }
 
     /**

@@ -15,6 +15,7 @@
         <column name="fk_currency" type="INTEGER" required="true"/>
         <column name="value" type="INTEGER" required="true"/>
         <column name="fee" type="INTEGER" required="false"/>
+        <column name="message_glossary_key" type="VARCHAR" required="true"/>
 
         <behavior name="timestampable"/>
 
