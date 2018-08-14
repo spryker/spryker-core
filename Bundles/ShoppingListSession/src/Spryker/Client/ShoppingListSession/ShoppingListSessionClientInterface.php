@@ -13,7 +13,7 @@ interface ShoppingListSessionClientInterface
 {
     /**
      * Specification:
-     *  - Gets Customer Shopping List Collection from Session or from Storage if data became outdated.
+     *  - Gets Customer Shopping List Collection from Session or from Shopping List Client if data became outdated.
      *
      * @api
      *
