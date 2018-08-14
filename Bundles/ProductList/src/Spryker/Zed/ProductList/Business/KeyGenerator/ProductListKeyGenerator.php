@@ -25,8 +25,6 @@ class ProductListKeyGenerator implements ProductListKeyGeneratorInterface
     protected $utilTextService;
 
     /**
-     * ProductListKeyGenerator constructor.
-     *
      * @param \Spryker\Zed\ProductList\Persistence\ProductListRepositoryInterface $productListRepository
      * @param \Spryker\Zed\ProductList\Dependency\Service\ProductListToUtilTextServiceInterface $utilTextService
      */

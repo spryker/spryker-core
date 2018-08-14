@@ -20,8 +20,6 @@ class CategoryHydrator implements CategoryHydratorInterface
     protected $categoryRepository;
 
     /**
-     * CategoryHydrator constructor.
-     *
      * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
      */
     public function __construct(CategoryRepositoryInterface $categoryRepository)
