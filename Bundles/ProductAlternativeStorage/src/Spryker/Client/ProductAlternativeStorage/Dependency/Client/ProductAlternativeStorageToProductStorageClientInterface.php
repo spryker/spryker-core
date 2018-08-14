@@ -28,6 +28,14 @@ interface ProductAlternativeStorageToProductStorageClientInterface
     public function getProductConcreteStorageData($idProductConcrete, $localeName): array;
 
     /**
+     * @param int $idProductConcrete
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array;
+
+    /**
      * @param array $data
      * @param string $localeName
      * @param array $selectedAttributes

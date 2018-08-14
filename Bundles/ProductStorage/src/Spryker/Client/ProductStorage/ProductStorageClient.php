@@ -19,6 +19,8 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
+     * @deprecated Use findProductAbstractStorageData($idProductConcrete, $localeName)
+     *
      * @param int $idProductAbstract
      * @param string $localeName
      *
@@ -35,6 +37,8 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Use getProductConcreteStorageData($idProductConcrete, $localeName)
      *
      * @param int $idProductConcrete
      * @param string $localeName
@@ -53,6 +57,40 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
+    {
+        return $this->getFactory()
+            ->createProductAbstractStorageReader()
+            ->findProductAbstractStorageData($idProductAbstract, $localeName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array
+    {
+        return $this->getFactory()
+            ->createProductConcreteStorageReader()
+            ->findProductConcreteStorageData($idProductConcrete, $localeName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param array $data
      * @param string $localeName
      * @param array $selectedAttributes
@@ -64,5 +102,37 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
         return $this->getFactory()
             ->createProductStorageDataMapper()
             ->mapProductStorageData($localeName, $data, $selectedAttributes);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function isProductAbstractRestricted(int $idProductAbstract): bool
+    {
+        return $this->getFactory()
+            ->createProductAbstractStorageReader()
+            ->isProductAbstractRestricted($idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function isProductConcreteRestricted(int $idProductConcrete): bool
+    {
+        return $this->getFactory()
+            ->createProductConcreteStorageReader()
+            ->isProductConcreteRestricted($idProductConcrete);
     }
 }
