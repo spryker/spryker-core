@@ -70,17 +70,18 @@ class ProductPackagingUnitTypeDataProvider implements ProductPackagingUnitTypeDa
      */
     protected function addDefaultNameMissingTranslations(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer)
     {
-        $availableLocales = $this->localeFacade->getLocaleCollection();
-        $availableNameLocaleizations = [];
-        foreach ($productPackagingUnitTypeTransfer->getTranslations() as $translation) {
-            $availableNameLocaleizations[$translation->getLocaleCode()] = $translation->getLocaleCode();
+        if ($productPackagingUnitTypeTransfer->getTranslations() === null) {
+            return $productPackagingUnitTypeTransfer;
         }
 
+        $availableLocales = $this->localeFacade->getLocaleCollection();
+        $availableNameLocalizations = $this->getAvailableNameLocalizations($productPackagingUnitTypeTransfer);
+
         foreach ($availableLocales as $localeTransfer) {
-            if (!isset($availableNameLocaleizations[$localeTransfer->getLocaleName()])) {
+            if (!isset($availableNameLocalizations[$localeTransfer->getLocaleName()])) {
                 $productPackagingUnitTypeTransfer
                     ->getTranslations()->append(
-                        $this->createDefaultProductPackagingUnitTypeTranslationTransfer($localeTransfer->getLocaleName())
+                        $this->createDefaultProductPackagingUnitTypeTranslationTransfer((string)$localeTransfer->getLocaleName())
                     );
             }
         }
@@ -97,5 +98,25 @@ class ProductPackagingUnitTypeDataProvider implements ProductPackagingUnitTypeDa
     {
         return (new ProductPackagingUnitTypeTranslationTransfer())
             ->setLocaleCode($localeName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return array
+     */
+    protected function getAvailableNameLocalizations(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): array
+    {
+        $availableNameLocalizations = [];
+
+        if ($productPackagingUnitTypeTransfer->getTranslations() === null) {
+            return $availableNameLocalizations;
+        }
+
+        foreach ($productPackagingUnitTypeTransfer->getTranslations() as $translation) {
+            $availableNameLocalizations[$translation->getLocaleCode()] = $translation->getLocaleCode();
+        }
+
+        return $availableNameLocalizations;
     }
 }

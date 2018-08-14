@@ -99,7 +99,7 @@ class SprykDetailsForm extends AbstractType
     protected function addArgumentsToForm(FormBuilderInterface $builder, array $arguments, array $options): void
     {
         foreach ($arguments as $argumentName => $argumentDefinition) {
-            if ($argumentName === 'className') {
+            if ($argumentName === 'className' && ($argumentDefinition !== null && isset($argumentDefinition['isChoice']))) {
                 $classNameChoiceTypeOptions = ['classNameChoices' => $options['classNameChoices']];
                 unset($options['classNameChoices']);
                 $builder->add($argumentName, ClassNameChoiceType::class, $classNameChoiceTypeOptions);

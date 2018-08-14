@@ -38,7 +38,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
     }
 
     /**
-     * Change default propel behaviour
+     * Changes default Propel behavior.
      *
      * Adds setter method for boolean columns.
      *

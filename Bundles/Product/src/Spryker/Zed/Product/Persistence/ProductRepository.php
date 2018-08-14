@@ -168,4 +168,54 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
         return $results;
     }
+
+    /**
+     * @param string[] $skus
+     *
+     * @return array
+     */
+    public function getProductConcreteIdsByConcreteSkus(array $skus): array
+    {
+        $results = $this->getFactory()
+            ->createProductQuery()
+            ->filterBySku_In($skus)
+            ->select([
+                SpyProductTableMap::COL_ID_PRODUCT,
+                SpyProductTableMap::COL_SKU,
+            ])
+            ->find()
+            ->getData();
+
+        $formattedResults = [];
+        foreach ($results as $result) {
+            $formattedResults[$result[SpyProductTableMap::COL_SKU]] = $result[SpyProductTableMap::COL_ID_PRODUCT];
+        }
+
+        return $formattedResults;
+    }
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return array
+     */
+    public function getProductConcreteSkusByConcreteIds(array $productIds): array
+    {
+        $results = $this->getFactory()
+            ->createProductQuery()
+            ->filterByIdProduct_In($productIds)
+            ->select([
+                SpyProductTableMap::COL_ID_PRODUCT,
+                SpyProductTableMap::COL_SKU,
+            ])
+            ->find()
+            ->getData();
+
+        $formattedResults = [];
+        foreach ($results as $result) {
+            $formattedResults[$result[SpyProductTableMap::COL_SKU]] = $result[SpyProductTableMap::COL_ID_PRODUCT];
+        }
+
+        return $formattedResults;
+    }
 }

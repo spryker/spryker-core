@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Business;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -636,5 +637,21 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
         return $this->getFactory()
             ->createCategoryNodeChecker()
             ->hasFirstLevelChildrenByName($name, $categoryTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createCategory()
+            ->getAllCategoryCollection($localeTransfer);
     }
 }
