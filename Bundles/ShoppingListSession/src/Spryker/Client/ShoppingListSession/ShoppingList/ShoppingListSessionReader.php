@@ -69,9 +69,6 @@ class ShoppingListSessionReader implements ShoppingListSessionReaderInterface
             $this->shoppingListSessionPluginsExecutor->executeCollectionOutdatedPlugins($shoppingListSessionTransfer)
         ) {
             $customerShoppingListCollectionTransfer = $this->shoppingListClient->getCustomerShoppingListCollection();
-            if (!$customerShoppingListCollectionTransfer) {
-                return new ShoppingListCollectionTransfer();
-            }
             $shoppingListSessionTransfer = (new ShoppingListSessionTransfer())
                 ->setUpdatedAt(time())
                 ->setShoppingLists($customerShoppingListCollectionTransfer);
