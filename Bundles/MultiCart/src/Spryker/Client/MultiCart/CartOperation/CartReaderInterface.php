@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 interface CartReaderInterface
 {
     /**
-     * Specification:
-     * - returns the quote collection by criteria from the database.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer

@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 interface QuoteCollectionReaderInterface
 {
     /**
-     * Specification:
-     * - Returns the quotes collection by criteria.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer

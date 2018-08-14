@@ -26,10 +26,6 @@ class QuoteCollectionReader implements QuoteCollectionReaderInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
