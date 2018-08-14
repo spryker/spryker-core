@@ -31,8 +31,9 @@ class ShoppingListStorageClient extends AbstractClient implements ShoppingListSt
         if (!$customerTransfer) {
             return true;
         }
-        $shoppingListCustomerStorageTransfer = $this->getShoppingListCustomerStorageByCustomerReference($customerTransfer->getCustomerReference());
-
+        $shoppingListCustomerStorageTransfer = $this->getShoppingListCustomerStorageByCustomerReference(
+            $customerTransfer->getCustomerReference()
+        );
         if (!$shoppingListCustomerStorageTransfer) {
             return true;
         }

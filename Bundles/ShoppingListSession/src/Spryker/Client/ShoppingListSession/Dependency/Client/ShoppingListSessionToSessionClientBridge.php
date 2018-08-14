@@ -28,7 +28,7 @@ class ShoppingListSessionToSessionClientBridge implements ShoppingListSessionToS
      *
      * @return void
      */
-    public function set($name, $value)
+    public function set($name, $value): void
     {
         $this->sessionClient->set($name, $value);
     }
