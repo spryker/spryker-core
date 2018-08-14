@@ -15,12 +15,7 @@ class SwaggerSchemaGenerator implements SwaggerSchemaGeneratorInterface
     /**
      * @var array
      */
-    protected $schemas;
-
-    public function __construct()
-    {
-        $this->schemas = [];
-    }
+    protected $schemas = [];
 
     /**
      * @return array

@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\SwaggerGenerator\Business;
 
 use Codeception\Test\Unit;
-use Spryker\Shared\SwaggerGenerator\SwaggerGeneratorConstants;
 use Spryker\Zed\SwaggerGenerator\Business\SwaggerGeneratorFacade;
+use Spryker\Zed\SwaggerGenerator\SwaggerGeneratorConfig;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -44,7 +44,7 @@ class SwaggerGeneratorFacadeTest extends Unit
         parent::setUp();
 
         $this->swaggerGeneratorFacade = new SwaggerGeneratorFacade();
-        $this->tester->setConfig(SwaggerGeneratorConstants::SWAGGER_GENERATOR_FILE_NAME, static::GENERATED_FILE_NAME);
+        $this->tester->setConfig(SwaggerGeneratorConfig::SWAGGER_GENERATOR_FILE_NAME, static::GENERATED_FILE_NAME);
     }
 
     /**

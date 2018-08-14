@@ -10,8 +10,8 @@ namespace Spryker\Zed\SwaggerGenerator\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SwaggerGenerator\Business\Generator\SwaggerGenerator;
 use Spryker\Zed\SwaggerGenerator\Business\Generator\SwaggerGeneratorInterface;
-use Spryker\Zed\SwaggerGenerator\Business\Generator\SwaggerPathsGenerator;
-use Spryker\Zed\SwaggerGenerator\Business\Generator\SwaggerPathsGeneratorInterface;
+use Spryker\Zed\SwaggerGenerator\Business\Generator\SwaggerPathGenerator;
+use Spryker\Zed\SwaggerGenerator\Business\Generator\SwaggerPathGeneratorInterface;
 use Spryker\Zed\SwaggerGenerator\Business\Generator\SwaggerSchemaGenerator;
 use Spryker\Zed\SwaggerGenerator\Business\Generator\SwaggerSchemaGeneratorInterface;
 use Spryker\Zed\SwaggerGenerator\SwaggerGeneratorDependencyProvider;
@@ -29,7 +29,8 @@ class SwaggerGeneratorBusinessFactory extends AbstractBusinessFactory
         return new SwaggerGenerator(
             $this->getResourceRoutesPluginsProviderPlugins(),
             $this->createSwaggerSchemaGenerator(),
-            $this->createSwaggerPathsGenerator()
+            $this->createSwaggerPathsGenerator(),
+            $this->getConfig()
         );
     }
 
@@ -42,11 +43,11 @@ class SwaggerGeneratorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SwaggerGenerator\Business\Generator\SwaggerPathsGeneratorInterface
+     * @return \Spryker\Zed\SwaggerGenerator\Business\Generator\SwaggerPathGeneratorInterface
      */
-    public function createSwaggerPathsGenerator(): SwaggerPathsGeneratorInterface
+    public function createSwaggerPathsGenerator(): SwaggerPathGeneratorInterface
     {
-        return new SwaggerPathsGenerator();
+        return new SwaggerPathGenerator();
     }
 
     /**

@@ -8,9 +8,8 @@
 namespace Spryker\Zed\SwaggerGenerator\Business\Generator;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\GlueApplication\GlueApplicationConstants;
-use Spryker\Shared\SwaggerGenerator\SwaggerGeneratorConstants;
+use Spryker\Zed\SwaggerGenerator\Business\Exception\FileNotCreatedException;
+use Spryker\Zed\SwaggerGenerator\SwaggerGeneratorConfig;
 use Symfony\Component\Yaml\Yaml;
 
 class SwaggerGenerator implements SwaggerGeneratorInterface
@@ -28,28 +27,36 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
     protected $swaggerSchemaGenerator;
 
     /**
-     * @var \Spryker\Zed\SwaggerGenerator\Business\Generator\SwaggerPathsGeneratorInterface
+     * @var \Spryker\Zed\SwaggerGenerator\Business\Generator\SwaggerPathGeneratorInterface
      */
     protected $swaggerPathGenerator;
 
     /**
-     * SwaggerGenerator constructor.
-     *
+     * @var \Spryker\Zed\SwaggerGenerator\SwaggerGeneratorConfig
+     */
+    protected $swaggerGeneratorConfig;
+
+    /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[] $resourceRoutesPluginsProviderPlugins
      * @param \Spryker\Zed\SwaggerGenerator\Business\Generator\SwaggerSchemaGeneratorInterface $swaggerSchemaGenerator
-     * @param \Spryker\Zed\SwaggerGenerator\Business\Generator\SwaggerPathsGeneratorInterface $swaggerPathGenerator
+     * @param \Spryker\Zed\SwaggerGenerator\Business\Generator\SwaggerPathGeneratorInterface $swaggerPathGenerator
+     * @param \Spryker\Zed\SwaggerGenerator\SwaggerGeneratorConfig $swaggerGeneratorConfig
      */
     public function __construct(
         array $resourceRoutesPluginsProviderPlugins,
         SwaggerSchemaGeneratorInterface $swaggerSchemaGenerator,
-        SwaggerPathsGeneratorInterface $swaggerPathGenerator
+        SwaggerPathGeneratorInterface $swaggerPathGenerator,
+        SwaggerGeneratorConfig $swaggerGeneratorConfig
     ) {
         $this->resourceRoutesPluginsProviderPlugins = $resourceRoutesPluginsProviderPlugins;
         $this->swaggerSchemaGenerator = $swaggerSchemaGenerator;
         $this->swaggerPathGenerator = $swaggerPathGenerator;
+        $this->swaggerGeneratorConfig = $swaggerGeneratorConfig;
     }
 
     /**
+     * @throws \Spryker\Zed\SwaggerGenerator\Business\Exception\FileNotCreatedException
+     *
      * @return void
      */
     public function generate(): void
@@ -70,7 +77,10 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
         $data['components']['schemas'] = $this->swaggerSchemaGenerator->getSchemas();
         $data['paths'] = $this->swaggerPathGenerator->getPaths();
 
-        file_put_contents($this->resolveGeneratedFileName(), Yaml::dump($data, 9));
+        $bytesWritten = file_put_contents($this->resolveGeneratedFileName(), Yaml::dump($data, 9));
+        if (!$bytesWritten) {
+            throw new FileNotCreatedException('Unable to create file, please check permissions and free space available on device');
+        }
     }
 
     /**
@@ -81,15 +91,15 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
         return [
             'openapi' => '3.0.0',
             'info' => [
-                'version' => '1.0.0',
-                'title' => 'Spryker API',
+                'version' => $this->swaggerGeneratorConfig->getInfoApiVersion(),
+                'title' => $this->swaggerGeneratorConfig->getInfoApiTitle(),
                 'license' => [
-                    'name' => 'MIT',
+                    'name' => $this->swaggerGeneratorConfig->getInfoApiInfoLicenceName(),
                 ],
             ],
             'servers' => [
                 [
-                    'url' => Config::get(GlueApplicationConstants::GLUE_APPLICATION_DOMAIN, ''),
+                    'url' => $this->swaggerGeneratorConfig->getRestApplicationDomain(),
                 ],
             ],
             'paths' => [],
@@ -104,7 +114,7 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
      */
     protected function resolveGeneratedFileName(): string
     {
-        $fileName = Config::get(SwaggerGeneratorConstants::SWAGGER_GENERATOR_FILE_NAME);
+        $fileName = $this->swaggerGeneratorConfig->getGeneratedFileName();
 
         if (substr($fileName, -\strlen(static::GENERATED_FILE_POSTFIX)) === static::GENERATED_FILE_POSTFIX) {
             return $fileName;

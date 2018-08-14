@@ -9,7 +9,7 @@ namespace Spryker\Zed\SwaggerGenerator\Business\Generator;
 
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 
-interface SwaggerPathsGeneratorInterface
+interface SwaggerPathGeneratorInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $resourceRoutePlugin

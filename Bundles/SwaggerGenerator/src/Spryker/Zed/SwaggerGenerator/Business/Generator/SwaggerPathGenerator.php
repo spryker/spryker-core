@@ -12,17 +12,12 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SwaggerPathsGenerator implements SwaggerPathsGeneratorInterface
+class SwaggerPathGenerator implements SwaggerPathGeneratorInterface
 {
     /**
      * @var array
      */
-    protected $paths;
-
-    public function __construct()
-    {
-        $this->paths = [];
-    }
+    protected $paths = [];
 
     /**
      * @return array
