@@ -16,8 +16,6 @@ interface ShoppingListCollectionOutdatedPluginInterface
      * - This check is applied to the ShoppingListSessionTransfer that is stored in Shopping List Session Storage.
      * - The plugins are triggered after Customer Shopping List Collection has been got from Shopping List Session
      *   Storage;
-     * - To the plugins passes ShoppingListSessionTransfer as a param;
-     * - Plugins should return bool;
      * - If at least one plugin returns true, than shopping list collection in shopping List Session Storage
      *   will be updated.
      *
