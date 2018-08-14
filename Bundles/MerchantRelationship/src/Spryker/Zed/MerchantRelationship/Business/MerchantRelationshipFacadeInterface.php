@@ -83,4 +83,15 @@ interface MerchantRelationshipFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
     public function getMerchantRelationshipByKey(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer;
+
+    /**
+     * Specification:
+     * - Returns all merchant relations.
+     * - Hydrate owner company business unit and merchant
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     */
+    public function getMerchantRelationshipCollection(): array;
 }

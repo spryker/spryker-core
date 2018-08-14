@@ -44,7 +44,6 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     protected static $productHeapSize = 0;
 
     /**
-     * ProductPackagingUnitWriterStep constructor.
      */
     public function __construct()
     {

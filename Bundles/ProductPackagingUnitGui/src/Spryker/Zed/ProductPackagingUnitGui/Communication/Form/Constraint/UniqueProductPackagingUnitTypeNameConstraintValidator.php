@@ -36,7 +36,7 @@ class UniqueProductPackagingUnitTypeNameConstraintValidator extends ConstraintVa
 
         $this
             ->context
-            ->buildViolation($constraint->getMessage($value->getName()))
+            ->buildViolation($constraint->getMessage((string)$value->getName()))
             ->atPath(ProductPackagingUnitTypeFormType::FIELD_NAME)
             ->addViolation();
     }
