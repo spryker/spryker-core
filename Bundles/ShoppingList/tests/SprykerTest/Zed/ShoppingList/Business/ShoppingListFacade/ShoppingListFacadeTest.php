@@ -21,6 +21,7 @@ use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\ShoppingList\ShoppingListConfig;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ReadShoppingListPermissionPlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionStoragePlugin;
@@ -70,6 +71,16 @@ class ShoppingListFacadeTest extends Unit
     protected $product;
 
     /**
+     * @var \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
+     */
+    protected $fullAccessPermissionGroup;
+
+    /**
+     * @var \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
+     */
+    protected $readOnlyPermissionGroup;
+
+    /**
      * @return void
      */
     protected function setUp()
@@ -84,6 +95,17 @@ class ShoppingListFacadeTest extends Unit
             new ReadShoppingListPermissionPlugin(),
             new WriteShoppingListPermissionPlugin(),
         ]);
+
+        $this->readOnlyPermissionGroup = $this->tester
+            ->haveShoppingListPermissionGroup(ShoppingListConfig::PERMISSION_GROUP_READ_ONLY, [
+                ReadShoppingListPermissionPlugin::KEY,
+            ]);
+
+        $this->fullAccessPermissionGroup = $this->tester
+            ->haveShoppingListPermissionGroup(ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS, [
+                ReadShoppingListPermissionPlugin::KEY,
+                WriteShoppingListPermissionPlugin::KEY,
+            ]);
 
         $this->tester->getLocator()->permission()->facade()->syncPermissionPlugins();
 
@@ -270,7 +292,7 @@ class ShoppingListFacadeTest extends Unit
             ->setIdCompanyUser($this->ownerCompanyUserTransfer->getIdCompanyUser())
             ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
             ->setIdShoppingListPermissionGroup($this->tester->getFacade()->getShoppingListPermissionGroup()->getIdShoppingListPermissionGroup());
-        $shoppingListTransfer->addCompanyUsers($shoppingListCompanyUserTransfer);
+        $shoppingListTransfer->addSharedCompanyUsers($shoppingListCompanyUserTransfer);
 
         // Act
         $shoppingListResponseTransfer = $this->tester->getFacade()->updateShareShoppingList($shoppingListTransfer);
@@ -518,6 +540,72 @@ class ShoppingListFacadeTest extends Unit
 
         $this->assertContains(self::FAKE_PERMISSION_READ_ONLY, $shoppingListPermissionGroupNames);
         $this->assertContains(self::FAKE_PERMISSION_FULL_ACCESS, $shoppingListPermissionGroupNames);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSharedCompanyUserWithFullAccessPermissionCanAddItemToShoppingList()
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+
+        $shoppingListCompanyUserTransfer = (new ShoppingListCompanyUserTransfer)
+            ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
+            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->setIdShoppingListPermissionGroup($this->fullAccessPermissionGroup->getIdShoppingListPermissionGroup());
+        $shoppingListTransfer->addSharedCompanyUsers($shoppingListCompanyUserTransfer);
+
+        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $shoppingListCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::SKU => $this->product->getSku(),
+        ]);
+
+        // Act
+        $this->tester->getFacade()->updateShareShoppingList($shoppingListTransfer);
+        $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+        $shoppingListItemResponseTransfer = $this->tester->getFacade()->getShoppingListItemCollection(
+            (new ShoppingListCollectionTransfer())->addShoppingList($shoppingListTransfer)
+        );
+
+        // Assert
+        $this->assertSame(1, $shoppingListItemResponseTransfer->getItems()->count(), 'Shared company user with full access permission can add item to shopping list.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testSharedCompanyUserWithReadOnlyPermissionCanNotAddItemToShoppingList()
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+
+        $shoppingListCompanyUserTransfer = (new ShoppingListCompanyUserTransfer)
+            ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
+            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->setIdShoppingListPermissionGroup($this->readOnlyPermissionGroup->getIdShoppingListPermissionGroup());
+        $shoppingListTransfer->addSharedCompanyUsers($shoppingListCompanyUserTransfer);
+
+        $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $shoppingListCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::SKU => $this->product->getSku(),
+        ]);
+
+        // Act
+        $this->tester->getFacade()->updateShareShoppingList($shoppingListTransfer);
+        $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+
+        $shoppingListItemResponseTransfer = $this->tester->getFacade()->getShoppingListItemCollection(
+            (new ShoppingListCollectionTransfer())->addShoppingList($shoppingListTransfer)
+        );
+
+        // Assert
+        $this->assertSame(0, $shoppingListItemResponseTransfer->getItems()->count(), 'Shared company user with read only permission can not add item to shopping list.');
     }
 
     /**

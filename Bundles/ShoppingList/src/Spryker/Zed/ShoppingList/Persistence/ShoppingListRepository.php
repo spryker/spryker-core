@@ -205,21 +205,6 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
-     */
-    public function findShoppingListPermissionGroupByName(ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer): ShoppingListPermissionGroupTransfer
-    {
-        $permissionGroupEntityTransfer = $this->getFactory()
-            ->createShoppingListPermissionGroupQuery()
-            ->filterByName($shoppingListPermissionGroupTransfer->getName())
-            ->findOne();
-
-        return (new ShoppingListPermissionGroupTransfer())->fromArray($permissionGroupEntityTransfer->toArray(), true);
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
      */
     public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer
@@ -229,7 +214,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
 
         return $this->getFactory()
             ->createShoppingListPermissionGroupMapper()
-            ->mapPermissionGroupCollectionTransfer($permissionGroupEntityTransferCollection);
+            ->mapShoppingListPermissionGroupEntitiesToShoppingListPermissionTransfers($permissionGroupEntityTransferCollection);
     }
 
     /**

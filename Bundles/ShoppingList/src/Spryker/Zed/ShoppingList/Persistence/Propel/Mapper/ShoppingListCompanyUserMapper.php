@@ -21,7 +21,7 @@ class ShoppingListCompanyUserMapper implements ShoppingListCompanyUserMapperInte
      */
     public function mapCompanyUserEntitiesToCompanyUserTransfers(?Collection $companyUserEntityCollection): ArrayObject
     {
-        $shoppingListCompanyUsers = new ArrayObject;
+        $shoppingListCompanyUsers = new ArrayObject();
 
         if (!$companyUserEntityCollection) {
             return $shoppingListCompanyUsers;

@@ -22,7 +22,7 @@ class ShoppingListCompanyBusinessUnitMapper implements ShoppingListCompanyBusine
     public function mapCompanyBusinessUnitEntitiesToCompanyBusinessUnitTransfers(
         ?Collection $companyBusinessUnitEntityTransferCollection
     ): ArrayObject {
-        $shoppingListCompanyBusinessUnits = new ArrayObject;
+        $shoppingListCompanyBusinessUnits = new ArrayObject();
 
         if (!$companyBusinessUnitEntityTransferCollection) {
             return $shoppingListCompanyBusinessUnits;

@@ -74,16 +74,16 @@ interface ShoppingListEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer
+     * @return void
      */
-    public function saveShoppingListCompanyBusinessUnit(ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer): ShoppingListCompanyBusinessUnitTransfer;
+    public function saveShoppingListCompanyBusinessUnit(ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer
+     * @return void
      */
-    public function saveShoppingListCompanyUser(ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer): ShoppingListCompanyUserTransfer;
+    public function saveShoppingListCompanyUser(ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
