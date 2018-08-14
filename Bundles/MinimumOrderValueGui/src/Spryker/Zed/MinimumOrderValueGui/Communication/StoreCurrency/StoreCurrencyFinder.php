@@ -8,9 +8,7 @@
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\StoreCurrency;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\StoreCurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
 use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConfig;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToStoreFacadeInterface;
@@ -40,95 +38,40 @@ class StoreCurrencyFinder implements StoreCurrencyFinderInterface
     }
 
     /**
-     * @param string $storeCurrency
+     * @param string|null $storeCurrencyRequestParam
      *
-     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
-     */
-    public function getStoreCurrencyByString(string $storeCurrency): StoreCurrencyTransfer
-    {
-        list($storeName, $currencyCode) = explode(
-            MinimumOrderValueGuiConfig::STORE_CURRENCY_DELIMITER,
-            $storeCurrency
-        );
-        $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
-
-        return $this->hydrateStoreCurrency($storeWithCurrencyTransfers, $storeName, $currencyCode);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
-     */
-    public function getCurrentStoreCurrency(): StoreCurrencyTransfer
-    {
-        return (new StoreCurrencyTransfer())
-            ->setStore($this->getCurrentStore())
-            ->setCurrency($this->getCurrentCurrency());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreWithCurrencyTransfer[] $storeWithCurrencyTransfers
-     * @param string $store
-     * @param string $currency
-     *
-     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
-     */
-    protected function hydrateStoreCurrency(
-        array $storeWithCurrencyTransfers,
-        string $store,
-        string $currency
-    ): StoreCurrencyTransfer {
-        $storeCurrencyTransfer = new StoreCurrencyTransfer();
-
-        foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
-            if ($store === $storeWithCurrencyTransfer->getStore()->getName()) {
-                $storeCurrencyTransfer->setStore($storeWithCurrencyTransfer->getStore());
-                $storeCurrencyTransfer = $this->hydrateCurrency($storeCurrencyTransfer, $storeWithCurrencyTransfer, $currency);
-
-                break;
-            }
-        }
-
-        return $storeCurrencyTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreCurrencyTransfer $storeCurrencyTransfer
-     * @param \Generated\Shared\Transfer\StoreWithCurrencyTransfer $storeWithCurrencyTransfer
-     * @param string $currency
-     *
-     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
-     */
-    protected function hydrateCurrency(
-        StoreCurrencyTransfer $storeCurrencyTransfer,
-        StoreWithCurrencyTransfer $storeWithCurrencyTransfer,
-        string $currency
-    ): StoreCurrencyTransfer {
-        foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
-            if ($currency === $currencyTransfer->getCode()) {
-                $storeCurrencyTransfer->setCurrency($currencyTransfer);
-
-                return $storeCurrencyTransfer;
-            }
-        }
-
-        return $storeCurrencyTransfer;
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    protected function getCurrentCurrency(): CurrencyTransfer
+    public function getCurrencyTransferFromRequest(?string $storeCurrencyRequestParam): CurrencyTransfer
     {
-        return $this->currencyFacade
-            ->getCurrent();
+        if (!$storeCurrencyRequestParam) {
+            return $this->currencyFacade->getCurrent();
+        }
+
+        list($storeName, $currencyCode) = explode(
+            MinimumOrderValueGuiConfig::STORE_CURRENCY_DELIMITER,
+            $storeCurrencyRequestParam
+        );
+
+        return $this->currencyFacade->fromIsoCode($currencyCode);
     }
 
     /**
+     * @param string|null $storeCurrencyRequestParam
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function getCurrentStore(): StoreTransfer
+    public function getStoreTransferFromRequest(?string $storeCurrencyRequestParam): StoreTransfer
     {
-        return $this->storeFacade
-            ->getCurrentStore();
+        if (!$storeCurrencyRequestParam) {
+            return $this->storeFacade->getCurrentStore();
+        }
+
+        list($storeName, $currencyCode) = explode(
+            MinimumOrderValueGuiConfig::STORE_CURRENCY_DELIMITER,
+            $storeCurrencyRequestParam
+        );
+
+        return $this->storeFacade->getStoreByName($storeName);
     }
 }

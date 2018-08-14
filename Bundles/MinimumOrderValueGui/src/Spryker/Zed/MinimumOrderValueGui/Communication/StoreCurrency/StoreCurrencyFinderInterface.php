@@ -7,19 +7,22 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\StoreCurrency;
 
-use Generated\Shared\Transfer\StoreCurrencyTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface StoreCurrencyFinderInterface
 {
     /**
-     * @param string $storeCurrency
+     * @param string|null $storeCurrencyRequestParam
      *
-     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreCurrencyByString(string $storeCurrency): StoreCurrencyTransfer;
+    public function getStoreTransferFromRequest(?string $storeCurrencyRequestParam): StoreTransfer;
 
     /**
-     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
+     * @param string|null $storeCurrencyRequestParam
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrentStoreCurrency(): StoreCurrencyTransfer;
+    public function getCurrencyTransferFromRequest(?string $storeCurrencyRequestParam): CurrencyTransfer;
 }

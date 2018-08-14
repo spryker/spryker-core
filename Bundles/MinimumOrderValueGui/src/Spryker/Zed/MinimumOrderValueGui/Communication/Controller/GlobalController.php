@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Controller;
 
-use Generated\Shared\Transfer\StoreCurrencyTransfer;
-use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConfig;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GlobalController extends AbstractController
 {
+    protected const STORE_CURRENCY_REQUEST_PARAM = 'store_currency';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -25,10 +27,13 @@ class GlobalController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $storeCurrencyTransfer = $this->getStoreCurrencyByRequest($request);
-        $globalMinimumOrderValueTransfers = $this->getGlobalMinimumOrderValueTransfers($storeCurrencyTransfer);
+        $storeCurrencyRequestParam = $request->query->get(static::STORE_CURRENCY_REQUEST_PARAM);
 
-        $globalThresholdForm = $this->getFactory()->createGlobalThresholdForm($globalMinimumOrderValueTransfers, $storeCurrencyTransfer);
+        $currencyTransfer = $this->getCurrencyTransferFromRequest($storeCurrencyRequestParam);
+        $storeTransfer = $this->getStoreTransferFromRequest($storeCurrencyRequestParam);
+        $globalMinimumOrderValueTransfers = $this->getGlobalMinimumOrderValueTransfers($storeTransfer, $currencyTransfer);
+
+        $globalThresholdForm = $this->getFactory()->createGlobalThresholdForm($globalMinimumOrderValueTransfers, $storeTransfer, $currencyTransfer);
         $globalThresholdForm->handleRequest($request);
 
         if ($globalThresholdForm->isSubmitted() && $globalThresholdForm->isValid()) {
@@ -66,39 +71,42 @@ class GlobalController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreCurrencyTransfer $storeCurrencyTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer[]
      */
-    protected function getGlobalMinimumOrderValueTransfers(StoreCurrencyTransfer $storeCurrencyTransfer): array
+    protected function getGlobalMinimumOrderValueTransfers(StoreTransfer $storeTransfer, CurrencyTransfer $currencyTransfer): array
     {
         return $this->getFactory()
             ->getMinimumOrderValueFacade()
             ->getGlobalThresholdsByStoreAndCurrency(
-                $storeCurrencyTransfer->getStore(),
-                $storeCurrencyTransfer->getCurrency()
+                $storeTransfer,
+                $currencyTransfer
             );
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string|null $storeCurrencyRequestParam
      *
-     * @return \Generated\Shared\Transfer\StoreCurrencyTransfer
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    protected function getStoreCurrencyByRequest(Request $request): StoreCurrencyTransfer
+    protected function getCurrencyTransferFromRequest(?string $storeCurrencyRequestParam): CurrencyTransfer
     {
-        $storeCurrency = $request->query->get(MinimumOrderValueGuiConfig::STORE_CURRENCY_URL_KEY);
-        $storeTransfer = null;
-        $currencyTransfer = null;
-
-        if ($storeCurrency !== null) {
-            return $this->getFactory()
-                ->createStoreCurrencyFinder()
-                ->getStoreCurrencyByString($storeCurrency);
-        }
-
         return $this->getFactory()
             ->createStoreCurrencyFinder()
-            ->getCurrentStoreCurrency();
+            ->getCurrencyTransferFromRequest($storeCurrencyRequestParam);
+    }
+
+    /**
+     * @param string|null $storeCurrencyRequestParam
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getStoreTransferFromRequest(?string $storeCurrencyRequestParam): StoreTransfer
+    {
+        return $this->getFactory()
+            ->createStoreCurrencyFinder()
+            ->getStoreTransferFromRequest($storeCurrencyRequestParam);
     }
 }

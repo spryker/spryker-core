@@ -7,19 +7,22 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\StoreCurrencyTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface FormDataProviderInterface
 {
     /**
      * @param array $defaultData
-     * @param \Generated\Shared\Transfer\StoreCurrencyTransfer $storeCurrencyTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return array
      */
     public function getData(
         array $defaultData,
-        StoreCurrencyTransfer $storeCurrencyTransfer
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer
     ): array;
 
     /**

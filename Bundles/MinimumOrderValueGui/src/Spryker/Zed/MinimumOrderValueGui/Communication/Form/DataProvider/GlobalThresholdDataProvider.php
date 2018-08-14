@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\StoreCurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConfig;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
@@ -56,13 +55,15 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
 
     /**
      * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer[] $globalMinimumOrderValueTransfers
-     * @param \Generated\Shared\Transfer\StoreCurrencyTransfer $storeCurrencyTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return array
      */
     public function getData(
         array $globalMinimumOrderValueTransfers,
-        StoreCurrencyTransfer $storeCurrencyTransfer
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer
     ): array {
         $data = [];
         foreach ($globalMinimumOrderValueTransfers as $globalMinimumOrderValueTransfer) {
@@ -83,8 +84,8 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
 
         if (empty($globalMinimumOrderValueTransfers)) {
             $data[GlobalThresholdType::FIELD_STORE_CURRENCY] = $this->formatStoreCurrencyRowValue(
-                $storeCurrencyTransfer->getStore(),
-                $storeCurrencyTransfer->getCurrency()
+                $storeTransfer,
+                $currencyTransfer
             );
         }
 

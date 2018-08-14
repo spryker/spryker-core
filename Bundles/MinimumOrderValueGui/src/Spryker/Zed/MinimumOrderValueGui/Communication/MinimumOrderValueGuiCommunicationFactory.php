@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Communication;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
-use Generated\Shared\Transfer\StoreCurrencyTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\GlobalThresholdDataProvider;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider;
@@ -36,19 +37,21 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
 {
     /**
      * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer[] $globalMinimumOrderValueTransfers
-     * @param \Generated\Shared\Transfer\StoreCurrencyTransfer $storeCurrencyTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createGlobalThresholdForm(
         array $globalMinimumOrderValueTransfers,
-        StoreCurrencyTransfer $storeCurrencyTransfer
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer
     ): FormInterface {
         $formDataProvider = $this->createGlobalThresholdFormDataProvider();
 
         return $this->getFormFactory()->create(
             GlobalThresholdType::class,
-            $formDataProvider->getData($globalMinimumOrderValueTransfers, $storeCurrencyTransfer),
+            $formDataProvider->getData($globalMinimumOrderValueTransfers, $storeTransfer, $currencyTransfer),
             $formDataProvider->getOptions()
         );
     }
@@ -75,7 +78,7 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
-     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\StoreCurrency\StoreCurrencyFinder
+     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\StoreCurrency\StoreCurrencyFinderInterface
      */
     public function createStoreCurrencyFinder(): StoreCurrencyFinderInterface
     {
