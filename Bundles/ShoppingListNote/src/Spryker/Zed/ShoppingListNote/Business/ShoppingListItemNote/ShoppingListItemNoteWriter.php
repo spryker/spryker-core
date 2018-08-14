@@ -32,6 +32,7 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
      */
     public function saveShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): ?ShoppingListItemNoteTransfer
     {
+        $shoppingListItemNoteTransfer->requireFkShoppingListItem();
 
         if (empty($shoppingListItemNoteTransfer->getMessage())) {
             $this->deleteShoppingListItemNote($shoppingListItemNoteTransfer);
