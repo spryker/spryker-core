@@ -21,11 +21,15 @@ class BusinessModelFinder implements BusinessModelFinderInterface
      */
     public function findBusinessModels(ModuleTransfer $moduleTransfer): ClassInformationCollectionTransfer
     {
+        $classInformationCollectionTransfer = new ClassInformationCollectionTransfer();
         $moduleBusinessDirectory = $this->getPathToModulesBusinessDirectory($moduleTransfer);
+        if (!is_dir($moduleBusinessDirectory)) {
+            return $classInformationCollectionTransfer;
+        }
+
         $finder = new Finder();
         $finder->in($moduleBusinessDirectory)->files()->notName('/Interface.php|BusinessFactory.php|Facade.php|Exception.php/');
 
-        $classInformationCollectionTransfer = new ClassInformationCollectionTransfer();
         foreach ($finder as $fileInfo) {
             $relativeClassName = str_replace(['/', '.php'], ['\\', ''], $fileInfo->getRelativePathname());
             $className = sprintf(
