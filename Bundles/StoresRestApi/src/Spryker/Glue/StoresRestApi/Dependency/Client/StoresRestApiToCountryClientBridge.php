@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\StoresRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\CountryTransfer;
-
 class StoresRestApiToCountryClientBridge implements StoresRestApiToCountryClientInterface
 {
     /**
@@ -29,7 +27,7 @@ class StoresRestApiToCountryClientBridge implements StoresRestApiToCountryClient
      *
      * @return \Generated\Shared\Transfer\RegionCollectionTransfer
      */
-    public function getRegionsByCountryIso2Code(CountryTransfer $countryTransfer)
+    public function getRegionsByCountryIso2Code($countryTransfer)
     {
         return $this->countryClient->getRegionsByCountryIso2Code($countryTransfer);
     }
@@ -39,7 +37,7 @@ class StoresRestApiToCountryClientBridge implements StoresRestApiToCountryClient
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
-    public function getCountryByIso2Code(CountryTransfer $countryTransfer)
+    public function getCountryByIso2Code($countryTransfer)
     {
         return $this->countryClient->getCountryByIso2Code($countryTransfer);
     }
