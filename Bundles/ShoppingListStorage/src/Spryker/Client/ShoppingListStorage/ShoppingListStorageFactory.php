@@ -9,7 +9,6 @@ namespace Spryker\Client\ShoppingListStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerInterface;
-use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToLocaleInterface;
 use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageInterface;
 use Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceInterface;
 use Spryker\Client\ShoppingListStorage\KeyBuilder\ShoppingListStorageKeyBuilder;
@@ -40,14 +39,6 @@ class ShoppingListStorageFactory extends AbstractFactory
     public function createKeyBuilder(): ShoppingListStorageKeyBuilder
     {
         return new ShoppingListStorageKeyBuilder();
-    }
-
-    /**
-     * @return \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToLocaleInterface
-     */
-    public function getLocaleClient(): ShoppingListStorageToLocaleInterface
-    {
-        return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::SHOPPING_LIST_STORAGE_LOCALE_CLIENT);
     }
 
     /**

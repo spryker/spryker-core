@@ -26,11 +26,6 @@ class ShoppingListCustomerStorage implements ShoppingListCustomerStorageInterfac
     protected $keyBuilder;
 
     /**
-     * @var string
-     */
-    protected $locale;
-
-    /**
      * @var \Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;

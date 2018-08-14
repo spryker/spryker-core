@@ -51,9 +51,8 @@ class ShoppingListStorageClient extends AbstractClient implements ShoppingListSt
      */
     public function getShoppingListCustomerStorageByCustomerReference(string $customerReference): ?ShoppingListCustomerStorageTransfer
     {
-        $shoppingListStorage = $this->getFactory()->createShoppingListCustomerStorage();
-        $shoppingListCustomerStorage = $shoppingListStorage->getShoppingListCustomerStorageByCustomerReference($customerReference);
-
-        return $shoppingListCustomerStorage;
+        return $this->getFactory()
+            ->createShoppingListCustomerStorage()
+            ->getShoppingListCustomerStorageByCustomerReference($customerReference);
     }
 }
