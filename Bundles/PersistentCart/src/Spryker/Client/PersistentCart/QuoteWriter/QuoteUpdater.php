@@ -31,8 +31,6 @@ class QuoteUpdater implements QuoteUpdaterInterface
     protected $quoteUpdatePluginExecutor;
 
     /**
-     * QuoteCreator constructor.
-     *
      * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface $persistentCartStub
      * @param \Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutorInterface $quoteUpdatePluginExecutor

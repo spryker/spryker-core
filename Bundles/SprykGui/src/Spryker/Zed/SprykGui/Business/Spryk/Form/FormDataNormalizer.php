@@ -109,7 +109,7 @@ class FormDataNormalizer implements FormDataNormalizerInterface
             $pattern = '?%s %s';
         }
         if ($argumentTransfer->getDefaultValue()) {
-            $pattern += sprintf(' = %s', $argumentTransfer->getDefaultValue());
+            $pattern .= sprintf(' = %s', $argumentTransfer->getDefaultValue());
         }
 
         return sprintf($pattern, $argumentTransfer->getType(), $argumentTransfer->getVariable());
