@@ -73,7 +73,6 @@ abstract class AbstractGlobalThresholdFormMapper
             $localizedFieldName = GlobalThresholdType::getLocalizedFormName($localizedFormPrefix, $localeTransfer->getLocaleName());
             $localizedMessage = (new MinimumOrderValueLocalizedMessageTransfer())
                 ->setLocaleCode($localeTransfer->getLocaleName())
-                ->setFkLocale($localeTransfer->getIdLocale())
                 ->setMessage($data[$localizedFieldName][LocalizedForm::FIELD_MESSAGE]);
 
             $globalMinimumOrderValueTransfer->getMinimumOrderValue()->addLocalizedMessage($localizedMessage);
