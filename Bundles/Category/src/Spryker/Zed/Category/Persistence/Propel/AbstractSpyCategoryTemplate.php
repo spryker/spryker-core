@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Category\Persistence\Propel;
 
-use Orm\Zed\Category\Persistence\Base\SpyCategoryTemplate as BaseSpyCategoryTemplate;
+use Orm\Zed\Category\Persistence\Base\SpyCategoryTemplate;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_category_template' table.
@@ -18,6 +18,6 @@ use Orm\Zed\Category\Persistence\Base\SpyCategoryTemplate as BaseSpyCategoryTemp
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyCategoryTemplate extends BaseSpyCategoryTemplate
+abstract class AbstractSpyCategoryTemplate extends SpyCategoryTemplate
 {
 }

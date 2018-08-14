@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Braintree\Persistence\Propel;
 
-use Orm\Zed\Braintree\Persistence\Base\SpyPaymentBraintreeQuery as BaseSpyPaymentBraintreeQuery;
+use Orm\Zed\Braintree\Persistence\Base\SpyPaymentBraintreeQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_payment_braintree' table.
@@ -18,6 +18,6 @@ use Orm\Zed\Braintree\Persistence\Base\SpyPaymentBraintreeQuery as BaseSpyPaymen
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyPaymentBraintreeQuery extends BaseSpyPaymentBraintreeQuery
+abstract class AbstractSpyPaymentBraintreeQuery extends SpyPaymentBraintreeQuery
 {
 } // SpyPaymentBraintreeQuery

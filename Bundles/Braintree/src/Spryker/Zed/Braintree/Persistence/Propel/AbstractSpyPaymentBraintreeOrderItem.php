@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Braintree\Persistence\Propel;
 
-use Orm\Zed\Braintree\Persistence\Base\SpyPaymentBraintreeOrderItem as BaseSpyPaymentBraintreeOrderItem;
+use Orm\Zed\Braintree\Persistence\Base\SpyPaymentBraintreeOrderItem;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_payment_braintree_order_item' table.
@@ -18,6 +18,6 @@ use Orm\Zed\Braintree\Persistence\Base\SpyPaymentBraintreeOrderItem as BaseSpyPa
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyPaymentBraintreeOrderItem extends BaseSpyPaymentBraintreeOrderItem
+abstract class AbstractSpyPaymentBraintreeOrderItem extends SpyPaymentBraintreeOrderItem
 {
 }

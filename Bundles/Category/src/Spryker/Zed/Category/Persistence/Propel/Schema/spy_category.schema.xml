@@ -65,4 +65,5 @@
     </foreign-key>
     <id-method-parameter value="spy_category_closure_table_pk_seq"/>
   </table>
+  <table name="spy_category_template" idMethod="native" class="SpyCategoryTemplate"/>
 </database>
