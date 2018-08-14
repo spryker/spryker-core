@@ -10,6 +10,7 @@ use Spryker\Zed\RestRequestValidator\Business\Exception\PathDoesNotExistExceptio
 use Spryker\Zed\RestRequestValidator\Business\Exception\SchemaCouldNotBeWritten;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
+use Throwable;
 
 class RestRequestValidatorSaver implements RestRequestValidatorSaverInterface
 {
@@ -36,15 +37,13 @@ class RestRequestValidatorSaver implements RestRequestValidatorSaverInterface
     /**
      * @param array $validatorConfig
      *
-     * @throws \Spryker\Zed\RestRequestValidator\Business\Exception\PathDoesNotExistException
      * @throws \Spryker\Zed\RestRequestValidator\Business\Exception\SchemaCouldNotBeWritten
      *
      * @return void
      */
     public function store(array $validatorConfig): void
     {
-        if (
-            !$this->checkPathExistsOrCreate($this->cacheFile)
+        if (!$this->checkPathExistsOrCreate($this->cacheFile)
             || !file_put_contents($this->cacheFile, Yaml::dump($validatorConfig))
         ) {
             throw new SchemaCouldNotBeWritten(
@@ -69,7 +68,7 @@ class RestRequestValidatorSaver implements RestRequestValidatorSaverInterface
 
         try {
             $this->filesystem->mkdir($directoryName);
-        } catch(\Throwable $throwable) {
+        } catch (Throwable $throwable) {
             throw new PathDoesNotExistException('Cache storage path does not exist and could not be created.');
         }
 

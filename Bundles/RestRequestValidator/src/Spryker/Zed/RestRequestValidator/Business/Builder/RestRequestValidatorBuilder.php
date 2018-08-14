@@ -6,9 +6,9 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Builder;
 
-use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaverInterface;
 use Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCollectorInterface;
 use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorMergerInterface;
+use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaverInterface;
 
 class RestRequestValidatorBuilder implements RestRequestValidatorBuilderInterface
 {
