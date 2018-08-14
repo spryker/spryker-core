@@ -276,7 +276,7 @@ interface ShoppingListClientInterface
     /**
      * Specification:
      *  - Makes Zed request.
-     *  - Update share shopping list with company users from business unit or exact company user.
+     *  - Updates share shopping list with company users from business unit or exact company user.
      *
      * @api
      *

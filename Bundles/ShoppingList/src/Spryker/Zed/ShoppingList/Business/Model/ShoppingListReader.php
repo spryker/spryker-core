@@ -80,12 +80,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
         }
 
         $shoppingListCompanyBusinessUnits = $this->shoppingListRepository
-            ->findShoppingListCompanyBusinessUnitsByShoppingListId($shoppingListTransfer)
-            ->getCompanyBusinessUnits();
+            ->getShoppingListCompanyBusinessUnitsByShoppingListId($shoppingListTransfer);
 
         $shoppingListCompanyUsers = $this->shoppingListRepository
-            ->findShoppingListCompanyUsersByShoppingListId($shoppingListTransfer)
-            ->getCompanyUsers();
+            ->getShoppingListCompanyUsersByShoppingListId($shoppingListTransfer);
 
         $shoppingListTransfer
             ->setSharedCompanyUsers($shoppingListCompanyUsers)
@@ -234,17 +232,13 @@ class ShoppingListReader implements ShoppingListReaderInterface
             )
         );
 
-        $fullAccessShoppingListPermissionGroupTransfer = $this->shoppingListRepository->findShoppingListPermissionGroupByName(
-            (new ShoppingListPermissionGroupTransfer())->setName(ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS)
-        );
-
-        $companyUserSharedShoppingListIds = $this->shoppingListRepository->findCompanyUserSharedShoppingListIdsByPermissionGroup(
+        $companyUserSharedShoppingListIds = $this->shoppingListRepository->getCompanyUserSharedShoppingListIdsByPermissionGroupName(
             $companyUserTransfer->getIdCompanyUser(),
-            $fullAccessShoppingListPermissionGroupTransfer
+            ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS
         );
-        $companyBusinessUnitSharedShoppingListIds = $this->shoppingListRepository->findCompanyBusinessUnitSharedShoppingListIdsByPermissionGroup(
+        $companyBusinessUnitSharedShoppingListIds = $this->shoppingListRepository->getCompanyBusinessUnitSharedShoppingListIdsByPermissionGroupName(
             $companyUserTransfer->getFkCompanyBusinessUnit(),
-            $fullAccessShoppingListPermissionGroupTransfer
+            ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS
         );
 
         $companyUserPermissionCollectionTransfer = $this->addWritePermissionToPermissionCollectionTransfer(

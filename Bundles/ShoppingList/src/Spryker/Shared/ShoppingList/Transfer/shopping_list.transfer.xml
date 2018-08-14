@@ -24,14 +24,6 @@
         <property name="shoppingLists" type="ShoppingList[]" singular="shoppingList" />
     </transfer>
 
-    <transfer name="ShoppingListCompanyBusinessUnitCollection">
-        <property name="companyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" singular="companyBusinessUnit" />
-    </transfer>
-
-    <transfer name="ShoppingListCompanyUserCollection">
-        <property name="companyUsers" type="ShoppingListCompanyUser[]" singular="companyUser" />
-    </transfer>
-
     <transfer name="ShoppingListPermissionGroupCollection">
         <property name="permissionGroups" type="ShoppingListPermissionGroup[]" singular="permissionGroup" />
     </transfer>

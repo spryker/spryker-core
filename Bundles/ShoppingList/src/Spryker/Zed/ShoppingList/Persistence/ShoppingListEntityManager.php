@@ -153,7 +153,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             ->findOneOrCreate();
 
         $shoppingListCompanyBusinessUnitEntity = $this->getFactory()->createShoppingListCompanyBusinessUnitMapper()
-            ->mapTransferToEntity($shoppingListCompanyBusinessUnitTransfer, $shoppingListCompanyBusinessUnitEntity);
+            ->mapCompanyBusinessUnitTransferToCompanyBusinessUnitEntity($shoppingListCompanyBusinessUnitTransfer, $shoppingListCompanyBusinessUnitEntity);
 
         $shoppingListCompanyBusinessUnitEntity->save();
         $shoppingListCompanyBusinessUnitTransfer->setIdShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitEntity->getIdShoppingListCompanyBusinessUnit());
@@ -175,7 +175,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             ->findOneOrCreate();
 
         $shoppingListCompanyUserEntity = $this->getFactory()->createShoppingListCompanyUserMapper()
-            ->mapTransferToEntity($shoppingListCompanyUserTransfer, $shoppingListCompanyUserEntity);
+            ->mapCompanyUserTransferToCompanyUserEntity($shoppingListCompanyUserTransfer, $shoppingListCompanyUserEntity);
 
         $shoppingListCompanyUserEntity->save();
         $shoppingListCompanyUserTransfer->setIdShoppingListCompanyUser($shoppingListCompanyUserEntity->getIdShoppingListCompanyUser());

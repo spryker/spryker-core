@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShoppingList\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit;
 use Propel\Runtime\Collection\Collection;
@@ -17,16 +17,20 @@ interface ShoppingListCompanyBusinessUnitMapperInterface
     /**
      * @param \Propel\Runtime\Collection\Collection|null $companyBusinessUnitEntityTransferCollection
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer[]|\ArrayObject
      */
-    public function mapCompanyBusinessUnitCollectionTransfer(?Collection $companyBusinessUnitEntityTransferCollection): ShoppingListCompanyBusinessUnitCollectionTransfer;
+    public function mapCompanyBusinessUnitEntitiesToCompanyBusinessUnitTransfers(
+        ?Collection $companyBusinessUnitEntityTransferCollection
+    ): ArrayObject;
 
     /**
      * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit $shoppingListCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer
      */
-    public function mapCompanyBusinessUnitTransfer(SpyShoppingListCompanyBusinessUnit $shoppingListCompanyBusinessUnit): ShoppingListCompanyBusinessUnitTransfer;
+    public function mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer(
+        SpyShoppingListCompanyBusinessUnit $shoppingListCompanyBusinessUnit
+    ): ShoppingListCompanyBusinessUnitTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
@@ -34,7 +38,7 @@ interface ShoppingListCompanyBusinessUnitMapperInterface
      *
      * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit
      */
-    public function mapTransferToEntity(
+    public function mapCompanyBusinessUnitTransferToCompanyBusinessUnitEntity(
         ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer,
         SpyShoppingListCompanyBusinessUnit $shoppingListCompanyBusinessUnitEntity
     ): SpyShoppingListCompanyBusinessUnit;

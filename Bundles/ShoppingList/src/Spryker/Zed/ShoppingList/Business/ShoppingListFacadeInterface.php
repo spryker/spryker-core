@@ -239,7 +239,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Update share shopping list with company business units and company users.
+     *  - Updates share shopping list with company business units and company users.
      *
      * @api
      *

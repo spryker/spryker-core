@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\ShoppingList\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
-use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
@@ -281,18 +280,22 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
-     * @param int $idCompanyBusinessUnit
-     * @param \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer
+     * @module Customer
      *
-     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit[]|\Propel\Runtime\Collection\ObjectCollection
+     * @param int $idCompanyBusinessUnit
+     * @param string $shoppingListPermissionGroupName
+     *
+     * @return int[]
      */
-    public function findCompanyBusinessUnitSharedShoppingListIdsByPermissionGroup(int $idCompanyBusinessUnit, ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer)
+    public function getCompanyBusinessUnitSharedShoppingListIdsByPermissionGroupName(int $idCompanyBusinessUnit, string $shoppingListPermissionGroupName): array
     {
         return $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
             ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->select(SpyShoppingListCompanyBusinessUnitTableMap::COL_FK_SHOPPING_LIST)
-            ->filterByFkShoppingListPermissionGroup($shoppingListPermissionGroupTransfer->getIdShoppingListPermissionGroup())
+            ->useSpyShoppingListPermissionGroupQuery()
+            ->filterByName($shoppingListPermissionGroupName)
+            ->endUse()
             ->find()
             ->toArray();
     }
@@ -316,17 +319,19 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      * @module Customer
      *
      * @param int $idCompanyUser
-     * @param \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer
+     * @param string $shoppingListPermissionGroupName
      *
-     * @return mixed|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return int[]
      */
-    public function findCompanyUserSharedShoppingListIdsByPermissionGroup(int $idCompanyUser, ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer)
+    public function getCompanyUserSharedShoppingListIdsByPermissionGroupName(int $idCompanyUser, string $shoppingListPermissionGroupName): array
     {
         return $this->getFactory()
             ->createShoppingListCompanyUserQuery()
             ->filterByFkCompanyUser($idCompanyUser)
             ->select(SpyShoppingListCompanyUserTableMap::COL_FK_SHOPPING_LIST)
-            ->filterByFkShoppingListPermissionGroup($shoppingListPermissionGroupTransfer->getIdShoppingListPermissionGroup())
+            ->useSpyShoppingListPermissionGroupQuery()
+            ->filterByName($shoppingListPermissionGroupName)
+            ->endUse()
             ->find()
             ->toArray();
     }
@@ -384,9 +389,9 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer[]|\ArrayObject
      */
-    public function findShoppingListCompanyBusinessUnitsByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer
+    public function getShoppingListCompanyBusinessUnitsByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ArrayObject
     {
         $shoppingListsCompanyBusinessUnits = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
@@ -395,15 +400,15 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
 
         return $this->getFactory()
             ->createShoppingListCompanyBusinessUnitMapper()
-            ->mapCompanyBusinessUnitCollectionTransfer($shoppingListsCompanyBusinessUnits);
+            ->mapCompanyBusinessUnitEntitiesToCompanyBusinessUnitTransfers($shoppingListsCompanyBusinessUnits);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer[]|\ArrayObject
      */
-    public function findShoppingListCompanyUsersByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyUserCollectionTransfer
+    public function getShoppingListCompanyUsersByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ArrayObject
     {
         $shoppingListsCompanyUsers = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
@@ -412,7 +417,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
 
         return $this->getFactory()
             ->createShoppingListCompanyUserMapper()
-            ->mapCompanyUserCollectionTransfer($shoppingListsCompanyUsers);
+            ->mapCompanyUserEntitiesToCompanyUserTransfers($shoppingListsCompanyUsers);
     }
 
     /**

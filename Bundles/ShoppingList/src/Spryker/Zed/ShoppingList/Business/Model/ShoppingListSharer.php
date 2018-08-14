@@ -150,10 +150,10 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     protected function updateShareShoppingListCompanyUsers(ShoppingListTransfer $shoppingListTransfer): void
     {
         $sharedShoppingListCompanyUserIds = [];
-        $sharedShoppingListCompanyUserCollection = $this->shoppingListRepository
-            ->findShoppingListCompanyUsersByShoppingListId($shoppingListTransfer);
+        $sharedShoppingListCompanyUsers = $this->shoppingListRepository
+            ->getShoppingListCompanyUsersByShoppingListId($shoppingListTransfer);
 
-        foreach ($sharedShoppingListCompanyUserCollection->getCompanyUsers() as $sharedShoppingListCompanyUserTransfer) {
+        foreach ($sharedShoppingListCompanyUsers as $sharedShoppingListCompanyUserTransfer) {
             $sharedShoppingListCompanyUserIds[$sharedShoppingListCompanyUserTransfer->getIdShoppingListCompanyUser()] =
                 $sharedShoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup();
         }
@@ -171,10 +171,10 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     protected function updateShareShoppingListCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer): void
     {
         $sharedShoppingListCompanyBusinessUnitIds = [];
-        $sharedShoppingListCompanyBusinessUnitCollection = $this->shoppingListRepository
-            ->findShoppingListCompanyBusinessUnitsByShoppingListId($shoppingListTransfer);
+        $sharedShoppingListCompanyBusinessUnits = $this->shoppingListRepository
+            ->getShoppingListCompanyBusinessUnitsByShoppingListId($shoppingListTransfer);
 
-        foreach ($sharedShoppingListCompanyBusinessUnitCollection->getCompanyBusinessUnits() as $sharedShoppingListCompanyBusinessUnitTransfer) {
+        foreach ($sharedShoppingListCompanyBusinessUnits as $sharedShoppingListCompanyBusinessUnitTransfer) {
             $sharedShoppingListCompanyBusinessUnitIds[$sharedShoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit()] =
                 $sharedShoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup();
         }

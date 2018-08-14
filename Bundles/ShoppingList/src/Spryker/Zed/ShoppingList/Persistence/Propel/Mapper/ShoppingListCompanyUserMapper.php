@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShoppingList\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser;
 use Propel\Runtime\Collection\Collection;
@@ -17,21 +17,21 @@ class ShoppingListCompanyUserMapper implements ShoppingListCompanyUserMapperInte
     /**
      * @param null|\Propel\Runtime\Collection\Collection $companyUserEntityCollection
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer[]|\ArrayObject
      */
-    public function mapCompanyUserCollectionTransfer(?Collection $companyUserEntityCollection): ShoppingListCompanyUserCollectionTransfer
+    public function mapCompanyUserEntitiesToCompanyUserTransfers(?Collection $companyUserEntityCollection): ArrayObject
     {
-        $shoppingListCompanyUserCollectionTransfer = new ShoppingListCompanyUserCollectionTransfer();
+        $shoppingListCompanyUsers = new ArrayObject;
 
         if (!$companyUserEntityCollection) {
-            return $shoppingListCompanyUserCollectionTransfer;
+            return $shoppingListCompanyUsers;
         }
 
         foreach ($companyUserEntityCollection as $companyUserEntityTransfer) {
-            $shoppingListCompanyUserCollectionTransfer->addCompanyUser($this->mapCompanyUserTransfer($companyUserEntityTransfer));
+            $shoppingListCompanyUsers[] = $this->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntityTransfer);
         }
 
-        return $shoppingListCompanyUserCollectionTransfer;
+        return $shoppingListCompanyUsers;
     }
 
     /**
@@ -39,7 +39,7 @@ class ShoppingListCompanyUserMapper implements ShoppingListCompanyUserMapperInte
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer
      */
-    public function mapCompanyUserTransfer(SpyShoppingListCompanyUser $shoppingListCompanyUser): ShoppingListCompanyUserTransfer
+    public function mapCompanyUserEntityToCompanyUserTransfer(SpyShoppingListCompanyUser $shoppingListCompanyUser): ShoppingListCompanyUserTransfer
     {
         return (new ShoppingListCompanyUserTransfer)
             ->setIdShoppingListCompanyUser($shoppingListCompanyUser->getIdShoppingListCompanyUser())
@@ -54,7 +54,7 @@ class ShoppingListCompanyUserMapper implements ShoppingListCompanyUserMapperInte
      *
      * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser
      */
-    public function mapTransferToEntity(
+    public function mapCompanyUserTransferToCompanyUserEntity(
         ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer,
         SpyShoppingListCompanyUser $shoppingListCompanyUserEntity
     ): SpyShoppingListCompanyUser {
