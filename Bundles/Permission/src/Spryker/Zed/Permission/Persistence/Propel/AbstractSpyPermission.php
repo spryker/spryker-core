@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Permission\Persistence\Propel;
 
-use Orm\Zed\Permission\Persistence\Base\SpyPermission as BaseSpyPermission;
+use Orm\Zed\Permission\Persistence\Base\SpyPermission;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_permission' table.
@@ -18,6 +18,6 @@ use Orm\Zed\Permission\Persistence\Base\SpyPermission as BaseSpyPermission;
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyPermission extends BaseSpyPermission
+abstract class AbstractSpyPermission extends SpyPermission
 {
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductImage\Persistence\Propel;
 
-use Orm\Zed\ProductImage\Persistence\Base\SpyProductImageSetQuery as BaseSpyProductImageSetQuery;
+use Orm\Zed\ProductImage\Persistence\Base\SpyProductImageSetQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_product_image_set' table.
@@ -18,6 +18,6 @@ use Orm\Zed\ProductImage\Persistence\Base\SpyProductImageSetQuery as BaseSpyProd
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyProductImageSetQuery extends BaseSpyProductImageSetQuery
+abstract class AbstractSpyProductImageSetQuery extends SpyProductImageSetQuery
 {
 } // SpyProductImageSetQuery

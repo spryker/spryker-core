@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence\Propel;
 
-use Orm\Zed\ProductLabel\Persistence\Base\SpyProductLabelQuery as BaseSpyProductLabelQuery;
+use Orm\Zed\ProductLabel\Persistence\Base\SpyProductLabelQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_product_label' table.
@@ -18,6 +18,6 @@ use Orm\Zed\ProductLabel\Persistence\Base\SpyProductLabelQuery as BaseSpyProduct
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyProductLabelQuery extends BaseSpyProductLabelQuery
+abstract class AbstractSpyProductLabelQuery extends SpyProductLabelQuery
 {
 } // SpyProductLabelQuery

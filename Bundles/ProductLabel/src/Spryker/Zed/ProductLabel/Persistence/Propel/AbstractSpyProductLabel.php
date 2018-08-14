@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Persistence\Propel;
 
-use Orm\Zed\ProductLabel\Persistence\Base\SpyProductLabel as BaseSpyProductLabel;
+use Orm\Zed\ProductLabel\Persistence\Base\SpyProductLabel;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_product_label' table.
@@ -18,6 +18,6 @@ use Orm\Zed\ProductLabel\Persistence\Base\SpyProductLabel as BaseSpyProductLabel
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyProductLabel extends BaseSpyProductLabel
+abstract class AbstractSpyProductLabel extends SpyProductLabel
 {
 }

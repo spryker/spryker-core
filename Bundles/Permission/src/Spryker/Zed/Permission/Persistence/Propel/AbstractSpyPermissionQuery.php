@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Permission\Persistence\Propel;
 
-use Orm\Zed\Permission\Persistence\Base\SpyPermissionQuery as BaseSpyPermissionQuery;
+use Orm\Zed\Permission\Persistence\Base\SpyPermissionQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_permission' table.
@@ -18,6 +18,6 @@ use Orm\Zed\Permission\Persistence\Base\SpyPermissionQuery as BaseSpyPermissionQ
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyPermissionQuery extends BaseSpyPermissionQuery
+abstract class AbstractSpyPermissionQuery extends SpyPermissionQuery
 {
 } // SpyPermissionQuery

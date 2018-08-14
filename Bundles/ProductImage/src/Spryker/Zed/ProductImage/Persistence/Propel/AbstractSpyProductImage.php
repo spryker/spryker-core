@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductImage\Persistence\Propel;
 
-use Orm\Zed\ProductImage\Persistence\Base\SpyProductImage as BaseSpyProductImage;
+use Orm\Zed\ProductImage\Persistence\Base\SpyProductImage;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_product_image' table.
@@ -18,6 +18,6 @@ use Orm\Zed\ProductImage\Persistence\Base\SpyProductImage as BaseSpyProductImage
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyProductImage extends BaseSpyProductImage
+abstract class AbstractSpyProductImage extends SpyProductImage
 {
 }
