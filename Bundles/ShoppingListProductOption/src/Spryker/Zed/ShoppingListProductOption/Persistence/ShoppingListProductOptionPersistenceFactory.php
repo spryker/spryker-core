@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ShoppingListProductOption\Persistence;
 
+use Orm\Zed\ShoppingListProductOption\Persistence\SpyShoppingListProductOption;
 use Orm\Zed\ShoppingListProductOption\Persistence\SpyShoppingListProductOptionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\ShoppingListProductOption\ShoppingListProductOptionConfig getConfig()
- * @method \Spryker\Zed\ShoppingListProductOption\Persistence\ShoppingListProductOptionQueryContainerInterface getQueryContainer()
  */
 class ShoppingListProductOptionPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -22,5 +22,13 @@ class ShoppingListProductOptionPersistenceFactory extends AbstractPersistenceFac
     public function createSpyShoppingListProductOptionQuery(): SpyShoppingListProductOptionQuery
     {
         return SpyShoppingListProductOptionQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ShoppingListProductOption\Persistence\SpyShoppingListProductOption
+     */
+    public function createSpyShoppingListProductOption(): SpyShoppingListProductOption
+    {
+        return new SpyShoppingListProductOption();
     }
 }

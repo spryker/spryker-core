@@ -48,12 +48,10 @@ class ShoppingListProductOptionEntityManager extends AbstractEntityManager imple
      */
     protected function saveShoppingListItemProductOption(int $idShoppingListItem, int $idProductOption): void
     {
-        $shoppingListProductOption = $this->getFactory()
-            ->createSpyShoppingListProductOptionQuery()
-            ->filterByFkShoppingListItem($idShoppingListItem)
-            ->filterByFkProductOptionValue($idProductOption)
-            ->findOneOrCreate();
-
-        $shoppingListProductOption->save();
+        $this->getFactory()
+            ->createSpyShoppingListProductOption()
+            ->setFkShoppingListItem($idShoppingListItem)
+            ->setFkProductOptionValue($idProductOption)
+            ->save();
     }
 }
