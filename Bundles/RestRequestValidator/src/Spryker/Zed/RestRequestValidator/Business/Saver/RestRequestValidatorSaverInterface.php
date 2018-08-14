@@ -4,9 +4,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\RestRequestValidator\Business\Cacher;
+namespace Spryker\Zed\RestRequestValidator\Business\Saver;
 
-interface RestRequestValidatorCacherInterface
+interface RestRequestValidatorSaverInterface
 {
     /**
      * @param array $validatorConfig

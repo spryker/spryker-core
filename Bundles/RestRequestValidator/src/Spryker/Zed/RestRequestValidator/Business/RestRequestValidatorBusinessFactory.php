@@ -9,8 +9,8 @@ namespace Spryker\Zed\RestRequestValidator\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorBuilder;
 use Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorBuilderInterface;
-use Spryker\Zed\RestRequestValidator\Business\Cacher\RestRequestValidatorCacher;
-use Spryker\Zed\RestRequestValidator\Business\Cacher\RestRequestValidatorCacherInterface;
+use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaver;
+use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaverInterface;
 use Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCollector;
 use Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCollectorInterface;
 use Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinder;
@@ -31,7 +31,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
         return new RestRequestValidatorBuilder(
             $this->createValidatorCollector(),
             $this->createValidatorMerger(),
-            $this->createValidatorCacher()
+            $this->createValidatorSaver()
         );
     }
 
@@ -52,11 +52,14 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\RestRequestValidator\Business\Cacher\RestRequestValidatorCacherInterface
+     * @return \Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaverInterface
      */
-    protected function createValidatorCacher(): RestRequestValidatorCacherInterface
+    protected function createValidatorSaver(): RestRequestValidatorSaverInterface
     {
-        return new RestRequestValidatorCacher($this->getConfig()->getValidationSchemaCacheFile());
+        return new RestRequestValidatorSaver(
+
+            $this->getConfig()->getValidationSchemaCacheFile()
+        );
     }
 
     /**

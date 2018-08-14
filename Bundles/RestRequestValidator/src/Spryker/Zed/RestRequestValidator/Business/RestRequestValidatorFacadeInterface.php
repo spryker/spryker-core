@@ -9,6 +9,10 @@ namespace Spryker\Zed\RestRequestValidator\Business;
 interface RestRequestValidatorFacadeInterface
 {
     /**
+     * Specification:
+     * - collects the validation rules declarations from all the modules
+     * - stores the rules in the cache.
+     *
      * @api
      *
      * @return void

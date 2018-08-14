@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Builder;
 
-use Spryker\Zed\RestRequestValidator\Business\Cacher\RestRequestValidatorCacherInterface;
+use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaverInterface;
 use Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCollectorInterface;
 use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorMergerInterface;
 
@@ -23,23 +23,23 @@ class RestRequestValidatorBuilder implements RestRequestValidatorBuilderInterfac
     protected $validatorMerger;
 
     /**
-     * @var \Spryker\Zed\RestRequestValidator\Business\Cacher\RestRequestValidatorCacherInterface
+     * @var \Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaverInterface
      */
-    protected $validatorCacher;
+    protected $validatorSaver;
 
     /**
      * @param \Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCollectorInterface $validatorCollector
      * @param \Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorMergerInterface $validatorMerger
-     * @param \Spryker\Zed\RestRequestValidator\Business\Cacher\RestRequestValidatorCacherInterface $validatorCacher
+     * @param \Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaverInterface $validatorSaver
      */
     public function __construct(
         RestRequestValidatorCollectorInterface $validatorCollector,
         RestRequestValidatorMergerInterface $validatorMerger,
-        RestRequestValidatorCacherInterface $validatorCacher
+        RestRequestValidatorSaverInterface $validatorSaver
     ) {
         $this->validatorCollector = $validatorCollector;
         $this->validatorMerger = $validatorMerger;
-        $this->validatorCacher = $validatorCacher;
+        $this->validatorSaver = $validatorSaver;
     }
 
     /**
@@ -51,6 +51,6 @@ class RestRequestValidatorBuilder implements RestRequestValidatorBuilderInterfac
     {
         $config = $this->validatorCollector->collect();
         $config = $this->validatorMerger->merge($config);
-        $this->validatorCacher->store($config);
+        $this->validatorSaver->store($config);
     }
 }

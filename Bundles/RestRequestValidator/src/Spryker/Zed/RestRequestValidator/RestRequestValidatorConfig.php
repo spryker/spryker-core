@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class RestRequestValidatorConfig extends AbstractBundleConfig
 {
     const VALIDATION_FILENAME_PATTERN = '*.validation.yaml';
-    const VALIDATION_CACHE_FILENAME_PATTERN = '/src/Generated/Glue/Validator/validator.cache';
+    const VALIDATION_CACHE_FILENAME_PATTERN = '/src/Generated/Glue/Validator/validation.cache';
 
     /**
      * @return array
