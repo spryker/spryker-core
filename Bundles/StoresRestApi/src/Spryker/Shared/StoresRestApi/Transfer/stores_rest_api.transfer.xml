@@ -33,7 +33,7 @@
         <property name="name" type="string"/>
         <property name="defaultCurrency" type="string"/>
         <property name="currencyIsoCode" type="string"/>
-        <property name="currencyIsoCodes" type="array"/>
+        <property name="currencyIsoCodes" type="string[]"/>
     </transfer>
 
 </transfers>

@@ -113,7 +113,7 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
      *
      * @param string $iso2Code
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\RegionCollectionTransfer
      */
     public function getRegionsByCountryIso2Code($iso2Code)
     {
