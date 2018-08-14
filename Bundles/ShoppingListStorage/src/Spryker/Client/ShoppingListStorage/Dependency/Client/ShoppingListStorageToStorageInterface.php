@@ -15,13 +15,4 @@ interface ShoppingListStorageToStorageInterface
      * @return mixed
      */
     public function get($key);
-
-    /**
-     * @api
-     *
-     * @param array $keys
-     *
-     * @return array
-     */
-    public function getMulti(array $keys);
 }

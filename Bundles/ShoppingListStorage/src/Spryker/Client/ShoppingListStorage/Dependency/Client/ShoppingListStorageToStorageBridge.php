@@ -15,8 +15,6 @@ class ShoppingListStorageToStorageBridge implements ShoppingListStorageToStorage
     protected $storage;
 
     /**
-     * @api
-     *
      * @param \Spryker\Client\Storage\StorageClientInterface $storage
      */
     public function __construct($storage)
@@ -32,15 +30,5 @@ class ShoppingListStorageToStorageBridge implements ShoppingListStorageToStorage
     public function get($key)
     {
         return $this->storage->get($key);
-    }
-
-    /**
-     * @param array $keys
-     *
-     * @return array
-     */
-    public function getMulti(array $keys)
-    {
-        return $this->storage->getMulti($keys);
     }
 }
