@@ -37,7 +37,7 @@ class CustomersResourceController extends AbstractController
     public function patchAction(RestRequestInterface $restRequest, RestCustomersRegularDataTransfer $customerTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCustomerWriter()
+            ->createCustomersWriter()
             ->updateCustomer($restRequest, $customerTransfer);
     }
 }
