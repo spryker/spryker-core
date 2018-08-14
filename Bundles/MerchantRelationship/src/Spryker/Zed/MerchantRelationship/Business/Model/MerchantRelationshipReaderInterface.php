@@ -21,9 +21,9 @@ interface MerchantRelationshipReaderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
-    public function getMerchantRelationshipByKey(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer;
+    public function findMerchantRelationshipByKey(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer;
 
     /**
      * @param int $idMerchantRelationship

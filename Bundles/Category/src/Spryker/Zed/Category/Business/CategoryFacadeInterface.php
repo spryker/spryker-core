@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Business;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -475,4 +476,16 @@ interface CategoryFacadeInterface
      * @return bool
      */
     public function hasFirstLevelChildrenByName(string $name, CategoryTransfer $categoryTransfer): bool;
+
+    /**
+     * Specification:
+     * - Retrieves collection with all categories from DB.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 }

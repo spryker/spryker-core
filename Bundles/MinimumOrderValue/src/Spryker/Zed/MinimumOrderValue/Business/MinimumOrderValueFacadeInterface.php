@@ -19,7 +19,7 @@ interface MinimumOrderValueFacadeInterface
 {
     /**
      * Specification:
-     * - Add minimum order value strategies to the types persistence.
+     * - Populates the database with minimum order value strategies of `MinimumOrderValueConfig`.
      *
      * @api
      *
@@ -53,7 +53,7 @@ interface MinimumOrderValueFacadeInterface
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
      *
-     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
      */
     public function getMinimumOrderValueTypeByKey(
         MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer

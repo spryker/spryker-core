@@ -20,7 +20,7 @@ class HardThresholdStrategy extends AbstractMinimumOrderValueStrategy implements
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @return bool
      */

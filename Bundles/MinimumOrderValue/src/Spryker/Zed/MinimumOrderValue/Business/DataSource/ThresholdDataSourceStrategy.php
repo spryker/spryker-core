@@ -25,7 +25,7 @@ class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterfac
     protected $storeThresholdReader;
 
     /**
-     * @var \Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdReaderInterface
+     * @var \Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig
      */
     protected $config;
 

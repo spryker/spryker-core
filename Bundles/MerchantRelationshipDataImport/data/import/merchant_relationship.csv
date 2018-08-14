@@ -17,3 +17,7 @@ sugar-moster-otto-supplier-1,sugar-moster,Supplier_Department,Supplier_Departmen
 sugar-moster-otto-supplier-2,sugar-moster,Supplier_Department,Ottom_store_Berlin
 sugar-moster-otto-supplier-3,sugar-moster,Supplier_Department,Ottom_store_Oslo
 sugar-moster-otto-supplier-4,sugar-moster,Supplier_Department,Ottom_store_London
+mr-008,restrictions-merchant,BU-IT-no-ASUS,BU-IT-no-tablets;BU-IT-no-ASUS
+mr-009,restrictions-merchant,BU-IT-only-wearables,"BU-IT-only-wearables"
+mr-010,restrictions-merchant,Sales-under-400,"Sales-under-400"
+mr-011,restrictions-merchant,Sales,Sales;Sales-under-400

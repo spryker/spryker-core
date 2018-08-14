@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/minimum-order-value.svg)](https://travis-ci.org/spryker/minimum-order-value)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/minimum-order-value/badge.svg)](https://coveralls.io/github/spryker/minimum-order-value)
 
-MinimumOrderValue Module provides many stratiges to set a threshold for user orders.
+MinimumOrderValue Module provides many strategies to set a threshold for user orders.
 
 ## Installation
 

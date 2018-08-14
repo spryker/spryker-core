@@ -46,7 +46,7 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
-    public function getMerchantRelationshipByKey(string $merchantRelationshipKey): ?MerchantRelationshipTransfer
+    public function findMerchantRelationshipByKey(string $merchantRelationshipKey): ?MerchantRelationshipTransfer
     {
         $spyMerchantRelation = $this->getFactory()
             ->createMerchantRelationshipQuery()
@@ -135,5 +135,33 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
         }
 
         return $merchantRelationshipCollection;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @module CompanyBusinessUnit
+     * @module Merchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     */
+    public function getMerchantRelationshipCollection(): array
+    {
+        $merchantRelationEntities = $this->getFactory()
+            ->createMerchantRelationshipQuery()
+            ->leftJoinCompanyBusinessUnit()
+            ->innerJoinWithMerchant()
+            ->find();
+
+        $merchantRelationTransfers = [];
+        foreach ($merchantRelationEntities as $merchantRelationEntity) {
+            $merchantRelationTransfers[] = $this->getFactory()
+                ->createPropelMerchantRelationshipMapper()
+                ->mapEntityToMerchantRelationshipTransfer($merchantRelationEntity, new MerchantRelationshipTransfer());
+        }
+
+        return $merchantRelationTransfers;
     }
 }

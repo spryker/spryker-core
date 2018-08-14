@@ -9,9 +9,9 @@ namespace Spryker\Zed\MinimumOrderValueDataImport\Business\Model\DataSet;
 
 interface MinimumOrderValueDataSetInterface
 {
-    public const STORE = 'store';
-    public const CURRENCY = 'currency';
-    public const STRATEGY = 'strategy';
-    public const THRESHOLD = 'threshold';
-    public const FEE = 'fee';
+    public const COLUMN_STORE = 'store';
+    public const COLUMN_CURRENCY = 'currency';
+    public const COLUMN_STRATEGY = 'strategy';
+    public const COLUMN_THRESHOLD = 'threshold';
+    public const COLUMN_FEE = 'fee';
 }

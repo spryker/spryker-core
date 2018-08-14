@@ -23,7 +23,7 @@ interface MerchantRelationshipRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
-    public function getMerchantRelationshipByKey(string $merchantRelationshipKey): ?MerchantRelationshipTransfer;
+    public function findMerchantRelationshipByKey(string $merchantRelationshipKey): ?MerchantRelationshipTransfer;
 
     /**
      * @param int $idMerchantRelationship
@@ -50,4 +50,18 @@ interface MerchantRelationshipRepositoryInterface
      * @return int
      */
     public function getMaxMerchantRelationshipId(): int;
+
+    /**
+     * Specification:
+     * - Returns all merchant relations.
+     * - Hydrate owner company business unit and merchant
+     *
+     * @api
+     *
+     * @module CompanyBusinessUnit
+     * @module Merchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     */
+    public function getMerchantRelationshipCollection(): array;
 }

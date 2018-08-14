@@ -17,8 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class MinimumOrderValueTypeInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @return void

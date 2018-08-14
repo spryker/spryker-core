@@ -27,11 +27,11 @@ class MerchantRelationshipMinimumOrderValueDataImportToMerchantRelationshipFacad
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
-    public function getMerchantRelationshipByKey(
+    public function findMerchantRelationshipByKey(
         MerchantRelationshipTransfer $merchantRelationshipTransfer
-    ): MerchantRelationshipTransfer {
-        return $this->merchantRelationshipFacade->getMerchantRelationshipByKey($merchantRelationshipTransfer);
+    ): ?MerchantRelationshipTransfer {
+        return $this->merchantRelationshipFacade->findMerchantRelationshipByKey($merchantRelationshipTransfer);
     }
 }
