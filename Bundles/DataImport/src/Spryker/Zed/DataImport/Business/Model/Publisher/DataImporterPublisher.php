@@ -23,6 +23,11 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     protected static $importedEntityEvents = [];
 
     /**
+     * @var array
+     */
+    protected static $triggeredEventIds = [];
+
+    /**
      * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface $eventFacade
      */
     public function __construct(DataImportToEventFacadeInterface $eventFacade)
@@ -31,42 +36,84 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     }
 
     /**
+     * @param string $eventName
+     * @param int $entityId
+     *
+     * @return void
+     */
+    public function addEvent($eventName, $entityId): void
+    {
+        if (isset(static::$triggeredEventIds[$eventName][$entityId])) {
+            return;
+        }
+
+        static::$importedEntityEvents[$eventName][] = $entityId;
+    }
+
+    /**
+     * @deprecated use addEvent() instead.
+     *
      * @param array $events
      *
      * @return void
      */
     public static function addImportedEntityEvents(array $events): void
     {
-        $mergedArray = array_merge_recursive(static::$importedEntityEvents, $events);
-
-        static::$importedEntityEvents = static::getUniqueArray($mergedArray);
+        static::$importedEntityEvents = array_merge_recursive(static::$importedEntityEvents, $events);
     }
 
     /**
+     * @param int $flushChunkSize
+     *
      * @return void
      */
-    public function triggerEvents(): void
+    public function triggerEvents($flushChunkSize = 1000000): void
     {
-        foreach (static::$importedEntityEvents as $event => $ids) {
+        $uniqueEvents = $this->getUniqueEvents();
+        foreach ($uniqueEvents as $event => $ids) {
             $uniqueIds = array_unique($ids, SORT_REGULAR);
+            $events = [];
             foreach ($uniqueIds as $id) {
-                $this->eventFacade->trigger($event, (new EventEntityTransfer())->setId($id));
+                $events[] = (new EventEntityTransfer())->setId($id);
+                static::$triggeredEventIds[$event][$id] = true;
             }
+            $this->eventFacade->triggerBulk($event, $events);
+        }
+
+        static::$importedEntityEvents = [];
+
+        if (count(static::$triggeredEventIds, COUNT_RECURSIVE) > $flushChunkSize) {
+            static::$triggeredEventIds = [];
         }
     }
 
     /**
-     * @param array $mergedArray
-     *
      * @return array
      */
-    protected static function getUniqueArray(array $mergedArray): array
+    protected static function getUniqueImportedEntityEvents(): array
     {
         $uniqueArray = [];
-        foreach ($mergedArray as $event => $ids) {
+        foreach (static::$importedEntityEvents as $event => $ids) {
             $uniqueArray[$event] = array_unique($ids, SORT_REGULAR);
         }
 
         return $uniqueArray;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getUniqueEvents(): array
+    {
+        $uniqueEvents = static::getUniqueImportedEntityEvents();
+        foreach ($uniqueEvents as $eventName => $events) {
+            foreach ($events as $entityKey => $entityId) {
+                if (isset(static::$triggeredEventIds[$eventName][(int)$entityId])) {
+                    unset($uniqueEvents[$eventName][$entityKey]);
+                }
+            }
+        }
+
+        return $uniqueEvents;
     }
 }

@@ -164,8 +164,8 @@ class DataImporter implements
      */
     protected function importDataSet(DataSetInterface $dataSet)
     {
-        foreach ($this->dataSetStepBroker as $dataSetImporter) {
-            $dataSetImporter->execute($dataSet);
+        foreach ($this->dataSetStepBroker as $dataSetStep) {
+            $dataSetStep->execute($dataSet);
         }
     }
 

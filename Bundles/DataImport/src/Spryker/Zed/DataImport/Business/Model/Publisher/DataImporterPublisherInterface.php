@@ -12,12 +12,14 @@ interface DataImporterPublisherInterface
     /**
      * @param array $events
      *
-     * @return mixed
+     * @return void
      */
     public static function addImportedEntityEvents(array $events);
 
     /**
+     * @param int $flushChunkSize
+     *
      * @return void
      */
-    public function triggerEvents();
+    public function triggerEvents($flushChunkSize = 1000000);
 }

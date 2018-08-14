@@ -21,15 +21,32 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
      * @api
      *
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
      * @return void
      */
-    public function trigger($eventName, TransferInterface $eventTransfer)
+    public function trigger($eventName, TransferInterface $transfer)
     {
         $this->getFactory()
             ->createEventDispatcher()
-            ->trigger($eventName, $eventTransfer);
+            ->trigger($eventName, $transfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     *
+     * @return void
+     */
+    public function triggerBulk($eventName, array $transfers): void
+    {
+        $this->getFactory()
+            ->createEventDispatcher()
+            ->triggerBulk($eventName, $transfers);
     }
 
     /**
@@ -46,5 +63,21 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
         return $this->getFactory()
             ->createEventQueueConsumer()
             ->processMessages($queueMessageTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function forwardMessages(array $queueMessageTransfers): array
+    {
+        return $this->getFactory()
+            ->createMessageForwarder()
+            ->forwardMessages($queueMessageTransfers);
     }
 }
