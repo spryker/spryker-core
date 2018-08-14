@@ -34,11 +34,18 @@ class PermissionResolver implements PermissionResolverInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string
+     * @return string|null key af access group or null if permissions can not be applied.
      */
-    public function getQuoteAccessLevel(QuoteTransfer $quoteTransfer): string
+    public function getQuoteAccessLevel(QuoteTransfer $quoteTransfer): ?string
     {
+        $quoteTransfer
+            ->requireIdQuote()
+            ->requireCustomerReference();
+
         $customerTransfer = $this->customerClient->getCustomer();
+        if (!$customerTransfer || !$customerTransfer->getCustomerReference()) {
+            return null;
+        }
 
         if ($customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()) {
             return SharedCartConfig::PERMISSION_GROUP_OWNER_ACCESS;
@@ -52,6 +59,14 @@ class PermissionResolver implements PermissionResolverInterface
             return SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS;
         }
 
-        return SharedCartConfig::PERMISSION_GROUP_READ_ONLY;
+        $readAllowed = $this->can(
+            WriteSharedCartPermissionPlugin::KEY,
+            $quoteTransfer->getIdQuote()
+        );
+        if ($readAllowed) {
+            return SharedCartConfig::PERMISSION_GROUP_READ_ONLY;
+        }
+
+        return null;
     }
 }

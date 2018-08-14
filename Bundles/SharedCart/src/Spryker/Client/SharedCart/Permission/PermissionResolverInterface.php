@@ -14,7 +14,7 @@ interface PermissionResolverInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string
+     * @return string|null key af access group or null if permissions can not be applied.
      */
-    public function getQuoteAccessLevel(QuoteTransfer $quoteTransfer): string;
+    public function getQuoteAccessLevel(QuoteTransfer $quoteTransfer): ?string;
 }
