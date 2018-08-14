@@ -22,7 +22,9 @@ class ShoppingListItemNoteMapper implements ShoppingListItemNoteMapperInterface
         SpyShoppingListItemNote $shoppingListItemNote,
         ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
     ): ShoppingListItemNoteTransfer {
-        return $shoppingListItemNoteTransfer->fromArray($shoppingListItemNote->toArray(), true);
+        $shoppingListItemNoteTransfer->fromArray($shoppingListItemNote->toArray(), true);
+
+        return $shoppingListItemNoteTransfer;
     }
 
     /**

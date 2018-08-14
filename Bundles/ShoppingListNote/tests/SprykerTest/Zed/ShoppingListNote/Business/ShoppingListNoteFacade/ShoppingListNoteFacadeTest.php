@@ -48,12 +48,7 @@ class ShoppingListNoteFacadeTest extends Unit
     /**
      * @var \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    protected $otherCompanyUserTransfer;
-
-    /**
-     * @var \Generated\Shared\Transfer\ShoppingListTransfer
-     */
-    protected $shoppingList;
+    protected $notOwnerCompanyUserTransfer;
 
     /**
      * @var \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
@@ -63,7 +58,7 @@ class ShoppingListNoteFacadeTest extends Unit
     /**
      * @var \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected $product;
+    protected $productTransfer;
 
     /**
      * @return void
@@ -105,15 +100,15 @@ class ShoppingListNoteFacadeTest extends Unit
         $this->ownerCompanyUserTransfer->setCustomer($ownerCustomerTransfer);
 
         $otherCustomerTransfer = $this->tester->haveCustomer();
-        $this->otherCompanyUserTransfer = $this->tester->haveCompanyUser([
+        $this->notOwnerCompanyUserTransfer = $this->tester->haveCompanyUser([
             CompanyUserTransfer::CUSTOMER => $otherCustomerTransfer,
             CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
             CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyTransferBusinessUnit->getIdCompanyBusinessUnit(),
         ]);
-        $this->otherCompanyUserTransfer->setCustomer($otherCustomerTransfer);
+        $this->notOwnerCompanyUserTransfer->setCustomer($otherCustomerTransfer);
 
-        $this->product = $this->tester->haveProduct();
-        $this->tester->haveProductInStock([StockProductTransfer::SKU => $this->product->getSku()]);
+        $this->productTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $this->productTransfer->getSku()]);
     }
 
     /**
@@ -123,7 +118,7 @@ class ShoppingListNoteFacadeTest extends Unit
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
-        $shoppingListItemTransfer = $this->tester->createShoppingListItem($shoppingListTransfer, $this->product);
+        $shoppingListItemTransfer = $this->tester->createShoppingListItem($shoppingListTransfer, $this->productTransfer);
 
         $shoppingListItemNoteTransfer = (new ShoppingListItemNoteBuilder(([
             ShoppingListItemNoteTransfer::FK_SHOPPING_LIST_ITEM => $shoppingListItemTransfer->getIdShoppingListItem(),
@@ -148,7 +143,7 @@ class ShoppingListNoteFacadeTest extends Unit
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
-        $shoppingListItemTransfer = $this->tester->createShoppingListItem($shoppingListTransfer, $this->product);
+        $shoppingListItemTransfer = $this->tester->createShoppingListItem($shoppingListTransfer, $this->productTransfer);
 
         $shoppingListItemNoteTransfer = (new ShoppingListItemNoteBuilder(([
             ShoppingListItemNoteTransfer::FK_SHOPPING_LIST_ITEM => $shoppingListItemTransfer->getIdShoppingListItem(),
@@ -180,7 +175,7 @@ class ShoppingListNoteFacadeTest extends Unit
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
-        $shoppingListItemTransfer = $this->tester->createShoppingListItem($shoppingListTransfer, $this->product);
+        $shoppingListItemTransfer = $this->tester->createShoppingListItem($shoppingListTransfer, $this->productTransfer);
         $shoppingListItemNoteTransfer = (new ShoppingListItemNoteBuilder(([
             ShoppingListItemNoteTransfer::FK_SHOPPING_LIST_ITEM => $shoppingListItemTransfer->getIdShoppingListItem(),
             ShoppingListItemNoteTransfer::MESSAGE => 'Note for shopping item goes here',

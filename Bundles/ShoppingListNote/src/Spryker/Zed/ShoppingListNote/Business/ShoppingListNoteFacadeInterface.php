@@ -13,7 +13,7 @@ interface ShoppingListNoteFacadeInterface
 {
     /**
      * Specification:
-     *  - Get shopping list item note by shopping list id.
+     *  - Gets shopping list item note by shopping list id.
      *
      * @api
      *
