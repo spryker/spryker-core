@@ -50,4 +50,18 @@ interface MerchantRelationshipRepositoryInterface
      * @return int
      */
     public function getMaxMerchantRelationshipId(): int;
+
+    /**
+     * Specification:
+     * - Returns all merchant relations.
+     * - Hydrate owner company business unit and merchant
+     *
+     * @api
+     *
+     * @module CompanyBusinessUnit
+     * @module Merchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     */
+    public function getMerchantRelationshipCollection(): array;
 }
