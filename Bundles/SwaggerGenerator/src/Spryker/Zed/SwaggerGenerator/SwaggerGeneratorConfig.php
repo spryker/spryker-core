@@ -12,17 +12,17 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SwaggerGeneratorConfig extends AbstractBundleConfig
 {
-    public const SWAGGER_GENERATOR_FILE_NAME = 'SWAGGER_GENERATOR_FILE_NAME';
-    public const SWAGGER_GENERATOR_INFO_VERSION = 'SWAGGER_GENERATOR_INFO_VERSION';
-    public const SWAGGER_GENERATOR_INFO_TITLE = 'SWAGGER_GENERATOR_INFO_TITLE';
-    public const SWAGGER_GENERATOR_INFO_LICENCE_NAME = 'SWAGGER_GENERATOR_INFO_LICENCE_NAME';
+    public const SWAGGER_GENERATOR_FILE_NAME = 'spryker_rest_api';
+    public const SWAGGER_GENERATOR_INFO_VERSION = '1.0.0';
+    public const SWAGGER_GENERATOR_INFO_TITLE = 'Spryker API';
+    public const SWAGGER_GENERATOR_INFO_LICENSE_NAME = 'MIT';
 
     /**
      * @return string
      */
     public function getGeneratedFileName(): string
     {
-        return $this->get(static::SWAGGER_GENERATOR_FILE_NAME);
+        return static::SWAGGER_GENERATOR_FILE_NAME;
     }
 
     /**
@@ -30,7 +30,7 @@ class SwaggerGeneratorConfig extends AbstractBundleConfig
      */
     public function getInfoApiVersion(): string
     {
-        return $this->get(static::SWAGGER_GENERATOR_INFO_VERSION);
+        return static::SWAGGER_GENERATOR_INFO_VERSION;
     }
 
     /**
@@ -38,7 +38,7 @@ class SwaggerGeneratorConfig extends AbstractBundleConfig
      */
     public function getInfoApiTitle(): string
     {
-        return $this->get(static::SWAGGER_GENERATOR_INFO_TITLE);
+        return static::SWAGGER_GENERATOR_INFO_TITLE;
     }
 
     /**
@@ -46,7 +46,7 @@ class SwaggerGeneratorConfig extends AbstractBundleConfig
      */
     public function getInfoApiInfoLicenceName(): string
     {
-        return $this->get(static::SWAGGER_GENERATOR_INFO_LICENCE_NAME);
+        return static::SWAGGER_GENERATOR_INFO_LICENSE_NAME;
     }
 
     /**
@@ -54,6 +54,6 @@ class SwaggerGeneratorConfig extends AbstractBundleConfig
      */
     public function getRestApplicationDomain()
     {
-        return $this->get(GlueApplicationConstants::GLUE_APPLICATION_DOMAIN);
+        return GlueApplicationConstants::GLUE_APPLICATION_DOMAIN;
     }
 }
