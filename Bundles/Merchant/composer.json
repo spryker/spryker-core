@@ -9,6 +9,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "autoload": {

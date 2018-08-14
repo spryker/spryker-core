@@ -14,6 +14,8 @@
     "spryker/util-sanitize": "^2.1.0"
   },
   "require-dev": {
+    "spryker/config": "*",
+    "spryker/propel-query-builder": "*",
     "spryker/event": "*"
   },
   "suggest": {

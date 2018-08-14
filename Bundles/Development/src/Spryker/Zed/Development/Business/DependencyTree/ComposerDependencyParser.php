@@ -67,6 +67,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
             if ($dependencyCollectionTransfer->getModule() === $moduleName) {
                 continue;
             }
+
             $dependencies[] = [
                 'dependencyModule' => $moduleName,
                 'types' => $this->getDependencyTypes($moduleName, $dependencyCollectionTransfer),
@@ -92,9 +93,13 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     protected function getIsOptional($moduleName, DependencyCollectionTransfer $moduleDependencyCollectionTransfer)
     {
         $isOptional = true;
+        $isInTestsOnly = true;
         foreach ($moduleDependencyCollectionTransfer->getDependencyModules() as $moduleDependencyTransfer) {
             if ($moduleDependencyTransfer->getModule() === $moduleName) {
                 foreach ($moduleDependencyTransfer->getDependencies() as $dependencyTransfer) {
+                    if (!$dependencyTransfer->getIsInTest()) {
+                        $isInTestsOnly = false;
+                    }
                     if (!$dependencyTransfer->getIsOptional() && !$dependencyTransfer->getIsInTest()) {
                         $isOptional = false;
                     }
@@ -102,7 +107,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
             }
         }
 
-        return $isOptional;
+        return $isOptional && !$isInTestsOnly;
     }
 
     /**

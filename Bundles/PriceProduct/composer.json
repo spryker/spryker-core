@@ -18,6 +18,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
+    "spryker/price-product-merchant-relationship": "*",
     "spryker/testify": "*"
   },
   "suggest": {

@@ -12,8 +12,10 @@
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
+    "spryker/config": "*",
     "spryker/event": "*",
     "spryker/propel-orm": "*",
+    "spryker/propel-query-builder": "*",
     "spryker/search": "*"
   },
   "suggest": {

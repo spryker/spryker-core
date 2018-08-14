@@ -80,7 +80,7 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
      */
     protected function isOptional(string $filePath, string $module): bool
     {
-        return ($this->isPluginFile($filePath) && !$this->isExtensionModule($module));
+        return ($this->isPluginFile($filePath) && !$this->isExtensionModule($module) && !$this->isTestFile($filePath));
     }
 
     /**

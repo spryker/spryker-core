@@ -19,7 +19,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     const APPLICATION_NAMESPACES = [
         'Orm',
     ];
-    const APPLICATION_LAYERS = [
+    const APPLICATIONS = [
         'Client',
         'Service',
         'Shared',
@@ -34,6 +34,17 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getPermissionMode(): int
     {
         return $this->get(DevelopmentConstants::DIRECTORY_PERMISSION, 0777);
+    }
+
+    /**
+     * @return array
+     */
+    public function getDevelopmentModules()
+    {
+        return [
+            'CodeSniffer',
+            'Testify',
+        ];
     }
 
     /**
@@ -73,7 +84,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getApplications()
     {
-        return static::APPLICATION_LAYERS;
+        return static::APPLICATIONS;
     }
 
     /**

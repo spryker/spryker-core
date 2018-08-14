@@ -17,8 +17,10 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company-role": "*",
     "spryker/customer": "*",
     "spryker/installer": "*",
+    "spryker/permission": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"

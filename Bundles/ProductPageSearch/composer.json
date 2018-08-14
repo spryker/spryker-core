@@ -22,7 +22,9 @@
     "spryker/util-sanitize": "^2.1.0"
   },
   "require-dev": {
-    "spryker/event": "*"
+    "spryker/config": "*",
+    "spryker/event": "*",
+    "spryker/propel-query-builder": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",

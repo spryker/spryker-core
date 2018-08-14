@@ -12,8 +12,10 @@
     "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
+    "spryker/config": "*",
     "spryker/event": "*",
     "spryker/propel-orm": "*",
+    "spryker/propel-query-builder": "*",
     "spryker/url": "*",
     "spryker/url-storage": "*"
   },

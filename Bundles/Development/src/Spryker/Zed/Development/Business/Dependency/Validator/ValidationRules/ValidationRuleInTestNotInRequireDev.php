@@ -19,7 +19,7 @@ class ValidationRuleInTestNotInRequireDev implements ValidationRuleInterface
      */
     public function validateModuleDependency(ModuleDependencyTransfer $moduleDependencyTransfer): ModuleDependencyTransfer
     {
-        if ($moduleDependencyTransfer->getIsTestDependency() && !$moduleDependencyTransfer->getIsInComposerRequireDev()) {
+        if ($moduleDependencyTransfer->getIsTestDependency() && !$moduleDependencyTransfer->getIsInComposerRequireDev() && !$moduleDependencyTransfer->getIsInComposerRequire()) {
             $moduleDependencyTransfer->setIsValid(false);
             $validationMessageTransfer = new ValidationMessageTransfer();
             $validationMessageTransfer->setMessage('Test dependency not listed in composer require-dev');

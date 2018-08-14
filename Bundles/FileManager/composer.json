@@ -10,6 +10,8 @@
     "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
+    "spryker/flysystem": "*",
+    "spryker/flysystem-local-file-system": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
