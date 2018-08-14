@@ -28,10 +28,17 @@ class ShoppingListItemNoteReader implements ShoppingListItemNoteReaderInterface
     /**
      * @param int $idShoppingListItem
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer|null
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer
      */
-    public function getShoppingListItemNoteByIdShoppingListItem(int $idShoppingListItem): ?ShoppingListItemNoteTransfer
+    public function getShoppingListItemNoteByIdShoppingListItem(int $idShoppingListItem): ShoppingListItemNoteTransfer
     {
-        return $this->shoppingListNoteRepository->findShoppingListItemNoteByFkShoppingListItem($idShoppingListItem);
+        $shoppingListItemNoteTransfer = $this->shoppingListNoteRepository
+            ->findShoppingListItemNoteByFkShoppingListItem($idShoppingListItem);
+
+        if (!$shoppingListItemNoteTransfer) {
+            $shoppingListItemNoteTransfer = new ShoppingListItemNoteTransfer();
+        }
+
+        return $shoppingListItemNoteTransfer;
     }
 }

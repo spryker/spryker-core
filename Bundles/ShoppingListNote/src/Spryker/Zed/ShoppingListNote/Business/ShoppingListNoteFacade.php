@@ -22,9 +22,9 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
      *
      * @param int $idShoppingListItem
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer|null
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer
      */
-    public function getShoppingListItemNoteByIdShoppingListItem(int $idShoppingListItem): ?ShoppingListItemNoteTransfer
+    public function getShoppingListItemNoteByIdShoppingListItem(int $idShoppingListItem): ShoppingListItemNoteTransfer
     {
         return $this->getFactory()->createShoppingListNoteReader()->getShoppingListItemNoteByIdShoppingListItem($idShoppingListItem);
     }

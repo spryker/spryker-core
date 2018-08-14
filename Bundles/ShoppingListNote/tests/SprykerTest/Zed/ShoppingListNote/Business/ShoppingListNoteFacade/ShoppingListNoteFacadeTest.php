@@ -170,13 +170,13 @@ class ShoppingListNoteFacadeTest extends Unit
         $shoppingListItemNoteResponseTransfer = $this->tester->getFacade()->getShoppingListItemNoteByIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
 
         // Assert
-        $this->assertNull($shoppingListItemNoteResponseTransfer);
+        $this->assertNull($shoppingListItemNoteResponseTransfer->getIdShoppingListItemNote());
     }
 
     /**
      * @return void
      */
-    public function testGetShoppingListItemNoteByIdShoppingListItem(): void
+    public function testCanGetShoppingListItemNoteByIdShoppingListItem(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);

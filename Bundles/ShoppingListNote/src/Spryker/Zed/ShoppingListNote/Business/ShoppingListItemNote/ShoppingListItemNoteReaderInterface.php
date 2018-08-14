@@ -16,5 +16,5 @@ interface ShoppingListItemNoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer|null
      */
-    public function getShoppingListItemNoteByIdShoppingListItem(int $idShoppingListItem): ?ShoppingListItemNoteTransfer;
+    public function getShoppingListItemNoteByIdShoppingListItem(int $idShoppingListItem): ShoppingListItemNoteTransfer;
 }
