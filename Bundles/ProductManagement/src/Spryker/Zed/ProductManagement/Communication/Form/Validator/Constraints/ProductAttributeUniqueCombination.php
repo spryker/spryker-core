@@ -10,12 +10,17 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Symfony\Component\Validator\Constraint;
 
-class SkuUnique extends Constraint
+class ProductAttributeUniqueCombination extends Constraint
 {
     /**
      * @var string
      */
-    public $message = 'SKU should be unique. Another product with sku "{{ sku }}" already exists';
+    public $message = 'Same attribute values combination already exists';
+
+    /**
+     * @var int
+     */
+    protected $idProductAbstract;
 
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
@@ -23,20 +28,30 @@ class SkuUnique extends Constraint
     protected $productFacade;
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacace
+     * @param int $idProductAbstract
      * @param array $options
      */
-    public function __construct(ProductManagementToProductInterface $productFacade, array $options = [])
+    public function __construct(ProductManagementToProductInterface $productFacace, int $idProductAbstract, array $options = [])
     {
         parent::__construct($options);
 
-        $this->productFacade = $productFacade;
+        $this->idProductAbstract = $idProductAbstract;
+        $this->productFacade = $productFacace;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdProductAbstract()
+    {
+        return $this->idProductAbstract;
     }
 
     /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
      */
-    public function getProductFacade(): ProductManagementToProductInterface
+    public function getProductFacade()
     {
         return $this->productFacade;
     }

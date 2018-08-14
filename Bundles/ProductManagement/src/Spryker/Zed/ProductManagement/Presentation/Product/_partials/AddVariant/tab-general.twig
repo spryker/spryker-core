@@ -8,7 +8,13 @@
 
 {{ form_row(form.sku, { 'id': 'sku-input' }) }}
 {{ form_row(form.sku_autogenerate_checkbox, { 'id': 'sku-autogenerate-checkbox-input' }) }}
-{{ form_row(form.form_product_concrete_super_attributes) }}
+
+{% for attributeForm in form.children.form_product_concrete_super_attributes %}
+    {{ form_widget(attributeForm) }}
+    <div class="has-error">
+        {{ form_errors(attributeForm) }}
+    </div>
+{% endfor %}
 
 {% for localeTransfer in localeCollection %}
     {% set formKey = 'general_' ~ localeTransfer.localeName %}

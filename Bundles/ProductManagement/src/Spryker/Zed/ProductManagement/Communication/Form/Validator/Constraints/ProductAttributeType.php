@@ -26,11 +26,11 @@ class ProductAttributeType extends Constraint
 
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
-     * @param array|null $options
+     * @param array $options
      */
     public function __construct(
         ProductManagementAttributeTransfer $productManagementAttributeTransfer,
-        ?array $options = []
+        array $options = []
     ) {
         parent::__construct($options);
 
