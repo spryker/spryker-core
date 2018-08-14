@@ -11,7 +11,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToCustomerClientBridgeInterface;
 use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface;
 use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListBridgeInterface;
-use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToStorageBridgeInterface;
 use Spryker\Client\ShoppingListSession\ShoppingList\ShoppingListSessionReader;
 use Spryker\Client\ShoppingListSession\ShoppingList\ShoppingListSessionReaderInterface;
 use Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutor;
@@ -27,7 +26,6 @@ class ShoppingListSessionFactory extends AbstractFactory
     public function createShoppingListSessionStorage(): ShoppingListSessionStorageInterface
     {
         return new ShoppingListSessionSessionStorage(
-            $this->getStorageClient(),
             $this->getSessionClient()
         );
     }
@@ -51,14 +49,6 @@ class ShoppingListSessionFactory extends AbstractFactory
     public function getSessionClient(): ShoppingListSessionToSessionClientBridgeInterface
     {
         return $this->getProvidedDependency(ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_SESSION_CLIENT);
-    }
-
-    /**
-     * @return \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToStorageBridgeInterface
-     */
-    protected function getStorageClient(): ShoppingListSessionToStorageBridgeInterface
-    {
-        return $this->getProvidedDependency(ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_STORAGE_CLIENT);
     }
 
     /**
