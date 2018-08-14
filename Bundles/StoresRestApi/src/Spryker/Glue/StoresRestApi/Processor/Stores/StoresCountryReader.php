@@ -7,17 +7,10 @@
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
 use Generated\Shared\Transfer\CountryTransfer;
-use Generated\Shared\Transfer\RegionCollectionTransfer;
 use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
-use Generated\Shared\Transfer\StoreRegionRestAttributesTransfer;
-use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCountryResourceMapperInterface;
-use Spryker\Glue\StoresRestApi\StoresRestApiConfig;
-use Spryker\Shared\Kernel\Store;
-use Symfony\Component\HttpFoundation\Response;
 
 class StoresCountryReader implements StoresCountryReaderInterface
 {
@@ -37,25 +30,18 @@ class StoresCountryReader implements StoresCountryReaderInterface
     protected $storesCountryResourceMapper;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientInterface $countryClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCountryResourceMapperInterface $countryResourceMapper
+     * @param \Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCountryResourceMapperInterface $storesCountryResourceMapper
      */
     public function __construct(
         StoresRestApiToCountryClientInterface $countryClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        StoresCountryResourceMapperInterface $storesCountryResourceMapper,
-        $store
+        StoresCountryResourceMapperInterface $storesCountryResourceMapper
     ) {
         $this->countryClient = $countryClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->storesCountryResourceMapper = $storesCountryResourceMapper;
-        $this->store = $store;
     }
 
     /**

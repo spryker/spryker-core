@@ -6,10 +6,10 @@
 
 namespace Spryker\Glue\StoresRestApi;
 
-use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientBridge;
-use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCurrencyClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientBridge;
+use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCurrencyClientBridge;
 use Spryker\Shared\Kernel\Store;
 
 class StoresRestApiDependencyProvider extends AbstractBundleDependencyProvider
@@ -42,7 +42,7 @@ class StoresRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::CLIENT_COUNTRY] = function (Container $container) {
             return new StoresRestApiToCountryClientBridge($container->getLocator()->country()->client());
         };
-        
+
         return $container;
     }
 

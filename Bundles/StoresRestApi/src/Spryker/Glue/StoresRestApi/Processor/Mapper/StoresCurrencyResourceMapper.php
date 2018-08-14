@@ -8,18 +8,15 @@ namespace Spryker\Glue\StoresRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer;
-use Spryker\Glue\StoresRestApi\StoresRestApiConfig;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Shared\Kernel\Store;
 
 class StoresCurrencyResourceMapper implements StoresCurrencyResourceMapperInterface
 {
     /**
-     * @param CurrencyTransfer $currencyTransfer
-     * @param Store $store
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     * @param \Spryker\Shared\Kernel\Store $store
      *
-     * @return \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer
+     * @return \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer
      */
     public function mapCurrencyToStoresCurrencyRestAttributes(CurrencyTransfer $currencyTransfer, Store $store): StoreCurrencyRestAttributesTransfer
     {

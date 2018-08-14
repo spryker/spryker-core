@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Country\Communication\Controller;
 
-use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\RegionCollectionTransfer;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\Country\Business\CountryFacadeInterface getFacade()

@@ -6,8 +6,6 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer;
 
 interface StoresCurrencyReaderInterface

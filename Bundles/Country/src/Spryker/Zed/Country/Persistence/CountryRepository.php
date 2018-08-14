@@ -9,7 +9,6 @@ namespace Spryker\Zed\Country\Persistence;
 
 use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Country\Persistence\Map\SpyRegionTableMap;
-use Orm\Zed\Country\Persistence\SpyCountry;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**

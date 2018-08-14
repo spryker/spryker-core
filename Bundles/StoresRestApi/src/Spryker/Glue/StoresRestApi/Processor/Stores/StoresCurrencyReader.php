@@ -6,16 +6,11 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer;
-use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCurrencyClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCurrencyClientInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCurrencyResourceMapperInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Shared\Kernel\Store;
-use Symfony\Component\HttpFoundation\Response;
 
 class StoresCurrencyReader implements StoresCurrencyReaderInterface
 {
@@ -67,7 +62,8 @@ class StoresCurrencyReader implements StoresCurrencyReaderInterface
         $currencyTransfer = $this->currencyClient->fromIsoCode($isoCode);
 
         return $this->storesCurrencyResourceMapper->mapCurrencyToStoresCurrencyRestAttributes(
-            $currencyTransfer, $this->store
+            $currencyTransfer,
+            $this->store
         );
     }
 }

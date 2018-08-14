@@ -6,21 +6,21 @@
 
 namespace Spryker\Glue\StoresRestApi;
 
+use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientInterface;
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCurrencyClientInterface;
-use Spryker\Glue\StoresRestApi\Processor\Stores\StoresReader;
-use Spryker\Glue\StoresRestApi\Processor\Stores\StoresReaderInterface;
-use Spryker\Glue\StoresRestApi\Processor\Stores\StoresCountryReader;
-use Spryker\Glue\StoresRestApi\Processor\Stores\StoresCountryReaderInterface;
-use Spryker\Glue\StoresRestApi\Processor\Stores\StoresCurrencyReader;
-use Spryker\Glue\StoresRestApi\Processor\Stores\StoresCurrencyReaderInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCountryResourceMapper;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCountryResourceMapperInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCurrencyResourceMapper;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCurrencyResourceMapperInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresResourceMapper;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresResourceMapperInterface;
-use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\StoresRestApi\Processor\Stores\StoresCountryReader;
+use Spryker\Glue\StoresRestApi\Processor\Stores\StoresCountryReaderInterface;
+use Spryker\Glue\StoresRestApi\Processor\Stores\StoresCurrencyReader;
+use Spryker\Glue\StoresRestApi\Processor\Stores\StoresCurrencyReaderInterface;
+use Spryker\Glue\StoresRestApi\Processor\Stores\StoresReader;
+use Spryker\Glue\StoresRestApi\Processor\Stores\StoresReaderInterface;
 use Spryker\Shared\Kernel\Store;
 
 class StoresRestApiFactory extends AbstractFactory
@@ -59,8 +59,7 @@ class StoresRestApiFactory extends AbstractFactory
             $this->createStoresCurrencyReader(),
             $this->getResourceBuilder(),
             $this->createStoresResourceMapper(),
-            $this->getStore(),
-            $this->getConfig()
+            $this->getStore()
         );
     }
 
@@ -72,8 +71,7 @@ class StoresRestApiFactory extends AbstractFactory
         return new StoresCountryReader(
             $this->getCountryClient(),
             $this->getResourceBuilder(),
-            $this->createStoresCountryResourceMapper(),
-            $this->getStore()
+            $this->createStoresCountryResourceMapper()
         );
     }
 

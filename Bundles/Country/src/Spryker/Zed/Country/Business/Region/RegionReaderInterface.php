@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RegionCollectionTransfer;
 
 interface RegionReaderInterface
 {
-
     /**
      * @param string $iso2Code
      *

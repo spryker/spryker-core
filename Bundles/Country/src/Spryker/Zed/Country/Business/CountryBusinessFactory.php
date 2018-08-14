@@ -9,11 +9,8 @@ namespace Spryker\Zed\Country\Business;
 
 use Spryker\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
 use Spryker\Zed\Country\Business\Internal\Install;
-use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Country\Business\RegionManager;
-use Spryker\Zed\Country\Business\RegionManagerInterface;
 use Spryker\Zed\Country\Business\Region\RegionReader;
-use Spryker\Zed\Country\Business\Region\RegionReaderInter;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Country\CountryConfig getConfig()

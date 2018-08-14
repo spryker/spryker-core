@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Country\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CountryTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
+use Orm\Zed\Country\Persistence\SpyRegion;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Country\Business\Exception\MissingCountryException;
@@ -122,5 +123,23 @@ class CountryFacadeTest extends Unit
     {
         $this->expectException(MissingCountryException::class);
         $this->countryFacade->getCountryByIso2Code(self::ISO2_CODE);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetRegionsByCountryIso2Code()
+    {
+        $country = new SpyCountry();
+        $country->setIso2Code(self::ISO2_CODE);
+        $country->save();
+
+        $region = new SpyRegion();
+        $region->setName('test');
+        $region->setFkCountry($country->getIdCountry());
+        $region->setIso2Code('TS');
+        $region->save();
+
+        $this->countryFacade->getRegionsByCountryIso2Code(self::ISO2_CODE);
     }
 }

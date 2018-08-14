@@ -7,19 +7,15 @@
 namespace Spryker\Glue\StoresRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\CountryTransfer;
-use Generated\Shared\Transfer\RegionCollectionTransfer;
 use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
 use Generated\Shared\Transfer\StoreRegionRestAttributesTransfer;
 use Orm\Zed\Country\Persistence\Map\SpyRegionTableMap;
-use Spryker\Glue\StoresRestApi\StoresRestApiConfig;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 class StoresCountryResourceMapper implements StoresCountryResourceMapperInterface
 {
     /**
-     * @param CountryTransfer $countryTransfer
-     * @param array regions
+     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
+     * @param array $regions
      *
      * @return \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer
      */
@@ -40,7 +36,6 @@ class StoresCountryResourceMapper implements StoresCountryResourceMapperInterfac
             $storesCountryAttributes->addRegions((new StoreRegionRestAttributesTransfer())
                 ->setName($region[SpyRegionTableMap::COL_NAME])
                 ->setIdentifier($region[SpyRegionTableMap::COL_ISO2_CODE]));
-
         }
 
         return $storesCountryAttributes;

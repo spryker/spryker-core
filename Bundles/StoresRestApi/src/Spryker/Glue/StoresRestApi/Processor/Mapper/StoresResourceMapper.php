@@ -6,25 +6,25 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
 use Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer;
 use Generated\Shared\Transfer\StoreLocaleRestAttributesTransfer;
-use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
 use Generated\Shared\Transfer\StoresRestAttributesTransfer;
-use Spryker\Glue\StoresRestApi\StoresRestApiConfig;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 class StoresResourceMapper implements StoresResourceMapperInterface
 {
     /**
-     * @param Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
+     * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
      * @param string $identifier
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    public function mapLocaleToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, string $identifier, string $name): StoresRestAttributesTransfer
-    {
+    public function mapLocaleToStoresRestAttributes(
+        StoresRestAttributesTransfer $storesRestAttributes,
+        string $identifier,
+        string $name
+    ): StoresRestAttributesTransfer {
         $storesLocaleAttributes = (new StoreLocaleRestAttributesTransfer())
             ->setName($name)
             ->setIdentifier($identifier);
@@ -35,7 +35,7 @@ class StoresResourceMapper implements StoresResourceMapperInterface
     }
 
     /**
-     * @param Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
+     * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
      * @param string $timeZone
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer

@@ -6,10 +6,11 @@
 
 namespace Spryker\Glue\StoresRestApi\Plugin;
 
-use Spryker\Glue\StoresRestApi\StoresRestApiConfig;
+use Generated\Shared\Transfer\StoresRestAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
+use Spryker\Glue\StoresRestApi\StoresRestApiConfig;
 
 /**
  * @method \Spryker\Glue\StoresRestApi\StoresRestApiFactory getFactory()
@@ -66,6 +67,6 @@ class StoresResourceRoutePlugin extends AbstractPlugin implements ResourceRouteP
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestStoreAttributesTransfer::class;
+        return StoresRestAttributesTransfer::class;
     }
 }

@@ -7,17 +7,11 @@
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
-use Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer;
-use Generated\Shared\Transfer\StoreLocaleRestAttributesTransfer;
-use Generated\Shared\Transfer\StoreRegionRestAttributesTransfer;
 use Generated\Shared\Transfer\StoresRestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresResourceMapperInterface;
-use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientInterface;
-use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCurrencyClientInterface;
 use Spryker\Glue\StoresRestApi\StoresRestApiConfig;
 use Spryker\Shared\Kernel\Store;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,32 +44,24 @@ class StoresReader implements StoresReaderInterface
     protected $store;
 
     /**
-     * @var \Spryker\Glue\StoresRestApi\StoresRestApiConfig
-     */
-    protected $config;
-
-    /**
      * @param \Spryker\Glue\StoresRestApi\Processor\Stores\StoresCountryReaderInterface $countryReader
      * @param \Spryker\Glue\StoresRestApi\Processor\Stores\StoresCurrencyReaderInterface $currencyReader
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\StoresRestApi\Processor\Mapper\StoresResourceMapperInterface $storesResourceMapper
      * @param \Spryker\Shared\Kernel\Store $store
-     * @param \Spryker\Glue\StoresRestApi\StoresRestApiConfig $config
      */
     public function __construct(
         StoresCountryReaderInterface $countryReader,
         StoresCurrencyReaderInterface $currencyReader,
         RestResourceBuilderInterface $restResourceBuilder,
         StoresResourceMapperInterface $storesResourceMapper,
-        Store $store,
-        StoresRestApiConfig $config
+        Store $store
     ) {
         $this->countryReader = $countryReader;
         $this->currencyReader = $currencyReader;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->storesResourceMapper = $storesResourceMapper;
         $this->store = $store;
-        $this->config = $config;
     }
 
     /**

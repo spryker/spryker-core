@@ -6,8 +6,8 @@
 
 namespace Spryker\Glue\StoresRestApi;
 
-use Spryker\Shared\Config\Config;
 use Spryker\Glue\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\UtilDateTime\UtilDateTimeConstants;
 
 class StoresRestApiConfig extends AbstractBundleConfig

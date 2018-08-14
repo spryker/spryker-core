@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Country\Business;
 
-use Generated\Shared\Transfer\RegionCollectionTransfer;
-
 interface CountryFacadeInterface
 {
     /**

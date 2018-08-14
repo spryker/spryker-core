@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Country;
 
-use Generated\Shared\Transfer\CountryResponseTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\RegionCollectionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
