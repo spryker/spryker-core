@@ -58,9 +58,17 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
+        $resourceIdentifier = $restRequest->getResource()->getId();
+
+        if (empty($resourceIdentifier)) {
+            $restErrorTransfer = (new RestErrorMessageTransfer())
+                ->setStatus(Response::HTTP_BAD_REQUEST);
+            return $response->addError($restErrorTransfer);
+        }
+
         $concreteProductData = $this->productResourceAliasStorageClient
             ->findProductConcreteStorageData(
-                $restRequest->getResource()->getId(),
+                $resourceIdentifier,
                 $restRequest->getMetadata()->getLocale()
             );
 

@@ -69,9 +69,17 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
+        $resourceIdentifier = $restRequest->getResource()->getId();
+
+        if (empty($resourceIdentifier)) {
+            $restErrorTransfer = (new RestErrorMessageTransfer())
+                ->setStatus(Response::HTTP_BAD_REQUEST);
+            return $response->addError($restErrorTransfer);
+        }
+
         $abstractProductData = $this->productResourceAliasStorageClient
             ->findProductAbstractStorageData(
-                $restRequest->getResource()->getId(),
+                $resourceIdentifier,
                 $restRequest->getMetadata()->getLocale()
             );
 
