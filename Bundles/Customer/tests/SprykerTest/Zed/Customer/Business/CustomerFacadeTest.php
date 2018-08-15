@@ -45,6 +45,7 @@ class CustomerFacadeTest extends Unit
     const TESTER_CITY = 'Testcity';
     const TESTER_ADDRESS1 = 'Testerstreet 23';
     const TESTER_ZIP_CODE = '42';
+    const TESTER_FK_COUNTRY_GERMANY = '60';
 
     /**
      * @var \SprykerTest\Zed\Customer\CustomerBusinessTester
@@ -948,5 +949,36 @@ class CustomerFacadeTest extends Unit
         }
 
         return false;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function createCustomerWithAddressAndCountry()
+    {
+        $customerTransfer = $this->createTestCustomer();
+        $addressTransfer = new AddressTransfer();
+        $addressTransfer->setEmail($customerTransfer->getEmail());
+        $addressTransfer->setFirstName(self::TESTER_NAME);
+        $addressTransfer->setLastName(self::TESTER_NAME);
+        $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
+        $addressTransfer->setFkCountry(self::TESTER_FK_COUNTRY_GERMANY);
+
+        $addressTransfer = $this->customerFacade->createAddress($addressTransfer);
+        $this->assertNotNull($addressTransfer);
+
+        return $this->getTestCustomerTransfer($customerTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAddressesHasCountry()
+    {
+        $customerTransfer = $this->createCustomerWithAddressAndCountry();
+
+        $addressesTransfer = $this->customerFacade->getAddresses($customerTransfer);
+        $addressTransfer = $addressesTransfer->getAddresses()[0];
+        $this->assertEquals(self::TESTER_FK_COUNTRY_GERMANY, $addressTransfer->getCountry()->getIdCountry());
     }
 }

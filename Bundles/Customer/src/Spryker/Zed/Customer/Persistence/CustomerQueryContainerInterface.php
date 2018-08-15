@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Customer\Persistence;
 
+use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CustomerQueryContainerInterface extends QueryContainerInterface
@@ -120,4 +121,13 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */
     public function queryAddressByIdCustomer($idCustomer);
+
+    /**
+     * @api
+     *
+     * @param string $uuid
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
+     */
+    public function queryAddressByUuid($uuid): SpyCustomerAddressQuery;
 }

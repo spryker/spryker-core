@@ -456,4 +456,17 @@ interface CustomerFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateSalesOrderCustomerInformation(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification:
+     * - Retrieves customer address by uuid of address.
+     * - Returns empty address transfer, if address with specified uuid not found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function findAddressByUuid(AddressTransfer $addressTransfer): AddressTransfer;
 }
