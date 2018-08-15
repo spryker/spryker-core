@@ -8,10 +8,13 @@
 namespace Spryker\Zed\ShoppingListProductOption\Business\Model;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ShoppingListProductOption\Persistence\ShoppingListProductOptionEntityManagerInterface;
 
 class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\ShoppingListProductOption\Persistence\ShoppingListProductOptionEntityManagerInterface
      */
@@ -33,15 +36,17 @@ class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriter
      */
     public function saveShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): void
     {
-        $shoppingListItemTransfer->requireIdShoppingListItem();
+        $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfer) {
+            $shoppingListItemTransfer->requireIdShoppingListItem();
 
-        $this->shoppingListProductOptionEntityManager
-            ->removeShoppingListItemProductOptions($shoppingListItemTransfer->getIdShoppingListItem());
+            $this->shoppingListProductOptionEntityManager
+                ->removeShoppingListItemProductOptions($shoppingListItemTransfer->getIdShoppingListItem());
 
-        $this->shoppingListProductOptionEntityManager
-            ->saveShoppingListItemProductOptions(
-                $shoppingListItemTransfer->getIdShoppingListItem(),
-                $shoppingListItemTransfer->getProductOptions()->getArrayCopy()
-            );
+            $this->shoppingListProductOptionEntityManager
+                ->saveShoppingListItemProductOptions(
+                    $shoppingListItemTransfer->getIdShoppingListItem(),
+                    $shoppingListItemTransfer->getProductOptions()->getArrayCopy()
+                );
+        });
     }
 }
