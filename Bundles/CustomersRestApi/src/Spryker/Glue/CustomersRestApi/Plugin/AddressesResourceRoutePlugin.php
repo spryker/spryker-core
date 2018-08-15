@@ -28,6 +28,7 @@ class AddressesResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
+            ->addGet('get', true)
             ->addPost('post', true);
 
         return $resourceRouteCollection;

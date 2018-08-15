@@ -10,6 +10,7 @@ namespace Spryker\Zed\Customer\Business\Customer;
 use Exception;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
@@ -285,8 +286,18 @@ class Address implements AddressInterface
     protected function entityCollectionToTransferCollection(ObjectCollection $entities)
     {
         $addressTransferCollection = new AddressesTransfer();
+        /**
+         * @var \Orm\Zed\Customer\Persistence\SpyCustomerAddress $entity
+         */
         foreach ($entities->getData() as $entity) {
-            $addressTransferCollection->addAddress($this->entityToAddressTransfer($entity));
+            $addressTransfer = $this->entityToAddressTransfer($entity);
+
+            $countryTransfer = new CountryTransfer();
+            $countryTransfer->fromArray($entity->getCountry()->toArray());
+            $addressTransfer->setCountry($countryTransfer);
+
+            $this->setDefaultAddressFlags($addressTransfer);
+            $addressTransferCollection->addAddress($addressTransfer);
         }
 
         return $addressTransferCollection;
@@ -611,5 +622,29 @@ class Address implements AddressInterface
         }
 
         $customerEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function findAddressByUuid(AddressTransfer $addressTransfer): AddressTransfer
+    {
+        $address = $this->queryContainer->queryAddressByUuid($addressTransfer->getUuid())->findOne();
+
+        if (!$address) {
+            return new AddressTransfer();
+        }
+
+        $addressTransfer = $this->entityToAddressTransfer($address);
+
+        $countryTransfer = new CountryTransfer();
+        $countryTransfer->fromArray($address->getCountry()->toArray());
+        $addressTransfer->setCountry($countryTransfer);
+
+        $this->setDefaultAddressFlags($addressTransfer);
+
+        return $addressTransfer;
     }
 }
