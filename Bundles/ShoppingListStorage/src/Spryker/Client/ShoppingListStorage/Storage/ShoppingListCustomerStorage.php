@@ -26,8 +26,6 @@ class ShoppingListCustomerStorage implements ShoppingListCustomerStorageInterfac
     protected $synchronizationService;
 
     /**
-     * ShoppingListStorage constructor.
-     *
      * @param \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageInterface $storage
      * @param \Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceInterface $synchronizationService
      */
