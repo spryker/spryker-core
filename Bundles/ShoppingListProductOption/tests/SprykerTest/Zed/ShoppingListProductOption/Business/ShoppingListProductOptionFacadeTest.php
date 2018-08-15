@@ -184,4 +184,40 @@ class ShoppingListProductOptionFacadeTest extends Unit
 
         $this->assertSameSize($actualResult->getProductOptions(), $expectedResult);
     }
+
+    /**
+     * @return void
+     */
+    public function testSaveShoppingListItemProductOptionsRemovesOldOptionAndSavesNewOption(): void
+    {
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+            ->setIdShoppingListItem($this->shoppingListItemEntity->getIdShoppingListItem())
+            ->setProductOptions(new ArrayObject([
+                $this->productOptionValue1Entity->getIdProductOptionValue(),
+            ]));
+        $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+            ->setIdShoppingListItem($this->shoppingListItemEntity->getIdShoppingListItem())
+            ->setProductOptions(new ArrayObject([
+                $this->productOptionValue2Entity->getIdProductOptionValue(),
+            ]));
+        $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+
+        $actualResult = $this->tester
+            ->getFacade()
+            ->getShoppingListItemProductOptionsByIdShoppingListItem(
+                $this->shoppingListItemEntity->getIdShoppingListItem()
+            );
+
+        $expectedResult = [
+            $this->productOptionValue2Entity->getIdProductOptionValue(),
+        ];
+
+        foreach ($actualResult->getProductOptions() as $productOption) {
+            $this->assertTrue(in_array($productOption->getIdProductOptionValue(), $expectedResult));
+        }
+
+        $this->assertSameSize($actualResult->getProductOptions(), $expectedResult);
+    }
 }
