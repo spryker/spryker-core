@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/minimum-order-value-extension.svg)](https://travis-ci.org/spryker/minimum-order-value-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/minimum-order-value-extension/badge.svg)](https://coveralls.io/github/spryker/minimum-order-value-extension)
 
-MinimumOrderValueExtension Module provides interfaces for MinimumOrderValue extension.
+MinimumOrderValueExtension module provides extension interfaces for MinimumOrderValue module.
 
 ## Installation
 
