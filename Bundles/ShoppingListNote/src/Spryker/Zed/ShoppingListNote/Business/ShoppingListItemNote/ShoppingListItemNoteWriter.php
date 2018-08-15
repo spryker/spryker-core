@@ -57,9 +57,7 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
             return null;
         }
 
-        return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemNoteTransfer) {
-            return $this->shoppingListNoteEntityManager->saveShoppingListItemNote($shoppingListItemNoteTransfer);
-        });
+        return $this->shoppingListNoteEntityManager->saveShoppingListItemNote($shoppingListItemNoteTransfer);
     }
 
     /**
@@ -71,9 +69,7 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
     {
         if ($this->checkWritePermission($shoppingListItemNoteTransfer)) {
             $shoppingListItemNoteTransfer->requireIdShoppingListItemNote();
-            $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemNoteTransfer) {
-                $this->shoppingListNoteEntityManager->deleteShoppingListItemNote($shoppingListItemNoteTransfer);
-            });
+            $this->shoppingListNoteEntityManager->deleteShoppingListItemNote($shoppingListItemNoteTransfer);
         }
     }
 

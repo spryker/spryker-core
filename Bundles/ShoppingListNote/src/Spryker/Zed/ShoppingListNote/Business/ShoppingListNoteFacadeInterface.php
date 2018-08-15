@@ -38,18 +38,6 @@ interface ShoppingListNoteFacadeInterface
 
     /**
      * Specification:
-     *  - Deletes note from shopping list item.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
-     *
-     * @return void
-     */
-    public function deleteShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void;
-
-    /**
-     * Specification:
      *  - Expands shopping list item with additional parameters.
      *
      * @api
