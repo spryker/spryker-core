@@ -53,12 +53,12 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
             return null;
         }
 
-        if ($this->isNoteExistsForItem($shoppingListItemNoteTransfer) || !$this->checkWritePermission($shoppingListItemNoteTransfer)) {
+        if (!$this->checkWritePermission($shoppingListItemNoteTransfer)) {
             return null;
         }
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemNoteTransfer) {
-            return $this->saveShoppingListItemNote($shoppingListItemNoteTransfer);
+            return $this->shoppingListNoteEntityManager->saveShoppingListItemNote($shoppingListItemNoteTransfer);
         });
     }
 
@@ -75,21 +75,6 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
                 $this->shoppingListNoteEntityManager->deleteShoppingListItemNote($shoppingListItemNoteTransfer);
             });
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
-     *
-     * @return bool
-     */
-    protected function isNoteExistsForItem(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): bool
-    {
-        $shoppingListItemNoteTransfer->requireFkShoppingListItem();
-
-        $shoppingListItemNoteTransfer = $this->shoppingListNoteRepository
-            ->findShoppingListItemNoteByFkShoppingListItem($shoppingListItemNoteTransfer->getFkShoppingListItem());
-
-        return $shoppingListItemNoteTransfer !== null;
     }
 
     /**
