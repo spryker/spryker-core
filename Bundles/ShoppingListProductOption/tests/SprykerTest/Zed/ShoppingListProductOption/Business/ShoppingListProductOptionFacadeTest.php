@@ -105,22 +105,22 @@ class ShoppingListProductOptionFacadeTest extends Unit
             ->setFkShoppingListItem($this->shoppingListItemEntity->getIdShoppingListItem());
         $shoppingListProductOption2->save();
 
-        $result = $this->tester
+        $actualResult = $this->tester
             ->getFacade()
             ->getShoppingListItemProductOptionsByIdShoppingListItem(
                 $this->shoppingListItemEntity->getIdShoppingListItem()
             );
 
-        $expectedResultArray = [
+        $expectedResult = [
             $this->productOptionValue1Entity->getIdProductOptionValue(),
             $this->productOptionValue2Entity->getIdProductOptionValue(),
         ];
 
-        foreach ($result->getProductOptions() as $productOption) {
-            $this->assertTrue(in_array($productOption->getIdProductOptionValue(), $expectedResultArray));
+        foreach ($actualResult->getProductOptions() as $productOption) {
+            $this->assertTrue(in_array($productOption->getIdProductOptionValue(), $expectedResult));
         }
 
-        $this->assertSameSize($result->getProductOptions(), $expectedResultArray);
+        $this->assertSameSize($actualResult->getProductOptions(), $expectedResult);
     }
 
     /**
@@ -128,15 +128,15 @@ class ShoppingListProductOptionFacadeTest extends Unit
      */
     public function testGetShoppingListItemProductOptionsByIdShoppingListItemWithoutExistOptions(): void
     {
-        $result = $this->tester
+        $actualResult = $this->tester
             ->getFacade()
             ->getShoppingListItemProductOptionsByIdShoppingListItem(
                 $this->shoppingListItemEntity->getIdShoppingListItem()
             );
 
-        $expectedResultArray = [];
+        $expectedResult = [];
 
-        $this->assertSameSize($result->getProductOptions(), $expectedResultArray);
+        $this->assertSameSize($actualResult->getProductOptions(), $expectedResult);
     }
 
     /**
@@ -152,22 +152,22 @@ class ShoppingListProductOptionFacadeTest extends Unit
                 ]));
 
         $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
-        $result = $this->tester
+        $actualResult = $this->tester
             ->getFacade()
             ->getShoppingListItemProductOptionsByIdShoppingListItem(
                 $this->shoppingListItemEntity->getIdShoppingListItem()
             );
 
-        $expectedResultArray = [
+        $expectedResult = [
             $this->productOptionValue1Entity->getIdProductOptionValue(),
             $this->productOptionValue2Entity->getIdProductOptionValue(),
         ];
 
-        foreach ($result->getProductOptions() as $productOption) {
-            $this->assertTrue(in_array($productOption->getIdProductOptionValue(), $expectedResultArray));
+        foreach ($actualResult->getProductOptions() as $productOption) {
+            $this->assertTrue(in_array($productOption->getIdProductOptionValue(), $expectedResult));
         }
 
-        $this->assertSameSize($result->getProductOptions(), $expectedResultArray);
+        $this->assertSameSize($actualResult->getProductOptions(), $expectedResult);
     }
 
     /**
@@ -180,14 +180,14 @@ class ShoppingListProductOptionFacadeTest extends Unit
             ->setProductOptions(new ArrayObject([]));
 
         $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
-        $result = $this->tester
+        $actualResult = $this->tester
             ->getFacade()
             ->getShoppingListItemProductOptionsByIdShoppingListItem(
                 $this->shoppingListItemEntity->getIdShoppingListItem()
             );
 
-        $expectedResultArray = [];
+        $expectedResult = [];
 
-        $this->assertSameSize($result->getProductOptions(), $expectedResultArray);
+        $this->assertSameSize($actualResult->getProductOptions(), $expectedResult);
     }
 }
