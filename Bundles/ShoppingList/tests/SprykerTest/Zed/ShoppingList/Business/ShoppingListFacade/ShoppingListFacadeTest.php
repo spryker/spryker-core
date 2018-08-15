@@ -289,16 +289,16 @@ class ShoppingListFacadeTest extends Unit
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListCompanyUserTransfer = (new ShoppingListCompanyUserTransfer)
-            ->setIdCompanyUser($this->ownerCompanyUserTransfer->getIdCompanyUser())
+            ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
             ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
-            ->setIdShoppingListPermissionGroup($this->tester->getFacade()->getShoppingListPermissionGroup()->getIdShoppingListPermissionGroup());
+            ->setIdShoppingListPermissionGroup($this->fullAccessPermissionGroup->getIdShoppingListPermissionGroup());
         $shoppingListTransfer->addSharedCompanyUsers($shoppingListCompanyUserTransfer);
 
         // Act
         $shoppingListResponseTransfer = $this->tester->getFacade()->updateShareShoppingList($shoppingListTransfer);
         $sharedShoppingListTransfer = (new ShoppingListTransfer())
             ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
-            ->setIdCompanyUser($this->ownerCompanyUserTransfer->getIdCompanyUser());
+            ->setIdCompanyUser($shoppingListCompanyUserTransfer->getIdCompanyUser());
         $sharedShoppingListTransfer = $this->tester->getFacade()->getShoppingList($sharedShoppingListTransfer);
 
         // Assert
