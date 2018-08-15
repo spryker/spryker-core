@@ -296,4 +296,17 @@ interface DevelopmentFacadeInterface
      * @return int
      */
     public function runPhpstan(InputInterface $input, OutputInterface $output);
+
+    /**
+     * Specification:
+     * - Validates that Abstract classes for database table exist.
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param string|null $module
+     *
+     * @return bool
+     */
+    public function runPropelAbstractValidation(OutputInterface $output, ?string $module): bool;
 }
