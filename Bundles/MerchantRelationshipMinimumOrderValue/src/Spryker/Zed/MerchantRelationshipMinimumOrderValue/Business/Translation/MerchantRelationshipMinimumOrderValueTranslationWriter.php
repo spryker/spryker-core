@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface;
+use Traversable;
 
 class MerchantRelationshipMinimumOrderValueTranslationWriter implements MerchantRelationshipMinimumOrderValueTranslationWriterInterface
 {
@@ -46,11 +47,11 @@ class MerchantRelationshipMinimumOrderValueTranslationWriter implements Merchant
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer[] $minimumOrderValueLocalizedMessageTransfers
+     * @param \Traversable|\Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer[] $minimumOrderValueLocalizedMessageTransfers
      *
      * @return string[]
      */
-    protected function createTranslationsLocaleMap(array $minimumOrderValueLocalizedMessageTransfers): array
+    protected function createTranslationsLocaleMap(Traversable $minimumOrderValueLocalizedMessageTransfers): array
     {
         $translationsByLocale = [];
         foreach ($minimumOrderValueLocalizedMessageTransfers as $minimumOrderValueLocalizedMessageTransfer) {

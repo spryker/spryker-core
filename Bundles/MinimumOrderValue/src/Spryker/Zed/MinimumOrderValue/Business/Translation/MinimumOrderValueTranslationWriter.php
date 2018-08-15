@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface;
+use Traversable;
 
 class MinimumOrderValueTranslationWriter implements MinimumOrderValueTranslationWriterInterface
 {
@@ -46,11 +47,11 @@ class MinimumOrderValueTranslationWriter implements MinimumOrderValueTranslation
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer[] $minimumOrderValueLocalizedMessageTransfers
+     * @param \Traversable|\Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer[] $minimumOrderValueLocalizedMessageTransfers
      *
      * @return string[]
      */
-    protected function createTranslationsLocaleMap(array $minimumOrderValueLocalizedMessageTransfers): array
+    protected function createTranslationsLocaleMap(Traversable $minimumOrderValueLocalizedMessageTransfers): array
     {
         $translationsByLocale = [];
         foreach ($minimumOrderValueLocalizedMessageTransfers as $minimumOrderValueLocalizedMessageTransfer) {

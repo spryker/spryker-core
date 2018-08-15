@@ -45,7 +45,7 @@ class MerchantRelationshipMinimumOrderValueGlossaryKeyGenerator implements Merch
                 $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()->getThresholdGroup(),
                 $merchantRelationshipMinimumOrderValueTransfer->getStore()->getName(),
                 $merchantRelationshipMinimumOrderValueTransfer->getCurrency()->getCode(),
-                $merchantRelationshipMinimumOrderValueTransfer->getMerchantRelationship()->getIdMerchantRelationship(),
+                $merchantRelationshipMinimumOrderValueTransfer->getMerchantRelationship()->getMerchantRelationshipKey(),
                 static::MINIMUM_ORDER_VALUE_GLOSSARY_MESSAGE,
             ]
         ));
