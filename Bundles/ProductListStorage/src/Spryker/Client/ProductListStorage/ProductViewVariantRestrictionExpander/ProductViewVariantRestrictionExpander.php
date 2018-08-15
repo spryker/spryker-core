@@ -22,8 +22,6 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     protected $productConcreteRestrictionReader;
 
     /**
-     * ProductViewVariantRestriction constructor.
-     *
      * @param \Spryker\Client\ProductListStorage\ProductConcreteRestriction\ProductConcreteRestrictionReaderInterface $productConcreteRestrictionReader
      */
     public function __construct(

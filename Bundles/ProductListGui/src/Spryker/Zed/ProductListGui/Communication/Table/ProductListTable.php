@@ -37,8 +37,6 @@ class ProductListTable extends AbstractTable
     protected $productListTablePluginExecutor;
 
     /**
-     * ProductListTable constructor.
-     *
      * @param \Orm\Zed\ProductList\Persistence\SpyProductListQuery $productListQuery
      * @param \Spryker\Zed\ProductListGui\Communication\Table\PluginExecutor\ProductListTablePluginExecutorInterface $productListTablePluginExecutor
      */
