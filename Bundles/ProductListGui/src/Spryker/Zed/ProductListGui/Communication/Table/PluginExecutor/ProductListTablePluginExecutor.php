@@ -32,8 +32,6 @@ class ProductListTablePluginExecutor implements ProductListTablePluginExecutorIn
     protected $productListTableHeaderExpanderPlugins;
 
     /**
-     * ProductListTablePluginExecutor constructor.
-     *
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderPluginInterface[] $productListTableActionExpanderPlugins
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableConfigExpanderPluginInterface[] $productListTableConfigExpanderPlugins
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface[] $productListTableDataExpanderPlugins

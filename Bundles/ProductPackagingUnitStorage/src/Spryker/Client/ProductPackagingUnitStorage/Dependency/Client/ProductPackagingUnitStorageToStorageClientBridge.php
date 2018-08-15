@@ -15,8 +15,6 @@ class ProductPackagingUnitStorageToStorageClientBridge implements ProductPackagi
     protected $storageClient;
 
     /**
-     * SynchronizationToStorageBridge constructor.
-     *
      * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
      */
     public function __construct($storageClient)

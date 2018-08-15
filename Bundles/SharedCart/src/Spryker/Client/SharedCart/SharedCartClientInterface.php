@@ -10,6 +10,7 @@ namespace Spryker\Client\SharedCart;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 
 interface SharedCartClientInterface
@@ -51,4 +52,16 @@ interface SharedCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function removeShareCart(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Calculate current customer permission on given quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string|null
+     */
+    public function getQuoteAccessLevel(QuoteTransfer $quoteTransfer): ?string;
 }
