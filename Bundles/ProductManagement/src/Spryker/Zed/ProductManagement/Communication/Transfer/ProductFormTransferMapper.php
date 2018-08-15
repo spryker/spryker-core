@@ -27,7 +27,9 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
+use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteSuperAttributeFormTrait;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface;
@@ -36,6 +38,8 @@ use Symfony\Component\Form\FormInterface;
 
 class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 {
+    use ProductConcreteSuperAttributeFormTrait;
+
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -146,23 +150,27 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param int $idProduct
+     * @param int|null $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function buildProductConcreteTransfer(
         ProductAbstractTransfer $productAbstractTransfer,
         FormInterface $form,
-        $idProduct
+        $idProduct = null
     ) {
         $sku = $form->get(ProductConcreteFormEdit::FIELD_SKU)->getData();
 
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setIdProductConcrete($idProduct)
-            ->setAttributes($this->getConcreteAttributes($idProduct))
+            ->setAttributes($this->getConcreteAttributes($form->getData(), $idProduct))
             ->setSku($sku)
             ->setAbstractSku($productAbstractTransfer->getSku())
             ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
+
+        if ($idProduct === null) {
+            $productConcreteTransfer->setIsActive(false);
+        }
 
         $productConcreteTransfer = $this->assignProductToBeBundled($form, $productConcreteTransfer);
         $productConcreteTransfer = $this->assignProductsToBeRemovedFromBundle($form, $productConcreteTransfer);
@@ -458,12 +466,17 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     }
 
     /**
-     * @param int $idProduct
+     * @param array $formData
+     * @param int|null $idProduct
      *
      * @return array
      */
-    protected function getConcreteAttributes($idProduct)
+    protected function getConcreteAttributes(array $formData, ?int $idProduct)
     {
+        if ($idProduct === null) {
+            return $this->getTransformedSubmittedSuperAttributes($formData[ProductConcreteFormAdd::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES]);
+        }
+
         $attributes = [];
 
         $entity = $this->productQueryContainer

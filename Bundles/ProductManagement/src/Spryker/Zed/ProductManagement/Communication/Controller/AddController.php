@@ -23,7 +23,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
-    const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    protected const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    protected const PARAM_ID_PRODUCT = 'id-product';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -118,6 +119,42 @@ class AddController extends AbstractController
 
         $bundledProductTable = $this->getFactory()
             ->createBundledProductTable();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $productConcreteTransfer = $this->getFactory()
+                    ->createProductFormTransferGenerator()
+                    ->buildProductConcreteTransfer($productAbstractTransfer, $form);
+
+                $this->getFactory()
+                    ->getProductFacade()
+                    ->saveProduct($productAbstractTransfer, [$productConcreteTransfer]);
+
+                $type = $productConcreteTransfer->getProductBundle() === null ?
+                    ProductManagementConfig::PRODUCT_TYPE_REGULAR :
+                    ProductManagementConfig::PRODUCT_TYPE_BUNDLE;
+
+                $this->getFactory()
+                    ->getProductFacade()
+                    ->touchProductConcrete($productConcreteTransfer->getIdProductConcrete());
+
+                $this->addSuccessMessage(sprintf(
+                    'The product [%s] was saved successfully.',
+                    $productConcreteTransfer->getSku()
+                ));
+
+                return $this->redirectResponse(sprintf(
+                    '/product-management/edit/variant?%s=%d&%s=%d&type=%s',
+                    static::PARAM_ID_PRODUCT_ABSTRACT,
+                    $idProductAbstract,
+                    static::PARAM_ID_PRODUCT,
+                    $productConcreteTransfer->getIdProductConcrete(),
+                    $type
+                ));
+            } catch (CategoryUrlExistsException $exception) {
+                $this->addErrorMessage($exception->getMessage());
+            }
+        }
 
         return $this->viewResponse([
             'form' => $form->createView(),
