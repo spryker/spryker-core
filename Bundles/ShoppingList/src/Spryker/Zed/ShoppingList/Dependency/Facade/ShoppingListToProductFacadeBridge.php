@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ShoppingList\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-
 class ShoppingListToProductFacadeBridge implements ShoppingListToProductFacadeInterface
 {
     /**
