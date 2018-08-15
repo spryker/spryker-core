@@ -14,7 +14,7 @@ interface ShoppingListNoteFacadeInterface
 {
     /**
      * Specification:
-     *  - Gets shopping list item note by shopping list id.
+     *  - Gets shopping list item note by shopping list item id.
      *
      * @api
      *
@@ -26,7 +26,7 @@ interface ShoppingListNoteFacadeInterface
 
     /**
      * Specification:
-     *  - Adds note to shopping list item.
+     *  - Saves note to shopping list item.
      *
      * @api
      *
@@ -58,5 +58,5 @@ interface ShoppingListNoteFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+    public function expandShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 }

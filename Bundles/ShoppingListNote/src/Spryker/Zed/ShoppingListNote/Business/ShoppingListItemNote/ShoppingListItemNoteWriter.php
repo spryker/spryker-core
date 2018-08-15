@@ -47,13 +47,13 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
      */
     public function saveShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): ?ShoppingListItemNoteTransfer
     {
-        if (empty($shoppingListItemNoteTransfer->getMessage())) {
-            $this->deleteShoppingListItemNote($shoppingListItemNoteTransfer);
-
+        if (!$this->checkWritePermission($shoppingListItemNoteTransfer)) {
             return null;
         }
 
-        if (!$this->checkWritePermission($shoppingListItemNoteTransfer)) {
+        if (empty($shoppingListItemNoteTransfer->getMessage())) {
+            $this->deleteShoppingListItemNote($shoppingListItemNoteTransfer);
+
             return null;
         }
 
@@ -84,13 +84,8 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
      */
     protected function checkWritePermission(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): bool
     {
-        if (!$shoppingListItemNoteTransfer->getIdShoppingList()) {
-            return true;
-        }
-
-        if (!$shoppingListItemNoteTransfer->getIdCompanyUser()) {
-            return false;
-        }
+        $shoppingListItemNoteTransfer->requireIdShoppingList();
+        $shoppingListItemNoteTransfer->requireIdCompanyUser();
 
         return $this->can(
             'WriteShoppingListPermissionPlugin',

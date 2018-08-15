@@ -25,6 +25,6 @@ class ShoppingListItemExpanderPlugin extends AbstractPlugin implements ItemExpan
      */
     public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        return $this->getFacade()->expandItem($shoppingListItemTransfer);
+        return $this->getFacade()->expandShoppingListItem($shoppingListItemTransfer);
     }
 }

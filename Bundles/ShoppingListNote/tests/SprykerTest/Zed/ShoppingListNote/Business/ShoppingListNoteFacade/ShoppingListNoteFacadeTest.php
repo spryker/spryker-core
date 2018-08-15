@@ -190,7 +190,7 @@ class ShoppingListNoteFacadeTest extends Unit
         $this->assertEquals($shoppingListItemNoteTransfer->getIdShoppingListItemNote(), $shoppingListItemNoteResponseTransfer->getIdShoppingListItemNote());
 
         // Arrange
-        $this->tester->getFacade()->deleteShoppingListItemNote($shoppingListItemNoteResponseTransfer);
+        $this->tester->getFacade()->deleteShoppingListItemNote($shoppingListItemNoteTransfer);
 
         // Act
         $shoppingListItemNoteResponseTransfer = $this->tester->getFacade()->getShoppingListItemNoteByIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
@@ -246,6 +246,7 @@ class ShoppingListNoteFacadeTest extends Unit
             ShoppingListItemNoteTransfer::FK_SHOPPING_LIST_ITEM => $shoppingListItemTransfer->getIdShoppingListItem(),
             ShoppingListItemNoteTransfer::MESSAGE => 'Note for shopping item goes here',
             ShoppingListItemNoteTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemNoteTransfer::ID_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
         ])))->build();
         $this->tester->getFacade()->saveShoppingListItemNote($shoppingListItemNoteTransfer);
 
@@ -254,5 +255,21 @@ class ShoppingListNoteFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($shoppingListItemNoteResponseTransfer->getIdShoppingListItemNote());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandShoppingListItemWithNote(): void
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListItemTransfer = $this->tester->createShoppingListItem($shoppingListTransfer, $this->productTransfer);
+
+        // Act
+        $this->tester->getFacade()->expandShoppingListItem($shoppingListItemTransfer);
+
+        // Assert
+        $this->assertNotNull($shoppingListItemTransfer->getNote());
     }
 }
