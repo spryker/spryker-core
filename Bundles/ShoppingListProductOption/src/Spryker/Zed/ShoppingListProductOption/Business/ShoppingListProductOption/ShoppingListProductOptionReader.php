@@ -43,11 +43,21 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
      */
     public function getShoppingListItemProductOptionsByIdShoppingListItem(int $idShoppingListItem): ProductOptionCollectionTransfer
     {
+        $productOptionCriteriaTransfer = $this->getProductOptionCriteriaTransfer($idShoppingListItem);
+
+        return $this->productOptionFacade->getProductOptionCollectionByCriteria($productOptionCriteriaTransfer);
+    }
+
+    /**
+     * @param int $idShoppingListItem
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionCriteriaTransfer
+     */
+    protected function getProductOptionCriteriaTransfer(int $idShoppingListItem): ProductOptionCriteriaTransfer
+    {
         $shoppingListItemProductOptionIds = $this->shoppingListProductOptionRepository
             ->findShoppingListItemProductOptionIdsByFkShoppingListItem($idShoppingListItem);
 
-        $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setIds($shoppingListItemProductOptionIds);
-
-        return $this->productOptionFacade->getProductOptionCollectionByCriteria($productOptionCriteriaTransfer);
+        return (new ProductOptionCriteriaTransfer())->setIds($shoppingListItemProductOptionIds);
     }
 }
