@@ -17,15 +17,18 @@ class MerchantRelationshipMinimumOrderValueGlossaryKeyGenerator implements Merch
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
-    public function assignMessageGlossaryKey(MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): void
-    {
+    public function assignMessageGlossaryKey(
+        MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
+    ): MerchantRelationshipMinimumOrderValueTransfer {
         $this->assertRequired($merchantRelationshipMinimumOrderValueTransfer);
 
         $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->setMessageGlossaryKey(
             $this->generateMessageGlossaryKey($merchantRelationshipMinimumOrderValueTransfer)
         );
+
+        return $merchantRelationshipMinimumOrderValueTransfer;
     }
 
     /**

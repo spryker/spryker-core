@@ -41,7 +41,7 @@ class MerchantRelationshipMinimumOrderValueBusinessFactory extends AbstractBusin
     /**
      * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface
      */
-    protected function getGlossaryFacade(): MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface
+    public function getGlossaryFacade(): MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(MerchantRelationshipMinimumOrderValueDependencyProvider::FACADE_GLOSSARY);
     }
@@ -49,7 +49,7 @@ class MerchantRelationshipMinimumOrderValueBusinessFactory extends AbstractBusin
     /**
      * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToStoreFacadeInterface
      */
-    protected function getStoreFacade(): MerchantRelationshipMinimumOrderValueToStoreFacadeInterface
+    public function getStoreFacade(): MerchantRelationshipMinimumOrderValueToStoreFacadeInterface
     {
         return $this->getProvidedDependency(MerchantRelationshipMinimumOrderValueDependencyProvider::FACADE_STORE);
     }

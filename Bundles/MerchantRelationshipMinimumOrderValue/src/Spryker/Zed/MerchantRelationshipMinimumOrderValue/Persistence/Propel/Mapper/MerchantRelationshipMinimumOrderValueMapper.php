@@ -28,7 +28,9 @@ class MerchantRelationshipMinimumOrderValueMapper implements MerchantRelationshi
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {
         $minimumOrderValueTypeEntity = $merchantRelationshipMinimumOrderValueEntity->getMinimumOrderValueType();
-        $merchantRelationshipMinimumOrderValueTransfer->setMinimumOrderValue($merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue() ?? (new MinimumOrderValueTransfer()));
+        $merchantRelationshipMinimumOrderValueTransfer->setMinimumOrderValue(
+            $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue() ?? (new MinimumOrderValueTransfer())
+        );
 
         $merchantRelationshipMinimumOrderValueTransfer->fromArray($merchantRelationshipMinimumOrderValueEntity->toArray(), true)
             ->setIdMerchantRelationshipMinimumOrderValue($merchantRelationshipMinimumOrderValueEntity->getIdMerchantRelationshipMinOrderValue())

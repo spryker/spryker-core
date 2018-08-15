@@ -35,14 +35,9 @@ class MerchantRelationshipMinimumOrderValueTranslationWriter implements Merchant
      */
     public function saveLocalizedMessages(MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): MerchantRelationshipMinimumOrderValueTransfer
     {
-        $translations = [];
-        foreach ($merchantRelationshipMinimumOrderValueTransfer->getLocalizedMessages() as $minimumOrderValueLocalizedMessageTransfer) {
-            $translations[$minimumOrderValueLocalizedMessageTransfer->getLocaleCode()] = $minimumOrderValueLocalizedMessageTransfer->getMessage();
-        }
-
         $keyTranslationTransfer = $this->createKeyTranslationTransfer(
             $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue(),
-            $translations
+            $this->createTranslationsLocaleMap($merchantRelationshipMinimumOrderValueTransfer->getLocalizedMessages())
         );
 
         $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
@@ -51,15 +46,30 @@ class MerchantRelationshipMinimumOrderValueTranslationWriter implements Merchant
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer[] $minimumOrderValueLocalizedMessageTransfers
+     *
+     * @return string[]
+     */
+    protected function createTranslationsLocaleMap(array $minimumOrderValueLocalizedMessageTransfers): array
+    {
+        $translationsByLocale = [];
+        foreach ($minimumOrderValueLocalizedMessageTransfers as $minimumOrderValueLocalizedMessageTransfer) {
+            $translationsByLocale[$minimumOrderValueLocalizedMessageTransfer->getLocaleCode()] = $minimumOrderValueLocalizedMessageTransfer->getMessage();
+        }
+
+        return $translationsByLocale;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
-     * @param array $translations
+     * @param string[] $translationsByLocale
      *
      * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */
-    protected function createKeyTranslationTransfer(MinimumOrderValueTransfer $minimumOrderValueTransfer, array $translations): KeyTranslationTransfer
+    protected function createKeyTranslationTransfer(MinimumOrderValueTransfer $minimumOrderValueTransfer, array $translationsByLocale): KeyTranslationTransfer
     {
         return (new KeyTranslationTransfer())
             ->setGlossaryKey($minimumOrderValueTransfer->getMessageGlossaryKey())
-            ->setLocales($translations);
+            ->setLocales($translationsByLocale);
     }
 }

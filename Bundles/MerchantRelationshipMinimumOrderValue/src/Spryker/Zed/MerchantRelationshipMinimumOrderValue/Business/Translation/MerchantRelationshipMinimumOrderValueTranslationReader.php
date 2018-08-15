@@ -61,12 +61,12 @@ class MerchantRelationshipMinimumOrderValueTranslationReader implements Merchant
      * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      * @param string $localeIsoCode
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
     protected function initOrUpdateLocalizedMessages(
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer,
         string $localeIsoCode
-    ): void {
+    ): MerchantRelationshipMinimumOrderValueTransfer {
         $translationTransfer = $this->findTranslationValue(
             $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getMessageGlossaryKey(),
             $this->createLocaleTransfer($localeIsoCode)
@@ -76,7 +76,7 @@ class MerchantRelationshipMinimumOrderValueTranslationReader implements Merchant
             if ($minimumOrderValueLocalizedMessageTransfer->getLocaleCode() === $localeIsoCode) {
                 $minimumOrderValueLocalizedMessageTransfer->setMessage($translationTransfer ? $translationTransfer->getValue() : null);
 
-                return;
+                return $merchantRelationshipMinimumOrderValueTransfer;
             }
         }
 
@@ -85,6 +85,8 @@ class MerchantRelationshipMinimumOrderValueTranslationReader implements Merchant
                 ->setLocaleCode($localeIsoCode)
                 ->setMessage($translationTransfer ? $translationTransfer->getValue() : null)
         );
+
+        return $merchantRelationshipMinimumOrderValueTransfer;
     }
 
     /**
@@ -102,16 +104,16 @@ class MerchantRelationshipMinimumOrderValueTranslationReader implements Merchant
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return null|string
+     * @return string|null
      */
     protected function findTranslationValue(string $keyName, LocaleTransfer $localeTransfer): ?string
     {
-        if ($this->glossaryFacade->hasTranslation($keyName, $localeTransfer)) {
-            $translationTransfer = $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
-
-            return $translationTransfer->getValue();
+        if (!$this->glossaryFacade->hasTranslation($keyName, $localeTransfer)) {
+            return null;
         }
 
-        return null;
+        $translationTransfer = $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
+
+        return $translationTransfer->getValue();
     }
 }

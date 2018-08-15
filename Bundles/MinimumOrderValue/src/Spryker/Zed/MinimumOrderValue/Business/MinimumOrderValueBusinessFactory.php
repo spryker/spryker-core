@@ -161,7 +161,7 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface
      */
-    protected function getGlossaryFacade(): MinimumOrderValueToGlossaryFacadeInterface
+    public function getGlossaryFacade(): MinimumOrderValueToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::FACADE_GLOSSARY);
     }
@@ -169,7 +169,7 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeInterface
      */
-    protected function getStoreFacade(): MinimumOrderValueToStoreFacadeInterface
+    public function getStoreFacade(): MinimumOrderValueToStoreFacadeInterface
     {
         return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::FACADE_STORE);
     }
@@ -177,7 +177,7 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface
      */
-    protected function getMessengerFacade(): MinimumOrderValueToMessengerFacadeInterface
+    public function getMessengerFacade(): MinimumOrderValueToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::FACADE_MESSENGER);
     }

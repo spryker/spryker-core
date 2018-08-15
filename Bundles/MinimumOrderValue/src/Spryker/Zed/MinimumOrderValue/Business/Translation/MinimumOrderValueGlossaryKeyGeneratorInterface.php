@@ -14,7 +14,9 @@ interface MinimumOrderValueGlossaryKeyGeneratorInterface
     /**
      * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
      */
-    public function assignMessageGlossaryKey(GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer): void;
+    public function assignMessageGlossaryKey(
+        GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+    ): GlobalMinimumOrderValueTransfer;
 }

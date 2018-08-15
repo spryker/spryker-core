@@ -61,12 +61,12 @@ class MinimumOrderValueTranslationReader implements MinimumOrderValueTranslation
      * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
      * @param string $localeIsoCode
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
      */
     protected function initOrUpdateLocalizedMessages(
         GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer,
         string $localeIsoCode
-    ): void {
+    ): GlobalMinimumOrderValueTransfer {
         $translationValue = $this->findTranslationValue(
             $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMessageGlossaryKey(),
             $this->createLocaleTransfer($localeIsoCode)
@@ -76,7 +76,7 @@ class MinimumOrderValueTranslationReader implements MinimumOrderValueTranslation
             if ($minimumOrderValueLocalizedMessageTransfer->getLocaleCode() === $localeIsoCode) {
                 $minimumOrderValueLocalizedMessageTransfer->setMessage($translationValue);
 
-                return;
+                return $globalMinimumOrderValueTransfer;
             }
         }
 
@@ -85,6 +85,8 @@ class MinimumOrderValueTranslationReader implements MinimumOrderValueTranslation
                 ->setLocaleCode($localeIsoCode)
                 ->setMessage($translationValue)
         );
+
+        return $globalMinimumOrderValueTransfer;
     }
 
     /**
@@ -102,16 +104,16 @@ class MinimumOrderValueTranslationReader implements MinimumOrderValueTranslation
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return null|string
+     * @return string|null
      */
     protected function findTranslationValue(string $keyName, LocaleTransfer $localeTransfer): ?string
     {
-        if ($this->glossaryFacade->hasTranslation($keyName, $localeTransfer)) {
-            $translationTransfer = $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
-
-            return $translationTransfer->getValue();
+        if (!$this->glossaryFacade->hasTranslation($keyName, $localeTransfer)) {
+            return null;
         }
 
-        return null;
+        $translationTransfer = $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
+
+        return $translationTransfer->getValue();
     }
 }

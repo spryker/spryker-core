@@ -17,15 +17,18 @@ class MinimumOrderValueGlossaryKeyGenerator implements MinimumOrderValueGlossary
     /**
      * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
      */
-    public function assignMessageGlossaryKey(GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer): void
-    {
+    public function assignMessageGlossaryKey(
+        GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+    ): GlobalMinimumOrderValueTransfer {
         $this->assertRequired($globalMinimumOrderValueTransfer);
 
         $globalMinimumOrderValueTransfer->getMinimumOrderValue()->setMessageGlossaryKey(
             $this->generateMessageGlossaryKey($globalMinimumOrderValueTransfer)
         );
+
+        return $globalMinimumOrderValueTransfer;
     }
 
     /**

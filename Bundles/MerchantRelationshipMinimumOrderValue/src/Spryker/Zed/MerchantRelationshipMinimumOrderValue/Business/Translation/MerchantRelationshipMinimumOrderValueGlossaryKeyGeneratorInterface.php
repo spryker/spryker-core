@@ -14,7 +14,9 @@ interface MerchantRelationshipMinimumOrderValueGlossaryKeyGeneratorInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
-    public function assignMessageGlossaryKey(MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): void;
+    public function assignMessageGlossaryKey(
+        MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
+    ): MerchantRelationshipMinimumOrderValueTransfer;
 }
