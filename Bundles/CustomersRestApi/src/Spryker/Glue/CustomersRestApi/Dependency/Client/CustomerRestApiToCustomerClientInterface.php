@@ -28,4 +28,11 @@ interface CustomerRestApiToCustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findCustomerByReference($customerTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function createAddress($addressTransfer);
 }

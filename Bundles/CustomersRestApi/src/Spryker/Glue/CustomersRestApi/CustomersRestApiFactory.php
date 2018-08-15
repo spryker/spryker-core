@@ -8,6 +8,8 @@ namespace Spryker\Glue\CustomersRestApi;
 
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToSessionClientInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Addresses\AddressesWriter;
+use Spryker\Glue\CustomersRestApi\Processor\Addresses\AddressesWriterInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReader;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapper;
@@ -51,6 +53,17 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->getCustomerClient(),
             $this->createCustomerResourceMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Addresses\AddressesWriterInterface
+     */
+    public function createAddressesWriter(): AddressesWriterInterface
+    {
+        return new AddressesWriter(
+            $this->getResourceBuilder(),
+            $this->getCustomerClient()
         );
     }
 }
