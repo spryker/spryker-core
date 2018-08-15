@@ -26,7 +26,7 @@ interface ShoppingListNoteFacadeInterface
 
     /**
      * Specification:
-     *  - Add note to shopping list item.
+     *  - Adds note to shopping list item.
      *
      * @api
      *
@@ -38,7 +38,7 @@ interface ShoppingListNoteFacadeInterface
 
     /**
      * Specification:
-     *  - Delete note from shopping list item.
+     *  - Deletes note from shopping list item.
      *
      * @api
      *
@@ -50,7 +50,7 @@ interface ShoppingListNoteFacadeInterface
 
     /**
      * Specification:
-     *  - Expand shopping list item with additional parameters.
+     *  - Expands shopping list item with additional parameters.
      *
      * @api
      *

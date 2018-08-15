@@ -17,9 +17,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterf
 class ShoppingListItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
-     * @inheritdoc
-     * Specification:
-     * - This plugin extend shopping item transfer with shopping item note transfer.
+     * {@inheritdoc}
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
@@ -27,8 +25,6 @@ class ShoppingListItemExpanderPlugin extends AbstractPlugin implements ItemExpan
      */
     public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        $expandedShoppingListItemTransfer = $this->getFacade()->expandItem($shoppingListItemTransfer);
-
-        return $expandedShoppingListItemTransfer;
+        return $this->getFacade()->expandItem($shoppingListItemTransfer);
     }
 }
