@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductLabelSearch\Persistence;
 
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery;
 
 /**
  * @method \Spryker\Zed\ProductLabelSearch\ProductLabelSearchConfig getConfig()
