@@ -15,7 +15,7 @@ interface ProductsRestApiToProductResourceAliasStorageClientInterface
      *
      * @return array|null
      */
-    public function findProductAbstractStorageData(string $sku, string $localeName): ?array;
+    public function findProductAbstractStorageDataBySku(string $sku, string $localeName): ?array;
 
     /**
      * @param string $sku
@@ -23,5 +23,5 @@ interface ProductsRestApiToProductResourceAliasStorageClientInterface
      *
      * @return array|null
      */
-    public function findProductConcreteStorageData(string $sku, string $localeName): ?array;
+    public function findProductConcreteStorageDataBySku(string $sku, string $localeName): ?array;
 }

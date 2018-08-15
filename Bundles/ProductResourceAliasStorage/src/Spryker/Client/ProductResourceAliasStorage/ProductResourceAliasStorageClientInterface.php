@@ -20,7 +20,7 @@ interface ProductResourceAliasStorageClientInterface
      *
      * @return array|null
      */
-    public function findProductAbstractStorageData(string $sku, string $localeName): ?array;
+    public function findProductAbstractStorageDataBySku(string $sku, string $localeName): ?array;
 
     /**
      * Specification:
@@ -33,5 +33,5 @@ interface ProductResourceAliasStorageClientInterface
      *
      * @return array|null
      */
-    public function getProductConcreteStorageData(string $sku, string $localeName): ?array;
+    public function getProductConcreteStorageDataBySku(string $sku, string $localeName): ?array;
 }

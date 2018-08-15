@@ -8,8 +8,8 @@
 namespace Spryker\Client\ProductResourceAliasStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductResourceAliasStorage\Storage\ProductAbstractStorageReader;
-use Spryker\Client\ProductResourceAliasStorage\Storage\ProductConcreteStorageReader;
+use Spryker\Client\ProductResourceAliasStorage\Storage\ProductAbstractStorageBySkuReader;
+use Spryker\Client\ProductResourceAliasStorage\Storage\ProductConcreteStorageBySkuReader;
 
 class ProductResourceAliasStorageFactory extends AbstractFactory
 {
@@ -18,7 +18,7 @@ class ProductResourceAliasStorageFactory extends AbstractFactory
      */
     public function createProductAbstractStorageReader()
     {
-        return new ProductAbstractStorageReader(
+        return new ProductAbstractStorageBySkuReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
             $this->getStore()
@@ -28,9 +28,9 @@ class ProductResourceAliasStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductResourceAliasStorage\Storage\ProductConcreteStorageReaderInterface
      */
-    public function createProductConcreteStorageReader()
+    public function createProductConcreteStorageBySkuReader()
     {
-        return new ProductConcreteStorageReader(
+        return new ProductConcreteStorageBySkuReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
             $this->getStore()

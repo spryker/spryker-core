@@ -13,7 +13,7 @@ use Spryker\Client\ProductResourceAliasStorage\Dependency\Service\ProductResourc
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
-class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterface
+class ProductConcreteStorageBySkuReader implements ProductConcreteStorageReaderInterface
 {
     protected const REFERENCE_NAME = 'sku:';
 

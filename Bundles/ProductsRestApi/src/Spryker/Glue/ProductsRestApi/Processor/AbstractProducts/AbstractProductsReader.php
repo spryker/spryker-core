@@ -78,7 +78,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
         }
 
         $abstractProductData = $this->productResourceAliasStorageClient
-            ->findProductAbstractStorageData(
+            ->findProductAbstractStorageDataBySku(
                 $resourceIdentifier,
                 $restRequest->getMetadata()->getLocale()
             );
@@ -110,7 +110,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
         $attributes = $restResource->getAttributes();
         $concreteProductsResourceList = $this->concreteProductsReader
             ->findProductConcretesByProductConcreteSkus(
-                array_keys($attributes->getAttributeMap()[static::PRODUCT_CONCRETE_IDS_KEY]),
+                $attributes->getAttributeMap()[static::PRODUCT_CONCRETE_IDS_KEY],
                 $restRequest
             );
 

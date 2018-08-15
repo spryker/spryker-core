@@ -67,7 +67,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
         }
 
         $concreteProductData = $this->productResourceAliasStorageClient
-            ->findProductConcreteStorageData(
+            ->findProductConcreteStorageDataBySku(
                 $resourceIdentifier,
                 $restRequest->getMetadata()->getLocale()
             );
@@ -114,7 +114,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
      */
     protected function findOneByProductConcrete(string $productConcreteSku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $concreteProductData = $this->productResourceAliasStorageClient->findProductConcreteStorageData(
+        $concreteProductData = $this->productResourceAliasStorageClient->findProductConcreteStorageDataBySku(
             $productConcreteSku,
             $restRequest->getMetadata()->getLocale()
         );

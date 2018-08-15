@@ -28,9 +28,9 @@ class ProductsRestApiToProductResourceAliasStorageClientBridge implements Produc
      *
      * @return array|null
      */
-    public function findProductAbstractStorageData(string $sku, string $localeName): ?array
+    public function findProductAbstractStorageDataBySku(string $sku, string $localeName): ?array
     {
-        return $this->productResourceAliasStorageClient->findProductAbstractStorageData($sku, $localeName);
+        return $this->productResourceAliasStorageClient->findProductAbstractStorageDataBySku($sku, $localeName);
     }
 
     /**
@@ -39,8 +39,8 @@ class ProductsRestApiToProductResourceAliasStorageClientBridge implements Produc
      *
      * @return array|null
      */
-    public function findProductConcreteStorageData(string $sku, string $localeName): ?array
+    public function findProductConcreteStorageDataBySku(string $sku, string $localeName): ?array
     {
-        return $this->productResourceAliasStorageClient->getProductConcreteStorageData($sku, $localeName);
+        return $this->productResourceAliasStorageClient->getProductConcreteStorageDataBySku($sku, $localeName);
     }
 }

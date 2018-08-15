@@ -13,7 +13,7 @@ use Spryker\Client\ProductResourceAliasStorage\Dependency\Service\ProductResourc
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
-class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterface
+class ProductAbstractStorageBySkuReader implements ProductAbstractStorageReaderInterface
 {
     protected const REFERENCE_NAME = 'sku:';
 
@@ -48,16 +48,16 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
-     * @param string $sku
+     * @param string $identifier
      * @param string $localeName
      *
      * @return array|null
      */
-    public function findProductAbstractStorageData(string $sku, string $localeName): ?array
+    public function findProductAbstractStorageData(string $identifier, string $localeName): ?array
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setReference(static::REFERENCE_NAME . $sku)
+            ->setReference(static::REFERENCE_NAME . $identifier)
             ->setLocale($localeName)
             ->setStore($this->store->getStoreName());
 

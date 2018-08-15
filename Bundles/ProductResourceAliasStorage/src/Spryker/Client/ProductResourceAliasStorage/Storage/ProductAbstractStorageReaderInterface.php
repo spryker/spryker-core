@@ -10,10 +10,10 @@ namespace Spryker\Client\ProductResourceAliasStorage\Storage;
 interface ProductAbstractStorageReaderInterface
 {
     /**
-     * @param string $sku
+     * @param string $identifier
      * @param string $localeName
      *
      * @return array|null
      */
-    public function findProductAbstractStorageData(string $sku, string $localeName): ?array;
+    public function findProductAbstractStorageData(string $identifier, string $localeName): ?array;
 }
