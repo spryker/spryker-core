@@ -11,8 +11,7 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingList;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem;
 use Orm\Zed\ShoppingListProductOption\Persistence\SpyShoppingListProductOption;
@@ -70,24 +69,19 @@ class ShoppingListProductOptionFacadeTest extends Unit
             ->setCustomerReference($customer->getCustomerReference());
         $shoppingListEntity->save();
 
-        $productOptionGroupEntity = (new SpyProductOptionGroupQuery())->findOne();
         $this->shoppingListItemEntity = (new SpyShoppingListItem())
             ->setFkShoppingList($shoppingListEntity->getIdShoppingList())
             ->setSku('test');
 
         $this->shoppingListItemEntity->save();
 
-        $this->productOptionValue1Entity = (new SpyProductOptionValue())
-            ->setValue('test')
-            ->setSku('test1')
-            ->setFkProductOptionGroup($productOptionGroupEntity->getIdProductOptionGroup());
-        $this->productOptionValue1Entity->save();
+        $this->productOptionValue1Entity = (new SpyProductOptionValueQuery())
+            ->filterByIdProductOptionValue(1)
+            ->findOne();
 
-        $this->productOptionValue2Entity = (new SpyProductOptionValue())
-            ->setValue('test')
-            ->setSku('test2')
-            ->setFkProductOptionGroup($productOptionGroupEntity->getIdProductOptionGroup());
-        $this->productOptionValue2Entity->save();
+        $this->productOptionValue2Entity = (new SpyProductOptionValueQuery())
+            ->filterByIdProductOptionValue(2)
+            ->findOne();
     }
 
     /**
