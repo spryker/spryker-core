@@ -92,10 +92,10 @@ class ProductAttributeFacadeTest extends Test
         $productManagementAttributeTransfer = $this->tester->generateProductManagementAttributeTransfer()
             ->setIdProductManagementAttribute($productAttributeKeyEntity->getIdProductManagementAttribute())
             ->setLocalizedKeys(new ArrayObject([
-               $this->tester->generateLocalizedProductManagementAttributeKeyTransfer([
-                   'locale_name' => 'aa_AA',
-                   'key_translation' => 'Foo',
-               ]),
+                $this->tester->generateLocalizedProductManagementAttributeKeyTransfer([
+                    'locale_name' => 'aa_AA',
+                    'key_translation' => 'Foo',
+                ]),
                 $this->tester->generateLocalizedProductManagementAttributeKeyTransfer([
                     'locale_name' => 'bb_BB',
                     'key_translation' => 'Bar',
@@ -448,6 +448,46 @@ class ProductAttributeFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testGetUniqueSuperAttributesFromConcreteProducts()
+    {
+        $attributesData = $this->tester->createSampleAttributeMetadataWithSuperAttributeData();
+        $productAbstractTransfer = $this->tester->createSampleAbstractProduct(ProductAttributeBusinessTester::ABSTRACT_SKU);
+        $firstProductConcreteTransfer = $this->tester->createSampleProduct($productAbstractTransfer, ProductAttributeBusinessTester::CONCRETE_SKU, $attributesData);
+
+        $this->tester->createSampleAttributeMetadata(ProductAttributeBusinessTester::ANOTHER_SUPER_ATTRIBUTE_KEY, true);
+
+        $attributesData[ProductAttributeBusinessTester::SUPER_ATTRIBUTE_KEY] = ProductAttributeBusinessTester::SUPER_ATTRIBUTE_VALUE . 'new';
+        $attributesData[ProductAttributeBusinessTester::ANOTHER_SUPER_ATTRIBUTE_KEY] = ProductAttributeBusinessTester::ANOTHER_SUPER_ATTRIBUTE_VALUE;
+        $secondProductConcreteTransfer = $this->tester->createSampleProduct($productAbstractTransfer, ProductAttributeBusinessTester::CONCRETE_SKU . '2', $attributesData);
+
+        $uniqueSuperAttributes = $this->productAttributeFacade->getUniqueSuperAttributesFromConcreteProducts([
+            $firstProductConcreteTransfer,
+            $secondProductConcreteTransfer,
+        ]);
+
+        $this->assertEquals(2, count($uniqueSuperAttributes));
+
+        foreach ($uniqueSuperAttributes as $superAttribute) {
+            $this->assertInstanceOf(ProductManagementAttributeTransfer::class, $superAttribute);
+            $this->assertTrue($superAttribute->getIsSuper());
+
+            if ($superAttribute->getKey() === ProductAttributeBusinessTester::SUPER_ATTRIBUTE_KEY) {
+                $this->assertEquals(2, count($superAttribute->getValues()));
+                $this->assertContains(ProductAttributeBusinessTester::SUPER_ATTRIBUTE_VALUE, $superAttribute->getValues());
+                $this->assertContains(ProductAttributeBusinessTester::SUPER_ATTRIBUTE_VALUE . 'new', $superAttribute->getValues());
+
+                continue;
+            }
+
+            $this->assertSame(ProductAttributeBusinessTester::ANOTHER_SUPER_ATTRIBUTE_KEY, $superAttribute->getKey());
+            $this->assertEquals(1, count($superAttribute->getValues()));
+            $this->assertContains(ProductAttributeBusinessTester::ANOTHER_SUPER_ATTRIBUTE_VALUE, $superAttribute->getValues());
+        }
+    }
+
+    /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
     protected function getAttributeTranslationMock()
@@ -465,11 +505,11 @@ class ProductAttributeFacadeTest extends Test
             ->getMock();
 
         $attributeTranslatorMock = $this->getMockBuilder(AttributeTranslator::class)->setConstructorArgs([
-                $this->productAttributeQueryContainer,
-                $productManagementToLocaleBridgeMock,
-                $productManagementToGlossaryBridgeMock,
-                $glossaryKeyBuilderMock,
-            ])->setMethods(['getLocaleByName'])->getMock();
+            $this->productAttributeQueryContainer,
+            $productManagementToLocaleBridgeMock,
+            $productManagementToGlossaryBridgeMock,
+            $glossaryKeyBuilderMock,
+        ])->setMethods(['getLocaleByName'])->getMock();
 
         $attributeTranslatorMock->method('getLocaleByName')->willReturnCallback(function ($localeName) {
             return $this->tester->getLocale($localeName);
