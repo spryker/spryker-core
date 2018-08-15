@@ -3,7 +3,10 @@
   "description": "ShoppingListProductOption module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "spryker/kernel": "^3.0.0",
+    "spryker/product-option": "^6.3.0",
+    "spryker/shopping-list": "^1.1.1"
   },
   "autoload": {
     "psr-4": {
