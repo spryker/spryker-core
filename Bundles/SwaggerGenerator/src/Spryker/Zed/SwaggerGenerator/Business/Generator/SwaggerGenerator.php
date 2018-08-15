@@ -16,6 +16,20 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
 {
     protected const GENERATED_FILE_POSTFIX = '.schema.yml';
 
+    protected const OPENAPI_VERSION = '3.0.0';
+
+    protected const KEY_OPENAPI = 'openapi';
+    protected const KEY_INFO = 'info';
+    protected const KEY_VERSION = 'version';
+    protected const KEY_TITLE = 'title';
+    protected const KEY_LICENSE = 'license';
+    protected const KEY_NAME = 'name';
+    protected const KEY_SERVERS = 'servers';
+    protected const KEY_URL = 'url';
+    protected const KEY_PATHS = 'paths';
+    protected const KEY_COMPONENTS = 'components';
+    protected const KEY_SCHEMAS = 'schemas';
+
     /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[]
      */
@@ -74,8 +88,8 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
             }
         }
 
-        $data['components']['schemas'] = $this->swaggerSchemaGenerator->getSchemas();
-        $data['paths'] = $this->swaggerPathGenerator->getPaths();
+        $data[static::KEY_COMPONENTS][static::KEY_SCHEMAS] = $this->swaggerSchemaGenerator->getSchemas();
+        $data[static::KEY_PATHS] = $this->swaggerPathGenerator->getPaths();
 
         $bytesWritten = file_put_contents($this->resolveGeneratedFileName(), Yaml::dump($data, 9));
         if (!$bytesWritten) {
@@ -89,22 +103,22 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
     protected function getDefaultDataStructure(): array
     {
         return [
-            'openapi' => '3.0.0',
-            'info' => [
-                'version' => $this->swaggerGeneratorConfig->getInfoApiVersion(),
-                'title' => $this->swaggerGeneratorConfig->getInfoApiTitle(),
-                'license' => [
-                    'name' => $this->swaggerGeneratorConfig->getInfoApiInfoLicenceName(),
+            static::KEY_OPENAPI => static::OPENAPI_VERSION,
+            static::KEY_INFO => [
+                static::KEY_VERSION => $this->swaggerGeneratorConfig->getInfoApiVersion(),
+                static::KEY_TITLE => $this->swaggerGeneratorConfig->getInfoApiTitle(),
+                static::KEY_LICENSE => [
+                    static::KEY_NAME => $this->swaggerGeneratorConfig->getInfoApiInfoLicenceName(),
                 ],
             ],
-            'servers' => [
+            static::KEY_SERVERS => [
                 [
-                    'url' => $this->swaggerGeneratorConfig->getRestApplicationDomain(),
+                    static::KEY_URL => $this->swaggerGeneratorConfig->getRestApplicationDomain(),
                 ],
             ],
-            'paths' => [],
-            'components' => [
-                'schemas' => [],
+            static::KEY_PATHS => [],
+            static::KEY_COMPONENTS => [
+                static::KEY_SCHEMAS => [],
             ],
         ];
     }
@@ -116,7 +130,7 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
     {
         $fileName = $this->swaggerGeneratorConfig->getGeneratedFileName();
 
-        if (substr($fileName, -\strlen(static::GENERATED_FILE_POSTFIX)) === static::GENERATED_FILE_POSTFIX) {
+        if (substr_compare($fileName, static::GENERATED_FILE_POSTFIX, -strlen(static::GENERATED_FILE_POSTFIX), null, true) === 0) {
             return $fileName;
         }
 
