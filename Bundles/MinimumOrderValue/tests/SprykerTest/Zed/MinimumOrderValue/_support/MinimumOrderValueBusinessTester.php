@@ -48,9 +48,10 @@ class MinimumOrderValueBusinessTester extends Actor
      */
     public function createStoreTransfer(): StoreTransfer
     {
-        return (new StoreTransfer())
-            ->setIdStore(1)
-            ->setName('DE');
+        return $this->getLocator()
+            ->store()
+            ->facade()
+            ->getStoreByName('DE');
     }
 
     /**
@@ -58,9 +59,10 @@ class MinimumOrderValueBusinessTester extends Actor
      */
     public function createCurrencyTransfer(): CurrencyTransfer
     {
-        return (new CurrencyTransfer())
-            ->setIdCurrency(93)
-            ->setCode('EUR');
+        return $this->getLocator()
+            ->currency()
+            ->facade()
+            ->getDefaultCurrencyForCurrentStore();
     }
 
     /**
