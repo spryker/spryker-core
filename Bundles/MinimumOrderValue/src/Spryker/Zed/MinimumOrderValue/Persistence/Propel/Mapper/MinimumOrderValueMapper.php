@@ -61,6 +61,7 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
         if (!$globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()) {
             $globalMinimumOrderValueTransfer->getMinimumOrderValue()->setMinimumOrderValueType(new MinimumOrderValueTypeTransfer());
         }
+
         $globalMinimumOrderValueTransfer->getMinimumOrderValue()->setMinimumOrderValueType(
             $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()->fromArray(
                 $minimumOrderValueEntity->getMinimumOrderValueType()->toArray(),

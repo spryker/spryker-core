@@ -100,11 +100,11 @@ class Reader implements ReaderInterface
 
         $priceProductTransfer = $this->findProductPrice($sku, $priceProductCriteriaTransfer);
 
-        if ($priceProductTransfer !== null) {
-            return $this->getPriceByPriceMode($priceProductTransfer->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
+        if ($priceProductTransfer === null) {
+            return null;
         }
 
-        return null;
+        return $this->getPriceByPriceMode($priceProductTransfer->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
     }
 
     /**
@@ -115,6 +115,10 @@ class Reader implements ReaderInterface
     public function findPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer)
     {
         $priceProductTransfer = $this->findPriceProductFor($priceProductFilterTransfer);
+
+        if ($priceProductTransfer === null) {
+            return null;
+        }
 
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
 
