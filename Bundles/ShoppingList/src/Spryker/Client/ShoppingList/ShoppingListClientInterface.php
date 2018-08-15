@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
@@ -239,14 +240,24 @@ interface ShoppingListClientInterface
     /**
      * Specification:
      *  - Makes Zed request.
-     *  - Get shopping list permission groups.
-     *  - Updates customer permissions.
+     *  - Get shopping list permission group.
      *
      * @api
      *
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
      */
     public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer;
+
+    /**
+     * Specification:
+     *  - Makes Zed request.
+     *  - Get shopping list permission groups.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
+     */
+    public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer;
 
     /**
      * Specification:
@@ -261,4 +272,17 @@ interface ShoppingListClientInterface
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
     public function shareShoppingList(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Makes Zed request.
+     *  - Updates share shopping list with company users from business unit or exact company user.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function updateShareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer;
 }
