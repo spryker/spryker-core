@@ -25,6 +25,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
@@ -91,6 +92,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
         $builder->add(static::FIELD_SKU, TextType::class, [
             'label' => 'SKU',
             'constraints' => [
+                new NotBlank(),
                 new SkuRegex(),
                 new SkuUnique($this->getFactory()->getProductFacade()),
             ],
@@ -99,7 +101,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options) {
             $formData = $event->getData();
 
-            if (!empty($formData[static::FIELD_SKU_AUTOGENERATE_CHECKBOX])) {
+            if (!empty($formData[static::FIELD_SKU_AUTOGENERATE_CHECKBOX]) && empty($formData[static::FIELD_SKU])) {
                 $formData[static::FIELD_SKU] = $this->getGeneratedSku($formData, $options);
                 $event->setData($formData);
             }
