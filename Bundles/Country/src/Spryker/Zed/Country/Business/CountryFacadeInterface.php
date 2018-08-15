@@ -81,7 +81,7 @@ interface CountryFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves regions by Iso2Code.
+     * - Retrieves regions by ISO-2 code.
      *
      * @api
      *

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Country\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\RegionCollectionTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 
-interface RegionMapperMapperInterface
+interface RegionMapperInterface
 {
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $regionEntityCollection

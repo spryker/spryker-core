@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\RegionTransfer;
 use Orm\Zed\Country\Persistence\SpyRegion;
 use Propel\Runtime\Collection\ObjectCollection;
 
-class RegionMapper implements RegionMapperMapperInterface
+class RegionMapper implements RegionMapperInterface
 {
      /**
       * @param \Propel\Runtime\Collection\ObjectCollection $regionEntityCollection
