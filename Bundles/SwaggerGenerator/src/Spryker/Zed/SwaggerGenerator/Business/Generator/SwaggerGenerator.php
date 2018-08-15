@@ -130,7 +130,7 @@ class SwaggerGenerator implements SwaggerGeneratorInterface
     {
         $fileName = $this->swaggerGeneratorConfig->getGeneratedFileName();
 
-        if (substr_compare($fileName, static::GENERATED_FILE_POSTFIX, -strlen(static::GENERATED_FILE_POSTFIX), null, true) === 0) {
+        if (substr_compare($fileName, static::GENERATED_FILE_POSTFIX, -strlen(static::GENERATED_FILE_POSTFIX)) === 0) {
             return $fileName;
         }
 
