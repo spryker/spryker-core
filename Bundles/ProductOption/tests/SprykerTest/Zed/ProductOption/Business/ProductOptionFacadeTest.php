@@ -11,6 +11,7 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
@@ -746,6 +747,59 @@ class ProductOptionFacadeTest extends Unit
 
         // Assert
         $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOptionCollectionByCriteriaWithOneIdReturnsCollection()
+    {
+        $ids = [1];
+        $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setIds($ids);
+
+        // Act
+        $actualResult = $this->createProductOptionFacade()->getProductOptionCollectionByCriteria($productOptionCriteriaTransfer);
+
+        // Assert
+        $this->assertSame(count($ids), $actualResult->getProductOptions()->count());
+
+        foreach ($actualResult->getProductOptions() as $productOption) {
+            $this->assertTrue(in_array($productOption->getIdProductOptionValue(), $ids));
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOptionCollectionByCriteriaWithTwoIdsReturnsCollection()
+    {
+        $ids = [1, 2];
+        $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setIds($ids);
+
+        // Act
+        $actualResult = $this->createProductOptionFacade()->getProductOptionCollectionByCriteria($productOptionCriteriaTransfer);
+
+        // Assert
+        $this->assertSame(count($ids), $actualResult->getProductOptions()->count());
+
+        foreach ($actualResult->getProductOptions() as $productOption) {
+            $this->assertTrue(in_array($productOption->getIdProductOptionValue(), $ids));
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOptionCollectionByCriteriaWithNoIdReturnsEmptyCollection()
+    {
+        $ids = [];
+        $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setIds($ids);
+
+        // Act
+        $actualResult = $this->createProductOptionFacade()->getProductOptionCollectionByCriteria($productOptionCriteriaTransfer);
+
+        // Assert
+        $this->assertSame(count($ids), $actualResult->getProductOptions()->count());
     }
 
     /**
