@@ -15,6 +15,14 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_CUSTOMER_NOT_FOUND = '402';
     public const RESPONSE_DETAILS_CUSTOMER_NOT_FOUND = 'Customer not found.';
 
+    public const RESOURCE_ADDRESSES = 'addresses';
+
+    public const RESPONSE_CODE_CUSTOMER_ADDRESSES_NOT_FOUND = '403';
+    public const RESPONSE_DETAILS_CUSTOMER_ADDRESSES_NOT_FOUND = 'Customer does not have addresses.';
+
+    public const RESPONSE_CODE_ADDRESS_NOT_FOUND = '404';
+    public const RESPONSE_DETAILS_ADDRESS_NOT_FOUND = 'Address not found.';
+
     public const RESPONSE_CODE_CUSTOMER_FAILED_TO_SAVE = '406';
     public const RESPONSE_DETAILS_CUSTOMER_FAILED_TO_SAVE = 'Failed to save customer';
 }

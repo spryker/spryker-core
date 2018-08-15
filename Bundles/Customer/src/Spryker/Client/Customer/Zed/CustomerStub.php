@@ -285,4 +285,17 @@ class CustomerStub implements CustomerStubInterface
 
         return $customerTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findAddressByUuid(AddressTransfer $addressTransfer): ?AddressTransfer
+    {
+        /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
+        $addressTransfer = $this->zedStub->call('/customer/gateway/find-address-by-uuid', $addressTransfer);
+
+        return $addressTransfer;
+    }
 }
