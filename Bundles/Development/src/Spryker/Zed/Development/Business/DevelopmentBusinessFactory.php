@@ -95,6 +95,8 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGen
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
 use Spryker\Zed\Development\Business\Phpstan\PhpstanRunner;
+use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidator;
+use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidatorInterface;
 use Spryker\Zed\Development\Business\Stability\StabilityCalculator;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -363,6 +365,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getPathToSdk(),
             $this->getConfig()->getApplications()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidatorInterface
+     */
+    public function createPropelAbstractValidator(): PropelAbstractClassValidatorInterface
+    {
+        return new PropelAbstractClassValidator();
     }
 
     /**
