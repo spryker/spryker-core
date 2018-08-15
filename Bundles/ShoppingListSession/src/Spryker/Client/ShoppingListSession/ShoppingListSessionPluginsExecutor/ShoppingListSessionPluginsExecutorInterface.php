@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\ShoppingListSessionTransfer;
 interface ShoppingListSessionPluginsExecutorInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShoppingListSessionTransfer $shoppingListSessionTransfer
      *
      * @return bool

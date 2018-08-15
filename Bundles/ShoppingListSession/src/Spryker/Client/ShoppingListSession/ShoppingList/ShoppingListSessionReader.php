@@ -9,7 +9,6 @@ namespace Spryker\Client\ShoppingListSession\ShoppingList;
 
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListSessionTransfer;
-use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToCustomerClientBridgeInterface;
 use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListBridgeInterface;
 use Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutorInterface;
 use Spryker\Client\ShoppingListSession\Storage\ShoppingListSessionStorageInterface;
@@ -32,26 +31,18 @@ class ShoppingListSessionReader implements ShoppingListSessionReaderInterface
     protected $shoppingListSessionPluginsExecutor;
 
     /**
-     * @var \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToCustomerClientBridgeInterface
-     */
-    protected $customerClient;
-
-    /**
      * @param \Spryker\Client\ShoppingListSession\Storage\ShoppingListSessionStorageInterface $shoppingListSessionStorage
      * @param \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListBridgeInterface $shoppingListClient
      * @param \Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutorInterface $shoppingListSessionPluginsExecutor
-     * @param \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToCustomerClientBridgeInterface $customerClient
      */
     public function __construct(
         ShoppingListSessionStorageInterface $shoppingListSessionStorage,
         ShoppingListSessionToShoppingListBridgeInterface $shoppingListClient,
-        ShoppingListSessionPluginsExecutorInterface $shoppingListSessionPluginsExecutor,
-        ShoppingListSessionToCustomerClientBridgeInterface $customerClient
+        ShoppingListSessionPluginsExecutorInterface $shoppingListSessionPluginsExecutor
     ) {
         $this->shoppingListSessionStorage = $shoppingListSessionStorage;
         $this->shoppingListClient = $shoppingListClient;
         $this->shoppingListSessionPluginsExecutor = $shoppingListSessionPluginsExecutor;
-        $this->customerClient = $customerClient;
     }
 
     /**
@@ -59,11 +50,6 @@ class ShoppingListSessionReader implements ShoppingListSessionReaderInterface
      */
     public function getCustomerShoppingListCollection(): ShoppingListCollectionTransfer
     {
-        $customerTransfer = $this->customerClient->getCustomer();
-        if (!$customerTransfer) {
-            return new ShoppingListCollectionTransfer();
-        }
-
         $shoppingListSessionTransfer = $this->shoppingListSessionStorage->findShoppingListCollection();
         if ($this->needUpdateShoppingListSession($shoppingListSessionTransfer)) {
             $shoppingListSessionTransfer = $this->doUpdateShoppingListSession();
@@ -73,11 +59,11 @@ class ShoppingListSessionReader implements ShoppingListSessionReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListSessionTransfer $shoppingListSessionTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListSessionTransfer|null $shoppingListSessionTransfer
      *
      * @return bool
      */
-    protected function needUpdateShoppingListSession(ShoppingListSessionTransfer $shoppingListSessionTransfer): bool
+    protected function needUpdateShoppingListSession(?ShoppingListSessionTransfer $shoppingListSessionTransfer): bool
     {
         return (
             !$shoppingListSessionTransfer

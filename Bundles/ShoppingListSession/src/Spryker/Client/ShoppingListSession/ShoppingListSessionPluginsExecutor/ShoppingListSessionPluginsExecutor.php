@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ShoppingListSessionTransfer;
 class ShoppingListSessionPluginsExecutor implements ShoppingListSessionPluginsExecutorInterface
 {
     /**
-     * @var array|\Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface[]
+     * @var \Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface[]
      */
     protected $shoppingListCollectionOutdatedPlugins;
 
@@ -25,6 +25,8 @@ class ShoppingListSessionPluginsExecutor implements ShoppingListSessionPluginsEx
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShoppingListSessionTransfer $shoppingListSessionTransfer
      *
      * @return bool
