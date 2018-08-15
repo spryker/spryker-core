@@ -13,6 +13,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ProductCon
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeNotBlank;
+use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeType;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeUniqueCombination;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductMoneyNotBlank;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
@@ -160,6 +161,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
                         ],
                         'constraints' => [
                             new ProductAttributeNotBlank(),
+                            new ProductAttributeType($productmanagementAttributeTransfer),
                         ],
                     ]
                 );

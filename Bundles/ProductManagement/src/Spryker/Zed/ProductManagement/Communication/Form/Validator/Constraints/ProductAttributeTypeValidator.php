@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints;
 
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ProductConcreteSuperAttributeForm;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -35,8 +36,23 @@ class ProductAttributeTypeValidator extends ConstraintValidator
      */
     protected function validateAttributeType($value, ProductAttributeType $constraint)
     {
-        if ($constraint->productManagementAttributeTransfer->getInputType() === ProductAttributeType::TYPE_NUMBER && !is_numeric($value)) {
-            $this->buildViloation($constraint, ProductAttributeType::TYPE_NUMBER, $value);
+        if (empty($value[ProductConcreteSuperAttributeForm::FIELD_CHECKBOX])) {
+            return;
+        }
+
+        $this->validateNumberType($value, $constraint);
+    }
+
+    /**
+     * @param mixed $value
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeType $constraint
+     *
+     * @return void
+     */
+    protected function validateNumberType($value, ProductAttributeType $constraint)
+    {
+        if ($constraint->productManagementAttributeTransfer->getInputType() === ProductAttributeType::TYPE_NUMBER && !is_numeric($value[ProductConcreteSuperAttributeForm::FIELD_INPUT])) {
+            $this->buildViloation($constraint, ProductAttributeType::TYPE_NUMBER, $value[ProductConcreteSuperAttributeForm::FIELD_INPUT]);
         }
     }
 

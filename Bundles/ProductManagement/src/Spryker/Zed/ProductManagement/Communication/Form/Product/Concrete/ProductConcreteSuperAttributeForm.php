@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
-use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -104,9 +103,6 @@ class ProductConcreteSuperAttributeForm extends AbstractType
                 'label' => false,
                 'attr' => [
                     'class' => 'hidden super-attribute-text-input',
-                ],
-                'constraints' => [
-                    new ProductAttributeType($productmanagementAttributeTransfer),
                 ],
             ]
         );
