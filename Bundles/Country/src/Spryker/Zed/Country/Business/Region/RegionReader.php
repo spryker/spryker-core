@@ -18,20 +18,12 @@ class RegionReader implements RegionReaderInterface
     protected $countryRepository;
 
     /**
-     * @var \Spryker\Zed\Country\Business\Region\RegionMapperInterface
-     */
-    protected $regionMapper;
-
-    /**
      * @param \Spryker\Zed\Country\Persistence\CountryRepositoryInterface $countryRepository
-     * @param \Spryker\Zed\Country\Business\Region\RegionMapperInterface $regionMapper
      */
     public function __construct(
-        CountryRepositoryInterface $countryRepository,
-        RegionMapperInterface $regionMapper
+        CountryRepositoryInterface $countryRepository
     ) {
         $this->countryRepository = $countryRepository;
-        $this->regionMapper = $regionMapper;
     }
 
     /**
@@ -41,10 +33,6 @@ class RegionReader implements RegionReaderInterface
      */
     public function getRegionsByCountryIso2Code(string $iso2Code): RegionCollectionTransfer
     {
-        $regionCollection = $this->regionMapper->mapRegionsToRegionCollection(
-            $this->countryRepository->getRegionsByCountryIso2Code($iso2Code)
-        );
-
-        return $regionCollection;
+        return $this->countryRepository->getRegionsByCountryIso2Code($iso2Code);
     }
 }

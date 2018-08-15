@@ -7,36 +7,23 @@
 namespace Spryker\Glue\StoresRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\CountryTransfer;
+use Generated\Shared\Transfer\RegionCollectionTransfer;
 use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
-use Generated\Shared\Transfer\StoreRegionRestAttributesTransfer;
-use Orm\Zed\Country\Persistence\Map\SpyRegionTableMap;
 
 class StoresCountryResourceMapper implements StoresCountryResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
-     * @param array $regions
+     * @param \Generated\Shared\Transfer\RegionCollectionTransfer $regionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer
      */
-    public function mapCountryToStoresCountryRestAttributes(CountryTransfer $countryTransfer, array $regions): StoreCountryRestAttributesTransfer
+    public function mapCountryToStoresCountryRestAttributes(CountryTransfer $countryTransfer, RegionCollectionTransfer $regionCollectionTransfer): StoreCountryRestAttributesTransfer
     {
-        $storesCountryAttributes = (new StoreCountryRestAttributesTransfer())
-            ->setName($countryTransfer->getName())
-            ->setIso2Code($countryTransfer->getIso2Code())
-            ->setIso3Code($countryTransfer->getIso3Code());
-
-        if ($countryTransfer->getPostalCodeMandatory()) {
-            $storesCountryAttributes
-                ->setPostalCodeMandatory($countryTransfer->getPostalCodeMandatory())
-                ->setPostalCodeRegex($countryTransfer->getPostalCodeRegex());
-        }
-
-        foreach ($regions as $region) {
-            $storesCountryAttributes->addRegions((new StoreRegionRestAttributesTransfer())
-                ->setName($region[SpyRegionTableMap::COL_NAME])
-                ->setIdentifier($region[SpyRegionTableMap::COL_ISO2_CODE]));
-        }
+        $storesCountryAttributes = (new StoreCountryRestAttributesTransfer())->fromArray(
+            $countryTransfer->toArray(),
+            true
+        )->setRegions($regionCollectionTransfer->getRegions());
 
         return $storesCountryAttributes;
     }

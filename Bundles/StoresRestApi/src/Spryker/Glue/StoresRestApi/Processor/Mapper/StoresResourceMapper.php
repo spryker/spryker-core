@@ -6,8 +6,6 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
-use Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer;
 use Generated\Shared\Transfer\StoreLocaleRestAttributesTransfer;
 use Generated\Shared\Transfer\StoresRestAttributesTransfer;
 
@@ -15,21 +13,22 @@ class StoresResourceMapper implements StoresResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
-     * @param string $identifier
-     * @param string $name
+     * @param array $locales
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
     public function mapLocaleToStoresRestAttributes(
         StoresRestAttributesTransfer $storesRestAttributes,
-        string $identifier,
-        string $name
+        array $locales
     ): StoresRestAttributesTransfer {
-        $storesLocaleAttributes = (new StoreLocaleRestAttributesTransfer())
-            ->setName($name)
-            ->setIdentifier($identifier);
 
-        $storesRestAttributes->addLocales($storesLocaleAttributes);
+        foreach ($locales as $identifier => $name) {
+            $storesLocaleAttributes = (new StoreLocaleRestAttributesTransfer())
+                ->setName($name)
+                ->setCode($identifier);
+
+            $storesRestAttributes->addLocales($storesLocaleAttributes);
+        }
 
         return $storesRestAttributes;
     }
@@ -49,26 +48,43 @@ class StoresResourceMapper implements StoresResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
-     * @param \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer $storeCountryAttributes
+     * @param string $defaulCurrency
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    public function mapStoreCountryToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, StoreCountryRestAttributesTransfer $storeCountryAttributes): StoresRestAttributesTransfer
+    public function mapDefaultCurrencyToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, string $defaulCurrency): StoresRestAttributesTransfer
     {
-        $storesRestAttributes->addCountries($storeCountryAttributes);
+        $storesRestAttributes->setDefaultCurrency($defaulCurrency);
 
         return $storesRestAttributes;
     }
 
     /**
      * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
-     * @param \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer $storeCurrencyAttributes
+     * @param \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer[] $storeCountryAttributes
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    public function mapStoreCurrencyToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, StoreCurrencyRestAttributesTransfer $storeCurrencyAttributes): StoresRestAttributesTransfer
+    public function mapStoreCountryToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, array $storeCountryAttributes): StoresRestAttributesTransfer
     {
-        $storesRestAttributes->setCurrency($storeCurrencyAttributes);
+        foreach ($storeCountryAttributes as $storeCountryAttribute) {
+            $storesRestAttributes->addCountries($storeCountryAttribute);
+        }
+
+        return $storesRestAttributes;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
+     * @param \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer[] $storeCurrencyAttributes
+     *
+     * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
+     */
+    public function mapStoreCurrencyToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, array $storeCurrencyAttributes): StoresRestAttributesTransfer
+    {
+        foreach ($storeCurrencyAttributes as $storeCurrencyAttribute) {
+            $storesRestAttributes->addCurrency($storeCurrencyAttribute);
+        }
 
         return $storesRestAttributes;
     }

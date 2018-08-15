@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\Country\Persistence;
 
-use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
-use Orm\Zed\Country\Persistence\Map\SpyRegionTableMap;
+use Generated\Shared\Transfer\RegionCollectionTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -19,36 +18,20 @@ class CountryRepository extends AbstractRepository implements CountryRepositoryI
     /**
      * @param string $iso2Code
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\RegionCollectionTransfer
      */
-    public function getRegionsByCountryIso2Code(string $iso2Code): array
+    public function getRegionsByCountryIso2Code(string $iso2Code): RegionCollectionTransfer
     {
-        if (!$this->findCountryByIso2Code($iso2Code)) {
-            return [];
-        }
-
-        return $this->getFactory()
+        $regionEntityCollection = $this->getFactory()
             ->createRegionQuery()
-            ->filterByFkCountry($this->findCountryByIso2Code($iso2Code))
-            ->select([
-                SpyRegionTableMap::COL_NAME,
-                SpyRegionTableMap::COL_ISO2_CODE,
-            ])
-            ->find()
-            ->toArray();
-    }
-
-    /**
-     * @param string $iso2Code
-     *
-     * @return int|null
-     */
-    protected function findCountryByIso2Code(string $iso2Code): ?int
-    {
-        return $this->getFactory()
-            ->createCountryQuery()
+            ->joinSpyCountry()
+            ->useSpyCountryQuery()
             ->filterByIso2Code($iso2Code)
-            ->select([SpyCountryTableMap::COL_ID_COUNTRY])
-            ->findOne();
+            ->endUse()
+            ->find();
+
+        return $this->getFactory()
+            ->createRegionMapper()
+            ->mapTransferCollection($regionEntityCollection);
     }
 }

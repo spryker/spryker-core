@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Country\Business\Region;
+namespace Spryker\Zed\Country\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\RegionCollectionTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 
-interface RegionMapperInterface
+interface RegionMapperMapperInterface
 {
     /**
-     * @param array $regions
+     * @param \Propel\Runtime\Collection\ObjectCollection $regionEntityCollection
      *
      * @return \Generated\Shared\Transfer\RegionCollectionTransfer
      */
-    public function mapRegionsToRegionCollection(array $regions): RegionCollectionTransfer;
+    public function mapTransferCollection(ObjectCollection $regionEntityCollection): RegionCollectionTransfer;
 }

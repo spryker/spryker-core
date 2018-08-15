@@ -16,8 +16,13 @@
         <property name="countries" type="Country[]" />
     </transfer>
 
+    <transfer name="Region">
+        <property name="iso2Code" type="string" />
+        <property name="name" type="string" />
+    </transfer>
+
     <transfer name="RegionCollection">
-        <property name="regions" type="array" />
+        <property name="regions" type="Region[]" />
     </transfer>
 
 </transfers>

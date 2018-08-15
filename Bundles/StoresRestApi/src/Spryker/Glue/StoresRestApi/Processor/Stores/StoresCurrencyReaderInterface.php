@@ -6,14 +6,12 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
-use Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer;
-
 interface StoresCurrencyReaderInterface
 {
     /**
-     * @param string $isoCode
+     * @param array $isoCodes
      *
-     * @return \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer
+     * @return \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer[]
      */
-    public function getStoresCurrencyAttributes(string $isoCode): StoreCurrencyRestAttributesTransfer;
+    public function getStoresCurrencyAttributes(array $isoCodes): array;
 }

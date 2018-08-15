@@ -140,6 +140,7 @@ class CountryFacadeTest extends Unit
         $region->setIso2Code('TS');
         $region->save();
 
-        $this->countryFacade->getRegionsByCountryIso2Code(self::ISO2_CODE);
+        $countryTransfer = (new CountryTransfer())->setIso2Code(self::ISO2_CODE);
+        $this->countryFacade->getRegionsByCountryIso2Code($countryTransfer);
     }
 }

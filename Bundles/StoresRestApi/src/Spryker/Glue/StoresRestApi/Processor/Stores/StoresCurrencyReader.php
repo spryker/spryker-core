@@ -6,7 +6,6 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
-use Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCurrencyClientInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCurrencyResourceMapperInterface;
@@ -53,17 +52,22 @@ class StoresCurrencyReader implements StoresCurrencyReaderInterface
     }
 
     /**
-     * @param string $isoCode
+     * @param array $isoCodes
      *
-     * @return \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer
+     * @return \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer[]
      */
-    public function getStoresCurrencyAttributes(string $isoCode): StoreCurrencyRestAttributesTransfer
+    public function getStoresCurrencyAttributes(array $isoCodes): array
     {
-        $currencyTransfer = $this->currencyClient->fromIsoCode($isoCode);
+        $storeCurrencyAttributes = [];
 
-        return $this->storesCurrencyResourceMapper->mapCurrencyToStoresCurrencyRestAttributes(
-            $currencyTransfer,
-            $this->store
-        );
+        foreach ($isoCodes as $isoCode) {
+            $currencyTransfer = $this->currencyClient->fromIsoCode($isoCode);
+            $storeCurrencyAttributes[] = $this->storesCurrencyResourceMapper->mapCurrencyToStoresCurrencyRestAttributes(
+                $currencyTransfer,
+                $this->store
+            );
+        }
+
+        return $storeCurrencyAttributes;
     }
 }

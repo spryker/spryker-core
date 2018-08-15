@@ -6,20 +6,17 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
-use Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer;
 use Generated\Shared\Transfer\StoresRestAttributesTransfer;
 
 interface StoresResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
-     * @param string $identifier
-     * @param string $name
+     * @param array $locales
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    public function mapLocaleToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, string $identifier, string $name): StoresRestAttributesTransfer;
+    public function mapLocaleToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, array $locales): StoresRestAttributesTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
@@ -31,17 +28,25 @@ interface StoresResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
-     * @param \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer $storeCountryAttributes
+     * @param string $defaulCurrency
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    public function mapStoreCountryToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, StoreCountryRestAttributesTransfer $storeCountryAttributes): StoresRestAttributesTransfer;
+    public function mapDefaultCurrencyToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, string $defaulCurrency): StoresRestAttributesTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer$storesRestAttributes
+     * @param \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer[] $storeCountryAttributes
+     *
+     * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
+     */
+    public function mapStoreCountryToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, array $storeCountryAttributes): StoresRestAttributesTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
-     * @param \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer $storeCurrencyAttributes
+     * @param \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer[] $storeCurrencyAttributes
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    public function mapStoreCurrencyToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, StoreCurrencyRestAttributesTransfer $storeCurrencyAttributes): StoresRestAttributesTransfer;
+    public function mapStoreCurrencyToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, array $storeCurrencyAttributes): StoresRestAttributesTransfer;
 }

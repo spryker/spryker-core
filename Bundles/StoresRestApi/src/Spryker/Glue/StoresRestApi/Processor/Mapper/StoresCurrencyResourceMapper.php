@@ -20,12 +20,9 @@ class StoresCurrencyResourceMapper implements StoresCurrencyResourceMapperInterf
      */
     public function mapCurrencyToStoresCurrencyRestAttributes(CurrencyTransfer $currencyTransfer, Store $store): StoreCurrencyRestAttributesTransfer
     {
-        $storesCurrencyAttributes = (new StoreCurrencyRestAttributesTransfer())
-            ->setCurrencyIsoCode($currencyTransfer->getCode())
-            ->setName($currencyTransfer->getName())
-            ->setCurrencyIsoCodes($store->getCurrencyIsoCodes())
-            ->setDefaultCurrency($store->getDefaultCurrencyCode());
-
-        return $storesCurrencyAttributes;
+        return (new StoreCurrencyRestAttributesTransfer())->fromArray(
+            $currencyTransfer->toArray(),
+            true
+        );
     }
 }

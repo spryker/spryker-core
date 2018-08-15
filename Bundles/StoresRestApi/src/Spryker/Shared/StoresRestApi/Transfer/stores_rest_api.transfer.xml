@@ -5,7 +5,8 @@
 
     <transfer name="StoresRestAttributes">
         <property name="timeZone" type="string"/>
-        <property name="currency" type="StoreCurrencyRestAttributes"/>
+        <property name="defaultCurrency" type="string"/>
+        <property name="currency" type="StoreCurrencyRestAttributes[]"/>
         <property name="locales" type="StoreLocaleRestAttributes[]"/>
         <property name="countries" type="StoreCountryRestAttributes[]"/>
     </transfer>
@@ -20,20 +21,18 @@
     </transfer>
 
     <transfer name="StoreRegionRestAttributes">
-        <property name="identifier" type="string"/>
+        <property name="code" type="string"/>
         <property name="name" type="string"/>
     </transfer>
 
     <transfer name="StoreLocaleRestAttributes">
-        <property name="identifier" type="string"/>
+        <property name="code" type="string"/>
         <property name="name" type="string"/>
     </transfer>
 
     <transfer name="StoreCurrencyRestAttributes">
         <property name="name" type="string"/>
-        <property name="defaultCurrency" type="string"/>
-        <property name="currencyIsoCode" type="string"/>
-        <property name="currencyIsoCodes" type="string[]"/>
+        <property name="code" type="string"/>
     </transfer>
 
 </transfers>

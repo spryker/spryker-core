@@ -6,14 +6,12 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
-use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
-
 interface StoresCountryReaderInterface
 {
     /**
-     * @param string $iso2Code
+     * @param array $iso2Codes
      *
-     * @return \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer
+     * @return \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer[]
      */
-    public function getStoresCountryAttributes(string $iso2Code): StoreCountryRestAttributesTransfer;
+    public function getStoresCountryAttributes(array $iso2Codes): array;
 }

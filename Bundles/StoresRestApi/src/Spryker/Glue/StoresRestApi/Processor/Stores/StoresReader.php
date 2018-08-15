@@ -77,20 +77,15 @@ class StoresReader implements StoresReaderInterface
 
         $storesRestAttributes = new StoresRestAttributesTransfer();
 
-        foreach ($this->store->getLocales() as $identifier => $name) {
-            $storesRestAttributes = $this->storesResourceMapper->mapLocaleToStoresRestAttributes(
-                $storesRestAttributes,
-                $identifier,
-                $name
-            );
-        }
+        $storesRestAttributes = $this->storesResourceMapper->mapLocaleToStoresRestAttributes(
+            $storesRestAttributes,
+            $this->store->getLocales()
+        );
 
-        foreach ($this->store->getCountries() as $iso2Code) {
-            $storesRestAttributes = $this->storesResourceMapper->mapStoreCountryToStoresRestAttributes(
-                $storesRestAttributes,
-                $this->countryReader->getStoresCountryAttributes($iso2Code)
-            );
-        }
+        $storesRestAttributes = $this->storesResourceMapper->mapStoreCountryToStoresRestAttributes(
+            $storesRestAttributes,
+            $this->countryReader->getStoresCountryAttributes($this->store->getCountries())
+        );
 
         $storesRestAttributes = isset($this->store->getContexts()['*']['timezone']) ?
             $this->storesResourceMapper->mapTimeZoneToStoresRestAttributes(
@@ -98,10 +93,14 @@ class StoresReader implements StoresReaderInterface
                 $this->store->getContexts()['*']['timezone']
             ) : $storesRestAttributes;
 
-        $storesCurrencyAttributes = $this->currencyReader->getStoresCurrencyAttributes($this->store->getCurrencyIsoCode());
+        $storesRestAttributes = $this->storesResourceMapper->mapDefaultCurrencyToStoresRestAttributes(
+            $storesRestAttributes,
+            $this->store->getDefaultCurrencyCode()
+        );
+
         $storesRestAttributes = $this->storesResourceMapper->mapStoreCurrencyToStoresRestAttributes(
             $storesRestAttributes,
-            $storesCurrencyAttributes
+            $this->currencyReader->getStoresCurrencyAttributes($this->store->getCurrencyIsoCodes())
         );
 
         $restResource = $this->restResourceBuilder->createRestResource(

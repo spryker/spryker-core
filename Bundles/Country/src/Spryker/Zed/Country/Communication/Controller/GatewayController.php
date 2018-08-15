@@ -33,6 +33,6 @@ class GatewayController extends AbstractGatewayController
      */
     public function getRegionsByCountryIso2CodeAction(CountryTransfer $countryTransfer): RegionCollectionTransfer
     {
-        return $this->getFacade()->getRegionsByCountryIso2Code($countryTransfer->getIso2Code());
+        return $this->getFacade()->getRegionsByCountryIso2Code($countryTransfer);
     }
 }

@@ -14,7 +14,7 @@ interface CountryClientInterface
 {
     /**
      * Specification:
-     * - Retrieves country by ISO-2 code.
+     * - Retrieves country by Iso2Code.
      *
      * @api
      *
@@ -26,7 +26,7 @@ interface CountryClientInterface
 
     /**
      * Specification:
-     * - Retrieves regions by ISO-2 code.
+     * - Retrieves regions by Iso2Code.
      *
      * @api
      *
