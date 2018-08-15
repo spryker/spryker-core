@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShoppingListProductOption\Business\Model;
+namespace Spryker\Zed\ShoppingListProductOption\Business\ShoppingListProductOption;
 
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
 use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;

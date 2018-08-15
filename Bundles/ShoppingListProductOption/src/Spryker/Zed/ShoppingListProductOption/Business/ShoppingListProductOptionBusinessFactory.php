@@ -8,10 +8,10 @@
 namespace Spryker\Zed\ShoppingListProductOption\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ShoppingListProductOption\Business\Model\ShoppingListProductOptionReader;
-use Spryker\Zed\ShoppingListProductOption\Business\Model\ShoppingListProductOptionReaderInterface;
-use Spryker\Zed\ShoppingListProductOption\Business\Model\ShoppingListProductOptionWriter;
-use Spryker\Zed\ShoppingListProductOption\Business\Model\ShoppingListProductOptionWriterInterface;
+use Spryker\Zed\ShoppingListProductOption\Business\ShoppingListProductOption\ShoppingListProductOptionReader;
+use Spryker\Zed\ShoppingListProductOption\Business\ShoppingListProductOption\ShoppingListProductOptionReaderInterface;
+use Spryker\Zed\ShoppingListProductOption\Business\ShoppingListProductOption\ShoppingListProductOptionWriter;
+use Spryker\Zed\ShoppingListProductOption\Business\ShoppingListProductOption\ShoppingListProductOptionWriterInterface;
 use Spryker\Zed\ShoppingListProductOption\Dependency\Facade\ShoppingListProductOptionToProductOptionFacadeInterface;
 use Spryker\Zed\ShoppingListProductOption\ShoppingListProductOptionDependencyProvider;
 
@@ -24,7 +24,7 @@ use Spryker\Zed\ShoppingListProductOption\ShoppingListProductOptionDependencyPro
 class ShoppingListProductOptionBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ShoppingListProductOption\Business\Model\ShoppingListProductOptionReaderInterface
+     * @return \Spryker\Zed\ShoppingListProductOption\Business\ShoppingListProductOption\ShoppingListProductOptionReaderInterface
      */
     public function createShoppingListItemProductOptionReader(): ShoppingListProductOptionReaderInterface
     {
@@ -35,7 +35,7 @@ class ShoppingListProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListProductOption\Business\Model\ShoppingListProductOptionWriterInterface
+     * @return \Spryker\Zed\ShoppingListProductOption\Business\ShoppingListProductOption\ShoppingListProductOptionWriterInterface
      */
     public function createShoppingListProductOptionWriter(): ShoppingListProductOptionWriterInterface
     {
