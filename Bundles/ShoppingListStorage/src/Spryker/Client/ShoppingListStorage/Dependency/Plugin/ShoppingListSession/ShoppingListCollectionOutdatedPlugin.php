@@ -20,6 +20,8 @@ class ShoppingListCollectionOutdatedPlugin extends AbstractPlugin implements Sho
     /**
      * {@inheritDoc}
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShoppingListSessionTransfer $shoppingListSession
      *
      * @return bool

@@ -12,7 +12,8 @@ use Generated\Shared\Transfer\ShoppingListSessionTransfer;
 interface ShoppingListStorageClientInterface
 {
     /**
-     * Check if Shopping List Collection in Session is outdated.
+     * Specification:
+     * - Check if Shopping List Collection in Session is outdated.
      *
      * @api
      *
