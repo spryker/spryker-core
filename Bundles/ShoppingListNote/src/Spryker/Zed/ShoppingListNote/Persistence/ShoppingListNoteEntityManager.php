@@ -24,7 +24,7 @@ class ShoppingListNoteEntityManager extends AbstractEntityManager implements Sho
     {
         $shoppingListItemNoteEntity = $this->getFactory()
             ->createShoppingListItemNoteQuery()
-            ->filterByFkShoppingListItem($shoppingListItemNoteTransfer->getFkShoppingListItem())
+            ->filterByIdShoppingListItemNote($shoppingListItemNoteTransfer->getIdShoppingListItemNote())
             ->findOneOrCreate();
 
         $shoppingListItemNoteEntity = $this->getFactory()

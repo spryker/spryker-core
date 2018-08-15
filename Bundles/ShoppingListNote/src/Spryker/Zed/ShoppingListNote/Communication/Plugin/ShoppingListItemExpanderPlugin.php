@@ -14,7 +14,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterf
 /**
  * @method \Spryker\Zed\ShoppingListNote\Business\ShoppingListNoteFacade getFacade()
  */
-class ShoppingListItemNoteExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
+class ShoppingListItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
      * @inheritdoc
@@ -27,10 +27,10 @@ class ShoppingListItemNoteExpanderPlugin extends AbstractPlugin implements ItemE
      */
     public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        $shoppingListItemNoteTransfer = $this->getFacade()
-            ->getShoppingListItemNoteByIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
-        $shoppingListItemTransfer->setNote($shoppingListItemNoteTransfer);
+        $expandedShoppingListItemTransfer = $this->getFacade()
+            ->getShoppingListItemExpander()
+            ->expandItem($shoppingListItemTransfer);
 
-        return $shoppingListItemTransfer;
+        return $expandedShoppingListItemTransfer;
     }
 }

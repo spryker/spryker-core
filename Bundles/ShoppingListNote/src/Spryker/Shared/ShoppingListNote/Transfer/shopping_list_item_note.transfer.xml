@@ -6,6 +6,8 @@
     <transfer name="ShoppingListItemNote">
         <property name="idShoppingListItemNote" type="int" />
         <property name="fkShoppingListItem" type="int" />
+        <property name="idCompanyUser" type="int" />
+        <property name="idShoppingList" type="int" />
         <property name="message" type="string"/>
     </transfer>
 
