@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
 
 class DependencyFinderComposite implements DependencyFinderInterface
 {
@@ -33,16 +34,28 @@ class DependencyFinderComposite implements DependencyFinderInterface
     }
 
     /**
-     * @param string $module
+     * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface $context
+     *
+     * @return bool
+     */
+    public function accept(DependencyFinderContextInterface $context): bool
+    {
+        return true;
+    }
+
+    /**
+     * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface $context
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
-     * @param string|null $dependencyType
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    public function findDependencies(string $module, DependencyContainerInterface $dependencyContainer, ?string $dependencyType = null): DependencyContainerInterface
+    public function findDependencies(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
     {
         foreach ($this->dependencyFinder as $dependencyFinder) {
-            $dependencyContainer = $dependencyFinder->findDependencies($module, $dependencyContainer, $dependencyType);
+            if (!$dependencyFinder->accept($context)) {
+                continue;
+            }
+            $dependencyContainer = $dependencyFinder->findDependencies($context, $dependencyContainer);
         }
 
         return $dependencyContainer;

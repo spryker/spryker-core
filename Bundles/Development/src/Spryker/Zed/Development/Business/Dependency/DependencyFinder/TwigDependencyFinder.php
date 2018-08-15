@@ -8,17 +8,11 @@
 namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
-use Spryker\Zed\Development\Business\Dependency\TwigFileFinder\TwigFileFinderInterface;
-use Symfony\Component\Finder\SplFileInfo;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
 
 class TwigDependencyFinder implements DependencyFinderInterface
 {
     public const TYPE_TWIG = 'twig';
-
-    /**
-     * @var \Spryker\Zed\Development\Business\Dependency\TwigFileFinder\TwigFileFinderInterface
-     */
-    protected $twigFileFinder;
 
     /**
      * @var \Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface[]
@@ -26,12 +20,10 @@ class TwigDependencyFinder implements DependencyFinderInterface
     protected $twigDependencyFinder;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Dependency\TwigFileFinder\TwigFileFinderInterface $twigFileFinder
-     * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface[] $twigDependencyFinder
+     * @param array $twigDependencyFinder
      */
-    public function __construct(TwigFileFinderInterface $twigFileFinder, array $twigDependencyFinder)
+    public function __construct(array $twigDependencyFinder)
     {
-        $this->twigFileFinder = $twigFileFinder;
         $this->twigDependencyFinder = $twigDependencyFinder;
     }
 
@@ -44,40 +36,33 @@ class TwigDependencyFinder implements DependencyFinderInterface
     }
 
     /**
-     * @param string $module
-     * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
-     * @param string|null $dependencyType
+     * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface $context
      *
-     * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
+     * @return bool
      */
-    public function findDependencies(string $module, DependencyContainerInterface $dependencyContainer, ?string $dependencyType = null): DependencyContainerInterface
+    public function accept(DependencyFinderContextInterface $context): bool
     {
-        if ($dependencyType !== null && $dependencyType !== $this->getType()) {
-            return $dependencyContainer;
+        if ($context->getDependencyType() !== null && $context->getDependencyType() !== $this->getType()) {
+            return false;
         }
 
-        if (!$this->twigFileFinder->hasModuleTwigFiles($module)) {
-            return $dependencyContainer;
+        if ($context->getFileInfo()->getExtension() !== 'twig') {
+            return false;
         }
 
-        foreach ($this->twigFileFinder->findTwigFiles($module) as $twigFileInfo) {
-            $dependencyContainer = $this->findDependenciesInFile($module, $twigFileInfo, $dependencyContainer);
-        }
-
-        return $dependencyContainer;
+        return true;
     }
 
     /**
-     * @param string $module
-     * @param \Symfony\Component\Finder\SplFileInfo $twigFileInfo
+     * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface $context
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    protected function findDependenciesInFile(string $module, SplFileInfo $twigFileInfo, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
+    public function findDependencies(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
     {
         foreach ($this->twigDependencyFinder as $twigDependencyFinder) {
-            $dependencyContainer = $twigDependencyFinder->checkDependencyInFile($module, $twigFileInfo, $dependencyContainer);
+            $dependencyContainer = $twigDependencyFinder->checkDependencyInFile($context, $dependencyContainer);
         }
 
         return $dependencyContainer;

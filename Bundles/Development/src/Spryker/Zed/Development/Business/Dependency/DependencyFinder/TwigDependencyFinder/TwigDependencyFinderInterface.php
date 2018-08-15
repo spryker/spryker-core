@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder;
 
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
-use Symfony\Component\Finder\SplFileInfo;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
 
 interface TwigDependencyFinderInterface
 {
@@ -18,11 +18,10 @@ interface TwigDependencyFinderInterface
     public function getType(): string;
 
     /**
-     * @param string $module
-     * @param \Symfony\Component\Finder\SplFileInfo $twigFileInfo
+     * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface $context
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    public function checkDependencyInFile(string $module, SplFileInfo $twigFileInfo, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface;
+    public function checkDependencyInFile(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface;
 }

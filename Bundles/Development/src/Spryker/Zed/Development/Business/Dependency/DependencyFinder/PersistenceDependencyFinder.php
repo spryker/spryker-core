@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
 use Spryker\Zed\Development\Business\Dependency\SchemaParser\PropelSchemaParserInterface;
 
 class PersistenceDependencyFinder implements DependencyFinderInterface
@@ -36,22 +37,35 @@ class PersistenceDependencyFinder implements DependencyFinderInterface
     }
 
     /**
-     * @param string $module
+     * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface $context
+     *
+     * @return bool
+     */
+    public function accept(DependencyFinderContextInterface $context): bool
+    {
+        if ($context->getDependencyType() !== null && $context->getDependencyType() !== $this->getType()) {
+            return false;
+        }
+
+        if (substr($context->getFileInfo()->getFilename(), -10) !== 'schema.xml') {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface $context
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
-     * @param string|null $dependencyType
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    public function findDependencies(string $module, DependencyContainerInterface $dependencyContainer, ?string $dependencyType = null): DependencyContainerInterface
+    public function findDependencies(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
     {
-        if ($dependencyType !== null && $dependencyType !== $this->getType()) {
-            return $dependencyContainer;
-        }
-
-        $foreignIdColumnNames = $this->propelSchemaParser->getForeignColumnNames($module);
+        $foreignIdColumnNames = $this->propelSchemaParser->getForeignColumnNames($context->getFileInfo());
 
         foreach ($foreignIdColumnNames as $foreignIdColumnName) {
-            $dependentModule = $this->propelSchemaParser->getModuleNameByForeignReference($foreignIdColumnName, $module);
+            $dependentModule = $this->propelSchemaParser->getModuleNameByForeignReference($foreignIdColumnName, $context->getModule());
             $dependencyContainer->addDependency(
                 $dependentModule,
                 $this->getType()

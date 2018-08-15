@@ -8,23 +8,22 @@
 namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder;
 
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class TemplateFunctionDependencyFinder implements TwigDependencyFinderInterface
 {
     protected const TEMPLATE_FUNCTION_PATTERN = '/template\(\'(.*?),\s\'(.*?)\'/';
 
     /**
-     * @param string $module
-     * @param \Symfony\Component\Finder\SplFileInfo $twigFileInfo
+     * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface $context
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    public function checkDependencyInFile(string $module, SplFileInfo $twigFileInfo, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
+    public function checkDependencyInFile(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
     {
-        $twigFileContent = $twigFileInfo->getContents();
+        $twigFileContent = $context->getFileInfo()->getContents();
 
         $pregMatchResult = preg_match_all(static::TEMPLATE_FUNCTION_PATTERN, $twigFileContent, $matches, PREG_SET_ORDER);
 
@@ -32,7 +31,7 @@ class TemplateFunctionDependencyFinder implements TwigDependencyFinderInterface
             return $dependencyContainer;
         }
 
-        return $this->addFindings($module, $matches, $dependencyContainer);
+        return $this->addFindings($context->getModule(), $matches, $dependencyContainer);
     }
 
     /**

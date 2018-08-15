@@ -43,6 +43,12 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyF
 use Spryker\Zed\Development\Business\Dependency\Manager;
 use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParser;
 use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface;
+use Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\ModuleFileFinder;
+use Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\ModuleFileFinderInterface;
+use Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder\PathBuilderComposite;
+use Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder\PathBuilderInterface;
+use Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder\SprykerModulePathBuilder;
+use Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder\SprykerShopModulePathBuilder;
 use Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParser;
 use Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParserInterface;
 use Spryker\Zed\Development\Business\Dependency\SchemaParser\PropelSchemaParser;
@@ -207,8 +213,48 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createModuleDependencyParser(): ModuleDependencyParserInterface
     {
         return new ModuleDependencyParser(
+            $this->createModuleFileFinder(),
             $this->createDependencyContainer(),
             $this->createDependencyFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\ModuleFileFinderInterface
+     */
+    public function createModuleFileFinder(): ModuleFileFinderInterface
+    {
+        return new ModuleFileFinder($this->createPathBuilder());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder\PathBuilderInterface
+     */
+    public function createPathBuilder(): PathBuilderInterface
+    {
+        return new PathBuilderComposite([
+            $this->createSprykerModuleFilePathBuilder(),
+            $this->createSprykerShopModuleFilePathBuilder(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder\PathBuilderInterface
+     */
+    public function createSprykerModuleFilePathBuilder(): PathBuilderInterface
+    {
+        return new SprykerModulePathBuilder(
+            $this->getConfig()->getPathToCore()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder\PathBuilderInterface
+     */
+    public function createSprykerShopModuleFilePathBuilder(): PathBuilderInterface
+    {
+        return new SprykerShopModulePathBuilder(
+            $this->getConfig()->getPathToShop()
         );
     }
 
@@ -262,9 +308,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createLocatorDependencyFinder(): DependencyFinderInterface
     {
-        return new LocatorDependencyFinder(
-            $this->createDependencyTreeFinder()
-        );
+        return new LocatorDependencyFinder();
     }
 
     /**
@@ -292,9 +336,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createUseStatementParser(): UseStatementParserInterface
     {
-        return new UseStatementParser(
-            $this->createDependencyTreeFinder()
-        );
+        return new UseStatementParser();
     }
 
     /**
@@ -303,7 +345,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createTwigDependencyFinder(): DependencyFinderInterface
     {
         return new TwigDependencyFinder(
-            $this->createTwigFinder(),
             $this->getTwigDependencyFinder()
         );
     }
