@@ -184,6 +184,11 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         $parentBusinessUnitId = (int)$companyBusinessUnitTransfer->getFkParentCompanyBusinessUnit();
 
         $companyBusinessUnitMap = $this->getCompanyBusinessUnits();
+
+        if (!isset($companyBusinessUnitMap[$businessUnitId])) {
+            return false;
+        }
+
         $companyBusinessUnitMap[$businessUnitId]->setFkParentCompanyBusinessUnit($parentBusinessUnitId);
 
         return $this->isHierarchyCycleExists($companyBusinessUnitMap, $businessUnitId);
