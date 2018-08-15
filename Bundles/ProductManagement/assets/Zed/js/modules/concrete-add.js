@@ -18,6 +18,8 @@ function initialize() {
     $.each($('.super-attribute-checkbox-input'), function (key, checkbox) {
         $(checkbox).trigger('change');
     });
+
+    $('#sku-autogenerate-checkbox-input').trigger('change');
 }
 
 function handleSuperAttributeCheckboxChange(e) {

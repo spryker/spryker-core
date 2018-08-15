@@ -101,7 +101,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options) {
             $formData = $event->getData();
 
-            if (!empty($formData[static::FIELD_SKU_AUTOGENERATE_CHECKBOX]) && empty($formData[static::FIELD_SKU])) {
+            if (!empty($formData[static::FIELD_SKU_AUTOGENERATE_CHECKBOX])) {
                 $formData[static::FIELD_SKU] = $this->getGeneratedSku($formData, $options);
                 $event->setData($formData);
             }
