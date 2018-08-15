@@ -39,6 +39,7 @@
         <property name="categories" type="array" />
         <property name="images" type="array" />
         <property name="prices" type="array" />
+        <property name="labelIds" type="array" />
     </transfer>
 
 </transfers>

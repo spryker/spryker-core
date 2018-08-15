@@ -1,5 +1,5 @@
 {
-  "name": "spryker/product-page-search-Extension",
+  "name": "spryker/product-page-search-extension",
   "description": "ProductPageSearchExtension module",
   "license": "proprietary",
   "require": {
