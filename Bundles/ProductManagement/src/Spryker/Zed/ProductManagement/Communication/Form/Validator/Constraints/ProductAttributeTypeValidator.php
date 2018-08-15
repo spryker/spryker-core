@@ -52,7 +52,7 @@ class ProductAttributeTypeValidator extends ConstraintValidator
     protected function validateNumberType($value, ProductAttributeType $constraint)
     {
         if ($constraint->productManagementAttributeTransfer->getInputType() === ProductAttributeType::TYPE_NUMBER && !is_numeric($value[ProductConcreteSuperAttributeForm::FIELD_INPUT])) {
-            $this->buildViloation($constraint, ProductAttributeType::TYPE_NUMBER, $value[ProductConcreteSuperAttributeForm::FIELD_INPUT]);
+            $this->buildViolation($constraint, ProductAttributeType::TYPE_NUMBER, $value[ProductConcreteSuperAttributeForm::FIELD_INPUT]);
         }
     }
 
@@ -63,7 +63,7 @@ class ProductAttributeTypeValidator extends ConstraintValidator
      *
      * @return void
      */
-    protected function buildViloation(ProductAttributeType $constraint, string $type, $value)
+    protected function buildViolation(ProductAttributeType $constraint, string $type, $value)
     {
         $this->context->buildViolation($constraint->message)
             ->setParameter('{{ type }}', ProductAttributeType::TYPE_NUMBER)
