@@ -87,11 +87,15 @@ class StoresReader implements StoresReaderInterface
             $this->countryReader->getStoresCountryAttributes($this->store->getCountries())
         );
 
-        $storesRestAttributes = isset($this->store->getContexts()['*']['timezone']) ?
+        $storesRestAttributes = isset($this->store->getContexts()['glue']['timezone']) ?
             $this->storesResourceMapper->mapTimeZoneToStoresRestAttributes(
                 $storesRestAttributes,
-                $this->store->getContexts()['*']['timezone']
-            ) : $storesRestAttributes;
+                $this->store->getContexts()['glue']['timezone']
+            ) : (isset($this->store->getContexts()['*']['timezone']) ?
+                $this->storesResourceMapper->mapTimeZoneToStoresRestAttributes(
+                    $storesRestAttributes,
+                    $this->store->getContexts()['*']['timezone']
+                ) : $storesRestAttributes);
 
         $storesRestAttributes = $this->storesResourceMapper->mapDefaultCurrencyToStoresRestAttributes(
             $storesRestAttributes,
