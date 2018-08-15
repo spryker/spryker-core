@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ShoppingListNote\Business;
 
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote\ShoppingListItemExpanderInterface;
 
 /**
  * @method \Spryker\Zed\ShoppingListNote\Business\ShoppingListNoteBusinessFactory getFactory()
@@ -59,10 +59,16 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote\ShoppingListItemExpanderInterface
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function getShoppingListItemExpander(): ShoppingListItemExpanderInterface
+    public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        return $this->getFactory()->createShoppingListItemExpander();
+        return $this->getFactory()->createShoppingListItemExpander()->expandItem($shoppingListItemTransfer);
     }
 }

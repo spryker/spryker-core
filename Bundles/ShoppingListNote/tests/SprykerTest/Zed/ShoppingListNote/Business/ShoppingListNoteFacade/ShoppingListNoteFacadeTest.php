@@ -245,7 +245,7 @@ class ShoppingListNoteFacadeTest extends Unit
         $shoppingListItemNoteTransfer = (new ShoppingListItemNoteBuilder(([
             ShoppingListItemNoteTransfer::FK_SHOPPING_LIST_ITEM => $shoppingListItemTransfer->getIdShoppingListItem(),
             ShoppingListItemNoteTransfer::MESSAGE => 'Note for shopping item goes here',
-            ShoppingListItemNoteTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser()
+            ShoppingListItemNoteTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
         ])))->build();
         $this->tester->getFacade()->saveShoppingListItemNote($shoppingListItemNoteTransfer);
 

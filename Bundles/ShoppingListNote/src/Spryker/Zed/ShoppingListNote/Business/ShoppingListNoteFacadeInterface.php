@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingListNote\Business;
 
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
 interface ShoppingListNoteFacadeInterface
 {
@@ -46,4 +47,16 @@ interface ShoppingListNoteFacadeInterface
      * @return void
      */
     public function deleteShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void;
+
+    /**
+     * Specification:
+     *  - Expand shopping list item with additional parameters.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 }
