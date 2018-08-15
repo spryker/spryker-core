@@ -151,4 +151,11 @@ interface CustomerStubInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findByReference(CustomerTransfer $customerTransfer): ?CustomerTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function findAddressByUuid(AddressTransfer $addressTransfer): ?AddressTransfer;
 }

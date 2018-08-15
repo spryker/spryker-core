@@ -328,4 +328,16 @@ class GatewayController extends AbstractGatewayController
 
         return $customerTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function findAddressByUuidAction(AddressTransfer $addressTransfer): AddressTransfer
+    {
+        $addressTransfer = $this->getFacade()->findAddressByUuid($addressTransfer);
+
+        return $addressTransfer;
+    }
 }

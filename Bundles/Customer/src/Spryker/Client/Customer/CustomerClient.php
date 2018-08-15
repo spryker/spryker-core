@@ -484,4 +484,20 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
         return null;
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function findAddressByUuid(AddressTransfer $addressTransfer): AddressTransfer
+    {
+        return $this->getFactory()
+            ->createZedCustomerStub()
+            ->findAddressByUuid($addressTransfer);
+    }
 }
