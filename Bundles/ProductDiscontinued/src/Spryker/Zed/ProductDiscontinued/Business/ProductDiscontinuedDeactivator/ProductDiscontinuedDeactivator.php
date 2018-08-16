@@ -45,8 +45,6 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
     protected $productDiscontinuedPluginExecutor;
 
     /**
-     * ProductDiscontinuedDeactivator constructor.
-     *
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager
      * @param \Spryker\Zed\ProductDiscontinued\Dependency\Facade\ProductDiscontinuedToProductFacadeInterface $productFacade

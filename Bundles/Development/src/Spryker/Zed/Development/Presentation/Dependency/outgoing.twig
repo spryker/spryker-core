@@ -15,13 +15,13 @@
                 <th>{{ 'in tests' | trans }}</th>
             </tr>
 
-            {% for dependencyBundle in dependencies.dependencyBundles %}
+            {% for dependencyModule in dependencies.dependencyModules %}
                 <tr>
-                    <td><a href="/development/dependency/outgoing?bundle={{ dependencyBundle.bundle }}">{{ dependencyBundle.bundle }}</a></td>
-                    <td>{{ dependencyBundle.dependencies | length }}</td>
+                    <td><a href="/development/dependency/outgoing?bundle={{ dependencyModule.module }}">{{ dependencyModule.module }}</a></td>
+                    <td>{{ dependencyModule.dependencies | length }}</td>
                     {% set inSrc = 0 %}
                     {% set inTest = 0 %}
-                    {% for dependency in dependencyBundle.dependencies  %}
+                    {% for dependency in dependencyModule.dependencies  %}
                         {% if dependency.isInTest %}
                             {% set inTest = inTest + 1 %}
                         {% else %}

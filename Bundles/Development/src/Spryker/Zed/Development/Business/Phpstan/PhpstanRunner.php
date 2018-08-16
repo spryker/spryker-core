@@ -84,6 +84,9 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $count = 0;
         $total = count($paths);
         $this->errorCount = 0;
+
+        asort($paths);
+
         foreach ($paths as $path => $configFilePath) {
             $resultCode |= $this->runCommand($path, $configFilePath, $input, $output);
             $count++;

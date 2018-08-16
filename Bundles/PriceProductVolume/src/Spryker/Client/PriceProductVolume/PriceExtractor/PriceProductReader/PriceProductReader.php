@@ -69,7 +69,7 @@ class PriceProductReader implements PriceProductReaderInterface
     protected function findIdProductAbstractByIdProductConcrete(int $idProductConcrete): ?int
     {
         $localeName = $this->localeClient->getCurrentLocale();
-        $productData = $this->productStorageClient->getProductConcreteStorageData(
+        $productData = $this->productStorageClient->findProductConcreteStorageData(
             $idProductConcrete,
             $localeName
         );
