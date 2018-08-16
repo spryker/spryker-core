@@ -19,6 +19,8 @@ class ShoppingListItemExpanderPlugin extends AbstractPlugin implements ItemExpan
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
