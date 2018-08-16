@@ -30,7 +30,7 @@ class AddressesReader implements AddressesReaderInterface
     protected $customerClient;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface
      */
     protected $addressesResourceMapper;
 

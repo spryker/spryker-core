@@ -9,9 +9,12 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Addresses;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class AddressesWriter implements AddressesWriterInterface
 {
@@ -45,8 +48,23 @@ class AddressesWriter implements AddressesWriterInterface
     public function deleteAddress(RestAddressAttributesTransfer $addressAttributesTransfer): RestResponseInterface
     {
         $addressTransfer = (new AddressTransfer())->fromArray($addressAttributesTransfer->toArray(), true);
-        $addressTransfer = $this->customerClient->deleteAddress($addressTransfer);
-        $response = $this->restResourceBuilder->createRestResponse();
-        return $response;
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        $address = $this->customerClient->findAddressByUuid($addressTransfer);
+
+        if (!$address->getUuid()) {
+            $restErrorTransfer = (new RestErrorMessageTransfer())
+                ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_NOT_FOUND)
+                ->setStatus(Response::HTTP_NOT_FOUND)
+                ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_ADDRESS_NOT_FOUND);
+
+            $restResponse->addError($restErrorTransfer);
+
+            return $restResponse;
+        }
+
+        $this->customerClient->deleteAddress($address);
+
+        return $restResponse;
     }
 }

@@ -37,6 +37,7 @@
         <property name="phone" type="string" />
         <property name="isDefaultShipping" type="bool" />
         <property name="isDefaultBilling" type="bool" />
+        <property name="uuid" type="string" />
     </transfer>
 
     <transfer name="Address">
