@@ -11,6 +11,8 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingList;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem;
@@ -62,11 +64,15 @@ class ShoppingListProductOptionFacadeTest extends Unit
         $factory->setConfig($config);
         $this->tester->getFacade()->setFactory($factory);
 
-        $customer = (new SpyCustomerQuery())->findOne();
+        $customerEntity = (new SpyCustomerQuery())
+            ->filterByCustomerReference('TEST_CUSTOMER')
+            ->filterByEmail('TEST_EMAIL')
+            ->findOneOrCreate();
+        $customerEntity->save();
 
         $shoppingListEntity = (new SpyShoppingList())
             ->setName('test')
-            ->setCustomerReference($customer->getCustomerReference());
+            ->setCustomerReference($customerEntity->getCustomerReference());
         $shoppingListEntity->save();
 
         $this->shoppingListItemEntity = (new SpyShoppingListItem())
@@ -75,13 +81,8 @@ class ShoppingListProductOptionFacadeTest extends Unit
 
         $this->shoppingListItemEntity->save();
 
-        $this->productOptionValue1Entity = (new SpyProductOptionValueQuery())
-            ->filterByIdProductOptionValue(1)
-            ->findOne();
-
-        $this->productOptionValue2Entity = (new SpyProductOptionValueQuery())
-            ->filterByIdProductOptionValue(2)
-            ->findOne();
+        $this->productOptionValue1Entity = $this->createProductOptionValue();
+        $this->productOptionValue2Entity = $this->createProductOptionValue('sku_for_testing_2');
     }
 
     /**
@@ -219,5 +220,27 @@ class ShoppingListProductOptionFacadeTest extends Unit
         }
 
         $this->assertSameSize($actualResult->getProductOptions(), $expectedResult);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
+     */
+    protected function createProductOptionValue(string $sku = 'sku_for_testing'): SpyProductOptionValue
+    {
+        $productOptionGroup = (new SpyProductOptionGroupQuery())
+            ->filterByName('test')
+            ->findOneOrCreate();
+        $productOptionGroup->save();
+
+        $productOptionValue = (new SpyProductOptionValueQuery())
+            ->filterByValue('value.translation.key')
+            ->filterByFkProductOptionGroup($productOptionGroup->getIdProductOptionGroup())
+            ->filterBySku($sku)
+            ->findOneOrCreate();
+        $productOptionValue->save();
+
+        return $productOptionValue;
     }
 }
