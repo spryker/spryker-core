@@ -10,10 +10,27 @@ namespace Spryker\Client\ProductStorage\Storage;
 interface ProductConcreteStorageReaderInterface
 {
     /**
+     * @deprecated Use findProductConcreteStorageData($idProductConcrete, $localeName): ?array
+     *
      * @param int $idProductConcrete
      * @param string $localeName
      *
      * @return array
      */
     public function getProductConcreteStorageData($idProductConcrete, $localeName);
+
+    /**
+     * @param int $idProductConcrete
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageData($idProductConcrete, $localeName): ?array;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function isProductConcreteRestricted(int $idProductConcrete): bool;
 }

@@ -145,14 +145,16 @@ class Reader implements ReaderInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @return int
+     * @return int|null
      */
     public function getTimestamp($filesystemName, $path)
     {
         return $this->handleReadOperation(function () use ($filesystemName, $path) {
-            return $this->filesystemProvider
+            $timestamp = $this->filesystemProvider
                 ->getFilesystemByName($filesystemName)
                 ->getTimestamp($path);
+
+            return $timestamp ? (int)$timestamp : null;
         });
     }
 
