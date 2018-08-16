@@ -62,9 +62,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
                 ->endUse();
         }
 
-        if ($criteriaFilterTransfer->getCompanyBusinessUnitIds()) {
-            $query->filterByIdCompanyBusinessUnit_In($criteriaFilterTransfer->getCompanyBusinessUnitIds());
-        }
+        $this->filterCompanyBusinessUnitCollection($query, $criteriaFilterTransfer);
 
         $collection = $this->buildQueryFromCriteria($query, $criteriaFilterTransfer->getFilter());
         $collection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
@@ -173,5 +171,20 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
             ->setLastPage($paginationModel->getLastPage())
             ->setNextPage($paginationModel->getNextPage())
             ->setPreviousPage($paginationModel->getPreviousPage());
+    }
+
+    /**
+     * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\Propel\AbstractSpyCompanyBusinessUnitQuery $companyBusinessUnitQuery
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return void
+     */
+    protected function filterCompanyBusinessUnitCollection(
+        AbstractSpyCompanyBusinessUnitQuery $companyBusinessUnitQuery,
+        CompanyBusinessUnitCriteriaFilterTransfer $criteriaFilterTransfer
+    ): void {
+        if ($criteriaFilterTransfer->getCompanyBusinessUnitIds()) {
+            $companyBusinessUnitQuery->filterByIdCompanyBusinessUnit_In($criteriaFilterTransfer->getCompanyBusinessUnitIds());
+        }
     }
 }
