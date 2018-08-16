@@ -160,7 +160,7 @@ class ProductOptionListTable extends AbstractTable
      *              PRICE_GROSS => ['<span>CHF 17.00</span>', '<span>EUR 15.00</span>', ...],
      *          ]
      *  ]
-     * 
+     *
      * First level keys are product option value ids,
      *   second level keys are price mode identifiers,
      *   third level keys are simple numerical indexes for each price,

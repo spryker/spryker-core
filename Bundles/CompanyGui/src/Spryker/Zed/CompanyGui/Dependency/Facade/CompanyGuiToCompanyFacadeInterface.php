@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanyGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\CompanyTypeCollectionTransfer;
 
 interface CompanyGuiToCompanyFacadeInterface
 {
