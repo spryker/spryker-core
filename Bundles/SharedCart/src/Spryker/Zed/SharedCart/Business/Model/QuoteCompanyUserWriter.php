@@ -31,8 +31,6 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     protected $sharedCartEntityManager;
 
     /**
-     * QuoteCompanyUserWriter constructor.
-     *
      * @param \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface $sharedCartRepository
      * @param \Spryker\Zed\SharedCart\Persistence\SharedCartEntityManagerInterface $sharedCartEntityManager
      */
