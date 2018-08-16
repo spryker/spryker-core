@@ -17,8 +17,6 @@ interface ShoppingListToProductFacadeInterface
     public function hasProductConcrete($sku): bool;
 
     /**
-     * @deprecated Will be removed with next major release
-     *
      * @param string $sku
      *
      * @return int|null
@@ -28,7 +26,9 @@ interface ShoppingListToProductFacadeInterface
     /**
      * @param string $concreteSku
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return int
      */
-    public function getProductConcrete($concreteSku);
+    public function getProductAbstractIdByConcreteSku($concreteSku);
 }

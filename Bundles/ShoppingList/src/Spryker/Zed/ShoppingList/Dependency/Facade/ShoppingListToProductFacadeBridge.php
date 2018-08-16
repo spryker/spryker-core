@@ -45,10 +45,12 @@ class ShoppingListToProductFacadeBridge implements ShoppingListToProductFacadeIn
     /**
      * @param string $concreteSku
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return int
      */
-    public function getProductConcrete($concreteSku)
+    public function getProductAbstractIdByConcreteSku($concreteSku)
     {
-        return $this->productFacade->getProductConcrete($concreteSku);
+        return $this->productFacade->getProductAbstractIdByConcreteSku($concreteSku);
     }
 }

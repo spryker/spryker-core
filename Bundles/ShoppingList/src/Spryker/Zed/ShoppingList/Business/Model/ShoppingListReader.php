@@ -279,9 +279,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
     protected function expandProducts(ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer): ShoppingListOverviewResponseTransfer
     {
         foreach ($shoppingListOverviewResponseTransfer->getItemsCollection()->getItems() as $item) {
-            $productConcrete = $this->productFacade->getProductConcrete($item->getSku());
-            $item->setIdProduct($productConcrete->getIdProductConcrete());
-            $item->setIdProductAbstract($productConcrete->getFkProductAbstract());
+            $idProduct = $this->productFacade->findProductConcreteIdBySku($item->getSku());
+            $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteSku($item->getSku());
+            $item->setIdProduct($idProduct);
+            $item->setIdProductAbstract($idProductAbstract);
 
             foreach ($this->itemExpanderPlugins as $itemExpanderPlugin) {
                 $item = $itemExpanderPlugin->expandItem($item);

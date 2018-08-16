@@ -14,5 +14,5 @@ interface ShoppingListProductOptionRepositoryInterface
      *
      * @return int[]
      */
-    public function findShoppingListItemProductOptionIdsByFkShoppingListItem(int $idShoppingListItem): array;
+    public function findShoppingListItemProductOptionIdsByIdShoppingListItem(int $idShoppingListItem): array;
 }

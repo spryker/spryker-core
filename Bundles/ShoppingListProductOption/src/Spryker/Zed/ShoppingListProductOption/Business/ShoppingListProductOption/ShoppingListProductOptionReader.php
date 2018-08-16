@@ -56,7 +56,7 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
     protected function getProductOptionCriteriaTransfer(int $idShoppingListItem): ProductOptionCriteriaTransfer
     {
         $shoppingListItemProductOptionIds = $this->shoppingListProductOptionRepository
-            ->findShoppingListItemProductOptionIdsByFkShoppingListItem($idShoppingListItem);
+            ->findShoppingListItemProductOptionIdsByIdShoppingListItem($idShoppingListItem);
 
         return (new ProductOptionCriteriaTransfer())->setIds($shoppingListItemProductOptionIds);
     }
