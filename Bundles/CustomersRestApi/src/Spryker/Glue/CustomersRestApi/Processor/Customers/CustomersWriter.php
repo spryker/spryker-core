@@ -15,7 +15,6 @@ use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterf
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Throwable;
 
 class CustomersWriter implements CustomersWriterInterface
 {
@@ -61,15 +60,12 @@ class CustomersWriter implements CustomersWriterInterface
         $response = $this->restResourceBuilder->createRestResponse();
 
         $customerTransfer = $this->customersResourceMapper->mapCustomerAttributesToCustomerTransfer($restCustomersAttributesTransfer);
-        try {
-            $customerResponseTransfer = $this->customerClient->registerCustomer($customerTransfer);
+        $customerResponseTransfer = $this->customerClient->registerCustomer($customerTransfer);
 
-            if (!$customerResponseTransfer->getIsSuccess()) {
-                return $this->createErrorResponse($customerResponseTransfer, $response);
-            }
-        } catch (Throwable $ex) {
-            return $response->addError($this->createErrorCustomerCantRegisterCustomer());
+        if (!$customerResponseTransfer->getIsSuccess()) {
+            return $this->createErrorResponse($customerResponseTransfer, $response);
         }
+
         $restResource = $this->customersResourceMapper->mapCustomerToCustomersRestResource($customerResponseTransfer->getCustomerTransfer());
 
         return $response->addResource($restResource);
@@ -97,17 +93,6 @@ class CustomersWriter implements CustomersWriterInterface
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER)
             ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
             ->setDetail($errorMessage);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
-    protected function createErrorCustomerCantRegisterCustomer(): RestErrorMessageTransfer
-    {
-        return (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER)
-            ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_CANT_REGISTER_CUSTOMER);
     }
 
     /**
