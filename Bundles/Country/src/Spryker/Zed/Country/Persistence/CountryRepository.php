@@ -22,16 +22,14 @@ class CountryRepository extends AbstractRepository implements CountryRepositoryI
      */
     public function getRegionsByCountryIso2Code(string $iso2Code): RegionCollectionTransfer
     {
-        $regionEntityCollection = $this->getFactory()
+        $query = $this->getFactory()
             ->createRegionQuery()
-            ->joinSpyCountry()
             ->useSpyCountryQuery()
-            ->filterByIso2Code($iso2Code)
-            ->endUse()
-            ->find();
+                ->filterByIso2Code($iso2Code)
+            ->endUse();
 
         return $this->getFactory()
             ->createRegionMapper()
-            ->mapTransferCollection($regionEntityCollection);
+            ->mapTransferCollection($this->buildQueryFromCriteria($query)->find());
     }
 }

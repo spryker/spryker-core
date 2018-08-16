@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Country\Business\Region;
 
 use Generated\Shared\Transfer\RegionCollectionTransfer;
+use Generated\Shared\Transfer\RegionRequestTransfer;
 use Spryker\Zed\Country\Persistence\CountryRepositoryInterface;
 
 class RegionReader implements RegionReaderInterface
@@ -27,12 +28,12 @@ class RegionReader implements RegionReaderInterface
     }
 
     /**
-     * @param string $iso2Code
+     * @param \Generated\Shared\Transfer\RegionRequestTransfer $regionRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RegionCollectionTransfer
      */
-    public function getRegionsByCountryIso2Code(string $iso2Code): RegionCollectionTransfer
+    public function getRegionsByCountryIso2Code(RegionRequestTransfer $regionRequestTransfer): RegionCollectionTransfer
     {
-        return $this->countryRepository->getRegionsByCountryIso2Code($iso2Code);
+        return $this->countryRepository->getRegionsByCountryIso2Code($regionRequestTransfer->getCountryIso2Code());
     }
 }

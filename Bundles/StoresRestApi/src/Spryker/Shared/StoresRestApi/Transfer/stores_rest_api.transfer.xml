@@ -21,7 +21,7 @@
     </transfer>
 
     <transfer name="StoreRegionRestAttributes">
-        <property name="code" type="string"/>
+        <property name="iso2Code" type="string"/>
         <property name="name" type="string"/>
     </transfer>
 
@@ -31,8 +31,8 @@
     </transfer>
 
     <transfer name="StoreCurrencyRestAttributes">
-        <property name="name" type="string"/>
         <property name="code" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

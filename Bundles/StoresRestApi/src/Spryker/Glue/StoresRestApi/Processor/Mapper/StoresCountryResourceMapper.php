@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -9,6 +10,7 @@ namespace Spryker\Glue\StoresRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\RegionCollectionTransfer;
 use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
+use Generated\Shared\Transfer\StoreRegionRestAttributesTransfer;
 
 class StoresCountryResourceMapper implements StoresCountryResourceMapperInterface
 {
@@ -23,7 +25,14 @@ class StoresCountryResourceMapper implements StoresCountryResourceMapperInterfac
         $storesCountryAttributes = (new StoreCountryRestAttributesTransfer())->fromArray(
             $countryTransfer->toArray(),
             true
-        )->setRegions($regionCollectionTransfer->getRegions());
+        );
+
+        foreach ($regionCollectionTransfer->getRegions() as $regionTransfer) {
+            $storesCountryAttributes->addRegions((new StoreRegionRestAttributesTransfer())->fromArray(
+                $regionTransfer->toArray(),
+                true
+            ));
+        }
 
         return $storesCountryAttributes;
     }

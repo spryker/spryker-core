@@ -23,22 +23,22 @@ class StoresRestApiToCountryClientBridge implements StoresRestApiToCountryClient
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
-     *
-     * @return \Generated\Shared\Transfer\RegionCollectionTransfer
-     */
-    public function getRegionsByCountryIso2Code($countryTransfer)
-    {
-        return $this->countryClient->getRegionsByCountryIso2Code($countryTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
+     * @param \Generated\Shared\Transfer\CountryRequestTransfer $countryRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
-    public function getCountryByIso2Code($countryTransfer)
+    public function getCountryByIso2Code($countryRequestTransfer)
     {
-        return $this->countryClient->getCountryByIso2Code($countryTransfer);
+        return $this->countryClient->getCountryByIso2Code($countryRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RegionRequestTransfer $regionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\RegionCollectionTransfer
+     */
+    public function getRegionsByCountryIso2Code($regionRequestTransfer)
+    {
+        return $this->countryClient->getRegionsByCountryIso2Code($regionRequestTransfer);
     }
 }

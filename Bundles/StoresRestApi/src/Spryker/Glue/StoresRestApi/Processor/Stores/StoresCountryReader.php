@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,7 +7,8 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
-use Generated\Shared\Transfer\CountryTransfer;
+use Generated\Shared\Transfer\CountryRequestTransfer;
+use Generated\Shared\Transfer\RegionRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCountryResourceMapperInterface;
@@ -53,9 +55,10 @@ class StoresCountryReader implements StoresCountryReaderInterface
         $storeCountryAttributes = [];
 
         foreach ($iso2Codes as $iso2Code) {
-            $countryTransfer = (new CountryTransfer())->setIso2Code($iso2Code);
-            $countryTransfer = $this->countryClient->getCountryByIso2Code($countryTransfer);
-            $regions = $this->countryClient->getRegionsByCountryIso2Code($countryTransfer);
+            $countryRequestTransfer = (new CountryRequestTransfer())->setIso2Code($iso2Code);
+            $regionRequestTransfer = (new RegionRequestTransfer())->setCountryIso2Code($iso2Code);
+            $countryTransfer = $this->countryClient->getCountryByIso2Code($countryRequestTransfer);
+            $regions = $this->countryClient->getRegionsByCountryIso2Code($regionRequestTransfer);
 
             $storeCountryAttributes[] = $this->storesCountryResourceMapper->mapCountryToStoresCountryRestAttributes(
                 $countryTransfer,

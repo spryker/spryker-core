@@ -8,13 +8,14 @@
 namespace Spryker\Zed\Country\Business\Region;
 
 use Generated\Shared\Transfer\RegionCollectionTransfer;
+use Generated\Shared\Transfer\RegionRequestTransfer;
 
 interface RegionReaderInterface
 {
     /**
-     * @param string $iso2Code
+     * @param \Generated\Shared\Transfer\RegionRequestTransfer $regionRequestTransfer
      *
      * @return \Generated\Shared\Transfer\RegionCollectionTransfer
      */
-    public function getRegionsByCountryIso2Code(string $iso2Code): RegionCollectionTransfer;
+    public function getRegionsByCountryIso2Code(RegionRequestTransfer $regionRequestTransfer): RegionCollectionTransfer;
 }

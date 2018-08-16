@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Country;
 
+use Spryker\Client\Country\Dependency\Client\CountryToZedRequestClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -34,7 +35,7 @@ class CountryDependencyProvider extends AbstractDependencyProvider
     protected function addZedRequestClient(Container $container): Container
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
-            return $container->getLocator()->zedRequest()->client();
+            return new CountryToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
         };
 
         return $container;

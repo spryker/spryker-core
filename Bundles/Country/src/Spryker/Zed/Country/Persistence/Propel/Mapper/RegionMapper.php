@@ -9,23 +9,22 @@ namespace Spryker\Zed\Country\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\RegionCollectionTransfer;
 use Generated\Shared\Transfer\RegionTransfer;
-use Orm\Zed\Country\Persistence\SpyRegion;
-use Propel\Runtime\Collection\ObjectCollection;
+use Generated\Shared\Transfer\SpyRegionEntityTransfer;
 
 class RegionMapper implements RegionMapperInterface
 {
-     /**
-      * @param \Propel\Runtime\Collection\ObjectCollection $regionEntityCollection
-      *
-      * @return \Generated\Shared\Transfer\RegionCollectionTransfer
-      */
-    public function mapTransferCollection(ObjectCollection $regionEntityCollection): RegionCollectionTransfer
+    /**
+     * @param \Generated\Shared\Transfer\SpyRegionEntityTransfer[] $regionEntityTransfers
+     *
+     * @return \Generated\Shared\Transfer\RegionCollectionTransfer
+     */
+    public function mapTransferCollection(array $regionEntityTransfers): RegionCollectionTransfer
     {
         $regionCollectionTransfer = new RegionCollectionTransfer();
-        foreach ($regionEntityCollection as $regionEntity) {
+        foreach ($regionEntityTransfers as $regionEntityTransfer) {
             $regionCollectionTransfer->addRegions(
                 $this->mapRegionTransfer(
-                    $regionEntity
+                    $regionEntityTransfer
                 )
             );
         }
@@ -34,14 +33,14 @@ class RegionMapper implements RegionMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Country\Persistence\SpyRegion $region
+     * @param \Generated\Shared\Transfer\SpyRegionEntityTransfer $regionEntityTransfer
      *
      * @return \Generated\Shared\Transfer\RegionTransfer
      */
-    public function mapRegionTransfer(SpyRegion $region): RegionTransfer
+    public function mapRegionTransfer(SpyRegionEntityTransfer $regionEntityTransfer): RegionTransfer
     {
         $regionTransfer = (new RegionTransfer())
-            ->fromArray($region->toArray(), true);
+            ->fromArray($regionEntityTransfer->toArray(), true);
 
         return $regionTransfer;
     }

@@ -8,14 +8,22 @@
 namespace Spryker\Zed\Country\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\RegionCollectionTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Generated\Shared\Transfer\RegionTransfer;
+use Generated\Shared\Transfer\SpyRegionEntityTransfer;
 
 interface RegionMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $regionEntityCollection
+     * @param \Generated\Shared\Transfer\SpyRegionEntityTransfer[] $regionEntityTransfers
      *
      * @return \Generated\Shared\Transfer\RegionCollectionTransfer
      */
-    public function mapTransferCollection(ObjectCollection $regionEntityCollection): RegionCollectionTransfer;
+    public function mapTransferCollection(array $regionEntityTransfers): RegionCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyRegionEntityTransfer $regionEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\RegionTransfer
+     */
+    public function mapRegionTransfer(SpyRegionEntityTransfer $regionEntityTransfer): RegionTransfer;
 }
