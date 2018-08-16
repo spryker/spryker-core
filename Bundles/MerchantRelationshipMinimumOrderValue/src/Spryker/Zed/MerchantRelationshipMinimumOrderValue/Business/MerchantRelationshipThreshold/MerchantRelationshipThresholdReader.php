@@ -58,10 +58,6 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
                 $cartMerchantRelationshipIds
             );
 
-        foreach ($merchantRelationshipMinimumOrderValueTransfers as $merchantRelationshipMinimumOrderValueTransfer) {
-            $this->translationReader->hydrateLocalizedMessages($merchantRelationshipMinimumOrderValueTransfer);
-        }
-
         return $this->getMinimumOrderValueTransfers($merchantRelationshipMinimumOrderValueTransfers, $itemMerchantRelationshipSubTotals);
     }
 

@@ -49,7 +49,7 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
                 ->setFkCurrency($currencyTransfer->getIdCurrency());
         }
 
-        if ($merchantRelationshipMinimumOrderValueEntity->getMessageGlossaryKey() === null) { // Only assign the key on creation
+        if ($merchantRelationshipMinimumOrderValueEntity->getMessageGlossaryKey() === null) {
             $merchantRelationshipMinimumOrderValueEntity->setMessageGlossaryKey(
                 $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getMessageGlossaryKey()
             );

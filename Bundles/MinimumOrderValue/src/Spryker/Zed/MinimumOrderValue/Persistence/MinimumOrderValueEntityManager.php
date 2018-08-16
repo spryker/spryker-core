@@ -75,7 +75,7 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
                 ->setFkCurrency($currencyTransfer->getIdCurrency());
         }
 
-        if ($minimumOrderValueEntity->getMessageGlossaryKey() === null) { // Only assign the key on creation
+        if ($minimumOrderValueEntity->getMessageGlossaryKey() === null) {
             $minimumOrderValueEntity->setMessageGlossaryKey(
                 $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMessageGlossaryKey()
             );

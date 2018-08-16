@@ -61,9 +61,9 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
             MinimumOrderValueStrategyInterface::GROUP_SOFT
         );
 
-        $storeTransferDE = $this->tester->createStoreTransfer();
+        $storeTransferDE = $this->tester->getStoreTransfer();
         $storeTransferUS = (new StoreTransfer())->setIdStore(2)->setName('US');
-        $currencyTransferEUR = $this->tester->createCurrencyTransfer();
+        $currencyTransferEUR = $this->tester->getCurrencyTransfer();
         $currencyTransferUSD = (new CurrencyTransfer())->setIdCurrency(2)->setCode('USD');
 
         // Action
@@ -153,8 +153,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
             MinimumOrderValueStrategyInterface::GROUP_SOFT
         );
 
-        $storeTransfer = $this->tester->createStoreTransfer();
-        $currencyTransfer = $this->tester->createCurrencyTransfer();
+        $storeTransfer = $this->tester->getStoreTransfer();
+        $currencyTransfer = $this->tester->getCurrencyTransfer();
 
         $globalMinimumOrderValueTransfer = $this->createGlobalMinimumOrderValueTransfer(
             $minimumOrderValueSoftStrategy,
@@ -186,8 +186,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
     public function testGetGlobalThresholdsByStoreAndCurrency(): void
     {
         // Prepare
-        $storeTransfer = $this->tester->createStoreTransfer();
-        $currencyTransfer = $this->tester->createCurrencyTransfer();
+        $storeTransfer = $this->tester->getStoreTransfer();
+        $currencyTransfer = $this->tester->getCurrencyTransfer();
 
         $minimumOrderValueSoftStrategy = $this->findMinimumOrderValueTypeTransferForGroup(
             MinimumOrderValueStrategyInterface::GROUP_SOFT
