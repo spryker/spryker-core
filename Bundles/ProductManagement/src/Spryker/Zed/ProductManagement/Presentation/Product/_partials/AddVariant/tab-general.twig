@@ -2,7 +2,7 @@
     {% filter trans|raw %}
         <h3>Add General Information</h3>
         <p>Below the name and description for your product can be edited for different locales (in different languages).</p>
-        <p><i>Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.</i></p>
+        <p><i>Note: The SKU is not editable after saving anymore.</i></p>
     {% endfilter %}
 </div>
 
@@ -13,9 +13,11 @@
 {% for attributeForm in form.form_product_concrete_super_attributes %}
     {{ form_label(attributeForm) }}
     {{ form_widget(attributeForm) }}
-    <div class="has-error">
-        {{ form_errors(attributeForm) }}
-    </div>
+    {% if attributeForm.vars.errors|length %}
+        <div class="has-error">
+            {{ form_errors(attributeForm) }}
+        </div>
+    {% endif %}
 {% endfor %}
 
 {% for localeTransfer in localeCollection %}
