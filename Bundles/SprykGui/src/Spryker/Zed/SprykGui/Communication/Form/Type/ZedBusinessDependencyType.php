@@ -67,7 +67,7 @@ class ZedBusinessDependencyType extends AbstractType
         $argumentCollectionTransfer = $this->buildArguments($methods, $moduleTransfer);
         $argumentOptions = [
             'entry_type' => ArgumentType::class,
-            'entry_options' => ['label' => false, 'argumentCollectionTransfer' => $argumentCollectionTransfer],
+            'entry_options' => ['label' => false, ArgumentType::ARGUMENT_CHOICES => $argumentCollectionTransfer->getArguments()],
             'allow_add' => true,
             'label' => false,
             'required' => false,
@@ -84,7 +84,7 @@ class ZedBusinessDependencyType extends AbstractType
                 $argumentCollectionTransfer = new ArgumentCollectionTransfer();
 
                 foreach ($event->getData() as $argumentInformation) {
-                    $argumentTransfer = $argumentInformation['argument'];
+                    $argumentTransfer = $argumentInformation['innerArgument'];
                     if ($argumentTransfer instanceof ArgumentTransfer) {
                         $argumentTransfer
                             ->setVariable($argumentInformation['variable'])
@@ -92,7 +92,7 @@ class ZedBusinessDependencyType extends AbstractType
                     }
                     $argumentCollectionTransfer->addArgument($argumentTransfer);
                 }
-                $event->setData($argumentCollectionTransfer);
+                $event->setData($argumentCollectionTransfer->getArguments());
             }
         );
     }
