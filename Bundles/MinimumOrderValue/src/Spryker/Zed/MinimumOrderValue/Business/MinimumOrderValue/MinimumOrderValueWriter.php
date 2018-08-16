@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold;
+namespace Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue;
 
-use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyInvalidArgumentException;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueGlossaryKeyGeneratorInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationWriterInterface;
 use Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface;
 
-class GlobalThresholdWriter implements GlobalThresholdWriterInterface
+class MinimumOrderValueWriter implements MinimumOrderValueWriterInterface
 {
     /**
      * @var \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface
@@ -55,49 +55,49 @@ class GlobalThresholdWriter implements GlobalThresholdWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyInvalidArgumentException
      *
-     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
-    public function setGlobalThreshold(
-        GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
-    ): GlobalMinimumOrderValueTransfer {
-        $globalMinimumOrderValueTransfer->requireMinimumOrderValue();
+    public function saveMinimumOrderValue(
+        MinimumOrderValueTransfer $minimumOrderValueTransfer
+    ): MinimumOrderValueTransfer {
+        $minimumOrderValueTransfer->requireThreshold();
 
-        $globalMinimumOrderValueTransfer
-            ->getMinimumOrderValue()
+        $minimumOrderValueTransfer
+            ->getThreshold()
             ->getMinimumOrderValueType()
             ->requireKey();
 
         $minimumOrderValueStrategy = $this->minimumOrderValueStrategyResolver
             ->resolveMinimumOrderValueStrategy(
-                $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()->getKey()
+                $minimumOrderValueTransfer->getThreshold()->getMinimumOrderValueType()->getKey()
             );
 
-        if (!$minimumOrderValueStrategy->isValid($globalMinimumOrderValueTransfer->getMinimumOrderValue())) {
+        if (!$minimumOrderValueStrategy->isValid($minimumOrderValueTransfer->getThreshold())) {
             throw new StrategyInvalidArgumentException();
         }
 
-        if (!$globalMinimumOrderValueTransfer->getMinimumOrderValue()
+        if (!$minimumOrderValueTransfer->getThreshold()
             ->getMinimumOrderValueType()
             ->getIdMinimumOrderValueType()
         ) {
             $minimumOrderValueTypeTransfer = $this->minimumOrderValueEntityManager
                 ->saveMinimumOrderValueType($minimumOrderValueStrategy->toTransfer());
 
-            $globalMinimumOrderValueTransfer->getMinimumOrderValue()
+            $minimumOrderValueTransfer->getThreshold()
                 ->setMinimumOrderValueType(
                     $minimumOrderValueTypeTransfer
                 );
         }
 
-        $this->glossaryKeyGenerator->assignMessageGlossaryKey($globalMinimumOrderValueTransfer);
-        $this->minimumOrderValueEntityManager->setGlobalThreshold($globalMinimumOrderValueTransfer);
+        $this->glossaryKeyGenerator->assignMessageGlossaryKey($minimumOrderValueTransfer);
+        $this->minimumOrderValueEntityManager->saveMinimumOrderValue($minimumOrderValueTransfer);
 
-        $this->translationWriter->saveLocalizedMessages($globalMinimumOrderValueTransfer);
+        $this->translationWriter->saveLocalizedMessages($minimumOrderValueTransfer);
 
-        return $globalMinimumOrderValueTransfer;
+        return $minimumOrderValueTransfer;
     }
 }

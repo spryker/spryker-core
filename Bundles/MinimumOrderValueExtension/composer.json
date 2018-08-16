@@ -7,15 +7,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/kernel": "*",
-    "spryker/minimum-order-value": "*",
-    "spryker/symfony": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/minimum-order-value": "If you want to use plugins for minimum order value.",
-    "spryker/symfony": "If you want to plugins with symfony components.",
-    "spryker/kernel": "If you want to use kernel functionality with certain plugins"
   },
   "autoload": {
     "psr-4": {

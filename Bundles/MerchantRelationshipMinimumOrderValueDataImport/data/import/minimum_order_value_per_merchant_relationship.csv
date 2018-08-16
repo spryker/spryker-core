@@ -1,4 +1,4 @@
-merchant_relation_key,store,currency,strategy,threshold,fee,message_en,message_de
+merchant_relation_key,store,currency,threshold_type_key,threshold,fee,message_en,message_de
 sugar-moster-27-rif-hq-1,DE,EUR,hard-threshold,80000,,,
 sugar-moster-27-rif-hq-1,DE,EUR,soft-threshold,120000,,,
 sugar-moster-27-rif-hq-2,DE,EUR,hard-threshold,30000,,,

@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\Propel\M
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\MerchantRelationshipMinimumOrderValue\Persistence\SpyMerchantRelationshipMinimumOrderValue;
@@ -28,14 +28,14 @@ class MerchantRelationshipMinimumOrderValueMapper implements MerchantRelationshi
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {
         $minimumOrderValueTypeEntity = $merchantRelationshipMinimumOrderValueEntity->getMinimumOrderValueType();
-        $merchantRelationshipMinimumOrderValueTransfer->setMinimumOrderValue(
-            $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue() ?? (new MinimumOrderValueTransfer())
+        $merchantRelationshipMinimumOrderValueTransfer->setThreshold(
+            $merchantRelationshipMinimumOrderValueTransfer->getThreshold() ?? (new MinimumOrderValueThresholdTransfer())
         );
 
         $merchantRelationshipMinimumOrderValueTransfer->fromArray($merchantRelationshipMinimumOrderValueEntity->toArray(), true)
             ->setIdMerchantRelationshipMinimumOrderValue($merchantRelationshipMinimumOrderValueEntity->getIdMerchantRelationshipMinOrderValue())
-            ->setMinimumOrderValue(
-                $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->fromArray($merchantRelationshipMinimumOrderValueEntity->toArray(), true)
+            ->setThreshold(
+                $merchantRelationshipMinimumOrderValueTransfer->getThreshold()->fromArray($merchantRelationshipMinimumOrderValueEntity->toArray(), true)
                     ->setMinimumOrderValueType(
                         (new MinimumOrderValueTypeTransfer())->fromArray($minimumOrderValueTypeEntity->toArray(), true)
                             ->setIdMinimumOrderValueType($minimumOrderValueTypeEntity->getIdMinOrderValueType())

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Persistence;
 
-use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 
 interface MinimumOrderValueEntityManagerInterface
@@ -20,11 +20,11 @@ interface MinimumOrderValueEntityManagerInterface
     public function saveMinimumOrderValueType(MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer): MinimumOrderValueTypeTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
-     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
-    public function setGlobalThreshold(
-        GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
-    ): GlobalMinimumOrderValueTransfer;
+    public function saveMinimumOrderValue(
+        MinimumOrderValueTransfer $minimumOrderValueTransfer
+    ): MinimumOrderValueTransfer;
 }

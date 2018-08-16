@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business\Translation;
 
-use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 
 interface MinimumOrderValueGlossaryKeyGeneratorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
-     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
     public function assignMessageGlossaryKey(
-        GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
-    ): GlobalMinimumOrderValueTransfer;
+        MinimumOrderValueTransfer $minimumOrderValueTransfer
+    ): MinimumOrderValueTransfer;
 }

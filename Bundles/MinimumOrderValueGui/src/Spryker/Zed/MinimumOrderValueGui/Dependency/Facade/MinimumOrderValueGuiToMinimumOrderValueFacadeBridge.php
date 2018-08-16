@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MinimumOrderValueGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 class MinimumOrderValueGuiToMinimumOrderValueFacadeBridge implements MinimumOrderValueGuiToMinimumOrderValueFacadeInterface
@@ -27,26 +27,26 @@ class MinimumOrderValueGuiToMinimumOrderValueFacadeBridge implements MinimumOrde
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTValueTransfer
      *
-     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
-    public function setGlobalThreshold(
-        GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
-    ): GlobalMinimumOrderValueTransfer {
-        return $this->minimumOrderValueFacade->setGlobalThreshold($globalMinimumOrderValueTransfer);
+    public function saveMinimumOrderValue(
+        MinimumOrderValueTransfer $minimumOrderValueTValueTransfer
+    ): MinimumOrderValueTransfer {
+        return $this->minimumOrderValueFacade->saveMinimumOrderValue($minimumOrderValueTValueTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer[]
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
      */
-    public function getGlobalThresholdsByStoreAndCurrency(
+    public function findMinimumOrderValues(
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array {
-        return $this->minimumOrderValueFacade->getGlobalThresholdsByStoreAndCurrency($storeTransfer, $currencyTransfer);
+        return $this->minimumOrderValueFacade->findMinimumOrderValues($storeTransfer, $currencyTransfer);
     }
 }

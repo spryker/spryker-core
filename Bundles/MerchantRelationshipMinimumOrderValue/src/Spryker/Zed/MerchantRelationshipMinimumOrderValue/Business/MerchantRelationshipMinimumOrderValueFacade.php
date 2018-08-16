@@ -24,7 +24,7 @@ class MerchantRelationshipMinimumOrderValueFacade extends AbstractFacade impleme
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     * @return \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer[]
      */
     public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {
@@ -45,12 +45,12 @@ class MerchantRelationshipMinimumOrderValueFacade extends AbstractFacade impleme
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
-    public function setMerchantRelationshipThreshold(
+    public function saveMerchantRelationshipMinimumOrderValue(
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {
         return $this->getFactory()
             ->createMerchantRelationshipThresholdWriter()
-            ->setMerchantRelationshipThreshold(
+            ->saveMerchantRelationshipMinimumOrderValue(
                 $merchantRelationshipMinimumOrderValueTransfer
             );
     }

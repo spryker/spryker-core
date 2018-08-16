@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business\Translation;
 
-use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 
 class MinimumOrderValueGlossaryKeyGenerator implements MinimumOrderValueGlossaryKeyGeneratorInterface
 {
@@ -15,58 +15,58 @@ class MinimumOrderValueGlossaryKeyGenerator implements MinimumOrderValueGlossary
     protected const MINIMUM_ORDER_VALUE_GLOSSARY_MESSAGE = 'message';
 
     /**
-     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
-     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
     public function assignMessageGlossaryKey(
-        GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
-    ): GlobalMinimumOrderValueTransfer {
-        $this->assertRequired($globalMinimumOrderValueTransfer);
+        MinimumOrderValueTransfer $minimumOrderValueTransfer
+    ): MinimumOrderValueTransfer {
+        $this->assertRequired($minimumOrderValueTransfer);
 
-        $globalMinimumOrderValueTransfer->getMinimumOrderValue()->setMessageGlossaryKey(
-            $this->generateMessageGlossaryKey($globalMinimumOrderValueTransfer)
+        $minimumOrderValueTransfer->getThreshold()->setMessageGlossaryKey(
+            $this->generateMessageGlossaryKey($minimumOrderValueTransfer)
         );
 
-        return $globalMinimumOrderValueTransfer;
+        return $minimumOrderValueTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @return string
      */
-    protected function generateMessageGlossaryKey(GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer): string
+    protected function generateMessageGlossaryKey(MinimumOrderValueTransfer $minimumOrderValueTransfer): string
     {
         return strtolower(implode(
             '.',
             [
                 static::MINIMUM_ORDER_VALUE_GLOSSARY_PREFIX,
-                $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()->getThresholdGroup(),
-                $globalMinimumOrderValueTransfer->getStore()->getName(),
-                $globalMinimumOrderValueTransfer->getCurrency()->getCode(),
+                $minimumOrderValueTransfer->getThreshold()->getMinimumOrderValueType()->getThresholdGroup(),
+                $minimumOrderValueTransfer->getStore()->getName(),
+                $minimumOrderValueTransfer->getCurrency()->getCode(),
                 static::MINIMUM_ORDER_VALUE_GLOSSARY_MESSAGE,
             ]
         ));
     }
 
     /**
-     * @param \Spryker\Zed\MinimumOrderValue\Business\Translation\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @return void
      */
-    protected function assertRequired(GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer): void
+    protected function assertRequired(MinimumOrderValueTransfer $minimumOrderValueTransfer): void
     {
-        $globalMinimumOrderValueTransfer->getMinimumOrderValue()
+        $minimumOrderValueTransfer->getThreshold()
             ->requireMinimumOrderValueType();
 
-        $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()
+        $minimumOrderValueTransfer->getThreshold()->getMinimumOrderValueType()
             ->requireThresholdGroup();
 
-        $globalMinimumOrderValueTransfer->getStore()
+        $minimumOrderValueTransfer->getStore()
             ->requireName();
 
-        $globalMinimumOrderValueTransfer->getCurrency()
+        $minimumOrderValueTransfer->getCurrency()
             ->requireCode();
     }
 }

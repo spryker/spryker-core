@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business\Strategy;
 
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 
 class SoftThresholdWithMessageStrategy extends AbstractMinimumOrderValueStrategy implements MinimumOrderValueStrategyInterface
 {
@@ -20,13 +20,13 @@ class SoftThresholdWithMessageStrategy extends AbstractMinimumOrderValueStrategy
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *
      * @return bool
      */
-    public function isValid(MinimumOrderValueTransfer $minimumOrderValueTransfer): bool
+    public function isValid(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): bool
     {
-        if ($minimumOrderValueTransfer->getValue() < 1 || $minimumOrderValueTransfer->getFee()) {
+        if ($minimumOrderValueThresholdTransfer->getValue() < 1 || $minimumOrderValueThresholdTransfer->getFee()) {
             return false;
         }
 
@@ -34,11 +34,11 @@ class SoftThresholdWithMessageStrategy extends AbstractMinimumOrderValueStrategy
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *
      * @return int|null
      */
-    public function calculateFee(MinimumOrderValueTransfer $minimumOrderValueTransfer): ?int
+    public function calculateFee(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): ?int
     {
         return null;
     }

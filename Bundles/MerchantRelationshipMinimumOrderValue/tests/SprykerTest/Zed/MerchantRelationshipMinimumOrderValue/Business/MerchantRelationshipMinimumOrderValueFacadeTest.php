@@ -35,7 +35,7 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
     /**
      * @return void
      */
-    public function testSetMerchantRelationshipHardAndSoftThresholds(): void
+    public function testSaveMerchantRelationshipHardAndSoftThresholds(): void
     {
         $merchantRelationshipTransfer = $this->tester->createTestMerchantRelationship(static::MERCHANT_RELATIONSHIP_KEY);
 
@@ -45,7 +45,7 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
         $currencyTransferUSD = (new CurrencyTransfer())->setIdCurrency(2)->setCode('USD');
 
         // Action
-        $hardThreshold1 = $this->getFacade()->setMerchantRelationshipThreshold(
+        $hardThreshold1 = $this->getFacade()->saveMerchantRelationshipMinimumOrderValue(
             $this->tester->createTestMerchantRelationshipMinimumOrderValueTransfer(
                 static::HARD_STRATEGY_KEY,
                 $merchantRelationshipTransfer,
@@ -55,7 +55,7 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
             )
         );
 
-        $hardThreshold2 = $this->getFacade()->setMerchantRelationshipThreshold(
+        $hardThreshold2 = $this->getFacade()->saveMerchantRelationshipMinimumOrderValue(
             $this->tester->createTestMerchantRelationshipMinimumOrderValueTransfer(
                 static::HARD_STRATEGY_KEY,
                 $merchantRelationshipTransfer,
@@ -65,7 +65,7 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
             )
         );
 
-        $softThreshold1 = $this->getFacade()->setMerchantRelationshipThreshold(
+        $softThreshold1 = $this->getFacade()->saveMerchantRelationshipMinimumOrderValue(
             $this->tester->createTestMerchantRelationshipMinimumOrderValueTransfer(
                 static::SOFT_STRATEGY_KEY,
                 $merchantRelationshipTransfer,
@@ -75,7 +75,7 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
             )
         );
 
-        $softThreshold2 = $this->getFacade()->setMerchantRelationshipThreshold(
+        $softThreshold2 = $this->getFacade()->saveMerchantRelationshipMinimumOrderValue(
             $this->tester->createTestMerchantRelationshipMinimumOrderValueTransfer(
                 static::SOFT_STRATEGY_KEY,
                 $merchantRelationshipTransfer,
@@ -85,7 +85,7 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
             )
         );
 
-        $softThreshold3 = $this->getFacade()->setMerchantRelationshipThreshold(
+        $softThreshold3 = $this->getFacade()->saveMerchantRelationshipMinimumOrderValue(
             $this->tester->createTestMerchantRelationshipMinimumOrderValueTransfer(
                 static::SOFT_STRATEGY_KEY,
                 $merchantRelationshipTransfer,

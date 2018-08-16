@@ -1,4 +1,4 @@
-store,currency,strategy,threshold,fee,message_en,message_de
+store,currency,threshold_type_key,threshold,fee,message_en,message_de
 DE,EUR,hard-threshold,40000,,,
 DE,EUR,soft-threshold,100000,,,
 DE,CHF,hard-threshold,120000,,,

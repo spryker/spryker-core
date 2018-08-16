@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business\DataSource;
 
-use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdReaderInterface;
+use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueReaderInterface;
 use Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig;
 
 class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterface
@@ -20,7 +20,7 @@ class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterfac
     protected $minimumOrderValueDataSourceStrategyPlugins;
 
     /**
-     * @var \Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdReaderInterface
+     * @var \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueReaderInterface
      */
     protected $storeThresholdReader;
 
@@ -31,12 +31,12 @@ class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterfac
 
     /**
      * @param \Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueDataSourceStrategyPluginInterface[] $minimumOrderValueDataSourceStrategyPlugins
-     * @param \Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdReaderInterface $storeThresholdReader
+     * @param \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueReaderInterface $storeThresholdReader
      * @param \Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig $config
      */
     public function __construct(
         array $minimumOrderValueDataSourceStrategyPlugins,
-        GlobalThresholdReaderInterface $storeThresholdReader,
+        MinimumOrderValueReaderInterface $storeThresholdReader,
         MinimumOrderValueConfig $config
     ) {
         $this->minimumOrderValueDataSourceStrategyPlugins = $minimumOrderValueDataSourceStrategyPlugins;
@@ -47,7 +47,7 @@ class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterfac
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     * @return \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer[]
      */
     public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {
@@ -65,7 +65,7 @@ class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterfac
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     * @return \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer[]
      */
     public function findGlobalApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {
@@ -73,17 +73,17 @@ class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterfac
             ->requireStore()
             ->requireCurrency();
 
-        $globalMinimumOrderValueTransfers = $this->storeThresholdReader
-            ->getGlobalThresholdsByStoreAndCurrency($quoteTransfer->getStore(), $quoteTransfer->getCurrency());
+        $minimumOrderValueTransfers = $this->storeThresholdReader
+            ->findMinimumOrderValues($quoteTransfer->getStore(), $quoteTransfer->getCurrency());
 
         $cartSubTotal = $this->getCartSubtotal($quoteTransfer);
 
-        return array_map(function (GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer) use ($cartSubTotal) {
-            $minimumOrderValueTransfer = $globalMinimumOrderValueTransfer->getMinimumOrderValue();
+        return array_map(function (MinimumOrderValueTransfer $minimumOrderValueTransfer) use ($cartSubTotal) {
+            $minimumOrderValueTransfer = $minimumOrderValueTransfer->getThreshold();
             $minimumOrderValueTransfer->setSubTotal($cartSubTotal);
 
             return $minimumOrderValueTransfer;
-        }, $globalMinimumOrderValueTransfers);
+        }, $minimumOrderValueTransfers);
     }
 
     /**

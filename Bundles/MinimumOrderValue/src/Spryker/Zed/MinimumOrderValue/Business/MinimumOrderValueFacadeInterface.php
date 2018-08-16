@@ -9,7 +9,7 @@ namespace Spryker\Zed\MinimumOrderValue\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -33,15 +33,15 @@ interface MinimumOrderValueFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
      *
-     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
-    public function setGlobalThreshold(
-        GlobalMinimumOrderValueTransfer $minimumOrderValueTransfer
-    ): GlobalMinimumOrderValueTransfer;
+    public function saveMinimumOrderValue(
+        MinimumOrderValueTransfer $minimumOrderValueTransfer
+    ): MinimumOrderValueTransfer;
 
     /**
      * Specification:
@@ -68,9 +68,9 @@ interface MinimumOrderValueFacadeInterface
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer[]
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
      */
-    public function getGlobalThresholdsByStoreAndCurrency(
+    public function findMinimumOrderValues(
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array;
@@ -114,13 +114,13 @@ interface MinimumOrderValueFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
      *
      * @return bool
      */
-    public function isStrategyValid(
-        MinimumOrderValueTransfer $minimumOrderValueTransfer
+    public function isThresholdValid(
+        MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
     ): bool;
 }

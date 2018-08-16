@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MinimumOrderValueDataImport\Business\Model\DataImportStep;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -37,12 +37,12 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
     protected $currencyFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     * @var \Generated\Shared\Transfer\StoreTransfer[] Keys are store names.
      */
     protected $storesHeap = [];
 
     /**
-     * @var \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @var \Generated\Shared\Transfer\CurrencyTransfer[] Keys are currency codes.
      */
     protected $currenciesHeap = [];
 
@@ -78,16 +78,16 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
             return;
         }
 
-        if ($dataSet[MinimumOrderValueDataSetInterface::COLUMN_STRATEGY] && $dataSet[MinimumOrderValueDataSetInterface::COLUMN_THRESHOLD]) {
-            $globalMinimumOrderValueTransfer = $this->createGlobalMinimumOrderValueTransfer(
-                $dataSet[MinimumOrderValueDataSetInterface::COLUMN_STRATEGY],
+        if ($dataSet[MinimumOrderValueDataSetInterface::COLUMN_MINIMUM_ORDER_VALUE_TYPE_KEY] && $dataSet[MinimumOrderValueDataSetInterface::COLUMN_THRESHOLD]) {
+            $minimumOrderValueTValueTransfer = $this->createMinimumOrderValueTransfer(
+                $dataSet[MinimumOrderValueDataSetInterface::COLUMN_MINIMUM_ORDER_VALUE_TYPE_KEY],
                 $storeTransfer,
                 $currencyTransfer,
                 (int)$dataSet[MinimumOrderValueDataSetInterface::COLUMN_THRESHOLD],
                 (int)$dataSet[MinimumOrderValueDataSetInterface::COLUMN_FEE]
             );
 
-            $this->minimumOrderValueFacade->setGlobalThreshold($globalMinimumOrderValueTransfer);
+            $this->minimumOrderValueFacade->saveMinimumOrderValue($minimumOrderValueTValueTransfer);
         }
     }
 
@@ -98,20 +98,20 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
      * @param int $thresholdValue
      * @param int|null $fee
      *
-     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
-    protected function createGlobalMinimumOrderValueTransfer(
+    protected function createMinimumOrderValueTransfer(
         string $strategyKey,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
         int $thresholdValue,
         ?int $fee = null
-    ): GlobalMinimumOrderValueTransfer {
-        return (new GlobalMinimumOrderValueTransfer())
+    ): MinimumOrderValueTransfer {
+        return (new MinimumOrderValueTransfer())
             ->setStore($storeTransfer)
             ->setCurrency($currencyTransfer)
-            ->setMinimumOrderValue(
-                (new MinimumOrderValueTransfer())
+            ->setThreshold(
+                (new MinimumOrderValueThresholdTransfer())
                     ->setValue($thresholdValue)
                     ->setFee($fee)
                     ->setMinimumOrderValueType(

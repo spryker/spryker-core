@@ -15,7 +15,7 @@ use Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueDa
  * @method \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipMinimumOrderValueFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Communication\MerchantRelationshipMinimumOrderValueCommunicationFactory getFactory()
  */
-class MerchantRelationhipMinimumOrderValueDataSourceStrategyPlugin extends AbstractPlugin implements MinimumOrderValueDataSourceStrategyPluginInterface
+class MerchantRelationshipMinimumOrderValueDataSourceStrategyPlugin extends AbstractPlugin implements MinimumOrderValueDataSourceStrategyPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -24,7 +24,7 @@ class MerchantRelationhipMinimumOrderValueDataSourceStrategyPlugin extends Abstr
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     * @return \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer[]
      */
     public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {

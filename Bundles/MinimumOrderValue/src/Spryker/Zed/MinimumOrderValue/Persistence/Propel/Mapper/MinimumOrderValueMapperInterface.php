@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValue;
 use Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValueType;
@@ -27,12 +27,12 @@ interface MinimumOrderValueMapperInterface
 
     /**
      * @param \Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValue $minimumOrderValueEntity
-     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
-     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
     public function mapGlobalMinimumOrderValueEntityToTransfer(
         SpyMinimumOrderValue $minimumOrderValueEntity,
-        GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
-    ): GlobalMinimumOrderValueTransfer;
+        MinimumOrderValueTransfer $minimumOrderValueTransfer
+    ): MinimumOrderValueTransfer;
 }

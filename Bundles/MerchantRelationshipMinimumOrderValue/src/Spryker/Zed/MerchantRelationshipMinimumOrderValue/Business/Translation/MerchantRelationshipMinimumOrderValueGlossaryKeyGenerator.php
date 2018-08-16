@@ -24,7 +24,7 @@ class MerchantRelationshipMinimumOrderValueGlossaryKeyGenerator implements Merch
     ): MerchantRelationshipMinimumOrderValueTransfer {
         $this->assertRequired($merchantRelationshipMinimumOrderValueTransfer);
 
-        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->setMessageGlossaryKey(
+        $merchantRelationshipMinimumOrderValueTransfer->getThreshold()->setMessageGlossaryKey(
             $this->generateMessageGlossaryKey($merchantRelationshipMinimumOrderValueTransfer)
         );
 
@@ -42,7 +42,7 @@ class MerchantRelationshipMinimumOrderValueGlossaryKeyGenerator implements Merch
             '.',
             [
                 static::MINIMUM_ORDER_VALUE_GLOSSARY_PREFIX,
-                $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()->getThresholdGroup(),
+                $merchantRelationshipMinimumOrderValueTransfer->getThreshold()->getMinimumOrderValueType()->getThresholdGroup(),
                 $merchantRelationshipMinimumOrderValueTransfer->getStore()->getName(),
                 $merchantRelationshipMinimumOrderValueTransfer->getCurrency()->getCode(),
                 $merchantRelationshipMinimumOrderValueTransfer->getMerchantRelationship()->getMerchantRelationshipKey(),
@@ -58,10 +58,10 @@ class MerchantRelationshipMinimumOrderValueGlossaryKeyGenerator implements Merch
      */
     protected function assertRequired(MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): void
     {
-        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()
+        $merchantRelationshipMinimumOrderValueTransfer->getThreshold()
             ->requireMinimumOrderValueType();
 
-        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()
+        $merchantRelationshipMinimumOrderValueTransfer->getThreshold()->getMinimumOrderValueType()
             ->requireThresholdGroup();
 
         $merchantRelationshipMinimumOrderValueTransfer->getStore()

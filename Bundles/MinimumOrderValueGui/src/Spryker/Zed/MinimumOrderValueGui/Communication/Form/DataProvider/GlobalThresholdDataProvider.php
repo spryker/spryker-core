@@ -54,35 +54,35 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer[] $globalMinimumOrderValueTransfers
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer[] $minimumOrderValueTValueTransfers
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return array
      */
     public function getData(
-        array $globalMinimumOrderValueTransfers,
+        array $minimumOrderValueTValueTransfers,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array {
         $data = [];
-        foreach ($globalMinimumOrderValueTransfers as $globalMinimumOrderValueTransfer) {
+        foreach ($minimumOrderValueTValueTransfers as $minimumOrderValueTValueTransfer) {
             $data[GlobalThresholdType::FIELD_STORE_CURRENCY] = $this->formatStoreCurrencyRowValue(
-                $globalMinimumOrderValueTransfer->getStore(),
-                $globalMinimumOrderValueTransfer->getCurrency()
+                $minimumOrderValueTValueTransfer->getStore(),
+                $minimumOrderValueTValueTransfer->getCurrency()
             );
 
             if ($thresholdStrategyDataProvider = $this->minimumOrderValueGuiCommunicationFactory
                 ->createGlobalSoftThresholdDataProviderResolver()
-                ->hasGlobalThresholdDataProviderByStrategyKey($globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()->getKey())) {
+                ->hasGlobalThresholdDataProviderByStrategyKey($minimumOrderValueTValueTransfer->getThreshold()->getMinimumOrderValueType()->getKey())) {
                 $data = $thresholdStrategyDataProvider = $this->minimumOrderValueGuiCommunicationFactory
                     ->createGlobalSoftThresholdDataProviderResolver()
-                    ->resolveGlobalThresholdDataProviderByStrategyKey($globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMinimumOrderValueType()->getKey())
-                    ->getData($data, $globalMinimumOrderValueTransfer);
+                    ->resolveGlobalThresholdDataProviderByStrategyKey($minimumOrderValueTValueTransfer->getThreshold()->getMinimumOrderValueType()->getKey())
+                    ->getData($data, $minimumOrderValueTValueTransfer);
             }
         }
 
-        if (empty($globalMinimumOrderValueTransfers)) {
+        if (empty($minimumOrderValueTValueTransfers)) {
             $data[GlobalThresholdType::FIELD_STORE_CURRENCY] = $this->formatStoreCurrencyRowValue(
                 $storeTransfer,
                 $currencyTransfer

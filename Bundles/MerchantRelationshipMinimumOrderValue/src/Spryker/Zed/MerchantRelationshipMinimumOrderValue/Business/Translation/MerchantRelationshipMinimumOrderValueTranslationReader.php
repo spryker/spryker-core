@@ -68,7 +68,7 @@ class MerchantRelationshipMinimumOrderValueTranslationReader implements Merchant
         string $localeIsoCode
     ): MerchantRelationshipMinimumOrderValueTransfer {
         $translationTransfer = $this->findTranslationValue(
-            $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getMessageGlossaryKey(),
+            $merchantRelationshipMinimumOrderValueTransfer->getThreshold()->getMessageGlossaryKey(),
             $this->createLocaleTransfer($localeIsoCode)
         );
 

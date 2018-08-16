@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade\MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface;
 use Traversable;
 
@@ -37,7 +37,7 @@ class MerchantRelationshipMinimumOrderValueTranslationWriter implements Merchant
     public function saveLocalizedMessages(MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): MerchantRelationshipMinimumOrderValueTransfer
     {
         $keyTranslationTransfer = $this->createKeyTranslationTransfer(
-            $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue(),
+            $merchantRelationshipMinimumOrderValueTransfer->getThreshold(),
             $this->createTranslationsLocaleMap($merchantRelationshipMinimumOrderValueTransfer->getLocalizedMessages())
         );
 
@@ -62,15 +62,15 @@ class MerchantRelationshipMinimumOrderValueTranslationWriter implements Merchant
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      * @param string[] $translationsByLocale
      *
      * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */
-    protected function createKeyTranslationTransfer(MinimumOrderValueTransfer $minimumOrderValueTransfer, array $translationsByLocale): KeyTranslationTransfer
+    protected function createKeyTranslationTransfer(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer, array $translationsByLocale): KeyTranslationTransfer
     {
         return (new KeyTranslationTransfer())
-            ->setGlossaryKey($minimumOrderValueTransfer->getMessageGlossaryKey())
+            ->setGlossaryKey($minimumOrderValueThresholdTransfer->getMessageGlossaryKey())
             ->setLocales($translationsByLocale);
     }
 }

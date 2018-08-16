@@ -28,9 +28,9 @@ interface MinimumOrderValueRepositoryInterface
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer[]
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
      */
-    public function getGlobalThresholdsByStoreAndCurrency(
+    public function findMinimumOrderValues(
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array;

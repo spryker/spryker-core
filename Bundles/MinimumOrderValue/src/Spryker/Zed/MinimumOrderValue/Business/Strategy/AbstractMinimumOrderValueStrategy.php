@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business\Strategy;
 
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 
 abstract class AbstractMinimumOrderValueStrategy
@@ -63,13 +63,13 @@ abstract class AbstractMinimumOrderValueStrategy
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *
      * @return bool
      */
-    public function isApplicable(MinimumOrderValueTransfer $minimumOrderValueTransfer): bool
+    public function isApplicable(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): bool
     {
-        return $minimumOrderValueTransfer->getSubTotal() < $minimumOrderValueTransfer->getValue();
+        return $minimumOrderValueThresholdTransfer->getSubTotal() < $minimumOrderValueThresholdTransfer->getValue();
     }
 
     /**

@@ -11,7 +11,7 @@ interface MinimumOrderValueDataSetInterface
 {
     public const COLUMN_STORE = 'store';
     public const COLUMN_CURRENCY = 'currency';
-    public const COLUMN_STRATEGY = 'strategy';
+    public const COLUMN_MINIMUM_ORDER_VALUE_TYPE_KEY = 'threshold_type_key';
     public const COLUMN_THRESHOLD = 'threshold';
     public const COLUMN_FEE = 'fee';
 }

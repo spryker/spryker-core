@@ -58,18 +58,18 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
-    public function setMerchantRelationshipThreshold(
+    public function saveMerchantRelationshipMinimumOrderValue(
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {
-        $this->minimumOrderValueFacade->isStrategyValid(
-            $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()
+        $this->minimumOrderValueFacade->isThresholdValid(
+            $merchantRelationshipMinimumOrderValueTransfer->getThreshold()
         );
 
         $this->hydrateMinimumOrderValueType($merchantRelationshipMinimumOrderValueTransfer);
 
         $this->glossaryKeyGenerator->assignMessageGlossaryKey($merchantRelationshipMinimumOrderValueTransfer);
         $this->merchantRelationshipMinimumOrderValueEntityManager
-            ->setMerchantRelationshipThreshold($merchantRelationshipMinimumOrderValueTransfer);
+            ->saveMerchantRelationshipMinimumOrderValue($merchantRelationshipMinimumOrderValueTransfer);
 
         $this->translationWriter->saveLocalizedMessages($merchantRelationshipMinimumOrderValueTransfer);
 
@@ -87,12 +87,12 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
         $minimumOrderValueTypeTransfer = $this->minimumOrderValueFacade
             ->getMinimumOrderValueTypeByKey(
                 $merchantRelationshipMinimumOrderValueTransfer
-                    ->getMinimumOrderValue()
+                    ->getThreshold()
                     ->getMinimumOrderValueType()
             );
 
         $merchantRelationshipMinimumOrderValueTransfer
-            ->getMinimumOrderValue()
+            ->getThreshold()
             ->setMinimumOrderValueType($minimumOrderValueTypeTransfer);
 
         return $merchantRelationshipMinimumOrderValueTransfer;

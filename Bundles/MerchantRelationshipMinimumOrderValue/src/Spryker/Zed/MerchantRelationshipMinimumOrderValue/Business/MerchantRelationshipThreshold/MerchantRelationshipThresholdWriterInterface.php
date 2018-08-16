@@ -16,7 +16,7 @@ interface MerchantRelationshipThresholdWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
-    public function setMerchantRelationshipThreshold(
+    public function saveMerchantRelationshipMinimumOrderValue(
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer;
 }

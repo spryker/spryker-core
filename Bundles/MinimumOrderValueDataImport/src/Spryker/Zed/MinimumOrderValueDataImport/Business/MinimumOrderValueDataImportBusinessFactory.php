@@ -45,7 +45,7 @@ class MinimumOrderValueDataImportBusinessFactory extends DataImportBusinessFacto
     /**
      * @return \Spryker\Zed\MinimumOrderValueDataImport\Dependency\Facade\MinimumOrderValueDataImportToMinimumOrderValueFacadeInterface
      */
-    protected function getMinimumOrderValueFacade(): MinimumOrderValueDataImportToMinimumOrderValueFacadeInterface
+    public function getMinimumOrderValueFacade(): MinimumOrderValueDataImportToMinimumOrderValueFacadeInterface
     {
         return $this->getProvidedDependency(MinimumOrderValueDataImportDependencyProvider::FACADE_MINIMUM_ORDER_VALUE);
     }
@@ -53,7 +53,7 @@ class MinimumOrderValueDataImportBusinessFactory extends DataImportBusinessFacto
     /**
      * @return \Spryker\Zed\MinimumOrderValueDataImport\Dependency\Facade\MinimumOrderValueDataImportToStoreFacadeInterface
      */
-    protected function getStoreFacade(): MinimumOrderValueDataImportToStoreFacadeInterface
+    public function getStoreFacade(): MinimumOrderValueDataImportToStoreFacadeInterface
     {
         return $this->getProvidedDependency(MinimumOrderValueDataImportDependencyProvider::FACADE_STORE);
     }
@@ -61,7 +61,7 @@ class MinimumOrderValueDataImportBusinessFactory extends DataImportBusinessFacto
     /**
      * @return \Spryker\Zed\MinimumOrderValueDataImport\Dependency\Facade\MinimumOrderValueDataImportToCurrencyFacadeInterface
      */
-    protected function getCurrencyFacade(): MinimumOrderValueDataImportToCurrencyFacadeInterface
+    public function getCurrencyFacade(): MinimumOrderValueDataImportToCurrencyFacadeInterface
     {
         return $this->getProvidedDependency(MinimumOrderValueDataImportDependencyProvider::FACADE_CURRENCY);
     }

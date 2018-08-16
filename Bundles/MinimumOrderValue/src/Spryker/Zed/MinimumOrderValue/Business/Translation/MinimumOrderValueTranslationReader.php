@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business\Translation;
 
-use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeInterface;
 
@@ -38,55 +38,55 @@ class MinimumOrderValueTranslationReader implements MinimumOrderValueTranslation
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
-     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
-    public function hydrateLocalizedMessages(GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer): GlobalMinimumOrderValueTransfer
+    public function hydrateLocalizedMessages(MinimumOrderValueTransfer $minimumOrderValueTransfer): MinimumOrderValueTransfer
     {
         $storeTransfer = $this->storeFacade
-            ->getStoreByName($globalMinimumOrderValueTransfer->getStore()->getName());
+            ->getStoreByName($minimumOrderValueTransfer->getStore()->getName());
 
         foreach ($storeTransfer->getAvailableLocaleIsoCodes() as $localeIsoCode) {
             $this->initOrUpdateLocalizedMessages(
-                $globalMinimumOrderValueTransfer,
+                $minimumOrderValueTransfer,
                 $localeIsoCode
             );
         }
 
-        return $globalMinimumOrderValueTransfer;
+        return $minimumOrderValueTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      * @param string $localeIsoCode
      *
-     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
     protected function initOrUpdateLocalizedMessages(
-        GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer,
+        MinimumOrderValueTransfer $minimumOrderValueTransfer,
         string $localeIsoCode
-    ): GlobalMinimumOrderValueTransfer {
+    ): MinimumOrderValueTransfer {
         $translationValue = $this->findTranslationValue(
-            $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getMessageGlossaryKey(),
+            $minimumOrderValueTransfer->getThreshold()->getMessageGlossaryKey(),
             $this->createLocaleTransfer($localeIsoCode)
         );
 
-        foreach ($globalMinimumOrderValueTransfer->getLocalizedMessages() as $minimumOrderValueLocalizedMessageTransfer) {
+        foreach ($minimumOrderValueTransfer->getLocalizedMessages() as $minimumOrderValueLocalizedMessageTransfer) {
             if ($minimumOrderValueLocalizedMessageTransfer->getLocaleCode() === $localeIsoCode) {
                 $minimumOrderValueLocalizedMessageTransfer->setMessage($translationValue);
 
-                return $globalMinimumOrderValueTransfer;
+                return $minimumOrderValueTransfer;
             }
         }
 
-        $globalMinimumOrderValueTransfer->addLocalizedMessage(
+        $minimumOrderValueTransfer->addLocalizedMessage(
             (new MinimumOrderValueLocalizedMessageTransfer())
                 ->setLocaleCode($localeIsoCode)
                 ->setMessage($translationValue)
         );
 
-        return $globalMinimumOrderValueTransfer;
+        return $minimumOrderValueTransfer;
     }
 
     /**

@@ -22,7 +22,7 @@ interface MerchantRelationshipMinimumOrderValueFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     * @return \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer[]
      */
     public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array;
 
@@ -39,7 +39,7 @@ interface MerchantRelationshipMinimumOrderValueFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
-    public function setMerchantRelationshipThreshold(
+    public function saveMerchantRelationshipMinimumOrderValue(
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer;
 }

@@ -11,7 +11,7 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyMerchantRelationshipEntityTransfer;
@@ -77,8 +77,8 @@ class MerchantRelationshipMinimumOrderValueBusinessTester extends Actor
             ->setMerchantRelationship($merchantRelationshipTransfer)
             ->setStore($storeTransfer)
             ->setCurrency($currencyTransfer)
-            ->setMinimumOrderValue(
-                (new MinimumOrderValueTransfer())
+            ->setThreshold(
+                (new MinimumOrderValueThresholdTransfer())
                     ->setMinimumOrderValueType($minimumOrderValueTypeTransfer)
                     ->setValue($thresholdValue)
                     ->setFee($fee)

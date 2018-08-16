@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueDataImport\Business\M
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -46,7 +46,7 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
     protected $currencyFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     * @var \Generated\Shared\Transfer\MerchantRelationshipTransfer[] Keys are merchant relationship keys.
      */
     protected $merchantRelationshipsHeap = [];
 
@@ -56,12 +56,12 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
     protected $merchantRelationshipsHeapSize = 0;
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     * @var \Generated\Shared\Transfer\StoreTransfer[] Keys are store names.
      */
     protected $storesHeap = [];
 
     /**
-     * @var \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @var \Generated\Shared\Transfer\CurrencyTransfer[] Keys are currency codes.
      */
     protected $currenciesHeap = [];
 
@@ -107,9 +107,9 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
             return;
         }
 
-        if ($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_STRATEGY] && $dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_THRESHOLD]) {
+        if ($dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_MINIMUM_ORDER_VALUE_TYPE_KEY] && $dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_THRESHOLD]) {
             $merchantRelationshipMinimumOrderValueTransfer = $this->createMerchantRelationshipMinimumOrderValueTransfer(
-                $dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_STRATEGY],
+                $dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_MINIMUM_ORDER_VALUE_TYPE_KEY],
                 $merchantRelationshipTransfer,
                 $storeTransfer,
                 $currencyTransfer,
@@ -117,7 +117,7 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
                 (int)$dataSet[MerchantRelationshipMinimumOrderValueDataSetInterface::COLUMN_FEE]
             );
 
-            $this->merchantRelationshipMinimumOrderValueFacade->setMerchantRelationshipThreshold(
+            $this->merchantRelationshipMinimumOrderValueFacade->saveMerchantRelationshipMinimumOrderValue(
                 $merchantRelationshipMinimumOrderValueTransfer
             );
         }
@@ -145,8 +145,8 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
             ->setMerchantRelationship($merchantRelationshipTransfer)
             ->setStore($storeTransfer)
             ->setCurrency($currencyTransfer)
-            ->setMinimumOrderValue(
-                (new MinimumOrderValueTransfer())
+            ->setThreshold(
+                (new MinimumOrderValueThresholdTransfer())
                     ->setValue($thresholdValue)
                     ->setFee($fee)
                     ->setMinimumOrderValueType(

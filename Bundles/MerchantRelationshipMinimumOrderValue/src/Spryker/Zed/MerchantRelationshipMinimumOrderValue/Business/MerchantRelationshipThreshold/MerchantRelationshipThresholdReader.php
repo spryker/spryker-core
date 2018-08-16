@@ -38,7 +38,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     * @return \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer[]
      */
     public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {
@@ -131,7 +131,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
      * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[] $merchantRelationshipMinimumOrderValueTransfers
      * @param int[] $itemMerchantRelationshipSubTotals
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     * @return \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer[]
      */
     protected function getMinimumOrderValueTransfers(
         array $merchantRelationshipMinimumOrderValueTransfers,
@@ -139,7 +139,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     ): array {
         $minimumOrderValueTransfers = [];
         foreach ($merchantRelationshipMinimumOrderValueTransfers as $merchantRelationshipMinimumOrderValueTransfer) {
-            $minimumOrderValueTransfer = $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue();
+            $minimumOrderValueTransfer = $merchantRelationshipMinimumOrderValueTransfer->getThreshold();
             $minimumOrderValueTransfer->setSubTotal(
                 $itemMerchantRelationshipSubTotals[$merchantRelationshipMinimumOrderValueTransfer->getMerchantRelationship()->getIdMerchantRelationship()]
             );

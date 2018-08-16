@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade;
 
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 
 class MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeBridge implements MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeInterface
@@ -26,14 +26,14 @@ class MerchantRelationshipMinimumOrderValueToMinimumOrderValueFacadeBridge imple
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *
      * @return bool
      */
-    public function isStrategyValid(
-        MinimumOrderValueTransfer $minimumOrderValueTransfer
+    public function isThresholdValid(
+        MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
     ): bool {
-        return $this->minimumOrderValueFacade->isStrategyValid($minimumOrderValueTransfer);
+        return $this->minimumOrderValueFacade->isThresholdValid($minimumOrderValueThresholdTransfer);
     }
 
     /**

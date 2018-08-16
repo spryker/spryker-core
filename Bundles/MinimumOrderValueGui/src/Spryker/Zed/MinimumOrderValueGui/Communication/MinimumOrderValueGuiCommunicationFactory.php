@@ -8,8 +8,6 @@
 namespace Spryker\Zed\MinimumOrderValueGui\Communication;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\GlobalThresholdDataProvider;
@@ -36,14 +34,14 @@ use Symfony\Component\Form\FormInterface;
 class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @param \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer[] $globalMinimumOrderValueTransfers
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer[] $minimumOrderValueTValueTransfers
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createGlobalThresholdForm(
-        array $globalMinimumOrderValueTransfers,
+        array $minimumOrderValueTValueTransfers,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): FormInterface {
@@ -51,7 +49,7 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
 
         return $this->getFormFactory()->create(
             GlobalThresholdType::class,
-            $formDataProvider->getData($globalMinimumOrderValueTransfers, $storeTransfer, $currencyTransfer),
+            $formDataProvider->getData($minimumOrderValueTValueTransfers, $storeTransfer, $currencyTransfer),
             $formDataProvider->getOptions()
         );
     }
@@ -119,23 +117,6 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
         return new GlobalThresholdDataProviderResolver(
             $this->getConfig()
         );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer
-     */
-    public function createGlobalMinimumOrderValueTransfer(): GlobalMinimumOrderValueTransfer
-    {
-        return (new GlobalMinimumOrderValueTransfer())
-            ->setMinimumOrderValue($this->createMinimumOrderValueTransfer());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
-     */
-    public function createMinimumOrderValueTransfer(): MinimumOrderValueTransfer
-    {
-        return new MinimumOrderValueTransfer();
     }
 
     /**

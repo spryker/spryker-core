@@ -12,12 +12,12 @@ use Spryker\Zed\MinimumOrderValue\Business\Applier\ThresholdApplier;
 use Spryker\Zed\MinimumOrderValue\Business\Applier\ThresholdApplierInterface;
 use Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategy;
 use Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategyInterface;
-use Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdReader;
-use Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdReaderInterface;
-use Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdWriter;
-use Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdWriterInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Installer\MinimumOrderValueTypeInstaller;
 use Spryker\Zed\MinimumOrderValue\Business\Installer\MinimumOrderValueTypeInstallerInterface;
+use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueReader;
+use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueReaderInterface;
+use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueWriter;
+use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueWriterInterface;
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueType\MinimumOrderValueTypeReader;
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueType\MinimumOrderValueTypeReaderInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolver;
@@ -63,22 +63,22 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdReaderInterface
+     * @return \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueReaderInterface
      */
-    public function createGlobalThresholdReader(): GlobalThresholdReaderInterface
+    public function createMinimumOrderValueReader(): MinimumOrderValueReaderInterface
     {
-        return new GlobalThresholdReader(
+        return new MinimumOrderValueReader(
             $this->getRepository(),
             $this->createMinimumOrderValueTranslationReader()
         );
     }
 
     /**
-     * @return \Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold\GlobalThresholdWriterInterface
+     * @return \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueWriterInterface
      */
-    public function createGlobalThresholdWriter(): GlobalThresholdWriterInterface
+    public function createMinimumOrderValueWriter(): MinimumOrderValueWriterInterface
     {
-        return new GlobalThresholdWriter(
+        return new MinimumOrderValueWriter(
             $this->createMinimumOrderValueStrategyResolver(),
             $this->getEntityManager(),
             $this->createMinimumOrderValueGlossaryKeyGenerator(),
@@ -145,7 +145,7 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     {
         return new ThresholdDataSourceStrategy(
             $this->getMinimumOrderValueDataSourceStrategies(),
-            $this->createGlobalThresholdReader(),
+            $this->createMinimumOrderValueReader(),
             $this->getConfig()
         );
     }

@@ -9,7 +9,7 @@
         <property name="thresholdGroup" type="string"/>
     </transfer>
 
-    <transfer name="MinimumOrderValue">
+    <transfer name="MinimumOrderValueThreshold">
         <property name="minimumOrderValueType" type="MinimumOrderValueType"/>
         <property name="value" type="int"/>
         <property name="fee" type="int"/>
@@ -17,9 +17,9 @@
         <property name="messageGlossaryKey" type="string"/>
     </transfer>
 
-    <transfer name="GlobalMinimumOrderValue">
+    <transfer name="MinimumOrderValue">
         <property name="idMinimumOrderValue" type="int"/>
-        <property name="minimumOrderValue" type="MinimumOrderValue"/>
+        <property name="threshold" type="MinimumOrderValueThreshold"/>
         <property name="store" type="Store"/>
         <property name="currency" type="Currency"/>
         <property name="localizedMessages" type="MinimumOrderValueLocalizedMessage[]" singular="localizedMessage" />
