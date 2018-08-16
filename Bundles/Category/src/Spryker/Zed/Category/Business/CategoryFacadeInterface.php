@@ -64,6 +64,7 @@ interface CategoryFacadeInterface
     /**
      * Specification:
      *  - Finds all category-node entities for idCategory
+     *  - Category-node entities sorted by node order
      *  - Returns hydrated NodeTransfer collection
      *
      * @api
