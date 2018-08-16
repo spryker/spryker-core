@@ -297,6 +297,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
      */
     protected function getFacade()
     {
-        return $this->tester->getFacade();
+        $config = $this->createMinimumOrderValueConfig();
+        $factory = $this->createMinimumOrderValueBusinessFactoryMock($config);
+        return $this->createMinimumOrderValueFacadeMock($factory);
     }
 }

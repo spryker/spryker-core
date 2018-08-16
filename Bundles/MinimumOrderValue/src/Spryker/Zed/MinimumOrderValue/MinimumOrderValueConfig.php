@@ -8,10 +8,6 @@
 namespace Spryker\Zed\MinimumOrderValue;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Zed\MinimumOrderValue\Business\Strategy\HardThresholdStrategy;
-use Spryker\Zed\MinimumOrderValue\Business\Strategy\SoftThresholdWithFixedFeeStrategy;
-use Spryker\Zed\MinimumOrderValue\Business\Strategy\SoftThresholdWithFlexibleFeeStrategy;
-use Spryker\Zed\MinimumOrderValue\Business\Strategy\SoftThresholdWithMessageStrategy;
 
 class MinimumOrderValueConfig extends AbstractBundleConfig
 {
@@ -25,12 +21,7 @@ class MinimumOrderValueConfig extends AbstractBundleConfig
      */
     public function getMinimumOrderValueStrategies(): array
     {
-        return [
-            new HardThresholdStrategy(),
-            new SoftThresholdWithMessageStrategy(),
-            new SoftThresholdWithFixedFeeStrategy(),
-            new SoftThresholdWithFlexibleFeeStrategy(),
-        ];
+        return [];
     }
 
     /**
