@@ -41,7 +41,6 @@
     "spryker/availability-cart-connector": "*",
     "spryker/availability-gui": "*",
     "spryker/availability-storage": "*",
-    "spryker/braintree": "*",
     "spryker/business-on-behalf": "*",
     "spryker/business-on-behalf-data-import": "*",
     "spryker/cache": "*",
