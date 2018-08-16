@@ -10,7 +10,7 @@ namespace Spryker\Zed\Setup\Business\Model;
 class System
 {
     /**
-     * @param string|null $what
+     * @param int|null $what
      *
      * @return string
      */

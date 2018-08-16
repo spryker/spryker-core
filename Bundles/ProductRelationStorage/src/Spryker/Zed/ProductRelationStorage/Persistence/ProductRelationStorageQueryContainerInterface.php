@@ -47,4 +47,13 @@ interface ProductRelationStorageQueryContainerInterface extends QueryContainerIn
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
      */
     public function queryProductRelations(array $productAbstractIds);
+
+    /**
+     * @api
+     *
+     * @param int[] $productRelationIds
+     *
+     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
+     */
+    public function queryProductRelationsByIds(array $productRelationIds);
 }

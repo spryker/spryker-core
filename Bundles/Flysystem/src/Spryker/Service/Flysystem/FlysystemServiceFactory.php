@@ -115,7 +115,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \League\Flysystem\Filesystem[]
+     * @return \League\Flysystem\FilesystemInterface[]
      */
     protected function buildFilesystemCollection()
     {
