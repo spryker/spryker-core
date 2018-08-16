@@ -30,6 +30,7 @@
         <property name="shoppingListName" type="string" />
         <property name="product" type="StorageProduct" />
         <property name="idCompanyUser" type="int" />
+        <property name="note" type="ShoppingListItemNote" />
     </transfer>
 
     <transfer name="ShoppingListItemCollection">
@@ -74,6 +75,7 @@
     <transfer name="ProductView">
         <property name="quantity" type="int" />
         <property name="idShoppingListItem" type="int" />
+        <property name="shoppingListItemNote" type="ShoppingListItemNote" />
     </transfer>
 
     <transfer name="ShoppingListShareRequest">
