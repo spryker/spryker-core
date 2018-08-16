@@ -226,7 +226,7 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     * - Selects product option collection by criteria transfer
+     * - Selects product option collection by criteria transfer.
      *
      * @api
      *

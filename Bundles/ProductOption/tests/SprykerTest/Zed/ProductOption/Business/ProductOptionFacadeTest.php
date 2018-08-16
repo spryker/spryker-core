@@ -754,7 +754,12 @@ class ProductOptionFacadeTest extends Unit
      */
     public function testGetProductOptionCollectionByCriteriaWithOneIdReturnsCollection()
     {
-        $ids = [1];
+        $productOptionFacade = $this->createProductOptionFacade();
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionValueTransfer->setFkProductOptionGroup($this->tester->haveProductOptionGroup()->getIdProductOptionGroup());
+        $idProductOptionValue = $productOptionFacade->saveProductOptionValue($productOptionValueTransfer);
+
+        $ids = [$idProductOptionValue];
         $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setIds($ids);
 
         // Act
@@ -773,7 +778,16 @@ class ProductOptionFacadeTest extends Unit
      */
     public function testGetProductOptionCollectionByCriteriaWithTwoIdsReturnsCollection()
     {
-        $ids = [1, 2];
+        $productOptionFacade = $this->createProductOptionFacade();
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionValueTransfer->setFkProductOptionGroup($this->tester->haveProductOptionGroup()->getIdProductOptionGroup());
+        $idProductOptionValue1 = $productOptionFacade->saveProductOptionValue($productOptionValueTransfer);
+
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer('sku_for_testing_2');
+        $productOptionValueTransfer->setFkProductOptionGroup($this->tester->haveProductOptionGroup()->getIdProductOptionGroup());
+        $idProductOptionValue2 = $productOptionFacade->saveProductOptionValue($productOptionValueTransfer);
+
+        $ids = [$idProductOptionValue1, $idProductOptionValue2];
         $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setIds($ids);
 
         // Act
@@ -839,14 +853,16 @@ class ProductOptionFacadeTest extends Unit
     }
 
     /**
+     * @param string $sku
+     *
      * @return \Generated\Shared\Transfer\ProductOptionValueTransfer
      */
-    protected function createProductOptionValueTransfer()
+    protected function createProductOptionValueTransfer(string $sku = 'sku_for_testing')
     {
         $productOptionValueTransfer = new ProductOptionValueTransfer();
         $productOptionValueTransfer->setValue('value.translation.key');
         $productOptionValueTransfer->setPrices(new ArrayObject());
-        $productOptionValueTransfer->setSku('sku_for_testing');
+        $productOptionValueTransfer->setSku($sku);
 
         $this->tester->addPrice(
             $productOptionValueTransfer,
