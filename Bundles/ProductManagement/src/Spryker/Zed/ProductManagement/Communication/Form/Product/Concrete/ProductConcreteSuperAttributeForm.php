@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete;
 
+use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -57,7 +59,7 @@ class ProductConcreteSuperAttributeForm extends AbstractType
             static::FIELD_DROPDOWN,
             Select2ComboBoxType::class,
             [
-                'choices' => $options[static::OPTION_PRODUCT_MANAGEMENT_ATTRIBUTE_TRANSFER]->getValues()->getArrayCopy(),
+                'choices' => $this->extractAttributeValuesFromTransfer($options[static::OPTION_PRODUCT_MANAGEMENT_ATTRIBUTE_TRANSFER]),
                 'choice_label' => function ($choiceValue) {
                     return $choiceValue;
                 },
@@ -108,5 +110,17 @@ class ProductConcreteSuperAttributeForm extends AbstractType
         );
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
+     *
+     * @return array
+     */
+    protected function extractAttributeValuesFromTransfer(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
+    {
+        return array_map(function (ProductManagementAttributeValueTransfer $productManagementAttributeValueTransfer) {
+            return $productManagementAttributeValueTransfer->getValue();
+        }, $productManagementAttributeTransfer->getValues()->getArrayCopy());
     }
 }

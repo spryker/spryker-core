@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ProductAttribute\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue;
 
 class ProductAttributeMapper implements ProductAttributeMapperInterface
 {
@@ -23,6 +25,25 @@ class ProductAttributeMapper implements ProductAttributeMapperInterface
         $productManagementAttributeTransfer->fromArray($productManagementAttributeEntity->toArray(), true);
         $productManagementAttributeTransfer->fromArray($productManagementAttributeEntity->getSpyProductAttributeKey()->toArray(), true);
 
+        foreach ($productManagementAttributeEntity->getSpyProductManagementAttributeValues() as $productManagementAttributeValueEntity) {
+            $productManagementAttributeTransfer->addValue(
+                $this->mapProductManagementAttributeValueEntityToTransfer($productManagementAttributeValueEntity, new ProductManagementAttributeValueTransfer())
+            );
+        }
+
         return $productManagementAttributeTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue $productManagementAttributeValueEntity
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer $productManagementAttributeValueTransfer
+     *
+     * @return $this
+     */
+    protected function mapProductManagementAttributeValueEntityToTransfer(SpyProductManagementAttributeValue $productManagementAttributeValueEntity, ProductManagementAttributeValueTransfer $productManagementAttributeValueTransfer)
+    {
+        return $productManagementAttributeValueTransfer->fromArray(
+            $productManagementAttributeValueEntity->toArray()
+        );
     }
 }

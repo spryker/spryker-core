@@ -61,18 +61,33 @@ class ProductAttributeUniqueCombinationValidator extends ConstraintValidator
 
     /**
      * @param array $submittedAttributes
-     * @param array $existingAttributes
+     * @param array $existingProductAttributes
      *
      * @return bool
      */
-    protected function validateCombinationExistence(array $submittedAttributes, array $existingAttributes)
+    protected function validateCombinationExistence(array $submittedAttributes, array $existingProductAttributes)
     {
-        foreach ($existingAttributes as $comnbination) {
+        foreach ($existingProductAttributes as $comnbination) {
             if (!count(array_diff_assoc($submittedAttributes, $comnbination))) {
                 return false;
             };
         }
 
         return true;
+    }
+
+    /**
+     * @param array $submittedAttributes
+     * @param array $existingProductAttributes
+     *
+     * @return array
+     */
+    protected function getExistingProductAttributesFilledWithEmptyAttributes(array $submittedAttributes, array $existingProductAttributes)
+    {
+        foreach ($submittedAttributes as $submittedAttributeKey => $submittedAttributeValue) {
+            $existingProductAttributes[$submittedAttributeKey] = $existingProductAttributes[$submittedAttributeKey] ?? null;
+        }
+
+        return $existingProductAttributes;
     }
 }

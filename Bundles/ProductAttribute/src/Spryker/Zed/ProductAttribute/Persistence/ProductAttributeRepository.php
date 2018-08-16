@@ -30,9 +30,10 @@ class ProductAttributeRepository extends AbstractRepository implements ProductAt
 
         $query = $this->getFactory()
             ->createProductManagementAttributeQuery()
+            ->leftJoinWithSpyProductManagementAttributeValue()
             ->innerJoinSpyProductAttributeKey()
             ->useSpyProductAttributeKeyQuery()
-            ->filterByKey($attributes, Criteria::IN)
+                ->filterByKey($attributes, Criteria::IN)
             ->enduse();
 
         $productManagementAttributeKeyEntityCollection = $query->find();

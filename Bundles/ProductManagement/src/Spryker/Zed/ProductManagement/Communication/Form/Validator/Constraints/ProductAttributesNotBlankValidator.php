@@ -11,7 +11,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ProductCon
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class ProductAttributeNotBlankValidator extends ConstraintValidator
+class ProductAttributesNotBlankValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value
@@ -30,15 +30,19 @@ class ProductAttributeNotBlankValidator extends ConstraintValidator
 
     /**
      * @param mixed $value
-     * @param \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeNotBlank $constraint
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributesNotBlank $constraint
      *
      * @return void
      */
-    protected function validateAttributeNotBlank($value, ProductAttributeNotBlank $constraint)
+    protected function validateAttributeNotBlank($value, ProductAttributesNotBlank $constraint)
     {
-        if (empty($value[ProductConcreteSuperAttributeForm::FIELD_CHECKBOX]) && empty($value[ProductConcreteSuperAttributeForm::FIELD_DROPDOWN])
-            || !empty($value[ProductConcreteSuperAttributeForm::FIELD_CHECKBOX]) && empty($value[ProductConcreteSuperAttributeForm::FIELD_INPUT])) {
-            $this->context->buildViolation($constraint->message)->addViolation();
+        foreach ($value as $attribute) {
+            if (empty($attribute[ProductConcreteSuperAttributeForm::FIELD_CHECKBOX]) && !empty($attribute[ProductConcreteSuperAttributeForm::FIELD_DROPDOWN])
+                || !empty($attribute[ProductConcreteSuperAttributeForm::FIELD_CHECKBOX]) && !empty($attribute[ProductConcreteSuperAttributeForm::FIELD_INPUT])) {
+                return;
+            }
         }
+
+        $this->context->buildViolation($constraint->message)->addViolation();
     }
 }

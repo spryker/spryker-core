@@ -8,11 +8,8 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use DateTime;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -241,28 +238,6 @@ class ProductConcreteFormEdit extends ProductFormAdd
     {
         $builder
             ->add(self::FIELD_ID_PRODUCT_CONCRETE, HiddenType::class, []);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
-    {
-        $builder->add(
-            static::FIELD_PRICES,
-            ProductMoneyCollectionType::class,
-            [
-                'entry_options' => [
-                    'data_class' => PriceProductTransfer::class,
-                ],
-                'entry_type' => ProductMoneyType::class,
-            ]
-        );
 
         return $this;
     }

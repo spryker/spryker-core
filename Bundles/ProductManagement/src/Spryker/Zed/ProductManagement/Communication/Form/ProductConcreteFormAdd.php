@@ -7,15 +7,11 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ProductConcreteSuperAttributeForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
-use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeNotBlank;
+use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributesNotBlank;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeType;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeUniqueCombination;
-use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductMoneyNotBlank;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuUnique;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -140,6 +136,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
                 'compound' => true,
                 'label' => 'Super attributes',
                 'constraints' => [
+                    new ProductAttributesNotBlank(),
                     new ProductAttributeUniqueCombination(
                         $this->getFactory()->getProductFacade(),
                         (int)$options[static::OPTION_ID_PRODUCT_ABSTRACT]
@@ -162,37 +159,11 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
                             'class' => 'super-attribute-inputs-group',
                         ],
                         'constraints' => [
-                            new ProductAttributeNotBlank(),
                             new ProductAttributeType($productmanagementAttributeTransfer),
                         ],
                     ]
                 );
         }
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addPriceForm(FormBuilderInterface $builder, array $options = [])
-    {
-        $builder->add(
-            static::FIELD_PRICES,
-            ProductMoneyCollectionType::class,
-            [
-                'entry_options' => [
-                    'data_class' => PriceProductTransfer::class,
-                ],
-                'entry_type' => ProductMoneyType::class,
-                'constraints' => [
-                    new ProductMoneyNotBlank(),
-                ],
-            ]
-        );
 
         return $this;
     }
@@ -214,8 +185,25 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
         $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById($idProductAbstract);
 
         $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setAttributes($this->getTransformedSubmittedSuperAttributes($formData[static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES]));
+        $productConcreteTransfer->setAttributes(
+            $this->getNonEmptyTransformedSubmittedSuperAttributes($formData[static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES])
+        );
 
         return $this->getFactory()->getProductFacade()->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
+    }
+
+    /**
+     * @param array $submittedAttributes
+     *
+     * @return array
+     */
+    protected function getNonEmptyTransformedSubmittedSuperAttributes(array $submittedAttributes)
+    {
+        return array_filter(
+            $this->getTransformedSubmittedSuperAttributes($submittedAttributes),
+            function ($submittedAttribute) {
+                return $submittedAttribute !== null && $submittedAttribute !== '';
+            }
+        );
     }
 }

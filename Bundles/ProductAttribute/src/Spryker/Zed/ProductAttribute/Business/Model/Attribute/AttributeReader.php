@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductAttribute\Business\Model\Attribute;
 
-use ArrayObject;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\Mapper\ProductAttributeTransferMapperInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface;
 use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface;
@@ -175,9 +174,8 @@ class AttributeReader implements AttributeReaderInterface
     {
         $uniqueTransaformedAttributes = $this->getUniqueTransformedAttributes($productConcreteTransfers);
         $superAttributes = $this->productAttributeRepository->findSuperAttributesFromAttributesList(array_keys($uniqueTransaformedAttributes));
-        $resultingSuperAttributes = $this->getSuperAttributesWithValues($superAttributes, $uniqueTransaformedAttributes);
 
-        return $resultingSuperAttributes;
+        return $superAttributes;
     }
 
     /**
@@ -198,25 +196,5 @@ class AttributeReader implements AttributeReaderInterface
         }
 
         return $uniqueTransaformedAttributes;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $superAttributes
-     * @param array $uniqueTransaformedAttributes
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
-     */
-    protected function getSuperAttributesWithValues(array $superAttributes, array $uniqueTransaformedAttributes)
-    {
-        $resultingSuperAttributes = [];
-
-        foreach ($superAttributes as $productManagementAttributeTransfer) {
-            $productManagementAttributeTransfer->setValues(
-                new ArrayObject($uniqueTransaformedAttributes[$productManagementAttributeTransfer->getKey()])
-            );
-            $resultingSuperAttributes[] = $productManagementAttributeTransfer;
-        }
-
-        return $resultingSuperAttributes;
     }
 }

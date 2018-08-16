@@ -9,12 +9,12 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints
 
 use Symfony\Component\Validator\Constraint;
 
-class ProductAttributeNotBlank extends Constraint
+class ProductAttributesNotBlank extends Constraint
 {
     /**
      * @var string
      */
-    public $message = 'Attribute value should not be empty';
+    public $message = 'At least one attribute value should be specified';
 
     /**
      * @param array $options
