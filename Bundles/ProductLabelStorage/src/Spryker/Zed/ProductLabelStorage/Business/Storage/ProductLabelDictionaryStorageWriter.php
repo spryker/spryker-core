@@ -11,9 +11,9 @@ use ArrayObject;
 use DateTime;
 use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage;
-use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabel;
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface;
 
 class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStorageWriterInterface
@@ -180,7 +180,7 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     }
 
     /**
-     * @param \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabel $productLabel
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabel
      *
      * @return bool
      */
@@ -200,7 +200,7 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     }
 
     /**
-     * @param \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabel $productLabel
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabel
      *
      * @return bool
      */
