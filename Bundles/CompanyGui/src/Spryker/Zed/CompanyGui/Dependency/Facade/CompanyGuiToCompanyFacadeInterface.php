@@ -27,11 +27,6 @@ interface CompanyGuiToCompanyFacadeInterface
     public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer;
 
     /**
-     * @return \Generated\Shared\Transfer\CompanyTypeCollectionTransfer
-     */
-    public function getCompanyTypes(): CompanyTypeCollectionTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
