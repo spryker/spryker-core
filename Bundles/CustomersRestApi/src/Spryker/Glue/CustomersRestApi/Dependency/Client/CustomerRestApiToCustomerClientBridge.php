@@ -70,4 +70,14 @@ class CustomerRestApiToCustomerClientBridge implements CustomerRestApiToCustomer
     {
         return $this->customerClient->findAddressByUuid($addressTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function updateAddress($addressTransfer)
+    {
+        return $this->customerClient->updateAddress($addressTransfer);
+    }
 }
