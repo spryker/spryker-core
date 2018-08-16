@@ -752,7 +752,7 @@ class ProductOptionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductOptionCollectionByCriteriaWithOneIdReturnsCollection()
+    public function testGetProductOptionCollectionByCriteriaWithOneIdReturnsCollection(): void
     {
         $productOptionFacade = $this->createProductOptionFacade();
         $productOptionValueTransfer = $this->createProductOptionValueTransfer();
