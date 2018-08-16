@@ -6,6 +6,7 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Request;
 
+use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,9 +30,9 @@ class RestRequestValidator implements RestRequestValidatorInterface
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
+    public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $restErrorMessageTransfer = $this->validateRequest($restRequest);
         if (!$restErrorMessageTransfer) {
@@ -43,9 +44,9 @@ class RestRequestValidator implements RestRequestValidatorInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    protected function validateRequest(RestRequestInterface $restRequest): ?RestErrorMessageTransfer
+    protected function validateRequest(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $method = $restRequest->getMetadata()->getMethod();
         if (!\in_array($method, [Request::METHOD_POST, Request::METHOD_PATCH], true)) {
@@ -57,7 +58,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
             $restErrorMessageTransfer = new RestErrorMessageTransfer();
             $restErrorMessageTransfer->setDetail('Post data missing.');
 
-            return $restErrorMessageTransfer;
+            return (new RestErrorCollectionTransfer())->addRestErrors($restErrorMessageTransfer);
         }
 
         return null;
@@ -67,17 +68,17 @@ class RestRequestValidator implements RestRequestValidatorInterface
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
     protected function executeRestRequestValidatorPlugins(
         Request $httpRequest,
         RestRequestInterface $restRequest
-    ): ?RestErrorMessageTransfer {
+    ): ?RestErrorCollectionTransfer {
 
         foreach ($this->restRequestValidatorPlugins as $requestValidatorPlugin) {
-            $restErrorMessageTransfer = $requestValidatorPlugin->validate($httpRequest, $restRequest);
-            if ($restErrorMessageTransfer) {
-                return $restErrorMessageTransfer;
+            $restErrorCollectionTransfer = $requestValidatorPlugin->validate($httpRequest, $restRequest);
+            if ($restErrorCollectionTransfer !== null) {
+                return $restErrorCollectionTransfer;
             }
         }
 
