@@ -62,6 +62,10 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
                 ->endUse();
         }
 
+        if ($criteriaFilterTransfer->getCompanyBusinessUnitIds()) {
+            $query->filterByIdCompanyBusinessUnit_In($criteriaFilterTransfer->getCompanyBusinessUnitIds());
+        }
+
         $collection = $this->buildQueryFromCriteria($query, $criteriaFilterTransfer->getFilter());
         $collection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
 

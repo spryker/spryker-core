@@ -88,6 +88,10 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             $queryCompanyUser->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
         }
 
+        if ($criteriaFilterTransfer->getCompanyUserIds()) {
+            $queryCompanyUser->filterByIdCompanyUser_In($criteriaFilterTransfer->getCompanyUserIds());
+        }
+
         $collection = $this->buildQueryFromCriteria($queryCompanyUser, $criteriaFilterTransfer->getFilter());
         $collection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
 
