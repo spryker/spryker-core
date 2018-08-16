@@ -22,6 +22,7 @@ class ShoppingListProductOptionDependencyProvider extends AbstractBundleDependen
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addProductOptionFacade($container);
 
         return $container;

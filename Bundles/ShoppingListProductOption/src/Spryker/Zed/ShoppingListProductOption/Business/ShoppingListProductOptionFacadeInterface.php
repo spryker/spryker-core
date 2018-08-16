@@ -14,8 +14,8 @@ interface ShoppingListProductOptionFacadeInterface
 {
     /**
      * Specification:
-     * - Removes existing shopping list product options
-     * - Creates new shopping list product options
+     * - Removes existing shopping list product options.
+     * - Creates new shopping list product options.
      *
      * @api
      *
@@ -27,7 +27,7 @@ interface ShoppingListProductOptionFacadeInterface
 
     /**
      * Specification:
-     * - Finds shopping list product options for shopping list item
+     * - Finds shopping list product options for shopping list item.
      *
      * @api
      *

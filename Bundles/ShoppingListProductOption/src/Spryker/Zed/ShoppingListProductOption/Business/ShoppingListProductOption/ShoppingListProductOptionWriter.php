@@ -37,16 +37,28 @@ class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriter
     public function saveShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfer) {
-            $shoppingListItemTransfer->requireIdShoppingListItem();
+            $this->executeSaveShoppingListItemProductOptionsTransaction($shoppingListItemTransfer);
+        });
+    }
 
-            $this->shoppingListProductOptionEntityManager
-                ->removeShoppingListItemProductOptions($shoppingListItemTransfer->getIdShoppingListItem());
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return void
+     */
+    protected function executeSaveShoppingListItemProductOptionsTransaction(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    {
+        $shoppingListItemTransfer->requireIdShoppingListItem();
 
+        $this->shoppingListProductOptionEntityManager
+            ->removeShoppingListItemProductOptions($shoppingListItemTransfer->getIdShoppingListItem());
+
+        foreach ($shoppingListItemTransfer->getProductOptions()->getArrayCopy() as $idProductOption) {
             $this->shoppingListProductOptionEntityManager
                 ->saveShoppingListItemProductOptions(
                     $shoppingListItemTransfer->getIdShoppingListItem(),
-                    $shoppingListItemTransfer->getProductOptions()->getArrayCopy()
+                    $idProductOption
                 );
-        });
+        }
     }
 }

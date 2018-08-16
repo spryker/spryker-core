@@ -11,11 +11,11 @@ interface ShoppingListProductOptionEntityManagerInterface
 {
     /**
      * @param int $idShoppingListItem
-     * @param int[] $idProductOptions
+     * @param int $idProductOption
      *
      * @return void
      */
-    public function saveShoppingListItemProductOptions(int $idShoppingListItem, array $idProductOptions): void;
+    public function saveShoppingListItemProductOptions(int $idShoppingListItem, int $idProductOption): void;
 
     /**
      * @param int $idShoppingListItem
