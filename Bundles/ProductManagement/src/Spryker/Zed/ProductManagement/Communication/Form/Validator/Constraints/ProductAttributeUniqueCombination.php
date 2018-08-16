@@ -15,7 +15,7 @@ class ProductAttributeUniqueCombination extends Constraint
     /**
      * @var string
      */
-    public $message = 'Same attribute values combination already exists';
+    public $message = 'The combination {{ combination }} already exists. Please define another one';
 
     /**
      * @var int

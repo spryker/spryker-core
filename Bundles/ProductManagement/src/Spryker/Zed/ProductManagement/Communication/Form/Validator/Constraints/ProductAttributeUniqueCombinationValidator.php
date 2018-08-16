@@ -43,7 +43,9 @@ class ProductAttributeUniqueCombinationValidator extends ConstraintValidator
         $concreteProducts = $constraint->getProductFacade()->getConcreteProductsByAbstractProductId($constraint->getIdProductAbstract());
 
         if (!$this->validateCombinationExistence($attributes, $this->getAttributeCombinationsFromConcreteProducts($concreteProducts))) {
-            $this->context->buildViolation($constraint->message)->addViolation();
+            $this->context->buildViolation($constraint->message)
+                ->setParameter('{{ combination }}', $this->formValidationMessagePlaceholder($attributes))
+                ->addViolation();
         }
     }
 
@@ -89,5 +91,23 @@ class ProductAttributeUniqueCombinationValidator extends ConstraintValidator
         }
 
         return $existingProductAttributes;
+    }
+
+    /**
+     * @param array $attributes
+     *
+     * @return string
+     */
+    protected function formValidationMessagePlaceholder(array $attributes)
+    {
+        $placeholder = '';
+
+        foreach ($attributes as $attributeKey => $attributeValue) {
+            if ($attributeValue !== null) {
+                $placeholder .= '[' . $attributeKey . ']' . ' - ' . $attributeValue . ', ';
+            }
+        }
+
+        return '"' . rtrim($placeholder, ', ') . '"';
     }
 }

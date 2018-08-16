@@ -67,7 +67,6 @@ class ProductAttributeTypeValidator extends ConstraintValidator
     {
         $this->context->buildViolation($constraint->message)
             ->setParameter('{{ type }}', ProductAttributeType::TYPE_NUMBER)
-            ->setParameter('{{ value }}', $value)
             ->addViolation();
     }
 }

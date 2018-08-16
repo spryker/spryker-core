@@ -17,7 +17,7 @@ class ProductAttributeType extends Constraint
     /**
      * @var string
      */
-    public $message = 'Given attribute value "{{ value }}" is incorrect. Value of type "{{ type }}" is expected.';
+    public $message = 'The entered value does not match the required input type. The input type is "{{ type }}"';
 
     /**
      * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer
