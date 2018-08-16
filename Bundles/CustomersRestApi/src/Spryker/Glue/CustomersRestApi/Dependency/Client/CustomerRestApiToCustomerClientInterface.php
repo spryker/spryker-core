@@ -42,4 +42,11 @@ interface CustomerRestApiToCustomerClientInterface
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function findAddressByUuid($addressTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function updateCustomerPassword($customerTransfer);
 }
