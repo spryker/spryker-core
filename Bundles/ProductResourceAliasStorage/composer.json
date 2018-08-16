@@ -12,10 +12,10 @@
     "spryker/synchronization": "^1.0.0"
   },
   "require-dev": {
-    "spryker/event": "^2.0.0"
+    "spryker/event": "*"
   },
   "suggest": {
-    "spryker/event": "^2.0.0"
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.0.0"
   },
   "autoload": {
     "psr-4": {
