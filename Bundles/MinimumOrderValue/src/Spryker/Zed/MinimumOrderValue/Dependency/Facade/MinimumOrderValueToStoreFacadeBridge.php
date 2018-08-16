@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 class MinimumOrderValueToStoreFacadeBridge implements MinimumOrderValueToStoreFacadeInterface
 {
     /**
@@ -25,12 +23,12 @@ class MinimumOrderValueToStoreFacadeBridge implements MinimumOrderValueToStoreFa
     }
 
     /**
-     * @param string $storeByName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName(string $storeByName): StoreTransfer
+    public function getStoreByName($storeName)
     {
-        return $this->storeFacade->getStoreByName($storeByName);
+        return $this->storeFacade->getStoreByName($storeName);
     }
 }

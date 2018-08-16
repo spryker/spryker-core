@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 interface MerchantRelationshipMinimumOrderValueToStoreFacadeInterface
 {
     /**
-     * @param string $storeByName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName(string $storeByName): StoreTransfer;
+    public function getStoreByName($storeName);
 }

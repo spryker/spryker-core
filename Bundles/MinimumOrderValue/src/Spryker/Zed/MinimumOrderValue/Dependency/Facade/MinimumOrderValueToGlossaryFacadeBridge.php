@@ -9,7 +9,6 @@ namespace Spryker\Zed\MinimumOrderValue\Dependency\Facade;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\TranslationTransfer;
 
 class MinimumOrderValueToGlossaryFacadeBridge implements MinimumOrderValueToGlossaryFacadeInterface
 {
@@ -28,24 +27,24 @@ class MinimumOrderValueToGlossaryFacadeBridge implements MinimumOrderValueToGlos
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
      * @return bool
      */
-    public function hasTranslation(string $keyName, LocaleTransfer $localeTransfer): bool
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null)
     {
-        return $this->glossaryFacade->hasTranslation($keyName, $localeTransfer);
+        return $this->glossaryFacade->hasTranslation($keyName, $locale);
     }
 
     /**
      * @param string $keyName
-     * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\LocaleTransfer $localeTransfer
+     * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\LocaleTransfer $locale
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation(string $keyName, LocaleTransfer $localeTransfer): TranslationTransfer
+    public function getTranslation($keyName, LocaleTransfer $locale)
     {
-        return $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
+        return $this->glossaryFacade->getTranslation($keyName, $locale);
     }
 
     /**
@@ -53,7 +52,7 @@ class MinimumOrderValueToGlossaryFacadeBridge implements MinimumOrderValueToGlos
      *
      * @return bool
      */
-    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer): bool
+    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer)
     {
         return $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
     }

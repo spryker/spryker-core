@@ -9,30 +9,29 @@ namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Dependency\Facade;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\TranslationTransfer;
 
 interface MerchantRelationshipMinimumOrderValueToGlossaryFacadeInterface
 {
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
      * @return bool
      */
-    public function hasTranslation(string $keyName, LocaleTransfer $localeTransfer): bool;
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null);
 
     /**
      * @param string $keyName
-     * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\LocaleTransfer $localeTransfer
+     * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\LocaleTransfer $locale
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation(string $keyName, LocaleTransfer $localeTransfer): TranslationTransfer;
+    public function getTranslation($keyName, LocaleTransfer $locale);
 
     /**
      * @param \Generated\Shared\Transfer\KeyTranslationTransfer $keyTranslationTransfer
      *
      * @return bool
      */
-    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer): bool;
+    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer);
 }
