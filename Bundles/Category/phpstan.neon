@@ -3,10 +3,8 @@ parameters:
 
     ignoreErrors:
     - '#Call to an undefined method .+Criteria::.+\(\).#'
-    - '#Call to an undefined method .+TouchFacadeInterface::bulkTouchActive\(\).#'
-    - '#Call to an undefined method .+TouchFacadeInterface::bulkTouchInactive\(\).#'
     - '#Method .+Criteria::addJoinObject\(\) invoked with 2 parameters, 1 required.#'
-    - '#Method .+CategoryQueryContainer::queryCategory\(\) invoked with 2 parameters, 1 required.#'
+    - '#Method .+CategoryQueryContainerInterface::queryCategory\(\) invoked with 2 parameters, 1 required.#'
 
 services:
     -

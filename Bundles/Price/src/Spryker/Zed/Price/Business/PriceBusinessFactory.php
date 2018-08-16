@@ -15,10 +15,13 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class PriceBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Price\PriceConfig|\Spryker\Zed\Kernel\AbstractBundleConfig
+     * @return \Spryker\Zed\Price\PriceConfig
      */
     public function getModuleConfig()
     {
-        return parent::getConfig();
+        /** @var \Spryker\Zed\Price\PriceConfig $config */
+        $config = parent::getConfig();
+
+        return $config;
     }
 }

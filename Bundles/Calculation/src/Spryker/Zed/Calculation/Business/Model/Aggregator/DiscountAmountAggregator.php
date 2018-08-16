@@ -72,11 +72,12 @@ class DiscountAmountAggregator implements CalculatorInterface
     protected function calculateDiscountAmountAggregationForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
-            $unitDiscountAmountAggregation = $this->calculateUnitDiscountAmountAggregation(
-                $expenseTransfer->getCalculatedDiscounts(),
-                $expenseTransfer->getUnitPrice()
+            $expenseTransfer->setUnitDiscountAmountAggregation(
+                $this->calculateUnitDiscountAmountAggregation(
+                    $expenseTransfer->getCalculatedDiscounts(),
+                    $expenseTransfer->getUnitPrice()
+                )
             );
-            $expenseTransfer->setUnitDiscountAmountAggregation($unitDiscountAmountAggregation);
 
             $sumDiscountAmountAggregation = $this->calculateSumDiscountAmountAggregation(
                 $expenseTransfer->getCalculatedDiscounts(),
@@ -84,20 +85,6 @@ class DiscountAmountAggregator implements CalculatorInterface
             );
             $expenseTransfer->setSumDiscountAmountAggregation($sumDiscountAmountAggregation);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
-     *
-     * @return void
-     */
-    protected function setCalculatedDiscountsSumAmount(CalculatedDiscountTransfer $calculatedDiscountTransfer)
-    {
-        $calculatedDiscountTransfer->setSumAmount(
-            $calculatedDiscountTransfer->getUnitAmount() * $calculatedDiscountTransfer->getQuantity()
-        );
-
-        $this->setCalculatedDiscounts($calculatedDiscountTransfer);
     }
 
     /**
@@ -125,6 +112,22 @@ class DiscountAmountAggregator implements CalculatorInterface
     }
 
     /**
+     * @deprecated For BC reasons, the sum prices are populated in case if they are not set
+     *
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
+     *
+     * @return void
+     */
+    protected function sanitizeCalculatedDiscountSumPrices(CalculatedDiscountTransfer $calculatedDiscountTransfer)
+    {
+        if (!$calculatedDiscountTransfer->getSumAmount()) {
+            $calculatedDiscountTransfer->setSumAmount(
+                $calculatedDiscountTransfer->getUnitAmount() * $calculatedDiscountTransfer->getQuantity()
+            );
+        }
+    }
+
+    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculateDiscounts
      * @param int $maxAmount
      *
@@ -134,7 +137,9 @@ class DiscountAmountAggregator implements CalculatorInterface
     {
         $itemSumDiscountAmountAggregation = 0;
         foreach ($calculateDiscounts as $calculatedDiscountTransfer) {
-            $this->setCalculatedDiscountsSumAmount($calculatedDiscountTransfer);
+            $this->sanitizeCalculatedDiscountSumPrices($calculatedDiscountTransfer);
+            $this->setCalculatedDiscounts($calculatedDiscountTransfer);
+
             $discountAmount = $calculatedDiscountTransfer->getSumAmount();
 
             $itemSumDiscountAmountAggregation += $discountAmount;

@@ -84,6 +84,9 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $count = 0;
         $total = count($paths);
         $this->errorCount = 0;
+
+        asort($paths);
+
         foreach ($paths as $path => $configFilePath) {
             $resultCode |= $this->runCommand($path, $configFilePath, $input, $output);
             $count++;
@@ -357,7 +360,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      *
      * @return void
      */
-    protected function addErrors($buffer)
+    protected function addErrors(string $buffer): void
     {
         preg_match('#\[ERROR\] Found (\d+) error#i', $buffer, $matches);
         if (!$matches) {
