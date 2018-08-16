@@ -8,6 +8,7 @@
 namespace Spryker\Client\Currency;
 
 use Spryker\Client\Currency\Dependency\Client\CurrencyToSessionBridge;
+use Spryker\Client\Currency\Dependency\Client\CurrencyToStoreClientBridge;
 use Spryker\Client\Currency\Dependency\Client\CurrencyToZedRequestClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
@@ -17,10 +18,13 @@ use Symfony\Component\Intl\Intl;
 
 class CurrencyDependencyProvider extends AbstractDependencyProvider
 {
-    const STORE = 'store';
-    const INTERNATIONALIZATION = 'internationalization';
-    const CLIENT_SESSION = 'CLIENT_SESSION';
+    public const STORE = 'store';
+    public const INTERNATIONALIZATION = 'internationalization';
+
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const CLIENT_STORE = 'CLIENT_STORE';
+
     public const PLUGINS_CURRENCY_POST_CHANGE = 'PLUGINS_CURRENCY_POST_CHANGE';
 
     /**
@@ -35,6 +39,7 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
         $container = $this->addInternationalization($container);
         $container = $this->addSessionClient($container);
         $container = $this->addZedRequestClient($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -94,6 +99,20 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
             return new CurrencyToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container[static::CLIENT_STORE] = function (Container $container) {
+            return new CurrencyToStoreClientBridge($container->getLocator()->store()->client());
         };
 
         return $container;

@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree;
 
-use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
+use Generated\Shared\Transfer\DependencyCollectionTransfer;
 
 interface ComposerDependencyParserInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer
+     * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $dependencyCollectionTransfer
      *
      * @return array
      */
-    public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer): array;
+    public function getComposerDependencyComparison(DependencyCollectionTransfer $dependencyCollectionTransfer): array;
 }
