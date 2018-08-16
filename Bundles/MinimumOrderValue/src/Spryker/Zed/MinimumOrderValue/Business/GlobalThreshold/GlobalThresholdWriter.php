@@ -10,6 +10,8 @@ namespace Spryker\Zed\MinimumOrderValue\Business\GlobalThreshold;
 use Generated\Shared\Transfer\GlobalMinimumOrderValueTransfer;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyInvalidArgumentException;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
+use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueGlossaryKeyGeneratorInterface;
+use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationWriterInterface;
 use Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface;
 
 class GlobalThresholdWriter implements GlobalThresholdWriterInterface
@@ -25,15 +27,31 @@ class GlobalThresholdWriter implements GlobalThresholdWriterInterface
     protected $minimumOrderValueEntityManager;
 
     /**
+     * @var \Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueGlossaryKeyGeneratorInterface
+     */
+    protected $glossaryKeyGenerator;
+
+    /**
+     * @var \Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationWriterInterface
+     */
+    protected $translationWriter;
+
+    /**
      * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
      * @param \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface $minimumOrderValueEntityManager
+     * @param \Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueGlossaryKeyGeneratorInterface $glossaryKeyGenerator
+     * @param \Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationWriterInterface $translationWriter
      */
     public function __construct(
         MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver,
-        MinimumOrderValueEntityManagerInterface $minimumOrderValueEntityManager
+        MinimumOrderValueEntityManagerInterface $minimumOrderValueEntityManager,
+        MinimumOrderValueGlossaryKeyGeneratorInterface $glossaryKeyGenerator,
+        MinimumOrderValueTranslationWriterInterface $translationWriter
     ) {
         $this->minimumOrderValueStrategyResolver = $minimumOrderValueStrategyResolver;
         $this->minimumOrderValueEntityManager = $minimumOrderValueEntityManager;
+        $this->glossaryKeyGenerator = $glossaryKeyGenerator;
+        $this->translationWriter = $translationWriter;
     }
 
     /**
@@ -75,6 +93,11 @@ class GlobalThresholdWriter implements GlobalThresholdWriterInterface
                 );
         }
 
-        return $this->minimumOrderValueEntityManager->setGlobalThreshold($globalMinimumOrderValueTransfer);
+        $this->glossaryKeyGenerator->assignMessageGlossaryKey($globalMinimumOrderValueTransfer);
+        $this->minimumOrderValueEntityManager->setGlobalThreshold($globalMinimumOrderValueTransfer);
+
+        $this->translationWriter->saveLocalizedMessages($globalMinimumOrderValueTransfer);
+
+        return $globalMinimumOrderValueTransfer;
     }
 }

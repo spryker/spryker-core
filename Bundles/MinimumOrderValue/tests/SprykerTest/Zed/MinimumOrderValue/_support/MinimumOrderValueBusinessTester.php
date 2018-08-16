@@ -39,28 +39,30 @@ class MinimumOrderValueBusinessTester extends Actor
     {
         return (new QuoteTransfer())
             ->setTotals($this->createTotalsTransfer())
-            ->setCurrency($this->createCurrencyTransfer())
-            ->setStore($this->createStoreTransfer());
+            ->setCurrency($this->getCurrencyTransfer())
+            ->setStore($this->getStoreTransfer());
     }
 
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function createStoreTransfer(): StoreTransfer
+    public function getStoreTransfer(): StoreTransfer
     {
-        return (new StoreTransfer())
-            ->setIdStore(1)
-            ->setName('DE');
+        return $this->getLocator()
+            ->store()
+            ->facade()
+            ->getStoreByName('DE');
     }
 
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function createCurrencyTransfer(): CurrencyTransfer
+    public function getCurrencyTransfer(): CurrencyTransfer
     {
-        return (new CurrencyTransfer())
-            ->setIdCurrency(1)
-            ->setCode('EUR');
+        return $this->getLocator()
+            ->currency()
+            ->facade()
+            ->getDefaultCurrencyForCurrentStore();
     }
 
     /**

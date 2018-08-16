@@ -26,7 +26,7 @@ class SoftThresholdFixedFeeDataProvider implements ThresholdStrategyDataProvider
         $data[GlobalThresholdType::FIELD_SOFT_FIXED_FEE] = $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getFee();
         $data[GlobalThresholdType::FIELD_SOFT_STRATEGY] = MinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_FIXED;
 
-        foreach ($globalMinimumOrderValueTransfer->getMinimumOrderValue()->getLocalizedMessages() as $localizedMessage) {
+        foreach ($globalMinimumOrderValueTransfer->getLocalizedMessages() as $localizedMessage) {
             $localizedFormName = GlobalThresholdType::getLocalizedFormName(GlobalThresholdType::PREFIX_SOFT, $localizedMessage->getLocaleCode());
             $data[$localizedFormName][LocalizedForm::FIELD_MESSAGE] = $localizedMessage->getMessage();
         }

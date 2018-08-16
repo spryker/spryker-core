@@ -44,10 +44,14 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
         SpyMinimumOrderValue $minimumOrderValueEntity,
         GlobalMinimumOrderValueTransfer $globalMinimumOrderValueTransfer
     ): GlobalMinimumOrderValueTransfer {
+        $globalMinimumOrderValueTransfer->setMinimumOrderValue(
+            $globalMinimumOrderValueTransfer->getMinimumOrderValue() ?? (new MinimumOrderValueTransfer())
+        );
+
         $globalMinimumOrderValueTransfer->fromArray($minimumOrderValueEntity->toArray(), true)
             ->setIdMinimumOrderValue($minimumOrderValueEntity->getIdMinOrderValue())
             ->setMinimumOrderValue(
-                (new MinimumOrderValueTransfer())->fromArray($minimumOrderValueEntity->toArray(), true)
+                $globalMinimumOrderValueTransfer->getMinimumOrderValue()->fromArray($minimumOrderValueEntity->toArray(), true)
             )->setCurrency(
                 (new CurrencyTransfer())->fromArray($minimumOrderValueEntity->getCurrency()->toArray(), true)
             )->setStore(

@@ -49,6 +49,12 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
                 ->setFkCurrency($currencyTransfer->getIdCurrency());
         }
 
+        if ($merchantRelationshipMinimumOrderValueEntity->getMessageGlossaryKey() === null) {
+            $merchantRelationshipMinimumOrderValueEntity->setMessageGlossaryKey(
+                $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()->getMessageGlossaryKey()
+            );
+        }
+
         $merchantRelationshipMinimumOrderValueEntity
             ->setValue($minimumOrderValueTransfer->getValue())
             ->setFee($minimumOrderValueTransfer->getFee())
@@ -62,7 +68,7 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
             ->createMerchantRelationshipMinimumOrderValueMapper()
             ->mapMerchantRelationshipMinimumOrderValueEntityToTransfer(
                 $merchantRelationshipMinimumOrderValueEntity,
-                new MerchantRelationshipMinimumOrderValueTransfer()
+                $merchantRelationshipMinimumOrderValueTransfer
             );
     }
 
@@ -84,6 +90,7 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
 
         $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValue()
             ->requireMinimumOrderValueType()
+            ->requireMessageGlossaryKey()
             ->requireValue();
 
         $merchantRelationshipMinimumOrderValueTransfer->getStore()

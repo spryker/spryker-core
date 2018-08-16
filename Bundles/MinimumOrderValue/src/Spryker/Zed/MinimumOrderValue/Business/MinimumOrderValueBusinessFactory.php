@@ -22,7 +22,15 @@ use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueType\MinimumOrderVal
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueType\MinimumOrderValueTypeReaderInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolver;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
+use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueGlossaryKeyGenerator;
+use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueGlossaryKeyGeneratorInterface;
+use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationReader;
+use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationReaderInterface;
+use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationWriter;
+use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationWriterInterface;
+use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface;
+use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\MinimumOrderValueDependencyProvider;
 
 /**
@@ -60,7 +68,8 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     public function createGlobalThresholdReader(): GlobalThresholdReaderInterface
     {
         return new GlobalThresholdReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createMinimumOrderValueTranslationReader()
         );
     }
 
@@ -71,7 +80,38 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     {
         return new GlobalThresholdWriter(
             $this->createMinimumOrderValueStrategyResolver(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->createMinimumOrderValueGlossaryKeyGenerator(),
+            $this->createMinimumOrderValueTranslationWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueGlossaryKeyGeneratorInterface
+     */
+    public function createMinimumOrderValueGlossaryKeyGenerator(): MinimumOrderValueGlossaryKeyGeneratorInterface
+    {
+        return new MinimumOrderValueGlossaryKeyGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationReaderInterface
+     */
+    public function createMinimumOrderValueTranslationReader(): MinimumOrderValueTranslationReaderInterface
+    {
+        return new MinimumOrderValueTranslationReader(
+            $this->getGlossaryFacade(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationWriterInterface
+     */
+    public function createMinimumOrderValueTranslationWriter(): MinimumOrderValueTranslationWriterInterface
+    {
+        return new MinimumOrderValueTranslationWriter(
+            $this->getGlossaryFacade()
         );
     }
 
@@ -119,9 +159,25 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface
+     */
+    public function getGlossaryFacade(): MinimumOrderValueToGlossaryFacadeInterface
+    {
+        return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeInterface
+     */
+    public function getStoreFacade(): MinimumOrderValueToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::FACADE_STORE);
+    }
+
+    /**
      * @return \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface
      */
-    protected function getMessengerFacade(): MinimumOrderValueToMessengerFacadeInterface
+    public function getMessengerFacade(): MinimumOrderValueToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::FACADE_MESSENGER);
     }

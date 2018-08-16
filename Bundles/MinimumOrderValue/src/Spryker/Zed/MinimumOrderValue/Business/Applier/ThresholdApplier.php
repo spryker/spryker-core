@@ -84,7 +84,7 @@ class ThresholdApplier implements ThresholdApplierInterface
 
         foreach ($minimumOrderValueTransfers as $minimumOrderValueTransfer) {
             $this->addExpenseToQuote($quoteTransfer, $minimumOrderValueTransfer);
-            $this->addInfoMessageToMessenger($quoteTransfer, $minimumOrderValueTransfer);
+            $this->addInfoMessageToMessenger($minimumOrderValueTransfer);
         }
 
         return $quoteTransfer;
@@ -110,7 +110,7 @@ class ThresholdApplier implements ThresholdApplierInterface
         }
 
         foreach ($minimumOrderValueTransfers as $minimumOrderValueTransfer) {
-            $this->addErrorMessageToCheckoutResponse($quoteTransfer, $checkoutResponseTransfer, $minimumOrderValueTransfer);
+            $this->addErrorMessageToCheckoutResponse($checkoutResponseTransfer, $minimumOrderValueTransfer);
         }
 
         return $checkoutResponseTransfer->getErrors()->count() === 0;
@@ -206,14 +206,12 @@ class ThresholdApplier implements ThresholdApplierInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @return void
      */
     protected function addErrorMessageToCheckoutResponse(
-        QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer,
         MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): void {
@@ -225,41 +223,20 @@ class ThresholdApplier implements ThresholdApplierInterface
             return;
         }
 
-        if ($quoteTransfer->getCustomer() === null || $quoteTransfer->getCustomer()->getLocale() === null) {
-            return;
-        }
-
-        foreach ($minimumOrderValueTransfer->getLocalizedMessages() as $localizedMessageTransfer) {
-            if ($localizedMessageTransfer->getLocaleCode() === $quoteTransfer->getCustomer()->getLocale()->getLocaleName()) {
-                $checkoutResponseTransfer->addError(
-                    (new CheckoutErrorTransfer())
-                        ->setMessage($localizedMessageTransfer->getMessage())
-                );
-
-                return;
-            }
-        }
+        $checkoutResponseTransfer->addError(
+            (new CheckoutErrorTransfer())
+                ->setMessage($minimumOrderValueTransfer->getMessageGlossaryKey())
+        );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @return void
      */
-    protected function addInfoMessageToMessenger(QuoteTransfer $quoteTransfer, MinimumOrderValueTransfer $minimumOrderValueTransfer): void
+    protected function addInfoMessageToMessenger(MinimumOrderValueTransfer $minimumOrderValueTransfer): void
     {
-        if ($quoteTransfer->getCustomer() === null || $quoteTransfer->getCustomer()->getLocale() === null) {
-            return;
-        }
-
-        foreach ($minimumOrderValueTransfer->getLocalizedMessages() as $localizedMessageTransfer) {
-            if ($localizedMessageTransfer->getLocaleCode() === $quoteTransfer->getCustomer()->getLocale()->getLocaleName()) {
-                $this->messengerFacade->addInfoMessage($this->createMessageTransfer($localizedMessageTransfer));
-
-                return;
-            }
-        }
+        $this->messengerFacade->addInfoMessage($minimumOrderValueTransfer->getMessageGlossaryKey());
     }
 
     /**

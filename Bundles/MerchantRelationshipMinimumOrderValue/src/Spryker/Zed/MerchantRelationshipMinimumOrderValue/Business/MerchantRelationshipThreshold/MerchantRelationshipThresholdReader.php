@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueTranslationReaderInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\MerchantRelationshipMinimumOrderValueRepositoryInterface;
 
 class MerchantRelationshipThresholdReader implements MerchantRelationshipThresholdReaderInterface
@@ -18,12 +19,20 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     protected $merchantRelationshipMinimumOrderValueRepository;
 
     /**
+     * @var \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueTranslationReaderInterface
+     */
+    protected $translationReader;
+
+    /**
      * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\MerchantRelationshipMinimumOrderValueRepositoryInterface $merchantRelationshipMinimumOrderValueRepository
+     * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueTranslationReaderInterface $translationReader
      */
     public function __construct(
-        MerchantRelationshipMinimumOrderValueRepositoryInterface $merchantRelationshipMinimumOrderValueRepository
+        MerchantRelationshipMinimumOrderValueRepositoryInterface $merchantRelationshipMinimumOrderValueRepository,
+        MerchantRelationshipMinimumOrderValueTranslationReaderInterface $translationReader
     ) {
         $this->merchantRelationshipMinimumOrderValueRepository = $merchantRelationshipMinimumOrderValueRepository;
+        $this->translationReader = $translationReader;
     }
 
     /**

@@ -25,7 +25,7 @@ class SoftThresholdDataProvider implements ThresholdStrategyDataProviderInterfac
         $data[GlobalThresholdType::FIELD_SOFT_VALUE] = $globalMinimumOrderValueTransfer->getMinimumOrderValue()->getValue();
         $data[GlobalThresholdType::FIELD_SOFT_STRATEGY] = MinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_MESSAGE;
 
-        foreach ($globalMinimumOrderValueTransfer->getMinimumOrderValue()->getLocalizedMessages() as $localizedMessage) {
+        foreach ($globalMinimumOrderValueTransfer->getLocalizedMessages() as $localizedMessage) {
             $localizedFormName = GlobalThresholdType::getLocalizedFormName(GlobalThresholdType::PREFIX_SOFT, $localizedMessage->getLocaleCode());
             $data[$localizedFormName][LocalizedForm::FIELD_MESSAGE] = $localizedMessage->getMessage();
         }

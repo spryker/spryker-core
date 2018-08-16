@@ -31,26 +31,9 @@ class MinimumOrderValueHelper extends Module
     /**
      * @return void
      */
-    public function truncateMinimumOrderValueTypes(): void
-    {
-        $this->getMinimumOrderValueTypeQuery()
-            ->deleteAll();
-    }
-
-    /**
-     * @return void
-     */
     public function assertMinimumOrderValueTableIsEmtpy(): void
     {
         $this->assertFalse($this->getMinimumOrderValueQuery()->exists(), sprintf(static::ERROR_MESSAGE_FOUND, SpyMinimumOrderValueTableMap::TABLE_NAME));
-    }
-
-    /**
-     * @return void
-     */
-    public function assertMinimumOrderValueTypeTableIsEmtpy(): void
-    {
-        $this->assertFalse($this->getMinimumOrderValueTypeQuery()->exists(), sprintf(static::ERROR_MESSAGE_FOUND, SpyMinimumOrderValueTypeTableMap::TABLE_NAME));
     }
 
     /**
