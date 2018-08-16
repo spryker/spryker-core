@@ -9,14 +9,12 @@ namespace Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote;
 
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteEntityManagerInterface;
 use Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteRepositoryInterface;
 
 class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
 {
     use PermissionAwareTrait;
-    use TransactionTrait;
 
     /**
      * @var \Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteEntityManagerInterface
@@ -68,7 +66,6 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
     public function deleteShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void
     {
         if ($this->checkWritePermission($shoppingListItemNoteTransfer)) {
-            $shoppingListItemNoteTransfer->requireIdShoppingListItemNote();
             $this->shoppingListNoteEntityManager->deleteShoppingListItemNote($shoppingListItemNoteTransfer);
         }
     }
