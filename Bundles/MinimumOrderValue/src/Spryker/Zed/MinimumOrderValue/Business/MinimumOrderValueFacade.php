@@ -44,8 +44,8 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
-     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
-     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyInvalidArgumentException
+     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException
+     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueThresholdInvalidArgumentException
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
@@ -64,7 +64,7 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
      *
-     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
+     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
      */
@@ -138,7 +138,7 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *
-     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
+     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException
      *
      * @return bool
      */

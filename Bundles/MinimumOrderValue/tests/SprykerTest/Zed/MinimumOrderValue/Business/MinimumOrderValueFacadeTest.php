@@ -121,7 +121,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
     }
 
     /**
-     * @expectedException \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
+     * @expectedException \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException
      *
      * @return void
      */

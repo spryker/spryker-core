@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue;
 
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
-use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyInvalidArgumentException;
+use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueThresholdInvalidArgumentException;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueGlossaryKeyGeneratorInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationWriterInterface;
@@ -57,7 +57,7 @@ class MinimumOrderValueWriter implements MinimumOrderValueWriterInterface
     /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
-     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyInvalidArgumentException
+     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueThresholdInvalidArgumentException
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
@@ -77,7 +77,7 @@ class MinimumOrderValueWriter implements MinimumOrderValueWriterInterface
             );
 
         if (!$minimumOrderValueStrategy->isValid($minimumOrderValueTransfer->getThreshold())) {
-            throw new StrategyInvalidArgumentException();
+            throw new MinimumOrderValueThresholdInvalidArgumentException();
         }
 
         if (!$minimumOrderValueTransfer->getThreshold()

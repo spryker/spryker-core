@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException;
+use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException;
 
 /**
  * @method \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValuePersistenceFactory getFactory()
@@ -22,7 +22,7 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
     /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
      *
-     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
+     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
      */
@@ -37,7 +37,7 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
             ->findOne();
 
         if (!$minimumOrderValueTypeEntity) {
-            throw new StrategyNotFoundException($minimumOrderValueTypeTransfer->getKey());
+            throw new MinimumOrderValueTypeNotFoundException($minimumOrderValueTypeTransfer->getKey());
         }
 
         return $this->getFactory()->createMinimumOrderValueMapper()

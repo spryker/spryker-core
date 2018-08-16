@@ -9,6 +9,6 @@ namespace Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception;
 
 use InvalidArgumentException;
 
-class StrategyInvalidArgumentException extends InvalidArgumentException
+class MinimumOrderValueThresholdInvalidArgumentException extends InvalidArgumentException
 {
 }

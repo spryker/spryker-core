@@ -16,7 +16,7 @@ interface MinimumOrderValueRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
      *
-     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
+     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
      */

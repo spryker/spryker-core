@@ -44,7 +44,7 @@ class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addMinimumOrderValueDataSourceStrategies(Container $container): Container
     {
-        $container[self::MINIMUM_ORDER_VALUE_DATA_SOURCE_STRATEGIES] = function (Container $container) {
+        $container[static::MINIMUM_ORDER_VALUE_DATA_SOURCE_STRATEGIES] = function (Container $container) {
             return $this->getMinimumOrderValueDataSourceStrategies($container);
         };
 

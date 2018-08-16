@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver;
 
-use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException;
+use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface;
 
 class MinimumOrderValueStrategyResolver implements MinimumOrderValueStrategyResolverInterface
@@ -29,7 +29,7 @@ class MinimumOrderValueStrategyResolver implements MinimumOrderValueStrategyReso
     /**
      * @param string $strategyKey
      *
-     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\StrategyNotFoundException
+     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException
      *
      * @return \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface
      */
@@ -41,6 +41,6 @@ class MinimumOrderValueStrategyResolver implements MinimumOrderValueStrategyReso
             }
         }
 
-        throw new StrategyNotFoundException($strategyKey);
+        throw new MinimumOrderValueTypeNotFoundException($strategyKey);
     }
 }

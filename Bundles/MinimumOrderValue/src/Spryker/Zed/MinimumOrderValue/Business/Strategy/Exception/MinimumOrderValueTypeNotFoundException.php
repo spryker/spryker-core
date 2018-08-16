@@ -10,7 +10,7 @@ namespace Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception;
 use Exception;
 use Throwable;
 
-class StrategyNotFoundException extends Exception
+class MinimumOrderValueTypeNotFoundException extends Exception
 {
     protected const MESSAGE = 'No strategy was found for the key `%s`';
 

@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business\Installer;
 
-use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface;
 use Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface;
 
 class MinimumOrderValueTypeInstaller implements MinimumOrderValueTypeInstallerInterface
@@ -55,21 +53,8 @@ class MinimumOrderValueTypeInstaller implements MinimumOrderValueTypeInstallerIn
     {
         foreach ($this->minimumOrderValueStrategies as $minimumOrderValueStrategy) {
             $this->minimumOrderValueEntityManager->saveMinimumOrderValueType(
-                $this->createMinimumOrderValueTypeTransfer($minimumOrderValueStrategy)
+                $minimumOrderValueStrategy->toTransfer()
             );
         }
-    }
-
-    /**
-     * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface $minimumOrderValueStrategy
-     *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
-     */
-    protected function createMinimumOrderValueTypeTransfer(
-        MinimumOrderValueStrategyInterface $minimumOrderValueStrategy
-    ): MinimumOrderValueTypeTransfer {
-        return (new MinimumOrderValueTypeTransfer())
-            ->setKey($minimumOrderValueStrategy->getKey())
-            ->setThresholdGroup($minimumOrderValueStrategy->getGroup());
     }
 }

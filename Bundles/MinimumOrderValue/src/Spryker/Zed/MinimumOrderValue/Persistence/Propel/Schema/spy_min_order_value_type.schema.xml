@@ -6,8 +6,7 @@
           package="src.Orm.Zed.MinimumOrderValue.Persistence">
 
     <table name="spy_min_order_value_type" idMethod="native" allowPkInsert="true" phpName="SpyMinimumOrderValueType">
-        <column name="id_min_order_value_type" required="true" type="INTEGER" primaryKey="true"
-                autoIncrement="true"/>
+        <column name="id_min_order_value_type" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="key" type="VARCHAR" required="true"/>
         <column name="threshold_group" type="VARCHAR" required="true"/>
 
