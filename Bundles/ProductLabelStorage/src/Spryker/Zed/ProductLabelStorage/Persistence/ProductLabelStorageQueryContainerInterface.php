@@ -41,7 +41,7 @@ interface ProductLabelStorageQueryContainerInterface extends QueryContainerInter
      *
      * @param int[] $productAbstractIds
      *
-     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
     public function queryProductLabelProductAbstractByProductAbstractIds(array $productAbstractIds);
 
@@ -50,14 +50,21 @@ interface ProductLabelStorageQueryContainerInterface extends QueryContainerInter
      *
      * @param int[] $productAbstractIds
      *
-     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
     public function queryProductLabelProductAbstractByIds(array $productAbstractIds);
 
     /**
      * @api
      *
-     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelLocalizedAttributesQuery
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    public function queryProductLabelProductAbstract();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
      */
     public function queryProductLabelLocalizedAttributes();
 }

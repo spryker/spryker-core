@@ -131,7 +131,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
 
         foreach ($packageProductConcreteEntityTransfers as $packageProductConcreteEntityTransfer) {
             $productConcretePackagingStorageTransfer = $this->createProductConcretePackagingStorageTransfer($packageProductConcreteEntityTransfer);
-            $hasProductPackagingUnit = $packageProductConcreteEntityTransfer->getSpyProductPackagingUnits()->count() > 0;
+            $hasProductPackagingUnit = $this->hasProductPackagingUnit($packageProductConcreteEntityTransfer);
 
             if (!$hasProductPackagingUnit) {
                 $this->getDefaultParameters($productConcretePackagingStorageTransfer, $hasProductPackagingUnit);
@@ -154,6 +154,20 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
         }
 
         return $productConcretePackagingStorageTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductEntityTransfer $productEntityTransfer
+     *
+     * @return bool
+     */
+    protected function hasProductPackagingUnit(SpyProductEntityTransfer $productEntityTransfer): bool
+    {
+        if ($productEntityTransfer->getSpyProductPackagingUnits() === null) {
+            return false;
+        }
+
+        return $productEntityTransfer->getSpyProductPackagingUnits()->count() > 0;
     }
 
     /**
@@ -185,8 +199,9 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     ): void {
         $productPackagingUnitTypeName = $this->getProductPackagingUnitTypeName($productPackagingUnitEntityTransfer, $defaultPackagingUnitTypeName);
 
+        $hasLeadProduct = ($productPackagingUnitEntityTransfer->getHasLeadProduct() !== null) ? $productPackagingUnitEntityTransfer->getHasLeadProduct() : false;
         $productConcretePackagingStorageTransfer
-            ->setHasLeadProduct($productPackagingUnitEntityTransfer->getHasLeadProduct())
+            ->setHasLeadProduct($hasLeadProduct)
             ->setName($productPackagingUnitTypeName);
     }
 
@@ -209,9 +224,11 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
      */
     protected function getProductPackagingUnitTypeName(SpyProductPackagingUnitEntityTransfer $productPackagingUnitEntityTransfer, string $defaultPackagingUnitTypeName): string
     {
-        return $productPackagingUnitEntityTransfer->getProductPackagingUnitType() ?
-               $productPackagingUnitEntityTransfer->getProductPackagingUnitType()->getName() :
-               $defaultPackagingUnitTypeName;
+        if ($productPackagingUnitEntityTransfer->getProductPackagingUnitType() === null || $productPackagingUnitEntityTransfer->getProductPackagingUnitType()->getName() === null) {
+            return $defaultPackagingUnitTypeName;
+        }
+
+        return $productPackagingUnitEntityTransfer->getProductPackagingUnitType()->getName();
     }
 
     /**
@@ -262,12 +279,12 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
 
     /**
      * @param int $idProductAbstract
-     * @param int $idProduct
+     * @param int|null $idProduct
      * @param array $productAbstractPackagingTypes
      *
      * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer
      */
-    protected function createProductAbstractPackagingStorageTransfer(int $idProductAbstract, int $idProduct, array $productAbstractPackagingTypes): ProductAbstractPackagingStorageTransfer
+    protected function createProductAbstractPackagingStorageTransfer(int $idProductAbstract, ?int $idProduct, array $productAbstractPackagingTypes): ProductAbstractPackagingStorageTransfer
     {
         return (new ProductAbstractPackagingStorageTransfer())
             ->setIdProductAbstract($idProductAbstract)

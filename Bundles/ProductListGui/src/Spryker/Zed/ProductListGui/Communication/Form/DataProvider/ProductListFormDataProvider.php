@@ -18,8 +18,6 @@ class ProductListFormDataProvider
     protected $productListFacade;
 
     /**
-     * ProductListFormDataProvider constructor.
-     *
      * @param \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeInterface $productListFacade
      */
     public function __construct(ProductListGuiToProductListFacadeInterface $productListFacade)
