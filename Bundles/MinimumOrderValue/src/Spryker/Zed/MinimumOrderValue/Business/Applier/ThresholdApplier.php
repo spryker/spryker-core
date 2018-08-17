@@ -17,6 +17,7 @@ use Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrateg
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface;
+use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig;
 
 class ThresholdApplier implements ThresholdApplierInterface
@@ -44,21 +45,29 @@ class ThresholdApplier implements ThresholdApplierInterface
     protected $messengerFacade;
 
     /**
+     * @var \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategyInterface $minimumOrderValueDataSourceStrategy
      * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
      * @param \Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig $config
      * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface $messengerFacade
+     * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface $moneyFacade
      */
     public function __construct(
         ThresholdDataSourceStrategyInterface $minimumOrderValueDataSourceStrategy,
         MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver,
         MinimumOrderValueConfig $config,
-        MinimumOrderValueToMessengerFacadeInterface $messengerFacade
+        MinimumOrderValueToMessengerFacadeInterface $messengerFacade,
+        MinimumOrderValueToMoneyFacadeInterface $moneyFacade
     ) {
         $this->minimumOrderValueDataSourceStrategy = $minimumOrderValueDataSourceStrategy;
         $this->minimumOrderValueStrategyResolver = $minimumOrderValueStrategyResolver;
         $this->config = $config;
         $this->messengerFacade = $messengerFacade;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -225,6 +234,9 @@ class ThresholdApplier implements ThresholdApplierInterface
         $checkoutResponseTransfer->addError(
             (new CheckoutErrorTransfer())
                 ->setMessage($minimumOrderValueThresholdTransfer->getMessageGlossaryKey())
+                ->setParameters([
+                    'threshold_value' => $this->moneyFacade->convertIntegerToDecimal($minimumOrderValueThresholdTransfer->getValue()),
+                ])
         );
     }
 
@@ -248,7 +260,10 @@ class ThresholdApplier implements ThresholdApplierInterface
     protected function createMessageTransfer(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): MessageTransfer
     {
         return (new MessageTransfer())
-            ->setValue($minimumOrderValueThresholdTransfer->getMessageGlossaryKey());
+            ->setValue($minimumOrderValueThresholdTransfer->getMessageGlossaryKey())
+            ->setParameters([
+                'threshold_value' => $this->moneyFacade->convertIntegerToDecimal($minimumOrderValueThresholdTransfer->getValue()),
+            ]);
     }
 
     /**

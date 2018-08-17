@@ -9,6 +9,7 @@
     "spryker/kernel": "^3.17.0",
     "spryker/messenger": "^3.1.0",
     "spryker/minimum-order-value-extension": "^1.0.0",
+    "spryker/money": "^2.0.0",
     "spryker/store": "^1.2.0"
   },
   "require-dev": {
