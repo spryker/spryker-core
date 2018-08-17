@@ -7,7 +7,7 @@
 namespace SprykerTest\Glue\GlueApplication\Rest\Request;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidatorInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface;
@@ -51,7 +51,7 @@ class RestRequestValidatorTest extends Unit
 
         $restRequestValidatorPluginMock
             ->method('validate')
-            ->willReturn(new RestErrorMessageTransfer());
+            ->willReturn(new RestErrorCollectionTransfer());
 
         $restRequestValidator = $this->createRestRequestValidator([$restRequestValidatorPluginMock]);
 
