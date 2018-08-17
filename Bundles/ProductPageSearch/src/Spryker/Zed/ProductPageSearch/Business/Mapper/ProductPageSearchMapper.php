@@ -85,7 +85,10 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     public function mapToProductPageSearchTransferFromJson($data)
     {
         $productAbstractPageSearchTransfer = new ProductPageSearchTransfer();
-        $productAbstractPageSearchTransfer->fromArray($this->utilEncoding->decodeJson($data, true));
+        $decodedData = $this->utilEncoding->decodeJson($data, true);
+        if (is_array($decodedData)) {
+            $productAbstractPageSearchTransfer->fromArray($decodedData);
+        }
 
         return $productAbstractPageSearchTransfer;
     }
