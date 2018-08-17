@@ -136,7 +136,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
 
     /**
      * @param \SimpleXMLElement $mergeTargetXmlElement
-     * @param \SimpleXMLElement[] $schemaXmlElements
+     * @param \SimpleXMLElement[]|\ArrayObject $schemaXmlElements
      *
      * @return string
      */

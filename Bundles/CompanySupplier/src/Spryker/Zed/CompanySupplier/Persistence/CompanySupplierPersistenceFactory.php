@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 class CompanySupplierPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\Company\Persistence\SpyCompanyTypeQuery
+     * @return \Orm\Zed\CompanySupplier\Persistence\SpyCompanyTypeQuery
      */
     public function createCompanyTypeQuery(): SpyCompanyTypeQuery
     {

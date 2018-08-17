@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SprykGui\Business\Spryk;
 
-use Generated\Shared\Transfer\ArgumentCollectionTransfer;
 use Generated\Shared\Transfer\ArgumentTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\ReturnTypeTransfer;
@@ -250,21 +249,9 @@ class Spryk implements SprykInterface
             }
             if (isset($argumentDefinition['isMultiple'])) {
                 if ($argumentName === 'constructorArguments') {
-                    $argumentCollectionTransfer = $userInput['arguments'];
-                    $userInput = [];
-                    $dependencyMethods = [];
-                    if ($argumentCollectionTransfer instanceof ArgumentCollectionTransfer) {
-                        foreach ($argumentCollectionTransfer->getArguments() as $argumentTransfer) {
-                            $userInput[] = $this->buildFromArgument($argumentTransfer);
-                            if ($argumentTransfer->getArgumentMeta() && $argumentTransfer->getArgumentMeta()->getMethod()) {
-                                $dependencyMethods[] = $argumentTransfer->getArgumentMeta()->getMethod();
-                            }
-                        }
-                    }
-                    $commandLineArguments[$argumentName] = $userInput;
-                    if (count($dependencyMethods) > 0) {
-                        $commandLineArguments['dependencyMethods'] = $dependencyMethods;
-                    }
+                    $commandLineArguments['constructorArguments'] = $userInput;
+                    $commandLineArguments['dependencyMethods'] = $this->getUserInputForArgument('dependencyMethods', $formData);
+                    ;
                     continue;
                 }
             }

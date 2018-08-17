@@ -50,6 +50,9 @@ class FacetUpdaterByProductCategoryFilters implements FacetUpdaterInterface
 
         $newFacets = [];
         foreach ($filters as $productCategoryFilterItemTransfer) {
+            if ($productCategoryFilterItemTransfer === null) {
+                continue;
+            }
             if ($productCategoryFilterItemTransfer->getIsActive() === true && isset($facets[$productCategoryFilterItemTransfer->getKey()])) {
                 $newFacets[$productCategoryFilterItemTransfer->getKey()] = $facets[$productCategoryFilterItemTransfer->getKey()];
             }

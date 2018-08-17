@@ -12,6 +12,9 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface;
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface;
 
+/**
+ * @deprecated This is not used anymore.
+ */
 class DependencyViolationChecker implements DependencyViolationCheckerInterface
 {
     /**
