@@ -34,16 +34,14 @@ class ProductAttributeRepository extends AbstractRepository implements ProductAt
             ->innerJoinSpyProductAttributeKey()
             ->useSpyProductAttributeKeyQuery()
                 ->filterByKey($attributes, Criteria::IN)
+                ->filterByIsSuper(true)
             ->enduse();
 
         $productManagementAttributeKeyEntityCollection = $query->find();
 
         foreach ($productManagementAttributeKeyEntityCollection as $productManagementAttributeEntity) {
-            if ($productManagementAttributeEntity->getSpyProductAttributeKey()->getIsSuper() === true) {
-                $productManagementAttributeTransfer = $mapper->mapProductManagementAttributeEntityToTransfer($productManagementAttributeEntity, new ProductManagementAttributeTransfer());
-
-                $superAttributes[$productManagementAttributeTransfer->getKey()] = $productManagementAttributeTransfer;
-            }
+            $productManagementAttributeTransfer = $mapper->mapProductManagementAttributeEntityToTransfer($productManagementAttributeEntity, new ProductManagementAttributeTransfer());
+            $superAttributes[$productManagementAttributeTransfer->getKey()] = $mapper->mapProductManagementAttributeEntityToTransfer($productManagementAttributeEntity, new ProductManagementAttributeTransfer());
         }
 
         return $superAttributes;
