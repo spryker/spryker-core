@@ -110,9 +110,9 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
      * @param string $productConcreteSku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    protected function findOneByProductConcrete(string $productConcreteSku, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findOneByProductConcrete(string $productConcreteSku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         $concreteProductData = $this->productResourceAliasStorageClient->findProductConcreteStorageDataBySku(
             $productConcreteSku,

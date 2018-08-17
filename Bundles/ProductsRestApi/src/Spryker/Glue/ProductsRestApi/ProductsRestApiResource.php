@@ -6,6 +6,7 @@
 
 namespace Spryker\Glue\ProductsRestApi;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\AbstractRestResource;
 
@@ -15,16 +16,16 @@ use Spryker\Glue\Kernel\AbstractRestResource;
 class ProductsRestApiResource extends AbstractRestResource implements ProductsRestApiResourceInterface
 {
     /**
-     * @param array $productIdentifiers
+     * @param string $productIdentifier
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findByConcreteProductSkus(array $productIdentifiers, RestRequestInterface $restRequest): array
+    public function findByConcreteProductSku(string $productIdentifier, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         return $this
             ->getFactory()
             ->createConcreteProductsReader()
-            ->findProductConcretesByProductConcreteSkus($productIdentifiers, $restRequest);
+            ->findOneByProductConcrete($productIdentifier, $restRequest);
     }
 }

@@ -6,15 +6,16 @@
 
 namespace Spryker\Glue\ProductsRestApi;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface ProductsRestApiResourceInterface
 {
     /**
-     * @param array $productIdentifiers
+     * @param string $productIdentifier
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findByConcreteProductSkus(array $productIdentifiers, RestRequestInterface $restRequest): array;
+    public function findByConcreteProductSku(string $productIdentifier, RestRequestInterface $restRequest): ?RestResourceInterface;
 }
