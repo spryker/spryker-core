@@ -1,4 +1,4 @@
-merchant_relation_key,store,currency,threshold_type_key,threshold,fee,message_en,message_de
-mr-test-001,DE,EUR,hard-threshold,800,,,
-mr-test-002,DE,EUR,soft-threshold-flexible-fee,500,12%,,
-mr-test-003,DE,EUR,soft-threshold-fixed-fee,400,77,,
+merchant_relation_key,store,currency,threshold_type_key,threshold,fee
+mr-test-001,DE,EUR,hard-threshold,800,
+mr-test-002,DE,EUR,soft-threshold-flexible-fee,500,12%
+mr-test-003,DE,EUR,soft-threshold-fixed-fee,400,77
