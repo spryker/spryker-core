@@ -21,8 +21,6 @@ use Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig;
 
 class ThresholdApplier implements ThresholdApplierInterface
 {
-    protected const THRESHOLD_EXPENSE_TYPE = 'THRESHOLD_EXPENSE_TYPE';
-
     /**
      * @var \Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategyInterface
      */
@@ -148,7 +146,7 @@ class ThresholdApplier implements ThresholdApplierInterface
     protected function removeMinimumOrderValueExpensesFromQuote(QuoteTransfer $quoteTransfer): void
     {
         foreach ($quoteTransfer->getExpenses() as $expenseOffset => $expenseTransfer) {
-            if ($expenseTransfer->getType() === static::THRESHOLD_EXPENSE_TYPE) {
+            if ($expenseTransfer->getType() === $this->config->getMinimumOrderValueExpenseType()) {
                 $quoteTransfer->getExpenses()->offsetUnset($expenseOffset);
                 continue;
             }
@@ -186,7 +184,7 @@ class ThresholdApplier implements ThresholdApplierInterface
     ): ExpenseTransfer {
         $expenseTransfer = (new ExpenseTransfer())
             ->setName($minimumOrderValueThresholdTransfer->getMinimumOrderValueType()->getKey())
-            ->setType(static::THRESHOLD_EXPENSE_TYPE)
+            ->setType($this->config->getMinimumOrderValueExpenseType())
             ->setQuantity(1);
 
         if ($priceMode === $this->config->getNetPriceMode()) {

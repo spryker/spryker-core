@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeBridge;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeBridge;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeBridge;
+use Spryker\Zed\MinimumOrderValue\Dependency\QueryContainer\MinimumOrderValueToSalesQueryContainerBridge;
 
 class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -19,6 +20,7 @@ class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_MESSENGER = 'MESSENGER_FACADE';
+    public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -33,6 +35,7 @@ class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addGlossaryFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMessengerFacade($container);
+        $container = $this->addSalesQueryContainer($container);
 
         return $container;
     }
@@ -88,6 +91,20 @@ class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container[static::FACADE_MESSENGER] = function (Container $container) {
             return new MinimumOrderValueToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesQueryContainer(Container $container): Container
+    {
+        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
+            return new MinimumOrderValueToSalesQueryContainerBridge($container->getLocator()->sales()->queryContainer());
         };
 
         return $container;

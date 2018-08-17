@@ -20,6 +20,8 @@ use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueWr
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueWriterInterface;
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueType\MinimumOrderValueTypeReader;
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueType\MinimumOrderValueTypeReaderInterface;
+use Spryker\Zed\MinimumOrderValue\Business\OrderSaver\OrderMinimumOrderValueFeesSaver;
+use Spryker\Zed\MinimumOrderValue\Business\OrderSaver\OrderMinimumOrderValueFeesSaverInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolver;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueGlossaryKeyGenerator;
@@ -31,6 +33,7 @@ use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslat
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeInterface;
+use Spryker\Zed\MinimumOrderValue\Dependency\QueryContainer\MinimumOrderValueToSalesQueryContainerInterface;
 use Spryker\Zed\MinimumOrderValue\MinimumOrderValueDependencyProvider;
 
 /**
@@ -139,6 +142,17 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MinimumOrderValue\Business\OrderSaver\OrderMinimumOrderValueFeesSaverInterface
+     */
+    public function createOrderMinimumOrderValueFeesSaver(): OrderMinimumOrderValueFeesSaverInterface
+    {
+        return new OrderMinimumOrderValueFeesSaver(
+            $this->getSalesQueryContainer(),
+            $this->getConfig()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategyInterface
      */
     public function createThresholdDataSourceStrategy(): ThresholdDataSourceStrategyInterface
@@ -180,5 +194,13 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     public function getMessengerFacade(): MinimumOrderValueToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Dependency\QueryContainer\MinimumOrderValueToSalesQueryContainerInterface
+     */
+    public function getSalesQueryContainer(): MinimumOrderValueToSalesQueryContainerInterface
+    {
+        return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::QUERY_CONTAINER_SALES);
     }
 }
