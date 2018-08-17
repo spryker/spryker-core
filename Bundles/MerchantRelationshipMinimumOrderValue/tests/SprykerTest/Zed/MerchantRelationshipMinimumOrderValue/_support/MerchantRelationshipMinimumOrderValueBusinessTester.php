@@ -54,7 +54,7 @@ class MerchantRelationshipMinimumOrderValueBusinessTester extends Actor
     }
 
     /**
-     * @param string $strategyKey
+     * @param string $minimumOrderValueTypeKey
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
@@ -64,14 +64,14 @@ class MerchantRelationshipMinimumOrderValueBusinessTester extends Actor
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
     public function createTestMerchantRelationshipMinimumOrderValueTransfer(
-        string $strategyKey,
+        string $minimumOrderValueTypeKey,
         MerchantRelationshipTransfer $merchantRelationshipTransfer,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
         int $thresholdValue,
         ?int $fee = null
     ): MerchantRelationshipMinimumOrderValueTransfer {
-        $minimumOrderValueTypeTransfer = $this->createTestMinimumOrderValueTypeTransfer($strategyKey);
+        $minimumOrderValueTypeTransfer = $this->createTestMinimumOrderValueTypeTransfer($minimumOrderValueTypeKey);
 
         return (new MerchantRelationshipMinimumOrderValueTransfer())
             ->setMerchantRelationship($merchantRelationshipTransfer)
@@ -86,14 +86,14 @@ class MerchantRelationshipMinimumOrderValueBusinessTester extends Actor
     }
 
     /**
-     * @param string $strategyKey
+     * @param string $minimumOrderValueTypeKey
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
      */
-    protected function createTestMinimumOrderValueTypeTransfer(string $strategyKey): MinimumOrderValueTypeTransfer
+    protected function createTestMinimumOrderValueTypeTransfer(string $minimumOrderValueTypeKey): MinimumOrderValueTypeTransfer
     {
         return (new MinimumOrderValueTypeTransfer())
-            ->setKey($strategyKey);
+            ->setKey($minimumOrderValueTypeKey);
     }
 
     /**

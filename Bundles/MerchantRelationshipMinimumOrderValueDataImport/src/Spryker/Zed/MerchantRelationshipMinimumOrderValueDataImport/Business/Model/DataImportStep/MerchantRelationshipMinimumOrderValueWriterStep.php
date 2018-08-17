@@ -124,7 +124,7 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
     }
 
     /**
-     * @param string $strategyKey
+     * @param string $minimumOrderValueTypeKey
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
@@ -134,7 +134,7 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
     protected function createMerchantRelationshipMinimumOrderValueTransfer(
-        string $strategyKey,
+        string $minimumOrderValueTypeKey,
         MerchantRelationshipTransfer $merchantRelationshipTransfer,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
@@ -151,7 +151,7 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
                     ->setFee($fee)
                     ->setMinimumOrderValueType(
                         (new MinimumOrderValueTypeTransfer())
-                            ->setKey($strategyKey)
+                            ->setKey($minimumOrderValueTypeKey)
                     )
             );
     }

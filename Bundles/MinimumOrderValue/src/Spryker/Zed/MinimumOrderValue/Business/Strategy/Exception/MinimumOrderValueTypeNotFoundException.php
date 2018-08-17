@@ -15,14 +15,14 @@ class MinimumOrderValueTypeNotFoundException extends Exception
     protected const MESSAGE = 'No strategy was found for the key `%s`';
 
     /**
-     * @param string $strategyKey
+     * @param string $minimumOrderValueTypeKey
      * @param string $message
      * @param int $code
      * @param \Throwable|null $previous
      */
-    public function __construct(string $strategyKey, string $message = "", int $code = 0, ?Throwable $previous = null)
+    public function __construct(string $minimumOrderValueTypeKey, string $message = "", int $code = 0, ?Throwable $previous = null)
     {
-        $this->message = sprintf(static::MESSAGE, $strategyKey);
+        $this->message = sprintf(static::MESSAGE, $minimumOrderValueTypeKey);
 
         parent::__construct($message, $code, $previous);
     }

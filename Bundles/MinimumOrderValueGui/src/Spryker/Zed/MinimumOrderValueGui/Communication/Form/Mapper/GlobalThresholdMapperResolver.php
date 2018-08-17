@@ -42,30 +42,30 @@ class GlobalThresholdMapperResolver implements GlobalThresholdMapperResolverInte
     }
 
     /**
-     * @param string $strategyKey
+     * @param string $minimumOrderValueTypeKey
      *
      * @throws \Spryker\Zed\MinimumOrderValueGui\Communication\Exception\MissingGlobalThresholdFormMapperException
      *
      * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalThresholdFormMapperInterface
      */
-    public function resolveGlobalThresholdMapperByStrategyKey(string $strategyKey): GlobalThresholdFormMapperInterface
+    public function resolveGlobalThresholdMapperByStrategyKey(string $minimumOrderValueTypeKey): GlobalThresholdFormMapperInterface
     {
-        if (!$this->hasGlobalThresholdMapperByStrategyKey($strategyKey)) {
+        if (!$this->hasGlobalThresholdMapperByStrategyKey($minimumOrderValueTypeKey)) {
             throw new MissingGlobalThresholdFormMapperException();
         }
         /** @var \Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalThresholdFormMapperInterface $mapperClass */
-        $mapperClass = $this->config->getGlobalThresholdMappers()[$strategyKey];
+        $mapperClass = $this->config->getGlobalThresholdMappers()[$minimumOrderValueTypeKey];
 
         return new $mapperClass($this->localeProvider, $this->storeCurrencyFinder);
     }
 
     /**
-     * @param string $strategyKey
+     * @param string $minimumOrderValueTypeKey
      *
      * @return bool
      */
-    public function hasGlobalThresholdMapperByStrategyKey(string $strategyKey): bool
+    public function hasGlobalThresholdMapperByStrategyKey(string $minimumOrderValueTypeKey): bool
     {
-        return array_key_exists($strategyKey, $this->config->getGlobalThresholdMappers());
+        return array_key_exists($minimumOrderValueTypeKey, $this->config->getGlobalThresholdMappers());
     }
 }

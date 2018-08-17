@@ -26,30 +26,30 @@ class GlobalThresholdDataProviderResolver implements GlobalThresholdDataProvider
     }
 
     /**
-     * @param string $strategyKey
+     * @param string $minimumOrderValueTypeKey
      *
      * @throws \Spryker\Zed\MinimumOrderValueGui\Communication\Exception\MissingThresholdDataProviderException
      *
      * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdStrategyDataProviderInterface
      */
-    public function resolveGlobalThresholdDataProviderByStrategyKey(string $strategyKey): ThresholdStrategyDataProviderInterface
+    public function resolveGlobalThresholdDataProviderByStrategyKey(string $minimumOrderValueTypeKey): ThresholdStrategyDataProviderInterface
     {
-        if (!$this->hasGlobalThresholdDataProviderByStrategyKey($strategyKey)) {
+        if (!$this->hasGlobalThresholdDataProviderByStrategyKey($minimumOrderValueTypeKey)) {
             throw new MissingThresholdDataProviderException();
         }
         /** @var \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdStrategyDataProviderInterface $dataProvider */
-        $dataProvider = $this->config->getGlobalThresholdDataProviders()[$strategyKey];
+        $dataProvider = $this->config->getGlobalThresholdDataProviders()[$minimumOrderValueTypeKey];
 
         return new $dataProvider();
     }
 
     /**
-     * @param string $strategyKey
+     * @param string $minimumOrderValueTypeKey
      *
      * @return bool
      */
-    public function hasGlobalThresholdDataProviderByStrategyKey(string $strategyKey): bool
+    public function hasGlobalThresholdDataProviderByStrategyKey(string $minimumOrderValueTypeKey): bool
     {
-        return array_key_exists($strategyKey, $this->config->getGlobalThresholdDataProviders());
+        return array_key_exists($minimumOrderValueTypeKey, $this->config->getGlobalThresholdDataProviders());
     }
 }

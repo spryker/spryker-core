@@ -92,7 +92,7 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
     }
 
     /**
-     * @param string $strategyKey
+     * @param string $minimumOrderValueTypeKey
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      * @param int $thresholdValue
@@ -101,7 +101,7 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
     protected function createMinimumOrderValueTransfer(
-        string $strategyKey,
+        string $minimumOrderValueTypeKey,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
         int $thresholdValue,
@@ -116,7 +116,7 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
                     ->setFee($fee)
                     ->setMinimumOrderValueType(
                         (new MinimumOrderValueTypeTransfer())
-                            ->setKey($strategyKey)
+                            ->setKey($minimumOrderValueTypeKey)
                     )
             );
     }

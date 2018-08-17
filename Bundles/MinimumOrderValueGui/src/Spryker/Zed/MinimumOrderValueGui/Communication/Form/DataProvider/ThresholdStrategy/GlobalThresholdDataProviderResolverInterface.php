@@ -10,18 +10,18 @@ namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\Thres
 interface GlobalThresholdDataProviderResolverInterface
 {
     /**
-     * @param string $strategyKey
+     * @param string $minimumOrderValueTypeKey
      *
      * @throws \Spryker\Zed\MinimumOrderValueGui\Communication\Exception\MissingGlobalThresholdFormMapperException
      *
      * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdStrategyDataProviderInterface
      */
-    public function resolveGlobalThresholdDataProviderByStrategyKey(string $strategyKey): ThresholdStrategyDataProviderInterface;
+    public function resolveGlobalThresholdDataProviderByStrategyKey(string $minimumOrderValueTypeKey): ThresholdStrategyDataProviderInterface;
 
     /**
-     * @param string $strategyKey
+     * @param string $minimumOrderValueTypeKey
      *
      * @return bool
      */
-    public function hasGlobalThresholdDataProviderByStrategyKey(string $strategyKey): bool;
+    public function hasGlobalThresholdDataProviderByStrategyKey(string $minimumOrderValueTypeKey): bool;
 }
