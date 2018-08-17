@@ -41,6 +41,8 @@ class MerchantRelationshipMinimumOrderValueRepository extends AbstractRepository
             ->filterByFkMerchantRelationship_In($merchantRelationshipIds)
             ->filterByStoreTransfer($storeTransfer)
             ->filterByCurrencyTransfer($currencyTransfer)
+            ->joinStore()
+            ->joinCurrency()
             ->joinMerchantRelationship()
             ->joinMinimumOrderValueType()
             ->find();
