@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueFacadeInterface getFacade()
- * @method \Spryker\Zed\MinimumOrderValue\Communication\MinimumOrderValueCommunicationFactory getFactory()
  */
 class MinimumOrderValueCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {

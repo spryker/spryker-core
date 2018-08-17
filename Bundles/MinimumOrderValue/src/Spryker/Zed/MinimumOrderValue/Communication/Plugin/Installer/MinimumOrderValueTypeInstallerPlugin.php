@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Communication\Plugin;
+namespace Spryker\Zed\MinimumOrderValue\Communication\Plugin\Installer;
 
 use Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
