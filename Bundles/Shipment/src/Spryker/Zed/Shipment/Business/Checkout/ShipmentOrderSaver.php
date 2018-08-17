@@ -128,7 +128,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         SaveOrderTransfer $saveOrderTransfer
     ) {
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if (ShipmentConstants::SHIPMENT_EXPENSE_TYPE === $expenseTransfer->getType()) {
+            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
                 $salesOrderExpenseEntity = new SpySalesExpense();
                 $this->hydrateOrderExpenseEntity($salesOrderExpenseEntity, $expenseTransfer);
                 $salesOrderExpenseEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
