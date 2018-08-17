@@ -47,18 +47,16 @@ class AddressesWriter implements AddressesWriterInterface
      */
     public function updateAddress(RestAddressAttributesTransfer $addressAttributesTransfer): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
         $addressTransfer = (new AddressTransfer())->fromArray($addressAttributesTransfer->toArray(), true);
-
         $address = $this->customerClient->findAddressByUuid($addressTransfer);
 
-        if (!$address->getUuid()) {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        if (!$address) {
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_NOT_FOUND)
                 ->setStatus(Response::HTTP_NOT_FOUND)
                 ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_ADDRESS_NOT_FOUND);
-
             $restResponse->addError($restErrorTransfer);
 
             return $restResponse;
