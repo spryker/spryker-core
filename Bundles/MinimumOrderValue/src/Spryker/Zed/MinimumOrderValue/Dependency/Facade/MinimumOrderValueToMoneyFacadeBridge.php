@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Dependency\Facade;
 
+use Generated\Shared\Transfer\MoneyTransfer;
+
 class MinimumOrderValueToMoneyFacadeBridge implements MinimumOrderValueToMoneyFacadeInterface
 {
     /**
@@ -23,12 +25,12 @@ class MinimumOrderValueToMoneyFacadeBridge implements MinimumOrderValueToMoneyFa
     }
 
     /**
-     * @param int $value
+     * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
      *
-     * @return float
+     * @return string
      */
-    public function convertIntegerToDecimal($value)
+    public function formatWithSymbol(MoneyTransfer $moneyTransfer)
     {
-        return $this->moneyFacade->convertIntegerToDecimal($value);
+        return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }
 }
