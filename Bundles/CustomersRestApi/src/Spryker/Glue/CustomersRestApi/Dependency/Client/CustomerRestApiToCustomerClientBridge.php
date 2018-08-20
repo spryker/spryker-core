@@ -6,6 +6,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 class CustomerRestApiToCustomerClientBridge implements CustomerRestApiToCustomerClientInterface
@@ -76,7 +77,7 @@ class CustomerRestApiToCustomerClientBridge implements CustomerRestApiToCustomer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function updateAddress($addressTransfer)
+    public function updateAddress(AddressTransfer $addressTransfer)
     {
         return $this->customerClient->updateAddress($addressTransfer);
     }
