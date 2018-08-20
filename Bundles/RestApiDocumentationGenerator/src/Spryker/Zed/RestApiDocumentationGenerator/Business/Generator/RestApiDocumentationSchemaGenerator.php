@@ -12,6 +12,12 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaGeneratorInterface
 {
+    protected const DATA_TYPES_MAPPING_LIST = [
+        'int' => 'integer',
+        'bool' => 'boolean',
+        'float' => 'number',
+    ];
+
     /**
      * @var array
      */
@@ -88,7 +94,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
         $schemaProperties = [];
         foreach ($transferMetadataValue as $key => $value) {
             if (class_exists($value['type'])) {
-                $schemaProperties[$key]['$ref'] = $this->formatSchemaType($value['type']);
+                $schemaProperties[$key]['$ref'] = $this->formatTransferClassToSchemaType($value['type']);
             } else {
                 $schemaProperties[$key]['type'] = $this->formatSchemaType($value['type']);
             }
@@ -104,23 +110,26 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      */
     protected function formatSchemaType(string $type): string
     {
-        switch ($type) {
-            case 'int':
-                return 'integer';
-            case 'bool':
-                return 'boolean';
+        if (array_key_exists($type, static::DATA_TYPES_MAPPING_LIST)) {
+            return static::DATA_TYPES_MAPPING_LIST[$type];
         }
 
         if (substr($type, -2) === '[]') {
             return 'array';
         }
 
-        if (class_exists($type)) {
-            $this->addTransferToSchema(new $type, $this->getSchemaKeyFromTransferClassName($type));
-
-            return sprintf('#/components/schemas/%s', $this->getSchemaKeyFromTransferClassName($type));
-        }
-
         return $type;
+    }
+
+    /**
+     * @param string $transferClassName
+     *
+     * @return string
+     */
+    protected function formatTransferClassToSchemaType(string $transferClassName): string
+    {
+        $this->addTransferToSchema(new $transferClassName, $this->getSchemaKeyFromTransferClassName($transferClassName));
+
+        return sprintf('#/components/schemas/%s', $this->getSchemaKeyFromTransferClassName($transferClassName));
     }
 }
