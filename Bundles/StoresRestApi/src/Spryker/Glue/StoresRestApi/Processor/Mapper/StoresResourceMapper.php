@@ -79,15 +79,15 @@ class StoresResourceMapper implements StoresResourceMapperInterface
      */
     protected function addTimeZoneToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, Store $store): StoresRestAttributesTransfer
     {
-        if (!isset($store->getContexts()['glue']['timezone']) && !isset($store->getContexts()['*']['timezone'])) {
-            return $storesRestAttributes;
-        }
-
         if (isset($store->getContexts()['glue']['timezone'])) {
             return $storesRestAttributes->setTimeZone($store->getContexts()['glue']['timezone']);
         }
 
-        return $storesRestAttributes->setTimeZone($store->getContexts()['*']['timezone']);
+        if (isset($store->getContexts()['*']['timezone'])) {
+            return $storesRestAttributes->setTimeZone($store->getContexts()['*']['timezone']);
+        }
+
+        return $storesRestAttributes;
     }
 
     /**
