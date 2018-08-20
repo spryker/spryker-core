@@ -776,7 +776,7 @@ class ProductOptionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductOptionCollectionByCriteriaWithTwoIdsReturnsCollection()
+    public function testGetProductOptionCollectionByCriteriaWithTwoIdsReturnsCollection(): void
     {
         $productOptionFacade = $this->createProductOptionFacade();
         $productOptionValueTransfer = $this->createProductOptionValueTransfer();
@@ -804,7 +804,7 @@ class ProductOptionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductOptionCollectionByCriteriaWithNoIdReturnsEmptyCollection()
+    public function testGetProductOptionCollectionByCriteriaWithNoIdReturnsEmptyCollection(): void
     {
         $ids = [];
         $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setIds($ids);
@@ -857,7 +857,7 @@ class ProductOptionFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ProductOptionValueTransfer
      */
-    protected function createProductOptionValueTransfer(string $sku = 'sku_for_testing')
+    protected function createProductOptionValueTransfer(string $sku = 'sku_for_testing'): ProductOptionValueTransfer
     {
         $productOptionValueTransfer = new ProductOptionValueTransfer();
         $productOptionValueTransfer->setValue('value.translation.key');
