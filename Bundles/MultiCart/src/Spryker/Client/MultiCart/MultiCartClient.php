@@ -105,7 +105,12 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
             ->getQuoteClient()
             ->getStorageStrategy();
 
-        return $storageStrategy === QuoteConfig::STORAGE_STRATEGY_DATABASE;
+        $idQuote = $this->getFactory()
+            ->getQuoteClient()
+            ->getQuote()
+            ->getIdQuote();
+
+        return $idQuote && $storageStrategy === QuoteConfig::STORAGE_STRATEGY_DATABASE;
     }
 
     /**
