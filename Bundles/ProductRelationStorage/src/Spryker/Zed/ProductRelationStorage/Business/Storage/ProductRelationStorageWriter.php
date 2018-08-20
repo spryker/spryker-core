@@ -40,7 +40,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     /**
      * @var array
      */
-    protected static $relationProductsCache = [];
+    protected $relationProductsCache = [];
 
     /**
      * @param \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface $queryContainer
@@ -66,7 +66,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     {
         $productRelationEntities = $this->findProductRelationAbstractEntities($productAbstractIds);
 
-        static::$relationProductsCache = $this->getRelationProductsCache(
+        $this->relationProductsCache = $this->getRelationProductsCache(
             $this->getIdsFromProductRelationEntities($productRelationEntities)
         );
 
@@ -262,7 +262,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      */
     protected function findRelationProducts($idProductRelation, $idLocale)
     {
-        return static::$relationProductsCache[$idProductRelation][$idLocale] ?? [];
+        return $this->relationProductsCache[$idProductRelation][$idLocale] ?? [];
     }
 
     /**
