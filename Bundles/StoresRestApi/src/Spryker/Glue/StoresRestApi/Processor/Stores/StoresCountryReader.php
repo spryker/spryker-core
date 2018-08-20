@@ -9,7 +9,6 @@ namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
 use Generated\Shared\Transfer\CountryRequestTransfer;
 use Generated\Shared\Transfer\RegionRequestTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCountryResourceMapperInterface;
 
@@ -21,27 +20,19 @@ class StoresCountryReader implements StoresCountryReaderInterface
     protected $countryClient;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
-
-    /**
      * @var \Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCountryResourceMapperInterface
      */
     protected $storesCountryResourceMapper;
 
     /**
      * @param \Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientInterface $countryClient
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCountryResourceMapperInterface $storesCountryResourceMapper
      */
     public function __construct(
         StoresRestApiToCountryClientInterface $countryClient,
-        RestResourceBuilderInterface $restResourceBuilder,
         StoresCountryResourceMapperInterface $storesCountryResourceMapper
     ) {
         $this->countryClient = $countryClient;
-        $this->restResourceBuilder = $restResourceBuilder;
         $this->storesCountryResourceMapper = $storesCountryResourceMapper;
     }
 

@@ -7,15 +7,12 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\StoresRestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresResourceMapperInterface;
 use Spryker\Glue\StoresRestApi\StoresRestApiConfig;
 use Spryker\Shared\Kernel\Store;
-use Symfony\Component\HttpFoundation\Response;
 
 class StoresReader implements StoresReaderInterface
 {
@@ -72,39 +69,9 @@ class StoresReader implements StoresReaderInterface
      */
     public function getStoresAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$this->store->getStoreName()) {
-            return $this->createInvalidStoreResponse();
-        }
-
-        $storesRestAttributes = new StoresRestAttributesTransfer();
-
-        $storesRestAttributes = $this->storesResourceMapper->mapLocaleToStoresRestAttributes(
-            $storesRestAttributes,
-            $this->store->getLocales()
-        );
-
-        $storesRestAttributes = $this->storesResourceMapper->mapStoreCountryToStoresRestAttributes(
-            $storesRestAttributes,
-            $this->countryReader->getStoresCountryAttributes($this->store->getCountries())
-        );
-
-        $storesRestAttributes = isset($this->store->getContexts()['glue']['timezone']) ?
-            $this->storesResourceMapper->mapTimeZoneToStoresRestAttributes(
-                $storesRestAttributes,
-                $this->store->getContexts()['glue']['timezone']
-            ) : (isset($this->store->getContexts()['*']['timezone']) ?
-                $this->storesResourceMapper->mapTimeZoneToStoresRestAttributes(
-                    $storesRestAttributes,
-                    $this->store->getContexts()['*']['timezone']
-                ) : $storesRestAttributes);
-
-        $storesRestAttributes = $this->storesResourceMapper->mapDefaultCurrencyToStoresRestAttributes(
-            $storesRestAttributes,
-            $this->store->getDefaultCurrencyCode()
-        );
-
-        $storesRestAttributes = $this->storesResourceMapper->mapStoreCurrencyToStoresRestAttributes(
-            $storesRestAttributes,
+        $storesRestAttributes = $this->storesResourceMapper->mapStoreToStoresRestAttribute(
+            $this->store,
+            $this->countryReader->getStoresCountryAttributes($this->store->getCountries()),
             $this->currencyReader->getStoresCurrencyAttributes($this->store->getCurrencyIsoCodes())
         );
 
@@ -117,16 +84,5 @@ class StoresReader implements StoresReaderInterface
         $response = $this->restResourceBuilder->createRestResponse();
 
         return $response->addResource($restResource);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createInvalidStoreResponse(): RestResponseInterface
-    {
-        return $this->restResourceBuilder->createRestResponse()->addError((new RestErrorMessageTransfer())
-            ->setCode(StoresRestApiConfig::RESPONSE_CODE_CANT_FIND_STORE)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(StoresRestApiConfig::RESPONSE_DETAIL_CANT_FIND_STORE));
     }
 }

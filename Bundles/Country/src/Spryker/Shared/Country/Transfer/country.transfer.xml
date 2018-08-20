@@ -10,7 +10,6 @@
         <property name="name" type="string" />
         <property name="postalCodeMandatory" type="bool" />
         <property name="postalCodeRegex" type="string" />
-        <property name="CountryRequests" type="CountryRequest[]" />
     </transfer>
 
     <transfer name="CountryCollection">
@@ -22,7 +21,6 @@
         <property name="fkCountry" type="int" />
         <property name="name" type="string" />
         <property name="iso2Code" type="string" />
-        <property name="RegionRequests" type="RegionRequest[]" />
     </transfer>
 
     <transfer name="RegionCollection">

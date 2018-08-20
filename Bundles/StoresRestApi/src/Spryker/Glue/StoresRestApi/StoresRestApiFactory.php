@@ -71,7 +71,6 @@ class StoresRestApiFactory extends AbstractFactory
     {
         return new StoresCountryReader(
             $this->getCountryClient(),
-            $this->getResourceBuilder(),
             $this->createStoresCountryResourceMapper()
         );
     }
@@ -83,7 +82,6 @@ class StoresRestApiFactory extends AbstractFactory
     {
         return new StoresCurrencyReader(
             $this->getCurrencyClient(),
-            $this->getResourceBuilder(),
             $this->createStoresCurrencyResourceMapper(),
             $this->getStore()
         );

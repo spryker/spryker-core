@@ -146,8 +146,8 @@ class CountryFacadeTest extends Unit
         $region->setIso2Code('TS');
         $region->save();
 
-        $this->countryFacade->getRegionsByCountryIso2Code(
+        $this->assertGreaterThan(0, $this->countryFacade->getRegionsByCountryIso2Code(
             (new RegionRequestBuilder())->build()->setCountryIso2Code($country->getIso2Code())
-        );
+        )->getRegions()->count());
     }
 }
