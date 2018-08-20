@@ -9,14 +9,24 @@ namespace Spryker\Zed\MinimumOrderValue\Business\Strategy;
 
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 
-class HardThresholdStrategy extends AbstractMinimumOrderValueStrategy implements MinimumOrderValueStrategyInterface
+class HardThresholdStrategy extends AbstractMinimumOrderValueStrategy
 {
     protected const STRATEGY_KEY = 'hard-threshold';
 
-    public function __construct()
+    /**
+     * @return string
+     */
+    public function getKey(): string
     {
-        $this->setKey(static::STRATEGY_KEY);
-        $this->setGroup(static::GROUP_HARD);
+        return static::STRATEGY_KEY;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGroup(): string
+    {
+        return static::GROUP_HARD;
     }
 
     /**
