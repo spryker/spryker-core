@@ -1,0 +1,26 @@
+{
+  "name": "spryker/shopping-list-product-option",
+  "description": "ShoppingListProductOption module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/kernel": "^3.0.0",
+    "spryker/product-option": "^6.3.0",
+    "spryker/shopping-list": "^1.1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

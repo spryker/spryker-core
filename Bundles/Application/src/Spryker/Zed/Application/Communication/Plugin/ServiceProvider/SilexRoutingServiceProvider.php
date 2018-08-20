@@ -14,7 +14,7 @@ use Spryker\Shared\Application\Business\Routing\SilexRouter;
 class SilexRoutingServiceProvider implements ServiceProviderInterface
 {
     /**
-     * @param \Silex\Application $app
+     * @param \Spryker\Shared\Kernel\Communication\Application $app
      *
      * @return void
      */
@@ -24,7 +24,7 @@ class SilexRoutingServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * @param \Silex\Application $app
+     * @param \Spryker\Shared\Kernel\Communication\Application $app
      *
      * @return void
      */
