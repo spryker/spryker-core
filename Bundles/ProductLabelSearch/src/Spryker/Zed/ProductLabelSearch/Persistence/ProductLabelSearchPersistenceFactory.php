@@ -8,9 +8,8 @@
 namespace Spryker\Zed\ProductLabelSearch\Persistence;
 
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery;
-use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelQuery;
 use Spryker\Zed\ProductLabelSearch\ProductLabelSearchDependencyProvider;
 
 /**
@@ -28,7 +27,7 @@ class ProductLabelSearchPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelQuery
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
     public function getPropelProductLabelQuery(): SpyProductLabelQuery
     {

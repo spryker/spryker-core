@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductLabelSearch;
 
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelQuery;
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToEventBehaviorFacadeBridge;
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductLabelBridge;
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductPageSearchBridge;
