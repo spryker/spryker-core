@@ -185,6 +185,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
 
         $companyBusinessUnitMap = $this->getCompanyBusinessUnits();
 
+        // A new element in the tree can not cause cycle, since it has no descendants
         if (!$businessUnitId) {
             return false;
         }
