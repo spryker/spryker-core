@@ -289,6 +289,12 @@ class ProductConcreteFormEdit extends ProductFormAdd
      */
     protected function addSuperAttributesForm(FormBuilderInterface $builder, array $options)
     {
+        $superAttributes = $this->getProductConcreteSuperAttributes($builder->getData()[static::FIELD_ID_PRODUCT_CONCRETE]);
+
+        if (empty($superAttributes)) {
+            return $this;
+        }
+
         $builder->add(
             static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES,
             FormType::class,
@@ -298,7 +304,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ]
         );
 
-        foreach ($this->getProductConcreteSuperAttributes($builder->getData()[static::FIELD_ID_PRODUCT_CONCRETE]) as $attributeKey => $attributeValue) {
+        foreach ($superAttributes as $attributeKey => $attributeValue) {
             $builder->get(static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES)
                 ->add(
                     $attributeKey,

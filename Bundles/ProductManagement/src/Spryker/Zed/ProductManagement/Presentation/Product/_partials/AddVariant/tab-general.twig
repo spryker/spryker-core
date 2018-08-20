@@ -7,18 +7,23 @@
 </div>
 
 {{ form_row(form.sku, { 'id': 'sku-input' }) }}
-{{ form_row(form.sku_autogenerate_checkbox, { 'id': 'sku-autogenerate-checkbox-input' }) }}
 
-{{ form_label(form.form_product_concrete_super_attributes) }}
-{% for attributeForm in form.form_product_concrete_super_attributes %}
-    {{ form_label(attributeForm) }}
-    {{ form_widget(attributeForm) }}
-    {% if attributeForm.vars.errors|length %}
-        <div class="has-error">
-            {{ form_errors(attributeForm) }}
-        </div>
-    {% endif %}
-{% endfor %}
+{% if form.sku_autogenerate_checkbox is defined %}
+    {{ form_row(form.sku_autogenerate_checkbox, { 'id': 'sku-autogenerate-checkbox-input' }) }}
+{% endif %}
+
+{% if form.form_product_concrete_super_attributes|length %}
+    {{ form_label(form.form_product_concrete_super_attributes) }}
+    {% for attributeForm in form.form_product_concrete_super_attributes %}
+        {{ form_label(attributeForm) }}
+        {{ form_widget(attributeForm) }}
+        {% if attributeForm.vars.errors|length %}
+            <div class="has-error">
+                {{ form_errors(attributeForm) }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
 
 {% for localeTransfer in localeCollection %}
     {% set formKey = 'general_' ~ localeTransfer.localeName %}

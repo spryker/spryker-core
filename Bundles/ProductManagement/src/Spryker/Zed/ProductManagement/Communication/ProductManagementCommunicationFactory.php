@@ -137,19 +137,13 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         $currentLocale = $this->getLocaleFacade()->getCurrentLocale();
 
         return new ProductConcreteFormAddDataProvider(
-            $this->getCategoryQueryContainer(),
-            $this->getQueryContainer(),
-            $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
             $this->getProductFacade(),
-            $this->getProductImageFacade(),
             $this->createLocaleProvider(),
             $currentLocale,
             $this->getProductAttributeCollection(),
             $this->getProductTaxCollection(),
-            $this->getConfig()->getImageUrlPrefix(),
             $this->getStore(),
-            $this->createProductStockHelper(),
             $this->getProductAttributeFacade()
         );
     }
