@@ -71,7 +71,7 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
         $minimumOrderValueMapper = $this->getFactory()->createMinimumOrderValueMapper();
 
         foreach ($minimumOrderValueTValueEntities as $globalMinOrderValueEntity) {
-            $minimumOrderValueTransfer = $minimumOrderValueMapper->mapGlobalMinimumOrderValueEntityToTransfer(
+            $minimumOrderValueTransfer = $minimumOrderValueMapper->mapMinimumOrderValueEntityToTransfer(
                 $globalMinOrderValueEntity,
                 new MinimumOrderValueTransfer()
             );

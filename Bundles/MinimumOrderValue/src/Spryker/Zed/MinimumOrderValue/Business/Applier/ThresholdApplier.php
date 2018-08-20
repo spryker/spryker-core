@@ -9,18 +9,22 @@ namespace Spryker\Zed\MinimumOrderValue\Business\Applier;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
+use Generated\Shared\Transfer\MoneyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategyInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface;
+use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig;
 
 class ThresholdApplier implements ThresholdApplierInterface
 {
+    protected const THRESHOLD_GLOSSARY_PARAMETER = '{{threshold}}';
     protected const THRESHOLD_EXPENSE_TYPE = 'THRESHOLD_EXPENSE_TYPE';
 
     /**
@@ -44,21 +48,29 @@ class ThresholdApplier implements ThresholdApplierInterface
     protected $messengerFacade;
 
     /**
+     * @var \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface
+     */
+    protected $moneyFacade;
+
+    /**
      * @param \Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategyInterface $minimumOrderValueDataSourceStrategy
      * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
      * @param \Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig $config
      * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface $messengerFacade
+     * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface $moneyFacade
      */
     public function __construct(
         ThresholdDataSourceStrategyInterface $minimumOrderValueDataSourceStrategy,
         MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver,
         MinimumOrderValueConfig $config,
-        MinimumOrderValueToMessengerFacadeInterface $messengerFacade
+        MinimumOrderValueToMessengerFacadeInterface $messengerFacade,
+        MinimumOrderValueToMoneyFacadeInterface $moneyFacade
     ) {
         $this->minimumOrderValueDataSourceStrategy = $minimumOrderValueDataSourceStrategy;
         $this->minimumOrderValueStrategyResolver = $minimumOrderValueStrategyResolver;
         $this->config = $config;
         $this->messengerFacade = $messengerFacade;
+        $this->moneyFacade = $moneyFacade;
     }
 
     /**
@@ -83,7 +95,7 @@ class ThresholdApplier implements ThresholdApplierInterface
 
         foreach ($minimumOrderValueThresholdTransfers as $minimumOrderValueThresholdTransfer) {
             $this->addExpenseToQuote($quoteTransfer, $minimumOrderValueThresholdTransfer);
-            $this->addInfoMessageToMessenger($minimumOrderValueThresholdTransfer);
+            $this->addInfoMessageToMessenger($minimumOrderValueThresholdTransfer, $quoteTransfer->getCurrency());
         }
 
         return $quoteTransfer;
@@ -109,7 +121,7 @@ class ThresholdApplier implements ThresholdApplierInterface
         }
 
         foreach ($minimumOrderValueThresholdTransfers as $minimumOrderValueThresholdTransfer) {
-            $this->addErrorMessageToCheckoutResponse($checkoutResponseTransfer, $minimumOrderValueThresholdTransfer);
+            $this->addErrorMessageToCheckoutResponse($checkoutResponseTransfer, $quoteTransfer->getCurrency(), $minimumOrderValueThresholdTransfer);
         }
 
         return $checkoutResponseTransfer->getErrors()->count() === 0;
@@ -206,12 +218,14 @@ class ThresholdApplier implements ThresholdApplierInterface
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *
      * @return void
      */
     protected function addErrorMessageToCheckoutResponse(
         CheckoutResponseTransfer $checkoutResponseTransfer,
+        CurrencyTransfer $currencyTransfer,
         MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
     ): void {
         $this->assertRequiredAttributes($minimumOrderValueThresholdTransfer);
@@ -225,30 +239,62 @@ class ThresholdApplier implements ThresholdApplierInterface
         $checkoutResponseTransfer->addError(
             (new CheckoutErrorTransfer())
                 ->setMessage($minimumOrderValueThresholdTransfer->getMessageGlossaryKey())
+                ->setParameters([
+                    static::THRESHOLD_GLOSSARY_PARAMETER => $this->moneyFacade->formatWithSymbol(
+                        $this->createMoneyTransfer($minimumOrderValueThresholdTransfer, $currencyTransfer)
+                    ),
+                ])
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return void
      */
-    protected function addInfoMessageToMessenger(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): void
-    {
+    protected function addInfoMessageToMessenger(
+        MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer,
+        CurrencyTransfer $currencyTransfer
+    ): void {
         $this->messengerFacade->addInfoMessage(
-            $this->createMessageTransfer($minimumOrderValueThresholdTransfer)
+            $this->createMessageTransfer($minimumOrderValueThresholdTransfer, $currencyTransfer)
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createMessageTransfer(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): MessageTransfer
-    {
+    protected function createMessageTransfer(
+        MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer,
+        CurrencyTransfer $currencyTransfer
+    ): MessageTransfer {
         return (new MessageTransfer())
-            ->setValue($minimumOrderValueThresholdTransfer->getMessageGlossaryKey());
+            ->setValue($minimumOrderValueThresholdTransfer->getMessageGlossaryKey())
+            ->setParameters([
+                static::THRESHOLD_GLOSSARY_PARAMETER => $this->moneyFacade->formatWithSymbol(
+                    $this->createMoneyTransfer($minimumOrderValueThresholdTransfer, $currencyTransfer)
+                ),
+            ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    protected function createMoneyTransfer(
+        MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer,
+        CurrencyTransfer $currencyTransfer
+    ): MoneyTransfer {
+        return (new MoneyTransfer())
+            ->setAmount(
+                (string)$minimumOrderValueThresholdTransfer->getValue()
+            )->setCurrency($currencyTransfer);
     }
 
     /**

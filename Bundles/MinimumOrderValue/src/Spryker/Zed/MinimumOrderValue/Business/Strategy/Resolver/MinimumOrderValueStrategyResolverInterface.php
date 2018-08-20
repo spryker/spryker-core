@@ -12,11 +12,11 @@ use Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInt
 interface MinimumOrderValueStrategyResolverInterface
 {
     /**
-     * @param string $strategyKey
+     * @param string $minimumOrderValueTypeKey
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException
      *
      * @return \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface
      */
-    public function resolveMinimumOrderValueStrategy(string $strategyKey): MinimumOrderValueStrategyInterface;
+    public function resolveMinimumOrderValueStrategy(string $minimumOrderValueTypeKey): MinimumOrderValueStrategyInterface;
 }

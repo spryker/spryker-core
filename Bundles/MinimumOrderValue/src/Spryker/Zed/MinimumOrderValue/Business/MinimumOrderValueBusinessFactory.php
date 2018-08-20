@@ -30,6 +30,7 @@ use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslat
 use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationWriterInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface;
+use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\MinimumOrderValueDependencyProvider;
 
@@ -134,7 +135,8 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
             $this->createThresholdDataSourceStrategy(),
             $this->createMinimumOrderValueStrategyResolver(),
             $this->getConfig(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
+            $this->getMoneyFacade()
         );
     }
 
@@ -164,6 +166,14 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     public function getGlossaryFacade(): MinimumOrderValueToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface
+     */
+    public function getMoneyFacade(): MinimumOrderValueToMoneyFacadeInterface
+    {
+        return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::FACADE_MONEY);
     }
 
     /**

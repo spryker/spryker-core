@@ -72,7 +72,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
                 $minimumOrderValueHardTypeTransfer,
                 $storeTransferDE,
                 $currencyTransferEUR,
-                100
+                10000
             )
         );
 
@@ -81,7 +81,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
                 $minimumOrderValueHardTypeTransfer,
                 $storeTransferDE,
                 $currencyTransferEUR,
-                200
+                20000
             )
         );
 
@@ -90,7 +90,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
                 $minimumOrderValueSoftStrategy,
                 $storeTransferDE,
                 $currencyTransferEUR,
-                200
+                20000
             )
         );
 
@@ -99,7 +99,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
                 $minimumOrderValueSoftStrategy,
                 $storeTransferUS,
                 $currencyTransferEUR,
-                200
+                20000
             )
         );
 
@@ -108,7 +108,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
                 $minimumOrderValueSoftStrategy,
                 $storeTransferUS,
                 $currencyTransferUSD,
-                200
+                20000
             )
         );
 
@@ -138,7 +138,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
                 $minimumOrderValueTypeTransferWithWrongKey,
                 $storeTransferUS,
                 $currencyTransferUSD,
-                200
+                20000
             )
         );
     }
@@ -160,7 +160,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
             $minimumOrderValueSoftStrategy,
             $storeTransfer,
             $currencyTransfer,
-            200
+            20000
         );
 
         $minimumOrderValueTValueTransfer
@@ -197,7 +197,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
             $minimumOrderValueSoftStrategy,
             $storeTransfer,
             $currencyTransfer,
-            200
+            20000
         );
 
         $minimumOrderValueTValueTransfer

@@ -40,6 +40,6 @@ class SoftThresholdWithFlexibleFeeStrategy extends AbstractMinimumOrderValueStra
      */
     public function calculateFee(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): ?int
     {
-        return (int)(($minimumOrderValueThresholdTransfer->getFee() / 100) * $minimumOrderValueThresholdTransfer->getSubTotal());
+        return (int)floor(($minimumOrderValueThresholdTransfer->getFee() / 100) * $minimumOrderValueThresholdTransfer->getSubTotal());
     }
 }

@@ -15,6 +15,4 @@ interface MerchantRelationshipMinimumOrderValueDataSetInterface
     public const COLUMN_MINIMUM_ORDER_VALUE_TYPE_KEY = 'threshold_type_key';
     public const COLUMN_THRESHOLD = 'threshold';
     public const COLUMN_FEE = 'fee';
-    public const COLUMN_MESSAGE_EN = 'message_en';
-    public const COLUMN_MESSAGE_DE = 'message_de';
 }

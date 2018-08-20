@@ -30,4 +30,8 @@
         <property name="localeCode" type="string" />
     </transfer>
 
+    <transfer name="Quote">
+        <property name="expenses" type="Expense[]" singular="expense"/>
+    </transfer>
+
 </transfers>

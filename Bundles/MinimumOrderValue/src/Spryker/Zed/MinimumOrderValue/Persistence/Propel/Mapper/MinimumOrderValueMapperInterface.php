@@ -31,7 +31,7 @@ interface MinimumOrderValueMapperInterface
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
      */
-    public function mapGlobalMinimumOrderValueEntityToTransfer(
+    public function mapMinimumOrderValueEntityToTransfer(
         SpyMinimumOrderValue $minimumOrderValueEntity,
         MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): MinimumOrderValueTransfer;
