@@ -58,6 +58,16 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function clearShoppingListAction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->getFacade()->clearShoppingList($shoppingListTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
