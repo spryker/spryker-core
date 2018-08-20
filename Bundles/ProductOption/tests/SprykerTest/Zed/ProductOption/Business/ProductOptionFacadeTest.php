@@ -759,17 +759,17 @@ class ProductOptionFacadeTest extends Unit
         $productOptionValueTransfer->setFkProductOptionGroup($this->tester->haveProductOptionGroup()->getIdProductOptionGroup());
         $idProductOptionValue = $productOptionFacade->saveProductOptionValue($productOptionValueTransfer);
 
-        $ids = [$idProductOptionValue];
-        $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setIds($ids);
+        $productOptionIds = [$idProductOptionValue];
+        $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setProductOptionIds($productOptionIds);
 
         // Act
         $actualResult = $this->createProductOptionFacade()->getProductOptionCollectionByCriteria($productOptionCriteriaTransfer);
 
         // Assert
-        $this->assertSame(count($ids), $actualResult->getProductOptions()->count());
+        $this->assertSame(count($productOptionIds), $actualResult->getProductOptions()->count());
 
         foreach ($actualResult->getProductOptions() as $productOption) {
-            $this->assertTrue(in_array($productOption->getIdProductOptionValue(), $ids));
+            $this->assertTrue(in_array($productOption->getIdProductOptionValue(), $productOptionIds));
         }
     }
 
@@ -787,17 +787,17 @@ class ProductOptionFacadeTest extends Unit
         $productOptionValueTransfer->setFkProductOptionGroup($this->tester->haveProductOptionGroup()->getIdProductOptionGroup());
         $idProductOptionValue2 = $productOptionFacade->saveProductOptionValue($productOptionValueTransfer);
 
-        $ids = [$idProductOptionValue1, $idProductOptionValue2];
-        $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setIds($ids);
+        $productOptionIds = [$idProductOptionValue1, $idProductOptionValue2];
+        $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setProductOptionIds($productOptionIds);
 
         // Act
         $actualResult = $this->createProductOptionFacade()->getProductOptionCollectionByCriteria($productOptionCriteriaTransfer);
 
         // Assert
-        $this->assertSame(count($ids), $actualResult->getProductOptions()->count());
+        $this->assertSame(count($productOptionIds), $actualResult->getProductOptions()->count());
 
         foreach ($actualResult->getProductOptions() as $productOption) {
-            $this->assertTrue(in_array($productOption->getIdProductOptionValue(), $ids));
+            $this->assertTrue(in_array($productOption->getIdProductOptionValue(), $productOptionIds));
         }
     }
 
@@ -806,14 +806,14 @@ class ProductOptionFacadeTest extends Unit
      */
     public function testGetProductOptionCollectionByCriteriaWithNoIdReturnsEmptyCollection(): void
     {
-        $ids = [];
-        $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setIds($ids);
+        $productOptionIds = [];
+        $productOptionCriteriaTransfer = (new ProductOptionCriteriaTransfer())->setProductOptionIds($productOptionIds);
 
         // Act
         $actualResult = $this->createProductOptionFacade()->getProductOptionCollectionByCriteria($productOptionCriteriaTransfer);
 
         // Assert
-        $this->assertSame(count($ids), $actualResult->getProductOptions()->count());
+        $this->assertSame(count($productOptionIds), $actualResult->getProductOptions()->count());
     }
 
     /**

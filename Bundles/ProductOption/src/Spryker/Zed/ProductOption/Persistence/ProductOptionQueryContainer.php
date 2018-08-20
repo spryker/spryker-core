@@ -113,7 +113,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return $this->getFactory()
             ->createProductOptionValueQuery()
-            ->filterByIdProductOptionValue_In($productOptionCriteriaTransfer->getIds());
+            ->filterByIdProductOptionValue_In($productOptionCriteriaTransfer->getProductOptionIds());
     }
 
     /**

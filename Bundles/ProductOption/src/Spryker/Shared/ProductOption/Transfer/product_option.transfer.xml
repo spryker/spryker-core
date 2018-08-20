@@ -25,7 +25,7 @@
     </transfer>
 
     <transfer name="ProductOptionCriteria">
-        <property name="ids" type="array" />
+        <property name="ProductOptionIds" type="array" />
     </transfer>
 
     <transfer name="Item">
