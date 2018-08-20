@@ -3,9 +3,13 @@
     <table name="table_a" phpName="TableA">
         <column name="id_column" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="string_column" type="VARCHAR" size="255" required="false"/>
+        <column name="char_column" type="CHAR" size="255" required="false"/>
         <column name="integer_column" type="INTEGER"/>
         <unique>
             <unique-column name="string_column"/>
+        </unique>
+        <unique>
+            <unique-column name="char_column"/>
         </unique>
         <unique>
             <unique-column name="integer_column"/>

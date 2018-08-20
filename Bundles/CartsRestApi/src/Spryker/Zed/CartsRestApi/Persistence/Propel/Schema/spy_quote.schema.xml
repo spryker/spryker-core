@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" name="zed"
+          namespace="Orm\Zed\Quote\Persistence"
+          package="src.Orm.Zed.Quote.Persistence"
+>
+
+    <table name="spy_quote" idMethod="native" allowPkInsert="true">
+        <column name="uuid" required="false" type="VARCHAR" size="255"/>
+        <unique name="spy_quote-unique-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+        <behavior name="uuid">
+            <parameter name="key_prefix" value="quote"/>
+            <parameter name="key_columns" value="customer_reference.id_quote"/>
+        </behavior>
+    </table>
+
+</database>
