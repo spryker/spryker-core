@@ -55,8 +55,7 @@ class StoresCurrencyReader implements StoresCurrencyReaderInterface
         foreach ($isoCodes as $isoCode) {
             $currencyTransfer = $this->currencyClient->fromIsoCode($isoCode);
             $storeCurrencyAttributes[] = $this->storesCurrencyResourceMapper->mapCurrencyToStoresCurrencyRestAttributes(
-                $currencyTransfer,
-                $this->store
+                $currencyTransfer
             );
         }
 
