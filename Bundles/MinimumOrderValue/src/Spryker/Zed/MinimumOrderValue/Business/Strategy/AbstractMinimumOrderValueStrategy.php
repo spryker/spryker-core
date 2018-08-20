@@ -10,58 +10,8 @@ namespace Spryker\Zed\MinimumOrderValue\Business\Strategy;
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 
-abstract class AbstractMinimumOrderValueStrategy
+abstract class AbstractMinimumOrderValueStrategy implements MinimumOrderValueStrategyInterface
 {
-    /**
-     * @var string
-     */
-    protected $key;
-
-    /**
-     * @var string
-     */
-    protected $group;
-
-    /**
-     * @param string $key
-     *
-     * @return $this
-     */
-    protected function setKey(string $key): MinimumOrderValueStrategyInterface
-    {
-        $this->key = $key;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getKey(): string
-    {
-        return $this->key;
-    }
-
-    /**
-     * @param string $groupName
-     *
-     * @return $this
-     */
-    protected function setGroup(string $groupName): MinimumOrderValueStrategyInterface
-    {
-        $this->group = $groupName;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getGroup(): string
-    {
-        return $this->group;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *

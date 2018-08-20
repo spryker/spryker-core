@@ -9,14 +9,24 @@ namespace Spryker\Zed\MinimumOrderValue\Business\Strategy;
 
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 
-class SoftThresholdWithFixedFeeStrategy extends AbstractMinimumOrderValueStrategy implements MinimumOrderValueStrategyInterface
+class SoftThresholdWithFixedFeeStrategy extends AbstractMinimumOrderValueStrategy
 {
     protected const STRATEGY_KEY = 'soft-threshold-fixed-fee';
 
-    public function __construct()
+    /**
+     * @return string
+     */
+    public function getKey(): string
     {
-        $this->setKey(static::STRATEGY_KEY);
-        $this->setGroup(static::GROUP_SOFT);
+        return static::STRATEGY_KEY;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGroup(): string
+    {
+        return static::GROUP_SOFT;
     }
 
     /**
