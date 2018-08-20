@@ -47,6 +47,7 @@
         <property name="idQuote" type="int"/>
         <property name="idCompanyUser" type="int"/>
         <property name="idQuotePermissionGroup" type="int"/>
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
     </transfer>
 
 </transfers>

@@ -64,4 +64,16 @@ interface SharedCartClientInterface
      * @return string|null
      */
     public function getQuoteAccessLevel(QuoteTransfer $quoteTransfer): ?string;
+
+    /**
+     * Specification:
+     * - Updates quote with permissions from share details.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuotePermissions(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer;
 }
