@@ -10,8 +10,10 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
+use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
 
 class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 {
@@ -26,15 +28,33 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     protected $priceProductEntityManager;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface
+     */
+    protected $priceProductRepository;
+
+    /**
+     * @var \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface[]
+     */
+    protected $priceProductStorePreDeletePlugins;
+
+    use TransactionTrait;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface $priceProductEntityManager
+     * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface $priceProductRepository
+     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface[] $priceProductStorePreDeletePlugins
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
-        PriceProductEntityManagerInterface $priceProductEntityManager
+        PriceProductEntityManagerInterface $priceProductEntityManager,
+        PriceProductRepositoryInterface $priceProductRepository,
+        array $priceProductStorePreDeletePlugins
     ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
         $this->priceProductEntityManager = $priceProductEntityManager;
+        $this->priceProductRepository = $priceProductRepository;
+        $this->priceProductStorePreDeletePlugins = $priceProductStorePreDeletePlugins;
     }
 
     /**
@@ -75,7 +95,42 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
      */
     public function deleteOrphanPriceProductStoreEntities(): void
     {
-        $this->priceProductEntityManager->deleteOrphanPriceProductStoreEntities();
+        $orphanPriceProductStoreEntities = $this->priceProductRepository->getOrphanPriceProductStoreEntities();
+
+        if (count($orphanPriceProductStoreEntities) === 0) {
+            return;
+        }
+
+        $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductStoreEntities) {
+            $this->doDeleteOrphanPriceProductStoreEntities($orphanPriceProductStoreEntities);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[] $priceProductStoreEntityTransfers
+     *
+     * @return void
+     */
+    protected function doDeleteOrphanPriceProductStoreEntities(array $priceProductStoreEntityTransfers): void
+    {
+        foreach ($priceProductStoreEntityTransfers as $priceProductStoreEntityTransfer) {
+            $idPriceProductStore = $priceProductStoreEntityTransfer->getIdPriceProductStore();
+
+            $this->runPreDeletePlugins($idPriceProductStore);
+            $this->priceProductEntityManager->deletePriceProductStore($idPriceProductStore);
+        }
+    }
+
+    /**
+     * @param int $idPriceProductStore
+     *
+     * @return void
+     */
+    protected function runPreDeletePlugins(int $idPriceProductStore): void
+    {
+        foreach ($this->priceProductStorePreDeletePlugins as $priceProductStorePreDeletePlugin) {
+            $priceProductStorePreDeletePlugin->preDelete($idPriceProductStore);
+        }
     }
 
     /**

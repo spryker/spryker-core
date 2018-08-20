@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PriceProduct\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\PriceProductFilterBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
@@ -25,11 +26,13 @@ use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceQueryCriteriaPlugin;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
+use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceProductStorePreDeletePlugin;
 use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceQueryCriteriaPlugin;
 use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProduct
@@ -60,6 +63,12 @@ class PriceProductFacadeTest extends Unit
         ];
 
         $this->tester->setDependency(PriceProductDependencyProvider::PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA, $priceDimensionQueryCriteriaPlugins);
+
+        $priceProductStorePreDeletePlugins = [
+            new MerchantRelationshipPriceProductStorePreDeletePlugin(),
+        ];
+
+        $this->tester->setDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE, $priceProductStorePreDeletePlugins);
     }
 
     /**
@@ -517,6 +526,52 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testFindProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn(): void
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceTypeTransfer = new PriceTypeTransfer();
+        $priceTypeTransfer->setName($priceProductFacade->getDefaultPriceTypeName());
+
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $prices = new ArrayObject();
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11, 10, self::USD_ISO_CODE);
+
+        $productAbstractTransfer = (new ProductAbstractTransfer())
+            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
+            ->setSku($productConcreteTransfer->getAbstractSku())
+            ->setPrices($prices);
+
+        $productAbstractTransfer = $priceProductFacade->persistProductAbstractPriceCollection($productAbstractTransfer);
+
+        $foundPrices = $priceProductFacade->findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn([$productAbstractTransfer->getIdProductAbstract()]);
+
+        $this->assertEquals(
+            count($foundPrices),
+            count($prices)
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildCriteriaFromFilter(): void
+    {
+        $priceProductFilterTransfer = (new PriceProductFilterBuilder([
+            'quantity' => rand(1, 100),
+        ]))->build();
+
+        $priceProductCriteriaTransfer = $this->getPriceProductFacade()
+            ->buildCriteriaFromFilter($priceProductFilterTransfer);
+
+        $this->assertEquals($priceProductFilterTransfer->getQuantity(), $priceProductCriteriaTransfer->getQuantity());
+    }
+
+    /**
      * @param string $currencyCode
      * @param string $priceTypeName
      * @param int $grossAmount
@@ -554,8 +609,8 @@ class PriceProductFacadeTest extends Unit
     ) {
 
         $priceProductTransfer = (new PriceProductTransfer())
-             ->setSkuProductAbstract($skuAbstract)
-             ->setSkuProduct($skuConcrete);
+            ->setSkuProductAbstract($skuAbstract)
+            ->setSkuProduct($skuConcrete);
 
         $config = $this->createSharedPriceProductConfig();
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())

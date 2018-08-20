@@ -128,6 +128,24 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     }
 
     /**
+     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
+     */
+    public function getOrphanPriceProductStoreEntities(): array
+    {
+        $priceProductStoreQuery = $this->getFactory()
+            ->createPriceProductStoreQuery();
+
+        $this->getFactory()
+            ->createPriceProductDimensionQueryExpander()
+            ->expandPriceProductStoreQueryWithPriceDimensionForDelete(
+                $priceProductStoreQuery,
+                new PriceProductCriteriaTransfer()
+            );
+
+        return $this->buildQueryFromCriteria($priceProductStoreQuery)->find();
+    }
+
+    /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
      * @param string $concreteSku
      *

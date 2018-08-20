@@ -75,6 +75,11 @@ interface PriceProductRepositoryInterface
     ): ?QueryCriteriaTransfer;
 
     /**
+     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
+     */
+    public function getOrphanPriceProductStoreEntities(): array;
+
+    /**
      * @param int $idPriceProductStore
      *
      * @return \Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer|null
