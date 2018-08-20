@@ -222,7 +222,7 @@ class MockArraySessionStorage implements SessionStorageInterface
      */
     public function setMetadataBag(?MetadataBag $bag = null)
     {
-        if (null === $bag) {
+        if ($bag === null) {
             $bag = new MetadataBag();
         }
 
