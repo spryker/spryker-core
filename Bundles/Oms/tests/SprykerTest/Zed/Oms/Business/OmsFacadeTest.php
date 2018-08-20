@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Oms\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
@@ -114,6 +115,57 @@ class OmsFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testReservedItemsByNonExistentSku()
+    {
+        $omsFacade = $this->createOmsFacade();
+        $items = $omsFacade->getReservedOrderItemsForSku('non-existent-sku');
+
+        $this->assertSame(0, $items->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetReservedStateNames(): void
+    {
+        $expected = [
+            'new',
+            'payment pending',
+            'paid',
+            'exported',
+            'shipped',
+        ];
+
+        // Action
+        $stateNames = $this->createOmsFacade()->getReservedStateNames();
+
+        // Assert
+        $this->assertSame($expected, $stateNames);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveReservation(): void
+    {
+        $omsFacade = $this->createOmsFacade();
+        $storeTransfer = (new StoreTransfer())->setIdStore(1)->setName('DE');
+        $productSku = 'xxx';
+        $reservationQuantity = 10;
+
+        // Action
+        $this->createOmsFacade()->saveReservation($productSku, $storeTransfer, $reservationQuantity);
+
+        // Assert
+        $this->assertEquals(
+            $reservationQuantity,
+            $this->createOmsFacade()->getOmsReservedProductQuantityForSku($productSku, $storeTransfer)
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
     protected function createOmsFacade()
@@ -139,16 +191,5 @@ class OmsFacadeTest extends Unit
         $this->tester->configureTestStateMachine($activeProcesses, $xmlFolder);
 
         return new OmsFacade();
-    }
-
-    /**
-     * @return void
-     */
-    public function testReservedItemsByNonExistentSku()
-    {
-        $omsFacade = $this->createOmsFacade();
-        $items = $omsFacade->getReservedOrderItemsForSku('non-existent-sku');
-
-        $this->assertSame(0, $items->count());
     }
 }
