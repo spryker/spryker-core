@@ -61,7 +61,10 @@ class SharedCartFactory extends AbstractFactory
      */
     public function createQuotePermissionsUpdater(): QuotePermissionsUpdaterInterface
     {
-        return new QuotePermissionsUpdater();
+        return new QuotePermissionsUpdater(
+            $this->getMultiCartClient(),
+            $this->getPersistentCartClient()
+        );
     }
 
     /**
