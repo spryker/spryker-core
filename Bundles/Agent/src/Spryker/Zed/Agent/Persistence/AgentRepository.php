@@ -41,15 +41,15 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
 
     /**
      * @param string $query
-     * @param int $limit
+     * @param int|null $limit
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer[]
      */
-    public function findCustomersByQuery(string $query, int $limit): array
+    public function findCustomersByQuery(string $query, ?int $limit): array
     {
         $queryPattern = $query . '%';
 
-        $customers = $this->getFactory()
+        $customersQuery = $this->getFactory()
             ->getCustomerQuery()
             ->select([
                 SpyCustomerTableMap::COL_ID_CUSTOMER,
@@ -61,9 +61,13 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
             ->_or()
             ->filterByLastName_Like($queryPattern)
             ->_or()
-            ->filterByFirstName_Like($queryPattern)
-            ->limit($limit)
-            ->find();
+            ->filterByFirstName_Like($queryPattern);
+
+        if ($limit !== null) {
+            $customersQuery->limit($limit);
+        }
+
+        $customers = $customersQuery->find();
 
         $customerTransferList = [];
 
