@@ -30,12 +30,10 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
             true
         );
 
-        if ($unitAddressEntityTransfer->getCountry()) {
-            $companyUnitAddressTransfer->setIso2Code($unitAddressEntityTransfer->getCountry()->getIso2Code());
-        }
+        $companyUnitAddressTransfer->setIso2Code($unitAddressEntityTransfer->getCountry()->getIso2Code());
 
-        $companyBusinessUnitCollectionTransfer = $this->mapCompanyBusinessUnitCollection($unitAddressEntityTransfer);
-        $companyUnitAddressTransfer->setCompanyBusinessUnitCollection($companyBusinessUnitCollectionTransfer);
+        $companyBusinessUnitTransfers = $this->mapCompanyBusinessUnitCollection($unitAddressEntityTransfer);
+        $companyUnitAddressTransfer->setCompanyBusinessUnits($companyBusinessUnitTransfers);
 
         return $companyUnitAddressTransfer;
     }

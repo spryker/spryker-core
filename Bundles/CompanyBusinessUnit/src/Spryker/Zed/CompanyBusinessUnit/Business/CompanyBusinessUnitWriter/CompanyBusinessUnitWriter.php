@@ -185,7 +185,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
 
         $companyBusinessUnitMap = $this->getCompanyBusinessUnits();
 
-        if (!isset($companyBusinessUnitMap[$businessUnitId])) {
+        if (!$businessUnitId) {
             return false;
         }
 

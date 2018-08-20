@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 /**
  * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressPersistenceFactory getFactory()
  * @method \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer save(\Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer $spyCompanyUnitAddressEntityTransfer)
+ * @method \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer delete(\Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer $spyCompanyUnitAddressEntityTransfer)
  */
 class CompanyUnitAddressEntityManager extends AbstractEntityManager implements CompanyUnitAddressEntityManagerInterface
 {
@@ -107,13 +108,13 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         int $idCompanyUnitAddress
     ): void {
-        $businessUnitCollection = $companyUnitAddressTransfer->getCompanyBusinessUnitCollection();
+        $businessUnits = $companyUnitAddressTransfer->getCompanyBusinessUnits();
 
-        if (!$businessUnitCollection || !$businessUnitCollection->getCompanyBusinessUnits()) {
+        if (!$businessUnits || !$businessUnits->getCompanyBusinessUnits()) {
             return;
         }
 
-        foreach ($businessUnitCollection->getCompanyBusinessUnits() as $companyBusinessUnit) {
+        foreach ($businessUnits->getCompanyBusinessUnits() as $companyBusinessUnit) {
             $entityTransfer = new SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer();
             $entityTransfer
                 ->setFkCompanyBusinessUnit($companyBusinessUnit->getIdCompanyBusinessUnit())

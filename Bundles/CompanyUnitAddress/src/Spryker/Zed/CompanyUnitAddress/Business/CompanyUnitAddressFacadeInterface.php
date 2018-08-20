@@ -18,6 +18,8 @@ interface CompanyUnitAddressFacadeInterface
     /**
      * Specification:
      * - Finds a company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress in the transfer
+     * - Extend transfer with country iso code
+     * - Extend transfer with company business unit collection, to display all business units attached to current address
      *
      * @api
      *
@@ -30,6 +32,7 @@ interface CompanyUnitAddressFacadeInterface
     /**
      * Specification:
      * - Creates a company unit address
+     * - Sets a list addresses assignment for company business unit
      *
      * @api
      *
@@ -43,6 +46,7 @@ interface CompanyUnitAddressFacadeInterface
      * Specification:
      * - Finds a company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress in the transfer
      * - Updates fields in a company unit address entity
+     * - Updates a list addresses assignment for company business unit
      *
      * @api
      *
@@ -68,6 +72,8 @@ interface CompanyUnitAddressFacadeInterface
     /**
      * Specification:
      * - Returns the company unit address collection.
+     * - Extend each transfer in collection with country iso code.
+     * - Extend each transfer in collection with company business unit collection, to display all business units attached to current address.
      *
      * @api
      *
