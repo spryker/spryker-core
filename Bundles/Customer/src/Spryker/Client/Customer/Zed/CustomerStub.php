@@ -133,11 +133,11 @@ class CustomerStub implements CustomerStubInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     * @return \Spryker\Client\ZedRequest\Client\Response
      */
     public function delete(CustomerTransfer $customerTransfer)
     {
-        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $response */
+        /** @var \Spryker\Client\ZedRequest\Client\Response $response */
         $response = $this->zedStub->call('/customer/gateway/delete', $customerTransfer);
 
         return $response;

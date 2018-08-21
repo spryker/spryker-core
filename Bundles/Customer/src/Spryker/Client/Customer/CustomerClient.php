@@ -230,7 +230,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     * @return \Spryker\Client\ZedRequest\Client\Response
      */
     public function deleteCustomer(CustomerTransfer $customerTransfer)
     {

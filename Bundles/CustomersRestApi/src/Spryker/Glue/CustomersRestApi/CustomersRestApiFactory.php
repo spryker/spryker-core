@@ -42,16 +42,6 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface
-     */
-    public function createAddressResourceMapper(): AddressesResourceMapperInterface
-    {
-        return new AddressesResourceMapper(
-            $this->getResourceBuilder()
-        );
-    }
-
-    /**
      * @return \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface
      */
     public function createCustomerReader(): CustomersReaderInterface
@@ -104,6 +94,16 @@ class CustomersRestApiFactory extends AbstractFactory
     public function createCustomersResourceMapper(): CustomersResourceMapperInterface
     {
         return new CustomersResourceMapper(
+            $this->getResourceBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface
+     */
+    public function createAddressResourceMapper(): AddressesResourceMapperInterface
+    {
+        return new AddressesResourceMapper(
             $this->getResourceBuilder()
         );
     }
