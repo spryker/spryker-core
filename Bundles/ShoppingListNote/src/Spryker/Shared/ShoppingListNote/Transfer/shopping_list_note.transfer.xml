@@ -8,7 +8,7 @@
         <property name="fkShoppingListItem" type="int" />
         <property name="idCompanyUser" type="int" />
         <property name="idShoppingList" type="int" />
-        <property name="message" type="string"/>
+        <property name="note" type="string"/>
     </transfer>
 
 </transfers>

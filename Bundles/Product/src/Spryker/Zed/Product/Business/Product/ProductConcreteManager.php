@@ -218,20 +218,20 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @param string[] $skus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|null
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findProductConcretesBySkus(array $skus): ?array
+    public function findProductConcretesBySkus(array $skus): array
     {
-        $productConcreteEntity = $this->productQueryContainer
+        $productConcreteEntities = $this->productQueryContainer
             ->queryProduct()
             ->filterBySku_In($skus)
             ->find();
 
-        if (!$productConcreteEntity->getData()) {
-            return null;
+        if (!$productConcreteEntities->getData()) {
+            return [];
         }
 
-        $productConcreteTransfers = $this->productTransferMapper->convertProductCollection($productConcreteEntity);
+        $productConcreteTransfers = $this->productTransferMapper->convertProductCollection($productConcreteEntities);
 
         return $productConcreteTransfers;
     }

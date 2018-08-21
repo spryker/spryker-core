@@ -4,7 +4,7 @@
     <table name="spy_shopping_list_item_note" phpName="SpyShoppingListItemNote">
         <column name="id_shopping_list_item_note" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_shopping_list_item" required="true" type="INTEGER"/>
-        <column name="message" required="false" type="LONGVARCHAR"/>
+        <column name="note" required="true" type="LONGVARCHAR"/>
         <behavior name="timestampable"/>
 
         <foreign-key name="spy_shopping_list_item_note-fk_shopping_list_item" foreignTable="spy_shopping_list_item">

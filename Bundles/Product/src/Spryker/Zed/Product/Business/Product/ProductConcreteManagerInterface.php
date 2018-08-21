@@ -54,9 +54,9 @@ interface ProductConcreteManagerInterface
     /**
      * @param string[] $skus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|null
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findProductConcretesBySkus(array $skus): ?array;
+    public function findProductConcretesBySkus(array $skus): array;
 
     /**
      * @param string $concreteSku

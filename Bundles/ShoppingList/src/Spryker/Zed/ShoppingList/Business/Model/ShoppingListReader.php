@@ -289,8 +289,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
             return $shoppingListItemCollectionTransfer;
         }
 
-        $productConcretesTransfer = $this->productFacade->findProductConcretesBySkus($shoppingListItemsSkus);
-        $this->mapProductConcreteIdToShoppingListItem($shoppingListItemCollectionTransfer->getItems(), $productConcretesTransfer);
+        $productConcreteTransfers = $this->productFacade->findProductConcretesBySkus($shoppingListItemsSkus);
+        $keyedProductConcreteTransfers = $this->getKeyedProductConcreteTransfers($productConcreteTransfers);
+        $shoppingListItems = $shoppingListItemCollectionTransfer->getItems();
+        $this->mapProductConcreteIdToShoppingListItem($shoppingListItems, $keyedProductConcreteTransfers);
 
         foreach ($shoppingListItemCollectionTransfer->getItems() as $item) {
             foreach ($this->itemExpanderPlugins as $itemExpanderPlugin) {
@@ -311,40 +313,43 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $shoppingListItemTransfers = (array)$shoppingListItemCollectionTransfer->getItems();
 
         return array_map(function (ShoppingListItemTransfer $shoppingListItemTransfer) {
-            return $shoppingListItemTransfer[ProductConcreteTransfer::SKU];
+            return $shoppingListItemTransfer[ShoppingListItemTransfer::SKU];
         }, $shoppingListItemTransfers);
     }
 
     /**
-     * @param \ArrayObject $shoppingListItemTransfers
-     * @param array $productConcretesTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[] $keyedProductConcretesTransfers
      */
-    protected function mapProductConcreteIdToShoppingListItem(ArrayObject $shoppingListItemTransfers, array $productConcretesTransfer): void
+    protected function getKeyedProductConcreteTransfers(array $productConcreteTransfers): array
     {
-        array_walk($shoppingListItemTransfers, function (ShoppingListItemTransfer $item) use ($productConcretesTransfer) {
-            $filteredProductConcretesBySku = $this->filterProductConcretesBySku($productConcretesTransfer, $item->getSku());
+        $keyedProductConcreteTransfers = array_reduce(
+            $productConcreteTransfers,
+            function (?array $keyedProductConcreteTransfers = null, ProductConcreteTransfer $productConcreteTransfer) {
+                $keyedProductConcreteTransfers[$productConcreteTransfer->getSku()] = $productConcreteTransfer;
 
-            if (!empty($filteredProductConcretesBySku)) {
-                $item->setIdProduct($filteredProductConcretesBySku->getIdProductConcrete());
+                return $keyedProductConcreteTransfers;
             }
-        });
+        );
+
+        return $keyedProductConcreteTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcretesTransfers
-     * @param string $sku
+     * @param \ArrayObject $shoppingListItemTransfers
+     * @param array $keyedProductConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return void
      */
-    protected function filterProductConcretesBySku(array $productConcretesTransfers, $sku): ProductConcreteTransfer
+    protected function mapProductConcreteIdToShoppingListItem(ArrayObject $shoppingListItemTransfers, array $keyedProductConcreteTransfers): void
     {
-        foreach ($productConcretesTransfers as $productConcreteTransfer) {
-            if ($productConcreteTransfer->getSku() === $sku) {
-                return $productConcreteTransfer;
+        array_walk($shoppingListItemTransfers, function (ShoppingListItemTransfer $shoppingListItemTransfer) use ($keyedProductConcreteTransfers) {
+            if (isset($keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()])) {
+                $idProduct = $keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()]->getIdProductConcrete();
+                $shoppingListItemTransfer->setIdProduct($idProduct);
             }
-        }
+        });
     }
 
     /**

@@ -49,7 +49,7 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
             return null;
         }
 
-        if (empty($shoppingListItemNoteTransfer->getMessage())) {
+        if (empty($shoppingListItemNoteTransfer->getNote())) {
             $this->deleteShoppingListItemNoteById($shoppingListItemNoteTransfer);
 
             return null;
