@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
@@ -274,24 +277,74 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
-     * TODO: switch from loop -> query to SKU IN query (create facade function + add to bridge)
-     *
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
     protected function expandProducts(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
     {
-        foreach ($shoppingListItemCollectionTransfer->getItems() as $item) {
-            $idProduct = $this->productFacade->findProductConcreteIdBySku($item->getSku());
-            $item->setIdProduct($idProduct);
+        $shoppingListItemsSkus = $this->getShoppingListItemsSkus($shoppingListItemCollectionTransfer);
 
+        if (empty($shoppingListItemsSkus)) {
+            return $shoppingListItemCollectionTransfer;
+        }
+
+        $productConcretesTransfer = $this->productFacade->findProductConcretesBySkus($shoppingListItemsSkus);
+        $this->mapProductConcreteIdToShoppingListItem($shoppingListItemCollectionTransfer->getItems(), $productConcretesTransfer);
+
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $item) {
             foreach ($this->itemExpanderPlugins as $itemExpanderPlugin) {
                 $item = $itemExpanderPlugin->expandItem($item);
             }
         }
 
         return $shoppingListItemCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return string[]
+     */
+    protected function getShoppingListItemsSkus(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): array
+    {
+        $shoppingListItemTransfers = (array)$shoppingListItemCollectionTransfer->getItems();
+
+        return array_map(function (ShoppingListItemTransfer $shoppingListItemTransfer) {
+            return $shoppingListItemTransfer[ProductConcreteTransfer::SKU];
+        }, $shoppingListItemTransfers);
+    }
+
+    /**
+     * @param \ArrayObject $shoppingListItemTransfers
+     * @param array $productConcretesTransfer
+     *
+     * @return void
+     */
+    protected function mapProductConcreteIdToShoppingListItem(ArrayObject $shoppingListItemTransfers, array $productConcretesTransfer): void
+    {
+        array_walk($shoppingListItemTransfers, function (ShoppingListItemTransfer $item) use ($productConcretesTransfer) {
+            $filteredProductConcretesBySku = $this->filterProductConcretesBySku($productConcretesTransfer, $item->getSku());
+
+            if (!empty($filteredProductConcretesBySku)) {
+                $item->setIdProduct($filteredProductConcretesBySku->getIdProductConcrete());
+            }
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcretesTransfers
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function filterProductConcretesBySku(array $productConcretesTransfers, $sku): ProductConcreteTransfer
+    {
+        foreach ($productConcretesTransfers as $productConcreteTransfer) {
+            if ($productConcreteTransfer->getSku() === $sku) {
+                return $productConcreteTransfer;
+            }
+        }
     }
 
     /**

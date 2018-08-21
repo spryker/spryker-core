@@ -148,6 +148,34 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
+
+        if (!$shoppingListTransfer || !$this->checkWritePermission($shoppingListTransfer)) {
+            return (new ShoppingListResponseTransfer())->setIsSuccess(false);
+        }
+
+        return $this->deleteShoppingListItems($shoppingListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    protected function deleteShoppingListItems(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        $this->shoppingListEntityManager->deleteShoppingListItems($shoppingListTransfer);
+
+        return (new ShoppingListResponseTransfer())->setIsSuccess(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
      * @return bool
      */
     protected function checkShoppingListWithSameName(ShoppingListTransfer $shoppingListTransfer): bool
@@ -213,7 +241,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
      */
     protected function executeRemoveShoppingListTransaction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        $this->shoppingListItemOperation->clearShoppingList($shoppingListTransfer);
+        $this->clearShoppingList($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListCompanyUsers($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnits($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListByName($shoppingListTransfer);

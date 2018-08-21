@@ -29,7 +29,7 @@ class ShoppingListNoteEntityManager extends AbstractEntityManager implements Sho
 
         $shoppingListItemNoteEntity = $this->getFactory()
             ->createShoppingListItemNoteMapper()
-            ->mapTransferToEntity($shoppingListItemNoteTransfer, $shoppingListItemNoteEntity);
+            ->mapShoppingListItemNoteTransferToEntity($shoppingListItemNoteTransfer, $shoppingListItemNoteEntity);
 
         $shoppingListItemNoteEntity->save();
         $shoppingListItemNoteTransfer->setIdShoppingListItemNote($shoppingListItemNoteEntity->getIdShoppingListItemNote());
@@ -42,7 +42,7 @@ class ShoppingListNoteEntityManager extends AbstractEntityManager implements Sho
      *
      * @return void
      */
-    public function deleteShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void
+    public function deleteShoppingListItemNoteById(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void
     {
         $shoppingListItemNoteTransfer->requireIdShoppingListItemNote();
         $this->getFactory()
