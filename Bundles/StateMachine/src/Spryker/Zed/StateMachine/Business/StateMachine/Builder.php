@@ -266,7 +266,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @return array
+     * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface[]
      */
     protected function createEvents()
     {
@@ -345,7 +345,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processMap
+     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processMap
      *
      * @return void
      */
@@ -388,7 +388,6 @@ class Builder implements BuilderInterface
 
             $xmlStates = $xmlProcess->states->children();
 
-            /** @var \SimpleXMLElement $xmlState */
             foreach ($xmlStates as $xmlState) {
                 $state = $this->createState($xmlState, $process);
 

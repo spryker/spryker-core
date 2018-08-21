@@ -24,7 +24,7 @@ class ProductConcreteProductAbstractUrlStorageListener extends AbstractPlugin im
     /**
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
      *
      * @return void

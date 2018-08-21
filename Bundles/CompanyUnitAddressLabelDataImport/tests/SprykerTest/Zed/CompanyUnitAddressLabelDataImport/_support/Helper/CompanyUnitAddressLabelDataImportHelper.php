@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\CompanyUnitAddressLabelDataImport\Helper;
@@ -17,8 +17,8 @@ class CompanyUnitAddressLabelDataImportHelper extends Module
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
-        $companyUnitAddressLabelQuery = $this->getCompanyUnitAddressLabelQuery();
-        $companyUnitAddressLabelQuery->find()->delete();
+        $this->getCompanyUnitAddressLabelQuery()
+            ->deleteAll();
     }
 
     /**

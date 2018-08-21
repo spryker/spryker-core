@@ -10,7 +10,7 @@ interface AvailabilityToProductInterface
     /**
      * @param string $productConcreteSku
      *
-     * @return int
+     * @return string
      */
     public function getAbstractSkuFromProductConcrete($productConcreteSku);
 }

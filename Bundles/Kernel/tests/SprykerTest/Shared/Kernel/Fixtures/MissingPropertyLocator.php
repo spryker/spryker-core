@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\Kernel\Fixtures;
 
 use Spryker\Shared\Kernel\AbstractLocator;
+use stdClass;
 
 class MissingPropertyLocator extends AbstractLocator
 {
@@ -18,5 +19,6 @@ class MissingPropertyLocator extends AbstractLocator
      */
     public function locate($bundle)
     {
+        return new stdClass();
     }
 }

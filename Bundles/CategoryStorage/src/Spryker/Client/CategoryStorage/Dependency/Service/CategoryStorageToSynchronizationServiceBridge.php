@@ -15,8 +15,6 @@ class CategoryStorageToSynchronizationServiceBridge implements CategoryStorageTo
     protected $synchronizationService;
 
     /**
-     * CmsToSynchronizationServiceBridge constructor.
-     *
      * @param \Spryker\Service\Synchronization\SynchronizationServiceInterface $synchronizationService
      */
     public function __construct($synchronizationService)
