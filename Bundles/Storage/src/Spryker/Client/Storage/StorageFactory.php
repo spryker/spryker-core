@@ -64,11 +64,14 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\StorageConfig|\Spryker\Client\Kernel\AbstractBundleConfig
+     * @return \Spryker\Client\Storage\StorageConfig
      */
     public function getStorageClientConfig()
     {
-        return parent::getConfig();
+        /** @var \Spryker\Client\Storage\StorageConfig $config */
+        $config = parent::getConfig();
+
+        return $config;
     }
 
     /**

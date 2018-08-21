@@ -8,10 +8,8 @@
 namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -69,26 +67,13 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     * @return void
      */
     public function deleteAction(CustomerTransfer $customerTransfer)
     {
-        $responseTransfer = new CustomerResponseTransfer();
-
-        try {
-            $result = $this->getFacade()
-                ->deleteCustomer($customerTransfer);
-        } catch (PropelException $e) {
-            $responseTransfer->setIsSuccess(false);
-            $responseTransfer->addError(
-                (new CustomerErrorTransfer())->setMessage('Can not delete customer')
-            );
-            return $responseTransfer;
-        }
-
-        $responseTransfer->setIsSuccess($result);
-
-        return $responseTransfer;
+        $result = $this->getFacade()
+            ->deleteCustomer($customerTransfer);
+        $this->setSuccess($result);
     }
 
     /**
