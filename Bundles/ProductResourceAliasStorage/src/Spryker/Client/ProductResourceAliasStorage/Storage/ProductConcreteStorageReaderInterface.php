@@ -15,5 +15,5 @@ interface ProductConcreteStorageReaderInterface
      *
      * @return array|null
      */
-    public function findProductConcreteStorageData(string $sku, string $localeName): ?array;
+    public function findProductConcreteStorageDataBySku(string $sku, string $localeName): ?array;
 }

@@ -29,8 +29,8 @@ class ProductAvailabilitiesRestApiToProductResourceAliasStorageBridge implements
      *
      * @return array|null
      */
-    public function findProductConcreteStorageData(string $sku, string $localeName): ?array
+    public function findProductConcreteStorageDataBySku(string $sku, string $localeName): ?array
     {
-        return $this->productResourceAliasStorageClient->getProductConcreteStorageData($sku, $localeName);
+        return $this->productResourceAliasStorageClient->findProductConcreteStorageDataBySku($sku, $localeName);
     }
 }

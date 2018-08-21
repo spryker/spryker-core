@@ -96,7 +96,7 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
     {
         $locale = $restRequest->getMetadata()->getLocale();
             $productConcreteStorageData = $this->productResourceAliasStorageClient
-            ->findProductConcreteStorageData($concreteProductSku, $locale);
+            ->findProductConcreteStorageDataBySku($concreteProductSku, $locale);
         if (!$productConcreteStorageData) {
             return null;
         }

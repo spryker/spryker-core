@@ -53,7 +53,7 @@ class ProductConcreteStorageBySkuReader implements ProductConcreteStorageReaderI
      *
      * @return array|null
      */
-    public function findProductConcreteStorageData(string $sku, string $localeName): ?array
+    public function findProductConcreteStorageDataBySku(string $sku, string $localeName): ?array
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer

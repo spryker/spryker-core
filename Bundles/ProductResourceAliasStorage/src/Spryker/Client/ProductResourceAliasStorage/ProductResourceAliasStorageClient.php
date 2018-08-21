@@ -41,10 +41,10 @@ class ProductResourceAliasStorageClient extends AbstractClient implements Produc
      *
      * @return array|null
      */
-    public function getProductConcreteStorageDataBySku(string $sku, string $localeName): ?array
+    public function findProductConcreteStorageDataBySku(string $sku, string $localeName): ?array
     {
         return $this->getFactory()
             ->createProductConcreteStorageBySkuReader()
-            ->findProductConcreteStorageData($sku, $localeName);
+            ->findProductConcreteStorageDataBySku($sku, $localeName);
     }
 }
