@@ -181,11 +181,11 @@ class ConcreteManagementTest extends FacadeTestAbstract
 
         $this->setupDefaultProducts();
 
-        $productConcretesTransfers = $this->productFacade->findProductConcretesBySkus(
+        $productConcreteTransfers = $this->productFacade->findProductConcretesBySkus(
             [$fakeNonExistSku]
         );
 
-        $this->assertNull($productConcretesTransfers[0]);
+        $this->assertNull($productConcreteTransfers);
     }
 
     /**
