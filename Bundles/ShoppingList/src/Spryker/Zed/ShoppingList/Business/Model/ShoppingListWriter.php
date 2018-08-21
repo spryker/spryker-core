@@ -258,7 +258,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     {
         $shoppingListTransfer = $this->shoppingListEntityManager->saveShoppingList($shoppingListTransfer);
 
-        if (!$shoppingListTransfer->getItems()->count() == 0) {
+        if (!$shoppingListTransfer->getItems()->count()) {
             return $shoppingListTransfer;
         }
 
