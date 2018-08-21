@@ -33,7 +33,7 @@ class ShoppingListItemNoteMapper implements ShoppingListItemNoteMapperInterface
      *
      * @return \Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote
      */
-    public function mapTransferToEntity(
+    public function mapShoppingListItemNoteTransferToEntity(
         ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer,
         SpyShoppingListItemNote $shoppingListItemNoteEntity
     ): SpyShoppingListItemNote {

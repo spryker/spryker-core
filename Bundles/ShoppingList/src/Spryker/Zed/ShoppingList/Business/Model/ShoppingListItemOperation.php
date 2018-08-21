@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
-use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -109,29 +108,6 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         }
 
         return $shoppingListItemTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
-     */
-    public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
-    {
-        $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
-        if (!$shoppingListTransfer || !$this->checkWritePermission($shoppingListTransfer)) {
-            return (new ShoppingListResponseTransfer())->setIsSuccess(false);
-        }
-
-        $shoppingListItemCollectionTransfer = $this->shoppingListRepository
-            ->findShoppingListItemsByIdShoppingList($shoppingListTransfer->getIdShoppingList());
-
-        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
-            $this->deleteShoppingListItem($shoppingListItemTransfer);
-        }
-
-        return (new ShoppingListResponseTransfer())
-            ->setIsSuccess(true);
     }
 
     /**

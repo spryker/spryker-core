@@ -50,7 +50,7 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
         }
 
         if (empty($shoppingListItemNoteTransfer->getMessage())) {
-            $this->deleteShoppingListItemNote($shoppingListItemNoteTransfer);
+            $this->deleteShoppingListItemNoteById($shoppingListItemNoteTransfer);
 
             return null;
         }
@@ -63,10 +63,10 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
      *
      * @return void
      */
-    public function deleteShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void
+    public function deleteShoppingListItemNoteById(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void
     {
         if ($this->checkWritePermission($shoppingListItemNoteTransfer)) {
-            $this->shoppingListNoteEntityManager->deleteShoppingListItemNote($shoppingListItemNoteTransfer);
+            $this->shoppingListNoteEntityManager->deleteShoppingListItemNoteById($shoppingListItemNoteTransfer);
         }
     }
 

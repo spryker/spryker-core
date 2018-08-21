@@ -23,5 +23,5 @@ interface ShoppingListItemNoteWriterInterface
      *
      * @return void
      */
-    public function deleteShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void;
+    public function deleteShoppingListItemNoteById(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void;
 }
