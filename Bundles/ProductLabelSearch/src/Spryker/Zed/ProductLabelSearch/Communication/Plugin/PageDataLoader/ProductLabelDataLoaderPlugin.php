@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductLabelSearch\Communication\Plugin\PageDataLoader;
 
+use DateTime;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
+use Generated\Shared\Transfer\SpyProductLabelEntityTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 
@@ -59,6 +61,10 @@ class ProductLabelDataLoaderPlugin extends AbstractPlugin implements ProductPage
         $map = [];
         foreach ($productLabelEntityTransfers as $productLabelEntityTransfer) {
             foreach ($productLabelEntityTransfer->getSpyProductLabelProductAbstracts() as $productLabelProductAbstract) {
+                if (!$this->isValidByDate($productLabelEntityTransfer)) {
+                    continue;
+                }
+
                 $map[$productLabelProductAbstract->getFkProductAbstract()][] = $productLabelEntityTransfer->getIdProductLabel();
             }
         }
@@ -81,6 +87,59 @@ class ProductLabelDataLoaderPlugin extends AbstractPlugin implements ProductPage
         }
 
         return $payloadTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductLabelEntityTransfer $spyProductLabel
+     *
+     * @return bool
+     */
+    protected function isValidByDate(SpyProductLabelEntityTransfer $spyProductLabel)
+    {
+        $isValidFromDate = $this->isValidByDateFrom($spyProductLabel);
+        $isValidToDate = $this->isValidByDateTo($spyProductLabel);
+
+        return ($isValidFromDate && $isValidToDate);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductLabelEntityTransfer $productLabel
+     *
+     * @return bool
+     */
+    protected function isValidByDateFrom(SpyProductLabelEntityTransfer $productLabel)
+    {
+        if (!$productLabel->getValidFrom()) {
+            return true;
+        }
+
+        $now = new DateTime();
+
+        if ($now < $productLabel->getValidFrom()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductLabelEntityTransfer $productLabel
+     *
+     * @return bool
+     */
+    protected function isValidByDateTo(SpyProductLabelEntityTransfer $productLabel)
+    {
+        if (!$productLabel->getValidTo()) {
+            return true;
+        }
+
+        $now = new DateTime();
+
+        if ($productLabel->getValidTo() < $now) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

@@ -29,7 +29,7 @@ class ProductImagePageDataLoaderExpanderPlugin extends AbstractPlugin implements
     {
         $images = [];
         $imageSets = $productData[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA]->getImages();
-        $imageSetsByLocale = $imageSets[$productData['fk_locale']];
+        $imageSetsByLocale = $imageSets[$productData['fk_locale']] ?? [];
 
         /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $imageSetsByLocale */
         foreach ($imageSetsByLocale as $imageSet) {

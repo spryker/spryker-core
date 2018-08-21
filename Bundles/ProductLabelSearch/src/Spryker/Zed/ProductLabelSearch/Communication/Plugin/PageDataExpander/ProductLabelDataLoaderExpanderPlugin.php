@@ -31,7 +31,7 @@ class ProductLabelDataLoaderExpanderPlugin extends AbstractPlugin implements Pro
         $productPayloadTransfer = $this->getProductPayloadTransfer($productData);
 
         $productAbstractPageSearchTransfer->setLabelIds(
-            $productPayloadTransfer->getLabelIds()
+            $productPayloadTransfer->getLabelIds() ?? []
         );
     }
 
