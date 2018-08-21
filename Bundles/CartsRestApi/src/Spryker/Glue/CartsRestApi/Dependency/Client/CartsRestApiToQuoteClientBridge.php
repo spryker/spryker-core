@@ -29,7 +29,7 @@ class CartsRestApiToQuoteClientBridge implements CartsRestApiToQuoteClientInterf
      *
      * @return void
      */
-    public function setQuote(QuoteTransfer $quoteTransfer): void
+    public function setQuote(QuoteTransfer $quoteTransfer)
     {
         $this->quoteClient->setQuote($quoteTransfer);
     }

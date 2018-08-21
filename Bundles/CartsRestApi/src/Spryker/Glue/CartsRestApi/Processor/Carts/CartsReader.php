@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToMultiCartClientInterface;
-use Spryker\Glue\CartsRestApi\Exception\UserNotFound;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -127,20 +126,11 @@ class CartsReader implements CartsReaderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @throws \Spryker\Glue\CartsRestApi\Exception\UserNotFound
-     *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     protected function getCustomerQuotes(RestRequestInterface $restRequest): QuoteCollectionTransfer
     {
         $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
-        if ($restRequest->getUser() === null) {
-            throw new UserNotFound(
-                CartsRestApiConfig::EXCEPTION_MESSAGE_USER_MISSING,
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
-        }
-
         $quoteCriteriaFilterTransfer->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
         $quoteCollectionTransfer = $this->multiCartClient->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
 

@@ -15,8 +15,6 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
-use Spryker\Glue\CartsRestApi\Exception\MissingQuoteIdentifier;
-use Spryker\Glue\CartsRestApi\Exception\UserNotFound;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -64,14 +62,14 @@ class CartsWriter implements CartsWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function create(
-        RestCartsAttributesTransfer $restCartsAttributesTransfer,
-        RestRequestInterface $restRequest
+        RestRequestInterface $restRequest,
+        RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestResponseInterface {
         $response = $this->restResourceBuilder->createRestResponse();
         $quoteTransfer = $this->createQuoteTransfer($restCartsAttributesTransfer, $restRequest);
@@ -80,7 +78,8 @@ class CartsWriter implements CartsWriterInterface
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
-                ->setDetail('Failed to create cart.');
+                ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
+                ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART);
 
             return $response->addError($restErrorTransfer);
         }
@@ -96,21 +95,20 @@ class CartsWriter implements CartsWriterInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @throws \Spryker\Glue\CartsRestApi\Exception\MissingQuoteIdentifier
-     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
+        $response = $this->restResourceBuilder->createRestResponse();
         $idQuote = $restRequest->getResource()->getId();
         if ($idQuote === null) {
-            throw new MissingQuoteIdentifier(
-                CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ID_MISSING,
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
-        }
+            $restErrorTransfer = (new RestErrorMessageTransfer())
+                ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_ID_MISSING)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ID_MISSING);
 
-        $response = $this->restResourceBuilder->createRestResponse();
+            return $response->addError($restErrorTransfer);
+        }
 
         $quoteResponseTransfer = $this->cartsReader->getQuoteTransferByUuid($idQuote, $restRequest);
 
@@ -118,7 +116,7 @@ class CartsWriter implements CartsWriterInterface
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
                 ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(sprintf("Cart with id '%s' not found.", $idQuote));
+                ->setDetail(sprintf(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_WITH_ID_NOT_FOUND, $idQuote));
 
             return $response->addError($restErrorTransfer);
         }
@@ -168,18 +166,10 @@ class CartsWriter implements CartsWriterInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @throws \Spryker\Glue\CartsRestApi\Exception\UserNotFound
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function getCustomerTransfer(RestRequestInterface $restRequest): CustomerTransfer
     {
-        if ($restRequest->getUser() === null) {
-            throw new UserNotFound(
-                CartsRestApiConfig::EXCEPTION_MESSAGE_USER_MISSING,
-                Response::HTTP_INTERNAL_SERVER_ERROR
-            );
-        }
         return (new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
     }
 

@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CartsRestApi\Persistence\CartsRestApiEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\CartsRestApi\Persistence\CartsRestApiRepositoryInterface getRepository()
  * @method \Spryker\Zed\CartsRestApi\CartsRestApiConfig getConfig()
  */
 class CartsRestApiBusinessFactory extends AbstractBusinessFactory
@@ -24,8 +23,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createQuoteUuidUpdater(): QuoteUuidWriterInterface
     {
         return new QuoteUuidWriter(
-            $this->getEntityManager(),
-            $this->getRepository()
+            $this->getEntityManager()
         );
     }
 }

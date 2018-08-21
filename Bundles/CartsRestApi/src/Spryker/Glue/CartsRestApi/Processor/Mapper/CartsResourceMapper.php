@@ -141,10 +141,10 @@ class CartsResourceMapper implements CartsResourceMapperInterface
         QuoteTransfer $quoteTransfer,
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): void {
+        $restCartsAttributesTransfer->fromArray($quoteTransfer->toArray(), true);
 
         $restCartsAttributesTransfer
             ->setCurrency($quoteTransfer->getCurrency()->getCode())
-            ->setPriceMode($quoteTransfer->getPriceMode())
             ->setStore($quoteTransfer->getStore()->getName());
     }
 }

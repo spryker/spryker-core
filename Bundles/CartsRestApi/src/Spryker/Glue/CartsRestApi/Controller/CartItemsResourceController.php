@@ -27,9 +27,9 @@ class CartItemsResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createCartItemsWriter()
-            ->add(
-                $restCartItemsAttributesTransfer,
-                $restRequest
+            ->addItem(
+                $restRequest,
+                $restCartItemsAttributesTransfer
             );
     }
 
@@ -43,9 +43,9 @@ class CartItemsResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createCartItemsWriter()
-            ->patch(
-                $restCartItemsAttributesTransfer,
-                $restRequest
+            ->updateQuantity(
+                $restRequest,
+                $restCartItemsAttributesTransfer
             );
     }
 
@@ -58,7 +58,7 @@ class CartItemsResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createCartItemsWriter()
-            ->delete(
+            ->deleteItem(
                 $restRequest
             );
     }

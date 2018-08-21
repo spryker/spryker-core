@@ -67,7 +67,7 @@ interface MultiCartFacadeInterface
 
     /**
      * Specification:
-     *  - Return the quotes collection.
+     *  - Returns the quotes collection.
      *
      * @api
      *

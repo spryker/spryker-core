@@ -12,15 +12,5 @@ interface CartsRestApiToZedRequestClientInterface
     /**
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function getLastResponseInfoMessages();
-
-    /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
-     */
     public function getLastResponseErrorMessages();
-
-    /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
-     */
-    public function getLastResponseSuccessMessages();
 }

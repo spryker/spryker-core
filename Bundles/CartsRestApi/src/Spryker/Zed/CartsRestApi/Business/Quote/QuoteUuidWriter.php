@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
 use Spryker\Zed\CartsRestApi\Persistence\CartsRestApiEntityManagerInterface;
-use Spryker\Zed\CartsRestApi\Persistence\CartsRestApiRepositoryInterface;
 
 class QuoteUuidWriter implements QuoteUuidWriterInterface
 {
@@ -18,20 +17,11 @@ class QuoteUuidWriter implements QuoteUuidWriterInterface
     protected $quoteEntityManager;
 
     /**
-     * @var \Spryker\Zed\CartsRestApi\Persistence\CartsRestApiRepositoryInterface
-     */
-    protected $quoteRepository;
-
-    /**
      * @param \Spryker\Zed\CartsRestApi\Persistence\CartsRestApiEntityManagerInterface $quoteEntityManager
-     * @param \Spryker\Zed\CartsRestApi\Persistence\CartsRestApiRepositoryInterface $quoteRepository
      */
-    public function __construct(
-        CartsRestApiEntityManagerInterface $quoteEntityManager,
-        CartsRestApiRepositoryInterface $quoteRepository
-    ) {
+    public function __construct(CartsRestApiEntityManagerInterface $quoteEntityManager)
+    {
         $this->quoteEntityManager = $quoteEntityManager;
-        $this->quoteRepository = $quoteRepository;
     }
 
     /**
@@ -39,12 +29,6 @@ class QuoteUuidWriter implements QuoteUuidWriterInterface
      */
     public function updateQuotesUuid(): void
     {
-        do {
-            $quotes = $this->quoteRepository->getQuotesWithoutUuid();
-
-            foreach ($quotes as $quote) {
-                $this->quoteEntityManager->saveQuoteWithoutUuid($quote);
-            }
-        } while ($quotes);
+        $this->quoteEntityManager->setEmptyQuoteUuids();
     }
 }

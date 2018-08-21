@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Persistence;
 
-use Orm\Zed\Quote\Persistence\SpyQuote;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -15,13 +15,24 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class CartsRestApiEntityManager extends AbstractEntityManager implements CartsRestApiEntityManagerInterface
 {
+    protected const BATCH_SIZE = 200;
+
     /**
-     * @param \Orm\Zed\Quote\Persistence\SpyQuote $quote
-     *
      * @return void
      */
-    public function saveQuoteWithoutUuid(SpyQuote $quote): void
+    public function setEmptyQuoteUuids(): void
     {
-        $quote->save();
+        $quoteQuery = $this->getFactory()->getQuoteQuery();
+
+        do {
+            $quotes = $quoteQuery
+                ->filterByUuid(null, Criteria::ISNULL)
+                ->limit(static::BATCH_SIZE)
+                ->find();
+
+            foreach ($quotes as $quote) {
+                $quote->save();
+            }
+        } while ($quotes->count());
     }
 }

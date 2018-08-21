@@ -20,6 +20,8 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
@@ -36,6 +38,8 @@ class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -46,6 +50,8 @@ class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -56,6 +62,8 @@ class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -66,6 +74,8 @@ class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @return string
      */
     public function getParentResourceType(): string

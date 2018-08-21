@@ -20,11 +20,12 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function providePersistenceLayerDependencies(Container $container)
+    public function providePersistenceLayerDependencies(Container $container): Container
     {
-        $this->addQuotePropelQuery($container);
+        $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addQuotePropelQuery($container);
 
-        return parent::providePersistenceLayerDependencies($container);
+        return $container;
     }
 
     /**

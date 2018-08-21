@@ -8,7 +8,7 @@
     "spryker/glue-application": "^1.0.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.22.0",
-    "spryker/multi-cart": "^1.0.0",
+    "spryker/multi-cart": "^1.1.0",
     "spryker/persistent-cart": "^1.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/quote": "^2.1.0",
@@ -20,7 +20,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/uuid-behavior": "^1.0.0"
+    "spryker/uuid-behavior": "Used to generate UUIDs for the cart entities."
   },
   "autoload": {
     "psr-4": {

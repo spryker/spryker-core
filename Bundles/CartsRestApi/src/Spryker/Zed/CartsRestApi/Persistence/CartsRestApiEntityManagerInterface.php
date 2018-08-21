@@ -7,14 +7,10 @@
 
 namespace Spryker\Zed\CartsRestApi\Persistence;
 
-use Orm\Zed\Quote\Persistence\SpyQuote;
-
 interface CartsRestApiEntityManagerInterface
 {
     /**
-     * @param \Orm\Zed\Quote\Persistence\SpyQuote $quote
-     *
      * @return void
      */
-    public function saveQuoteWithoutUuid(SpyQuote $quote): void;
+    public function setEmptyQuoteUuids(): void;
 }

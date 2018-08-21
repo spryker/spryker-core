@@ -1,7 +1,6 @@
 parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
     ignoreErrors:
-            - '#Call to an undefined method Generated\\Glue\\Ide\\AutoCompletion|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::[a-zA-Z]*\(\)#'
             - '#Strict comparison using === between [a-zA-Z\\]* and null will always evaluate to false.#'
 
 services:

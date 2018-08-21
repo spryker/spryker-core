@@ -7,18 +7,14 @@
 
 namespace Spryker\Glue\CartsRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartsRestApiToCartClientInterface
 {
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getQuote(): QuoteTransfer;
+    public function getQuote();
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -26,15 +22,7 @@ interface CartsRestApiToCartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItem(ItemTransfer $itemTransfer, array $params = []): QuoteTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $itemTransfer
-     * @param array $params
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function addValidItems(CartChangeTransfer $itemTransfer, array $params = []): QuoteTransfer;
+    public function addItem(ItemTransfer $itemTransfer, array $params = []);
 
     /**
      * @param string $sku
@@ -42,17 +30,7 @@ interface CartsRestApiToCartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeItem($sku, $groupKey = null): QuoteTransfer;
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function validateQuote();
-
-    /**
-     * @return void
-     */
-    public function clearQuote();
+    public function removeItem($sku, $groupKey = null);
 
     /**
      * @param string $sku

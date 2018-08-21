@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface getFacade()
  */
-class QuoteUuidWriter extends Console
+class QuoteUuidGeneratorConsole extends Console
 {
     const COMMAND_NAME = 'quote:uuid:generate';
     const COMMAND_DESCRIPTION = 'Generates UUIDs for the existing quote records that do not have one.';
@@ -22,7 +22,7 @@ class QuoteUuidWriter extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
         $this
@@ -37,7 +37,7 @@ class QuoteUuidWriter extends Console
      *
      * @return void
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->getFacade()->updateQuoteUuid();
     }

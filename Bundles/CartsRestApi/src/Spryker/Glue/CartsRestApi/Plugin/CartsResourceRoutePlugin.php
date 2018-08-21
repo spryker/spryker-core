@@ -19,6 +19,8 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
@@ -36,6 +38,8 @@ class CartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePl
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -46,6 +50,8 @@ class CartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePl
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -56,6 +62,8 @@ class CartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePl
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string

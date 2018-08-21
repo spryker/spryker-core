@@ -41,7 +41,7 @@ class CartsResourceController extends AbstractController
      */
     public function postAction(RestRequestInterface $restRequest, RestCartsAttributesTransfer $restCartsAttributesTransfer): RestResponseInterface
     {
-        return $this->getFactory()->createCartsWriter()->create($restCartsAttributesTransfer, $restRequest);
+        return $this->getFactory()->createCartsWriter()->create($restRequest, $restCartsAttributesTransfer);
     }
 
     /**

@@ -14,12 +14,12 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface CartsWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function create(RestCartsAttributesTransfer $restCartsAttributesTransfer, RestRequestInterface $restRequest): RestResponseInterface;
+    public function create(RestRequestInterface $restRequest, RestCartsAttributesTransfer $restCartsAttributesTransfer): RestResponseInterface;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
