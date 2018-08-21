@@ -1,0 +1,20 @@
+{
+  "mappings": {
+    "page": {
+      "properties": {
+        "product-lists": {
+          "type": "object",
+          "include_in_all": false,
+          "properties": {
+            "blacklists": {
+              "type": "integer"
+            },
+            "whitelists": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}

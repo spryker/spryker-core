@@ -1,0 +1,27 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+@import '~jstree/dist/themes/default/style';
+
+/*
+ * Inactive nodes
+ */
+.jstree-default .jstree-node.node-inactive > a {
+  opacity: 0.5;
+}
+
+.file-directory-progress {
+  width: 100%;
+}
+
+.file-directory-progress-container {
+  &.progress-inline {
+    margin: 5px 0;
+  }
+}
+
+.ui-datepicker {
+  z-index: 2 !important;
+}

@@ -12,12 +12,12 @@ use Spryker\Service\Flysystem\Exception\FilesystemNotFoundException;
 class FilesystemProvider implements FilesystemProviderInterface
 {
     /**
-     * @var \League\Flysystem\Filesystem[]
+     * @var \League\Flysystem\FilesystemInterface[]
      */
     protected $filesystemCollection;
 
     /**
-     * @param \League\Flysystem\Filesystem[] $filesystemCollection
+     * @param \League\Flysystem\FilesystemInterface[] $filesystemCollection
      */
     public function __construct(array $filesystemCollection)
     {
@@ -29,7 +29,7 @@ class FilesystemProvider implements FilesystemProviderInterface
      *
      * @throws \Spryker\Service\Flysystem\Exception\FilesystemNotFoundException
      *
-     * @return \League\Flysystem\Filesystem
+     * @return \League\Flysystem\FilesystemInterface
      */
     public function getFilesystemByName($name)
     {
@@ -43,7 +43,7 @@ class FilesystemProvider implements FilesystemProviderInterface
     }
 
     /**
-     * @return \League\Flysystem\Filesystem[]
+     * @return \League\Flysystem\FilesystemInterface[]
      */
     public function getFilesystemCollection()
     {

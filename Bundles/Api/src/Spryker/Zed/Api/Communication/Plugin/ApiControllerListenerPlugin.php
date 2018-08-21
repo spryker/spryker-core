@@ -34,6 +34,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      */
     public function onKernelController(FilterControllerEvent $event)
     {
+        /** @var array $currentController */
         $currentController = $event->getController();
         $controller = $currentController[0];
         $action = $currentController[1];

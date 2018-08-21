@@ -38,7 +38,7 @@ class ProductOptionStorageClient extends AbstractClient implements ProductOption
      *
      * @param int $idAbstractProduct
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
      */
     public function getProductOptionsForCurrentStore($idAbstractProduct)
     {

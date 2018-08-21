@@ -36,7 +36,7 @@ class RefundTotalCalculator implements CalculatorInterface
     {
         $refundTotalAmount = 0;
         foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
-            $refundTotalAmount += $itemTransfer->getRefundableAmount() * $itemTransfer->getQuantity();
+            $refundTotalAmount += $itemTransfer->getRefundableAmount();
             $refundTotalAmount += $this->calculateItemOptionTotalRefundAmount($itemTransfer);
         }
         return $refundTotalAmount;
@@ -51,7 +51,7 @@ class RefundTotalCalculator implements CalculatorInterface
     {
         $refundTotalAmount = 0;
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $refundTotalAmount += $productOptionTransfer->getRefundableAmount() * $productOptionTransfer->getQuantity();
+            $refundTotalAmount += $productOptionTransfer->getRefundableAmount();
         }
         return $refundTotalAmount;
     }
@@ -65,7 +65,7 @@ class RefundTotalCalculator implements CalculatorInterface
     {
         $refundTotalAmount = 0;
         foreach ($calculableObjectTransfer->getExpenses() as $expenseTransfer) {
-            $refundTotalAmount += $expenseTransfer->getRefundableAmount() * $expenseTransfer->getQuantity();
+            $refundTotalAmount += $expenseTransfer->getRefundableAmount();
         }
         return $refundTotalAmount;
     }

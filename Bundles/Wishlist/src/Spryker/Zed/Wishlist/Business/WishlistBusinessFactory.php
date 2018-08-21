@@ -39,7 +39,8 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
         return new Writer(
             $this->getQueryContainer(),
             $this->createReader(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
+            $this->getAddItemPreCheckPlugins()
         );
     }
 
@@ -75,5 +76,13 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     protected function getProductFacade()
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[]
+     */
+    public function getAddItemPreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_ADD_ITEM_PRE_CHECK);
     }
 }
