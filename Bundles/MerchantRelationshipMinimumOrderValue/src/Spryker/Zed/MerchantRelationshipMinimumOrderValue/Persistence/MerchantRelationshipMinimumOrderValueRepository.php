@@ -38,9 +38,11 @@ class MerchantRelationshipMinimumOrderValueRepository extends AbstractRepository
 
         $merchantRelationshipMinimumOrderValueEntities = $this->getFactory()
             ->createMerchantRelationshipMinimumOrderValueQuery()
-            ->filterByFkMerchantRelationship_In($merchantRelationshipIds)
+            ->filterByFkMerchantRelationship_In(array_values($merchantRelationshipIds))
             ->filterByStoreTransfer($storeTransfer)
             ->filterByCurrencyTransfer($currencyTransfer)
+            ->joinStore()
+            ->joinCurrency()
             ->joinMerchantRelationship()
             ->joinMinimumOrderValueType()
             ->find();

@@ -51,7 +51,7 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
                 $merchantRelationshipTransfer,
                 $storeTransferDE,
                 $currencyTransferEUR,
-                100
+                10000
             )
         );
 
@@ -61,7 +61,7 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
                 $merchantRelationshipTransfer,
                 $storeTransferDE,
                 $currencyTransferEUR,
-                200
+                20000
             )
         );
 
@@ -71,7 +71,7 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
                 $merchantRelationshipTransfer,
                 $storeTransferDE,
                 $currencyTransferEUR,
-                200
+                20000
             )
         );
 
@@ -81,7 +81,7 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
                 $merchantRelationshipTransfer,
                 $storeTransferUS,
                 $currencyTransferEUR,
-                200
+                20000
             )
         );
 
@@ -91,7 +91,7 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
                 $merchantRelationshipTransfer,
                 $storeTransferUS,
                 $currencyTransferUSD,
-                200
+                20000
             )
         );
 
