@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsProductsResourceRelationship;
+namespace Spryker\Glue\CartItemsProductsRelationship;
 
-use Spryker\Glue\CartsProductsResourceRelationship\Dependency\RestResource\CartsProductsResourceRelationToProductsRestApiBridge;
+use Spryker\Glue\CartItemsProductsRelationship\Dependency\RestResource\CartItemsProductsRelationToProductsRestApiBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
-class CartsProductsResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
+class CartItemsProductsRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const RESOURCE_PRODUCTS = 'RESOURCE_PRODUCTS';
 
@@ -35,7 +35,7 @@ class CartsProductsResourceRelationshipDependencyProvider extends AbstractBundle
     protected function addProductsResource(Container $container): Container
     {
         $container[static::RESOURCE_PRODUCTS] = function (Container $container) {
-            return new CartsProductsResourceRelationToProductsRestApiBridge($container->getLocator()->productsRestApi()->resource());
+            return new CartItemsProductsRelationToProductsRestApiBridge($container->getLocator()->productsRestApi()->resource());
         };
 
         return $container;

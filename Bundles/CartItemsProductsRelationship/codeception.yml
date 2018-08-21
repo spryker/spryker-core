@@ -1,4 +1,4 @@
-namespace: CartsProductsResourceRelationship
+namespace: CartItemsProductsRelationship
 actor: Tester
 paths:
     tests: tests

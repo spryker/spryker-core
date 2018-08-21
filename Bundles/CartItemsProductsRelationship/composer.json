@@ -1,6 +1,6 @@
 {
-  "name": "spryker/carts-products-resource-relationship",
-  "description": "CartsProductsResourceRelationship module",
+  "name": "spryker/cart-items-products-relationship",
+  "description": "CartItemsProductsRelationship module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",

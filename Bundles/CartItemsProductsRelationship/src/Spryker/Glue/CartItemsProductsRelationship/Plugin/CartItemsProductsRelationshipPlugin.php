@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsProductsResourceRelationship\Plugin;
+namespace Spryker\Glue\CartItemsProductsRelationship\Plugin;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\CartsProductsResourceRelationship\CartsProductsResourceRelationshipFactory getFactory()
+ * @method \Spryker\Glue\CartItemsProductsRelationship\CartItemsProductsRelationshipFactory getFactory()
  */
 class CartItemsProductsRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {

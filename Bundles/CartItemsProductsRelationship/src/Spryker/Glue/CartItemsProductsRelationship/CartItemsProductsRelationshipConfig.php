@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsProductsResourceRelationship;
+namespace Spryker\Glue\CartItemsProductsRelationship;
 
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 
-class CartsProductsResourceRelationshipConfig extends AbstractBundleConfig
+class CartItemsProductsRelationshipConfig extends AbstractBundleConfig
 {
 }

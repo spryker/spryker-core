@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsProductsResourceRelationship\Dependency\RestResource;
+namespace Spryker\Glue\CartItemsProductsRelationship\Dependency\RestResource;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CartsProductsResourceRelationToProductsRestApiInterface
+interface CartItemsProductsRelationToProductsRestApiInterface
 {
     /**
      * @param string $productIdentifier

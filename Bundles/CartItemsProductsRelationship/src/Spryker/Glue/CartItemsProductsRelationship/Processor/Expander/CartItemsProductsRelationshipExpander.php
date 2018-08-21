@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsProductsResourceRelationship\Processor\Mapper;
+namespace Spryker\Glue\CartItemsProductsRelationship\Processor\Expander;
 
-use Spryker\Glue\CartsProductsResourceRelationship\Dependency\RestResource\CartsProductsResourceRelationToProductsRestApiInterface;
+use Spryker\Glue\CartItemsProductsRelationship\Dependency\RestResource\CartItemsProductsRelationToProductsRestApiInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class CartsProductsResourceRelationshipMapper implements CartsProductsResourceRelationshipMapperInterface
+class CartItemsProductsRelationshipExpander implements CartItemsProductsRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\CartsProductsResourceRelationship\Dependency\RestResource\CartsProductsResourceRelationToProductsRestApiInterface
+     * @var \Spryker\Glue\CartItemsProductsRelationship\Dependency\RestResource\CartItemsProductsRelationToProductsRestApiInterface
      */
     protected $productsResource;
 
     /**
-     * @param \Spryker\Glue\CartsProductsResourceRelationship\Dependency\RestResource\CartsProductsResourceRelationToProductsRestApiInterface $productsResource
+     * @param \Spryker\Glue\CartItemsProductsRelationship\Dependency\RestResource\CartItemsProductsRelationToProductsRestApiInterface $productsResource
      */
-    public function __construct(CartsProductsResourceRelationToProductsRestApiInterface $productsResource)
+    public function __construct(CartItemsProductsRelationToProductsRestApiInterface $productsResource)
     {
         $this->productsResource = $productsResource;
     }
