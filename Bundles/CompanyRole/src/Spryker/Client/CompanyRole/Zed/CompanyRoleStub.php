@@ -39,7 +39,10 @@ class CompanyRoleStub implements CompanyRoleStubInterface
      */
     public function createCompanyRole(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
     {
-        return $this->zedRequestClient->call('/company-role/gateway/create', $companyRoleTransfer);
+        /** @var \Generated\Shared\Transfer\CompanyRoleResponseTransfer $companyRoleResponseTransfer */
+        $companyRoleResponseTransfer = $this->zedRequestClient->call('/company-role/gateway/create', $companyRoleTransfer);
+
+        return $companyRoleResponseTransfer;
     }
 
     /**
@@ -50,10 +53,13 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     public function getCompanyRoleCollection(
         CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyRoleCollectionTransfer {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer */
+        $companyRoleCollectionTransfer = $this->zedRequestClient->call(
             '/company-role/gateway/get-company-role-collection',
             $criteriaFilterTransfer
         );
+
+        return $companyRoleCollectionTransfer;
     }
 
     /**
@@ -63,10 +69,13 @@ class CompanyRoleStub implements CompanyRoleStubInterface
      */
     public function getCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer
     {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer */
+        $companyRoleTransfer = $this->zedRequestClient->call(
             '/company-role/gateway/get-company-role-by-id',
             $companyRoleTransfer
         );
+
+        return $companyRoleTransfer;
     }
 
     /**
@@ -89,10 +98,13 @@ class CompanyRoleStub implements CompanyRoleStubInterface
      */
     public function deleteCompanyRole(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
     {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyRoleResponseTransfer $companyRoleResponseTransfer */
+        $companyRoleResponseTransfer = $this->zedRequestClient->call(
             '/company-role/gateway/delete-company-role',
             $companyRoleTransfer
         );
+
+        return $companyRoleResponseTransfer;
     }
 
     /**
@@ -102,10 +114,13 @@ class CompanyRoleStub implements CompanyRoleStubInterface
      */
     public function findCompanyRolePermissions(CompanyRoleTransfer $companyRoleTransfer): PermissionCollectionTransfer
     {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer */
+        $permissionCollectionTransfer = $this->zedRequestClient->call(
             '/company-role/gateway/find-company-role-permissions',
             $companyRoleTransfer
         );
+
+        return $permissionCollectionTransfer;
     }
 
     /**
@@ -128,10 +143,13 @@ class CompanyRoleStub implements CompanyRoleStubInterface
      */
     public function findPermissionByIdCompanyRoleByIdPermission(PermissionTransfer $permissionTransfer): PermissionTransfer
     {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer */
+        $permissionTransfer = $this->zedRequestClient->call(
             '/company-role/gateway/find-permission-by-id-company-role-by-id-permission',
             $permissionTransfer
         );
+
+        return $permissionTransfer;
     }
 
     /**
@@ -141,9 +159,12 @@ class CompanyRoleStub implements CompanyRoleStubInterface
      */
     public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer
     {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer $companyRolePermissionResponseTransfer */
+        $companyRolePermissionResponseTransfer = $this->zedRequestClient->call(
             '/company-role/gateway/update-company-role-permission',
             $permissionTransfer
         );
+
+        return $companyRolePermissionResponseTransfer;
     }
 }
