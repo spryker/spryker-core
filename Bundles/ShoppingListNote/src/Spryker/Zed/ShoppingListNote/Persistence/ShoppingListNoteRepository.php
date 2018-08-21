@@ -27,12 +27,12 @@ class ShoppingListNoteRepository extends AbstractRepository implements ShoppingL
             ->filterByFkShoppingListItem($idShoppingListItem)
             ->findOne();
 
-        if (!$shoppingListItemNote) {
-            return null;
+        if ($shoppingListItemNote !== null) {
+            return $this->getFactory()
+                ->createShoppingListItemNoteMapper()
+                ->mapShoppingListItemNoteTransfer($shoppingListItemNote, new ShoppingListItemNoteTransfer());
         }
 
-        return $this->getFactory()
-            ->createShoppingListItemNoteMapper()
-            ->mapShoppingListItemNoteTransfer($shoppingListItemNote, new ShoppingListItemNoteTransfer());
+        return null;
     }
 }
