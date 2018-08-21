@@ -24,8 +24,6 @@ class CustomerAddress implements CustomerAddressInterface
     protected $defaultAddressChangePlugins;
 
     /**
-     * CustomerAddress constructor.
-     *
      * @param \Spryker\Client\Customer\Zed\CustomerStubInterface $customerStub
      * @param \Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface[] $defaultAddressChangePlugins
      */

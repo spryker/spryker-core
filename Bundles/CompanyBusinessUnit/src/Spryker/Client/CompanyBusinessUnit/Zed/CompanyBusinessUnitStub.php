@@ -36,10 +36,13 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
     public function getCompanyBusinessUnitById(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitTransfer {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer */
+        $companyBusinessUnitTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/get-company-business-unit-by-id',
             $companyBusinessUnitTransfer
         );
+
+        return $companyBusinessUnitTransfer;
     }
 
     /**
@@ -50,10 +53,13 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
     public function createCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer */
+        $companyBusinessUnitResponseTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/create',
             $companyBusinessUnitTransfer
         );
+
+        return $companyBusinessUnitResponseTransfer;
     }
 
     /**
@@ -64,10 +70,13 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
     public function updateCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer */
+        $companyBusinessUnitResponseTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/update',
             $companyBusinessUnitTransfer
         );
+
+        return $companyBusinessUnitResponseTransfer;
     }
 
     /**
@@ -78,11 +87,13 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
     public function deleteCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
-
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer */
+        $companyBusinessUnitResponseTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/delete',
             $companyBusinessUnitTransfer
         );
+
+        return $companyBusinessUnitResponseTransfer;
     }
 
     /**
@@ -93,9 +104,12 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
     public function getCompanyBusinessUnitCollection(
         CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer */
+        $companyBusinessUnitCollectionTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/get-company-business-unit-collection',
             $companyBusinessUnitCriteriaFilterTransfer
         );
+
+        return $companyBusinessUnitCollectionTransfer;
     }
 }

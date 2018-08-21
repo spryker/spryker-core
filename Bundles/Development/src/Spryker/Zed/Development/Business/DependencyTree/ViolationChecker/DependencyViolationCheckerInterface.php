@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree\ViolationChecker;
 
+/**
+ * @deprecated This is not used anymore.
+ */
 interface DependencyViolationCheckerInterface
 {
     /**

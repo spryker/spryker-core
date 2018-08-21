@@ -97,7 +97,7 @@ class AttributeMap implements AttributeMapInterface
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
      */
     protected function getConcreteProducts($idProductAbstract, $idLocale)
     {
