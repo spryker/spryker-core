@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
@@ -78,20 +77,15 @@ class CustomersWriter implements CustomersWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function deleteCustomer(RestCustomersAttributesTransfer $restCustomersAttributesTransfer): RestResponseInterface
+    public function anonymizeCustomer(RestCustomersAttributesTransfer $restCustomersAttributesTransfer): RestResponseInterface
     {
-        $customerTransfer = (new CustomerTransfer())->fromArray($restCustomersAttributesTransfer->toArray(), true);
-        $customerTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
-
         $response = $this->restResourceBuilder->createRestResponse();
 
-        if (!$customerTransfer) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
+        $customerTransfer = $this->customersResourceMapper->mapCustomerAttributesToCustomerTransfer($restCustomersAttributesTransfer);
+        $customerTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-            $response->addError($restErrorTransfer);
+        if (!$customerTransfer) {
+            $response->addError($this->createErrorCustomerNotFound());
 
             return $response;
         }
@@ -141,5 +135,16 @@ class CustomersWriter implements CustomersWriterInterface
         }
 
         return $response;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createErrorCustomerNotFound(): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
     }
 }

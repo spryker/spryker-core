@@ -24,5 +24,5 @@ interface CustomersWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function deleteCustomer(RestCustomersAttributesTransfer $restCustomerTransfer): RestResponseInterface;
+    public function anonymizeCustomer(RestCustomersAttributesTransfer $restCustomerTransfer): RestResponseInterface;
 }

@@ -52,6 +52,6 @@ class CustomersResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createCustomersWriter()
-            ->deleteCustomer($restCustomersAttributesTransfer);
+            ->anonymizeCustomer($restCustomersAttributesTransfer);
     }
 }
