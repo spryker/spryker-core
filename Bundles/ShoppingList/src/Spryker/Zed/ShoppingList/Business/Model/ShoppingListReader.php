@@ -290,8 +290,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
         $productConcreteTransfers = $this->productFacade->findProductConcretesBySkus($shoppingListItemsSkus);
         $keyedProductConcreteTransfers = $this->getKeyedProductConcreteTransfers($productConcreteTransfers);
-        $shoppingListItems = $shoppingListItemCollectionTransfer->getItems();
-        $shoppingListItems = $this->mapProductConcreteIdToShoppingListItem($shoppingListItems, $keyedProductConcreteTransfers);
+        $shoppingListItems = $this->mapProductConcreteIdToShoppingListItem($shoppingListItemCollectionTransfer->getItems(), $keyedProductConcreteTransfers);
 
         foreach ($shoppingListItems as $item) {
             foreach ($this->itemExpanderPlugins as $itemExpanderPlugin) {
