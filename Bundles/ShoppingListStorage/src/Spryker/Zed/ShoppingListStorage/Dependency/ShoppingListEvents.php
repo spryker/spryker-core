@@ -27,7 +27,7 @@ interface ShoppingListEvents
 
     /**
      * Specification:
-     * - This event will be used for spy_shopping_list entity delete
+     * - This event will be used for spy_shopping_list entity delete.
      *
      * @api
      */
@@ -35,7 +35,31 @@ interface ShoppingListEvents
 
     /**
      * Specification:
-     * - This event will be used for spy_shopping_list_company_user entity creation
+     * - This event will be used for spy_shopping_list_item entity create.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_SHOPPING_LIST_ITEM_CREATE = 'Entity.spy_shopping_list_item.create';
+
+    /**
+     * Specification:
+     * - This event will be used for spy_shopping_list_item entity update.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_SHOPPING_LIST_ITEM_UPDATE = 'Entity.spy_shopping_list_item.update';
+
+    /**
+     * Specification:
+     * - This event will be used for spy_shopping_list_item entity delete.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_SHOPPING_LIST_ITEM_DELETE = 'Entity.spy_shopping_list_item.delete';
+
+    /**
+     * Specification:
+     * - This event will be used for spy_shopping_list_company_user entity create.
      *
      * @api
      */

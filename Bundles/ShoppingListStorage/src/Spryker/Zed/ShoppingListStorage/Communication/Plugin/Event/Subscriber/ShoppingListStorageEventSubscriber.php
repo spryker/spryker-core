@@ -12,6 +12,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListCompanyBusinessUnitStorageListener;
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListCompanyUserStorageListener;
+use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListItemStorageListener;
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListStorageListener;
 use Spryker\Zed\ShoppingListStorage\Dependency\ShoppingListEvents;
 
@@ -33,11 +34,12 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
         $this->addShoppingListCreateListener($eventCollection);
-        $this->addShoppingListDeleteListener($eventCollection);
+        $this->addShoppingListItemCreateListener($eventCollection);
+        $this->addShoppingListItemDeleteListener($eventCollection);
         $this->addShoppingListCompanyUserCreateListener($eventCollection);
         $this->addShoppingListCompanyUserDeleteListener($eventCollection);
-        $this->addShoppingListCompanyBusinerrUnitCreateListener($eventCollection);
-        $this->addShoppingListCompanyBusinerrUnitUpdateListener($eventCollection);
+        $this->addShoppingListCompanyBusinessUnitCreateListener($eventCollection);
+        $this->addShoppingListCompanyBusinessUnitUpdateListener($eventCollection);
 
         return $eventCollection;
     }
@@ -60,11 +62,24 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
      *
      * @return void
      */
-    protected function addShoppingListDeleteListener(EventCollectionInterface $eventCollection): void
+    protected function addShoppingListItemCreateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(
-            ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_DELETE,
-            new ShoppingListStorageListener()
+            ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_ITEM_CREATE,
+            new ShoppingListItemStorageListener()
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addShoppingListItemDeleteListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(
+            ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_ITEM_DELETE,
+            new ShoppingListItemStorageListener()
         );
     }
 
@@ -99,7 +114,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
      *
      * @return void
      */
-    protected function addShoppingListCompanyBusinerrUnitCreateListener(EventCollectionInterface $eventCollection): void
+    protected function addShoppingListCompanyBusinessUnitCreateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_COMPANY_BUSINESS_UNIT_CREATE,
@@ -112,7 +127,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
      *
      * @return void
      */
-    protected function addShoppingListCompanyBusinerrUnitUpdateListener(EventCollectionInterface $eventCollection): void
+    protected function addShoppingListCompanyBusinessUnitUpdateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_COMPANY_BUSINESS_UNIT_UPDATE,
