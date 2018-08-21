@@ -28,8 +28,6 @@ class ProductListAggregateFormDataProvider
     protected $productListOwnerTypeFormExpanderPlugins;
 
     /**
-     * ProductListAggregateFormDataProvider constructor.
-     *
      * @param \Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListFormDataProvider $productListFormDataProvider
      * @param \Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListCategoryRelationFormDataProvider $productListCategoryRelationFormDataProvider
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListOwnerTypeFormExpanderPluginInterface[] $productListOwnerTypeFormExpanderPlugins

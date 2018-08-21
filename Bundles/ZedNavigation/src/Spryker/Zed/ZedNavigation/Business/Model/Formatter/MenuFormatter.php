@@ -216,7 +216,7 @@ class MenuFormatter implements MenuFormatterInterface
     protected function getPageAction(array $page)
     {
         $pageAction = null;
-        if (isset($page[self::ACTION]) && self::INDEX !== $page[self::ACTION]) {
+        if (isset($page[self::ACTION]) && $page[self::ACTION] !== self::INDEX) {
             $pageAction = $page[self::ACTION];
         }
 
@@ -234,7 +234,7 @@ class MenuFormatter implements MenuFormatterInterface
         $pageController = null;
         if (isset($page[self::CONTROLLER]) &&
             (
-                self::INDEX !== $page[self::CONTROLLER] || $action !== null
+                $page[self::CONTROLLER] !== self::INDEX || $action !== null
             )
         ) {
             $pageController = $page[self::CONTROLLER];

@@ -388,4 +388,19 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     {
         return $this->getFactory()->createPhpstanRunner()->run($input, $output);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param string|null $module
+     *
+     * @return bool
+     */
+    public function runPropelAbstractValidation(OutputInterface $output, ?string $module): bool
+    {
+        return $this->getFactory()->createPropelAbstractValidator()->validate($output, $module);
+    }
 }

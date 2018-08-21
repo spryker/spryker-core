@@ -35,8 +35,6 @@ class CurrencyUpdater implements CurrencyUpdaterInterface
     protected $storeClient;
 
     /**
-     * CurrencyUpdater constructor.
-     *
      * @param \Spryker\Shared\Currency\Builder\CurrencyBuilderInterface $currencyBuilder
      * @param \Spryker\Client\Currency\CurrencyChange\CurrencyPostChangePluginExecutorInterface $currencyPostChangePluginExecutor
      * @param \Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface $currencyPersistence
