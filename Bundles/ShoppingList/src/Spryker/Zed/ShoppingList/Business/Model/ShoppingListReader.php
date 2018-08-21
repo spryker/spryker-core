@@ -320,7 +320,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[] $keyedProductConcretesTransfers
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[] $keyedProductConcreteTransfers
      */
     protected function getKeyedProductConcreteTransfers(array $productConcreteTransfers): array
     {
@@ -338,7 +338,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
     /**
      * @param \ArrayObject $shoppingListItemTransfers
-     * @param array $keyedProductConcreteTransfers
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $keyedProductConcreteTransfers
      *
      * @return void
      */
