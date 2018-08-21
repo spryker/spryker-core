@@ -54,6 +54,18 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriterInterface
+     */
+    public function createCustomersWriter(): CustomersWriterInterface
+    {
+        return new CustomersWriter(
+            $this->getCustomerClient(),
+            $this->getResourceBuilder(),
+            $this->createCustomersResourceMapper()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\CustomersRestApi\Processor\Addresses\AddressesReaderInterface
      */
     public function createAddressesReader(): AddressesReaderInterface
@@ -73,18 +85,6 @@ class CustomersRestApiFactory extends AbstractFactory
         return new CustomersAddressesReader(
             $this->getCustomerClient(),
             $this->createAddressResourceMapper()
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriterInterface
-     */
-    public function createCustomersWriter(): CustomersWriterInterface
-    {
-        return new CustomersWriter(
-            $this->getCustomerClient(),
-            $this->getResourceBuilder(),
-            $this->createCustomersResourceMapper()
         );
     }
 
