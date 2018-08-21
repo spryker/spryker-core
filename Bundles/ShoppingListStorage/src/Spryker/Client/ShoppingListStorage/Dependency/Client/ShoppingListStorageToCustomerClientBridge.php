@@ -9,7 +9,7 @@ namespace Spryker\Client\ShoppingListStorage\Dependency\Client;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 
-class ShoppingListStorageToCustomerBridge implements ShoppingListStorageToCustomerInterface
+class ShoppingListStorageToCustomerClientBridge implements ShoppingListStorageToCustomerClientInterface
 {
     /**
      * @var \Spryker\Client\Customer\CustomerClientInterface

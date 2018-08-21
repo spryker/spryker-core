@@ -41,12 +41,4 @@ class ShoppingListStoragePersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::PROPEL_QUERY_COMPANY_USER);
     }
-
-    /**
-     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListItemQuery
-     */
-    public function getShoppingListItemPropelQuery()
-    {
-        return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::PROPEL_QUERY_SHOPPING_LIST_ITEM);
-    }
 }

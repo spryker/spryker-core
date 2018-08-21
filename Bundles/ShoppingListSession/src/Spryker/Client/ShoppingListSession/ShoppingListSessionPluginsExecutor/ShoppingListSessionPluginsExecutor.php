@@ -25,8 +25,6 @@ class ShoppingListSessionPluginsExecutor implements ShoppingListSessionPluginsEx
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ShoppingListSessionTransfer $shoppingListSessionTransfer
      *
      * @return bool

@@ -9,14 +9,14 @@ namespace Spryker\Client\ShoppingListStorage\Storage;
 
 use Generated\Shared\Transfer\ShoppingListCustomerStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageInterface;
+use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageClientInterface;
 use Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceInterface;
 use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
 
 class ShoppingListCustomerStorage implements ShoppingListCustomerStorageInterface
 {
     /**
-     * @var \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageInterface
+     * @var \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageClientInterface
      */
     protected $storage;
 
@@ -26,11 +26,11 @@ class ShoppingListCustomerStorage implements ShoppingListCustomerStorageInterfac
     protected $synchronizationService;
 
     /**
-     * @param \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageInterface $storage
+     * @param \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageClientInterface $storage
      * @param \Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceInterface $synchronizationService
      */
     public function __construct(
-        ShoppingListStorageToStorageInterface $storage,
+        ShoppingListStorageToStorageClientInterface $storage,
         ShoppingListStorageToSynchronizationServiceInterface $synchronizationService
     ) {
         $this->storage = $storage;

@@ -42,6 +42,16 @@ class ShoppingListSessionFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutorInterface
+     */
+    public function createShoppingListCollectionOutdatedPluginsExecutor(): ShoppingListSessionPluginsExecutorInterface
+    {
+        return new ShoppingListSessionPluginsExecutor(
+            $this->getShoppingListCollectionOutdatedPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface
      */
     public function getSessionClient(): ShoppingListSessionToSessionClientBridgeInterface
@@ -52,7 +62,7 @@ class ShoppingListSessionFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListBridgeInterface
      */
-    protected function getShoppingListClient(): ShoppingListSessionToShoppingListBridgeInterface
+    public function getShoppingListClient(): ShoppingListSessionToShoppingListBridgeInterface
     {
         return $this->getProvidedDependency(ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT);
     }
@@ -60,18 +70,8 @@ class ShoppingListSessionFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface[]
      */
-    protected function getShoppingListCollectionOutdatedPlugins(): array
+    public function getShoppingListCollectionOutdatedPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_COLLECTION_OUTDATED_PLUGINS);
-    }
-
-    /**
-     * @return \Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutorInterface
-     */
-    protected function createShoppingListCollectionOutdatedPluginsExecutor(): ShoppingListSessionPluginsExecutorInterface
-    {
-        return new ShoppingListSessionPluginsExecutor(
-            $this->getShoppingListCollectionOutdatedPlugins()
-        );
     }
 }

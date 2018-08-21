@@ -9,7 +9,7 @@ namespace Spryker\Client\ShoppingListStorage\OutdateChecker;
 
 use Generated\Shared\Transfer\ShoppingListCustomerStorageTransfer;
 use Generated\Shared\Transfer\ShoppingListSessionTransfer;
-use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerInterface;
+use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerClientInterface;
 use Spryker\Client\ShoppingListStorage\Storage\ShoppingListCustomerStorageInterface;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Client\ShoppingListStorage\Storage\ShoppingListCustomerStorageInterf
 class ShoppingListCollectionOutdateChecker implements ShoppingListCollectionOutdateCheckerInterface
 {
     /**
-     * @var \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerInterface
+     * @var \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerClientInterface
      */
     protected $customerClient;
 
@@ -30,11 +30,11 @@ class ShoppingListCollectionOutdateChecker implements ShoppingListCollectionOutd
     protected $shoppingListCustomerStorage;
 
     /**
-     * @param \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerInterface $customerClient
+     * @param \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerClientInterface $customerClient
      * @param \Spryker\Client\ShoppingListStorage\Storage\ShoppingListCustomerStorageInterface $shoppingListCustomerStorage
      */
     public function __construct(
-        ShoppingListStorageToCustomerInterface $customerClient,
+        ShoppingListStorageToCustomerClientInterface $customerClient,
         ShoppingListCustomerStorageInterface $shoppingListCustomerStorage
     ) {
         $this->customerClient = $customerClient;

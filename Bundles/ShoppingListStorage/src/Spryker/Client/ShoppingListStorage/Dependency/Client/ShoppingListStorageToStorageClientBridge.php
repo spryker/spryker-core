@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ShoppingListStorage\Dependency\Client;
 
-class ShoppingListStorageToStorageBridge implements ShoppingListStorageToStorageInterface
+class ShoppingListStorageToStorageClientBridge implements ShoppingListStorageToStorageClientInterface
 {
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface

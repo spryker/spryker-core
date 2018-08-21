@@ -7,12 +7,12 @@
 
 namespace Spryker\Client\ShoppingListStorage\Dependency\Client;
 
-interface ShoppingListStorageToStorageInterface
+use Generated\Shared\Transfer\CustomerTransfer;
+
+interface ShoppingListStorageToCustomerClientInterface
 {
     /**
-     * @param string $key
-     *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function get($key);
+    public function getCustomer(): ?CustomerTransfer;
 }

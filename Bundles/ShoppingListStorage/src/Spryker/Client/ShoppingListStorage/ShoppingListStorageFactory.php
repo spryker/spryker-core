@@ -8,8 +8,8 @@
 namespace Spryker\Client\ShoppingListStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerInterface;
-use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageInterface;
+use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerClientInterface;
+use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageClientInterface;
 use Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceInterface;
 use Spryker\Client\ShoppingListStorage\OutdateChecker\ShoppingListCollectionOutdateChecker;
 use Spryker\Client\ShoppingListStorage\OutdateChecker\ShoppingListCollectionOutdateCheckerInterface;
@@ -41,9 +41,9 @@ class ShoppingListStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageInterface
+     * @return \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageClientInterface
      */
-    public function getStorageClient(): ShoppingListStorageToStorageInterface
+    public function getStorageClient(): ShoppingListStorageToStorageClientInterface
     {
         return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::SHOPPING_LIST_STORAGE_STORAGE_CLIENT);
     }
@@ -57,9 +57,9 @@ class ShoppingListStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerInterface
+     * @return \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerClientInterface
      */
-    public function getCustomerClient(): ShoppingListStorageToCustomerInterface
+    public function getCustomerClient(): ShoppingListStorageToCustomerClientInterface
     {
         return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::SHOPPING_LIST_STORAGE_CUSTOMER_CLIENT);
     }

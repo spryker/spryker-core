@@ -9,8 +9,8 @@ namespace Spryker\Client\ShoppingListStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerBridge;
-use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageBridge;
+use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToCustomerClientBridge;
+use Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageClientBridge;
 use Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceBridge;
 
 class ShoppingListStorageDependencyProvider extends AbstractDependencyProvider
@@ -42,7 +42,7 @@ class ShoppingListStorageDependencyProvider extends AbstractDependencyProvider
     protected function addCustomerClient(Container $container): Container
     {
         $container[static::SHOPPING_LIST_STORAGE_CUSTOMER_CLIENT] = function (Container $container) {
-            return new ShoppingListStorageToCustomerBridge($container->getLocator()->customer()->client());
+            return new ShoppingListStorageToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;
@@ -56,7 +56,7 @@ class ShoppingListStorageDependencyProvider extends AbstractDependencyProvider
     protected function addStorageClient(Container $container): Container
     {
         $container[static::SHOPPING_LIST_STORAGE_STORAGE_CLIENT] = function (Container $container) {
-            return new ShoppingListStorageToStorageBridge($container->getLocator()->storage()->client());
+            return new ShoppingListStorageToStorageClientBridge($container->getLocator()->storage()->client());
         };
 
         return $container;
