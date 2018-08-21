@@ -320,7 +320,7 @@ class CartItemsWriter implements CartItemsWriterInterface
         foreach ($errors as $messageTransfer) {
             $restErrorMessageTransfer = (new RestErrorMessageTransfer())
                 ->setCode(CartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION)
-                ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
+                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                 ->setDetail($messageTransfer->getValue());
 
             $restResponse->addError($restErrorMessageTransfer);
