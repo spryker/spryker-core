@@ -1,14 +1,15 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\CustomersRestApi;
 
 use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
-use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerClientBridge;
-use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToSessionClientBridge;
+use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientBridge;
+use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToSessionClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -40,7 +41,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     protected function addSessionClient(Container $container): Container
     {
         $container[static::CLIENT_SESSION] = function (Container $container) {
-            return new CustomerRestApiToSessionClientBridge($container->getLocator()->session()->client());
+            return new CustomersRestApiToSessionClientBridge($container->getLocator()->session()->client());
         };
 
         return $container;
@@ -54,7 +55,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     protected function addCustomerClient(Container $container): Container
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
-            return new CustomerRestApiToCustomerClientBridge($container->getLocator()->customer()->client());
+            return new CustomersRestApiToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;

@@ -4,10 +4,9 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCustomersAttributes">
-        <property name="idCustomer" type="int" />
-        <property name="customerReference" type="string" />
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
+        <property name="email" type="string"/>
         <property name="company" type="string" />
         <property name="gender" type="string" />
         <property name="dateOfBirth" type="string" />
@@ -15,6 +14,19 @@
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
         <property name="registered" type="string" />
+        <property name="password" type="string"/>
+        <property name="passwordConfirmation" type="string"/>
+        <property name="acceptedTerms" type="bool"/>
+    </transfer>
+
+    <transfer name="RestCustomersResponseAttributes">
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
+        <property name="email" type="string"/>
+        <property name="company" type="string" />
+        <property name="gender" type="string" />
+        <property name="dateOfBirth" type="string" />
+        <property name="salutation" type="string" />
     </transfer>
 
     <transfer name="RestCustomersInfoAttributes">
