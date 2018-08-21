@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Category\Business\Model;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Category\Business\Model\Category\CategoryInterface;
 use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface;
@@ -198,6 +200,16 @@ class Category
         $this->triggerEvent(CategoryEvents::CATEGORY_AFTER_DELETE, $categoryTransfer);
 
         $this->queryContainer->getConnection()->commit();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    {
+        return $this->category->getAllCategoryCollection($localeTransfer);
     }
 
     /**
