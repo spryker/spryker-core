@@ -35,7 +35,7 @@ class RelationMapper implements RelationMapperInterface
 
         $relationMap = $this->getRelation($entityTransfer, $relation);
 
-        if (RelationMap::ONE_TO_MANY !== $relationMap->getType()) {
+        if ($relationMap->getType() !== RelationMap::ONE_TO_MANY) {
             throw new UnsupportedRelationException('Only one to many relations supported');
         }
 

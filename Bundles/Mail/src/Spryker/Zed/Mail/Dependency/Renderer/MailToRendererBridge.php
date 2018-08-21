@@ -47,10 +47,11 @@ class MailToRendererBridge implements MailToRendererInterface
     }
 
     /**
-     * @return \Twig_ExtensionInterface|\Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin
+     * @return \Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin
      */
     protected function getTranslator()
     {
+        /** @var \Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin $translator */
         $translator = $this->twigEnvironment->getExtension('translator');
 
         return $translator;

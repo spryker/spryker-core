@@ -14,6 +14,7 @@
         <property name="type" type="string" />
         <property name="labels" type="string[]" singular="label" />
         <property name="values" type="array" singular="value" />
+        <property name="options" type="array" singular="option" />
     </transfer>
 
     <transfer name="ChartLayout">
