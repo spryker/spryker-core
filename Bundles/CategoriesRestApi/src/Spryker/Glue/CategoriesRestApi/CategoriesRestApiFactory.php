@@ -7,6 +7,7 @@
 namespace Spryker\Glue\CategoriesRestApi;
 
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface;
+use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToProductCategoryResourceAliasStorageClientInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Categories\CategoriesReader;
 use Spryker\Glue\CategoriesRestApi\Processor\Categories\CategoriesReaderInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapper;
@@ -26,6 +27,7 @@ class CategoriesRestApiFactory extends AbstractFactory
         return new CategoriesReader(
             $this->getResourceBuilder(),
             $this->getCategoryStorageClient(),
+            $this->getProductCategoryResourceAliasStorageClient(),
             $this->createCategoriesResourceMapper()
         );
     }
@@ -36,6 +38,14 @@ class CategoriesRestApiFactory extends AbstractFactory
     protected function getCategoryStorageClient(): CategoriesRestApiToCategoryStorageClientInterface
     {
         return $this->getProvidedDependency(CategoriesRestApiDependencyProvider::CLIENT_CATEGORY_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToProductCategoryResourceAliasStorageClientInterface
+     */
+    protected function getProductCategoryResourceAliasStorageClient(): CategoriesRestApiToProductCategoryResourceAliasStorageClientInterface
+    {
+        return $this->getProvidedDependency(CategoriesRestApiDependencyProvider::CLIENT_PRODUCT_CATEGORY_RESOURCE_ALIAS_STORAGE);
     }
 
     /**

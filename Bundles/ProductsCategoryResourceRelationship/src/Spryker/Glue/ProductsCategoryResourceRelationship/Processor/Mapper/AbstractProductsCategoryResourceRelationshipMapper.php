@@ -34,7 +34,7 @@ class AbstractProductsCategoryResourceRelationshipMapper implements AbstractProd
     {
         foreach ($resources as $resource) {
             $abstractCategoriesResource = $this->categoriesResource
-                ->findConcreteCategoriesByConcreteProductSku($resource->getId(), $restRequest);
+                ->readProductCategories($resource->getId(), $restRequest);
             if ($abstractCategoriesResource !== null) {
                 $resource->addRelationship($abstractCategoriesResource);
             }

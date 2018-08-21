@@ -27,6 +27,7 @@ class AbstractProductsCategoryResourceRelationshipPlugin extends AbstractPlugin 
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
+
         $this->getFactory()
             ->createAbstractProductsCategoryResourceRelationshipMapper()
             ->mapResourceRelationships($resources, $restRequest);
@@ -41,6 +42,6 @@ class AbstractProductsCategoryResourceRelationshipPlugin extends AbstractPlugin 
      */
     public function getRelationshipResourceType(): string
     {
-        return 'abstract-product-category';
+        return 'abstract-product-categories';
     }
 }

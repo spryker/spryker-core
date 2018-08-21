@@ -16,11 +16,15 @@ class CategoriesRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_CATEGORY_NODES_ACTION_NAME = 'get';
     public const RESOURCE_CATEGORY_NODES_IS_PROTECTED = false;
 
+    public const RESOURCE_PRODUCT_CATEGORIES_ACTION_NAME = 'get';
+
     public const RESOURCE_CATEGORY_TREES = 'category-trees';
     public const RESOURCE_CATEGORY_NODES = 'category-nodes';
+    public const RESOURCE_PRODUCT_CATEGORIES = 'product-categories';
 
     public const CONTROLLER_CATEGORIES = 'category-tree-resource';
     public const CONTROLLER_CATEGORY = 'category-resource';
+    public const CONTROLLER_PRODUCT_CATEGORIES = 'product-categories-resource';
 
     public const RESPONSE_CODE_INVALID_CATEGORY_ID = '501';
     public const RESPONSE_DETAILS_INVALID_CATEGORY_ID = 'Can\'t find category node with the given id.';

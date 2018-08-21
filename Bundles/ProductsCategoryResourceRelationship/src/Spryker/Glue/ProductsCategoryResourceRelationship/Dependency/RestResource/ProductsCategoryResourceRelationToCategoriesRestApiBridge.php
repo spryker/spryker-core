@@ -7,6 +7,7 @@
 namespace Spryker\Glue\ProductsCategoryResourceRelationship\Dependency\RestResource;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class ProductsCategoryResourceRelationToCategoriesRestApiBridge implements ProductsCategoryResourceRelationToCategoriesRestApiInterface
 {
@@ -24,12 +25,11 @@ class ProductsCategoryResourceRelationToCategoriesRestApiBridge implements Produ
     }
 
     /**
-     * @param string $abstractProductSku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findCategoriesByAbstractProductSku($abstractProductSku, $restRequest): ?RestResourceInterface
+    public function readProductCategories(RestRequestInterface $request): ?RestResourceInterface
     {
         return $this->categoriesRestApiResource
             ->findCategoriesByAbstractProductSku($abstractProductSku, $restRequest);

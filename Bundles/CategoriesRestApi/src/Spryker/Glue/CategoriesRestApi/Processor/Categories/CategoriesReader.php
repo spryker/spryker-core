@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\RestCategoryNodesAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig;
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface;
+use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToProductCategoryResourceAliasStorageClientInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -28,6 +29,11 @@ class CategoriesReader implements CategoriesReaderInterface
     protected $categoryStorageClient;
 
     /**
+     * @var \Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToProductCategoryResourceAliasStorageClientInterface
+     */
+    protected $productCategoryResourceAliasStorageClient;
+
+    /**
      * @var \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapperInterface
      */
     protected $categoriesResourceMapper;
@@ -40,10 +46,12 @@ class CategoriesReader implements CategoriesReaderInterface
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CategoriesRestApiToCategoryStorageClientInterface $categoryStorageClient,
+        CategoriesRestApiToProductCategoryResourceAliasStorageClientInterface $productCategoryResourceAliasStorageClient,
         CategoriesResourceMapperInterface $categoriesResourceMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->categoryStorageClient = $categoryStorageClient;
+        $this->productCategoryResourceAliasStorageClient = $productCategoryResourceAliasStorageClient;
         $this->categoriesResourceMapper = $categoriesResourceMapper;
     }
 
@@ -63,6 +71,35 @@ class CategoriesReader implements CategoriesReaderInterface
             ->restResourceBuilder
             ->createRestResource(
                 CategoriesRestApiConfig::RESOURCE_CATEGORY_TREES,
+                null,
+                $categoriesTransfer
+            );
+
+        return $restResponse->addResource($restResource);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function readProductCategories(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $abstractProductResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
+
+        $abstractSku = $abstractProductResource->getId();
+        $locale = $restRequest->getMetadata()->getLocale();
+
+        $categoriesResource = $this->productCategoryResourceAliasStorageClient->findProductCategoryAbstractStorageTransfer($abstractSku, $locale);
+        $categoriesTransfer = $this->categoriesResourceMapper
+            ->mapCategoriesResourceToRestCategoriesTransfer((array)$categoriesResource);
+
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $restResource = $this
+            ->restResourceBuilder
+            ->createRestResource(
+                CategoriesRestApiConfig::RESOURCE_PRODUCT_CATEGORIES,
                 null,
                 $categoriesTransfer
             );
