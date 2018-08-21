@@ -63,6 +63,7 @@ class AbstractProductsResourceMapper implements AbstractProductsResourceMapperIn
         }
         $productConcreteIds = array_flip($attributeMap[static::KEY_PRODUCT_CONCRETE_IDS]);
 
+        // TODO: My eyes are bleeding, lets refactor this shit.
         if (isset($attributeMap[static::KEY_ATTRIBUTE_VARIANTS])) {
             foreach ($attributeMap[static::KEY_ATTRIBUTE_VARIANTS] as $key => $data) {
                 $attributeMap[static::KEY_ATTRIBUTE_VARIANTS][$key][static::KEY_ID_PRODUCT_CONCRETE] =
