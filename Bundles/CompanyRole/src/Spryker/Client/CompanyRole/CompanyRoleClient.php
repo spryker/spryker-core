@@ -166,4 +166,26 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
             ->createZedCompanyRoleStub()
             ->updateCompanyRolePermission($permissionTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $companyRolePermissions
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function filterCompanyRolePermissions(
+        CompanyRoleTransfer $companyRoleTransfer,
+        PermissionCollectionTransfer $companyRolePermissions
+    ): PermissionCollectionTransfer {
+        return $this->getFactory()
+            ->createCompanyRolePermissionsHandler()
+            ->filterCompanyRolePermissions(
+                $companyRoleTransfer,
+                $companyRolePermissions
+            );
+    }
 }

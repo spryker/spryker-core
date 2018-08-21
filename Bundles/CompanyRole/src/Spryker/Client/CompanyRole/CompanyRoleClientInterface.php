@@ -132,4 +132,20 @@ interface CompanyRoleClientInterface
      * @return \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer
      */
     public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Filters company roles permissions and removes ones that is not available for manual configuration.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $companyRolePermissions
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function filterCompanyRolePermissions(
+        CompanyRoleTransfer $companyRoleTransfer,
+        PermissionCollectionTransfer $companyRolePermissions
+    ): PermissionCollectionTransfer;
 }
