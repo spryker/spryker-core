@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Log;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface LogConstants
 {
     /**
@@ -76,6 +79,14 @@ interface LogConstants
      * @api
      */
     const LOG_FILE_PATH_YVES = 'LOG_FILE_PATH_YVES';
+
+    /**
+     * Specification:
+     * - Absolute path to the installation log files directory.
+     *
+     * @api
+     */
+    public const LOG_FOLDER_PATH_INSTALLATION = 'LOG:LOG_FOLDER_PATH_INSTALLATION';
 
     /**
      * Specification:

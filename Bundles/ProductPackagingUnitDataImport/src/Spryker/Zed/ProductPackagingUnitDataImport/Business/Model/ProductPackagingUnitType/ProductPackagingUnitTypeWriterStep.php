@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\ProductPackagingUnitType;
@@ -22,7 +22,7 @@ class ProductPackagingUnitTypeWriterStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $productPackagingUnitTypeEntity = $this->getProductPackagingUnitTypeQuery()
-            ->filterByName($dataSet[ProductPackagingUnitTypeDataSetInterface::NAME])
+            ->filterByName($dataSet[ProductPackagingUnitTypeDataSetInterface::COLUMN_NAME])
             ->findOneOrCreate();
 
         if ($productPackagingUnitTypeEntity->isNew()) {
@@ -31,6 +31,8 @@ class ProductPackagingUnitTypeWriterStep implements DataImportStepInterface
     }
 
     /**
+     * @module ProductPackagingUnit
+     *
      * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery
      */
     protected function getProductPackagingUnitTypeQuery(): SpyProductPackagingUnitTypeQuery

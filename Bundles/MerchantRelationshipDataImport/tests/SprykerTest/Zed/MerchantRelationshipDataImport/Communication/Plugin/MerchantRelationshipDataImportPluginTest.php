@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\MerchantRelationshipDataImport\Communication\Plugin;
@@ -12,6 +12,10 @@ use Generated\Shared\DataBuilder\CompanyBusinessUnitBuilder;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use ReflectionClass;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
+use Spryker\Zed\MerchantRelationshipDataImport\Business\MerchantRelationshipDataImportBusinessFactory;
+use Spryker\Zed\MerchantRelationshipDataImport\Business\MerchantRelationshipDataImportFacade;
 use Spryker\Zed\MerchantRelationshipDataImport\Communication\Plugin\MerchantRelationshipDataImportPlugin;
 use Spryker\Zed\MerchantRelationshipDataImport\MerchantRelationshipDataImportConfig;
 
@@ -50,6 +54,12 @@ class MerchantRelationshipDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
         $dataImportPlugin = new MerchantRelationshipDataImportPlugin();
+        $pluginReflection = new ReflectionClass($dataImportPlugin);
+
+        $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
+        $facadePropertyReflection->setAccessible(true);
+        $facadePropertyReflection->setValue($dataImportPlugin, $this->getFacadeMock());
+
         $dataImporterReportTransfer = $dataImportPlugin->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
@@ -103,5 +113,32 @@ class MerchantRelationshipDataImportPluginTest extends Unit
         $this->tester->haveMerchant([
             'merchantKey' => 'oryx-merchant-test',
         ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipDataImport\Business\MerchantRelationshipDataImportFacade
+     */
+    public function getFacadeMock()
+    {
+        $factoryMock = $this->getMockBuilder(MerchantRelationshipDataImportBusinessFactory::class)
+            ->setMethods(
+                [
+                    'createTransactionAwareDataSetStepBroker',
+                    'getConfig',
+                ]
+            )
+            ->getMock();
+
+        $factoryMock
+            ->method('createTransactionAwareDataSetStepBroker')
+            ->willReturn(new DataSetStepBroker());
+
+        $factoryMock->method('getConfig')
+            ->willReturn(new MerchantRelationshipDataImportConfig());
+
+        $facade = new MerchantRelationshipDataImportFacade();
+        $facade->setFactory($factoryMock);
+
+        return $facade;
     }
 }

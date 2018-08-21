@@ -25,6 +25,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PLUGINS_ITEM_EXPANDER = 'PLUGINS_ITEM_EXPANDER';
     public const PLUGINS_QUOTE_ITEM_EXPANDER = 'PLUGINS_QUOTE_ITEM_EXPANDER';
+    public const PLUGINS_ADD_ITEM_PRE_CHECK = 'PLUGINS_ADD_ITEM_PRE_CHECK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -42,6 +43,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addItemExpanderPlugins($container);
         $container = $this->addQuoteItemExpanderPlugins($container);
+        $container = $this->addAddItemPreCheckPlugins($container);
 
         return $container;
     }
@@ -145,9 +147,31 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAddItemPreCheckPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_ADD_ITEM_PRE_CHECK] = function () {
+            return $this->getAddItemPreCheckPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
      */
     protected function getItemExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[]
+     */
+    protected function getAddItemPreCheckPlugins(): array
     {
         return [];
     }

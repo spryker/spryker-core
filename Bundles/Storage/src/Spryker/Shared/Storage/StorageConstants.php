@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Storage;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface StorageConstants
 {
     const STORAGE_KV_SOURCE = 'STORAGE_KV_SOURCE';
