@@ -77,7 +77,7 @@ interface PriceProductRepositoryInterface
     /**
      * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
      */
-    public function getOrphanPriceProductStoreEntities(): array;
+    public function findOrphanPriceProductStoreEntities(): array;
 
     /**
      * @param int $idPriceProductStore

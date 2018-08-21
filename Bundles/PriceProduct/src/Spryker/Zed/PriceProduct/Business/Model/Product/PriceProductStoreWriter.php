@@ -17,6 +17,8 @@ use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
 
 class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface
      */
@@ -36,8 +38,6 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
      * @var \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface[]
      */
     protected $priceProductStorePreDeletePlugins;
-
-    use TransactionTrait;
 
     /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
@@ -95,7 +95,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
      */
     public function deleteOrphanPriceProductStoreEntities(): void
     {
-        $orphanPriceProductStoreEntities = $this->priceProductRepository->getOrphanPriceProductStoreEntities();
+        $orphanPriceProductStoreEntities = $this->priceProductRepository->findOrphanPriceProductStoreEntities();
 
         if (count($orphanPriceProductStoreEntities) === 0) {
             return;

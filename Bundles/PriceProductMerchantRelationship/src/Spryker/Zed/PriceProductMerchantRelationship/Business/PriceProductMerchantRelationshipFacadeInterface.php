@@ -43,7 +43,7 @@ interface PriceProductMerchantRelationshipFacadeInterface
 
     /**
      * Specification:
-     *  - Deletes price product merchant relationship records by id price product store
+     *  - Deletes connection records between spy_price_product_store and spy_price_product_business_unit by idPriceProductStore
      *
      * @api
      *

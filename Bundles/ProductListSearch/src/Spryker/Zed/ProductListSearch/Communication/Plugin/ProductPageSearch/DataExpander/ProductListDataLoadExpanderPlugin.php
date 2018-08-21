@@ -54,7 +54,7 @@ class ProductListDataLoadExpanderPlugin extends AbstractPlugin implements Produc
         $enumForType = array_flip(SpyProductListTableMap::getValueSet(SpyProductListTableMap::COL_TYPE));
         $typeDbValue = $enumForType[$type];
 
-        return $this->getProductPayload($productData)->getLists()[$typeDbValue] ?? [];
+        return $this->getProductPayload($productData)->getProductLists()[$typeDbValue] ?? [];
     }
 
     /**

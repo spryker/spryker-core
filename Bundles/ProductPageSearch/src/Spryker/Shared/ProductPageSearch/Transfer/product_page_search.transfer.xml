@@ -39,10 +39,6 @@
         <property name="categories" type="array" />
         <property name="images" type="array" />
         <property name="prices" type="array" />
-        <property name="labelIds" type="array" />
-        <property name="averageRating" type="float" />
-        <property name="reviewCount" type="int" />
-        <property name="lists" type="array" />
     </transfer>
 
 </transfers>

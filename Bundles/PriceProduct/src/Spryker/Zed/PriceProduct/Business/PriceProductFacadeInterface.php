@@ -375,6 +375,7 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Reads abstract product prices from database.
+     * - Expands each price transfer via array of PriceProductDimensionExpanderStrategyPluginInterface.
      *
      * @api
      *

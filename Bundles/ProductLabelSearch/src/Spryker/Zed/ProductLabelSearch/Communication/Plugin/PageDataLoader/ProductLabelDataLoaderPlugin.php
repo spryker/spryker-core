@@ -15,7 +15,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoad
  * @method \Spryker\Zed\ProductLabelSearch\Communication\ProductLabelSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchRepositoryInterface getRepository()()
  */
-class ProductLabelPageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
+class ProductLabelDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
 {
     /**
      * @api

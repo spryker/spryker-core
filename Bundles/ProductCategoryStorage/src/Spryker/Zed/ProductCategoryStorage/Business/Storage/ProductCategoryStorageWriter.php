@@ -77,15 +77,17 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         $categories = [];
 
         foreach ($spyProductAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
-            if (isset($productCategories[$productAbstractLocalizedEntity->getFkProductAbstract()])) {
-                $mappings = $productCategories[$productAbstractLocalizedEntity->getFkProductAbstract()];
-                $localizedCategories = [];
-                foreach ($mappings as $mapping) {
-                    $localizedCategories = array_merge($localizedCategories, $this->generateProductCategoryLocalizedData($mapping, $productAbstractLocalizedEntity->getFkLocale()));
-                }
-
-                $categories[$productAbstractLocalizedEntity->getFkProductAbstract()][$productAbstractLocalizedEntity->getFkLocale()] = $localizedCategories;
+            if (!isset($productCategories[$productAbstractLocalizedEntity->getFkProductAbstract()])) {
+                continue;
             }
+
+            $mappings = $productCategories[$productAbstractLocalizedEntity->getFkProductAbstract()];
+            $localizedCategories = [];
+            foreach ($mappings as $mapping) {
+                $localizedCategories = array_merge($localizedCategories, $this->generateProductCategoryLocalizedData($mapping, $productAbstractLocalizedEntity->getFkLocale()));
+            }
+
+            $categories[$productAbstractLocalizedEntity->getFkProductAbstract()][$productAbstractLocalizedEntity->getFkLocale()] = $localizedCategories;
         }
 
         $spyProductAbstractStorageEntities = $this->findProductAbstractCategoryStorageEntitiesByProductAbstractIds($productAbstractIds);

@@ -262,6 +262,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
@@ -426,6 +428,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer

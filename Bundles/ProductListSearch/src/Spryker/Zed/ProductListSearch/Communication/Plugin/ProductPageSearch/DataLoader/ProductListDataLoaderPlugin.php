@@ -205,7 +205,7 @@ class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageD
         foreach ($payloadTransfers as $payloadTransfer) {
             $lists = $mappedProductListIds[$payloadTransfer->getIdProductAbstract()] ?? null;
 
-            $payloadTransfer->setLists($lists);
+            $payloadTransfer->setProductLists($lists);
         }
 
         return $payloadTransfers;
