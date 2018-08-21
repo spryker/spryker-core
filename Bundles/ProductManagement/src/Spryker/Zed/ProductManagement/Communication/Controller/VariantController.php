@@ -36,8 +36,8 @@ class VariantController extends AbstractController
      * - sku: test-sku
      * - localized_attribute_values[de_DE]: {"short_description":"Lorem Ipsum","long_description":"Lorem Ipsum de_DE ..."}
      * - localized_attribute_values[en_US]: {"short_description":"Lorem Ipsum","long_description":"Lorem Ipsum en_US ..."}
-     * - attribute_group: {"size":"Size","color":"Color","flavour":"Flavour"}
-     * - attribute_values: {"color":{"red":"Red","blue":"Blue"},"flavour":{"sweet":"Cakes"},"size":{"40":"40","41":"41"}}
+     * - attribute_group: {"size":"Size","color":"Color","flavor":"Flavor"}
+     * - attribute_values: {"color":{"red":"Red","blue":"Blue"},"flavor":{"sweet":"Cakes"},"size":{"40":"40","41":"41"}}
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

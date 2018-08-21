@@ -24,7 +24,7 @@ class AvailabilityToProductBridge implements AvailabilityToProductInterface
     /**
      * @param string $productConcreteSku
      *
-     * @return int
+     * @return string
      */
     public function getAbstractSkuFromProductConcrete($productConcreteSku)
     {
