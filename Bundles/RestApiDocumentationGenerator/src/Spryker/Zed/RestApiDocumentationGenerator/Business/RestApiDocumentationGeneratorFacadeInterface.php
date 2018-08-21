@@ -11,11 +11,11 @@ interface RestApiDocumentationGeneratorFacadeInterface
 {
     /**
      * Specification:
-     *  - Generates Open API specification file in YAML format (Name of generated file declaring in configuration file)
+     *  - Generates Open API specification file in YAML format
      *
      * @api
      *
      * @return void
      */
-    public function generate(): void;
+    public function generateOpenApiSpecification(): void;
 }

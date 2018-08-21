@@ -38,7 +38,7 @@ class RestApiDocumentationGeneratorConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
-        $this->getFacade()->generate();
+        $this->getFacade()->generateOpenApiSpecification();
 
         return static::CODE_SUCCESS;
     }

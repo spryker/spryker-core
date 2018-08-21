@@ -12,5 +12,5 @@ interface RestApiDocumentationGeneratorInterface
     /**
      * @return void
      */
-    public function generate(): void;
+    public function generateOpenApiSpecification(): void;
 }

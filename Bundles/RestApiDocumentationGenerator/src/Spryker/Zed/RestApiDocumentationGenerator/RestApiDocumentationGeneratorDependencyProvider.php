@@ -7,23 +7,14 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator;
 
-use Spryker\Glue\GlueApplication\Plugin\Rest\ResourceRoutePluginsProviderPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToSymfonyYamlAdapter;
 
 class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PLUGIN_RESOURCE_ROUTES_RESOLVER = 'PLUGIN_RESOURCE_ROUTES_RESOLVER';
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideCommunicationLayerDependencies(Container $container)
-    {
-        return $container;
-    }
+    public const PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS = 'PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS';
+    public const YAML_DUMPER = 'YAML_DUMPER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,6 +23,7 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = $this->addYamlDumper($container);
         $container = $this->addResourceRoutePluginsProviderPlugins($container);
 
         return $container;
@@ -42,8 +34,12 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function providePersistenceLayerDependencies(Container $container)
+    protected function addYamlDumper(Container $container): Container
     {
+        $container[static::YAML_DUMPER] = function () {
+            return new RestApiDocumentationGeneratorToSymfonyYamlAdapter();
+        };
+
         return $container;
     }
 
@@ -54,7 +50,7 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
      */
     protected function addResourceRoutePluginsProviderPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_RESOURCE_ROUTES_RESOLVER] = function () {
+        $container[static::PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS] = function () {
             return $this->getResourceRoutePluginsProviderPlugins();
         };
 
@@ -62,12 +58,10 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[]
+     * @return \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[]
      */
     protected function getResourceRoutePluginsProviderPlugins(): array
     {
-        return [
-            new ResourceRoutePluginsProviderPlugin(),
-        ];
+        return [];
     }
 }

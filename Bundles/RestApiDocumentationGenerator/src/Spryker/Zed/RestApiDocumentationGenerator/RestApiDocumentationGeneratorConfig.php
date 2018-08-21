@@ -52,8 +52,8 @@ class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getRestApplicationDomain()
+    public function getRestApplicationDomain(): string
     {
-        return GlueApplicationConstants::GLUE_APPLICATION_DOMAIN;
+        return $this->get(GlueApplicationConstants::GLUE_APPLICATION_DOMAIN);
     }
 }

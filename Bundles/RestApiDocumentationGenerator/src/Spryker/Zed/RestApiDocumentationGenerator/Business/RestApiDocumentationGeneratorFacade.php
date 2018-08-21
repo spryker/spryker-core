@@ -21,10 +21,10 @@ class RestApiDocumentationGeneratorFacade extends AbstractFacade implements Rest
      *
      * @return void
      */
-    public function generate(): void
+    public function generateOpenApiSpecification(): void
     {
         $this->getFactory()
             ->createGenerator()
-            ->generate();
+            ->generateOpenApiSpecification();
     }
 }
