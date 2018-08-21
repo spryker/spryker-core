@@ -173,7 +173,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     {
         $productConcreteIds = $productViewTransfer->getAttributeMap()->getProductConcreteIds();
         $idProductConcrete = array_shift($productConcreteIds);
-        $productConcreteStorageData = $this->productConcreteStorageReader->getProductConcreteStorageData($idProductConcrete, $locale);
+        $productConcreteStorageData = $this->productConcreteStorageReader->findProductConcreteStorageData($idProductConcrete, $locale);
 
         if (!$productConcreteStorageData) {
             return $productViewTransfer;
@@ -210,7 +210,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         }
 
         $idProductConcrete = $this->extractIdOfProductConcrete($selectedVariantNode);
-        $productConcreteStorageData = $this->productConcreteStorageReader->getProductConcreteStorageData($idProductConcrete, $locale);
+        $productConcreteStorageData = $this->productConcreteStorageReader->findProductConcreteStorageData($idProductConcrete, $locale);
 
         if (!$productConcreteStorageData) {
             return $productViewTransfer;

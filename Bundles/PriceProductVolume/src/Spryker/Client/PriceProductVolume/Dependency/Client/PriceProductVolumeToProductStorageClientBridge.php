@@ -23,6 +23,8 @@ class PriceProductVolumeToProductStorageClientBridge implements PriceProductVolu
     }
 
     /**
+     * @deprecated Use getProductConcreteStorageData($idProductConcrete, $localeName)
+     *
      * @param int $idProductConcrete
      * @param string $localeName
      *
@@ -31,5 +33,16 @@ class PriceProductVolumeToProductStorageClientBridge implements PriceProductVolu
     public function getProductConcreteStorageData($idProductConcrete, $localeName): array
     {
         return $this->productStorageClient->getProductConcreteStorageData($idProductConcrete, $localeName);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array
+    {
+        return $this->productStorageClient->findProductConcreteStorageData($idProductConcrete, $localeName);
     }
 }

@@ -37,8 +37,6 @@ class QuoteCreator implements QuoteCreatorInterface
     protected $zedRequestClient;
 
     /**
-     * QuoteCreator constructor.
-     *
      * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedRequestClient
      * @param \Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface $persistentCartStub
