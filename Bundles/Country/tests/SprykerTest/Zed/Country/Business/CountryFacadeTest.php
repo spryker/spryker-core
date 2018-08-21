@@ -8,8 +8,10 @@
 namespace SprykerTest\Zed\Country\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\RegionRequestBuilder;
 use Generated\Shared\Transfer\CountryTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
+use Orm\Zed\Country\Persistence\SpyRegion;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Country\Business\Exception\MissingCountryException;
@@ -39,6 +41,11 @@ class CountryFacadeTest extends Unit
      * @var \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface
      */
     protected $countryQueryContainer;
+
+    /**
+     * @var \SprykerTest\Zed\Country\CountryBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -122,5 +129,26 @@ class CountryFacadeTest extends Unit
     {
         $this->expectException(MissingCountryException::class);
         $this->countryFacade->getCountryByIso2Code(self::ISO2_CODE);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetRegionsByCountryIso2CodeReturnsNotEmptyResult()
+    {
+        $country = new SpyCountry();
+        $country->setIso2Code(self::ISO2_CODE);
+        $country->save();
+
+        $region = new SpyRegion();
+        $region->setName('test');
+        $region->setFkCountry($country->getIdCountry());
+        $region->setIso2Code('TS');
+        $region->save();
+
+        $regionRequestTransfer = (new RegionRequestBuilder())->build()->setCountryIso2Code($country->getIso2Code());
+        $regionTransfer = $this->countryFacade->getRegionsByCountryIso2Code($regionRequestTransfer);
+
+        $this->assertEquals('TS', $regionTransfer->getRegions()[0]->getIso2Code());
     }
 }
