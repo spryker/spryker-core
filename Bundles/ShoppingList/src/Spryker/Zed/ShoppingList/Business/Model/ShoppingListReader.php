@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
@@ -292,9 +291,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $productConcreteTransfers = $this->productFacade->findProductConcretesBySkus($shoppingListItemsSkus);
         $keyedProductConcreteTransfers = $this->getKeyedProductConcreteTransfers($productConcreteTransfers);
         $shoppingListItems = $shoppingListItemCollectionTransfer->getItems();
-        $this->mapProductConcreteIdToShoppingListItem($shoppingListItems, $keyedProductConcreteTransfers);
+        $shoppingListItems = $this->mapProductConcreteIdToShoppingListItem($shoppingListItems, $keyedProductConcreteTransfers);
 
-        foreach ($shoppingListItemCollectionTransfer->getItems() as $item) {
+        foreach ($shoppingListItems as $item) {
             foreach ($this->itemExpanderPlugins as $itemExpanderPlugin) {
                 $item = $itemExpanderPlugin->expandItem($item);
             }
@@ -320,18 +319,15 @@ class ShoppingListReader implements ShoppingListReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[] $keyedProductConcreteTransfers
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     protected function getKeyedProductConcreteTransfers(array $productConcreteTransfers): array
     {
-        $keyedProductConcreteTransfers = array_reduce(
-            $productConcreteTransfers,
-            function (?array $keyedProductConcreteTransfers = null, ProductConcreteTransfer $productConcreteTransfer) {
-                $keyedProductConcreteTransfers[$productConcreteTransfer->getSku()] = $productConcreteTransfer;
+        $keyedProductConcreteTransfers = [];
 
-                return $keyedProductConcreteTransfers;
-            }
-        );
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $keyedProductConcreteTransfers[$productConcreteTransfer->getSku()] = $productConcreteTransfer;
+        }
 
         return $keyedProductConcreteTransfers;
     }
@@ -340,9 +336,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
      * @param \ArrayObject $shoppingListItemTransfers
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $keyedProductConcreteTransfers
      *
-     * @return void
+     * @return \ArrayObject
      */
-    protected function mapProductConcreteIdToShoppingListItem(ArrayObject $shoppingListItemTransfers, array $keyedProductConcreteTransfers): void
+    protected function mapProductConcreteIdToShoppingListItem(ArrayObject $shoppingListItemTransfers, array $keyedProductConcreteTransfers): ArrayObject
     {
         array_walk($shoppingListItemTransfers, function (ShoppingListItemTransfer $shoppingListItemTransfer) use ($keyedProductConcreteTransfers) {
             if (isset($keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()])) {
@@ -350,6 +346,8 @@ class ShoppingListReader implements ShoppingListReaderInterface
                 $shoppingListItemTransfer->setIdProduct($idProduct);
             }
         });
+
+        return $shoppingListItemTransfers;
     }
 
     /**
