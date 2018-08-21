@@ -36,11 +36,14 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
                 $companyUnitAddressTransfer,
                 new SpyCompanyUnitAddressEntityTransfer()
             );
+        $companyUnitAddressExist = $entityTransfer->getIdCompanyUnitAddress() !== null;
         $entityTransfer = $this->save($entityTransfer);
         $idCompanyUnitAddress = $entityTransfer->getIdCompanyUnitAddress();
         $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
 
-        $this->saveAddressToBusinessUnitRelations($companyUnitAddressTransfer, $idCompanyUnitAddress);
+        if (!$companyUnitAddressExist) {
+            $this->createAddressToBusinessUnitRelations($companyUnitAddressTransfer, $idCompanyUnitAddress);
+        }
 
         return $companyUnitAddressTransfer;
     }
@@ -104,7 +107,7 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
      *
      * @return void
      */
-    protected function saveAddressToBusinessUnitRelations(
+    protected function createAddressToBusinessUnitRelations(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         int $idCompanyUnitAddress
     ): void {
