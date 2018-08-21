@@ -49,11 +49,13 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
      */
     public function deleteShoppingListByName(ShoppingListTransfer $shoppingListTransfer): void
     {
-        $this->getFactory()
+        $shoppingListEntity = $this->getFactory()
             ->createShoppingListQuery()
             ->filterByCustomerReference($shoppingListTransfer->getCustomerReference())
             ->filterByName($shoppingListTransfer->getName())
-            ->delete();
+            ->findOne();
+
+        $shoppingListEntity->delete();
     }
 
     /**
@@ -179,10 +181,14 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
      */
     public function deleteShoppingListCompanyUsers(ShoppingListTransfer $shoppingListTransfer): void
     {
-        $this->getFactory()
+        $shoppingListCompanyUserEntities = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
             ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
-            ->delete();
+            ->find();
+
+        foreach ($shoppingListCompanyUserEntities as $shoppingListCompanyUserEntity) {
+            $shoppingListCompanyUserEntity->delete();
+        }
     }
 
     /**
@@ -192,9 +198,13 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
      */
     public function deleteShoppingListCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer): void
     {
-        $this->getFactory()
+        $shoppingListCompanyBusinessUnitEntities = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
             ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
-            ->delete();
+            ->find();
+
+        foreach ($shoppingListCompanyBusinessUnitEntities as $shoppingListCompanyBusinessUnitEntity) {
+            $shoppingListCompanyBusinessUnitEntity->delete();
+        }
     }
 }
