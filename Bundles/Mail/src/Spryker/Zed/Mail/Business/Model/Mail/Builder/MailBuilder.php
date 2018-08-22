@@ -19,7 +19,7 @@ use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface;
 class MailBuilder implements MailBuilderInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\MailTransfer
+     * @var \Generated\Shared\Transfer\MailTransfer|null
      */
     protected $mailTransfer;
 
