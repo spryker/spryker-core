@@ -12,17 +12,26 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
 {
-    public const SWAGGER_GENERATOR_FILE_NAME = 'spryker_rest_api';
-    public const SWAGGER_GENERATOR_INFO_VERSION = '1.0.0';
-    public const SWAGGER_GENERATOR_INFO_TITLE = 'Spryker API';
-    public const SWAGGER_GENERATOR_INFO_LICENSE_NAME = 'MIT';
+    public const REST_API_DOCUMENTATION_TARGET_DIRECTORY = APPLICATION_SOURCE_DIR . '/Generated/Glue/Specification/';
+    public const REST_API_DOCUMENTATION_FILE_NAME = 'spryker_rest_api';
+    public const REST_API_DOCUMENTATION_INFO_VERSION = '1.0.0';
+    public const REST_API_DOCUMENTATION_INFO_TITLE = 'Spryker API';
+    public const REST_API_DOCUMENTATION_INFO_LICENSE_NAME = 'MIT';
+
+    /**
+     * @return string
+     */
+    public function getTargetDirectory(): string
+    {
+        return static::REST_API_DOCUMENTATION_TARGET_DIRECTORY;
+    }
 
     /**
      * @return string
      */
     public function getGeneratedFileName(): string
     {
-        return static::SWAGGER_GENERATOR_FILE_NAME;
+        return static::REST_API_DOCUMENTATION_FILE_NAME;
     }
 
     /**
@@ -30,7 +39,7 @@ class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
      */
     public function getInfoApiVersion(): string
     {
-        return static::SWAGGER_GENERATOR_INFO_VERSION;
+        return static::REST_API_DOCUMENTATION_INFO_VERSION;
     }
 
     /**
@@ -38,7 +47,7 @@ class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
      */
     public function getInfoApiTitle(): string
     {
-        return static::SWAGGER_GENERATOR_INFO_TITLE;
+        return static::REST_API_DOCUMENTATION_INFO_TITLE;
     }
 
     /**
@@ -46,7 +55,7 @@ class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
      */
     public function getInfoApiInfoLicenceName(): string
     {
-        return static::SWAGGER_GENERATOR_INFO_LICENSE_NAME;
+        return static::REST_API_DOCUMENTATION_INFO_LICENSE_NAME;
     }
 
     /**

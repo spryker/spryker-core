@@ -14,6 +14,7 @@ use Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfi
 class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterface
 {
     protected const GENERATED_FILE_POSTFIX = '.schema.yml';
+    protected const GENERATED_FILE_PERMISSIONS = '0775';
 
     protected const OPENAPI_VERSION = '3.0.0';
 
@@ -72,7 +73,7 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
             $this->yamlDumper->dump($data, static::YAML_NESTING_LEVEL)
         );
         if (!$bytesWritten) {
-            throw new FileNotCreatedException('Unable to create file, please check permissions and free space available on device');
+            throw new FileNotCreatedException('Unable to create file, please check permissions and free space available on device.');
         }
     }
 
@@ -103,16 +104,27 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
     }
 
     /**
+     * @throws \Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\FileNotCreatedException
+     *
      * @return string
      */
     protected function resolveGeneratedFileName(): string
     {
+        $targetDirectory = $this->restApiDocumentationGeneratorConfig->getTargetDirectory();
+        if (substr($targetDirectory, -1) !== '/') {
+            $targetDirectory .= '/';
+        }
+
+        if (!is_dir($targetDirectory) && !mkdir($targetDirectory, static::GENERATED_FILE_PERMISSIONS) && !is_dir($targetDirectory)) {
+            throw new FileNotCreatedException('Unable to create directory.');
+        }
+
         $fileName = $this->restApiDocumentationGeneratorConfig->getGeneratedFileName();
 
         if (substr_compare($fileName, static::GENERATED_FILE_POSTFIX, -strlen(static::GENERATED_FILE_POSTFIX)) === 0) {
             return $fileName;
         }
 
-        return $fileName . static::GENERATED_FILE_POSTFIX;
+        return $targetDirectory . $fileName . static::GENERATED_FILE_POSTFIX;
     }
 }
