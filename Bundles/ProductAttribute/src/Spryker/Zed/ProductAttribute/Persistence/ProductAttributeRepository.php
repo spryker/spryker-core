@@ -41,7 +41,7 @@ class ProductAttributeRepository extends AbstractRepository implements ProductAt
 
         foreach ($productManagementAttributeKeyEntityCollection as $productManagementAttributeEntity) {
             $productManagementAttributeTransfer = $mapper->mapProductManagementAttributeEntityToTransfer($productManagementAttributeEntity, new ProductManagementAttributeTransfer());
-            $superAttributes[$productManagementAttributeTransfer->getKey()] = $mapper->mapProductManagementAttributeEntityToTransfer($productManagementAttributeEntity, new ProductManagementAttributeTransfer());
+            $superAttributes[$productManagementAttributeTransfer->getKey()] = $productManagementAttributeTransfer;
         }
 
         return $superAttributes;

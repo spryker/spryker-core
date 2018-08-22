@@ -185,16 +185,16 @@ class AttributeReader implements AttributeReaderInterface
      */
     protected function getUniqueTransformedAttributes(array $productConcreteTransfers): array
     {
-        $uniqueTransaformedAttributes = [];
+        $uniqueTransformedAttributes = [];
 
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
             foreach ($productConcreteTransfer->getAttributes() as $attributeKey => $attributeValue) {
-                if (!isset($uniqueTransaformedAttributes[$attributeKey]) || !in_array($attributeValue, $uniqueTransaformedAttributes[$attributeKey])) {
-                    $uniqueTransaformedAttributes[$attributeKey][] = $attributeValue;
+                if (!isset($uniqueTransformedAttributes[$attributeKey]) || !in_array($attributeValue, $uniqueTransformedAttributes[$attributeKey])) {
+                    $uniqueTransformedAttributes[$attributeKey][] = $attributeValue;
                 }
             }
         }
 
-        return $uniqueTransaformedAttributes;
+        return $uniqueTransformedAttributes;
     }
 }

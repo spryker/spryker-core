@@ -113,7 +113,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
      */
     protected function addSkuAutogenerateCheckboxField(FormBuilderInterface $builder)
     {
-        if (!empty($builder->getOption(static::OPTION_SUPER_ATTRIBUTES))) {
+        if ($builder->getOption(static::OPTION_SUPER_ATTRIBUTES)) {
             $builder->add(static::FIELD_SKU_AUTOGENERATE_CHECKBOX, CheckboxType::class, [
                 'label' => 'Autogenerate SKU',
             ]);
@@ -130,16 +130,17 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
      */
     protected function addProductConcreteSuperAttributeForm(FormBuilderInterface $builder, array $options)
     {
-        $constraints = empty($builder->getOption(static::OPTION_SUPER_ATTRIBUTES)) ?
-            [] :
-            [
+        $constraints = [];
+
+        if ($builder->getOption(static::OPTION_SUPER_ATTRIBUTES)) {
+            $constraints = [
                 new ProductAttributesNotBlank(),
                 new ProductAttributeUniqueCombination(
                     $this->getFactory()->getProductFacade(),
                     (int)$options[static::OPTION_ID_PRODUCT_ABSTRACT]
                 ),
-
             ];
+        }
 
         $builder->add(
             static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES,

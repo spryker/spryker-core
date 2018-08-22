@@ -75,7 +75,7 @@ class ProductConcreteFormAddDataProvider
     protected $taxCollection = [];
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface|null
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface
      */
     protected $store;
 
@@ -292,6 +292,8 @@ class ProductConcreteFormAddDataProvider
     protected function convertAbstractLocalizedAttributesToFormOptions(?ProductAbstractTransfer $productAbstractTransfer = null, ?LocaleTransfer $localeTransfer = null)
     {
         $values = [];
+        $productAttributeValues = [];
+
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
             $isProductSpecificAttribute = false;
             $id = $attributeTransfer->getIdProductManagementAttribute();
@@ -316,24 +318,30 @@ class ProductConcreteFormAddDataProvider
             ];
         }
 
+        if (!$productAbstractTransfer) {
+            return $values;
+        }
+
         $productAttributeValues = [];
         $productAttributeKeys = [];
-        if ($productAbstractTransfer) {
-            if ($localeTransfer) {
-                foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributeTransfer) {
-                    if ($localizedAttributeTransfer->getLocale()->getLocaleName() === $localeTransfer->getLocaleName()) {
-                        $productAttributeValues = $localizedAttributeTransfer->getAttributes();
-                    }
-                }
-            } else {
-                $productAttributeValues = $productAbstractTransfer->getAttributes();
-            }
 
-            $productAttributeKeys = $this->productFacade->getCombinedAbstractAttributeKeys($productAbstractTransfer, $localeTransfer);
+        if ($localeTransfer) {
+            foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributeTransfer) {
+                if ($localizedAttributeTransfer->getLocale()->getLocaleName() !== $localeTransfer->getLocaleName()) {
+                    continue;
+                }
+
+                $productAttributeValues = $localizedAttributeTransfer->getAttributes();
+            }
+        } else {
+            $productAttributeValues = $productAbstractTransfer->getAttributes();
         }
+
+        $productAttributeKeys = $this->productFacade->getCombinedAbstractAttributeKeys($productAbstractTransfer, $localeTransfer);
 
         foreach ($productAttributeKeys as $type) {
             $isDefined = $this->attributeTransferCollection->has($type);
+
             if ($isDefined) {
                 continue;
             }
