@@ -10,7 +10,7 @@ namespace Spryker\Client\ShoppingListSession;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridge;
-use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListBridge;
+use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListClientBridge;
 
 class ShoppingListSessionDependencyProvider extends AbstractDependencyProvider
 {
@@ -57,7 +57,7 @@ class ShoppingListSessionDependencyProvider extends AbstractDependencyProvider
     protected function addShoppingListClient(Container $container): Container
     {
         $container[static::SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT] = function (Container $container) {
-            return new ShoppingListSessionToShoppingListBridge($container->getLocator()->shoppingList()->client());
+            return new ShoppingListSessionToShoppingListClientBridge($container->getLocator()->shoppingList()->client());
         };
 
         return $container;

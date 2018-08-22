@@ -7,12 +7,10 @@
 
 namespace Spryker\Client\ShoppingListStorage\Dependency\Client;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 interface ShoppingListStorageToCustomerClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer(): ?CustomerTransfer;
+    public function getCustomer();
 }

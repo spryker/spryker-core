@@ -9,7 +9,7 @@ namespace Spryker\Client\ShoppingListSession\ShoppingList;
 
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListSessionTransfer;
-use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListBridgeInterface;
+use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListClientBridgeInterface;
 use Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutorInterface;
 use Spryker\Client\ShoppingListSession\Storage\ShoppingListSessionStorageInterface;
 
@@ -21,7 +21,7 @@ class ShoppingListSessionReader implements ShoppingListSessionReaderInterface
     protected $shoppingListSessionStorage;
 
     /**
-     * @var \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListBridgeInterface
+     * @var \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListClientBridgeInterface
      */
     protected $shoppingListClient;
 
@@ -32,12 +32,12 @@ class ShoppingListSessionReader implements ShoppingListSessionReaderInterface
 
     /**
      * @param \Spryker\Client\ShoppingListSession\Storage\ShoppingListSessionStorageInterface $shoppingListSessionStorage
-     * @param \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListBridgeInterface $shoppingListClient
+     * @param \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListClientBridgeInterface $shoppingListClient
      * @param \Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutorInterface $shoppingListSessionPluginsExecutor
      */
     public function __construct(
         ShoppingListSessionStorageInterface $shoppingListSessionStorage,
-        ShoppingListSessionToShoppingListBridgeInterface $shoppingListClient,
+        ShoppingListSessionToShoppingListClientBridgeInterface $shoppingListClient,
         ShoppingListSessionPluginsExecutorInterface $shoppingListSessionPluginsExecutor
     ) {
         $this->shoppingListSessionStorage = $shoppingListSessionStorage;

@@ -9,7 +9,7 @@ namespace Spryker\Client\ShoppingListSession\Dependency\Client;
 
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 
-class ShoppingListSessionToShoppingListBridge implements ShoppingListSessionToShoppingListBridgeInterface
+class ShoppingListSessionToShoppingListClientBridge implements ShoppingListSessionToShoppingListClientBridgeInterface
 {
     /**
      * @var \Spryker\Client\ShoppingList\ShoppingListClientInterface
