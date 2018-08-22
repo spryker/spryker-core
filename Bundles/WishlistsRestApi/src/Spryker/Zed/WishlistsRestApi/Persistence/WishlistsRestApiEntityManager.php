@@ -32,6 +32,6 @@ class WishlistsRestApiEntityManager extends AbstractEntityManager implements Wis
             foreach ($wishlistEntities as $wishlistEntity) {
                 $wishlistEntity->save();
             }
-        } while ($wishlistEntities);
+        } while ($wishlistEntities->count());
     }
 }
