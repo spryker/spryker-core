@@ -50,7 +50,7 @@ class RestApiDocumentationGeneratorFacadeTest extends Unit
      */
     public function testGenerateShouldCreateYamlFile(): void
     {
-        $this->swaggerGeneratorFacade->generate();
+        $this->swaggerGeneratorFacade->generateOpenApiSpecification();
 
         $this->assertFileExists(static::GENERATED_FILE_NAME);
         $this->assertFileIsWritable(static::GENERATED_FILE_NAME);
@@ -61,7 +61,7 @@ class RestApiDocumentationGeneratorFacadeTest extends Unit
      */
     public function testGenerateShouldCreateValidYamlFileThatCanBeParsedToArray(): void
     {
-        $this->swaggerGeneratorFacade->generate();
+        $this->swaggerGeneratorFacade->generateOpenApiSpecification();
         $parsedFile = Yaml::parseFile(static::GENERATED_FILE_NAME);
 
         $this->assertInternalType('array', $parsedFile);
