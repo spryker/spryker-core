@@ -225,25 +225,6 @@ class CartItemsWriter implements CartItemsWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer|null
-     */
-    protected function findItemTransfer(
-        RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer,
-        QuoteTransfer $quoteTransfer
-    ): ?ItemTransfer {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getSku() === $restCartItemsAttributesRequestTransfer->getSku()) {
-                return $itemTransfer;
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
@@ -370,6 +351,23 @@ class CartItemsWriter implements CartItemsWriterInterface
             );
 
         return $restResponse->addResource($cartItemsResource);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    protected function findItemTransfer(
+        RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ?ItemTransfer {
+        return $this->cartClient->findQuoteItem(
+            $quoteTransfer,
+            $restCartItemsAttributesRequestTransfer->getSku(),
+            $restCartItemsAttributesRequestTransfer->getGroupKey()
+        );
     }
 
     /**

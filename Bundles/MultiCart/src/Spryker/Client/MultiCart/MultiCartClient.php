@@ -194,6 +194,8 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer

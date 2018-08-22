@@ -11,6 +11,8 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\MultiCart\Business\MultiCartBusinessFactory;
 use Spryker\Zed\MultiCart\Business\MultiCartFacade;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge;
@@ -27,7 +29,6 @@ use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge;
  */
 class ReadQuoteCollectionTest extends Unit
 {
-    protected const DE_1 = 'DE--1';
     protected const COLLECTION_DATA = [
         [
             'id_quote' => 1,
@@ -35,8 +36,8 @@ class ReadQuoteCollectionTest extends Unit
             'store' => 'DE',
             'priceMode' => 'GROSS_MODE',
             'currency' => 'EUR',
-            'customerReference' => 'DE--1',
-            'uuid' => '67c4148a-d677-53bd-9324-f1567e09ae56',
+            'customerReference' => 'tester-de',
+            'uuid' => '7fd5cc11-87ff-55e2-b413-7e07f9640404',
 
         ],
         [
@@ -45,9 +46,14 @@ class ReadQuoteCollectionTest extends Unit
             'store' => 'DE',
             'priceMode' => 'GROSS_MODE',
             'currency' => 'EUR',
-            'customerReference' => 'DE--1',
-            'uuid' => '907c0644-0f53-53bb-bc4e-30274011641f',
+            'customerReference' => 'tester-de',
+            'uuid' => '22b43a18-e46c-55bf-bc00-65f4dee0727a',
         ],
+    ];
+
+    protected const CUSTOMER_DATA = [
+        'customer_reference' => 'tester-de',
+        'email' => 'tester@test.com',
     ];
 
     /**
@@ -61,13 +67,24 @@ class ReadQuoteCollectionTest extends Unit
     protected $multiCartFacade;
 
     /**
+     * @var \SprykerTest\Zed\MultiCart\MultiCartBusinessTester
+     */
+    protected $tester;
+
+    /**
+     * @var \Orm\Zed\Customer\Persistence\SpyCustomer
+     */
+    protected $customer;
+
+    /**
      * @return void
      */
     protected function setUp()
     {
-        $this->multiCartFacade = new MultiCartFacade();
+        parent::setUp();
 
-        return parent::setUp();
+        $this->customer = $this->createCustomer();
+        $this->multiCartFacade = $this->tester->getFacade();
     }
 
     /**
@@ -77,7 +94,7 @@ class ReadQuoteCollectionTest extends Unit
     {
         $this->initWithResult();
         $criteriaTransfer = new QuoteCriteriaFilterTransfer();
-        $criteriaTransfer->setCustomerReference(static::DE_1);
+        $criteriaTransfer->setCustomerReference(static::CUSTOMER_DATA['customer_reference']);
 
         $quoteResponseTransfer = $this->multiCartFacade->getQuoteCollectionByCriteria($criteriaTransfer);
 
@@ -93,7 +110,7 @@ class ReadQuoteCollectionTest extends Unit
     {
         $this->initWithoutResult();
         $criteriaTransfer = new QuoteCriteriaFilterTransfer();
-        $criteriaTransfer->setCustomerReference(static::DE_1);
+        $criteriaTransfer->setCustomerReference(static::CUSTOMER_DATA['customer_reference']);
 
         $quoteResponseTransfer = $this->multiCartFacade->getQuoteCollectionByCriteria($criteriaTransfer);
 
@@ -178,5 +195,21 @@ class ReadQuoteCollectionTest extends Unit
             ->willReturn($this->getEmptyQuoteFacadeMock());
 
         $this->multiCartFacade->setFactory($this->multiCartBusinessFactory);
+    }
+
+    /**
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
+     */
+    protected function createCustomer()
+    {
+        $customerEntity = SpyCustomerQuery::create()->findOneByCustomerReference(static::CUSTOMER_DATA['customer_reference']);
+        if ($customerEntity) {
+            return $customerEntity;
+        }
+        $customerEntity = new SpyCustomer();
+        $customerEntity->fromArray(static::CUSTOMER_DATA);
+        $customerEntity->save();
+
+        return $customerEntity;
     }
 }

@@ -30,6 +30,8 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
+
         $container = $this->addCartClient($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addQuoteClient($container);

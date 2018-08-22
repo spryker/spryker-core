@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CartsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class CartsRestApiToCartClientBridge implements CartsRestApiToCartClientInterface
 {
@@ -64,5 +65,17 @@ class CartsRestApiToCartClientBridge implements CartsRestApiToCartClientInterfac
     public function changeItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
         return $this->cartClient->changeItemQuantity($sku, $groupKey, $quantity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $sku
+     * @param null|string $groupKey
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
+    {
+        return $this->cartClient->findQuoteItem($quoteTransfer, $sku, $groupKey);
     }
 }
