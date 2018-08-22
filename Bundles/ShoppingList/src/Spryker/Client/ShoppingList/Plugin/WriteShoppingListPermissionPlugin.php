@@ -8,11 +8,11 @@
 namespace Spryker\Client\ShoppingList\Plugin;
 
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Shared\PermissionExtension\Dependency\Plugin\AwareConfigurationPermissionPluginInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\InfrastructuralPermissionPluginInterface;
 use Spryker\Shared\ShoppingList\ShoppingListConfig;
 
-class WriteShoppingListPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface, AwareConfigurationPermissionPluginInterface
+class WriteShoppingListPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface, InfrastructuralPermissionPluginInterface
 {
     public const KEY = ShoppingListConfig::WRITE_SHOPPING_LIST_PERMISSION_PLUGIN_KEY;
 

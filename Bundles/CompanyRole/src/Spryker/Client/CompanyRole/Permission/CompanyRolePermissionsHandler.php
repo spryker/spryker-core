@@ -50,10 +50,10 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
         $registeredPermissionTransfers = $this->permissionClient->getRegisteredPermissions()
             ->getPermissions();
 
-        $awareConfigurationPermissionKeys = $this->getAwareConfigurationPermissionKeys($registeredPermissionTransfers);
+        $infrastructuralPermissionKeys = $this->getInfrastructuralPermissionKeys($registeredPermissionTransfers);
 
         foreach ($allPermissionTransfers as $permissionTransfer) {
-            if (in_array($permissionTransfer->getKey(), $awareConfigurationPermissionKeys, true)) {
+            if (in_array($permissionTransfer->getKey(), $infrastructuralPermissionKeys, true)) {
                 continue;
             }
 
@@ -103,16 +103,16 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
      *
      * @return string[]
      */
-    protected function getAwareConfigurationPermissionKeys(ArrayObject $registeredPermissionTransfers): array
+    protected function getInfrastructuralPermissionKeys(ArrayObject $registeredPermissionTransfers): array
     {
-        $awareConfigurationPermissionKeys = [];
+        $infrastructuralPermissionKeys = [];
 
         foreach ($registeredPermissionTransfers as $permissionTransfer) {
-            if ($permissionTransfer->getIsAwareConfiguration()) {
-                $awareConfigurationPermissionKeys[] = $permissionTransfer->getKey();
+            if ($permissionTransfer->getIsInfrastructural()) {
+                $infrastructuralPermissionKeys[] = $permissionTransfer->getKey();
             }
         }
 
-        return $awareConfigurationPermissionKeys;
+        return $infrastructuralPermissionKeys;
     }
 }

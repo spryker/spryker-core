@@ -7,6 +7,6 @@
 
 namespace Spryker\Shared\PermissionExtension\Dependency\Plugin;
 
-interface AwareConfigurationPermissionPluginInterface
+interface InfrastructuralPermissionPluginInterface
 {
 }

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ShoppingList\Communication\Plugin;
 
-use Spryker\Shared\PermissionExtension\Dependency\Plugin\AwareConfigurationPermissionPluginInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\InfrastructuralPermissionPluginInterface;
 use Spryker\Shared\ShoppingList\ShoppingListConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface getFacade()
  * @method \Spryker\Zed\ShoppingList\Communication\ShoppingListCommunicationFactory getFactory()
  */
-class ReadShoppingListPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface, AwareConfigurationPermissionPluginInterface
+class ReadShoppingListPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface, InfrastructuralPermissionPluginInterface
 {
     public const KEY = ShoppingListConfig::READ_SHOPPING_LIST_PERMISSION_PLUGIN_KEY;
 
