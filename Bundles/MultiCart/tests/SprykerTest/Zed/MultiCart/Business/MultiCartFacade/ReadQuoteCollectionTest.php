@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\MultiCart\Business\MultiCartBusinessFactory;
-use Spryker\Zed\MultiCart\Business\MultiCartFacade;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge;
 
 /**
