@@ -8,8 +8,8 @@ namespace Spryker\Glue\ProductsCategoriesResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiInterface;
-use Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Mapper\AbstractProductsCategoriesResourceRelationshipMapper;
-use Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Mapper\AbstractProductsCategoriesResourceRelationshipMapperInterface;
+use Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Expander\AbstractProductsCategoriesResourceRelationshipExpander;
+use Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Expander\AbstractProductsCategoriesResourceRelationshipExpanderInterface;
 
 class ProductsCategoriesResourceRelationshipFactory extends AbstractFactory
 {
@@ -22,10 +22,10 @@ class ProductsCategoriesResourceRelationshipFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Mapper\AbstractProductsCategoriesResourceRelationshipMapperInterface
+     * @return \Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Mapper\AbstractProductsCategoriesResourceRelationshipExpanderInterface
      */
-    public function createAbstractProductsCategoriesResourceRelationshipMapper(): AbstractProductsCategoriesResourceRelationshipMapperInterface
+    public function createAbstractProductsCategoriesResourceRelationshipMapper(): AbstractProductsCategoriesResourceRelationshipExpanderInterface
     {
-        return new AbstractProductsCategoriesResourceRelationshipMapper($this->getCategoriesResource());
+        return new AbstractProductsCategoriesResourceRelationshipExpander($this->getCategoriesResource());
     }
 }

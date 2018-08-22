@@ -4,12 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Mapper;
+namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiInterface;
 
-class AbstractProductsCategoriesResourceRelationshipMapper implements AbstractProductsCategoriesResourceRelationshipMapperInterface
+class AbstractProductsCategoriesResourceRelationshipExpander implements AbstractProductsCategoriesResourceRelationshipExpanderInterface
 {
     /**
      * @var \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiInterface
@@ -30,11 +30,11 @@ class AbstractProductsCategoriesResourceRelationshipMapper implements AbstractPr
      *
      * @return void
      */
-    public function mapResourceRelationships(array $resources, RestRequestInterface $restRequest): void
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
             $abstractCategoriesResource = $this->categoriesResource
-                ->findProductCategoriesBySku($resource->getId(), $restRequest);
+                ->findProductCategoriesBySku($restRequest);
             if ($abstractCategoriesResource !== null) {
                 $resource->addRelationship($abstractCategoriesResource);
             }

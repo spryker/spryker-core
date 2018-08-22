@@ -83,13 +83,13 @@ class CategoriesReader implements CategoriesReaderInterface
     }
 
     /**
-     * @param string $abstractSku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findProductCategoriesBySku(string $abstractSku, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findProductCategoriesBySku(RestRequestInterface $restRequest): ?RestResourceInterface
     {
+        $abstractSku = $restRequest->getResource()->getId();
         $categoriesResource = $this->productCategoryResourceAliasStorageClient->findProductCategoryAbstractStorageTransfer(
             $abstractSku,
             $restRequest->getMetadata()->getLocale()

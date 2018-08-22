@@ -23,7 +23,7 @@ class ProductCategoryResourceAliasStorageDependencyProvider extends AbstractDepe
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
@@ -36,7 +36,7 @@ class ProductCategoryResourceAliasStorageDependencyProvider extends AbstractDepe
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addStorageClient(Container $container)
+    protected function addStorageClient(Container $container): Container
     {
         $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new ProductCategoryResourceAliasStorageToStorageClientBridge($container->getLocator()->storage()->client());
@@ -50,7 +50,7 @@ class ProductCategoryResourceAliasStorageDependencyProvider extends AbstractDepe
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addSynchronizationService(Container $container)
+    protected function addSynchronizationService(Container $container): Container
     {
         $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
             return new ProductCategoryResourceAliasStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());

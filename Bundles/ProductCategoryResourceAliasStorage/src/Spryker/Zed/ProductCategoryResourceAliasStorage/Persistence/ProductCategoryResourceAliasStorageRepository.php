@@ -42,7 +42,7 @@ class ProductCategoryResourceAliasStorageRepository extends AbstractRepository i
         /** @var \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery $findCriteria */
         $findCriteria = $this->getFactory()
             ->getProductCategoryPropelQuery()
-            ->filterByIdProductCategory_In($productCategoryIds)
+            ->filterByFkProductAbstract_In($productCategoryIds)
             ->joinWithSpyProductAbstract()
             ->select([
                 SpyProductCategoryTableMap::COL_ID_PRODUCT_CATEGORY,

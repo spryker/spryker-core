@@ -29,7 +29,7 @@ class AbstractProductsCategoriesResourceRelationshipPlugin extends AbstractPlugi
     {
         $this->getFactory()
             ->createAbstractProductsCategoriesResourceRelationshipMapper()
-            ->mapResourceRelationships($resources, $restRequest);
+            ->addResourceRelationships($resources, $restRequest);
     }
 
     /**

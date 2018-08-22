@@ -26,7 +26,7 @@ class ProductAbstractCategoryMappingResourceStorageListener extends AbstractPlug
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
         $productAbstractCategorysIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
         $this->getFacade()->updateProductAbstractCategoryStorageSkus($productAbstractCategorysIds);

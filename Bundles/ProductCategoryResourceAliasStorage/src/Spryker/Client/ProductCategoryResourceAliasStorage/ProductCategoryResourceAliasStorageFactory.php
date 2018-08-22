@@ -8,14 +8,17 @@
 namespace Spryker\Client\ProductCategoryResourceAliasStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductCategoryResourceAliasStorage\Dependency\Client\ProductCategoryResourceAliasStorageToStorageClientInterface;
+use Spryker\Client\ProductCategoryResourceAliasStorage\Dependency\Service\ProductCategoryResourceAliasStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductCategoryResourceAliasStorage\Storage\ProductAbstractCategoryStorageReader;
+use Spryker\Client\ProductCategoryResourceAliasStorage\Storage\ProductAbstractCategoryStorageReaderInterface;
 
 class ProductCategoryResourceAliasStorageFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Client\ProductCategoryResourceAliasStorage\Storage\ProductAbstractCategoryStorageReaderInterface
      */
-    public function createProductAbstractCategoryStorageReader()
+    public function createProductAbstractCategoryStorageReader(): ProductAbstractCategoryStorageReaderInterface
     {
         return new ProductAbstractCategoryStorageReader(
             $this->getStorageClient(),
@@ -26,15 +29,15 @@ class ProductCategoryResourceAliasStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductCategoryResourceAliasStorage\Dependency\Client\ProductCategoryResourceAliasStorageToStorageClientInterface
      */
-    public function getStorageClient()
+    public function getStorageClient(): ProductCategoryResourceAliasStorageToStorageClientInterface
     {
         return $this->getProvidedDependency(ProductCategoryResourceAliasStorageDependencyProvider::CLIENT_STORAGE);
     }
 
     /**
-     * @return \Spryker\Client\ProductCategoryResourceAliasStorage\Dependency\Service\ProductCategoryResourceAliasStorageToSynchronizationServiceBridge
+     * @return \Spryker\Client\ProductCategoryResourceAliasStorage\Dependency\Service\ProductCategoryResourceAliasStorageToSynchronizationServiceInterface
      */
-    public function getSynchronizationService()
+    public function getSynchronizationService(): ProductCategoryResourceAliasStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ProductCategoryResourceAliasStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
