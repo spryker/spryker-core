@@ -7,9 +7,8 @@
 namespace Spryker\Glue\ProductAvailabilitiesRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToAvailabilityResourceAliasStorageClientInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface;
-use Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductResourceAliasStorageInterface;
+use Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\AbstractProductAvailability\AbstractProductAvailabilitiesReader;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\AbstractProductAvailability\AbstractProductAvailabilitiesReaderInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\ConcreteProductAvailability\ConcreteProductAvailabilitiesReader;
@@ -22,14 +21,6 @@ use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\ConcreteProductAv
 class ProductAvailabilitiesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToAvailabilityResourceAliasStorageClientInterface
-     */
-    public function getProductAvailabilitiesRestApiStorageClient(): ProductAvailabilitiesRestApiToAvailabilityResourceAliasStorageClientInterface
-    {
-        return $this->getProvidedDependency(ProductAvailabilitiesRestApiDependencyProvider::CLIENT_AVAILABILITY_RESOURCE_ALIAS_STORAGE);
-    }
-
-    /**
      * @return \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface
      */
     public function getAvailabilityStorageClient(): ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface
@@ -38,11 +29,11 @@ class ProductAvailabilitiesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductResourceAliasStorageInterface
+     * @return \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductStorageClientInterface
      */
-    public function getProductResourceAliasStorageClient(): ProductAvailabilitiesRestApiToProductResourceAliasStorageInterface
+    public function getProductStorageClient(): ProductAvailabilitiesRestApiToProductStorageClientInterface
     {
-        return $this->getProvidedDependency(ProductAvailabilitiesRestApiDependencyProvider::CLIENT_PRODUCT_RESOURCE_ALIAS_STORAGE);
+        return $this->getProvidedDependency(ProductAvailabilitiesRestApiDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 
     /**
@@ -51,7 +42,8 @@ class ProductAvailabilitiesRestApiFactory extends AbstractFactory
     public function createAbstractProductAvailabilitiesReader(): AbstractProductAvailabilitiesReaderInterface
     {
         return new AbstractProductAvailabilitiesReader(
-            $this->getProductAvailabilitiesRestApiStorageClient(),
+            $this->getProductStorageClient(),
+            $this->getAvailabilityStorageClient(),
             $this->getResourceBuilder(),
             $this->createAbstractProductsAvailabilitiesResourceMapper()
         );
@@ -64,7 +56,7 @@ class ProductAvailabilitiesRestApiFactory extends AbstractFactory
     {
         return new ConcreteProductAvailabilitiesReader(
             $this->getAvailabilityStorageClient(),
-            $this->getProductResourceAliasStorageClient(),
+            $this->getProductStorageClient(),
             $this->getResourceBuilder(),
             $this->createConcreteProductsAvailabilitiesResourceMapper()
         );

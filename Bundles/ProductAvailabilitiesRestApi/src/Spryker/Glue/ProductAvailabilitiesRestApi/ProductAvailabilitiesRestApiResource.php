@@ -29,7 +29,7 @@ class ProductAvailabilitiesRestApiResource extends AbstractRestResource implemen
     {
         return $this->getFactory()
             ->createAbstractProductAvailabilitiesReader()
-            ->findAbstractProductAvailabilityByAbstractProductSku($abstractProductId);
+            ->findAbstractProductAvailabilityByAbstractProductSku($abstractProductId, $restRequest);
     }
 
     /**

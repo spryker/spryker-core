@@ -12,7 +12,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface;
-use Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductResourceAliasStorageInterface;
+use Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\ConcreteProductAvailabilitiesResourceMapperInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\ProductAvailabilitiesRestApiConfig;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
@@ -20,15 +20,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabilitiesReaderInterface
 {
+    protected const PRODUCT_CONCRETE_MAPPING = 'sku';
+    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface
      */
     protected $availabilityStorageClient;
 
     /**
-     * @var \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductResourceAliasStorageInterface
+     * @var \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductStorageClientInterface
      */
-    protected $productResourceAliasStorageClient;
+    protected $productStorageClient;
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -42,18 +45,18 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
 
     /**
      * @param \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface $availabilityStorageClient
-     * @param \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductResourceAliasStorageInterface $productResourceAliasStorageClient
+     * @param \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\ConcreteProductAvailabilitiesResourceMapperInterface $concreteProductsAvailabilityResourceMapper
      */
     public function __construct(
         ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface $availabilityStorageClient,
-        ProductAvailabilitiesRestApiToProductResourceAliasStorageInterface $productResourceAliasStorageClient,
+        ProductAvailabilitiesRestApiToProductStorageClientInterface $productStorageClient,
         RestResourceBuilderInterface $restResourceBuilder,
         ConcreteProductAvailabilitiesResourceMapperInterface $concreteProductsAvailabilityResourceMapper
     ) {
         $this->availabilityStorageClient = $availabilityStorageClient;
-        $this->productResourceAliasStorageClient = $productResourceAliasStorageClient;
+        $this->productStorageClient = $productStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->concreteProductsAvailabilityResourceMapper = $concreteProductsAvailabilityResourceMapper;
     }
@@ -70,9 +73,9 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
         $concreteProductResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS);
         if (!$concreteProductResource) {
             $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CONCRETE_PRODUCT_SKU_IS_MISSING)
+                ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED)
                 ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CONCRETE_PRODUCT_SKU_IS_MISSING);
+                ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED);
 
             return $restResponse->addError($restErrorTransfer);
         }
@@ -94,13 +97,13 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
      */
     public function findConcreteProductAvailabilityByConcreteProductSku(string $concreteProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $locale = $restRequest->getMetadata()->getLocale();
-            $productConcreteStorageData = $this->productResourceAliasStorageClient
-            ->findProductConcreteStorageDataBySku($concreteProductSku, $locale);
+        $localeName = $restRequest->getMetadata()->getLocale();
+            $productConcreteStorageData = $this->productStorageClient
+            ->findProductConcreteStorageDataByMap(static::PRODUCT_CONCRETE_MAPPING, $concreteProductSku, $localeName);
         if (!$productConcreteStorageData) {
             return null;
         }
-        $idProductAbstract = $productConcreteStorageData['id_product_abstract'];
+        $idProductAbstract = $productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT];
 
         $availabilityAbstractEntityTransfer = $this->availabilityStorageClient->getAvailabilityAbstract((int)$idProductAbstract);
         foreach ($availabilityAbstractEntityTransfer->getSpyAvailabilities() as $availabilityEntityTransfer) {

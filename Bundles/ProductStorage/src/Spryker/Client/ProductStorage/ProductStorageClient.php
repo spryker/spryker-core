@@ -135,4 +135,40 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
             ->createProductConcreteStorageReader()
             ->isProductConcreteRestricted($idProductConcrete);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $mapping
+     * @param string $identifier
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductAbstractStorageDataByMap(string $mapping, string $identifier, string $localeName): ?array
+    {
+        return $this->getFactory()
+            ->createProductAbstractStorageReader()
+            ->findProductAbstractStorageDataByMap($mapping, $identifier, $localeName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $mapping
+     * @param string $identifier
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMap(string $mapping, string $identifier, string $localeName): ?array
+    {
+        return $this->getFactory()
+            ->createProductConcreteStorageReader()
+            ->findProductConcreteStorageDataByMap($mapping, $identifier, $localeName);
+    }
 }

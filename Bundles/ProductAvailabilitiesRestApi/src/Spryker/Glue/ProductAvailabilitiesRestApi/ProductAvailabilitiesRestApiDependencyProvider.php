@@ -8,15 +8,13 @@ namespace Spryker\Glue\ProductAvailabilitiesRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToAvailabilityResourceAliasStorageClientBridge;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToAvailabilityStorageClientBridge;
-use Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductResourceAliasStorageBridge;
+use Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductStorageClientBridge;
 
 class ProductAvailabilitiesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_AVAILABILITY_RESOURCE_ALIAS_STORAGE = 'CLIENT_AVAILABILITY_RESOURCE_ALIAS_STORAGE';
     public const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
-    public const CLIENT_PRODUCT_RESOURCE_ALIAS_STORAGE = 'CLIENT_PRODUCT_RESOURCE_ALIAS_STORAGE';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -25,25 +23,8 @@ class ProductAvailabilitiesRestApiDependencyProvider extends AbstractBundleDepen
      */
     public function provideDependencies(Container $container): Container
     {
-        $container = $this->addProductAvailabilitiesRestApiStorageClient($container);
         $container = $this->addAvailabilityStorageClient($container);
-        $container = $this->addProductResourceAliasStorageClient($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addProductAvailabilitiesRestApiStorageClient(Container $container): Container
-    {
-        $container[static::CLIENT_AVAILABILITY_RESOURCE_ALIAS_STORAGE] = function (Container $container) {
-            return new ProductAvailabilitiesRestApiToAvailabilityResourceAliasStorageClientBridge(
-                $container->getLocator()->availabilityResourceAliasStorage()->client()
-            );
-        };
+        $container = $this->addProductStorageClient($container);
 
         return $container;
     }
@@ -69,10 +50,10 @@ class ProductAvailabilitiesRestApiDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addProductResourceAliasStorageClient(Container $container): Container
+    protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_RESOURCE_ALIAS_STORAGE] = function (Container $container) {
-            return new ProductAvailabilitiesRestApiToProductResourceAliasStorageBridge($container->getLocator()->productResourceAliasStorage()->client());
+        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+            return new ProductAvailabilitiesRestApiToProductStorageClientBridge($container->getLocator()->productStorage()->client());
         };
 
         return $container;
