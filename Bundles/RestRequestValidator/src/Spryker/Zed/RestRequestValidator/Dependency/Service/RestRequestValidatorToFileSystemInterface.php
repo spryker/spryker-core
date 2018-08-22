@@ -5,12 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\RestRequestValidator\Business\Collector;
+namespace Spryker\Zed\RestRequestValidator\Dependency\Service;
 
-interface RestRequestValidatorCollectorInterface
+interface RestRequestValidatorToFileSystemInterface
 {
-    /**
-     * @return array
-     */
-    public function collect(): array;
 }
