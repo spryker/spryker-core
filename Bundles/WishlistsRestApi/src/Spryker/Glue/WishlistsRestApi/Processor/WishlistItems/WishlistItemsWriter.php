@@ -92,11 +92,8 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
             return $restResponse->addError($restErrorTransfer);
         }
 
-        $itemResource = $this->restResourceBuilder->createRestResource(
-            WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
-            $wishlistItemTransfer->getSku(),
-            $this->wishlistItemsResourceMapper->mapWishlistItemAttributes($wishlistItemTransfer)
-        );
+        $itemResource = $this->wishlistItemsResourceMapper
+            ->mapWishlistItemsResource($wishlistItemTransfer, $wishlistUuid);
 
         return $restResponse->addResource($itemResource);
     }

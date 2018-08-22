@@ -83,6 +83,6 @@ class WishlistsRestApiFactory extends AbstractFactory
      */
     protected function createWishlistItemsResourceMapper(): WishlistItemsResourceMapperInterface
     {
-        return new WishlistItemsResourceMapper();
+        return new WishlistItemsResourceMapper($this->getResourceBuilder());
     }
 }
