@@ -23,11 +23,11 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
+use Spryker\Zed\PriceProduct\Business\PriceProductBusinessFactory;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceQueryCriteriaPlugin;
+use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManager;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
-use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceProductStorePreDeletePlugin;
-use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceQueryCriteriaPlugin;
 use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
@@ -59,16 +59,9 @@ class PriceProductFacadeTest extends Unit
 
         $priceDimensionQueryCriteriaPlugins = [
             new DefaultPriceQueryCriteriaPlugin(),
-            new MerchantRelationshipPriceQueryCriteriaPlugin(),
         ];
 
         $this->tester->setDependency(PriceProductDependencyProvider::PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA, $priceDimensionQueryCriteriaPlugins);
-
-        $priceProductStorePreDeletePlugins = [
-            new MerchantRelationshipPriceProductStorePreDeletePlugin(),
-        ];
-
-        $this->tester->setDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE, $priceProductStorePreDeletePlugins);
     }
 
     /**
@@ -511,6 +504,17 @@ class PriceProductFacadeTest extends Unit
     public function testDeleteOrphanPriceProductStoreEntitiesNotFails()
     {
         $priceProductFacade = $this->getPriceProductFacade();
+        $priceProductBusinessFactory = (new PriceProductBusinessFactory());
+
+        /** @var \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManager $priceProductEntityManagerMock */
+        $priceProductEntityManagerMock = $this->getMockBuilder(PriceProductEntityManager::class)
+            ->setMethods([
+                'deletePriceProductStore',
+            ])
+            ->getMock();
+
+        $priceProductBusinessFactory->setEntityManager($priceProductEntityManagerMock);
+        $priceProductFacade->setFactory($priceProductBusinessFactory);
 
         $priceProductFacade->deleteOrphanPriceProductStoreEntities();
     }
@@ -638,7 +642,7 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
     protected function getPriceProductFacade()
     {
