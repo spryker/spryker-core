@@ -9,13 +9,8 @@ namespace SprykerTest\Zed\AvailabilityStorage\Communication\Plugin\Event\Listene
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
-use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
-use Orm\Zed\AvailabilityStorage\Persistence\Map\SpyAvailabilityStorageTableMap;
 use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorageQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use PHPUnit\Framework\SkippedTestError;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
@@ -47,7 +42,7 @@ class AvailabilityStorageListenerTest extends Unit
     protected $productAbstractTransfer;
 
     /**
-     * @var \Generated\Shared\Transfer\AvailabilityTransfer
+     * @var \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
      */
     protected $abstractAvailabilityTransfer;
 
@@ -69,7 +64,6 @@ class AvailabilityStorageListenerTest extends Unit
         }
         $this->productAbstractTransfer = $this->tester->haveProductAbstract();
         $this->abstractAvailabilityTransfer = $this->tester->haveAvailabilityAbstract($this->productAbstractTransfer);
-
     }
 
     /**
@@ -86,7 +80,7 @@ class AvailabilityStorageListenerTest extends Unit
         $availabilityStorageListener->setFacade($this->getAvailabilityStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($abstractAvailabilityEntity->getIdAvailabilityAbstract())
+            (new EventEntityTransfer())->setId($this->abstractAvailabilityTransfer->getIdAvailabilityAbstract()),
         ];
 
         $availabilityStorageListener->handleBulk($eventTransfers, AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH);

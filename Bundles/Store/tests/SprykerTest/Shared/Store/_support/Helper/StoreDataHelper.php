@@ -4,7 +4,8 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-namespace SprykerTest\Zed\Store;
+
+namespace SprykerTest\Shared\Store\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\StoreBuilder;
@@ -16,7 +17,7 @@ class StoreDataHelper extends Module
     use DataCleanupHelperTrait;
 
     /**
-     * @param [] $storeOverride
+     * @param array $storeOverride
      *
      * @return \Generated\Shared\Transfer\StoreTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */

@@ -8,8 +8,6 @@
 namespace SprykerTest\Shared\Availability\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\StoreBuilder;
-use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 class AvailabilityDataHelper extends Module
@@ -17,14 +15,12 @@ class AvailabilityDataHelper extends Module
     use DataCleanupHelperTrait;
 
     /**
-     * @param array $storeOverride
+     * @param array $availabilityOverride
      *
-     * @return \Generated\Shared\Transfer\AvailabilityTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return null
      */
     public function haveAvailabilityAbstract($availabilityOverride = [])
     {
-
-
         return null;
     }
 }
