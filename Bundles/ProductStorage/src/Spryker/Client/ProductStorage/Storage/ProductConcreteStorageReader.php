@@ -103,7 +103,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         $mappingKey = $this->getStorageKey($reference, $localeName);
         $mappingData = $this->storageClient->get($mappingKey);
 
-        if (!$mappingData) {
+        if ($mappingData === null) {
             return null;
         }
 
