@@ -18,7 +18,7 @@ class ShoppingListCustomerStorage implements ShoppingListCustomerStorageInterfac
     /**
      * @var \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageClientInterface
      */
-    protected $storage;
+    protected $storageClient;
 
     /**
      * @var \Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceInterface
@@ -26,14 +26,14 @@ class ShoppingListCustomerStorage implements ShoppingListCustomerStorageInterfac
     protected $synchronizationService;
 
     /**
-     * @param \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageClientInterface $storage
+     * @param \Spryker\Client\ShoppingListStorage\Dependency\Client\ShoppingListStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ShoppingListStorage\Dependency\Service\ShoppingListStorageToSynchronizationServiceInterface $synchronizationService
      */
     public function __construct(
-        ShoppingListStorageToStorageClientInterface $storage,
+        ShoppingListStorageToStorageClientInterface $storageClient,
         ShoppingListStorageToSynchronizationServiceInterface $synchronizationService
     ) {
-        $this->storage = $storage;
+        $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
     }
 
@@ -45,7 +45,7 @@ class ShoppingListCustomerStorage implements ShoppingListCustomerStorageInterfac
     public function getShoppingListCustomerStorageByCustomerReference(string $customerReference): ?ShoppingListCustomerStorageTransfer
     {
         $key = $this->generateKey($customerReference);
-        $shoppingListStorageData = $this->storage->get($key);
+        $shoppingListStorageData = $this->storageClient->get($key);
 
         if (!$shoppingListStorageData) {
             return null;
