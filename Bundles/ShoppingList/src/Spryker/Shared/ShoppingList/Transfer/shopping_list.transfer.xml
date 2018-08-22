@@ -116,4 +116,9 @@
         <property name="Items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="ShoppingListPreAddItemCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
 </transfers>

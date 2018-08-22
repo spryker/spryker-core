@@ -1,30 +1,56 @@
 <?php
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\CustomersRestApi;
 
-use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerClientInterface;
-use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToSessionClientInterface;
+use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
+use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToSessionClientInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriter;
+use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriterInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapper;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CustomersRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToSessionClientInterface
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriterInterface
      */
-    public function getSessionClient(): CustomerRestApiToSessionClientInterface
+    public function createCustomersWriter(): CustomersWriterInterface
     {
-        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::CLIENT_SESSION);
+        return new CustomersWriter(
+            $this->getCustomerClient(),
+            $this->getResourceBuilder(),
+            $this->createCustomersResourceMapper()
+        );
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerClientInterface
+     * @return \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface
      */
-    public function getCustomerClient(): CustomerRestApiToCustomerClientInterface
+    public function getCustomerClient(): CustomersRestApiToCustomerClientInterface
     {
         return $this->getProvidedDependency(CustomersRestApiDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface
+     */
+    public function createCustomersResourceMapper(): CustomersResourceMapperInterface
+    {
+        return new CustomersResourceMapper(
+            $this->getResourceBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToSessionClientInterface
+     */
+    public function getSessionClient(): CustomersRestApiToSessionClientInterface
+    {
+        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::CLIENT_SESSION);
     }
 }
