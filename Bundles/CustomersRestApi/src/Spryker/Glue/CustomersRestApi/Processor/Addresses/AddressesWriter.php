@@ -7,12 +7,11 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Addresses;
 
-use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,15 +29,23 @@ class AddressesWriter implements AddressesWriterInterface
     protected $customerClient;
 
     /**
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface
+     */
+    protected $addressesResourceMapper;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface $addressesResourceMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        CustomersRestApiToCustomerClientInterface $customerClient
+        CustomersRestApiToCustomerClientInterface $customerClient,
+        AddressesResourceMapperInterface $addressesResourceMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->customerClient = $customerClient;
+        $this->addressesResourceMapper = $addressesResourceMapper;
     }
 
     /**
@@ -48,54 +55,63 @@ class AddressesWriter implements AddressesWriterInterface
      */
     public function createAddress(RestAddressAttributesTransfer $addressAttributesTransfer): RestResponseInterface
     {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setCustomerReference($addressAttributesTransfer->getCustomerReference());
-
-        $customer = $this->customerClient->findCustomerByReference($customerTransfer);
-
         $response = $this->restResourceBuilder->createRestResponse();
 
-        if (!$customer) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
+        $customerTransfer = $this->addressesResourceMapper->mapRestAddressAttributesTransferToCustomerTransfer($addressAttributesTransfer);
+        $customerTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-            $response->addError($restErrorTransfer);
+        if (!$customerTransfer) {
+            $response->addError($this->createErrorCustomerNotFound());
 
             return $response;
         }
-        $addressTransfer = (new AddressTransfer())->fromArray($addressAttributesTransfer->toArray(), true);
-        $addressTransfer->setFkCustomer($customer->getIdCustomer());
+
+        $addressTransfer = $this
+            ->addressesResourceMapper
+            ->mapRestAddressAttributesTransferToAddressTransfer(
+                $addressAttributesTransfer,
+                $customerTransfer->getIdCustomer()
+            );
 
         $addressTransfer = $this->customerClient->createAddress($addressTransfer);
 
         if (!$addressTransfer) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ADDRESS_FAILED_TO_SAVE)
-                ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_ADDRESS_FAILED_TO_SAVE);
-
-            $response->addError($restErrorTransfer);
+            $response->addError($this->createErrorAddressNotSaved());
 
             return $response;
         }
 
-        $resource = $this->restResourceBuilder->createRestResource(
-            CustomersRestApiConfig::RESOURCE_ADDRESSES,
-            $addressTransfer->getUuid()
-        );
-        $restResourceSelfLink = sprintf(
-            '%s/%s/%s/%s',
-            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
-            $addressAttributesTransfer->getCustomerReference(),
-            CustomersRestApiConfig::RESOURCE_ADDRESSES,
-            $addressTransfer->getUuid()
-        );
-        $resource->addLink('self', $restResourceSelfLink);
+        $restResource = $this
+            ->addressesResourceMapper
+            ->mapAddressTransferToRestResource(
+                $addressTransfer,
+                $addressAttributesTransfer->getCustomerReference()
+            );
 
-        $response->addResource($resource);
+        $response->addResource($restResource);
 
         return $response;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createErrorCustomerNotFound(): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createErrorAddressNotSaved(): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ADDRESS_FAILED_TO_SAVE)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_ADDRESS_FAILED_TO_SAVE);
     }
 }
