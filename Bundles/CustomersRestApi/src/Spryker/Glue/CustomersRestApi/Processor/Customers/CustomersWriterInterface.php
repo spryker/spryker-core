@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -21,9 +22,9 @@ interface CustomersWriterInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCustomersRegularDataTransfer $restCustomerTransfer
+     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomerTransfer
      *
      * @return mixed
      */
-    public function updateCustomer(RestRequestInterface $restRequest, RestCustomersRegularDataTransfer $restCustomerTransfer): RestResponseInterface;
+    public function updateCustomer(RestRequestInterface $restRequest, RestCustomersAttributesTransfer $restCustomerTransfer): RestResponseInterface;
 }

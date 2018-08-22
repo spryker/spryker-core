@@ -7,7 +7,6 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
@@ -75,47 +74,35 @@ class CustomersWriter implements CustomersWriterInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCustomersRegularDataTransfer $restCustomerTransfer
+     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomerTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function updateCustomer(RestRequestInterface $restRequest, RestCustomersRegularDataTransfer $restCustomerTransfer): RestResponseInterface
+    public function updateCustomer(RestRequestInterface $restRequest, RestCustomersAttributesTransfer $restCustomerTransfer): RestResponseInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $customer = $this->customerClient
-            ->findCustomerByReference((new CustomerTransfer)->setCustomerReference(
-                $restCustomerTransfer->getCustomerReference()
-            ));
-        if (!$customer) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
+        $customerTransfer = $this->customersResourceMapper->mapCustomerAttributesToCustomerTransfer($restCustomerTransfer);
+        $customer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-            $response->addError($restErrorTransfer);
+        if (!$customer) {
+            $response->addError($this->createErrorCustomerNotFound());
 
             return $response;
         }
-        $customer->fromArray($restCustomerTransfer->toArray(), true);
 
-        $customerResponseTransfer = $this->customerClient->updateCustomer($customer);
+        $customerTransfer->setIdCustomer($customer->getIdCustomer());
+        $customerResponseTransfer = $this->customerClient->updateCustomer($customerTransfer);
 
         if (!$customerResponseTransfer->getIsSuccess()) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_FAILED_TO_SAVE)
-                ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_FAILED_TO_SAVE);
-            $response->addError($restErrorTransfer);
+            $response->addError($this->createErrorCustomerNotSaved());
+
+            return $response;
         }
 
-        $resource = $this->customersResourceMapper->mapCustomerTransferToRestResource(
-            $customerResponseTransfer->getCustomerTransfer()
-        );
+        $restResource = $this->customersResourceMapper->mapCustomerTransferToRestResource($customerResponseTransfer->getCustomerTransfer());
 
-        $response->addResource($resource);
-
-        return $response;
+        return $response->addResource($restResource);
     }
 
     /**
@@ -140,6 +127,28 @@ class CustomersWriter implements CustomersWriterInterface
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER)
             ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
             ->setDetail($errorMessage);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createErrorCustomerNotFound(): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createErrorCustomerNotSaved(): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_FAILED_TO_SAVE)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_FAILED_TO_SAVE);
     }
 
     /**

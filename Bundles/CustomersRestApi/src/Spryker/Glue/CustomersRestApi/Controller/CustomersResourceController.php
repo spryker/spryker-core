@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CustomersRestApi\Controller;
 
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
-use Generated\Shared\Transfer\RestCustomersRegularDataTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -45,11 +44,11 @@ class CustomersResourceController extends AbstractController
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCustomersRegularDataTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $customerTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function patchAction(RestRequestInterface $restRequest, RestCustomersRegularDataTransfer $customerTransfer): RestResponseInterface
+    public function patchAction(RestRequestInterface $restRequest, RestCustomersAttributesTransfer $customerTransfer): RestResponseInterface
     {
         return $this->getFactory()
             ->createCustomersWriter()
