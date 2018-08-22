@@ -1,4 +1,4 @@
-namespace: ProductsCategoryResourceRelationship
+namespace: ProductsCategoriesResourceRelationship
 actor: Tester
 paths:
     tests: tests

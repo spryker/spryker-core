@@ -4,10 +4,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsCategoryResourceRelationship;
+namespace Spryker\Glue\ProductsCategoriesResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 
-class ProductsCategoryResourceRelationshipConfig extends AbstractBundleConfig
+class ProductsCategoriesResourceRelationshipConfig extends AbstractBundleConfig
 {
 }

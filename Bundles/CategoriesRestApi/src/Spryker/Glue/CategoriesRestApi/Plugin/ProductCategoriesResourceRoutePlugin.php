@@ -6,7 +6,6 @@
 
 namespace Spryker\Glue\CategoriesRestApi\Plugin;
 
-use Generated\Shared\Transfer\RestCategoryTreesAttributesTransfer;
 use Generated\Shared\Transfer\RestProductCategoriesTreeTransfer;
 use Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
@@ -27,8 +26,7 @@ class ProductCategoriesResourceRoutePlugin extends AbstractPlugin implements Res
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection->addGet(
-            CategoriesRestApiConfig::RESOURCE_PRODUCT_CATEGORIES_ACTION_NAME,
-            CategoriesRestApiConfig::RESOURCE_PRODUCT_CATEGORIES
+            CategoriesRestApiConfig::RESOURCE_PRODUCT_CATEGORIES_ACTION_NAME
         );
 
         return $resourceRouteCollection;

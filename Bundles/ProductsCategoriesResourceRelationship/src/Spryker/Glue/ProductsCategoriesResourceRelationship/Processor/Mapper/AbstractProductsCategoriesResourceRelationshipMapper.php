@@ -4,22 +4,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsCategoryResourceRelationship\Processor\Mapper;
+namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Mapper;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductsCategoryResourceRelationship\Dependency\RestResource\ProductsCategoryResourceRelationToCategoriesRestApiInterface;
+use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiInterface;
 
-class AbstractProductsCategoryResourceRelationshipMapper implements AbstractProductsCategoryResourceRelationshipMapperInterface
+class AbstractProductsCategoriesResourceRelationshipMapper implements AbstractProductsCategoriesResourceRelationshipMapperInterface
 {
     /**
-     * @var \Spryker\Glue\ProductsCategoryResourceRelationship\Dependency\RestResource\ProductsCategoryResourceRelationToCategoriesRestApiInterface
+     * @var \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiInterface
      */
     protected $categoriesResource;
 
     /**
-     * @param \Spryker\Glue\ProductsCategoryResourceRelationship\Dependency\RestResource\ProductsCategoryResourceRelationToCategoriesRestApiInterface $categoriesResource
+     * @param \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiInterface $categoriesResource
      */
-    public function __construct(ProductsCategoryResourceRelationToCategoriesRestApiInterface $categoriesResource)
+    public function __construct(ProductsCategoriesResourceRelationToCategoriesRestApiInterface $categoriesResource)
     {
         $this->categoriesResource = $categoriesResource;
     }

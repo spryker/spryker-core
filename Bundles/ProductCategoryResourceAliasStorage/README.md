@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-category-resource-alias-storage.svg)](https://travis-ci.org/spryker/product-category-resource-alias-storage)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-category-resource-alias-storage/badge.svg)](https://coveralls.io/github/spryker/product-category-resource-alias-storage)
 
-{{ADD DESCRIPTION HERE}}
+ProductCategoryResourceAliasStorage Module provides functionality to read product categories data from key-value storage by sku.
 
 ## Installation
 

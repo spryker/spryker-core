@@ -4,13 +4,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsCategoryResourceRelationship;
+namespace Spryker\Glue\ProductsCategoriesResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\ProductsCategoryResourceRelationship\Dependency\RestResource\ProductsCategoryResourceRelationToCategoriesRestApiBridge;
+use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiBridge;
 
-class ProductsCategoryResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
+class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const RESOURCE_CATEGORY = 'RESOURCE_CATEGORY';
 
@@ -34,7 +34,7 @@ class ProductsCategoryResourceRelationshipDependencyProvider extends AbstractBun
     protected function addCategoriesResource(Container $container): Container
     {
         $container[static::RESOURCE_CATEGORY] = function (Container $container) {
-            return new ProductsCategoryResourceRelationToCategoriesRestApiBridge(
+            return new ProductsCategoriesResourceRelationToCategoriesRestApiBridge(
                 $container->getLocator()->categoriesRestApi()->resource()
             );
         };

@@ -4,16 +4,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsCategoryResourceRelationship\Plugin;
+namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Plugin;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\ProductsCategoryResourceRelationship\ProductsCategoryResourceRelationshipFactory getFactory()
+ * @method \Spryker\Glue\ProductsCategoriesResourceRelationship\ProductsCategoriesResourceRelationshipFactory getFactory()
  */
-class AbstractProductsCategoryResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class AbstractProductsCategoriesResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -28,7 +28,7 @@ class AbstractProductsCategoryResourceRelationshipPlugin extends AbstractPlugin 
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createAbstractProductsCategoryResourceRelationshipMapper()
+            ->createAbstractProductsCategoriesResourceRelationshipMapper()
             ->mapResourceRelationships($resources, $restRequest);
     }
 

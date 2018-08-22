@@ -1,8 +1,11 @@
 {
-  "name": "spryker/products-category-resource-relationship",
-  "description": "ProductsCategoryResourceRelationship module",
+  "name": "spryker/products-categories-resource-relationship",
+  "description": "ProductsCategoriesResourceRelationship module",
   "license": "proprietary",
   "require": {
+    "spryker/glue-application": "^1.0.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/kernel": "^3.22.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

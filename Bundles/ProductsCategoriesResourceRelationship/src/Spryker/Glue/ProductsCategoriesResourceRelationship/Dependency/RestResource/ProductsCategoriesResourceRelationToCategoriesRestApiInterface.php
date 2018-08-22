@@ -4,12 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsCategoryResourceRelationship\Dependency\RestResource;
+namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface ProductsCategoryResourceRelationToCategoriesRestApiInterface
+interface ProductsCategoriesResourceRelationToCategoriesRestApiInterface
 {
     /**
      * @param string $abstractProductId
