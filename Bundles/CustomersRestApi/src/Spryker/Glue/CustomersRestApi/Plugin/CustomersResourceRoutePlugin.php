@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -6,12 +7,15 @@
 
 namespace Spryker\Glue\CustomersRestApi\Plugin;
 
-use Generated\Shared\Transfer\RestCustomersRegularDataTransfer;
+use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
+/**
+ * @method \Spryker\Glue\CustomersRestApi\CustomersRestApiFactory getFactory()
+ */
 class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
@@ -27,6 +31,7 @@ class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     {
         $resourceRouteCollection
             ->addGet('get', true)
+            ->addPost('post', false)
             ->addPatch('patch', true);
 
         return $resourceRouteCollection;
@@ -65,6 +70,6 @@ class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestCustomersRegularDataTransfer::class;
+        return RestCustomersAttributesTransfer::class;
     }
 }

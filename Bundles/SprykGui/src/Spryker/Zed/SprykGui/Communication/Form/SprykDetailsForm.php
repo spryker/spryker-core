@@ -99,10 +99,22 @@ class SprykDetailsForm extends AbstractType
     protected function addArgumentsToForm(FormBuilderInterface $builder, array $arguments, array $options): void
     {
         foreach ($arguments as $argumentName => $argumentDefinition) {
-            if ($argumentName === 'className') {
+            if ($argumentName === 'className' && ($argumentDefinition !== null && isset($argumentDefinition['isChoice']))) {
                 $classNameChoiceTypeOptions = ['classNameChoices' => $options['classNameChoices']];
                 unset($options['classNameChoices']);
                 $builder->add($argumentName, ClassNameChoiceType::class, $classNameChoiceTypeOptions);
+
+                continue;
+            }
+
+            if (isset($argumentDefinition['type'])) {
+                $typeOptions = $this->getFormTypeOptions($options, $argumentDefinition);
+                if (isset($argumentDefinition['isOptional'])) {
+                    $typeOptions['required'] = false;
+                }
+                $formTypeName = 'Spryker\\Zed\\SprykGui\\Communication\\Form\\Type\\' . $argumentDefinition['type'] . 'Type';
+
+                $builder->add($argumentName, $formTypeName, $typeOptions);
 
                 continue;
             }
@@ -123,20 +135,29 @@ class SprykDetailsForm extends AbstractType
                 continue;
             }
 
-            if (isset($argumentDefinition['type'])) {
-                $typeOptions = $options;
-                if (isset($argumentDefinition['isOptional'])) {
-                    $typeOptions['required'] = false;
-                }
-                $builder->add($argumentName, 'Spryker\\Zed\\SprykGui\\Communication\\Form\\Type\\' . $argumentDefinition['type'] . 'Type', $typeOptions);
-
-                continue;
-            }
-
             $type = $this->getType($argumentDefinition);
             $typeOptions = $this->getTypeOptions($argumentName, $argumentDefinition);
             $builder->add($argumentName, $type, $typeOptions);
         }
+    }
+
+    /**
+     * @param array $options
+     * @param array $argumentDefinition
+     *
+     * @return array
+     */
+    protected function getFormTypeOptions(array $options, array $argumentDefinition): array
+    {
+        if (!isset($argumentDefinition['typeOptions'])) {
+            return $options;
+        }
+        $typeOptions = [];
+        foreach ($argumentDefinition['typeOptions'] as $typeOptionName) {
+            $typeOptions[$typeOptionName] = $options[$typeOptionName];
+        }
+
+        return $typeOptions;
     }
 
     /**

@@ -1,0 +1,16 @@
+{% block content %}
+    {{ form_row(productListProductConcreteRelationForm.products_upload) }}
+    {{ tabs(
+        availableProductConcreteRelationTabs,
+        {
+            'availableProductConcreteTable': availableProductConcreteTable
+        }
+    ) }}
+    <hr/>
+    {{ tabs(
+        assignedProductConcreteRelationTabs,
+        {
+            'assignedProductConcreteTable': assignedProductConcreteTable
+        }
+    ) }}
+{% endblock %}
