@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
@@ -77,6 +79,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
             return new ShoppingListTransfer();
         }
 
+        $shoppingListItemCollectionTransfer = $this->shoppingListRepository->findShoppingListItemsByIdShoppingList($shoppingListTransfer->getIdShoppingList());
+        $this->expandProducts($shoppingListItemCollectionTransfer);
+        $shoppingListTransfer->setItems($shoppingListItemCollectionTransfer->getItems());
+
         return $shoppingListTransfer;
     }
 
@@ -103,7 +109,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
         $shoppingListOverviewRequestTransfer->setShoppingList($shoppingListTransfer);
         $shoppingListOverviewResponseTransfer = $this->shoppingListRepository->findShoppingListPaginatedItems($shoppingListOverviewRequestTransfer);
-        $shoppingListOverviewResponseTransfer = $this->expandProducts($shoppingListOverviewResponseTransfer);
+        $this->expandProducts($shoppingListOverviewResponseTransfer->getItemsCollection());
 
         $customerTransfer = new CustomerTransfer();
         $requestCompanyUserTransfer = $this->companyUserFacade->getCompanyUserById($shoppingListOverviewRequestTransfer->getShoppingList()->getIdCompanyUser());
@@ -270,24 +276,77 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
-     * TODO: switch from loop -> query to SKU IN query (create facade function + add to bridge)
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
-     * @param \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    protected function expandProducts(ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer): ShoppingListOverviewResponseTransfer
+    protected function expandProducts(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
     {
-        foreach ($shoppingListOverviewResponseTransfer->getItemsCollection()->getItems() as $item) {
-            $idProduct = $this->productFacade->findProductConcreteIdBySku($item->getSku());
-            $item->setIdProduct($idProduct);
+        $shoppingListItemsSkus = $this->getShoppingListItemsSkus($shoppingListItemCollectionTransfer);
 
+        if (empty($shoppingListItemsSkus)) {
+            return $shoppingListItemCollectionTransfer;
+        }
+
+        $productConcreteTransfers = $this->productFacade->findProductConcretesBySkus($shoppingListItemsSkus);
+        $keyedProductConcreteTransfers = $this->getKeyedProductConcreteTransfers($productConcreteTransfers);
+        $shoppingListItems = $this->mapProductConcreteIdToShoppingListItem($shoppingListItemCollectionTransfer->getItems(), $keyedProductConcreteTransfers);
+
+        foreach ($shoppingListItems as $item) {
             foreach ($this->itemExpanderPlugins as $itemExpanderPlugin) {
                 $item = $itemExpanderPlugin->expandItem($item);
             }
         }
 
-        return $shoppingListOverviewResponseTransfer;
+        return $shoppingListItemCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return string[]
+     */
+    protected function getShoppingListItemsSkus(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): array
+    {
+        $shoppingListItemTransfers = (array)$shoppingListItemCollectionTransfer->getItems();
+
+        return array_map(function (ShoppingListItemTransfer $shoppingListItemTransfer) {
+            return $shoppingListItemTransfer[ShoppingListItemTransfer::SKU];
+        }, $shoppingListItemTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function getKeyedProductConcreteTransfers(array $productConcreteTransfers): array
+    {
+        $keyedProductConcreteTransfers = [];
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $keyedProductConcreteTransfers[$productConcreteTransfer->getSku()] = $productConcreteTransfer;
+        }
+
+        return $keyedProductConcreteTransfers;
+    }
+
+    /**
+     * @param \ArrayObject $shoppingListItemTransfers
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $keyedProductConcreteTransfers
+     *
+     * @return \ArrayObject
+     */
+    protected function mapProductConcreteIdToShoppingListItem(ArrayObject $shoppingListItemTransfers, array $keyedProductConcreteTransfers): ArrayObject
+    {
+        array_walk($shoppingListItemTransfers, function (ShoppingListItemTransfer $shoppingListItemTransfer) use ($keyedProductConcreteTransfers) {
+            if (isset($keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()])) {
+                $idProduct = $keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()]->getIdProductConcrete();
+                $shoppingListItemTransfer->setIdProduct($idProduct);
+            }
+        });
+
+        return $shoppingListItemTransfers;
     }
 
     /**
