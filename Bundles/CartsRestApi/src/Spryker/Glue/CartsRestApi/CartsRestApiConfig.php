@@ -35,9 +35,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_QUOTE_ITEM_ID_MISSING = '108';
 
     public const EXCEPTION_MESSAGE_QUOTE_ID_MISSING = 'Quote identifier is required';
-    public const EXCEPTION_MESSAGE_QUOTE_NOT_FOUND = 'Quote not found';
-    public const EXCEPTION_MESSAGE_QUOTE_ITEM_NOT_FOUND = 'Quote item not found';
-    public const EXCEPTION_MESSAGE_USER_MISSING = 'User is not found';
+    public const EXCEPTION_MESSAGE_QUOTE_ITEM_NOT_FOUND = 'Quote item \'%s\' not found';
     public const EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART = 'Failed to create cart';
     public const EXCEPTION_MESSAGE_QUOTE_WITH_ID_NOT_FOUND = 'Cart with id \'%s\' not found';
     public const EXCEPTION_MESSAGE_QUOTE_ITEM_ID_MISSING = 'Quote item SKU is missing';

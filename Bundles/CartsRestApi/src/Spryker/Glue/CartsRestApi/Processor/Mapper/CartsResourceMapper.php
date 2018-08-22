@@ -75,12 +75,12 @@ class CartsResourceMapper implements CartsResourceMapperInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemResource = $this->restResourceBuilder->createRestResource(
                 CartsRestApiConfig::RESOURCE_CART_ITEMS,
-                $itemTransfer->getSku(),
+                $itemTransfer->getGroupKey(),
                 $this->cartItemsResourceMapper->mapCartItemAttributes($itemTransfer)
             );
             $itemResource->addLink(
                 'self',
-                CartsRestApiConfig::RESOURCE_CARTS . '/' . $cartResource->getId() . '/' . CartsRestApiConfig::RESOURCE_CART_ITEMS . '/' . $itemTransfer->getSku()
+                CartsRestApiConfig::RESOURCE_CARTS . '/' . $cartResource->getId() . '/' . CartsRestApiConfig::RESOURCE_CART_ITEMS . '/' . $itemTransfer->getGroupKey()
             );
 
             $cartResource->addRelationship($itemResource);

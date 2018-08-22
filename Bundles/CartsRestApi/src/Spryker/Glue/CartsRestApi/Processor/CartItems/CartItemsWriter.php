@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CartsRestApi\Processor\CartItems;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -18,7 +17,6 @@ use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientIn
 use Spryker\Glue\CartsRestApi\Processor\Carts\CartsReaderInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -91,11 +89,11 @@ class CartItemsWriter implements CartItemsWriterInterface
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $cartsResource = $this->getCartResource($restRequest);
-        $idQuote = $this->getQuoteIdentifier($cartsResource);
+        $cartsResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_CARTS);
         if ($cartsResource === null) {
             return $this->createCartIdMissingError($restResponse);
         }
+        $idQuote = $cartsResource->getId();
         if ($idQuote === null) {
             return $this->createCartIdMissingError($restResponse);
         }
@@ -115,7 +113,7 @@ class CartItemsWriter implements CartItemsWriterInterface
             return $this->returnWithError($errors, $restResponse);
         }
 
-        return $this->handleResponse($idQuote, $restCartItemsAttributesTransfer, $quoteTransfer);
+        return $this->cartsReader->readByIdentifier($quoteTransfer->getUuid(), $restRequest);
     }
 
     /**
@@ -128,36 +126,37 @@ class CartItemsWriter implements CartItemsWriterInterface
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface {
-
+        $sku = '';
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        $cartsResource = $this->getCartResource($restRequest);
+
+        $cartsResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_CARTS);
         if ($cartsResource === null) {
             return $this->createCartIdMissingError($restResponse);
         }
-        $idQuote = $this->getQuoteIdentifier($cartsResource);
+
+        $idQuote = $cartsResource->getId();
         if ($idQuote === null) {
             return $this->createCartIdMissingError($restResponse);
         }
-        $sku = $this->getItemIdentifier($restRequest);
-        if ($sku === null) {
+
+        $itemIdentifier = $restRequest->getResource()->getId();
+        if ($itemIdentifier === null) {
             return $this->createItemIdMissingError($restResponse);
         }
 
         $quoteResponseTransfer = $this->cartsReader->getQuoteTransferByUuid($idQuote, $restRequest);
-
         if (!$quoteResponseTransfer->getIsSuccessful() || $quoteResponseTransfer->getQuoteTransfer() === null) {
             return $this->createCartNotFoundError($idQuote, $restResponse);
         }
 
-        if (!$this->hasQuoteItem($quoteResponseTransfer->getQuoteTransfer(), $sku)) {
-            return $this->createItemNotFoundError($sku, $restResponse);
+        if ($this->cartClient->findQuoteItem($quoteResponseTransfer->getQuoteTransfer(), $sku, $itemIdentifier) === null) {
+            return $this->createItemNotFoundError($itemIdentifier, $restResponse);
         }
 
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
-
         $quoteTransfer = $this->cartClient->changeItemQuantity(
-            $restCartItemsAttributesTransfer->getSku(),
-            $restCartItemsAttributesTransfer->getGroupKey(),
+            $sku,
+            $itemIdentifier,
             $restCartItemsAttributesTransfer->getQuantity()
         );
 
@@ -166,7 +165,7 @@ class CartItemsWriter implements CartItemsWriterInterface
             return $this->returnWithError($errors, $restResponse);
         }
 
-        return $this->handleResponse($idQuote, $restCartItemsAttributesTransfer, $quoteTransfer);
+        return $this->cartsReader->readByIdentifier($quoteTransfer->getUuid(), $restRequest);
     }
 
     /**
@@ -177,81 +176,51 @@ class CartItemsWriter implements CartItemsWriterInterface
     public function deleteItem(
         RestRequestInterface $restRequest
     ): RestResponseInterface {
+        $sku = '';
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        $cartsResource = $this->getCartResource($restRequest);
+
+        $cartsResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_CARTS);
         if ($cartsResource === null) {
             return $this->createCartIdMissingError($restResponse);
         }
-        $idQuote = $this->getQuoteIdentifier($cartsResource);
+
+        $idQuote = $cartsResource->getId();
         if ($idQuote === null) {
             return $this->createCartIdMissingError($restResponse);
         }
-        $sku = $this->getItemIdentifier($restRequest);
-        if ($sku === null) {
+
+        $itemIdentifier = $restRequest->getResource()->getId();
+        if ($itemIdentifier === null) {
             return $this->createItemIdMissingError($restResponse);
         }
 
         $quoteResponseTransfer = $this->cartsReader->getQuoteTransferByUuid($idQuote, $restRequest);
-
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->createCartNotFoundError($idQuote, $restResponse);
         }
 
-        if (!$this->hasQuoteItem($quoteResponseTransfer->getQuoteTransfer(), $sku)) {
-            return $this->createItemNotFoundError($sku, $restResponse);
+        if ($this->cartClient->findQuoteItem($quoteResponseTransfer->getQuoteTransfer(), $sku, $itemIdentifier) === null) {
+            return $this->createItemNotFoundError($itemIdentifier, $restResponse);
         }
 
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
-        $this->cartClient->removeItem($sku);
+        $this->cartClient->removeItem($sku, $itemIdentifier);
 
         return $restResponse;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $sku
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function hasQuoteItem(QuoteTransfer $quoteTransfer, string $sku): bool
+    protected function prepareItemTransfer(RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer): ItemTransfer
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getSku() === $sku) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    protected function getCartResource(RestRequestInterface $restRequest): RestResourceInterface
-    {
-        return $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_CARTS);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $cartsResource
-     *
-     * @return string
-     */
-    protected function getQuoteIdentifier(RestResourceInterface $cartsResource): string
-    {
-        return $cartsResource->getId();
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return string
-     */
-    protected function getItemIdentifier(RestRequestInterface $restRequest)
-    {
-        return $restRequest->getResource()->getId();
+        $itemTransfer = (new ItemTransfer())->fromArray(
+            $restCartItemsAttributesRequestTransfer->toArray(),
+            true
+        );
+        return $itemTransfer;
     }
 
     /**
@@ -265,7 +234,7 @@ class CartItemsWriter implements CartItemsWriterInterface
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(sprintf("Cart with id '%s' not found.", $idQuote));
+            ->setDetail(sprintf(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_WITH_ID_NOT_FOUND, $idQuote));
 
         return $restResponse->addError($restErrorTransfer);
     }
@@ -281,7 +250,7 @@ class CartItemsWriter implements CartItemsWriterInterface
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(sprintf("Cart item with sku '%s' not found.", $sku));
+            ->setDetail(sprintf(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ITEM_NOT_FOUND, $sku));
 
         return $restResponse->addError($restErrorTransfer);
     }
@@ -304,70 +273,6 @@ class CartItemsWriter implements CartItemsWriterInterface
         }
 
         return $restResponse;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function prepareItemTransfer(RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer): ItemTransfer
-    {
-        $itemTransfer = (new ItemTransfer())->fromArray(
-            $restCartItemsAttributesRequestTransfer->toArray(),
-            true
-        );
-        return $itemTransfer;
-    }
-
-    /**
-     * @param string $idQuote
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function handleResponse(string $idQuote, RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer, QuoteTransfer $quoteTransfer)
-    {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-        /**
-         * @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-         */
-        $itemTransfer = $this->findItemTransfer($restCartItemsAttributesTransfer, $quoteTransfer);
-        if ($itemTransfer === null) {
-            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_ADDING_ITEM)
-                ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
-                ->setDetail(sprintf('Failed adding item "%s" to the cart "%s"', $restCartItemsAttributesTransfer->getSku(), $idQuote));
-
-            return $restResponse->addError($restErrorMessageTransfer);
-        }
-        $restCartItemsAttributesResponseTransfer = $this->cartItemsResourceMapper->mapCartItemAttributes($itemTransfer);
-        $cartItemsResource = $this->restResourceBuilder
-            ->createRestResource(
-                CartsRestApiConfig::RESOURCE_CART_ITEMS,
-                $itemTransfer->getSku(),
-                $restCartItemsAttributesResponseTransfer
-            );
-
-        return $restResponse->addResource($cartItemsResource);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer|null
-     */
-    protected function findItemTransfer(
-        RestCartItemsAttributesTransfer $restCartItemsAttributesRequestTransfer,
-        QuoteTransfer $quoteTransfer
-    ): ?ItemTransfer {
-        return $this->cartClient->findQuoteItem(
-            $quoteTransfer,
-            $restCartItemsAttributesRequestTransfer->getSku(),
-            $restCartItemsAttributesRequestTransfer->getGroupKey()
-        );
     }
 
     /**
