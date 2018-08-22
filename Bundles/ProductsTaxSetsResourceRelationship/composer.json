@@ -10,13 +10,13 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/products-rest-api": "^1.0.0",
-    "spryker/tax-sets-rest-api": "^1.0.0",
+    "spryker/products-rest-api": "*",
+    "spryker/tax-sets-rest-api": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/products-rest-api": "^1.0.0",
-    "spryker/tax-sets-rest-api": "^1.0.0"
+    "spryker/products-rest-api": "If you want to use ProductsRestApi module",
+    "spryker/tax-sets-rest-api": "If you want to use TaxSetsRestApi module"
   },
   "autoload": {
     "psr-4": {
