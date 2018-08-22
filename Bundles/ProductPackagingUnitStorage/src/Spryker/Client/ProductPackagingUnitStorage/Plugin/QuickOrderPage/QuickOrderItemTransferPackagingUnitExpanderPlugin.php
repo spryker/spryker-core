@@ -100,7 +100,7 @@ class QuickOrderItemTransferPackagingUnitExpanderPlugin extends AbstractPlugin i
         }
 
         foreach ($productAbstractPackagingStorageTransfer->getTypes() as $productConcretePackagingStorageTransfer) {
-            if ($productConcretePackagingStorageTransfer->getIdProduct() === $productConcretePackagingStorageTransfer->getIdProduct()) {
+            if ($productConcretePackagingStorageTransfer->getIdProduct() === $productConcreteTransfer->getIdProductConcrete()) {
                 return $productConcretePackagingStorageTransfer;
             }
         }
