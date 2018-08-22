@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\WishlistsProductsResourceRelationship\Processor\Mapper;
+namespace Spryker\Glue\WishlistItemsProductsResourceRelationship\Processor\Mapper;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface WishlistsProductsResourceRelationshipMapperInterface
+interface WishlistItemsProductsResourceRelationshipMapperInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources

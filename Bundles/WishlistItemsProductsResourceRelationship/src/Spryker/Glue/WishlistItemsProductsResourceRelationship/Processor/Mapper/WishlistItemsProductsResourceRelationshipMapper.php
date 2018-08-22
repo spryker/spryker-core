@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\WishlistsProductsResourceRelationship\Processor\Mapper;
+namespace Spryker\Glue\WishlistItemsProductsResourceRelationship\Processor\Mapper;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\WishlistsProductsResourceRelationship\Dependency\RestResource\WishlistsProductsResourceRelationshipToProductsRestApiInterface;
+use Spryker\Glue\WishlistItemsProductsResourceRelationship\Dependency\RestResource\WishlistItemsProductsResourceRelationshipToProductsRestApiInterface;
 
-class WishlistsProductsResourceRelationshipMapper implements WishlistsProductsResourceRelationshipMapperInterface
+class WishlistItemsProductsResourceRelationshipMapper implements WishlistItemsProductsResourceRelationshipMapperInterface
 {
     /**
-     * @var \Spryker\Glue\WishlistsProductsResourceRelationship\Dependency\RestResource\WishlistsProductsResourceRelationshipToProductsRestApiInterface
+     * @var \Spryker\Glue\WishlistItemsProductsResourceRelationship\Dependency\RestResource\WishlistItemsProductsResourceRelationshipToProductsRestApiInterface
      */
     protected $productsResource;
 
     /**
      * WishlistsProductsResourceRelationshipMapper constructor.
      *
-     * @param \Spryker\Glue\WishlistsProductsResourceRelationship\Dependency\RestResource\WishlistsProductsResourceRelationshipToProductsRestApiInterface $productsResource
+     * @param \Spryker\Glue\WishlistItemsProductsResourceRelationship\Dependency\RestResource\WishlistItemsProductsResourceRelationshipToProductsRestApiInterface $productsResource
      */
-    public function __construct(WishlistsProductsResourceRelationshipToProductsRestApiInterface $productsResource)
+    public function __construct(WishlistItemsProductsResourceRelationshipToProductsRestApiInterface $productsResource)
     {
         $this->productsResource = $productsResource;
     }

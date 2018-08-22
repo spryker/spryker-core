@@ -1,6 +1,6 @@
 {
-  "name": "spryker/wishlists-products-resource-relationship",
-  "description": "WishlistsProductsResourceRelationship module",
+  "name": "spryker/wishlist-items-products-resource-relationship",
+  "description": "WishlistItemsProductsResourceRelationship module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
