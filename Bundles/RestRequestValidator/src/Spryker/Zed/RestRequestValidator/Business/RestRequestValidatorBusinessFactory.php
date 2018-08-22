@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -39,7 +40,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCollectorInterface
      */
-    protected function createValidatorCollector(): RestRequestValidatorCollectorInterface
+    public function createValidatorCollector(): RestRequestValidatorCollectorInterface
     {
         return new RestRequestValidatorCollector($this->createSchemaFinder());
     }
@@ -47,7 +48,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorMergerInterface
      */
-    protected function createValidatorMerger(): RestRequestValidatorMergerInterface
+    public function createValidatorMerger(): RestRequestValidatorMergerInterface
     {
         return new RestRequestValidatorMerger();
     }
@@ -55,7 +56,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaverInterface
      */
-    protected function createValidatorSaver(): RestRequestValidatorSaverInterface
+    public function createValidatorSaver(): RestRequestValidatorSaverInterface
     {
         return new RestRequestValidatorSaver(
             $this->createFilesystem(),
@@ -66,7 +67,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinderInterface
      */
-    protected function createSchemaFinder(): RestRequestValidatorSchemaFinderInterface
+    public function createSchemaFinder(): RestRequestValidatorSchemaFinderInterface
     {
         return new RestRequestValidatorSchemaFinder(
             $this->getConfig()->getValidationSchemaPathPattern(),
@@ -77,7 +78,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Symfony\Component\Filesystem\Filesystem
      */
-    protected function createFilesystem()
+    public function createFilesystem(): Filesystem
     {
         return new Filesystem();
     }

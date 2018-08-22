@@ -1,12 +1,11 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\RestRequestValidator\Business\Merger;
-
-use function array_key_exists;
 
 class RestRequestValidatorMerger implements RestRequestValidatorMergerInterface
 {
@@ -40,14 +39,29 @@ class RestRequestValidatorMerger implements RestRequestValidatorMergerInterface
 
         foreach ($validationConfigs as $validationSchemaScoped) {
             foreach ($validationSchemaScoped as $actionName => $fieldsConfig) {
-                if (!array_key_exists($actionName, $resultingConfiguration)) {
-                    $resultingConfiguration[$actionName] = $fieldsConfig;
-                } else {
-                    foreach ($fieldsConfig as $fieldName => $validatorsList) {
-                        if (array_key_exists($fieldName, $resultingConfiguration[$actionName])) {
-                            $resultingConfiguration[$actionName][$fieldName] = $validatorsList;
-                        }
-                    }
+                $resultingConfiguration = $this->mergeOverlappingConfig($actionName, $fieldsConfig);
+            }
+        }
+
+        return $resultingConfiguration;
+    }
+
+    /**
+     * @param string $actionName
+     * @param array $fieldsConfig
+     *
+     * @return array
+     */
+    protected function mergeOverlappingConfig($actionName, $fieldsConfig): array
+    {
+        $resultingConfiguration = [];
+
+        if (!array_key_exists($actionName, $resultingConfiguration)) {
+            $resultingConfiguration[$actionName] = $fieldsConfig;
+        } else {
+            foreach ($fieldsConfig as $fieldName => $validatorsList) {
+                if (array_key_exists($fieldName, $resultingConfiguration[$actionName])) {
+                    $resultingConfiguration[$actionName][$fieldName] = $validatorsList;
                 }
             }
         }

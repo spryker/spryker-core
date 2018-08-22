@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -44,9 +45,9 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    protected function getPaths()
+    protected function getPaths(): array
     {
         $paths = [];
         foreach ($this->pathPattern as $pathPattern) {
