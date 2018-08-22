@@ -68,12 +68,12 @@ class AbstractProductsResourceMapper implements AbstractProductsResourceMapperIn
                     $productId = $attributeValue[static::KEY_ID_PRODUCT_CONCRETE];
                     $sku = $productConcreteIds[$productId];
                     $attributeMap[static::KEY_ATTRIBUTE_VARIANTS][$attribute][static::KEY_ID_PRODUCT_CONCRETE] = $sku;
-                } else {
-                    foreach ($attributeValue as $attributeItemName => &$attributeValueItem) {
-                        $productId = $attributeValueItem[static::KEY_ID_PRODUCT_CONCRETE];
-                        $sku = $productConcreteIds[$productId];
-                        $attributeValueItem[static::KEY_ID_PRODUCT_CONCRETE] = $sku;
-                    }
+                    continue;
+                }
+                foreach ($attributeValue as $attributeItemName => &$attributeValueItem) {
+                    $productId = $attributeValueItem[static::KEY_ID_PRODUCT_CONCRETE];
+                    $sku = $productConcreteIds[$productId];
+                    $attributeValueItem[static::KEY_ID_PRODUCT_CONCRETE] = $sku;
                 }
             }
         }
