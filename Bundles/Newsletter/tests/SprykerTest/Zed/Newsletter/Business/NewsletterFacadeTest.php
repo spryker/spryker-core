@@ -67,7 +67,7 @@ class NewsletterFacadeTest extends Unit
         $response = $this->newsletterFacade->subscribeWithSingleOptIn($request);
 
         foreach ($response->getSubscriptionResults() as $result) {
-            $this->assertTrue($result->getIsSuccess(), $result->getErrorMessage());
+            $this->assertTrue($result->getIsSuccess(), (string)$result->getErrorMessage());
         }
     }
 
@@ -125,7 +125,7 @@ class NewsletterFacadeTest extends Unit
         $response = $this->newsletterFacade->subscribeWithDoubleOptIn($request);
 
         foreach ($response->getSubscriptionResults() as $result) {
-            $this->assertTrue($result->getIsSuccess(), $result->getErrorMessage());
+            $this->assertTrue($result->getIsSuccess(), (string)$result->getErrorMessage());
         }
     }
 
@@ -165,7 +165,7 @@ class NewsletterFacadeTest extends Unit
 
         $response = $this->newsletterFacade->approveDoubleOptInSubscriber($subscriber);
 
-        $this->assertTrue($response->getIsSuccess(), $response->getErrorMessage());
+        $this->assertTrue($response->getIsSuccess(), (string)$response->getErrorMessage());
     }
 
     /**
@@ -197,7 +197,7 @@ class NewsletterFacadeTest extends Unit
         $response = $this->newsletterFacade->unsubscribe($request);
 
         foreach ($response->getSubscriptionResults() as $result) {
-            $this->assertTrue($result->getIsSuccess(), $result->getErrorMessage());
+            $this->assertTrue($result->getIsSuccess(), (string)$result->getErrorMessage());
         }
     }
 
@@ -223,7 +223,7 @@ class NewsletterFacadeTest extends Unit
         $response = $this->newsletterFacade->unsubscribe($request);
 
         foreach ($response->getSubscriptionResults() as $result) {
-            $this->assertFalse($result->getIsSuccess(), $result->getErrorMessage());
+            $this->assertFalse($result->getIsSuccess(), (string)$result->getErrorMessage());
         }
     }
 
@@ -243,7 +243,7 @@ class NewsletterFacadeTest extends Unit
         $response = $this->newsletterFacade->checkSubscription($request);
 
         $result = $response->getSubscriptionResults()[0];
-        $this->assertTrue($result->getIsSuccess(), $result->getErrorMessage());
+        $this->assertTrue($result->getIsSuccess(), (string)$result->getErrorMessage());
     }
 
     /**
