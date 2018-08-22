@@ -38,7 +38,9 @@ class QuickOrderItemTransferPackagingUnitExpanderPlugin extends AbstractPlugin i
             return $itemTransfer;
         }
 
-        $productConcretePackagingStorageTransfer = $this->extractProductConcretePackagingStorageTransfer($productAbstractPackagingStorageTransfer, $itemTransfer->getProductConcrete());
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
+        $productConcreteTransfer = $itemTransfer->getProductConcrete();
+        $productConcretePackagingStorageTransfer = $this->extractProductConcretePackagingStorageTransfer($productAbstractPackagingStorageTransfer, $productConcreteTransfer);
 
         if ($productConcretePackagingStorageTransfer === null) {
             return $itemTransfer;
@@ -60,7 +62,8 @@ class QuickOrderItemTransferPackagingUnitExpanderPlugin extends AbstractPlugin i
         ItemTransfer $itemTransfer,
         ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer,
         ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer
-    ): void {
+    ): void
+    {
         $productMeausurementSalesUnitTransfer = $this->getDefaultProductMeasurementSalesUnitTransfer((int)$productConcretePackagingStorageTransfer->getIdProduct());
 
         if ($productConcretePackagingStorageTransfer->getHasLeadProduct() !== true
