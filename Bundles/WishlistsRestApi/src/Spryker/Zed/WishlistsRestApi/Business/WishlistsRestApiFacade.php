@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -21,19 +23,7 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
     public function updateWishlistsUuid(): void
     {
         $this->getFactory()
-            ->createWishlistWriter()
+            ->createWishlistUuidWriter()
             ->updateWishlistsUuid();
-    }
-
-    /**
-     * @api
-     *
-     * @return void
-     */
-    public function updateWishlistItemsUuid(): void
-    {
-        $this->getFactory()
-            ->createWishlistItemWriter()
-            ->updateWishlistItemsUuid();
     }
 }

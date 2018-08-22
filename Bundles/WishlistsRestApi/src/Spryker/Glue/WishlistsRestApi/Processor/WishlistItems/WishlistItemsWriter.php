@@ -71,7 +71,7 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
         }
 
         $wishlistUuid = $wishlistResource->getId();
-        $wishlistTransfer = $this->wishlistsReader->getWishlistByUuid($wishlistUuid);
+        $wishlistTransfer = $this->wishlistsReader->findWishlistByUuid($wishlistUuid);
         if ($wishlistTransfer === null) {
             return $this->createWishlistNotFoundErrorResponse($restResponse);
         }
@@ -117,16 +117,16 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
         }
 
         $wishlistUuid = $wishlistResource->getId();
-        $wishlistTransfer = $this->wishlistsReader->getWishlistByUuid($wishlistUuid);
+        $wishlistTransfer = $this->wishlistsReader->findWishlistByUuid($wishlistUuid);
         if ($wishlistTransfer === null) {
             return $this->createWishlistNotFoundErrorResponse($restResponse);
         }
 
         if (!$this->isSkuInWishlist($wishlistTransfer, $sku)) {
             $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_NO_ITEM_WITH_PROVIDED_SKU)
+                ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_NO_ITEM_WITH_PROVIDED_ID)
                 ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_NO_ITEM_WITH_PROVIDED_SKU);
+                ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_NO_ITEM_WITH_PROVIDED_ID);
 
             return $restResponse->addError($restErrorTransfer);
         }
@@ -162,6 +162,8 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
     protected function isSkuInWishlist(WishlistTransfer $wishlistTransfer, string $sku): bool
     {
         $wishlistsResource = $this->wishlistsReader->getWishistResource($wishlistTransfer);
+
+        /** @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $wishlistItemResources */
         foreach ($wishlistsResource->getRelationships() as $wishlistItemResources) {
             foreach ($wishlistItemResources as $wishlistItemResource) {
                 if ($wishlistItemResource->getId() === $sku) {

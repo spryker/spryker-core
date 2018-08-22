@@ -31,8 +31,8 @@ class WishlistItemsConcreteProductsResourceRelationshipPlugin extends AbstractPl
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createWishlistsProductsResourceRelationshipMapper()
-            ->mapResourceRelationships($resources, $restRequest);
+            ->createWishlistsProductsResourceRelationshipExpander()
+            ->addResourceRelationships($resources, $restRequest);
     }
 
     /**

@@ -6,32 +6,32 @@
 
 namespace Spryker\Zed\WishlistsRestApi\Persistence;
 
-use Orm\Zed\Wishlist\Persistence\SpyWishlist;
-use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\WishlistsRestApi\Persistence\WishlistsRestApiPersistenceFactory getFactory()
  */
 class WishlistsRestApiEntityManager extends AbstractEntityManager implements WishlistsRestApiEntityManagerInterface
 {
-    /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist $wishlist
-     *
-     * @return void
-     */
-    public function saveWishlistEntity(SpyWishlist $wishlist): void
-    {
-        $wishlist->save();
-    }
+    protected const BATCH_SIZE = 200;
 
     /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem $wishlistItem
-     *
      * @return void
      */
-    public function saveWishlistItemEntity(SpyWishlistItem $wishlistItem): void
+    public function setEmptyWishlistUuids(): void
     {
-        $wishlistItem->save();
+        $wishlistQuery = $this->getFactory()->getWishlistPropelQuery();
+
+        do {
+            $wishlistEntities = $wishlistQuery
+                ->filterByUuid(null, Criteria::ISNULL)
+                ->limit(static::BATCH_SIZE)
+                ->find();
+
+            foreach ($wishlistEntities as $wishlistEntity) {
+                $wishlistEntity->save();
+            }
+        } while ($wishlistEntities);
     }
 }

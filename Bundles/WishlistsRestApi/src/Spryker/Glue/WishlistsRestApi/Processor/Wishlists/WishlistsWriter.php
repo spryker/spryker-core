@@ -73,7 +73,7 @@ class WishlistsWriter implements WishlistsWriterInterface
         $wishlistTransfer->setFkCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());
 
         $wishlistResponseTransfer = $this->wishlistClient->validateAndCreateWishlist($wishlistTransfer);
-        if (!$wishlistResponseTransfer->getIsSuccess()) {
+        if (!$wishlistResponseTransfer->getIsSuccess() || $wishlistResponseTransfer->getWishlist() === null) {
             return $this->handleWishlistResponseTransferError(
                 $wishlistResponseTransfer,
                 WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_CANT_CREATE_WISHLIST,
@@ -81,7 +81,7 @@ class WishlistsWriter implements WishlistsWriterInterface
             );
         }
 
-        $wishlistTransfer = $this->wishlistsReader->getWishlistByUuid(
+        $wishlistTransfer = $this->wishlistsReader->findWishlistByUuid(
             $wishlistResponseTransfer->getWishlist()->getUuid()
         );
         $restResource = $this->wishlistsResourceMapper->mapWishlistsResource($wishlistTransfer);
@@ -98,7 +98,8 @@ class WishlistsWriter implements WishlistsWriterInterface
     public function update(RestWishlistsAttributesTransfer $attributesTransfer, RestRequestInterface $restRequest): RestResponseInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
-        $wishlistTransfer = $this->wishlistsReader->getWishlistByUuid($restRequest->getResource()->getId());
+
+        $wishlistTransfer = $this->wishlistsReader->findWishlistByUuid($restRequest->getResource()->getId());
         if ($wishlistTransfer === null) {
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NOT_FOUND)
@@ -132,7 +133,7 @@ class WishlistsWriter implements WishlistsWriterInterface
         $response = $this->restResourceBuilder->createRestResponse();
 
         $wishlistUuid = $restRequest->getResource()->getId();
-        $wishlistTransfer = $this->wishlistsReader->getWishlistByUuid($wishlistUuid);
+        $wishlistTransfer = $this->wishlistsReader->findWishlistByUuid($wishlistUuid);
 
         if ($wishlistTransfer === null) {
             $restErrorTransfer = (new RestErrorMessageTransfer())
@@ -150,12 +151,12 @@ class WishlistsWriter implements WishlistsWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer
-     * @param string $defaultErrorCode
+     * @param string $errorCode
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function handleWishlistResponseTransferError(WishlistResponseTransfer $wishlistResponseTransfer, string $defaultErrorCode, RestResponseInterface $restResponse): RestResponseInterface
+    protected function handleWishlistResponseTransferError(WishlistResponseTransfer $wishlistResponseTransfer, string $errorCode, RestResponseInterface $restResponse): RestResponseInterface
     {
         foreach ($wishlistResponseTransfer->getErrors() as $error) {
             if ($error === WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS) {
@@ -168,7 +169,7 @@ class WishlistsWriter implements WishlistsWriterInterface
             }
 
             $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode($defaultErrorCode)
+                ->setCode($errorCode)
                 ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
                 ->setDetail($error);
             $restResponse->addError($restErrorTransfer);

@@ -8,11 +8,4 @@
         </behavior>
     </table>
 
-    <table name="spy_wishlist_item" phpName="SpyWishlistItem">
-        <behavior name="uuid">
-            <parameter name="key_prefix" value="wishlist_item"/>
-            <parameter name="key_columns" value="fk_wishlist.id_wishlist_item"/>
-        </behavior>
-    </table>
-
 </database>

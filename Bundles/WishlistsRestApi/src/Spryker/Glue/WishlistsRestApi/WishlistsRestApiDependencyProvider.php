@@ -12,7 +12,7 @@ use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistCl
 
 class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_WISHLIST_CLIENT = 'CLIENT_WISHLIST_CLIENT';
+    public const CLIENT_WISHLIST = 'CLIENT_WISHLIST';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -22,6 +22,7 @@ class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public function provideDependencies(Container $container): Container
     {
         $container = $this->addWishlistClient($container);
+
         return $container;
     }
 
@@ -32,7 +33,7 @@ class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addWishlistClient(Container $container): Container
     {
-        $container[static::CLIENT_WISHLIST_CLIENT] = function (Container $container) {
+        $container[static::CLIENT_WISHLIST] = function (Container $container) {
             return new WishlistsRestApiToWishlistClientBridge($container->getLocator()->wishlist()->client());
         };
 

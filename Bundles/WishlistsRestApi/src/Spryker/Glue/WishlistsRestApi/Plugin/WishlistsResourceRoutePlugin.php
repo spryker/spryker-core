@@ -18,6 +18,8 @@ use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 class WishlistsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
@@ -26,7 +28,6 @@ class WishlistsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-
         $resourceRouteCollection
             ->addPost('post')
             ->addPatch('patch')
@@ -37,6 +38,8 @@ class WishlistsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -47,6 +50,8 @@ class WishlistsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -57,6 +62,8 @@ class WishlistsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string

@@ -6,23 +6,12 @@
 
 namespace Spryker\Zed\WishlistsRestApi\Persistence;
 
-use Orm\Zed\Wishlist\Persistence\SpyWishlist;
-use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 use Spryker\Zed\Kernel\Persistence\EntityManager\EntityManagerInterface;
 
 interface WishlistsRestApiEntityManagerInterface extends EntityManagerInterface
 {
     /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist $wishlist
-     *
      * @return void
      */
-    public function saveWishlistEntity(SpyWishlist $wishlist): void;
-
-    /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem $wishlistItem
-     *
-     * @return void
-     */
-    public function saveWishlistItemEntity(SpyWishlistItem $wishlistItem): void;
+    public function setEmptyWishlistUuids(): void;
 }

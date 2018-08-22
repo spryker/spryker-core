@@ -19,6 +19,8 @@ use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 class WishlistItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
@@ -34,6 +36,8 @@ class WishlistItemsResourceRoutePlugin extends AbstractPlugin implements Resourc
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -44,6 +48,8 @@ class WishlistItemsResourceRoutePlugin extends AbstractPlugin implements Resourc
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string
@@ -54,6 +60,8 @@ class WishlistItemsResourceRoutePlugin extends AbstractPlugin implements Resourc
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string

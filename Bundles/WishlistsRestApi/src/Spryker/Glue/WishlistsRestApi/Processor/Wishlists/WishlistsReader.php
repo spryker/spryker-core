@@ -38,8 +38,6 @@ class WishlistsReader implements WishlistsReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * WishlistsReader constructor.
-     *
      * @param \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface $wishlistClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistsResourceMapperInterface $wishlistsResourceMapper
@@ -71,6 +69,37 @@ class WishlistsReader implements WishlistsReaderInterface
     }
 
     /**
+     * @param string $wishlistUuid
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer|null
+     */
+    public function findWishlistByUuid(string $wishlistUuid): ?WishlistTransfer
+    {
+        $customerWishlistCollectionTransfer = $this->wishlistClient->getCustomerWishlistCollection();
+        $customerWishlists = $customerWishlistCollectionTransfer->getWishlists();
+
+        foreach ($customerWishlists as $wishlistTransfer) {
+            if ($wishlistTransfer->getUuid() === $wishlistUuid) {
+                return $wishlistTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function getWishistResource(WishlistTransfer $wishlistTransfer): RestResourceInterface
+    {
+        $wishlistOverviewResponseTransfer = $this->getWishlistOverviewWithoutProductDetails($wishlistTransfer);
+
+        return $this->wishlistsResourceMapper->mapWishlistsResource($wishlistTransfer, $wishlistOverviewResponseTransfer);
+    }
+
+    /**
      * @param string $idWishlist
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -79,7 +108,7 @@ class WishlistsReader implements WishlistsReaderInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $wishlistTransfer = $this->getWishlistByUuid($idWishlist);
+        $wishlistTransfer = $this->findWishlistByUuid($idWishlist);
         if ($wishlistTransfer === null) {
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NOT_FOUND)
@@ -104,11 +133,9 @@ class WishlistsReader implements WishlistsReaderInterface
         $customerWishlistCollectionTransfer = $this->wishlistClient->getCustomerWishlistCollection();
         $customerWishlists = $customerWishlistCollectionTransfer->getWishlists();
 
-        if (count($customerWishlists) > 0) {
-            foreach ($customerWishlists as $wishlistTransfer) {
-                $wishlistResource = $this->wishlistsResourceMapper->mapWishlistsResource($wishlistTransfer);
-                $restResponse->addResource($wishlistResource);
-            }
+        foreach ($customerWishlists as $wishlistTransfer) {
+            $wishlistResource = $this->wishlistsResourceMapper->mapWishlistsResource($wishlistTransfer);
+            $restResponse->addResource($wishlistResource);
         }
 
         return $restResponse;
@@ -127,36 +154,5 @@ class WishlistsReader implements WishlistsReaderInterface
         $wishlistOverviewRequestTransfer->setItemsPerPage(PHP_INT_MAX);
 
         return $this->wishlistClient->getWishlistOverviewWithoutProductDetails($wishlistOverviewRequestTransfer);
-    }
-
-    /**
-     * @param string $wishlistUuid
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer|null
-     */
-    public function getWishlistByUuid(string $wishlistUuid): ?WishlistTransfer
-    {
-        $customerWishlistCollectionTransfer = $this->wishlistClient->getCustomerWishlistCollection();
-        $customerWishlists = $customerWishlistCollectionTransfer->getWishlists();
-
-        foreach ($customerWishlists as $wishlistTransfer) {
-            if ($wishlistTransfer->getUuid() === $wishlistUuid) {
-                return $wishlistTransfer;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    public function getWishistResource(WishlistTransfer $wishlistTransfer): RestResourceInterface
-    {
-        $wishlistOverviewResponseTransfer = $this->getWishlistOverviewWithoutProductDetails($wishlistTransfer);
-
-        return $this->wishlistsResourceMapper->mapWishlistsResource($wishlistTransfer, $wishlistOverviewResponseTransfer);
     }
 }

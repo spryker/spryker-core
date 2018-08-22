@@ -21,7 +21,7 @@ interface WishlistsReaderInterface
      *
      * @return null|\Generated\Shared\Transfer\WishlistTransfer
      */
-    public function getWishlistByUuid(string $wishlistUuid): ?WishlistTransfer;
+    public function findWishlistByUuid(string $wishlistUuid): ?WishlistTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer

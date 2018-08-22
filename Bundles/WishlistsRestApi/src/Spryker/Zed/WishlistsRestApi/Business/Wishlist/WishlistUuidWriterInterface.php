@@ -4,12 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\WishlistsRestApi\Business\WishlistItem;
+namespace Spryker\Zed\WishlistsRestApi\Business\Wishlist;
 
-interface WishlistItemsWriterInterface
+interface WishlistUuidWriterInterface
 {
     /**
      * @return void
      */
-    public function updateWishlistItemsUuid(): void;
+    public function updateWishlistsUuid(): void;
 }

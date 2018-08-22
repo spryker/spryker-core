@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\WishlistsRestApi\Persistence;
 
-use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\WishlistsRestApi\WishlistsRestApiDependencyProvider;
@@ -22,13 +21,5 @@ class WishlistsRestApiPersistenceFactory extends AbstractPersistenceFactory
     public function getWishlistPropelQuery(): SpyWishlistQuery
     {
         return $this->getProvidedDependency(WishlistsRestApiDependencyProvider::PROPEL_QUERY_WISHLIST);
-    }
-
-    /**
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
-     */
-    public function getWishlistItemPropelQuery(): SpyWishlistItemQuery
-    {
-        return $this->getProvidedDependency(WishlistsRestApiDependencyProvider::PROPEL_QUERY_WISHLIST_ITEM);
     }
 }

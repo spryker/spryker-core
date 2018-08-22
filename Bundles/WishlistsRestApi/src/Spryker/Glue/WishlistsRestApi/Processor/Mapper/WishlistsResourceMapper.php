@@ -7,6 +7,7 @@
 namespace Spryker\Glue\WishlistsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestWishlistsAttributesTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -15,6 +16,9 @@ use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 
 class WishlistsResourceMapper implements WishlistsResourceMapperInterface
 {
+    protected const SELF_LINK_NAME = 'self';
+    protected const SELF_LINK_FORMAT_PATTERN = '%s/%s/%s/%s';
+
     /**
      * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapperInterface
      */
@@ -54,7 +58,7 @@ class WishlistsResourceMapper implements WishlistsResourceMapperInterface
         );
 
         if ($wishlistOverviewResponseTransfer !== null) {
-            $this->mapWishlistItems($wishlistOverviewResponseTransfer, $wishlistsResource);
+            $this->addWishlistItems($wishlistOverviewResponseTransfer, $wishlistsResource);
         }
 
         return $wishlistsResource;
@@ -66,21 +70,33 @@ class WishlistsResourceMapper implements WishlistsResourceMapperInterface
      *
      * @return void
      */
-    protected function mapWishlistItems(WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer, RestResourceInterface $wishlistsResource): void
+    protected function addWishlistItems(WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer, RestResourceInterface $wishlistsResource): void
     {
         foreach ($wishlistOverviewResponseTransfer->getItems() as $itemTransfer) {
-            $itemResource = $this->restResourceBuilder->createRestResource(
-                WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
-                $itemTransfer->getUuid(),
-                $this->wishlistItemsResourceMapper->mapWishlistItemAttributes($itemTransfer)
-            );
-            $itemResource->addLink(
-                'self',
-                $this->createSelfLinkForWishlistItem($wishlistsResource->getId(), $itemTransfer->getUuid())
-            );
+            $itemResource = $this->mapWishlistItemToRestResource($wishlistsResource, $itemTransfer);
 
             $wishlistsResource->addRelationship($itemResource);
         }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $wishlistsResource
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $itemTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function mapWishlistItemToRestResource(RestResourceInterface $wishlistsResource, WishlistItemTransfer $itemTransfer): RestResourceInterface
+    {
+        $itemResource = $this->restResourceBuilder->createRestResource(
+            WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
+            $itemTransfer->getSku(),
+            $this->wishlistItemsResourceMapper->mapWishlistItemAttributes($itemTransfer)
+        );
+        $itemResource->addLink(
+            static::SELF_LINK_NAME,
+            $this->createSelfLinkForWishlistItem($wishlistsResource->getId(), $itemTransfer->getSku())
+        );
+        return $itemResource;
     }
 
     /**
@@ -92,7 +108,7 @@ class WishlistsResourceMapper implements WishlistsResourceMapperInterface
     protected function createSelfLinkForWishlistItem(string $wishlistResourceId, string $wishlistItemResourceId): string
     {
         return sprintf(
-            '%s/%s/%s/%s',
+            static::SELF_LINK_FORMAT_PATTERN,
             WishlistsRestApiConfig::RESOURCE_WISHLISTS,
             $wishlistResourceId,
             WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,

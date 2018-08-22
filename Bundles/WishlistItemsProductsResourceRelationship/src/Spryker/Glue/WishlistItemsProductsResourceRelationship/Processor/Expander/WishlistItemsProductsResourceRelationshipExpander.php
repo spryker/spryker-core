@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\WishlistItemsProductsResourceRelationship\Processor\Mapper;
+namespace Spryker\Glue\WishlistItemsProductsResourceRelationship\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\WishlistItemsProductsResourceRelationship\Dependency\RestResource\WishlistItemsProductsResourceRelationshipToProductsRestApiInterface;
 
-class WishlistItemsProductsResourceRelationshipMapper implements WishlistItemsProductsResourceRelationshipMapperInterface
+class WishlistItemsProductsResourceRelationshipExpander implements WishlistItemsProductsResourceRelationshipExpanderInterface
 {
     /**
      * @var \Spryker\Glue\WishlistItemsProductsResourceRelationship\Dependency\RestResource\WishlistItemsProductsResourceRelationshipToProductsRestApiInterface
@@ -18,8 +18,6 @@ class WishlistItemsProductsResourceRelationshipMapper implements WishlistItemsPr
     protected $productsResource;
 
     /**
-     * WishlistsProductsResourceRelationshipMapper constructor.
-     *
      * @param \Spryker\Glue\WishlistItemsProductsResourceRelationship\Dependency\RestResource\WishlistItemsProductsResourceRelationshipToProductsRestApiInterface $productsResource
      */
     public function __construct(WishlistItemsProductsResourceRelationshipToProductsRestApiInterface $productsResource)
@@ -33,12 +31,14 @@ class WishlistItemsProductsResourceRelationshipMapper implements WishlistItemsPr
      *
      * @return void
      */
-    public function mapResourceRelationships(array $resources, RestRequestInterface $restRequest): void
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            $concreteProduct = $this->productsResource->findOneByProductConcreteSku($resource->getAttributes()['sku'], $restRequest);
-            if ($concreteProduct !== null) {
-                $resource->addRelationship($concreteProduct);
+            if (isset($resource->getAttributes()['sku'])) {
+                $concreteProduct = $this->productsResource->findOneByProductConcreteSku($resource->getAttributes()['sku'], $restRequest);
+                if ($concreteProduct !== null) {
+                    $resource->addRelationship($concreteProduct);
+                }
             }
         }
     }

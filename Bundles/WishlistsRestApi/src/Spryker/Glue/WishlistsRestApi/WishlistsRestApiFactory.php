@@ -64,7 +64,7 @@ class WishlistsRestApiFactory extends AbstractFactory
      */
     protected function getWishlistClient(): WishlistsRestApiToWishlistClientInterface
     {
-        return $this->getProvidedDependency(WishlistsRestApiDependencyProvider::CLIENT_WISHLIST_CLIENT);
+        return $this->getProvidedDependency(WishlistsRestApiDependencyProvider::CLIENT_WISHLIST);
     }
 
     /**

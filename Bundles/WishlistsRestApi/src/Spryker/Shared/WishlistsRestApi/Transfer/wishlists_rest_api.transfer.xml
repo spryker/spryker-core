@@ -18,9 +18,5 @@
         <property name="uuid" type="string" />
     </transfer>
 
-    <transfer name="WishlistItem">
-        <property name="uuid" type="string" />
-    </transfer>
-
 </transfers>
 

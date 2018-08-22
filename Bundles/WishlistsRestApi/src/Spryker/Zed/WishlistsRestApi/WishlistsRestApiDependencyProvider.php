@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\WishlistsRestApi;
 
-use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -14,7 +13,6 @@ use Spryker\Zed\Kernel\Container;
 class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_WISHLIST = 'PROPEL_QUERY_WISHLIST';
-    public const PROPEL_QUERY_WISHLIST_ITEM = 'PROPEL_QUERY_WISHLIST_ITEM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,7 +22,6 @@ class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = $this->addWishlistPropelQuery($container);
-        $container = $this->addWishlistItemPropelQuery($container);
 
         return $container;
     }
@@ -38,20 +35,6 @@ class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container[static::PROPEL_QUERY_WISHLIST] = function () {
             return SpyWishlistQuery::create();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function addWishlistItemPropelQuery(Container $container): Container
-    {
-        $container[static::PROPEL_QUERY_WISHLIST_ITEM] = function () {
-            return SpyWishlistItemQuery::create();
         };
 
         return $container;

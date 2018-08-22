@@ -17,14 +17,4 @@ interface WishlistsRestApiFacadeInterface
      * @return void
      */
     public function updateWishlistsUuid(): void;
-
-    /**
-     * Specification:
-     *  - Updates existing wishlist item records in DB with generated UUID value
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function updateWishlistItemsUuid(): void;
 }
