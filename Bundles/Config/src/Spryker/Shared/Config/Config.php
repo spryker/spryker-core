@@ -22,12 +22,12 @@ class Config
     protected static $config = null;
 
     /**
-     * @var self
+     * @var self|null
      */
     private static $instance;
 
     /**
-     * @var \Spryker\Shared\Config\Profiler
+     * @var \Spryker\Shared\Config\Profiler|null
      */
     private static $profiler;
 

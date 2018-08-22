@@ -7,17 +7,11 @@
 
 namespace Spryker\Zed\Cart\Dependency;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface as SprykerPreReloadItemsPluginInterface;
 
-interface PreReloadItemsPluginInterface
+/**
+ * @deprecated Use \Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface instead.
+ */
+interface PreReloadItemsPluginInterface extends SprykerPreReloadItemsPluginInterface
 {
-    /**
-     * Specification:
-     *   - This plugin is execute before reloading cart items, with this plugin you can modify quote before reloading it.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function preReloadItems(QuoteTransfer $quoteTransfer);
 }

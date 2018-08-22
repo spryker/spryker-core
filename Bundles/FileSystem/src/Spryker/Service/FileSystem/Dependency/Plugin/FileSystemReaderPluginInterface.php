@@ -53,7 +53,7 @@ interface FileSystemReaderPluginInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
-     * @return string
+     * @return int|null
      */
     public function getTimestamp(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
