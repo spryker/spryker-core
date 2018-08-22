@@ -25,7 +25,7 @@ class CartItemsProductsRelationshipFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\CartItemsProductsRelationship\Processor\Expander\CartItemsProductsRelationshipExpanderInterface
      */
-    public function createCartsProductsResourceMapper(): CartItemsProductsRelationshipExpanderInterface
+    public function createCartsProductsResourceExpander(): CartItemsProductsRelationshipExpanderInterface
     {
         return new CartItemsProductsRelationshipExpander($this->getProductsResource());
     }

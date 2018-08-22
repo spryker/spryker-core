@@ -17,5 +17,5 @@ interface CartItemsProductsRelationshipExpanderInterface
      *
      * @return void
      */
-    public function mapResourceRelationships(array $resources, RestRequestInterface $restRequest): void;
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void;
 }

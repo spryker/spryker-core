@@ -30,7 +30,7 @@ class CartItemsProductsRelationshipPlugin extends AbstractPlugin implements Reso
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $this->getFactory()->createCartsProductsResourceMapper()->mapResourceRelationships($resources, $restRequest);
+        $this->getFactory()->createCartsProductsResourceExpander()->addResourceRelationships($resources, $restRequest);
     }
 
     /**
