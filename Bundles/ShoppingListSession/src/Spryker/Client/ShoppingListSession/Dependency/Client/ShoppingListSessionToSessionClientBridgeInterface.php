@@ -15,7 +15,7 @@ interface ShoppingListSessionToSessionClientBridgeInterface
      *
      * @return void
      */
-    public function set($name, $value): void;
+    public function set($name, $value);
 
     /**
      * @param string $name
