@@ -115,7 +115,7 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
             $targetDirectory .= '/';
         }
 
-        if (!is_dir($targetDirectory) && !mkdir($targetDirectory, static::GENERATED_FILE_PERMISSIONS) && !is_dir($targetDirectory)) {
+        if (!is_dir($targetDirectory) && !mkdir($targetDirectory, static::GENERATED_FILE_PERMISSIONS, true) && !is_dir($targetDirectory)) {
             throw new FileNotCreatedException('Unable to create directory.');
         }
 
