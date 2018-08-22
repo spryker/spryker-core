@@ -45,4 +45,11 @@ interface ShoppingListStorageRepositoryInterface
      * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingList[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function findShoppingListEntitiesByCustomerReferences(array $customerReferences): ObjectCollection;
+
+    /**
+     * @param array $shoppingListCustomerStorageIds
+     *
+     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findShoppingListCustomerStorageEntitiesByIds(array $shoppingListCustomerStorageIds): ObjectCollection;
 }

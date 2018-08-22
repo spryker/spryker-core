@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingListStorage;
 
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingListItemQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -18,6 +19,7 @@ class ShoppingListStorageDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const PROPEL_QUERY_SHOPPING_LIST = 'PROPEL_QUERY_SHOPPING_LIST';
     public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
+    public const PROPEL_QUERY_SHOPPING_LIST_ITEM = 'PROPEL_QUERY_SHOPPING_LIST_ITEM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -41,6 +43,7 @@ class ShoppingListStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addShoppingListPropelQuery($container);
+        $container = $this->addShoppingListItemPropelQuery($container);
         $container = $this->addCompanyUserPropelQuery($container);
 
         return $container;
@@ -69,6 +72,20 @@ class ShoppingListStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::PROPEL_QUERY_SHOPPING_LIST] = function (Container $container) {
             return SpyShoppingListQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShoppingListItemPropelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_SHOPPING_LIST_ITEM] = function (Container $container) {
+            return SpyShoppingListItemQuery::create();
         };
 
         return $container;
