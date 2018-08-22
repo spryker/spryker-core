@@ -61,7 +61,7 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
      *
      * @return void
      */
-    public function writeToFile(array $paths, array $schemas): void
+    public function write(array $paths, array $schemas): void
     {
         $data = $this->getDefaultDataStructure();
         $data[static::KEY_PATHS] = $paths;

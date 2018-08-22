@@ -15,5 +15,5 @@ interface RestApiDocumentationWriterInterface
      *
      * @return void
      */
-    public function writeToFile(array $paths, array $schemas): void;
+    public function write(array $paths, array $schemas): void;
 }

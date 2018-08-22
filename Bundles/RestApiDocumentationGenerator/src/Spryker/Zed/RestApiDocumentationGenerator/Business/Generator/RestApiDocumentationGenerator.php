@@ -66,7 +66,7 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
             }
         }
 
-        $this->restApiDocumentationWriter->writeToFile(
+        $this->restApiDocumentationWriter->write(
             $this->restApiPathGenerator->getPaths(),
             $this->restApiSchemaGenerator->getSchemas()
         );
