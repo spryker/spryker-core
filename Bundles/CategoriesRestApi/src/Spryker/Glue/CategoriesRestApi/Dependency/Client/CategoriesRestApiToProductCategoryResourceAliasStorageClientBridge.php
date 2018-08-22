@@ -31,6 +31,6 @@ class CategoriesRestApiToProductCategoryResourceAliasStorageClientBridge impleme
      */
     public function findProductCategoryAbstractStorageTransfer(string $sku, string $localeName): ?ProductAbstractCategoryStorageTransfer
     {
-        return $this->productCategoryResourceAliasStorageClient->findProductCategoryAbstractStorageTransfer($locale);
+        return $this->productCategoryResourceAliasStorageClient->findProductCategoryAbstractStorageTransfer($sku, $localeName);
     }
 }

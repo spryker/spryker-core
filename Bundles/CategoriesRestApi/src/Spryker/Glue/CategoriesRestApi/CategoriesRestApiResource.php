@@ -20,14 +20,15 @@ class CategoriesRestApiResource extends AbstractRestResource implements Categori
      *
      * @api
      *
+     * @param string $abstractProductId
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function readProductCategories(string $idAbstractProduct, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findCategoriesByAbstractProductSku(string $abstractProductId, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         return $this->getFactory()
             ->createCategoriesReader()
-            ->readProductCategories($restRequest);
+            ->findProductCategoriesBySku($abstractProductId, $restRequest);
     }
 }

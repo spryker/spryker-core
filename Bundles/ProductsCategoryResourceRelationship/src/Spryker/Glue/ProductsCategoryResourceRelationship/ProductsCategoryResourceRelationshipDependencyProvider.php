@@ -33,7 +33,7 @@ class ProductsCategoryResourceRelationshipDependencyProvider extends AbstractBun
      */
     protected function addCategoriesResource(Container $container): Container
     {
-        $container[static::RESOURCE_CATEGORIES] = function (Container $container) {
+        $container[static::RESOURCE_CATEGORY] = function (Container $container) {
             return new ProductsCategoryResourceRelationToCategoriesRestApiBridge(
                 $container->getLocator()->categoriesRestApi()->resource()
             );

@@ -12,9 +12,10 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface ProductsCategoryResourceRelationToCategoriesRestApiInterface
 {
     /**
+     * @param string $abstractProductId
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function readProductCategories(RestRequestInterface $request): ?RestResourceInterface;
+    public function findProductCategoriesBySku(string $abstractProductId, RestRequestInterface $restRequest): ?RestResourceInterface;
 }

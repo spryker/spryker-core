@@ -13,7 +13,11 @@ use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategory
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToProductCategoryResourceAliasStorageClientInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+
+use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class CategoriesReader implements CategoriesReaderInterface
@@ -80,31 +84,33 @@ class CategoriesReader implements CategoriesReaderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $abstractSku
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function readProductCategories(RestRequestInterface $restRequest): RestResponseInterface
+    public function findProductCategoriesBySku(string $abstractSku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-        $abstractProductResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
+        $categoriesResource = $this->productCategoryResourceAliasStorageClient->findProductCategoryAbstractStorageTransfer(
+            $abstractSku,
+            $restRequest->getMetadata()->getLocale()
+        );
 
-        $abstractSku = $abstractProductResource->getId();
-        $locale = $restRequest->getMetadata()->getLocale();
+        if (!$categoriesResource) {
+            return null;
+        }
 
-        $categoriesResource = $this->productCategoryResourceAliasStorageClient->findProductCategoryAbstractStorageTransfer($abstractSku, $locale);
         $categoriesTransfer = $this->categoriesResourceMapper
-            ->mapCategoriesResourceToRestCategoriesTransfer((array)$categoriesResource);
+            ->mapProductCategoriesToRestProductCategoriesTransfer((array)$categoriesResource->getCategories());
 
-        $restResponse = $this->restResourceBuilder->createRestResponse();
         $restResource = $this
             ->restResourceBuilder
             ->createRestResource(
                 CategoriesRestApiConfig::RESOURCE_PRODUCT_CATEGORIES,
-                null,
+                $abstractSku,
                 $categoriesTransfer
             );
 
-        return $restResponse->addResource($restResource);
+        return $restResource;
     }
 
     /**

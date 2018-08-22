@@ -6,7 +6,9 @@
 
 namespace Spryker\Glue\CategoriesRestApi\Processor\Categories;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface CategoriesReaderInterface
 {
@@ -19,10 +21,11 @@ interface CategoriesReaderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $abstractSku
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function readProductCategories(RestRequestInterface $restRequest): RestResponseInterface;
+    public function findProductCategoriesBySku(string $abstractSku, RestRequestInterface $restRequest): ?RestResourceInterface;
 
     /**
      * @param int $nodeId

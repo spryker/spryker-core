@@ -6,7 +6,7 @@
 
 namespace Spryker\Glue\CategoriesRestApi\Controller;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
 
@@ -18,14 +18,12 @@ class ProductCategoriesResourceController extends AbstractController
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function getAction(RestRequestInterface $restRequest): RestResponseInterface
+    public function getAction(RestRequestInterface $restRequest): RestResourceInterface
     {
-        file_put_contents('test11111.txt', print_r(123, 1));
-
         return $this->getFactory()
             ->createCategoriesReader()
-            ->readProductCategories($restRequest);
+            ->findProductCategoriesBySku($restRequest->getResource()->getId(), $restRequest);
     }
 }

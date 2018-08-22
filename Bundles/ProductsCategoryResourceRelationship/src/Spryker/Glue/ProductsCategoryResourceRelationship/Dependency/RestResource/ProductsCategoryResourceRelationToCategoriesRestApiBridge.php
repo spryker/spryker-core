@@ -25,13 +25,14 @@ class ProductsCategoryResourceRelationToCategoriesRestApiBridge implements Produ
     }
 
     /**
+     * @param string $abstractProductId
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function readProductCategories(RestRequestInterface $request): ?RestResourceInterface
+    public function findProductCategoriesBySku(string $abstractProductId, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         return $this->categoriesRestApiResource
-            ->findCategoriesByAbstractProductSku($abstractProductSku, $restRequest);
+            ->findCategoriesByAbstractProductSku($abstractProductId, $restRequest);
     }
 }

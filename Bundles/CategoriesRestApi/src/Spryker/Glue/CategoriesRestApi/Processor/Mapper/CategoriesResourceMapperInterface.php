@@ -7,6 +7,7 @@
 namespace Spryker\Glue\CategoriesRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestCategoriesTreeTransfer;
+use Generated\Shared\Transfer\RestProductCategoriesTreeTransfer;
 
 interface CategoriesResourceMapperInterface
 {
@@ -16,4 +17,11 @@ interface CategoriesResourceMapperInterface
      * @return \Generated\Shared\Transfer\RestCategoriesTreeTransfer
      */
     public function mapCategoriesResourceToRestCategoriesTransfer(array $categoriesResource): RestCategoriesTreeTransfer;
+
+    /**
+     * @param array $productCategoriesResource
+     *
+     * @return \Generated\Shared\Transfer\RestProductCategoriesTreeTransfer
+     */
+    public function mapProductCategoriesToRestProductCategoriesTransfer(array $productCategoriesResource): RestProductCategoriesTreeTransfer;
 }
