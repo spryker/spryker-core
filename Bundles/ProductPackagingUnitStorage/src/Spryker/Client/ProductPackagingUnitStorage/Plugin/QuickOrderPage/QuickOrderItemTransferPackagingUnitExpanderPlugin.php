@@ -72,7 +72,8 @@ class QuickOrderItemTransferPackagingUnitExpanderPlugin extends AbstractPlugin i
             return;
         }
 
-        $itemTransfer->setAmountSalesUnit($productMeausurementSalesUnitTransfer);
+        $itemTransfer->setAmountSaalesUnit($productMeausurementSalesUnitTransfer);
+        $itemTransfer->setQuantitySalesUnit($productMeausurementSalesUnitTransfer);
         $itemTransfer->setAmount(
             $productConcretePackagingStorageTransfer->getDefaultAmount() * $itemTransfer->getQuantity()
         );
