@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -26,4 +27,12 @@ interface ConcreteProductsReaderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
     public function findProductConcretesByProductConcreteSkus(array $productIds, RestRequestInterface $restRequest): array;
+
+    /**
+     * @param string $productConcreteSku
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     */
+    public function findOneByProductConcreteSku(string $productConcreteSku, RestRequestInterface $restRequest): ?RestResourceInterface;
 }

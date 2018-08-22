@@ -1,0 +1,59 @@
+<?php
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\WishlistsRestApi;
+
+use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
+use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+
+class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvider
+{
+    public const PROPEL_QUERY_WISHLIST = 'PROPEL_QUERY_WISHLIST';
+    public const PROPEL_QUERY_WISHLIST_ITEM = 'PROPEL_QUERY_WISHLIST_ITEM';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = $this->addWishlistPropelQuery($container);
+        $container = $this->addWishlistItemPropelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addWishlistPropelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_WISHLIST] = function () {
+            return SpyWishlistQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addWishlistItemPropelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_WISHLIST_ITEM] = function () {
+            return SpyWishlistItemQuery::create();
+        };
+
+        return $container;
+    }
+}
