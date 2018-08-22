@@ -13,8 +13,8 @@ interface QuickOrderItemTransferExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands provided ItemTransfer with additional data or replaces existing one
-     * - Will be executed before adding items into cart
+     * - Expands provided ItemTransfer with additional data or replaces existing one.
+     * - Will be executed before adding items into cart.
      *
      * @api
      *
@@ -22,5 +22,5 @@ interface QuickOrderItemTransferExpanderPluginInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function expand(ItemTransfer $itemTransfer);
+    public function expand(ItemTransfer $itemTransfer): ItemTransfer;
 }

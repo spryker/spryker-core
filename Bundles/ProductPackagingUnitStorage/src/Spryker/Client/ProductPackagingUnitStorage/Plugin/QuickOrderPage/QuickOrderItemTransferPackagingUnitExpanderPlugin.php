@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
 use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface;
 
@@ -62,8 +63,7 @@ class QuickOrderItemTransferPackagingUnitExpanderPlugin extends AbstractPlugin i
         ItemTransfer $itemTransfer,
         ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer,
         ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer
-    ): void
-    {
+    ): void {
         $productMeausurementSalesUnitTransfer = $this->getDefaultProductMeasurementSalesUnitTransfer((int)$productConcretePackagingStorageTransfer->getIdProduct());
 
         if ($productConcretePackagingStorageTransfer->getHasLeadProduct() !== true
@@ -72,7 +72,7 @@ class QuickOrderItemTransferPackagingUnitExpanderPlugin extends AbstractPlugin i
             return;
         }
 
-        $itemTransfer->setAmountSaalesUnit($productMeausurementSalesUnitTransfer);
+        $itemTransfer->setAmountSalesUnit($productMeausurementSalesUnitTransfer);
         $itemTransfer->setQuantitySalesUnit($productMeausurementSalesUnitTransfer);
         $itemTransfer->setAmount(
             $productConcretePackagingStorageTransfer->getDefaultAmount() * $itemTransfer->getQuantity()
@@ -84,7 +84,7 @@ class QuickOrderItemTransferPackagingUnitExpanderPlugin extends AbstractPlugin i
      *
      * @return bool
      */
-    protected function validateItemTransfer(ItemTransfer $itemTransfer)
+    protected function validateItemTransfer(ItemTransfer $itemTransfer): bool
     {
         return $itemTransfer->getIdProductAbstract() !== null
             && $itemTransfer->getProductConcrete() !== null
@@ -97,7 +97,7 @@ class QuickOrderItemTransferPackagingUnitExpanderPlugin extends AbstractPlugin i
      *
      * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer|null
      */
-    protected function extractProductConcretePackagingStorageTransfer(ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer, ProductConcreteTransfer $productConcreteTransfer)
+    protected function extractProductConcretePackagingStorageTransfer(ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer, ProductConcreteTransfer $productConcreteTransfer): ?ProductConcretePackagingStorageTransfer
     {
         if ($productAbstractPackagingStorageTransfer->getTypes() === null) {
             return null;
@@ -117,7 +117,7 @@ class QuickOrderItemTransferPackagingUnitExpanderPlugin extends AbstractPlugin i
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer|null
      */
-    protected function getDefaultProductMeasurementSalesUnitTransfer(int $idProduct)
+    protected function getDefaultProductMeasurementSalesUnitTransfer(int $idProduct): ?ProductMeasurementSalesUnitTransfer
     {
         $productMeausurementSalesUnitTransfers = $this->getFactory()
             ->getProductMeasurementUnitStorageClient()
