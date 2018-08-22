@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\WishlistsProductsResourceRelationship;
+namespace Spryker\Glue\WishlistItemsProductsResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\WishlistsProductsResourceRelationship\Dependency\RestResource\WishlistsProductsResourceRelationshipToProductsRestApiBridge;
+use Spryker\Glue\WishlistItemsProductsResourceRelationship\Dependency\RestResource\WishlistItemsProductsResourceRelationshipToProductsRestApiBridge;
 
-class WishlistsProductsResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
+class WishlistItemsProductsResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const RESOURCE_PRODUCTS = 'RESOURCE_PRODUCTS';
 
@@ -35,7 +35,7 @@ class WishlistsProductsResourceRelationshipDependencyProvider extends AbstractBu
     protected function addProductsResource(Container $container): Container
     {
         $container[static::RESOURCE_PRODUCTS] = function (Container $container) {
-            return new WishlistsProductsResourceRelationshipToProductsRestApiBridge(
+            return new WishlistItemsProductsResourceRelationshipToProductsRestApiBridge(
                 $container->getLocator()->productsRestApi()->resource()
             );
         };

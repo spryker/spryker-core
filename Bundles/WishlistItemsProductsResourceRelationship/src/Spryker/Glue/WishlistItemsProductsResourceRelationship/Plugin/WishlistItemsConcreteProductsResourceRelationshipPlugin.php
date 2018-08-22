@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\WishlistsProductsResourceRelationship\Plugin;
+namespace Spryker\Glue\WishlistItemsProductsResourceRelationship\Plugin;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\WishlistsProductsResourceRelationship\WishlistsProductsResourceRelationshipFactory getFactory()
+ * @method \Spryker\Glue\WishlistItemsProductsResourceRelationship\WishlistItemsProductsResourceRelationshipFactory getFactory()
  */
 class WishlistItemsConcreteProductsResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
-    protected const RELATIONSHIP_RESOURCE_TYPE = 'wishlist-items-concrete-products';
+    protected const RELATIONSHIP_RESOURCE_TYPE = 'wishlist-items-products';
 
     /**
      * {@inheritdoc}

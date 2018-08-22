@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\WishlistsProductsResourceRelationship;
+namespace Spryker\Glue\WishlistItemsProductsResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 
-class WishlistsProductsResourceRelationshipConfig extends AbstractBundleConfig
+class WishlistItemsProductsResourceRelationshipConfig extends AbstractBundleConfig
 {
 }
