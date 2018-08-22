@@ -10,6 +10,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/products-rest-api": "^1.0.0",
+    "spryker/tax-sets-rest-api": "^1.0.0",
     "spryker/testify": "*"
   },
   "suggest": {
