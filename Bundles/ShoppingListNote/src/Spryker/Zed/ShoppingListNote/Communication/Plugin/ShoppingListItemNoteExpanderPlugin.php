@@ -14,7 +14,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterf
 /**
  * @method \Spryker\Zed\ShoppingListNote\Business\ShoppingListNoteFacade getFacade()
  */
-class ShoppingListItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
+class ShoppingListItemNoteExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
      * {@inheritdoc}

@@ -213,7 +213,7 @@ class ShoppingListNoteFacadeTest extends Unit
         $this->assertNotNull($shoppingListItemNoteResponseTransfer->getIdShoppingListItemNote());
 
         // Arrange
-        $shoppingListItemNoteTransfer->setNote('');
+        $shoppingListItemNoteTransfer->setShoppingListItemNote('');
         $this->tester->getFacade()->saveShoppingListItemNote($shoppingListItemNoteTransfer);
 
         // Act
@@ -236,6 +236,6 @@ class ShoppingListNoteFacadeTest extends Unit
         $this->tester->getFacade()->expandShoppingListItem($shoppingListItemTransfer);
 
         // Assert
-        $this->assertNotNull($shoppingListItemTransfer->getNote());
+        $this->assertNotNull($shoppingListItemTransfer->getShoppingListItemNote());
     }
 }
