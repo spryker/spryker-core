@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductPackagingUnitStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToProductMeasurementUnitStorageClientInterface;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageClientInterface;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Service\ProductPackagingUnitStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageKeyGenerator;
@@ -47,5 +48,13 @@ class ProductPackagingUnitStorageFactory extends AbstractFactory
     public function getSynchronizationService(): ProductPackagingUnitStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToProductMeasurementUnitStorageClientInterface
+     */
+    public function getProductMeasurementUnitStorageClient(): ProductPackagingUnitStorageToProductMeasurementUnitStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE);
     }
 }
