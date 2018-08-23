@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\RestCategoriesTreeTransfer;
 interface CategoriesResourceMapperInterface
 {
     /**
-     * @param array $categoriesResource
+     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers
      *
      * @return \Generated\Shared\Transfer\RestCategoriesTreeTransfer
      */
-    public function mapCategoriesResourceToRestCategoriesTransfer(array $categoriesResource): RestCategoriesTreeTransfer;
+    public function mapCategoriesResourceToRestCategoriesTransfer(array $categoryNodeStorageTransfers): RestCategoriesTreeTransfer;
 }

@@ -55,7 +55,7 @@ class CategoriesReader implements CategoriesReaderInterface
     public function readCategoriesTree(string $locale): RestResponseInterface
     {
         $categoriesResource = $this->categoryStorageClient->getCategories($locale);
-        $categoriesTransfer = $this->categoriesResourceMapper
+        $restCategoriesTreeTransfer = $this->categoriesResourceMapper
             ->mapCategoriesResourceToRestCategoriesTransfer((array)$categoriesResource);
 
         $restResponse = $this->restResourceBuilder->createRestResponse();
@@ -64,7 +64,7 @@ class CategoriesReader implements CategoriesReaderInterface
             ->createRestResource(
                 CategoriesRestApiConfig::RESOURCE_CATEGORY_TREES,
                 null,
-                $categoriesTransfer
+                $restCategoriesTreeTransfer
             );
 
         return $restResponse->addResource($restResource);
@@ -76,18 +76,18 @@ class CategoriesReader implements CategoriesReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readCategory(int $nodeId, string $locale): RestResponseInterface
+    public function getCategory(int $nodeId, string $locale): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        $categoryResource = $this->categoryStorageClient->getCategoryNodeById($nodeId, $locale);
+        $categoryNodeStorageTransfer = $this->categoryStorageClient->getCategoryNodeById($nodeId, $locale);
 
-        if (empty($categoryResource->getNodeId())) {
+        if (empty($categoryNodeStorageTransfer->getNodeId())) {
             return $this->createErrorResponse($restResponse);
         }
 
-        $categoryTransfer = (new RestCategoryNodesAttributesTransfer())
+        $restCategoryNodesAttributesTransfer = (new RestCategoryNodesAttributesTransfer())
             ->fromArray(
-                $categoryResource->toArray(),
+                $categoryNodeStorageTransfer->toArray(),
                 true
             );
 
@@ -95,8 +95,8 @@ class CategoriesReader implements CategoriesReaderInterface
             ->restResourceBuilder
             ->createRestResource(
                 CategoriesRestApiConfig::RESOURCE_CATEGORY_NODES,
-                (string)$categoryTransfer->getNodeId(),
-                $categoryTransfer
+                (string)$restCategoryNodesAttributesTransfer->getNodeId(),
+                $restCategoryNodesAttributesTransfer
             );
 
         return $restResponse->addResource($restResource);
