@@ -24,6 +24,6 @@ class ProductCategoriesResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createCategoriesReader()
-            ->findProductCategoriesBySku($restRequest);
+            ->getProductCategoriesResourceBySku($restRequest);
     }
 }

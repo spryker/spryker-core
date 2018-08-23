@@ -35,7 +35,7 @@ class AbstractProductsCategoriesResourceRelationshipExpander implements Abstract
     {
         foreach ($resources as $resource) {
             $abstractCategoriesResource = $this->categoriesResource
-                ->findProductCategoriesBySku($restRequest);
+                ->getProductCategoriesResourceBySku($restRequest);
             if ($abstractCategoriesResource !== null) {
                 $resource->addRelationship($abstractCategoriesResource);
             }
