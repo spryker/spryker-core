@@ -76,12 +76,7 @@ class CartsWriter implements CartsWriterInterface
         $quoteResponseTransfer = $this->persistentCartClient->createQuote($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
-                ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
-                ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART);
-
-            return $response->addError($restErrorTransfer);
+            return $this->createFailedCreatingQuoteError($response);
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(
@@ -102,29 +97,22 @@ class CartsWriter implements CartsWriterInterface
         $response = $this->restResourceBuilder->createRestResponse();
         $idQuote = $restRequest->getResource()->getId();
         if ($idQuote === null) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_ID_MISSING)
-                ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ID_MISSING);
-
-            return $response->addError($restErrorTransfer);
+            return $this->createQuoteIdMissingError($response);
         }
 
         $quoteResponseTransfer = $this->cartsReader->getQuoteTransferByUuid($idQuote, $restRequest);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(sprintf(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_WITH_ID_NOT_FOUND, $idQuote));
-
-            return $response->addError($restErrorTransfer);
+            return $this->createQuoteNotFoundError($idQuote, $response);
         }
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->setCustomer($quoteResponseTransfer->getCustomer());
 
-        $this->persistentCartClient->deleteQuote($quoteTransfer);
+        $quoteResponseTransfer = $this->persistentCartClient->deleteQuote($quoteTransfer);
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->createFailedDeletingQuoteError($response);
+        }
 
         return $response;
     }
@@ -182,5 +170,66 @@ class CartsWriter implements CartsWriterInterface
     {
         return (new StoreTransfer())
             ->setName($restCartsAttributesTransfer->getStore());
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createQuoteIdMissingError(RestResponseInterface $response): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_ID_MISSING)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ID_MISSING);
+
+        return $response->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param string $idQuote
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createQuoteNotFoundError(string $idQuote, RestResponseInterface $response): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(sprintf(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_WITH_ID_NOT_FOUND, $idQuote));
+
+        return $response->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createFailedDeletingQuoteError(RestResponseInterface $response): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_QUOTE)
+            ->setStatus(Response::HTTP_ACCEPTED)
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_QUOTE);
+
+        return $response->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createFailedCreatingQuoteError(RestResponseInterface $response): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_CREATING_QUOTE)
+            ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART);
+
+        return $response->addError($restErrorTransfer);
     }
 }

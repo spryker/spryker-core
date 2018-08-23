@@ -117,6 +117,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     protected function setTotals(QuoteTransfer $quoteTransfer, RestCartsAttributesTransfer $restCartsAttributesTransfer): void
     {
         if ($quoteTransfer->getTotals() === null) {
+            $restCartsAttributesTransfer->setTotals(new RestCartsTotalsTransfer());
             return;
         }
 
