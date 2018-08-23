@@ -17,14 +17,6 @@ class MinimumOrderValueConfig extends AbstractBundleConfig
     protected const PRICE_MODE_NET = 'NET_MODE';
 
     /**
-     * @return \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface[]
-     */
-    public function getMinimumOrderValueStrategies(): array
-    {
-        return [];
-    }
-
-    /**
      * @return string
      */
     public function getNetPriceMode(): string

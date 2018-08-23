@@ -15,9 +15,9 @@ class MinimumOrderValueTypeInstaller implements MinimumOrderValueTypeInstallerIn
     use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface[]
+     * @var \Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueStrategyPluginInterface[]
      */
-    protected $minimumOrderValueStrategies;
+    protected $minimumOrderValueStrategyPlugins;
 
     /**
      * @var \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface
@@ -25,14 +25,14 @@ class MinimumOrderValueTypeInstaller implements MinimumOrderValueTypeInstallerIn
     protected $minimumOrderValueEntityManager;
 
     /**
-     * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface[] $minimumOrderValueStrategies
+     * @param \Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueStrategyPluginInterface[] $minimumOrderValueStrategyPlugins
      * @param \Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueEntityManagerInterface $minimumOrderValueEntityManager
      */
     public function __construct(
-        array $minimumOrderValueStrategies,
+        array $minimumOrderValueStrategyPlugins,
         MinimumOrderValueEntityManagerInterface $minimumOrderValueEntityManager
     ) {
-        $this->minimumOrderValueStrategies = $minimumOrderValueStrategies;
+        $this->minimumOrderValueStrategyPlugins = $minimumOrderValueStrategyPlugins;
         $this->minimumOrderValueEntityManager = $minimumOrderValueEntityManager;
     }
 
@@ -51,7 +51,7 @@ class MinimumOrderValueTypeInstaller implements MinimumOrderValueTypeInstallerIn
      */
     protected function executeInstallTransaction(): void
     {
-        foreach ($this->minimumOrderValueStrategies as $minimumOrderValueStrategy) {
+        foreach ($this->minimumOrderValueStrategyPlugins as $minimumOrderValueStrategy) {
             $this->minimumOrderValueEntityManager->saveMinimumOrderValueType(
                 $minimumOrderValueStrategy->toTransfer()
             );

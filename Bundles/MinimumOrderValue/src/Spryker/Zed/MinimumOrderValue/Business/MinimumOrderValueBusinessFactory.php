@@ -47,7 +47,7 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     public function createMinimumOrderValueTypeInstaller(): MinimumOrderValueTypeInstallerInterface
     {
         return new MinimumOrderValueTypeInstaller(
-            $this->getConfig()->getMinimumOrderValueStrategies(),
+            $this->getMinimumOrderValueStrategyPlugins(),
             $this->getEntityManager()
         );
     }
@@ -122,7 +122,7 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     public function createMinimumOrderValueStrategyResolver(): MinimumOrderValueStrategyResolverInterface
     {
         return new MinimumOrderValueStrategyResolver(
-            $this->getConfig()->getMinimumOrderValueStrategies()
+            $this->getMinimumOrderValueStrategyPlugins()
         );
     }
 
@@ -190,5 +190,13 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     public function getMessengerFacade(): MinimumOrderValueToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueStrategyPluginInterface[]
+     */
+    public function getMinimumOrderValueStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::PLUGINS_MINIMUM_ORDER_VALUE_STRATEGY);
     }
 }
