@@ -62,7 +62,7 @@ class ComposerJsonUpdaterConsole extends Console
             $modifiedModules[] = $processedModule;
         }
 
-        $text = $isDryRun ? ' need(s) updating.': 'updated.';
+        $text = $isDryRun ? ' need(s) updating.' : 'updated.';
         $this->output->writeln(sprintf('%s of %s module(s) ' . $text, count($modifiedModules), count($processedModules)));
 
         if ($this->input->getOption(static::VERBOSE)) {
@@ -80,6 +80,6 @@ class ComposerJsonUpdaterConsole extends Console
             $this->output->writeln(sprintf('Please run `%s` locally without dry-run.', $command));
         }
 
-        return count($modifiedModules) < 1 ? static::CODE_SUCCESS  : static::CODE_ERROR;
+        return count($modifiedModules) < 1 ? static::CODE_SUCCESS : static::CODE_ERROR;
     }
 }

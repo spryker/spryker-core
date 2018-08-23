@@ -25,7 +25,7 @@ class ProductPackagingUnitEntityManager extends AbstractEntityManager implements
     ): ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeEntity = $this->getFactory()
             ->createProductPackagingUnitTypeQuery()
-            ->filterByName($productPackagingUnitTypeTransfer->getName())
+            ->filterByIdProductPackagingUnitType($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType())
             ->findOneOrCreate();
 
         $productPackagingUnitTypeEntity->fromArray($productPackagingUnitTypeTransfer->modifiedToArray());
@@ -34,5 +34,21 @@ class ProductPackagingUnitEntityManager extends AbstractEntityManager implements
         $productPackagingUnitTypeTransfer->fromArray($productPackagingUnitTypeEntity->toArray(), true);
 
         return $productPackagingUnitTypeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return bool
+     */
+    public function deleteProductPackagingUnitType(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): bool {
+        $productPackagingUnitTypeTransfer->requireIdProductPackagingUnitType();
+
+        return $this->getFactory()
+                ->createProductPackagingUnitTypeQuery()
+                ->filterByIdProductPackagingUnitType($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType())
+                ->delete() > 0;
     }
 }

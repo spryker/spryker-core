@@ -161,12 +161,14 @@ class ProductOptionListTable extends AbstractTable
      *          ]
      *  ]
      *
+     * First level keys are product option value ids,
+     *   second level keys are price mode identifiers,
+     *   third level keys are simple numerical indexes for each price,
+     *   values are formatted prices with symbol.
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueCollection
      *
-     * @return string[] First level keys are product option value ids,
-     *                  second level keys are price mode identifiers,
-     *                  third level keys are simple numerical indexes for each price,
-     *                  values are formatted prices with symbol.
+     * @return array
      */
     protected function getPriceCollection(ObjectCollection $productOptionValueCollection)
     {
