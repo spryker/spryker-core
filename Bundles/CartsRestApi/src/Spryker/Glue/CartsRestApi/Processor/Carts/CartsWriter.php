@@ -212,7 +212,7 @@ class CartsWriter implements CartsWriterInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_QUOTE)
-            ->setStatus(Response::HTTP_ACCEPTED)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_QUOTE);
 
         return $response->addError($restErrorTransfer);

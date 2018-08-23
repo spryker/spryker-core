@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CartsRestApi\Processor\CartItems;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -149,7 +150,7 @@ class CartItemsWriter implements CartItemsWriterInterface
             return $this->createCartNotFoundError($idQuote, $restResponse);
         }
 
-        if ($this->cartClient->findQuoteItem($quoteResponseTransfer->getQuoteTransfer(), $sku, $itemIdentifier) === null) {
+        if ($this->findQuoteItem($quoteResponseTransfer, $sku, $itemIdentifier) === null) {
             return $this->createItemNotFoundError($itemIdentifier, $restResponse);
         }
 
@@ -199,7 +200,7 @@ class CartItemsWriter implements CartItemsWriterInterface
             return $this->createCartNotFoundError($idQuote, $restResponse);
         }
 
-        if ($this->cartClient->findQuoteItem($quoteResponseTransfer->getQuoteTransfer(), $sku, $itemIdentifier) === null) {
+        if ($this->findQuoteItem($quoteResponseTransfer, $sku, $itemIdentifier) === null) {
             return $this->createItemNotFoundError($itemIdentifier, $restResponse);
         }
 
@@ -303,5 +304,17 @@ class CartItemsWriter implements CartItemsWriterInterface
             ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ITEM_ID_MISSING);
 
         return $response->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param string $sku
+     * @param string $itemIdentifier
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    protected function findQuoteItem(QuoteResponseTransfer $quoteResponseTransfer, string $sku, string $itemIdentifier)
+    {
+        return $this->cartClient->findQuoteItem($quoteResponseTransfer->getQuoteTransfer(), $sku, $itemIdentifier);
     }
 }
