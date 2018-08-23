@@ -19,7 +19,7 @@ class CustomersAddressesReader implements CustomersAddressesReaderInterface
     protected $customerClient;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface
      */
     protected $addressesResourceMapper;
 

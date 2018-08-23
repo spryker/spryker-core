@@ -58,10 +58,20 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     public function findAddressByUuid($addressTransfer)
     {
         return $this->customerClient->findAddressByUuid($addressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function createAddress($addressTransfer)
+    {
+        return $this->customerClient->createAddress($addressTransfer);
     }
 }
