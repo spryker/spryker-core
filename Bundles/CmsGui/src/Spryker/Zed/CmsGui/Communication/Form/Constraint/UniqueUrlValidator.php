@@ -44,7 +44,7 @@ class UniqueUrlValidator extends ConstraintValidator
 
         if ($this->hasUrl($url, $constraint, $value->getIdCmsPage())) {
             $this->context
-                ->buildViolation(sprintf('Provided Url "%s" is already taken.', $url))
+                ->buildViolation(sprintf('Provided URL "%s" is already taken.', $url))
                 ->atPath('url')
                 ->addViolation();
         }
@@ -95,7 +95,7 @@ class UniqueUrlValidator extends ConstraintValidator
      * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $submittedPageAttributesTransfer
      * @param \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl $constraint
      *
-     * @return bool
+     * @return string
      */
     protected function buildUrl(CmsPageAttributesTransfer $submittedPageAttributesTransfer, UniqueUrl $constraint)
     {
