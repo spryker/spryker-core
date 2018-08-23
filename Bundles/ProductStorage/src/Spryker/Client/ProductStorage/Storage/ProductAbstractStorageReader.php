@@ -112,7 +112,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         $mappingKey = $this->getStorageKey($reference, $localeName);
         $mappingData = $this->storageClient->get($mappingKey);
 
-        if ($mappingData === null) {
+        if ($mappingData == null) {
             return null;
         }
 
