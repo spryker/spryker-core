@@ -332,19 +332,20 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
-     * @param \ArrayObject $shoppingListItemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $keyedProductConcreteTransfers
      *
      * @return \ArrayObject
      */
     protected function mapProductConcreteIdToShoppingListItem(ArrayObject $shoppingListItemTransfers, array $keyedProductConcreteTransfers): ArrayObject
     {
-        array_walk($shoppingListItemTransfers, function (ShoppingListItemTransfer $shoppingListItemTransfer) use ($keyedProductConcreteTransfers) {
-            if (isset($keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()])) {
-                $idProduct = $keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()]->getIdProductConcrete();
-                $shoppingListItemTransfer->setIdProduct($idProduct);
+        foreach ($shoppingListItemTransfers as $shoppingListItemTransfer) {
+            if (!isset($keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()])) {
+                continue;
             }
-        });
+            $idProduct = $keyedProductConcreteTransfers[$shoppingListItemTransfer->getSku()]->getIdProductConcrete();
+            $shoppingListItemTransfer->setIdProduct($idProduct);
+        }
 
         return $shoppingListItemTransfers;
     }
