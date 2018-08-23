@@ -17,5 +17,12 @@ interface AddressesWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
+    public function createAddress(RestAddressAttributesTransfer $addressAttributesTransfer): RestResponseInterface;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestAddressAttributesTransfer $addressAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
     public function deleteAddress(RestAddressAttributesTransfer $addressAttributesTransfer): RestResponseInterface;
 }

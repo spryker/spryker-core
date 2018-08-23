@@ -37,6 +37,7 @@
     </transfer>
 
     <transfer name="RestAddressAttributes">
+        <property name="customerReference" type="string" />
         <property name="salutation" type="string" />
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
@@ -46,6 +47,7 @@
         <property name="zipCode" type="string" />
         <property name="city" type="string" />
         <property name="country" type="string" />
+        <property name="company" type="string" />
         <property name="phone" type="string" />
         <property name="isDefaultShipping" type="bool" />
         <property name="isDefaultBilling" type="bool" />

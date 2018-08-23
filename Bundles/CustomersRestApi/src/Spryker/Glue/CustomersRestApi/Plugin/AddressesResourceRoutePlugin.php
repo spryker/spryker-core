@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -28,6 +29,7 @@ class AddressesResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     {
         $resourceRouteCollection
             ->addGet('get', true)
+            ->addPost('post', true)
             ->addDelete('delete', true);
 
         return $resourceRouteCollection;
