@@ -82,10 +82,10 @@ class SystemUnderTestBootstrap
         $errorHandlerEnvironment = new ErrorHandlerEnvironment();
         $errorHandlerEnvironment->initialize();
 
-        if (self::APPLICATION_ZED === $application) {
+        if ($application === self::APPLICATION_ZED) {
             return $this->bootstrapZed();
         }
-        if (self::APPLICATION_YVES === $application) {
+        if ($application === self::APPLICATION_YVES) {
             return $this->bootstrapYves();
         }
     }
