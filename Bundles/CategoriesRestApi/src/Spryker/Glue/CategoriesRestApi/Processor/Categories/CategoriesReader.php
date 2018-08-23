@@ -100,10 +100,7 @@ class CategoriesReader implements CategoriesReaderInterface
             );
 
         if (!$productAbstractCategoryStorageTransfer) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CategoriesRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_CATEGORIES_ARE_MISSING)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(CategoriesRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_CATEGORIES_ARE_MISSING);
+            $restErrorTransfer = $this->createRestErrorTransfer();
 
             return $this->restResourceBuilder->createRestResource(
                 CategoriesRestApiConfig::RESOURCE_PRODUCT_CATEGORIES,
@@ -169,5 +166,16 @@ class CategoriesReader implements CategoriesReaderInterface
             ->setDetail(CategoriesRestApiConfig::RESPONSE_DETAILS_INVALID_CATEGORY_ID);
 
         return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createRestErrorTransfer(): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode(CategoriesRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_CATEGORIES_ARE_MISSING)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(CategoriesRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_CATEGORIES_ARE_MISSING);
     }
 }

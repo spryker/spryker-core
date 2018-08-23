@@ -19,9 +19,9 @@ class ProductCategoriesResourceController extends AbstractController
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function getAction(RestRequestInterface $restRequest): ?RestResourceInterface
+    public function getAction(RestRequestInterface $restRequest): RestResourceInterface
     {
         return $this->getFactory()
             ->createCategoriesReader()
