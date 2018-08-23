@@ -10,7 +10,7 @@ namespace Spryker\Zed\MinimumOrderValueGui;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeBridge;
-use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToLocaleBridge;
+use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToLocaleFacadeBridge;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMinimumOrderValueFacadeBridge;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMoneyFacadeBridge;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToStoreFacadeBridge;
@@ -105,7 +105,7 @@ class MinimumOrderValueGuiDependencyProvider extends AbstractBundleDependencyPro
     protected function addLocaleFacade(Container $container): Container
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
-            return new MinimumOrderValueGuiToLocaleBridge($container->getLocator()->locale()->facade());
+            return new MinimumOrderValueGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         };
 
         return $container;

@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValueGui\Dependency\Facade;
+namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade;
 
-interface MinimumOrderValueGuiToLocaleInterface
+interface MerchantRelationshipMinimumOrderValueGuiToLocaleFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer

@@ -7,30 +7,64 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Table;
 
+use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
+use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipTableMap;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
+use Orm\Zed\MerchantRelationshipMinimumOrderValue\Persistence\SpyMerchantRelationshipMinimumOrderValueQuery;
+use Orm\Zed\MinimumOrderValue\Persistence\Map\SpyMinimumOrderValueTypeTableMap;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class MerchantRelationshipMinimumOrderValueTable extends AbstractTable
 {
+    protected const REQUEST_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
+    protected const URL_MERCHANT_RELATIONSHIP_EDIT = '/merchant-relationship-minimum-order-value-gui/edit';
+
     protected const COL_ID_MERCHANT_RELATIONSHIP = SpyMerchantRelationshipTableMap::COL_ID_MERCHANT_RELATIONSHIP;
 
-    protected const COL_COMPANY_RELATION = 'Company name';
+    protected const COL_COMPANY_NAME = 'company_name';
+    protected const COL_MERCHANT_RELATIONSHIP_NAME = 'merchant_relationship_name';
+    protected const COL_BUSINESS_UNIT_NAME = 'business_unit_name';
+    protected const COL_THRESHOLDS = 'merchant_relationship_thresholds';
+    protected const COL_THRESHOLD_GROUP = 'threshold_group';
+    protected const COL_ACTIONS = 'actions';
 
-    protected const COL_ACTIONS = 'Actions';
+    /**
+     * @var \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
+     */
+    protected $propelMerchantRelationshipQuery;
+
+    /**
+     * @var \Orm\Zed\MerchantRelationshipMinimumOrderValue\Persistence\SpyMerchantRelationshipMinimumOrderValueQuery
+     */
+    protected $propelMerchantRelationshipMinimumOrderValueQuery;
+
+    /**
+     * @param \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery $propelMerchantRelationshipQuery
+     * @param \Orm\Zed\MerchantRelationshipMinimumOrderValue\Persistence\SpyMerchantRelationshipMinimumOrderValueQuery $propelMerchantRelationshipMinimumOrderValueQuery
+     */
+    public function __construct(
+        SpyMerchantRelationshipQuery $propelMerchantRelationshipQuery,
+        SpyMerchantRelationshipMinimumOrderValueQuery $propelMerchantRelationshipMinimumOrderValueQuery
+    ) {
+        $this->propelMerchantRelationshipQuery = $propelMerchantRelationshipQuery;
+        $this->propelMerchantRelationshipMinimumOrderValueQuery = $propelMerchantRelationshipMinimumOrderValueQuery;
+    }
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config = $this->setHeader($config);
 
+        $config->addRawColumn(static::COL_THRESHOLDS);
         $config->addRawColumn(static::COL_ACTIONS);
-        $config->addRawColumn(static::COL_COMPANY_RELATION);
 
         $config->setSortable([
             static::COL_ID_MERCHANT_RELATIONSHIP,
@@ -44,7 +78,7 @@ class MerchantRelationshipMinimumOrderValueTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $query = $this->prepareQuery();
         $queryResults = $this->runQuery($query, $config);
@@ -59,11 +93,22 @@ class MerchantRelationshipMinimumOrderValueTable extends AbstractTable
     }
 
     /**
+     * @uses MerchantRelationship
+     * @uses CompanyBusinessUnit
+     * @uses Merchant
+     * @uses Company
+     *
      * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
      */
     protected function prepareQuery(): SpyMerchantRelationshipQuery
     {
-        $query = SpyMerchantRelationshipQuery::create();
+        $query = $this->propelMerchantRelationshipQuery
+            ->joinWithCompanyBusinessUnit()
+            ->joinWithMerchant()
+            ->joinWith('CompanyBusinessUnit.Company')
+            ->withColumn(SpyCompanyBusinessUnitTableMap::COL_NAME, static::COL_BUSINESS_UNIT_NAME)
+            ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY_NAME)
+            ->withColumn("CONCAT(" . SpyMerchantTableMap::COL_NAME . ", ' ', " . SpyMerchantRelationshipTableMap::COL_MERCHANT_RELATIONSHIP_KEY . ")", static::COL_MERCHANT_RELATIONSHIP_NAME);
 
         return $query;
     }
@@ -76,13 +121,15 @@ class MerchantRelationshipMinimumOrderValueTable extends AbstractTable
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $baseData = [
-            static::COL_ID_MERCHANT_RELATIONSHIP => 'Company Unit Address Id',
-            static::COL_COMPANY_RELATION => 'Company',
+            static::COL_ID_MERCHANT_RELATIONSHIP => 'Id',
+            static::COL_COMPANY_NAME => 'Company name',
+            static::COL_BUSINESS_UNIT_NAME => 'BU name',
+            static::COL_MERCHANT_RELATIONSHIP_NAME => 'Merchant relationship name',
+            static::COL_THRESHOLDS => 'Thresholds',
+            static::COL_ACTIONS => 'Actions',
         ];
 
-        $actions = [static::COL_ACTIONS => static::COL_ACTIONS];
-
-        $config->setHeader($baseData + $actions);
+        $config->setHeader($baseData);
 
         return $config;
     }
@@ -96,12 +143,14 @@ class MerchantRelationshipMinimumOrderValueTable extends AbstractTable
     {
         $baseData = [
             static::COL_ID_MERCHANT_RELATIONSHIP => $item[static::COL_ID_MERCHANT_RELATIONSHIP],
-            static::COL_COMPANY_RELATION => $this->getCompanyName(),
+            static::COL_COMPANY_NAME => $item[static::COL_COMPANY_NAME],
+            static::COL_BUSINESS_UNIT_NAME => $item[static::COL_BUSINESS_UNIT_NAME],
+            static::COL_MERCHANT_RELATIONSHIP_NAME => $item[static::COL_MERCHANT_RELATIONSHIP_NAME],
+            static::COL_THRESHOLDS => $this->prepareMerchantRelationshipThresholds($item[static::COL_ID_MERCHANT_RELATIONSHIP]),
+            static::COL_ACTIONS => $this->buildLinks($item),
         ];
 
-        $actions = [static::COL_ACTIONS => $this->buildLinks($item)];
-
-        return $baseData + $actions;
+        return $baseData;
     }
 
     /**
@@ -109,18 +158,46 @@ class MerchantRelationshipMinimumOrderValueTable extends AbstractTable
      *
      * @return string
      */
-    protected function buildLinks(array $item)
+    protected function buildLinks(array $item): string
     {
         $buttons = [];
+
+        $urlParams = [static::REQUEST_ID_MERCHANT_RELATIONSHIP => $item[static::COL_ID_MERCHANT_RELATIONSHIP]];
+        $buttons[] = $this->generateEditButton(
+            Url::generate(static::URL_MERCHANT_RELATIONSHIP_EDIT, $urlParams),
+            'Edit'
+        );
 
         return implode(' ', $buttons);
     }
 
     /**
+     * @uses MinimumOrderValue
+     * @uses MerchantRelationshipMinimumOrderValue
+     *
+     * @param int $idMerchantRelationship
+     *
      * @return string
      */
-    protected function getCompanyName(): string
+    protected function prepareMerchantRelationshipThresholds(int $idMerchantRelationship): string
     {
-        return '';
+        $query = clone $this->propelMerchantRelationshipMinimumOrderValueQuery;
+        $thresholds = $query
+            ->joinWithMinimumOrderValueType()
+            ->filterByFkMerchantRelationship($idMerchantRelationship)
+            ->withColumn(SpyMinimumOrderValueTypeTableMap::COL_THRESHOLD_GROUP, static::COL_THRESHOLD_GROUP)
+            ->find()
+            ->toArray();
+
+        if (empty($thresholds)) {
+            return '';
+        }
+
+        $resultThresholds = [];
+        foreach ($thresholds as $threshold) {
+            $resultThresholds[$threshold[static::COL_THRESHOLD_GROUP]] = "<span class='minimum-order-value-label'>" . $threshold[static::COL_THRESHOLD_GROUP] . "</span>";
+        }
+
+        return implode('', $resultThresholds);
     }
 }

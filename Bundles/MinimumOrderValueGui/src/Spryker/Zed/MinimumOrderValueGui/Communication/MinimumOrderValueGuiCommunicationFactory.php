@@ -22,6 +22,7 @@ use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalThresholdMa
 use Spryker\Zed\MinimumOrderValueGui\Communication\StoreCurrency\StoreCurrencyFinder;
 use Spryker\Zed\MinimumOrderValueGui\Communication\StoreCurrency\StoreCurrencyFinderInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface;
+use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToLocaleFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMinimumOrderValueFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMoneyFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToStoreFacadeInterface;
@@ -152,9 +153,9 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
-     * @return \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToLocaleInterface
+     * @return \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToLocaleFacadeInterface
      */
-    public function getLocaleFacade()
+    public function getLocaleFacade(): MinimumOrderValueGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(MinimumOrderValueGuiDependencyProvider::FACADE_LOCALE);
     }

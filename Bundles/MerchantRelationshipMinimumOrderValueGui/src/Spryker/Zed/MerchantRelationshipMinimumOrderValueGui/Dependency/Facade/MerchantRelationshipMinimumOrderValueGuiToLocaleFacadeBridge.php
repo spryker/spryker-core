@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValueGui\Dependency\Facade;
+namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade;
 
-class MinimumOrderValueGuiToLocaleBridge implements MinimumOrderValueGuiToLocaleInterface
+class MerchantRelationshipMinimumOrderValueGuiToLocaleFacadeBridge implements MerchantRelationshipMinimumOrderValueGuiToLocaleFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
