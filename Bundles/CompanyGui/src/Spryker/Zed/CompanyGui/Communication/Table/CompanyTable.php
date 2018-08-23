@@ -31,7 +31,7 @@ class CompanyTable extends AbstractTable
     public const URL_COMPANY_EDIT = '/company-gui/edit-company/index?id-company=%d';
 
     /**
-     * @var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     * @var \Orm\Zed\Company\Persistence\SpyCompanyQuery
      */
     protected $companyQuery;
 
