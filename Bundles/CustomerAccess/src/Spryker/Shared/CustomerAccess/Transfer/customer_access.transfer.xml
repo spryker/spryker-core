@@ -8,7 +8,7 @@
     </transfer>
 
     <transfer name="ContentTypeAccess">
-        <property name="idUnauthenticatedCustomerAccess" type="integer" />
+        <property name="idUnauthenticatedCustomerAccess" type="int" />
         <property name="contentType" type="string" />
         <property name="isRestricted" type="bool" />
     </transfer>
