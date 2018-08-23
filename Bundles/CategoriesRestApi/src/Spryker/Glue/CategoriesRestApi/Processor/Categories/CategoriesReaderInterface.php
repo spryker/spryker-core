@@ -23,5 +23,5 @@ interface CategoriesReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readCategory(int $nodeId, string $locale): RestResponseInterface;
+    public function getCategory(int $nodeId, string $locale): RestResponseInterface;
 }

@@ -65,7 +65,7 @@ class CategoriesRestApiResourceReaderTest extends Unit
     {
         $categoriesReader = $this->createCategoriesReader($this->getCategoryTransfer());
 
-        $categoriesTreeRestResponse = $categoriesReader->readCategory($this->categoryNodeData['node_id'], static::DE_LOCALE);
+        $categoriesTreeRestResponse = $categoriesReader->getCategory($this->categoryNodeData['node_id'], static::DE_LOCALE);
 
         $this->assertInstanceOf('\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface', $categoriesTreeRestResponse);
         $this->assertEmpty($categoriesTreeRestResponse->getErrors());
@@ -93,8 +93,8 @@ class CategoriesRestApiResourceReaderTest extends Unit
     {
         $categoriesReader = $this->createCategoriesReader($this->getCategoryEmptyTransfer());
 
-        $categoriesReader->readCategory($this->categoryNodeData['node_id'], static::DE_LOCALE);
-        $categoriesTreeRestResponse = $categoriesReader->readCategory($this->categoryNodeData['node_id'], static::DE_LOCALE);
+        $categoriesReader->getCategory($this->categoryNodeData['node_id'], static::DE_LOCALE);
+        $categoriesTreeRestResponse = $categoriesReader->getCategory($this->categoryNodeData['node_id'], static::DE_LOCALE);
 
         $this->assertInstanceOf('\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface', $categoriesTreeRestResponse);
         $this->assertNotEmpty($categoriesTreeRestResponse->getErrors());
@@ -173,5 +173,12 @@ class CategoriesRestApiResourceReaderTest extends Unit
         );
 
         return $categoriesReader;
+    }
+
+    /**
+     * @return void
+     */
+    public function fetchDependencies()
+    {
     }
 }

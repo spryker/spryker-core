@@ -13,17 +13,17 @@ use Generated\Shared\Transfer\RestCategoryTreesAttributesTransfer;
 class CategoriesResourceMapper implements CategoriesResourceMapperInterface
 {
     /**
-     * @param array $categoriesResource
+     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers
      *
      * @return \Generated\Shared\Transfer\RestCategoriesTreeTransfer
      */
-    public function mapCategoriesResourceToRestCategoriesTransfer(array $categoriesResource): RestCategoriesTreeTransfer
+    public function mapCategoriesResourceToRestCategoriesTransfer(array $categoryNodeStorageTransfers): RestCategoriesTreeTransfer
     {
         $rootCategories = new ArrayObject();
-        foreach ($categoriesResource as $categoriesResourceItem) {
+        foreach ($categoryNodeStorageTransfers as $categoryNodeStorageTransfer) {
             $categoriesResourceTransfer = (new RestCategoryTreesAttributesTransfer())
                 ->fromArray(
-                    $categoriesResourceItem->toArray(),
+                    $categoryNodeStorageTransfer->toArray(),
                     true
                 );
             $rootCategories->append($categoriesResourceTransfer);
