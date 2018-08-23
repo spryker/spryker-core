@@ -124,4 +124,11 @@ class CategoriesRestApiResourceMapperTest extends Unit
 
         return $children;
     }
+
+    /**
+     * @return void
+     */
+    public function fetchDependencies()
+    {
+    }
 }
