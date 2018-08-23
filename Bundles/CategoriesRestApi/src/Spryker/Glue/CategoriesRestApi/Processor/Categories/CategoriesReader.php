@@ -91,12 +91,13 @@ class CategoriesReader implements CategoriesReaderInterface
     public function findProductCategoriesBySku(RestRequestInterface $restRequest): ?RestResourceInterface
     {
         $abstractSku = $restRequest->getResource()->getId();
-        $categoriesResource = $this->productCategoryResourceAliasStorageClient->findProductCategoryAbstractStorageTransfer(
-            $abstractSku,
-            $restRequest->getMetadata()->getLocale()
-        );
+        $productAbstractCategoryStorageTransfer = $this->productCategoryResourceAliasStorageClient
+            ->findProductCategoryAbstractStorageTransfer(
+                $abstractSku,
+                $restRequest->getMetadata()->getLocale()
+            );
 
-        if (!$categoriesResource) {
+        if (!$productAbstractCategoryStorageTransfer) {
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(CategoriesRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_CATEGORIES_ARE_MISSING)
                 ->setStatus(Response::HTTP_NOT_FOUND)
@@ -110,7 +111,7 @@ class CategoriesReader implements CategoriesReaderInterface
         }
 
         $categoriesTransfer = $this->categoriesResourceMapper
-            ->mapProductCategoriesToRestProductCategoriesTransfer((array)$categoriesResource->getCategories());
+            ->mapProductCategoriesToRestProductCategoriesTransfer($productAbstractCategoryStorageTransfer);
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CategoriesRestApiConfig::RESOURCE_PRODUCT_CATEGORIES,

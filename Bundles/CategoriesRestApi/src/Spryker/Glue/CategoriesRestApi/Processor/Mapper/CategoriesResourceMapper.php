@@ -7,6 +7,7 @@
 namespace Spryker\Glue\CategoriesRestApi\Processor\Mapper;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 use Generated\Shared\Transfer\RestCategoriesTreeTransfer;
 use Generated\Shared\Transfer\RestCategoryTreesAttributesTransfer;
 use Generated\Shared\Transfer\RestProductCategoriesAttributesTransfer;
@@ -34,15 +35,15 @@ class CategoriesResourceMapper implements CategoriesResourceMapperInterface
     }
 
     /**
-     * @param array $productCategoriesResource
+     * @param \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer $productAbstractCategoryStorageTransfer
      *
      * @return \Generated\Shared\Transfer\RestProductCategoriesTreeTransfer
      */
-    public function mapProductCategoriesToRestProductCategoriesTransfer(array $productCategoriesResource): RestProductCategoriesTreeTransfer
+    public function mapProductCategoriesToRestProductCategoriesTransfer(ProductAbstractCategoryStorageTransfer $productAbstractCategoryStorageTransfer): RestProductCategoriesTreeTransfer
     {
         $productCategories = new RestProductCategoriesTreeTransfer();
 
-        foreach ($productCategoriesResource as $productCategoriesResourceItem) {
+        foreach ((array)$productAbstractCategoryStorageTransfer->getCategories() as $productCategoriesResourceItem) {
             $productCategoriesResourceTransfer = (new RestProductCategoriesAttributesTransfer())
                 ->fromArray($productCategoriesResourceItem->toArray(), true);
             $productCategories->addProductCategoriesStorage($productCategoriesResourceTransfer);
