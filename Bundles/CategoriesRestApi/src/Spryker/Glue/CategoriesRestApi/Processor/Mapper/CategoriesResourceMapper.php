@@ -43,7 +43,7 @@ class CategoriesResourceMapper implements CategoriesResourceMapperInterface
     {
         $productCategories = new RestProductCategoriesTreeTransfer();
 
-        foreach ((array)$productAbstractCategoryStorageTransfer->getCategories() as $productCategoriesResourceItem) {
+        foreach ($productAbstractCategoryStorageTransfer->getCategories() as $productCategoriesResourceItem) {
             $productCategoriesResourceTransfer = (new RestProductCategoriesAttributesTransfer())
                 ->fromArray($productCategoriesResourceItem->toArray(), true);
             $productCategories->addProductCategoriesStorage($productCategoriesResourceTransfer);
