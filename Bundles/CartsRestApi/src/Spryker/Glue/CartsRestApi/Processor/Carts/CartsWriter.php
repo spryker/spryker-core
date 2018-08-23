@@ -71,12 +71,12 @@ class CartsWriter implements CartsWriterInterface
         RestRequestInterface $restRequest,
         RestCartsAttributesTransfer $restCartsAttributesTransfer
     ): RestResponseInterface {
-        $response = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->restResourceBuilder->createRestResponse();
         $quoteTransfer = $this->createQuoteTransfer($restCartsAttributesTransfer, $restRequest);
         $quoteResponseTransfer = $this->persistentCartClient->createQuote($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createFailedCreatingQuoteError($response);
+            return $this->createFailedCreatingQuoteError($restResponse);
         }
 
         $restResource = $this->cartsResourceMapper->mapCartsResource(
@@ -84,7 +84,7 @@ class CartsWriter implements CartsWriterInterface
             $restRequest
         );
 
-        return $response->addResource($restResource);
+        return $restResponse->addResource($restResource);
     }
 
     /**
@@ -94,16 +94,16 @@ class CartsWriter implements CartsWriterInterface
      */
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $response = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->restResourceBuilder->createRestResponse();
         $idQuote = $restRequest->getResource()->getId();
         if ($idQuote === null) {
-            return $this->createQuoteIdMissingError($response);
+            return $this->createQuoteIdMissingError($restResponse);
         }
 
         $quoteResponseTransfer = $this->cartsReader->getQuoteTransferByUuid($idQuote, $restRequest);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createQuoteNotFoundError($idQuote, $response);
+            return $this->createQuoteNotFoundError($idQuote, $restResponse);
         }
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
@@ -111,10 +111,10 @@ class CartsWriter implements CartsWriterInterface
 
         $quoteResponseTransfer = $this->persistentCartClient->deleteQuote($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createFailedDeletingQuoteError($response);
+            return $this->createFailedDeletingQuoteError($restResponse);
         }
 
-        return $response;
+        return $restResponse;
     }
 
     /**

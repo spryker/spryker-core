@@ -62,13 +62,13 @@ class CartsReader implements CartsReaderInterface
         $quoteResponseTransfer = $this->getQuoteTransferByUuid($idQuote, $restRequest);
 
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
-            $response = $this->restResourceBuilder->createRestResponse();
+            $restResponse = $this->restResourceBuilder->createRestResponse();
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
                 ->setStatus(Response::HTTP_NOT_FOUND)
                 ->setDetail(sprintf("Cart with id '%s' not found.", $idQuote));
 
-            return $response->addError($restErrorTransfer);
+            return $restResponse->addError($restErrorTransfer);
         }
 
         return $this->getRestResponse($restRequest, $quoteResponseTransfer);
@@ -83,17 +83,17 @@ class CartsReader implements CartsReaderInterface
     {
         $quoteCollectionTransfer = $this->getCustomerQuotes($restRequest);
 
-        $response = $this->restResourceBuilder->createRestResponse(count($quoteCollectionTransfer->getQuotes()));
+        $restResponse = $this->restResourceBuilder->createRestResponse(count($quoteCollectionTransfer->getQuotes()));
         if (count($quoteCollectionTransfer->getQuotes()) === 0) {
-            return $response;
+            return $restResponse;
         }
 
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             $cartResource = $this->cartsResourceMapper->mapCartsResource($quoteTransfer, $restRequest);
-            $response->addResource($cartResource);
+            $restResponse->addResource($cartResource);
         }
 
-        return $response;
+        return $restResponse;
     }
 
     /**
@@ -147,13 +147,13 @@ class CartsReader implements CartsReaderInterface
         RestRequestInterface $restRequest,
         QuoteResponseTransfer $quoteResponseTransfer
     ): RestResponseInterface {
-        $response = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->restResourceBuilder->createRestResponse();
         $cartResource = $this->cartsResourceMapper->mapCartsResource(
             $quoteResponseTransfer->getQuoteTransfer(),
             $restRequest
         );
-        $response->addResource($cartResource);
+        $restResponse->addResource($cartResource);
 
-        return $response;
+        return $restResponse;
     }
 }

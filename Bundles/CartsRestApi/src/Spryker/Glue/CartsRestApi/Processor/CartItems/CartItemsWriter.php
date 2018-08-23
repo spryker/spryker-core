@@ -174,6 +174,9 @@ class CartItemsWriter implements CartItemsWriterInterface
 
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
         $this->cartClient->removeItem($sku, $itemIdentifier);
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->createFailedDeletingQuoteItemError($restResponse);
+        }
 
         return $restResponse;
     }
@@ -238,9 +241,9 @@ class CartItemsWriter implements CartItemsWriterInterface
      *
      * @throws \Spryker\Glue\CartsRestApi\Exception\CartsRestApiException
      *
-     * @return int
+     * @return string
      */
-    protected function getCartIdentifier(RestResourceInterface $cartsResource): int
+    protected function getCartIdentifier(RestResourceInterface $cartsResource): string
     {
         $idQuote = $cartsResource->getId();
         if ($idQuote === null) {
@@ -330,5 +333,20 @@ class CartItemsWriter implements CartItemsWriterInterface
             ->setDetail($exception->getMessage());
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createFailedDeletingQuoteItemError(RestResponseInterface $response): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_FAILED_DELETING_QUOTE_ITEM)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_FAILED_DELETING_QUOTE_ITEM);
+
+        return $response->addError($restErrorTransfer);
     }
 }
