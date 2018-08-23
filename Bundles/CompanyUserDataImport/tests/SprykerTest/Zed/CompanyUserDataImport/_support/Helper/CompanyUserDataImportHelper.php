@@ -17,8 +17,6 @@ class CompanyUserDataImportHelper extends Module
 
     protected const ERROR_MESSAGE_EXPECTED = 'Expected at least one entry in the database table `%s` but table is empty.';
 
-    protected const ERROR_MESSAGE_EXPECTED_COUNT = 'Expected exactly %d entries in the database table `%s`, but found %d.';
-
     /**
      * @return void
      */

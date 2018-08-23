@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\CompanyUserDataImport\Communication\Plugin\DataImport;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
@@ -31,6 +30,10 @@ use Spryker\Zed\CompanyUserDataImport\CompanyUserDataImportConfig;
  */
 class CompanyUserDataImportPluginTest extends Unit
 {
+    protected const COMPANY_KEY = 'Test_ltd';
+    protected const COMPANY_BUSINESS_UNIT_KEY_1 = 'Test_HQ';
+    protected const COMPANY_BUSINESS_UNIT_KEY_2 = 'Test_Department';
+
     /**
      * @var \SprykerTest\Zed\CompanyUserDataImport\CompanyUserDataImportCommunicationTester
      */
@@ -74,24 +77,26 @@ class CompanyUserDataImportPluginTest extends Unit
      */
     protected function prepareTestData(): void
     {
-        $this->tester->haveRegisteredCustomer([
-            CustomerTransfer::CUSTOMER_REFERENCE => 'REF--1',
+        $this->tester->haveCustomer([
+            SpyCustomerEntityTransfer::CUSTOMER_REFERENCE => 'DE--8',
         ]);
 
-        $this->tester->haveRegisteredCustomer([
-            SpyCustomerEntityTransfer::CUSTOMER_REFERENCE => 'REF--2',
+        $this->tester->haveCustomer([
+            SpyCustomerEntityTransfer::CUSTOMER_REFERENCE => 'DE--9',
         ]);
 
-        $this->tester->haveCompany([
-            SpyCompanyEntityTransfer::KEY => 'Test_ltd',
-        ]);
-
-        $this->tester->haveCompanyBusinessUnit([
-            SpyCompanyBusinessUnitEntityTransfer::KEY => 'Test_HQ',
+        $companyTransfer = $this->tester->haveCompany([
+            SpyCompanyEntityTransfer::KEY => static::COMPANY_KEY,
         ]);
 
         $this->tester->haveCompanyBusinessUnit([
-            SpyCompanyBusinessUnitEntityTransfer::KEY => 'Test_Department',
+            SpyCompanyBusinessUnitEntityTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY_1,
+            SpyCompanyBusinessUnitEntityTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+
+        $this->tester->haveCompanyBusinessUnit([
+            SpyCompanyBusinessUnitEntityTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY_2,
+            SpyCompanyBusinessUnitEntityTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
     }
 }
