@@ -12,6 +12,9 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollect
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
+/**
+ * @method \Spryker\Glue\CustomersRestApi\CustomersRestApiFactory getFactory()
+ */
 class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
@@ -26,7 +29,8 @@ class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addGet('get', true);
+            ->addGet('get', true)
+            ->addPost('post', false);
 
         return $resourceRouteCollection;
     }
