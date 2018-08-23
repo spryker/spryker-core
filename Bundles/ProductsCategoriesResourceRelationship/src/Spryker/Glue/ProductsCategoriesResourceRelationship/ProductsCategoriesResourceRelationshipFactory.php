@@ -22,9 +22,9 @@ class ProductsCategoriesResourceRelationshipFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Mapper\AbstractProductsCategoriesResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Expander\AbstractProductsCategoriesResourceRelationshipExpanderInterface
      */
-    public function createAbstractProductsCategoriesResourceRelationshipMapper(): AbstractProductsCategoriesResourceRelationshipExpanderInterface
+    public function createAbstractProductsCategoriesResourceRelationshipExpander(): AbstractProductsCategoriesResourceRelationshipExpanderInterface
     {
         return new AbstractProductsCategoriesResourceRelationshipExpander($this->getCategoriesResource());
     }
