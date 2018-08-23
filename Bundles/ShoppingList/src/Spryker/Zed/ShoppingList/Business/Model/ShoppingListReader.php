@@ -284,7 +284,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
     {
         foreach ($shoppingListItemCollectionTransfer->getItems() as $item) {
             $idProduct = $this->productFacade->findProductConcreteIdBySku($item->getSku());
+            $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteSku($item->getSku());
             $item->setIdProduct($idProduct);
+            $item->setIdProductAbstract($idProductAbstract);
 
             foreach ($this->itemExpanderPlugins as $itemExpanderPlugin) {
                 $item = $itemExpanderPlugin->expandItem($item);

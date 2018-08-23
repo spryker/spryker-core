@@ -20,6 +20,14 @@
         <property name="isOrdered" type="bool" />
     </transfer>
 
+    <transfer name="ProductOptionCollection">
+        <property name="productOptions" type="ProductOption[]" singular="productOption" />
+    </transfer>
+
+    <transfer name="ProductOptionCriteria">
+        <property name="ProductOptionIds" type="array" />
+    </transfer>
+
     <transfer name="Item">
         <property name="idProductAbstract" type="int" />
         <property name="IdSalesOrderItem" type="int" />
