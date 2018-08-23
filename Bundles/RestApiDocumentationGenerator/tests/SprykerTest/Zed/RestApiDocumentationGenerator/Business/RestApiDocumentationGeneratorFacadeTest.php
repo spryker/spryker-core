@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\RestApiDocumentationGenerator\Business;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\RestApiDocumentationGeneratorFacade;
+use Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfig;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -23,7 +25,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class RestApiDocumentationGeneratorFacadeTest extends Unit
 {
-    protected const GENERATED_FILE_NAME = 'spryker_rest_api.schema.yml';
+    protected const GENERATED_FILE_NAME_PATTERN = '*.schema.yml';
 
     /**
      * @var \SprykerTest\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorFacadeTester
@@ -52,8 +54,9 @@ class RestApiDocumentationGeneratorFacadeTest extends Unit
     {
         $this->swaggerGeneratorFacade->generateOpenApiSpecification();
 
-        $this->assertFileExists(static::GENERATED_FILE_NAME);
-        $this->assertFileIsWritable(static::GENERATED_FILE_NAME);
+        $finder = new Finder();
+        $finder->in($this->getConfig()->getTargetDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
+        $this->assertCount(1, $finder);
     }
 
     /**
@@ -62,9 +65,21 @@ class RestApiDocumentationGeneratorFacadeTest extends Unit
     public function testGenerateShouldCreateValidYamlFileThatCanBeParsedToArray(): void
     {
         $this->swaggerGeneratorFacade->generateOpenApiSpecification();
-        $parsedFile = Yaml::parseFile(static::GENERATED_FILE_NAME);
+        $finder = new Finder();
+        $finder->in($this->getConfig()->getTargetDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
 
-        $this->assertInternalType('array', $parsedFile);
+        foreach ($finder as $fileInfo) {
+            $parsedFile = Yaml::parseFile($fileInfo->getPathname());
+            $this->assertInternalType('array', $parsedFile);
+        }
+    }
+
+    /**
+     * @return \Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfig
+     */
+    protected function getConfig(): RestApiDocumentationGeneratorConfig
+    {
+        return new RestApiDocumentationGeneratorConfig();
     }
 
     /**
@@ -72,10 +87,14 @@ class RestApiDocumentationGeneratorFacadeTest extends Unit
      */
     protected function tearDown(): void
     {
-        parent::tearDown();
-
-        if (file_exists(static::GENERATED_FILE_NAME)) {
-            unlink(static::GENERATED_FILE_NAME);
+        $finder = new Finder();
+        $finder->in($this->getConfig()->getTargetDirectory())->name(static::GENERATED_FILE_NAME_PATTERN);
+        if ($finder->count() > 0) {
+            foreach ($finder as $fileInfo) {
+                unlink($fileInfo->getPathname());
+            }
         }
+
+        parent::tearDown();
     }
 }

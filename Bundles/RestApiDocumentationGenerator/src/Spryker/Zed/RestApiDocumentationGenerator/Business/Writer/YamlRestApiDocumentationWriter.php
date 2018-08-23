@@ -14,7 +14,7 @@ use Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfi
 class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterface
 {
     protected const GENERATED_FILE_POSTFIX = '.schema.yml';
-    protected const GENERATED_FILE_PERMISSIONS = '0775';
+    protected const TARGET_DIRECTORY_PERMISSIONS = 0775;
 
     protected const OPENAPI_VERSION = '3.0.0';
 
@@ -115,7 +115,7 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
             $targetDirectory .= '/';
         }
 
-        if (!is_dir($targetDirectory) && !mkdir($targetDirectory, static::GENERATED_FILE_PERMISSIONS, true) && !is_dir($targetDirectory)) {
+        if (!is_dir($targetDirectory) && !mkdir($targetDirectory, static::TARGET_DIRECTORY_PERMISSIONS, true) && !is_dir($targetDirectory)) {
             throw new FileNotCreatedException('Unable to create directory.');
         }
 
