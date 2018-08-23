@@ -42,8 +42,13 @@ class CategoriesResourceMapper implements CategoriesResourceMapperInterface
     public function mapProductCategoriesToRestProductCategoriesTransfer(ProductAbstractCategoryStorageTransfer $productAbstractCategoryStorageTransfer): RestProductCategoriesTreeTransfer
     {
         $productCategories = new RestProductCategoriesTreeTransfer();
+        $productCategoriesResource = $productAbstractCategoryStorageTransfer->getCategories();
 
-        foreach ($productAbstractCategoryStorageTransfer->getCategories() as $productCategoriesResourceItem) {
+        if ($productCategoriesResource === null) {
+            return $productCategories;
+        }
+
+        foreach ($productCategoriesResource as $productCategoriesResourceItem) {
             $productCategoriesResourceTransfer = (new RestProductCategoriesAttributesTransfer())
                 ->fromArray($productCategoriesResourceItem->toArray(), true);
             $productCategories->addProductCategoriesStorage($productCategoriesResourceTransfer);

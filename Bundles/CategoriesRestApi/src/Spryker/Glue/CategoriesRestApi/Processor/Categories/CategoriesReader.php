@@ -90,7 +90,9 @@ class CategoriesReader implements CategoriesReaderInterface
      */
     public function getProductCategoriesResourceBySku(RestRequestInterface $restRequest): RestResourceInterface
     {
+        /** @var string $abstractSku */
         $abstractSku = $restRequest->getResource()->getId();
+
         $productAbstractCategoryStorageTransfer = $this->productCategoryResourceAliasStorageClient
             ->findProductCategoryAbstractStorageTransfer(
                 $abstractSku,
