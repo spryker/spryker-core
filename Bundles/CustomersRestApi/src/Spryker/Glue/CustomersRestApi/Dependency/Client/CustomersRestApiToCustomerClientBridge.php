@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
@@ -40,7 +41,7 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findCustomerByReference($customerTransfer)
+    public function findCustomerByReference(CustomerTransfer $customerTransfer): ?CustomerTransfer
     {
         return $this->customerClient->findCustomerByReference($customerTransfer);
     }
@@ -50,7 +51,7 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
-    public function getAddresses($customerTransfer)
+    public function getAddresses(CustomerTransfer $customerTransfer)
     {
         return $this->customerClient->getAddresses($customerTransfer);
     }
@@ -60,7 +61,7 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findAddressByUuid($addressTransfer)
+    public function findAddressByUuid(AddressTransfer $addressTransfer): ?AddressTransfer
     {
         return $this->customerClient->findAddressByUuid($addressTransfer);
     }
@@ -70,7 +71,7 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function createAddress($addressTransfer)
+    public function createAddress(AddressTransfer $addressTransfer)
     {
         return $this->customerClient->createAddress($addressTransfer);
     }
@@ -80,7 +81,7 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function updateCustomer($customerTransfer)
+    public function updateCustomer(CustomerTransfer $customerTransfer)
     {
         return $this->customerClient->updateCustomer($customerTransfer);
     }
