@@ -60,6 +60,18 @@
         <property name="lastPage" type="int"/>
     </transfer>
 
+    <transfer name="CompanyBusinessUnitTreeItem">
+        <property name="fkParentCompanyBusinessUnit" type="int"/>
+        <property name="children" type="CompanyBusinessUnitTree"/>
+        <property name="level" type="int"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitTree">
+        <property name="CompanyBusinessUnitTreeItems" type="CompanyBusinessUnitTreeItem[]"/>
+    </transfer>
+
     <transfer name="ResponseMessage">
         <property name="text" type="string"/>
     </transfer>
