@@ -29,4 +29,12 @@
         <property name="productImages" type="array" />
     </transfer>
 
+    <transfer name="ProductConcretePageSearch">
+        <property name="idProduct" type="int" />
+        <property name="name" type="string" />
+        <property name="sku" type="string" />
+        <property name="locale" type="string" />
+        <property name="store" type="string" />
+    </transfer>
+
 </transfers>
