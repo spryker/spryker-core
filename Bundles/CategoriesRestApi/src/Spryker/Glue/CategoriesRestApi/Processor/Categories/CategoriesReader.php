@@ -96,19 +96,26 @@ class CategoriesReader implements CategoriesReaderInterface
         );
 
         if (!$categoriesResource) {
-            return null;
+            $restErrorTransfer = (new RestErrorMessageTransfer())
+                ->setCode(CategoriesRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_CATEGORIES_ARE_MISSING)
+                ->setStatus(Response::HTTP_NOT_FOUND)
+                ->setDetail(CategoriesRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_CATEGORIES_ARE_MISSING);
+
+            return $this->restResourceBuilder->createRestResource(
+                CategoriesRestApiConfig::RESOURCE_PRODUCT_CATEGORIES,
+                $abstractSku,
+                $restErrorTransfer
+            );
         }
 
         $categoriesTransfer = $this->categoriesResourceMapper
             ->mapProductCategoriesToRestProductCategoriesTransfer((array)$categoriesResource->getCategories());
 
-        $restResource = $this
-            ->restResourceBuilder
-            ->createRestResource(
-                CategoriesRestApiConfig::RESOURCE_PRODUCT_CATEGORIES,
-                $abstractSku,
-                $categoriesTransfer
-            );
+        $restResource = $this->restResourceBuilder->createRestResource(
+            CategoriesRestApiConfig::RESOURCE_PRODUCT_CATEGORIES,
+            $abstractSku,
+            $categoriesTransfer
+        );
 
         return $restResource;
     }

@@ -26,6 +26,9 @@ class CategoriesRestApiConfig extends AbstractBundleConfig
     public const CONTROLLER_CATEGORY = 'category-resource';
     public const CONTROLLER_PRODUCT_CATEGORIES = 'product-categories-resource';
 
-    public const RESPONSE_CODE_INVALID_CATEGORY_ID = '501';
+    public const RESPONSE_CODE_INVALID_CATEGORY_ID = '701';
     public const RESPONSE_DETAILS_INVALID_CATEGORY_ID = 'Can\'t find category node with the given id.';
+
+    public const RESPONSE_CODE_ABSTRACT_PRODUCT_CATEGORIES_ARE_MISSING = '702';
+    public const RESPONSE_DETAIL_ABSTRACT_PRODUCT_CATEGORIES_ARE_MISSING = 'Can\'t find product categories by requested SKU.';
 }
