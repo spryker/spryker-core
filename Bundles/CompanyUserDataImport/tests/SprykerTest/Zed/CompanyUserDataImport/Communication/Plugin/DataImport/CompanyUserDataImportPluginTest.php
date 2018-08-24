@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyCompanyEntityTransfer;
 use Generated\Shared\Transfer\SpyCustomerEntityTransfer;
 use Spryker\Zed\CompanyUserDataImport\Communication\Plugin\DataImport\CompanyUserDataImportPlugin;
@@ -30,9 +29,8 @@ use Spryker\Zed\CompanyUserDataImport\CompanyUserDataImportConfig;
  */
 class CompanyUserDataImportPluginTest extends Unit
 {
+    protected const CUSTOMER_REFERENCE = 'DE--8';
     protected const COMPANY_KEY = 'Test_ltd';
-    protected const COMPANY_BUSINESS_UNIT_KEY_1 = 'Test_HQ';
-    protected const COMPANY_BUSINESS_UNIT_KEY_2 = 'Test_Department';
 
     /**
      * @var \SprykerTest\Zed\CompanyUserDataImport\CompanyUserDataImportCommunicationTester
@@ -78,25 +76,11 @@ class CompanyUserDataImportPluginTest extends Unit
     protected function prepareTestData(): void
     {
         $this->tester->haveCustomer([
-            SpyCustomerEntityTransfer::CUSTOMER_REFERENCE => 'DE--8',
-        ]);
-
-        $this->tester->haveCustomer([
-            SpyCustomerEntityTransfer::CUSTOMER_REFERENCE => 'DE--9',
+            SpyCustomerEntityTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE,
         ]);
 
         $companyTransfer = $this->tester->haveCompany([
             SpyCompanyEntityTransfer::KEY => static::COMPANY_KEY,
-        ]);
-
-        $this->tester->haveCompanyBusinessUnit([
-            SpyCompanyBusinessUnitEntityTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY_1,
-            SpyCompanyBusinessUnitEntityTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-        ]);
-
-        $this->tester->haveCompanyBusinessUnit([
-            SpyCompanyBusinessUnitEntityTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY_2,
-            SpyCompanyBusinessUnitEntityTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
     }
 }

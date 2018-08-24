@@ -26,5 +26,4 @@ suites:
              - \SprykerTest\Shared\Propel\Helper\TransactionHelper
              - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
              - \SprykerTest\Zed\Company\Helper\CompanyHelper
-             - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
              - \SprykerTest\Zed\CompanyUserDataImport\Helper\CompanyUserDataImportHelper

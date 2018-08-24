@@ -9,8 +9,6 @@ namespace Spryker\Zed\CompanyUserDataImport\Business\Model\CompanyUser;
 
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
-use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
-use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
@@ -33,7 +31,6 @@ class CompanyUserWriterStep extends PublishAwareStep implements DataImportStepIn
     {
         $idCustomer = $this->getIdCustomerByReference($dataSet[CompanyUserDataSetInterface::COLUMN_CUSTOMER_REFERENCE]);
         $idCompany = $this->getIdCompanyByKey($dataSet[CompanyUserDataSetInterface::COLUMN_COMPANY_KEY]);
-        $idCompanyBusinessUnit = $this->getIdCompanyBusinessUnitByKey($dataSet[CompanyUserDataSetInterface::COLUMN_BUSINESS_UNIT_KEY]);
 
         $companyUserEntity = SpyCompanyUserQuery::create()
             ->filterByKey($dataSet[CompanyUserDataSetInterface::COLUMN_COMPANY_USER_KEY])
@@ -42,7 +39,6 @@ class CompanyUserWriterStep extends PublishAwareStep implements DataImportStepIn
         $companyUserEntity
             ->setFkCustomer($idCustomer)
             ->setFkCompany($idCompany)
-            ->setFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->setIsDefault((bool)$dataSet[CompanyUserDataSetInterface::COLUMN_COMPANY_USER_KEY])
             ->save();
     }
@@ -88,26 +84,6 @@ class CompanyUserWriterStep extends PublishAwareStep implements DataImportStepIn
     }
 
     /**
-     * @param string $companyBusinessUnitKey
-     *
-     * @throws \Pyz\Zed\DataImport\Business\Exception\EntityNotFoundException
-     *
-     * @return int
-     */
-    protected function getIdCompanyBusinessUnitByKey(string $companyBusinessUnitKey): int
-    {
-        $idCompanyBusinessUnit = $this->getCompanyBusinessUnitQuery()
-            ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
-            ->findOneByKey($companyBusinessUnitKey);
-
-        if (!$idCompanyBusinessUnit) {
-            throw new EntityNotFoundException(sprintf('Could not find company business unit by key "%s"', $idCompanyBusinessUnit));
-        }
-
-        return $idCompanyBusinessUnit;
-    }
-
-    /**
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     protected function getCustomerQuery(): SpyCustomerQuery
@@ -121,13 +97,5 @@ class CompanyUserWriterStep extends PublishAwareStep implements DataImportStepIn
     protected function getCompanyQuery(): SpyCompanyQuery
     {
         return SpyCompanyQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
-     */
-    protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
-    {
-        return SpyCompanyBusinessUnitQuery::create();
     }
 }

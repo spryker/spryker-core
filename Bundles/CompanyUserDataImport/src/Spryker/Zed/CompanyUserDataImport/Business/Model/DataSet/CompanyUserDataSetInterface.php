@@ -12,6 +12,5 @@ interface CompanyUserDataSetInterface
     public const COLUMN_COMPANY_USER_KEY = 'company_user_key';
     public const COLUMN_CUSTOMER_REFERENCE = 'customer_reference';
     public const COLUMN_COMPANY_KEY = 'company_key';
-    public const COLUMN_BUSINESS_UNIT_KEY = 'business_unit_key';
     public const COLUMN_IS_DEFAULT = 'is_default';
 }
