@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException;
 use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
@@ -351,6 +352,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->queryAllNodesByCategoryId($idCategory)
+            ->orderByNodeOrder(Criteria::ASC)
             ->find();
     }
 
