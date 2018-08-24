@@ -29,4 +29,18 @@ class CompanyBusinessUnitDataImportFacade extends AbstractFacade implements Comp
     {
         return $this->getFactory()->createCompanyBusinessUnitDataImport()->import($dataImporterConfigurationTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importBusinessUnitUser(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    {
+        return $this->getFactory()->createCompanyBusinessUnitUserDataImport()->import($dataImporterConfigurationTransfer);
+    }
 }
