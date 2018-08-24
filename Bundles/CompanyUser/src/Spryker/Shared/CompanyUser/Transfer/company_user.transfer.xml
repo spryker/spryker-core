@@ -13,6 +13,7 @@
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
+        <property name="key" type="string"/>
         <property name="fkCompany" type="int"/>
         <property name="company" type="Company" />
         <property name="fkCustomer" type="int"/>
