@@ -13,10 +13,9 @@ use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
 use Spryker\Zed\CompanyRoleDataImport\Business\Model\DataSet\CompanyRoleDataSetInterface;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
-class CompanyRoleWriterStep extends PublishAwareStep implements DataImportStepInterface
+class CompanyRoleWriterStep implements DataImportStepInterface
 {
     /**
      * @module Company
