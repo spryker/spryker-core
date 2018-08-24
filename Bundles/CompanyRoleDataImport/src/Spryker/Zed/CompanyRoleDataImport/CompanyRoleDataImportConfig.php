@@ -13,6 +13,8 @@ use Spryker\Zed\DataImport\DataImportConfig;
 class CompanyRoleDataImportConfig extends DataImportConfig
 {
     public const IMPORT_TYPE_COMPANY_ROLE = 'company-role';
+    public const IMPORT_TYPE_COMPANY_ROLE_PERMISSION = 'company-role-permission';
+    public const IMPORT_TYPE_COMPANY_USER_ROLE = 'company-user-role';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
@@ -22,6 +24,28 @@ class CompanyRoleDataImportConfig extends DataImportConfig
         return $this->buildImporterConfiguration(
             implode(DIRECTORY_SEPARATOR, [$this->getModuleDataImportDirectory(), 'company_role.csv']),
             static::IMPORT_TYPE_COMPANY_ROLE
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    public function getCompanyRolePermissionDataImporterConfiguration(): DataImporterConfigurationTransfer
+    {
+        return $this->buildImporterConfiguration(
+            implode(DIRECTORY_SEPARATOR, [$this->getModuleDataImportDirectory(), 'company_role_permission.csv']),
+            static::IMPORT_TYPE_COMPANY_ROLE_PERMISSION
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    public function getCompanyUserRoleDataImporterConfiguration(): DataImporterConfigurationTransfer
+    {
+        return $this->buildImporterConfiguration(
+            implode(DIRECTORY_SEPARATOR, [$this->getModuleDataImportDirectory(), 'company_user_role.csv']),
+            static::IMPORT_TYPE_COMPANY_USER_ROLE
         );
     }
 

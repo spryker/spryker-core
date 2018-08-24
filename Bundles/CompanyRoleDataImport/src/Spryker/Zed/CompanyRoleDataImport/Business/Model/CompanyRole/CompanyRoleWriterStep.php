@@ -19,7 +19,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 class CompanyRoleWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
-     * @module CompanyRole
+     * @module Company
      *
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
