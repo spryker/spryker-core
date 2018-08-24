@@ -150,4 +150,36 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
             ->resolveMinimumOrderValueStrategy($minimumOrderValueThresholdTransfer->getMinimumOrderValueType()->getKey())
             ->isValid($minimumOrderValueThresholdTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addMinimumOrderValueThresholdsToQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteExpander()
+            ->addMinimumOrderValueThresholdsToQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addMinimumOrderValueThresholdCartInfoMessages(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createThresholdMessenger()
+            ->addMinimumOrderValueThresholdCartInfoMessages($quoteTransfer);
+    }
 }

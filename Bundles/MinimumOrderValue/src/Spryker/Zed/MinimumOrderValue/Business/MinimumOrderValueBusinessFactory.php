@@ -20,8 +20,12 @@ use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueWr
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueWriterInterface;
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueType\MinimumOrderValueTypeReader;
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueType\MinimumOrderValueTypeReaderInterface;
+use Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpander;
+use Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpanderInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolver;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
+use Spryker\Zed\MinimumOrderValue\Business\ThresholdMessenger\ThresholdMessenger;
+use Spryker\Zed\MinimumOrderValue\Business\ThresholdMessenger\ThresholdMessengerInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueGlossaryKeyGenerator;
 use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueGlossaryKeyGeneratorInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslationReader;
@@ -137,6 +141,28 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getMessengerFacade(),
             $this->getMoneyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpanderInterface
+     */
+    public function createQuoteExpander(): QuoteExpanderInterface
+    {
+        return new QuoteExpander(
+            $this->createThresholdDataSourceStrategy()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Business\ThresholdMessenger\ThresholdMessengerInterface
+     */
+    public function createThresholdMessenger(): ThresholdMessengerInterface
+    {
+        return new ThresholdMessenger(
+            $this->getMessengerFacade(),
+            $this->getMoneyFacade(),
+            $this->createQuoteExpander()
         );
     }
 

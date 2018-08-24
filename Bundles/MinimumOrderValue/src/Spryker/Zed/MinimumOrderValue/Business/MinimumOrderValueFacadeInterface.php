@@ -123,4 +123,28 @@ interface MinimumOrderValueFacadeInterface
     public function isThresholdValid(
         MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
     ): bool;
+
+    /**
+     * Specification:
+     * - Adds MinimumOrderValueThresholdTransfer collection to QuoteTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addMinimumOrderValueThresholdsToQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Adds threshold messages using the messenger.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addMinimumOrderValueThresholdCartInfoMessages(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }
