@@ -15,10 +15,9 @@ use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\CompanyUserDataImport\Business\Model\DataSet\CompanyUserDataSetInterface;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
-class CompanyUserWriterStep extends PublishAwareStep implements DataImportStepInterface
+class CompanyUserWriterStep implements DataImportStepInterface
 {
     /**
      * @module CompanyUser
