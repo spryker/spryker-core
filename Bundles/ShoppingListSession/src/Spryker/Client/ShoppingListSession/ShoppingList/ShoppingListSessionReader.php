@@ -9,9 +9,6 @@ namespace Spryker\Client\ShoppingListSession\ShoppingList;
 
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListSessionTransfer;
-use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListClientBridgeInterface;
-use Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutorInterface;
-use Spryker\Client\ShoppingListSession\Storage\ShoppingListSessionStorageInterface;
 
 class ShoppingListSessionReader implements ShoppingListSessionReaderInterface
 {
@@ -36,9 +33,9 @@ class ShoppingListSessionReader implements ShoppingListSessionReaderInterface
      * @param \Spryker\Client\ShoppingListSession\ShoppingListSessionPluginsExecutor\ShoppingListSessionPluginsExecutorInterface $shoppingListSessionPluginsExecutor
      */
     public function __construct(
-        ShoppingListSessionStorageInterface $shoppingListSessionStorage,
-        ShoppingListSessionToShoppingListClientBridgeInterface $shoppingListClient,
-        ShoppingListSessionPluginsExecutorInterface $shoppingListSessionPluginsExecutor
+        $shoppingListSessionStorage,
+        $shoppingListClient,
+        $shoppingListSessionPluginsExecutor
     ) {
         $this->shoppingListSessionStorage = $shoppingListSessionStorage;
         $this->shoppingListClient = $shoppingListClient;

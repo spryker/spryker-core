@@ -8,7 +8,6 @@
 namespace Spryker\Client\ShoppingListSession\Storage;
 
 use Generated\Shared\Transfer\ShoppingListSessionTransfer;
-use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface;
 
 class ShoppingListSessionSessionStorage implements ShoppingListSessionStorageInterface
 {
@@ -23,7 +22,7 @@ class ShoppingListSessionSessionStorage implements ShoppingListSessionStorageInt
      * @param \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface $sessionClient
      */
     public function __construct(
-        ShoppingListSessionToSessionClientBridgeInterface $sessionClient
+        $sessionClient
     ) {
         $this->sessionClient = $sessionClient;
     }
