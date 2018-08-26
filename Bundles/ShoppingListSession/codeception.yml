@@ -1,4 +1,6 @@
 namespace: ShoppingListSession
+include:
+    - tests/SprykerTest/Client/ShoppingListSession
 actor: Tester
 paths:
     tests: tests
