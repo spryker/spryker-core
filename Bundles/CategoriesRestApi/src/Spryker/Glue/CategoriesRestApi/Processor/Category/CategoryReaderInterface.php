@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CategoriesRestApi\Processor\Categories;
+namespace Spryker\Glue\CategoriesRestApi\Processor\Category;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-interface CategoriesReaderInterface
+interface CategoryReaderInterface
 {
     /**
      * @param string $locale
@@ -24,5 +24,5 @@ interface CategoriesReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCategory(int $nodeId, string $locale): RestResponseInterface;
+    public function getCategoryNode(int $nodeId, string $locale): RestResponseInterface;
 }
