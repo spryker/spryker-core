@@ -1,10 +1,12 @@
 parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
-
     ignoreErrors:
-    - '#Class .+HttpClient constructor invoked with 3 parameters, 5-7 required.#'
-    - '#Call to an undefined method .+AbstractBundleConfig::getYvesRequestRepeatDataFileName\(\).#'
-    - '#Call to an undefined method .+AbstractBundleConfig::getPathToYvesRequestRepeatData\(\).#'
+        - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::.+#'
+        - '#Call to an undefined method .+Criteria::.+\(\).#'
+        - '#Call to an undefined method .+SpyCategoryQuery\|.+SpyLocaleQuery::joinWithSpyProductAbstractStore\(\)#'
+        - '#Method .+ProductPageSearchQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\Criteria.#'
+        - '#Method .+ProductPageSearchQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
+        - '#Cannot access offset .+ on .+SpyCategoryNode.#'
 
 services:
     -
