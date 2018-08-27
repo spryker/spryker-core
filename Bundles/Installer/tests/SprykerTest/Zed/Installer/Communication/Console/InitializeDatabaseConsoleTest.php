@@ -31,6 +31,8 @@ class InitializeDatabaseConsoleTest extends Test
     /**
      * @dataProvider _classFullNameDataProvider
      *
+     * @uses InitializeDatabaseConsole::getPluginNameFromClass()
+     *
      * @param string $example
      *
      * @return void

@@ -7,10 +7,12 @@
     "spryker/kernel": "^3.0.0",
     "spryker/symfony": "^3.0.0"
   },
+  "require-dev": {
+    "spryker/testify": "*"
+  },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\Installer\\Helper\\": "tests/SprykerTest/Zed/Installer/_support/Helper/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
