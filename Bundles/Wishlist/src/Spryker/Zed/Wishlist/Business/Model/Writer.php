@@ -88,8 +88,7 @@ class Writer implements WriterInterface
         $wishlistEntity->fromArray($wishlistTransfer->toArray());
         $wishlistEntity->save();
 
-        $wishlistTransfer->setIdWishlist($wishlistEntity->getIdWishlist());
-        $wishlistTransfer->setUuid($wishlistEntity->getUuid());
+        $wishlistTransfer->fromArray($wishlistEntity->toArray());
 
         return $wishlistTransfer;
     }
