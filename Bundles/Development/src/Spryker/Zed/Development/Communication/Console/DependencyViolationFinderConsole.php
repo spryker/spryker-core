@@ -10,6 +10,7 @@ namespace Spryker\Zed\Development\Communication\Console;
 use ArrayObject;
 use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\ModuleDependencyTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableCell;
@@ -17,7 +18,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Zend\Filter\Word\DashToCamelCase;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
@@ -33,7 +33,7 @@ class DependencyViolationFinderConsole extends Console
     /**
      * @var array
      */
-    protected $moduleNames = [];
+    protected $moduleTransferCollection = [];
 
     /**
      * @var int
@@ -73,25 +73,30 @@ class DependencyViolationFinderConsole extends Console
 
         $this->startValidation($modulesToValidate, $dependencyType);
 
-        foreach ($modulesToValidate as $moduleToValidate) {
-            $this->validateModule($moduleToValidate, $output, $dependencyType);
+        foreach ($modulesToValidate as $moduleName => $moduleTransfer) {
+            if ($moduleTransfer->getIsStandalone()) {
+                $output->writeln(sprintf('<fg=yellow>%s</> is a standalone module and will be skipped.', $moduleTransfer->getName()));
+                $output->writeln('');
+                continue;
+            }
+            $this->validateModule($moduleTransfer, $output, $dependencyType);
         }
 
         return $this->endValidation();
     }
 
     /**
-     * @param string $moduleToValidate
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string|null $dependencyType
      *
      * @return void
      */
-    protected function validateModule(string $moduleToValidate, OutputInterface $output, ?string $dependencyType = null): void
+    protected function validateModule(ModuleTransfer $moduleTransfer, OutputInterface $output, ?string $dependencyType = null): void
     {
-        $this->startModuleValidation($moduleToValidate);
+        $this->startModuleValidation($moduleTransfer->getName());
 
-        $moduleDependencyTransferCollection = $this->getModuleDependencies($moduleToValidate, $dependencyType);
+        $moduleDependencyTransferCollection = $this->getModuleDependencies($moduleTransfer->getName(), $dependencyType);
 
         if ($output->isVerbose()) {
             $this->describeDependencies($moduleDependencyTransferCollection, $output, $dependencyType);
@@ -99,7 +104,7 @@ class DependencyViolationFinderConsole extends Console
 
         $moduleViolationCount = $this->getDependencyViolationCount($moduleDependencyTransferCollection, $dependencyType);
         if ($moduleViolationCount > 0) {
-            $this->printDependencyViolationErrors($moduleToValidate, $moduleDependencyTransferCollection, $output, $dependencyType);
+            $this->printDependencyViolationErrors($moduleTransfer->getName(), $moduleDependencyTransferCollection, $output, $dependencyType);
         }
 
         $this->dependencyViolationCount += $moduleViolationCount;
@@ -174,7 +179,7 @@ class DependencyViolationFinderConsole extends Console
      * @param string $moduleToValidate
      * @param string|null $dependencyType
      *
-     * @return \Generated\Shared\Transfer\ModuleDependencyTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ModuleDependencyTransfer[]
      */
     protected function getModuleDependencies(string $moduleToValidate, ?string $dependencyType = null): ArrayObject
     {
@@ -255,27 +260,26 @@ class DependencyViolationFinderConsole extends Console
      */
     protected function getModulesToCheckForViolations(InputInterface $input): array
     {
-        $modules = $this->getModuleNames();
+        $moduleTransferCollection = $this->getModuleTransferCollection();
         $module = $input->getArgument(static::ARGUMENT_MODULE);
+
         if ($module) {
-            $filter = new DashToCamelCase();
-            $filteredModuleName = ucfirst($filter->filter($module));
-            $modules = [$filteredModuleName];
+            $moduleTransferCollection = [$module => $moduleTransferCollection[$module]];
         }
 
-        return $modules;
+        return $moduleTransferCollection;
     }
 
     /**
      * @return array
      */
-    protected function getModuleNames(): array
+    protected function getModuleTransferCollection(): array
     {
-        if (!$this->moduleNames) {
-            $this->moduleNames = $this->getFacade()->getAllModules();
+        if (!$this->moduleTransferCollection) {
+            $this->moduleTransferCollection = $this->getFacade()->getModules();
         }
 
-        return $this->moduleNames;
+        return $this->moduleTransferCollection;
     }
 
     /**
@@ -299,9 +303,10 @@ class DependencyViolationFinderConsole extends Console
      */
     protected function isModuleNameValid(array $modulesToValidate): bool
     {
-        $moduleNames = $this->getModuleNames();
+        $moduleTransferCollection = $this->getModuleTransferCollection();
+        $currentModuleTransfer = current($modulesToValidate);
 
-        if (!in_array(current($modulesToValidate), $moduleNames)) {
+        if (!isset($moduleTransferCollection[$currentModuleTransfer->getName()])) {
             return false;
         }
 
@@ -323,7 +328,7 @@ class DependencyViolationFinderConsole extends Console
         $message = sprintf(
             'Checking %d %s for %sdependency issues.',
             count($modulesToValidate),
-            (count($modulesToValidate) === 1) ? 'Module <fg=yellow>' . current($modulesToValidate) . '</>' : 'Modules',
+            (count($modulesToValidate) === 1) ? 'Module <fg=yellow>' . current($modulesToValidate)->getName() . '</>' : 'Modules',
             $typeMessage
         );
         $this->info($message);
@@ -341,13 +346,13 @@ class DependencyViolationFinderConsole extends Console
     }
 
     /**
-     * @param string $moduleToValidate
+     * @param string $moduleName
      *
      * @return void
      */
-    protected function startModuleValidation(string $moduleToValidate): void
+    protected function startModuleValidation(string $moduleName): void
     {
-        $this->info(sprintf('Check dependencies in <fg=yellow>%s</> module', $moduleToValidate));
+        $this->info(sprintf('Check dependencies in <fg=yellow>%s</> module', $moduleName));
     }
 
     /**

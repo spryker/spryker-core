@@ -126,6 +126,7 @@ use Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerEcoModulePathBuilder;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerModulePathBuilder;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerShopModulePathBuilder;
+use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerStandAloneModulePathBuilder;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
 use Spryker\Zed\Development\Business\Phpstan\PhpstanRunner;
 use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidator;
@@ -237,10 +238,19 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createPathBuilder(): PathBuilderInterface
     {
         return new PathBuilderComposite([
+            $this->createSprykerStandAloneModuleFilePathBuilder(),
             $this->createSprykerModuleFilePathBuilder(),
             $this->createSprykerShopModuleFilePathBuilder(),
             $this->createSprykerEcoModuleFilePathBuilder(),
         ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface
+     */
+    public function createSprykerStandAloneModuleFilePathBuilder(): PathBuilderInterface
+    {
+        return new SprykerStandAloneModulePathBuilder();
     }
 
     /**
@@ -1195,6 +1205,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         $finderComposite = new ComposerJsonFinderComposite();
         $finderComposite->addFinder($this->createComposerJsonFinder());
+        $finderComposite->addFinder($this->createComposerJsonFinderStandAlone());
         $finderComposite->addFinder($this->createComposerJsonFinderSdk());
         $finderComposite->addFinder($this->createComposerJsonFinderShop());
 
@@ -1209,6 +1220,19 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         $composerJsonFinder = new ComposerJsonFinder(
             $this->createFinder(),
             $this->getConfig()->getPathToCore()
+        );
+
+        return $composerJsonFinder;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
+     */
+    protected function createComposerJsonFinderStandAlone()
+    {
+        $composerJsonFinder = new ComposerJsonFinder(
+            $this->createFinder(),
+            APPLICATION_VENDOR_DIR . '/spryker/'
         );
 
         return $composerJsonFinder;

@@ -66,6 +66,11 @@ class DependencyViolationFixConsole extends Console
         }
 
         foreach ($modulesToValidate as $moduleName => $moduleTransfer) {
+            if ($moduleTransfer->getIsStandalone()) {
+                $output->writeln(sprintf('<fg=yellow>%s</> is a standalone module and will be skipped.', $moduleTransfer->getName()));
+                $output->writeln('');
+                continue;
+            }
             $this->fixModuleDependencies($moduleName, $moduleTransfer, $output);
         }
     }
@@ -86,6 +91,9 @@ class DependencyViolationFixConsole extends Console
             $composerJsonFile = $moduleTransfer->getRootDirectory() . '/composer.json';
             $composerJsonContent = file_get_contents($composerJsonFile);
             $composerJsonArray = json_decode($composerJsonContent, true);
+
+            $output->writeln('');
+            $output->writeln(sprintf('Fixing dependencies in <fg=yellow>%s</>', $moduleToValidate));
 
             foreach ($moduleDependencyTransferCollection as $moduleDependencyTransfer) {
                 if ($moduleDependencyTransfer->getIsValid()) {
@@ -133,6 +141,8 @@ class DependencyViolationFixConsole extends Console
                     }
                 }
             }
+
+            $output->writeln(sprintf('Fixed dependencies in <fg=yellow>%s</>', $moduleToValidate));
 
             if ($this->input->getOption(static::OPTION_DRY_RUN)) {
                 return;
@@ -237,8 +247,9 @@ class DependencyViolationFixConsole extends Console
     protected function isModuleNameValid(array $modulesToValidate): bool
     {
         $moduleNames = $this->getModuleTransferCollection();
+        $currentModule = current($modulesToValidate);
 
-        if (!in_array(current($modulesToValidate), $moduleNames)) {
+        if (!isset($moduleNames[$currentModule->getName()])) {
             return false;
         }
 

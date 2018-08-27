@@ -104,6 +104,7 @@
         <property name="nameDashed" type="string"/>
         <property name="organization" type="Organization"/>
         <property name="rootDirectory" type="string"/>
+        <property name="isStandalone" type="bool"/>
     </transfer>
 
     <transfer name="Organization">

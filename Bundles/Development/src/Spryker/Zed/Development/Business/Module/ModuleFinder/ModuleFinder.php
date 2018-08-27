@@ -41,6 +41,8 @@ class ModuleFinder implements ModuleFinderInterface
         $moduleTransferCollection = $this->addStandAloneModulesToCollection($moduleTransferCollection);
         $moduleTransferCollection = $this->addModulesToCollection($moduleTransferCollection);
 
+        ksort($moduleTransferCollection);
+
         return $moduleTransferCollection;
     }
 
@@ -57,7 +59,10 @@ class ModuleFinder implements ModuleFinderInterface
             if (in_array($directoryInfo->getFilename(), ['spryker', 'spryker-shop'])) {
                 continue;
             }
-            $moduleTransferCollection = $this->addModuleTransfer($moduleTransferCollection, $directoryInfo);
+            $moduleTransfer = $this->getModuleTransfer($directoryInfo);
+            $moduleTransfer->setIsStandalone(true);
+
+            $moduleTransferCollection[$moduleTransfer->getName()] = $moduleTransfer;
         }
 
         return $moduleTransferCollection;
@@ -73,19 +78,20 @@ class ModuleFinder implements ModuleFinderInterface
         $moduleDirectories = (new Finder())->directories()->depth('== 0')->in($this->moduleDirectories);
 
         foreach ($moduleDirectories as $directoryInfo) {
-            $moduleTransferCollection = $this->addModuleTransfer($moduleTransferCollection, $directoryInfo);
+            $moduleTransfer = $this->getModuleTransfer($directoryInfo);
+
+            $moduleTransferCollection[$moduleTransfer->getName()] = $moduleTransfer;
         }
 
         return $moduleTransferCollection;
     }
 
     /**
-     * @param array $moduleTransferCollection
      * @param \Symfony\Component\Finder\SplFileInfo $directoryInfo
      *
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     * @return \Generated\Shared\Transfer\ModuleTransfer
      */
-    protected function addModuleTransfer(array $moduleTransferCollection, SplFileInfo $directoryInfo): array
+    protected function getModuleTransfer(SplFileInfo $directoryInfo): ModuleTransfer
     {
         $composerJsonAsArray = $this->getComposerJsonAsArray($directoryInfo);
         $organizationName = $this->getOrganizationNameFromComposer($composerJsonAsArray);
@@ -100,13 +106,12 @@ class ModuleFinder implements ModuleFinderInterface
         $moduleTransfer
             ->setName($this->camelCase($moduleName))
             ->setNameDashed($moduleName)
-            ->setRootDirectory($directoryInfo->getRealPath());
+            ->setRootDirectory($directoryInfo->getRealPath())
+            ->setIsStandalone(false);
 
         $moduleTransfer->setOrganization($organizationTransfer);
 
-        $moduleTransferCollection[$this->camelCase($moduleName)] = $moduleTransfer;
-
-        return $moduleTransferCollection;
+        return $moduleTransfer;
     }
 
     /**
