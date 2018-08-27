@@ -38,7 +38,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_CUSTOMER_PASSWORD = 'customer-password';
 
     public const RESPONSE_CODE_PASSWORDS_DONT_MATCH = '406';
-    public const RESPONSE_DETAILS_PASSWORDS_DONT_MATCH = 'Passwords don`t match.';
+    public const RESPONSE_DETAILS_PASSWORDS_DONT_MATCH = 'Passwords don\'t match.';
     public const RESPONSE_CODE_PASSWORD_CHANGE_FAILED = '407';
     public const RESPONSE_CODE_INVALID_PASSWORD = '408';
     public const RESPONSE_DETAILS_INVALID_PASSWORD = 'Invalid password';
