@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueFacade getFacade()
  */
-class RemoveMinimumOrderValueExpensesFromQuoteCalculationPlugin extends AbstractPlugin implements CalculationPluginInterface
+class AddMinimumOrderValueExpensesToQuoteCalculationPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -27,6 +27,6 @@ class RemoveMinimumOrderValueExpensesFromQuoteCalculationPlugin extends Abstract
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer): void
     {
-        $this->getFacade()->removeMinimumOrderValueExpensesFromQuote($calculableObjectTransfer);
+        $this->getFacade()->addMinimumOrderValueExpensesToQuote($calculableObjectTransfer);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
@@ -101,23 +102,6 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function cartMinimumOrderValuePostSave(
-        QuoteTransfer $quoteTransfer
-    ): QuoteTransfer {
-        return $this->getFactory()
-            ->createThresholdApplier()
-            ->applyOnQuote($quoteTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return bool
@@ -181,5 +165,37 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
         return $this->getFactory()
             ->createThresholdMessenger()
             ->addMinimumOrderValueThresholdCartInfoMessages($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function removeMinimumOrderValueExpensesFromQuote(CalculableObjectTransfer $calculableObjectTransfer): void
+    {
+        $this->getFactory()
+            ->createExpenseCalculator()
+            ->removeMinimumOrderValueExpensesFromQuote($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function addMinimumOrderValueExpensesToQuote(CalculableObjectTransfer $calculableObjectTransfer): void
+    {
+        $this->getFactory()
+            ->createExpenseCalculator()
+            ->addMinimumOrderValueExpensesToQuote($calculableObjectTransfer);
     }
 }

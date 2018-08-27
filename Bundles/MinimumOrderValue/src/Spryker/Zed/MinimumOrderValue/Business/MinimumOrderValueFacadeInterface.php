@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
@@ -77,22 +78,6 @@ interface MinimumOrderValueFacadeInterface
 
     /**
      * Specification:
-     * - Checks quote value/values against minimum order value soft thresholds.
-     * - Adds threshold messages using the messenger.
-     * - Adds the fees as Expenses to QuoteTransfer
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function cartMinimumOrderValuePostSave(
-        QuoteTransfer $quoteTransfer
-    ): QuoteTransfer;
-
-    /**
-     * Specification:
      * - Checks quote value/values against minimum order value hard thresholds.
      * - Also adds the messages to CheckoutResponseTransfer, if any
      *
@@ -147,4 +132,28 @@ interface MinimumOrderValueFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addMinimumOrderValueThresholdCartInfoMessages(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Removes minimum order value expenses from original quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function removeMinimumOrderValueExpensesFromQuote(CalculableObjectTransfer $calculableObjectTransfer): void;
+
+    /**
+     * Specification:
+     * - Adds minimum order value expenses to original quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function addMinimumOrderValueExpensesToQuote(CalculableObjectTransfer $calculableObjectTransfer): void;
 }

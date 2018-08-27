@@ -11,7 +11,10 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
+use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig as SharedMinimumOrderValueConfig;
+use Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpanderInterface;
+use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
+use Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig;
 
 class ExpenseCalculator implements ExpenseCalculatorInterface
 {
@@ -31,6 +34,21 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
     protected $config;
 
     /**
+     * @param \Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpanderInterface $quoteExpander
+     * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
+     * @param \Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig $config
+     */
+    public function __construct(
+        QuoteExpanderInterface $quoteExpander,
+        MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver,
+        MinimumOrderValueConfig $config
+    ) {
+        $this->quoteExpander = $quoteExpander;
+        $this->minimumOrderValueStrategyResolver = $minimumOrderValueStrategyResolver;
+        $this->config = $config;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
@@ -39,7 +57,7 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
     {
         $quoteTransfer = $calculableObjectTransfer->getOriginalQuote();
         foreach ($quoteTransfer->getExpenses() as $expenseOffset => $expenseTransfer) {
-            if ($expenseTransfer->getType() === MinimumOrderValueConfig::THRESHOLD_EXPENSE_TYPE) {
+            if ($expenseTransfer->getType() === SharedMinimumOrderValueConfig::THRESHOLD_EXPENSE_TYPE) {
                 $quoteTransfer->getExpenses()->offsetUnset($expenseOffset);
                 continue;
             }
@@ -61,7 +79,7 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
 
         $minimumOrderValueThresholdTransfers = $this->filterMinimumOrderValuesByThresholdGroup(
             $quoteTransfer->getMinimumOrderValueThresholds()->getArrayCopy(),
-            MinimumOrderValueConfig::GROUP_SOFT
+            SharedMinimumOrderValueConfig::GROUP_SOFT
         );
 
         foreach ($minimumOrderValueThresholdTransfers as $minimumOrderValueThresholdTransfer) {
@@ -154,12 +172,12 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
     ): ExpenseTransfer {
         $expenseTransfer = (new ExpenseTransfer())
             ->setName($minimumOrderValueThresholdTransfer->getMinimumOrderValueType()->getKey())
-            ->setType(MinimumOrderValueConfig::THRESHOLD_EXPENSE_TYPE)
+            ->setType(SharedMinimumOrderValueConfig::THRESHOLD_EXPENSE_TYPE)
             ->setUnitPrice($expensePrice)
             ->setSumPrice($expensePrice)
             ->setUnitPriceToPayAggregation($expensePrice)
             ->setSumPriceToPayAggregation($expensePrice)
-            ->setTaxRate(5) //MOST IMPORTANT PART..PAGE TO SET TAX SET FOR MOV AND QUERY TO RETRIEVE + SET TAX RATE
+            ->setTaxRate(5) //TODO: MOST IMPORTANT PART..PAGE TO SET TAX SET FOR MOV AND QUERY TO RETRIEVE + SET TAX RATE
             ->setQuantity(1);
 
         if ($priceMode === $this->config->getNetPriceMode()) {
