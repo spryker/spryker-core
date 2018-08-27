@@ -73,7 +73,7 @@ class AddressesWriter implements AddressesWriterInterface
 
         $addressTransfer = $this->customerClient->createAddress($addressTransfer);
 
-        if (!$addressTransfer) {
+        if (!$addressTransfer->getUuid()) {
             $response->addError($this->createErrorAddressNotSaved());
 
             return $response;

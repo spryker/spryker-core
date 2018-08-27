@@ -30,6 +30,17 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_ADDRESS_NOT_FOUND = '404';
     public const RESPONSE_DETAILS_ADDRESS_NOT_FOUND = 'Address was not found.';
 
-    public const RESPONSE_CODE_CUSTOMER_ADDRESS_FAILED_TO_SAVE = '407';
+    public const RESPONSE_CODE_CUSTOMER_REFERENCE_MISSING = '405';
+    public const RESPONSE_DETAILS_CUSTOMER_REFERENCE_MISSING = 'Customer reference is missing.';
+
+    public const RESOURCE_CUSTOMER_PASSWORD = 'customer-password';
+
+    public const RESPONSE_CODE_PASSWORDS_DONT_MATCH = '406';
+    public const RESPONSE_DETAILS_PASSWORDS_DONT_MATCH = 'Passwords don\'t match.';
+    public const RESPONSE_CODE_PASSWORD_CHANGE_FAILED = '407';
+    public const RESPONSE_CODE_INVALID_PASSWORD = '408';
+    public const RESPONSE_DETAILS_INVALID_PASSWORD = 'Invalid password';
+
+    public const RESPONSE_CODE_CUSTOMER_ADDRESS_FAILED_TO_SAVE = '409';
     public const RESPONSE_DETAILS_CUSTOMER_ADDRESS_FAILED_TO_SAVE = 'Failed to save customer address.';
 }
