@@ -138,10 +138,6 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
                 $companyUserTransfer->getIdCompanyUser()
             )->findOne();
 
-        if (!$companyUserEntityTransfer) {
-            return null;
-        }
-
         return $this->getFactory()
             ->createCompanyUserMapper()
             ->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntityTransfer);
