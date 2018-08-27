@@ -148,11 +148,34 @@ class DependencyViolationFixConsole extends Console
                 return;
             }
 
+            $composerJsonArray = $this->orderEntriesInComposerJsonArray($composerJsonArray);
+
             $modifiedComposerJson = json_encode($composerJsonArray, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
             $modifiedComposerJson = preg_replace(static::REPLACE_4_WITH_2_SPACES, '$1', $modifiedComposerJson) . PHP_EOL;
 
             file_put_contents($composerJsonFile, $modifiedComposerJson);
         }
+    }
+
+    /**
+     * @param array $composerJsonArray
+     *
+     * @return array
+     */
+    protected function orderEntriesInComposerJsonArray(array $composerJsonArray): array
+    {
+        $entriesToSort = ['require', 'require-dev', 'suggest'];
+        foreach ($entriesToSort as $keyToSort) {
+            if (isset($composerJsonArray[$keyToSort])) {
+                $arrayToSort = $composerJsonArray[$keyToSort];
+
+                ksort($arrayToSort);
+
+                $composerJsonArray[$keyToSort] = $arrayToSort;
+            }
+        }
+
+        return $composerJsonArray;
     }
 
     /**
