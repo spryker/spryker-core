@@ -39,7 +39,7 @@ class CustomersAddressesReader implements CustomersAddressesReaderInterface
      * @param string $customerReference
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function readByIdentifier(string $customerReference, RestResourceInterface $restResource): RestResourceInterface
     {

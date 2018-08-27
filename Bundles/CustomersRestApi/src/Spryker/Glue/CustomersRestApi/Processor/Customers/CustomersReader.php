@@ -80,4 +80,17 @@ class CustomersReader implements CustomersReaderInterface
 
         return $response;
     }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerByReference(string $customerReference): ?CustomerTransfer
+    {
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setCustomerReference($customerReference);
+
+        return $this->customerClient->findCustomerByReference($customerTransfer);
+    }
 }

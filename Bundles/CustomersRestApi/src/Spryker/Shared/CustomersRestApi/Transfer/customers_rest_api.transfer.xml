@@ -54,6 +54,12 @@
         <property name="isDefaultBilling" type="bool" />
     </transfer>
 
+    <transfer name="RestCustomerPasswordAttributes">
+        <property name="password" type="string" />
+        <property name="newPassword" type="string" />
+        <property name="confirmPassword" type="string" />
+    </transfer>
+
     <transfer name="Address">
         <property name="uuid" type="string" />
     </transfer>
