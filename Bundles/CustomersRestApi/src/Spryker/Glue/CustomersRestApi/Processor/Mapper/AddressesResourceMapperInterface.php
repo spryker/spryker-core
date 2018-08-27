@@ -32,12 +32,10 @@ interface AddressesResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestAddressAttributesTransfer $restAddressAttributesTransfer
-     * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function mapRestAddressAttributesTransferToAddressTransfer(
-        RestAddressAttributesTransfer $restAddressAttributesTransfer,
-        int $idCustomer
+        RestAddressAttributesTransfer $restAddressAttributesTransfer
     ): AddressTransfer;
 }

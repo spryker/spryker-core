@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomersRestApiToCustomerClientInterface
@@ -35,7 +36,7 @@ interface CustomersRestApiToCustomerClientInterface
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     public function findAddressByUuid($addressTransfer);
 
@@ -52,4 +53,11 @@ interface CustomersRestApiToCustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function updateCustomerPassword($customerTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function deleteAddress(AddressTransfer $addressTransfer);
 }
