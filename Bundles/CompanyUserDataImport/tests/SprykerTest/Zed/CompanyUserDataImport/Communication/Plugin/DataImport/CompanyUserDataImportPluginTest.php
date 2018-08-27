@@ -8,11 +8,11 @@
 namespace SprykerTest\Zed\CompanyUserDataImport\Communication\Plugin\DataImport;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use Generated\Shared\Transfer\SpyCompanyEntityTransfer;
-use Generated\Shared\Transfer\SpyCustomerEntityTransfer;
 use Spryker\Zed\CompanyUserDataImport\Communication\Plugin\DataImport\CompanyUserDataImportPlugin;
 use Spryker\Zed\CompanyUserDataImport\CompanyUserDataImportConfig;
 
@@ -104,15 +104,15 @@ class CompanyUserDataImportPluginTest extends Unit
     protected function prepareTestData(): void
     {
         $this->tester->haveCustomer([
-            SpyCustomerEntityTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE_1,
+            CustomerTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE_1,
         ]);
 
         $this->tester->haveCustomer([
-            SpyCustomerEntityTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE_2,
+            CustomerTransfer::CUSTOMER_REFERENCE => static::CUSTOMER_REFERENCE_2,
         ]);
 
         $companyTransfer = $this->tester->haveCompany([
-            SpyCompanyEntityTransfer::KEY => static::COMPANY_KEY,
+            CompanyTransfer::KEY => static::COMPANY_KEY,
         ]);
     }
 }
