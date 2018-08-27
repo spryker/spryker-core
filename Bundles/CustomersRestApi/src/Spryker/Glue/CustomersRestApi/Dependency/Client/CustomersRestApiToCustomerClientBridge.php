@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
@@ -83,6 +84,16 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
     public function updateCustomerPassword($customerTransfer)
     {
         return $this->customerClient->updateCustomerPassword($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function deleteAddress(AddressTransfer $addressTransfer)
+    {
+        return $this->customerClient->deleteAddress($addressTransfer);
     }
 
     /**

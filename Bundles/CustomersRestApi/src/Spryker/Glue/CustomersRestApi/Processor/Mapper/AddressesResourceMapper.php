@@ -70,16 +70,12 @@ class AddressesResourceMapper implements AddressesResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestAddressAttributesTransfer $restAddressAttributesTransfer
-     * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function mapRestAddressAttributesTransferToAddressTransfer(
-        RestAddressAttributesTransfer $restAddressAttributesTransfer,
-        int $idCustomer
+        RestAddressAttributesTransfer $restAddressAttributesTransfer
     ): AddressTransfer {
-        $addressTransfer = (new AddressTransfer())->fromArray($restAddressAttributesTransfer->toArray(), true);
-
-        return $addressTransfer->setFkCustomer($idCustomer);
+        return (new AddressTransfer())->fromArray($restAddressAttributesTransfer->toArray(), true);
     }
 }
