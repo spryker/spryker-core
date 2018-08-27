@@ -25,9 +25,6 @@ class EditCompanyBusinessUnitController extends AbstractController
      */
     protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';
 
-    protected const MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_UPDATE = 'Company Business Unit "%s" has been updated.';
-    protected const MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_UPDATE = 'Company Business Unit "%s" has not been updated.';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -53,10 +50,9 @@ class EditCompanyBusinessUnitController extends AbstractController
                 ->update($companyBusinessUnitTransfer);
 
             if (!$companyResponseTransfer->getIsSuccessful()) {
-                $this->addErrorMessage(sprintf(
-                    static::MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_UPDATE,
-                    $companyBusinessUnitTransfer->getName()
-                ));
+                foreach ($companyResponseTransfer->getMessages() as $message) {
+                    $this->addErrorMessage($message->getText());
+                }
 
                 return $this->viewResponse([
                     'form' => $form->createView(),
@@ -64,10 +60,9 @@ class EditCompanyBusinessUnitController extends AbstractController
                 ]);
             }
 
-            $this->addSuccessMessage(sprintf(
-                static::MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_UPDATE,
-                $companyBusinessUnitTransfer->getName()
-            ));
+            foreach ($companyResponseTransfer->getMessages() as $message) {
+                $this->addSuccessMessage($message->getText());
+            }
 
             return $this->redirectResponse($redirectUrl);
         }

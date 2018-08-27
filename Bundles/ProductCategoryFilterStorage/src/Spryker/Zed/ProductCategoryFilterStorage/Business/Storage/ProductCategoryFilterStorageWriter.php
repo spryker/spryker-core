@@ -33,8 +33,6 @@ class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorage
     protected $isSendingToQueue = true;
 
     /**
-     * ProductCategoryFilterStorageWriter constructor.
-     *
      * @param \Spryker\Zed\ProductCategoryFilterStorage\Persistence\ProductCategoryFilterStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductCategoryFilterStorage\Dependency\Service\ProductCategoryFilterStorageToUtilEncodingInterface $utilEncodingService
      * @param bool $isSendingToQueue

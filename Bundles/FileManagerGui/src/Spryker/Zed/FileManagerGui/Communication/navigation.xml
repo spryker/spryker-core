@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config>
+    <file-manager>
+        <label>File Manager</label>
+        <title>File Manager</title>
+        <icon>fa-file</icon>
+        <pages>
+            <tree>
+                <label>File Tree</label>
+                <title>File Tree</title>
+                <bundle>file-manager-gui</bundle>
+                <controller>directories-tree</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </tree>
+            <list>
+                <label>File List</label>
+                <title>File List</title>
+                <bundle>file-manager-gui</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </list>
+            <settings>
+                <label>MIME Type Settings</label>
+                <title>MIME Type Settings</title>
+                <bundle>file-manager-gui</bundle>
+                <controller>mime-type</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </settings>
+        </pages>
+    </file-manager>
+</config>

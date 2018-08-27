@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/ProductCategoryFilterStorage.svg)](https://travis-ci.org/spryker/ProductCategoryFilterStorage)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/ProductCategoryFilterStorage/badge.svg)](https://coveralls.io/github/spryker/ProductCategoryFilterStorage)
 
-{{ADD DESCRIPTION HERE}}
+Manages storage for product category filter entities.
 
 ## Installation
 
