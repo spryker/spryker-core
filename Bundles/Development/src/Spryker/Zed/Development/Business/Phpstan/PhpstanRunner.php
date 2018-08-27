@@ -84,6 +84,9 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $count = 0;
         $total = count($paths);
         $this->errorCount = 0;
+
+        asort($paths);
+
         foreach ($paths as $path => $configFilePath) {
             $resultCode |= $this->runCommand($path, $configFilePath, $input, $output);
             $count++;
@@ -283,7 +286,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         $vendor = $this->dasherize($namespace);
         $module = $this->dasherize($module);
-        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module;
+        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
         $paths = $this->addPath($paths, $path);
 
         return $paths;

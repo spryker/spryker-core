@@ -56,13 +56,7 @@ class ProductPackagingUnitSynchronizationDataPlugin extends AbstractPlugin imple
     {
         $synchronizationDataTransfers = [];
 
-        $productAbstractPackagingUnitTransfers = $this->getRepository()
-            ->findProductAbstractPackagingUnitStorageByProductAbstractIds($ids);
-
-        if (empty($ids)) {
-            $productAbstractPackagingUnitTransfers = $this->getRepository()
-                ->findAllProductAbstractPackagingUnitStorageEntities();
-        }
+        $productAbstractPackagingUnitTransfers = $this->getProductAbstractPackagingUnitStorageEntityTransfers($ids);
 
         foreach ($productAbstractPackagingUnitTransfers as $productAbstractPackagingUnitTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
@@ -72,6 +66,22 @@ class ProductPackagingUnitSynchronizationDataPlugin extends AbstractPlugin imple
         }
 
         return $synchronizationDataTransfers;
+    }
+
+    /**
+     * @param array $ids
+     *
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     */
+    protected function getProductAbstractPackagingUnitStorageEntityTransfers(array $ids = [])
+    {
+        if (empty($ids)) {
+            return $this->getRepository()
+                ->findAllProductAbstractPackagingUnitStorageEntities();
+        }
+
+        return $this->getRepository()
+            ->findProductAbstractPackagingUnitStorageByProductAbstractIds($ids);
     }
 
     /**
