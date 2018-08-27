@@ -31,7 +31,7 @@ class TemplateFunctionDependencyFinder implements TwigDependencyFinderInterface
             return $dependencyContainer;
         }
 
-        return $this->addFindings($context->getModule(), $matches, $dependencyContainer);
+        return $this->addFindings($context->getModule()->getName(), $matches, $dependencyContainer);
     }
 
     /**

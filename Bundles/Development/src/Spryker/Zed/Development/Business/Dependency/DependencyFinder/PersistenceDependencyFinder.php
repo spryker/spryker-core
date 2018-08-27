@@ -65,7 +65,7 @@ class PersistenceDependencyFinder implements DependencyFinderInterface
         $foreignIdColumnNames = $this->propelSchemaParser->getForeignColumnNames($context->getFileInfo());
 
         foreach ($foreignIdColumnNames as $foreignIdColumnName) {
-            $dependentModule = $this->propelSchemaParser->getModuleNameByForeignReference($foreignIdColumnName, $context->getModule());
+            $dependentModule = $this->propelSchemaParser->getModuleNameByForeignReference($foreignIdColumnName, $context->getModule()->getName());
             $dependencyContainer->addDependency(
                 $dependentModule,
                 $this->getType()

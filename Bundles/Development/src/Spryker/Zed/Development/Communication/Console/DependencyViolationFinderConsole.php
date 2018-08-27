@@ -75,7 +75,10 @@ class DependencyViolationFinderConsole extends Console
 
         $this->startValidation($modulesToValidate, $dependencyType);
 
-        foreach ($modulesToValidate as $moduleTransfer) {
+        foreach ($modulesToValidate as $index => $moduleTransfer) {
+            if (!$this->isNamespacedModuleName($index)) {
+                continue;
+            }
             if ($moduleTransfer->getIsStandalone()) {
                 $output->writeln(sprintf('<fg=yellow>%s</> is a standalone module and will be skipped.', $moduleTransfer->getName()));
                 $output->writeln('');
