@@ -108,7 +108,7 @@ class DependencyViolationFixConsole extends Console
                 $validationMessagesTransferCollection = $moduleDependencyTransfer->getValidationMessages();
                 foreach ($validationMessagesTransferCollection as $validationMessageTransfer) {
                     if (ValidationRuleInterface::ADD_REQUIRE === $validationMessageTransfer->getFixType()) {
-                        $composerJsonArray['require'][$moduleNameToFix] = '"*"';
+                        $composerJsonArray['require'][$moduleNameToFix] = '*';
                         if ($output->isVerbose()) {
                             $output->writeln(sprintf('<fg=green>%s</> added to require', $moduleNameToFix));
                         }
@@ -134,7 +134,7 @@ class DependencyViolationFixConsole extends Console
                     }
 
                     if (ValidationRuleInterface::ADD_SUGGEST === $validationMessageTransfer->getFixType()) {
-                        $composerJsonArray['suggest'][$moduleNameToFix] = '"ADD SUGGEST DESCRIPTION"';
+                        $composerJsonArray['suggest'][$moduleNameToFix] = 'ADD SUGGEST DESCRIPTION';
                         if ($output->isVerbose()) {
                             $output->writeln(sprintf('<fg=green>%s</> added to suggests', $moduleNameToFix));
                         }
