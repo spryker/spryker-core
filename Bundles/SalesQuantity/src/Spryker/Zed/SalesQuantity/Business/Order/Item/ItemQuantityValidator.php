@@ -48,12 +48,18 @@ class ItemQuantityValidator implements ItemQuantityValidatorInterface
     }
 
     /**
+     * @uses ItemTransfer::getBundleItemIdentifier()
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return bool
      */
     protected function isBundledItem(ItemTransfer $itemTransfer)
     {
+        if (!method_exists($itemTransfer, 'getBundleItemIdentifier')) {
+            return false;
+        }
+
         if ($itemTransfer->getRelatedBundleItemIdentifier() || $itemTransfer->getBundleItemIdentifier()) {
             return true;
         }

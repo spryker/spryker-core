@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
@@ -20,6 +22,12 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     use TransactionTrait;
 
     protected const ERROR_MESSAGE_HAS_RELATED_USERS = 'company.company_business_unit.delete.error.has_users';
+
+    protected const ERROR_MESSAGE_HIERARCHY_CYCLE_IN_BUSINESS_UNIT_UPDATE = 'Company Business Unit "%s" has not been updated. A Business Unit cannot be set as a child to an own child Business Unit, please check the Business Unit hierarchy.';
+
+    protected const SUCCESS_MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE = 'Company Business Unit "%s" has been updated.';
+
+    protected const HIERARCHY_CYCLE_CHECK_DEPTH = 1000;
 
     /**
      * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface
@@ -60,7 +68,8 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     {
         $companyBusinessUnitResponseTransfer = (new CompanyBusinessUnitResponseTransfer())
             ->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer)
-            ->setIsSuccessful(true);
+            ->setIsSuccessful(true)
+            ->addMessage($this->getSuccessMessageResponseTransfer($companyBusinessUnitTransfer));
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyBusinessUnitResponseTransfer) {
             return $this->executeUpdateTransaction($companyBusinessUnitResponseTransfer);
@@ -148,10 +157,112 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     protected function executeUpdateTransaction(CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer): CompanyBusinessUnitResponseTransfer
     {
         $companyBusinessUnitTransfer = $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer();
+
+        if ($this->isCompanyBusinessUnitHierarchyCycleExists($companyBusinessUnitTransfer)) {
+            $companyBusinessUnitResponseTransfer->setIsSuccessful(false);
+            $companyBusinessUnitResponseTransfer->setMessages(new ArrayObject());
+            $companyBusinessUnitResponseTransfer->addMessage($this->getHierarchyCycleErrorMessageResponseTransfer($companyBusinessUnitTransfer));
+
+            return $companyBusinessUnitResponseTransfer;
+        }
+
         $companyBusinessUnitTransfer = $this->entityManager->saveCompanyBusinessUnit($companyBusinessUnitTransfer);
         $companyBusinessUnitTransfer = $this->pluginExecutor->executePostSavePlugins($companyBusinessUnitTransfer);
         $companyBusinessUnitResponseTransfer->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer);
 
         return $companyBusinessUnitResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return bool
+     */
+    protected function isCompanyBusinessUnitHierarchyCycleExists(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool
+    {
+        $businessUnitId = (int)$companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
+        $parentBusinessUnitId = (int)$companyBusinessUnitTransfer->getFkParentCompanyBusinessUnit();
+
+        $companyBusinessUnitMap = $this->getCompanyBusinessUnits();
+        $companyBusinessUnitMap[$businessUnitId]->setFkParentCompanyBusinessUnit($parentBusinessUnitId);
+
+        return $this->isHierarchyCycleExists($companyBusinessUnitMap, $businessUnitId);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[]
+     */
+    protected function getCompanyBusinessUnits(): array
+    {
+        $companyBusinessUnitsCollection = $this->repository->getCompanyBusinessUnitCollection(new CompanyBusinessUnitCriteriaFilterTransfer());
+
+        $companyBusinessUnits = [];
+        foreach ($companyBusinessUnitsCollection->getCompanyBusinessUnits() as $companyBusinessUnit) {
+            $companyBusinessUnits[$companyBusinessUnit->getIdCompanyBusinessUnit()] = $companyBusinessUnit;
+        }
+
+        return $companyBusinessUnits;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[] $companyBusinessUnitMap
+     * @param int $entryCompanyBusinessUnitId
+     *
+     * @return bool
+     */
+    public function isHierarchyCycleExists(array $companyBusinessUnitMap, int $entryCompanyBusinessUnitId): bool
+    {
+        $allNodes = $companyBusinessUnitMap;
+        $attemptCount = 0;
+
+        $visitedNodes = [$entryCompanyBusinessUnitId];
+        $nodeToCheck = $entryCompanyBusinessUnitId;
+
+        do {
+            if (in_array($allNodes[$nodeToCheck]->getFkParentCompanyBusinessUnit(), $visitedNodes)) {
+                return true;
+            }
+
+            $visitedNodes[] = $allNodes[$nodeToCheck]->getFkParentCompanyBusinessUnit();
+            $nodeToCheck = $allNodes[$nodeToCheck]->getFkParentCompanyBusinessUnit();
+        } while ($nodeToCheck && $attemptCount++ < static::HIERARCHY_CYCLE_CHECK_DEPTH);
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResponseMessageTransfer
+     */
+    protected function getSuccessMessageResponseTransfer(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ResponseMessageTransfer
+    {
+        $responseMessage = new ResponseMessageTransfer();
+        $responseMessage->setText(
+            sprintf(
+                static::SUCCESS_MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE,
+                $companyBusinessUnitTransfer->getName()
+            )
+        );
+
+        return $responseMessage;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResponseMessageTransfer
+     */
+    protected function getHierarchyCycleErrorMessageResponseTransfer(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ResponseMessageTransfer
+    {
+        $responseMessage = new ResponseMessageTransfer();
+        $responseMessage->setText(
+            sprintf(
+                static::ERROR_MESSAGE_HIERARCHY_CYCLE_IN_BUSINESS_UNIT_UPDATE,
+                $companyBusinessUnitTransfer->getName()
+            )
+        );
+
+        return $responseMessage;
     }
 }

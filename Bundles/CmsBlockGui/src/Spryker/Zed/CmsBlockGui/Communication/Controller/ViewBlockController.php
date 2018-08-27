@@ -49,7 +49,7 @@ class ViewBlockController extends AbstractCmsBlockController
     /**
      * @param int $idCmsBlock
      *
-     * @return string[]
+     * @return array
      */
     protected function getRenderedViewPlugins($idCmsBlock)
     {
