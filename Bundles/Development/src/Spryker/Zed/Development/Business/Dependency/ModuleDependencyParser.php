@@ -11,12 +11,12 @@ use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContext;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface;
-use Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\ModuleFileFinderInterface;
+use Spryker\Zed\Development\Business\Module\ModuleFileFinder\ModuleFileFinderInterface;
 
 class ModuleDependencyParser implements ModuleDependencyParserInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\ModuleFileFinderInterface
+     * @var \Spryker\Zed\Development\Business\Module\ModuleFileFinder\ModuleFileFinderInterface
      */
     protected $moduleFileFinder;
 
@@ -31,7 +31,7 @@ class ModuleDependencyParser implements ModuleDependencyParserInterface
     protected $dependencyFinder;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\ModuleFileFinderInterface $moduleFileFinder
+     * @param \Spryker\Zed\Development\Business\Module\ModuleFileFinder\ModuleFileFinderInterface $moduleFileFinder
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface $dependencyFinder
      */

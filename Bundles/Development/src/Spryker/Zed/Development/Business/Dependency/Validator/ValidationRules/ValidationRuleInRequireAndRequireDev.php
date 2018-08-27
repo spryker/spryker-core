@@ -23,6 +23,8 @@ class ValidationRuleInRequireAndRequireDev implements ValidationRuleInterface
             $moduleDependencyTransfer->setIsValid(false);
             $validationMessageTransfer = new ValidationMessageTransfer();
             $validationMessageTransfer->setMessage('Dependency is listed in require and require-dev, only one is needed');
+            $validationMessageTransfer->setFixType(static::MANUAL_FIX);
+
             $moduleDependencyTransfer->addValidationMessage($validationMessageTransfer);
         }
 

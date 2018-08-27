@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder;
+namespace Spryker\Zed\Development\Business\Module\PathBuilder;
 
-class SprykerModulePathBuilder extends AbstractPathBuilder
+class SprykerEcoModulePathBuilder extends AbstractPathBuilder
 {
     /**
      * @var string
@@ -17,7 +17,7 @@ class SprykerModulePathBuilder extends AbstractPathBuilder
     /**
      * @param string $basePath
      */
-    public function __construct($basePath)
+    public function __construct(string $basePath)
     {
         $this->basePath = $basePath;
     }

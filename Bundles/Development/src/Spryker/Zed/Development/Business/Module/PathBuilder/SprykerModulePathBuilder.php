@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder;
+namespace Spryker\Zed\Development\Business\Module\PathBuilder;
 
-class SprykerShopModulePathBuilder extends AbstractPathBuilder
+class SprykerModulePathBuilder extends AbstractPathBuilder
 {
     /**
      * @var string
@@ -30,7 +30,7 @@ class SprykerShopModulePathBuilder extends AbstractPathBuilder
     public function buildPaths(string $module): array
     {
         $paths = [
-            sprintf('%s%s', $this->basePath, $module),
+            sprintf('%s%s/', $this->basePath, $module),
         ];
 
         return $paths;

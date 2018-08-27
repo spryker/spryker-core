@@ -98,6 +98,13 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
+     * @return array
+     */
+    public function getModules();
+
+    /**
+     * @api
+     *
      * @deprecated Use `getAllModules()` instead.
      *
      * @return array
@@ -302,7 +309,6 @@ interface DevelopmentFacadeInterface
 
     /**
      * Specification:
-<<<<<<< HEAD
      * - Validates that Abstract classes for database table exist.
      *
      * @api
@@ -313,7 +319,9 @@ interface DevelopmentFacadeInterface
      * @return bool
      */
     public function runPropelAbstractValidation(OutputInterface $output, ?string $module): bool;
-=======
+
+    /**
+     * Specification:
      * - Parses all dependencies in src and tests directory of a given module.
      * - Parses all defined composer dependencies.
      * - Compares and validates the parsed results.
@@ -325,5 +333,4 @@ interface DevelopmentFacadeInterface
      * @return \Generated\Shared\Transfer\DependencyValidationResponseTransfer
      */
     public function validateModuleDependencies(DependencyValidationRequestTransfer $dependencyValidationRequestTransfer): DependencyValidationResponseTransfer;
->>>>>>> te-36 added dependency violation finder for twig dependencies, refactored dependency violation finder console
 }

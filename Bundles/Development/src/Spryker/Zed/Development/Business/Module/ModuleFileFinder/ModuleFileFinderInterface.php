@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Development\Business\Dependency\ModuleFileFinder;
+namespace Spryker\Zed\Development\Business\Module\ModuleFileFinder;
 
 use Symfony\Component\Finder\Finder;
 

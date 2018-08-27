@@ -9,31 +9,17 @@ namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
-use Spryker\Zed\Development\DevelopmentConfig;
 
-class DevelopmentDependencyFinder extends AbstractFileDependencyFinder
+class CodeceptionDependencyFinder extends AbstractFileDependencyFinder
 {
-    public const TYPE_DEVELOPMENT = 'development';
-
-    /**
-     * @var \Spryker\Zed\Development\DevelopmentConfig
-     */
-    protected $developmentConfig;
-
-    /**
-     * @param \Spryker\Zed\Development\DevelopmentConfig $developmentConfig
-     */
-    public function __construct(DevelopmentConfig $developmentConfig)
-    {
-        $this->developmentConfig = $developmentConfig;
-    }
+    public const TYPE_CODECEPTION = 'codeception';
 
     /**
      * @return string
      */
     public function getType(): string
     {
-        return static::TYPE_DEVELOPMENT;
+        return static::TYPE_CODECEPTION;
     }
 
     /**
@@ -47,7 +33,7 @@ class DevelopmentDependencyFinder extends AbstractFileDependencyFinder
             return false;
         }
 
-        if ($context->getFileInfo()->getExtension() !== 'php') {
+        if ($context->getFileInfo()->getFilename() !== 'codeception.yml') {
             return false;
         }
 
@@ -62,13 +48,10 @@ class DevelopmentDependencyFinder extends AbstractFileDependencyFinder
      */
     public function findDependencies(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
     {
-        foreach ($this->developmentConfig->getDevelopmentModules() as $developmentModule) {
-            $dependencyContainer->addDependency(
-                $developmentModule,
-                $this->getType(),
-                false,
-                true
-            );
+        if (preg_match_all('/SprykerTest\\\\(.*?)\\\\(.*?)\\\\/', $context->getFileInfo()->getContents(), $matches, PREG_SET_ORDER)) {
+            foreach ($matches as $match) {
+                $dependencyContainer->addDependency($match[2], $this->getType(), false, true);
+            }
         }
 
         return $dependencyContainer;

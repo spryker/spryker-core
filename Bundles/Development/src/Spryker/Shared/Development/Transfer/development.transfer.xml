@@ -96,6 +96,20 @@
 
     <transfer name="ValidationMessage">
         <property name="message" type="string"/>
+        <property name="fixType" type="string"/>
+    </transfer>
+
+    <transfer name="Module">
+        <property name="name" type="string"/>
+        <property name="nameDashed" type="string"/>
+        <property name="organization" type="Organization"/>
+        <property name="rootDirectory" type="string"/>
+    </transfer>
+
+    <transfer name="Organization">
+        <property name="name" type="string"/>
+        <property name="nameDashed" type="string"/>
+        <property name="organization" type="Organization"/>
     </transfer>
 
 </transfers>

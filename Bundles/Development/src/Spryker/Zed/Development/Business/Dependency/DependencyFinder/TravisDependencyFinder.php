@@ -9,31 +9,17 @@ namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
-use Spryker\Zed\Development\Business\Dependency\SchemaParser\PropelSchemaParserInterface;
 
-class PersistenceDependencyFinder implements DependencyFinderInterface
+class TravisDependencyFinder extends AbstractFileDependencyFinder
 {
-    public const TYPE_PERSISTENCE = 'persistence';
-
-    /**
-     * @var \Spryker\Zed\Development\Business\Dependency\SchemaParser\PropelSchemaParserInterface
-     */
-    protected $propelSchemaParser;
-
-    /**
-     * @param \Spryker\Zed\Development\Business\Dependency\SchemaParser\PropelSchemaParserInterface $propelSchemaParser
-     */
-    public function __construct(PropelSchemaParserInterface $propelSchemaParser)
-    {
-        $this->propelSchemaParser = $propelSchemaParser;
-    }
+    public const TYPE_TRAVIS = 'travis';
 
     /**
      * @return string
      */
     public function getType(): string
     {
-        return static::TYPE_PERSISTENCE;
+        return static::TYPE_TRAVIS;
     }
 
     /**
@@ -47,7 +33,7 @@ class PersistenceDependencyFinder implements DependencyFinderInterface
             return false;
         }
 
-        if (substr($context->getFileInfo()->getFilename(), -10) !== 'schema.xml' || strpos($context->getFileInfo()->getFilename(), 'spy_') !== 0) {
+        if ($context->getFileInfo()->getFilename() !== '.travis.yml') {
             return false;
         }
 
@@ -62,14 +48,13 @@ class PersistenceDependencyFinder implements DependencyFinderInterface
      */
     public function findDependencies(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
     {
-        $foreignIdColumnNames = $this->propelSchemaParser->getForeignColumnNames($context->getFileInfo());
+        $fileContent = $context->getFileInfo()->getContents();
+        if (strpos($fileContent, 'code-sniffer/Spryker/ruleset.xml') !== false) {
+            $dependencyContainer->addDependency('CodeSniffer', $this->getType(), false, true);
+        }
 
-        foreach ($foreignIdColumnNames as $foreignIdColumnName) {
-            $dependentModule = $this->propelSchemaParser->getModuleNameByForeignReference($foreignIdColumnName, $context->getModule());
-            $dependencyContainer->addDependency(
-                $dependentModule,
-                $this->getType()
-            );
+        if (strpos($fileContent, 'vendor/bin/codecept') !== false) {
+            $dependencyContainer->addDependency('Testify', $this->getType(), false, true);
         }
 
         return $dependencyContainer;

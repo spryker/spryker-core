@@ -23,6 +23,8 @@ class ValidationRuleIsOptionalButInRequire implements ValidationRuleInterface
             $moduleDependencyTransfer->setIsValid(false);
             $validationMessageTransfer = new ValidationMessageTransfer();
             $validationMessageTransfer->setMessage('Optional dependency should not be listed in composer require');
+            $validationMessageTransfer->setFixType(static::REMOVE_REQUIRE);
+
             $moduleDependencyTransfer->addValidationMessage($validationMessageTransfer);
         }
 

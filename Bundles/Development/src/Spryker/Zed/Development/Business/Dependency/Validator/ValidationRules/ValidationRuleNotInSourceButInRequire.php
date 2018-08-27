@@ -23,6 +23,8 @@ class ValidationRuleNotInSourceButInRequire implements ValidationRuleInterface
             $moduleDependencyTransfer->setIsValid(false);
             $validationMessageTransfer = new ValidationMessageTransfer();
             $validationMessageTransfer->setMessage('Dependency listed in composer require not found in source');
+            $validationMessageTransfer->setFixType(static::REMOVE_REQUIRE);
+
             $moduleDependencyTransfer->addValidationMessage($validationMessageTransfer);
         }
 

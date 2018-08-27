@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder;
+namespace Spryker\Zed\Development\Business\Module\PathBuilder;
 
 class PathBuilderComposite implements PathBuilderInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder\PathBuilderInterface[]
+     * @var \Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface[]
      */
     protected $pathBuilder;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder\PathBuilderInterface[] $pathBuilder
+     * @param \Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface[] $pathBuilder
      */
     public function __construct(array $pathBuilder)
     {

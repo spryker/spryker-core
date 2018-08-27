@@ -101,7 +101,7 @@ class ExternalDependencyFinder extends AbstractFileDependencyFinder
         $modules = $this->getModuleNamesFromUseStatements($useStatements);
 
         if (count($modules) > 0) {
-            $dependencyModules[$context->getFileInfo()->getFilename()] = array_unique($modules);
+            $dependencyModules[$context->getFileInfo()->getRealPath()] = array_unique($modules);
         }
 
         return $dependencyModules;

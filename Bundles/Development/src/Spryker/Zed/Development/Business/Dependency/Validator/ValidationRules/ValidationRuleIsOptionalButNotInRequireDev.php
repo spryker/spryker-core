@@ -23,6 +23,8 @@ class ValidationRuleIsOptionalButNotInRequireDev implements ValidationRuleInterf
             $moduleDependencyTransfer->setIsValid(false);
             $validationMessageTransfer = new ValidationMessageTransfer();
             $validationMessageTransfer->setMessage('Optional dependency should be listed for testing in composer require-dev');
+            $validationMessageTransfer->setFixType(static::ADD_REQUIRE_DEV);
+
             $moduleDependencyTransfer->addValidationMessage($validationMessageTransfer);
         }
 

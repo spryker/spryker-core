@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Development\Business\Dependency\ModuleFileFinder;
+namespace Spryker\Zed\Development\Business\Module\ModuleFileFinder;
 
 use Exception;
-use Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder\PathBuilderInterface;
+use Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface;
 use Symfony\Component\Finder\Finder;
 
 class ModuleFileFinder implements ModuleFileFinderInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder\PathBuilderInterface
+     * @var \Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface
      */
     protected $pathBuilder;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder\PathBuilderInterface $pathBuilder
+     * @param \Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface $pathBuilder
      */
     public function __construct(PathBuilderInterface $pathBuilder)
     {
@@ -43,7 +43,7 @@ class ModuleFileFinder implements ModuleFileFinderInterface
         }
 
         $finder = new Finder();
-        $finder->files()->in($directories);
+        $finder->files()->in($directories)->ignoreDotFiles(false);
 
         return $finder;
     }

@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Development\Business\Dependency\ModuleFileFinder\PathBuilder;
+namespace Spryker\Zed\Development\Business\Module\PathBuilder;
 
-class SprykerEcoPathBuilder extends AbstractPathBuilder
+class SprykerSdkPathBuilder extends AbstractPathBuilder
 {
     /**
      * @var string
@@ -38,8 +38,8 @@ class SprykerEcoPathBuilder extends AbstractPathBuilder
     {
         $paths = [];
         foreach ($this->applications as $application) {
-            $paths[] = sprintf('%s/%s/src/SprykerEco/%s/%s', $this->basePath, $module, $application, $module);
-            $paths[] = sprintf('%s/%s/tests/SprykerEcoTest/%s/%s', $this->basePath, $module, $application, $module);
+            $paths[] = sprintf('%s/%s/src/SprykerSdk/%s/%s', $this->basePath, $module, $application, $module);
+            $paths[] = sprintf('%s/%s/tests/SprykerSdkTest/%s/%s', $this->basePath, $module, $application, $module);
         }
 
         return $paths;

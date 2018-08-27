@@ -23,6 +23,8 @@ class ValidationRuleDevelopmentOnlyDependency implements ValidationRuleInterface
             $moduleDependencyTransfer->setIsValid(false);
             $validationMessageTransfer = new ValidationMessageTransfer();
             $validationMessageTransfer->setMessage('Dependency is marked as dev only but listed in composer require');
+            $validationMessageTransfer->setFixType(static::REMOVE_REQUIRE);
+
             $moduleDependencyTransfer->addValidationMessage($validationMessageTransfer);
         }
 

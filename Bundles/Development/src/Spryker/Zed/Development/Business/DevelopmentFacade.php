@@ -138,6 +138,16 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
+     * @return array
+     */
+    public function getModules()
+    {
+        return $this->getFactory()->createModuleFinder()->find();
+    }
+
+    /**
+     * @api
+     *
      * @deprecated Use `getAllModules()` instead.
      *
      * @return array
@@ -397,7 +407,6 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @api
      *
-<<<<<<< HEAD
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string|null $module
      *
@@ -406,7 +415,13 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function runPropelAbstractValidation(OutputInterface $output, ?string $module): bool
     {
         return $this->getFactory()->createPropelAbstractValidator()->validate($output, $module);
-=======
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DependencyValidationRequestTransfer $dependencyValidationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\DependencyValidationResponseTransfer
@@ -414,6 +429,5 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function validateModuleDependencies(DependencyValidationRequestTransfer $dependencyValidationRequestTransfer): DependencyValidationResponseTransfer
     {
         return $this->getFactory()->createDependencyValidator()->validate($dependencyValidationRequestTransfer);
->>>>>>> te-36 added dependency violation finder for twig dependencies, refactored dependency violation finder console
     }
 }
