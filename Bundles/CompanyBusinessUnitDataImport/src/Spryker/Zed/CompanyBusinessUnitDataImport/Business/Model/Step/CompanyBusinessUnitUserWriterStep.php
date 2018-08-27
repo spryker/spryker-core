@@ -18,6 +18,11 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 class CompanyBusinessUnitUserWriterStep implements DataImportStepInterface
 {
     /**
+     * @var int[]
+     */
+    protected $idCompanyBusinessUnitListCache = [];
+
+    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Pyz\Zed\DataImport\Business\Exception\EntityNotFoundException
@@ -29,8 +34,7 @@ class CompanyBusinessUnitUserWriterStep implements DataImportStepInterface
         $idCompanyBusinessUnit = $this->getIdCompanyBusinessUnitByKey($dataSet[CompanyBusinessUnitUserDataSet::COLUMN_BUSINESS_UNIT_KEY]);
 
         $companyUserEntity = SpyCompanyUserQuery::create()
-            ->filterByKey($dataSet[CompanyBusinessUnitUserDataSet::COLUMN_COMPANY_USER_KEY])
-            ->findOne();
+            ->findOneByKey($dataSet[CompanyBusinessUnitUserDataSet::COLUMN_COMPANY_USER_KEY]);
 
         if ($companyUserEntity === null) {
             throw new EntityNotFoundException(sprintf('Could not find company user by key "%s"', $dataSet[CompanyBusinessUnitUserDataSet::COLUMN_COMPANY_USER_KEY]));
@@ -50,15 +54,20 @@ class CompanyBusinessUnitUserWriterStep implements DataImportStepInterface
      */
     protected function getIdCompanyBusinessUnitByKey(string $companyBusinessUnitKey): int
     {
-        $idCompanyBusinessUnit = $this->getCompanyBusinessUnitQuery()
-            ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
-            ->findOneByKey($companyBusinessUnitKey);
+        if (!isset($this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey])) {
+            $idCompanyBusinessUnit = $this->getCompanyBusinessUnitQuery()
+                ->filterByKey($companyBusinessUnitKey)
+                ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
+                ->findOne();
 
-        if (!$idCompanyBusinessUnit) {
-            throw new EntityNotFoundException(sprintf('Could not find company business unit by key "%s"', $companyBusinessUnitKey));
+            if (!$idCompanyBusinessUnit) {
+                throw new EntityNotFoundException(sprintf('Could not find company business unit by key "%s"', $companyBusinessUnitKey));
+            }
+
+            $this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey] = $idCompanyBusinessUnit;
         }
 
-        return $idCompanyBusinessUnit;
+        return $this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey];
     }
 
     /**

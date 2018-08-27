@@ -8,12 +8,12 @@
 namespace SprykerTest\Zed\CompanyBusinessUnitDataImport\Communication\Plugin;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer;
-use Generated\Shared\Transfer\SpyCompanyEntityTransfer;
-use Generated\Shared\Transfer\SpyCompanyUserEntityTransfer;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Communication\Plugin\CompanyBusinessUnitDataImportPlugin;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Communication\Plugin\CompanyBusinessUnitUserDataImportPlugin;
 use Spryker\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportConfig;
@@ -53,7 +53,7 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
     public function testImportImportsCompanyBusinessUnit(): void
     {
         $this->tester->ensureDatabaseTableIsEmpty();
-        $this->tester->haveCompany([SpyCompanyEntityTransfer::KEY => static::COMPANY_KEY]);
+        $this->tester->haveCompany([CompanyTransfer::KEY => static::COMPANY_KEY]);
 
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
             static::IMPORT_COMPANY_BUSINESS_UNIT_CSV
@@ -97,7 +97,7 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
     public function testImportThrowsExceptionWhenParentBusinessUnitNotFound(): void
     {
         $this->tester->ensureDatabaseTableIsEmpty();
-        $this->tester->haveActiveCompany([SpyCompanyEntityTransfer::KEY => static::COMPANY_KEY]);
+        $this->tester->haveActiveCompany([CompanyTransfer::KEY => static::COMPANY_KEY]);
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
             static::IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_PARENT_CSV
         );
@@ -114,17 +114,17 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
     {
         $customerTransfer = $this->tester->haveCustomer();
         $companyTransfer = $this->tester->haveCompany([
-            SpyCompanyEntityTransfer::KEY => static::COMPANY_KEY,
+            CompanyTransfer::KEY => static::COMPANY_KEY,
         ]);
 
         $this->tester->haveCompanyUser([
-            SpyCompanyUserEntityTransfer::KEY => static::COMPANY_USER_KEY,
-            SpyCompanyUserEntityTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            SpyCompanyUserEntityTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::KEY => static::COMPANY_USER_KEY,
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
         ]);
 
         $this->tester->haveCompanyBusinessUnit([
-            SpyCompanyBusinessUnitEntityTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY,
+            CompanyBusinessUnitTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY,
         ]);
 
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(static::IMPORT_COMPANY_BUSINESS_UNIT_USER_CSV);
