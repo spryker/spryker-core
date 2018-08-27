@@ -221,6 +221,7 @@ class SalesFacadeSaveOrderTest extends Unit
         $itemTransfer
             ->setUnitPrice(1)
             ->setUnitGrossPrice(1)
+            ->setSumGrossPrice(1)
             ->setQuantity(1)
             ->setName('test-name')
             ->setSku('sku-test');
@@ -350,6 +351,7 @@ class SalesFacadeSaveOrderTest extends Unit
             ->setSku('sku1')
             ->setUnitPrice(130)
             ->setUnitGrossPrice(120)
+            ->setSumGrossPrice(120)
             ->setQuantity(1)
             ->setTaxRate(19);
 
@@ -358,6 +360,7 @@ class SalesFacadeSaveOrderTest extends Unit
             ->setSku('sku2')
             ->setUnitPrice(130)
             ->setUnitGrossPrice(130)
+            ->setSumGrossPrice(130)
             ->setQuantity(1)
             ->setTaxRate(19);
 

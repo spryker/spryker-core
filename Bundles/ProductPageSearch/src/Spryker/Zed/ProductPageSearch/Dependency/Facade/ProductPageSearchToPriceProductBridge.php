@@ -53,4 +53,14 @@ class ProductPageSearchToPriceProductBridge implements ProductPageSearchToPriceP
     {
         return $this->priceProductFacade->groupPriceProductCollection($priceProductTransfers);
     }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPricesWithoutPriceExtraction($idProductAbstract)
+    {
+        return $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract);
+    }
 }

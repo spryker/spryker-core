@@ -10,6 +10,9 @@ namespace Spryker\Client\AvailabilityStorage;
 interface AvailabilityStorageClientInterface
 {
     /**
+     * Specification:
+     *  - Return storage availability data by abstract product id.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -19,6 +22,9 @@ interface AvailabilityStorageClientInterface
     public function getProductAvailabilityByIdProductAbstract($idProductAbstract);
 
     /**
+     * Specification:
+     *  - Return entity availability data by abstract product id.
+     *
      * @api
      *
      * @param int $idProductAbstract

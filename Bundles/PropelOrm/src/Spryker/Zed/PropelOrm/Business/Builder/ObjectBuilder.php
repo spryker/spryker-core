@@ -37,7 +37,7 @@ class ObjectBuilder extends PropelObjectBuilder
     }
 
     /**
-     * Change default propel behaviour
+     * Changes default Propel behavior.
      *
      * Adds setter method for boolean columns.
      *
@@ -95,6 +95,7 @@ class ObjectBuilder extends PropelObjectBuilder
             '\PDO'
         );
         $table = $this->getTable();
+        /** @var \Propel\Generator\Platform\DefaultPlatform $platform */
         $platform = $this->getPlatform();
         $primaryKeyMethodInfo = '';
         if ($table->getIdMethodParameters()) {

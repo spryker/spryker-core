@@ -33,7 +33,7 @@ class PropelInstallHelper extends Module
     }
 
     /**
-     * @return int
+     * @return void
      */
     protected function initPropel()
     {
@@ -139,7 +139,7 @@ class PropelInstallHelper extends Module
         $process = new Process($command, Configuration::projectDir());
         $process->setTimeout(600);
         $process->mustRun(function ($type, $buffer) use ($command) {
-            if (Process::ERR === $type) {
+            if ($type === Process::ERR) {
                 echo $command . ' Failed:' . PHP_EOL;
                 echo $buffer;
             }

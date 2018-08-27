@@ -123,6 +123,7 @@ class TouchRecord implements TouchRecordInterface
      */
     protected function deleteKeyChangeActiveRecord($itemType, $idItem)
     {
+        /** @var \Orm\Zed\Touch\Persistence\SpyTouch|null $touchDeletedEntity */
         $touchDeletedEntity = $this->touchQueryContainer
             ->queryUpdateTouchEntry(
                 $itemType,
@@ -158,6 +159,7 @@ class TouchRecord implements TouchRecordInterface
      */
     protected function insertKeyChangeRecord($itemType, $idItem)
     {
+        /** @var \Orm\Zed\Touch\Persistence\SpyTouch|null $touchOldEntity */
         $touchOldEntity = $this->touchQueryContainer
             ->queryUpdateTouchEntry(
                 $itemType,
@@ -170,6 +172,7 @@ class TouchRecord implements TouchRecordInterface
             return;
         }
 
+        /** @var \Orm\Zed\Touch\Persistence\SpyTouch|null $touchDeletedEntity */
         $touchDeletedEntity = $this->touchQueryContainer
             ->queryUpdateTouchEntry(
                 $itemType,

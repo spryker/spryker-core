@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Newsletter;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface NewsletterConstants
 {
     const SHOP_MAIL_DOUBLE_OPT_IN_CONFIRMATION_TEMPLATE_NAME = 'DOUBLE_OPT_IN_CONFIRMATION_TEMPLATE_NAME';

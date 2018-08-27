@@ -340,7 +340,7 @@ class CacheDataProvider
                         $inLimitUnusedKeysSize = $thirdDataset - self::OVER_LIMIT_SIZE;
                         $key = $key = 'kv:key' . ($i + $thirdDataset - $inLimitUnusedKeysSize + 1);
                         $value = $i < $inLimitUnusedKeysSize ? StorageClient::KEY_INIT :
-                            ($i < $inLimitUnusedKeysSize + $thirdDataset ? StorageClient::KEY_USED :  StorageClient::KEY_NEW);
+                            ($i < $inLimitUnusedKeysSize + $thirdDataset ? StorageClient::KEY_USED : StorageClient::KEY_NEW);
                     }
                     break;
 

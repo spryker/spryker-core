@@ -29,6 +29,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\PriceCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RefundableAmountCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RefundTotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveCanceledAmountCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalCalculator;
@@ -295,6 +296,14 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveCanceledAmountCalculator|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface
+     */
+    public function createRemoveCanceledAmountCalculator()
+    {
+        return new RemoveCanceledAmountCalculator();
+    }
+
+    /**
      * @return \Spryker\Zed\Calculation\Business\Model\Calculator\NetTotalCalculator|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface
      */
     public function createNetTotalCalculator()
@@ -311,7 +320,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
+     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[]
      */
     protected function getProvidedOrderCalculatorPluginStack()
     {

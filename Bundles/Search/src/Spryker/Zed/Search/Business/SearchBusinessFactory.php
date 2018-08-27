@@ -94,7 +94,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
         return new IndexInstaller(
             $this->createJsonIndexDefinitionLoader(),
             $this->getElasticsearchClient(),
-            $messenger
+            $messenger,
+            $this->getConfig()
         );
     }
 
