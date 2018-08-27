@@ -74,4 +74,14 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
     {
         return $this->customerClient->createAddress($addressTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function updateCustomerPassword($customerTransfer)
+    {
+        return $this->customerClient->updateCustomerPassword($customerTransfer);
+    }
 }

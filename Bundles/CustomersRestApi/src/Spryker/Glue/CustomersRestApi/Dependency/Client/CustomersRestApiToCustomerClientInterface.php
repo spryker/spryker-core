@@ -45,4 +45,11 @@ interface CustomersRestApiToCustomerClientInterface
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function createAddress($addressTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function updateCustomerPassword($customerTransfer);
 }
