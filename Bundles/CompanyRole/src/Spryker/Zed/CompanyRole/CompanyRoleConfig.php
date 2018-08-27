@@ -27,7 +27,7 @@ class CompanyRoleConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getAdminRolePermissions(): array
+    public function getAdminRolePermissionKeys(): array
     {
         return [];
     }
@@ -38,33 +38,33 @@ class CompanyRoleConfig extends AbstractBundleConfig
     public function getCompanyRoles(): array
     {
         return [
-            $this->getAdministratorRole(),
+            $this->getAdminRole(),
         ];
     }
 
     /**
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
-    protected function getAdministratorRole(): CompanyRoleTransfer
+    protected function getAdminRole(): CompanyRoleTransfer
     {
         return (new CompanyRoleTransfer())
             ->setName(static::DEFAULT_ADMIN_ROLE_NAME)
             ->setIsDefault(true)
             ->setPermissionCollection($this->createPermissionCollectionFromPermissionKeys(
-                $this->getAdminRolePermissions()
+                $this->getAdminRolePermissionKeys()
             ));
     }
 
     /**
-     * @param string[] $rolePermissionKeys
+     * @param string[] $permissionKeys
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    protected function createPermissionCollectionFromPermissionKeys(array $rolePermissionKeys): PermissionCollectionTransfer
+    protected function createPermissionCollectionFromPermissionKeys(array $permissionKeys): PermissionCollectionTransfer
     {
         $permissions = new PermissionCollectionTransfer();
 
-        foreach ($rolePermissionKeys as $permissionKey) {
+        foreach ($permissionKeys as $permissionKey) {
             $permission = (new PermissionTransfer())
                 ->setKey($permissionKey);
 

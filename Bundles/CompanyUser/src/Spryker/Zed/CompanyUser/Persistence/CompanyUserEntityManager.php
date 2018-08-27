@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class CompanyUserEntityManager extends AbstractEntityManager implements CompanyUserEntityManagerInterface
 {
-    protected const IS_ACTIVE_COLUMN_SPY_COMPANY_USER = 'IsActive';
+    protected const COLUMN_COMPANY_USER_IS_ACTIVE = 'IsActive';
 
     /**
      * @api
@@ -67,7 +67,7 @@ class CompanyUserEntityManager extends AbstractEntityManager implements CompanyU
             ->filterByIdCompanyUser(
                 $companyUserTransfer->getIdCompanyUser()
             )->update([
-                static::IS_ACTIVE_COLUMN_SPY_COMPANY_USER => $companyUserTransfer->getIsActive(),
+                static::COLUMN_COMPANY_USER_IS_ACTIVE => $companyUserTransfer->getIsActive(),
             ]);
 
         return $companyUserTransfer;

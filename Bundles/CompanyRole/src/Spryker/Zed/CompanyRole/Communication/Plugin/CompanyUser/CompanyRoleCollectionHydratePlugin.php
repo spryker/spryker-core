@@ -14,10 +14,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface getFacade()
  */
-class CompanyRoleUnitHydratePlugin extends AbstractPlugin implements CompanyUserHydrationPluginInterface
+class CompanyRoleCollectionHydratePlugin extends AbstractPlugin implements CompanyUserHydrationPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Hydrates company user transfer with its company role collection.
+     * - Uses CompanyRoleFacade to hydrate company user.
      *
      * @api
      *
