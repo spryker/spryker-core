@@ -20,6 +20,16 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 class CompanyUserWriterStep implements DataImportStepInterface
 {
     /**
+     * @var int[]
+     */
+    protected $idCustomerListCache = [];
+
+    /**
+     * @var int[]
+     */
+    protected $idCompanyListCache = [];
+
+    /**
      * @module CompanyUser
      *
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -51,15 +61,20 @@ class CompanyUserWriterStep implements DataImportStepInterface
      */
     protected function getIdCustomerByReference(string $customerReference): int
     {
-        $idCustomer = SpyCustomerQuery::create()
-            ->select(SpyCustomerTableMap::COL_ID_CUSTOMER)
-            ->findOneByCustomerReference($customerReference);
+        if (!isset($this->idCustomerListCache[$customerReference])) {
+            $idCustomer = $this->getCustomerQuery()
+                ->filterByCustomerReference($customerReference)
+                ->select(SpyCustomerTableMap::COL_ID_CUSTOMER)
+                ->findOne();
 
-        if (!$idCustomer) {
-            throw new EntityNotFoundException(sprintf('Could not find customer by reference "%s"', $customerReference));
+            if (!$idCustomer) {
+                throw new EntityNotFoundException(sprintf('Could not find customer by reference "%s"', $customerReference));
+            }
+
+            $this->idCustomerListCache[$customerReference] = $idCustomer;
         }
 
-        return $idCustomer;
+        return $this->idCustomerListCache[$customerReference];
     }
 
     /**
@@ -71,15 +86,20 @@ class CompanyUserWriterStep implements DataImportStepInterface
      */
     protected function getIdCompanyByKey(string $companyKey): int
     {
-        $idCompany = $this->getCompanyQuery()
-            ->select(SpyCompanyTableMap::COL_ID_COMPANY)
-            ->findOneByKey($companyKey);
+        if (!isset($this->idCompanyListCache[$companyKey])) {
+            $idCompany = $this->getCompanyQuery()
+                ->filterByKey($companyKey)
+                ->select(SpyCompanyTableMap::COL_ID_COMPANY)
+                ->findOne();
 
-        if (!$idCompany) {
-            throw new EntityNotFoundException(sprintf('Could not find company by key "%s"', $companyKey));
+            if (!$idCompany) {
+                throw new EntityNotFoundException(sprintf('Could not find company by key "%s"', $companyKey));
+            }
+
+            $this->idCompanyListCache[$companyKey] = $idCompany;
         }
 
-        return $idCompany;
+        return $this->idCompanyListCache[$companyKey];
     }
 
     /**

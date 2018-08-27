@@ -1,6 +1,5 @@
 parameters:
     ignoreErrors:
-        - '#Strict comparison using === between [a-zA-Z\\]* and null will always evaluate to false.#'
 
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
