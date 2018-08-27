@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
+use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapper;
+use Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
 /**
@@ -31,6 +35,30 @@ class ProductPageSearchPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractPageSearch()
     {
         return SpyProductAbstractPageSearchQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery
+     */
+    public function createProductConcretePageSearchQuery(): SpyProductConcretePageSearchQuery
+    {
+        return SpyProductConcretePageSearchQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function createProductQuery(): SpyProductQuery
+    {
+        return SpyProductQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface
+     */
+    public function createProductPageSearchMapper(): ProductPageSearchMapperInterface
+    {
+        return new ProductPageSearchMapper();
     }
 
     /**
