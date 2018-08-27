@@ -8,11 +8,10 @@
 namespace Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy;
 
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
+use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
 
 class HardThresholdStrategyPlugin extends AbstractMinimumOrderValueStrategyPlugin
 {
-    protected const STRATEGY_KEY = 'hard-threshold';
-
     /**
      * {inheritdoc}
      *
@@ -22,7 +21,7 @@ class HardThresholdStrategyPlugin extends AbstractMinimumOrderValueStrategyPlugi
      */
     public function getKey(): string
     {
-        return static::STRATEGY_KEY;
+        return MinimumOrderValueConfig::THRESHOLD_STRATEGY_KEY_HARD;
     }
 
     /**
@@ -34,7 +33,7 @@ class HardThresholdStrategyPlugin extends AbstractMinimumOrderValueStrategyPlugi
      */
     public function getGroup(): string
     {
-        return static::GROUP_HARD;
+        return MinimumOrderValueConfig::GROUP_HARD;
     }
 
     /**
@@ -48,7 +47,7 @@ class HardThresholdStrategyPlugin extends AbstractMinimumOrderValueStrategyPlugi
      */
     public function isValid(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): bool
     {
-        if ($minimumOrderValueThresholdTransfer->getValue() < 1 || $minimumOrderValueThresholdTransfer->getFee()) {
+        if ($minimumOrderValueThresholdTransfer->getThreshold() < 1 || $minimumOrderValueThresholdTransfer->getFeeIfThresholdNotMet()) {
             return false;
         }
 

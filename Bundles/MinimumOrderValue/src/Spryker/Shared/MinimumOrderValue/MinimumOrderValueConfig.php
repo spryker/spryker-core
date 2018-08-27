@@ -11,5 +11,16 @@ class MinimumOrderValueConfig
 {
     public const GROUP_HARD = 'Hard';
     public const GROUP_SOFT = 'Soft';
+
+    public const THRESHOLD_STRATEGY_KEY_HARD = 'hard-threshold';
+    public const THRESHOLD_STRATEGY_KEY_SOFT = 'soft-threshold';
+    public const THRESHOLD_STRATEGY_KEY_SOFT_FIXED_FEE = 'soft-threshold-fixed-fee';
+    public const THRESHOLD_STRATEGY_KEY_SOFT_FLEXIBLE_FEE = 'soft-threshold-flexible-fee';
+
     public const THRESHOLD_EXPENSE_TYPE = 'THRESHOLD_EXPENSE_TYPE';
+
+    /**
+     * @uses CalculationPriceMode::PRICE_MODE_NET
+     */
+    public const PRICE_MODE_NET = 'NET_MODE';
 }

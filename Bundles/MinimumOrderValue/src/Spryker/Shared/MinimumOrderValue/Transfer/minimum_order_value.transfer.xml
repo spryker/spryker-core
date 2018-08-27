@@ -10,11 +10,11 @@
     </transfer>
 
     <transfer name="MinimumOrderValueThreshold">
+        <property name="threshold" type="int"/>
+        <property name="feeIfThresholdNotMet" type="int"/>
+        <property name="comparedToSubtotal" type="int"/>
+        <property name="thresholdNotMetMessageGlossaryKey" type="string"/>
         <property name="minimumOrderValueType" type="MinimumOrderValueType"/>
-        <property name="value" type="int"/>
-        <property name="fee" type="int"/>
-        <property name="subTotal" type="int"/>
-        <property name="messageGlossaryKey" type="string"/>
     </transfer>
 
     <transfer name="MinimumOrderValue">
@@ -31,8 +31,7 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="minimumOrderValueThresholds" type="MinimumOrderValueThreshold[]" singular="minimumOrderValueThreshold"/>
-        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="minimumOrderValueThresholdCollection" type="MinimumOrderValueThreshold[]" singular="minimumOrderValueThreshold"/>
     </transfer>
 
 </transfers>

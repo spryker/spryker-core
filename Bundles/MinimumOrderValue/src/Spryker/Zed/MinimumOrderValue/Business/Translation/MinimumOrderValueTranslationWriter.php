@@ -70,7 +70,7 @@ class MinimumOrderValueTranslationWriter implements MinimumOrderValueTranslation
     protected function createKeyTranslationTransfer(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer, array $translationsByLocale): KeyTranslationTransfer
     {
         return (new KeyTranslationTransfer())
-            ->setGlossaryKey($minimumOrderValueThresholdTransfer->getMessageGlossaryKey())
+            ->setGlossaryKey($minimumOrderValueThresholdTransfer->getThresholdNotMetMessageGlossaryKey())
             ->setLocales($translationsByLocale);
     }
 }

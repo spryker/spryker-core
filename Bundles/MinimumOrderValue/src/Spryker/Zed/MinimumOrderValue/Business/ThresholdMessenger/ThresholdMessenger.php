@@ -59,9 +59,7 @@ class ThresholdMessenger implements ThresholdMessengerInterface
     public function addMinimumOrderValueThresholdCartInfoMessages(
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        if (!$quoteTransfer->getMinimumOrderValueThresholds() || !$quoteTransfer->getMinimumOrderValueThresholds()->count()) {
-            $quoteTransfer = $this->quoteExpander->addMinimumOrderValueThresholdsToQuote($quoteTransfer);
-        }
+        $quoteTransfer = $this->quoteExpander->addMinimumOrderValueThresholdsToQuote($quoteTransfer);
 
         $thresholdMessages = $this->getMessagesForThresholds($quoteTransfer);
         foreach ($thresholdMessages as $thresholdMessage) {
@@ -79,7 +77,7 @@ class ThresholdMessenger implements ThresholdMessengerInterface
     protected function getMessagesForThresholds(QuoteTransfer $quoteTransfer): array
     {
         $minimumOrderValueThresholdTransfers = $this->filterMinimumOrderValuesByThresholdGroup(
-            $quoteTransfer->getMinimumOrderValueThresholds()->getArrayCopy(),
+            $quoteTransfer->getMinimumOrderValueThresholdCollection()->getArrayCopy(),
             MinimumOrderValueConfig::GROUP_SOFT
         );
 
@@ -103,7 +101,7 @@ class ThresholdMessenger implements ThresholdMessengerInterface
         CurrencyTransfer $currencyTransfer
     ): MessageTransfer {
         return (new MessageTransfer())
-            ->setValue($minimumOrderValueThresholdTransfer->getMessageGlossaryKey())
+            ->setValue($minimumOrderValueThresholdTransfer->getThresholdNotMetMessageGlossaryKey())
             ->setParameters([
                 static::THRESHOLD_GLOSSARY_PARAMETER => $this->moneyFacade->formatWithSymbol(
                     $this->createMoneyTransfer($minimumOrderValueThresholdTransfer, $currencyTransfer)
@@ -123,7 +121,7 @@ class ThresholdMessenger implements ThresholdMessengerInterface
     ): MoneyTransfer {
         return (new MoneyTransfer())
             ->setAmount(
-                (string)$minimumOrderValueThresholdTransfer->getValue()
+                (string)$minimumOrderValueThresholdTransfer->getThreshold()
             )->setCurrency($currencyTransfer);
     }
 

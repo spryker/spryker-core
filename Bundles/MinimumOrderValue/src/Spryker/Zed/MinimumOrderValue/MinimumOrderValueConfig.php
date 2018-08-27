@@ -11,16 +11,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MinimumOrderValueConfig extends AbstractBundleConfig
 {
-    /**
-     * @uses CalculationPriceMode::PRICE_MODE_NET
-     */
-    protected const PRICE_MODE_NET = 'NET_MODE';
-
-    /**
-     * @return string
-     */
-    public function getNetPriceMode(): string
-    {
-        return static::PRICE_MODE_NET;
-    }
 }

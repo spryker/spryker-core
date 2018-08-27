@@ -111,7 +111,7 @@ interface MinimumOrderValueFacadeInterface
 
     /**
      * Specification:
-     * - Adds MinimumOrderValueThresholdTransfer collection to QuoteTransfer.
+     * - Adds info messages when soft threshold not met.
      *
      * @api
      *
@@ -119,23 +119,11 @@ interface MinimumOrderValueFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addMinimumOrderValueThresholdsToQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function addThresholdNotMetInfoMessages(QuoteTransfer $quoteTransfer): QuoteTransfer;
 
     /**
      * Specification:
-     * - Adds threshold messages using the messenger.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function addMinimumOrderValueThresholdCartInfoMessages(QuoteTransfer $quoteTransfer): QuoteTransfer;
-
-    /**
-     * Specification:
-     * - Removes minimum order value expenses from original quote.
+     * - Removes minimum order value expenses from CalculableObjectTransfer.
      *
      * @api
      *
@@ -147,7 +135,9 @@ interface MinimumOrderValueFacadeInterface
 
     /**
      * Specification:
-     * - Adds minimum order value expenses to original quote.
+     * - Gets MinimumOrderValueTransfers from data sources.
+     * - Resolves MinimumOrderValueTransfers to StrategyPlugin.
+     * - Adds expenses from MinimumOrderValueTransfer to CalculableObjectTransfer.
      *
      * @api
      *
@@ -155,5 +145,5 @@ interface MinimumOrderValueFacadeInterface
      *
      * @return void
      */
-    public function addMinimumOrderValueExpensesToQuote(CalculableObjectTransfer $calculableObjectTransfer): void;
+    public function addMinimumOrderValueExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
 }

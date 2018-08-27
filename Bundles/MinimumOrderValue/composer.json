@@ -14,7 +14,6 @@
     "spryker/store": "^1.2.0"
   },
   "require-dev": {
-    "spryker/calculation": "*",
     "spryker/cart": "*",
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",

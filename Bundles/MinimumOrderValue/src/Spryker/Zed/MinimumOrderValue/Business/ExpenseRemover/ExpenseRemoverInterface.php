@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\ExpenseCalculator;
+namespace Spryker\Zed\MinimumOrderValue\Business\ExpenseRemover;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 
-interface ExpenseCalculatorInterface
+interface ExpenseRemoverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
-    public function addMinimumOrderValueExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
+    public function removeMinimumOrderValueExpensesFromQuote(CalculableObjectTransfer $calculableObjectTransfer): void;
 }

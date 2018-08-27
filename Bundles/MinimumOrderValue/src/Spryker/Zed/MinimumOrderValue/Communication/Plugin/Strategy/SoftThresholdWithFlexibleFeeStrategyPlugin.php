@@ -8,11 +8,10 @@
 namespace Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy;
 
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
+use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
 
 class SoftThresholdWithFlexibleFeeStrategyPlugin extends AbstractMinimumOrderValueStrategyPlugin
 {
-    protected const STRATEGY_KEY = 'soft-threshold-flexible-fee';
-
     /**
      * {inheritdoc}
      *
@@ -22,7 +21,7 @@ class SoftThresholdWithFlexibleFeeStrategyPlugin extends AbstractMinimumOrderVal
      */
     public function getKey(): string
     {
-        return static::STRATEGY_KEY;
+        return MinimumOrderValueConfig::THRESHOLD_STRATEGY_KEY_SOFT_FLEXIBLE_FEE;
     }
 
     /**
@@ -34,7 +33,7 @@ class SoftThresholdWithFlexibleFeeStrategyPlugin extends AbstractMinimumOrderVal
      */
     public function getGroup(): string
     {
-        return static::GROUP_SOFT;
+        return MinimumOrderValueConfig::GROUP_SOFT;
     }
 
     /**
@@ -48,7 +47,7 @@ class SoftThresholdWithFlexibleFeeStrategyPlugin extends AbstractMinimumOrderVal
      */
     public function isValid(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): bool
     {
-        if ($minimumOrderValueThresholdTransfer->getValue() < 1 || $minimumOrderValueThresholdTransfer->getFee() < 1) {
+        if ($minimumOrderValueThresholdTransfer->getThreshold() < 1 || $minimumOrderValueThresholdTransfer->getFeeIfThresholdNotMet() < 1) {
             return false;
         }
 
@@ -66,6 +65,6 @@ class SoftThresholdWithFlexibleFeeStrategyPlugin extends AbstractMinimumOrderVal
      */
     public function calculateFee(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): ?int
     {
-        return (int)floor(($minimumOrderValueThresholdTransfer->getFee() / 100) * $minimumOrderValueThresholdTransfer->getSubTotal());
+        return (int)floor(($minimumOrderValueThresholdTransfer->getFeeIfThresholdNotMet() / 100) * $minimumOrderValueThresholdTransfer->getComparedToSubtotal());
     }
 }

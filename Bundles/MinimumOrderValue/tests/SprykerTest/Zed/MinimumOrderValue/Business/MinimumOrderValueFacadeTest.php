@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface;
+use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
 
 /**
  * Auto-generated group annotations
@@ -54,11 +54,11 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
     {
         // Prepare
         $minimumOrderValueHardTypeTransfer = $this->findMinimumOrderValueTypeTransferForGroup(
-            MinimumOrderValueStrategyInterface::GROUP_HARD
+            MinimumOrderValueConfig::GROUP_HARD
         );
 
         $minimumOrderValueSoftStrategy = $this->findMinimumOrderValueTypeTransferForGroup(
-            MinimumOrderValueStrategyInterface::GROUP_SOFT
+            MinimumOrderValueConfig::GROUP_SOFT
         );
 
         $storeTransferDE = $this->tester->getStoreTransfer();
@@ -150,7 +150,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
     {
         // Prepare
         $minimumOrderValueSoftStrategy = $this->findMinimumOrderValueTypeTransferForGroup(
-            MinimumOrderValueStrategyInterface::GROUP_SOFT
+            MinimumOrderValueConfig::GROUP_SOFT
         );
 
         $storeTransfer = $this->tester->getStoreTransfer();
@@ -190,7 +190,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         $currencyTransfer = $this->tester->getCurrencyTransfer();
 
         $minimumOrderValueSoftStrategy = $this->findMinimumOrderValueTypeTransferForGroup(
-            MinimumOrderValueStrategyInterface::GROUP_SOFT
+            MinimumOrderValueConfig::GROUP_SOFT
         );
 
         $minimumOrderValueTValueTransfer = $this->createMinimumOrderValueTransfer(
@@ -268,8 +268,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
             ->setThreshold(
                 (new MinimumOrderValueThresholdTransfer())
                     ->setMinimumOrderValueType($minimumOrderValueTypeTransfer)
-                    ->setValue($thresholdValue)
-                    ->setFee($fee)
+                    ->setThreshold($thresholdValue)
+                    ->setFeeIfThresholdNotMet($fee)
             )->setStore($storeTransfer)
             ->setCurrency($currencyTransfer);
     }

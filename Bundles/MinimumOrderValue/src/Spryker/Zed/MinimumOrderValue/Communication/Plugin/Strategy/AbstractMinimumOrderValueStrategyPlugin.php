@@ -14,9 +14,6 @@ use Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueSt
 
 abstract class AbstractMinimumOrderValueStrategyPlugin extends AbstractPlugin implements MinimumOrderValueStrategyPluginInterface
 {
-    public const GROUP_HARD = 'Hard';
-    public const GROUP_SOFT = 'Soft';
-
     /**
      * {inheritdoc}
      *
@@ -28,7 +25,7 @@ abstract class AbstractMinimumOrderValueStrategyPlugin extends AbstractPlugin im
      */
     public function isApplicable(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): bool
     {
-        return $minimumOrderValueThresholdTransfer->getSubTotal() < $minimumOrderValueThresholdTransfer->getValue();
+        return $minimumOrderValueThresholdTransfer->getComparedToSubtotal() < $minimumOrderValueThresholdTransfer->getThreshold();
     }
 
     /**

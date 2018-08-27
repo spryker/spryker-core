@@ -147,8 +147,8 @@ class MerchantRelationshipMinimumOrderValueWriterStep implements DataImportStepI
             ->setCurrency($currencyTransfer)
             ->setThreshold(
                 (new MinimumOrderValueThresholdTransfer())
-                    ->setValue($thresholdValue)
-                    ->setFee($fee)
+                    ->setThreshold($thresholdValue)
+                    ->setFeeIfThresholdNotMet($fee)
                     ->setMinimumOrderValueType(
                         (new MinimumOrderValueTypeTransfer())
                             ->setKey($minimumOrderValueTypeKey)

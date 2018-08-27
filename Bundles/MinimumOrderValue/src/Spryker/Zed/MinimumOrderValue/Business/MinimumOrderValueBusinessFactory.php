@@ -14,6 +14,8 @@ use Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrateg
 use Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategyInterface;
 use Spryker\Zed\MinimumOrderValue\Business\ExpenseCalculator\ExpenseCalculator;
 use Spryker\Zed\MinimumOrderValue\Business\ExpenseCalculator\ExpenseCalculatorInterface;
+use Spryker\Zed\MinimumOrderValue\Business\ExpenseRemover\ExpenseRemover;
+use Spryker\Zed\MinimumOrderValue\Business\ExpenseRemover\ExpenseRemoverInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Installer\MinimumOrderValueTypeInstaller;
 use Spryker\Zed\MinimumOrderValue\Business\Installer\MinimumOrderValueTypeInstallerInterface;
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueReader;
@@ -140,7 +142,6 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
         return new ThresholdApplier(
             $this->createThresholdDataSourceStrategy(),
             $this->createMinimumOrderValueStrategyResolver(),
-            $this->getConfig(),
             $this->getMessengerFacade(),
             $this->getMoneyFacade()
         );
@@ -175,9 +176,16 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     {
         return new ExpenseCalculator(
             $this->createQuoteExpander(),
-            $this->createMinimumOrderValueStrategyResolver(),
-            $this->getConfig()
+            $this->createMinimumOrderValueStrategyResolver()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Business\ExpenseRemover\ExpenseRemoverInterface
+     */
+    public function createExpenseRemover(): ExpenseRemoverInterface
+    {
+        return new ExpenseRemover();
     }
 
     /**

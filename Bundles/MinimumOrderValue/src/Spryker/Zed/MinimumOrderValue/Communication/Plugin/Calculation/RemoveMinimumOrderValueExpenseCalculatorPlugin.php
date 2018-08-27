@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueFacade getFacade()
  */
-class RemoveMinimumOrderValueExpensesFromQuoteCalculationPlugin extends AbstractPlugin implements CalculationPluginInterface
+class RemoveMinimumOrderValueExpenseCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
     /**
      * {@inheritdoc}

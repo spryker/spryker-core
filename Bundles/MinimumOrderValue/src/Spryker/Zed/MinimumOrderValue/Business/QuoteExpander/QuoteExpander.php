@@ -49,7 +49,7 @@ class QuoteExpander implements QuoteExpanderInterface
             return $quoteTransfer;
         }
 
-        $quoteTransfer->setMinimumOrderValueThresholds(
+        $quoteTransfer->setMinimumOrderValueThresholdCollection(
             (new ArrayObject($minimumOrderValueThresholdTransfers))
         );
 

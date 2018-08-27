@@ -10,11 +10,9 @@ namespace Spryker\Zed\MinimumOrderValue\Business\ExpenseCalculator;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig as SharedMinimumOrderValueConfig;
+use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
 use Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpanderInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
-use Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig;
 
 class ExpenseCalculator implements ExpenseCalculatorInterface
 {
@@ -29,23 +27,15 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
     protected $minimumOrderValueStrategyResolver;
 
     /**
-     * @var \Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig
-     */
-    protected $config;
-
-    /**
      * @param \Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpanderInterface $quoteExpander
      * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
-     * @param \Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig $config
      */
     public function __construct(
         QuoteExpanderInterface $quoteExpander,
-        MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver,
-        MinimumOrderValueConfig $config
+        MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
     ) {
         $this->quoteExpander = $quoteExpander;
         $this->minimumOrderValueStrategyResolver = $minimumOrderValueStrategyResolver;
-        $this->config = $config;
     }
 
     /**
@@ -53,47 +43,29 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
      *
      * @return void
      */
-    public function removeMinimumOrderValueExpensesFromQuote(CalculableObjectTransfer $calculableObjectTransfer): void
+    public function addMinimumOrderValueExpenses(CalculableObjectTransfer $calculableObjectTransfer): void
     {
-        $quoteTransfer = $calculableObjectTransfer->getOriginalQuote();
-        foreach ($quoteTransfer->getExpenses() as $expenseOffset => $expenseTransfer) {
-            if ($expenseTransfer->getType() === SharedMinimumOrderValueConfig::THRESHOLD_EXPENSE_TYPE) {
-                $quoteTransfer->getExpenses()->offsetUnset($expenseOffset);
-                continue;
-            }
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return void
-     */
-    public function addMinimumOrderValueExpensesToQuote(CalculableObjectTransfer $calculableObjectTransfer): void
-    {
-        $quoteTransfer = $calculableObjectTransfer->getOriginalQuote();
-
-        if (!$quoteTransfer->getMinimumOrderValueThresholds() || !$quoteTransfer->getMinimumOrderValueThresholds()->count()) {
-            $quoteTransfer = $this->quoteExpander->addMinimumOrderValueThresholdsToQuote($quoteTransfer);
-        }
+        $quoteTransfer = $this->quoteExpander->addMinimumOrderValueThresholdsToQuote(
+            $calculableObjectTransfer->getOriginalQuote()
+        );
 
         $minimumOrderValueThresholdTransfers = $this->filterMinimumOrderValuesByThresholdGroup(
-            $quoteTransfer->getMinimumOrderValueThresholds()->getArrayCopy(),
-            SharedMinimumOrderValueConfig::GROUP_SOFT
+            $quoteTransfer->getMinimumOrderValueThresholdCollection()->getArrayCopy(),
+            MinimumOrderValueConfig::GROUP_SOFT
         );
 
         foreach ($minimumOrderValueThresholdTransfers as $minimumOrderValueThresholdTransfer) {
-            $this->addExpenseToQuote($quoteTransfer, $minimumOrderValueThresholdTransfer);
+            $this->addExpense($calculableObjectTransfer, $minimumOrderValueThresholdTransfer);
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *
      * @return void
      */
-    protected function addExpenseToQuote(QuoteTransfer $quoteTransfer, MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): void
+    protected function addExpense(CalculableObjectTransfer $calculableObjectTransfer, MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): void
     {
         $this->assertRequiredAttributes($minimumOrderValueThresholdTransfer);
         $minimumOrderValueThresholdTransferStrategy = $this->minimumOrderValueStrategyResolver
@@ -103,13 +75,13 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
             return;
         }
 
-        $calculatedFees = $minimumOrderValueThresholdTransferStrategy->calculateFee($minimumOrderValueThresholdTransfer);
+        $calculatedFee = $minimumOrderValueThresholdTransferStrategy->calculateFee($minimumOrderValueThresholdTransfer);
 
-        if (!$calculatedFees) {
+        if (!$calculatedFee) {
             return;
         }
 
-        $this->addMinimumOrderValueExpenseToQuote($minimumOrderValueThresholdTransfer, $quoteTransfer, $calculatedFees);
+        $this->addMinimumOrderValueExpenseToCalculableObject($minimumOrderValueThresholdTransfer, $calculableObjectTransfer, $calculatedFee);
     }
 
     /**
@@ -134,8 +106,8 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
     {
         $minimumOrderValueThresholdTransfer
             ->requireMinimumOrderValueType()
-            ->requireSubTotal()
-            ->requireValue();
+            ->requireComparedToSubtotal()
+            ->requireThreshold();
 
         $minimumOrderValueThresholdTransfer->getMinimumOrderValueType()
             ->requireKey();
@@ -143,18 +115,18 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      * @param int $calculatedFees
      *
      * @return void
      */
-    protected function addMinimumOrderValueExpenseToQuote(
+    protected function addMinimumOrderValueExpenseToCalculableObject(
         MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer,
-        QuoteTransfer $quoteTransfer,
+        CalculableObjectTransfer $calculableObjectTransfer,
         int $calculatedFees
     ): void {
-        $quoteTransfer->addExpense(
-            $this->createExpenseByPriceMode($minimumOrderValueThresholdTransfer, $calculatedFees, $quoteTransfer->getPriceMode())
+        $calculableObjectTransfer->addExpense(
+            $this->createExpenseByPriceMode($minimumOrderValueThresholdTransfer, $calculatedFees, $calculableObjectTransfer->getPriceMode())
         );
     }
 
@@ -172,7 +144,7 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
     ): ExpenseTransfer {
         $expenseTransfer = (new ExpenseTransfer())
             ->setName($minimumOrderValueThresholdTransfer->getMinimumOrderValueType()->getKey())
-            ->setType(SharedMinimumOrderValueConfig::THRESHOLD_EXPENSE_TYPE)
+            ->setType(MinimumOrderValueConfig::THRESHOLD_EXPENSE_TYPE)
             ->setUnitPrice($expensePrice)
             ->setSumPrice($expensePrice)
             ->setUnitPriceToPayAggregation($expensePrice)
@@ -180,7 +152,7 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
             ->setTaxRate(5) //TODO: MOST IMPORTANT PART..PAGE TO SET TAX SET FOR MOV AND QUERY TO RETRIEVE + SET TAX RATE
             ->setQuantity(1);
 
-        if ($priceMode === $this->config->getNetPriceMode()) {
+        if ($priceMode === MinimumOrderValueConfig::PRICE_MODE_NET) {
             $expenseTransfer->setUnitGrossPrice(0);
             $expenseTransfer->setSumGrossPrice(0);
             $expenseTransfer->setUnitNetPrice($expensePrice);

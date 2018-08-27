@@ -144,23 +144,7 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addMinimumOrderValueThresholdsToQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->getFactory()
-            ->createQuoteExpander()
-            ->addMinimumOrderValueThresholdsToQuote($quoteTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function addMinimumOrderValueThresholdCartInfoMessages(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function addThresholdNotMetInfoMessages(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
             ->createThresholdMessenger()
@@ -179,7 +163,7 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
     public function removeMinimumOrderValueExpensesFromQuote(CalculableObjectTransfer $calculableObjectTransfer): void
     {
         $this->getFactory()
-            ->createExpenseCalculator()
+            ->createExpenseRemover()
             ->removeMinimumOrderValueExpensesFromQuote($calculableObjectTransfer);
     }
 
@@ -192,10 +176,10 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @return void
      */
-    public function addMinimumOrderValueExpensesToQuote(CalculableObjectTransfer $calculableObjectTransfer): void
+    public function addMinimumOrderValueExpenses(CalculableObjectTransfer $calculableObjectTransfer): void
     {
         $this->getFactory()
             ->createExpenseCalculator()
-            ->addMinimumOrderValueExpensesToQuote($calculableObjectTransfer);
+            ->addMinimumOrderValueExpenses($calculableObjectTransfer);
     }
 }
