@@ -28,7 +28,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAILS_CUSTOMER_ADDRESSES_NOT_FOUND = 'Customer does not have addresses.';
 
     public const RESPONSE_CODE_ADDRESS_NOT_FOUND = '404';
-    public const RESPONSE_DETAILS_ADDRESS_NOT_FOUND = 'Address not found.';
+    public const RESPONSE_DETAILS_ADDRESS_NOT_FOUND = 'Address was not found.';
 
     public const RESPONSE_CODE_CUSTOMER_ADDRESS_FAILED_TO_SAVE = '407';
     public const RESPONSE_DETAILS_CUSTOMER_ADDRESS_FAILED_TO_SAVE = 'Failed to save customer address.';
