@@ -58,18 +58,17 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     public function execute(DataSetInterface $dataSet): void
     {
         $dataSet = $this->normalizeDataSet($dataSet);
-        $productPackagingUnitTypeId = $this->getproductPackagingUnitTypeIdByname($dataSet[ProductPackagingUnitDataSetInterface::TYPE_NAME]);
-        $productConcreteId = $this->getProductConcreteIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::CONCRETE_SKU]);
+        $productPackagingUnitTypeId = $this->getIdProductPackagingUnitTypeByName($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_TYPE_NAME]);
+        $productConcreteId = $this->getIdProductBySku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]);
 
         $productPackagingUnitEntity = $this->getProductPackagingUnitQuery()
             ->filterByFkProduct($productConcreteId)
-            ->leftJoinWithSpyProductPackagingUnitAmount()
             ->findOneOrCreate();
 
         $this->persistLeadProduct($dataSet, $productConcreteId);
 
         $productPackagingUnitEntity
-            ->setHasLeadProduct($dataSet[ProductPackagingUnitDataSetInterface::HAS_LEAD_PRODUCT])
+            ->setHasLeadProduct($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_HAS_LEAD_PRODUCT])
             ->setFkProductPackagingUnitType($productPackagingUnitTypeId);
 
         $productPackagingUnitEntity->save();
