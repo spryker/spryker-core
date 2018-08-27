@@ -5,19 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyRole\Communication\Plugin\CompanyUser;
+namespace Spryker\Zed\CompanyRole\Communication\Plugin\CompanyUserExtension;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
-use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface;
+use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface getFacade()
  */
-class AssignRolesCompanyUserPostSavePlugin extends AbstractPlugin implements CompanyUserPostSavePluginInterface
+class AssignRolesCompanyUserPostCreatePlugin extends AbstractPlugin implements CompanyUserPostCreatePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Saves company user role collection if it's not empty.
+     * - Uses CompanyRoleFacade to save company user.
+     * - Is being called after new company user has been created and company roles were added to company user transfer.
      *
      * @api
      *
@@ -25,7 +28,7 @@ class AssignRolesCompanyUserPostSavePlugin extends AbstractPlugin implements Com
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function postSave(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
+    public function postCreate(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
         $companyUser = $companyUserResponseTransfer->getCompanyUser();
 

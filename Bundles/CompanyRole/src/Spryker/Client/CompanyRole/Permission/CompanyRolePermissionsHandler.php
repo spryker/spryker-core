@@ -15,7 +15,7 @@ use Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToPermissionClientIn
 
 class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInterface
 {
-    protected const PERMISSION_KEY_GLOSSARY_PREFIX = 'permission.name';
+    protected const PERMISSION_KEY_GLOSSARY_PREFIX = 'permission.name.';
 
     /**
      * @var \Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToPermissionClientInterface
@@ -85,7 +85,7 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
         $permissionAsArray = $permissionTransfer->toArray(false, true);
         $permissionAsArray[CompanyRoleTransfer::ID_COMPANY_ROLE] = null;
 
-        $permissionGlossaryKeyName = static::PERMISSION_KEY_GLOSSARY_PREFIX . '.' . $permissionAsArray[PermissionTransfer::KEY];
+        $permissionGlossaryKeyName = static::PERMISSION_KEY_GLOSSARY_PREFIX . $permissionAsArray[PermissionTransfer::KEY];
         $permissionAsArray[PermissionTransfer::KEY] = $permissionGlossaryKeyName;
 
         foreach ($companyRolePermissionTransfers as $rolePermission) {

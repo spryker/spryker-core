@@ -47,7 +47,7 @@ class CompanyRoleFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToZedRequestClientInterface
      */
-    protected function getZedRequestClient(): CompanyRoleToZedRequestClientInterface
+    public function getZedRequestClient(): CompanyRoleToZedRequestClientInterface
     {
         return $this->getProvidedDependency(CompanyRoleDependencyProvider::CLIENT_ZED_REQUEST);
     }
@@ -55,7 +55,7 @@ class CompanyRoleFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToPermissionClientInterface
      */
-    protected function getPermissionClient(): CompanyRoleToPermissionClientInterface
+    public function getPermissionClient(): CompanyRoleToPermissionClientInterface
     {
         return $this->getProvidedDependency(CompanyRoleDependencyProvider::CLIENT_PERMISSION);
     }
