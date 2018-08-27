@@ -21,7 +21,7 @@ class HardThresholdDataProvider implements ThresholdStrategyDataProviderInterfac
      */
     public function getData(array $data, MinimumOrderValueTransfer $minimumOrderValueTValueTransfer): array
     {
-        $data[GlobalThresholdType::FIELD_HARD_VALUE] = $minimumOrderValueTValueTransfer->getThreshold()->getValue();
+        $data[GlobalThresholdType::FIELD_HARD_VALUE] = $minimumOrderValueTValueTransfer->getThreshold()->getThreshold();
 
         foreach ($minimumOrderValueTValueTransfer->getLocalizedMessages() as $localizedMessage) {
             $localizedFormName = GlobalThresholdType::getLocalizedFormName(GlobalThresholdType::PREFIX_HARD, $localizedMessage->getLocaleCode());

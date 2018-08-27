@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\GlobalThresholdDataProvider;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\SettingsFormDataProvider;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\GlobalThresholdDataProviderResolver;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\GlobalThresholdDataProviderResolverInterface;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
@@ -19,12 +20,14 @@ use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalHardThresho
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalThresholdFormMapperInterface;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalThresholdMapperResolver;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalThresholdMapperResolverInterface;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\SettingsForm;
 use Spryker\Zed\MinimumOrderValueGui\Communication\StoreCurrency\StoreCurrencyFinder;
 use Spryker\Zed\MinimumOrderValueGui\Communication\StoreCurrency\StoreCurrencyFinderInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMinimumOrderValueFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMoneyFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToStoreFacadeInterface;
+use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToTaxFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\MinimumOrderValueGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
@@ -51,6 +54,30 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
             GlobalThresholdType::class,
             $formDataProvider->getData($minimumOrderValueTValueTransfers, $storeTransfer, $currencyTransfer),
             $formDataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\SettingsFormDataProvider $settingsFormDataProvider
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getSettingsForm(SettingsFormDataProvider $settingsFormDataProvider): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            SettingsForm::class,
+            $settingsFormDataProvider->getData(),
+            $settingsFormDataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\SettingsFormDataProvider
+     */
+    public function createSettingsFromDataProvider(): SettingsFormDataProvider
+    {
+        return new SettingsFormDataProvider(
+            $this->getTaxFacade()
         );
     }
 
@@ -157,5 +184,13 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(MinimumOrderValueGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToTaxFacadeInterface
+     */
+    public function getTaxFacade(): MinimumOrderValueGuiToTaxFacadeInterface
+    {
+        return $this->getProvidedDependency(MinimumOrderValueGuiDependencyProvider::FACADE_TAX);
     }
 }

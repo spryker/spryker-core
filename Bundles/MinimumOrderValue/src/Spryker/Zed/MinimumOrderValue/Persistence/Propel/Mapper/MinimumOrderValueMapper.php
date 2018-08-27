@@ -44,14 +44,10 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
         SpyMinimumOrderValue $minimumOrderValueEntity,
         MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): MinimumOrderValueTransfer {
-        $minimumOrderValueTransfer->setThreshold(
-            $minimumOrderValueTransfer->getThreshold() ?? (new MinimumOrderValueThresholdTransfer())
-        );
-
         $minimumOrderValueTransfer->fromArray($minimumOrderValueEntity->toArray(), true)
             ->setIdMinimumOrderValue($minimumOrderValueEntity->getIdMinOrderValue())
             ->setThreshold(
-                $minimumOrderValueTransfer->getThreshold()->fromArray($minimumOrderValueEntity->toArray(), true)
+                $this->mapMinimumOrderValueThresholdTransfer($minimumOrderValueTransfer, $minimumOrderValueEntity)
             )->setCurrency(
                 (new CurrencyTransfer())->fromArray($minimumOrderValueEntity->getCurrency()->toArray(), true)
             )->setStore(
@@ -70,5 +66,23 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
         );
 
         return $minimumOrderValueTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValue $minimumOrderValueEntity
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer
+     */
+    protected function mapMinimumOrderValueThresholdTransfer(MinimumOrderValueTransfer $minimumOrderValueTransfer, SpyMinimumOrderValue $minimumOrderValueEntity): MinimumOrderValueThresholdTransfer
+    {
+        $minimumOrderValueThresholdTransfer = $minimumOrderValueTransfer->getThreshold() ?? (new MinimumOrderValueThresholdTransfer());
+        $minimumOrderValueThresholdTransfer = $minimumOrderValueThresholdTransfer
+            ->fromArray($minimumOrderValueEntity->toArray(), true)
+            ->setFeeIfThresholdNotMet($minimumOrderValueEntity->getFee())
+            ->setThreshold($minimumOrderValueEntity->getValue())
+            ->setThresholdNotMetMessageGlossaryKey($minimumOrderValueEntity->getMessageGlossaryKey());
+
+        return $minimumOrderValueThresholdTransfer;
     }
 }

@@ -57,7 +57,7 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array {
-        $minimumOrderValueTValueEntities = $this->getFactory()
+        $minimumOrderValueEntities = $this->getFactory()
             ->createMinimumOrderValueQuery()
             ->filterByStoreTransfer($storeTransfer)
             ->filterByCurrencyTransfer($currencyTransfer)
@@ -70,7 +70,7 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
 
         $minimumOrderValueMapper = $this->getFactory()->createMinimumOrderValueMapper();
 
-        foreach ($minimumOrderValueTValueEntities as $globalMinOrderValueEntity) {
+        foreach ($minimumOrderValueEntities as $globalMinOrderValueEntity) {
             $minimumOrderValueTransfer = $minimumOrderValueMapper->mapMinimumOrderValueEntityToTransfer(
                 $globalMinOrderValueEntity,
                 new MinimumOrderValueTransfer()
