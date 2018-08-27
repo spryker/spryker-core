@@ -17,6 +17,7 @@
 
     <transfer name="CompanyRole">
         <property name="idCompanyRole" type="int"/>
+        <property name="key" type="string"/>
         <property name="fkCompany" type="int"/>
         <property name="name" type="string"/>
         <property name="isDefault" type="bool"/>

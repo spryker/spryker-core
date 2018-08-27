@@ -6,6 +6,7 @@
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="is_default" type="BOOLEAN" required="true" defaultValue="false"/>
         <column name="fk_company" type="INTEGER" required="true"/>
+        <column name="key" type="VARCHAR" size="255" description="Key is an identifier for existing entities. This should never be changed."/>
 
         <foreign-key name="spy_company_role-fk_company" foreignTable="spy_company" phpName="Company" refPhpName="CompanyRole">
             <reference local="fk_company" foreign="id_company"/>
