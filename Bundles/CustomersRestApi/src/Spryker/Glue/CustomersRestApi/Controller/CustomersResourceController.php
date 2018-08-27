@@ -44,14 +44,13 @@ class CustomersResourceController extends AbstractController
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function deleteAction(RestRequestInterface $restRequest, RestCustomersAttributesTransfer $restCustomersAttributesTransfer): RestResponseInterface
+    public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
             ->createCustomersWriter()
-            ->anonymizeCustomer($restCustomersAttributesTransfer);
+            ->anonymizeCustomer($restRequest);
     }
 }

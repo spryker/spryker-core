@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -138,15 +139,15 @@ class CustomersWriter implements CustomersWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function anonymizeCustomer(RestCustomersAttributesTransfer $restCustomersAttributesTransfer): RestResponseInterface
+    public function anonymizeCustomer(RestRequestInterface $restRequest): RestResponseInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $customerTransfer = $this->customersResourceMapper->mapCustomerAttributesToCustomerTransfer($restCustomersAttributesTransfer);
+        $customerTransfer = (new CustomerTransfer)->setCustomerReference($restRequest->getResource()->getId());
         $customerTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
         if (!$customerTransfer) {

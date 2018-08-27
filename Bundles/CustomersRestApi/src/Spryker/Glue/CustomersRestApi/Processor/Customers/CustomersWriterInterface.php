@@ -30,9 +30,9 @@ interface CustomersWriterInterface
     public function updateCustomerPassword(RestRequestInterface $restRequest, RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomerTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function anonymizeCustomer(RestCustomersAttributesTransfer $restCustomerTransfer): RestResponseInterface;
+    public function anonymizeCustomer(RestRequestInterface $restRequest): RestResponseInterface;
 }
