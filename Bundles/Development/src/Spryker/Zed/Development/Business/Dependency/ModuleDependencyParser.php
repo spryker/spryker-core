@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Business\Dependency;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContext;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface;
@@ -43,19 +44,19 @@ class ModuleDependencyParser implements ModuleDependencyParserInterface
     }
 
     /**
-     * @param string $module
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      * @param string|null $dependencyType
      *
      * @return \Generated\Shared\Transfer\DependencyCollectionTransfer
      */
-    public function parseOutgoingDependencies(string $module, ?string $dependencyType = null): DependencyCollectionTransfer
+    public function parseOutgoingDependencies(ModuleTransfer $moduleTransfer, ?string $dependencyType = null): DependencyCollectionTransfer
     {
-        $dependencyContainer = $this->dependencyContainer->initialize($module);
+        $dependencyContainer = $this->dependencyContainer->initialize($moduleTransfer);
 
-        $moduleFiles = $this->moduleFileFinder->find($module);
+        $moduleFiles = $this->moduleFileFinder->find($moduleTransfer);
 
         foreach ($moduleFiles as $moduleFile) {
-            $dependencyFinderContext = new DependencyFinderContext($module, $moduleFile, $dependencyType);
+            $dependencyFinderContext = new DependencyFinderContext($moduleTransfer, $moduleFile, $dependencyType);
             $dependencyContainer = $this->dependencyFinder->findDependencies($dependencyFinderContext, $dependencyContainer);
         }
 

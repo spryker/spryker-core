@@ -62,10 +62,21 @@ class ModuleFinder implements ModuleFinderInterface
             $moduleTransfer = $this->getModuleTransfer($directoryInfo);
             $moduleTransfer->setIsStandalone(true);
 
-            $moduleTransferCollection[$moduleTransfer->getName()] = $moduleTransfer;
+            $moduleTransferCollection[$this->buildCollectionKey($moduleTransfer)] = $moduleTransfer;
+            $moduleTransferCollection[$moduleTransfer->getName()][] = $moduleTransfer;
         }
 
         return $moduleTransferCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return string
+     */
+    protected function buildCollectionKey(ModuleTransfer $moduleTransfer): string
+    {
+        return sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());
     }
 
     /**
@@ -80,7 +91,8 @@ class ModuleFinder implements ModuleFinderInterface
         foreach ($moduleDirectories as $directoryInfo) {
             $moduleTransfer = $this->getModuleTransfer($directoryInfo);
 
-            $moduleTransferCollection[$moduleTransfer->getName()] = $moduleTransfer;
+            $moduleTransferCollection[$this->buildCollectionKey($moduleTransfer)] = $moduleTransfer;
+            $moduleTransferCollection[$moduleTransfer->getName()][] = $moduleTransfer;
         }
 
         return $moduleTransferCollection;

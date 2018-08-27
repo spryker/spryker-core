@@ -136,11 +136,13 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function getModules()
+    public function getModules(): array
     {
         return $this->getFactory()->createModuleFinder()->find();
     }

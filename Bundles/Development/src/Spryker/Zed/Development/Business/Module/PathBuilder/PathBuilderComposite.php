@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Development\Business\Module\PathBuilder;
 
+use Generated\Shared\Transfer\ModuleTransfer;
+
 class PathBuilderComposite implements PathBuilderInterface
 {
     /**
@@ -23,17 +25,30 @@ class PathBuilderComposite implements PathBuilderInterface
     }
 
     /**
-     * @param string $module
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
      * @return array
      */
-    public function buildPaths(string $module): array
+    public function buildPaths(ModuleTransfer $moduleTransfer): array
     {
         $moduleFilePaths = [];
         foreach ($this->pathBuilder as $pathBuilder) {
-            $moduleFilePaths = array_merge($moduleFilePaths, $pathBuilder->buildPaths($module));
+            if (!$pathBuilder->accept($moduleTransfer)) {
+                continue;
+            }
+            $moduleFilePaths = array_merge($moduleFilePaths, $pathBuilder->buildPaths($moduleTransfer));
         }
 
         return $moduleFilePaths;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return bool
+     */
+    public function accept(ModuleTransfer $moduleTransfer): bool
+    {
+        return true;
     }
 }

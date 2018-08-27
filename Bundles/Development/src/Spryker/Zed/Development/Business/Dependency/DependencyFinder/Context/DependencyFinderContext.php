@@ -7,14 +7,15 @@
 
 namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context;
 
+use Generated\Shared\Transfer\ModuleTransfer;
 use Symfony\Component\Finder\SplFileInfo;
 
 class DependencyFinderContext implements DependencyFinderContextInterface
 {
     /**
-     * @var string
+     * @var \Generated\Shared\Transfer\ModuleTransfer
      */
-    protected $module;
+    protected $moduleTransfer;
 
     /**
      * @var \Symfony\Component\Finder\SplFileInfo
@@ -27,23 +28,23 @@ class DependencyFinderContext implements DependencyFinderContextInterface
     protected $dependencyType;
 
     /**
-     * @param string $module
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      * @param string|null $dependencyType
      */
-    public function __construct(string $module, SplFileInfo $fileInfo, ?string $dependencyType = null)
+    public function __construct(ModuleTransfer $moduleTransfer, SplFileInfo $fileInfo, ?string $dependencyType = null)
     {
-        $this->module = $module;
+        $this->moduleTransfer = $moduleTransfer;
         $this->fileInfo = $fileInfo;
         $this->dependencyType = $dependencyType;
     }
 
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\ModuleTransfer
      */
-    public function getModule(): string
+    public function getModule(): ModuleTransfer
     {
-        return $this->module;
+        return $this->moduleTransfer;
     }
 
     /**

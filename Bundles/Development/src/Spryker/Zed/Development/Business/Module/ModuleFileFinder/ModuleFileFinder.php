@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Business\Module\ModuleFileFinder;
 
 use Exception;
+use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Development\Business\Module\PathBuilder\PathBuilderInterface;
 use Symfony\Component\Finder\Finder;
 
@@ -27,19 +28,19 @@ class ModuleFileFinder implements ModuleFileFinderInterface
     }
 
     /**
-     * @param string $module
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
      * @throws \Exception
      *
      * @return \Symfony\Component\Finder\Finder
      */
-    public function find(string $module): Finder
+    public function find(ModuleTransfer $moduleTransfer): Finder
     {
-        $directories = $this->pathBuilder->buildPaths($module);
+        $directories = $this->pathBuilder->buildPaths($moduleTransfer);
         $directories = array_filter($directories, 'glob');
 
         if (count($directories) === 0) {
-            throw new Exception(sprintf('Could not find directories for the "%s" module.', $module));
+            throw new Exception(sprintf('Could not find directories for the "%s" module.', $moduleTransfer->getName()));
         }
 
         $finder = new Finder();

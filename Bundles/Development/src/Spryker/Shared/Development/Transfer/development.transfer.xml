@@ -21,7 +21,7 @@
     </transfer>
 
     <transfer name="DependencyCollection">
-        <property name="module" type="string"/>
+        <property name="module" type="Module"/>
         <property name="dependencyModules" type="DependencyModule[]" singular="dependencyModule"/>
     </transfer>
 
@@ -72,7 +72,7 @@
     </transfer>
 
     <transfer name="DependencyValidationRequest">
-        <property name="module" type="string"/>
+        <property name="module" type="Module"/>
         <property name="dependencyType" type="string"/>
     </transfer>
 

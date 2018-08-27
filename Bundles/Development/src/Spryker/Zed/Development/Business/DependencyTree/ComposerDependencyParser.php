@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ComposerDependencyTransfer;
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyModuleTransfer;
 use Generated\Shared\Transfer\DependencyTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface;
 use Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException;
 use Symfony\Component\Finder\SplFileInfo;
@@ -64,7 +65,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
         $dependencies = [];
 
         foreach ($allModuleNames as $moduleName) {
-            if ($dependencyCollectionTransfer->getModule() === $moduleName) {
+            if ($dependencyCollectionTransfer->getModule()->getName() === $moduleName) {
                 continue;
             }
 
@@ -289,43 +290,36 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     }
 
     /**
-     * @param string $moduleName
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
      * @throws \Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException
      *
      * @return \Generated\Shared\Transfer\ComposerDependencyCollectionTransfer
      */
-    protected function getParsedComposerDependenciesForBundle($moduleName)
+    protected function getParsedComposerDependenciesForBundle(ModuleTransfer $moduleTransfer)
     {
-        $composerJsonFiles = $this->finder->findAll();
-
         $composerDependencies = new ComposerDependencyCollectionTransfer();
 
-        foreach ($composerJsonFiles as $composerJsonFile) {
-            if ($this->shouldSkip($composerJsonFile, $moduleName)) {
-                continue;
-            }
+        $composerJsonFilePath = sprintf('%s/composer.json', $moduleTransfer->getRootDirectory());
+        $content = file_get_contents($composerJsonFilePath);
+        $content = json_decode($content, true);
 
-            $content = file_get_contents($composerJsonFile);
-            $content = json_decode($content, true);
-
-            if (json_last_error()) {
-                throw new InvalidComposerJsonException(sprintf(
-                    'Unable to parse %s: %s.',
-                    $composerJsonFile,
-                    json_last_error_msg()
-                ));
-            }
-
-            $require = isset($content['require']) ? $content['require'] : [];
-            $this->addComposerDependencies($require, $composerDependencies);
-
-            $requireDev = isset($content['require-dev']) ? $content['require-dev'] : [];
-            $this->addComposerDependencies($requireDev, $composerDependencies, true);
-
-            $suggested = isset($content['suggest']) ? $content['suggest'] : [];
-            $this->addSuggestedDependencies($suggested, $composerDependencies);
+        if (json_last_error()) {
+            throw new InvalidComposerJsonException(sprintf(
+                'Unable to parse %s: %s.',
+                $composerJsonFilePath,
+                json_last_error_msg()
+            ));
         }
+
+        $require = isset($content['require']) ? $content['require'] : [];
+        $this->addComposerDependencies($require, $composerDependencies);
+
+        $requireDev = isset($content['require-dev']) ? $content['require-dev'] : [];
+        $this->addComposerDependencies($requireDev, $composerDependencies, true);
+
+        $suggested = isset($content['suggest']) ? $content['suggest'] : [];
+        $this->addSuggestedDependencies($suggested, $composerDependencies);
 
         return $composerDependencies;
     }
@@ -414,7 +408,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      */
     protected function isOwnExtensionModule($moduleName, $dependencyCollectionTransfer)
     {
-        return $moduleName === $dependencyCollectionTransfer->getModule() . 'Extension';
+        return $moduleName === $dependencyCollectionTransfer->getModule()->getName() . 'Extension';
     }
 
     /**

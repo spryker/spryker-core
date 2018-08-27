@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Communication\Console;
 
 use ArrayObject;
+use Exception;
 use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface;
@@ -44,7 +45,7 @@ class DependencyViolationFixConsole extends Console
 
         $this
             ->setName(static::COMMAND_NAME)
-            ->addArgument(static::ARGUMENT_MODULE, InputArgument::OPTIONAL, 'Module to run composer dependency fix for.')
+            ->addArgument(static::ARGUMENT_MODULE, InputArgument::OPTIONAL, 'Module to run composer dependency fix for. You must use dot syntax for namespaced ones, e.g. `SprykerEco.FooBar`.')
             ->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-run the command, changed composer.json will not be saved.')
             ->setDescription('Fix dependency violations in composer.json.');
     }
@@ -60,31 +61,31 @@ class DependencyViolationFixConsole extends Console
         $modulesToValidate = $this->getModulesToForViolationFix($input);
 
         if ($this->isSingleModuleFix($modulesToValidate) && !$this->isModuleNameValid($modulesToValidate)) {
-            $output->writeln(sprintf('Requested module <fg=green>%s</> not found in current scope.', current($modulesToValidate)));
+            $namespacedModuleName = $this->buildCollectionKey($modulesToValidate);
+            $output->writeln(sprintf('Requested module <fg=green>%s</> not found in current scope.', $namespacedModuleName));
 
             return static::CODE_ERROR;
         }
 
-        foreach ($modulesToValidate as $moduleName => $moduleTransfer) {
+        foreach ($modulesToValidate as $moduleTransfer) {
             if ($moduleTransfer->getIsStandalone()) {
                 $output->writeln(sprintf('<fg=yellow>%s</> is a standalone module and will be skipped.', $moduleTransfer->getName()));
                 $output->writeln('');
                 continue;
             }
-            $this->fixModuleDependencies($moduleName, $moduleTransfer, $output);
+            $this->fixModuleDependencies($moduleTransfer, $output);
         }
     }
 
     /**
-     * @param string $moduleToValidate
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
-    protected function fixModuleDependencies(string $moduleToValidate, ModuleTransfer $moduleTransfer, OutputInterface $output): void
+    protected function fixModuleDependencies(ModuleTransfer $moduleTransfer, OutputInterface $output): void
     {
-        $moduleDependencyTransferCollection = $this->getModuleDependencies($moduleToValidate);
+        $moduleDependencyTransferCollection = $this->getModuleDependencies($moduleTransfer);
 
         $moduleViolationCount = $this->getDependencyViolationCount($moduleDependencyTransferCollection);
         if ($moduleViolationCount > 0) {
@@ -93,7 +94,7 @@ class DependencyViolationFixConsole extends Console
             $composerJsonArray = json_decode($composerJsonContent, true);
 
             $output->writeln('');
-            $output->writeln(sprintf('Fixing dependencies in <fg=yellow>%s</>', $moduleToValidate));
+            $output->writeln(sprintf('Fixing dependencies in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
 
             foreach ($moduleDependencyTransferCollection as $moduleDependencyTransfer) {
                 if ($moduleDependencyTransfer->getIsValid()) {
@@ -101,9 +102,9 @@ class DependencyViolationFixConsole extends Console
                 }
 
                 $module = $moduleDependencyTransfer->getModule();
-                $moduleTransfer = $this->getModuleTransfer($module);
+                $dependencyModuleTransfer = $this->getModuleTransfer($module);
 
-                $moduleNameToFix = sprintf('%s/%s', $moduleTransfer->getOrganization()->getNameDashed(), $moduleTransfer->getNameDashed());
+                $moduleNameToFix = sprintf('%s/%s', $dependencyModuleTransfer->getOrganization()->getNameDashed(), $dependencyModuleTransfer->getNameDashed());
 
                 $validationMessagesTransferCollection = $moduleDependencyTransfer->getValidationMessages();
                 foreach ($validationMessagesTransferCollection as $validationMessageTransfer) {
@@ -142,7 +143,7 @@ class DependencyViolationFixConsole extends Console
                 }
             }
 
-            $output->writeln(sprintf('Fixed dependencies in <fg=yellow>%s</>', $moduleToValidate));
+            $output->writeln(sprintf('Fixed dependencies in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
 
             if ($this->input->getOption(static::OPTION_DRY_RUN)) {
                 return;
@@ -179,14 +180,14 @@ class DependencyViolationFixConsole extends Console
     }
 
     /**
-     * @param string $moduleToValidate
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
      * @return \Generated\Shared\Transfer\ModuleDependencyTransfer[]|\ArrayObject
      */
-    protected function getModuleDependencies(string $moduleToValidate): ArrayObject
+    protected function getModuleDependencies(ModuleTransfer $moduleTransfer): ArrayObject
     {
         $dependencyValidationRequestTransfer = new DependencyValidationRequestTransfer();
-        $dependencyValidationRequestTransfer->setModule($moduleToValidate);
+        $dependencyValidationRequestTransfer->setModule($moduleTransfer);
 
         $dependencyValidationResponseTransfer = $this->getFacade()->validateModuleDependencies($dependencyValidationRequestTransfer);
 
@@ -215,7 +216,38 @@ class DependencyViolationFixConsole extends Console
      */
     protected function getModuleTransfer(string $module): ModuleTransfer
     {
-        return $this->getModuleTransferCollection()[$module];
+        if ($this->isNamespacedModuleName($module)) {
+            return $this->getModuleTransferCollection()[$module];
+        }
+
+        return $this->getFromModuleTransferCollectionByModuleName($module);
+    }
+
+    /**
+     * @param string $module
+     *
+     * @return bool
+     */
+    protected function isNamespacedModuleName(string $module): bool
+    {
+        return (strpos($module, '.') !== false);
+    }
+
+    /**
+     * @param string $module
+     *
+     * @throws \Exception
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer
+     */
+    protected function getFromModuleTransferCollectionByModuleName(string $module): ModuleTransfer
+    {
+        $moduleTransferCollection = $this->getModuleTransferCollection()[$module];
+        if (count($moduleTransferCollection) > 1) {
+            throw new Exception(sprintf('Module name "%s" is not unique across namespaces', $module));
+        }
+
+        return current($moduleTransferCollection);
     }
 
     /**
@@ -225,15 +257,15 @@ class DependencyViolationFixConsole extends Console
      */
     protected function getModulesToForViolationFix(InputInterface $input): array
     {
-        $modules = $this->getModuleTransferCollection();
+        $moduleTransferCollection = $this->getModuleTransferCollection();
         $module = $input->getArgument(static::ARGUMENT_MODULE);
 
         if ($module) {
             $moduleTransfer = $this->getModuleTransfer($module);
-            $modules = [$module => $moduleTransfer];
+            $moduleTransferCollection = [$module => $moduleTransfer];
         }
 
-        return $modules;
+        return $moduleTransferCollection;
     }
 
     /**
@@ -269,13 +301,34 @@ class DependencyViolationFixConsole extends Console
      */
     protected function isModuleNameValid(array $modulesToValidate): bool
     {
-        $moduleNames = $this->getModuleTransferCollection();
-        $currentModule = current($modulesToValidate);
+        $moduleTransferCollection = $this->getModuleTransferCollection();
+        $currentModule = $this->getCurrentModule($modulesToValidate);
+        $collectionKey = $this->buildCollectionKey($currentModule);
 
-        if (!isset($moduleNames[$currentModule->getName()])) {
+        if (!isset($moduleTransferCollection[$collectionKey])) {
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * @param array $modulesToValidate
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer
+     */
+    protected function getCurrentModule(array $modulesToValidate): ModuleTransfer
+    {
+        return current($modulesToValidate);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return string
+     */
+    protected function buildCollectionKey(ModuleTransfer $moduleTransfer): string
+    {
+        return sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());
     }
 }

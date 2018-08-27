@@ -7,14 +7,15 @@
 
 namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context;
 
+use Generated\Shared\Transfer\ModuleTransfer;
 use Symfony\Component\Finder\SplFileInfo;
 
 interface DependencyFinderContextInterface
 {
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\ModuleTransfer
      */
-    public function getModule(): string;
+    public function getModule(): ModuleTransfer;
 
     /**
      * @return \Symfony\Component\Finder\SplFileInfo

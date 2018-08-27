@@ -107,7 +107,7 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
         $dependencyModules = [];
         $useStatements = $this->useStatementParser->getUseStatements($context->getFileInfo());
 
-        $modules = $this->getModuleNamesFromUseStatements($useStatements, $context->getModule());
+        $modules = $this->getModuleNamesFromUseStatements($useStatements, $context->getModule()->getName());
 
         if (count($modules) > 0) {
             $dependencyModules[$context->getFileInfo()->getRealPath()] = array_unique($modules);

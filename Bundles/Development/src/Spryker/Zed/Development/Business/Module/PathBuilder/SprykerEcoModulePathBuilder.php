@@ -7,8 +7,15 @@
 
 namespace Spryker\Zed\Development\Business\Module\PathBuilder;
 
+use Generated\Shared\Transfer\ModuleTransfer;
+
 class SprykerEcoModulePathBuilder extends AbstractPathBuilder
 {
+    /**
+     * @var string
+     */
+    protected const ORGANIZATION = 'SprykerEco';
+
     /**
      * @var string
      */
@@ -23,16 +30,24 @@ class SprykerEcoModulePathBuilder extends AbstractPathBuilder
     }
 
     /**
-     * @param string $module
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
      * @return array
      */
-    public function buildPaths(string $module): array
+    public function buildPaths(ModuleTransfer $moduleTransfer): array
     {
-        $paths = [
-            sprintf('%s%s/', $this->basePath, $module),
+        return [
+            sprintf('%s%s/', $this->basePath, $moduleTransfer->getNameDashed()),
         ];
+    }
 
-        return $paths;
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return bool
+     */
+    public function accept(ModuleTransfer $moduleTransfer): bool
+    {
+        return ($moduleTransfer->getOrganization()->getName() === static::ORGANIZATION);
     }
 }

@@ -91,11 +91,19 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
+     * @deprecated Please use `getModules()` instead.
+     *
      * @return array
      */
     public function getAllModules();
 
     /**
+     * Specification:
+     * - Loads all modules in all added module directories.
+     * - Creates an array of ModuleTransfer objects.
+     * - ModuleTransfer objects also contain an OrganizationTransfer object.
+     * - The key of the returned array is `OrganizationName.ModuleName`.
+     *
      * @api
      *
      * @return array

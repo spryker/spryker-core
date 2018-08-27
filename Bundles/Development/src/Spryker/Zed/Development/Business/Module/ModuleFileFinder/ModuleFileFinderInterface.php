@@ -7,14 +7,15 @@
 
 namespace Spryker\Zed\Development\Business\Module\ModuleFileFinder;
 
+use Generated\Shared\Transfer\ModuleTransfer;
 use Symfony\Component\Finder\Finder;
 
 interface ModuleFileFinderInterface
 {
     /**
-     * @param string $module
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
      * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
-    public function find(string $module): Finder;
+    public function find(ModuleTransfer $moduleTransfer): Finder;
 }

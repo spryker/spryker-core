@@ -7,12 +7,21 @@
 
 namespace Spryker\Zed\Development\Business\Module\PathBuilder;
 
+use Generated\Shared\Transfer\ModuleTransfer;
+
 interface PathBuilderInterface
 {
     /**
-     * @param string $module
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return bool
+     */
+    public function accept(ModuleTransfer $moduleTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
      * @return array
      */
-    public function buildPaths(string $module): array;
+    public function buildPaths(ModuleTransfer $moduleTransfer): array;
 }

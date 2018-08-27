@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\Development\Business\Module\PathBuilder;
 
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToDash;
+use Generated\Shared\Transfer\ModuleTransfer;
 
 class SprykerStandAloneModulePathBuilder extends AbstractPathBuilder
 {
+    /**
+     * @var string
+     */
+    protected const ORGANIZATION = 'Spryker';
+
     /**
      * @var string
      */
@@ -24,31 +27,26 @@ class SprykerStandAloneModulePathBuilder extends AbstractPathBuilder
     }
 
     /**
-     * @param string $module
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
      * @return array
      */
-    public function buildPaths(string $module): array
+    public function buildPaths(ModuleTransfer $moduleTransfer): array
     {
         $paths = [
-            sprintf('%s%s/', $this->basePath, $this->dasherize($module)),
+            sprintf('%s%s/', $this->basePath, $moduleTransfer->getNameDashed()),
         ];
 
         return $paths;
     }
 
     /**
-     * @param string $module
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
-     * @return string
+     * @return bool
      */
-    protected function dasherize(string $module): string
+    public function accept(ModuleTransfer $moduleTransfer): bool
     {
-        $filterChain = new FilterChain();
-        $filterChain
-            ->attach(new CamelCaseToDash())
-            ->attach(new StringToLower());
-
-        return $filterChain->filter($module);
+        return ($moduleTransfer->getOrganization()->getName() === static::ORGANIZATION);
     }
 }
