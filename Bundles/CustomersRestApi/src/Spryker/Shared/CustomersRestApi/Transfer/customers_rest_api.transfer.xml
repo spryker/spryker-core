@@ -52,6 +52,13 @@
         <property name="phone" type="string" />
         <property name="isDefaultShipping" type="bool" />
         <property name="isDefaultBilling" type="bool" />
+        <property name="uuid" type="string" />
+    </transfer>
+
+    <transfer name="RestCustomerPasswordAttributes">
+        <property name="password" type="string" />
+        <property name="newPassword" type="string" />
+        <property name="confirmPassword" type="string" />
     </transfer>
 
     <transfer name="Address">

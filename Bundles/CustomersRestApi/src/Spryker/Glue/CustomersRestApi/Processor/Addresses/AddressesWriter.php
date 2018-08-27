@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Addresses;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
@@ -14,6 +15,7 @@ use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerCl
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class AddressesWriter implements AddressesWriterInterface
@@ -66,16 +68,12 @@ class AddressesWriter implements AddressesWriterInterface
             return $response;
         }
 
-        $addressTransfer = $this
-            ->addressesResourceMapper
-            ->mapRestAddressAttributesTransferToAddressTransfer(
-                $addressAttributesTransfer,
-                $customerTransfer->getIdCustomer()
-            );
+        $addressTransfer = $this->addressesResourceMapper->mapRestAddressAttributesTransferToAddressTransfer($addressAttributesTransfer);
+        $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
 
         $addressTransfer = $this->customerClient->createAddress($addressTransfer);
 
-        if (!$addressTransfer) {
+        if (!$addressTransfer->getUuid()) {
             $response->addError($this->createErrorAddressNotSaved());
 
             return $response;
@@ -91,6 +89,29 @@ class AddressesWriter implements AddressesWriterInterface
         $response->addResource($restResource);
 
         return $response;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function deleteAddress(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        $addressTransfer = (new AddressTransfer())->setUuid($restRequest->getResource()->getId());
+        $addressTransfer = $this->customerClient->findAddressByUuid($addressTransfer);
+
+        if (!$addressTransfer) {
+            $restResponse->addError($this->createErrorAddressNotFound());
+
+            return $restResponse;
+        }
+
+        $this->customerClient->deleteAddress($addressTransfer);
+
+        return $restResponse;
     }
 
     /**
@@ -113,5 +134,16 @@ class AddressesWriter implements AddressesWriterInterface
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ADDRESS_FAILED_TO_SAVE)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_ADDRESS_FAILED_TO_SAVE);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createErrorAddressNotFound(): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_ADDRESS_NOT_FOUND);
     }
 }
