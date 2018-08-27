@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CompanyRoleDataImport\Business\Model\CompanyRole;
 
-use Orm\Zed\CompanyRole\Persistence\Map\SpyCompanyRoleTableMap;
-use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleToCompanyUserQuery;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
@@ -17,8 +15,13 @@ use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
-class CompanyUserRoleWriterStep implements DataImportStepInterface
+class CompanyUserRoleWriterStep extends AbstractCompanyRoleWriterStep implements DataImportStepInterface
 {
+    /**
+     * @var int[]
+     */
+    protected $idCompanyUserListCache = [];
+
     /**
      * @module CompanyUser
      *
@@ -40,26 +43,6 @@ class CompanyUserRoleWriterStep implements DataImportStepInterface
     }
 
     /**
-     * @param string $companyRoleKey
-     *
-     * @throws \Pyz\Zed\DataImport\Business\Exception\EntityNotFoundException
-     *
-     * @return int
-     */
-    protected function getIdCompanyRoleByKey(string $companyRoleKey): int
-    {
-        $idCompanyRole = $this->getCompanyRoleQuery()
-            ->select(SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE)
-            ->findOneByKey($companyRoleKey);
-
-        if (!$idCompanyRole) {
-            throw new EntityNotFoundException(sprintf('Could not find company role by key "%s"', $companyRoleKey));
-        }
-
-        return $idCompanyRole;
-    }
-
-    /**
      * @param string $companyUserKey
      *
      * @throws \Pyz\Zed\DataImport\Business\Exception\EntityNotFoundException
@@ -68,23 +51,20 @@ class CompanyUserRoleWriterStep implements DataImportStepInterface
      */
     protected function getIdCompanyUserByKey(string $companyUserKey): int
     {
-        $idCompanyUser = $this->getCompanyUserQuery()
-            ->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER)
-            ->findOneByKey($companyUserKey);
+        if (!isset($this->idCompanyUserListCache[$companyUserKey])) {
+            $idCompanyUser = $this->getCompanyUserQuery()
+                ->filterByKey($companyUserKey)
+                ->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER)
+                ->findOne();
 
-        if (!$idCompanyUser) {
-            throw new EntityNotFoundException(sprintf('Could not find company user by key "%s"', $companyUserKey));
+            if (!$idCompanyUser) {
+                throw new EntityNotFoundException(sprintf('Could not find company user by key "%s"', $companyUserKey));
+            }
+
+            $this->idCompanyUserListCache[$companyUserKey] = $idCompanyUser;
         }
 
-        return $idCompanyUser;
-    }
-
-    /**
-     * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery
-     */
-    protected function getCompanyRoleQuery(): SpyCompanyRoleQuery
-    {
-        return SpyCompanyRoleQuery::create();
+        return $this->idCompanyUserListCache[$companyUserKey];
     }
 
     /**

@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\CompanyRoleDataImport\Communication\Plugin\DataImport;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use Spryker\Zed\CompanyRoleDataImport\Communication\Plugin\DataImport\CompanyRoleDataImportPlugin;
+use Spryker\Zed\CompanyRoleDataImport\Communication\Plugin\DataImport\CompanyUserRoleDataImportPlugin;
 use Spryker\Zed\CompanyRoleDataImport\CompanyRoleDataImportConfig;
 
 /**
@@ -21,32 +21,32 @@ use Spryker\Zed\CompanyRoleDataImport\CompanyRoleDataImportConfig;
  * @group Communication
  * @group Plugin
  * @group DataImport
- * @group CompanyRoleDataImportPluginTest
+ * @group CompanyUserRoleDataImportPluginTest
  * Add your own group annotations below this line
  */
-class CompanyRoleDataImportPluginTest extends AbstractCompanyRoleDataImportMock
+class CompanyUserRoleDataImportPluginTest extends AbstractCompanyRoleDataImportMock
 {
     /**
      * @return void
      */
-    public function testImportCompanyRoleData(): void
+    public function testImportCompanyUserRoleData(): void
     {
-        $this->tester->truncateCompanyRoles();
-        $this->tester->assertCompanyRoleTableIsEmtpy();
+        $this->tester->truncateCompanyToCompanyUserRoles();
+        $this->tester->assertCompanyRoleToCompanyUserTableIsEmtpy();
 
         $dataImporterReaderConfigurationTransfer = (new DataImporterReaderConfigurationTransfer())
-            ->setFileName(codecept_data_dir() . 'import/company_role.csv');
+            ->setFileName(codecept_data_dir() . 'import/company_user_role.csv');
 
         $dataImportConfigurationTransfer = (new DataImporterConfigurationTransfer())
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
             ->setThrowException(true);
 
-        $dataImporterReportTransfer = $this->getCompanyRoleDataImportPlugin()->import($dataImportConfigurationTransfer);
+        $dataImporterReportTransfer = $this->getCompanyUserRoleDataImportPlugin()->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertCompanyRoleTableHasRecords();
+        $this->tester->assertCompanyRoleToCompanyUserTableHasRecords();
     }
 
     /**
@@ -54,24 +54,24 @@ class CompanyRoleDataImportPluginTest extends AbstractCompanyRoleDataImportMock
      *
      * @return void
      */
-    public function testImportCompanyRoleWithInvalidCompany(): void
+    public function testImportCompanyUserRoleWithInvlaidCompanyUser(): void
     {
-        $this->tester->truncateCompanyRoles();
-        $this->tester->assertCompanyRoleTableIsEmtpy();
+        $this->tester->truncateCompanyToCompanyUserRoles();
+        $this->tester->assertCompanyRoleToCompanyUserTableIsEmtpy();
 
         $dataImporterReaderConfigurationTransfer = (new DataImporterReaderConfigurationTransfer())
-            ->setFileName(codecept_data_dir() . 'import/company_role_with_invalid_company.csv');
+            ->setFileName(codecept_data_dir() . 'import/company_user_role_with_invalid_company_user.csv');
 
         $dataImportConfigurationTransfer = (new DataImporterConfigurationTransfer())
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
             ->setThrowException(true);
 
-        $dataImporterReportTransfer = $this->getCompanyRoleDataImportPlugin()->import($dataImportConfigurationTransfer);
+        $dataImporterReportTransfer = $this->getCompanyUserRoleDataImportPlugin()->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertCompanyRoleTableHasRecords();
+        $this->tester->assertCompanyRoleToCompanyUserTableHasRecords();
     }
 
     /**
@@ -79,18 +79,17 @@ class CompanyRoleDataImportPluginTest extends AbstractCompanyRoleDataImportMock
      */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
-        $companyRoleDataImportPlugin = new CompanyRoleDataImportPlugin();
         $this->assertSame(
-            CompanyRoleDataImportConfig::IMPORT_TYPE_COMPANY_ROLE,
-            $this->getCompanyRoleDataImportPlugin()->getImportType()
+            CompanyRoleDataImportConfig::IMPORT_TYPE_COMPANY_USER_ROLE,
+            $this->getCompanyUserRoleDataImportPlugin()->getImportType()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CompanyRoleDataImport\Communication\Plugin\DataImport\CompanyRoleDataImportPlugin
+     * @return \Spryker\Zed\CompanyRoleDataImport\Communication\Plugin\DataImport\CompanyUserRoleDataImportPlugin
      */
-    protected function getCompanyRoleDataImportPlugin(): CompanyRoleDataImportPlugin
+    protected function getCompanyUserRoleDataImportPlugin(): CompanyUserRoleDataImportPlugin
     {
-        return new CompanyRoleDataImportPlugin();
+        return new CompanyUserRoleDataImportPlugin();
     }
 }

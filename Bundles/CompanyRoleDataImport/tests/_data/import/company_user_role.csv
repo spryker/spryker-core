@@ -1,2 +1,3 @@
 company_role_key,company_user_key
-Test_Key,ComUser--1
+Role_Admin,ComUser--1
+Role_Buyer,ComUser--2

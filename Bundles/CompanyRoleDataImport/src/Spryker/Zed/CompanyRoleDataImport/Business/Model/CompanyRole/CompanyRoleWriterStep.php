@@ -18,6 +18,11 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 class CompanyRoleWriterStep implements DataImportStepInterface
 {
     /**
+     * @var int[]
+     */
+    protected $idCompanyListCache = [];
+
+    /**
      * @module Company
      *
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -48,15 +53,20 @@ class CompanyRoleWriterStep implements DataImportStepInterface
      */
     protected function getIdCompanyByKey(string $companyKey): int
     {
-        $idCompany = $this->getCompanyQuery()
-            ->select(SpyCompanyTableMap::COL_ID_COMPANY)
-            ->findOneByKey($companyKey);
+        if (!isset($this->idCompanyListCache[$companyKey])) {
+            $idCompany = $this->getCompanyQuery()
+                ->filterByKey($companyKey)
+                ->select(SpyCompanyTableMap::COL_ID_COMPANY)
+                ->findOne();
 
-        if (!$idCompany) {
-            throw new EntityNotFoundException(sprintf('Could not find company by key "%s"', $companyKey));
+            if (!$idCompany) {
+                throw new EntityNotFoundException(sprintf('Could not find company by key "%s"', $companyKey));
+            }
+
+            $this->idCompanyListCache[$companyKey] = $idCompany;
         }
 
-        return $idCompany;
+        return $this->idCompanyListCache[$companyKey];
     }
 
     /**
