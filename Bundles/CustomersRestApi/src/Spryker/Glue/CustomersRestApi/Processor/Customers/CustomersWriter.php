@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
-use Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
@@ -35,6 +35,11 @@ class CustomersWriter implements CustomersWriterInterface
     protected $restResourceBuilder;
 
     /**
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface
+     */
+    protected $customersReader;
+
+    /**
      * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface
      */
     protected $customersResourceMapper;
@@ -42,15 +47,18 @@ class CustomersWriter implements CustomersWriterInterface
     /**
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface $customersReader
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface $customersResourceMapper
      */
     public function __construct(
         CustomersRestApiToCustomerClientInterface $customerClient,
         RestResourceBuilderInterface $restResourceBuilder,
+        CustomersReaderInterface $customersReader,
         CustomersResourceMapperInterface $customersResourceMapper
     ) {
         $this->customerClient = $customerClient;
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->customersReader = $customersReader;
         $this->customersResourceMapper = $customersResourceMapper;
     }
 

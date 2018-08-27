@@ -63,20 +63,8 @@ class CustomersRestApiFactory extends AbstractFactory
         return new CustomersWriter(
             $this->getCustomerClient(),
             $this->getResourceBuilder(),
-            $this->createCustomersResourceMapper()
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriterInterface
-     */
-    public function createCustomersWriter(): CustomersWriterInterface
-    {
-        return new CustomersWriter(
-            $this->getResourceBuilder(),
-            $this->getCustomerClient(),
             $this->createCustomerReader(),
-            $this->createCustomerResourceMapper()
+            $this->createCustomersResourceMapper()
         );
     }
 
