@@ -127,14 +127,21 @@ class CartItemsWriter implements CartItemsWriterInterface
         $sku = '';
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        try {
-            $cartsResource = $this->getCartsResource($restRequest);
-            $idQuote = $this->getCartIdentifier($cartsResource);
-            $itemIdentifier = $this->getCartItemIdentifier($restRequest);
-            $quoteResponseTransfer = $this->findQuote($restRequest, $idQuote);
-            $this->findQuoteItem($quoteResponseTransfer, $itemIdentifier);
-        } catch (CartsRestApiException $exception) {
-            return $this->createErrorResponse($exception);
+        $idQuote = $this->getCartIdentifier($restRequest);
+        if ($idQuote === null) {
+            return $this->createQuoteIdMissingError();
+        }
+        $quoteResponseTransfer = $this->cartsReader->getQuoteTransferByUuid($idQuote, $restRequest);
+        if (!$quoteResponseTransfer->getIsSuccessful() || $quoteResponseTransfer->getQuoteTransfer() === null) {
+            return $this->createQuoteNotFoundError($idQuote);
+        }
+        $itemIdentifier = $restRequest->getResource()->getId();
+        if ($itemIdentifier === null) {
+            return $this->createQuoteItemIdentifierMissingError();
+        }
+
+        if ($this->cartClient->findQuoteItem($quoteResponseTransfer->getQuoteTransfer(), $sku, $itemIdentifier) === null) {
+            return $this->createQuoteItemNotFoundError($sku);
         }
 
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
@@ -369,6 +376,34 @@ class CartItemsWriter implements CartItemsWriterInterface
             ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
             ->setDetail(sprintf(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_WITH_ID_NOT_FOUND, $idQuote));
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createQuoteItemIdentifierMissingError(): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_ITEM_ID_MISSING)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ITEM_ID_MISSING);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createQuoteItemNotFoundError(string $sku): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_ITEM_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(sprintf(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_ITEM_NOT_FOUND, $sku));
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
