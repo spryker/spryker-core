@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Addresses;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
@@ -14,6 +15,7 @@ use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerCl
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class AddressesWriter implements AddressesWriterInterface
@@ -90,15 +92,15 @@ class AddressesWriter implements AddressesWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestAddressAttributesTransfer $addressAttributesTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function deleteAddress(RestAddressAttributesTransfer $addressAttributesTransfer): RestResponseInterface
+    public function deleteAddress(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $addressTransfer = $this->addressesResourceMapper->mapRestAddressAttributesTransferToAddressTransfer($addressAttributesTransfer);
+        $addressTransfer = (new AddressTransfer())->setUuid($restRequest->getResource()->getId());
         $addressTransfer = $this->customerClient->findAddressByUuid($addressTransfer);
 
         if (!$addressTransfer) {

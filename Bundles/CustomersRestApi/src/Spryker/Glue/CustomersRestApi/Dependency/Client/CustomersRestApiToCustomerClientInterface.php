@@ -36,7 +36,7 @@ interface CustomersRestApiToCustomerClientInterface
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     public function findAddressByUuid($addressTransfer);
 
