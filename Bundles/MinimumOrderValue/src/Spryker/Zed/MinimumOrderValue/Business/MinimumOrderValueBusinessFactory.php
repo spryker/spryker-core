@@ -24,8 +24,6 @@ use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueWr
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueWriterInterface;
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueType\MinimumOrderValueTypeReader;
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueType\MinimumOrderValueTypeReaderInterface;
-use Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpander;
-use Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpanderInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolver;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Business\ThresholdMessenger\ThresholdMessenger;
