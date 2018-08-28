@@ -94,7 +94,7 @@ class CustomersWriter implements CustomersWriterInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $customerTransfer = $this->customersResourceMapper->mapCustomerAttributesToCustomerTransfer($restCustomerTransfer);
+        $customerTransfer = (new CustomerTransfer)->setCustomerReference($restRequest->getResource()->getId());
         $customer = $this->customerClient->findCustomerByReference($customerTransfer);
 
         if (!$customer) {
@@ -103,6 +103,7 @@ class CustomersWriter implements CustomersWriterInterface
             return $response;
         }
 
+        $customerTransfer = $this->customersResourceMapper->mapCustomerAttributesToCustomerTransfer($restCustomerTransfer);
         $customerTransfer->setIdCustomer($customer->getIdCustomer());
         $customerResponseTransfer = $this->customerClient->updateCustomer($customerTransfer);
 
