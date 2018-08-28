@@ -35,11 +35,6 @@ class ShoppingListReader implements ShoppingListReaderInterface
     protected $shoppingListRepository;
 
     /**
-     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
-     */
-    protected $itemExpanderPlugins;
-
-    /**
      * @var \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface
      */
     protected $productFacade;
@@ -50,21 +45,26 @@ class ShoppingListReader implements ShoppingListReaderInterface
     protected $companyUserFacade;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemPluginExecutorInterface
+     */
+    protected $pluginExecutor;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface $customerFacade
-     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
+     * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemPluginExecutorInterface $pluginExecutor
      */
     public function __construct(
         ShoppingListRepositoryInterface $shoppingListRepository,
         ShoppingListToProductFacadeInterface $productFacade,
         ShoppingListToCompanyUserFacadeInterface $customerFacade,
-        array $itemExpanderPlugins
+        ShoppingListItemPluginExecutorInterface $pluginExecutor
     ) {
         $this->shoppingListRepository = $shoppingListRepository;
-        $this->itemExpanderPlugins = $itemExpanderPlugins;
         $this->productFacade = $productFacade;
         $this->companyUserFacade = $customerFacade;
+        $this->pluginExecutor = $pluginExecutor;
     }
 
     /**
@@ -293,9 +293,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $shoppingListItems = $this->mapProductConcreteIdToShoppingListItem($shoppingListItemCollectionTransfer->getItems(), $keyedProductConcreteTransfers);
 
         foreach ($shoppingListItems as $item) {
-            foreach ($this->itemExpanderPlugins as $itemExpanderPlugin) {
-                $item = $itemExpanderPlugin->expandItem($item);
-            }
+            $this->pluginExecutor->executeItemExpanderPlugins($item);
         }
 
         return $shoppingListItemCollectionTransfer;

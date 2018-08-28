@@ -39,8 +39,7 @@ class ShoppingListNoteBusinessFactory extends AbstractBusinessFactory
     public function createShoppingListNoteWriter(): ShoppingListItemNoteWriterInterface
     {
         return new ShoppingListItemNoteWriter(
-            $this->getEntityManager(),
-            $this->getRepository()
+            $this->getEntityManager()
         );
     }
 

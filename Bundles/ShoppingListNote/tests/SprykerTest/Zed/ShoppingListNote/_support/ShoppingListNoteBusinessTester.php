@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
@@ -93,6 +94,19 @@ class ShoppingListNoteBusinessTester extends Actor
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
             ShoppingListItemTransfer::QUANTITY => 1,
             ShoppingListItemTransfer::SKU => $product->getSku(),
+        ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer
+     */
+    public function createShoppingListItemNote(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemNoteTransfer
+    {
+        return $this->haveShoppingListItemNote([
+            ShoppingListItemNoteTransfer::FK_SHOPPING_LIST_ITEM => $shoppingListItemTransfer->getIdShoppingListItem(),
+            ShoppingListItemNoteTransfer::NOTE => 'Note for shopping item goes here',
         ]);
     }
 }

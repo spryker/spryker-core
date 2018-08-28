@@ -9,6 +9,8 @@ namespace SprykerTest\Shared\ShoppingListNote\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ShoppingListItemBuilder;
+use Generated\Shared\DataBuilder\ShoppingListItemNoteBuilder;
+use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -26,5 +28,17 @@ class ShoppingListNoteHelper extends Module
         $shoppingListItemTransfer = (new ShoppingListItemBuilder($seed))->build();
 
         return $this->getLocator()->shoppingList()->facade()->addItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer
+     */
+    public function haveShoppingListItemNote(array $seed = []): ShoppingListItemNoteTransfer
+    {
+        $shoppingListItemNoteTransfer = (new ShoppingListItemNoteBuilder($seed))->build();
+
+        return $this->getLocator()->shoppingListNote()->facade()->saveShoppingListItemNote($shoppingListItemNoteTransfer);
     }
 }

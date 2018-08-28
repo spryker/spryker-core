@@ -10,7 +10,6 @@ namespace Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteEntityManagerInterface;
-use Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteRepositoryInterface;
 
 class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
 {
@@ -22,20 +21,11 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
     protected $shoppingListNoteEntityManager;
 
     /**
-     * @var \Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteRepositoryInterface
-     */
-    protected $shoppingListNoteRepository;
-
-    /**
      * @param \Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteEntityManagerInterface $shoppingListNoteEntityManager
-     * @param \Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteRepositoryInterface $shoppingListNoteRepository
      */
-    public function __construct(
-        ShoppingListNoteEntityManagerInterface $shoppingListNoteEntityManager,
-        ShoppingListNoteRepositoryInterface $shoppingListNoteRepository
-    ) {
+    public function __construct(ShoppingListNoteEntityManagerInterface $shoppingListNoteEntityManager)
+    {
         $this->shoppingListNoteEntityManager = $shoppingListNoteEntityManager;
-        $this->shoppingListNoteRepository = $shoppingListNoteRepository;
     }
 
     /**
@@ -45,12 +35,10 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
      */
     public function saveShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): ?ShoppingListItemNoteTransfer
     {
-        if (!$this->checkWritePermission($shoppingListItemNoteTransfer)) {
-            return null;
-        }
-
         if (empty($shoppingListItemNoteTransfer->getNote())) {
-            $this->deleteShoppingListItemNoteById($shoppingListItemNoteTransfer);
+            if ($shoppingListItemNoteTransfer->getIdShoppingListItemNote()) {
+                $this->shoppingListNoteEntityManager->deleteShoppingListItemNoteById($shoppingListItemNoteTransfer);
+            }
 
             return null;
         }
@@ -65,25 +53,8 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
      */
     public function deleteShoppingListItemNoteById(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void
     {
-        if ($this->checkWritePermission($shoppingListItemNoteTransfer)) {
+        if ($shoppingListItemNoteTransfer->getIdShoppingListItemNote()) {
             $this->shoppingListNoteEntityManager->deleteShoppingListItemNoteById($shoppingListItemNoteTransfer);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
-     *
-     * @return bool
-     */
-    protected function checkWritePermission(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): bool
-    {
-        $shoppingListItemNoteTransfer->requireIdShoppingList();
-        $shoppingListItemNoteTransfer->requireIdCompanyUser();
-
-        return $this->can(
-            'WriteShoppingListPermissionPlugin',
-            $shoppingListItemNoteTransfer->getIdCompanyUser(),
-            $shoppingListItemNoteTransfer->getIdShoppingList()
-        );
     }
 }

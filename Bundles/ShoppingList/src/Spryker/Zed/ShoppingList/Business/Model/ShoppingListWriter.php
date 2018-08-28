@@ -60,12 +60,24 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     protected $shoppingListItemOperation;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\Business\Model\ShoppingListReaderInterface
+     */
+    private $shoppingListReader;
+
+    /**
+     * @var \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemPluginExecutorInterface
+     */
+    private $pluginExecutor;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\ShoppingListConfig $shoppingListConfig
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface $messengerFacade
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface $shoppingListItemOperation
+     * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListReaderInterface $shoppingListReader
+     * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemPluginExecutorInterface $pluginExecutor
      */
     public function __construct(
         ShoppingListEntityManagerInterface $shoppingListEntityManager,
@@ -73,7 +85,9 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         ShoppingListRepositoryInterface $shoppingListRepository,
         ShoppingListConfig $shoppingListConfig,
         ShoppingListToMessengerFacadeInterface $messengerFacade,
-        ShoppingListItemOperationInterface $shoppingListItemOperation
+        ShoppingListItemOperationInterface $shoppingListItemOperation,
+        ShoppingListReaderInterface $shoppingListReader,
+        ShoppingListItemPluginExecutorInterface $pluginExecutor
     ) {
         $this->shoppingListEntityManager = $shoppingListEntityManager;
         $this->productFacade = $productFacade;
@@ -81,6 +95,8 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         $this->shoppingListConfig = $shoppingListConfig;
         $this->messengerFacade = $messengerFacade;
         $this->shoppingListItemOperation = $shoppingListItemOperation;
+        $this->shoppingListReader = $shoppingListReader;
+        $this->pluginExecutor = $pluginExecutor;
     }
 
     /**
@@ -152,9 +168,9 @@ class ShoppingListWriter implements ShoppingListWriterInterface
      */
     public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
+        $shoppingListTransfer = $this->shoppingListReader->getShoppingList($shoppingListTransfer);
 
-        if (!$shoppingListTransfer || !$this->checkWritePermission($shoppingListTransfer)) {
+        if (!$this->checkWritePermission($shoppingListTransfer)) {
             return (new ShoppingListResponseTransfer())->setIsSuccess(false);
         }
 
@@ -168,7 +184,9 @@ class ShoppingListWriter implements ShoppingListWriterInterface
      */
     protected function deleteShoppingListItems(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        $this->shoppingListEntityManager->deleteShoppingListItems($shoppingListTransfer);
+        $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListTransfer) {
+            $this->executeDeleteShoppingListItemsTransaction($shoppingListTransfer);
+        });
 
         return (new ShoppingListResponseTransfer())->setIsSuccess(true);
     }
@@ -267,5 +285,19 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         }
 
         return $shoppingListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    protected function executeDeleteShoppingListItemsTransaction(ShoppingListTransfer $shoppingListTransfer): void
+    {
+        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
+            $this->pluginExecutor->executeBeforeDeletePlugins($shoppingListItemTransfer);
+        }
+
+        $this->shoppingListEntityManager->deleteShoppingListItems($shoppingListTransfer);
     }
 }

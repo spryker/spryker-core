@@ -14,6 +14,8 @@ use Spryker\Zed\ShoppingList\Business\Model\QuoteToShoppingListConverter;
 use Spryker\Zed\ShoppingList\Business\Model\QuoteToShoppingListConverterInterface;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperation;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface;
+use Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemPluginExecutor;
+use Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemPluginExecutorInterface;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListReader;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListReaderInterface;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolver;
@@ -45,7 +47,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getProductFacade(),
             $this->getCompanyUserFacade(),
-            $this->getItemExpanderPlugins()
+            $this->createShoppingListItemPluginExecutor()
         );
     }
 
@@ -60,7 +62,9 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getConfig(),
             $this->getMessengerFacade(),
-            $this->createShoppingListItemOperation()
+            $this->createShoppingListItemOperation(),
+            $this->createShoppingListReader(),
+            $this->createShoppingListItemPluginExecutor()
         );
     }
 
@@ -88,7 +92,21 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createShoppingListResolver(),
             $this->getMessengerFacade(),
-            $this->getAddItemPreCheckPlugins()
+            $this->createShoppingListItemPluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemPluginExecutorInterface
+     */
+    public function createShoppingListItemPluginExecutor(): ShoppingListItemPluginExecutorInterface
+    {
+        return new ShoppingListItemPluginExecutor(
+            $this->getMessengerFacade(),
+            $this->getShoppingListItemBeforeDeletePlugins(),
+            $this->getShoppingListItemPostSavePlugins(),
+            $this->getAddItemPreCheckPlugins(),
+            $this->getItemExpanderPlugins()
         );
     }
 
@@ -186,5 +204,21 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function getAddItemPreCheckPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ADD_ITEM_PRE_CHECK);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface[]
+     */
+    public function getShoppingListItemPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface[]
+     */
+    public function getShoppingListItemBeforeDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE);
     }
 }
