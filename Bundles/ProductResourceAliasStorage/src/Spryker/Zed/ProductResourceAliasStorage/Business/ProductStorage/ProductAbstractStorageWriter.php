@@ -18,23 +18,23 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     /**
      * @var \Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStorageRepositoryInterface
      */
-    protected $productResourceAliasStorageRepository;
+    protected $repository;
 
     /**
      * @var \Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStorageEntityManagerInterface
      */
-    protected $productResourceAliasStorageEntityManager;
+    protected $entityManager;
 
     /**
-     * @param \Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStorageRepositoryInterface $productResourceAliasStorageRepository
-     * @param \Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStorageEntityManagerInterface $productResourceAliasStorageEntityManager
+     * @param \Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStorageRepositoryInterface $repository
+     * @param \Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStorageEntityManagerInterface $entityManager
      */
     public function __construct(
-        ProductResourceAliasStorageRepositoryInterface $productResourceAliasStorageRepository,
-        ProductResourceAliasStorageEntityManagerInterface $productResourceAliasStorageEntityManager
+        ProductResourceAliasStorageRepositoryInterface $repository,
+        ProductResourceAliasStorageEntityManagerInterface $entityManager
     ) {
-        $this->productResourceAliasStorageRepository = $productResourceAliasStorageRepository;
-        $this->productResourceAliasStorageEntityManager = $productResourceAliasStorageEntityManager;
+        $this->repository = $repository;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -44,9 +44,9 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      */
     public function updateProductAbstractStorageSkus(array $productAbstractIds): void
     {
-        $productAbstractStorageEntities = $this->productResourceAliasStorageRepository->getProductAbstractStorageEntities($productAbstractIds);
+        $productAbstractStorageEntities = $this->repository->getProductAbstractStorageEntities($productAbstractIds);
 
-        $productAbstractData = $this->productResourceAliasStorageRepository->getProductAbstractSkuList($productAbstractIds);
+        $productAbstractData = $this->repository->getProductAbstractSkuList($productAbstractIds);
 
         foreach ($productAbstractStorageEntities as $productAbstractStorageEntity) {
             $sku = $productAbstractData[$productAbstractStorageEntity->getFkProductAbstract()][static::KEY_SKU];
@@ -59,7 +59,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
             }
 
             $productAbstractStorageEntity->setSku($sku);
-            $this->productResourceAliasStorageEntityManager->saveProductAbstractStorageEntity($productAbstractStorageEntity);
+            $this->entityManager->saveProductAbstractStorageEntity($productAbstractStorageEntity);
         }
     }
 
