@@ -11,10 +11,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/carts-rest-api": "*"
   },
   "suggest": {
-    "spryker/carts-rest-api": "*"
+    "spryker/carts-rest-api": "Provides REST API endpoints for managing registerd customers carts."
   },
   "autoload": {
     "psr-4": {
