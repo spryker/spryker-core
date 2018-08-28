@@ -64,4 +64,13 @@ interface SynchronizationFacadeInterface
      * @return void
      */
     public function searchDelete(array $data, $queueName);
+
+    /**
+     * @api
+     *
+     * @param string[] $resources
+     *
+     * @return void
+     */
+    public function executeResolvedPluginsBySources(array $resources);
 }

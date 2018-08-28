@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\TaxSetCollectionTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
+use Spryker\Zed\Tax\Persistence\TaxRepositoryInterface;
 
 class TaxReader implements TaxReaderInterface
 {
@@ -23,12 +24,20 @@ class TaxReader implements TaxReaderInterface
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface
+     */
+    protected $taxRepository;
+
+    /**
      * @param \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface $taxRepository
      */
     public function __construct(
-        TaxQueryContainerInterface $queryContainer
+        TaxQueryContainerInterface $queryContainer,
+        TaxRepositoryInterface $taxRepository
     ) {
         $this->queryContainer = $queryContainer;
+        $this->taxRepository = $taxRepository;
     }
 
     /**
@@ -152,5 +161,26 @@ class TaxReader implements TaxReaderInterface
         $taxSetQuery = $this->queryContainer->queryTaxSet($id);
 
         return $taxSetQuery->count() > 0;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function taxSetWithSameNameExists(string $name): bool
+    {
+        return !$this->taxRepository->isTaxSetNameUnique($name);
+    }
+
+    /**
+     * @param string $name
+     * @param int $idTaxSet
+     *
+     * @return bool
+     */
+    public function taxSetWithSameNameAndIdExists(string $name, int $idTaxSet): bool
+    {
+        return !$this->taxRepository->isTaxSetNameAndIdUnique($name, $idTaxSet);
     }
 }

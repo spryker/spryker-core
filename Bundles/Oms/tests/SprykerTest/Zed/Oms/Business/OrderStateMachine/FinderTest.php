@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Zed\Oms\Business\Exception\StateNotFoundException;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
 use Spryker\Zed\Oms\Business\Process\Event;
@@ -67,6 +66,9 @@ class FinderTest extends Unit
     }
 
     /**
+     * @expectedException \Spryker\Zed\Oms\Business\Exception\StateNotFoundException
+     * @expectedExceptionMessage State with name "not existing" not found in any StateMachine processes.
+     *
      * @return void
      */
     public function testGetStateDisplayNameShouldThrowExceptionWhenStateNotFound()
@@ -76,8 +78,6 @@ class FinderTest extends Unit
         $salesOrderItemEntity = $this->createSalesOrderItemEntity();
 
         $salesOrderItemEntity->getState()->setName('not existing');
-
-        $this->setExpectedException(StateNotFoundException::class, 'State with name "not existing" not found in any StateMachine processes.');
 
         $finder->getStateDisplayName($salesOrderItemEntity);
     }

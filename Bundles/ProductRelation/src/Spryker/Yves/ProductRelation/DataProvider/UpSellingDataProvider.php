@@ -43,7 +43,7 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
     /**
      * @param array $parameters , parameters can be (quote => QuoteTransfer, or array of abstract product ids [1,2,3])
      *
-     * @return \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer[]
      */
     public function buildTemplateData(array $parameters)
     {
