@@ -24,35 +24,35 @@ interface CustomersRestApiToCustomerClientInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findCustomerByReference($customerTransfer);
+    public function findCustomerByReference(CustomerTransfer $customerTransfer): ?CustomerTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
-    public function getAddresses($customerTransfer);
+    public function getAddresses(CustomerTransfer $customerTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findAddressByUuid($addressTransfer);
+    public function findAddressByUuid(AddressTransfer $addressTransfer): ?AddressTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function createAddress($addressTransfer);
+    public function createAddress(AddressTransfer $addressTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function updateCustomerPassword($customerTransfer);
+    public function updateCustomerPassword(CustomerTransfer $customerTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
