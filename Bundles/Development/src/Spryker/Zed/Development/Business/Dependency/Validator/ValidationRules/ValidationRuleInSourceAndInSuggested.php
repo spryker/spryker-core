@@ -19,7 +19,7 @@ class ValidationRuleInSourceAndInSuggested implements ValidationRuleInterface
      */
     public function validateModuleDependency(ModuleDependencyTransfer $moduleDependencyTransfer): ModuleDependencyTransfer
     {
-        if ($moduleDependencyTransfer->getIsSrcDependency() && $moduleDependencyTransfer->getIsSuggested()) {
+        if (!$moduleDependencyTransfer->getIsOptionalDependency() && $moduleDependencyTransfer->getIsSrcDependency() && $moduleDependencyTransfer->getIsSuggested()) {
             $moduleDependencyTransfer->setIsValid(false);
             $validationMessageTransfer = new ValidationMessageTransfer();
             $validationMessageTransfer->setMessage('Source dependency should not be listed in composer suggests');
