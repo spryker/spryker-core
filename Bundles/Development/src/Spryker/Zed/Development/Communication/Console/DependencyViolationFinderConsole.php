@@ -301,7 +301,7 @@ class DependencyViolationFinderConsole extends Console
     {
         $moduleTransferCollection = $this->getModuleTransferCollection()[$module];
         if (count($moduleTransferCollection) > 1) {
-            throw new Exception(sprintf('Module name "%s" is not unique across namespaces', $module));
+            throw new Exception(sprintf('Module name "%s" is not unique across namespaces.', $module));
         }
 
         return current($moduleTransferCollection);

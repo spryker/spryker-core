@@ -67,7 +67,10 @@ class DependencyViolationFixConsole extends Console
             return static::CODE_ERROR;
         }
 
-        foreach ($modulesToValidate as $moduleTransfer) {
+        foreach ($modulesToValidate as $index => $moduleTransfer) {
+            if (!$this->isNamespacedModuleName($index)) {
+                continue;
+            }
             if ($moduleTransfer->getIsStandalone()) {
                 $output->writeln(sprintf('<fg=yellow>%s</> is a standalone module and will be skipped.', $moduleTransfer->getName()));
                 $output->writeln('');
@@ -88,57 +91,69 @@ class DependencyViolationFixConsole extends Console
         $moduleDependencyTransferCollection = $this->getModuleDependencies($moduleTransfer);
 
         $moduleViolationCount = $this->getDependencyViolationCount($moduleDependencyTransferCollection);
-        if ($moduleViolationCount > 0) {
-            $composerJsonFile = $moduleTransfer->getRootDirectory() . '/composer.json';
-            $composerJsonContent = file_get_contents($composerJsonFile);
-            $composerJsonArray = json_decode($composerJsonContent, true);
 
-            $output->writeln('');
-            $output->writeln(sprintf('Fixing dependencies in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
+        if ($moduleViolationCount === 0) {
+            $output->writeln(sprintf('No dependency issues found in <fg=green>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
+            return;
+        }
 
-            foreach ($moduleDependencyTransferCollection as $moduleDependencyTransfer) {
-                if ($moduleDependencyTransfer->getIsValid()) {
-                    continue;
+        $composerJsonFile = $moduleTransfer->getRootDirectory() . '/composer.json';
+        $composerJsonContent = file_get_contents($composerJsonFile);
+        $composerJsonArray = json_decode($composerJsonContent, true);
+
+        $output->writeln('');
+        $output->writeln(sprintf('Fixing dependencies in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
+
+        foreach ($moduleDependencyTransferCollection as $moduleDependencyTransfer) {
+            if ($moduleDependencyTransfer->getIsValid()) {
+                continue;
+            }
+
+            $module = $moduleDependencyTransfer->getModule();
+            try {
+                $dependencyModuleTransfer = $this->getModuleTransfer($module);
+            } catch (Exception $exception) {
+                $output->writeln(sprintf('<bg=red>%s</>', $exception->getMessage()));
+                $output->writeln(sprintf('Please check the module <fg=yellow>%s.%s</> manually.', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
+                $output->writeln('');
+
+                continue;
+            }
+
+            $moduleNameToFix = sprintf('%s/%s', $dependencyModuleTransfer->getOrganization()->getNameDashed(), $dependencyModuleTransfer->getNameDashed());
+
+            $validationMessagesTransferCollection = $moduleDependencyTransfer->getValidationMessages();
+            foreach ($validationMessagesTransferCollection as $validationMessageTransfer) {
+                if (ValidationRuleInterface::ADD_REQUIRE === $validationMessageTransfer->getFixType()) {
+                    $composerJsonArray['require'][$moduleNameToFix] = '*';
+                    if ($output->isVerbose()) {
+                        $output->writeln(sprintf('<fg=green>%s</> added to require', $moduleNameToFix));
+                    }
+                }
+                if (ValidationRuleInterface::REMOVE_REQUIRE === $validationMessageTransfer->getFixType()) {
+                    unset($composerJsonArray['require'][$moduleNameToFix]);
+                    if ($output->isVerbose()) {
+                        $output->writeln(sprintf('<fg=green>%s</> removed from require', $moduleNameToFix));
+                    }
                 }
 
-                $module = $moduleDependencyTransfer->getModule();
-                $dependencyModuleTransfer = $this->getModuleTransfer($module);
-
-                $moduleNameToFix = sprintf('%s/%s', $dependencyModuleTransfer->getOrganization()->getNameDashed(), $dependencyModuleTransfer->getNameDashed());
-
-                $validationMessagesTransferCollection = $moduleDependencyTransfer->getValidationMessages();
-                foreach ($validationMessagesTransferCollection as $validationMessageTransfer) {
-                    if (ValidationRuleInterface::ADD_REQUIRE === $validationMessageTransfer->getFixType()) {
-                        $composerJsonArray['require'][$moduleNameToFix] = '*';
-                        if ($output->isVerbose()) {
-                            $output->writeln(sprintf('<fg=green>%s</> added to require', $moduleNameToFix));
-                        }
+                if (ValidationRuleInterface::ADD_REQUIRE_DEV === $validationMessageTransfer->getFixType()) {
+                    $composerJsonArray['require-dev'][$moduleNameToFix] = '*';
+                    if ($output->isVerbose()) {
+                        $output->writeln(sprintf('<fg=green>%s</> added to require-dev', $moduleNameToFix));
                     }
-                    if (ValidationRuleInterface::REMOVE_REQUIRE === $validationMessageTransfer->getFixType()) {
-                        unset($composerJsonArray['require'][$moduleNameToFix]);
-                        if ($output->isVerbose()) {
-                            $output->writeln(sprintf('<fg=green>%s</> removed from require', $moduleNameToFix));
-                        }
+                }
+                if (ValidationRuleInterface::REMOVE_REQUIRE_DEV === $validationMessageTransfer->getFixType()) {
+                    unset($composerJsonArray['require-dev'][$moduleNameToFix]);
+                    if ($output->isVerbose()) {
+                        $output->writeln(sprintf('<fg=green>%s</> removed from require-dev', $moduleNameToFix));
                     }
+                }
 
-                    if (ValidationRuleInterface::ADD_REQUIRE_DEV === $validationMessageTransfer->getFixType()) {
-                        $composerJsonArray['require-dev'][$moduleNameToFix] = '*';
-                        if ($output->isVerbose()) {
-                            $output->writeln(sprintf('<fg=green>%s</> added to require-dev', $moduleNameToFix));
-                        }
-                    }
-                    if (ValidationRuleInterface::REMOVE_REQUIRE_DEV === $validationMessageTransfer->getFixType()) {
-                        unset($composerJsonArray['require-dev'][$moduleNameToFix]);
-                        if ($output->isVerbose()) {
-                            $output->writeln(sprintf('<fg=green>%s</> removed from require-dev', $moduleNameToFix));
-                        }
-                    }
-
-                    if (ValidationRuleInterface::ADD_SUGGEST === $validationMessageTransfer->getFixType()) {
-                        $composerJsonArray['suggest'][$moduleNameToFix] = 'ADD SUGGEST DESCRIPTION';
-                        if ($output->isVerbose()) {
-                            $output->writeln(sprintf('<fg=green>%s</> added to suggests', $moduleNameToFix));
-                        }
+                if (ValidationRuleInterface::ADD_SUGGEST === $validationMessageTransfer->getFixType()) {
+                    $composerJsonArray['suggest'][$moduleNameToFix] = 'ADD SUGGEST DESCRIPTION';
+                    if ($output->isVerbose()) {
+                        $output->writeln(sprintf('<fg=green>%s</> added to suggests', $moduleNameToFix));
                     }
                 }
             }
@@ -242,9 +257,16 @@ class DependencyViolationFixConsole extends Console
      */
     protected function getFromModuleTransferCollectionByModuleName(string $module): ModuleTransfer
     {
-        $moduleTransferCollection = $this->getModuleTransferCollection()[$module];
+        $moduleTransferCollection = $this->getModuleTransferCollection();
+
+        if (!isset($moduleTransferCollection[$module])) {
+            throw new Exception(sprintf('Module name "%s" not not found in module transfer collection.', $module));
+        }
+
+        $moduleTransferCollection = $moduleTransferCollection[$module];
+
         if (count($moduleTransferCollection) > 1) {
-            throw new Exception(sprintf('Module name "%s" is not unique across namespaces', $module));
+            throw new Exception(sprintf('Module name "%s" is not unique across namespaces.', $module));
         }
 
         return current($moduleTransferCollection);
