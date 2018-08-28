@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -84,7 +85,7 @@ class WishlistsWriter implements WishlistsWriterInterface
         $wishlistTransfer = $this->wishlistsReader->findWishlistByUuid(
             $wishlistResponseTransfer->getWishlist()->getUuid()
         );
-        $restResource = $this->wishlistsResourceMapper->mapWishlistsResource($wishlistTransfer);
+        $restResource = $this->wishlistsResourceMapper->mapWishlistTransferToRestResource($wishlistTransfer);
 
         return $response->addResource($restResource);
     }
@@ -108,7 +109,7 @@ class WishlistsWriter implements WishlistsWriterInterface
 
             return $response->addError($restErrorTransfer);
         }
-        $wishlistTransfer->setName($attributesTransfer->getName());
+        $wishlistTransfer = $this->wishlistsResourceMapper->updateWishlistTransferNameFromWishlistAttributesTransfer($wishlistTransfer, $attributesTransfer);
 
         $wishlistResponseTransfer = $this->wishlistClient->validateAndUpdateWishlist($wishlistTransfer);
         if (!$wishlistResponseTransfer->getIsSuccess()) {
@@ -118,7 +119,8 @@ class WishlistsWriter implements WishlistsWriterInterface
                 $response
             );
         }
-        $restResource = $this->wishlistsResourceMapper->mapWishlistsResource($wishlistResponseTransfer->getWishlist());
+        $wishlistOverviewTransfer = $this->wishlistsReader->findWishlistOverviewByUuid($wishlistResponseTransfer->getWishlist()->getUuid());
+        $restResource = $this->wishlistsResourceMapper->mapWishlistOverviewResponseTransferToRestResource($wishlistOverviewTransfer);
 
         return $response->addResource($restResource);
     }

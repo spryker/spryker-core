@@ -1,10 +1,16 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Glue\WishlistsRestApi\Processor\WishlistItems;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -93,7 +99,7 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
         }
 
         $itemResource = $this->wishlistItemsResourceMapper
-            ->mapWishlistItemsResource($wishlistItemTransfer, $wishlistUuid);
+            ->mapWishlistItemTransferToRestResource($wishlistItemTransfer, $wishlistUuid);
 
         return $restResponse->addResource($itemResource);
     }
@@ -114,12 +120,12 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
         }
 
         $wishlistUuid = $wishlistResource->getId();
-        $wishlistTransfer = $this->wishlistsReader->findWishlistByUuid($wishlistUuid);
-        if ($wishlistTransfer === null) {
+        $wishlistOverviewTransfer = $this->wishlistsReader->findWishlistOverviewByUuid($wishlistUuid);
+        if ($wishlistOverviewTransfer === null) {
             return $this->createWishlistNotFoundErrorResponse($restResponse);
         }
 
-        if (!$this->isSkuInWishlist($wishlistTransfer, $sku)) {
+        if (!$this->isSkuInWishlist($wishlistOverviewTransfer, $sku)) {
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_NO_ITEM_WITH_PROVIDED_ID)
                 ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
@@ -128,8 +134,7 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
             return $restResponse->addError($restErrorTransfer);
         }
 
-        $wishlistItemTransfer = $this->createWishlistItemTransfer($wishlistTransfer);
-        $wishlistItemTransfer->setSku($sku);
+        $wishlistItemTransfer = $this->createWishlistItemTransfer($wishlistOverviewTransfer->getWishlist(), $sku);
         $this->wishlistClient->removeItem($wishlistItemTransfer);
 
         return $restResponse;
@@ -137,35 +142,32 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     * @param string|null $sku
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    protected function createWishlistItemTransfer(WishlistTransfer $wishlistTransfer): WishlistItemTransfer
+    protected function createWishlistItemTransfer(WishlistTransfer $wishlistTransfer, ?string $sku = null): WishlistItemTransfer
     {
         $wishlistItemTransfer = new WishlistItemTransfer();
         $wishlistItemTransfer->setFkWishlist($wishlistTransfer->getIdWishlist());
         $wishlistItemTransfer->setWishlistName($wishlistTransfer->getName());
         $wishlistItemTransfer->setFkCustomer($wishlistTransfer->getFkCustomer());
+        $wishlistItemTransfer->setSku($sku);
 
         return $wishlistItemTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistOverviewTransfer
      * @param string $sku
      *
      * @return bool
      */
-    protected function isSkuInWishlist(WishlistTransfer $wishlistTransfer, string $sku): bool
+    protected function isSkuInWishlist(WishlistOverviewResponseTransfer $wishlistOverviewTransfer, string $sku): bool
     {
-        $wishlistsResource = $this->wishlistsReader->getWishistResource($wishlistTransfer);
-
-        /** @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $wishlistItemResources */
-        foreach ($wishlistsResource->getRelationships() as $wishlistItemResources) {
-            foreach ($wishlistItemResources as $wishlistItemResource) {
-                if ($wishlistItemResource->getId() === $sku) {
-                    return true;
-                }
+        foreach ($wishlistOverviewTransfer->getItems() as $wishlistItem) {
+            if ($wishlistItem->getSku() === $sku) {
+                return true;
             }
         }
 

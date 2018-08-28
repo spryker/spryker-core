@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -36,7 +37,7 @@ class WishlistItemsResourceMapper implements WishlistItemsResourceMapperInterfac
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function mapWishlistItemsResource(WishlistItemTransfer $wishlistItemTransfer, string $parentResourceId): RestResourceInterface
+    public function mapWishlistItemTransferToRestResource(WishlistItemTransfer $wishlistItemTransfer, string $parentResourceId): RestResourceInterface
     {
         $restWishlistItemsAttributesTransfer = (new RestWishlistItemsAttributesTransfer())->fromArray($wishlistItemTransfer->toArray(), true);
 

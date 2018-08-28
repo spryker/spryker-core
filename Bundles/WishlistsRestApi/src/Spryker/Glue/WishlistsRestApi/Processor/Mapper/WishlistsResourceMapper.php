@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -39,25 +40,46 @@ class WishlistsResourceMapper implements WishlistsResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer|null $wishlistOverviewResponseTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function mapWishlistsResource(WishlistTransfer $wishlistTransfer, ?WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer = null): RestResourceInterface
+    public function mapWishlistTransferToRestResource(WishlistTransfer $wishlistTransfer): RestResourceInterface
     {
         $restWishlistsAttributesTransfer = (new RestWishlistsAttributesTransfer())->fromArray($wishlistTransfer->toArray(), true);
 
         $wishlistsResource = $this->restResourceBuilder->createRestResource(
             WishlistsRestApiConfig::RESOURCE_WISHLISTS,
-            (string)$wishlistTransfer->getUuid(),
+            $wishlistTransfer->getUuid(),
             $restWishlistsAttributesTransfer
         );
 
-        if ($wishlistOverviewResponseTransfer !== null) {
-            $this->addWishlistItems($wishlistOverviewResponseTransfer, $wishlistsResource);
-        }
-
         return $wishlistsResource;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function mapWishlistOverviewResponseTransferToRestResource(WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer): RestResourceInterface
+    {
+        $wishlistResource = $this->mapWishlistTransferToRestResource($wishlistOverviewResponseTransfer->getWishlist());
+        $this->addWishlistItems($wishlistOverviewResponseTransfer, $wishlistResource);
+
+        return $wishlistResource;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $attributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function updateWishlistTransferNameFromWishlistAttributesTransfer(WishlistTransfer $wishlistItemTransfer, RestWishlistsAttributesTransfer $attributesTransfer): WishlistTransfer
+    {
+        $wishlistItemTransfer->setName($attributesTransfer->getName());
+
+        return $wishlistItemTransfer;
     }
 
     /**
@@ -69,7 +91,7 @@ class WishlistsResourceMapper implements WishlistsResourceMapperInterface
     protected function addWishlistItems(WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer, RestResourceInterface $wishlistsResource): void
     {
         foreach ($wishlistOverviewResponseTransfer->getItems() as $itemTransfer) {
-            $itemResource = $this->wishlistItemsResourceMapper->mapWishlistItemsResource($itemTransfer, $wishlistsResource->getId());
+            $itemResource = $this->wishlistItemsResourceMapper->mapWishlistItemTransferToRestResource($itemTransfer, $wishlistsResource->getId());
             $wishlistsResource->addRelationship($itemResource);
         }
     }

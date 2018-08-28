@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -62,7 +63,7 @@ class WishlistsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface
      */
-    protected function getWishlistClient(): WishlistsRestApiToWishlistClientInterface
+    public function getWishlistClient(): WishlistsRestApiToWishlistClientInterface
     {
         return $this->getProvidedDependency(WishlistsRestApiDependencyProvider::CLIENT_WISHLIST);
     }
@@ -70,7 +71,7 @@ class WishlistsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistsResourceMapperInterface
      */
-    protected function createWishlistsResourceMapper(): WishlistsResourceMapperInterface
+    public function createWishlistsResourceMapper(): WishlistsResourceMapperInterface
     {
         return new WishlistsResourceMapper(
             $this->createWishlistItemsResourceMapper(),
@@ -81,7 +82,7 @@ class WishlistsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapperInterface
      */
-    protected function createWishlistItemsResourceMapper(): WishlistItemsResourceMapperInterface
+    public function createWishlistItemsResourceMapper(): WishlistItemsResourceMapperInterface
     {
         return new WishlistItemsResourceMapper($this->getResourceBuilder());
     }
