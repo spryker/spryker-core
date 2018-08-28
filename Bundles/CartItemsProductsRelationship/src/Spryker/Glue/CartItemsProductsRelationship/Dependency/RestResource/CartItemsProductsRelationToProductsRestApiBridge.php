@@ -33,6 +33,6 @@ class CartItemsProductsRelationToProductsRestApiBridge implements CartItemsProdu
      */
     public function findByConcreteProductSku(string $productIdentifier, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        return $this->productsRestResource->findByConcreteProductSku($productIdentifier, $restRequest);
+        return $this->productsRestResource->findProductConcreteBySku($productIdentifier, $restRequest);
     }
 }
