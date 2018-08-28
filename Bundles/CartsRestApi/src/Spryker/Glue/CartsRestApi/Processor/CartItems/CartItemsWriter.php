@@ -126,12 +126,12 @@ class CartItemsWriter implements CartItemsWriterInterface
 
         $idQuote = $this->getCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
-        if ($idQuote === null || $itemIdentifier === null) {
+        if ($this->isRequestValid($idQuote, $itemIdentifier)) {
             return $this->createMissingRequiredParameterError();
         }
 
         $quoteResponseTransfer = $this->cartsReader->getQuoteTransferByUuid($idQuote, $restRequest);
-        if (!$quoteResponseTransfer->getIsSuccessful() || $quoteResponseTransfer->getQuoteTransfer() === null) {
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->createQuoteNotFoundError($idQuote);
         }
 
@@ -167,12 +167,13 @@ class CartItemsWriter implements CartItemsWriterInterface
 
         $idQuote = $this->getCartIdentifier($restRequest);
         $itemIdentifier = $restRequest->getResource()->getId();
-        if ($idQuote === null || $itemIdentifier === null) {
+        if ($this->isRequestValid($idQuote, $itemIdentifier)) {
             return $this->createMissingRequiredParameterError();
         }
 
         $quoteResponseTransfer = $this->cartsReader->getQuoteTransferByUuid($idQuote, $restRequest);
-        if (!$quoteResponseTransfer->getIsSuccessful() || $quoteResponseTransfer->getQuoteTransfer() === null) {
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->createQuoteNotFoundError($idQuote);
         }
 
@@ -302,10 +303,21 @@ class CartItemsWriter implements CartItemsWriterInterface
     protected function createMissingRequiredParameterError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER)
-            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_MISSING_REQUIRED_PARAMETER)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param string|null $idQuote
+     * @param string|null $itemIdentifier
+     *
+     * @return bool
+     */
+    protected function isRequestValid(?string $idQuote, ?string $itemIdentifier): bool
+    {
+        return ($idQuote === null || $itemIdentifier === null);
     }
 }
