@@ -8,14 +8,10 @@
 namespace Spryker\Zed\Development\Communication\Console;
 
 use ArrayObject;
-use Exception;
-use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\ModuleDependencyTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
-use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Helper\TableCell;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,17 +20,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Development\Business\DevelopmentBusinessFactory getFactory()
  */
-class DependencyViolationFinderConsole extends Console
+class DependencyViolationFinderConsole extends AbstractDependencyViolationConsole
 {
     const COMMAND_NAME = 'dev:dependency:find';
-    const ARGUMENT_MODULE = 'module';
     const OPTION_DEPENDENCY_TYPE = 'dependency-type';
     const OPTION_DEPENDENCY_TYPE_SHORT = 'd';
-
-    /**
-     * @var array
-     */
-    protected $moduleTransferCollection = [];
 
     /**
      * @var int
@@ -50,9 +40,8 @@ class DependencyViolationFinderConsole extends Console
 
         $this
             ->setName(static::COMMAND_NAME)
-            ->addArgument(static::ARGUMENT_MODULE, InputArgument::OPTIONAL, 'Module to run checks for. You must use dot syntax for namespaced ones, e.g. `SprykerEco.FooBar`.')
             ->addOption(static::OPTION_DEPENDENCY_TYPE, static::OPTION_DEPENDENCY_TYPE_SHORT, InputOption::VALUE_REQUIRED, 'Runs only one specific dependency type check.')
-            ->setDescription('Find dependency violations in the dependency tree (Spryker core dev only).');
+            ->setDescription('Find dependency violations in the modules.');
     }
 
     /**
@@ -64,8 +53,14 @@ class DependencyViolationFinderConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $modulesToValidate = $this->getModulesToCheckForViolations($input);
+        if (count($modulesToValidate) === 0) {
+            $output->writeln('Could not find any module to check. Maybe you have a typo in the module argument or you missed to use a proper organization prefix.');
+
+            return static::CODE_ERROR;
+        }
+
         if ($this->isSingleModuleValidation($modulesToValidate) && !$this->isModuleNameValid($modulesToValidate)) {
-            $namespacedModuleName = $this->buildCollectionKey($modulesToValidate);
+            $namespacedModuleName = $this->buildModuleKey($modulesToValidate);
             $output->writeln(sprintf('Requested module <fg=green>%s</> not found in current scope.', $namespacedModuleName));
 
             return static::CODE_ERROR;
@@ -99,7 +94,7 @@ class DependencyViolationFinderConsole extends Console
      */
     protected function validateModule(ModuleTransfer $moduleTransfer, OutputInterface $output, ?string $dependencyType = null): void
     {
-        $this->startModuleValidation($this->buildCollectionKey($moduleTransfer));
+        $this->startModuleValidation($this->buildModuleKey($moduleTransfer));
 
         $moduleDependencyTransferCollection = $this->getModuleDependencies($moduleTransfer, $dependencyType);
 
@@ -109,7 +104,7 @@ class DependencyViolationFinderConsole extends Console
 
         $moduleViolationCount = $this->getDependencyViolationCount($moduleDependencyTransferCollection, $dependencyType);
         if ($moduleViolationCount > 0) {
-            $this->printDependencyViolationErrors($this->buildCollectionKey($moduleTransfer), $moduleDependencyTransferCollection, $output, $dependencyType);
+            $this->printDependencyViolationErrors($this->buildModuleKey($moduleTransfer), $moduleDependencyTransferCollection, $output, $dependencyType);
         }
 
         $this->dependencyViolationCount += $moduleViolationCount;
@@ -181,43 +176,6 @@ class DependencyViolationFinderConsole extends Console
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
-     * @param string|null $dependencyType
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ModuleDependencyTransfer[]
-     */
-    protected function getModuleDependencies(ModuleTransfer $moduleTransfer, ?string $dependencyType = null): ArrayObject
-    {
-        $dependencyValidationRequestTransfer = new DependencyValidationRequestTransfer();
-        $dependencyValidationRequestTransfer->setModule($moduleTransfer);
-        $dependencyValidationRequestTransfer->setDependencyType($dependencyType);
-
-        $dependencyValidationResponseTransfer = $this->getFacade()->validateModuleDependencies($dependencyValidationRequestTransfer);
-
-        return $dependencyValidationResponseTransfer->getModuleDependencies();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ModuleDependencyTransfer[]|\ArrayObject $moduleDependencyTransferCollection
-     * @param string|null $dependencyType
-     *
-     * @return int
-     */
-    protected function getDependencyViolationCount(ArrayObject $moduleDependencyTransferCollection, ?string $dependencyType = null): int
-    {
-        $violationCountInModule = 0;
-        foreach ($moduleDependencyTransferCollection as $moduleDependencyTransfer) {
-            if ($dependencyType !== null && !in_array($dependencyType, $moduleDependencyTransfer->getDependencyTypes())) {
-                continue;
-            }
-
-            $violationCountInModule = $violationCountInModule + count($moduleDependencyTransfer->getValidationMessages());
-        }
-
-        return $violationCountInModule;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ModuleDependencyTransfer $moduleDependencyTransfer
      *
      * @return array
@@ -259,108 +217,6 @@ class DependencyViolationFinderConsole extends Console
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     *
-     * @return array
-     */
-    protected function getModulesToCheckForViolations(InputInterface $input): array
-    {
-        $moduleTransferCollection = $this->getModuleTransferCollection();
-        $module = $input->getArgument(static::ARGUMENT_MODULE);
-
-        if ($module) {
-            $moduleTransfer = $this->getModuleTransfer($module);
-            $moduleTransferCollection = [$module => $moduleTransfer];
-        }
-
-        return $moduleTransferCollection;
-    }
-
-    /**
-     * @param string $module
-     *
-     * @return \Generated\Shared\Transfer\ModuleTransfer
-     */
-    protected function getModuleTransfer(string $module): ModuleTransfer
-    {
-        if ($this->isNamespacedModuleName($module)) {
-            return $this->getModuleTransferCollection()[$module];
-        }
-
-        return $this->getFromModuleTransferCollectionByModuleName($module);
-    }
-
-    /**
-     * @param string $module
-     *
-     * @throws \Exception
-     *
-     * @return \Generated\Shared\Transfer\ModuleTransfer
-     */
-    protected function getFromModuleTransferCollectionByModuleName(string $module): ModuleTransfer
-    {
-        $moduleTransferCollection = $this->getModuleTransferCollection()[$module];
-        if (count($moduleTransferCollection) > 1) {
-            throw new Exception(sprintf('Module name "%s" is not unique across namespaces.', $module));
-        }
-
-        return current($moduleTransferCollection);
-    }
-
-    /**
-     * @param string $module
-     *
-     * @return bool
-     */
-    protected function isNamespacedModuleName(string $module): bool
-    {
-        return (strpos($module, '.') !== false);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getModuleTransferCollection(): array
-    {
-        if (!$this->moduleTransferCollection) {
-            $this->moduleTransferCollection = $this->getFacade()->getModules();
-        }
-
-        return $this->moduleTransferCollection;
-    }
-
-    /**
-     * @param array $modulesToValidate
-     *
-     * @return bool
-     */
-    protected function isSingleModuleValidation(array $modulesToValidate): bool
-    {
-        if (count($modulesToValidate) > 1) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param array $modulesToValidate
-     *
-     * @return bool
-     */
-    protected function isModuleNameValid(array $modulesToValidate): bool
-    {
-        $moduleTransferCollection = $this->getModuleTransferCollection();
-        $currentModuleTransfer = current($modulesToValidate);
-
-        if (!isset($moduleTransferCollection[$this->buildCollectionKey($currentModuleTransfer)])) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * @param array $modulesToValidate
      * @param string|null $dependencyType
      *
@@ -375,7 +231,7 @@ class DependencyViolationFinderConsole extends Console
         $message = sprintf(
             'Checking %d %s for %sdependency issues.',
             count($modulesToValidate),
-            (count($modulesToValidate) === 1) ? 'Module <fg=yellow>' . $this->buildCollectionKey(current($modulesToValidate)) . '</>' : 'Modules',
+            (count($modulesToValidate) === 1) ? 'Module <fg=yellow>' . $this->buildModuleKey(current($modulesToValidate)) . '</>' : 'Modules',
             $typeMessage
         );
         $this->info($message);
@@ -428,15 +284,5 @@ class DependencyViolationFinderConsole extends Console
     protected function getDependencyType(InputInterface $input)
     {
         return $input->getOption(static::OPTION_DEPENDENCY_TYPE);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
-     *
-     * @return string
-     */
-    protected function buildCollectionKey(ModuleTransfer $moduleTransfer): string
-    {
-        return sprintf('%s.%s', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());
     }
 }

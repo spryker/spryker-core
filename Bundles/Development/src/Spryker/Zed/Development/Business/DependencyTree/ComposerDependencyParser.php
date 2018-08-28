@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyModuleTransfer;
 use Generated\Shared\Transfer\DependencyTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
-use Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface;
 use Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\FilterChain;
@@ -27,19 +26,6 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     const TYPE_EXCLUDE = 'exclude';
     const TYPE_INCLUDE_DEV = 'include-dev';
     const TYPE_EXCLUDE_DEV = 'exclude-dev';
-
-    /**
-     * @var \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
-     */
-    protected $finder;
-
-    /**
-     * @param \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface $finder
-     */
-    public function __construct(ComposerJsonFinderInterface $finder)
-    {
-        $this->finder = $finder;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $dependencyCollectionTransfer
@@ -257,36 +243,37 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     }
 
     /**
-     * @param string $moduleName
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @throws \Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException
      *
      * @return array
      */
-    protected function parseDeclaredDependenciesForBundle($moduleName)
+    protected function parseDeclaredDependenciesForBundle(ModuleTransfer $moduleTransfer): array
     {
-        $composerJsonFiles = $this->finder->findAll();
-        foreach ($composerJsonFiles as $composerJsonFile) {
-            if ($this->shouldSkip($composerJsonFile, $moduleName)) {
-                continue;
-            }
+        $dependencyJsonFilePath = sprintf('%s/dependency.json', $moduleTransfer->getRootDirectory());
 
-            $path = dirname((string)$composerJsonFile);
-            $dependencyFile = $path . DIRECTORY_SEPARATOR . 'dependency.json';
-            if (!file_exists($dependencyFile)) {
-                return [];
-            }
-
-            $content = file_get_contents($dependencyFile);
-            $content = json_decode($content, true);
-
-            return [
-                static::TYPE_INCLUDE => isset($content[static::TYPE_INCLUDE]) ? array_keys($content[static::TYPE_INCLUDE]) : [],
-                static::TYPE_EXCLUDE => isset($content[static::TYPE_EXCLUDE]) ? array_keys($content[static::TYPE_EXCLUDE]) : [],
-                static::TYPE_INCLUDE_DEV => isset($content[static::TYPE_INCLUDE_DEV]) ? array_keys($content[static::TYPE_INCLUDE_DEV]) : [],
-                static::TYPE_EXCLUDE_DEV => isset($content[static::TYPE_EXCLUDE_DEV]) ? array_keys($content[static::TYPE_EXCLUDE_DEV]) : [],
-            ];
+        if (!file_exists($dependencyJsonFilePath)) {
+            return [];
         }
 
-        return [];
+        $content = file_get_contents($dependencyJsonFilePath);
+        $content = json_decode($content, true);
+
+        if (json_last_error()) {
+            throw new InvalidComposerJsonException(sprintf(
+                'Unable to parse %s: %s.',
+                $dependencyJsonFilePath,
+                json_last_error_msg()
+            ));
+        }
+
+        return [
+            static::TYPE_INCLUDE => isset($content[static::TYPE_INCLUDE]) ? array_keys($content[static::TYPE_INCLUDE]) : [],
+            static::TYPE_EXCLUDE => isset($content[static::TYPE_EXCLUDE]) ? array_keys($content[static::TYPE_EXCLUDE]) : [],
+            static::TYPE_INCLUDE_DEV => isset($content[static::TYPE_INCLUDE_DEV]) ? array_keys($content[static::TYPE_INCLUDE_DEV]) : [],
+            static::TYPE_EXCLUDE_DEV => isset($content[static::TYPE_EXCLUDE_DEV]) ? array_keys($content[static::TYPE_EXCLUDE_DEV]) : [],
+        ];
     }
 
     /**
@@ -296,7 +283,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      *
      * @return \Generated\Shared\Transfer\ComposerDependencyCollectionTransfer
      */
-    protected function getParsedComposerDependenciesForBundle(ModuleTransfer $moduleTransfer)
+    protected function getParsedComposerDependenciesForBundle(ModuleTransfer $moduleTransfer): ComposerDependencyCollectionTransfer
     {
         $composerDependencies = new ComposerDependencyCollectionTransfer();
 

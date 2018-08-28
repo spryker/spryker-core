@@ -79,7 +79,7 @@ class LocatorDependencyFinder implements DependencyFinderInterface
     protected function getLocatedModulesFromDependencyProvider(SplFileInfo $fileInfo): array
     {
         $dependencyModules = [];
-        
+
         if (preg_match_all('/->(?<module>\w+?)\(\)->(client|facade|queryContainer|service|resource)\(\)/', $fileInfo->getContents(), $matches, PREG_SET_ORDER)) {
             foreach ($matches as $match) {
                 $dependencyModules[] = ucfirst($match['module']);

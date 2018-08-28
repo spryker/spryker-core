@@ -1385,7 +1385,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createComposerDependencyParser()
     {
-        return new ComposerDependencyParser($this->createComposerJsonFinderComposite());
+        return new ComposerDependencyParser();
     }
 
     /**
