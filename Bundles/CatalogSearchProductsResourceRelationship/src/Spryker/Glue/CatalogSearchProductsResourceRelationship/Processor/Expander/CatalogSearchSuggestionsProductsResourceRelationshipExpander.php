@@ -39,7 +39,7 @@ class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements Ca
         foreach ($resources as $resource) {
             /** @var \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer $attributes */
             $attributes = $resource->getAttributes();
-            if ($attributes && $attributes->getProducts()) {
+            if ($attributes->getProducts()) {
                 $this->addAbstractProductsToResource($attributes->getProducts(), $resource, $restRequest);
             }
         }
