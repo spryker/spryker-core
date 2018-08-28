@@ -28,4 +28,11 @@ interface CustomersWriterInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function updateCustomerPassword(RestRequestInterface $restRequest, RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer): RestResponseInterface;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function anonymizeCustomer(RestRequestInterface $restRequest): RestResponseInterface;
 }

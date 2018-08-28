@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -138,6 +139,29 @@ class CustomersWriter implements CustomersWriterInterface
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function anonymizeCustomer(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $response = $this->restResourceBuilder->createRestResponse();
+
+        $customerTransfer = (new CustomerTransfer)->setCustomerReference($restRequest->getResource()->getId());
+        $customerTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
+
+        if (!$customerTransfer) {
+            $response->addError($this->createErrorCustomerNotFound());
+
+            return $response;
+        }
+
+        $this->customerClient->anonymizeCustomer($customerTransfer);
+
+        return $response;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer
      *
      * @return bool
@@ -232,5 +256,16 @@ class CustomersWriter implements CustomersWriterInterface
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORDS_DONT_MATCH);
 
         return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createErrorCustomerNotFound(): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
     }
 }

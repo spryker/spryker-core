@@ -30,7 +30,8 @@ class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     {
         $resourceRouteCollection
             ->addGet('get', true)
-            ->addPost('post', false);
+            ->addPost('post', false)
+            ->addDelete('delete', true);
 
         return $resourceRouteCollection;
     }

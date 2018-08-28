@@ -95,4 +95,14 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
     {
         return $this->customerClient->deleteAddress($addressTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function anonymizeCustomer(CustomerTransfer $customerTransfer)
+    {
+        return $this->customerClient->anonymizeCustomer($customerTransfer);
+    }
 }

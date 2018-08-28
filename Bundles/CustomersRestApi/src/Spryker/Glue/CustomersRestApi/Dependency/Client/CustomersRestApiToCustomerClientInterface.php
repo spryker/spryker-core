@@ -60,4 +60,11 @@ interface CustomersRestApiToCustomerClientInterface
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function deleteAddress(AddressTransfer $addressTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function anonymizeCustomer(CustomerTransfer $customerTransfer);
 }
