@@ -79,7 +79,7 @@ class CategoryReader implements CategoryReaderInterface
     public function getCategoryNode(string $nodeId, string $locale): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        if (!$this->validateNodeId($nodeId)) {
+        if (!$this->isNodeIdValid($nodeId)) {
             return $this->createInvalidNodeIdResponse($restResponse);
         }
         $categoryNodeStorageTransfer = $this->categoryStorageClient->getCategoryNodeById((int)$nodeId, $locale);
@@ -137,7 +137,7 @@ class CategoryReader implements CategoryReaderInterface
      *
      * @return bool
      */
-    protected function validateNodeId(string $nodeId): bool
+    protected function isNodeIdValid(string $nodeId): bool
     {
         $convertedToInt = (int)$nodeId;
         return $nodeId === (string)$convertedToInt;
