@@ -30,6 +30,7 @@ class AddressesResourceRoutePlugin extends AbstractPlugin implements ResourceRou
         $resourceRouteCollection
             ->addGet('get', true)
             ->addPost('post', true)
+            ->addPatch('patch', true)
             ->addDelete('delete', true);
 
         return $resourceRouteCollection;

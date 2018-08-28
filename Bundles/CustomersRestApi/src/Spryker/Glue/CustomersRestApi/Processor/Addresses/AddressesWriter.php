@@ -92,13 +92,14 @@ class AddressesWriter implements AddressesWriterInterface
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestAddressAttributesTransfer $addressAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function updateAddress(RestAddressAttributesTransfer $addressAttributesTransfer): RestResponseInterface
+    public function updateAddress(RestRequestInterface $restRequest, RestAddressAttributesTransfer $addressAttributesTransfer): RestResponseInterface
     {
-        $addressTransfer = (new AddressTransfer())->fromArray($addressAttributesTransfer->toArray(), true);
+        $addressTransfer = (new AddressTransfer())->setUuid($restRequest->getResource()->getId());
         $address = $this->customerClient->findAddressByUuid($addressTransfer);
 
         $restResponse = $this->restResourceBuilder->createRestResponse();
@@ -113,7 +114,23 @@ class AddressesWriter implements AddressesWriterInterface
             return $restResponse;
         }
 
-        $this->customerClient->updateAddress($address);
+        $addressTransfer = (new AddressTransfer())->fromArray($addressAttributesTransfer->toArray(), true);
+        $addressTransfer = $this->customerClient->updateAddress($addressTransfer);
+
+        if (!$addressTransfer->getUuid()) {
+            $restResponse->addError($this->createErrorAddressNotSaved());
+
+            return $restResponse;
+        }
+
+        $restResource = $this
+            ->addressesResourceMapper
+            ->mapAddressTransferToRestResource(
+                $addressTransfer,
+                $addressAttributesTransfer->getCustomerReference()
+            );
+
+        $restResponse->addResource($restResource);
 
         return $restResponse;
     }
