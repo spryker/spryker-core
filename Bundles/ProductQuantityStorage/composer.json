@@ -14,6 +14,8 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
+    "spryker/product": "*",
+    "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/queue": "*",
     "spryker/testify": "*"

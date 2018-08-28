@@ -19,5 +19,9 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   }
 }

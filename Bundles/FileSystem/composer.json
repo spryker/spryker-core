@@ -8,9 +8,11 @@
     "spryker/kernel": "^3.5.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/flysystem-local-file-system": "*",
     "spryker/fly-system": "*",
+    "spryker/flysystem-aws3v3-file-system": "*",
+    "spryker/flysystem-ftp-file-system": "*",
+    "spryker/flysystem-local-file-system": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

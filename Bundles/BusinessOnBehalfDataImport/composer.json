@@ -12,8 +12,7 @@
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
-    "spryker/business-on-behalf": "*",
-    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

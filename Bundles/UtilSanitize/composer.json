@@ -25,5 +25,9 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "require-dev": {
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   }
 }

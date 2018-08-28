@@ -29,5 +29,11 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/product": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   }
 }

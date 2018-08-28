@@ -12,7 +12,6 @@
     "spryker/PropelOrm": "^1.0.0",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {

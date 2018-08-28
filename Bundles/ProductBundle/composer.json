@@ -24,11 +24,9 @@
     "spryker/calculation": "*",
     "spryker/cart": "*",
     "spryker/checkout": "*",
-    "spryker/code-sniffer": "*",
     "spryker/oms": "*",
     "spryker/propel": "*",
     "spryker/sales-aggregator": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

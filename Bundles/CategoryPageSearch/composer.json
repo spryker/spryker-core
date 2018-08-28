@@ -15,9 +15,12 @@
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/event": "*",
-    "spryker/propel-query-builder": "*"
+    "spryker/propel": "*",
+    "spryker/propel-query-builder": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"

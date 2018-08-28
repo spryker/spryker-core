@@ -12,8 +12,7 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/company-user": "^1.0.0",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

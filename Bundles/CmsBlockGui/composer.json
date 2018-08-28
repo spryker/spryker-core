@@ -14,10 +14,12 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
+    "spryker/propel": "*",
     "spryker/store": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "autoload": {
     "psr-4": {

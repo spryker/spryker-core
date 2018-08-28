@@ -7,7 +7,6 @@
     "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.21.0",
     "spryker/price-product": "^2.1.0",
-    "spryker/price-product-storage-extension": "^1.0.0",
     "spryker/product": "^5.5.0 || ^6.0.0",
     "spryker/propel-orm": "^1.5.0",
     "spryker/storage": "^3.4.0",
@@ -16,8 +15,13 @@
     "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/event": "*",
-    "spryker/product-storage": "*"
+    "spryker/product-storage": "*",
+    "spryker/propel": "*",
+    "spryker/propel-query-builder": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",

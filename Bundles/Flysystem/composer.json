@@ -9,16 +9,14 @@
     "spryker/kernel": "^3.5.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/flysystem-local-file-system": "*",
-    "spryker/flysystem-aws3v3-file-system": "*",
-    "spryker/flysystem-ftp-file-system": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/flysystem-local-file-system": "For handling local files.",
     "spryker/flysystem-aws3v3-file-system": "For handling AWS3v3 filesystem.",
-    "spryker/flysystem-ftp-file-system": "For handling FTP filesystem."
+    "spryker/flysystem-ftp-file-system": "For handling FTP filesystem.",
+    "spryker/flysystem-local-file-system": "For handling local files."
   },
   "autoload": {
     "psr-4": {

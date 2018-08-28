@@ -15,9 +15,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/collector-storage-connector": "*",
-    "spryker/propel": "*",
-    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "suggest": {

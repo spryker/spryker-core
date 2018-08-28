@@ -46,7 +46,6 @@
     "spryker/product-set-storage": "*",
     "spryker/product-storage": "*",
     "spryker/propel": "^3.0.0",
-    "spryker/silex": "^2.0.0",
     "spryker/testify": "*",
     "spryker/url-storage": "*"
   },

@@ -7,15 +7,14 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/company-gui": "*",
     "spryker/gui": "^3.13.0",
     "spryker/symfony": "^3.0.0",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/symfony": "If you want to use CompanyGui plugins",
+    "spryker/company-gui": "If you want to provide plugins to CompanyGui module",
     "spryker/gui": "If you want to use CompanyGuiExtension module plugin interfaces which used Gui transfer object.",
-    "spryker/company-gui": "If you want to provide plugins to CompanyGui module"
+    "spryker/symfony": "If you want to use CompanyGui plugins"
   },
   "autoload": {
     "psr-4": {

@@ -15,7 +15,10 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/country": "*",
-    "spryker/testify": "*"
+    "spryker/locale": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*",
+    "spryker/touch": "*"
   },
   "autoload": {
     "psr-4": {

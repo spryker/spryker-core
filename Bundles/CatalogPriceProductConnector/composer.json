@@ -13,16 +13,15 @@
   "require-dev": {
     "spryker/catalog": "*",
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/elastica": "*",
     "spryker/search": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0.",
-    "spryker/search": "If you want to use Search plugins.",
+    "spryker/config": "If you want to use Config plugins.",
     "spryker/elastica": "If you want to use Elastica plugins.",
-    "spryker/config": "If you want to use Config plugins."
+    "spryker/search": "If you want to use Search plugins."
   },
   "autoload": {
     "psr-4": {
