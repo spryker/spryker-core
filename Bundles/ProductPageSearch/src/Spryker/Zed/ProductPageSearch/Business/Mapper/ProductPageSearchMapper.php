@@ -78,16 +78,15 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     }
 
     /**
-     * @param string $data
+     * @param string|null $data
      *
      * @return \Generated\Shared\Transfer\ProductPageSearchTransfer
      */
     public function mapToProductPageSearchTransferFromJson($data)
     {
         $productAbstractPageSearchTransfer = new ProductPageSearchTransfer();
-        $decodedData = $this->utilEncoding->decodeJson($data, true);
-        if (is_array($decodedData)) {
-            $productAbstractPageSearchTransfer->fromArray($decodedData);
+        if (!empty($data)) {
+            $productAbstractPageSearchTransfer->fromArray($this->utilEncoding->decodeJson($data, true));
         }
 
         return $productAbstractPageSearchTransfer;
