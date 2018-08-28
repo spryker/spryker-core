@@ -55,6 +55,7 @@ use Spryker\Zed\Development\Business\Dependency\Validator\DependencyValidatorInt
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleComposite;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleDevelopmentOnlyDependency;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInRequireAndRequireDev;
+use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInSourceAndInSuggested;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInSourceNotInRequire;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInTestNotInRequireDev;
@@ -551,6 +552,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createValidationRuleIsOptionalButInRequire(),
             $this->createValidationRuleIsOptionalButNotInRequireDev(),
             $this->createValidationRuleIsOptionalButNotSuggested(),
+            $this->createValidationRuleInSourceAndInSuggested(),
             $this->createValidationRuleInRequireAndRequireDev(),
         ]);
     }
@@ -617,6 +619,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createValidationRuleIsOptionalButNotSuggested(): ValidationRuleInterface
     {
         return new ValidationRuleIsOptionalButNotSuggested();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface
+     */
+    public function createValidationRuleInSourceAndInSuggested(): ValidationRuleInterface
+    {
+        return new ValidationRuleInSourceAndInSuggested();
     }
 
     /**

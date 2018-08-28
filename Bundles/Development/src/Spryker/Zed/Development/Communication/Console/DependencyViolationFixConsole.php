@@ -161,6 +161,7 @@ class DependencyViolationFixConsole extends AbstractDependencyViolationConsole
 
         $composerJsonFile = $moduleTransfer->getRootDirectory() . '/composer.json';
         $composerJsonArray = $this->orderEntriesInComposerJsonArray($composerJsonArray);
+        $composerJsonArray = $this->removeEmptyEntriesInComposerJsonArray($composerJsonArray);
 
         $modifiedComposerJson = json_encode($composerJsonArray, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
         $modifiedComposerJson = preg_replace(static::REPLACE_4_WITH_2_SPACES, '$1', $modifiedComposerJson) . PHP_EOL;
@@ -241,6 +242,10 @@ class DependencyViolationFixConsole extends AbstractDependencyViolationConsole
             $composerJsonArray['suggest'][$moduleNameToFix] = 'ADD SUGGEST DESCRIPTION';
             $this->writeIfVerbose(sprintf('<fg=green>%s</> added to suggests', $moduleNameToFix));
         }
+        if (ValidationRuleInterface::REMOVE_SUGGEST === $validationMessageTransfer->getFixType()) {
+            unset($composerJsonArray['suggest'][$moduleNameToFix]);
+            $this->writeIfVerbose(sprintf('<fg=green>%s</> removed from suggests', $moduleNameToFix));
+        }
 
         return $composerJsonArray;
     }
@@ -264,14 +269,31 @@ class DependencyViolationFixConsole extends AbstractDependencyViolationConsole
      */
     protected function orderEntriesInComposerJsonArray(array $composerJsonArray): array
     {
-        $entriesToSort = ['require', 'require-dev', 'suggest'];
-        foreach ($entriesToSort as $keyToSort) {
-            if (isset($composerJsonArray[$keyToSort])) {
-                $arrayToSort = $composerJsonArray[$keyToSort];
+        $keys = ['require', 'require-dev', 'suggest'];
+        foreach ($keys as $key) {
+            if (isset($composerJsonArray[$key])) {
+                $arrayToSort = $composerJsonArray[$key];
 
                 ksort($arrayToSort);
 
-                $composerJsonArray[$keyToSort] = $arrayToSort;
+                $composerJsonArray[$key] = $arrayToSort;
+            }
+        }
+
+        return $composerJsonArray;
+    }
+
+    /**
+     * @param array $composerJsonArray
+     *
+     * @return array
+     */
+    protected function removeEmptyEntriesInComposerJsonArray(array $composerJsonArray): array
+    {
+        $keys = ['require', 'require-dev', 'suggest'];
+        foreach ($keys as $key) {
+            if (isset($composerJsonArray[$key]) && count($composerJsonArray[$key]) === 0) {
+                unset($composerJsonArray[$key]);
             }
         }
 

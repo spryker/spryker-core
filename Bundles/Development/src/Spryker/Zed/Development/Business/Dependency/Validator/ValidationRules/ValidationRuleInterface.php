@@ -17,6 +17,7 @@ interface ValidationRuleInterface
 
     const REMOVE_REQUIRE = 'remove-require';
     const REMOVE_REQUIRE_DEV = 'remove-require-dev';
+    const REMOVE_SUGGEST = 'remove-suggest';
 
     const MANUAL_FIX = 'manual-fix';
 
