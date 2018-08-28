@@ -41,6 +41,10 @@ class RestRequestValidator implements RestRequestValidatorInterface
      */
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
+        if (!$restRequest->getResource()->getAttributes()) {
+            return null;
+        }
+
         $validationConfig = $this->configReader->getValidationConfiguration($restRequest->getResource()->getType(), $restRequest->getMetadata()->getMethod());
 
         $validationResult = $this->applyValidationToRequest($restRequest, $validationConfig);
