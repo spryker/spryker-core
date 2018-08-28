@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
 use Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpanderInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
+use Spryker\Zed\MinimumOrderValue\Business\TaxRateReader\TaxRateReaderInterface;
 
 class ExpenseCalculator implements ExpenseCalculatorInterface
 {
@@ -27,15 +28,23 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
     protected $minimumOrderValueStrategyResolver;
 
     /**
+     * @var \Spryker\Zed\MinimumOrderValue\Business\TaxRateReader\TaxRateReaderInterface
+     */
+    protected $taxRateReader;
+
+    /**
      * @param \Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpanderInterface $quoteExpander
      * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
+     * @param \Spryker\Zed\MinimumOrderValue\Business\TaxRateReader\TaxRateReaderInterface $taxRateReader
      */
     public function __construct(
         QuoteExpanderInterface $quoteExpander,
-        MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
+        MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver,
+        TaxRateReaderInterface $taxRateReader
     ) {
         $this->quoteExpander = $quoteExpander;
         $this->minimumOrderValueStrategyResolver = $minimumOrderValueStrategyResolver;
+        $this->taxRateReader = $taxRateReader;
     }
 
     /**
@@ -76,6 +85,8 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
         }
 
         $calculatedFee = $minimumOrderValueThresholdTransferStrategy->calculateFee($minimumOrderValueThresholdTransfer);
+
+        $calculatedFee = 1000;
 
         if (!$calculatedFee) {
             return;
@@ -149,7 +160,7 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
             ->setSumPrice($expensePrice)
             ->setUnitPriceToPayAggregation($expensePrice)
             ->setSumPriceToPayAggregation($expensePrice)
-            ->setTaxRate(5) //TODO: MOST IMPORTANT PART..PAGE TO SET TAX SET FOR MOV AND QUERY TO RETRIEVE + SET TAX RATE
+            ->setTaxRate($this->taxRateReader->getMinimumOrderValueTaxRate())
             ->setQuantity(1);
 
         if ($priceMode === MinimumOrderValueConfig::PRICE_MODE_NET) {

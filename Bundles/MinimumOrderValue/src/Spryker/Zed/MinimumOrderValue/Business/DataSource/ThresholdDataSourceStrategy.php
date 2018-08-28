@@ -9,8 +9,8 @@ namespace Spryker\Zed\MinimumOrderValue\Business\DataSource;
 
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueReaderInterface;
-use Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig;
 
 class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterface
 {
@@ -25,23 +25,15 @@ class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterfac
     protected $storeThresholdReader;
 
     /**
-     * @var \Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig
-     */
-    protected $config;
-
-    /**
      * @param \Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueDataSourceStrategyPluginInterface[] $minimumOrderValueDataSourceStrategyPlugins
      * @param \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueReaderInterface $storeThresholdReader
-     * @param \Spryker\Zed\MinimumOrderValue\MinimumOrderValueConfig $config
      */
     public function __construct(
         array $minimumOrderValueDataSourceStrategyPlugins,
-        MinimumOrderValueReaderInterface $storeThresholdReader,
-        MinimumOrderValueConfig $config
+        MinimumOrderValueReaderInterface $storeThresholdReader
     ) {
         $this->minimumOrderValueDataSourceStrategyPlugins = $minimumOrderValueDataSourceStrategyPlugins;
         $this->storeThresholdReader = $storeThresholdReader;
-        $this->config = $config;
     }
 
     /**
@@ -80,7 +72,7 @@ class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterfac
 
         return array_map(function (MinimumOrderValueTransfer $minimumOrderValueTransfer) use ($cartSubTotal) {
             $minimumOrderValueTransfer = $minimumOrderValueTransfer->getThreshold();
-            $minimumOrderValueTransfer->setSubTotal($cartSubTotal);
+            $minimumOrderValueTransfer->setComparedToSubtotal($cartSubTotal);
 
             return $minimumOrderValueTransfer;
         }, $minimumOrderValueTransfers);
@@ -95,7 +87,7 @@ class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterfac
     {
         $cartSubTotal = 0;
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($quoteTransfer->getPriceMode() === $this->config->getNetPriceMode()) {
+            if ($quoteTransfer->getPriceMode() === MinimumOrderValueConfig::PRICE_MODE_NET) {
                 $cartSubTotal += ($itemTransfer->getUnitNetPrice() * $itemTransfer->getQuantity());
                 continue;
             }

@@ -29,7 +29,7 @@ class GlobalSoftThresholdFormMapper extends AbstractGlobalThresholdFormMapper im
             GlobalThresholdType::PREFIX_SOFT
         );
 
-        $minimumOrderValueTValueTransfer->getThreshold()->setValue($data[GlobalThresholdType::FIELD_SOFT_VALUE]);
+        $minimumOrderValueTValueTransfer->getThreshold()->setThreshold($data[GlobalThresholdType::FIELD_SOFT_VALUE]);
 
         $minimumOrderValueTypeTransfer = (new MinimumOrderValueTypeTransfer())
             ->setKey(MinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_MESSAGE)

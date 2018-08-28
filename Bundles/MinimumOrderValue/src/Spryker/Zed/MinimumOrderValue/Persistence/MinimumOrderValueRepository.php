@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\MinimumOrderValue\Persistence\Map\SpyMinimumOrderValueTaxSetTableMap;
+use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
+use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException;
 
@@ -20,6 +22,13 @@ use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueT
  */
 class MinimumOrderValueRepository extends AbstractRepository implements MinimumOrderValueRepositoryInterface
 {
+    public const COL_MAX_TAX_RATE = 'MaxTaxRate';
+
+    /**
+     * @see \Spryker\Shared\Tax\TaxConstants::TAX_EXEMPT_PLACEHOLDER
+     */
+    protected const TAX_EXEMPT_PLACEHOLDER = 'Tax Exempt';
+
     /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
      *
@@ -94,5 +103,33 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
             ->findOne();
 
         return $taxSetId;
+    }
+
+    /**
+     * @uses Tax
+     * @uses Country
+     *
+     * @param string $countryIso2Code
+     *
+     * @return float|null
+     */
+    public function findMaxTaxRateByIdTaxSetAndCountryIso2Code(string $countryIso2Code): ?float
+    {
+        return $this->getFactory()->createMinimumOrderValueTaxSetPropelQuery()
+            ->useTaxSetQuery()
+            ->useSpyTaxSetTaxQuery()
+            ->useSpyTaxRateQuery()
+            ->useCountryQuery()
+            ->filterByIso2Code($countryIso2Code)
+            ->endUse()
+            ->_or()
+            ->filterByName(static::TAX_EXEMPT_PLACEHOLDER)
+            ->endUse()
+            ->endUse()
+            ->groupBy(SpyTaxSetTableMap::COL_NAME)
+            ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', static::COL_MAX_TAX_RATE)
+            ->endUse()
+            ->select([static::COL_MAX_TAX_RATE])
+            ->findOne();
     }
 }

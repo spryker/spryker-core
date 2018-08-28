@@ -28,6 +28,8 @@ use Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpander;
 use Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpanderInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolver;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
+use Spryker\Zed\MinimumOrderValue\Business\TaxRateReader\TaxRateReader;
+use Spryker\Zed\MinimumOrderValue\Business\TaxRateReader\TaxRateReaderInterface;
 use Spryker\Zed\MinimumOrderValue\Business\ThresholdMessenger\ThresholdMessenger;
 use Spryker\Zed\MinimumOrderValue\Business\ThresholdMessenger\ThresholdMessengerInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueGlossaryKeyGenerator;
@@ -40,6 +42,7 @@ use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryF
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeInterface;
+use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToTaxFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\MinimumOrderValueDependencyProvider;
 
 /**
@@ -176,7 +179,8 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     {
         return new ExpenseCalculator(
             $this->createQuoteExpander(),
-            $this->createMinimumOrderValueStrategyResolver()
+            $this->createMinimumOrderValueStrategyResolver(),
+            $this->createTaxRateReader()
         );
     }
 
@@ -195,8 +199,18 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     {
         return new ThresholdDataSourceStrategy(
             $this->getMinimumOrderValueDataSourceStrategies(),
-            $this->createMinimumOrderValueReader(),
-            $this->getConfig()
+            $this->createMinimumOrderValueReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Business\TaxRateReader\TaxRateReaderInterface
+     */
+    public function createTaxRateReader(): TaxRateReaderInterface
+    {
+        return new TaxRateReader(
+            $this->getTaxFacade(),
+            $this->getRepository()
         );
     }
 
@@ -238,6 +252,14 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     public function getMessengerFacade(): MinimumOrderValueToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToTaxFacadeInterface
+     */
+    public function getTaxFacade(): MinimumOrderValueToTaxFacadeInterface
+    {
+        return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::FACADE_TAX);
     }
 
     /**

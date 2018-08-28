@@ -17,6 +17,7 @@ use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryF
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeBridge;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeBridge;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeBridge;
+use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToTaxFacadeBridge;
 
 class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -24,7 +25,8 @@ class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_STORE = 'FACADE_STORE';
-    public const FACADE_MESSENGER = 'MESSENGER_FACADE';
+    public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    public const FACADE_TAX = 'FACADE_TAX';
     public const PLUGINS_MINIMUM_ORDER_VALUE_STRATEGY = 'PLUGINS_MINIMUM_ORDER_VALUE_STRATEGY';
 
     /**
@@ -32,7 +34,7 @@ class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
@@ -41,6 +43,7 @@ class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addMoneyFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMessengerFacade($container);
+        $container = $this->addTaxFacade($container);
         $container = $this->addMinimumOrderValueStrategyPlugins($container);
 
         return $container;
@@ -111,6 +114,20 @@ class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container[static::FACADE_MESSENGER] = function (Container $container) {
             return new MinimumOrderValueToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTaxFacade(Container $container): Container
+    {
+        $container[static::FACADE_TAX] = function (Container $container) {
+            return new MinimumOrderValueToTaxFacadeBridge($container->getLocator()->tax()->facade());
         };
 
         return $container;

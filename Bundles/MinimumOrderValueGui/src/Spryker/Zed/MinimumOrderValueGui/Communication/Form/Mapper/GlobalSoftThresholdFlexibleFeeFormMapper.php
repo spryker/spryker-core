@@ -29,8 +29,8 @@ class GlobalSoftThresholdFlexibleFeeFormMapper extends AbstractGlobalThresholdFo
             GlobalThresholdType::PREFIX_SOFT
         );
 
-        $minimumOrderValueTValueTransfer->getThreshold()->setValue($data[GlobalThresholdType::FIELD_SOFT_VALUE]);
-        $minimumOrderValueTValueTransfer->getThreshold()->setFee($data[GlobalThresholdType::FIELD_SOFT_FLEXIBLE_FEE]);
+        $minimumOrderValueTValueTransfer->getThreshold()->setThreshold($data[GlobalThresholdType::FIELD_SOFT_VALUE]);
+        $minimumOrderValueTValueTransfer->getThreshold()->setFeeIfThresholdNotMet($data[GlobalThresholdType::FIELD_SOFT_FLEXIBLE_FEE]);
 
         $minimumOrderValueTypeTransfer = (new MinimumOrderValueTypeTransfer())
             ->setKey(MinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE)
