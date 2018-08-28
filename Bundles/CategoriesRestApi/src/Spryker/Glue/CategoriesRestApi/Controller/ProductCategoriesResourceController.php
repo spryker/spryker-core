@@ -24,7 +24,7 @@ class ProductCategoriesResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResourceInterface
     {
         return $this->getFactory()
-            ->createCategoriesReader()
+            ->createCategoryReader()
             ->getProductCategoriesResourceBySku($restRequest);
     }
 }

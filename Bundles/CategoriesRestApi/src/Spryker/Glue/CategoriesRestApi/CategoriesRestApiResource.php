@@ -28,7 +28,7 @@ class CategoriesRestApiResource extends AbstractRestResource implements Categori
     public function getCategoriesByAbstractProductSku(RestRequestInterface $restRequest): RestResourceInterface
     {
         return $this->getFactory()
-            ->createCategoriesReader()
+            ->createCategoryReader()
             ->getProductCategoriesResourceBySku($restRequest);
     }
 }

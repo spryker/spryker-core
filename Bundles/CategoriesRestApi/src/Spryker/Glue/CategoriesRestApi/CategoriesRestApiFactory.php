@@ -9,10 +9,12 @@ namespace Spryker\Glue\CategoriesRestApi;
 
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface;
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToProductCategoryResourceAliasStorageClientInterface;
-use Spryker\Glue\CategoriesRestApi\Processor\Categories\CategoriesReader;
-use Spryker\Glue\CategoriesRestApi\Processor\Categories\CategoriesReaderInterface;
+use Spryker\Glue\CategoriesRestApi\Processor\Category\CategoryReader;
+use Spryker\Glue\CategoriesRestApi\Processor\Category\CategoryReaderInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapper;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapperInterface;
+use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapper;
+use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -21,15 +23,16 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class CategoriesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\CategoriesRestApi\Processor\Categories\CategoriesReaderInterface
+     * @return \Spryker\Glue\CategoriesRestApi\Processor\Category\CategoryReaderInterface
      */
-    public function createCategoriesReader(): CategoriesReaderInterface
+    public function createCategoryReader(): CategoryReaderInterface
     {
-        return new CategoriesReader(
+        return new CategoryReader(
             $this->getResourceBuilder(),
             $this->getCategoryStorageClient(),
             $this->getProductCategoryResourceAliasStorageClient(),
-            $this->createCategoriesResourceMapper()
+            $this->createCategoriesResourceMapper(),
+            $this->createCategoryMapper()
         );
     }
 
@@ -55,5 +58,13 @@ class CategoriesRestApiFactory extends AbstractFactory
     protected function createCategoriesResourceMapper(): CategoriesResourceMapperInterface
     {
         return new CategoriesResourceMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface
+     */
+    protected function createCategoryMapper(): CategoryMapperInterface
+    {
+        return new CategoryMapper();
     }
 }

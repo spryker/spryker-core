@@ -2,7 +2,7 @@ parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
     ignoreErrors:
         - '#Call to an undefined method .+LocatorLocatorInterface::.+\(\).#'
-        - '#Casting to array something that#'
+        - '#Casting to array\<.*\> something that#'
 
 services:
     -

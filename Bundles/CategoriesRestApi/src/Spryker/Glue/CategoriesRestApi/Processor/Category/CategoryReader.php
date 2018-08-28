@@ -5,22 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CategoriesRestApi\Processor\Categories;
+namespace Spryker\Glue\CategoriesRestApi\Processor\Category;
 
-use Generated\Shared\Transfer\RestCategoryNodesAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig;
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface;
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToProductCategoryResourceAliasStorageClientInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapperInterface;
+use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-
 use Symfony\Component\HttpFoundation\Response;
 
-class CategoriesReader implements CategoriesReaderInterface
+class CategoryReader implements CategoryReaderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -43,21 +42,29 @@ class CategoriesReader implements CategoriesReaderInterface
     protected $categoriesResourceMapper;
 
     /**
+     * @var \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface
+     */
+    protected $categoryMapper;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface $categoryStorageClient
      * @param \Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToProductCategoryResourceAliasStorageClientInterface $productCategoryResourceAliasStorageClient
      * @param \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapperInterface $categoriesResourceMapper
+     * @param \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface $categoryMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CategoriesRestApiToCategoryStorageClientInterface $categoryStorageClient,
         CategoriesRestApiToProductCategoryResourceAliasStorageClientInterface $productCategoryResourceAliasStorageClient,
-        CategoriesResourceMapperInterface $categoriesResourceMapper
+        CategoriesResourceMapperInterface $categoriesResourceMapper,
+        CategoryMapperInterface $categoryMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->categoryStorageClient = $categoryStorageClient;
         $this->productCategoryResourceAliasStorageClient = $productCategoryResourceAliasStorageClient;
         $this->categoriesResourceMapper = $categoriesResourceMapper;
+        $this->categoryMapper = $categoryMapper;
     }
 
     /**
@@ -65,11 +72,11 @@ class CategoriesReader implements CategoriesReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readCategoriesTree(string $locale): RestResponseInterface
+    public function getCategoryTree(string $locale): RestResponseInterface
     {
-        $categoriesResource = $this->categoryStorageClient->getCategories($locale);
-        $restCategoriesTreeTransfer = $this->categoriesResourceMapper
-            ->mapCategoriesResourceToRestCategoriesTransfer((array)$categoriesResource);
+        $categoryTree = $this->categoryStorageClient->getCategories($locale);
+        $restCategoriesTreeTransfer = $this->categoryMapper
+            ->mapCategoryTreeToRestCategoryTreesTransfer((array)$categoryTree);
 
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $restResource = $this
@@ -127,20 +134,17 @@ class CategoriesReader implements CategoriesReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCategory(int $nodeId, string $locale): RestResponseInterface
+    public function getCategoryNode(int $nodeId, string $locale): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $categoryNodeStorageTransfer = $this->categoryStorageClient->getCategoryNodeById($nodeId, $locale);
 
-        if (empty($categoryNodeStorageTransfer->getNodeId())) {
+        if (!$categoryNodeStorageTransfer->getNodeId()) {
             return $this->createErrorResponse($restResponse);
         }
 
-        $restCategoryNodesAttributesTransfer = (new RestCategoryNodesAttributesTransfer())
-            ->fromArray(
-                $categoryNodeStorageTransfer->toArray(),
-                true
-            );
+        $restCategoryNodesAttributesTransfer = $this->categoryMapper
+            ->mapCategoryNodeToRestCategoryNodesTransfer($categoryNodeStorageTransfer);
 
         $restResource = $this
             ->restResourceBuilder
