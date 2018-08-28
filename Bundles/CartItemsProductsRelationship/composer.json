@@ -10,12 +10,12 @@
     "spryker/products-rest-api": "^1.1.0"
   },
   "require-dev": {
+    "spryker/carts-rest-api": "*",
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/carts-rest-api": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/carts-rest-api":  "If you want to expand cart items resource with concrete products relationship."
+    "spryker/carts-rest-api": "If you want to expand cart items resource with concrete products relationship."
   },
   "autoload": {
     "psr-4": {
