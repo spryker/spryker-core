@@ -16,9 +16,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class DevelopmentConfig extends AbstractBundleConfig
 {
     const BUNDLE_PLACEHOLDER = '[BUNDLE]';
+
     const APPLICATION_NAMESPACES = [
         'Orm',
     ];
+
     const APPLICATIONS = [
         'Client',
         'Service',

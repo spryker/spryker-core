@@ -127,7 +127,7 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
         $dependentModules = [];
         foreach ($useStatements as $useStatement) {
             $useStatementFragments = explode('\\', $useStatement);
-            if (!in_array($useStatementFragments[0], $this->config->getInternalNamespaces())) {
+            if ($this->isIgnorableUseStatement($useStatementFragments)) {
                 continue;
             }
             $foreignModule = $useStatementFragments[2];
@@ -137,5 +137,15 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
         }
 
         return $dependentModules;
+    }
+
+    /**
+     * @param array $useStatementFragments
+     *
+     * @return bool
+     */
+    protected function isIgnorableUseStatement(array $useStatementFragments): bool
+    {
+        return (!in_array($useStatementFragments[0], $this->config->getInternalNamespaces()) || !in_array($useStatementFragments[1], $this->config->getApplications()));
     }
 }
