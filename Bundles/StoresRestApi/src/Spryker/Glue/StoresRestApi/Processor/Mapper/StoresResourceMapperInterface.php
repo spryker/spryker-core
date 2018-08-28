@@ -8,16 +8,14 @@
 namespace Spryker\Glue\StoresRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\StoresRestAttributesTransfer;
-use Spryker\Shared\Kernel\Store;
 
 interface StoresResourceMapperInterface
 {
     /**
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer[] $countries
      * @param \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer[] $currencies
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    public function mapStoreToStoresRestAttribute(Store $store, array $countries, array $currencies): StoresRestAttributesTransfer;
+    public function mapStoreToStoresRestAttribute(array $countries, array $currencies): StoresRestAttributesTransfer;
 }

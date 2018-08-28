@@ -10,6 +10,7 @@ namespace Spryker\Glue\StoresRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientInterface;
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCurrencyClientInterface;
+use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToStoreClientInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCountryResourceMapper;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCountryResourceMapperInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCurrencyResourceMapper;
@@ -22,7 +23,6 @@ use Spryker\Glue\StoresRestApi\Processor\Stores\StoresCurrencyReader;
 use Spryker\Glue\StoresRestApi\Processor\Stores\StoresCurrencyReaderInterface;
 use Spryker\Glue\StoresRestApi\Processor\Stores\StoresReader;
 use Spryker\Glue\StoresRestApi\Processor\Stores\StoresReaderInterface;
-use Spryker\Shared\Kernel\Store;
 
 class StoresRestApiFactory extends AbstractFactory
 {
@@ -43,11 +43,11 @@ class StoresRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToStoreClientInterface
      */
-    public function getStore(): Store
+    public function getStoreClient(): StoresRestApiToStoreClientInterface
     {
-        return $this->getProvidedDependency(StoresRestApiDependencyProvider::STORE);
+        return $this->getProvidedDependency(StoresRestApiDependencyProvider::CLIENT_STORE);
     }
 
     /**
@@ -60,7 +60,7 @@ class StoresRestApiFactory extends AbstractFactory
             $this->createStoresCurrencyReader(),
             $this->getResourceBuilder(),
             $this->createStoresResourceMapper(),
-            $this->getStore()
+            $this->getStoreClient()
         );
     }
 
@@ -82,8 +82,7 @@ class StoresRestApiFactory extends AbstractFactory
     {
         return new StoresCurrencyReader(
             $this->getCurrencyClient(),
-            $this->createStoresCurrencyResourceMapper(),
-            $this->getStore()
+            $this->createStoresCurrencyResourceMapper()
         );
     }
 
@@ -92,7 +91,7 @@ class StoresRestApiFactory extends AbstractFactory
      */
     public function createStoresResourceMapper(): StoresResourceMapperInterface
     {
-        return new StoresResourceMapper();
+        return new StoresResourceMapper($this->getStoreClient());
     }
 
     /**

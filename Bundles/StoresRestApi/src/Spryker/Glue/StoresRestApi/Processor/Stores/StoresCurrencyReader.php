@@ -9,7 +9,6 @@ namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCurrencyClientInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCurrencyResourceMapperInterface;
-use Spryker\Shared\Kernel\Store;
 
 class StoresCurrencyReader implements StoresCurrencyReaderInterface
 {
@@ -24,23 +23,15 @@ class StoresCurrencyReader implements StoresCurrencyReaderInterface
     protected $storesCurrencyResourceMapper;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCurrencyClientInterface $currencyClient
      * @param \Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCurrencyResourceMapperInterface $storesCurrencyResourceMapper
-     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         StoresRestApiToCurrencyClientInterface $currencyClient,
-        StoresCurrencyResourceMapperInterface $storesCurrencyResourceMapper,
-        Store $store
+        StoresCurrencyResourceMapperInterface $storesCurrencyResourceMapper
     ) {
         $this->currencyClient = $currencyClient;
         $this->storesCurrencyResourceMapper = $storesCurrencyResourceMapper;
-        $this->store = $store;
     }
 
     /**

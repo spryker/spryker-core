@@ -89,5 +89,5 @@ interface CountryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\RegionCollectionTransfer
      */
-    public function getRegionsByCountryIso2Code(RegionRequestTransfer $regionRequestTransfer): RegionCollectionTransfer;
+    public function findRegionsByCountryIso2Code(RegionRequestTransfer $regionRequestTransfer): RegionCollectionTransfer;
 }
