@@ -71,15 +71,18 @@ class CategoryReader implements CategoryReaderInterface
     }
 
     /**
-     * @param int $nodeId
+     * @param string $nodeId
      * @param string $locale
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCategoryNode(int $nodeId, string $locale): RestResponseInterface
+    public function getCategoryNode(string $nodeId, string $locale): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        $categoryNodeStorageTransfer = $this->categoryStorageClient->getCategoryNodeById($nodeId, $locale);
+        if (!$this->validateNodeId($nodeId)) {
+            return $this->createInvalidNodeIdResponse($restResponse);
+        }
+        $categoryNodeStorageTransfer = $this->categoryStorageClient->getCategoryNodeById((int)$nodeId, $locale);
 
         if (!$categoryNodeStorageTransfer->getNodeId()) {
             return $this->createErrorResponse($restResponse);
@@ -107,10 +110,35 @@ class CategoryReader implements CategoryReaderInterface
     protected function createErrorResponse(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CategoriesRestApiConfig::RESPONSE_CODE_CATEGORY_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(CategoriesRestApiConfig::RESPONSE_DETAILS_CATEGORY_NOT_FOUND);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createInvalidNodeIdResponse(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CategoriesRestApiConfig::RESPONSE_CODE_INVALID_CATEGORY_ID)
-            ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CategoriesRestApiConfig::RESPONSE_DETAILS_INVALID_CATEGORY_ID);
 
         return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param string $nodeId
+     *
+     * @return bool
+     */
+    protected function validateNodeId(string $nodeId): bool
+    {
+        return strcmp($nodeId, (int)$nodeId) === 0;
     }
 }
