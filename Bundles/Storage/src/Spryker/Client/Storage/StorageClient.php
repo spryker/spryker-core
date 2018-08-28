@@ -43,7 +43,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected static $bufferedDecodedValues;
 
     /**
-     * @var \Spryker\Client\Storage\Redis\ServiceInterface
+     * @var \Spryker\Client\Storage\Redis\ServiceInterface|null
      */
     public static $service;
 
