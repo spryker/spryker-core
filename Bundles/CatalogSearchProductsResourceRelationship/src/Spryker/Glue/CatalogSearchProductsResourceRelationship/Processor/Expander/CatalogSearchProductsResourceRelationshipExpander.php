@@ -39,8 +39,7 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
         foreach ($resources as $resource) {
             $attributes = $resource->getAttributes();
             if ($attributes && $attributes->offsetGet('products')) {
-                /** @var \Generated\Shared\Transfer\RestCatalogSearchProductsAttributesTransfer[] $products */
-                $products = $attributes->offsetGet('products');
+                $products = $attributes->offsetGet('products')->getArrayCopy();
                 $this->addAbstractProductsToResource($products, $resource, $restRequest);
             }
         }
