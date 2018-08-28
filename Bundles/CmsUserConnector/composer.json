@@ -9,7 +9,6 @@
     "spryker/user": "^3.0.1"
   },
   "require-dev": {
-    "spryker/PropelOrm": "^1.0.0",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"

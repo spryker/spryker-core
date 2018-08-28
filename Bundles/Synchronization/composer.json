@@ -16,7 +16,6 @@
   },
   "require-dev": {
     "spryker/availability-storage": "*",
-    "spryker/catalog-page-search": "*",
     "spryker/category-page-search": "*",
     "spryker/category-storage": "*",
     "spryker/cms-block-category-storage": "*",
@@ -36,7 +35,6 @@
     "spryker/product-measurement-unit-storage": "*",
     "spryker/product-option-storage": "*",
     "spryker/product-page-search": "*",
-    "spryker/product-page-storage": "*",
     "spryker/product-quantity-storage": "*",
     "spryker/product-relation-storage": "*",
     "spryker/product-review-search": "*",

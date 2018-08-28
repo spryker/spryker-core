@@ -26,7 +26,6 @@
     "spryker/checkout": "*",
     "spryker/oms": "*",
     "spryker/propel": "*",
-    "spryker/sales-aggregator": "*",
     "spryker/testify": "*"
   },
   "suggest": {
