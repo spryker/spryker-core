@@ -139,6 +139,7 @@ class CategoryReader implements CategoryReaderInterface
      */
     protected function validateNodeId(string $nodeId): bool
     {
-        return strcmp($nodeId, (int)$nodeId) === 0;
+        $convertedToInt = (int)$nodeId;
+        return $nodeId === (string)$convertedToInt;
     }
 }
