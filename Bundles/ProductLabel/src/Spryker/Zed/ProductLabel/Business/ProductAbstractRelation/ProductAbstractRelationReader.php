@@ -43,7 +43,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     /**
      * @param int $idProductLabel
      *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract[]
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findRelationEntitiesByIdProductLabel($idProductLabel)
     {

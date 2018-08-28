@@ -82,6 +82,14 @@ interface LogConstants
 
     /**
      * Specification:
+     * - Absolute path to the installation log files directory.
+     *
+     * @api
+     */
+    public const LOG_FOLDER_PATH_INSTALLATION = 'LOG:LOG_FOLDER_PATH_INSTALLATION';
+
+    /**
+     * Specification:
      * - Absolute path to the log file which should be used be the stream handler. E.g. /var/www/data/logs/spryker.log
      * - If set logs will be written to the specified file.
      *

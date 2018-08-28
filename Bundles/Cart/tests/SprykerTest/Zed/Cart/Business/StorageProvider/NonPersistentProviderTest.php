@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
+use SprykerTest\Zed\Cart\Business\Mocks\CartItemAddTripleStrategy;
 
 /**
  * Auto-generated group annotations
@@ -39,10 +40,8 @@ class NonPersistentProviderTest extends Unit
     protected function setUp()
     {
         parent::setUp();
-        $this->provider = new NonPersistentProvider();
+        $this->provider = new NonPersistentProvider([], []);
     }
-
-    //@todo test with more then 1 item
 
     /**
      * @return void
@@ -55,11 +54,11 @@ class NonPersistentProviderTest extends Unit
 
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
         $newItem = $this->createItem($itemId, $newQuantity);
-        $change = new CartChangeTransfer();
-        $change->addItem($newItem);
-        $change->setQuote($quoteTransfer);
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->addItem($newItem);
+        $cartChangeTransfer->setQuote($quoteTransfer);
 
-        $changedCart = $this->provider->addItems($change);
+        $changedCart = $this->provider->addItems($cartChangeTransfer);
         $changedItems = $changedCart->getItems();
         $this->assertCount(1, $changedItems);
 
@@ -85,11 +84,11 @@ class NonPersistentProviderTest extends Unit
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
 
         $newItem = $this->createItem($newId, $newQuantity);
-        $change = new CartChangeTransfer();
-        $change->addItem($newItem);
-        $change->setQuote($quoteTransfer);
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->addItem($newItem);
+        $cartChangeTransfer->setQuote($quoteTransfer);
 
-        $changedCart = $this->provider->addItems($change);
+        $changedCart = $this->provider->addItems($cartChangeTransfer);
         $changedItems = $changedCart->getItems();
         $this->assertCount(2, $changedItems);
 
@@ -125,12 +124,12 @@ class NonPersistentProviderTest extends Unit
 
         $newFirstItem = $this->createItem($newItemId, $newFirstItemQuantity);
         $newSecondItem = $this->createItem($newItemId, $newSecondItemQuantity);
-        $change = new CartChangeTransfer();
-        $change->addItem($newFirstItem);
-        $change->addItem($newSecondItem);
-        $change->setQuote($quoteTransfer);
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->addItem($newFirstItem);
+        $cartChangeTransfer->addItem($newSecondItem);
+        $cartChangeTransfer->setQuote($quoteTransfer);
 
-        $changedCart = $this->provider->addItems($change);
+        $changedCart = $this->provider->addItems($cartChangeTransfer);
         $changedItems = $changedCart->getItems();
         $this->assertCount(2, $changedItems);
 
@@ -162,11 +161,11 @@ class NonPersistentProviderTest extends Unit
 
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
         $newItem = $this->createItem($itemId, $reduceQuantity);
-        $change = new CartChangeTransfer();
-        $change->addItem($newItem);
-        $change->setQuote($quoteTransfer);
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->addItem($newItem);
+        $cartChangeTransfer->setQuote($quoteTransfer);
 
-        $changedCart = $this->provider->removeItems($change);
+        $changedCart = $this->provider->removeItems($cartChangeTransfer);
         $this->assertCount(0, $changedCart->getItems());
     }
 
@@ -182,11 +181,11 @@ class NonPersistentProviderTest extends Unit
 
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
         $newItem = $this->createItem($deleteItemId, $reduceQuantity);
-        $change = new CartChangeTransfer();
-        $change->addItem($newItem);
-        $change->setQuote($quoteTransfer);
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->addItem($newItem);
+        $cartChangeTransfer->setQuote($quoteTransfer);
 
-        $changedCart = $this->provider->removeItems($change);
+        $changedCart = $this->provider->removeItems($cartChangeTransfer);
         $changedItems = $changedCart->getItems();
         $this->assertCount(1, $changedItems);
         $item = $changedItems[0];
@@ -205,11 +204,11 @@ class NonPersistentProviderTest extends Unit
 
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
         $newItem = $this->createItem($itemId, $reduceQuantity);
-        $change = new CartChangeTransfer();
-        $change->addItem($newItem);
-        $change->setQuote($quoteTransfer);
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->addItem($newItem);
+        $cartChangeTransfer->setQuote($quoteTransfer);
 
-        $changedCart = $this->provider->removeItems($change);
+        $changedCart = $this->provider->removeItems($cartChangeTransfer);
         $this->assertCount(0, $changedCart->getItems());
     }
 
@@ -229,11 +228,11 @@ class NonPersistentProviderTest extends Unit
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
 
         $newItem = $this->createItem($newId, $newQuantity);
-        $change = new CartChangeTransfer();
-        $change->addItem($newItem);
-        $change->setQuote($quoteTransfer);
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->addItem($newItem);
+        $cartChangeTransfer->setQuote($quoteTransfer);
 
-        $this->provider->addItems($change);
+        $this->provider->addItems($cartChangeTransfer);
     }
 
     /**
@@ -252,11 +251,11 @@ class NonPersistentProviderTest extends Unit
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
 
         $newItem = $this->createItem($newId, $newQuantity);
-        $change = new CartChangeTransfer();
-        $change->addItem($newItem);
-        $change->setQuote($quoteTransfer);
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->addItem($newItem);
+        $cartChangeTransfer->setQuote($quoteTransfer);
 
-        $this->provider->addItems($change);
+        $this->provider->addItems($cartChangeTransfer);
     }
 
     /**
@@ -275,11 +274,11 @@ class NonPersistentProviderTest extends Unit
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
 
         $newItem = $this->createItem($newId, $newQuantity);
-        $change = new CartChangeTransfer();
-        $change->addItem($newItem);
-        $change->setQuote($quoteTransfer);
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->addItem($newItem);
+        $cartChangeTransfer->setQuote($quoteTransfer);
 
-        $this->provider->removeItems($change);
+        $this->provider->removeItems($cartChangeTransfer);
     }
 
     /**
@@ -298,11 +297,55 @@ class NonPersistentProviderTest extends Unit
         $quoteTransfer = $this->createQuoteWithItem($itemId, $existingQuantity);
 
         $newItem = $this->createItem($newId, $newQuantity);
-        $change = new CartChangeTransfer();
-        $change->addItem($newItem);
-        $change->setQuote($quoteTransfer);
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->addItem($newItem);
+        $cartChangeTransfer->setQuote($quoteTransfer);
 
-        $this->provider->removeItems($change);
+        $this->provider->removeItems($cartChangeTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWithCustomCartAddItemStrategy(): void
+    {
+        $provider = new NonPersistentProvider([
+            new CartItemAddTripleStrategy(),
+        ], [
+        ]);
+
+        $existingItemId = '123';
+        $newItemId = '321';
+        $existingItemQuantity = 1;
+        $newFirstItemQuantity = 3;
+        $newSecondItemQuantity = 4;
+
+        $quoteTransfer = $this->createQuoteWithItem($existingItemId, $existingItemQuantity);
+        $orignalItemTransfer = $quoteTransfer->getItems()->offsetGet(0);
+
+        $newFirstItem = $this->createItem($newItemId, $newFirstItemQuantity);
+        $newSecondItem = $this->createItem($newItemId, $newSecondItemQuantity);
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->addItem($newFirstItem);
+        $cartChangeTransfer->addItem($newSecondItem);
+        $cartChangeTransfer->setQuote($quoteTransfer);
+
+        $changedCart = $provider->addItems($cartChangeTransfer);
+        $changedItems = $changedCart->getItems();
+        $this->assertCount(2, $changedItems);
+
+        $skuIndex = [];
+        foreach ($changedItems as $key => $changedItem) {
+            $skuIndex[$changedItem->getId()] = $key;
+        }
+
+        $addedItem = $changedItems[$skuIndex[$newItemId]];
+        $this->assertSame($newItemId, $addedItem->getId());
+        $this->assertSame(($newFirstItemQuantity + $newSecondItemQuantity) * 3, $addedItem->getQuantity());
+
+        $existingItem = $changedItems[$skuIndex[$existingItemId]];
+        $this->assertSame($existingItemId, $existingItem->getId());
+        $this->assertSame($existingItemQuantity, $existingItem->getQuantity());
     }
 
     /**

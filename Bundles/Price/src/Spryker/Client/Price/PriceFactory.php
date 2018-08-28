@@ -46,11 +46,14 @@ class PriceFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Price\PriceConfig|\Spryker\Client\Kernel\AbstractBundleConfig
+     * @return \Spryker\Client\Price\PriceConfig
      */
     public function getModuleConfig()
     {
-        return parent::getConfig();
+        /** @var \Spryker\Client\Price\PriceConfig $config */
+        $config = parent::getConfig();
+
+        return $config;
     }
 
     /**

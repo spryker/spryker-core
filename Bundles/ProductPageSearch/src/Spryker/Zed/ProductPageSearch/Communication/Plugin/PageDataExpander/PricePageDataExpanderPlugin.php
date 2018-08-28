@@ -20,7 +20,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
 class PricePageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
-     * @var string[] Keys are store names, values are store ids.
+     * @var int[]|null Keys are store names, values are store ids.
      */
     protected $idStoreMapBuffer;
 
@@ -51,7 +51,7 @@ class PricePageDataExpanderPlugin extends AbstractPlugin implements ProductPageD
      */
     protected function getGroupedStorePrices($idProductAbstract, $storeName)
     {
-        $priceProductCollection = $this->getFactory()->getPriceProductFacade()->findProductAbstractPrices($idProductAbstract);
+        $priceProductCollection = $this->getFactory()->getPriceProductFacade()->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract);
         $storePriceProductCollection = $this->filterPriceProductCollectionByStore($priceProductCollection, $storeName);
 
         return $this->getFactory()->getPriceProductFacade()->groupPriceProductCollection($storePriceProductCollection);

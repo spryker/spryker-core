@@ -26,13 +26,13 @@ class BuildControllerCest
      *
      * @return void
      */
-    public function openBuildSpryk(SprykGuiCommunicationTester $i)
-    {
-        $i->amOnPage('/spryk-gui/build?spryk=AddZedBusinessFacadeMethod');
-        $i->seeResponseCodeIs(200);
-        $i->seeBreadcrumbNavigation('Dashboard / SprykGui / Spryks / Build Spryk');
-        $i->see('Spryk', 'h2');
-    }
+//    public function openBuildSpryk(SprykGuiCommunicationTester $i)
+//    {
+//        $i->amOnPage('/spryk-gui/build?spryk=AddZedBusinessFacadeMethod');
+//        $i->seeResponseCodeIs(200);
+//        $i->seeBreadcrumbNavigation('Dashboard / SprykGui / Spryks / Build Spryk');
+//        $i->see('Spryk', 'h2');
+//    }
 
     /**
      * @param \SprykerTest\Zed\SprykGui\SprykGuiCommunicationTester $i
@@ -46,6 +46,13 @@ class BuildControllerCest
         $i->seeBreadcrumbNavigation('Dashboard / SprykGui / Spryks / Build Spryk');
         $i->see('Spryk', 'h2');
 
+        $input = [];
+        $input[] = [
+            'innerArgument' => 0,
+            'variable' => '$fooBar',
+            'defaultValue' => '',
+        ];
+
         $formData = [
             'spryk_main_form' => [
                 'module' => 'SprykGui',
@@ -53,7 +60,7 @@ class BuildControllerCest
                 'sprykDetails' => [
                     'comment' => "Line one.\r\nLine two.",
                     'method' => 'addFooBar',
-                    'input' => 'string $fooBar',
+                    'input' => $input,
                     'output' => 'bool',
                 ],
                 'create' => true,
@@ -61,6 +68,7 @@ class BuildControllerCest
         ];
         $i->submitForm(['name' => 'spryk_main_form'], $formData);
 
+        $i->seeResponseCodeIs(200);
         $i->see('Jira Template', 'h3');
     }
 }

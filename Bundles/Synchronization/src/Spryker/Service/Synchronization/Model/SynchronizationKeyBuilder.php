@@ -28,8 +28,6 @@ class SynchronizationKeyBuilder implements SynchronizationKeyBuilderInterface
     protected $searchSyncKeyGeneratorPlugins;
 
     /**
-     * SynchronizationKeyBuilder constructor.
-     *
      * @param \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface $defaultKeyGeneratorPlugin
      * @param \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[] $storageSyncKeyGeneratorPlugins
      * @param \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[] $searchSyncKeyGeneratorPlugins
