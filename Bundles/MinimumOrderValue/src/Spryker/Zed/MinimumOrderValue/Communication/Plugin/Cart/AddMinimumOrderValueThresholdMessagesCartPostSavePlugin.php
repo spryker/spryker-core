@@ -27,6 +27,6 @@ class AddMinimumOrderValueThresholdMessagesCartPostSavePlugin extends AbstractPl
      */
     public function postSave(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFacade()->addThresholdNotMetInfoMessages($quoteTransfer);
+        return $this->getFacade()->addMinimumOrderValueMessages($quoteTransfer);
     }
 }

@@ -20,9 +20,8 @@ class MinimumOrderValueStrategyResolver implements MinimumOrderValueStrategyReso
     /**
      * @param \Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueStrategyPluginInterface[] $minimumOrderValueStrategyPlugins
      */
-    public function __construct(
-        array $minimumOrderValueStrategyPlugins
-    ) {
+    public function __construct(array $minimumOrderValueStrategyPlugins)
+    {
         $this->minimumOrderValueStrategyPlugins = $minimumOrderValueStrategyPlugins;
     }
 

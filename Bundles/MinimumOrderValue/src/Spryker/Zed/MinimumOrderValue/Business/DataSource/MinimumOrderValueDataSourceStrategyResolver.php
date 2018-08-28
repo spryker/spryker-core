@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueReaderInterface;
 
-class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterface
+class MinimumOrderValueDataSourceStrategyResolver implements MinimumOrderValueDataSourceStrategyResolverInterface
 {
     /**
      * @var \Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueDataSourceStrategyPluginInterface[]
@@ -22,18 +22,18 @@ class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterfac
     /**
      * @var \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueReaderInterface
      */
-    protected $storeThresholdReader;
+    protected $minimumOrderValueReader;
 
     /**
      * @param \Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueDataSourceStrategyPluginInterface[] $minimumOrderValueDataSourceStrategyPlugins
-     * @param \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueReaderInterface $storeThresholdReader
+     * @param \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueReaderInterface $minimumOrderValueReader
      */
     public function __construct(
         array $minimumOrderValueDataSourceStrategyPlugins,
-        MinimumOrderValueReaderInterface $storeThresholdReader
+        MinimumOrderValueReaderInterface $minimumOrderValueReader
     ) {
         $this->minimumOrderValueDataSourceStrategyPlugins = $minimumOrderValueDataSourceStrategyPlugins;
-        $this->storeThresholdReader = $storeThresholdReader;
+        $this->minimumOrderValueReader = $minimumOrderValueReader;
     }
 
     /**
@@ -65,14 +65,14 @@ class ThresholdDataSourceStrategy implements ThresholdDataSourceStrategyInterfac
             ->requireStore()
             ->requireCurrency();
 
-        $minimumOrderValueTransfers = $this->storeThresholdReader
+        $minimumOrderValueTransfers = $this->minimumOrderValueReader
             ->findMinimumOrderValues($quoteTransfer->getStore(), $quoteTransfer->getCurrency());
 
         $cartSubTotal = $this->getCartSubtotal($quoteTransfer);
 
         return array_map(function (MinimumOrderValueTransfer $minimumOrderValueTransfer) use ($cartSubTotal) {
-            $minimumOrderValueTransfer = $minimumOrderValueTransfer->getThreshold();
-            $minimumOrderValueTransfer->setComparedToSubtotal($cartSubTotal);
+            $minimumOrderValueTransfer = $minimumOrderValueTransfer->getMinimumOrderValueThreshold();
+            $minimumOrderValueTransfer->setValue($cartSubTotal);
 
             return $minimumOrderValueTransfer;
         }, $minimumOrderValueTransfers);

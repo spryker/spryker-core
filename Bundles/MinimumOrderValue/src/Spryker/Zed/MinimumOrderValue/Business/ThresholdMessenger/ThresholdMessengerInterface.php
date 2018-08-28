@@ -16,5 +16,5 @@ interface ThresholdMessengerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addMinimumOrderValueThresholdCartInfoMessages(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function addMinimumOrderValueMessages(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

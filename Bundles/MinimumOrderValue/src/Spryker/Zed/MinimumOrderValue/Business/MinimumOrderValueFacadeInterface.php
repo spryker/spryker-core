@@ -111,7 +111,7 @@ interface MinimumOrderValueFacadeInterface
 
     /**
      * Specification:
-     * - Adds info messages when soft threshold not met.
+     * - Adds info messages when soft threshold is not met.
      *
      * @api
      *
@@ -119,7 +119,7 @@ interface MinimumOrderValueFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addThresholdNotMetInfoMessages(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function addMinimumOrderValueMessages(QuoteTransfer $quoteTransfer): QuoteTransfer;
 
     /**
      * Specification:
@@ -131,7 +131,7 @@ interface MinimumOrderValueFacadeInterface
      *
      * @return void
      */
-    public function removeMinimumOrderValueExpensesFromQuote(CalculableObjectTransfer $calculableObjectTransfer): void;
+    public function removeMinimumOrderValueExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
 
     /**
      * Specification:

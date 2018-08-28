@@ -81,7 +81,7 @@ class MerchantRelationshipMinimumOrderValueBusinessTester extends Actor
                 (new MinimumOrderValueThresholdTransfer())
                     ->setMinimumOrderValueType($minimumOrderValueTypeTransfer)
                     ->setThreshold($thresholdValue)
-                    ->setFeeIfThresholdNotMet($fee)
+                    ->setFee($fee)
             );
     }
 

@@ -47,11 +47,7 @@ class SoftThresholdWithMessageStrategyPlugin extends AbstractMinimumOrderValueSt
      */
     public function isValid(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): bool
     {
-        if ($minimumOrderValueThresholdTransfer->getThreshold() < 1 || $minimumOrderValueThresholdTransfer->getFeeIfThresholdNotMet()) {
-            return false;
-        }
-
-        return true;
+        return !($minimumOrderValueThresholdTransfer->getThreshold() < 1 || $minimumOrderValueThresholdTransfer->getFee());
     }
 
     /**

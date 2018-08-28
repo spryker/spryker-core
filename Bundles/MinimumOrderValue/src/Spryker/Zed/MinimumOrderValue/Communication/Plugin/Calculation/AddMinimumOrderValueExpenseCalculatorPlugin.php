@@ -12,7 +12,7 @@ use Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterfac
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueFacade getFacade()
+ * @method \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueFacadeInterface getFacade()
  */
 class AddMinimumOrderValueExpenseCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {

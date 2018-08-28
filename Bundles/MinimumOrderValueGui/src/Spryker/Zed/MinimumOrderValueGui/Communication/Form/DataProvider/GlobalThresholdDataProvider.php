@@ -74,10 +74,10 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
 
             if ($thresholdStrategyDataProvider = $this->minimumOrderValueGuiCommunicationFactory
                 ->createGlobalSoftThresholdDataProviderResolver()
-                ->hasGlobalThresholdDataProviderByStrategyKey($minimumOrderValueTValueTransfer->getThreshold()->getMinimumOrderValueType()->getKey())) {
+                ->hasGlobalThresholdDataProviderByStrategyKey($minimumOrderValueTValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->getKey())) {
                 $data = $thresholdStrategyDataProvider = $this->minimumOrderValueGuiCommunicationFactory
                     ->createGlobalSoftThresholdDataProviderResolver()
-                    ->resolveGlobalThresholdDataProviderByStrategyKey($minimumOrderValueTValueTransfer->getThreshold()->getMinimumOrderValueType()->getKey())
+                    ->resolveGlobalThresholdDataProviderByStrategyKey($minimumOrderValueTValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->getKey())
                     ->getData($data, $minimumOrderValueTValueTransfer);
             }
         }

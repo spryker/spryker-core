@@ -8,10 +8,8 @@
 namespace Spryker\Zed\MinimumOrderValue\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MinimumOrderValue\Business\Applier\ThresholdApplier;
-use Spryker\Zed\MinimumOrderValue\Business\Applier\ThresholdApplierInterface;
-use Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategy;
-use Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategyInterface;
+use Spryker\Zed\MinimumOrderValue\Business\DataSource\MinimumOrderValueDataSourceStrategyResolver;
+use Spryker\Zed\MinimumOrderValue\Business\DataSource\MinimumOrderValueDataSourceStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Business\ExpenseCalculator\ExpenseCalculator;
 use Spryker\Zed\MinimumOrderValue\Business\ExpenseCalculator\ExpenseCalculatorInterface;
 use Spryker\Zed\MinimumOrderValue\Business\ExpenseRemover\ExpenseRemover;
@@ -24,8 +22,6 @@ use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueWr
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValue\MinimumOrderValueWriterInterface;
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueType\MinimumOrderValueTypeReader;
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueType\MinimumOrderValueTypeReaderInterface;
-use Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpander;
-use Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpanderInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolver;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Business\TaxRateReader\TaxRateReader;
@@ -138,25 +134,15 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MinimumOrderValue\Business\Applier\ThresholdApplierInterface
+     * @return \Spryker\Zed\MinimumOrderValue\Business\HardThresholdCheck\HardThresholdCheckerInterface
      */
-    public function createThresholdApplier(): ThresholdApplierInterface
+    public function createHardThresholdChecker(): HardThresholdCheckerInterface
     {
-        return new ThresholdApplier(
-            $this->createThresholdDataSourceStrategy(),
+        return new HardThresholdChecker(
+            $this->createMinimumOrderValueDataSourceStrategyResolver(),
             $this->createMinimumOrderValueStrategyResolver(),
             $this->getMessengerFacade(),
             $this->getMoneyFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpanderInterface
-     */
-    public function createQuoteExpander(): QuoteExpanderInterface
-    {
-        return new QuoteExpander(
-            $this->createThresholdDataSourceStrategy()
         );
     }
 
@@ -168,7 +154,7 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
         return new ThresholdMessenger(
             $this->getMessengerFacade(),
             $this->getMoneyFacade(),
-            $this->createQuoteExpander()
+            $this->createMinimumOrderValueDataSourceStrategyResolver()
         );
     }
 
@@ -178,8 +164,8 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     public function createExpenseCalculator(): ExpenseCalculatorInterface
     {
         return new ExpenseCalculator(
-            $this->createQuoteExpander(),
             $this->createMinimumOrderValueStrategyResolver(),
+            $this->createMinimumOrderValueDataSourceStrategyResolver(),
             $this->createTaxRateReader()
         );
     }
@@ -193,11 +179,11 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategyInterface
+     * @return \Spryker\Zed\MinimumOrderValue\Business\DataSource\MinimumOrderValueDataSourceStrategyResolverInterface
      */
-    public function createThresholdDataSourceStrategy(): ThresholdDataSourceStrategyInterface
+    public function createMinimumOrderValueDataSourceStrategyResolver(): MinimumOrderValueDataSourceStrategyResolverInterface
     {
-        return new ThresholdDataSourceStrategy(
+        return new MinimumOrderValueDataSourceStrategyResolver(
             $this->getMinimumOrderValueDataSourceStrategies(),
             $this->createMinimumOrderValueReader()
         );

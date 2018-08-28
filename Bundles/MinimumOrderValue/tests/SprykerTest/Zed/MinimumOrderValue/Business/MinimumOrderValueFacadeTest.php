@@ -176,7 +176,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         );
 
         // Assert
-        $this->assertNotEmpty($softThreshold->getThreshold()->getMessageGlossaryKey());
+        $this->assertNotEmpty($softThreshold->getMinimumOrderValueThreshold()->getMessageGlossaryKey());
         $this->assertCount(1, $softThreshold->getLocalizedMessages());
     }
 
@@ -265,11 +265,11 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         ?int $fee = null
     ): MinimumOrderValueTransfer {
         return (new MinimumOrderValueTransfer())
-            ->setThreshold(
+            ->setMinimumOrderValueThreshold(
                 (new MinimumOrderValueThresholdTransfer())
                     ->setMinimumOrderValueType($minimumOrderValueTypeTransfer)
                     ->setThreshold($thresholdValue)
-                    ->setFeeIfThresholdNotMet($fee)
+                    ->setFee($fee)
             )->setStore($storeTransfer)
             ->setCurrency($currencyTransfer);
     }

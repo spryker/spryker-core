@@ -11,15 +11,15 @@
 
     <transfer name="MinimumOrderValueThreshold">
         <property name="threshold" type="int"/>
-        <property name="feeIfThresholdNotMet" type="int"/>
-        <property name="comparedToSubtotal" type="int"/>
-        <property name="thresholdNotMetMessageGlossaryKey" type="string"/>
+        <property name="value" type="int" description="to be compared with threshold"/>
+        <property name="fee" type="int"/>
+        <property name="messageGlossaryKey" type="string"/>
         <property name="minimumOrderValueType" type="MinimumOrderValueType"/>
     </transfer>
 
     <transfer name="MinimumOrderValue">
         <property name="idMinimumOrderValue" type="int"/>
-        <property name="threshold" type="MinimumOrderValueThreshold"/>
+        <property name="minimumOrderValueThreshold" type="MinimumOrderValueThreshold"/>
         <property name="store" type="Store"/>
         <property name="currency" type="Currency"/>
         <property name="localizedMessages" type="MinimumOrderValueLocalizedMessage[]" singular="localizedMessage" />
@@ -28,10 +28,6 @@
     <transfer name="MinimumOrderValueLocalizedMessage">
         <property name="message" type="string" />
         <property name="localeCode" type="string" />
-    </transfer>
-
-    <transfer name="Quote">
-        <property name="minimumOrderValueThresholdCollection" type="MinimumOrderValueThreshold[]" singular="minimumOrderValueThreshold"/>
     </transfer>
 
 </transfers>
