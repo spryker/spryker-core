@@ -11,11 +11,12 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Client\Session\SessionClient;
+use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridge;
 use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListClientBridgeInterface;
 use Spryker\Client\ShoppingListSession\ShoppingListSessionClientInterface;
 use Spryker\Client\ShoppingListSession\ShoppingListSessionDependencyProvider;
-use SprykerTest\Client\ShoppingListSession\Fixtures\Plugin\BarPlugin;
-use SprykerTest\Client\ShoppingListSession\Fixtures\Plugin\FooPlugin;
+use SprykerTest\Client\ShoppingListSession\Fixtures\Plugin\CollectionOutdatedPluginReturnsFalse;
+use SprykerTest\Client\ShoppingListSession\Fixtures\Plugin\CollectionOutdatedPluginReturnsTrue;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
@@ -46,11 +47,11 @@ class ShoppingListSessionClientTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->setDependency(ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_SESSION_CLIENT, $this->getSessionClientMock());
+        $this->tester->setDependency(ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_SESSION_CLIENT, $this->getShoppingListSessionToSessionClientBridge());
         $this->tester->setDependency(
             ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_COLLECTION_OUTDATED_PLUGINS,
             function () {
-                return [new FooPlugin()];
+                return [new CollectionOutdatedPluginReturnsFalse()];
             }
         );
     }
@@ -92,7 +93,7 @@ class ShoppingListSessionClientTest extends Unit
             ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT,
             $this->getShoppingListClientMock($shoppingListCollectionTransferFirst)
         );
-        $customerShoppingListCollectionFirstFesult = $this->getShoppingListSessionClient()->getCustomerShoppingListCollection();
+        $customerShoppingListCollectionFirstResult = $this->getShoppingListSessionClient()->getCustomerShoppingListCollection();
 
         $this->tester->setDependency(
             ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT,
@@ -102,7 +103,7 @@ class ShoppingListSessionClientTest extends Unit
 
         //Assert
         $this->assertNotEquals($shoppingListCollectionTransferFirst, $shoppingListCollectionTransferSecond);
-        $this->assertEquals($shoppingListCollectionTransferFirst, $customerShoppingListCollectionFirstFesult);
+        $this->assertEquals($shoppingListCollectionTransferFirst, $customerShoppingListCollectionFirstResult);
         $this->assertEquals($shoppingListCollectionTransferFirst, $customerShoppingListCollectionSecondResult);
         $this->assertNotEquals($shoppingListCollectionTransferFirst, $shoppingListCollectionTransferSecond);
     }
@@ -130,7 +131,7 @@ class ShoppingListSessionClientTest extends Unit
         $this->tester->setDependency(
             ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_COLLECTION_OUTDATED_PLUGINS,
             function () {
-                return [new BarPlugin()];
+                return [new CollectionOutdatedPluginReturnsTrue()];
             }
         );
         $shoppingListClientMock = $this->getShoppingListClientMock($shoppingListCollectionTransferSecond);
@@ -164,14 +165,14 @@ class ShoppingListSessionClientTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Session\SessionClient
+     * @return \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridge
      */
-    protected function getSessionClientMock()
+    protected function getShoppingListSessionToSessionClientBridge()
     {
-        $sessionClient = new SessionClient();
-        $sessionClient->setContainer(new Session(new MockArraySessionStorage()));
+        $this->sessionClient = new SessionClient();
+        $this->sessionClient->setContainer(new Session(new MockArraySessionStorage()));
 
-        return $sessionClient;
+        return new ShoppingListSessionToSessionClientBridge($this->sessionClient);
     }
 
     /**

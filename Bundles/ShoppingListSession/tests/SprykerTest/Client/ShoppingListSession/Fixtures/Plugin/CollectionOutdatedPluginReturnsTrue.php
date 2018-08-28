@@ -10,13 +10,13 @@ namespace SprykerTest\Client\ShoppingListSession\Fixtures\Plugin;
 use Generated\Shared\Transfer\ShoppingListSessionTransfer;
 use Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface;
 
-class FooPlugin implements ShoppingListCollectionOutdatedPluginInterface
+class CollectionOutdatedPluginReturnsTrue implements ShoppingListCollectionOutdatedPluginInterface
 {
     /**
      * {@inheritDoc}
      */
     public function isCollectionOutdated(ShoppingListSessionTransfer $shoppingListSession): bool
     {
-        return false;
+        return true;
     }
 }
