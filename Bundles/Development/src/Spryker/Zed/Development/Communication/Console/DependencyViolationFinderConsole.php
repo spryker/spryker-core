@@ -42,6 +42,8 @@ class DependencyViolationFinderConsole extends AbstractDependencyViolationConsol
             ->setName(static::COMMAND_NAME)
             ->addOption(static::OPTION_DEPENDENCY_TYPE, static::OPTION_DEPENDENCY_TYPE_SHORT, InputOption::VALUE_REQUIRED, 'Runs only one specific dependency type check.')
             ->setDescription('Find dependency violations in the modules.');
+
+        $this->setAliases(['dev:dependency:find-violations']);
     }
 
     /**

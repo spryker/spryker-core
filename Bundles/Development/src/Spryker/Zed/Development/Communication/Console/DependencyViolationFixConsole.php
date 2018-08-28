@@ -59,7 +59,7 @@ class DependencyViolationFixConsole extends AbstractDependencyViolationConsole
             if (!$this->isNamespacedModuleName($index) || $moduleTransfer->getIsStandalone()) {
                 continue;
             }
-            $this->fixModuleDependencies($moduleTransfer);
+            $this->executeModuleTransfer($moduleTransfer);
         }
     }
 
@@ -74,13 +74,10 @@ class DependencyViolationFixConsole extends AbstractDependencyViolationConsole
         $moduleViolationCount = $this->getDependencyViolationCount($moduleDependencyTransferCollection);
 
         if ($moduleViolationCount === 0) {
-            $this->output->writeln(sprintf('No dependency issues found in <fg=green>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
+            $this->output->writeln(sprintf('No dependency issues found in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
 
             return;
         }
-
-        $this->output->writeln('');
-        $this->output->writeln(sprintf('Fixing dependencies in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
 
         $this->fixModuleDependencies($moduleTransfer);
     }
