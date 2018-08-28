@@ -56,8 +56,6 @@ class MockArraySessionStorage implements SessionStorageInterface
     protected static $bags;
 
     /**
-     * Constructor.
-     *
      * @param string $name Session name
      * @param \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag|null $metaBag MetadataBag instance
      */

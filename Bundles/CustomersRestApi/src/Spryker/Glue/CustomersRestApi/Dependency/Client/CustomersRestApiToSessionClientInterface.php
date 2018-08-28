@@ -6,7 +6,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Dependency\Client;
 
-interface CustomerRestApiToSessionClientInterface
+interface CustomersRestApiToSessionClientInterface
 {
     /**
      * @param string $key
