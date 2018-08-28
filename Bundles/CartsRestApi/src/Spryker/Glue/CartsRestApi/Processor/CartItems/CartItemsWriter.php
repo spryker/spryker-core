@@ -320,5 +320,4 @@ class CartItemsWriter implements CartItemsWriterInterface
     {
         return ($idQuote === null || $itemIdentifier === null);
     }
-
 }
