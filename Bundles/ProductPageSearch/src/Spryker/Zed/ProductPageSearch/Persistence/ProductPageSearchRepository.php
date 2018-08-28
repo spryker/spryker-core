@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
+use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -19,27 +19,27 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     /**
      * @param int[] $ids
      *
-     * @return \Generated\Shared\Transfer\ProductPageSearchTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function findProductConcreteSearchPagesByIds(array $ids): array
+    public function findProductConcretePageSearchByProductConcreteIds(array $ids): array
     {
-        $productConcreteSearchPageTransfers = [];
+        $productConcretePageSearchTransfers = [];
         $mapper = $this->getFactory()->createProductPageSearchMapper();
 
         $query = $this->getFactory()
             ->createProductConcretePageSearchQuery()
             ->filterByFkProduct_In($ids);
 
-        $productConcreteSearchPageEntities = $query->find();
+        $productConcretePageSearchEntities = $query->find();
 
-        foreach ($productConcreteSearchPageEntities as $productConcreteSearchPageEntity) {
-            $productConcreteSearchPageTransfers[] = $mapper->mapProductConcretePageSearchEntityToTransfer(
-                $productConcreteSearchPageEntity,
-                new ProductPageSearchTransfer()
+        foreach ($productConcretePageSearchEntities as $productConcretePageSearchEntity) {
+            $productConcretePageSearchTransfers[$productConcretePageSearchEntity->getFkProduct()][$productConcretePageSearchEntity->getStore()][$productConcretePageSearchEntity->getLocale()] = $mapper->mapProductConcretePageSearchEntityToTransfer(
+                $productConcretePageSearchEntity,
+                new ProductConcretePageSearchTransfer()
             );
         }
 
-        return $productConcreteSearchPageTransfers;
+        return $productConcretePageSearchTransfers;
     }
 
     /**
@@ -54,6 +54,17 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
 
         $query = $this->getFactory()
             ->createProductQuery()
+            ->joinWithSpyProductAbstract()
+            ->joinWithSpyProductLocalizedAttributes()
+            ->useSpyProductLocalizedAttributesQuery()
+                ->joinWithLocale()
+            ->endUse()
+            ->useSpyProductAbstractQuery()
+                ->joinWithSpyProductAbstractStore()
+                ->useSpyProductAbstractStoreQuery()
+                    ->joinWithSpyStore()
+                ->endUse()
+            ->endUse()
             ->filterByIdProduct_In($ids);
 
         $productConcreteEntities = $query->find();

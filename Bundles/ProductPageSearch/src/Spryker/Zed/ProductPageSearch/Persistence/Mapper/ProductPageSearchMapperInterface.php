@@ -46,4 +46,15 @@ interface ProductPageSearchMapperInterface
         SpyProduct $productEntity,
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductConcreteTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
+     */
+    public function mapProductConcreteTransferToProductConcretePageSearchTransfer(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer;
 }

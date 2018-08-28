@@ -12,9 +12,9 @@ interface ProductPageSearchRepositoryInterface
     /**
      * @param int[] $ids
      *
-     * @return \Generated\Shared\Transfer\ProductPageSearchTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function findProductConcreteSearchPagesByIds(array $ids): array;
+    public function findProductConcretePageSearchByProductConcreteIds(array $ids): array;
 
     /**
      * @param int[] $ids

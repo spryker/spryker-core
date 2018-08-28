@@ -23,5 +23,5 @@ interface ProductPageSearchEntityManagerInterface
      *
      * @return bool
      */
-    public function deleteProductPageSearch(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): bool;
+    public function deleteProductConcretePageSearch(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): bool;
 }
