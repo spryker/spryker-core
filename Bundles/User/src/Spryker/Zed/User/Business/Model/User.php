@@ -157,9 +157,7 @@ class User implements UserInterface
 
         $modifiedUser = $userTransfer->modifiedToArray();
 
-        if ($modifiedUser[UserTransfer::PASSWORD]) {
-            unset($modifiedUser[UserTransfer::PASSWORD]);
-        }
+        unset($modifiedUser[UserTransfer::PASSWORD]);
 
         $userEntity->fromArray($modifiedUser);
 
