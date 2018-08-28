@@ -67,7 +67,9 @@ interface MultiCartFacadeInterface
 
     /**
      * Specification:
-     *  - Returns the quotes collection.
+     *  - Returns the quotes collection by provided criteria.
+     *  - Collection is filtered by customer reference.
+     *  - Pagination and ordering options can be passed to criteria.
      *
      * @api
      *

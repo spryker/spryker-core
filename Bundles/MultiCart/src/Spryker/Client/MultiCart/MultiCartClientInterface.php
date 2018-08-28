@@ -148,7 +148,9 @@ interface MultiCartClientInterface
 
     /**
      * Specification:
-     * - Returns quote collection by criteria from the persistent storage.
+     * - Returns quote collection by criteria from Zed.
+     * - Collection is filtered by customer reference.
+     * - Pagination and ordering options can be passed to criteria.
      *
      * @api
      *

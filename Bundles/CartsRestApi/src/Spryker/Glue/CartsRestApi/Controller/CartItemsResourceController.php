@@ -43,7 +43,7 @@ class CartItemsResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createCartItemsWriter()
-            ->updateQuantity(
+            ->updateItemQuantity(
                 $restRequest,
                 $restCartItemsAttributesTransfer
             );

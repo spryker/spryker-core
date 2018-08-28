@@ -34,6 +34,10 @@ class CartItemsProductsRelationshipPlugin extends AbstractPlugin implements Reso
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getRelationshipResourceType(): string

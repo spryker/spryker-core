@@ -41,4 +41,5 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_FAILED_DELETING_QUOTE = 'Quote could not be deleted.';
     public const EXCEPTION_MESSAGE_FAILED_DELETING_QUOTE_ITEM = 'Quote item could not be deleted.';
     public const EXCEPTION_MESSAGE_MISSING_REQUIRED_PARAMETER = 'Quote id or item id is not specified.';
+    public const EXCEPTION_MESSAGE_QUOTE_NOT_FOUND = 'Cart with id \'%s\' not found.';
 }

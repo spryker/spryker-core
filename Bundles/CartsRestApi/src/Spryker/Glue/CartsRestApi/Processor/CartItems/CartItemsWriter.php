@@ -117,7 +117,7 @@ class CartItemsWriter implements CartItemsWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function updateQuantity(
+    public function updateItemQuantity(
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): RestResponseInterface {

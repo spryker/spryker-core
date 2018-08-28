@@ -52,21 +52,21 @@ class CartsReader implements CartsReaderInterface
     }
 
     /**
-     * @param string $idQuote
+     * @param string $uuidQuote
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readByIdentifier(string $idQuote, RestRequestInterface $restRequest): RestResponseInterface
+    public function readByIdentifier(string $uuidQuote, RestRequestInterface $restRequest): RestResponseInterface
     {
-        $quoteResponseTransfer = $this->getQuoteTransferByUuid($idQuote, $restRequest);
+        $quoteResponseTransfer = $this->getQuoteTransferByUuid($uuidQuote, $restRequest);
 
         if ($quoteResponseTransfer->getIsSuccessful() === false) {
             $restResponse = $this->restResourceBuilder->createRestResponse();
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(CartsRestApiConfig::RESPONSE_CODE_QUOTE_NOT_FOUND)
                 ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(sprintf("Cart with id '%s' not found.", $idQuote));
+                ->setDetail(sprintf(CartsRestApiConfig::EXCEPTION_MESSAGE_QUOTE_NOT_FOUND, $uuidQuote));
 
             return $restResponse->addError($restErrorTransfer);
         }
@@ -97,12 +97,12 @@ class CartsReader implements CartsReaderInterface
     }
 
     /**
-     * @param string $idQuote
+     * @param string $uuidQuote
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteTransferByUuid(string $idQuote, RestRequestInterface $restRequest): QuoteResponseTransfer
+    public function getQuoteTransferByUuid(string $uuidQuote, RestRequestInterface $restRequest): QuoteResponseTransfer
     {
         $quoteCollectionTransfer = $this->getCustomerQuotes($restRequest);
 
@@ -112,7 +112,7 @@ class CartsReader implements CartsReaderInterface
         }
 
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getUuid() === $idQuote) {
+            if ($quoteTransfer->getUuid() === $uuidQuote) {
                 return (new QuoteResponseTransfer())
                     ->setIsSuccessful(true)
                     ->setQuoteTransfer($quoteTransfer);

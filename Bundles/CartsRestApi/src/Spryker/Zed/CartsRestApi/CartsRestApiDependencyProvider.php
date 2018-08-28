@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Container;
 
 class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PROPEL_QUERY_QOUTE = 'PROPEL_QUERY_QOUTE';
+    public const PROPEL_QUERY_QUOTE = 'PROPEL_QUERY_QUOTE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,7 +35,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuotePropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_QOUTE] = function () {
+        $container[static::PROPEL_QUERY_QUOTE] = function () {
             return SpyQuoteQuery::create();
         };
 

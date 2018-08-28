@@ -21,6 +21,6 @@ class CartsRestApiPersistenceFactory extends AbstractPersistenceFactory
      */
     public function getQuoteQuery(): SpyQuoteQuery
     {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PROPEL_QUERY_QOUTE);
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PROPEL_QUERY_QUOTE);
     }
 }

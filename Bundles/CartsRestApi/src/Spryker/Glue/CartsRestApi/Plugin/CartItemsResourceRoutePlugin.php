@@ -76,6 +76,8 @@ class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @return string
      */
     public function getParentResourceType(): string
