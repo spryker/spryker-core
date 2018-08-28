@@ -9,6 +9,6 @@ namespace Spryker\Zed\ProductPageSearch\Business\Exception;
 
 use Exception;
 
-class EncodedDataIsNotValid extends Exception
+class EncodedDataNotValidException extends Exception
 {
 }

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\ProductPageSearch\Business\Attribute\ProductPageAttributeInterface;
-use Spryker\Zed\ProductPageSearch\Business\Exception\EncodedDataIsNotValid;
+use Spryker\Zed\ProductPageSearch\Business\Exception\EncodedDataNotValidException;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface;
 
@@ -81,7 +81,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     /**
      * @param string $data
      *
-     * @throws \Spryker\Zed\ProductPageSearch\Business\Exception\EncodedDataIsNotValid
+     * @throws \Spryker\Zed\ProductPageSearch\Business\Exception\EncodedDataNotValidException
      *
      * @return \Generated\Shared\Transfer\ProductPageSearchTransfer
      */
@@ -90,7 +90,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         $productAbstractPageSearchTransfer = new ProductPageSearchTransfer();
         $decodedData = $this->utilEncoding->decodeJson($data, true);
         if (!is_array($decodedData)) {
-            throw new EncodedDataIsNotValid('Invalid ProductPageSearchTransfer data');
+            throw new EncodedDataNotValidException('Invalid ProductPageSearchTransfer data');
         }
 
         return $productAbstractPageSearchTransfer->fromArray($decodedData);
