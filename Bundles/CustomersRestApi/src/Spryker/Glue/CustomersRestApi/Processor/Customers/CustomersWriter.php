@@ -230,28 +230,6 @@ class CustomersWriter implements CustomersWriterInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
-    protected function createErrorCustomerNotFound(): RestErrorMessageTransfer
-    {
-        return (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
-    protected function createErrorCustomerNotSaved(): RestErrorMessageTransfer
-    {
-        return (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_FAILED_TO_SAVE)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_FAILED_TO_SAVE);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
      *
@@ -312,5 +290,27 @@ class CustomersWriter implements CustomersWriterInterface
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORDS_DONT_MATCH);
 
         return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createErrorCustomerNotFound(): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createErrorCustomerNotSaved(): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_FAILED_TO_SAVE)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_FAILED_TO_SAVE);
     }
 }
