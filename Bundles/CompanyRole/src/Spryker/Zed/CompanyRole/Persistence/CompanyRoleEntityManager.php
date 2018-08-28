@@ -130,8 +130,10 @@ class CompanyRoleEntityManager extends AbstractEntityManager implements CompanyR
             ->filterByFkPermission($permissionTransfer->getIdPermission())
             ->findOne();
 
-        $spyCompanyRoleToPermission->setConfiguration(\json_encode($permissionTransfer->getConfiguration()));
-        $spyCompanyRoleToPermission->save();
+        if ($spyCompanyRoleToPermission !== null) {
+            $spyCompanyRoleToPermission->setConfiguration(\json_encode($permissionTransfer->getConfiguration()));
+            $spyCompanyRoleToPermission->save();
+        }
     }
 
     /**
