@@ -15,8 +15,8 @@
     "spryker/carts-rest-api": "*"
   },
   "suggest": {
-    "spryker/carts-rest-api": "Provides REST API endpoints for managing registerd customers carts."
-  },
+    "spryker/carts-rest-api":  "If you want to expand cart items resource with concrete products relationship."
+  }
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
