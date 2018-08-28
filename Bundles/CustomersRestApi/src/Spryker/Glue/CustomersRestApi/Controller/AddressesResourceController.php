@@ -39,7 +39,7 @@ class AddressesResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createAddressesWriter()
-            ->createAddress($restAddressAttributesTransfer);
+            ->createAddress($restRequest, $restAddressAttributesTransfer);
     }
 
     /**

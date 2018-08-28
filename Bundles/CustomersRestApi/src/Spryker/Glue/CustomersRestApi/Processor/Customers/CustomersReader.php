@@ -56,12 +56,8 @@ class CustomersReader implements CustomersReaderInterface
     public function readByIdentifier(RestRequestInterface $restRequest): RestResponseInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
-        $customerReference = $restRequest->getResource()->getId();
 
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setCustomerReference($customerReference);
-
-        $customer = $this->customerClient->findCustomerByReference($customerTransfer);
+        $customer = $this->findCustomerByReference($restRequest->getResource()->getId());
 
         if (!$customer) {
             $restErrorTransfer = (new RestErrorMessageTransfer())

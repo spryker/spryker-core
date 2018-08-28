@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\Addresses;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
@@ -51,15 +52,18 @@ class AddressesWriter implements AddressesWriterInterface
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestAddressAttributesTransfer $addressAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createAddress(RestAddressAttributesTransfer $addressAttributesTransfer): RestResponseInterface
+    public function createAddress(RestRequestInterface $restRequest, RestAddressAttributesTransfer $addressAttributesTransfer): RestResponseInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $customerTransfer = $this->addressesResourceMapper->mapRestAddressAttributesTransferToCustomerTransfer($addressAttributesTransfer);
+        $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
+
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
         $customerTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
         if (!$customerTransfer) {
@@ -83,7 +87,7 @@ class AddressesWriter implements AddressesWriterInterface
             ->addressesResourceMapper
             ->mapAddressTransferToRestResource(
                 $addressTransfer,
-                $addressAttributesTransfer->getCustomerReference()
+                $customerReference
             );
 
         $response->addResource($restResource);
@@ -127,7 +131,7 @@ class AddressesWriter implements AddressesWriterInterface
             ->addressesResourceMapper
             ->mapAddressTransferToRestResource(
                 $addressTransfer,
-                $addressAttributesTransfer->getCustomerReference()
+                $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId()
             );
 
         $restResponse->addResource($restResource);
