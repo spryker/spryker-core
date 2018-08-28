@@ -13,11 +13,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CartsRestApiToCartClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getQuote();
-
-    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $params
      *
