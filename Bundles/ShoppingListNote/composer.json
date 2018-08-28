@@ -3,6 +3,7 @@
   "description": "ShoppingListNote module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
     "spryker/shopping-list": "^1.0.0",
     "spryker/shopping-list-extension": "^1.1.0"
@@ -13,7 +14,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\ShoppingListNote\\Helper\\": "tests/SprykerTest/Shared/ShoppingListNote/_support/Helper/"
     }
   },
   "autoload-dev": {
