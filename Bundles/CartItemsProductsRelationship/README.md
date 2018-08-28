@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/cart-items-products-relationship.svg)](https://travis-ci.org/spryker/cart-items-products-relationship)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/cart-items-products-relationship/badge.svg)](https://coveralls.io/github/spryker/cart-items-products-relationship)
 
-CartItemsProductsRelationship is a module providing the relation of products resource to cart items resource.
+CartItemsProductsRelationship module provides relationship between cart items and concrete product resources.
 
 ## Installation
 
