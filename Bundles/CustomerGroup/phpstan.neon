@@ -2,9 +2,7 @@ parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
     ignoreErrors:
-    - '#Class .+HttpClient constructor invoked with 3 parameters, 5-7 required.#'
-    - '#Call to an undefined method .+AbstractBundleConfig::getYvesRequestRepeatDataFileName\(\).#'
-    - '#Call to an undefined method .+AbstractBundleConfig::getPathToYvesRequestRepeatData\(\).#'
+    - '#Method .+CustomerTable::prepareQuery\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria#'
 
 services:
     -

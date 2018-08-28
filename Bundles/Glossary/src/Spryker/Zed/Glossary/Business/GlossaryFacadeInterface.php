@@ -225,7 +225,7 @@ interface GlossaryFacadeInterface
      *
      * @param array $idKeys
      *
-     * @return bool
+     * @return void
      */
     public function deleteTranslationsByFkKeys(array $idKeys);
 
