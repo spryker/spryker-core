@@ -10,4 +10,5 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class RestRequestValidatorConfig extends AbstractBundleConfig
 {
+    public const RESPONSE_CODE_REQUEST_INVALID = '901';
 }
