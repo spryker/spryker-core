@@ -136,7 +136,7 @@ class CartItemsWriter implements CartItemsWriterInterface
         }
 
         if ($this->cartClient->findQuoteItem($quoteResponseTransfer->getQuoteTransfer(), $sku, $itemIdentifier) === null) {
-            return $this->createQuoteItemNotFoundError($sku);
+            return $this->createQuoteItemNotFoundError($itemIdentifier);
         }
 
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
@@ -178,7 +178,7 @@ class CartItemsWriter implements CartItemsWriterInterface
         }
 
         if ($this->cartClient->findQuoteItem($quoteResponseTransfer->getQuoteTransfer(), $sku, $itemIdentifier) === null) {
-            return $this->createQuoteItemNotFoundError($sku);
+            return $this->createQuoteItemNotFoundError($itemIdentifier);
         }
 
         $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
@@ -320,4 +320,5 @@ class CartItemsWriter implements CartItemsWriterInterface
     {
         return ($idQuote === null || $itemIdentifier === null);
     }
+
 }
