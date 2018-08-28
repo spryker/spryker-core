@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\MinimumOrderValue\Persistence\Map\SpyMinimumOrderValueTaxSetTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException;
 
@@ -80,5 +81,18 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
         }
 
         return $minimumOrderValueTransfers;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function findMinimumOrderValueTaxSetId(): ?int
+    {
+        $taxSetId = $this->getFactory()
+            ->createMinimumOrderValueTaxSetPropelQuery()
+            ->select([SpyMinimumOrderValueTaxSetTableMap::COL_FK_TAX_SET])
+            ->findOne();
+
+        return $taxSetId;
     }
 }

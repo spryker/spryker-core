@@ -34,4 +34,9 @@ interface MinimumOrderValueRepositoryInterface
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array;
+
+    /**
+     * @return int|null
+     */
+    public function findMinimumOrderValueTaxSetId(): ?int;
 }

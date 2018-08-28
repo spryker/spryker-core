@@ -24,7 +24,7 @@ class MinimumOrderValueGlossaryKeyGenerator implements MinimumOrderValueGlossary
     ): MinimumOrderValueTransfer {
         $this->assertRequired($minimumOrderValueTransfer);
 
-        $minimumOrderValueTransfer->getThreshold()->setMessageGlossaryKey(
+        $minimumOrderValueTransfer->getThreshold()->setThresholdNotMetMessageGlossaryKey(
             $this->generateMessageGlossaryKey($minimumOrderValueTransfer)
         );
 

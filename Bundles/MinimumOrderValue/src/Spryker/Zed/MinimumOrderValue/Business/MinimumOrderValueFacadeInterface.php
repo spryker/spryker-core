@@ -146,4 +146,26 @@ interface MinimumOrderValueFacadeInterface
      * @return void
      */
     public function addMinimumOrderValueExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
+
+    /**
+     * Specification:
+     * - Gets MinimumOrderValue tax set id from database.
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function findMinimumOrderValueTaxSetId(): ?int;
+
+    /**
+     * Specification:
+     * - Saves MinimumOrderValue tax set id to database.
+     *
+     * @api
+     *
+     * @param int $idTaxSet
+     *
+     * @return void
+     */
+    public function saveMinimumOrderValueTaxSet(int $idTaxSet): void;
 }

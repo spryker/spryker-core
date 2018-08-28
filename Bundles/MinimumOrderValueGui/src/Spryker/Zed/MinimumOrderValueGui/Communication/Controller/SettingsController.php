@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\SettingsForm;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -24,6 +25,17 @@ class SettingsController extends AbstractController
     {
         $dataProvider = $this->getFactory()->createSettingsFromDataProvider();
         $form = $this->getFactory()->getSettingsForm($dataProvider);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $idTaxSet = (int)$form->getData()[SettingsForm::FIELD_TAX_SET];
+            $this->getFactory()
+                ->getMinimumOrderValueFacade()
+                ->saveMinimumOrderValueTaxSet($idTaxSet);
+
+            $this->addSuccessMessage('Minimum Order Value settings saved.');
+        }
 
         return [
             'form' => $form->createView(),

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider;
 
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\SettingsForm;
+use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMinimumOrderValueFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToTaxFacadeInterface;
 
 class SettingsFormDataProvider
@@ -18,11 +19,20 @@ class SettingsFormDataProvider
     protected $taxFacade;
 
     /**
-     * @param \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToTaxFacadeInterface $taxFacade
+     * @var \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMinimumOrderValueFacadeInterface
      */
-    public function __construct(MinimumOrderValueGuiToTaxFacadeInterface $taxFacade)
-    {
+    protected $minimumOrderValueFacade;
+
+    /**
+     * @param \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToTaxFacadeInterface $taxFacade
+     * @param \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMinimumOrderValueFacadeInterface $minimumOrderValueFacade
+     */
+    public function __construct(
+        MinimumOrderValueGuiToTaxFacadeInterface $taxFacade,
+        MinimumOrderValueGuiToMinimumOrderValueFacadeInterface $minimumOrderValueFacade
+    ) {
         $this->taxFacade = $taxFacade;
+        $this->minimumOrderValueFacade = $minimumOrderValueFacade;
     }
 
     /**
@@ -40,7 +50,7 @@ class SettingsFormDataProvider
      */
     public function getData(): array
     {
-        return ['fkTaxSet' => 6];
+        return [SettingsForm::FIELD_TAX_SET => $this->minimumOrderValueFacade->findMinimumOrderValueTaxSetId()];
     }
 
     /**

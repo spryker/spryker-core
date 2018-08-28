@@ -5,8 +5,13 @@
           namespace="Orm\Zed\MinimumOrderValue\Persistence"
           package="src.Orm.Zed.MinimumOrderValue.Persistence">
 
-    <table name="spy_min_order_value_tax_set" phpName="SpyMinimumOrderValueTaxSet">
+    <table name="spy_min_order_value_tax_set" idMethod="native" allowPkInsert="true" phpName="SpyMinimumOrderValueTaxSet">
+        <column name="id_min_order_value_tax_set" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_tax_set" type="INTEGER" required="true"/>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="id_min_order_value_tax_set_pk_seq"/>
 
         <foreign-key name="spy_min_order_value_tax_set-fk_tax_set"
                      foreignTable="spy_tax_set" phpName="TaxSet">

@@ -77,7 +77,8 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
     public function createSettingsFromDataProvider(): SettingsFormDataProvider
     {
         return new SettingsFormDataProvider(
-            $this->getTaxFacade()
+            $this->getTaxFacade(),
+            $this->getMinimumOrderValueFacade()
         );
     }
 

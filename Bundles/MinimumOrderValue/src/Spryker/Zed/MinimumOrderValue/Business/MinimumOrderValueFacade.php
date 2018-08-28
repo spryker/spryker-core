@@ -182,4 +182,30 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
             ->createExpenseCalculator()
             ->addMinimumOrderValueExpenses($calculableObjectTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function findMinimumOrderValueTaxSetId(): ?int
+    {
+        return $this->getRepository()->findMinimumOrderValueTaxSetId();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idTaxSet
+     *
+     * @return void
+     */
+    public function saveMinimumOrderValueTaxSet(int $idTaxSet): void
+    {
+        $this->getEntityManager()->saveMinimumOrderValueTaxSet($idTaxSet);
+    }
 }

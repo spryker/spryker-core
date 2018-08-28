@@ -77,13 +77,13 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
 
         if ($minimumOrderValueEntity->getMessageGlossaryKey() === null) {
             $minimumOrderValueEntity->setMessageGlossaryKey(
-                $minimumOrderValueTransfer->getThreshold()->getMessageGlossaryKey()
+                $minimumOrderValueTransfer->getThreshold()->getThresholdNotMetMessageGlossaryKey()
             );
         }
 
         $minimumOrderValueEntity
-            ->setValue($minimumOrderValueTransfer->getThreshold()->getValue())
-            ->setFee($minimumOrderValueTransfer->getThreshold()->getFee())
+            ->setValue($minimumOrderValueTransfer->getThreshold()->getThreshold())
+            ->setFee($minimumOrderValueTransfer->getThreshold()->getFeeIfThresholdNotMet())
             ->setFkMinOrderValueType(
                 $minimumOrderValueTypeTransfer->getIdMinimumOrderValueType()
             )->save();
@@ -94,6 +94,20 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
                 $minimumOrderValueEntity,
                 $minimumOrderValueTransfer
             );
+    }
+
+    /**
+     * @param int $idTaxSet
+     *
+     * @return void
+     */
+    public function saveMinimumOrderValueTaxSet(int $idTaxSet): void
+    {
+        $this->getFactory()
+            ->createMinimumOrderValueTaxSetPropelQuery()
+            ->findOneOrCreate()
+            ->setFkTaxSet($idTaxSet)
+            ->save();
     }
 
     /**
@@ -109,8 +123,8 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
             ->requireCurrency();
 
         $minimumOrderValueTransfer->getThreshold()
-            ->requireValue()
-            ->requireMessageGlossaryKey()
+            ->requireThreshold()
+            ->requireThresholdNotMetMessageGlossaryKey()
             ->requireMinimumOrderValueType();
 
         $minimumOrderValueTransfer->getThreshold()->getMinimumOrderValueType()

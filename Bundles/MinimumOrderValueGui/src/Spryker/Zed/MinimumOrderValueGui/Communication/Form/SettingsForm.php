@@ -19,7 +19,7 @@ class SettingsForm extends AbstractType
 {
     public const OPTION_TAX_SETS = 'OPTION_TAX_SETS';
 
-    protected const FIELD_TAX_SET_FIELD = 'fkTaxSet';
+    public const FIELD_TAX_SET = 'fkTaxSet';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -51,7 +51,7 @@ class SettingsForm extends AbstractType
     protected function addTaxSetField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(
-            static::FIELD_TAX_SET_FIELD,
+            static::FIELD_TAX_SET,
             ChoiceType::class,
             [
                 'label' => 'Tax set',
