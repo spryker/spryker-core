@@ -48,7 +48,7 @@ class CompanyUserWriterStep implements DataImportStepInterface
         $companyUserEntity
             ->setFkCustomer($idCustomer)
             ->setFkCompany($idCompany)
-            ->setIsDefault((bool)$dataSet[CompanyUserDataSetInterface::COLUMN_COMPANY_USER_KEY])
+            ->setIsDefault((bool)$dataSet[CompanyUserDataSetInterface::COLUMN_IS_DEFAULT])
             ->save();
     }
 
