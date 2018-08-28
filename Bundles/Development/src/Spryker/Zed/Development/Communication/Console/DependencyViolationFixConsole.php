@@ -51,10 +51,7 @@ class DependencyViolationFixConsole extends AbstractDependencyViolationConsole
     {
         $modulesToValidate = $this->getModulesToCheckForViolations($input);
 
-        if ($this->isSingleModuleValidation($modulesToValidate) && !$this->isModuleNameValid($modulesToValidate)) {
-            $namespacedModuleName = $this->buildModuleKey($modulesToValidate);
-            $output->writeln(sprintf('Requested module <fg=green>%s</> not found in current scope.', $namespacedModuleName));
-
+        if (!$this->canRun($modulesToValidate)) {
             return static::CODE_ERROR;
         }
 

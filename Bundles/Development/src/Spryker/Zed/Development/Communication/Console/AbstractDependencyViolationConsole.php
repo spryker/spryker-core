@@ -44,6 +44,29 @@ class AbstractDependencyViolationConsole extends Console
     }
 
     /**
+     * @param array $modulesToValidate
+     *
+     * @return bool
+     */
+    protected function canRun(array $modulesToValidate): bool
+    {
+        if (count($modulesToValidate) === 0) {
+            $this->output->writeln('Could not find any module to fix. Maybe you have a typo in the module argument or you missed to use a proper organization prefix.');
+
+            return false;
+        }
+
+        if ($this->isSingleModuleValidation($modulesToValidate) && !$this->isModuleNameValid($modulesToValidate)) {
+            $namespacedModuleName = $this->buildModuleKey(current($modulesToValidate));
+            $this->output->writeln(sprintf('Requested module <fg=green>%s</> not found in current scope.', $namespacedModuleName));
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      * @param string|null $dependencyType
      *

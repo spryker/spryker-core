@@ -53,16 +53,8 @@ class DependencyViolationFinderConsole extends AbstractDependencyViolationConsol
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $modulesToValidate = $this->getModulesToCheckForViolations($input);
-        if (count($modulesToValidate) === 0) {
-            $output->writeln('Could not find any module to check. Maybe you have a typo in the module argument or you missed to use a proper organization prefix.');
 
-            return static::CODE_ERROR;
-        }
-
-        if ($this->isSingleModuleValidation($modulesToValidate) && !$this->isModuleNameValid($modulesToValidate)) {
-            $namespacedModuleName = $this->buildModuleKey($modulesToValidate);
-            $output->writeln(sprintf('Requested module <fg=green>%s</> not found in current scope.', $namespacedModuleName));
-
+        if (!$this->canRun($modulesToValidate)) {
             return static::CODE_ERROR;
         }
 
