@@ -7,14 +7,14 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\CustomersAddresses;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerClientInterface;
+use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 class CustomersAddressesReader implements CustomersAddressesReaderInterface
 {
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerClientInterface
+     * @var \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface
      */
     protected $customerClient;
 
@@ -24,11 +24,11 @@ class CustomersAddressesReader implements CustomersAddressesReaderInterface
     protected $addressesResourceMapper;
 
     /**
-     * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomerRestApiToCustomerClientInterface $customerClient
+     * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface $addressesResourceMapper
      */
     public function __construct(
-        CustomerRestApiToCustomerClientInterface $customerClient,
+        CustomersRestApiToCustomerClientInterface $customerClient,
         AddressesResourceMapperInterface $addressesResourceMapper
     ) {
         $this->customerClient = $customerClient;

@@ -381,7 +381,7 @@ interface CustomerClientInterface
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    public function findAddressByUuid(AddressTransfer $addressTransfer): AddressTransfer;
+    public function findAddressByUuid(AddressTransfer $addressTransfer): ?AddressTransfer;
 }

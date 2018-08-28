@@ -6,7 +6,7 @@
  */
 namespace Spryker\Glue\CustomersRestApi\Dependency\Client;
 
-class CustomerRestApiToSessionClientBridge implements CustomerRestApiToSessionClientInterface
+class CustomersRestApiToSessionClientBridge implements CustomersRestApiToSessionClientInterface
 {
     /**
      * @var \Spryker\Client\Session\SessionClientInterface
