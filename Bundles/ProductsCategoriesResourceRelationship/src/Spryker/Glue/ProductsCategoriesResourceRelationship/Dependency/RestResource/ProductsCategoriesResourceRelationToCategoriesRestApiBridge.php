@@ -33,6 +33,6 @@ class ProductsCategoriesResourceRelationToCategoriesRestApiBridge implements Pro
     public function getProductCategoriesResourceBySku(RestRequestInterface $restRequest): RestResourceInterface
     {
         return $this->categoriesRestApiResource
-            ->findCategoriesByAbstractProductSku($restRequest);
+            ->getCategoriesByAbstractProductSku($restRequest);
     }
 }
