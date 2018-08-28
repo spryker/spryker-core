@@ -18,7 +18,7 @@
             {% include '@User/_partials/user-form.twig' %}
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Update' | trans }}" />
-            {{ form_end(userForm,{'render_rest': false}) }}
+            {{ form_end(userForm) }}
 
         {% endblock %}
 
