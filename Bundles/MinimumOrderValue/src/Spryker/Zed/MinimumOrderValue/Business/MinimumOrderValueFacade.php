@@ -111,8 +111,8 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool {
         return $this->getFactory()
-            ->createThresholdApplier()
-            ->applicableForCheckout($quoteTransfer, $checkoutResponseTransfer);
+            ->createHardThresholdChecker()
+            ->checkQuoteForHardThreshold($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
@@ -144,11 +144,11 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addThresholdNotMetInfoMessages(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function addMinimumOrderValueMessages(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
             ->createThresholdMessenger()
-            ->addMinimumOrderValueThresholdCartInfoMessages($quoteTransfer);
+            ->addMinimumOrderValueMessages($quoteTransfer);
     }
 
     /**
@@ -160,11 +160,11 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @return void
      */
-    public function removeMinimumOrderValueExpensesFromQuote(CalculableObjectTransfer $calculableObjectTransfer): void
+    public function removeMinimumOrderValueExpenses(CalculableObjectTransfer $calculableObjectTransfer): void
     {
         $this->getFactory()
             ->createExpenseRemover()
-            ->removeMinimumOrderValueExpensesFromQuote($calculableObjectTransfer);
+            ->removeMinimumOrderValueExpenses($calculableObjectTransfer);
     }
 
     /**

@@ -25,7 +25,7 @@ abstract class AbstractMinimumOrderValueStrategyPlugin extends AbstractPlugin im
      */
     public function isApplicable(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): bool
     {
-        return $minimumOrderValueThresholdTransfer->getComparedToSubtotal() < $minimumOrderValueThresholdTransfer->getThreshold();
+        return $minimumOrderValueThresholdTransfer->getValue() < $minimumOrderValueThresholdTransfer->getThreshold();
     }
 
     /**

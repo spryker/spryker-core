@@ -22,7 +22,7 @@ class SoftThresholdDataProvider implements ThresholdStrategyDataProviderInterfac
      */
     public function getData(array $data, MinimumOrderValueTransfer $minimumOrderValueTValueTransfer): array
     {
-        $data[GlobalThresholdType::FIELD_SOFT_VALUE] = $minimumOrderValueTValueTransfer->getThreshold()->getThreshold();
+        $data[GlobalThresholdType::FIELD_SOFT_VALUE] = $minimumOrderValueTValueTransfer->getMinimumOrderValueThreshold()->getThreshold();
         $data[GlobalThresholdType::FIELD_SOFT_STRATEGY] = MinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_MESSAGE;
 
         foreach ($minimumOrderValueTValueTransfer->getLocalizedMessages() as $localizedMessage) {

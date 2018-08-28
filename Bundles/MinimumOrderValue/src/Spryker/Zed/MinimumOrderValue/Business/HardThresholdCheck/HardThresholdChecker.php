@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\Applier;
+namespace Spryker\Zed\MinimumOrderValue\Business\HardThresholdCheck;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -14,20 +14,20 @@ use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
-use Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategyInterface;
+use Spryker\Zed\MinimumOrderValue\Business\DataSource\MinimumOrderValueDataSourceStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface;
 
-class ThresholdApplier implements ThresholdApplierInterface
+class HardThresholdChecker implements HardThresholdCheckerInterface
 {
     protected const THRESHOLD_GLOSSARY_PARAMETER = '{{threshold}}';
     protected const THRESHOLD_EXPENSE_TYPE = 'THRESHOLD_EXPENSE_TYPE';
 
     /**
-     * @var \Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategyInterface
+     * @var \Spryker\Zed\MinimumOrderValue\Business\DataSource\MinimumOrderValueDataSourceStrategyResolverInterface
      */
-    protected $minimumOrderValueDataSourceStrategy;
+    protected $minimumOrderValueDataSourceStrategyResolver;
 
     /**
      * @var \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface
@@ -45,18 +45,18 @@ class ThresholdApplier implements ThresholdApplierInterface
     protected $moneyFacade;
 
     /**
-     * @param \Spryker\Zed\MinimumOrderValue\Business\DataSource\ThresholdDataSourceStrategyInterface $minimumOrderValueDataSourceStrategy
+     * @param \Spryker\Zed\MinimumOrderValue\Business\DataSource\MinimumOrderValueDataSourceStrategyResolverInterface $minimumOrderValueDataSourceStrategyResolver
      * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
      * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface $messengerFacade
      * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface $moneyFacade
      */
     public function __construct(
-        ThresholdDataSourceStrategyInterface $minimumOrderValueDataSourceStrategy,
+        MinimumOrderValueDataSourceStrategyResolverInterface $minimumOrderValueDataSourceStrategyResolver,
         MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver,
         MinimumOrderValueToMessengerFacadeInterface $messengerFacade,
         MinimumOrderValueToMoneyFacadeInterface $moneyFacade
     ) {
-        $this->minimumOrderValueDataSourceStrategy = $minimumOrderValueDataSourceStrategy;
+        $this->minimumOrderValueDataSourceStrategyResolver = $minimumOrderValueDataSourceStrategyResolver;
         $this->minimumOrderValueStrategyResolver = $minimumOrderValueStrategyResolver;
         $this->messengerFacade = $messengerFacade;
         $this->moneyFacade = $moneyFacade;
@@ -68,9 +68,9 @@ class ThresholdApplier implements ThresholdApplierInterface
      *
      * @return bool
      */
-    public function applicableForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    public function checkQuoteForHardThreshold(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
-        $minimumOrderValueThresholdTransfers = $this->minimumOrderValueDataSourceStrategy->findApplicableThresholds($quoteTransfer);
+        $minimumOrderValueThresholdTransfers = $this->minimumOrderValueDataSourceStrategyResolver->findApplicableThresholds($quoteTransfer);
 
         $minimumOrderValueThresholdTransfers = $this->filterMinimumOrderValuesByThresholdGroup(
             $minimumOrderValueThresholdTransfers,
@@ -110,7 +110,7 @@ class ThresholdApplier implements ThresholdApplierInterface
 
         $checkoutResponseTransfer->addError(
             (new CheckoutErrorTransfer())
-                ->setMessage($minimumOrderValueThresholdTransfer->getThresholdNotMetMessageGlossaryKey())
+                ->setMessage($minimumOrderValueThresholdTransfer->getMessageGlossaryKey())
                 ->setParameters([
                     static::THRESHOLD_GLOSSARY_PARAMETER => $this->moneyFacade->formatWithSymbol(
                         $this->createMoneyTransfer($minimumOrderValueThresholdTransfer, $currencyTransfer)
@@ -144,7 +144,7 @@ class ThresholdApplier implements ThresholdApplierInterface
     {
         $minimumOrderValueThresholdTransfer
             ->requireMinimumOrderValueType()
-            ->requireComparedToSubtotal()
+            ->requireValue()
             ->requireThreshold();
 
         $minimumOrderValueThresholdTransfer->getMinimumOrderValueType()

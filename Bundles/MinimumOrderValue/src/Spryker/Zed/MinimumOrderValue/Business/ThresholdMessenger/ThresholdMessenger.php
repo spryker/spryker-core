@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
-use Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpanderInterface;
+use Spryker\Zed\MinimumOrderValue\Business\DataSource\MinimumOrderValueDataSourceStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface;
 
@@ -32,23 +32,23 @@ class ThresholdMessenger implements ThresholdMessengerInterface
     protected $moneyFacade;
 
     /**
-     * @var \Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpanderInterface
+     * @var \Spryker\Zed\MinimumOrderValue\Business\DataSource\MinimumOrderValueDataSourceStrategyResolverInterface
      */
-    protected $quoteExpander;
+    protected $minimumOrderValueDataSourceStrategyResolver;
 
     /**
      * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface $messengerFacade
      * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface $moneyFacade
-     * @param \Spryker\Zed\MinimumOrderValue\Business\QuoteExpander\QuoteExpanderInterface $quoteExpander
+     * @param \Spryker\Zed\MinimumOrderValue\Business\DataSource\MinimumOrderValueDataSourceStrategyResolverInterface $minimumOrderValueDataSourceStrategyResolver
      */
     public function __construct(
         MinimumOrderValueToMessengerFacadeInterface $messengerFacade,
         MinimumOrderValueToMoneyFacadeInterface $moneyFacade,
-        QuoteExpanderInterface $quoteExpander
+        MinimumOrderValueDataSourceStrategyResolverInterface $minimumOrderValueDataSourceStrategyResolver
     ) {
         $this->messengerFacade = $messengerFacade;
         $this->moneyFacade = $moneyFacade;
-        $this->quoteExpander = $quoteExpander;
+        $this->minimumOrderValueDataSourceStrategyResolver = $minimumOrderValueDataSourceStrategyResolver;
     }
 
     /**
@@ -56,11 +56,9 @@ class ThresholdMessenger implements ThresholdMessengerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addMinimumOrderValueThresholdCartInfoMessages(
+    public function addMinimumOrderValueMessages(
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        $quoteTransfer = $this->quoteExpander->addMinimumOrderValueThresholdsToQuote($quoteTransfer);
-
         $thresholdMessages = $this->getMessagesForThresholds($quoteTransfer);
         foreach ($thresholdMessages as $thresholdMessage) {
             $this->messengerFacade->addInfoMessage($thresholdMessage);
@@ -77,7 +75,7 @@ class ThresholdMessenger implements ThresholdMessengerInterface
     protected function getMessagesForThresholds(QuoteTransfer $quoteTransfer): array
     {
         $minimumOrderValueThresholdTransfers = $this->filterMinimumOrderValuesByThresholdGroup(
-            $quoteTransfer->getMinimumOrderValueThresholdCollection()->getArrayCopy(),
+            $this->minimumOrderValueDataSourceStrategyResolver->findApplicableThresholds($quoteTransfer),
             MinimumOrderValueConfig::GROUP_SOFT
         );
 
@@ -101,7 +99,7 @@ class ThresholdMessenger implements ThresholdMessengerInterface
         CurrencyTransfer $currencyTransfer
     ): MessageTransfer {
         return (new MessageTransfer())
-            ->setValue($minimumOrderValueThresholdTransfer->getThresholdNotMetMessageGlossaryKey())
+            ->setValue($minimumOrderValueThresholdTransfer->getMessageGlossaryKey())
             ->setParameters([
                 static::THRESHOLD_GLOSSARY_PARAMETER => $this->moneyFacade->formatWithSymbol(
                     $this->createMoneyTransfer($minimumOrderValueThresholdTransfer, $currencyTransfer)

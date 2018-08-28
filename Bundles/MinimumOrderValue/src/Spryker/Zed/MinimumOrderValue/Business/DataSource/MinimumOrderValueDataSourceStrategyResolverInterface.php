@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\QuoteExpander;
+namespace Spryker\Zed\MinimumOrderValue\Business\DataSource;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteExpanderInterface
+interface MinimumOrderValueDataSourceStrategyResolverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer[]
      */
-    public function addMinimumOrderValueThresholdsToQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array;
 }

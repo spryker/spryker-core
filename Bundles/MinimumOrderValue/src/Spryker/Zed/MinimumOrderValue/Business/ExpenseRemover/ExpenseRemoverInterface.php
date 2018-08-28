@@ -16,5 +16,5 @@ interface ExpenseRemoverInterface
      *
      * @return void
      */
-    public function removeMinimumOrderValueExpensesFromQuote(CalculableObjectTransfer $calculableObjectTransfer): void;
+    public function removeMinimumOrderValueExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
 }

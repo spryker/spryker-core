@@ -17,7 +17,7 @@ class ExpenseRemover implements ExpenseRemoverInterface
      *
      * @return void
      */
-    public function removeMinimumOrderValueExpensesFromQuote(CalculableObjectTransfer $calculableObjectTransfer): void
+    public function removeMinimumOrderValueExpenses(CalculableObjectTransfer $calculableObjectTransfer): void
     {
         foreach ($calculableObjectTransfer->getExpenses() as $expenseOffset => $expenseTransfer) {
             if ($expenseTransfer->getType() === MinimumOrderValueConfig::THRESHOLD_EXPENSE_TYPE) {

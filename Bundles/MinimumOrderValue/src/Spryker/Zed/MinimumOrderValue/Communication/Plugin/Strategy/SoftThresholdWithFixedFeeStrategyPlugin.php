@@ -47,7 +47,7 @@ class SoftThresholdWithFixedFeeStrategyPlugin extends AbstractMinimumOrderValueS
      */
     public function isValid(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): bool
     {
-        if ($minimumOrderValueThresholdTransfer->getThreshold() < 1 || $minimumOrderValueThresholdTransfer->getFeeIfThresholdNotMet() < 1) {
+        if ($minimumOrderValueThresholdTransfer->getThreshold() < 1 || $minimumOrderValueThresholdTransfer->getFee() < 1) {
             return false;
         }
 
@@ -65,6 +65,6 @@ class SoftThresholdWithFixedFeeStrategyPlugin extends AbstractMinimumOrderValueS
      */
     public function calculateFee(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): ?int
     {
-        return $minimumOrderValueThresholdTransfer->getFeeIfThresholdNotMet();
+        return $minimumOrderValueThresholdTransfer->getFee();
     }
 }
