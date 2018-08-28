@@ -5,27 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Model\Order;
+namespace Spryker\Glue\OrdersRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface OrderReaderInterface
+interface OrdersRestApiToSalesClientInterface
 {
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return string[]
-     */
-    public function getDistinctOrderStates($idSalesOrder);
-
-    /**
-     * @param int $idSalesOrderItem
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer|null
-     */
-    public function findOrderByIdSalesOrderItem($idSalesOrderItem);
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

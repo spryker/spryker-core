@@ -64,4 +64,17 @@ class SalesStub implements SalesStubInterface
 
         return $orderTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getOrderListByCustomerReference(OrderTransfer $orderTransfer): OrderListTransfer
+    {
+        /** @var \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer */
+        $orderListTransfer = $this->zedStub->call('/sales/gateway/get-order-list-by-customer-reference', $orderTransfer);
+
+        return $orderListTransfer;
+    }
 }

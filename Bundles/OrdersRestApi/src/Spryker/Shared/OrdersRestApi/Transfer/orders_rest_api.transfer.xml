@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="OrdersRestAttributes">
+        <property name="orders" type="OrderRestAttributes[]"/>
+    </transfer>
+
+    <transfer name="OrderRestAttributes">
+        <property name="orderReference" type="string"/>
+        <property name="orderDate" type="string"/>
+        <property name="totals" type="OrderRestTotalAttributes[]"/>
+    </transfer>
+
+    <transfer name="OrderRestTotalAttributes">
+        <property name="grandTotal" type="string"/>
+        <property name="refundTotal" type="string"/>
+        <property name="canceledTotal" type="string"/>
+        <property name="subtotal" type="string"/>
+    </transfer>
+
+</transfers>

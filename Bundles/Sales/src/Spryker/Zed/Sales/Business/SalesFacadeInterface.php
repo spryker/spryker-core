@@ -182,6 +182,18 @@ interface SalesFacadeInterface
     public function findOrderByIdSalesOrderItem($idSalesOrderItem);
 
     /**
+     * Specification:
+     * - Returns a list of of orders for the given customer reference.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getOrderListByCustomerReference(OrderTransfer $orderTransfer): OrderListTransfer;
+
+    /**
      *
      * Specification:
      * - Transforms provided cart items according configured cart item transformer strategies.
