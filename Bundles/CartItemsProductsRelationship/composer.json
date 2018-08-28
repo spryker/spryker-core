@@ -16,7 +16,7 @@
   },
   "suggest": {
     "spryker/carts-rest-api":  "If you want to expand cart items resource with concrete products relationship."
-  }
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
