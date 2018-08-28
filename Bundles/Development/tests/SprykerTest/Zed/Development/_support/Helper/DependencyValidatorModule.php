@@ -11,6 +11,8 @@ use Codeception\Module;
 use Codeception\Stub;
 use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\OrganizationTransfer;
 use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface;
 use Spryker\Zed\Development\Business\DependencyTree\ComposerDependencyParserInterface;
 use Spryker\Zed\Development\Business\DevelopmentBusinessFactory;
@@ -53,8 +55,17 @@ class DependencyValidatorModule extends Module
      */
     public function getDependencyValidationRequestTransfer(string $moduleName = 'Default', ?string $dependencyType = null): DependencyValidationRequestTransfer
     {
+        $organizationTransfer = new OrganizationTransfer();
+        $organizationTransfer
+            ->setName('Spryker');
+
+        $moduleTransfer = new ModuleTransfer();
+        $moduleTransfer
+            ->setName($moduleName)
+            ->setOrganization($organizationTransfer);
+
         $dependencyValidationRequestTransfer = new DependencyValidationRequestTransfer();
-        $dependencyValidationRequestTransfer->setModule($moduleName)->setDependencyType($dependencyType);
+        $dependencyValidationRequestTransfer->setModule($moduleTransfer)->setDependencyType($dependencyType);
 
         return $dependencyValidationRequestTransfer;
     }
