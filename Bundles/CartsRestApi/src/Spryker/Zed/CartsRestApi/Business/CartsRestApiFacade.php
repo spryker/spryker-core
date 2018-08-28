@@ -25,6 +25,6 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      */
     public function updateQuoteUuid(): void
     {
-        $this->getFactory()->createQuoteUuidUpdater()->updateQuotesUuid();
+        $this->getFactory()->createQuoteUuidWriter()->updateQuotesUuid();
     }
 }

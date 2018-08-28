@@ -20,7 +20,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApi\Business\Quote\QuoteUuidWriterInterface
      */
-    public function createQuoteUuidUpdater(): QuoteUuidWriterInterface
+    public function createQuoteUuidWriter(): QuoteUuidWriterInterface
     {
         return new QuoteUuidWriter(
             $this->getEntityManager()
