@@ -64,8 +64,9 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
         foreach ($productAbstractIds as $idProductAbstract) {
             $packageProductConcreteEntityTransfers = $this->getPackageProductsByAbstractId($idProductAbstract);
 
-            if ($packageProductConcreteEntityTransfers) {
-                list($productPackagingLeadProduct) = $packageProductConcreteEntityTransfers[0]->getSpyProductPackagingLeadProducts();
+            if (!empty($packageProductConcreteEntityTransfers)) {
+                list($packageProductConcreteEntityTransfer) = $packageProductConcreteEntityTransfers;
+                list($productPackagingLeadProduct) = $packageProductConcreteEntityTransfer->getSpyProductPackagingLeadProducts();
                 $productAbstractPackagingStoreTransfers[] = $this->hydrateProductAbstractPackagingStoreTransfer(
                     $idProductAbstract,
                     $productPackagingLeadProduct,
