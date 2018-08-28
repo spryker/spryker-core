@@ -122,9 +122,12 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
      */
     public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeTransfer
     {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTreeTransfer $companyBusinessUnitTreeTransfer */
+        $companyBusinessUnitTreeTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/get-customer-company-business-unit-tree',
             $customerTransfer
         );
+
+        return $companyBusinessUnitTreeTransfer;
     }
 }
