@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TaxSetsReader implements TaxSetsReaderInterface
 {
+    protected const TAX_SET_RESPONSE_ERROR_ABSTRACT_PRODUCT_NOT_FOUND = 'Could not get tax set, product abstract with id "0" not found.';
     /**
      * @var \Spryker\Glue\TaxSetsRestApi\Dependency\Client\TaxSetsRestApiToTaxProductConnectorClientInterface
      */
@@ -70,6 +71,11 @@ class TaxSetsReader implements TaxSetsReaderInterface
         );
 
         if ($taxSetResponseTransfer->getError()) {
+            if ($taxSetResponseTransfer->getError() === static::TAX_SET_RESPONSE_ERROR_ABSTRACT_PRODUCT_NOT_FOUND) {
+                $restErrorTransfer = $this->createAbstractProductNotFoundError();
+
+                return $restResponse->addError($restErrorTransfer);
+            }
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(TaxSetsRestApiConfig::RESPONSE_CODE_CANT_FIND_PRODUCT_TAX_SETS)
                 ->setStatus(Response::HTTP_NOT_FOUND)
