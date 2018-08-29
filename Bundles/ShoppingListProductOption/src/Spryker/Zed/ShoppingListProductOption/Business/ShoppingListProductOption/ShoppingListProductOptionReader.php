@@ -58,6 +58,6 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
         $shoppingListItemProductOptionIds = $this->shoppingListProductOptionRepository
             ->findShoppingListItemProductOptionIdsByIdShoppingListItem($idShoppingListItem);
 
-        return (new ProductOptionCriteriaTransfer())->setIds($shoppingListItemProductOptionIds);
+        return (new ProductOptionCriteriaTransfer())->setProductOptionIds($shoppingListItemProductOptionIds);
     }
 }

@@ -11,9 +11,6 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingList;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem;
 use Orm\Zed\ShoppingListProductOption\Persistence\SpyShoppingListProductOption;
@@ -81,8 +78,8 @@ class ShoppingListProductOptionFacadeTest extends Unit
 
         $this->shoppingListItemEntity->save();
 
-        $this->productOptionValue1Entity = $this->createProductOptionValue();
-        $this->productOptionValue2Entity = $this->createProductOptionValue('sku_for_testing_2');
+        $this->productOptionValue1Entity = $this->tester->createProductOptionValue();
+        $this->productOptionValue2Entity = $this->tester->createProductOptionValue('sku_for_testing_2');
     }
 
     /**
@@ -223,24 +220,66 @@ class ShoppingListProductOptionFacadeTest extends Unit
     }
 
     /**
-     * @param string $sku
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
+     * @return void
      */
-    protected function createProductOptionValue(string $sku = 'sku_for_testing'): SpyProductOptionValue
+    public function testExpandItemWithProductOptions(): void
     {
-        $productOptionGroup = (new SpyProductOptionGroupQuery())
-            ->filterByName('test')
-            ->findOneOrCreate();
-        $productOptionGroup->save();
+        $this->tester->cleanUpShoppingListProductOptionByIdShoppingListItem($this->shoppingListItemEntity->getIdShoppingListItem());
+        $this->tester->assureShoppingListProductOption($this->shoppingListItemEntity->getIdShoppingListItem(), $this->productOptionValue1Entity->getIdProductOptionValue());
+        $this->tester->assureShoppingListProductOption($this->shoppingListItemEntity->getIdShoppingListItem(), $this->productOptionValue2Entity->getIdProductOptionValue());
 
-        $productOptionValue = (new SpyProductOptionValueQuery())
-            ->filterByValue('value.translation.key')
-            ->filterByFkProductOptionGroup($productOptionGroup->getIdProductOptionGroup())
-            ->filterBySku($sku)
-            ->findOneOrCreate();
-        $productOptionValue->save();
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+            ->setIdShoppingListItem($this->shoppingListItemEntity->getIdShoppingListItem());
 
-        return $productOptionValue;
+        $actualResult = $this->tester->getFacade()->expandItem($shoppingListItemTransfer);
+
+        $expectedResult = [
+            $this->productOptionValue1Entity->getIdProductOptionValue(),
+            $this->productOptionValue2Entity->getIdProductOptionValue(),
+        ];
+
+        $this->assertSame(count($actualResult->getProductOptions()), count($expectedResult));
+        foreach ($actualResult->getProductOptions() as $productOption) {
+            $this->assertTrue(in_array($productOption->getIdProductOptionValue(), $expectedResult));
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandItemWithProductOption(): void
+    {
+        $this->tester->cleanUpShoppingListProductOptionByIdShoppingListItem($this->shoppingListItemEntity->getIdShoppingListItem());
+        $this->tester->assureShoppingListProductOption($this->shoppingListItemEntity->getIdShoppingListItem(), $this->productOptionValue1Entity->getIdProductOptionValue());
+
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+            ->setIdShoppingListItem($this->shoppingListItemEntity->getIdShoppingListItem());
+
+        $actualResult = $this->tester->getFacade()->expandItem($shoppingListItemTransfer);
+
+        $expectedResult = [
+            $this->productOptionValue1Entity->getIdProductOptionValue(),
+        ];
+
+        $this->assertSame(count($actualResult->getProductOptions()), count($expectedResult));
+        foreach ($actualResult->getProductOptions() as $productOption) {
+            $this->assertTrue(in_array($productOption->getIdProductOptionValue(), $expectedResult));
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandItemWithoutProductOption(): void
+    {
+        $this->tester->cleanUpShoppingListProductOptionByIdShoppingListItem($this->shoppingListItemEntity->getIdShoppingListItem());
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+            ->setIdShoppingListItem($this->shoppingListItemEntity->getIdShoppingListItem());
+
+        $actualResult = $this->tester->getFacade()->expandItem($shoppingListItemTransfer);
+
+        foreach ($actualResult->getProductOptions() as $productOptions) {
+            $this->assertEmpty($productOptions);
+        }
     }
 }

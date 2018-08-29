@@ -49,4 +49,20 @@ class ShoppingListProductOptionFacade extends AbstractFacade implements Shopping
             ->createShoppingListItemProductOptionReader()
             ->getShoppingListItemProductOptionsByIdShoppingListItem($idShoppingListItem);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    {
+        return $this->getFactory()
+            ->createShoppingListItemExpander()
+            ->expandItem($shoppingListItemTransfer);
+    }
 }

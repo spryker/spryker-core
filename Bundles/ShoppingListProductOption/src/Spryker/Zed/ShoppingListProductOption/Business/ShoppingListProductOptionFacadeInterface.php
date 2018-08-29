@@ -36,4 +36,16 @@ interface ShoppingListProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
     public function getShoppingListItemProductOptionsByIdShoppingListItem(int $idShoppingListItem): ProductOptionCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Adds a product options to shopping list item.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 }
