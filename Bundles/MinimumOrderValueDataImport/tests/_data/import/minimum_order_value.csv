@@ -1,0 +1,5 @@
+store,currency,threshold_type_key,threshold,fee
+DE,EUR,hard-threshold,40000,
+DE,EUR,soft-threshold,100000,
+DE,CHF,hard-threshold,120000,
+DE,CHF,soft-threshold,200000,
