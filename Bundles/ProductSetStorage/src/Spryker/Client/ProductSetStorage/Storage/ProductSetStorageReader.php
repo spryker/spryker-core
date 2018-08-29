@@ -49,7 +49,7 @@ class ProductSetStorageReader implements ProductSetStorageReaderInterface
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer|null
      */
     public function getProductSetByIdProductSet($idProductAbstract, $localeName)
     {
