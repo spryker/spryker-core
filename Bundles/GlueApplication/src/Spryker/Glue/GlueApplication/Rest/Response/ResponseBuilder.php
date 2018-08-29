@@ -68,7 +68,7 @@ class ResponseBuilder implements ResponseBuilderInterface
         );
 
         $data = $this->resourcesToArray($restResponse->getResources(), $restRequest);
-        if (count($data) === 1) {
+        if ($restRequest->getResource()->getId()) {
             $response[RestResponseInterface::RESPONSE_DATA] = $data[0];
         } else {
             $response[RestResponseInterface::RESPONSE_DATA] = $data;
