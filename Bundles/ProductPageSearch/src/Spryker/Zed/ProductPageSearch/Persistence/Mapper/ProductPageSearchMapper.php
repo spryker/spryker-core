@@ -7,18 +7,33 @@
 
 namespace Spryker\Zed\ProductPageSearch\Persistence\Mapper;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch;
 use Orm\Zed\Store\Persistence\SpyStore;
+use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface;
 
 class ProductPageSearchMapper implements ProductPageSearchMapperInterface
 {
-    public const TYPE_PRODUCT_CONCRETE = 'product_concrete';
+    /**
+     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface
+     */
+    protected $searchFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface $searchFacade
+     */
+    public function __construct(ProductPageSearchToSearchInterface $searchFacade)
+    {
+        $this->searchFacade = $searchFacade;
+    }
 
     /**
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch $productConcretePageSearchEntity
@@ -68,6 +83,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
             true
         );
 
+        $productConcreteTransfer->setIdProductConcrete($productConcreteEntity->getIdProduct());
         $productConcreteTransfer->setAbstractSku(
             $productConcreteEntity->getSpyProductAbstract()->getSku()
         );
@@ -90,17 +106,43 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */
     public function mapProductConcreteTransferToProductConcretePageSearchTransfer(
         ProductConcreteTransfer $productConcreteTransfer,
-        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer,
+        StoreTransfer $storeTransfer,
+        LocalizedAttributesTransfer $localizedAttributesTransfer
     ): ProductConcretePageSearchTransfer {
-        $productConcretePageSearchTransfer->setType(static::TYPE_PRODUCT_CONCRETE);
+        $productConcretePageSearchTransfer->fromArray(
+            $productConcreteTransfer->toArray(),
+            true
+        );
 
-        dump($productConcreteTransfer, $productConcretePageSearchTransfer);
-        die;
+        $productConcretePageSearchTransfer->setFkProduct($productConcreteTransfer->getIdProductConcrete());
+        $productConcretePageSearchTransfer->setType(ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME);
+        $productConcretePageSearchTransfer->setStore($storeTransfer->getName());
+        $productConcretePageSearchTransfer->setLocale($localizedAttributesTransfer->getLocale()->getLocaleName());
+        $productConcretePageSearchTransfer->setName($localizedAttributesTransfer->getName());
+
+        return $productConcretePageSearchTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+     *
+     * @return array
+     */
+    public function mapToSearchData(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): array
+    {
+        return $this->searchFacade->transformPageMapToDocumentByMapperName(
+            $productConcretePageSearchTransfer->toArray(true, true),
+            (new LocaleTransfer())->setLocaleName($productConcretePageSearchTransfer->getLocale()),
+            ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME
+        );
     }
 
     /**
@@ -113,8 +155,28 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         SpyProductLocalizedAttributes $productLocalizedAttributesEntity,
         LocalizedAttributesTransfer $localizedAttributesTransfer
     ): LocalizedAttributesTransfer {
-        return $localizedAttributesTransfer->fromArray(
+        $localizedAttributesTransfer->fromArray(
             $productLocalizedAttributesEntity->toArray(),
+            true
+        );
+
+        $localizedAttributesTransfer->setLocale(
+            $this->mapLocaleEntityToTransfer($productLocalizedAttributesEntity->getLocale(), new LocaleTransfer())
+        );
+
+        return $localizedAttributesTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntity
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function mapLocaleEntityToTransfer(SpyLocale $localeEntity, LocaleTransfer $localeTransfer): LocaleTransfer
+    {
+        return $localeTransfer->fromArray(
+            $localeEntity->toArray(),
             true
         );
     }

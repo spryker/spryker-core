@@ -81,6 +81,14 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface[]
+     */
+    public function getProductConcretePageMapExpanderPlugins()
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToCategoryInterface
      */
     public function getCategoryFacade()

@@ -50,6 +50,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const PLUGIN_PRODUCT_PAGE_DATA_EXPANDER = 'PLUGIN_PRODUCT_PAGE_DATA_EXPANDER';
     const PLUGIN_PRODUCT_PAGE_MAP_EXPANDER = 'PLUGIN_PRODUCT_PAGE_MAP_EXPANDER';
+    const PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER';
     const PLUGIN_PRODUCT_PRICE_PAGE_DATA = 'PLUGIN_PRODUCT_PRICE_PAGE_DATA';
     const PLUGIN_PRODUCT_CATEGORY_PAGE_DATA = 'PLUGIN_PRODUCT_CATEGORY_PAGE_DATA';
     const PLUGIN_PRODUCT_IMAGE_PAGE_DATA = 'PLUGIN_PRODUCT_IMAGE_PAGE_DATA';
@@ -103,6 +104,10 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[static::PLUGIN_PRODUCT_PAGE_MAP_EXPANDER] = function (Container $container) {
             return $this->getMapExpanderPlugins();
+        };
+
+        $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER] = function (Container $container) {
+            return $this->getProductConcretePageMapExpanderPlugins();
         };
 
         return $container;
@@ -161,6 +166,10 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductPageSearchToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
         };
 
+        $container[self::FACADE_SEARCH] = function (Container $container) {
+            return new ProductPageSearchToSearchBridge($container->getLocator()->search()->facade());
+        };
+
         return $container;
     }
 
@@ -186,5 +195,13 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             new ProductCategoryPageMapExpanderPlugin(),
             new ProductImagePageMapExpanderPlugin(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
+     */
+    protected function getProductConcretePageMapExpanderPlugins(): array
+    {
+        return [];
     }
 }

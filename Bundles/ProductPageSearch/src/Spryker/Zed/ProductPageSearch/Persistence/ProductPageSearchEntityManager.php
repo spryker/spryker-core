@@ -24,7 +24,7 @@ class ProductPageSearchEntityManager extends AbstractEntityManager implements Pr
     {
         $query = $this->getFactory()
             ->createProductConcretePageSearchQuery()
-            ->filterByIdProductConcretePageSearch();
+            ->filterByIdProductConcretePageSearch($productConcretePageSearchTransfer->getIdProductConcretePageSearch());
 
         $productConcreteSearchPageEntity = $query->findOneOrCreate();
 
@@ -48,7 +48,7 @@ class ProductPageSearchEntityManager extends AbstractEntityManager implements Pr
     {
         $query = $this->getFactory()
             ->createProductConcretePageSearchQuery()
-            ->filterByIdProductConcretePageSearch();
+            ->filterByIdProductConcretePageSearch($productConcretePageSearchTransfer->getIdProductConcretePageSearch());
 
         $productConcreteSearchPageEntity = $query->findOne();
 

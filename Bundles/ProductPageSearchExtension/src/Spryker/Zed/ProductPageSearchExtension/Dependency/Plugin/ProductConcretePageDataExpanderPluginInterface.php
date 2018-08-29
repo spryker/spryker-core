@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductConcretePageDataExpanderPluginInterface
 {
@@ -17,10 +18,10 @@ interface ProductConcretePageDataExpanderPluginInterface
      *
      * @api
      *
-     * @param array $productConcreteData
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
      *
      * @return void
      */
-    public function expand(array $productConcreteData, ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): void;
+    public function expand(ProductConcreteTransfer $productConcreteTransfer, ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): void;
 }
