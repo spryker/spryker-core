@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder;
 
-use Symfony\Component\Finder\Finder;
+use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface;
 
 class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFinderInterface
 {
@@ -22,26 +22,32 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     protected $pathPattern;
 
     /**
+     * @var \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
+     */
+    protected $finder;
+
+    /**
+     * @param \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface $finder
      * @param array $pathPattern
      * @param string $fileNamePattern
      */
-    public function __construct(array $pathPattern, string $fileNamePattern)
+    public function __construct(RestRequestValidatorToFinderAdapterInterface $finder, array $pathPattern, string $fileNamePattern)
     {
+        $this->finder = $finder;
         $this->pathPattern = $pathPattern;
         $this->fileNamePattern = $fileNamePattern;
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
      */
-    public function findSchemas(): Finder
+    public function findSchemas(): RestRequestValidatorToFinderAdapterInterface
     {
-        $finder = new Finder();
-        $finder
+        $this->finder
             ->in($this->getPaths())
             ->name($this->fileNamePattern);
 
-        return $finder;
+        return $this->finder;
     }
 
     /**

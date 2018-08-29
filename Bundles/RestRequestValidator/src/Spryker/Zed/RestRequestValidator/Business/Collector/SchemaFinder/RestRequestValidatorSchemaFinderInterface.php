@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder;
 
-use Symfony\Component\Finder\Finder;
+use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface;
 
 interface RestRequestValidatorSchemaFinderInterface
 {
     /**
-     * @return \Symfony\Component\Finder\Finder
+     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
      */
-    public function findSchemas(): Finder;
+    public function findSchemas(): RestRequestValidatorToFinderAdapterInterface;
 }
