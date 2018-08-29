@@ -81,7 +81,7 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function updateCustomerPassword($customerTransfer)
+    public function updateCustomerPassword(CustomerTransfer $customerTransfer)
     {
         return $this->customerClient->updateCustomerPassword($customerTransfer);
     }
@@ -114,5 +114,15 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
     public function anonymizeCustomer(CustomerTransfer $customerTransfer)
     {
         return $this->customerClient->anonymizeCustomer($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function updateAddress(AddressTransfer $addressTransfer)
+    {
+        return $this->customerClient->updateAddress($addressTransfer);
     }
 }

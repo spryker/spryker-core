@@ -52,7 +52,7 @@ interface CustomersRestApiToCustomerClientInterface
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function updateCustomerPassword($customerTransfer);
+    public function updateCustomerPassword(CustomerTransfer $customerTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -74,4 +74,11 @@ interface CustomersRestApiToCustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function anonymizeCustomer(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function updateAddress(AddressTransfer $addressTransfer);
 }

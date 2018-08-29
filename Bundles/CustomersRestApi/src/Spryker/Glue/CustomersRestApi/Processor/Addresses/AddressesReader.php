@@ -134,7 +134,7 @@ class AddressesReader implements AddressesReaderInterface
 
         $address = $this->customerClient->findAddressByUuid($addressTransfer);
 
-        if (!$address->getUuid()) {
+        if (!$address) {
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_NOT_FOUND)
                 ->setStatus(Response::HTTP_NOT_FOUND)
