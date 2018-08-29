@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridge;
+use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface;
 use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListClientBridgeInterface;
 use Spryker\Client\ShoppingListSession\ShoppingListSessionClientInterface;
 use Spryker\Client\ShoppingListSession\ShoppingListSessionDependencyProvider;
@@ -59,7 +60,7 @@ class ShoppingListSessionClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetCustomerShoppingListCollectionFirstTimeReturnsCollectionFromShoppingListClient()
+    public function testGetCustomerShoppingListCollectionFirstTimeReturnsCollectionFromShoppingListClient(): void
     {
         //Assign
         $shoppingListCollectionTransfer = (new ShoppingListCollectionTransfer())
@@ -78,7 +79,7 @@ class ShoppingListSessionClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetCustomerShoppingListCollectionShouldGetCollectionFromSessionClientWhenNoOfCollectionOutdatedPluginsReturnsTrue()
+    public function testGetCustomerShoppingListCollectionShouldGetCollectionFromSessionClientWhenNoOfCollectionOutdatedPluginsReturnsTrue(): void
     {
         //Assign
         $shoppingListCollectionTransferFirst = (new ShoppingListCollectionTransfer())
@@ -111,7 +112,7 @@ class ShoppingListSessionClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetCustomerShoppingListCollectionShouldGetCollectionFromShoppingListClientWhenOneOfCollectionOutdatedPluginsReturnsTrue()
+    public function testGetCustomerShoppingListCollectionShouldGetCollectionFromShoppingListClientWhenOneOfCollectionOutdatedPluginsReturnsTrue(): void
     {
         //Assign
         $shoppingListCollectionTransferFirst = (new ShoppingListCollectionTransfer())
@@ -150,7 +151,7 @@ class ShoppingListSessionClientTest extends Unit
      *
      * @return \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListClientBridgeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getShoppingListClientMock(ShoppingListCollectionTransfer $shoppingListCollectionTransfer)
+    private function getShoppingListClientMock(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListSessionToShoppingListClientBridgeInterface
     {
         $shoppingListClientMock = $this->getMockBuilder(ShoppingListSessionToShoppingListClientBridgeInterface::class)
             ->setMethods(['getCustomerShoppingListCollection'])
@@ -165,9 +166,9 @@ class ShoppingListSessionClientTest extends Unit
     }
 
     /**
-     * @return \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridge
+     * @return \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface
      */
-    protected function getShoppingListSessionToSessionClientBridge()
+    protected function getShoppingListSessionToSessionClientBridge(): ShoppingListSessionToSessionClientBridgeInterface
     {
         $this->sessionClient = new SessionClient();
         $this->sessionClient->setContainer(new Session(new MockArraySessionStorage()));
