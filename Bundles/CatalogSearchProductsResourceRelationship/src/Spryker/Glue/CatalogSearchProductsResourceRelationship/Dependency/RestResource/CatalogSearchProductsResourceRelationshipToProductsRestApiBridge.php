@@ -18,8 +18,6 @@ class CatalogSearchProductsResourceRelationshipToProductsRestApiBridge implement
     protected $productsResource;
 
     /**
-     * CatalogSearchProductsResourceRelationshipToProductsRestApiBridge constructor.
-     *
      * @param \Spryker\Glue\ProductsRestApi\ProductsRestApiResourceInterface $productsResource
      */
     public function __construct($productsResource)
@@ -31,7 +29,7 @@ class CatalogSearchProductsResourceRelationshipToProductsRestApiBridge implement
      * @param string $abstractProductSku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return null|\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
     public function findOneByProductAbstractSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
     {

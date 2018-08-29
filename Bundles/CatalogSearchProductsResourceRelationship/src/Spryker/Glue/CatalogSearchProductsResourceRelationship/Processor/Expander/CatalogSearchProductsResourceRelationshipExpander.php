@@ -13,14 +13,13 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearchProductsResourceRelationshipExpanderInterface
 {
+    protected const KEY_PRODUCTS = 'products';
     /**
      * @var \Spryker\Glue\CatalogSearchProductsResourceRelationship\Dependency\RestResource\CatalogSearchProductsResourceRelationshipToProductsRestApiInterface
      */
     protected $productsResource;
 
     /**
-     * CatalogSearchProductsResourceRelationshipExpander constructor.
-     *
      * @param \Spryker\Glue\CatalogSearchProductsResourceRelationship\Dependency\RestResource\CatalogSearchProductsResourceRelationshipToProductsRestApiInterface $productsResource
      */
     public function __construct(CatalogSearchProductsResourceRelationshipToProductsRestApiInterface $productsResource)
@@ -38,8 +37,8 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
     {
         foreach ($resources as $resource) {
             $attributes = $resource->getAttributes();
-            if ($attributes && $attributes->offsetGet('products')) {
-                $products = $attributes->offsetGet('products')->getArrayCopy();
+            if ($attributes && $attributes->offsetGet(static::KEY_PRODUCTS)) {
+                $products = $attributes->offsetGet(static::KEY_PRODUCTS)->getArrayCopy();
                 $this->addAbstractProductsToResource($products, $resource, $restRequest);
             }
         }

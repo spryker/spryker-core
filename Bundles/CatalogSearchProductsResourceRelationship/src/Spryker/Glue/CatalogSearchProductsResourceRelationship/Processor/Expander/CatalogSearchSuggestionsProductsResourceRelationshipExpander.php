@@ -13,14 +13,14 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements CatalogSearchSuggestionsProductsResourceRelationshipExpanderInterface
 {
+    protected const KEY_ABSTRACT_SKU = 'abstract_sku';
+
     /**
      * @var \Spryker\Glue\CatalogSearchProductsResourceRelationship\Dependency\RestResource\CatalogSearchProductsResourceRelationshipToProductsRestApiInterface
      */
     protected $productsResource;
 
     /**
-     * CatalogSearchProductsResourceRelationshipExpander constructor.
-     *
      * @param \Spryker\Glue\CatalogSearchProductsResourceRelationship\Dependency\RestResource\CatalogSearchProductsResourceRelationshipToProductsRestApiInterface $productsResource
      */
     public function __construct(CatalogSearchProductsResourceRelationshipToProductsRestApiInterface $productsResource)
@@ -55,8 +55,8 @@ class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements Ca
     protected function addAbstractProductsToResource(array $products, RestResourceInterface $resource, RestRequestInterface $restRequest): void
     {
         foreach ($products as $product) {
-            if (isset($product['abstract_sku'])) {
-                $abstractProduct = $this->productsResource->findOneByProductAbstractSku($product['abstract_sku'], $restRequest);
+            if (isset($product[static::KEY_ABSTRACT_SKU])) {
+                $abstractProduct = $this->productsResource->findOneByProductAbstractSku($product[static::KEY_ABSTRACT_SKU], $restRequest);
                 if ($abstractProduct) {
                     $resource->addRelationship($abstractProduct);
                 }

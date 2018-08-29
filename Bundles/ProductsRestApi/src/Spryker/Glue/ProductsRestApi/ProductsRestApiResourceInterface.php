@@ -14,7 +14,7 @@ interface ProductsRestApiResourceInterface
 {
     /**
      * Specification:
-     *  - Retrieve abstract product by concrete abstract sku
+     *  - Retrieves abstract product by concrete abstract sku.
      *
      * @api
      *
