@@ -43,4 +43,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_CUSTOMER_ADDRESS_FAILED_TO_SAVE = '409';
     public const RESPONSE_DETAILS_CUSTOMER_ADDRESS_FAILED_TO_SAVE = 'Failed to save customer address.';
+
+    public const RESPONSE_CODE_CUSTOMER_FAILED_TO_SAVE = '410';
+    public const RESPONSE_DETAILS_CUSTOMER_FAILED_TO_SAVE = 'Failed to save customer';
 }
