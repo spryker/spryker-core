@@ -10,6 +10,8 @@ namespace Spryker\Client\MultiCart;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\MultiCart\CartOperation\CartCreator;
 use Spryker\Client\MultiCart\CartOperation\CartCreatorInterface;
+use Spryker\Client\MultiCart\CartOperation\CartReader;
+use Spryker\Client\MultiCart\CartOperation\CartReaderInterface;
 use Spryker\Client\MultiCart\CartOperation\CartUpdater;
 use Spryker\Client\MultiCart\CartOperation\CartUpdaterInterface;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToCustomerClientInterface;
@@ -91,6 +93,16 @@ class MultiCartFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->getDateTimeService(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\MultiCart\CartOperation\CartReaderInterface
+     */
+    public function createCartReader(): CartReaderInterface
+    {
+        return new CartReader(
+            $this->createMultiCartZedStub()
         );
     }
 

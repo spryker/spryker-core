@@ -14,7 +14,7 @@ interface CmsBlockToGlossaryInterface
     /**
      * @param array $keys
      *
-     * @return bool
+     * @return void
      */
     public function deleteTranslationsByFkKeys(array $keys);
 
