@@ -32,7 +32,6 @@
 
     <transfer name="CalculableObject">
         <property name="expenses" type="Expense[]" singular="expense"/>
-        <property name="priceMode" type="string" />
         <property name="originalQuote" type="Quote" />
     </transfer>
 
