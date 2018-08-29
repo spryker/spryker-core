@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTotalsTableMap;
@@ -44,5 +45,33 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         return $this->getFactory()
             ->createSalesMapper()
             ->mapSalesOrderListTransfer($orderEntity);
+    }
+
+    /**
+     * @param string $orderReference
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function findOrderByOrderReference(string $orderReference): OrderTransfer
+    {
+        $orderData = $this->getFactory()
+            ->createSalesOrderQuery()
+            ->filterByOrderReference($orderReference)
+            ->useOrderTotalQuery()
+            ->withColumn(SpySalesOrderTotalsTableMap::COL_GRAND_TOTAL, TotalsTransfer::GRAND_TOTAL)
+            ->withColumn(SpySalesOrderTotalsTableMap::COL_REFUND_TOTAL, TotalsTransfer::REFUND_TOTAL)
+            ->withColumn(SpySalesOrderTotalsTableMap::COL_TAX_TOTAL, TotalsTransfer::TAX_TOTAL)
+            ->withColumn(SpySalesOrderTotalsTableMap::COL_CANCELED_TOTAL, TotalsTransfer::CANCELED_TOTAL)
+            ->withColumn(SpySalesOrderTotalsTableMap::COL_SUBTOTAL, TotalsTransfer::SUBTOTAL)
+            ->endUse()
+            ->select([
+                SpySalesOrderTableMap::COL_CREATED_AT,
+                SpySalesOrderTableMap::COL_ORDER_REFERENCE,
+            ])
+            ->findOne();
+
+        return $this->getFactory()
+            ->createSalesMapper()
+            ->mapSalesOrderTransfer($orderData);
     }
 }

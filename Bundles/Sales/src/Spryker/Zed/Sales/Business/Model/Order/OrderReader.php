@@ -91,4 +91,14 @@ class OrderReader implements OrderReaderInterface
     {
         return $this->salesRepository->getOrderListByCustomerReference($orderTransfer->getCustomerReference());
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function findOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->salesRepository->findOrderByOrderReference($orderTransfer->getOrderReference());
+    }
 }

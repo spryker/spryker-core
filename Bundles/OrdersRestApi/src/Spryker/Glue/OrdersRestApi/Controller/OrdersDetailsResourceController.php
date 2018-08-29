@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\OrdersRestApi\Processor\Orders;
+namespace Spryker\Glue\OrdersRestApi\Controller;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\Kernel\Controller\AbstractController;
 
-interface OrdersReaderInterface
+/**
+ * @method \Spryker\Glue\OrdersRestApi\OrdersRestApiFactory getFactory()
+ */
+class OrdersDetailsResourceController extends AbstractController
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getOrdersAttributes(RestRequestInterface $restRequest): RestResponseInterface;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function getOrdersDetailsResourceAttributes(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getAction(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        return $this->getFactory()->createOrdersReader()->getOrdersDetailsResourceAttributes($restRequest);
+    }
 }

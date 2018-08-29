@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 interface SalesRepositoryInterface
 {
@@ -17,4 +18,11 @@ interface SalesRepositoryInterface
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrderListByCustomerReference(string $customerReference): OrderListTransfer;
+
+    /**
+     * @param string $orderReference
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function findOrderByOrderReference(string $orderReference): OrderTransfer;
 }

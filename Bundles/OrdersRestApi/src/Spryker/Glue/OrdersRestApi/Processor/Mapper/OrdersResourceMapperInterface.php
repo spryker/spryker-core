@@ -8,7 +8,9 @@
 namespace Spryker\Glue\OrdersRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderRestAttributesTransfer;
 use Generated\Shared\Transfer\OrdersRestAttributesTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 interface OrdersResourceMapperInterface
 {
@@ -17,5 +19,12 @@ interface OrdersResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\OrdersRestAttributesTransfer
      */
-    public function mapStoreToOrdersRestAttribute(OrderListTransfer $orderListTransfer): OrdersRestAttributesTransfer;
+    public function mapOrderListToOrdersRestAttribute(OrderListTransfer $orderListTransfer): OrdersRestAttributesTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderRestAttributesTransfer
+     */
+    public function mapOrderToOrdersRestAttribute(OrderTransfer $orderTransfer): OrderRestAttributesTransfer;
 }

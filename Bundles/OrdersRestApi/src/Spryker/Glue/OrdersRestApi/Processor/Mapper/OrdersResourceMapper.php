@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderRestAttributesTransfer;
 use Generated\Shared\Transfer\OrderRestTotalAttributesTransfer;
 use Generated\Shared\Transfer\OrdersRestAttributesTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 class OrdersResourceMapper implements OrdersResourceMapperInterface
 {
@@ -19,7 +20,7 @@ class OrdersResourceMapper implements OrdersResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\OrdersRestAttributesTransfer
      */
-    public function mapStoreToOrdersRestAttribute(OrderListTransfer $orderListTransfer): OrdersRestAttributesTransfer
+    public function mapOrderListToOrdersRestAttribute(OrderListTransfer $orderListTransfer): OrdersRestAttributesTransfer
     {
         $ordersRestAttributes = new OrdersRestAttributesTransfer();
 
@@ -37,5 +38,22 @@ class OrdersResourceMapper implements OrdersResourceMapperInterface
         }
 
         return $ordersRestAttributes;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderRestAttributesTransfer
+     */
+    public function mapOrderToOrdersRestAttribute(OrderTransfer $orderTransfer): OrderRestAttributesTransfer
+    {
+        return (new OrderRestAttributesTransfer())
+            ->addTotals((new OrderRestTotalAttributesTransfer())
+                ->setRefundTotal($orderTransfer->getTotals()->getRefundTotal())
+                ->setGrandTotal($orderTransfer->getTotals()->getGrandTotal())
+                ->setCanceledTotal($orderTransfer->getTotals()->getCanceledTotal())
+                ->setSubtotal($orderTransfer->getTotals()->getSubTotal()))
+            ->setOrderDate($orderTransfer->getCreatedAt())
+            ->setOrderReference($orderTransfer->getOrderReference());
     }
 }

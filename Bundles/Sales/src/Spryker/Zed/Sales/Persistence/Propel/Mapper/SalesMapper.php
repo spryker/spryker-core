@@ -16,15 +16,15 @@ use Propel\Runtime\Collection\ArrayCollection;
 class SalesMapper implements SalesMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\ArrayCollection $orderData
+     * @param \Propel\Runtime\Collection\ArrayCollection $ordersTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function mapSalesOrderListTransfer(ArrayCollection $orderData): OrderListTransfer
+    public function mapSalesOrderListTransfer(ArrayCollection $ordersTransfer): OrderListTransfer
     {
         $orderListTransfer = new OrderListTransfer();
 
-        foreach ($orderData->getData() as $order) {
+        foreach ($ordersTransfer->getData() as $order) {
             $orderListTransfer->addOrder((new OrderTransfer())
                 ->setCreatedAt($order[SpySalesOrderTableMap::COL_CREATED_AT])
                 ->setOrderReference($order[SpySalesOrderTableMap::COL_ORDER_REFERENCE])
@@ -36,5 +36,25 @@ class SalesMapper implements SalesMapperInterface
         }
 
         return $orderListTransfer;
+    }
+
+    /**
+     * @param array $orderData
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function mapSalesOrderTransfer(array $orderData): OrderTransfer
+    {
+        $orderTransfer = new OrderTransfer();
+
+        $orderTransfer->setCreatedAt($orderData[SpySalesOrderTableMap::COL_CREATED_AT])
+            ->setOrderReference($orderData[SpySalesOrderTableMap::COL_ORDER_REFERENCE])
+            ->setTotals((new TotalsTransfer())
+                ->setGrandTotal($orderData[TotalsTransfer::GRAND_TOTAL])
+                ->setSubtotal($orderData[TotalsTransfer::SUBTOTAL])
+                ->setRefundTotal($orderData[TotalsTransfer::REFUND_TOTAL])
+                ->setCanceledTotal($orderData[TotalsTransfer::CANCELED_TOTAL]));
+
+        return $orderTransfer;
     }
 }

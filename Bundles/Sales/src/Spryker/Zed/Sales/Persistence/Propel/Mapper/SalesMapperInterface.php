@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\Collection\ArrayCollection;
 
 interface SalesMapperInterface
@@ -18,4 +19,11 @@ interface SalesMapperInterface
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function mapSalesOrderListTransfer(ArrayCollection $orderData): OrderListTransfer;
+
+    /**
+     * @param array $orderData
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function mapSalesOrderTransfer(array $orderData): OrderTransfer;
 }

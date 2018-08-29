@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\OrdersRestApi\Processor\Orders;
 
+use Generated\Shared\Transfer\OrderRestAttributesTransfer;
+use Generated\Shared\Transfer\OrdersRestAttributesTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -58,11 +60,36 @@ class OrdersReader implements OrdersReaderInterface
         $orderTransfer = (new OrderTransfer())->setCustomerReference($customerReference);
         $orderListTransfer = $this->salesClient->getOrderListByCustomerReference($orderTransfer);
 
-        $ordersRestAttributes = $this->ordersResourceMapper->mapStoreToOrdersRestAttribute($orderListTransfer);
+        $ordersRestAttributes = $this->ordersResourceMapper->mapOrderListToOrdersRestAttribute($orderListTransfer);
 
         $restResource = $this->restResourceBuilder->createRestResource(
             OrdersRestApiConfig::RESOURCE_ORDERS,
             $restRequest->getResource()->getId(),
+            $ordersRestAttributes
+        );
+
+        $response = $this->restResourceBuilder->createRestResponse();
+
+        return $response->addResource($restResource);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getOrdersDetailsResourceAttributes(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $orderReference = $restRequest->getResource()->getId();
+        $orderTransfer = $this->salesClient->findOrderByOrderReference(
+            (new OrderTransfer())->setOrderReference($orderReference)
+        );
+
+        $ordersRestAttributes = $this->ordersResourceMapper->mapOrderToOrdersRestAttribute($orderTransfer);
+
+        $restResource = $this->restResourceBuilder->createRestResource(
+            OrdersRestApiConfig::RESOURCE_ORDERS,
+            $orderReference,
             $ordersRestAttributes
         );
 

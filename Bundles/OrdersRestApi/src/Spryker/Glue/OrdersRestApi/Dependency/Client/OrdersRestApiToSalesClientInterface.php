@@ -18,4 +18,11 @@ interface OrdersRestApiToSalesClientInterface
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrderListByCustomerReference(OrderTransfer $orderTransfer): OrderListTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function findOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
 }

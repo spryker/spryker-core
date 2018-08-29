@@ -72,6 +72,22 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function findOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createOrderReader()
+            ->findOrderByOrderReference($orderTransfer);
+    }
+
+    /**
      * Specification:
      *  - Returns a list of of orders for the given customer id and (optional) filters.
      *  - Aggregates order totals calls -> SalesAggregator

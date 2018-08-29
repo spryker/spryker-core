@@ -59,4 +59,16 @@ interface SalesClientInterface
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getOrderListByCustomerReference(OrderTransfer $orderTransfer): OrderListTransfer;
+
+    /**
+     * Specification:
+     * - Returns the order for the given order reference.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function findOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
 }
