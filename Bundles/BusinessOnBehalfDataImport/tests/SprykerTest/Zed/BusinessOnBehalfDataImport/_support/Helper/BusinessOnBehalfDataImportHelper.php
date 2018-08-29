@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\BusinessOnBehalfDataImport\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
@@ -62,6 +63,17 @@ class BusinessOnBehalfDataImportHelper extends Module
     }
 
     /**
+     * @param string $key
+     *
+     * @return void
+     */
+    public function ensureCompanyBusinessUnitWithKeyDoesNotExist(string $key): void
+    {
+        $companyBusinessUnitQuery = $this->getCompanyBusinessUnitQuery();
+        $companyBusinessUnitQuery->filterByKey($key)->delete();
+    }
+
+    /**
      * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
      */
     protected function getCompanyUserQuery(): SpyCompanyUserQuery
@@ -75,6 +87,14 @@ class BusinessOnBehalfDataImportHelper extends Module
     protected function getCustomerQuery(): SpyCustomerQuery
     {
         return SpyCustomerQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
+     */
+    protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
+    {
+        return SpyCompanyBusinessUnitQuery::create();
     }
 
     /**
