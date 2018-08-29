@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
@@ -38,7 +38,6 @@ class OrderReader implements OrderReaderInterface
         SalesQueryContainerInterface $queryContainer,
         OrderHydratorInterface $orderHydrator,
         SalesRepositoryInterface $salesRepository
-
     ) {
         $this->queryContainer = $queryContainer;
         $this->orderHydrator = $orderHydrator;

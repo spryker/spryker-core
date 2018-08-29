@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\OrdersRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderRestAttributesTransfer;
 use Generated\Shared\Transfer\OrderRestTotalAttributesTransfer;
 use Generated\Shared\Transfer\OrdersRestAttributesTransfer;
-use Generated\Shared\Transfer\OrderListTransfer;
 
 class OrdersResourceMapper implements OrdersResourceMapperInterface
 {
@@ -30,8 +30,7 @@ class OrdersResourceMapper implements OrdersResourceMapperInterface
                         ->setRefundTotal($order->getTotals()->getRefundTotal())
                         ->setGrandTotal($order->getTotals()->getGrandTotal())
                         ->setCanceledTotal($order->getTotals()->getCanceledTotal())
-                        ->setSubtotal($order->getTotals()->getSubTotal())
-                    )
+                        ->setSubtotal($order->getTotals()->getSubTotal()))
                     ->setOrderDate($order->getCreatedAt())
                     ->setOrderReference($order->getOrderReference())
             );

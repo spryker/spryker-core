@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/orders-rest-api.svg)](https://travis-ci.org/spryker/orders-rest-api)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/orders-rest-api/badge.svg)](https://coveralls.io/github/spryker/orders-rest-api)
 
-{{ADD DESCRIPTION HERE}}
+OrdersRestApi module provides REST access to orders.
 
 ## Installation
 

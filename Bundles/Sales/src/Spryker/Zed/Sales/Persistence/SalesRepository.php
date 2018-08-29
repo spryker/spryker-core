@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\OrderListTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTotalsTableMap;

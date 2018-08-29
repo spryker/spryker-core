@@ -7,11 +7,7 @@
 
 namespace Spryker\Zed\Sales\Persistence;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
-use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
-use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
-use Generated\Shared\Transfer\ProductAlternativeTransfer;
 
 interface SalesRepositoryInterface
 {

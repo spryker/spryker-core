@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 
-use \Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
@@ -32,9 +32,7 @@ class SalesMapper implements SalesMapperInterface
                     ->setGrandTotal($order[TotalsTransfer::GRAND_TOTAL])
                     ->setSubtotal($order[TotalsTransfer::SUBTOTAL])
                     ->setRefundTotal($order[TotalsTransfer::REFUND_TOTAL])
-                    ->setCanceledTotal($order[TotalsTransfer::CANCELED_TOTAL])
-                )
-            );
+                    ->setCanceledTotal($order[TotalsTransfer::CANCELED_TOTAL])));
         }
 
         return $orderListTransfer;

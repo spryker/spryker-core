@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\OrdersRestApi\Dependency\Client;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 class OrdersRestApiToSalesClientBridge implements OrdersRestApiToSalesClientInterface
 {
