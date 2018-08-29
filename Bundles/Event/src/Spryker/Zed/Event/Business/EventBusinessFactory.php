@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Event\Business;
 
+use Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery;
 use Spryker\Zed\Event\Business\Dispatcher\EventDispatcher;
 use Spryker\Zed\Event\Business\Logger\EventLogger;
 use Spryker\Zed\Event\Business\Logger\LoggerConfig;
@@ -51,7 +52,7 @@ class EventBusinessFactory extends AbstractBusinessFactory
      */
     public function createEventQueueConsumer()
     {
-        return new EventQueueConsumer($this->createEventLogger(), $this->getUtilEncodingService(), $this->getConfig()->getMaxRetryAmount());
+        return new EventQueueConsumer($this->createEventLogger(), $this->getUtilEncodingService(), $this->getConfig());
     }
 
     /**
@@ -111,11 +112,11 @@ class EventBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Event\Dependency\QueryContainer\EventToQueueQueryContainerInterface
+     * @return \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery
      */
-    protected function getQueueQueryContainer()
+    protected function getQueueQueryContainer(): SpyQueueProcessQuery
     {
-        return $this->getProvidedDependency(EventDependencyProvider::QUERY_CONTAINER_QUEUE);
+        return $this->getProvidedDependency(EventDependencyProvider::PROPEL_QUERY_QUEUE_PROCESS);
     }
 
     /**

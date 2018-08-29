@@ -10,10 +10,10 @@ namespace Spryker\Zed\Event;
 use Spryker\Zed\Event\Dependency\Client\EventToQueueBridge;
 use Spryker\Zed\Event\Dependency\EventCollection;
 use Spryker\Zed\Event\Dependency\EventSubscriberCollection;
-use Spryker\Zed\Event\Dependency\QueryContainer\EventToQueueQueryContainerBridge;
 use Spryker\Zed\Event\Dependency\Service\EventToUtilEncoding;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Queue\Persistence\QueueQueryContainer;
 
 class EventDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -23,7 +23,7 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_QUEUE = 'client queue';
 
     const SERVICE_UTIL_ENCODING = 'service util encoding';
-    const QUERY_CONTAINER_QUEUE = 'QUERY_CONTAINER_QUEUE';
+    const PROPEL_QUERY_QUEUE_PROCESS = 'PROPEL_QUERY_QUEUE_PROCESS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -118,10 +118,10 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQueueQueryContainer($container)
+    protected function addQueueQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_QUEUE] = function (Container $container) {
-            return new EventToQueueQueryContainerBridge($container->getLocator()->queue()->queryContainer());
+        $container[static::PROPEL_QUERY_QUEUE_PROCESS] = function (Container $container) {
+            return (new QueueQueryContainer)->queryProcesses();
         };
 
         return $container;

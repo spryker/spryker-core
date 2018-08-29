@@ -10,12 +10,13 @@ namespace Spryker\Zed\Event\Business\Queue\Consumer;
 use Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
-use Spryker\Shared\Event\EventConstants;
+use Spryker\Shared\Event\EventConfig as SharedEventConfig;
 use Spryker\Zed\Event\Business\Exception\MessageTypeNotFoundException;
 use Spryker\Zed\Event\Business\Logger\EventLoggerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
+use Spryker\Zed\Event\EventConfig;
 use Throwable;
 
 class EventQueueConsumer implements EventQueueConsumerInterface
@@ -34,24 +35,24 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     protected $utilEncodingService;
 
     /**
-     * @var int
+     * @var \Spryker\Zed\Event\EventConfig
      */
-    protected $maxRetryAmount;
+    protected $eventConfig;
 
     /**
      * @param \Spryker\Zed\Event\Business\Logger\EventLoggerInterface $eventLogger
      * @param \Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface $utilEncodingService
-     * @param int $maxRetryAmount
+     * @param \Spryker\Zed\Event\EventConfig $eventConfig
      */
     public function __construct(
         EventLoggerInterface $eventLogger,
         EventToUtilEncodingInterface $utilEncodingService,
-        $maxRetryAmount = 1
+        EventConfig $eventConfig
     ) {
 
         $this->eventLogger = $eventLogger;
         $this->utilEncodingService = $utilEncodingService;
-        $this->maxRetryAmount = $maxRetryAmount;
+        $this->eventConfig = $eventConfig;
     }
 
     /**
@@ -171,7 +172,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         $queueMessageBody = $this->utilEncodingService->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
         $queueMessageBody = $this->updateMessageRetryKey($queueMessageBody);
 
-        if ($queueMessageBody[static::RETRY_KEY] < $this->maxRetryAmount) {
+        if ($queueMessageBody[static::RETRY_KEY] < $this->eventConfig->getMaxRetryAmount()) {
             $queueMessageBody[static::RETRY_KEY]++;
             $queueMessageTransfer->getQueueMessage()->setBody($this->utilEncodingService->encodeJson($queueMessageBody));
             $this->markMessageAsRetry($queueMessageTransfer, $retryMessage);
@@ -300,7 +301,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         $queueMessageTransfer->setAcknowledge(false);
         $queueMessageTransfer->setReject(true);
         $queueMessageTransfer->setHasError(true);
-        $queueMessageTransfer->setRoutingKey(EventConstants::EVENT_ROUTING_KEY_ERROR);
+        $queueMessageTransfer->setRoutingKey(SharedEventConfig::EVENT_ROUTING_KEY_ERROR);
     }
 
     /**
@@ -314,7 +315,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         $message = sprintf('Retry on: %s', $retryMessage);
         $this->setMessage($queueMessageTransfer, 'retryMessage', $message);
         $queueMessageTransfer->setAcknowledge(true);
-        $queueMessageTransfer->setRoutingKey(EventConstants::EVENT_ROUTING_KEY_RETRY);
+        $queueMessageTransfer->setRoutingKey(SharedEventConfig::EVENT_ROUTING_KEY_RETRY);
     }
 
     /**

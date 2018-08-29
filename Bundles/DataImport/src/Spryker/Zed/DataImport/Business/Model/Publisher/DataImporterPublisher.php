@@ -67,7 +67,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
      *
      * @return void
      */
-    public function triggerEvents($flushChunkSize = 1000000): void
+    public function triggerEvents($flushChunkSize = self::FLUSH_CHUNK_SIZE): void
     {
         $uniqueEvents = $this->getUniqueEvents();
         foreach ($uniqueEvents as $event => $ids) {

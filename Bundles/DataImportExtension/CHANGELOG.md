@@ -1,3 +1,3 @@
 # DataImportExtension Changelog
 
-[Release Changelog](https://github.com/spryker/data-import-Extension/releases)
+[Release Changelog](https://github.com/spryker/data-import-extension/releases)
