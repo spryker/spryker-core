@@ -37,7 +37,7 @@ class Operation implements OperationInterface
     protected $calculationFacade;
 
     /**
-     * @var \Spryker\Zed\Messenger\Business\MessengerFacade
+     * @var \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface
      */
     protected $messengerFacade;
 
@@ -79,7 +79,7 @@ class Operation implements OperationInterface
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[] $preCheckPlugins
      * @param \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[] $postSavePlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[] $terminationPlugins
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[] $cartRemovalPreCheckPlugins
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface[] $cartRemovalPreCheckPlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
