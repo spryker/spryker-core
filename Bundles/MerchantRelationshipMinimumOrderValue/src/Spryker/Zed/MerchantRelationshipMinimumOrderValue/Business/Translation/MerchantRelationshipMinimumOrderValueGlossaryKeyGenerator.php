@@ -24,7 +24,7 @@ class MerchantRelationshipMinimumOrderValueGlossaryKeyGenerator implements Merch
     ): MerchantRelationshipMinimumOrderValueTransfer {
         $this->assertRequired($merchantRelationshipMinimumOrderValueTransfer);
 
-        $merchantRelationshipMinimumOrderValueTransfer->getThreshold()->setThresholdNotMetMessageGlossaryKey(
+        $merchantRelationshipMinimumOrderValueTransfer->getThreshold()->setMessageGlossaryKey(
             $this->generateMessageGlossaryKey($merchantRelationshipMinimumOrderValueTransfer)
         );
 
@@ -52,7 +52,7 @@ class MerchantRelationshipMinimumOrderValueGlossaryKeyGenerator implements Merch
     }
 
     /**
-     * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
      * @return void
      */
