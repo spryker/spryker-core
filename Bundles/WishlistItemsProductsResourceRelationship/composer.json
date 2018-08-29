@@ -6,17 +6,16 @@
     "php": ">=7.1",
     "spryker/glue-application": "^1.0.0",
     "spryker/glue-application-extension": "^1.0.0",
+    "spryker/products-rest-api": "^1.1.0",
     "spryker/kernel": "^3.22.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/products-rest-api": "*",
     "spryker/testify": "*",
     "spryker/wishlists-rest-api": "*"
   },
   "suggest": {
-    "spryker/products-rest-api": "If you want to use ProductsRestApi module",
-    "spryker/wishlists-rest-api": "If you want to use WishlistsRestApi module"
+    "spryker/wishlists-rest-api": "If you want to expand wishlist items resource with concrete products relationship."
   },
   "autoload": {
     "psr-4": {

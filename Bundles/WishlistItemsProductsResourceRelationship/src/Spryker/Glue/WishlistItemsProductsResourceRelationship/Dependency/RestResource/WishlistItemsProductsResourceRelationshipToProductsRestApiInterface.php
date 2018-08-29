@@ -17,5 +17,5 @@ interface WishlistItemsProductsResourceRelationshipToProductsRestApiInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findOneByProductConcreteSku($concreteProductSku, $restRequest): ?RestResourceInterface;
+    public function findProductConcreteBySku($concreteProductSku, $restRequest): ?RestResourceInterface;
 }

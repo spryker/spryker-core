@@ -35,7 +35,7 @@ class WishlistItemsProductsResourceRelationshipExpander implements WishlistItems
     {
         foreach ($resources as $resource) {
             if (isset($resource->getAttributes()['sku'])) {
-                $concreteProduct = $this->productsResource->findOneByProductConcreteSku($resource->getAttributes()['sku'], $restRequest);
+                $concreteProduct = $this->productsResource->findProductConcreteBySku($resource->getAttributes()['sku'], $restRequest);
                 if ($concreteProduct !== null) {
                     $resource->addRelationship($concreteProduct);
                 }

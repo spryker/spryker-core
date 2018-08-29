@@ -30,8 +30,8 @@ class WishlistItemsProductsResourceRelationshipToProductsRestApiBridge implement
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findOneByProductConcreteSku($concreteProductSku, $restRequest): ?RestResourceInterface
+    public function findProductConcreteBySku($concreteProductSku, $restRequest): ?RestResourceInterface
     {
-        return $this->productsResource->findOneByProductConcreteSku($concreteProductSku, $restRequest);
+        return $this->productsResource->findProductConcreteBySku($concreteProductSku, $restRequest);
     }
 }
