@@ -61,10 +61,6 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
             ])
             ->filterByEmail_Like($queryPattern)
             ->_or()
-            ->filterByLastName_Like($queryPattern)
-            ->_or()
-            ->filterByFirstName_Like($queryPattern)
-            ->_or()
             ->where('lower(' . SpyCustomerTableMap::COL_LAST_NAME . ') like ?', $lowercasePattern)
             ->_or()
             ->where('lower(' . SpyCustomerTableMap::COL_FIRST_NAME . ') like ?', $lowercasePattern);
