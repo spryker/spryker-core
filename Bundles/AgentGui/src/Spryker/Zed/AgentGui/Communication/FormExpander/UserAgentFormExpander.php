@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class UserAgentFormExpander implements UserAgentFormExpanderInterface
 {
     protected const FIELD_IS_AGENT = 'is_agent';
-    protected const FIELD_IS_AGENT_LABEL = 'Yes, this user is an agent';
+    protected const FIELD_IS_AGENT_LABEL = 'This user is an agent';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
