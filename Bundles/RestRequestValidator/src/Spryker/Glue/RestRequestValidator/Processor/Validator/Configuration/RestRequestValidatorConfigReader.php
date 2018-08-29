@@ -7,34 +7,54 @@
 namespace Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration;
 
 use Spryker\Glue\RestRequestValidator\Business\Exception\CacheFileNotFound;
+use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
+use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface;
 use Spryker\Shared\RestRequestValidator\RestRequestValidatorConfig;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Yaml\Yaml;
-use function strtolower;
 
 class RestRequestValidatorConfigReader implements RestRequestValidatorConfigReaderInterface
 {
     /**
+     * @var \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface
+     */
+    protected $filesystem;
+
+    /**
+     * @var \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface
+     */
+    protected $yaml;
+
+    /**
+     * @param \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface $filesystem
+     * @param \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface $yaml
+     */
+    public function __construct(
+        RestRequestValidatorToFilesystemAdapterInterface $filesystem,
+        RestRequestValidatorToYamlAdapterInterface $yaml
+    ) {
+        $this->filesystem = $filesystem;
+        $this->yaml = $yaml;
+    }
+
+    /**
      * @param string $resourceType
-     * @param string $requetMethod
+     * @param string $requestMethod
      *
      * @throws \Spryker\Glue\RestRequestValidator\Business\Exception\CacheFileNotFound
      *
      * @return array
      */
-    public function getValidationConfiguration(string $resourceType, string $requetMethod): array
+    public function getValidationConfiguration(string $resourceType, string $requestMethod): array
     {
-        $filesystem = new Filesystem();
-        if (!$filesystem->exists(APPLICATION_SOURCE_DIR . RestRequestValidatorConfig::VALIDATION_CACHE_FILENAME_PATTERN)) {
+        if (!$this->filesystem->exists(APPLICATION_SOURCE_DIR . RestRequestValidatorConfig::VALIDATION_CACHE_FILENAME_PATTERN)) {
             throw new CacheFileNotFound('Validation cache is enabled, but there is no cache file.');
         }
 
-        $configuration = Yaml::parseFile(APPLICATION_SOURCE_DIR . RestRequestValidatorConfig::VALIDATION_CACHE_FILENAME_PATTERN);
+        $configuration = $this->yaml->parseFile(APPLICATION_SOURCE_DIR . RestRequestValidatorConfig::VALIDATION_CACHE_FILENAME_PATTERN);
 
-        if (empty($configuration[$resourceType])) {
+        if (empty($configuration[$resourceType][strtolower($requestMethod)])) {
             return [];
         }
 
-        return $configuration[$resourceType][strtolower($requetMethod)];
+        return $configuration[$resourceType][strtolower($requestMethod)];
     }
 }

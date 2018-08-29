@@ -11,4 +11,14 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 class RestRequestValidatorConfig extends AbstractBundleConfig
 {
     public const RESPONSE_CODE_REQUEST_INVALID = '901';
+
+    /**
+     * @return string[]
+     */
+    public function getAvailableConstraintNamespaces(): array
+    {
+        return [
+            '\\Symfony\\Component\\Validator\\Constraints\\',
+        ];
+    }
 }

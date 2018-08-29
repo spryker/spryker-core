@@ -10,9 +10,9 @@ interface RestRequestValidatorConfigReaderInterface
 {
     /**
      * @param string $resourceType
-     * @param string $requetMethod
+     * @param string $requestMethod
      *
      * @return array
      */
-    public function getValidationConfiguration(string $resourceType, string $requetMethod): array;
+    public function getValidationConfiguration(string $resourceType, string $requestMethod): array;
 }
