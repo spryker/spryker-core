@@ -139,7 +139,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     ): array {
         $minimumOrderValueTransfers = [];
         foreach ($merchantRelationshipMinimumOrderValueTransfers as $merchantRelationshipMinimumOrderValueTransfer) {
-            $minimumOrderValueTransfer = $merchantRelationshipMinimumOrderValueTransfer->getThreshold();
+            $minimumOrderValueTransfer = $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueThreshold();
             $minimumOrderValueTransfer->setValue(
                 $itemMerchantRelationshipSubTotals[$merchantRelationshipMinimumOrderValueTransfer->getMerchantRelationship()->getIdMerchantRelationship()]
             );
