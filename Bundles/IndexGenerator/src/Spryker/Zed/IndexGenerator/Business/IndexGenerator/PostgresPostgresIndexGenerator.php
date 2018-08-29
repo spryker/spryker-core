@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\IndexGenerator\Business\IndexGenerator;
 
+use ArrayObject;
 use DOMDocument;
 use Generated\Shared\Transfer\ForeignKeyFileTransfer;
+use Spryker\Zed\IndexGenerator\Business\Exception\IndexGeneratorException;
 use Spryker\Zed\IndexGenerator\Business\ForeignKeysProvider\ForeignKeysProviderInterface;
 use Spryker\Zed\IndexGenerator\IndexGeneratorConfig;
 use Symfony\Component\Finder\Finder;
@@ -94,13 +96,14 @@ class PostgresPostgresIndexGenerator implements PostgresIndexGeneratorInterface
     {
         $domDocument = $this->createDomDocument($foreignKeyFileTransfer);
 
-        foreach ($foreignKeyFileTransfer->getForeignKeyTables() as $foreignKeyTable) {
+        foreach ($this->getForeignKeyTableTransferCollection($foreignKeyFileTransfer) as $foreignKeyTableTransfer) {
             $tableElement = $domDocument->createElement('table');
-            $tableElement->setAttribute('name', $foreignKeyTable->getTableName());
+            $foreignTableName = (string)$foreignKeyTableTransfer->getTableName();
+            $tableElement->setAttribute('name', $foreignTableName);
             $domDocument->documentElement->appendChild($tableElement);
 
-            foreach ($foreignKeyTable->getColumns() as $column) {
-                $indexName = $this->getIndexName($foreignKeyTable->getTableName(), $column);
+            foreach ($foreignKeyTableTransfer->getColumns() as $column) {
+                $indexName = $this->getIndexName($foreignTableName, $column);
 
                 $indexElement = $domDocument->createElement('index');
                 $tableElement->appendChild($indexElement);
@@ -113,9 +116,26 @@ class PostgresPostgresIndexGenerator implements PostgresIndexGeneratorInterface
             }
         }
 
-        if (!$this->isDocumentEmpty($domDocument)) {
+        if (!$this->isDocumentEmpty($domDocument) && $foreignKeyFileTransfer->getFilename() !== null) {
             $this->saveDocument($domDocument, $foreignKeyFileTransfer->getFilename());
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ForeignKeyFileTransfer $foreignKeyFileTransfer
+     *
+     * @throws \Spryker\Zed\IndexGenerator\Business\Exception\IndexGeneratorException
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ForeignKeyTableTransfer[]
+     */
+    protected function getForeignKeyTableTransferCollection(ForeignKeyFileTransfer $foreignKeyFileTransfer): ArrayObject
+    {
+        $foreignKeyTableTransferCollection = $foreignKeyFileTransfer->getForeignKeyTables();
+        if ($foreignKeyTableTransferCollection === null) {
+            throw new IndexGeneratorException('No foreign key table found!');
+        }
+
+        return $foreignKeyTableTransferCollection;
     }
 
     /**
