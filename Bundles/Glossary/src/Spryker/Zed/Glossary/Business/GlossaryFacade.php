@@ -282,13 +282,13 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      *
      * @param array $idKeys
      *
-     * @return bool
+     * @return void
      */
     public function deleteTranslationsByFkKeys(array $idKeys)
     {
         $translationManager = $this->getFactory()->createTranslationManager();
 
-        return $translationManager->deleteTranslationsByFkKeys($idKeys);
+        $translationManager->deleteTranslationsByFkKeys($idKeys);
     }
 
     /**
