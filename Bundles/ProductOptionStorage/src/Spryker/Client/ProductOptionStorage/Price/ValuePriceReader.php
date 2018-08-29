@@ -16,22 +16,22 @@ use Spryker\Shared\ProductOption\ProductOptionConstants;
 class ValuePriceReader implements ValuePriceReaderInterface
 {
     /**
-     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceClientInterface
-     */
-    protected $priceClient;
-
-    /**
-     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyClientInterface
+     * @var \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToCurrencyClientInterface
      */
     protected $currencyClient;
 
     /**
-     * @var string
+     * @var \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPriceClientInterface
+     */
+    protected $priceClient;
+
+    /**
+     * @var string|null
      */
     protected static $currentCurrencyCodeBuffer;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected static $currentPriceModeBuffer;
 

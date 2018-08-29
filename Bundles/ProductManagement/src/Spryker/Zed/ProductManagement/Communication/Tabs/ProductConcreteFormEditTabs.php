@@ -24,8 +24,6 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
     protected $productConcreteFormEditTabsExpanderPlugins;
 
     /**
-     * ProductConcreteFormEditTabs constructor.
-     *
      * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface[] $productConcreteFormEditTabsExpanderPlugins
      */
     public function __construct(array $productConcreteFormEditTabsExpanderPlugins = [])

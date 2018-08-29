@@ -35,6 +35,9 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryNodeById($idNode);
 
     /**
+     * Specification:
+     * - Finds all category-node entities sorted by node order
+     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery

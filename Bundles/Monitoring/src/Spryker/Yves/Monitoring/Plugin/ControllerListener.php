@@ -68,7 +68,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
         $this->monitoringService->addCustomParameter('request_uri', $requestUri);
         $this->monitoringService->addCustomParameter('host', $host);
 
-        if ($this->ignoreTransaction($transactionName)) {
+        if ($this->isTransactionIgnorable($transactionName)) {
             $this->monitoringService->markIgnoreTransaction();
         }
     }
@@ -78,10 +78,10 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
      *
      * @return bool
      */
-    protected function ignoreTransaction(string $transaction): bool
+    protected function isTransactionIgnorable(string $transaction): bool
     {
         foreach ($this->ignorableTransactions as $ignorableTransaction) {
-            if (strpos($transaction, $ignorableTransaction) !== false) {
+            if (strpos($transaction, $ignorableTransaction) === 0) {
                 return true;
             }
         }
