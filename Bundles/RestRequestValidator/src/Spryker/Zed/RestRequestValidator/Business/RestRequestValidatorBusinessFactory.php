@@ -18,7 +18,10 @@ use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorMerger;
 use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorMergerInterface;
 use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaver;
 use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaverInterface;
-use Symfony\Component\Filesystem\Filesystem;
+use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
+use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface;
+use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface;
+use Spryker\Zed\RestRequestValidator\RestRequestValidatorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig getConfig()
@@ -42,7 +45,11 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
      */
     public function createValidatorCollector(): RestRequestValidatorCollectorInterface
     {
-        return new RestRequestValidatorCollector($this->createSchemaFinder());
+        return new RestRequestValidatorCollector(
+            $this->createSchemaFinder(),
+            $this->getFilesystem(),
+            $this->getYaml()
+        );
     }
 
     /**
@@ -59,7 +66,8 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     public function createValidatorSaver(): RestRequestValidatorSaverInterface
     {
         return new RestRequestValidatorSaver(
-            $this->createFilesystem(),
+            $this->getFilesystem(),
+            $this->getYaml(),
             $this->getConfig()->getValidationSchemaCacheFile()
         );
     }
@@ -70,16 +78,33 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     public function createSchemaFinder(): RestRequestValidatorSchemaFinderInterface
     {
         return new RestRequestValidatorSchemaFinder(
+            $this->getFinder(),
             $this->getConfig()->getValidationSchemaPathPattern(),
             $this->getConfig()->getValidationSchemaFileNamePattern()
         );
     }
 
     /**
-     * @return \Symfony\Component\Filesystem\Filesystem
+     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
      */
-    public function createFilesystem(): Filesystem
+    public function getFinder(): RestRequestValidatorToFinderAdapterInterface
     {
-        return new Filesystem();
+        return $this->getProvidedDependency(RestRequestValidatorDependencyProvider::FINDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface
+     */
+    public function getFilesystem(): RestRequestValidatorToFilesystemAdapterInterface
+    {
+        return $this->getProvidedDependency(RestRequestValidatorDependencyProvider::FILESYSTEM);
+    }
+
+    /**
+     * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface
+     */
+    public function getYaml(): RestRequestValidatorToYamlAdapterInterface
+    {
+        return $this->getProvidedDependency(RestRequestValidatorDependencyProvider::YAML);
     }
 }

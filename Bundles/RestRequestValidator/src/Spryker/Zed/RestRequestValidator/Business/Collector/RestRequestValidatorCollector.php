@@ -9,7 +9,8 @@ namespace Spryker\Zed\RestRequestValidator\Business\Collector;
 
 use Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinderInterface;
 use Spryker\Zed\RestRequestValidator\Business\Exception\SchemaFileNotFound;
-use Symfony\Component\Yaml\Yaml;
+use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
+use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface;
 
 class RestRequestValidatorCollector implements RestRequestValidatorCollectorInterface
 {
@@ -19,11 +20,28 @@ class RestRequestValidatorCollector implements RestRequestValidatorCollectorInte
     protected $validationSchemaFinder;
 
     /**
-     * @param \Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinderInterface $validationSchemaFinder
+     * @var \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface
      */
-    public function __construct(RestRequestValidatorSchemaFinderInterface $validationSchemaFinder)
-    {
+    protected $yaml;
+
+    /**
+     * @var \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface
+     */
+    protected $filesystem;
+
+    /**
+     * @param \Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinderInterface $validationSchemaFinder
+     * @param \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface $filesystem
+     * @param \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface $yaml
+     */
+    public function __construct(
+        RestRequestValidatorSchemaFinderInterface $validationSchemaFinder,
+        RestRequestValidatorToFilesystemAdapterInterface $filesystem,
+        RestRequestValidatorToYamlAdapterInterface $yaml
+    ) {
         $this->validationSchemaFinder = $validationSchemaFinder;
+        $this->filesystem = $filesystem;
+        $this->yaml = $yaml;
     }
 
     /**
@@ -36,10 +54,10 @@ class RestRequestValidatorCollector implements RestRequestValidatorCollectorInte
         $resultingConfig = [];
 
         foreach ($this->validationSchemaFinder->findSchemas() as $moduleValidationSchema) {
-            if (!file_exists($moduleValidationSchema->getPathname())) {
+            if (!$this->filesystem->exists($moduleValidationSchema->getPathname())) {
                 throw new SchemaFileNotFound('Schema-File does not exist: ' . $moduleValidationSchema);
             }
-            $parsedConfiguration = Yaml::parseFile($moduleValidationSchema->getPathname());
+            $parsedConfiguration = $this->yaml->parseFile($moduleValidationSchema->getPathname());
             foreach ($parsedConfiguration as $resourceName => $resourceValidatorConfiguration) {
                 $resultingConfig[$resourceName][] = $resourceValidatorConfiguration;
             }
