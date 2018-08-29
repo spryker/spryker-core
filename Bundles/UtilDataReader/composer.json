@@ -9,6 +9,11 @@
     "spryker/sql-criteria-builder": "^1.0.0",
     "spryker/symfony": "^3.0.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -28,10 +33,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*"
   }
 }

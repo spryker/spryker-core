@@ -10,6 +10,12 @@
     "spryker/product-discontinued-extension": "^1.0.0",
     "spryker/propel-orm": "^1.1.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/product": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -29,11 +35,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/product": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*"
   }
 }
