@@ -10,11 +10,11 @@ namespace Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Subscriber;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ShoppingList\Dependency\ShoppingListEvents;
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListCompanyBusinessUnitStorageListener;
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListCompanyUserStorageListener;
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListItemStorageListener;
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListStorageListener;
-use Spryker\Zed\ShoppingListStorage\Dependency\ShoppingListEvents;
 
 /**
  * @method \Spryker\Zed\ShoppingListStorage\Business\ShoppingListStorageFacade getFacade()
@@ -34,6 +34,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
         $this->addShoppingListCreateListener($eventCollection);
+        $this->addShoppingListDeleteListener($eventCollection);
         $this->addShoppingListItemCreateListener($eventCollection);
         $this->addShoppingListItemDeleteListener($eventCollection);
         $this->addShoppingListCompanyUserCreateListener($eventCollection);
@@ -53,6 +54,19 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_CREATE,
+            new ShoppingListStorageListener()
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addShoppingListDeleteListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(
+            ShoppingListEvents::CUSTOM_SHOPPING_LIST_DELETE,
             new ShoppingListStorageListener()
         );
     }

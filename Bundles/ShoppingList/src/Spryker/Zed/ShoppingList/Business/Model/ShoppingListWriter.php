@@ -7,13 +7,17 @@
 
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
+use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
+use Spryker\Zed\ShoppingList\Dependency\ShoppingListEvents;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 use Spryker\Zed\ShoppingList\ShoppingListConfig;
@@ -55,24 +59,32 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     protected $messengerFacade;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface
+     */
+    protected $eventFacade;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\ShoppingListConfig $shoppingListConfig
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface $messengerFacade
+     * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface $eventFacade
      */
     public function __construct(
         ShoppingListEntityManagerInterface $shoppingListEntityManager,
         ShoppingListToProductFacadeInterface $productFacade,
         ShoppingListRepositoryInterface $shoppingListRepository,
         ShoppingListConfig $shoppingListConfig,
-        ShoppingListToMessengerFacadeInterface $messengerFacade
+        ShoppingListToMessengerFacadeInterface $messengerFacade,
+        ShoppingListToEventFacadeInterface $eventFacade
     ) {
         $this->shoppingListEntityManager = $shoppingListEntityManager;
         $this->productFacade = $productFacade;
         $this->shoppingListRepository = $shoppingListRepository;
         $this->shoppingListConfig = $shoppingListConfig;
         $this->messengerFacade = $messengerFacade;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -205,6 +217,15 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         $this->shoppingListEntityManager->deleteShoppingListCompanyUsers($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnits($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListByName($shoppingListTransfer);
+
+        $eventTransfer = (new EventEntityTransfer())
+            ->setName('custom_shopping_list')
+            ->setId($shoppingListTransfer->getIdShoppingList())
+            ->setEvent(ShoppingListEvents::CUSTOM_SHOPPING_LIST_DELETE)
+            ->setModifiedColumns([
+                SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE => $shoppingListTransfer->getCustomerReference(),
+            ]);
+        $this->eventFacade->trigger(ShoppingListEvents::CUSTOM_SHOPPING_LIST_DELETE, $eventTransfer);
 
         return (new ShoppingListResponseTransfer())->setIsSuccess(true);
     }

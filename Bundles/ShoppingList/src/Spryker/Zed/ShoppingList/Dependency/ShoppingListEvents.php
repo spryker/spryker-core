@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShoppingListStorage\Dependency;
+namespace Spryker\Zed\ShoppingList\Dependency;
 
 interface ShoppingListEvents
 {
@@ -32,6 +32,14 @@ interface ShoppingListEvents
      * @api
      */
     public const ENTITY_SPY_SHOPPING_LIST_DELETE = 'Entity.spy_shopping_list.delete';
+
+    /**
+     * Specification:
+     * - This event will be used for Custom triggered shopping_list delete.
+     *
+     * @api
+     */
+    public const CUSTOM_SHOPPING_LIST_DELETE = 'Custom.shopping_list.delete';
 
     /**
      * Specification:
