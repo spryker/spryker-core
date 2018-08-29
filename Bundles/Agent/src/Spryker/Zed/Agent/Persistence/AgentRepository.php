@@ -49,10 +49,11 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
     {
         $queryPattern = $query . '%';
 
-        $lowercasePattern = mb_strtolower($queryPattern);
+//        $lowercasePattern = mb_strtolower($queryPattern);
 
         $customersQuery = $this->getFactory()
             ->getCustomerQuery()
+            ->setIgnoreCase(true)
             ->select([
                 SpyCustomerTableMap::COL_ID_CUSTOMER,
                 SpyCustomerTableMap::COL_FIRST_NAME,
@@ -61,9 +62,9 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
             ])
             ->filterByEmail_Like($queryPattern)
             ->_or()
-            ->where('lower(' . SpyCustomerTableMap::COL_LAST_NAME . ') like ?', $lowercasePattern)
+            ->filterByLastName_Like($queryPattern)
             ->_or()
-            ->where('lower(' . SpyCustomerTableMap::COL_FIRST_NAME . ') like ?', $lowercasePattern);
+            ->filterByFirstName_Like($queryPattern);
 
         if ($limit !== null) {
             $customersQuery->limit($limit);
