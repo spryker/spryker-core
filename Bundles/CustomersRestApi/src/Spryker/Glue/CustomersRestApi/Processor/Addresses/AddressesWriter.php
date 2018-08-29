@@ -59,7 +59,7 @@ class AddressesWriter implements AddressesWriterInterface
      */
     public function createAddress(RestRequestInterface $restRequest, RestAddressAttributesTransfer $addressAttributesTransfer): RestResponseInterface
     {
-        $response = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
 
@@ -67,9 +67,9 @@ class AddressesWriter implements AddressesWriterInterface
         $customerTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
         if (!$customerTransfer) {
-            $response->addError($this->createErrorCustomerNotFound());
+            $restResponse->addError($this->createErrorCustomerNotFound());
 
-            return $response;
+            return $restResponse;
         }
 
         $addressTransfer = $this->addressesResourceMapper->mapRestAddressAttributesTransferToAddressTransfer($addressAttributesTransfer);
@@ -78,9 +78,9 @@ class AddressesWriter implements AddressesWriterInterface
         $addressTransfer = $this->customerClient->createAddress($addressTransfer);
 
         if (!$addressTransfer->getUuid()) {
-            $response->addError($this->createErrorAddressNotSaved());
+            $restResponse->addError($this->createErrorAddressNotSaved());
 
-            return $response;
+            return $restResponse;
         }
 
         $restResource = $this
@@ -90,9 +90,9 @@ class AddressesWriter implements AddressesWriterInterface
                 $customerReference
             );
 
-        $response->addResource($restResource);
+        $restResponse->addResource($restResource);
 
-        return $response;
+        return $restResponse;
     }
 
     /**
@@ -103,17 +103,13 @@ class AddressesWriter implements AddressesWriterInterface
      */
     public function updateAddress(RestRequestInterface $restRequest, RestAddressAttributesTransfer $addressAttributesTransfer): RestResponseInterface
     {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
         $addressTransfer = (new AddressTransfer())->setUuid($restRequest->getResource()->getId());
         $address = $this->customerClient->findAddressByUuid($addressTransfer);
 
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
         if (!$address) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_ADDRESS_NOT_FOUND);
-            $restResponse->addError($restErrorTransfer);
+            $restResponse->addError($this->createErrorAddressNotFound());
 
             return $restResponse;
         }
