@@ -7,8 +7,8 @@
 
 namespace Spryker\Yves\Kernel\Widget;
 
-use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
-use Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException;
+use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
+use Spryker\Yves\Kernel\Exception\InvalidWidgetException;
 
 class WidgetFactory implements WidgetFactoryInterface
 {
@@ -21,9 +21,9 @@ class WidgetFactory implements WidgetFactoryInterface
      * @param string $widgetClassName
      * @param array $arguments
      *
-     * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface
+     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface
      */
-    public function build(string $widgetClassName, array $arguments = [])
+    public function build(string $widgetClassName, array $arguments): WidgetInterface
     {
         $cacheKey = $this->generateCacheKey($widgetClassName, $arguments);
         $widget = $this->getCachedWidget($cacheKey);
@@ -31,11 +31,9 @@ class WidgetFactory implements WidgetFactoryInterface
             return $widget;
         }
 
-        $this->assertClassIsWidgetPlugin($widgetClassName);
-        $this->assertInitializeExists($widgetClassName);
+        $this->assertClassIsWidget($widgetClassName);
 
-        $widget = new $widgetClassName();
-        call_user_func_array([$widget, 'initialize'], $arguments);
+        $widget = new $widgetClassName(...$arguments);
 
         $this->cacheWidget($cacheKey, $widget);
 
@@ -45,34 +43,17 @@ class WidgetFactory implements WidgetFactoryInterface
     /**
      * @param string $widgetClassName
      *
-     * @throws \Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException
+     * @throws \Spryker\Yves\Kernel\Exception\InvalidWidgetException
      *
      * @return void
      */
-    protected function assertClassIsWidgetPlugin(string $widgetClassName)
+    protected function assertClassIsWidget(string $widgetClassName)
     {
-        if (!is_subclass_of($widgetClassName, WidgetPluginInterface::class)) {
-            throw new InvalidWidgetPluginException(sprintf(
-                'Invalid widget plugin %s. This class needs to implement %s.',
+        if (!is_subclass_of($widgetClassName, WidgetInterface::class)) {
+            throw new InvalidWidgetException(sprintf(
+                'Invalid widget %s. This class needs to implement %s.',
                 $widgetClassName,
-                WidgetPluginInterface::class
-            ));
-        }
-    }
-
-    /**
-     * @param string $widgetClassName
-     *
-     * @throws \Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException
-     *
-     * @return void
-     */
-    protected function assertInitializeExists(string $widgetClassName)
-    {
-        if (!method_exists($widgetClassName, 'initialize')) {
-            throw new InvalidWidgetPluginException(sprintf(
-                'Widget %s needs to define and implement custom initialize() method with its custom widget input parameters.',
-                $widgetClassName
+                WidgetInterface::class
             ));
         }
     }
@@ -91,20 +72,20 @@ class WidgetFactory implements WidgetFactoryInterface
     /**
      * @param string $cacheKey
      *
-     * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface|null
+     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|null
      */
-    protected function getCachedWidget(string $cacheKey)
+    protected function getCachedWidget(string $cacheKey): ?WidgetInterface
     {
         return static::$widgetCache[$cacheKey] ?? null;
     }
 
     /**
      * @param string $cacheKey
-     * @param \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface $widget
+     * @param \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface $widget
      *
      * @return void
      */
-    protected function cacheWidget(string $cacheKey, WidgetPluginInterface $widget)
+    protected function cacheWidget(string $cacheKey, WidgetInterface $widget)
     {
         static::$widgetCache[$cacheKey] = $widget;
     }

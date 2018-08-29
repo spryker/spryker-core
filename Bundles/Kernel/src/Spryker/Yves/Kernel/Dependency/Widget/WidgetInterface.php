@@ -5,14 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Kernel\Dependency\Plugin;
+namespace Spryker\Yves\Kernel\Dependency\Widget;
 
+use ArrayAccess;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 
-/**
- * @deprecated Use \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface instead.
- */
-interface WidgetPluginInterface extends WidgetContainerInterface
+interface WidgetInterface extends WidgetContainerInterface, ArrayAccess
 {
     /**
      * Specification:
@@ -22,7 +20,7 @@ interface WidgetPluginInterface extends WidgetContainerInterface
      *
      * @return string
      */
-    public static function getName();
+    public static function getName(): string;
 
     /**
      * Specification:
@@ -32,5 +30,15 @@ interface WidgetPluginInterface extends WidgetContainerInterface
      *
      * @return string
      */
-    public static function getTemplate();
+    public static function getTemplate(): string;
+
+    /**
+     * Specification:
+     * - Returns the data of the widget.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getParameters(): array;
 }

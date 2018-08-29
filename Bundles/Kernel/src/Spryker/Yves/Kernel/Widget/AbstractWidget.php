@@ -7,18 +7,20 @@
 
 namespace Spryker\Yves\Kernel\Widget;
 
-use ArrayAccess;
-use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
+use Spryker\Yves\Kernel\BundleConfigResolverAwareTrait;
+use Spryker\Yves\Kernel\ClientResolverAwareTrait;
+use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
 use Spryker\Yves\Kernel\Exception\MissingWidgetPluginException;
 use Spryker\Yves\Kernel\Exception\ReadOnlyException;
+use Spryker\Yves\Kernel\FactoryResolverAwareTrait;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 
-/**
- * @deprecated Use \Spryker\Yves\Kernel\Widget\AbstractWidget instead.
- */
-abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPluginInterface, ArrayAccess
+abstract class AbstractWidget implements WidgetInterface
 {
     use WidgetContainerAwareTrait;
+    use FactoryResolverAwareTrait;
+    use ClientResolverAwareTrait;
+    use BundleConfigResolverAwareTrait;
 
     /**
      * @var array
@@ -60,11 +62,19 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
      *
      * @return $this
      */
-    protected function addParameter(string $name, $value)
+    protected function addParameter(string $name, $value): self
     {
         $this->parameters[$name] = $value;
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParameters(): array
+    {
+        return $this->parameters;
     }
 
     /**
@@ -110,5 +120,21 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
     public function offsetUnset($offset)
     {
         throw new ReadOnlyException('This is a read only object.');
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Communication\Application
+     */
+    protected function getApplication()
+    {
+        return (new Pimple())->getApplication();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLocale()
+    {
+        return $this->getApplication()['locale'];
     }
 }
