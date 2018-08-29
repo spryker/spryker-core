@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business\TaxRateReader;
 
+use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToTaxFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Persistence\MinimumOrderValueRepositoryInterface;
 
 class TaxRateReader implements TaxRateReaderInterface
 {
-    protected const DEFAULT_TAX_RATE_ISO2CODE = 'DE';
-
     /**
      * @var \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToTaxFacadeInterface
      */
@@ -39,8 +38,8 @@ class TaxRateReader implements TaxRateReaderInterface
      */
     public function getMinimumOrderValueTaxRate(): float
     {
-        $countryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code() ?? static::DEFAULT_TAX_RATE_ISO2CODE;
-        $taxRate = $this->repository->findMaxTaxRateByIdTaxSetAndCountryIso2Code($countryIso2Code);
+        $countryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code() ?? MinimumOrderValueConfig::DEFAULT_TAX_RATE_ISO2CODE;
+        $taxRate = $this->repository->findMaxTaxRateByCountryIso2Code($countryIso2Code);
         if ($taxRate !== null) {
             return $taxRate;
         }

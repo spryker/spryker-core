@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\MinimumOrderValue\Persistence\Map\SpyMinimumOrderValueTaxSetTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException;
 
@@ -22,12 +23,7 @@ use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueT
  */
 class MinimumOrderValueRepository extends AbstractRepository implements MinimumOrderValueRepositoryInterface
 {
-    public const COL_MAX_TAX_RATE = 'MaxTaxRate';
-
-    /**
-     * @see \Spryker\Shared\Tax\TaxConstants::TAX_EXEMPT_PLACEHOLDER
-     */
-    protected const TAX_EXEMPT_PLACEHOLDER = 'Tax Exempt';
+    protected const COL_MAX_TAX_RATE = 'MaxTaxRate';
 
     /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
@@ -113,7 +109,7 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
      *
      * @return float|null
      */
-    public function findMaxTaxRateByIdTaxSetAndCountryIso2Code(string $countryIso2Code): ?float
+    public function findMaxTaxRateByCountryIso2Code(string $countryIso2Code): ?float
     {
         return $this->getFactory()->createMinimumOrderValueTaxSetPropelQuery()
             ->useTaxSetQuery()
@@ -123,7 +119,7 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
             ->filterByIso2Code($countryIso2Code)
             ->endUse()
             ->_or()
-            ->filterByName(static::TAX_EXEMPT_PLACEHOLDER)
+            ->filterByName(MinimumOrderValueConfig::TAX_EXEMPT_PLACEHOLDER)
             ->endUse()
             ->endUse()
             ->groupBy(SpyTaxSetTableMap::COL_NAME)

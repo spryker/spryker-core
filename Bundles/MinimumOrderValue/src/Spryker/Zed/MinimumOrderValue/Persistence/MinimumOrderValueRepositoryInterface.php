@@ -45,5 +45,5 @@ interface MinimumOrderValueRepositoryInterface
      *
      * @return float|null
      */
-    public function findMaxTaxRateByIdTaxSetAndCountryIso2Code(string $countryIso2Code): ?float;
+    public function findMaxTaxRateByCountryIso2Code(string $countryIso2Code): ?float;
 }
