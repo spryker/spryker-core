@@ -96,7 +96,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     {
         $results = [];
         foreach ($productConcreteSkus as $idResource) {
-            $productResource = $this->findOneByProductConcreteSku($idResource, $restRequest);
+            $productResource = $this->findOneByProductConcrete($idResource, $restRequest);
             if (!$productResource) {
                 continue;
             }
@@ -107,15 +107,15 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     }
 
     /**
-     * @param string $productConcreteSku
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findOneByProductConcreteSku(string $productConcreteSku, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findOneByProductConcrete(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         $concreteProductData = $this->productResourceAliasStorageClient->findProductConcreteStorageDataBySku(
-            $productConcreteSku,
+            $sku,
             $restRequest->getMetadata()->getLocale()
         );
 

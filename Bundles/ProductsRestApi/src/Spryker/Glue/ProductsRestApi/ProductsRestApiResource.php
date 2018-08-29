@@ -17,19 +17,16 @@ use Spryker\Glue\Kernel\AbstractRestResource;
 class ProductsRestApiResource extends AbstractRestResource implements ProductsRestApiResourceInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $concreteProductSku
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findOneByProductConcreteSku(string $concreteProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findProductConcreteBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        return $this->getFactory()
+        return $this
+            ->getFactory()
             ->createConcreteProductsReader()
-            ->findOneByProductConcreteSku($concreteProductSku, $restRequest);
+            ->findOneByProductConcrete($sku, $restRequest);
     }
 }

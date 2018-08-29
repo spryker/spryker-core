@@ -13,15 +13,10 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface ProductsRestApiResourceInterface
 {
     /**
-     * Specification:
-     *  - Retrieve concrete product by concrete product sku
-     *
-     * @api
-     *
-     * @param string $concreteProductSku
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findOneByProductConcreteSku(string $concreteProductSku, RestRequestInterface $restRequest): ?RestResourceInterface;
+    public function findProductConcreteBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface;
 }

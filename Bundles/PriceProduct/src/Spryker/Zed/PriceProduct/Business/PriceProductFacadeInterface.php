@@ -61,6 +61,22 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
+     *  - Searches for persisted price in database by given price filter transfer.
+     *  - If currency not set it will use default store currency.
+     *  - If store not set it will use default store.
+     *  - If product price type is not set it will use default.
+     *  - returns a PriceProductTransfer or null.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    public function findPriceProductFor(PriceProductFilterTransfer $priceFilterTransfer): ?PriceProductTransfer;
+
+    /**
+     * Specification:
      * - Creates a new price type entity and persists it in database.
      * - Returns the ID of the persisted type.
      *

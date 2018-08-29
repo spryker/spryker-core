@@ -29,10 +29,10 @@ interface ConcreteProductsReaderInterface
     public function findProductConcretesByProductConcreteSkus(array $productIds, RestRequestInterface $restRequest): array;
 
     /**
-     * @param string $productConcreteSku
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findOneByProductConcreteSku(string $productConcreteSku, RestRequestInterface $restRequest): ?RestResourceInterface;
+    public function findOneByProductConcrete(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface;
 }
