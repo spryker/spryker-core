@@ -25,7 +25,7 @@ class PasswordController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse
      */
     public function resetRequestAction(Request $request)
     {
@@ -48,7 +48,7 @@ class PasswordController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function resetAction(Request $request)
     {
