@@ -5,28 +5,49 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\Strategy;
+namespace Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy;
 
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
+use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
 
-class SoftThresholdWithFixedFeeStrategy extends AbstractMinimumOrderValueStrategy implements MinimumOrderValueStrategyInterface
+class SoftThresholdWithFixedFeeStrategyPlugin extends AbstractMinimumOrderValueStrategyPlugin
 {
-    protected const STRATEGY_KEY = 'soft-threshold-fixed-fee';
-
-    public function __construct()
+    /**
+     * {inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getKey(): string
     {
-        $this->setKey(static::STRATEGY_KEY);
-        $this->setGroup(static::GROUP_SOFT);
+        return MinimumOrderValueConfig::THRESHOLD_STRATEGY_KEY_SOFT_FIXED_FEE;
     }
 
     /**
+     * {inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getGroup(): string
+    {
+        return MinimumOrderValueConfig::GROUP_SOFT;
+    }
+
+    /**
+     * {inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *
      * @return bool
      */
     public function isValid(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): bool
     {
-        if ($minimumOrderValueThresholdTransfer->getValue() < 1 || $minimumOrderValueThresholdTransfer->getFee() < 1) {
+        if ($minimumOrderValueThresholdTransfer->getThreshold() < 1 || $minimumOrderValueThresholdTransfer->getFee() < 1) {
             return false;
         }
 
@@ -34,6 +55,10 @@ class SoftThresholdWithFixedFeeStrategy extends AbstractMinimumOrderValueStrateg
     }
 
     /**
+     * {inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *
      * @return int|null

@@ -32,4 +32,16 @@ interface MinimumOrderValueGuiToMinimumOrderValueFacadeInterface
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array;
+
+    /**
+     * @return int|null
+     */
+    public function findMinimumOrderValueTaxSetId(): ?int;
+
+    /**
+     * @param int $idTaxSet
+     *
+     * @return void
+     */
+    public function saveMinimumOrderValueTaxSet(int $idTaxSet): void;
 }

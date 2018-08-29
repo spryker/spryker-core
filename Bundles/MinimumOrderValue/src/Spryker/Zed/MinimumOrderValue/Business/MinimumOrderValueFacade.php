@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
@@ -101,23 +102,6 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function cartMinimumOrderValuePostSave(
-        QuoteTransfer $quoteTransfer
-    ): QuoteTransfer {
-        return $this->getFactory()
-            ->createThresholdApplier()
-            ->applyOnQuote($quoteTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return bool
@@ -127,8 +111,8 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool {
         return $this->getFactory()
-            ->createThresholdApplier()
-            ->applicableForCheckout($quoteTransfer, $checkoutResponseTransfer);
+            ->createHardThresholdChecker()
+            ->checkQuoteForHardThreshold($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
@@ -149,5 +133,79 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
             ->createMinimumOrderValueStrategyResolver()
             ->resolveMinimumOrderValueStrategy($minimumOrderValueThresholdTransfer->getMinimumOrderValueType()->getKey())
             ->isValid($minimumOrderValueThresholdTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addMinimumOrderValueMessages(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createThresholdMessenger()
+            ->addMinimumOrderValueMessages($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function removeMinimumOrderValueExpenses(CalculableObjectTransfer $calculableObjectTransfer): void
+    {
+        $this->getFactory()
+            ->createExpenseRemover()
+            ->removeMinimumOrderValueExpenses($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function addMinimumOrderValueExpenses(CalculableObjectTransfer $calculableObjectTransfer): void
+    {
+        $this->getFactory()
+            ->createExpenseCalculator()
+            ->addMinimumOrderValueExpenses($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function findMinimumOrderValueTaxSetId(): ?int
+    {
+        return $this->getRepository()->findMinimumOrderValueTaxSetId();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idTaxSet
+     *
+     * @return void
+     */
+    public function saveMinimumOrderValueTaxSet(int $idTaxSet): void
+    {
+        $this->getEntityManager()->saveMinimumOrderValueTaxSet($idTaxSet);
     }
 }

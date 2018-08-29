@@ -51,13 +51,13 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
 
         if ($merchantRelationshipMinimumOrderValueEntity->getMessageGlossaryKey() === null) {
             $merchantRelationshipMinimumOrderValueEntity->setMessageGlossaryKey(
-                $merchantRelationshipMinimumOrderValueTransfer->getThreshold()->getMessageGlossaryKey()
+                $merchantRelationshipMinimumOrderValueTransfer->getThreshold()->getThresholdNotMetMessageGlossaryKey()
             );
         }
 
         $merchantRelationshipMinimumOrderValueEntity
-            ->setValue($minimumOrderValueTransfer->getValue())
-            ->setFee($minimumOrderValueTransfer->getFee())
+            ->setValue($minimumOrderValueTransfer->getThreshold())
+            ->setFee($minimumOrderValueTransfer->getFeeIfThresholdNotMet())
             ->setFkMerchantRelationship(
                 $merchantRelationshipTransfer->getIdMerchantRelationship()
             )->setFkMinOrderValueType(
@@ -90,8 +90,8 @@ class MerchantRelationshipMinimumOrderValueEntityManager extends AbstractEntityM
 
         $merchantRelationshipMinimumOrderValueTransfer->getThreshold()
             ->requireMinimumOrderValueType()
-            ->requireMessageGlossaryKey()
-            ->requireValue();
+            ->requireThresholdNotMetMessageGlossaryKey()
+            ->requireThreshold();
 
         $merchantRelationshipMinimumOrderValueTransfer->getStore()
             ->requireIdStore();

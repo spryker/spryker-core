@@ -49,4 +49,22 @@ class MinimumOrderValueGuiToMinimumOrderValueFacadeBridge implements MinimumOrde
     ): array {
         return $this->minimumOrderValueFacade->findMinimumOrderValues($storeTransfer, $currencyTransfer);
     }
+
+    /**
+     * @return int|null
+     */
+    public function findMinimumOrderValueTaxSetId(): ?int
+    {
+        return $this->minimumOrderValueFacade->findMinimumOrderValueTaxSetId();
+    }
+
+    /**
+     * @param int $idTaxSet
+     *
+     * @return void
+     */
+    public function saveMinimumOrderValueTaxSet(int $idTaxSet): void
+    {
+        $this->minimumOrderValueFacade->saveMinimumOrderValueTaxSet($idTaxSet);
+    }
 }

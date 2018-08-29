@@ -15,4 +15,9 @@
     <transfer name="PriceProductDimension">
         <property name="idMerchantRelationship" type="int" />
     </transfer>
+
+    <transfer name="Quote">
+        <property name="store" type="Store" />
+        <property name="currency" type="Currency" />
+    </transfer>
 </transfers>

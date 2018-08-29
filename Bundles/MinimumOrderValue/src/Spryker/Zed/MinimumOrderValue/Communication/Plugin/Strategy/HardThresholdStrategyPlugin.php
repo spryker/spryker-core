@@ -5,35 +5,56 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\Strategy;
+namespace Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy;
 
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
+use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
 
-class SoftThresholdWithMessageStrategy extends AbstractMinimumOrderValueStrategy implements MinimumOrderValueStrategyInterface
+class HardThresholdStrategyPlugin extends AbstractMinimumOrderValueStrategyPlugin
 {
-    protected const STRATEGY_KEY = 'soft-threshold';
-
-    public function __construct()
+    /**
+     * {inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getKey(): string
     {
-        $this->setKey(static::STRATEGY_KEY);
-        $this->setGroup(static::GROUP_SOFT);
+        return MinimumOrderValueConfig::THRESHOLD_STRATEGY_KEY_HARD;
     }
 
     /**
+     * {inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getGroup(): string
+    {
+        return MinimumOrderValueConfig::GROUP_HARD;
+    }
+
+    /**
+     * {inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *
      * @return bool
      */
     public function isValid(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): bool
     {
-        if ($minimumOrderValueThresholdTransfer->getValue() < 1 || $minimumOrderValueThresholdTransfer->getFee()) {
-            return false;
-        }
-
-        return true;
+        return !(($minimumOrderValueThresholdTransfer->getThreshold() < 1 || $minimumOrderValueThresholdTransfer->getFee()));
     }
 
     /**
+     * {inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *
      * @return int|null
