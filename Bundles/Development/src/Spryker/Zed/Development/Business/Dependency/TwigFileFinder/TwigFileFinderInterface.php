@@ -14,7 +14,7 @@ interface TwigFileFinderInterface
     /**
      * @param string $module
      *
-     * @return \Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
      */
     public function findTwigFiles(string $module): Finder;
 

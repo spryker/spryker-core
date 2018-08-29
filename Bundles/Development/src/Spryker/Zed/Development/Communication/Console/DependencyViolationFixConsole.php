@@ -196,11 +196,11 @@ class DependencyViolationFixConsole extends AbstractDependencyViolationConsole
      */
     protected function fixDependencyViolationsInRequire(ValidationMessageTransfer $validationMessageTransfer, array $composerJsonArray, string $moduleNameToFix): array
     {
-        if (ValidationRuleInterface::ADD_REQUIRE === $validationMessageTransfer->getFixType()) {
+        if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::ADD_REQUIRE) {
             $composerJsonArray['require'][$moduleNameToFix] = '*';
             $this->writeIfVerbose(sprintf('<fg=green>%s</> added to require', $moduleNameToFix));
         }
-        if (ValidationRuleInterface::REMOVE_REQUIRE === $validationMessageTransfer->getFixType()) {
+        if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::REMOVE_REQUIRE) {
             unset($composerJsonArray['require'][$moduleNameToFix]);
             $this->writeIfVerbose(sprintf('<fg=green>%s</> removed from require', $moduleNameToFix));
         }
@@ -217,11 +217,11 @@ class DependencyViolationFixConsole extends AbstractDependencyViolationConsole
      */
     protected function fixDependencyViolationsInRequireDev(ValidationMessageTransfer $validationMessageTransfer, array $composerJsonArray, string $moduleNameToFix): array
     {
-        if (ValidationRuleInterface::ADD_REQUIRE_DEV === $validationMessageTransfer->getFixType()) {
+        if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::ADD_REQUIRE_DEV) {
             $composerJsonArray['require-dev'][$moduleNameToFix] = '*';
             $this->writeIfVerbose(sprintf('<fg=green>%s</> added to require-dev', $moduleNameToFix));
         }
-        if (ValidationRuleInterface::REMOVE_REQUIRE_DEV === $validationMessageTransfer->getFixType()) {
+        if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::REMOVE_REQUIRE_DEV) {
             unset($composerJsonArray['require-dev'][$moduleNameToFix]);
             $this->writeIfVerbose(sprintf('<fg=green>%s</> removed from require-dev', $moduleNameToFix));
         }
@@ -238,11 +238,11 @@ class DependencyViolationFixConsole extends AbstractDependencyViolationConsole
      */
     protected function fixDependencyViolationsInSuggest(ValidationMessageTransfer $validationMessageTransfer, array $composerJsonArray, string $moduleNameToFix): array
     {
-        if (ValidationRuleInterface::ADD_SUGGEST === $validationMessageTransfer->getFixType()) {
+        if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::ADD_SUGGEST) {
             $composerJsonArray['suggest'][$moduleNameToFix] = 'ADD SUGGEST DESCRIPTION';
             $this->writeIfVerbose(sprintf('<fg=green>%s</> added to suggests', $moduleNameToFix));
         }
-        if (ValidationRuleInterface::REMOVE_SUGGEST === $validationMessageTransfer->getFixType()) {
+        if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::REMOVE_SUGGEST) {
             unset($composerJsonArray['suggest'][$moduleNameToFix]);
             $this->writeIfVerbose(sprintf('<fg=green>%s</> removed from suggests', $moduleNameToFix));
         }

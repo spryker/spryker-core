@@ -28,7 +28,7 @@ class TwigFileFinder implements TwigFileFinderInterface
     /**
      * @param string $module
      *
-     * @return \Symfony\Component\Finder\Finder
+     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
      */
     public function findTwigFiles(string $module): Finder
     {
