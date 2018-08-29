@@ -49,8 +49,6 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
     {
         $queryPattern = $query . '%';
 
-//        $lowercasePattern = mb_strtolower($queryPattern);
-
         $customersQuery = $this->getFactory()
             ->getCustomerQuery()
             ->setIgnoreCase(true)
