@@ -34,8 +34,8 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
 
     /**
      * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
-     * @param \Spryker\Zed\MinimumOrderValue\Business\TaxRateReader\TaxRateReaderInterface $taxRateReader
      * @param \Spryker\Zed\MinimumOrderValue\Business\DataSource\MinimumOrderValueDataSourceStrategyResolverInterface $minimumOrderValueDataSourceStrategyResolver
+     * @param \Spryker\Zed\MinimumOrderValue\Business\TaxRateReader\TaxRateReaderInterface $taxRateReader
      */
     public function __construct(
         MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver,
