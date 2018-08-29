@@ -22,11 +22,24 @@ class CategoriesRestApiDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = $this->addCategoryStorageClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCategoryStorageClient(Container $container): Container
+    {
         $container[static::CLIENT_CATEGORY_STORAGE] = function (Container $container) {
             return new CategoriesRestApiToCategoryStorageClientBridge(
                 $container->getLocator()->categoryStorage()->client()
             );
         };
+
         return $container;
     }
 }
