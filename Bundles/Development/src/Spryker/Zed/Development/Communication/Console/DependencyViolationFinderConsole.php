@@ -25,6 +25,8 @@ class DependencyViolationFinderConsole extends AbstractDependencyViolationConsol
     const COMMAND_NAME = 'dev:dependency:find';
     const OPTION_DEPENDENCY_TYPE = 'dependency-type';
     const OPTION_DEPENDENCY_TYPE_SHORT = 'd';
+    const OPTION_STOP_ON_VIOLATION = 'stop-on-violation';
+    const OPTION_STOP_ON_VIOLATION_SHORT = 's';
 
     /**
      * @var int
@@ -41,6 +43,7 @@ class DependencyViolationFinderConsole extends AbstractDependencyViolationConsol
         $this
             ->setName(static::COMMAND_NAME)
             ->addOption(static::OPTION_DEPENDENCY_TYPE, static::OPTION_DEPENDENCY_TYPE_SHORT, InputOption::VALUE_REQUIRED, 'Runs only one specific dependency type check.')
+            ->addOption(static::OPTION_STOP_ON_VIOLATION, static::OPTION_STOP_ON_VIOLATION_SHORT, InputOption::VALUE_NONE, 'Stop execution when a violation was found.')
             ->setDescription('Find dependency violations in the modules.');
 
         $this->setAliases(['dev:dependency:find-violations']);
@@ -99,6 +102,10 @@ class DependencyViolationFinderConsole extends AbstractDependencyViolationConsol
         $moduleViolationCount = $this->getDependencyViolationCount($moduleDependencyTransferCollection, $dependencyType);
         if ($moduleViolationCount > 0) {
             $this->printDependencyViolationErrors($this->buildModuleKey($moduleTransfer), $moduleDependencyTransferCollection, $output, $dependencyType);
+            if ($this->input->getOption(static::OPTION_STOP_ON_VIOLATION)) {
+                $this->output->writeln(sprintf('Found <fg=red>%s</> errors, stop execution now as requested.', $moduleViolationCount));
+                exit(static::CODE_ERROR);
+            }
         }
 
         $this->dependencyViolationCount += $moduleViolationCount;
