@@ -5,24 +5,34 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\Strategy;
+namespace Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy;
 
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueStrategyPluginInterface;
 
-abstract class AbstractMinimumOrderValueStrategy implements MinimumOrderValueStrategyInterface
+abstract class AbstractMinimumOrderValueStrategyPlugin extends AbstractPlugin implements MinimumOrderValueStrategyPluginInterface
 {
     /**
+     * {inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *
      * @return bool
      */
     public function isApplicable(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): bool
     {
-        return $minimumOrderValueThresholdTransfer->getSubTotal() < $minimumOrderValueThresholdTransfer->getValue();
+        return $minimumOrderValueThresholdTransfer->getValue() < $minimumOrderValueThresholdTransfer->getThreshold();
     }
 
     /**
+     * {inheritdoc}
+     *
+     * @api
+
      * @return \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer
      */
     public function toTransfer(): MinimumOrderValueTypeTransfer

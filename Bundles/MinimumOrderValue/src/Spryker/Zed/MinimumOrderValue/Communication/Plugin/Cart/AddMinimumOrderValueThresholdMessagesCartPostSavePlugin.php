@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueFacadeInterface getFacade()
  */
-class MinimumOrderValueCartPostSavePlugin extends AbstractPlugin implements PostSavePluginInterface
+class AddMinimumOrderValueThresholdMessagesCartPostSavePlugin extends AbstractPlugin implements PostSavePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -25,8 +25,8 @@ class MinimumOrderValueCartPostSavePlugin extends AbstractPlugin implements Post
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function postSave(QuoteTransfer $quoteTransfer)
+    public function postSave(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFacade()->cartMinimumOrderValuePostSave($quoteTransfer);
+        return $this->getFacade()->addMinimumOrderValueMessages($quoteTransfer);
     }
 }

@@ -9,7 +9,7 @@ namespace Spryker\Zed\MinimumOrderValue\Business\DataSource;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface ThresholdDataSourceStrategyInterface
+interface MinimumOrderValueDataSourceStrategyResolverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

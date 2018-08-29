@@ -5,51 +5,62 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\Strategy;
+namespace Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy;
 
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
+use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
 
-class SoftThresholdWithFlexibleFeeStrategy extends AbstractMinimumOrderValueStrategy
+class SoftThresholdWithMessageStrategyPlugin extends AbstractMinimumOrderValueStrategyPlugin
 {
-    protected const STRATEGY_KEY = 'soft-threshold-flexible-fee';
-
     /**
+     * {inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getKey(): string
     {
-        return static::STRATEGY_KEY;
+        return MinimumOrderValueConfig::THRESHOLD_STRATEGY_KEY_SOFT;
     }
 
     /**
+     * {inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getGroup(): string
     {
-        return static::GROUP_SOFT;
+        return MinimumOrderValueConfig::GROUP_SOFT;
     }
 
     /**
+     * {inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *
      * @return bool
      */
     public function isValid(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): bool
     {
-        if ($minimumOrderValueThresholdTransfer->getValue() < 1 || $minimumOrderValueThresholdTransfer->getFee() < 1) {
-            return false;
-        }
-
-        return true;
+        return !($minimumOrderValueThresholdTransfer->getThreshold() < 1 || $minimumOrderValueThresholdTransfer->getFee());
     }
 
     /**
+     * {inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
      *
      * @return int|null
      */
     public function calculateFee(MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer): ?int
     {
-        return (int)floor(($minimumOrderValueThresholdTransfer->getFee() / 100) * $minimumOrderValueThresholdTransfer->getSubTotal());
+        return null;
     }
 }

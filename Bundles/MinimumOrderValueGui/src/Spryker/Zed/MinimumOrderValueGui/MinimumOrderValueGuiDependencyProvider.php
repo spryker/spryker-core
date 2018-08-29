@@ -14,6 +14,7 @@ use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToLoc
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMinimumOrderValueFacadeBridge;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMoneyFacadeBridge;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToStoreFacadeBridge;
+use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToTaxFacadeBridge;
 
 class MinimumOrderValueGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -22,6 +23,7 @@ class MinimumOrderValueGuiDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_MINIMUM_ORDER_VALUE = 'FACADE_MINIMUM_ORDER_VALUE';
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_TAX = 'FACADE_TAX';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,6 +39,7 @@ class MinimumOrderValueGuiDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addMinimumOrderValueFacade($container);
         $container = $this->addMoneyFacade($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addTaxFacade($container);
 
         return $container;
     }
@@ -106,6 +109,20 @@ class MinimumOrderValueGuiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new MinimumOrderValueGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTaxFacade(Container $container): Container
+    {
+        $container[static::FACADE_TAX] = function (Container $container) {
+            return new MinimumOrderValueGuiToTaxFacadeBridge($container->getLocator()->tax()->facade());
         };
 
         return $container;

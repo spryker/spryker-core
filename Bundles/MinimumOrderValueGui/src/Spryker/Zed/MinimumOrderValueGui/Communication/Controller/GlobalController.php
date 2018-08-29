@@ -118,6 +118,6 @@ class GlobalController extends AbstractController
     protected function createMinimumOrderValueTransfer(): MinimumOrderValueTransfer
     {
         return (new MinimumOrderValueTransfer())
-            ->setThreshold(new MinimumOrderValueThresholdTransfer());
+            ->setMinimumOrderValueThreshold(new MinimumOrderValueThresholdTransfer());
     }
 }

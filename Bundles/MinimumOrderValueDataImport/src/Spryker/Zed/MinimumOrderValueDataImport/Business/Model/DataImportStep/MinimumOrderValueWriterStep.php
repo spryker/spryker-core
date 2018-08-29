@@ -110,9 +110,9 @@ class MinimumOrderValueWriterStep implements DataImportStepInterface
         return (new MinimumOrderValueTransfer())
             ->setStore($storeTransfer)
             ->setCurrency($currencyTransfer)
-            ->setThreshold(
+            ->setMinimumOrderValueThreshold(
                 (new MinimumOrderValueThresholdTransfer())
-                    ->setValue($thresholdValue)
+                    ->setThreshold($thresholdValue)
                     ->setFee($fee)
                     ->setMinimumOrderValueType(
                         (new MinimumOrderValueTypeTransfer())
