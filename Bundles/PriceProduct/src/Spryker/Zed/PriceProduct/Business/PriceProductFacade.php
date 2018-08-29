@@ -58,29 +58,13 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
-     * @return int|null
+     * @return int
      */
     public function findPriceFor(PriceProductFilterTransfer $priceFilterTransfer)
     {
         return $this->getFactory()
             ->createReaderModel()
             ->findPriceFor($priceFilterTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    public function findPriceProductFor(PriceProductFilterTransfer $priceFilterTransfer): ?PriceProductTransfer
-    {
-        return $this->getFactory()
-            ->createReaderModel()
-            ->findPriceProductFor($priceFilterTransfer);
     }
 
     /**
