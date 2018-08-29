@@ -23,12 +23,12 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
     const RESULT_FIELD_PRODUCT_ORDER = 'product_order';
 
     /**
-     * @var array
+     * @var array|null
      */
     protected static $categoryTree;
 
     /**
-     * @var string
+     * @var array|null
      */
     protected static $categoryName;
 

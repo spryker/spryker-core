@@ -22,7 +22,7 @@ class ProductOptionStorageClient extends AbstractClient implements ProductOption
      * @param int $idAbstractProduct
      * @param int $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
      */
     public function getProductOptions($idAbstractProduct, $localeName)
     {

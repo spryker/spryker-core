@@ -9,6 +9,9 @@ namespace Spryker\Zed\User\Business\Model;
 
 use Generated\Shared\Transfer\UserTransfer;
 
+/**
+ * @method \Generated\Shared\Transfer\UserTransfer removeUser($idUser)
+ */
 interface UserInterface
 {
     /**
