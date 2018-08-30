@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy;
 
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\LocalizedForm;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\ThresholdType;
 
@@ -15,15 +15,15 @@ class HardThresholdDataProvider implements ThresholdStrategyDataProviderInterfac
 {
     /**
      * @param array $data
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTValueTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
      * @return array
      */
-    public function getData(array $data, MinimumOrderValueTransfer $minimumOrderValueTValueTransfer): array
+    public function getData(array $data, MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): array
     {
-        $data[ThresholdType::FIELD_HARD_VALUE] = $minimumOrderValueTValueTransfer->getThreshold()->getValue();
+        $data[ThresholdType::FIELD_HARD_THRESHOLD] = $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueThreshold()->getThreshold();
 
-        foreach ($minimumOrderValueTValueTransfer->getLocalizedMessages() as $localizedMessage) {
+        foreach ($merchantRelationshipMinimumOrderValueTransfer->getLocalizedMessages() as $localizedMessage) {
             $localizedFormName = ThresholdType::getLocalizedFormName(ThresholdType::PREFIX_HARD, $localizedMessage->getLocaleCode());
             $data[$localizedFormName][LocalizedForm::FIELD_MESSAGE] = $localizedMessage->getMessage();
         }

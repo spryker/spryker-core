@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueTranslationReaderInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValue\Persistence\MerchantRelationshipMinimumOrderValueRepositoryInterface;
 
@@ -52,13 +54,38 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
         $cartMerchantRelationshipIds = $this->getCartMerchantRelationshipIds($customerMerchantRelationships, $itemMerchantRelationshipSubTotals);
 
         $merchantRelationshipMinimumOrderValueTransfers = $this->merchantRelationshipMinimumOrderValueRepository
-            ->findThresholdsForMerchantRelationshipIds(
+            ->getThresholdsForMerchantRelationshipIds(
                 $quoteTransfer->getStore(),
                 $quoteTransfer->getCurrency(),
                 $cartMerchantRelationshipIds
             );
 
         return $this->getMinimumOrderValueTransfers($merchantRelationshipMinimumOrderValueTransfers, $itemMerchantRelationshipSubTotals);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     * @param int[] $merchantRelationshipIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[]
+     */
+    public function getThresholdsForMerchantRelationshipIds(
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer,
+        array $merchantRelationshipIds
+    ): array {
+        $merchantRelationshipMinimumOrderValueTransfers = $this->merchantRelationshipMinimumOrderValueRepository->getThresholdsForMerchantRelationshipIds(
+            $storeTransfer,
+            $currencyTransfer,
+            $merchantRelationshipIds
+        );
+
+        foreach ($merchantRelationshipMinimumOrderValueTransfers as $merchantRelationshipMinimumOrderValueTransfer) {
+            $this->translationReader->hydrateLocalizedMessages($merchantRelationshipMinimumOrderValueTransfer);
+        }
+
+        return $merchantRelationshipMinimumOrderValueTransfers;
     }
 
     /**

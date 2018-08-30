@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\Mapper;
 
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Spryker\Shared\MerchantRelationshipMinimumOrderValueGui\MerchantRelationshipMinimumOrderValueGuiConfig;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\ThresholdType;
@@ -16,27 +16,27 @@ class SoftThresholdFlexibleFeeFormMapper extends AbstractThresholdFormMapper imp
 {
     /**
      * @param array $data
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTValueTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
-    public function map(array $data, MinimumOrderValueTransfer $minimumOrderValueTValueTransfer): MinimumOrderValueTransfer
+    public function map(array $data, MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): MerchantRelationshipMinimumOrderValueTransfer
     {
-        $minimumOrderValueTValueTransfer = $this->setStoreAndCurrencyToMinimumOrderValueTransfer($data, $minimumOrderValueTValueTransfer);
-        $minimumOrderValueTValueTransfer = $this->setLocalizedMessagesToMinimumOrderValueTransfer(
+        $merchantRelationshipMinimumOrderValueTransfer = $this->setStoreAndCurrencyToMinimumOrderValueTransfer($data, $merchantRelationshipMinimumOrderValueTransfer);
+        $merchantRelationshipMinimumOrderValueTransfer = $this->setLocalizedMessagesToMinimumOrderValueTransfer(
             $data,
-            $minimumOrderValueTValueTransfer,
+            $merchantRelationshipMinimumOrderValueTransfer,
             ThresholdType::PREFIX_SOFT
         );
 
-        $minimumOrderValueTValueTransfer->getThreshold()->setValue($data[ThresholdType::FIELD_SOFT_VALUE]);
-        $minimumOrderValueTValueTransfer->getThreshold()->setFee($data[ThresholdType::FIELD_SOFT_FLEXIBLE_FEE]);
+        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueThreshold()->setThreshold($data[ThresholdType::FIELD_SOFT_THRESHOLD]);
+        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueThreshold()->setFee($data[ThresholdType::FIELD_SOFT_FLEXIBLE_FEE]);
 
         $minimumOrderValueTypeTransfer = (new MinimumOrderValueTypeTransfer())
             ->setKey(MerchantRelationshipMinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE)
             ->setThresholdGroup(MerchantRelationshipMinimumOrderValueGuiConfig::GROUP_SOFT);
-        $minimumOrderValueTValueTransfer->getThreshold()->setMinimumOrderValueType($minimumOrderValueTypeTransfer);
+        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueThreshold()->setMinimumOrderValueType($minimumOrderValueTypeTransfer);
 
-        return $minimumOrderValueTValueTransfer;
+        return $merchantRelationshipMinimumOrderValueTransfer;
     }
 }

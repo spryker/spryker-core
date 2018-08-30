@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy;
 
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 
 interface ThresholdStrategyDataProviderInterface
 {
     /**
      * @param array $data
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTValueTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
      * @return array
      */
-    public function getData(array $data, MinimumOrderValueTransfer $minimumOrderValueTValueTransfer): array;
+    public function getData(array $data, MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): array;
 }

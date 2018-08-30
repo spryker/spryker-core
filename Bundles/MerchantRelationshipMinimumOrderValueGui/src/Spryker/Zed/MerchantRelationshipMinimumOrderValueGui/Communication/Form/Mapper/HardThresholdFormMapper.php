@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\Mapper;
 
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Spryker\Shared\MerchantRelationshipMinimumOrderValueGui\MerchantRelationshipMinimumOrderValueGuiConfig;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\ThresholdType;
@@ -16,25 +16,25 @@ class HardThresholdFormMapper extends AbstractThresholdFormMapper implements Thr
 {
     /**
      * @param array $data
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTValueTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
-    public function map(array $data, MinimumOrderValueTransfer $minimumOrderValueTValueTransfer): MinimumOrderValueTransfer
+    public function map(array $data, MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): MerchantRelationshipMinimumOrderValueTransfer
     {
-        $minimumOrderValueTValueTransfer = $this->setStoreAndCurrencyToMinimumOrderValueTransfer($data, $minimumOrderValueTValueTransfer);
-        $minimumOrderValueTValueTransfer = $this->setLocalizedMessagesToMinimumOrderValueTransfer(
+        $merchantRelationshipMinimumOrderValueTransfer = $this->setStoreAndCurrencyToMinimumOrderValueTransfer($data, $merchantRelationshipMinimumOrderValueTransfer);
+        $merchantRelationshipMinimumOrderValueTransfer = $this->setLocalizedMessagesToMinimumOrderValueTransfer(
             $data,
-            $minimumOrderValueTValueTransfer,
+            $merchantRelationshipMinimumOrderValueTransfer,
             ThresholdType::PREFIX_HARD
         );
 
-        $minimumOrderValueTValueTransfer->getThreshold()->setValue($data[ThresholdType::FIELD_HARD_VALUE]);
+        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueThreshold()->setThreshold($data[ThresholdType::FIELD_HARD_THRESHOLD]);
         $minimumOrderValueTypeTransfer = (new MinimumOrderValueTypeTransfer())
             ->setKey(MerchantRelationshipMinimumOrderValueGuiConfig::HARD_TYPE_STRATEGY)
             ->setThresholdGroup(MerchantRelationshipMinimumOrderValueGuiConfig::GROUP_HARD);
-        $minimumOrderValueTValueTransfer->getThreshold()->setMinimumOrderValueType($minimumOrderValueTypeTransfer);
+        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueThreshold()->setMinimumOrderValueType($minimumOrderValueTypeTransfer);
 
-        return $minimumOrderValueTValueTransfer;
+        return $merchantRelationshipMinimumOrderValueTransfer;
     }
 }

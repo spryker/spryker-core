@@ -26,7 +26,7 @@ use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\StoreCurr
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Table\MerchantRelationshipMinimumOrderValueTable;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToCurrencyFacadeInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToLocaleFacadeInterface;
-use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToMinimumOrderValueFacadeInterface;
+use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToMerchantRelationshipMinimumOrderValueFacadeInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToMoneyFacadeInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToStoreFacadeInterface;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\MerchantRelationshipMinimumOrderValueGuiDependencyProvider;
@@ -49,7 +49,7 @@ class MerchantRelationshipMinimumOrderValueGuiCommunicationFactory extends Abstr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer[] $minimumOrderValueTransfers
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[] $minimumOrderValueTransfers
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
@@ -167,14 +167,6 @@ class MerchantRelationshipMinimumOrderValueGuiCommunicationFactory extends Abstr
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToMinimumOrderValueFacadeInterface
-     */
-    public function getMinimumOrderValueFacade(): MerchantRelationshipMinimumOrderValueGuiToMinimumOrderValueFacadeInterface
-    {
-        return $this->getProvidedDependency(MerchantRelationshipMinimumOrderValueGuiDependencyProvider::FACADE_MINIMUM_ORDER_VALUE);
-    }
-
-    /**
      * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToMoneyFacadeInterface
      */
     public function getMoneyFacade(): MerchantRelationshipMinimumOrderValueGuiToMoneyFacadeInterface
@@ -188,5 +180,13 @@ class MerchantRelationshipMinimumOrderValueGuiCommunicationFactory extends Abstr
     public function getLocaleFacade(): MerchantRelationshipMinimumOrderValueGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(MerchantRelationshipMinimumOrderValueGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToMerchantRelationshipMinimumOrderValueFacadeInterface
+     */
+    public function getMerchantRelationshipMinimumOrderValueFacade(): MerchantRelationshipMinimumOrderValueGuiToMerchantRelationshipMinimumOrderValueFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantRelationshipMinimumOrderValueGuiDependencyProvider::FACADE_MERCHANT_RELATIONSHIP_MINIMUM_ORDER_VALUE);
     }
 }

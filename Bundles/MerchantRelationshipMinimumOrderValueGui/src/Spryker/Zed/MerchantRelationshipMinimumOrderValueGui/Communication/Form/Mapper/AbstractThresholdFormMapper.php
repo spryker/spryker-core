@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\Mapper;
 
+use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueLocalizedMessageTransfer;
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\LocalizedForm;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\ThresholdType;
@@ -40,35 +40,35 @@ abstract class AbstractThresholdFormMapper
 
     /**
      * @param array $data
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTValueTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
     protected function setStoreAndCurrencyToMinimumOrderValueTransfer(
         array $data,
-        MinimumOrderValueTransfer $minimumOrderValueTValueTransfer
-    ): MinimumOrderValueTransfer {
+        MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
+    ): MerchantRelationshipMinimumOrderValueTransfer {
         $storeTransfer = $this->storeCurrencyFinder->getStoreTransferFromRequest($data[ThresholdType::FIELD_STORE_CURRENCY]);
         $currencyTransfer = $this->storeCurrencyFinder->getCurrencyTransferFromRequest($data[ThresholdType::FIELD_STORE_CURRENCY]);
 
-        $minimumOrderValueTValueTransfer->setStore($storeTransfer);
-        $minimumOrderValueTValueTransfer->setCurrency($currencyTransfer);
+        $merchantRelationshipMinimumOrderValueTransfer->setStore($storeTransfer);
+        $merchantRelationshipMinimumOrderValueTransfer->setCurrency($currencyTransfer);
 
-        return $minimumOrderValueTValueTransfer;
+        return $merchantRelationshipMinimumOrderValueTransfer;
     }
 
     /**
      * @param array $data
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTValueTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      * @param string $localizedFormPrefix
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
     protected function setLocalizedMessagesToMinimumOrderValueTransfer(
         array $data,
-        MinimumOrderValueTransfer $minimumOrderValueTValueTransfer,
+        MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer,
         string $localizedFormPrefix
-    ): MinimumOrderValueTransfer {
+    ): MerchantRelationshipMinimumOrderValueTransfer {
         $localeCollection = $this->localeProvider->getLocaleCollection();
         foreach ($localeCollection as $localeTransfer) {
             $localizedFieldName = ThresholdType::getLocalizedFormName($localizedFormPrefix, $localeTransfer->getLocaleName());
@@ -76,9 +76,9 @@ abstract class AbstractThresholdFormMapper
                 ->setLocaleCode($localeTransfer->getLocaleName())
                 ->setMessage($data[$localizedFieldName][LocalizedForm::FIELD_MESSAGE]);
 
-            $minimumOrderValueTValueTransfer->addLocalizedMessage($localizedMessage);
+            $merchantRelationshipMinimumOrderValueTransfer->addLocalizedMessage($localizedMessage);
         }
 
-        return $minimumOrderValueTValueTransfer;
+        return $merchantRelationshipMinimumOrderValueTransfer;
     }
 }

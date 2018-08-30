@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToCurrencyFacadeBridge;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToLocaleFacadeBridge;
-use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToMinimumOrderValueFacadeBridge;
+use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToMerchantRelationshipMinimumOrderValueFacadeBridge;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToMoneyFacadeBridge;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToStoreFacadeBridge;
 
@@ -21,7 +21,7 @@ class MerchantRelationshipMinimumOrderValueGuiDependencyProvider extends Abstrac
 {
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const FACADE_STORE = 'FACADE_STORE';
-    public const FACADE_MINIMUM_ORDER_VALUE = 'FACADE_MINIMUM_ORDER_VALUE';
+    public const FACADE_MERCHANT_RELATIONSHIP_MINIMUM_ORDER_VALUE = 'FACADE_MERCHANT_RELATIONSHIP_MINIMUM_ORDER_VALUE';
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const PROPEL_QUERY_MERCHANT_RELATIONSHIP = 'PROPEL_QUERY_MERCHANT_RELATIONSHIP';
@@ -38,9 +38,9 @@ class MerchantRelationshipMinimumOrderValueGuiDependencyProvider extends Abstrac
 
         $container = $this->addCurrencyFacade($container);
         $container = $this->addStoreFacade($container);
-        $container = $this->addMinimumOrderValueFacade($container);
         $container = $this->addMoneyFacade($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addMerchantRelationshipMinimumOrderValueFacade($container);
         $container = $this->addMerchantRelationshipPropelQuery($container);
         $container = $this->addMerchantRelationshipMinimumOrderValuePropelQuery($container);
 
@@ -80,20 +80,6 @@ class MerchantRelationshipMinimumOrderValueGuiDependencyProvider extends Abstrac
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMinimumOrderValueFacade(Container $container): Container
-    {
-        $container[static::FACADE_MINIMUM_ORDER_VALUE] = function (Container $container) {
-            return new MerchantRelationshipMinimumOrderValueGuiToMinimumOrderValueFacadeBridge($container->getLocator()->minimumOrderValue()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addMoneyFacade(Container $container): Container
     {
         $container[static::FACADE_MONEY] = function (Container $container) {
@@ -112,6 +98,22 @@ class MerchantRelationshipMinimumOrderValueGuiDependencyProvider extends Abstrac
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new MerchantRelationshipMinimumOrderValueGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantRelationshipMinimumOrderValueFacade(Container $container): Container
+    {
+        $container[static::FACADE_MERCHANT_RELATIONSHIP_MINIMUM_ORDER_VALUE] = function (Container $container) {
+            return new MerchantRelationshipMinimumOrderValueGuiToMerchantRelationshipMinimumOrderValueFacadeBridge(
+                $container->getLocator()->merchantRelationshipMinimumOrderValue()->facade()
+            );
         };
 
         return $container;

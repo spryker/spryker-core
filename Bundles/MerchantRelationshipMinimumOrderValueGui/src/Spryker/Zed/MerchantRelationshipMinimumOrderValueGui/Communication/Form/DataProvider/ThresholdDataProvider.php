@@ -54,7 +54,7 @@ class ThresholdDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer[] $minimumOrderValueTransfers
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[] $minimumOrderValueTransfers
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
@@ -66,19 +66,19 @@ class ThresholdDataProvider implements FormDataProviderInterface
         CurrencyTransfer $currencyTransfer
     ): array {
         $data = [];
-        foreach ($minimumOrderValueTransfers as $minimumOrderValueTValueTransfer) {
+        foreach ($minimumOrderValueTransfers as $minimumOrderValueTransfer) {
             $data[ThresholdType::FIELD_STORE_CURRENCY] = $this->formatStoreCurrencyRowValue(
-                $minimumOrderValueTValueTransfer->getStore(),
-                $minimumOrderValueTValueTransfer->getCurrency()
+                $minimumOrderValueTransfer->getStore(),
+                $minimumOrderValueTransfer->getCurrency()
             );
 
             if ($thresholdStrategyDataProvider = $this->minimumOrderValueGuiCommunicationFactory
                 ->createSoftThresholdDataProviderResolver()
-                ->hasThresholdDataProviderByStrategyKey($minimumOrderValueTValueTransfer->getThreshold()->getMinimumOrderValueType()->getKey())) {
+                ->hasThresholdDataProviderByStrategyKey($minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->getKey())) {
                 $data = $thresholdStrategyDataProvider = $this->minimumOrderValueGuiCommunicationFactory
                     ->createSoftThresholdDataProviderResolver()
-                    ->resolveThresholdDataProviderByStrategyKey($minimumOrderValueTValueTransfer->getThreshold()->getMinimumOrderValueType()->getKey())
-                    ->getData($data, $minimumOrderValueTValueTransfer);
+                    ->resolveThresholdDataProviderByStrategyKey($minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->getKey())
+                    ->getData($data, $minimumOrderValueTransfer);
             }
         }
 

@@ -5,20 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\MerchantRelationshipThreshold;
+namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
-interface MerchantRelationshipThresholdReaderInterface
+interface MerchantRelationshipMinimumOrderValueGuiToMerchantRelationshipMinimumOrderValueFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer[]
+     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
-    public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array;
+    public function saveMerchantRelationshipMinimumOrderValue(
+        MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
+    ): MerchantRelationshipMinimumOrderValueTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer

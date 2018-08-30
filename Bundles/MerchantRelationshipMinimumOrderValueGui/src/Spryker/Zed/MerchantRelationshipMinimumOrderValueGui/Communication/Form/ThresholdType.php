@@ -29,10 +29,10 @@ class ThresholdType extends AbstractType
     public const PREFIX_SOFT = 'soft';
 
     public const FIELD_STORE_CURRENCY = 'storeCurrency';
-    public const FIELD_HARD_VALUE = 'hardValue';
+    public const FIELD_HARD_THRESHOLD = 'hardThreshold';
 
     public const FIELD_SOFT_STRATEGY = 'softStrategy';
-    public const FIELD_SOFT_VALUE = 'softValue';
+    public const FIELD_SOFT_THRESHOLD = 'softThreshold';
     public const FIELD_SOFT_FIXED_FEE = 'softFixedFee';
     public const FIELD_SOFT_FLEXIBLE_FEE = 'softFlexibleFee';
 
@@ -136,7 +136,7 @@ class ThresholdType extends AbstractType
      */
     protected function addHardValueField(FormBuilderInterface $builder, array $options): self
     {
-        $builder->add(static::FIELD_HARD_VALUE, TextType::class, [
+        $builder->add(static::FIELD_HARD_THRESHOLD, TextType::class, [
             'label' => 'Enter minimum order value',
             'required' => false,
             'constraints' => [
@@ -173,7 +173,7 @@ class ThresholdType extends AbstractType
      */
     protected function addSoftValueField(FormBuilderInterface $builder, array $options): self
     {
-        $builder->add(static::FIELD_SOFT_VALUE, TextType::class, [
+        $builder->add(static::FIELD_SOFT_THRESHOLD, TextType::class, [
             'label' => 'Enter minimum order value',
             'required' => false,
             'constraints' => [
@@ -303,14 +303,14 @@ class ThresholdType extends AbstractType
         $data = $event->getData();
 
         if (is_array($data)) {
-            if (isset($data[static::FIELD_HARD_VALUE])) {
-                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_HARD_VALUE]);
-                $data[static::FIELD_HARD_VALUE] = $moneyFloat;
+            if (isset($data[static::FIELD_HARD_THRESHOLD])) {
+                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_HARD_THRESHOLD]);
+                $data[static::FIELD_HARD_THRESHOLD] = $moneyFloat;
             }
 
-            if (isset($data[static::FIELD_SOFT_VALUE])) {
-                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_SOFT_VALUE]);
-                $data[static::FIELD_SOFT_VALUE] = $moneyFloat;
+            if (isset($data[static::FIELD_SOFT_THRESHOLD])) {
+                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_SOFT_THRESHOLD]);
+                $data[static::FIELD_SOFT_THRESHOLD] = $moneyFloat;
             }
 
             if (isset($data[static::FIELD_SOFT_FLEXIBLE_FEE])) {
@@ -339,14 +339,14 @@ class ThresholdType extends AbstractType
         $data = $event->getData();
 
         if (is_array($data)) {
-            if (isset($data[static::FIELD_HARD_VALUE])) {
-                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_HARD_VALUE]);
-                $data[static::FIELD_HARD_VALUE] = $moneyInt;
+            if (isset($data[static::FIELD_HARD_THRESHOLD])) {
+                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_HARD_THRESHOLD]);
+                $data[static::FIELD_HARD_THRESHOLD] = $moneyInt;
             }
 
-            if (isset($data[static::FIELD_SOFT_VALUE])) {
-                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_SOFT_VALUE]);
-                $data[static::FIELD_SOFT_VALUE] = $moneyInt;
+            if (isset($data[static::FIELD_SOFT_THRESHOLD])) {
+                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_SOFT_THRESHOLD]);
+                $data[static::FIELD_SOFT_THRESHOLD] = $moneyInt;
             }
 
             if (isset($data[static::FIELD_SOFT_FLEXIBLE_FEE])) {

@@ -8,8 +8,9 @@
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Controller;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
-use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\ThresholdType;
@@ -31,12 +32,12 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $storeCurrencyRequestParam = $request->query->get(static::STORE_CURRENCY_REQUEST_PARAM);
-        $merchantRelationIdRequestParam = $request->query->getInt(static::REQUEST_ID_MERCHANT_RELATIONSHIP);
+        $idMerchantRelationship = $request->query->getInt(static::REQUEST_ID_MERCHANT_RELATIONSHIP);
 
         $currencyTransfer = $this->getCurrencyTransferFromRequest($storeCurrencyRequestParam);
         $storeTransfer = $this->getStoreTransferFromRequest($storeCurrencyRequestParam);
 
-        $minimumOrderValueTransfers = $this->getMinimumOrderValueTransfers($storeTransfer, $currencyTransfer);
+        $minimumOrderValueTransfers = $this->getMinimumOrderValueTransfers($storeTransfer, $currencyTransfer, $idMerchantRelationship);
 
         $thresholdForm = $this->getFactory()->createThresholdForm($minimumOrderValueTransfers, $storeTransfer, $currencyTransfer);
         $thresholdForm->handleRequest($request);
@@ -45,26 +46,30 @@ class EditController extends AbstractController
             $data = $thresholdForm->getData();
             $hardMinimumOrderValueTransfer = $this->getFactory()
                 ->createHardThresholdFormMapper()
-                ->map($data, $this->createMinimumOrderValueTransfer());
+                ->map($data, $this->createMerchantRelationshipMinimumOrderValueTransfer());
+            $hardMinimumOrderValueTransfer->getMerchantRelationship()
+                ->setIdMerchantRelationship($idMerchantRelationship);
 
             $this->getFactory()
-                ->getMinimumOrderValueFacade()
-                ->saveMinimumOrderValue($hardMinimumOrderValueTransfer);
+                ->getMerchantRelationshipMinimumOrderValueFacade()
+                ->saveMerchantRelationshipMinimumOrderValue($hardMinimumOrderValueTransfer);
 
             if ($this->getFactory()->createSoftThresholdFormMapperResolver()->hasThresholdMapperByStrategyKey(
                 $data[ThresholdType::FIELD_SOFT_STRATEGY]
             )) {
                 $softMinimumOrderValueTransfer = $this->getFactory()
                     ->createSoftThresholdFormMapperResolver()->resolveThresholdMapperByStrategyKey($data[ThresholdType::FIELD_SOFT_STRATEGY])
-                    ->map($data, $this->createMinimumOrderValueTransfer());
+                    ->map($data, $this->createMerchantRelationshipMinimumOrderValueTransfer());
+                $softMinimumOrderValueTransfer->getMerchantRelationship()
+                    ->setIdMerchantRelationship($idMerchantRelationship);
 
                 $this->getFactory()
-                    ->getMinimumOrderValueFacade()
-                    ->saveMinimumOrderValue($softMinimumOrderValueTransfer);
+                    ->getMerchantRelationshipMinimumOrderValueFacade()
+                    ->saveMerchantRelationshipMinimumOrderValue($softMinimumOrderValueTransfer);
             }
 
             $this->addSuccessMessage(sprintf(
-                'The Global Threshold is saved successfully.'
+                'The Merchant Relationship Threshold is saved successfully.'
             ));
         }
         $localeProvider = $this->getFactory()->createLocaleProvider();
@@ -78,16 +83,18 @@ class EditController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     * @param int $idMerchantRelationship
      *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[]
      */
-    protected function getMinimumOrderValueTransfers(StoreTransfer $storeTransfer, CurrencyTransfer $currencyTransfer): array
+    protected function getMinimumOrderValueTransfers(StoreTransfer $storeTransfer, CurrencyTransfer $currencyTransfer, int $idMerchantRelationship): array
     {
         return $this->getFactory()
-            ->getMinimumOrderValueFacade()
-            ->findMinimumOrderValues(
+            ->getMerchantRelationshipMinimumOrderValueFacade()
+            ->getThresholdsForMerchantRelationshipIds(
                 $storeTransfer,
-                $currencyTransfer
+                $currencyTransfer,
+                [$idMerchantRelationship]
             );
     }
 
@@ -116,11 +123,12 @@ class EditController extends AbstractController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
-    protected function createMinimumOrderValueTransfer(): MinimumOrderValueTransfer
+    protected function createMerchantRelationshipMinimumOrderValueTransfer(): MerchantRelationshipMinimumOrderValueTransfer
     {
-        return (new MinimumOrderValueTransfer())
-            ->setThreshold(new MinimumOrderValueThresholdTransfer());
+        return (new MerchantRelationshipMinimumOrderValueTransfer())
+            ->setMinimumOrderValueThreshold(new MinimumOrderValueThresholdTransfer())
+            ->setMerchantRelationship(new MerchantRelationshipTransfer());
     }
 }
