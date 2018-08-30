@@ -1,8 +1,7 @@
 parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
     ignoreErrors:
-        - '#Method .+PriceProductQueryContainer::queryPriceEntityForProductAbstract\(\) should return Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery but returns Propel\\Runtime\\ActiveQuery\\Criteria#'
-        - '#Method .+PriceProductQueryContainer::queryPriceEntityForProductConcrete\(\) should return Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery but returns Propel\\Runtime\\ActiveQuery\\Criteria#'
+        - '#Method .+PriceProductQueryContainer::.+ should return#'
         - '#Call to an undefined method Generated\\Shared\\Transfer\\PriceProductTransfer\:\:getPriceProduct\(\)#'
         - '#Call to an undefined method .+Criteria::.+\(\).#'
         - '#Call to an undefined method .+SpyPriceProductQuery::joinWithPriceProductDefault\(\)#'
