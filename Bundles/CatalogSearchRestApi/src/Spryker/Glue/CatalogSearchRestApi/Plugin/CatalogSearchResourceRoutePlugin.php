@@ -29,7 +29,7 @@ class CatalogSearchResourceRoutePlugin extends AbstractPlugin implements Resourc
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addGet('get', false);
+            ->addGet('get');
 
         return $resourceRouteCollection;
     }
