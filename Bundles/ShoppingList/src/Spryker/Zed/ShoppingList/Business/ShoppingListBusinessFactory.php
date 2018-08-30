@@ -176,7 +176,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface
      */
-    protected function getEventFacade(): ShoppingListToEventFacadeInterface
+    public function getEventFacade(): ShoppingListToEventFacadeInterface
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::FACADE_EVENT);
     }

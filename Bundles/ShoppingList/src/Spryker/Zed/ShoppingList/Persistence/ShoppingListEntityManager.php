@@ -101,11 +101,14 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
      */
     public function deleteShoppingListItem(int $idShoppingListItem): void
     {
-        $this->getFactory()
+        $shoppingListItemEntities = $this->getFactory()
             ->createShoppingListItemQuery()
             ->filterByIdShoppingListItem($idShoppingListItem)
-            ->findOne()
-            ->delete();
+            ->find();
+
+        foreach ($shoppingListItemEntities as $shoppingListItemEntity) {
+            $shoppingListItemEntity->delete();
+        }
     }
 
     /**

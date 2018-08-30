@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface;
@@ -32,6 +31,8 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     protected const CANNOT_UPDATE_SHOPPING_LIST = 'customer.account.shopping_list.error.cannot_update';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CREATE_SUCCESS = 'customer.account.shopping_list.create.success';
     protected const GLOSSARY_PARAM_NAME = '%name%';
+    protected const CUSTOM_EVENT_NAME = 'custom_shopping_list';
+    protected const CUSTOM_EVENT_COL_CUSTOMER_REFERENCE = 'spy_shopping_list.customer_reference';
 
     /**
      * @var \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface
@@ -219,11 +220,11 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         $this->shoppingListEntityManager->deleteShoppingListByName($shoppingListTransfer);
 
         $eventTransfer = (new EventEntityTransfer())
-            ->setName('custom_shopping_list')
+            ->setName(static::CUSTOM_EVENT_NAME)
             ->setId($shoppingListTransfer->getIdShoppingList())
             ->setEvent(ShoppingListEvents::CUSTOM_SHOPPING_LIST_DELETE)
             ->setModifiedColumns([
-                SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE => $shoppingListTransfer->getCustomerReference(),
+                static::CUSTOM_EVENT_COL_CUSTOMER_REFERENCE => $shoppingListTransfer->getCustomerReference(),
             ]);
         $this->eventFacade->trigger(ShoppingListEvents::CUSTOM_SHOPPING_LIST_DELETE, $eventTransfer);
 
