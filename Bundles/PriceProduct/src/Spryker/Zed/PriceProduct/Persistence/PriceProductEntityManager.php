@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
  * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductPersistenceFactory getFactory()
+ * @method \Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer save(\Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer $spyCompanyUnitAddressEntityTransfer)
  */
 class PriceProductEntityManager extends AbstractEntityManager implements PriceProductEntityManagerInterface
 {

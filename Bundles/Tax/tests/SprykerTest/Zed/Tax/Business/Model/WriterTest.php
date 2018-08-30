@@ -8,10 +8,11 @@
 namespace SprykerTest\Zed\Tax\Business\Model;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\TaxSetBuilder;
 use Generated\Shared\Transfer\TaxRateTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
+use Spryker\Zed\Tax\Business\Model\Exception\DuplicateResourceException;
 use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Spryker\Zed\Tax\Business\TaxFacade;
 
@@ -27,7 +28,6 @@ use Spryker\Zed\Tax\Business\TaxFacade;
  */
 class WriterTest extends Unit
 {
-    const DUMMY_TAX_SET_NAME = 'SalesTax';
     const DUMMY_TAX_RATE1_NAME = 'Local';
     const DUMMY_TAX_RATE1_PERCENTAGE = 25;
     const DUMMY_TAX_RATE2_NAME = 'Regional';
@@ -66,10 +66,7 @@ class WriterTest extends Unit
      */
     private function createTaxSetTransfer()
     {
-        $taxSetTransfer = new TaxSetTransfer();
-        $taxSetTransfer->setName(self::DUMMY_TAX_SET_NAME);
-
-        return $taxSetTransfer;
+        return (new TaxSetBuilder())->build();
     }
 
     /**
@@ -103,7 +100,7 @@ class WriterTest extends Unit
         $taxSetQuery = SpyTaxSetQuery::create()->filterByIdTaxSet($taxSetTransfer->getIdTaxSet())->findOne();
 
         $this->assertNotEmpty($taxSetQuery);
-        $this->assertEquals(self::DUMMY_TAX_SET_NAME, $taxSetQuery->getName());
+        $this->assertEquals($taxSetTransfer->getName(), $taxSetQuery->getName());
         $this->assertNotEmpty($taxSetQuery->getSpyTaxRates());
     }
 
@@ -238,13 +235,8 @@ class WriterTest extends Unit
         $taxRateTransfer = $this->createTaxRateTransfer();
         $taxRateTransfer->setIdTaxRate(self::NON_EXISTENT_ID);
 
-        $exceptionOccurred = false;
-        try {
-            $this->taxFacade->updateTaxRate($taxRateTransfer);
-        } catch (ResourceNotFoundException $e) {
-            $exceptionOccurred = true;
-        }
-        $this->assertTrue($exceptionOccurred);
+        $this->expectException(ResourceNotFoundException::class);
+        $this->taxFacade->updateTaxRate($taxRateTransfer);
     }
 
     /**
@@ -310,5 +302,45 @@ class WriterTest extends Unit
 
         $taxSetEntity = $taxSetQuery->findOne();
         $this->assertEmpty($taxSetEntity);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateTaxSetWithExistingTaxSetNameShouldRaiseException()
+    {
+        //Arrange
+        $taxSetTransfer = (new TaxSetBuilder())->build();
+        $taxSetName1 = $taxSetTransfer->getName();
+        $this->taxFacade->createTaxSet($taxSetTransfer);
+        $taxSetTransfer2 = (new TaxSetBuilder())->build();
+        $taxSetTransfer2->setName($taxSetName1);
+
+        //Assert
+        $this->expectException(DuplicateResourceException::class);
+
+        //Act
+        $this->taxFacade->createTaxSet($taxSetTransfer2);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateTaxSetWithExistingTaxSetNameShouldRaiseException()
+    {
+        //Arrange
+        $taxSetTransfer = (new TaxSetBuilder())->build();
+        $taxSetName1 = $taxSetTransfer->getName();
+        $this->taxFacade->createTaxSet($taxSetTransfer);
+        $taxSetTransfer2 = (new TaxSetBuilder())->build();
+        $taxSetId2 = $this->taxFacade->createTaxSet($taxSetTransfer2)->getIdTaxSet();
+        $taxSetTransfer3 = (new TaxSetBuilder())->build();
+        $taxSetTransfer3->setIdTaxSet($taxSetId2)->setName($taxSetName1);
+
+        //Assert
+        $this->expectException(DuplicateResourceException::class);
+
+        //Act
+        $this->taxFacade->updateTaxSet($taxSetTransfer3);
     }
 }

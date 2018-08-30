@@ -29,6 +29,14 @@ class DevelopmentConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @return string[]
+     */
+    public function getInternalNamespaces(): array
+    {
+        return ['Spryker', 'SprykerEco', 'SprykerSdk', 'SprykerShop', 'Orm'];
+    }
+
+    /**
      * Gets path to application root directory.
      *
      * @return string
@@ -183,6 +191,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Zend\\' => 'spryker/zend',
             'phpDocumentor\\GraphViz\\' => 'spryker/graphviz',
             'Egulias\\EmailValidator\\' => 'spryker/egulias',
+            'Ramsey\\Uuid' => 'spryker/ramsey-uuid',
         ];
     }
 
@@ -208,6 +217,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             '/zendframework/' => 'spryker/zend',
             'phpdocumentor/graphviz' => 'spryker/graphviz',
             'egulias/email-validator' => 'spryker/egulias',
+            'ramsey/uuid' => 'spryker/ramsey-uuid',
         ];
     }
 
@@ -386,6 +396,6 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getPhpstanLevel()
     {
-        return 2;
+        return 3;
     }
 }

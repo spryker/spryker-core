@@ -42,7 +42,7 @@ class GlossaryController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\JsonResponse
      */
     public function indexAction(Request $request)
     {

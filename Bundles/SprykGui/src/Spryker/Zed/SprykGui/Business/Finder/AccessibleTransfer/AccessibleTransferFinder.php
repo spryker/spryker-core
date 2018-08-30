@@ -24,7 +24,7 @@ class AccessibleTransferFinder implements AccessibleTransferFinderInterface
 
         $finder = new Finder();
 
-        $finder->in(APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'src/Generated/Shared/Transfer/')->contains('/@module(?:[\sA-Za-z|]*)(' . $module . ')|(?:[Orm\\Zed\\\\]' . $module . ')/');
+        $finder->in(APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'src/Generated/Shared/Transfer/')->contains('/@module(?:[\sA-Za-z|]*)(' . $module . ')/');
 
         foreach ($finder as $fileInfo) {
             $transferClassName = $this->getTransferClassName($fileInfo);
@@ -41,6 +41,6 @@ class AccessibleTransferFinder implements AccessibleTransferFinderInterface
      */
     private function getTransferClassName(SplFileInfo $fileInfo): string
     {
-        return sprintf('Generated\\Shared\Transfer\\%s', str_replace('.php', '', $fileInfo->getFilename()));
+        return sprintf('\\Generated\\Shared\Transfer\\%s', str_replace('.php', '', $fileInfo->getFilename()));
     }
 }

@@ -205,6 +205,7 @@ class User implements UserInterface
      */
     public function getUserByUsername($username)
     {
+        /** @var \Orm\Zed\User\Persistence\SpyUser|null $entity */
         $entity = $this->queryContainer->queryUserByUsername($username)->findOne();
 
         if ($entity === null) {
@@ -223,6 +224,7 @@ class User implements UserInterface
      */
     public function getUserById($id)
     {
+        /** @var \Orm\Zed\User\Persistence\SpyUser|null $entity */
         $entity = $this->queryContainer
             ->queryUserById($id)
             ->findOne();
@@ -243,6 +245,7 @@ class User implements UserInterface
      */
     public function getActiveUserById($id)
     {
+        /** @var \Orm\Zed\User\Persistence\SpyUser|null $entity */
         $entity = $this->queryContainer
             ->queryUserById($id)
             ->filterByStatus(SpyUserTableMap::COL_STATUS_ACTIVE)
@@ -260,10 +263,11 @@ class User implements UserInterface
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @return \Orm\Zed\User\Persistence\SpyUser
      */
     public function getEntityUserById($id)
     {
+        /** @var \Orm\Zed\User\Persistence\SpyUser|null $entity */
         $entity = $this->queryContainer->queryUserById($id)->findOne();
 
         if ($entity === null) {
