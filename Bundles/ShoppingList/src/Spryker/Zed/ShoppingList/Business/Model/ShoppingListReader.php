@@ -75,7 +75,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
     public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
-        if (!$this->checkReadPermission($shoppingListTransfer)) {
+        if (!$shoppingListTransfer || !$this->checkReadPermission($shoppingListTransfer)) {
             return new ShoppingListTransfer();
         }
 
