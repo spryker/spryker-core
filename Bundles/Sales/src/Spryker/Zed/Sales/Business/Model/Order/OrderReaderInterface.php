@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
-use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
 interface OrderReaderInterface

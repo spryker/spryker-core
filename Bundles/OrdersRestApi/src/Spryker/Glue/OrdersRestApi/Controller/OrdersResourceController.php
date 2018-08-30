@@ -25,7 +25,6 @@ class OrdersResourceController extends AbstractController
     {
         if ($restRequest->getResource()->getId()) {
             return $this->getFactory()->createOrdersReader()->getOrdersDetailsResourceAttributes($restRequest);
-
         }
 
         return $this->getFactory()->createOrdersReader()->getOrdersAttributes($restRequest);

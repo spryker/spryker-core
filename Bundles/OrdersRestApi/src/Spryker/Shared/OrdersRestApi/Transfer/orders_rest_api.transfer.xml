@@ -9,7 +9,7 @@
 
     <transfer name="OrderRestAttributes">
         <property name="createdAt" type="string"/>
-        <property name="totals" type="OrderRestTotalAttributes[]"/>
+        <property name="totals" type="OrderRestTotalAttributes"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="items" type="OrderItemsRestAttributes[]"/>
         <property name="expenses" type="OrderRestExpenseAttributes[]"/>
@@ -26,10 +26,15 @@
     <transfer name="OrderRestTotalAttributes">
         <property name="expenseTotal" type="int"/>
         <property name="discountTotal" type="int"/>
-        <property name="taxTotal" type="int"/>
+        <property name="taxTotal" type="OrderRestTaxTotalAttributes"/>
         <property name="subtotal" type="int"/>
         <property name="grandTotal" type="int"/>
         <property name="canceledTotal" type="int"/>
+    </transfer>
+
+    <transfer name="OrderRestTaxTotalAttributes">
+        <property name="taxRate" type="float" />
+        <property name="amount" type="int" />
     </transfer>
 
     <transfer name="OrderRestExpenseAttributes">
