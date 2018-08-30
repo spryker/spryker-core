@@ -125,7 +125,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addEventFacade(Container $container)
+    protected function addEventFacade(Container $container): Container
     {
         $container[static::FACADE_EVENT] = function (Container $container) {
             return new ShoppingListToEventFacadeBridge($container->getLocator()->event()->facade());
