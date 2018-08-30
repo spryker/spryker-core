@@ -189,9 +189,9 @@ class PriceManager implements PriceManagerInterface
         PriceProductFilterTransfer $priceProductFilterTransfer,
         $priceMode
     ) {
-        $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
+        $price = $this->priceProductFacade->findPriceFor($priceProductFilterTransfer);
 
-        if ($priceProductTransfer === null) {
+        if ($price === null) {
             throw new PriceMissingException(
                 sprintf(
                     'Cart item "%s" can not be priced.',
@@ -200,17 +200,15 @@ class PriceManager implements PriceManagerInterface
             );
         }
 
-        $itemTransfer->setPriceProduct($priceProductTransfer);
-
         if ($priceMode === $this->getNetPriceModeIdentifier()) {
-            $itemTransfer->setOriginUnitNetPrice($priceProductTransfer->getMoneyValue()->getNetAmount());
+            $itemTransfer->setOriginUnitNetPrice($price);
             $itemTransfer->setOriginUnitGrossPrice(0);
             $itemTransfer->setSumGrossPrice(0);
             return;
         }
 
         $itemTransfer->setOriginUnitNetPrice(0);
-        $itemTransfer->setOriginUnitGrossPrice($priceProductTransfer->getMoneyValue()->getGrossAmount());
+        $itemTransfer->setOriginUnitGrossPrice($price);
         $itemTransfer->setSumNetPrice(0);
     }
 
