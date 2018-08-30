@@ -1,8 +1,4 @@
 parameters:
-    ignoreErrors:
-        - '#Negated boolean is always false.#'
-        - '#Result of || is always false.#'
-
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
 services:
