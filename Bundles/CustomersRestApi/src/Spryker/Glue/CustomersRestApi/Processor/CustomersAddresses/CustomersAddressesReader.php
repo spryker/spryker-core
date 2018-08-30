@@ -47,6 +47,10 @@ class CustomersAddressesReader implements CustomersAddressesReaderInterface
         $customerTransfer->setCustomerReference($customerReference);
         $customerTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
+        if (!$customerTransfer) {
+            return $restResource;
+        }
+
         $addresses = $this->customerClient->getAddresses($customerTransfer);
 
         foreach ($addresses->getAddresses() as $address) {
