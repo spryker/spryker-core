@@ -282,4 +282,12 @@ class RestRequest implements RestRequestInterface
     {
         return $this->excludeRelationship;
     }
+
+    /**
+     * @return array
+     */
+    public function getRawPostData(): array
+    {
+        return $this->httpRequest->attributes->get(RestResourceInterface::RESOURCE_DATA)['data']['attributes'];
+    }
 }

@@ -114,4 +114,9 @@ interface RestRequestInterface
      * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface[]
      */
     public function getFiltersByResource(string $resource): array;
+
+    /**
+     * @return array
+     */
+    public function getRawPostData(): array;
 }

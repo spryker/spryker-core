@@ -6,13 +6,14 @@
 
 namespace Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration;
 
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+
 interface RestRequestValidatorConfigReaderInterface
 {
     /**
-     * @param string $resourceType
-     * @param string $requestMethod
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return array
      */
-    public function getValidationConfiguration(string $resourceType, string $requestMethod): array;
+    public function getValidationConfiguration(RestRequestInterface $restRequest): array;
 }

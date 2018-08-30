@@ -55,7 +55,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
             return null;
         }
 
-        $validationConfig = $this->configReader->getValidationConfiguration($restRequest->getResource()->getType(), $restRequest->getMetadata()->getMethod());
+        $validationConfig = $this->configReader->getValidationConfiguration($restRequest);
 
         $validationResult = $this->applyValidationToRequest($restRequest, $validationConfig);
 
@@ -75,8 +75,10 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function applyValidationToRequest(RestRequestInterface $restRequest, array $validationConfig): RestErrorCollectionTransfer
     {
         $validator = Validation::createValidator();
-        $constraints = new Collection($this->initializeConstraintCollection($validationConfig));
-        $fieldsToValidate = $this->getFieldsForValidation($restRequest, $validationConfig);
+        $constraints = new Collection(
+            ['fields' => $this->initializeConstraintCollection($validationConfig)] + $this->getDefaultValidationConfig()
+        );
+        $fieldsToValidate = $this->getFieldsForValidation($restRequest);
 
         $violations = $validator->validate(
             $fieldsToValidate,
@@ -148,12 +150,19 @@ class RestRequestValidator implements RestRequestValidatorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param array $configResult
      *
      * @return array
      */
-    protected function getFieldsForValidation(RestRequestInterface $restRequest, array $configResult): array
+    protected function getFieldsForValidation(RestRequestInterface $restRequest): array
     {
-        return array_intersect_key($restRequest->getResource()->getAttributes()->toArray(), $configResult);
+        return $restRequest->getRawPostData();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultValidationConfig(): array
+    {
+        return ['allowExtraFields' => true, 'groups' => ['Default']];
     }
 }
