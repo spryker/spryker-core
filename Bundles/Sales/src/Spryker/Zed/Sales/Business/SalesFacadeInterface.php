@@ -183,27 +183,15 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Returns a list of of orders for the given customer reference.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    public function getOrderListByCustomerReference(OrderTransfer $orderTransfer): OrderListTransfer;
-
-    /**
-     * Specification:
      * - Returns the order for the given order reference.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
      */
-    public function findOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
+    public function findCustomerOrderByOrderReference(OrderTransfer $orderTransfer): ?OrderTransfer;
 
     /**
      *

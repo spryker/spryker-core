@@ -7,11 +7,6 @@
 
 namespace Spryker\Zed\Sales\Persistence;
 
-use Generated\Shared\Transfer\OrderListTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\TotalsTransfer;
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTotalsTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -21,57 +16,22 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
 {
     /**
      * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    public function getOrderListByCustomerReference(string $customerReference): OrderListTransfer
-    {
-        $orderEntity = $this->getFactory()
-            ->createSalesOrderQuery()
-            ->filterByCustomerReference($customerReference)
-            ->useOrderTotalQuery()
-            ->withColumn(SpySalesOrderTotalsTableMap::COL_GRAND_TOTAL, TotalsTransfer::GRAND_TOTAL)
-            ->withColumn(SpySalesOrderTotalsTableMap::COL_REFUND_TOTAL, TotalsTransfer::REFUND_TOTAL)
-            ->withColumn(SpySalesOrderTotalsTableMap::COL_TAX_TOTAL, TotalsTransfer::TAX_TOTAL)
-            ->withColumn(SpySalesOrderTotalsTableMap::COL_CANCELED_TOTAL, TotalsTransfer::CANCELED_TOTAL)
-            ->withColumn(SpySalesOrderTotalsTableMap::COL_SUBTOTAL, TotalsTransfer::SUBTOTAL)
-            ->endUse()
-            ->select([
-                SpySalesOrderTableMap::COL_CREATED_AT,
-                SpySalesOrderTableMap::COL_ORDER_REFERENCE,
-            ])
-            ->find();
-
-        return $this->getFactory()
-            ->createSalesMapper()
-            ->mapSalesOrderListTransfer($orderEntity);
-    }
-
-    /**
      * @param string $orderReference
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return int|null
      */
-    public function findOrderByOrderReference(string $orderReference): OrderTransfer
+    public function findCustomerOrderByOrderReference(string $customerReference, string $orderReference): ?int
     {
-        $orderData = $this->getFactory()
+        $idSalesOrder = $this->getFactory()
             ->createSalesOrderQuery()
+            ->filterByCustomerReference($customerReference)
             ->filterByOrderReference($orderReference)
-            ->useOrderTotalQuery()
-            ->withColumn(SpySalesOrderTotalsTableMap::COL_GRAND_TOTAL, TotalsTransfer::GRAND_TOTAL)
-            ->withColumn(SpySalesOrderTotalsTableMap::COL_REFUND_TOTAL, TotalsTransfer::REFUND_TOTAL)
-            ->withColumn(SpySalesOrderTotalsTableMap::COL_TAX_TOTAL, TotalsTransfer::TAX_TOTAL)
-            ->withColumn(SpySalesOrderTotalsTableMap::COL_CANCELED_TOTAL, TotalsTransfer::CANCELED_TOTAL)
-            ->withColumn(SpySalesOrderTotalsTableMap::COL_SUBTOTAL, TotalsTransfer::SUBTOTAL)
-            ->endUse()
-            ->select([
-                SpySalesOrderTableMap::COL_CREATED_AT,
-                SpySalesOrderTableMap::COL_ORDER_REFERENCE,
-            ])
             ->findOne();
 
-        return $this->getFactory()
-            ->createSalesMapper()
-            ->mapSalesOrderTransfer($orderData);
+        if (!$idSalesOrder) {
+            return null;
+        }
+
+        return $idSalesOrder->getIdSalesOrder();
     }
 }

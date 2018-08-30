@@ -8,16 +8,33 @@
     </transfer>
 
     <transfer name="OrderRestAttributes">
-        <property name="orderReference" type="string"/>
-        <property name="orderDate" type="string"/>
+        <property name="createdAt" type="string"/>
         <property name="totals" type="OrderRestTotalAttributes[]"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="items" type="OrderItemsRestAttributes[]"/>
+        <property name="expenses" type="OrderRestExpenseAttributes[]"/>
+    </transfer>
+
+    <transfer name="OrderItemsRestAttributes">
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="sumPrice" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="OrderRestTotalAttributes">
-        <property name="grandTotal" type="string"/>
-        <property name="refundTotal" type="string"/>
-        <property name="canceledTotal" type="string"/>
-        <property name="subtotal" type="string"/>
+        <property name="expenseTotal" type="int"/>
+        <property name="discountTotal" type="int"/>
+        <property name="taxTotal" type="int"/>
+        <property name="subtotal" type="int"/>
+        <property name="grandTotal" type="int"/>
+        <property name="canceledTotal" type="int"/>
+    </transfer>
+
+    <transfer name="OrderRestExpenseAttributes">
+        <property name="name" type="string"/>
+        <property name="sumPrice" type="int"/>
     </transfer>
 
 </transfers>

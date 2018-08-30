@@ -7,8 +7,10 @@
 
 namespace Spryker\Glue\OrdersRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\OrderItemsRestAttributesTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderRestAttributesTransfer;
+use Generated\Shared\Transfer\OrderRestExpenseAttributesTransfer;
 use Generated\Shared\Transfer\OrderRestTotalAttributesTransfer;
 use Generated\Shared\Transfer\OrdersRestAttributesTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -26,15 +28,24 @@ class OrdersResourceMapper implements OrdersResourceMapperInterface
 
         foreach ($orderListTransfer->getOrders() as $order) {
             $ordersRestAttributes->addOrders(
-                (new OrderRestAttributesTransfer())
-                    ->addTotals((new OrderRestTotalAttributesTransfer())
-                        ->setRefundTotal($order->getTotals()->getRefundTotal())
-                        ->setGrandTotal($order->getTotals()->getGrandTotal())
-                        ->setCanceledTotal($order->getTotals()->getCanceledTotal())
-                        ->setSubtotal($order->getTotals()->getSubTotal()))
-                    ->setOrderDate($order->getCreatedAt())
-                    ->setOrderReference($order->getOrderReference())
-            );
+                $orderRestAttributesTransfer = (new OrderRestAttributesTransfer())
+                    ->addTotals((new OrderRestTotalAttributesTransfer())->fromArray(
+                        $order->getTotals()->toArray(), true)
+                    )
+                    ->setCreatedAt($order->getCreatedAt())
+                    ->setCurrencyIsoCode($order->getCurrencyIsoCode()));
+
+            foreach ($order->getItems() as $item) {
+                $orderRestAttributesTransfer->addItems(
+                    (new OrderItemsRestAttributesTransfer())->fromArray($item->toArray(), true)
+                );
+            }
+
+            foreach ($order->getExpenses() as $expense) {
+                $orderRestAttributesTransfer->addExpenses(
+                    (new OrderRestExpenseAttributesTransfer())->fromArray($expense->toArray(), true)
+                );
+            }
         }
 
         return $ordersRestAttributes;
@@ -47,13 +58,26 @@ class OrdersResourceMapper implements OrdersResourceMapperInterface
      */
     public function mapOrderToOrdersRestAttribute(OrderTransfer $orderTransfer): OrderRestAttributesTransfer
     {
-        return (new OrderRestAttributesTransfer())
-            ->addTotals((new OrderRestTotalAttributesTransfer())
-                ->setRefundTotal($orderTransfer->getTotals()->getRefundTotal())
-                ->setGrandTotal($orderTransfer->getTotals()->getGrandTotal())
-                ->setCanceledTotal($orderTransfer->getTotals()->getCanceledTotal())
-                ->setSubtotal($orderTransfer->getTotals()->getSubTotal()))
-            ->setOrderDate($orderTransfer->getCreatedAt())
-            ->setOrderReference($orderTransfer->getOrderReference());
+        $orderRestAttributesTransfer = (new OrderRestAttributesTransfer())
+            ->addTotals((new OrderRestTotalAttributesTransfer())->fromArray(
+                $orderTransfer->getTotals()->toArray(), true)
+            )
+            ->setCreatedAt($orderTransfer->getCreatedAt())
+            ->setCurrencyIsoCode($orderTransfer->getCurrencyIsoCode())
+            ->setExpenses($orderTransfer->getExpenses());
+
+        foreach ($orderTransfer->getItems() as $item) {
+            $orderRestAttributesTransfer->addItems(
+                (new OrderItemsRestAttributesTransfer())->fromArray($item->toArray(), true)
+            );
+        }
+
+        foreach ($orderTransfer->getExpenses() as $expense) {
+            $orderRestAttributesTransfer->addExpenses(
+                (new OrderRestExpenseAttributesTransfer())->fromArray($expense->toArray(), true)
+            );
+        }
+
+        return $orderRestAttributesTransfer;
     }
 }

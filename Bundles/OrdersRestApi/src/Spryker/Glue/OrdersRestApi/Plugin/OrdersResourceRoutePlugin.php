@@ -30,7 +30,7 @@ class OrdersResourceRoutePlugin extends AbstractPlugin implements ResourceRouteP
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addGet('get', false);
+            ->addGet('get', OrdersRestApiConfig::RESOURCE_ORDERS_IS_PROTECTED);
 
         return $resourceRouteCollection;
     }

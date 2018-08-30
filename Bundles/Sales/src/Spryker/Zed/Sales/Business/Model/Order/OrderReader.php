@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
-use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
@@ -85,20 +84,19 @@ class OrderReader implements OrderReaderInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
      */
-    public function getOrderListByCustomerReference(OrderTransfer $orderTransfer): OrderListTransfer
+    public function findCustomerOrderByOrderReference(OrderTransfer $orderTransfer): ?OrderTransfer
     {
-        return $this->salesRepository->getOrderListByCustomerReference($orderTransfer->getCustomerReference());
-    }
+        $idSalesOrder = $this->salesRepository->findCustomerOrderByOrderReference(
+            $orderTransfer->getCustomerReference(),
+            $orderTransfer->getOrderReference()
+        );
 
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function findOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer
-    {
-        return $this->salesRepository->findOrderByOrderReference($orderTransfer->getOrderReference());
+        if ($idSalesOrder === null) {
+            return new OrderTransfer();
+        }
+
+        return $this->orderHydrator->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
     }
 }

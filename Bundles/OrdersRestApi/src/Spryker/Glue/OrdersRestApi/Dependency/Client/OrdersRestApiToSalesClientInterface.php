@@ -13,16 +13,16 @@ use Generated\Shared\Transfer\OrderTransfer;
 interface OrdersRestApiToSalesClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getOrderListByCustomerReference(OrderTransfer $orderTransfer): OrderListTransfer;
+    public function getCustomerOrders(OrderListTransfer $orderListTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
      */
-    public function findOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
+    public function findCustomerOrderByOrderReference(OrderTransfer $orderTransfer): ?OrderTransfer;
 }

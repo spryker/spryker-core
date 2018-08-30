@@ -62,29 +62,13 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
      */
-    public function getOrderListByCustomerReference(OrderTransfer $orderTransfer): OrderListTransfer
+    public function findCustomerOrderByOrderReference(OrderTransfer $orderTransfer): ?OrderTransfer
     {
         return $this->getFactory()
             ->createOrderReader()
-            ->getOrderListByCustomerReference($orderTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function findOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer
-    {
-        return $this->getFactory()
-            ->createOrderReader()
-            ->findOrderByOrderReference($orderTransfer);
+            ->findCustomerOrderByOrderReference($orderTransfer);
     }
 
     /**
