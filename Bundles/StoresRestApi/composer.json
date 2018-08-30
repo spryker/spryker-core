@@ -9,7 +9,7 @@
     "spryker/glue-application": "^1.0.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.22.0",
-    "spryker/store": "^1.7.0"
+    "spryker/store": "^1.8.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
