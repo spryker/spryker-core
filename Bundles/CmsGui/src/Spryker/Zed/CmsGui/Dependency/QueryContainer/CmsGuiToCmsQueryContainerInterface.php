@@ -6,7 +6,6 @@
 namespace Spryker\Zed\CmsGui\Dependency\QueryContainer;
 
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface CmsGuiToCmsQueryContainerInterface
 {

@@ -208,11 +208,11 @@ class CmsPageReader implements CmsPageReaderInterface
 
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[] $localizedAttributesIdEntityMap
-     * @param string $idLocale
+     * @param int $idLocale
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
      */
-    protected function getLocalizedAttributesByLocale($localizedAttributesIdEntityMap, $idLocale): SpyCmsPageLocalizedAttributes
+    protected function getLocalizedAttributesByLocale(array $localizedAttributesIdEntityMap, int $idLocale): SpyCmsPageLocalizedAttributes
     {
         if (isset($localizedAttributesIdEntityMap[$idLocale])) {
             return $localizedAttributesIdEntityMap[$idLocale];
