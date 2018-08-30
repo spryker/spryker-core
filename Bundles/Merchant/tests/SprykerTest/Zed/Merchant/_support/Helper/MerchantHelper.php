@@ -13,10 +13,12 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\RelationMap;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class MerchantHelper extends Module
 {
+    use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
     /**
@@ -29,7 +31,31 @@ class MerchantHelper extends Module
         $merchantTransfer = (new MerchantBuilder($seedData))->build();
         $merchantTransfer->setIdMerchant(null);
 
-        return $this->getLocator()->merchant()->facade()->createMerchant($merchantTransfer);
+        $merchantTransfer = $this->getLocator()
+            ->merchant()
+            ->facade()
+            ->createMerchant($merchantTransfer);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantTransfer) {
+            $this->cleanupMerchant($merchantTransfer);
+        });
+
+        return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return void
+     */
+    protected function cleanupMerchant(MerchantTransfer $merchantTransfer): void
+    {
+        $this->debug(sprintf('Deleting Merchant: %d', $merchantTransfer->getIdMerchant()));
+
+        $this->getLocator()
+            ->merchant()
+            ->facade()
+            ->deleteMerchant($merchantTransfer);
     }
 
     /**

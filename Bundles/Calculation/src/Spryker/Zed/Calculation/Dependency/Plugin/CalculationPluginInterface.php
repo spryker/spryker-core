@@ -7,16 +7,11 @@
 
 namespace Spryker\Zed\Calculation\Dependency\Plugin;
 
-use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface as ExtensionCalculationPluginInterface;
 
-interface CalculationPluginInterface
+/**
+ * @deprecated Use \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface instead.
+ */
+interface CalculationPluginInterface extends ExtensionCalculationPluginInterface
 {
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return void
-     */
-    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer);
 }
