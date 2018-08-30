@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cms\Persistence;
 
+use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
@@ -218,9 +219,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    public function queryLocalizedPagesWithTemplates();
+    public function queryLocalizedPagesWithTemplates(): SpyCmsPageQuery;
 
     /**
      * @api

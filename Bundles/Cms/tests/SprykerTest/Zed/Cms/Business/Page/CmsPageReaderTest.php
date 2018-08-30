@@ -139,9 +139,9 @@ class CmsPageReaderTest extends CmsMocks
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    protected function getAvailableLocales()
+    protected function getAvailableLocales(): array
     {
         return [
             1 => 'en_US',

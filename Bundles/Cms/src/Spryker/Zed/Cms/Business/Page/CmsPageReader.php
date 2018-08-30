@@ -196,7 +196,7 @@ class CmsPageReader implements CmsPageReaderInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[]
      */
-    protected function createKeyMappingByLocalizedAttributes(SpyCmsPage $cmsPageEntity)
+    protected function createKeyMappingByLocalizedAttributes(SpyCmsPage $cmsPageEntity): array
     {
         $localizedAttributesMap = [];
         foreach ($cmsPageEntity->getSpyCmsPageLocalizedAttributess() as $cmsPageLocalizedAttributesEntity) {
@@ -212,7 +212,7 @@ class CmsPageReader implements CmsPageReaderInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
      */
-    protected function getLocalizedAttributesByLocale($localizedAttributesIdEntityMap, $idLocale)
+    protected function getLocalizedAttributesByLocale($localizedAttributesIdEntityMap, $idLocale): SpyCmsPageLocalizedAttributes
     {
         if (isset($localizedAttributesIdEntityMap[$idLocale])) {
             return $localizedAttributesIdEntityMap[$idLocale];

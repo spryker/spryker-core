@@ -365,13 +365,13 @@ class CmsPageSaver implements CmsPageSaverInterface
      * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[] $cmsPageLocalizedAttributesList
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[]
      */
     protected function createNewCmsPageLocalizedAttributes(
         CmsPageTransfer $cmsPageTransfer,
         array $cmsPageLocalizedAttributesList,
         SpyCmsPage $cmsPageEntity
-    ) {
+    ): array {
         foreach ($cmsPageTransfer->getPageAttributes() as $cmsPageAttributesTransfer) {
             if (!$cmsPageAttributesTransfer->getIdCmsPageLocalizedAttributes()) {
                 $cmsPageLocalizedAttributesEntity = $this->createLocalizedAttributes($cmsPageAttributesTransfer, $cmsPageEntity);
@@ -393,7 +393,7 @@ class CmsPageSaver implements CmsPageSaverInterface
     protected function updateMetaAttributeWithLocalizedAttributes(
         CmsPageTransfer $cmsPageTransfer,
         SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity
-    ) {
+    ): void {
         foreach ($cmsPageTransfer->getMetaAttributes() as $cmsPageMetaAttributesTransfer) {
             if ($cmsPageMetaAttributesTransfer->getFkLocale() === $cmsPageLocalizedAttributesEntity->getFkLocale()) {
                 $cmsPageMetaAttributesTransfer->setIdCmsPageLocalizedAttributes(

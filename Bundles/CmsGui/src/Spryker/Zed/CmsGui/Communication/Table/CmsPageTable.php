@@ -511,18 +511,19 @@ class CmsPageTable extends AbstractTable
      *
      * @return string
      */
-    protected function buildCmsPageName(array $item)
+    protected function buildCmsPageName(array $item): string
     {
         $cmsNames = $this->extractNames($item);
+
         return reset($cmsNames);
     }
 
     /**
      * @param array $item
      *
-     * @return array
+     * @return string[]
      */
-    protected function extractNames(array $item)
+    protected function extractNames(array $item): array
     {
         return explode(',', $item[CmsPageTableConstants::COL_NAME]);
     }
