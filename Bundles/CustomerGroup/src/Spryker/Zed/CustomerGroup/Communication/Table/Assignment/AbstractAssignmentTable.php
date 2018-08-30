@@ -30,7 +30,7 @@ abstract class AbstractAssignmentTable extends AbstractTable
     protected $utilEncoding;
 
     /**
-     * @var \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignmentCustomerQueryBuilder
+     * @var \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignmentCustomerQueryBuilderInterface
      */
     protected $tableQueryBuilder;
 
