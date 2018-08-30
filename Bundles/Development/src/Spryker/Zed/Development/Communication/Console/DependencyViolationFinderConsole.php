@@ -72,14 +72,27 @@ class DependencyViolationFinderConsole extends AbstractDependencyViolationConsol
                 continue;
             }
             if ($moduleTransfer->getIsStandalone()) {
-                $output->writeln(sprintf('<fg=yellow>%s</> is a standalone module and will be skipped.', $moduleTransfer->getName()));
-                $output->writeln('');
+                $this->notifyStandaloneModuleExecution($output, $moduleTransfer);
                 continue;
             }
             $this->validateModule($moduleTransfer, $output, $dependencyType);
         }
 
         return $this->endValidation();
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return void
+     */
+    protected function notifyStandaloneModuleExecution(OutputInterface $output, ModuleTransfer $moduleTransfer): void
+    {
+        if ($output->isVerbose()) {
+            $output->writeln(sprintf('<fg=yellow>%s</> is a standalone module and will be skipped.', $moduleTransfer->getName()));
+            $output->writeln('');
+        }
     }
 
     /**
@@ -95,7 +108,7 @@ class DependencyViolationFinderConsole extends AbstractDependencyViolationConsol
 
         $moduleDependencyTransferCollection = $this->getModuleDependencies($moduleTransfer, $dependencyType);
 
-        if ($output->isVerbose()) {
+        if ($output->isVeryVerbose()) {
             $this->describeDependencies($moduleDependencyTransferCollection, $output, $dependencyType);
         }
 
@@ -235,7 +248,9 @@ class DependencyViolationFinderConsole extends AbstractDependencyViolationConsol
             (count($modulesToValidate) === 1) ? 'Module <fg=yellow>' . $this->buildModuleKey(current($modulesToValidate)) . '</>' : 'Modules',
             $typeMessage
         );
-        $this->info($message);
+        if ($this->output->isVerbose()) {
+            $this->info($message);
+        }
     }
 
     /**
@@ -244,7 +259,9 @@ class DependencyViolationFinderConsole extends AbstractDependencyViolationConsol
     protected function endValidation(): int
     {
         $dependencyViolationCount = ($this->dependencyViolationCount > 0) ? sprintf('<fg=red>%d</>', $this->dependencyViolationCount) : sprintf('<fg=yellow>%d</>', $this->dependencyViolationCount);
-        $this->info(sprintf('%s module dependency issues found', $dependencyViolationCount));
+        if ($dependencyViolationCount > 0 || $this->output->isVerbose()) {
+            $this->info(sprintf('%s module dependency issues found', $dependencyViolationCount));
+        }
 
         return $this->dependencyViolationCount > 0 ? static::CODE_ERROR : static::CODE_SUCCESS;
     }
@@ -256,7 +273,9 @@ class DependencyViolationFinderConsole extends AbstractDependencyViolationConsol
      */
     protected function startModuleValidation(string $moduleName): void
     {
-        $this->info(sprintf('Check dependencies in <fg=yellow>%s</> module', $moduleName));
+        if ($this->output->isVerbose()) {
+            $this->info(sprintf('Check dependencies in <fg=yellow>%s</> module', $moduleName));
+        }
     }
 
     /**
@@ -273,8 +292,10 @@ class DependencyViolationFinderConsole extends AbstractDependencyViolationConsol
             $type = sprintf('<fg=magenta>%s</> ', $dependencyType);
         }
 
-        $this->info(sprintf('Found <fg=yellow>%s</> %sdependency violations', $moduleViolationCount, $type));
-        $output->writeln('');
+        if ($this->output->isVerbose()) {
+            $this->info(sprintf('Found <fg=yellow>%s</> %sdependency violations', $moduleViolationCount, $type));
+            $output->writeln('');
+        }
     }
 
     /**
