@@ -24,7 +24,7 @@ class ModuleFinder implements ModuleFinderInterface
     protected $moduleDirectories;
 
     /**
-     * @var \Generated\Shared\Transfer\ModuleTransfer[]
+     * @var \Generated\Shared\Transfer\ModuleTransfer[]|null
      */
     protected static $moduleTransferCollection;
 
@@ -41,7 +41,7 @@ class ModuleFinder implements ModuleFinderInterface
      */
     public function find(): array
     {
-        if (!static::$moduleTransferCollection) {
+        if (static::$moduleTransferCollection === null) {
             $moduleTransferCollection = [];
 
             $moduleTransferCollection = $this->addStandAloneModulesToCollection($moduleTransferCollection);

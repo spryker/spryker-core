@@ -16,7 +16,7 @@ class ExtensionDependencyFinder extends AbstractFileDependencyFinder
     public const TYPE_EXTENSION = 'extension';
 
     /**
-     * @var \Generated\Shared\Transfer\ModuleTransfer[]
+     * @var array
      */
     protected $executedModules = [];
 
