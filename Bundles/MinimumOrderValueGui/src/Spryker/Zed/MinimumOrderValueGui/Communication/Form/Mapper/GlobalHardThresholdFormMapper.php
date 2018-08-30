@@ -29,7 +29,7 @@ class GlobalHardThresholdFormMapper extends AbstractGlobalThresholdFormMapper im
             GlobalThresholdType::PREFIX_HARD
         );
 
-        $minimumOrderValueTValueTransfer->getMinimumOrderValueThreshold()->setValue($data[GlobalThresholdType::FIELD_HARD_VALUE]);
+        $minimumOrderValueTValueTransfer->getMinimumOrderValueThreshold()->setValue($data[GlobalThresholdType::FIELD_HARD_THRESHOLD]);
         $minimumOrderValueTypeTransfer = (new MinimumOrderValueTypeTransfer())
             ->setKey(MinimumOrderValueGuiConfig::HARD_TYPE_STRATEGY)
             ->setThresholdGroup(MinimumOrderValueGuiConfig::GROUP_HARD);

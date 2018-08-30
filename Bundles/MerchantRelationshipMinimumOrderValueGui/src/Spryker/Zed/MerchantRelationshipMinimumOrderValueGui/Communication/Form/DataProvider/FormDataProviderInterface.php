@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface FormDataProviderInterface
 {
     /**
+     * @param int $idMerchantRelationship
      * @param array $defaultData
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
@@ -20,6 +21,7 @@ interface FormDataProviderInterface
      * @return array
      */
     public function getData(
+        int $idMerchantRelationship,
         array $defaultData,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer

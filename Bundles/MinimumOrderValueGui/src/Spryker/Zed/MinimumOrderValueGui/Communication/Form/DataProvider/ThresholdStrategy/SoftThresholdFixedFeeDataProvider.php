@@ -22,7 +22,7 @@ class SoftThresholdFixedFeeDataProvider implements ThresholdStrategyDataProvider
      */
     public function getData(array $data, MinimumOrderValueTransfer $minimumOrderValueTValueTransfer): array
     {
-        $data[GlobalThresholdType::FIELD_SOFT_VALUE] = $minimumOrderValueTValueTransfer->getMinimumOrderValueThreshold()->getThreshold();
+        $data[GlobalThresholdType::FIELD_SOFT_THRESHOLD] = $minimumOrderValueTValueTransfer->getMinimumOrderValueThreshold()->getThreshold();
         $data[GlobalThresholdType::FIELD_SOFT_FIXED_FEE] = $minimumOrderValueTValueTransfer->getMinimumOrderValueThreshold()->getFee();
         $data[GlobalThresholdType::FIELD_SOFT_STRATEGY] = MinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_FIXED;
 

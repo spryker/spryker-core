@@ -9,10 +9,10 @@ require('ZedGui');
 require('../../scss/main.scss');
 
 var softThresholdStrategyToggle = function() {
-    var softStrategy = $('input[name="global-threshold[softStrategy]"]:checked').val();
-    var softValueBlock = $('#global-threshold_softThreshold').parent();
-    var softFixedFeeBlock = $('#global-threshold_softFixedFee').parent();
-    var softFlexibleFeeBlock = $('#global-threshold_softFlexibleFee').parent();
+    var softStrategy = $('input[name="threshold[softStrategy]"]:checked').val();
+    var softValueBlock = $('#threshold_softThreshold').parent();
+    var softFixedFeeBlock = $('#threshold_softFixedFee').parent();
+    var softFlexibleFeeBlock = $('#threshold_softFlexibleFee').parent();
 
     if (softStrategy == 'soft-threshold') {
         softValueBlock.removeClass('hidden');
@@ -31,9 +31,11 @@ var softThresholdStrategyToggle = function() {
 
 $(document).ready(function () {
     softThresholdStrategyToggle();
-    $('input[name="global-threshold[softStrategy]"]').click(softThresholdStrategyToggle);
+    $('input[name="threshold[softStrategy]"]').click(softThresholdStrategyToggle);
 
-    $('#global-threshold_storeCurrency').change(function() {
-        window.location.href = '/minimum-order-value-gui/global?store_currency='+$(this).val();
+    $('#threshold_storeCurrency').change(function() {
+        var idMerchantRelationship = $('#threshold_storeCurrency').val();
+        window.location.href = '/merchant-relationship-minimum-order-value-gui/edit?id-merchant-relationship=' + idMerchantRelationship
+            +'&store_currency='+$(this).val();
     })
 });

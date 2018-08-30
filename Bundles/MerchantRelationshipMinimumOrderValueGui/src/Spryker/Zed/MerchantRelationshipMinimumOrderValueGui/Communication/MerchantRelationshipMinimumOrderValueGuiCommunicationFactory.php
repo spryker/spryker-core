@@ -49,6 +49,7 @@ class MerchantRelationshipMinimumOrderValueGuiCommunicationFactory extends Abstr
     }
 
     /**
+     * @param int $idMerchantRelationship
      * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[] $minimumOrderValueTransfers
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
@@ -56,6 +57,7 @@ class MerchantRelationshipMinimumOrderValueGuiCommunicationFactory extends Abstr
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createThresholdForm(
+        int $idMerchantRelationship,
         array $minimumOrderValueTransfers,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
@@ -64,7 +66,7 @@ class MerchantRelationshipMinimumOrderValueGuiCommunicationFactory extends Abstr
 
         return $this->getFormFactory()->create(
             ThresholdType::class,
-            $formDataProvider->getData($minimumOrderValueTransfers, $storeTransfer, $currencyTransfer),
+            $formDataProvider->getData($idMerchantRelationship, $minimumOrderValueTransfers, $storeTransfer, $currencyTransfer),
             $formDataProvider->getOptions()
         );
     }

@@ -39,7 +39,7 @@ class EditController extends AbstractController
 
         $minimumOrderValueTransfers = $this->getMinimumOrderValueTransfers($storeTransfer, $currencyTransfer, $idMerchantRelationship);
 
-        $thresholdForm = $this->getFactory()->createThresholdForm($minimumOrderValueTransfers, $storeTransfer, $currencyTransfer);
+        $thresholdForm = $this->getFactory()->createThresholdForm($idMerchantRelationship, $minimumOrderValueTransfers, $storeTransfer, $currencyTransfer);
         $thresholdForm->handleRequest($request);
 
         if ($thresholdForm->isSubmitted() && $thresholdForm->isValid()) {

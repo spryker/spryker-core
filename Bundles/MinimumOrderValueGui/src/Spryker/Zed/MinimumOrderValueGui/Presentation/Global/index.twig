@@ -13,7 +13,7 @@
 
             <h3>{{ 'Hard Threshold' | trans }}</h3>
 
-            {{ form_row(globalThresholdForm.hardValue) }}
+            {{ form_row(globalThresholdForm.hardThreshold) }}
 
             {% for localeTransfer in localeCollection %}
                 {% set formKey = 'hard_' ~ localeTransfer.localeName %}
@@ -36,7 +36,7 @@
             <h3>{{ 'Soft Threshold' | trans }}</h3>
 
             {{ form_row(globalThresholdForm.softStrategy) }}
-            {{ form_row(globalThresholdForm.softValue) }}
+            {{ form_row(globalThresholdForm.softThreshold) }}
             {{ form_row(globalThresholdForm.softFixedFee) }}
             {{ form_row(globalThresholdForm.softFlexibleFee) }}
 

@@ -54,6 +54,7 @@ class ThresholdDataProvider implements FormDataProviderInterface
     }
 
     /**
+     * @param int $idMerchantRelationship
      * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[] $minimumOrderValueTransfers
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
@@ -61,6 +62,7 @@ class ThresholdDataProvider implements FormDataProviderInterface
      * @return array
      */
     public function getData(
+        int $idMerchantRelationship,
         array $minimumOrderValueTransfers,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
@@ -88,6 +90,8 @@ class ThresholdDataProvider implements FormDataProviderInterface
                 $currencyTransfer
             );
         }
+
+        $data[ThresholdType::FIELD_ID_MERCHANT_RELATIONSHIP] = $idMerchantRelationship;
 
         return $data;
     }

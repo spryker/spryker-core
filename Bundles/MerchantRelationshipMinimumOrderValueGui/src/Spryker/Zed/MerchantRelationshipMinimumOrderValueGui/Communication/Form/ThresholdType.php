@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\For
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -29,6 +30,7 @@ class ThresholdType extends AbstractType
     public const PREFIX_SOFT = 'soft';
 
     public const FIELD_STORE_CURRENCY = 'storeCurrency';
+    public const FIELD_ID_MERCHANT_RELATIONSHIP = 'idMerchantRelationship';
     public const FIELD_HARD_THRESHOLD = 'hardThreshold';
 
     public const FIELD_SOFT_STRATEGY = 'softStrategy';
@@ -52,6 +54,7 @@ class ThresholdType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addStoreCurrencyField($builder, $options);
+        $this->addIdMerchantRelationshipField($builder);
 
         $this->addHardValueField($builder, $options);
         $this->addLocalizedForms($builder, static::PREFIX_HARD);
@@ -109,17 +112,29 @@ class ThresholdType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdMerchantRelationshipField(FormBuilderInterface $builder): self
+    {
+        $builder->add(static::FIELD_ID_MERCHANT_RELATIONSHIP, HiddenType::class, [
+            'required' => true,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return $this
      */
     protected function addStoreCurrencyField(FormBuilderInterface $builder, array $options): self
     {
-        $storesList = $options[static::OPTION_STORES_ARRAY];
-
         $builder->add(static::FIELD_STORE_CURRENCY, Select2ComboBoxType::class, [
             'label' => 'Store and Currency',
-            'choices' => $storesList,
+            'choices' => $options[static::OPTION_STORES_ARRAY],
             'choices_as_values' => true,
             'multiple' => false,
             'required' => true,
@@ -235,7 +250,7 @@ class ThresholdType extends AbstractType
             ->getLocaleCollection();
 
         foreach ($localeCollection as $localeTransfer) {
-            $name = self::getLocalizedFormName($localizedFormPrefix, $localeTransfer->getLocaleName());
+            $name = static::getLocalizedFormName($localizedFormPrefix, $localeTransfer->getLocaleName());
             $this->addLocalizedForm($builder, $name);
         }
 
