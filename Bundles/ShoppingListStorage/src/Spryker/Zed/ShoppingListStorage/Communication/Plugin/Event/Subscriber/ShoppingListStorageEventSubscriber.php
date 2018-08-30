@@ -67,7 +67,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     protected function addShoppingListDeleteListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(
-            ShoppingListEvents::CUSTOM_SHOPPING_LIST_DELETE,
+            ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_DELETE_CUSTOM,
             new ShoppingListStorageCustomListener()
         );
     }

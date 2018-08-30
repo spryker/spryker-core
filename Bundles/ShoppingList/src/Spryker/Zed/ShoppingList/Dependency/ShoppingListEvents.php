@@ -39,7 +39,7 @@ interface ShoppingListEvents
      *
      * @api
      */
-    public const CUSTOM_SHOPPING_LIST_DELETE = 'Custom.shopping_list.delete';
+    public const ENTITY_SPY_SHOPPING_LIST_DELETE_CUSTOM = 'Entity.shopping_list.deleteCustom';
 
     /**
      * Specification:
@@ -112,4 +112,12 @@ interface ShoppingListEvents
      * @api
      */
     public const ENTITY_SPY_SHOPPING_LIST_COMPANY_BUSINESS_UNIT_DELETE = 'Entity.spy_shopping_list_company_business_unit.delete';
+
+    /**
+     * Specification:
+     * - This constant event will be used as name of custom delete event for spy_shopping_list entity
+     *
+     * @api
+     */
+    public const ENTITY_SPY_SHOPPING_LIST_DELETE_CUSTOM_EVENT_NAME = 'spy_shopping_list';
 }

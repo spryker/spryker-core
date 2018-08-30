@@ -31,7 +31,6 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     protected const CANNOT_UPDATE_SHOPPING_LIST = 'customer.account.shopping_list.error.cannot_update';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CREATE_SUCCESS = 'customer.account.shopping_list.create.success';
     protected const GLOSSARY_PARAM_NAME = '%name%';
-    protected const CUSTOM_EVENT_NAME = 'custom_shopping_list';
     protected const CUSTOM_EVENT_COL_CUSTOMER_REFERENCE = 'spy_shopping_list.customer_reference';
 
     /**
@@ -220,13 +219,13 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         $this->shoppingListEntityManager->deleteShoppingListByName($shoppingListTransfer);
 
         $eventTransfer = (new EventEntityTransfer())
-            ->setName(static::CUSTOM_EVENT_NAME)
+            ->setName(ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_DELETE_CUSTOM_EVENT_NAME)
             ->setId($shoppingListTransfer->getIdShoppingList())
-            ->setEvent(ShoppingListEvents::CUSTOM_SHOPPING_LIST_DELETE)
+            ->setEvent(ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_DELETE_CUSTOM)
             ->setModifiedColumns([
                 static::CUSTOM_EVENT_COL_CUSTOMER_REFERENCE => $shoppingListTransfer->getCustomerReference(),
             ]);
-        $this->eventFacade->trigger(ShoppingListEvents::CUSTOM_SHOPPING_LIST_DELETE, $eventTransfer);
+        $this->eventFacade->trigger(ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_DELETE_CUSTOM, $eventTransfer);
 
         return (new ShoppingListResponseTransfer())->setIsSuccess(true);
     }

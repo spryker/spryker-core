@@ -24,6 +24,9 @@ class ShoppingListStorageCustomListener extends AbstractPlugin implements EventB
     /**
      * {@inheritdoc}
      *
+     *  Handles custom Delete event, that unlike of regular contains needed data in ModifiedColumns, uses this data
+     *  for Publish.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -36,13 +39,13 @@ class ShoppingListStorageCustomListener extends AbstractPlugin implements EventB
         $this->preventTransaction();
         $customerReferences = [];
 
-        $verifiedEventTransfers = $this->getFactory()
+        $validEventTransfers = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransfersByModifiedColumns($eventTransfers, [
                 SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE,
             ]);
 
-        foreach ($verifiedEventTransfers as $eventTransfer) {
+        foreach ($validEventTransfers as $eventTransfer) {
             $customerReferences[] = $eventTransfer->getModifiedColumns()[SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE];
         }
 
