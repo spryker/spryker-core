@@ -21,4 +21,16 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
             '\\Symfony\\Component\\Validator\\Constraints\\',
         ];
     }
+
+    /**
+     * @return string[]
+     */
+    public function getAvailableMethods(): array
+    {
+        return [
+            'POST',
+            'PUT',
+            'PATCH',
+        ];
+    }
 }

@@ -28,7 +28,8 @@ class RestRequestValidatorFactory extends AbstractFactory
     {
         return new RestRequestValidator(
             $this->createRestRequestConfigurationReader(),
-            $this->createRestRequestValidatorConstraintResolver()
+            $this->createRestRequestValidatorConstraintResolver(),
+            $this->getConfig()
         );
     }
 

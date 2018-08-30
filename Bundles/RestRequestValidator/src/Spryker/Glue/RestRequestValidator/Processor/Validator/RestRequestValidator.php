@@ -32,15 +32,23 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected $constraintResolver;
 
     /**
+     * @var \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface $configReader
      * @param \Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface $constraintResolver
+     * @param \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig $config
      */
     public function __construct(
         RestRequestValidatorConfigReaderInterface $configReader,
-        RestRequestValidatorConstraintResolverInterface $constraintResolver
+        RestRequestValidatorConstraintResolverInterface $constraintResolver,
+        RestRequestValidatorConfig $config
     ) {
         $this->configReader = $configReader;
         $this->constraintResolver = $constraintResolver;
+        $this->config = $config;
     }
 
     /**
@@ -51,7 +59,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
      */
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
-        if (!$restRequest->getResource()->getAttributes()) {
+        if (!$restRequest->getResource()->getAttributes() || !$this->isSubjectByMethod($restRequest)) {
             return null;
         }
 
@@ -164,5 +172,15 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function getDefaultValidationConfig(): array
     {
         return ['allowExtraFields' => true, 'groups' => ['Default']];
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function isSubjectByMethod(RestRequestInterface $restRequest): bool
+    {
+        return in_array($restRequest->getMetadata()->getMethod(), $this->config->getAvailableMethods());
     }
 }
