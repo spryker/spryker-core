@@ -153,6 +153,8 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
                 $localizedAttribute
             );
 
+            $this->expandProductConcretePageSearchTransferWithPlugins($productConcreteTransfer, $productConcretePageSearchTransfer);
+
             $productConcretePageSearchTransfer->setData(
                 $this->mapper->mapToSearchData($productConcretePageSearchTransfer)
             );
@@ -160,8 +162,6 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
             $productConcretePageSearchTransfer->setStructuredData(
                 $this->utilEncoding->encodeJson($productConcretePageSearchTransfer->toArray())
             );
-
-            $this->expandProductConcretePageSearchTransferWithPlugins($productConcreteTransfer, $productConcretePageSearchTransfer);
 
             $this->entityManager->saveProductConcretePageSearch($productConcretePageSearchTransfer);
         }

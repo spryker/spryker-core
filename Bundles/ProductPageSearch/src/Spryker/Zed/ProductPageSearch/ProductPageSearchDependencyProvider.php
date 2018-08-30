@@ -51,6 +51,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     const PLUGIN_PRODUCT_PAGE_DATA_EXPANDER = 'PLUGIN_PRODUCT_PAGE_DATA_EXPANDER';
     const PLUGIN_PRODUCT_PAGE_MAP_EXPANDER = 'PLUGIN_PRODUCT_PAGE_MAP_EXPANDER';
     const PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER';
+    const PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER';
     const PLUGIN_PRODUCT_PRICE_PAGE_DATA = 'PLUGIN_PRODUCT_PRICE_PAGE_DATA';
     const PLUGIN_PRODUCT_CATEGORY_PAGE_DATA = 'PLUGIN_PRODUCT_CATEGORY_PAGE_DATA';
     const PLUGIN_PRODUCT_IMAGE_PAGE_DATA = 'PLUGIN_PRODUCT_IMAGE_PAGE_DATA';
@@ -110,6 +111,10 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return $this->getProductConcretePageMapExpanderPlugins();
         };
 
+        $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER] = function (Container $container) {
+            return $this->getProductConcretePageDataExpanderPlugins();
+        };
+
         return $container;
     }
 
@@ -134,6 +139,10 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[static::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER] = function (Container $container) {
             return $this->getDataExpanderPlugins();
+        };
+
+        $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER] = function (Container $container) {
+            return $this->getProductConcretePageDataExpanderPlugins();
         };
 
         return $container;
@@ -201,6 +210,14 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
      */
     protected function getProductConcretePageMapExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface[]
+     */
+    protected function getProductConcretePageDataExpanderPlugins(): array
     {
         return [];
     }

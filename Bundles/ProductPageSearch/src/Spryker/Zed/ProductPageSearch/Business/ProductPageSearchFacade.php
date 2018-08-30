@@ -48,8 +48,6 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param array $productAbstractIds
@@ -61,5 +59,37 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
         $this->getFactory()
             ->createProductAbstractPagePublisher()
             ->unpublish($productAbstractIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return void
+     */
+    public function publishConcreteProducts(array $productConcreteIds): void
+    {
+        $this->getFactory()
+            ->createProductConcretePageSearchPublisher()
+            ->publish($productConcreteIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return void
+     */
+    public function unpublishConcreteProducts(array $productConcreteIds): void
+    {
+        $this->getFactory()
+            ->createProductConcretePageSearchPublisher()
+            ->unpublish($productConcreteIds);
     }
 }
