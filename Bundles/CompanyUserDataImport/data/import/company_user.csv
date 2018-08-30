@@ -1,4 +1,6 @@
 company_user_key,customer_reference,company_key,is_default
+Test--1,DE--1,test-company,true
+BoB--1,DE--5,BoB-Regular,
 Otto--1,DE--8,Ottom_ltd,
 Otto--2,DE--9,Ottom_ltd,
 Otto--3,DE--10,Ottom_ltd,
