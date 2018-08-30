@@ -114,7 +114,7 @@ abstract class AbstractRouter implements RouterInterface
         $url = $pathInfo;
         $scheme = $this->context->getScheme();
 
-        if (self::NETWORK_PATH !== $referenceType &&
+        if ($referenceType !== self::NETWORK_PATH &&
             ($scheme === 'http' && $this->sslEnabled === true || $scheme === 'https' && $this->sslEnabled === false)) {
             $referenceType = self::ABSOLUTE_URL;
         }
@@ -145,7 +145,7 @@ abstract class AbstractRouter implements RouterInterface
     {
         $scheme = $this->getScheme();
         $port = $this->getPortPart($scheme);
-        $schemeAuthority = self::NETWORK_PATH === $referenceType ? '//' : "$scheme://";
+        $schemeAuthority = $referenceType === self::NETWORK_PATH ? '//' : "$scheme://";
         $schemeAuthority .= $this->context->getHost() . $port;
 
         return $schemeAuthority . $this->context->getBaseUrl() . $pathInfo;

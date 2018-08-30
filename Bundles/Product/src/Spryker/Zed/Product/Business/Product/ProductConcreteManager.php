@@ -458,4 +458,24 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
 
         $this->productQueryContainer->getConnection()->commit();
     }
+
+    /**
+     * @param string[] $skus
+     *
+     * @return array
+     */
+    public function getProductConcreteIdsByConcreteSkus(array $skus): array
+    {
+        return $this->productRepository->getProductConcreteIdsByConcreteSkus($skus);
+    }
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return array
+     */
+    public function getProductConcreteSkusByConcreteIds(array $productIds): array
+    {
+        return $this->productRepository->getProductConcreteSkusByConcreteIds($productIds);
+    }
 }

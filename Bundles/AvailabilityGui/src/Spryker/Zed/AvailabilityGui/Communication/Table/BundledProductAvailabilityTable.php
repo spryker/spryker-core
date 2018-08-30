@@ -38,7 +38,7 @@ class BundledProductAvailabilityTable extends AbstractTable
     protected $idProductBundle;
 
     /**
-     * @var \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerInterface
+     * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected $productAbstractQuery;
 

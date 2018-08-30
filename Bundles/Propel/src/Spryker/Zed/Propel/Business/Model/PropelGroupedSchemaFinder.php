@@ -25,7 +25,7 @@ class PropelGroupedSchemaFinder implements PropelGroupedSchemaFinderInterface
     }
 
     /**
-     * @return array|\Symfony\Component\Finder\SplFileInfo
+     * @return array
      */
     public function getGroupedSchemaFiles()
     {
