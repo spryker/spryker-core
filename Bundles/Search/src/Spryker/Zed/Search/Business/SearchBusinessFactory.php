@@ -152,7 +152,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param null|string $index
+     * @param string|null $index
      *
      * @return \Elastica\Index
      */

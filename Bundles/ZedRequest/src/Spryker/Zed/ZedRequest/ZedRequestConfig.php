@@ -37,7 +37,7 @@ class ZedRequestConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param null|string $bundleControllerAction
+     * @param string|null $bundleControllerAction
      *
      * @return string
      */

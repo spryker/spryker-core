@@ -107,7 +107,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     /**
      * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
      *
-     * @return null|\Generated\Shared\Transfer\CurrencyTransfer
+     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
      */
     protected function getCurrencyMetaTransfer(Request $request)
     {
