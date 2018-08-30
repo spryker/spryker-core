@@ -25,6 +25,7 @@ use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductAttribute\ProductAttributeConfig getConfig()
  * @method \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeRepositoryInterface getRepository()
  */
 class ProductAttributeBusinessFactory extends AbstractBusinessFactory
 {
@@ -97,7 +98,8 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
         return new AttributeReader(
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createProductAttributeTransferGenerator()
+            $this->createProductAttributeTransferGenerator(),
+            $this->getRepository()
         );
     }
 

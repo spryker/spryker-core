@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 
@@ -207,7 +208,7 @@ class ProductMoneyCollectionDataProvider
         CurrencyTransfer $currencyTransfer
     ) {
         return implode(
-            '-',
+            ProductMoneyCollectionType::PRICE_DELIMITER,
             [
                 $idStore,
                 $currencyTransfer->getIdCurrency(),

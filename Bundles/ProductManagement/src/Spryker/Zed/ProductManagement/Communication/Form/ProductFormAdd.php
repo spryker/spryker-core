@@ -21,6 +21,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
+use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductMoneyNotBlank;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -293,7 +294,7 @@ class ProductFormAdd extends AbstractType
                                 ->filterBySku($sku)
                                 ->_or()
                                 ->useSpyProductAbstractQuery()
-                                    ->filterBySku($sku)
+                                ->filterBySku($sku)
                                 ->endUse()
                                 ->count();
 
@@ -484,6 +485,9 @@ class ProductFormAdd extends AbstractType
                     'data_class' => PriceProductTransfer::class,
                 ],
                 'entry_type' => ProductMoneyType::class,
+                'constraints' => [
+                    new ProductMoneyNotBlank(),
+                ],
             ]
         );
 

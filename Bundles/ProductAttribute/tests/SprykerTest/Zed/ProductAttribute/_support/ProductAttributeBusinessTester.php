@@ -43,6 +43,9 @@ class ProductAttributeBusinessTester extends Actor
     const CONCRETE_SKU = 'testFooBarConcrete';
     const SUPER_ATTRIBUTE_KEY = 'super_attribute';
     const SUPER_ATTRIBUTE_VALUE = 'very super attribute';
+    const ANOTHER_SUPER_ATTRIBUTE_KEY = 'another_super_attribute';
+    const ANOTHER_SUPER_ATTRIBUTE_VALUE = 'another super attribute value';
+
     const FOO_ATTRIBUTE_KEY = 'foo';
 
     const DATA_PRODUCT_ATTRIBUTES_VALUES = [

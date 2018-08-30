@@ -2,12 +2,28 @@
     {% filter trans|raw %}
         <h3>Add General Information</h3>
         <p>Below the name and description for your product can be edited for different locales (in different languages).</p>
-        <p><i>Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.</i></p>
+        <p><i>Note: The SKU is not editable after saving anymore.</i></p>
     {% endfilter %}
 </div>
 
-{{ form_row(form.sku) }}
-{{ form_row(form.form_product_concrete_super_attributes) }}
+{{ form_row(form.sku, { 'id': 'sku-input' }) }}
+
+{% if form.sku_autogenerate_checkbox is defined %}
+    {{ form_row(form.sku_autogenerate_checkbox, { 'id': 'sku-autogenerate-checkbox-input' }) }}
+{% endif %}
+
+{% if form.form_product_concrete_super_attributes|length %}
+    {{ form_label(form.form_product_concrete_super_attributes) }}
+    {% for attributeForm in form.form_product_concrete_super_attributes %}
+        {{ form_label(attributeForm) }}
+        {{ form_widget(attributeForm) }}
+        {% if attributeForm.vars.errors|length %}
+            <div class="has-error">
+                {{ form_errors(attributeForm) }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
 
 {% for localeTransfer in localeCollection %}
     {% set formKey = 'general_' ~ localeTransfer.localeName %}
