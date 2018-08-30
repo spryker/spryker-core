@@ -436,9 +436,11 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
+     * @deprecated Not in use anymore. Will be removed with the next major.
+     *
      * @param \Generated\Shared\Transfer\TranslationTransfer $transferTranslation
      *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     protected function createAndTouchTranslationFromTransfer(TranslationTransfer $transferTranslation)
     {
@@ -510,7 +512,7 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function createTranslationForCurrentLocale($keyName, $value, $isActive = true)
     {
@@ -528,7 +530,7 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {

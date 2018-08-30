@@ -26,7 +26,7 @@ interface VariantGeneratorInterface
      *          [red] => Red
      *          [blue] => Blue
      *      )
-     *     [flavour] => Array
+     *     [flavor] => Array
      *      (
      *          [sweet] => Cakes
      *      )

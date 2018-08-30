@@ -116,6 +116,39 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function taxSetWithSameNameExists(string $name): bool
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->taxSetWithSameNameExists($name);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $name
+     * @param int $idTaxSet
+     *
+     * @return bool
+     */
+    public function taxSetWithSameNameAndIdExists(string $name, int $idTaxSet): bool
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->taxSetWithSameNameAndIdExists($name, $idTaxSet);
+    }
+
+    /**
      * Specification:
      *  - Create new tax rate
      *
@@ -315,7 +348,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
      * @param float $taxRate
      * @param bool $round
      *
-     * @return int
+     * @return float
      */
     public function getAccruedTaxAmountFromGrossPrice($grossPrice, $taxRate, $round = false)
     {

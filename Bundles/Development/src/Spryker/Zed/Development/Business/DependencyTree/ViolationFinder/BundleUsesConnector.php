@@ -9,6 +9,9 @@ namespace Spryker\Zed\Development\Business\DependencyTree\ViolationFinder;
 
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
+/**
+ * @deprecated Not used anymore.
+ */
 class BundleUsesConnector implements ViolationFinderInterface
 {
     /**
