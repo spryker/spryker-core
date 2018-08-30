@@ -43,10 +43,6 @@ class CustomersAddressesReader implements CustomersAddressesReaderInterface
      */
     public function readByIdentifier(string $customerReference, RestResourceInterface $restResource): RestResourceInterface
     {
-        if (!$customerReference) {
-            return $restResource;
-        }
-
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setCustomerReference($customerReference);
         $customerTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
