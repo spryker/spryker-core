@@ -19,7 +19,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     /**
      * @param int[] $ids
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     * @return array
      */
     public function findProductConcretePageSearchByProductConcreteIds(array $ids): array
     {

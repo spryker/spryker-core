@@ -22,6 +22,8 @@ use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInt
 
 class ProductPageSearchMapper implements ProductPageSearchMapperInterface
 {
+    public const IDENTIFIER_PRODUCT_CONCRETE_PAGE_SEARCH = 'id_product_concrete_page_search';
+
     /**
      * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface
      */

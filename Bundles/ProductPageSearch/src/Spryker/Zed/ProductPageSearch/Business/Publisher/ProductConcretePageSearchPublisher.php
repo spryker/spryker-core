@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductPageSearch\Business\Exception\ProductConcretePageSearchNotFoundException;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface;
+use Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapper;
 use Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchEntityManagerInterface;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface;
@@ -32,7 +33,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     protected $entityManager;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface
+     * @var \Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface
      */
     protected $mapper;
 
@@ -160,7 +161,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
             );
 
             $productConcretePageSearchTransfer->setStructuredData(
-                $this->utilEncoding->encodeJson($productConcretePageSearchTransfer->toArray())
+                $this->getStructuredDataFromProductConcretePageSearchTransfer($productConcretePageSearchTransfer)
             );
 
             $this->entityManager->saveProductConcretePageSearch($productConcretePageSearchTransfer);
@@ -177,7 +178,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     protected function deleteProductConcretePageSearch(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): void
     {
         if ($this->entityManager->deleteProductConcretePageSearch($productConcretePageSearchTransfer) === false) {
-            throw new ProductConcretePageSearchNotFoundException(sprintf('Target storage entry for product with id %s not found', $productConcretePageSearchTransfer->getIdProduct()));
+            throw new ProductConcretePageSearchNotFoundException(sprintf('Target storage entry for product with id %s not found', $productConcretePageSearchTransfer->getFkProduct()));
         }
     }
 
@@ -192,5 +193,18 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
         foreach ($this->pageDataExpanderPlugins as $plugin) {
             $plugin->expand($productConcreteTransfer, $productConcretePageSearchTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+     *
+     * @return string
+     */
+    protected function getStructuredDataFromProductConcretePageSearchTransfer(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer)
+    {
+        $data = $productConcretePageSearchTransfer->toArray();
+        unset($data[ProductPageSearchMapper::IDENTIFIER_PRODUCT_CONCRETE_PAGE_SEARCH]);
+
+        return $this->utilEncoding->encodeJson($data);
     }
 }
