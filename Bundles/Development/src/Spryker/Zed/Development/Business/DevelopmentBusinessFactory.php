@@ -21,7 +21,6 @@ use Spryker\Zed\Development\Business\Composer\Updater\BranchAliasUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\ComposerUpdaterComposite;
 use Spryker\Zed\Development\Business\Composer\Updater\DescriptionUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\LicenseUpdater;
-use Spryker\Zed\Development\Business\Composer\Updater\RequireExternalUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\RequireUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\StabilityUpdater;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainer;
@@ -1270,7 +1269,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             ->addUpdater($this->createComposerJsonDescriptionUpdater())
             ->addUpdater($this->createComposerJsonLicenseUpdater())
             ->addUpdater($this->createComposerJsonRequireUpdater())
-            ->addUpdater($this->createComposerJsonRequireExternalUpdater())
             ->addUpdater($this->createComposerJsonStabilityUpdater())
             ->addUpdater($this->createComposerJsonAutoloadUpdater())
             ->addUpdater($this->createComposerJsonBranchAliasUpdater());
@@ -1307,22 +1305,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createComposerJsonRequireUpdater()
     {
-        return new RequireUpdater(
-            $this->createDependencyTreeReader(),
-            $this->createComposerJsonRequireUpdaterTreeFilter()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface
-     */
-    protected function createComposerJsonRequireExternalUpdater()
-    {
-        return new RequireExternalUpdater(
-            $this->createExternalDependencyTree(),
-            $this->getConfig()->getExternalToInternalMap(),
-            $this->getConfig()->getIgnorableDependencies()
-        );
+        return new RequireUpdater();
     }
 
     /**
