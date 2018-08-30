@@ -24,8 +24,8 @@ class ShoppingListStorageCustomListener extends AbstractPlugin implements EventB
     /**
      * {@inheritdoc}
      *
-     *  Handles custom Delete event, that unlike of regular contains needed data in ModifiedColumns, uses this data
-     *  for Publish.
+     *  - Handles custom Delete event, that unlike of regular contains needed data in ModifiedColumns, uses this data
+     *    for Publish.
      *
      * @api
      *
