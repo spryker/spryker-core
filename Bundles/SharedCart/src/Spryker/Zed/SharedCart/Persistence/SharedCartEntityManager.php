@@ -10,6 +10,7 @@ namespace Spryker\Zed\SharedCart\Persistence;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareDetailTransfer;
 use Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -138,5 +139,27 @@ class SharedCartEntityManager extends AbstractEntityManager implements SharedCar
             ->createQuoteCompanyUserQuery()
             ->filterByFkQuote($quoteTransfer->getIdQuote())
             ->delete();
+    }
+
+    /**
+     * @param int $idQuote
+     * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
+     *
+     * @return void
+     */
+    public function updateCompanyUserQuotePermissionGroup(int $idQuote, ShareDetailTransfer $shareDetailTransfer): void
+    {
+        $shareDetailTransfer->requireIdCompanyUser();
+        $shareDetailTransfer->requireQuotePermissionGroup();
+
+        $quotePermissionGroupTransfer = $shareDetailTransfer->getQuotePermissionGroup();
+        $quotePermissionGroupTransfer->requireIdQuotePermissionGroup();
+
+        $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByFkQuote($idQuote)
+            ->filterByFkCompanyUser(
+                $shareDetailTransfer->getIdCompanyUser()
+            )->update(['FkQuotePermissionGroup' => $quotePermissionGroupTransfer->getIdQuotePermissionGroup()]);
     }
 }

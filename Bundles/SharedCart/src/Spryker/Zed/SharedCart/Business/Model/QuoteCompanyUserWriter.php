@@ -61,9 +61,35 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     {
         $currentQuoteCompanyUserIdCollection = $this->sharedCartRepository->findQuoteCompanyUserIdCollection($quoteTransfer->getIdQuote());
         $this->addNewQuoteCompanyUsers($quoteTransfer);
+        $this->updateExistingQuoteCompanyUsers($quoteTransfer, $currentQuoteCompanyUserIdCollection);
         $this->removeQuoteCompanyUsers((array)$quoteTransfer->getShareDetails(), $currentQuoteCompanyUserIdCollection);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int[] $currentQuoteCompanyUserIdCollection
+     *
+     * @return void
+     */
+    protected function updateExistingQuoteCompanyUsers(QuoteTransfer $quoteTransfer, array $currentQuoteCompanyUserIdCollection): void
+    {
+        $quoteCompanyUserIdIndex = $this->indexQuoteCompanyUserId((array)$quoteTransfer->getShareDetails());
+        $commonCompanyUserIdIndexes = array_intersect($quoteCompanyUserIdIndex, $currentQuoteCompanyUserIdCollection);
+
+        foreach ($quoteTransfer->getShareDetails() as $shareDetailTransfer) {
+            if (!$shareDetailTransfer->getIdQuoteCompanyUser()) {
+                continue;
+            }
+
+            if (in_array($shareDetailTransfer->getIdCompanyUser(), $commonCompanyUserIdIndexes, false)) {
+                $this->sharedCartEntityManager->updateCompanyUserQuotePermissionGroup(
+                    $quoteTransfer->getIdQuote(),
+                    $shareDetailTransfer
+                );
+            }
+        }
     }
 
     /**
