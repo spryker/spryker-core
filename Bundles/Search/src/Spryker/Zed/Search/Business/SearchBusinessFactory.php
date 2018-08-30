@@ -135,9 +135,12 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      */
     public function getElasticsearchClient()
     {
-        return $this
+        /** @var \Elastica\Client $client */
+        $client = $this
             ->createSearchClientProvider()
             ->getInstance();
+
+        return $client;
     }
 
     /**
