@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Country;
 
-use Generated\Shared\Transfer\CountryRequestTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\RegionCollectionTransfer;
 use Generated\Shared\Transfer\RegionRequestTransfer;
@@ -20,11 +19,11 @@ interface CountryClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CountryRequestTransfer $countryRequestTransfer
+     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
-    public function getCountryByIso2Code(CountryRequestTransfer $countryRequestTransfer): CountryTransfer;
+    public function getCountryByIso2Code(CountryTransfer $countryTransfer): CountryTransfer;
 
     /**
      * Specification:
@@ -36,5 +35,5 @@ interface CountryClientInterface
      *
      * @return \Generated\Shared\Transfer\RegionCollectionTransfer
      */
-    public function getRegionsByCountryIso2Code(RegionRequestTransfer $regionRequestTransfer): RegionCollectionTransfer;
+    public function findRegionsByCountryIso2Code(RegionRequestTransfer $regionRequestTransfer): RegionCollectionTransfer;
 }

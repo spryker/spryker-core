@@ -21,20 +21,16 @@
         <property name="fkCountry" type="int" />
         <property name="name" type="string" />
         <property name="iso2Code" type="string" />
+        <property name="country" type="Country" />
     </transfer>
 
     <transfer name="RegionCollection">
         <property name="regions" type="Region[]" />
     </transfer>
 
-    <transfer name="CountryRequest">
-        <property name="iso2Code" type="string"/>
-    </transfer>
-
     <transfer name="RegionRequest">
-        <property name="countryIso2Code" type="string"/>
+        <property name="region" type="Region"/>
     </transfer>
-
 
 </transfers>
 

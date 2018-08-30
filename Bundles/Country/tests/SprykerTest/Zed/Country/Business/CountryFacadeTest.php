@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Country\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CountryBuilder;
+use Generated\Shared\DataBuilder\RegionBuilder;
 use Generated\Shared\DataBuilder\RegionRequestBuilder;
 use Generated\Shared\Transfer\CountryTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
@@ -146,8 +148,11 @@ class CountryFacadeTest extends Unit
         $region->setIso2Code('TS');
         $region->save();
 
-        $regionRequestTransfer = (new RegionRequestBuilder())->build()->setCountryIso2Code($country->getIso2Code());
-        $regionTransfer = $this->countryFacade->getRegionsByCountryIso2Code($regionRequestTransfer);
+        $countryTransfer = (new CountryBuilder())->build()->setIso2Code($country->getIso2Code());
+        $regionTransfer = (new RegionBuilder())->build()->setCountry($countryTransfer);
+        $regionRequestTransfer = (new RegionRequestBuilder())->build()->setRegion($regionTransfer);
+
+        $regionTransfer = $this->countryFacade->findRegionsByCountryIso2Code($regionRequestTransfer);
 
         $this->assertEquals('TS', $regionTransfer->getRegions()[0]->getIso2Code());
     }

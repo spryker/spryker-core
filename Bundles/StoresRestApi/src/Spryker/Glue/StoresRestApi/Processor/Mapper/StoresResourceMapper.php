@@ -9,24 +9,35 @@ namespace Spryker\Glue\StoresRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\StoreLocaleRestAttributesTransfer;
 use Generated\Shared\Transfer\StoresRestAttributesTransfer;
-use Spryker\Shared\Kernel\Store;
 
 class StoresResourceMapper implements StoresResourceMapperInterface
 {
     /**
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @var \Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
+     * @param \Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToStoreClientInterface $storeClient
+     */
+    public function __construct($storeClient)
+    {
+        $this->storeClient = $storeClient;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer[] $countries
      * @param \Generated\Shared\Transfer\StoreCurrencyRestAttributesTransfer[] $currencies
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    public function mapStoreToStoresRestAttribute(Store $store, array $countries, array $currencies): StoresRestAttributesTransfer
+    public function mapStoreToStoresRestAttribute(array $countries, array $currencies): StoresRestAttributesTransfer
     {
         $storesRestAttributes = new StoresRestAttributesTransfer();
 
         $storesRestAttributes = $this->addLocaleToStoresRestAttributes(
             $storesRestAttributes,
-            $store->getLocales()
+            $this->storeClient->getCurrentStore()->getAvailableLocaleIsoCodes()
         );
 
         $storesRestAttributes = $this->addStoreCountryToStoresRestAttributes(
@@ -34,11 +45,11 @@ class StoresResourceMapper implements StoresResourceMapperInterface
             $countries
         );
 
-        $storesRestAttributes = $this->addTimeZoneToStoresRestAttributes($storesRestAttributes, $store);
+        $storesRestAttributes = $this->addTimeZoneToStoresRestAttributes($storesRestAttributes);
 
         $storesRestAttributes = $this->addDefaultCurrencyToStoresRestAttributes(
             $storesRestAttributes,
-            $store->getDefaultCurrencyCode()
+            $this->storeClient->getCurrentStore()->getDefaultCurrencyIsoCode()
         );
 
         $storesRestAttributes = $this->addStoreCurrencyToStoresRestAttributes(
@@ -73,32 +84,23 @@ class StoresResourceMapper implements StoresResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
-     * @param \Spryker\Shared\Kernel\Store $store
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    protected function addTimeZoneToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, Store $store): StoresRestAttributesTransfer
+    protected function addTimeZoneToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes): StoresRestAttributesTransfer
     {
-        if (isset($store->getContexts()['glue']['timezone'])) {
-            return $storesRestAttributes->setTimeZone($store->getContexts()['glue']['timezone']);
-        }
-
-        if (isset($store->getContexts()['*']['timezone'])) {
-            return $storesRestAttributes->setTimeZone($store->getContexts()['*']['timezone']);
-        }
-
-        return $storesRestAttributes;
+        return $storesRestAttributes->setTimeZone($this->storeClient->getCurrentStore()->getTimezone());
     }
 
     /**
      * @param \Generated\Shared\Transfer\StoresRestAttributesTransfer $storesRestAttributes
-     * @param string $defaulCurrency
+     * @param string $defaultCurrency
      *
      * @return \Generated\Shared\Transfer\StoresRestAttributesTransfer
      */
-    protected function addDefaultCurrencyToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, string $defaulCurrency): StoresRestAttributesTransfer
+    protected function addDefaultCurrencyToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, string $defaultCurrency): StoresRestAttributesTransfer
     {
-        $storesRestAttributes->setDefaultCurrency($defaulCurrency);
+        $storesRestAttributes->setDefaultCurrency($defaultCurrency);
 
         return $storesRestAttributes;
     }

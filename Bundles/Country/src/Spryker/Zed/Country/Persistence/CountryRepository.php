@@ -20,7 +20,7 @@ class CountryRepository extends AbstractRepository implements CountryRepositoryI
      *
      * @return \Generated\Shared\Transfer\RegionCollectionTransfer
      */
-    public function getRegionsByCountryIso2Code(string $iso2Code): RegionCollectionTransfer
+    public function findRegionsByCountryIso2Code(string $iso2Code): RegionCollectionTransfer
     {
         $query = $this->getFactory()
             ->createRegionQuery()

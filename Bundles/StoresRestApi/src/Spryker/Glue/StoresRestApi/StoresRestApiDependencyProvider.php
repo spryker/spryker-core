@@ -11,13 +11,13 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientBridge;
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCurrencyClientBridge;
-use Spryker\Shared\Kernel\Store;
+use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToStoreClientBridge;
 
 class StoresRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_COUNTRY = 'CLIENT_COUNTRY';
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
-    public const STORE = 'STORE';
+    public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -28,7 +28,7 @@ class StoresRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addCountryClient($container);
         $container = $this->addCurrencyClient($container);
-        $container = $this->addStore($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -66,10 +66,10 @@ class StoresRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addStore(Container $container): Container
+    protected function addStoreClient(Container $container): Container
     {
-        $container[static::STORE] = function () {
-            return Store::getInstance();
+        $container[static::CLIENT_STORE] = function (Container $container) {
+            return new StoresRestApiToStoreClientBridge($container->getLocator()->store()->client());
         };
 
         return $container;

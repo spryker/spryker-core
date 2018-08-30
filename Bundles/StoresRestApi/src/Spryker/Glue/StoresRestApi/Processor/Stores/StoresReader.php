@@ -10,9 +10,9 @@ namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToStoreClientInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresResourceMapperInterface;
 use Spryker\Glue\StoresRestApi\StoresRestApiConfig;
-use Spryker\Shared\Kernel\Store;
 
 class StoresReader implements StoresReaderInterface
 {
@@ -37,29 +37,29 @@ class StoresReader implements StoresReaderInterface
     protected $storesResourceMapper;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToStoreClientInterface
      */
-    protected $store;
+    protected $storeClient;
 
     /**
      * @param \Spryker\Glue\StoresRestApi\Processor\Stores\StoresCountryReaderInterface $countryReader
      * @param \Spryker\Glue\StoresRestApi\Processor\Stores\StoresCurrencyReaderInterface $currencyReader
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\StoresRestApi\Processor\Mapper\StoresResourceMapperInterface $storesResourceMapper
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToStoreClientInterface $storeClient
      */
     public function __construct(
         StoresCountryReaderInterface $countryReader,
         StoresCurrencyReaderInterface $currencyReader,
         RestResourceBuilderInterface $restResourceBuilder,
         StoresResourceMapperInterface $storesResourceMapper,
-        Store $store
+        StoresRestApiToStoreClientInterface $storeClient
     ) {
         $this->countryReader = $countryReader;
         $this->currencyReader = $currencyReader;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->storesResourceMapper = $storesResourceMapper;
-        $this->store = $store;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -70,14 +70,13 @@ class StoresReader implements StoresReaderInterface
     public function getStoresAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
         $storesRestAttributes = $this->storesResourceMapper->mapStoreToStoresRestAttribute(
-            $this->store,
-            $this->countryReader->getStoresCountryAttributes($this->store->getCountries()),
-            $this->currencyReader->getStoresCurrencyAttributes($this->store->getCurrencyIsoCodes())
+            $this->countryReader->getStoresCountryAttributes($this->storeClient->getCurrentStore()->getCountries()),
+            $this->currencyReader->getStoresCurrencyAttributes($this->storeClient->getCurrentStore()->getAvailableCurrencyIsoCodes())
         );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             StoresRestApiConfig::RESOURCE_STORES,
-            $this->store->getStoreName(),
+            $this->storeClient->getCurrentStore()->getName(),
             $storesRestAttributes
         );
 
