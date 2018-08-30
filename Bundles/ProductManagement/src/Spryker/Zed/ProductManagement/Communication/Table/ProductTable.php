@@ -162,6 +162,7 @@ class ProductTable extends AbstractProductTable
      */
     protected function getStoreNames($idProductAbstract)
     {
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractStore[] $productAbstractStoreCollection */
         $productAbstractStoreCollection = $this->getProductAbstractStoreWithStore($idProductAbstract);
 
         $storeNames = [];
@@ -178,7 +179,7 @@ class ProductTable extends AbstractProductTable
     /**
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStore[]
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
      */
     protected function getProductAbstractStoreWithStore($idProductAbstract)
     {

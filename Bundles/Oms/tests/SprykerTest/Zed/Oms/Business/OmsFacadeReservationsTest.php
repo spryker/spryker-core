@@ -71,6 +71,7 @@ class OmsFacadeReservationsTest extends Unit
 
         $saveOrderTransfer = $this->tester->haveOrder([
             'unitPrice' => 100,
+            'sumPrice' => 100,
         ], $testStateMachineProcessName);
 
         $salesOrderEntity = SpySalesOrderQuery::create()

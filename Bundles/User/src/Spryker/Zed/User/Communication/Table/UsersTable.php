@@ -162,7 +162,7 @@ class UsersTable extends AbstractTable
     /**
      * @param array $user
      *
-     * @return array
+     * @return string
      */
     protected function createStatusButton(array $user)
     {
@@ -175,7 +175,7 @@ class UsersTable extends AbstractTable
             );
         }
 
-        return $urls[] = $this->generateViewButton(
+        return $this->generateViewButton(
             Url::generate(self::DEACTIVATE_USER_URL, [
                 self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
             ]),

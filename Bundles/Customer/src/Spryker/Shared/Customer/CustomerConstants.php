@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Customer;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface CustomerConstants
 {
     const CUSTOMER_ANONYMOUS_PATTERN = 'CUSTOMER_ANONYMOUS_PATTERN';
