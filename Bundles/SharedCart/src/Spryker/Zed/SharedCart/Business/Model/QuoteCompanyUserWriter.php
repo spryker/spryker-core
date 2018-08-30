@@ -83,7 +83,7 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
                 continue;
             }
 
-            if (in_array($shareDetailTransfer->getIdCompanyUser(), $commonCompanyUserIdIndexes, false)) {
+            if (in_array($shareDetailTransfer->getIdQuoteCompanyUser(), $commonCompanyUserIdIndexes, false)) {
                 $this->sharedCartEntityManager->updateCompanyUserQuotePermissionGroup(
                     $quoteTransfer->getIdQuote(),
                     $shareDetailTransfer
