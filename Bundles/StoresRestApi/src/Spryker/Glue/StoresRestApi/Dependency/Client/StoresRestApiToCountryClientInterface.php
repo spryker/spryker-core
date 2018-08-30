@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\StoresRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryRequestTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
-use Generated\Shared\Transfer\RegionCollectionTransfer;
-use Generated\Shared\Transfer\RegionRequestTransfer;
 
 interface StoresRestApiToCountryClientInterface
 {
@@ -21,9 +21,9 @@ interface StoresRestApiToCountryClientInterface
     public function getCountryByIso2Code(CountryTransfer $countryTransfer): CountryTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\RegionRequestTransfer $regionRequestTransfer
+     * @param \Generated\Shared\Transfer\CountryRequestTransfer $countryRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\RegionCollectionTransfer
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function findRegionsByCountryIso2Code(RegionRequestTransfer $regionRequestTransfer): RegionCollectionTransfer;
+    public function findCountriesByIso2Codes(CountryRequestTransfer $countryRequestTransfer): CountryCollectionTransfer;
 }

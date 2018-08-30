@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\Country\Business\Region;
 
-use Generated\Shared\Transfer\RegionCollectionTransfer;
-use Generated\Shared\Transfer\RegionRequestTransfer;
+use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryRequestTransfer;
 
 interface RegionReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RegionRequestTransfer $regionRequestTransfer
+     * @param \Generated\Shared\Transfer\CountryRequestTransfer $countryRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\RegionCollectionTransfer
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function findRegionsByCountryIso2Code(RegionRequestTransfer $regionRequestTransfer): RegionCollectionTransfer;
+    public function findCountriesByIso2Codes(CountryRequestTransfer $countryRequestTransfer): CountryCollectionTransfer;
 }

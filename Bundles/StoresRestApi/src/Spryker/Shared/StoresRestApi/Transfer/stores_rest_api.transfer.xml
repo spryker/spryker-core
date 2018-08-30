@@ -17,7 +17,7 @@
         <property name="name" type="string"/>
         <property name="postalCodeMandatory" type="bool"/>
         <property name="postalCodeRegex" type="string"/>
-        <property name="regions" type="StoreRegionRestAttributes[]"/>
+        <property name="regions" type="StoreRegionRestAttributes[]" singular="region"/>
     </transfer>
 
     <transfer name="StoreRegionRestAttributes">

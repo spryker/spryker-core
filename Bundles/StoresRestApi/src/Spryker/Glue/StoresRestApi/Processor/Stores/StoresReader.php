@@ -69,14 +69,15 @@ class StoresReader implements StoresReaderInterface
      */
     public function getStoresAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
+        $currentStore = $this->storeClient->getCurrentStore();
         $storesRestAttributes = $this->storesResourceMapper->mapStoreToStoresRestAttribute(
-            $this->countryReader->getStoresCountryAttributes($this->storeClient->getCurrentStore()->getCountries()),
-            $this->currencyReader->getStoresCurrencyAttributes($this->storeClient->getCurrentStore()->getAvailableCurrencyIsoCodes())
+            $this->countryReader->getStoresCountryAttributes($currentStore->getCountries()),
+            $this->currencyReader->getStoresCurrencyAttributes($currentStore->getAvailableCurrencyIsoCodes())
         );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             StoresRestApiConfig::RESOURCE_STORES,
-            $this->storeClient->getCurrentStore()->getName(),
+            $currentStore->getName(),
             $storesRestAttributes
         );
 

@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CountryTransfer;
-use Generated\Shared\Transfer\RegionCollectionTransfer;
 use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
 use Generated\Shared\Transfer\StoreRegionRestAttributesTransfer;
 
@@ -16,23 +16,24 @@ class StoresCountryResourceMapper implements StoresCountryResourceMapperInterfac
 {
     /**
      * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
-     * @param \Generated\Shared\Transfer\RegionCollectionTransfer $regionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer
      */
-    public function mapCountryToStoresCountryRestAttributes(CountryTransfer $countryTransfer, RegionCollectionTransfer $regionCollectionTransfer): StoreCountryRestAttributesTransfer
+    public function mapCountryToStoresCountryRestAttributes(CountryTransfer $countryTransfer): StoreCountryRestAttributesTransfer
     {
         $storesCountryAttributes = (new StoreCountryRestAttributesTransfer())->fromArray(
             $countryTransfer->toArray(),
             true
         );
 
-        foreach ($regionCollectionTransfer->getRegions() as $regionTransfer) {
-            $storesCountryAttributes->addRegions((new StoreRegionRestAttributesTransfer())->fromArray(
+        $regions = new ArrayObject();
+        foreach ($countryTransfer->getRegions() as $regionTransfer) {
+            $regions->append((new StoreRegionRestAttributesTransfer())->fromArray(
                 $regionTransfer->toArray(),
                 true
             ));
         }
+        $storesCountryAttributes->setRegions($regions);
 
         return $storesCountryAttributes;
     }
