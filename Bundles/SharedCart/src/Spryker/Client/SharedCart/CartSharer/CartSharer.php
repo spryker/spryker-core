@@ -65,6 +65,8 @@ class CartSharer implements CartSharerInterface
     }
 
     /**
+     * @deprecated Please use QuotePermissionsUpdater::updateQuotePermissions() instead
+     *
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
