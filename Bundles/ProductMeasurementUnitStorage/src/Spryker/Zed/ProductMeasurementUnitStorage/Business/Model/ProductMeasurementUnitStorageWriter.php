@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Business\Model;
 
 use Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer;
-use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer;
 use Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageEntityManagerInterface;
@@ -53,17 +53,17 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
      */
     public function publish(array $productMeasurementUnitIds): void
     {
-        $productMeasurementUnitEntities = $this->findProductMeasurementUnitEntities($productMeasurementUnitIds);
+        $productMeasurementUnitTransfers = $this->findProductMeasurementUnitTransfers($productMeasurementUnitIds);
         $productMeasurementUnitStorageEntities = $this->findProductMeasurementUnitStorageEntities($productMeasurementUnitIds);
         $mappedProductMeasurementUnitStorageEntities = $this->mapProductMeasurementUnitStorageEntities($productMeasurementUnitStorageEntities);
 
-        foreach ($productMeasurementUnitEntities as $productMeasurementUnitEntity) {
-            $idProductMeasurementUnit = $productMeasurementUnitEntity->getIdProductMeasurementUnit();
+        foreach ($productMeasurementUnitTransfers as $productMeasurementUnitTransfer) {
+            $idProductMeasurementUnit = $productMeasurementUnitTransfer->getIdProductMeasurementUnit();
             $productMeasurementUnitStorageEntity = $this->selectStorageEntity($mappedProductMeasurementUnitStorageEntities, $idProductMeasurementUnit);
 
             unset($mappedProductMeasurementUnitStorageEntities[$idProductMeasurementUnit]);
 
-            $this->saveStorageEntity($productMeasurementUnitStorageEntity, $productMeasurementUnitEntity);
+            $this->saveStorageEntity($productMeasurementUnitStorageEntity, $productMeasurementUnitTransfer);
         }
 
         $this->deleteStorageEntities($mappedProductMeasurementUnitStorageEntities);
@@ -71,19 +71,19 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
 
     /**
      * @param \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntity
-     * @param \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer $productMeasurementUnitEntity
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
      *
      * @return void
      */
     protected function saveStorageEntity(
         SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntity,
-        SpyProductMeasurementUnitEntityTransfer $productMeasurementUnitEntity
+        ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
     ): void {
         $productMeasurementUnitStorageEntity
-            ->setFkProductMeasurementUnit($productMeasurementUnitEntity->getIdProductMeasurementUnit())
+            ->setFkProductMeasurementUnit($productMeasurementUnitTransfer->getIdProductMeasurementUnit())
             ->setData(
                 (new ProductMeasurementUnitStorageTransfer())
-                    ->fromArray($productMeasurementUnitEntity->toArray(), true)
+                    ->fromArray($productMeasurementUnitTransfer->toArray(), true)
                     ->toArray()
             );
 
@@ -122,11 +122,11 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
     /**
      * @param int[] $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    protected function findProductMeasurementUnitEntities(array $productMeasurementUnitIds): array
+    protected function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array
     {
-        return $this->productMeasurementUnitFacade->findProductMeasurementUnitEntities($productMeasurementUnitIds);
+        return $this->productMeasurementUnitFacade->findProductMeasurementUnitTransfers($productMeasurementUnitIds);
     }
 
     /**

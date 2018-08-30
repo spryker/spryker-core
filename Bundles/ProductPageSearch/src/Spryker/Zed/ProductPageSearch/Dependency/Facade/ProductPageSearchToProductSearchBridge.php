@@ -18,8 +18,6 @@ class ProductPageSearchToProductSearchBridge implements ProductPageSearchToProdu
     protected $productSearchFacade;
 
     /**
-     * ProductPageSearchToProductSearchBridge constructor.
-     *
      * @param \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface $productSearchFacade
      */
     public function __construct($productSearchFacade)

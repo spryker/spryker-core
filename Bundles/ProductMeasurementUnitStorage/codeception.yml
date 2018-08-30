@@ -1,4 +1,4 @@
-namespace: SprykerTest
+namespace: ProductMeasurementUnitStorage
 actor: Tester
 
 include:
@@ -20,5 +20,4 @@ settings:
 
 coverage:
     enabled: true
-    remote: false
-    whitelist: { include: ['src/*'] }
+    whitelist: { include: ['src/*.php'] }

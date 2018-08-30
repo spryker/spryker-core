@@ -12,7 +12,7 @@ interface ProductConcreteMeasurementUnitStorageReaderInterface
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[] Keys are store names
      */
-    public function getProductConcreteMeasurementUnitStorageByIdProduct(int $idProduct): array;
+    public function generateProductConcreteMeasurementUnitStorageTransfersByIdProduct(int $idProduct): array;
 }

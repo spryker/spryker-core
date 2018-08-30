@@ -32,8 +32,12 @@ use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusChecker;
+use Spryker\Zed\Product\Business\Product\Status\ProductConcreteStatusChecker;
+use Spryker\Zed\Product\Business\Product\Status\ProductConcreteStatusCheckerInterface;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReader;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriter;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggester;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggesterInterface;
 use Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouch;
 use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouch;
 use Spryker\Zed\Product\Business\Product\Url\ProductAbstractAfterUpdateUrlObserver;
@@ -47,6 +51,7 @@ use Spryker\Zed\Product\ProductDependencyProvider;
 /**
  * @method \Spryker\Zed\Product\ProductConfig getConfig()
  * @method \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Product\Persistence\ProductRepositoryInterface getRepository()
  */
 class ProductBusinessFactory extends AbstractBusinessFactory
 {
@@ -96,7 +101,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractAssertion(),
             $this->createProductConcreteAssertion(),
             $this->createAttributeEncoder(),
-            $this->createProductTransferMapper()
+            $this->createProductTransferMapper(),
+            $this->getRepository()
         );
 
         $productConcreteManager->setEventFacade($this->getEventFacade());
@@ -162,6 +168,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractStatusChecker()
     {
         return new ProductAbstractStatusChecker($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Status\ProductConcreteStatusCheckerInterface
+     */
+    public function createProductConcreteStatusChecker(): ProductConcreteStatusCheckerInterface
+    {
+        return new ProductConcreteStatusChecker($this->getRepository());
     }
 
     /**
@@ -550,5 +564,17 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function getEventFacade()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Suggest\ProductSuggesterInterface
+     */
+    public function createProductSuggester(): ProductSuggesterInterface
+    {
+        return new ProductSuggester(
+            $this->getConfig(),
+            $this->getRepository(),
+            $this->getLocaleFacade()
+        );
     }
 }

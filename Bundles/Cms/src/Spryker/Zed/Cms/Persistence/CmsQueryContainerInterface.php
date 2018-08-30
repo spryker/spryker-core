@@ -49,6 +49,15 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param int $idUrl
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlById($idUrl);
+
+    /**
+     * @api
+     *
      * @param int $idCmsPage
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
@@ -294,4 +303,28 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryResourceUrlByCmsPageId($idCmsPage);
+
+    /**
+     * @api
+     *
+     * @param string $key
+     * @param int $localeId
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function queryKeyWithTranslationByKeyAndLocale($key, $localeId);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryPageWithTemplatesAndUrls();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlsWithRedirect();
 }

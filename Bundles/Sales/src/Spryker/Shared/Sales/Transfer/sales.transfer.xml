@@ -115,10 +115,16 @@
         <property name="state" type="ItemState" />
         <property name="canceledAmount" type="int"/>
         <property name="stateHistory" type="ItemState[]" />
+        <property name="isOrdered" type="bool" />
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item" />
     </transfer>
 
     <transfer name="Expense">
         <property name="unitGrossPrice" type="int" />
+        <property name="isOrdered" type="bool" />
     </transfer>
 
     <transfer name="TaxSet">
@@ -135,7 +141,7 @@
         <property name="expenses" type="Expense[]" singular="expense" />
     </transfer>
 
-    <transfer name="StatemachineTrigger">
+    <transfer name="StatemachineTrigger" deprecated="Not in use anymore, will be removed with next major">
         <property name="eventName" type="string" />
         <property name="orderId" type="string" />
         <property name="references" type="array" />

@@ -1,7 +1,9 @@
-namespace: SprykerTest
+namespace: ProductMeasurementUnit
 actor: Tester
+
 include:
-  - tests/SprykerTest/Zed/ProductMeasurementUnit
+    - tests/SprykerTest/Zed/ProductMeasurementUnit
+
 paths:
     tests: tests
     log: tests/_output
@@ -18,5 +20,4 @@ settings:
 
 coverage:
     enabled: true
-    remote: false
-    whitelist: { include: ['src/*'] }
+    whitelist: { include: ['src/*.php'] }

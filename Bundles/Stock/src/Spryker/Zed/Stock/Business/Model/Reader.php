@@ -168,7 +168,7 @@ class Reader implements ReaderInterface
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]|\Traversable
      */
     public function getStocksProduct($sku)
     {
@@ -188,7 +188,7 @@ class Reader implements ReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]|\Traversable
      */
     public function findProductStocksForStore($sku, StoreTransfer $storeTransfer)
     {

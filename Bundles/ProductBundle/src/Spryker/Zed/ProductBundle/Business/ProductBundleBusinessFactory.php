@@ -28,6 +28,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFin
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Quote\QuoteItemsGrouper;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Quote\QuoteItemsGrouperInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleIdHydrator;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundlesSalesOrderHydrate;
@@ -142,7 +144,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
             $this->getAvailabilityQueryContainer(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getConfig()
         );
     }
 
@@ -154,7 +157,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleCheckoutAvailabilityCheck(
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getConfig()
         );
     }
 
@@ -252,6 +256,14 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductBundleCartChangeObserver(): ProductBundleCartChangeObserverInterface
     {
         return new ProductBundleCartChangeObserver($this->getMessengerFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Quote\QuoteItemsGrouperInterface
+     */
+    public function createQuoteItemsGrouper(): QuoteItemsGrouperInterface
+    {
+        return new QuoteItemsGrouper();
     }
 
     /**

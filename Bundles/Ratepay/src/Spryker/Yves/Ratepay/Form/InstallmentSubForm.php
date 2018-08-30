@@ -47,7 +47,7 @@ class InstallmentSubForm extends SubFormAbstract
                 }
                 $data = $form->getData();
 
-                if (RatepayConstants::DEBIT_PAY_TYPE_DIRECT_DEBIT == $data->getDebitPayType()) {
+                if ($data->getDebitPayType() == RatepayConstants::DEBIT_PAY_TYPE_DIRECT_DEBIT) {
                     return [$this->getPropertyPath(), RatepayConstants::DEBIT_PAY_TYPE_DIRECT_DEBIT];
                 }
 

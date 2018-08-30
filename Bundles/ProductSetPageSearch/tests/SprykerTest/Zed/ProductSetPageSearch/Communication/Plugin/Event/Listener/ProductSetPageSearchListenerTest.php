@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -242,7 +243,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductSetPageSearchQuery::create()->count();
-        $this->assertSame($beforeCount + 2, $afterCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $afterCount);
         $this->assertProductSetPageSearch();
     }
 

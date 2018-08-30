@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Kernel;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface KernelConstants
 {
     const BACKTRACE_USER_PATH = 'BACKTRACE_USER_PATH';
@@ -27,4 +30,9 @@ interface KernelConstants
     const AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED = 'ENABLE_AUTO_LOADER_UNRESOLVABLE_CACHE';
     const AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER = 'AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER';
     const AUTO_LOADER_CACHE_FILE_NO_LOCK = 'AUTO_LOADER_CACHE_FILE_NO_LOCK';
+
+    /**
+     * A set of whitelist domains, that every external URL is checked against, before redirect.
+     */
+    public const DOMAIN_WHITELIST = 'KERNEL:DOMAIN_WHITELIST';
 }

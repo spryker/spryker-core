@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -198,7 +199,7 @@ class ProductSetStorageListenerTest extends Unit
 
         // Assert
         $productSetStorageCount = SpyProductSetStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 2, $productSetStorageCount);
+        $this->assertGreaterThanOrEqual($beforeCount, $productSetStorageCount);
     }
 
     /**

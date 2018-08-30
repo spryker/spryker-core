@@ -15,6 +15,8 @@ use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterf
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface;
+use Spryker\Client\SharedCart\Permission\PermissionResolver;
+use Spryker\Client\SharedCart\Permission\PermissionResolverInterface;
 use Spryker\Client\SharedCart\Zed\SharedCartStub;
 use Spryker\Client\SharedCart\Zed\SharedCartStubInterface;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
@@ -35,13 +37,23 @@ class SharedCartFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\SharedCart\Permission\PermissionResolverInterface
+     */
+    public function createPermissionResolver(): PermissionResolverInterface
+    {
+        return new PermissionResolver(
+            $this->getCustomerClient()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\SharedCart\Zed\SharedCartStubInterface
      */
     public function createZedSharedCartStub(): SharedCartStubInterface
     {
         return new SharedCartStub($this->getZedRequestClient());
     }
-    
+
     /**
      * @return \Spryker\Client\SharedCart\Dependency\Client\SharedCartToCartClientInterface
      */

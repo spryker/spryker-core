@@ -220,6 +220,7 @@ class Customer implements CustomerInterface
         }
 
         $this->executePostCustomerRegistrationPlugins($customerTransfer);
+        $customerTransfer = $this->customerExpander->expand($customerTransfer);
 
         $this->sendRegistrationToken($customerTransfer);
 
@@ -324,6 +325,8 @@ class Customer implements CustomerInterface
      */
     protected function sendPasswordRestoreConfirmation(CustomerTransfer $customerTransfer)
     {
+        $customerTransfer = $this->get($customerTransfer);
+
         $mailTransfer = new MailTransfer();
         $mailTransfer->setType(CustomerRestoredPasswordConfirmationMailTypePlugin::MAIL_TYPE);
         $mailTransfer->setCustomer($customerTransfer);

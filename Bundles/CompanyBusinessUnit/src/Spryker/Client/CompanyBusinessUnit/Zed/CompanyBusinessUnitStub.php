@@ -31,71 +31,85 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
     public function getCompanyBusinessUnitById(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitTransfer {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer */
+        $companyBusinessUnitTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/get-company-business-unit-by-id',
             $companyBusinessUnitTransfer
         );
+
+        return $companyBusinessUnitTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
     public function createCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer */
+        $companyBusinessUnitResponseTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/create',
             $companyBusinessUnitTransfer
         );
+
+        return $companyBusinessUnitResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
     public function updateCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer */
+        $companyBusinessUnitResponseTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/update',
             $companyBusinessUnitTransfer
         );
+
+        return $companyBusinessUnitResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
     public function deleteCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
-
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer */
+        $companyBusinessUnitResponseTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/delete',
             $companyBusinessUnitTransfer
         );
+
+        return $companyBusinessUnitResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
     public function getCompanyBusinessUnitCollection(
         CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
-        return $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer */
+        $companyBusinessUnitCollectionTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/get-company-business-unit-collection',
             $companyBusinessUnitCriteriaFilterTransfer
         );
+
+        return $companyBusinessUnitCollectionTransfer;
     }
 }

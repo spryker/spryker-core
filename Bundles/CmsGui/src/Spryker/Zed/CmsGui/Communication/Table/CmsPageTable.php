@@ -216,7 +216,7 @@ class CmsPageTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return string
+     * @return array
      */
     protected function createViewButtonItem(array $item)
     {
@@ -232,7 +232,7 @@ class CmsPageTable extends AbstractTable
      * @param array $item
      * @param string $urlPrefix
      *
-     * @return string
+     * @return string|array
      */
     protected function createViewInShopButtonItem(array $item, $urlPrefix)
     {
@@ -265,7 +265,7 @@ class CmsPageTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return string
+     * @return array
      */
     protected function createVersionHistoryButton(array $item)
     {
@@ -301,7 +301,7 @@ class CmsPageTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return string
+     * @return array
      */
     protected function createEditPageButtonItem(array $item)
     {
@@ -316,7 +316,7 @@ class CmsPageTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return string
+     * @return array
      */
     protected function createEditGlossaryButtonItem(array $item)
     {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -125,11 +125,14 @@ class RepeaterHelper extends Module
     }
 
     /**
-     * @return object|\Spryker\Shared\ZedRequest\Client\AbstractRequest
+     * @return \Spryker\Shared\ZedRequest\Client\AbstractRequest
      */
     public function getTransferRequest()
     {
-        return Stub::make(AbstractRequest::class);
+        /** @var \Spryker\Shared\ZedRequest\Client\AbstractRequest $request */
+        $request = Stub::make(AbstractRequest::class);
+
+        return $request;
     }
 
     /**

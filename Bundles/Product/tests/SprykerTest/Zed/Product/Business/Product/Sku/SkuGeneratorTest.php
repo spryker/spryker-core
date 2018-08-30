@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -59,6 +60,38 @@ class SkuGeneratorTest extends Unit
         $sanitizedSku = $skuGenerator->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
 
         $this->assertEquals('one-ONEONE-Lietuviskai-key-value_key2-value2', $sanitizedSku);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGenerateProductConcreteSkuWithManyAttributesShouldTruncatesToMaxSkuLength(): void
+    {
+        $skuGenerator = $this->createSkuGenerator();
+
+        $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer->setSku('Long Sku');
+
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setAttributes([
+            'color' => 'blue',
+            'flash_memory' => '4GB',
+            'form_factor' => 'Bar',
+            'internal_memory' => '32GB',
+            'internal_storage_capacity' => '1526MB',
+            'os_installed' => 'Android',
+            'processor_cache' => '4MB',
+            'processor_frequency' => '1.6GHz',
+            'series' => 'Ace2',
+            'storage_capacity' => '128GB',
+            'storage_media' => 'SSD',
+            'total-megapixels' => '16.1MP',
+            'total_storage_capacity' => '128GB',
+        ]);
+
+        $formattedSku = $skuGenerator->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
+
+        $this->assertTrue(\strlen($formattedSku) <= SkuGenerator::SKU_MAX_LENGTH);
     }
 
     /**

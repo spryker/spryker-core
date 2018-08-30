@@ -24,8 +24,21 @@ use Spryker\Zed\Development\Business\Composer\Updater\LicenseUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\RequireExternalUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\RequireUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\StabilityUpdater;
-use Spryker\Zed\Development\Business\Dependency\BundleParser;
+use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainer;
+use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderComposite;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ExternalDependencyFinder;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\InternalDependencyFinder;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\LocatorDependencyFinder;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\PersistenceDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\Manager;
+use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParser;
+use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface;
+use Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParser;
+use Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParserInterface;
+use Spryker\Zed\Development\Business\Dependency\SchemaParser\PropelSchemaParser;
+use Spryker\Zed\Development\Business\Dependency\SchemaParser\PropelSchemaParserInterface;
 use Spryker\Zed\Development\Business\DependencyTree\AdjacencyMatrixBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\ComposerDependencyParser;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\BundleToViewFilter;
@@ -74,6 +87,7 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\FacadeMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\QueryContainerMethodBuilder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ResourceMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ServiceMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractor;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator;
@@ -81,6 +95,8 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGen
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
 use Spryker\Zed\Development\Business\Phpstan\PhpstanRunner;
+use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidator;
+use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidatorInterface;
 use Spryker\Zed\Development\Business\Stability\StabilityCalculator;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -163,13 +179,96 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\Dependency\BundleParserInterface
+     * @return \Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface
      */
-    public function createDependencyBundleParser()
+    public function createModuleDependencyParser(): ModuleDependencyParserInterface
     {
-        return new BundleParser(
-            $this->createDependencyTreeFinder(),
+        return new ModuleDependencyParser(
+            $this->createDependencyContainer(),
+            $this->createDependencyFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
+     */
+    public function createDependencyContainer(): DependencyContainerInterface
+    {
+        return new DependencyContainer();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface
+     */
+    public function createDependencyFinder(): DependencyFinderInterface
+    {
+        return new DependencyFinderComposite([
+            $this->createInternalDependencyFinder(),
+            $this->createExternalDependencyFinder(),
+            $this->createLocatorDependencyFinder(),
+            $this->createPersistenceDependencyFinder(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface
+     */
+    public function createInternalDependencyFinder(): DependencyFinderInterface
+    {
+        return new InternalDependencyFinder(
+            $this->createUseStatementParser(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface
+     */
+    public function createExternalDependencyFinder(): DependencyFinderInterface
+    {
+        return new ExternalDependencyFinder(
+            $this->createUseStatementParser(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface
+     */
+    public function createLocatorDependencyFinder(): DependencyFinderInterface
+    {
+        return new LocatorDependencyFinder(
+            $this->createDependencyTreeFinder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface
+     */
+    public function createPersistenceDependencyFinder(): DependencyFinderInterface
+    {
+        return new PersistenceDependencyFinder(
+            $this->createPropelSchemaParser()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\SchemaParser\PropelSchemaParserInterface
+     */
+    public function createPropelSchemaParser(): PropelSchemaParserInterface
+    {
+        return new PropelSchemaParser(
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParserInterface
+     */
+    public function createUseStatementParser(): UseStatementParserInterface
+    {
+        return new UseStatementParser(
+            $this->createDependencyTreeFinder()
         );
     }
 
@@ -178,9 +277,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createDependencyManager()
     {
-        $bundleParser = $this->createDependencyBundleParser();
-
-        return new Manager($bundleParser, [
+        return new Manager($this->createModuleDependencyParser(), [
             $this->getConfig()->getPathToCore(),
             $this->getConfig()->getPathToShop(),
             $this->getConfig()->getPathToSdk(),
@@ -219,7 +316,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         $finderComposite = new FinderComposite();
         $finderComposite
             ->addFinder($this->createSprykerFinder())
-            ->addFinder($this->createSdkFinder())
             ->addFinder($this->createShopFinder());
 
         return $finderComposite;
@@ -269,6 +365,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getPathToSdk(),
             $this->getConfig()->getApplications()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidatorInterface
+     */
+    public function createPropelAbstractValidator(): PropelAbstractClassValidatorInterface
+    {
+        return new PropelAbstractClassValidator();
     }
 
     /**
@@ -471,7 +575,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         $outgoingDependencyGraphBuilder = new OutgoingGraphBuilder(
             $bundleToView,
             $this->getGraph(),
-            $this->createDependencyBundleParser(),
+            $this->createModuleDependencyParser(),
             $this->createDependencyManager(),
             $excludedBundles
         );
@@ -619,6 +723,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated This is only used by an unused facade method.
+     *
      * @return \Spryker\Zed\Development\Business\DependencyTree\ViolationChecker\DependencyViolationCheckerInterface
      */
     public function createDependencyViolationChecker()
@@ -631,6 +737,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Not used anymore.
+     *
      * @return \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface
      */
     protected function createViolationFinder()
@@ -645,6 +753,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Not used anymore.
+     *
      * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface
      */
     protected function createDependencyViolationFilter()
@@ -678,6 +788,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Not used anymore.
+     *
      * @return \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface
      */
     protected function createViolationFinderUseForeignConstants()
@@ -686,6 +798,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Not used anymore.
+     *
      * @return \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface
      */
     protected function createViolationFinderUseForeignException()
@@ -694,6 +808,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Not used anymore.
+     *
      * @return \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface
      */
     protected function createViolationFinderBundleUsesConnector()
@@ -702,6 +818,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Not used anymore.
+     *
      * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface
      */
     protected function createDependencyTreeConstantsToForeignConstantsFilter()
@@ -875,7 +993,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createComposerJsonLicenseUpdater()
     {
-        return new LicenseUpdater('proprietary');
+        return new LicenseUpdater();
     }
 
     /**
@@ -991,6 +1109,28 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface
+     */
+    protected function createGlueIdeAutoCompletionBundleBuilder()
+    {
+        return new IdeAutoCompletionBundleBuilder(
+            $this->createGlueAutoCompletionMethodBuilderStack(),
+            $this->getConfig()->getGlueIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
+     */
+    public function createGlueIdeAutoCompletionWriter()
+    {
+        return $this->createIdeAutoCompletionWriter(
+            $this->createGlueIdeAutoCompletionBundleBuilder(),
+            $this->getConfig()->getGlueIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
      */
     public function createClientIdeAutoCompletionWriter()
@@ -1053,6 +1193,19 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return [
             $this->createIdeAutoCompletionFacadeMethodBuilder(),
             $this->createIdeAutoCompletionQueryContainerMethodBuilder(),
+            $this->createIdeAutoCompletionClientMethodBuilder(),
+            $this->createIdeAutoCompletionServiceMethodBuilder(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     */
+    protected function createGlueAutoCompletionMethodBuilderStack()
+    {
+        return [
+            $this->createIdeAutoCompletionResourceMethodBuild(),
+            $this->createIdeAutoCompletionClientMethodBuilder(),
             $this->createIdeAutoCompletionServiceMethodBuilder(),
         ];
     }
@@ -1064,6 +1217,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return [
             $this->createIdeAutoCompletionClientMethodBuilder(),
+            $this->createIdeAutoCompletionServiceMethodBuilder(),
         ];
     }
 
@@ -1107,6 +1261,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createIdeAutoCompletionServiceMethodBuilder()
     {
         return new ServiceMethodBuilder($this->createIdeAutoCompletionNamespaceExtractor());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface
+     */
+    protected function createIdeAutoCompletionResourceMethodBuild()
+    {
+        return new ResourceMethodBuilder($this->createIdeAutoCompletionNamespaceExtractor());
     }
 
     /**

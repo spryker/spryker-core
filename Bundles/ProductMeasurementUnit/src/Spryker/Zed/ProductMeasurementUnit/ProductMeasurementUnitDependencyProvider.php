@@ -7,13 +7,21 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit;
 
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeBridge;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeBridge;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceBridge;
 
 class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION = 'SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION';
+
+    public const FACADE_EVENT = 'FACADE_EVENT';
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+
+    public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -25,6 +33,9 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addUtilMeasurementUnitConversionService($container);
+        $container = $this->addEventFacade($container);
+        $container = $this->addSalesOrderItemPropelQuery($container);
+        $container = $this->addGlossaryFacade($container);
 
         return $container;
     }
@@ -38,6 +49,22 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
+        $container = $this->addSalesOrderItemPropelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventFacade(Container $container): Container
+    {
+        $container[static::FACADE_EVENT] = function (Container $container) {
+            return new ProductMeasurementUnitToEventFacadeBridge($container->getLocator()->event()->facade());
+        };
+
         return $container;
     }
 
@@ -50,6 +77,34 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
     {
         $container[static::SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION] = function (Container $container) {
             return new ProductMeasurementUnitToUtilMeasurementUnitConversionServiceBridge($container->getLocator()->utilMeasurementUnitConversion()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesOrderItemPropelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_SALES_ORDER_ITEM] = function () {
+            return SpySalesOrderItemQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGlossaryFacade(Container $container): Container
+    {
+        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+            return new ProductMeasurementUnitToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
         };
 
         return $container;
