@@ -24,6 +24,11 @@ class ModuleFinder implements ModuleFinderInterface
     protected $moduleDirectories;
 
     /**
+     * @var \Generated\Shared\Transfer\ModuleTransfer[]
+     */
+    protected static $moduleTransferCollection;
+
+    /**
      * @param string[] $moduleDirectories
      */
     public function __construct(array $moduleDirectories)
@@ -36,14 +41,18 @@ class ModuleFinder implements ModuleFinderInterface
      */
     public function find(): array
     {
-        $moduleTransferCollection = [];
+        if (!static::$moduleTransferCollection) {
+            $moduleTransferCollection = [];
 
-        $moduleTransferCollection = $this->addStandAloneModulesToCollection($moduleTransferCollection);
-        $moduleTransferCollection = $this->addModulesToCollection($moduleTransferCollection);
+            $moduleTransferCollection = $this->addStandAloneModulesToCollection($moduleTransferCollection);
+            $moduleTransferCollection = $this->addModulesToCollection($moduleTransferCollection);
 
-        ksort($moduleTransferCollection);
+            ksort($moduleTransferCollection);
 
-        return $moduleTransferCollection;
+            static::$moduleTransferCollection = $moduleTransferCollection;
+        }
+
+        return static::$moduleTransferCollection;
     }
 
     /**
