@@ -63,8 +63,7 @@ class OrdersResourceMapper implements OrdersResourceMapperInterface
                 $orderTransfer->getTotals()->toArray(), true)
             )
             ->setCreatedAt($orderTransfer->getCreatedAt())
-            ->setCurrencyIsoCode($orderTransfer->getCurrencyIsoCode())
-            ->setExpenses($orderTransfer->getExpenses());
+            ->setCurrencyIsoCode($orderTransfer->getCurrencyIsoCode());
 
         foreach ($orderTransfer->getItems() as $item) {
             $orderRestAttributesTransfer->addItems(
