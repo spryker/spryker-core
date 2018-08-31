@@ -40,7 +40,7 @@ interface CartsRestApiToCartClientInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
-     * @param null|string $groupKey
+     * @param string|null $groupKey
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */

@@ -71,7 +71,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
      * @param string $relationName
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $parentEntity
      *
-     * @return null|string
+     * @return string|null
      */
     protected function findParentEntitySetterMethodName($relationName, ActiveRecordInterface $parentEntity)
     {

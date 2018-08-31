@@ -227,7 +227,7 @@ class CartItemsWriter implements CartItemsWriterInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return null|string
+     * @return string|null
      */
     protected function getCartIdentifier(RestRequestInterface $restRequest): ?string
     {
