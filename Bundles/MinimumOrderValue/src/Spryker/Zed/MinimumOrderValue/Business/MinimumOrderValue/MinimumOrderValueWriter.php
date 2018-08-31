@@ -64,30 +64,30 @@ class MinimumOrderValueWriter implements MinimumOrderValueWriterInterface
     public function saveMinimumOrderValue(
         MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): MinimumOrderValueTransfer {
-        $minimumOrderValueTransfer->requireThreshold();
+        $minimumOrderValueTransfer->requireMinimumOrderValueThreshold();
 
         $minimumOrderValueTransfer
-            ->getThreshold()
+            ->getMinimumOrderValueThreshold()
             ->getMinimumOrderValueType()
             ->requireKey();
 
         $minimumOrderValueStrategy = $this->minimumOrderValueStrategyResolver
             ->resolveMinimumOrderValueStrategy(
-                $minimumOrderValueTransfer->getThreshold()->getMinimumOrderValueType()->getKey()
+                $minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->getKey()
             );
 
-        if (!$minimumOrderValueStrategy->isValid($minimumOrderValueTransfer->getThreshold())) {
+        if (!$minimumOrderValueStrategy->isValid($minimumOrderValueTransfer->getMinimumOrderValueThreshold())) {
             throw new MinimumOrderValueThresholdInvalidArgumentException();
         }
 
-        if (!$minimumOrderValueTransfer->getThreshold()
+        if (!$minimumOrderValueTransfer->getMinimumOrderValueThreshold()
             ->getMinimumOrderValueType()
             ->getIdMinimumOrderValueType()
         ) {
             $minimumOrderValueTypeTransfer = $this->minimumOrderValueEntityManager
                 ->saveMinimumOrderValueType($minimumOrderValueStrategy->toTransfer());
 
-            $minimumOrderValueTransfer->getThreshold()
+            $minimumOrderValueTransfer->getMinimumOrderValueThreshold()
                 ->setMinimumOrderValueType(
                     $minimumOrderValueTypeTransfer
                 );

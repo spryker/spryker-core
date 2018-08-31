@@ -25,4 +25,9 @@ interface ZedNavigationCacheInterface
      * @return array
      */
     public function getNavigation();
+
+    /**
+     * @return bool
+     */
+    public function hasContent(): bool;
 }

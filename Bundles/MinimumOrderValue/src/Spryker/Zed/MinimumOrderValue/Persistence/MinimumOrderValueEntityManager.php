@@ -56,7 +56,7 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
     {
         $this->assertRequiredAttributes($minimumOrderValueTransfer);
 
-        $minimumOrderValueTypeTransfer = $minimumOrderValueTransfer->getThreshold()->getMinimumOrderValueType();
+        $minimumOrderValueTypeTransfer = $minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType();
         $storeTransfer = $minimumOrderValueTransfer->getStore();
         $currencyTransfer = $minimumOrderValueTransfer->getCurrency();
 
@@ -77,13 +77,13 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
 
         if ($minimumOrderValueEntity->getMessageGlossaryKey() === null) {
             $minimumOrderValueEntity->setMessageGlossaryKey(
-                $minimumOrderValueTransfer->getThreshold()->getMessageGlossaryKey()
+                $minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMessageGlossaryKey()
             );
         }
 
         $minimumOrderValueEntity
-            ->setValue($minimumOrderValueTransfer->getThreshold()->getValue())
-            ->setFee($minimumOrderValueTransfer->getThreshold()->getFee())
+            ->setValue($minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getValue())
+            ->setFee($minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getFee())
             ->setFkMinOrderValueType(
                 $minimumOrderValueTypeTransfer->getIdMinimumOrderValueType()
             )->save();
@@ -97,6 +97,20 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
     }
 
     /**
+     * @param int $idTaxSet
+     *
+     * @return void
+     */
+    public function saveMinimumOrderValueTaxSet(int $idTaxSet): void
+    {
+        $this->getFactory()
+            ->createMinimumOrderValueTaxSetPropelQuery()
+            ->findOneOrCreate()
+            ->setFkTaxSet($idTaxSet)
+            ->save();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
      *
      * @return void
@@ -104,16 +118,16 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
     protected function assertRequiredAttributes(MinimumOrderValueTransfer $minimumOrderValueTransfer): void
     {
         $minimumOrderValueTransfer
-            ->requireThreshold()
+            ->requireMinimumOrderValueThreshold()
             ->requireStore()
             ->requireCurrency();
 
-        $minimumOrderValueTransfer->getThreshold()
+        $minimumOrderValueTransfer->getMinimumOrderValueThreshold()
             ->requireValue()
             ->requireMessageGlossaryKey()
             ->requireMinimumOrderValueType();
 
-        $minimumOrderValueTransfer->getThreshold()->getMinimumOrderValueType()
+        $minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()
             ->requireIdMinimumOrderValueType()
             ->requireThresholdGroup();
 

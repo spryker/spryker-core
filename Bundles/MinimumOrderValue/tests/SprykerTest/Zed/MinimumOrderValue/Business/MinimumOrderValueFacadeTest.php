@@ -14,7 +14,12 @@ use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface;
+use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
+use Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy\HardThresholdStrategyPlugin;
+use Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy\SoftThresholdWithFixedFeeStrategyPlugin;
+use Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy\SoftThresholdWithFlexibleFeeStrategyPlugin;
+use Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy\SoftThresholdWithMessageStrategyPlugin;
+use Spryker\Zed\MinimumOrderValue\MinimumOrderValueDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -35,6 +40,28 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
     protected $tester;
 
     /**
+     * @var \Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueStrategyPluginInterface[]
+     */
+    protected $strategies;
+
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        $this->strategies = [
+            new HardThresholdStrategyPlugin(),
+            new SoftThresholdWithMessageStrategyPlugin(),
+            new SoftThresholdWithFixedFeeStrategyPlugin(),
+            new SoftThresholdWithFlexibleFeeStrategyPlugin(),
+        ];
+
+        $this->tester->setDependency(MinimumOrderValueDependencyProvider::PLUGINS_MINIMUM_ORDER_VALUE_STRATEGY, $this->strategies);
+
+        parent::setUp();
+    }
+
+    /**
      * @return void
      */
     public function testInstallMinimumOrderValueTypesShouldPersistTypes(): void
@@ -43,8 +70,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         $this->getFacade()->installMinimumOrderValueTypes();
 
         // Assert
-        $config = $this->createMinimumOrderValueConfig();
-        $this->tester->assertMinimumOrderValueTypeTableHasRecords(count($config->getMinimumOrderValueStrategies()));
+        $this->tester->assertMinimumOrderValueTypeTableHasRecords(count($this->strategies));
     }
 
     /**
@@ -54,11 +80,11 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
     {
         // Prepare
         $minimumOrderValueHardTypeTransfer = $this->findMinimumOrderValueTypeTransferForGroup(
-            MinimumOrderValueStrategyInterface::GROUP_HARD
+            MinimumOrderValueConfig::GROUP_HARD
         );
 
         $minimumOrderValueSoftStrategy = $this->findMinimumOrderValueTypeTransferForGroup(
-            MinimumOrderValueStrategyInterface::GROUP_SOFT
+            MinimumOrderValueConfig::GROUP_SOFT
         );
 
         $storeTransferDE = $this->tester->getStoreTransfer();
@@ -150,7 +176,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
     {
         // Prepare
         $minimumOrderValueSoftStrategy = $this->findMinimumOrderValueTypeTransferForGroup(
-            MinimumOrderValueStrategyInterface::GROUP_SOFT
+            MinimumOrderValueConfig::GROUP_SOFT
         );
 
         $storeTransfer = $this->tester->getStoreTransfer();
@@ -176,7 +202,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         );
 
         // Assert
-        $this->assertNotEmpty($softThreshold->getThreshold()->getMessageGlossaryKey());
+        $this->assertNotEmpty($softThreshold->getMinimumOrderValueThreshold()->getMessageGlossaryKey());
         $this->assertCount(1, $softThreshold->getLocalizedMessages());
     }
 
@@ -190,7 +216,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         $currencyTransfer = $this->tester->getCurrencyTransfer();
 
         $minimumOrderValueSoftStrategy = $this->findMinimumOrderValueTypeTransferForGroup(
-            MinimumOrderValueStrategyInterface::GROUP_SOFT
+            MinimumOrderValueConfig::GROUP_SOFT
         );
 
         $minimumOrderValueTValueTransfer = $this->createMinimumOrderValueTransfer(
@@ -229,7 +255,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         $quoteTransfer = $this->tester->createTestQuoteTransfer();
 
         // Action
-        $this->getFacade()->cartMinimumOrderValuePostSave($quoteTransfer);
+        $this->getFacade()->addMinimumOrderValueMessages($quoteTransfer);
     }
 
     /**
@@ -265,10 +291,10 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         ?int $fee = null
     ): MinimumOrderValueTransfer {
         return (new MinimumOrderValueTransfer())
-            ->setThreshold(
+            ->setMinimumOrderValueThreshold(
                 (new MinimumOrderValueThresholdTransfer())
                     ->setMinimumOrderValueType($minimumOrderValueTypeTransfer)
-                    ->setValue($thresholdValue)
+                    ->setThreshold($thresholdValue)
                     ->setFee($fee)
             )->setStore($storeTransfer)
             ->setCurrency($currencyTransfer);
@@ -282,8 +308,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
     protected function findMinimumOrderValueTypeTransferForGroup(
         string $strategyGroup
     ): ?MinimumOrderValueTypeTransfer {
-        $config = $this->createMinimumOrderValueConfig();
-        foreach ($config->getMinimumOrderValueStrategies() as $minimumOrderValueStrategy) {
+        foreach ($this->strategies as $minimumOrderValueStrategy) {
             if ($strategyGroup === $minimumOrderValueStrategy->getGroup()) {
                 return $minimumOrderValueStrategy->toTransfer();
             }
@@ -297,8 +322,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
      */
     protected function getFacade()
     {
-        $config = $this->createMinimumOrderValueConfig();
-        $factory = $this->createMinimumOrderValueBusinessFactoryMock($config);
+        $factory = $this->createMinimumOrderValueBusinessFactoryMock();
         return $this->createMinimumOrderValueFacadeMock($factory);
     }
 }

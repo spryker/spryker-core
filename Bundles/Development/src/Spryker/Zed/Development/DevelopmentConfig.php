@@ -396,6 +396,6 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getPhpstanLevel()
     {
-        return 2;
+        return 3;
     }
 }

@@ -37,7 +37,7 @@ class MinimumOrderValueTranslationWriter implements MinimumOrderValueTranslation
     public function saveLocalizedMessages(MinimumOrderValueTransfer $minimumOrderValueTransfer): MinimumOrderValueTransfer
     {
         $keyTranslationTransfer = $this->createKeyTranslationTransfer(
-            $minimumOrderValueTransfer->getThreshold(),
+            $minimumOrderValueTransfer->getMinimumOrderValueThreshold(),
             $this->createTranslationsLocaleMap($minimumOrderValueTransfer->getLocalizedMessages())
         );
 

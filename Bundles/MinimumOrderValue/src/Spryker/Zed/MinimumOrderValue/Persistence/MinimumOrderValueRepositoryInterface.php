@@ -34,4 +34,16 @@ interface MinimumOrderValueRepositoryInterface
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array;
+
+    /**
+     * @return int|null
+     */
+    public function findMinimumOrderValueTaxSetId(): ?int;
+
+    /**
+     * @param string $countryIso2Code
+     *
+     * @return float|null
+     */
+    public function findMaxTaxRateByCountryIso2Code(string $countryIso2Code): ?float;
 }

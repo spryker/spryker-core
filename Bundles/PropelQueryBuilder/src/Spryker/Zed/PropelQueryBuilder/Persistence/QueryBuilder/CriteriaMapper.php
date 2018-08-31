@@ -274,7 +274,7 @@ class CriteriaMapper implements CriteriaMapperInterface
     /**
      * @param string $value
      *
-     * @return string
+     * @return bool
      */
     protected function isOrCondition($value)
     {

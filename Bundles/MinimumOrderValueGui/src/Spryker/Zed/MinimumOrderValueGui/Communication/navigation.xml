@@ -3,16 +3,24 @@
     <threshold>
         <label>Threshold</label>
         <title>Threshold</title>
-        <uri>/minimum-order-value-gui</uri>
         <icon>fa-angle-double-right</icon>
         <pages>
+            <threshold-settings>
+                <label>Threshold settings</label>
+                <title>Threshold settings</title>
+                <bundle>minimum-order-value-gui</bundle>
+                <controller>settings</controller>
+                <action>index</action>
+                <icon>fa-angle-double-right</icon>
+            </threshold-settings>
             <global-threshold>
                 <label>Global threshold</label>
                 <title>Global threshold</title>
-                <uri>/minimum-order-value-gui/global</uri>
+                <bundle>minimum-order-value-gui</bundle>
+                <controller>global</controller>
+                <action>index</action>
                 <icon>fa-angle-double-right</icon>
             </global-threshold>
-
         </pages>
     </threshold>
 </config>

@@ -8,22 +8,21 @@
 namespace Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver;
 
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException;
-use Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface;
+use Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueStrategyPluginInterface;
 
 class MinimumOrderValueStrategyResolver implements MinimumOrderValueStrategyResolverInterface
 {
     /**
-     * @var \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface[]
+     * @var \Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueStrategyPluginInterface[]
      */
-    protected $minimumOrderValueStrategies;
+    protected $minimumOrderValueStrategyPlugins;
 
     /**
-     * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface[] $minimumOrderValueStrategies
+     * @param \Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueStrategyPluginInterface[] $minimumOrderValueStrategyPlugins
      */
-    public function __construct(
-        array $minimumOrderValueStrategies
-    ) {
-        $this->minimumOrderValueStrategies = $minimumOrderValueStrategies;
+    public function __construct(array $minimumOrderValueStrategyPlugins)
+    {
+        $this->minimumOrderValueStrategyPlugins = $minimumOrderValueStrategyPlugins;
     }
 
     /**
@@ -31,11 +30,11 @@ class MinimumOrderValueStrategyResolver implements MinimumOrderValueStrategyReso
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException
      *
-     * @return \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface
+     * @return \Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueStrategyPluginInterface
      */
-    public function resolveMinimumOrderValueStrategy(string $minimumOrderValueTypeKey): MinimumOrderValueStrategyInterface
+    public function resolveMinimumOrderValueStrategy(string $minimumOrderValueTypeKey): MinimumOrderValueStrategyPluginInterface
     {
-        foreach ($this->minimumOrderValueStrategies as $minimumOrderValueStrategy) {
+        foreach ($this->minimumOrderValueStrategyPlugins as $minimumOrderValueStrategy) {
             if ($minimumOrderValueStrategy->getKey() === $minimumOrderValueTypeKey) {
                 return $minimumOrderValueStrategy;
             }

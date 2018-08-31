@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver;
 
-use Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface;
+use Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueStrategyPluginInterface;
 
 interface MinimumOrderValueStrategyResolverInterface
 {
@@ -16,7 +16,7 @@ interface MinimumOrderValueStrategyResolverInterface
      *
      * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException
      *
-     * @return \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface
+     * @return \Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueStrategyPluginInterface
      */
-    public function resolveMinimumOrderValueStrategy(string $minimumOrderValueTypeKey): MinimumOrderValueStrategyInterface;
+    public function resolveMinimumOrderValueStrategy(string $minimumOrderValueTypeKey): MinimumOrderValueStrategyPluginInterface;
 }

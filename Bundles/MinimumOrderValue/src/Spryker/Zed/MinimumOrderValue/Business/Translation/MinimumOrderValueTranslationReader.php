@@ -68,7 +68,7 @@ class MinimumOrderValueTranslationReader implements MinimumOrderValueTranslation
         string $localeIsoCode
     ): MinimumOrderValueTransfer {
         $translationValue = $this->findTranslationValue(
-            $minimumOrderValueTransfer->getThreshold()->getMessageGlossaryKey(),
+            $minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMessageGlossaryKey(),
             $this->createLocaleTransfer($localeIsoCode)
         );
 
