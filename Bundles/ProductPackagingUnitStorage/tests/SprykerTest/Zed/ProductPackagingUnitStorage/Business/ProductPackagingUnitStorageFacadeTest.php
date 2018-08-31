@@ -10,6 +10,9 @@ namespace SprykerTest\Zed\ProductPackagingUnitStorage\Business;
 use Codeception\Test\Unit;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
+use Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageBusinessFactory;
+use Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacade;
+use SprykerTest\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfigMock;
 
 /**
  * Auto-generated group annotations
@@ -32,11 +35,6 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface
-     */
-    protected $productPackagingUnitStorageFacade;
-
-    /**
      * @return void
      */
     public function setUp()
@@ -48,8 +46,6 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
                 $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
-
-        $this->productPackagingUnitStorageFacade = $this->tester->getLocator()->productPackagingUnitStorage()->facade();
     }
 
     /**
@@ -63,7 +59,7 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
             $this->tester->haveProductAbstract(['sku' => static::PRODUCT_ABSTRACT_SKU]);
         }
 
-        $this->productPackagingUnitStorageFacade->publishProductAbstractPackaging([static::PRODUCT_ABSTRACT_SKU]);
+        $this->getProductPackagingUnitStorageFacade()->publishProductAbstractPackaging([static::PRODUCT_ABSTRACT_SKU]);
 
         $this->assertTrue(true);
     }
@@ -79,8 +75,22 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
             $this->tester->haveProductAbstract(['sku' => static::PRODUCT_ABSTRACT_SKU]);
         }
 
-        $this->productPackagingUnitStorageFacade->unpublishProductAbstractPackaging([static::PRODUCT_ABSTRACT_SKU]);
+        $this->getProductPackagingUnitStorageFacade()->unpublishProductAbstractPackaging([static::PRODUCT_ABSTRACT_SKU]);
 
         $this->assertTrue(true);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacade
+     */
+    protected function getProductPackagingUnitStorageFacade()
+    {
+        $factory = new ProductPackagingUnitStorageBusinessFactory();
+        $factory->setConfig(new ProductPackagingUnitStorageConfigMock());
+
+        $facade = new ProductPackagingUnitStorageFacade();
+        $facade->setFactory($factory);
+
+        return $facade;
     }
 }
