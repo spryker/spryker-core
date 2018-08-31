@@ -8,8 +8,9 @@ namespace Spryker\Glue\RestRequestValidator;
 
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
-use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapter;
+use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReader;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolver;
@@ -40,7 +41,9 @@ class RestRequestValidatorFactory extends AbstractFactory
     {
         return new RestRequestValidatorConfigReader(
             $this->getFilesystem(),
-            $this->getYaml()
+            $this->getYaml(),
+            $this->getStoreClient(),
+            $this->getConfig()
         );
     }
 
@@ -61,10 +64,18 @@ class RestRequestValidatorFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapter
+     * @return \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface
      */
-    public function getYaml(): RestRequestValidatorToYamlAdapter
+    public function getYaml(): RestRequestValidatorToYamlAdapterInterface
     {
         return $this->getProvidedDependency(RestRequestValidatorDependencyProvider::YAML);
+    }
+
+    /**
+     * @return \Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientInterface
+     */
+    public function getStoreClient(): RestRequestValidatorToStoreClientInterface
+    {
+        return $this->getProvidedDependency(RestRequestValidatorDependencyProvider::CLIENT_STORE);
     }
 }

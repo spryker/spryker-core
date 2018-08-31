@@ -8,6 +8,7 @@ namespace Spryker\Glue\RestRequestValidator;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientBridge;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapter;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapter;
 
@@ -15,6 +16,7 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
 {
     public const FILESYSTEM = 'FILESYSTEM';
     public const YAML = 'YAML';
+    public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -27,6 +29,7 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
 
         $container = $this->addFilesystem($container);
         $container = $this->addYaml($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -54,6 +57,20 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::YAML] = function () {
             return new RestRequestValidatorToYamlAdapter();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container[static::CLIENT_STORE] = function (Container $container) {
+            return new RestRequestValidatorToStoreClientBridge($container->getLocator()->store()->client());
         };
 
         return $container;

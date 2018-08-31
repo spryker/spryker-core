@@ -8,6 +8,7 @@ namespace Spryker\Glue\RestRequestValidator;
 
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 use Spryker\Shared\RestRequestValidator\RestRequestValidatorConfig as RestRequestValidatorConfigShared;
+use Symfony\Component\HttpFoundation\Request;
 
 class RestRequestValidatorConfig extends AbstractBundleConfig
 {
@@ -29,9 +30,9 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     public function getAvailableMethods(): array
     {
         return [
-            'POST',
-            'PUT',
-            'PATCH',
+            Request::METHOD_POST,
+            Request::METHOD_PUT,
+            Request::METHOD_PATCH,
         ];
     }
 
@@ -40,6 +41,6 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
      */
     public function getValidationCacheFilenamePattern(): string
     {
-        return RestRequestValidatorConfigShared::VALIDATION_CACHE_FILENAME_PATTERN;
+        return APPLICATION_SOURCE_DIR . RestRequestValidatorConfigShared::VALIDATION_CACHE_FILENAME_PATTERN;
     }
 }

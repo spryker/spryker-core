@@ -73,7 +73,7 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getCacheFilePath(): string
+    public function getCacheFilePathPattern(): string
     {
         return APPLICATION_SOURCE_DIR . RestRequestValidatorConfigShared::VALIDATION_CACHE_FILENAME_PATTERN;
     }

@@ -8,9 +8,11 @@ namespace Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\RestRequestValidator\Business\Exception\CacheFileNotFound;
+use Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface;
-use Spryker\Shared\RestRequestValidator\RestRequestValidatorConfig;
+use Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig;
+use function sprintf;
 
 class RestRequestValidatorConfigReader implements RestRequestValidatorConfigReaderInterface
 {
@@ -25,15 +27,31 @@ class RestRequestValidatorConfigReader implements RestRequestValidatorConfigRead
     protected $yaml;
 
     /**
+     * @var \Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
+     * @var \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface $filesystem
      * @param \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface $yaml
+     * @param \Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientInterface $storeClient
+     * @param \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig $config
      */
     public function __construct(
         RestRequestValidatorToFilesystemAdapterInterface $filesystem,
-        RestRequestValidatorToYamlAdapterInterface $yaml
+        RestRequestValidatorToYamlAdapterInterface $yaml,
+        RestRequestValidatorToStoreClientInterface $storeClient,
+        RestRequestValidatorConfig $config
     ) {
         $this->filesystem = $filesystem;
         $this->yaml = $yaml;
+        $this->storeClient = $storeClient;
+        $this->config = $config;
     }
 
     /**
@@ -45,16 +63,24 @@ class RestRequestValidatorConfigReader implements RestRequestValidatorConfigRead
      */
     public function getValidationConfiguration(RestRequestInterface $restRequest): array
     {
-        if (!$this->filesystem->exists(APPLICATION_SOURCE_DIR . RestRequestValidatorConfig::VALIDATION_CACHE_FILENAME_PATTERN)) {
+        if (!$this->filesystem->exists($this->getValidationConfigPath())) {
             throw new CacheFileNotFound('Validation cache is enabled, but there is no cache file.');
         }
 
-        $configuration = $this->yaml->parseFile(APPLICATION_SOURCE_DIR . RestRequestValidatorConfig::VALIDATION_CACHE_FILENAME_PATTERN);
+        $configuration = $this->yaml->parseFile($this->getValidationConfigPath());
 
         if (empty($configuration[$restRequest->getResource()->getType()][strtolower($restRequest->getMetadata()->getMethod())])) {
             return [];
         }
 
         return $configuration[$restRequest->getResource()->getType()][strtolower($restRequest->getMetadata()->getMethod())];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getValidationConfigPath(): string
+    {
+        return sprintf($this->config->getValidationCacheFilenamePattern(), $this->storeClient->getCurrentStore()->getName());
     }
 }

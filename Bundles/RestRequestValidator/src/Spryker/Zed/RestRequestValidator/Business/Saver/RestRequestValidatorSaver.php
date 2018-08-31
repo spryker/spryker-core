@@ -67,7 +67,7 @@ class RestRequestValidatorSaver implements RestRequestValidatorSaverInterface
      */
     protected function getStoreCacheFilePath(StoreTransfer $storeTransfer): string
     {
-        return sprintf($this->config->getCacheFilePath(), $storeTransfer->getName());
+        return sprintf($this->config->getCacheFilePathPattern(), $storeTransfer->getName());
     }
 
     /**
@@ -77,6 +77,6 @@ class RestRequestValidatorSaver implements RestRequestValidatorSaverInterface
      */
     protected function getOutdatedConfig(StoreTransfer $storeTransfer): array
     {
-        return glob(sprintf($this->config->getCacheFilePath(), $storeTransfer->getName()));
+        return glob(sprintf($this->config->getCacheFilePathPattern(), $storeTransfer->getName()));
     }
 }
