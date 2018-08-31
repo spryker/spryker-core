@@ -112,9 +112,11 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
             return $companyBusinessUnitResponseTransfer;
         }
 
-        $idCompanyBusinessUnit = $companyBusinessUnitResponseTransfer
-            ->getCompanyBusinessUnitTransfer()
-            ->getIdCompanyBusinessUnit();
+        $companyBusinessUnitTransfer = $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer();
+        $companyBusinessUnitTransfer = $this->pluginExecutor->executePreDeletePlugins($companyBusinessUnitTransfer);
+        $companyBusinessUnitResponseTransfer->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer);
+
+        $idCompanyBusinessUnit = $companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
 
         $this->entityManager->clearParentBusinessUnit($idCompanyBusinessUnit);
         $this->entityManager->deleteCompanyBusinessUnitById($idCompanyBusinessUnit);

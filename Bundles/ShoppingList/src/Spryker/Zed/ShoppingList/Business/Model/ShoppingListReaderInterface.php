@@ -64,4 +64,11 @@ interface ShoppingListReaderInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findCompanyUserPermissions(int $idCompanyUser): PermissionCollectionTransfer;
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return bool
+     */
+    public function hasCompanyBusinessUnitSharedWithShoppingLists(int $idCompanyBusinessUnit): bool;
 }

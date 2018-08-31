@@ -305,4 +305,19 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->orderByIdShoppingList()
             ->leftJoinWithSpyShoppingListItem();
     }
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return bool
+     */
+    public function hasCompanyBusinessUnitSharedWithShoppingLists(int $idCompanyBusinessUnit): bool
+    {
+        $existsSpyCompanyBusinessUnit = $this->getFactory()
+            ->createShoppingListCompanyBusinessUnitQuery()
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->exists();
+
+        return $existsSpyCompanyBusinessUnit;
+    }
 }
