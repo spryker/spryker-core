@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Addresses;
 
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
@@ -81,30 +80,18 @@ class AddressesReader implements AddressesReaderInterface
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setCustomerReference($customerReference);
 
-        $customer = $this->customerClient->findCustomerByReference($customerTransfer);
+        $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        if (!$customer) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
-
-            $restResponse->addError($restErrorTransfer);
+        if (!$customerResponseTransfer->getHasCustomer()) {
+            $this->createCustomerNotFoundError($restResponse);
 
             return $restResponse;
         }
-        /**
-         * @var \Generated\Shared\Transfer\AddressesTransfer $addresses
-         */
-        $addresses = $this->customerClient->getAddresses($customer);
+
+        $addresses = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
 
         if (!count($addresses->getAddresses())) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ADDRESSES_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_ADDRESSES_NOT_FOUND);
-
-            $restResponse->addError($restErrorTransfer);
+            $this->createCustomerAddressesNotFoundError($restResponse);
 
             return $restResponse;
         }
@@ -112,7 +99,7 @@ class AddressesReader implements AddressesReaderInterface
         foreach ($addresses->getAddresses() as $address) {
             $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource(
                 $address,
-                $customerTransfer->getCustomerReference()
+                $customerResponseTransfer->getCustomerTransfer()
             );
 
             $restResponse->addResource($addressesResource);
@@ -130,25 +117,85 @@ class AddressesReader implements AddressesReaderInterface
     public function readByUuid(string $uuid, string $customerReference): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        $addressTransfer = new AddressTransfer();
-        $addressTransfer->setUuid($uuid);
 
-        $address = $this->customerClient->findAddressByUuid($addressTransfer);
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setCustomerReference($customerReference);
 
-        if (!$address) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_ADDRESS_NOT_FOUND);
+        $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-            $restResponse->addError($restErrorTransfer);
+        if (!$customerResponseTransfer->getHasCustomer()) {
+            $this->createCustomerNotFoundError($restResponse);
 
             return $restResponse;
         }
 
-        $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource($address, $customerReference);
-        $restResponse->addResource($addressesResource);
+        $addresses = $this->customerClient->getAddresses($customerTransfer);
+
+        if (!count($addresses->getAddresses())) {
+            $this->createCustomerAddressesNotFoundError($restResponse);
+
+            return $restResponse;
+        }
+
+        foreach ($addresses->getAddresses() as $address) {
+            if ($address->getUuid() === $uuid) {
+                $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource(
+                    $address,
+                    $customerResponseTransfer->getCustomerTransfer()
+                );
+                $restResponse->addResource($addressesResource);
+
+                return $restResponse;
+            }
+        }
+
+        $this->createAddressNotFoundError($restResponse);
 
         return $restResponse;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createCustomerAddressesNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ADDRESSES_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_ADDRESSES_NOT_FOUND);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createAddressNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_ADDRESS_NOT_FOUND);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createCustomerNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
+
+        return $restResponse->addError($restErrorTransfer);
     }
 }

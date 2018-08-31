@@ -39,9 +39,9 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function findCustomerByReference(CustomerTransfer $customerTransfer): ?CustomerTransfer
+    public function findCustomerByReference(CustomerTransfer $customerTransfer): CustomerResponseTransfer
     {
         return $this->customerClient->findCustomerByReference($customerTransfer);
     }
@@ -54,16 +54,6 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
     public function getAddresses(CustomerTransfer $customerTransfer)
     {
         return $this->customerClient->getAddresses($customerTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
-     */
-    public function findAddressByUuid(AddressTransfer $addressTransfer): ?AddressTransfer
-    {
-        return $this->customerClient->findAddressByUuid($addressTransfer);
     }
 
     /**

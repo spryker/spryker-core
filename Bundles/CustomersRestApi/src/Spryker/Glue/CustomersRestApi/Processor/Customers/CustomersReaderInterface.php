@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -23,7 +23,7 @@ interface CustomersReaderInterface
     /**
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function findCustomerByReference(string $customerReference): ?CustomerTransfer;
+    public function findCustomerByReference(string $customerReference): CustomerResponseTransfer;
 }

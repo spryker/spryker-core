@@ -8,6 +8,7 @@
 namespace Spryker\Client\Customer;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerClientInterface
@@ -363,25 +364,12 @@ interface CustomerClientInterface
     /**
      * Specification:
      * - Retrieves customer information using provided customer reference.
-     * - Returns null if customer was not found.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function findCustomerByReference(CustomerTransfer $customerTransfer): ?CustomerTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves address by uuid from persistent storage.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
-     */
-    public function findAddressByUuid(AddressTransfer $addressTransfer): ?AddressTransfer;
+    public function findCustomerByReference(CustomerTransfer $customerTransfer): CustomerResponseTransfer;
 }

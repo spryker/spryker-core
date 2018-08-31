@@ -8,6 +8,7 @@
 namespace Spryker\Client\Customer\Zed;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerStubInterface
@@ -148,14 +149,7 @@ interface CustomerStubInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function findByReference(CustomerTransfer $customerTransfer): ?CustomerTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
-     */
-    public function findAddressByUuid(AddressTransfer $addressTransfer): ?AddressTransfer;
+    public function findCustomerByReference(CustomerTransfer $customerTransfer): CustomerResponseTransfer;
 }

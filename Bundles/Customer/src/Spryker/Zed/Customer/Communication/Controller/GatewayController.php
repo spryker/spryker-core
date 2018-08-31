@@ -301,28 +301,19 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function findByReferenceAction(CustomerTransfer $customerTransfer): CustomerTransfer
+    public function findCustomerByReferenceAction(CustomerTransfer $customerTransfer): CustomerResponseTransfer
     {
         $customerTransfer = $this->getFacade()->findByReference($customerTransfer->getCustomerReference());
+        $customerResponseTransfer = new CustomerResponseTransfer();
 
-        if ($customerTransfer === null) {
-            return new CustomerTransfer();
+        if ($customerTransfer !== null) {
+            $customerResponseTransfer->setCustomerTransfer($customerTransfer);
+            $customerResponseTransfer->setIsSuccess(true);
+            $customerResponseTransfer->setHasCustomer(true);
         }
 
-        return $customerTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    public function findAddressByUuidAction(AddressTransfer $addressTransfer): AddressTransfer
-    {
-        $addressTransfer = $this->getFacade()->findAddressByUuid($addressTransfer);
-
-        return $addressTransfer;
+        return $customerResponseTransfer;
     }
 }

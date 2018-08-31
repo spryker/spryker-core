@@ -8,6 +8,7 @@
 namespace Spryker\Client\Customer;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -470,34 +471,11 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findCustomerByReference(CustomerTransfer $customerTransfer): ?CustomerTransfer
-    {
-        $customerTransfer = $this->getFactory()
-            ->createZedCustomerStub()
-            ->findByReference($customerTransfer);
-
-        if ($customerTransfer && $customerTransfer->getIdCustomer()) {
-            return $customerTransfer;
-        }
-
-        return null;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
-     */
-    public function findAddressByUuid(AddressTransfer $addressTransfer): ?AddressTransfer
+    public function findCustomerByReference(CustomerTransfer $customerTransfer): CustomerResponseTransfer
     {
         return $this->getFactory()
             ->createZedCustomerStub()
-            ->findAddressByUuid($addressTransfer);
+            ->findCustomerByReference($customerTransfer);
     }
 }

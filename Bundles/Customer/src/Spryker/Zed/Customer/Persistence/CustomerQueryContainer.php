@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Customer\Persistence;
 
-use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -172,18 +171,5 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     public function queryCustomers()
     {
         return $this->getFactory()->createSpyCustomerQuery();
-    }
-
-    /**
-     * @api
-     *
-     * @inheritdoc
-     */
-    public function queryAddressByUuid($uuid): SpyCustomerAddressQuery
-    {
-        $query = $this->getFactory()->createSpyCustomerAddressQuery();
-        $query->filterByUuid($uuid);
-
-        return $query;
     }
 }

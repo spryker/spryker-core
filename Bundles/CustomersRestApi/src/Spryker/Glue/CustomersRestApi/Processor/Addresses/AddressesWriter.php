@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\RestAddressAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -37,18 +38,26 @@ class AddressesWriter implements AddressesWriterInterface
     protected $addressesResourceMapper;
 
     /**
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface
+     */
+    protected $customersReader;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface $addressesResourceMapper
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface $customersReader
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CustomersRestApiToCustomerClientInterface $customerClient,
-        AddressesResourceMapperInterface $addressesResourceMapper
+        AddressesResourceMapperInterface $addressesResourceMapper,
+        CustomersReaderInterface $customersReader
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->customerClient = $customerClient;
         $this->addressesResourceMapper = $addressesResourceMapper;
+        $this->customersReader = $customersReader;
     }
 
     /**
@@ -64,10 +73,10 @@ class AddressesWriter implements AddressesWriterInterface
         $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
 
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
-        $customerTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
+        $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        if (!$customerTransfer) {
-            $restResponse->addError($this->createErrorCustomerNotFound());
+        if (!$customerResponseTransfer->getHasCustomer()) {
+            $this->createErrorCustomerNotFound($restResponse);
 
             return $restResponse;
         }
@@ -78,7 +87,7 @@ class AddressesWriter implements AddressesWriterInterface
         $addressTransfer = $this->customerClient->createAddress($addressTransfer);
 
         if (!$addressTransfer->getUuid()) {
-            $restResponse->addError($this->createErrorAddressNotSaved());
+            $this->createErrorAddressNotSaved($restResponse);
 
             return $restResponse;
         }
@@ -87,7 +96,7 @@ class AddressesWriter implements AddressesWriterInterface
             ->addressesResourceMapper
             ->mapAddressTransferToRestResource(
                 $addressTransfer,
-                $customerReference
+                $customerResponseTransfer->getCustomerTransfer()
             );
 
         $restResponse->addResource($restResource);
@@ -105,20 +114,14 @@ class AddressesWriter implements AddressesWriterInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $addressTransfer = (new AddressTransfer())->setUuid($restRequest->getResource()->getId());
-        $address = $this->customerClient->findAddressByUuid($addressTransfer);
-
-        if (!$address) {
-            $restResponse->addError($this->createErrorAddressNotFound());
-
-            return $restResponse;
-        }
+        $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
+        $customerResponseTransfer = $this->customersReader->findCustomerByReference($customerReference);
 
         $addressTransfer = (new AddressTransfer())->fromArray($addressAttributesTransfer->toArray(), true);
         $addressTransfer = $this->customerClient->updateAddress($addressTransfer);
 
         if (!$addressTransfer->getUuid()) {
-            $restResponse->addError($this->createErrorAddressNotSaved());
+            $this->createErrorAddressNotSaved($restResponse);
 
             return $restResponse;
         }
@@ -127,7 +130,7 @@ class AddressesWriter implements AddressesWriterInterface
             ->addressesResourceMapper
             ->mapAddressTransferToRestResource(
                 $addressTransfer,
-                $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId()
+                $customerResponseTransfer->getCustomerTransfer()
             );
 
         $restResponse->addResource($restResource);
@@ -148,7 +151,7 @@ class AddressesWriter implements AddressesWriterInterface
         $addressTransfer = $this->customerClient->findAddressByUuid($addressTransfer);
 
         if (!$addressTransfer) {
-            $restResponse->addError($this->createErrorAddressNotFound());
+            $this->createAddressNotFoundError($restResponse);
 
             return $restResponse;
         }
@@ -159,35 +162,47 @@ class AddressesWriter implements AddressesWriterInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createErrorCustomerNotFound(): RestErrorMessageTransfer
+    protected function createErrorCustomerNotFound(RestResponseInterface $restResponse): RestResponseInterface
     {
-        return (new RestErrorMessageTransfer())
+        $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
+
+        return $restResponse->addError($restErrorTransfer);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createErrorAddressNotSaved(): RestErrorMessageTransfer
+    protected function createErrorAddressNotSaved(RestResponseInterface $restResponse): RestResponseInterface
     {
-        return (new RestErrorMessageTransfer())
+        $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ADDRESS_FAILED_TO_SAVE)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_ADDRESS_FAILED_TO_SAVE);
+
+        return $restResponse->addError($restErrorTransfer);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createErrorAddressNotFound(): RestErrorMessageTransfer
+    protected function createAddressNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
     {
-        return (new RestErrorMessageTransfer())
+        $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_ADDRESS_NOT_FOUND);
+
+        return $restResponse->addError($restErrorTransfer);
     }
 }

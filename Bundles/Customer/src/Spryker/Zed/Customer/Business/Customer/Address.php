@@ -275,6 +275,10 @@ class Address implements AddressInterface
         $addressTransfer->fromArray($entity->toArray(), true);
         $addressTransfer->setIso2Code($entity->getCountry()->getIso2Code());
 
+        $countryTransfer = new CountryTransfer();
+        $countryTransfer->fromArray($entity->getCountry()->toArray());
+        $addressTransfer->setCountry($countryTransfer);
+
         return $addressTransfer;
     }
 
@@ -296,7 +300,6 @@ class Address implements AddressInterface
             $countryTransfer->fromArray($entity->getCountry()->toArray());
             $addressTransfer->setCountry($countryTransfer);
 
-            $this->setDefaultAddressFlags($addressTransfer);
             $addressTransferCollection->addAddress($addressTransfer);
         }
 
@@ -622,29 +625,5 @@ class Address implements AddressInterface
         }
 
         $customerEntity->save();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    public function findAddressByUuid(AddressTransfer $addressTransfer): AddressTransfer
-    {
-        $address = $this->queryContainer->queryAddressByUuid($addressTransfer->getUuid())->findOne();
-
-        if (!$address) {
-            return new AddressTransfer();
-        }
-
-        $addressTransfer = $this->entityToAddressTransfer($address);
-
-        $countryTransfer = new CountryTransfer();
-        $countryTransfer->fromArray($address->getCountry()->toArray());
-        $addressTransfer->setCountry($countryTransfer);
-
-        $this->setDefaultAddressFlags($addressTransfer);
-
-        return $addressTransfer;
     }
 }
