@@ -38,5 +38,5 @@ interface SalesStubInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function findCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
+    public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
 }

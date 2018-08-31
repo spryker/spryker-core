@@ -8,11 +8,14 @@
 namespace Spryker\Glue\OrdersRestApi\Processor\Orders;
 
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrdersRestAttributesTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToProductBundleClientInterface;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapperInterface;
@@ -26,6 +29,11 @@ class OrdersReader implements OrdersReaderInterface
     protected $salesClient;
 
     /**
+     * @var \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToProductBundleClientInterface
+     */
+    protected $productBundleClient;
+
+    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
@@ -37,15 +45,18 @@ class OrdersReader implements OrdersReaderInterface
 
     /**
      * @param \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface $salesClient
+     * @param \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToProductBundleClientInterface $productBundleClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapperInterface $ordersResourceMapper
      */
     public function __construct(
         OrdersRestApiToSalesClientInterface $salesClient,
+        OrdersRestApiToProductBundleClientInterface $productBundleClient,
         RestResourceBuilderInterface $restResourceBuilder,
         OrdersResourceMapperInterface $ordersResourceMapper
     ) {
         $this->salesClient = $salesClient;
+        $this->productBundleClient = $productBundleClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->ordersResourceMapper = $ordersResourceMapper;
     }
@@ -57,13 +68,28 @@ class OrdersReader implements OrdersReaderInterface
      */
     public function getOrdersAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $response = $this->restResourceBuilder->createRestResponse();
-
         $customerId = $restRequest->getUser()->getSurrogateIdentifier();
-        $orderListData = (new OrderListTransfer())->setIdCustomer($customerId);
-        $orderListData = $this->salesClient->getCustomerOrders($orderListData);
 
-        $ordersRestAttributes = $this->ordersResourceMapper->mapOrderListToOrdersRestAttribute($orderListData);
+        $orderListTransfer = (new OrderListTransfer())->setIdCustomer((int)$customerId);
+
+        if ($restRequest->getPage()) {
+            $offset = $restRequest->getPage()->getOffset();
+            $limit = $restRequest->getPage()->getLimit();
+            $pagination = (new PaginationTransfer())
+                ->setPage($offset)
+                ->setMaxPerPage($limit);
+
+            $orderListTransfer->setPagination($pagination);
+        }
+
+        $orderListData = $this->salesClient->getCustomerOrders($orderListTransfer);
+
+        $ordersRestAttributes = (new OrdersRestAttributesTransfer());
+
+        foreach ($orderListData->getOrders() as $orderData) {
+            $itemsData = $this->productBundleClient->getGroupedBundleItems($orderData->getItems(), $orderData->getBundleItems());
+            $this->ordersResourceMapper->mapOrderListToOrdersRestAttribute($orderData, $itemsData, $ordersRestAttributes);
+        }
 
         $restResource = $this->restResourceBuilder->createRestResource(
             OrdersRestApiConfig::RESOURCE_ORDERS,
@@ -71,7 +97,9 @@ class OrdersReader implements OrdersReaderInterface
             $ordersRestAttributes
         );
 
-        return $response->addResource($restResource);
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addResource($restResource);
     }
 
     /**
@@ -86,22 +114,22 @@ class OrdersReader implements OrdersReaderInterface
         $orderReference = $restRequest->getResource()->getId();
         $customerReference = $restRequest->getUser()->getNaturalIdentifier();
 
-        $orderTransfer = (new OrderTransfer())
-            ->setOrderReference($orderReference)
-            ->setCustomerReference($customerReference);
-
-        $orderData = $this->salesClient->findCustomerOrderByOrderReference($orderTransfer);
+        $orderTransfer = (new OrderTransfer())->setOrderReference($orderReference)->setCustomerReference($customerReference);
+        $orderData = $this->salesClient->getCustomerOrderByOrderReference($orderTransfer);
 
         if (!$orderData->getItems()->count()) {
             return $this->createErrorResponse($response);
         }
 
-        $ordersRestAttributes = $this->ordersResourceMapper->mapOrderToOrdersRestAttribute($orderData);
+        $orderRestAttributes = $this->ordersResourceMapper->mapOrderToOrdersRestAttribute(
+            $orderData,
+            $this->productBundleClient->getGroupedBundleItems($orderData->getItems(), $orderData->getBundleItems())
+        );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             OrdersRestApiConfig::RESOURCE_ORDERS,
             $orderReference,
-            $ordersRestAttributes
+            $orderRestAttributes
         );
 
         return $response->addResource($restResource);

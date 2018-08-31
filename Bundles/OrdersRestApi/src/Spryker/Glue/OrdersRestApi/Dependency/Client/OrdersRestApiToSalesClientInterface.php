@@ -22,7 +22,7 @@ interface OrdersRestApiToSalesClientInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function findCustomerOrderByOrderReference(OrderTransfer $orderTransfer): ?OrderTransfer;
+    public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
 }

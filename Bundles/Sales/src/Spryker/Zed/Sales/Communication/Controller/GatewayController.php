@@ -65,10 +65,10 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function findCustomerOrderByOrderReferenceAction(OrderTransfer $orderTransfer): ?OrderTransfer
+    public function getCustomerOrderByOrderReferenceAction(OrderTransfer $orderTransfer): OrderTransfer
     {
-        return $this->getFacade()->findCustomerOrderByOrderReference($orderTransfer);
+        return $this->getFacade()->getCustomerOrderByOrderReference($orderTransfer);
     }
 }

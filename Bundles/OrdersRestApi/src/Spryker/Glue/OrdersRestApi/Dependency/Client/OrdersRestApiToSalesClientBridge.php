@@ -38,10 +38,10 @@ class OrdersRestApiToSalesClientBridge implements OrdersRestApiToSalesClientInte
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function findCustomerOrderByOrderReference(OrderTransfer $orderTransfer): ?OrderTransfer
+    public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer
     {
-        return $this->salesClient->findCustomerOrderByOrderReference($orderTransfer);
+        return $this->salesClient->getCustomerOrderByOrderReference($orderTransfer);
     }
 }

@@ -7,36 +7,58 @@
 
 namespace Spryker\Glue\OrdersRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\OrderListTransfer;
+use ArrayObject;
+use Generated\Shared\Transfer\OrderItemsRestAttributesTransfer;
 use Generated\Shared\Transfer\OrderRestAttributesTransfer;
 use Generated\Shared\Transfer\OrdersRestAttributesTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class OrdersResourceMapper implements OrdersResourceMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\OrdersRestAttributesTransfer $ordersRestAttributes
      *
-     * @return \Generated\Shared\Transfer\OrdersRestAttributesTransfer
+     * @return void
      */
-    public function mapOrderListToOrdersRestAttribute(OrderListTransfer $orderListTransfer): OrdersRestAttributesTransfer
+    public function mapOrderListToOrdersRestAttribute(OrderTransfer $orderTransfer, array $items, OrdersRestAttributesTransfer $ordersRestAttributes): void
     {
-        $ordersRestAttributes = new OrdersRestAttributesTransfer();
-
-        foreach ($orderListTransfer->getOrders() as $order) {
-            $ordersRestAttributes->addOrders((new OrderRestAttributesTransfer())->fromArray($order->toArray(), true));
-        }
-
-        return $ordersRestAttributes;
+        $ordersRestAttributes->addOrders($this->mapOrderToOrdersRestAttribute($orderTransfer, $items));
     }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return \Generated\Shared\Transfer\OrderRestAttributesTransfer
      */
-    public function mapOrderToOrdersRestAttribute(OrderTransfer $orderTransfer): OrderRestAttributesTransfer
+    public function mapOrderToOrdersRestAttribute(OrderTransfer $orderTransfer, array $items): OrderRestAttributesTransfer
     {
-        return (new OrderRestAttributesTransfer())->fromArray($orderTransfer->toArray(), true);
+        $taxAmount = $orderTransfer->getTotals()->getTaxTotal()->getAmount();
+
+        $orderTransfer->setItems(new ArrayObject());
+        $orderTransfer->setTotals($orderTransfer->getTotals()->setTaxTotal(null));
+        $orderRestAttributesTransfer = (new OrderRestAttributesTransfer())->fromArray($orderTransfer->toArray(), true);
+        $orderRestAttributesTransfer->setTotals($orderRestAttributesTransfer->getTotals()->setTaxTotal($taxAmount));
+
+        foreach ($items as $item) {
+            if ($item instanceof AbstractTransfer) {
+                $orderRestAttributesTransfer->addItems(
+                    (new OrderItemsRestAttributesTransfer())->fromArray($item->toArray(), true)
+                );
+
+                continue;
+            }
+
+            $orderRestAttributesTransfer->addItems((new OrderItemsRestAttributesTransfer())->fromArray(
+                $item[ProductBundleGrouper::BUNDLE_PRODUCT]->toArray(),
+                true
+            ));
+        }
+
+        return $orderRestAttributesTransfer;
     }
 }

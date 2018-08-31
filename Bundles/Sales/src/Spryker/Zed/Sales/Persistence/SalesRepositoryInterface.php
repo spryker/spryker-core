@@ -15,5 +15,5 @@ interface SalesRepositoryInterface
      *
      * @return int|null
      */
-    public function findCustomerOrderByOrderReference(string $customerReference, string $orderReference): ?int;
+    public function findCustomerOrderIdByOrderReference(string $customerReference, string $orderReference): ?int;
 }
