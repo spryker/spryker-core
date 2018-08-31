@@ -39,4 +39,11 @@ interface ProductPageSearchToProductInterface
      * @return int[]
      */
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract);
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function findConcreteProductsByIds(array $productConcreteIds): array;
 }

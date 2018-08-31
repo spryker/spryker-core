@@ -64,4 +64,11 @@ interface ProductRepositoryInterface
      * @return array
      */
     public function getProductConcreteSkusByConcreteIds(array $productIds): array;
+
+    /**
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function findConcreteProductsByIds(array $ids): array;
 }

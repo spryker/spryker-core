@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch;
 
 interface ProductPageSearchMapperInterface
@@ -37,17 +36,6 @@ interface ProductPageSearchMapperInterface
         ProductConcretePageSearchTransfer $productConcretePageSearchTransfer,
         SpyProductConcretePageSearch $productConcretePageSearchEntity
     ): SpyProductConcretePageSearch;
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function mapProductConcreteEntityToTransfer(
-        SpyProduct $productEntity,
-        ProductConcreteTransfer $productConcreteTransfer
-    ): ProductConcreteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

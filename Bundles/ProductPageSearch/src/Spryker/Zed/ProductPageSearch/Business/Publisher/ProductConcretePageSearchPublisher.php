@@ -12,25 +12,31 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductPageSearch\Business\Exception\ProductConcretePageSearchNotFoundException;
+use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface;
+use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\ProductConcretePageSearchWriterInterface;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface;
 use Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapper;
 use Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface;
-use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchEntityManagerInterface;
-use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface;
 
 class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPublisherInterface
 {
     use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface
+     * @var \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface
      */
-    protected $repository;
+    protected $productConcretePageSearchReader;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchEntityManagerInterface
+     * @var \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\ProductConcretePageSearchWriterInterface
      */
-    protected $entityManager;
+    protected $productConcretePageSearchWriter;
+
+    /**
+     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface
+     */
+    protected $productFacade;
 
     /**
      * @var \Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface
@@ -48,21 +54,24 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     protected $pageDataExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface $productPageSearchRepository
-     * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchEntityManagerInterface $productPageSearchEntityManager
+     * @param \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface $productConcretePageSearchReader
+     * @param \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\ProductConcretePageSearchWriterInterface $productConcretePageSearchWriter
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface $productFacade
      * @param \Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface $productPageSearchMapper
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface $utilEncoding
-     * @param array $pageDataExpanderPlugins
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface[] $pageDataExpanderPlugins
      */
     public function __construct(
-        ProductPageSearchRepositoryInterface $productPageSearchRepository,
-        ProductPageSearchEntityManagerInterface $productPageSearchEntityManager,
+        ProductConcretePageSearchReaderInterface $productConcretePageSearchReader,
+        ProductConcretePageSearchWriterInterface $productConcretePageSearchWriter,
+        ProductPageSearchToProductInterface $productFacade,
         ProductPageSearchMapperInterface $productPageSearchMapper,
         ProductPageSearchToUtilEncodingInterface $utilEncoding,
         array $pageDataExpanderPlugins
     ) {
-        $this->repository = $productPageSearchRepository;
-        $this->entityManager = $productPageSearchEntityManager;
+        $this->productConcretePageSearchReader = $productConcretePageSearchReader;
+        $this->productConcretePageSearchWriter = $productConcretePageSearchWriter;
+        $this->productFacade = $productFacade;
         $this->mapper = $productPageSearchMapper;
         $this->pageDataExpanderPlugins = $pageDataExpanderPlugins;
         $this->utilEncoding = $utilEncoding;
@@ -75,8 +84,8 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      */
     public function publish(array $ids): void
     {
-        $productConcreteTransfers = $this->repository->findConcreteProductsByIds($ids);
-        $productConcretePageSearchTransfers = $this->repository->findProductConcretePageSearchByProductConcreteIds($ids);
+        $productConcreteTransfers = $this->productFacade->findConcreteProductsByIds($ids);
+        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->findProductConcretePageSearchEntitiesByProductConcreteIds($ids);
 
         $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteTransfers, $productConcretePageSearchTransfers) {
             $this->executePublishTransaction($productConcreteTransfers, $productConcretePageSearchTransfers);
@@ -90,7 +99,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      */
     public function unpublish(array $ids): void
     {
-        $productConcretePageSearchTransfers = $this->repository->findProductConcretePageSearchByProductConcreteIds($ids);
+        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->findProductConcretePageSearchEntitiesByProductConcreteIds($ids);
 
         $this->getTransactionHandler()->handleTransaction(function () use ($productConcretePageSearchTransfers) {
             $this->executeUnpublishTransaction($productConcretePageSearchTransfers);
@@ -164,7 +173,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
                 $this->getStructuredDataFromProductConcretePageSearchTransfer($productConcretePageSearchTransfer)
             );
 
-            $this->entityManager->saveProductConcretePageSearch($productConcretePageSearchTransfer);
+            $this->productConcretePageSearchWriter->saveProductConcretePageSearch($productConcretePageSearchTransfer);
         }
     }
 
@@ -177,7 +186,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      */
     protected function deleteProductConcretePageSearch(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): void
     {
-        if ($this->entityManager->deleteProductConcretePageSearch($productConcretePageSearchTransfer) === false) {
+        if ($this->productConcretePageSearchWriter->deleteProductConcretePageSearch($productConcretePageSearchTransfer) === false) {
             throw new ProductConcretePageSearchNotFoundException(sprintf('Target storage entry for product with id %s not found', $productConcretePageSearchTransfer->getFkProduct()));
         }
     }

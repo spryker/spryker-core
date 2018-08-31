@@ -218,4 +218,41 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
         return $formattedResults;
     }
+
+    /**
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function findConcreteProductsByIds(array $ids): array
+    {
+        $productConcreteTransfers = [];
+        $mapper = $this->getFactory()->createProductMapper();
+
+        $query = $this->getFactory()
+            ->createProductQuery()
+            ->joinWithSpyProductAbstract()
+            ->joinWithSpyProductLocalizedAttributes()
+            ->useSpyProductLocalizedAttributesQuery()
+                ->joinWithLocale()
+            ->endUse()
+            ->useSpyProductAbstractQuery()
+                ->joinWithSpyProductAbstractStore()
+                ->useSpyProductAbstractStoreQuery()
+                    ->joinWithSpyStore()
+                ->endUse()
+            ->endUse()
+            ->filterByIdProduct_In($ids);
+
+        $productConcreteEntities = $query->find();
+
+        foreach ($productConcreteEntities as $productConcreteEntity) {
+            $productConcreteTransfers[] = $mapper->mapProductConcreteEntityToTransfer(
+                $productConcreteEntity,
+                new ProductConcreteTransfer()
+            );
+        }
+
+        return $productConcreteTransfers;
+    }
 }
