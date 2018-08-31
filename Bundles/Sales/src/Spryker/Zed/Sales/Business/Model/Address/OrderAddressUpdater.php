@@ -30,7 +30,7 @@ class OrderAddressUpdater implements OrderAddressUpdaterInterface
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      * @param int $idAddress
      *
-     * @return boolean
+     * @return bool
      */
     public function update(AddressTransfer $addressTransfer, $idAddress)
     {
