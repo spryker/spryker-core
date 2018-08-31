@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
  */
 class CatalogSearchAbstractProductsResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
-    protected const RELATIONSHIP_RESOURCE_TYPE = 'catalog-search-abstract-product';
+    protected const RELATIONSHIP_RESOURCE_TYPE = 'catalog-search-abstract-products';
 
     /**
      * {@inheritdoc}

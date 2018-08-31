@@ -14,14 +14,14 @@ interface ProductsRestApiResourceInterface
 {
     /**
      * Specification:
-     *  - Retrieves abstract product by concrete abstract sku.
+     *  - Retrieves abstract product resource by sku.
      *
      * @api
      *
-     * @param string $abstractProductSku
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findOneByProductAbstractSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface;
+    public function findProductAbstractBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface;
 }

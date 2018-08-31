@@ -59,39 +59,20 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
      */
     protected function mapSearchResponseFacetTransfersToSearchAttributesTransfer(array $facets, RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer): RestCatalogSearchAttributesTransfer
     {
-        $restSearchAttributesTransfer->setFacets(null);
         foreach ($facets as $facet) {
             if ($facet instanceof FacetSearchResultTransfer) {
-                $restFacet = $this->createRestFacetSearchResultAttributesTransfer($facet);
-                $restSearchAttributesTransfer->addFacet($restFacet->toArray());
+                $restSearchAttributesTransfer->addValueFacet(
+                    (new RestFacetSearchResultAttributesTransfer())->fromArray($facet->toArray(), true)
+                );
                 continue;
             }
             if ($facet instanceof RangeSearchResultTransfer) {
-                $restFacet = $this->createRestRangeSearchResultAttributesTransfer($facet);
-                $restSearchAttributesTransfer->addFacet($restFacet->toArray());
+                $restSearchAttributesTransfer->addRangeFacet(
+                    (new RestRangeSearchResultAttributesTransfer())->fromArray($facet->toArray(), true)
+                );
             }
         }
 
         return $restSearchAttributesTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer $facet
-     *
-     * @return \Generated\Shared\Transfer\RestFacetSearchResultAttributesTransfer
-     */
-    protected function createRestFacetSearchResultAttributesTransfer(FacetSearchResultTransfer $facet): RestFacetSearchResultAttributesTransfer
-    {
-        return (new RestFacetSearchResultAttributesTransfer())->fromArray($facet->toArray(), true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RangeSearchResultTransfer $facet
-     *
-     * @return \Generated\Shared\Transfer\RestRangeSearchResultAttributesTransfer
-     */
-    protected function createRestRangeSearchResultAttributesTransfer(RangeSearchResultTransfer $facet): RestRangeSearchResultAttributesTransfer
-    {
-        return (new RestRangeSearchResultAttributesTransfer())->fromArray($facet->toArray(), true);
     }
 }

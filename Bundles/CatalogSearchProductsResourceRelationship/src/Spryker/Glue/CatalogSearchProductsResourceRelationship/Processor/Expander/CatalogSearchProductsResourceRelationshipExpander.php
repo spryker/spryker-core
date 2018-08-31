@@ -55,7 +55,7 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
     {
         foreach ($products as $product) {
             if ($product->getAbstractSku()) {
-                $abstractProduct = $this->productsResource->findOneByProductAbstractSku($product->getAbstractSku(), $restRequest);
+                $abstractProduct = $this->productsResource->findProductAbstractBySku($product->getAbstractSku(), $restRequest);
                 if ($abstractProduct) {
                     $resource->addRelationship($abstractProduct);
                 }

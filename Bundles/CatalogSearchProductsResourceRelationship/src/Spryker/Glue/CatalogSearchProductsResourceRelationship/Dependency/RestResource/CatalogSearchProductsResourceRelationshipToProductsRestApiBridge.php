@@ -26,13 +26,13 @@ class CatalogSearchProductsResourceRelationshipToProductsRestApiBridge implement
     }
 
     /**
-     * @param string $abstractProductSku
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findOneByProductAbstractSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findProductAbstractBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        return $this->productsResource->findOneByProductAbstractSku($abstractProductSku, $restRequest);
+        return $this->productsResource->findProductAbstractBySku($sku, $restRequest);
     }
 }

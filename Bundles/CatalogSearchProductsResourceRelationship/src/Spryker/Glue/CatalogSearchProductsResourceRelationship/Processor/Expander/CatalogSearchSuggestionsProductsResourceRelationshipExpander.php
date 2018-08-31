@@ -56,7 +56,7 @@ class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements Ca
     {
         foreach ($products as $product) {
             if (isset($product[static::KEY_ABSTRACT_SKU])) {
-                $abstractProduct = $this->productsResource->findOneByProductAbstractSku($product[static::KEY_ABSTRACT_SKU], $restRequest);
+                $abstractProduct = $this->productsResource->findProductAbstractBySku($product[static::KEY_ABSTRACT_SKU], $restRequest);
                 if ($abstractProduct) {
                     $resource->addRelationship($abstractProduct);
                 }

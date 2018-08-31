@@ -8,7 +8,8 @@
         <property name="sort" type="RestCatalogSearchSortAttributes"/>
         <property name="pagination" type="RestCatalogSearchPaginationAttributes"/>
         <property name="products" type="RestCatalogSearchProductsAttributes[]"/>
-        <property name="facets" type="array" singular="facet"/>
+        <property name="valueFacets" type="RestFacetSearchResultAttributes[]" singular="valueFacet"/>
+        <property name="rangeFacets" type="RestRangeSearchResultAttributes[]" singular="rangeFacet"/>
         <property name="spellingSuggestion" type="string"/>
     </transfer>
 
