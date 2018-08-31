@@ -10,7 +10,7 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 class CmsToLocaleBridge implements CmsToLocaleInterface
 {
     /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
     protected $localeFacade;
 
