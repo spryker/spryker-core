@@ -44,31 +44,45 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
         SpyMinimumOrderValue $minimumOrderValueEntity,
         MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): MinimumOrderValueTransfer {
-        $minimumOrderValueTransfer->setThreshold(
-            $minimumOrderValueTransfer->getThreshold() ?? (new MinimumOrderValueThresholdTransfer())
-        );
-
         $minimumOrderValueTransfer->fromArray($minimumOrderValueEntity->toArray(), true)
             ->setIdMinimumOrderValue($minimumOrderValueEntity->getIdMinOrderValue())
-            ->setThreshold(
-                $minimumOrderValueTransfer->getThreshold()->fromArray($minimumOrderValueEntity->toArray(), true)
+            ->setMinimumOrderValueThreshold(
+                $this->mapMinimumOrderValueThresholdTransfer($minimumOrderValueTransfer, $minimumOrderValueEntity)
             )->setCurrency(
                 (new CurrencyTransfer())->fromArray($minimumOrderValueEntity->getCurrency()->toArray(), true)
             )->setStore(
                 (new StoreTransfer())->fromArray($minimumOrderValueEntity->getStore()->toArray(), true)
             );
 
-        if (!$minimumOrderValueTransfer->getThreshold()->getMinimumOrderValueType()) {
-            $minimumOrderValueTransfer->getThreshold()->setMinimumOrderValueType(new MinimumOrderValueTypeTransfer());
+        if (!$minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()) {
+            $minimumOrderValueTransfer->getMinimumOrderValueThreshold()->setMinimumOrderValueType(new MinimumOrderValueTypeTransfer());
         }
 
-        $minimumOrderValueTransfer->getThreshold()->setMinimumOrderValueType(
-            $minimumOrderValueTransfer->getThreshold()->getMinimumOrderValueType()->fromArray(
+        $minimumOrderValueTransfer->getMinimumOrderValueThreshold()->setMinimumOrderValueType(
+            $minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->fromArray(
                 $minimumOrderValueEntity->getMinimumOrderValueType()->toArray(),
                 true
             )
         );
 
         return $minimumOrderValueTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer $minimumOrderValueTransfer
+     * @param \Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValue $minimumOrderValueEntity
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer
+     */
+    protected function mapMinimumOrderValueThresholdTransfer(MinimumOrderValueTransfer $minimumOrderValueTransfer, SpyMinimumOrderValue $minimumOrderValueEntity): MinimumOrderValueThresholdTransfer
+    {
+        $minimumOrderValueThresholdTransfer = $minimumOrderValueTransfer->getMinimumOrderValueThreshold() ?? (new MinimumOrderValueThresholdTransfer());
+        $minimumOrderValueThresholdTransfer = $minimumOrderValueThresholdTransfer
+            ->fromArray($minimumOrderValueEntity->toArray(), true)
+            ->setFee($minimumOrderValueEntity->getFee())
+            ->setThreshold($minimumOrderValueEntity->getValue())
+            ->setMessageGlossaryKey($minimumOrderValueEntity->getMessageGlossaryKey());
+
+        return $minimumOrderValueThresholdTransfer;
     }
 }

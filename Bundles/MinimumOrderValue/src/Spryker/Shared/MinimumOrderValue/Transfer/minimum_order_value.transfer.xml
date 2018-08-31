@@ -10,16 +10,16 @@
     </transfer>
 
     <transfer name="MinimumOrderValueThreshold">
-        <property name="minimumOrderValueType" type="MinimumOrderValueType"/>
-        <property name="value" type="int"/>
+        <property name="threshold" type="int"/>
+        <property name="value" type="int" description="to be compared with threshold"/>
         <property name="fee" type="int"/>
-        <property name="subTotal" type="int"/>
         <property name="messageGlossaryKey" type="string"/>
+        <property name="minimumOrderValueType" type="MinimumOrderValueType"/>
     </transfer>
 
     <transfer name="MinimumOrderValue">
         <property name="idMinimumOrderValue" type="int"/>
-        <property name="threshold" type="MinimumOrderValueThreshold"/>
+        <property name="minimumOrderValueThreshold" type="MinimumOrderValueThreshold"/>
         <property name="store" type="Store"/>
         <property name="currency" type="Currency"/>
         <property name="localizedMessages" type="MinimumOrderValueLocalizedMessage[]" singular="localizedMessage" />
@@ -30,8 +30,48 @@
         <property name="localeCode" type="string" />
     </transfer>
 
-    <transfer name="Quote">
+    <transfer name="CalculableObject">
         <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="originalQuote" type="Quote" />
     </transfer>
 
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals" />
+        <property name="priceMode" type="string" />
+        <property name="currency" type="Currency" />
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="idExpense" type="int" />
+        <property name="type" type="string" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
+        <property name="name" type="string" />
+        <property name="taxRate" type="float" />
+        <property name="quantity" type="int" />
+
+        <property name="unitNetPrice" type="int" />
+        <property name="sumNetPrice" type="int" />
+
+        <property name="unitPrice" type="int" />
+        <property name="sumPrice" type="int" />
+
+        <property name="unitPriceToPayAggregation" type="int" />
+        <property name="sumPriceToPayAggregation" type="int" />
+    </transfer>
+
+    <transfer name="Item">
+        <property name="unitGrossPrice" type="int" />
+        <property name="unitNetPrice" type="int" />
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="errorCode" type="int" />
+        <property name="message" type="string" />
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="errors" type="CheckoutError[]" singular="error" />
+    </transfer>
 </transfers>

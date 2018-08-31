@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MinimumOrderValue\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
@@ -78,22 +79,6 @@ interface MinimumOrderValueFacadeInterface
 
     /**
      * Specification:
-     * - Checks quote value/values against minimum order value soft thresholds.
-     * - Adds threshold messages using the messenger.
-     * - Adds the fees as Expenses to QuoteTransfer
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function cartMinimumOrderValuePostSave(
-        QuoteTransfer $quoteTransfer
-    ): QuoteTransfer;
-
-    /**
-     * Specification:
      * - Checks quote value/values against minimum order value hard thresholds.
      * - Also adds the messages to CheckoutResponseTransfer, if any
      *
@@ -141,4 +126,64 @@ interface MinimumOrderValueFacadeInterface
     public function isThresholdValid(
         MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
     ): bool;
+
+    /**
+     * Specification:
+     * - Adds info messages when soft threshold is not met.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addMinimumOrderValueMessages(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Removes minimum order value expenses from CalculableObjectTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function removeMinimumOrderValueExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
+
+    /**
+     * Specification:
+     * - Gets MinimumOrderValueTransfers from data sources.
+     * - Resolves MinimumOrderValueTransfers to StrategyPlugin.
+     * - Adds expenses from MinimumOrderValueTransfer to CalculableObjectTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function addMinimumOrderValueExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
+
+    /**
+     * Specification:
+     * - Gets MinimumOrderValue tax set id from database.
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function findMinimumOrderValueTaxSetId(): ?int;
+
+    /**
+     * Specification:
+     * - Saves MinimumOrderValue tax set id to database.
+     *
+     * @api
+     *
+     * @param int $idTaxSet
+     *
+     * @return void
+     */
+    public function saveMinimumOrderValueTaxSet(int $idTaxSet): void;
 }

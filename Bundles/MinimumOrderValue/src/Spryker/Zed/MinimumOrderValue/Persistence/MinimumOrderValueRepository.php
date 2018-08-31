@@ -11,6 +11,10 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\MinimumOrderValue\Persistence\Map\SpyMinimumOrderValueTaxSetTableMap;
+use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
+use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException;
 
@@ -19,6 +23,8 @@ use Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueT
  */
 class MinimumOrderValueRepository extends AbstractRepository implements MinimumOrderValueRepositoryInterface
 {
+    protected const COL_MAX_TAX_RATE = 'MaxTaxRate';
+
     /**
      * @param \Generated\Shared\Transfer\MinimumOrderValueTypeTransfer $minimumOrderValueTypeTransfer
      *
@@ -57,7 +63,7 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array {
-        $minimumOrderValueTValueEntities = $this->getFactory()
+        $minimumOrderValueEntities = $this->getFactory()
             ->createMinimumOrderValueQuery()
             ->filterByStoreTransfer($storeTransfer)
             ->filterByCurrencyTransfer($currencyTransfer)
@@ -70,7 +76,7 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
 
         $minimumOrderValueMapper = $this->getFactory()->createMinimumOrderValueMapper();
 
-        foreach ($minimumOrderValueTValueEntities as $globalMinOrderValueEntity) {
+        foreach ($minimumOrderValueEntities as $globalMinOrderValueEntity) {
             $minimumOrderValueTransfer = $minimumOrderValueMapper->mapMinimumOrderValueEntityToTransfer(
                 $globalMinOrderValueEntity,
                 new MinimumOrderValueTransfer()
@@ -80,5 +86,46 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
         }
 
         return $minimumOrderValueTransfers;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function findMinimumOrderValueTaxSetId(): ?int
+    {
+        $taxSetId = $this->getFactory()
+            ->createMinimumOrderValueTaxSetPropelQuery()
+            ->select([SpyMinimumOrderValueTaxSetTableMap::COL_FK_TAX_SET])
+            ->findOne();
+
+        return $taxSetId;
+    }
+
+    /**
+     * @uses Tax
+     * @uses Country
+     *
+     * @param string $countryIso2Code
+     *
+     * @return float|null
+     */
+    public function findMaxTaxRateByCountryIso2Code(string $countryIso2Code): ?float
+    {
+        return $this->getFactory()->createMinimumOrderValueTaxSetPropelQuery()
+            ->useTaxSetQuery()
+            ->useSpyTaxSetTaxQuery()
+            ->useSpyTaxRateQuery()
+            ->useCountryQuery()
+            ->filterByIso2Code($countryIso2Code)
+            ->endUse()
+            ->_or()
+            ->filterByName(MinimumOrderValueConfig::TAX_EXEMPT_PLACEHOLDER)
+            ->endUse()
+            ->endUse()
+            ->groupBy(SpyTaxSetTableMap::COL_NAME)
+            ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', static::COL_MAX_TAX_RATE)
+            ->endUse()
+            ->select([static::COL_MAX_TAX_RATE])
+            ->findOne();
     }
 }

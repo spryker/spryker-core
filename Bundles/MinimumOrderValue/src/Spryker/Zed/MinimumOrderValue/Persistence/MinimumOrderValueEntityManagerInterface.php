@@ -27,4 +27,11 @@ interface MinimumOrderValueEntityManagerInterface
     public function saveMinimumOrderValue(
         MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): MinimumOrderValueTransfer;
+
+    /**
+     * @param int $idTaxSet
+     *
+     * @return void
+     */
+    public function saveMinimumOrderValueTaxSet(int $idTaxSet): void;
 }

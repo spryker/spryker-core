@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MinimumOrderValue\Persistence;
 
 use Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValueQuery;
+use Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValueTaxSetQuery;
 use Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValueTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\MinimumOrderValue\Persistence\Propel\Mapper\MinimumOrderValueMapper;
@@ -41,5 +42,13 @@ class MinimumOrderValuePersistenceFactory extends AbstractPersistenceFactory
     public function createMinimumOrderValueMapper(): MinimumOrderValueMapperInterface
     {
         return new MinimumOrderValueMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\MinimumOrderValue\Persistence\SpyMinimumOrderValueTaxSetQuery
+     */
+    public function createMinimumOrderValueTaxSetPropelQuery(): SpyMinimumOrderValueTaxSetQuery
+    {
+        return SpyMinimumOrderValueTaxSetQuery::create();
     }
 }
