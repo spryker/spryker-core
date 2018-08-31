@@ -29,6 +29,14 @@ class DevelopmentConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @return int
+     */
+    public function getPermissionMode(): int
+    {
+        return $this->get(DevelopmentConstants::DIRECTORY_PERMISSION, 0777);
+    }
+
+    /**
      * @return string[]
      */
     public function getInternalNamespaces(): array
@@ -310,6 +318,7 @@ class DevelopmentConfig extends AbstractBundleConfig
                 'Generated\%s\Ide',
                 IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
             ),
+            IdeAutoCompletionConstants::DIRECTORY_PERMISSION => $this->getPermissionMode(),
         ];
     }
 

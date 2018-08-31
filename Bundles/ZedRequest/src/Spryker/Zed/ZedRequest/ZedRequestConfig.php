@@ -50,4 +50,12 @@ class ZedRequestConfig extends AbstractBundleConfig
 
         return $fileName . '.log';
     }
+
+    /**
+     * @return int
+     */
+    public function getPermissionMode(): int
+    {
+        return $this->get(ZedRequestConstants::DIRECTORY_PERMISSION, 0777);
+    }
 }

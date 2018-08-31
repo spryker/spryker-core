@@ -119,7 +119,10 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      */
     protected function createElasticsearchIndexMapGenerator()
     {
-        return new IndexMapGenerator($this->getConfig()->getClassTargetDirectory());
+        return new IndexMapGenerator(
+            $this->getConfig()->getClassTargetDirectory(),
+            $this->getConfig()->getPermissionMode()
+        );
     }
 
     /**
