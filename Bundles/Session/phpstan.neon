@@ -4,6 +4,8 @@ parameters:
     ignoreErrors:
     - '#Property .+SessionHandlerCouchbase::\$connection has unknown class Couchbase as its type.#'
     - '#Instantiated class Couchbase not found.#'
+    - '#Call to method .+\(\) on an unknown class Couchbase.#'
+    - '#Call to an undefined method PDO::delete\(\).#'
 
 services:
     -

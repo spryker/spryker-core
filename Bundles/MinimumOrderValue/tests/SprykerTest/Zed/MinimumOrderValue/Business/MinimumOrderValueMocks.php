@@ -11,37 +11,17 @@ use Codeception\TestCase\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueBusinessFactory;
 use Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueFacade;
-use SprykerTest\Zed\MinimumOrderValue\Business\Config\MinimumOrderValueConfig;
 
 abstract class MinimumOrderValueMocks extends Test
 {
     /**
-     * @var \SprykerTest\Zed\MinimumOrderValue\Business\Config\MinimumOrderValueConfig
-     */
-    protected $config;
-
-    /**
-     * @return \SprykerTest\Zed\MinimumOrderValue\Business\Config\MinimumOrderValueConfig
-     */
-    protected function createMinimumOrderValueConfig(): MinimumOrderValueConfig
-    {
-        return new MinimumOrderValueConfig();
-    }
-
-    /**
-     * @param \SprykerTest\Zed\MinimumOrderValue\Business\Config\MinimumOrderValueConfig|null $config
-     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueBusinessFactory
      */
-    protected function createMinimumOrderValueBusinessFactoryMock(?MinimumOrderValueConfig $config = null): MockObject
+    protected function createMinimumOrderValueBusinessFactoryMock(): MockObject
     {
         $mockObject = $this->getMockBuilder(MinimumOrderValueBusinessFactory::class)
             ->enableProxyingToOriginalMethods()
             ->getMock();
-
-        if ($config !== null) {
-            $mockObject->setConfig($config);
-        }
 
         return $mockObject;
     }
