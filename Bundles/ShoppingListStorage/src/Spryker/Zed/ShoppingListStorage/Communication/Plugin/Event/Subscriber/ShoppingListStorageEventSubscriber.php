@@ -35,6 +35,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
         $this->addShoppingListCreateListener($eventCollection);
+        $this->addShoppingListUpdateListener($eventCollection);
         $this->addShoppingListDeleteListener($eventCollection);
         $this->addShoppingListItemCreateListener($eventCollection);
         $this->addShoppingListItemDeleteListener($eventCollection);
@@ -55,6 +56,19 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_CREATE,
+            new ShoppingListStorageListener()
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addShoppingListUpdateListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(
+            ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_UPDATE,
             new ShoppingListStorageListener()
         );
     }
