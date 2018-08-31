@@ -13,4 +13,8 @@
         <property name="note" type="string"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="cartNote" type="string" />
+    </transfer>
+
 </transfers>

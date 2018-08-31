@@ -6,7 +6,8 @@
     "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
     "spryker/shopping-list": "^1.0.0",
-    "spryker/shopping-list-extension": "^1.1.0"
+    "spryker/shopping-list-extension": "^1.1.0",
+    "spryker/cart": "^5.3.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

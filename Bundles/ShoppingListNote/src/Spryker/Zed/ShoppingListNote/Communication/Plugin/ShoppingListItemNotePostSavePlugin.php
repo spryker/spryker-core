@@ -28,10 +28,13 @@ class ShoppingListItemNotePostSavePlugin extends AbstractPlugin implements Shopp
      */
     public function execute(ShoppingListItemTransfer $shoppingListItemTransfer): void
     {
-        if (!$shoppingListItemTransfer->getShoppingListItemNote()) {
+        $shoppingListItemNote = $shoppingListItemTransfer->getShoppingListItemNote();
+
+        if (!$shoppingListItemNote) {
             return;
         }
 
-        $this->getFacade()->saveShoppingListItemNote($shoppingListItemTransfer->getShoppingListItemNote());
+        $shoppingListItemNote->setFkShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
+        $this->getFacade()->saveShoppingListItemNote($shoppingListItemNote);
     }
 }
