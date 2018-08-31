@@ -10,7 +10,7 @@ namespace Spryker\Client\ShoppingListNote\Plugin;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ShoppingList\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface;
+use Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface;
 
 /**
  * @method \Spryker\Client\ShoppingListNote\ShoppingListNoteFactory getFactory()
