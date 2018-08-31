@@ -16,10 +16,12 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class DevelopmentConfig extends AbstractBundleConfig
 {
     const BUNDLE_PLACEHOLDER = '[BUNDLE]';
+
     const APPLICATION_NAMESPACES = [
         'Orm',
     ];
-    const APPLICATION_LAYERS = [
+
+    const APPLICATIONS = [
         'Client',
         'Service',
         'Shared',
@@ -45,6 +47,18 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string[]
+     */
+    public function getTwigPathPatterns(): array
+    {
+        return [
+            $this->getPathToCore() . '%1$s/src/Spryker/Zed/%1$s/Presentation/',
+            $this->getPathToCore() . '%1$s/src/Spryker/Yves/%1$s/Theme/',
+            $this->getPathToShop() . '%1$s/src/SprykerShop/Yves/%1$s/Theme/',
+        ];
+    }
+
+    /**
      * Gets path to application root directory.
      *
      * @return string
@@ -61,7 +75,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getApplications()
     {
-        return static::APPLICATION_LAYERS;
+        return static::APPLICATIONS;
     }
 
     /**

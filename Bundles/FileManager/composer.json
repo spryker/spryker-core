@@ -11,6 +11,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/flysystem": "*",
+    "spryker/flysystem-local-file-system": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

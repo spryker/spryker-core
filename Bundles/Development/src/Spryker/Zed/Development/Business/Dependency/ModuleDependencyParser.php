@@ -8,11 +8,19 @@
 namespace Spryker\Zed\Development\Business\Dependency;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContext;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface;
+use Spryker\Zed\Development\Business\Module\ModuleFileFinder\ModuleFileFinderInterface;
 
 class ModuleDependencyParser implements ModuleDependencyParserInterface
 {
+    /**
+     * @var \Spryker\Zed\Development\Business\Module\ModuleFileFinder\ModuleFileFinderInterface
+     */
+    protected $moduleFileFinder;
+
     /**
      * @var \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
@@ -24,27 +32,33 @@ class ModuleDependencyParser implements ModuleDependencyParserInterface
     protected $dependencyFinder;
 
     /**
+     * @param \Spryker\Zed\Development\Business\Module\ModuleFileFinder\ModuleFileFinderInterface $moduleFileFinder
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface $dependencyFinder
      */
-    public function __construct(DependencyContainerInterface $dependencyContainer, DependencyFinderInterface $dependencyFinder)
+    public function __construct(ModuleFileFinderInterface $moduleFileFinder, DependencyContainerInterface $dependencyContainer, DependencyFinderInterface $dependencyFinder)
     {
+        $this->moduleFileFinder = $moduleFileFinder;
         $this->dependencyContainer = $dependencyContainer;
         $this->dependencyFinder = $dependencyFinder;
     }
 
     /**
-     * @param string $module
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     * @param string|null $dependencyType
      *
      * @return \Generated\Shared\Transfer\DependencyCollectionTransfer
      */
-    public function parseOutgoingDependencies(string $module): DependencyCollectionTransfer
+    public function parseOutgoingDependencies(ModuleTransfer $moduleTransfer, ?string $dependencyType = null): DependencyCollectionTransfer
     {
-        $this->dependencyContainer->initialize($module);
-        $dependencyContainer = $this->dependencyFinder->findDependencies(
-            $module,
-            $this->dependencyContainer->initialize($module)
-        );
+        $dependencyContainer = $this->dependencyContainer->initialize($moduleTransfer);
+
+        $moduleFiles = $this->moduleFileFinder->find($moduleTransfer);
+
+        foreach ($moduleFiles as $moduleFile) {
+            $dependencyFinderContext = new DependencyFinderContext($moduleTransfer, $moduleFile, $dependencyType);
+            $dependencyContainer = $this->dependencyFinder->findDependencies($dependencyFinderContext, $dependencyContainer);
+        }
 
         return $dependencyContainer->getDependencyCollection();
     }

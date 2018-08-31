@@ -16,12 +16,16 @@
     "spryker/price-product": "^1.0.0 || ^2.0.0",
     "spryker/product": "^6.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/shopping-list-extension": "^1.1.0",
+    "spryker/shopping-list-extension": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company": "*",
     "spryker/installer": "*",
+    "spryker/propel": "*",
+    "spryker/quote": "*",
+    "spryker/stock": "*",
     "spryker/testify": "*"
   },
   "suggest": {
