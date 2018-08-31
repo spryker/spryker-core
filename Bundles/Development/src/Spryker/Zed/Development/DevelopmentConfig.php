@@ -39,17 +39,6 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
-     */
-    public function getDevelopmentModules()
-    {
-        return [
-            'CodeSniffer',
-            'Testify',
-        ];
-    }
-
-    /**
      * @return string[]
      */
     public function getInternalNamespaces(): array
