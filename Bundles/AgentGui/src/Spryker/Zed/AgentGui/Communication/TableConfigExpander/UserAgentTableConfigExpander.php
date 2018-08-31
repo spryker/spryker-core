@@ -32,9 +32,11 @@ class UserAgentTableConfigExpander implements UserAgentTableConfigExpanderInterf
      */
     protected function addAgentHeader(TableConfiguration $config): void
     {
-        $config->setHeader(array_merge($config->getHeader(), [
+        $header = $this->insertAfterHeader($config->getHeader(), SpyUserTableMap::COL_STATUS, [
             SpyUserTableMap::COL_IS_AGENT => 'Agent',
-        ]));
+        ]);
+
+        $config->setHeader($header);
     }
 
     /**
@@ -47,5 +49,23 @@ class UserAgentTableConfigExpander implements UserAgentTableConfigExpanderInterf
         $config->setRawColumns(array_merge($config->getRawColumns(), [
             SpyUserTableMap::COL_IS_AGENT,
         ]));
+    }
+
+    /**
+     * Insert header after selected
+     *
+     * @param array $array
+     * @param string $key
+     * @param array $new
+     *
+     * @return array
+     */
+    protected function insertAfterHeader(array $array, string $key, array $new): array
+    {
+        $keys = array_keys($array);
+        $index = array_search($key, $keys);
+        $pos = $index === false ? count($array) : $index + 1;
+
+        return array_merge(array_slice($array, 0, $pos), $new, array_slice($array, $pos));
     }
 }
