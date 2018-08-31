@@ -11,6 +11,10 @@ use Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepositoryInt
 
 class ShoppingListStorageReader implements ShoppingListStorageReaderInterface
 {
+    protected const OWN_CUSTOMER_REFERENCES = 'ownCustomerReferences';
+    protected const SHARED_WITH_COMPANY_USER_CUSTOMER_REFERENCES = 'sharedWithCompanyUserCustomerReferences';
+    protected const SHARED_WITH_COMPANY_BUSINESS_UNIT_CUSTOMER_REFERENCES = 'sharedWithCompanyBusinessUnitCustomerReferences';
+
     /**
      * @var \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepositoryInterface
      */
@@ -31,7 +35,12 @@ class ShoppingListStorageReader implements ShoppingListStorageReaderInterface
      */
     public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array
     {
-        return $this->shoppingListStorageRepository->getCustomerReferencesByShoppingListIds($shoppingListIds);
+        $ownCustomerReferences = $this->shoppingListStorageRepository->getOwnCustomerReferencesByShoppingListIds($shoppingListIds);
+        $sharedWithCompanyUserCustomerReferences = $this->shoppingListStorageRepository->getSharedWithCompanyUserCustomerReferencesByShoppingListIds($shoppingListIds);
+        $sharedWithCompanyBusinessUnitCustomerReferences = $this->shoppingListStorageRepository->getSharedWithCompanyBusinessUnitCustomerReferencesByShoppingListIds($shoppingListIds);
+        $customerReferences = array_merge($ownCustomerReferences, $sharedWithCompanyUserCustomerReferences, $sharedWithCompanyBusinessUnitCustomerReferences);
+
+        return array_unique($customerReferences);
     }
 
     /**
@@ -41,7 +50,9 @@ class ShoppingListStorageReader implements ShoppingListStorageReaderInterface
      */
     public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
     {
-        return $this->shoppingListStorageRepository->getCustomerReferencesByCompanyBusinessUnitIds($companyBusinessUnitIds);
+        $shoppingListIds = $this->shoppingListStorageRepository->getShoppingListIdsByCompanyBusinessUnitIds($companyBusinessUnitIds);
+
+        return $this->getCustomerReferencesByShoppingListIds($shoppingListIds);
     }
 
     /**
@@ -51,6 +62,8 @@ class ShoppingListStorageReader implements ShoppingListStorageReaderInterface
      */
     public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array
     {
-        return $this->shoppingListStorageRepository->getCustomerReferencesByCompanyUserIds($companyUserIds);
+        $shoppingListIds = $this->shoppingListStorageRepository->getShoppingListIdsByCompanyUserIds($companyUserIds);
+
+        return $this->getCustomerReferencesByShoppingListIds($shoppingListIds);
     }
 }

@@ -16,21 +16,35 @@ interface ShoppingListStorageRepositoryInterface
      *
      * @return string[]
      */
-    public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array;
+    public function getOwnCustomerReferencesByShoppingListIds(array $shoppingListIds): array;
+
+    /**
+     * @param int[] $shoppingListIds
+     *
+     * @return string[]
+     */
+    public function getSharedWithCompanyUserCustomerReferencesByShoppingListIds(array $shoppingListIds): array;
+
+    /**
+     * @param int[] $shoppingListIds
+     *
+     * @return string[]
+     */
+    public function getSharedWithCompanyBusinessUnitCustomerReferencesByShoppingListIds(array $shoppingListIds): array;
 
     /**
      * @param int[] $companyBusinessUnitIds
      *
-     * @return string[]
+     * @return int[]
      */
-    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
+    public function getShoppingListIdsByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
 
     /**
      * @param int[] $companyUserIds
      *
-     * @return string[]
+     * @return int[]
      */
-    public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
+    public function getShoppingListIdsByCompanyUserIds(array $companyUserIds): array;
 
     /**
      * @param string[] $customerReference
