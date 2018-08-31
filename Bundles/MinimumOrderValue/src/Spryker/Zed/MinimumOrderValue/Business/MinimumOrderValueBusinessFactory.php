@@ -42,8 +42,8 @@ use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryF
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeInterface;
-use Spryker\Zed\MinimumOrderValue\Dependency\QueryContainer\MinimumOrderValueToSalesQueryContainerInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToTaxFacadeInterface;
+use Spryker\Zed\MinimumOrderValue\Dependency\QueryContainer\MinimumOrderValueToSalesQueryContainerInterface;
 use Spryker\Zed\MinimumOrderValue\MinimumOrderValueDependencyProvider;
 
 /**
