@@ -9,56 +9,30 @@ namespace Spryker\Glue\OrdersRestApi\Processor\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderItemsRestAttributesTransfer;
-use Generated\Shared\Transfer\OrderRestAttributesTransfer;
 use Generated\Shared\Transfer\OrdersRestAttributesTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class OrdersResourceMapper implements OrdersResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param \Generated\Shared\Transfer\OrdersRestAttributesTransfer $ordersRestAttributes
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\OrdersRestAttributesTransfer
      */
-    public function mapOrderListToOrdersRestAttribute(OrderTransfer $orderTransfer, array $items, OrdersRestAttributesTransfer $ordersRestAttributes): void
+    public function mapOrderToOrdersRestAttribute(OrderTransfer $orderTransfer, array $items): OrdersRestAttributesTransfer
     {
-        $ordersRestAttributes->addOrders($this->mapOrderToOrdersRestAttribute($orderTransfer, $items));
-    }
+        $ordersRestAttributesTransfer = (new OrdersRestAttributesTransfer())->fromArray($orderTransfer->toArray(), true);
+        $ordersRestAttributesTransfer->getTotals()->setTaxTotal($orderTransfer->getTotals()->getTaxTotal()->getAmount());
 
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
-     *
-     * @return \Generated\Shared\Transfer\OrderRestAttributesTransfer
-     */
-    public function mapOrderToOrdersRestAttribute(OrderTransfer $orderTransfer, array $items): OrderRestAttributesTransfer
-    {
-        $taxAmount = $orderTransfer->getTotals()->getTaxTotal()->getAmount();
-
-        $orderTransfer->setItems(new ArrayObject());
-        $orderTransfer->setTotals($orderTransfer->getTotals()->setTaxTotal(null));
-        $orderRestAttributesTransfer = (new OrderRestAttributesTransfer())->fromArray($orderTransfer->toArray(), true);
-        $orderRestAttributesTransfer->setTotals($orderRestAttributesTransfer->getTotals()->setTaxTotal($taxAmount));
+        $ordersRestAttributesTransfer->setItems(new ArrayObject());
 
         foreach ($items as $item) {
-            if ($item instanceof AbstractTransfer) {
-                $orderRestAttributesTransfer->addItems(
-                    (new OrderItemsRestAttributesTransfer())->fromArray($item->toArray(), true)
-                );
-
-                continue;
-            }
-
-            $orderRestAttributesTransfer->addItems((new OrderItemsRestAttributesTransfer())->fromArray(
-                $item[ProductBundleGrouper::BUNDLE_PRODUCT]->toArray(),
-                true
-            ));
+            $ordersRestAttributesTransfer->addItems(
+                (new OrderItemsRestAttributesTransfer())->fromArray($item->toArray(), true)
+            );
         }
 
-        return $orderRestAttributesTransfer;
+        return $ordersRestAttributesTransfer;
     }
 }

@@ -4,16 +4,11 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="OrdersRestAttributes">
-        <property name="orders" type="OrderRestAttributes[]"/>
-    </transfer>
-
-    <transfer name="OrderRestAttributes">
-        <property name="orderReference" type="string"/>
         <property name="createdAt" type="string"/>
-        <property name="totals" type="OrderRestTotalAttributes"/>
+        <property name="totals" type="OrderRestTotalsAttributes"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="items" type="OrderItemsRestAttributes[]"/>
-        <property name="expenses" type="OrderRestExpenseAttributes[]"/>
+        <property name="expenses" type="OrderRestExpensesAttributes[]"/>
     </transfer>
 
     <transfer name="OrderItemsRestAttributes">
@@ -24,7 +19,7 @@
         <property name="quantity" type="int"/>
     </transfer>
 
-    <transfer name="OrderRestTotalAttributes">
+    <transfer name="OrderRestTotalsAttributes">
         <property name="expenseTotal" type="int"/>
         <property name="discountTotal" type="int"/>
         <property name="taxTotal" type="int"/>
@@ -33,7 +28,7 @@
         <property name="canceledTotal" type="int"/>
     </transfer>
 
-    <transfer name="OrderRestExpenseAttributes">
+    <transfer name="OrderRestExpensesAttributes">
         <property name="name" type="string"/>
         <property name="sumPrice" type="int"/>
     </transfer>

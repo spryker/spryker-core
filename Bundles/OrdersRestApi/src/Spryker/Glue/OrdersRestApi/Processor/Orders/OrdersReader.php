@@ -8,7 +8,6 @@
 namespace Spryker\Glue\OrdersRestApi\Processor\Orders;
 
 use Generated\Shared\Transfer\OrderListTransfer;
-use Generated\Shared\Transfer\OrdersRestAttributesTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -19,10 +18,13 @@ use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToProductBundleCli
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapperInterface;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrdersReader implements OrdersReaderInterface
 {
+    protected const BUNDLE_PRODUCT = 'bundleProduct';
+
     /**
      * @var \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface
      */
@@ -69,37 +71,36 @@ class OrdersReader implements OrdersReaderInterface
     public function getOrdersAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
         $customerId = $restRequest->getUser()->getSurrogateIdentifier();
-
         $orderListTransfer = (new OrderListTransfer())->setIdCustomer((int)$customerId);
+
+        $totalOrdersCount = 0;
+        $limit = 0;
 
         if ($restRequest->getPage()) {
             $offset = $restRequest->getPage()->getOffset();
             $limit = $restRequest->getPage()->getLimit();
-            $pagination = (new PaginationTransfer())
-                ->setPage($offset)
-                ->setMaxPerPage($limit);
-
-            $orderListTransfer->setPagination($pagination);
+            $totalOrdersCount = $this->salesClient->getCustomerOrders($orderListTransfer)->getOrders()->count();
+            $this->addPaginationToOrderListData($offset, $limit, $orderListTransfer);
         }
 
-        $orderListData = $this->salesClient->getCustomerOrders($orderListTransfer);
+        $response = $this->restResourceBuilder->createRestResponse($totalOrdersCount, $limit);
+        $orderListData = $this->salesClient->getCustomerOrders($orderListTransfer)->getOrders();
 
-        $ordersRestAttributes = (new OrdersRestAttributesTransfer());
+        foreach ($orderListData as $orderData) {
+            $ordersRestAttributes = $this->ordersResourceMapper->mapOrderToOrdersRestAttribute(
+                $orderData,
+                $this->getTransformedBundleItems($orderData)
+            );
+            $restResource = $this->restResourceBuilder->createRestResource(
+                OrdersRestApiConfig::RESOURCE_ORDERS,
+                $orderData->getOrderReference(),
+                $ordersRestAttributes
+            );
 
-        foreach ($orderListData->getOrders() as $orderData) {
-            $itemsData = $this->productBundleClient->getGroupedBundleItems($orderData->getItems(), $orderData->getBundleItems());
-            $this->ordersResourceMapper->mapOrderListToOrdersRestAttribute($orderData, $itemsData, $ordersRestAttributes);
+            $response->addResource($restResource);
         }
 
-        $restResource = $this->restResourceBuilder->createRestResource(
-            OrdersRestApiConfig::RESOURCE_ORDERS,
-            $restRequest->getUser()->getNaturalIdentifier(),
-            $ordersRestAttributes
-        );
-
-        return $this->restResourceBuilder
-            ->createRestResponse()
-            ->addResource($restResource);
+        return $response;
     }
 
     /**
@@ -110,7 +111,6 @@ class OrdersReader implements OrdersReaderInterface
     public function getOrdersDetailsResourceAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
-
         $orderReference = $restRequest->getResource()->getId();
         $customerReference = $restRequest->getUser()->getNaturalIdentifier();
 
@@ -121,15 +121,14 @@ class OrdersReader implements OrdersReaderInterface
             return $this->createErrorResponse($response);
         }
 
-        $orderRestAttributes = $this->ordersResourceMapper->mapOrderToOrdersRestAttribute(
+        $ordersRestAttributes = $this->ordersResourceMapper->mapOrderToOrdersRestAttribute(
             $orderData,
-            $this->productBundleClient->getGroupedBundleItems($orderData->getItems(), $orderData->getBundleItems())
+            $this->getTransformedBundleItems($orderData)
         );
-
         $restResource = $this->restResourceBuilder->createRestResource(
             OrdersRestApiConfig::RESOURCE_ORDERS,
             $orderReference,
-            $orderRestAttributes
+            $ordersRestAttributes
         );
 
         return $response->addResource($restResource);
@@ -148,5 +147,48 @@ class OrdersReader implements OrdersReaderInterface
             ->setDetail(OrdersRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ORDER);
 
         return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return void
+     */
+    protected function addPaginationToOrderListData(int $offset, int $limit, $orderListTransfer): void
+    {
+        $pagination = (new PaginationTransfer())
+            ->setPage($offset)
+            ->setMaxPerPage($limit);
+
+        $orderListTransfer->setPagination($pagination);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function getTransformedBundleItems(OrderTransfer $orderTransfer): array
+    {
+        $items = $this->productBundleClient->getGroupedBundleItems(
+            $orderTransfer->getItems(),
+            $orderTransfer->getBundleItems()
+        );
+
+        $transformedItems = [];
+
+        foreach ($items as $item) {
+            if ($item instanceof AbstractTransfer) {
+                $transformedItems[] = $item;
+
+                continue;
+            }
+
+            $transformedItems[] = $item[self::BUNDLE_PRODUCT];
+        }
+
+        return $transformedItems;
     }
 }
