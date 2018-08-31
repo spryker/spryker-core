@@ -56,7 +56,7 @@ class DependencyFinderContext implements DependencyFinderContextInterface
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getDependencyType(): ?string
     {
