@@ -6,13 +6,13 @@
     "php": ">=7.1",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/log": "*",
-    "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
