@@ -145,7 +145,7 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ShoppingList\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
      */
     protected function getShoppingListItemToItemMapperPlugins(): array
     {

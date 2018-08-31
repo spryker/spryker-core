@@ -34,7 +34,7 @@ class CartHandler implements CartHandlerInterface
     protected $messengerClient;
 
     /**
-     * @var \Spryker\Client\ShoppingList\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
+     * @var \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
      */
     private $shoppingListItemToItemMapperPlugins;
 
@@ -42,7 +42,7 @@ class CartHandler implements CartHandlerInterface
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface $cartClient
      * @param \Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface $shoppingListStub
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface $messengerClient
-     * @param \Spryker\Client\ShoppingList\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[] $shoppingListItemToItemMapperPlugins
+     * @param \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[] $shoppingListItemToItemMapperPlugins
      */
     public function __construct(
         ShoppingListToCartClientInterface $cartClient,

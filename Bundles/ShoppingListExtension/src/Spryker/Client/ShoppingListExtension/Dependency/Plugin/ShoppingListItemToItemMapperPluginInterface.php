@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ShoppingList\Dependency\Plugin;
+namespace Spryker\Client\ShoppingListExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;

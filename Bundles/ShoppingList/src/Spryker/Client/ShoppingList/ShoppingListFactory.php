@@ -114,7 +114,7 @@ class ShoppingListFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ShoppingList\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
      */
     public function getShoppingListItemToItemMapperPlugins(): array
     {
