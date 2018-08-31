@@ -9,7 +9,6 @@ namespace Spryker\Client\Country\Zed;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Generated\Shared\Transfer\CountryRequestTransfer;
-use Generated\Shared\Transfer\CountryTransfer;
 use Spryker\Client\Country\Dependency\Client\CountryToZedRequestClientInterface;
 
 class CountryStub implements CountryStubInterface
@@ -25,19 +24,6 @@ class CountryStub implements CountryStubInterface
     public function __construct(CountryToZedRequestClientInterface $zedRequestClient)
     {
         $this->zedRequestClient = $zedRequestClient;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CountryTransfer
-     */
-    public function getCountryByIso2Code(CountryTransfer $countryTransfer): CountryTransfer
-    {
-        /** @var \Generated\Shared\Transfer\CountryTransfer $countryTransfer */
-        $countryTransfer = $this->zedRequestClient->call('/country/gateway/get-country-by-iso2-code', $countryTransfer);
-
-        return $countryTransfer;
     }
 
     /**

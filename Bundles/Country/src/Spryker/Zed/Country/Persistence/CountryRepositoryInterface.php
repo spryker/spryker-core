@@ -8,14 +8,13 @@
 namespace Spryker\Zed\Country\Persistence;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
-use Generated\Shared\Transfer\CountryRequestTransfer;
 
 interface CountryRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CountryRequestTransfer $countryRequestTransfer
+     * @param string[] $iso2Codes
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function findCountriesByIso2Codes(CountryRequestTransfer $countryRequestTransfer): CountryCollectionTransfer;
+    public function findCountriesByIso2Codes(array $iso2Codes): CountryCollectionTransfer;
 }

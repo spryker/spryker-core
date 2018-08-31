@@ -9,25 +9,13 @@ namespace Spryker\Client\Country;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Generated\Shared\Transfer\CountryRequestTransfer;
-use Generated\Shared\Transfer\CountryTransfer;
 
 interface CountryClientInterface
 {
     /**
      * Specification:
-     * - Retrieves country by ISO-2 code.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CountryTransfer
-     */
-    public function getCountryByIso2Code(CountryTransfer $countryTransfer): CountryTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves countries by country ISO-2 code.
+     * - Retrieves countries with regions data by country ISO-2 codes.
+     * - Makes Zed request.
      *
      * @api
      *

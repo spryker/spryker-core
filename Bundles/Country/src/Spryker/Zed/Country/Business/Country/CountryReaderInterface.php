@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Country\Business\Region;
+namespace Spryker\Zed\Country\Business\Country;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Generated\Shared\Transfer\CountryRequestTransfer;
 
-interface RegionReaderInterface
+interface CountryReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CountryRequestTransfer $countryRequestTransfer

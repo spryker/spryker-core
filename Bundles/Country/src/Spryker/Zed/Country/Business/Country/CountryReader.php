@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Country\Business\Region;
+namespace Spryker\Zed\Country\Business\Country;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Generated\Shared\Transfer\CountryRequestTransfer;
 use Spryker\Zed\Country\Persistence\CountryRepositoryInterface;
 
-class RegionReader implements RegionReaderInterface
+class CountryReader implements CountryReaderInterface
 {
     /**
      * @var \Spryker\Zed\Country\Persistence\CountryRepositoryInterface
@@ -34,6 +34,6 @@ class RegionReader implements RegionReaderInterface
      */
     public function findCountriesByIso2Codes(CountryRequestTransfer $countryRequestTransfer): CountryCollectionTransfer
     {
-        return $this->countryRepository->findCountriesByIso2Codes($countryRequestTransfer);
+        return $this->countryRepository->findCountriesByIso2Codes($countryRequestTransfer->getIso2Codes());
     }
 }

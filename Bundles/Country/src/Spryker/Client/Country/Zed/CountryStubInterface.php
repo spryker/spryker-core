@@ -9,17 +9,9 @@ namespace Spryker\Client\Country\Zed;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Generated\Shared\Transfer\CountryRequestTransfer;
-use Generated\Shared\Transfer\CountryTransfer;
 
 interface CountryStubInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CountryTransfer
-     */
-    public function getCountryByIso2Code(CountryTransfer $countryTransfer): CountryTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\CountryRequestTransfer $countryRequestTransfer
      *

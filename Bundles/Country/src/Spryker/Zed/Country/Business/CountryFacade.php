@@ -122,7 +122,7 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     public function findCountriesByIso2Codes(CountryRequestTransfer $countryRequestTransfer): CountryCollectionTransfer
     {
         return $this->getFactory()
-            ->createRegionReader()
+            ->createCountryReader()
             ->findCountriesByIso2Codes($countryRequestTransfer);
     }
 }

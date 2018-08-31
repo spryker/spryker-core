@@ -47,7 +47,6 @@ class StoresCountryReader implements StoresCountryReaderInterface
             (new CountryRequestTransfer())
                 ->setIso2Codes($iso2Codes)
         );
-
         foreach ($countryCollectionTransfer->getCountries() as $countryTransfer) {
             $storeCountryAttributes[] = $this->storesCountryResourceMapper->mapCountryToStoresCountryRestAttributes(
                 $countryTransfer

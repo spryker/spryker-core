@@ -7,10 +7,8 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Mapper;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\StoreCountryRestAttributesTransfer;
-use Generated\Shared\Transfer\StoreRegionRestAttributesTransfer;
 
 class StoresCountryResourceMapper implements StoresCountryResourceMapperInterface
 {
@@ -22,18 +20,9 @@ class StoresCountryResourceMapper implements StoresCountryResourceMapperInterfac
     public function mapCountryToStoresCountryRestAttributes(CountryTransfer $countryTransfer): StoreCountryRestAttributesTransfer
     {
         $storesCountryAttributes = (new StoreCountryRestAttributesTransfer())->fromArray(
-            $countryTransfer->toArray(),
+            $countryTransfer->toArray(true),
             true
         );
-
-        $regions = new ArrayObject();
-        foreach ($countryTransfer->getRegions() as $regionTransfer) {
-            $regions->append((new StoreRegionRestAttributesTransfer())->fromArray(
-                $regionTransfer->toArray(),
-                true
-            ));
-        }
-        $storesCountryAttributes->setRegions($regions);
 
         return $storesCountryAttributes;
     }

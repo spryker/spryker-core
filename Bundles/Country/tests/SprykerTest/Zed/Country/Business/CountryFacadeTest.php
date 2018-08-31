@@ -134,7 +134,7 @@ class CountryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetRegionsByCountryIso2CodeReturnsNotEmptyResult()
+    public function testGetCountriesByCountryIso2CodesReturnsRightValue()
     {
         $country = new SpyCountry();
         $country->setIso2Code(self::ISO2_CODE);

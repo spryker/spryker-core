@@ -76,7 +76,7 @@ class StoresResourceMapper implements StoresResourceMapperInterface
                 ->setName($name)
                 ->setCode($identifier);
 
-            $storesRestAttributes->addLocales($storesLocaleAttributes);
+            $storesRestAttributes->addLocale($storesLocaleAttributes);
         }
 
         return $storesRestAttributes;
@@ -114,7 +114,7 @@ class StoresResourceMapper implements StoresResourceMapperInterface
     protected function addStoreCountryToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, array $storeCountryAttributes): StoresRestAttributesTransfer
     {
         foreach ($storeCountryAttributes as $storeCountryAttribute) {
-            $storesRestAttributes->addCountries($storeCountryAttribute);
+            $storesRestAttributes->addCountry($storeCountryAttribute);
         }
 
         return $storesRestAttributes;
@@ -129,7 +129,7 @@ class StoresResourceMapper implements StoresResourceMapperInterface
     protected function addStoreCurrencyToStoresRestAttributes(StoresRestAttributesTransfer $storesRestAttributes, array $storeCurrencyAttributes): StoresRestAttributesTransfer
     {
         foreach ($storeCurrencyAttributes as $storeCurrencyAttribute) {
-            $storesRestAttributes->addCurrencies($storeCurrencyAttribute);
+            $storesRestAttributes->addCurrency($storeCurrencyAttribute);
         }
 
         return $storesRestAttributes;
