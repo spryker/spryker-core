@@ -55,7 +55,7 @@ class CustomersReader implements CustomersReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readByIdentifier(RestRequestInterface $restRequest): RestResponseInterface
+    public function getCustomerByCustomerReference(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 

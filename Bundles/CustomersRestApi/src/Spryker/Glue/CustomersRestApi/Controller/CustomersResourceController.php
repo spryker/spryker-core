@@ -26,7 +26,7 @@ class CustomersResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createCustomerReader()
-            ->readByIdentifier($restRequest);
+            ->getCustomerByCustomerReference($restRequest);
     }
 
     /**

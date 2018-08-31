@@ -26,7 +26,7 @@ class AddressesResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createAddressesReader()
-            ->read($restRequest);
+            ->getAddressesByAddressUuid($restRequest);
     }
 
     /**
