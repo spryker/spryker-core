@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\Country\Communication\Controller;
 
-use Generated\Shared\Transfer\CountryTransfer;
-use Generated\Shared\Transfer\RegionCollectionTransfer;
-use Generated\Shared\Transfer\RegionRequestTransfer;
+use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -18,22 +17,12 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
-     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
+     * @param \Generated\Shared\Transfer\CountryRequestTransfer $countryRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CountryTransfer
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function getCountryByIso2CodeAction(CountryTransfer $countryTransfer): CountryTransfer
+    public function findCountriesByIso2CodesAction(CountryRequestTransfer $countryRequestTransfer): CountryCollectionTransfer
     {
-        return $this->getFacade()->getCountryByIso2Code($countryTransfer->getIso2Code());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RegionRequestTransfer $regionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\RegionCollectionTransfer
-     */
-    public function findRegionsByCountryIso2CodeAction(RegionRequestTransfer $regionRequestTransfer): RegionCollectionTransfer
-    {
-        return $this->getFacade()->findRegionsByCountryIso2Code($regionRequestTransfer);
+        return $this->getFacade()->findCountriesByIso2Codes($countryRequestTransfer);
     }
 }

@@ -7,9 +7,8 @@
 
 namespace Spryker\Client\Country\Zed;
 
-use Generated\Shared\Transfer\CountryTransfer;
-use Generated\Shared\Transfer\RegionCollectionTransfer;
-use Generated\Shared\Transfer\RegionRequestTransfer;
+use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryRequestTransfer;
 use Spryker\Client\Country\Dependency\Client\CountryToZedRequestClientInterface;
 
 class CountryStub implements CountryStubInterface
@@ -28,28 +27,15 @@ class CountryStub implements CountryStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
+     * @param \Generated\Shared\Transfer\CountryRequestTransfer $countryRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CountryTransfer
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function getCountryByIso2Code(CountryTransfer $countryTransfer): CountryTransfer
+    public function findCountriesByIso2Codes(CountryRequestTransfer $countryRequestTransfer): CountryCollectionTransfer
     {
-        /** @var \Generated\Shared\Transfer\CountryTransfer $countryTransfer */
-        $countryTransfer = $this->zedRequestClient->call('/country/gateway/get-country-by-iso2-code', $countryTransfer);
+        /** @var \Generated\Shared\Transfer\CountryCollectionTransfer $countriesCollectionTransfer */
+        $countriesCollectionTransfer = $this->zedRequestClient->call('/country/gateway/find-countries-by-iso2-codes', $countryRequestTransfer);
 
-        return $countryTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RegionRequestTransfer $regionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\RegionCollectionTransfer
-     */
-    public function findRegionsByCountryIso2Code(RegionRequestTransfer $regionRequestTransfer): RegionCollectionTransfer
-    {
-        /** @var \Generated\Shared\Transfer\RegionCollectionTransfer $regionCollectionTransfer */
-        $regionCollectionTransfer = $this->zedRequestClient->call('/country/gateway/find-regions-by-country-iso2-code', $regionRequestTransfer);
-
-        return $regionCollectionTransfer;
+        return $countriesCollectionTransfer;
     }
 }

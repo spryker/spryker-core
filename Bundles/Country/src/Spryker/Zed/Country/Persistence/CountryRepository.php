@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\Country\Persistence;
 
-use Generated\Shared\Transfer\RegionCollectionTransfer;
+use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -16,20 +17,20 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CountryRepository extends AbstractRepository implements CountryRepositoryInterface
 {
     /**
-     * @param string $iso2Code
+     * @param string[] $iso2Codes
      *
-     * @return \Generated\Shared\Transfer\RegionCollectionTransfer
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function findRegionsByCountryIso2Code(string $iso2Code): RegionCollectionTransfer
+    public function findCountriesByIso2Codes(array $iso2Codes): CountryCollectionTransfer
     {
-        $query = $this->getFactory()
-            ->createRegionQuery()
-            ->useSpyCountryQuery()
-                ->filterByIso2Code($iso2Code)
-            ->endUse();
+        $countryQuery = $this->getFactory()
+            ->createCountryQuery()
+            ->joinWithSpyRegion(Criteria::LEFT_JOIN)
+            ->filterByIso2Code_In($iso2Codes);
+        $countries = $this->buildQueryFromCriteria($countryQuery)->find();
 
         return $this->getFactory()
-            ->createRegionMapper()
-            ->mapTransferCollection($this->buildQueryFromCriteria($query)->find());
+            ->createCountryMapper()
+            ->mapCountryTransferCollection($countries);
     }
 }

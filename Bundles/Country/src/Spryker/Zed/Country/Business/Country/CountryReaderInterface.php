@@ -5,20 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Country;
+namespace Spryker\Zed\Country\Business\Country;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Generated\Shared\Transfer\CountryRequestTransfer;
 
-interface CountryClientInterface
+interface CountryReaderInterface
 {
     /**
-     * Specification:
-     * - Retrieves countries with regions data by country ISO-2 codes.
-     * - Makes Zed request.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CountryRequestTransfer $countryRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
