@@ -53,11 +53,11 @@ class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriter
         $this->shoppingListProductOptionEntityManager
             ->removeShoppingListItemProductOptions($shoppingListItemTransfer->getIdShoppingListItem());
 
-        foreach ($shoppingListItemTransfer->getProductOptions()->getArrayCopy() as $idProductOption) {
+        foreach ($shoppingListItemTransfer->getProductOptions() as $productOptionTransfer) {
             $this->shoppingListProductOptionEntityManager
                 ->saveShoppingListItemProductOptions(
                     $shoppingListItemTransfer->getIdShoppingListItem(),
-                    $idProductOption
+                    $productOptionTransfer->getIdProductOptionValue()
                 );
         }
     }

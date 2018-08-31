@@ -8,10 +8,8 @@
 namespace SprykerTest\Zed\ShoppingListProductOption;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Orm\Zed\ShoppingListProductOption\Persistence\SpyShoppingListProductOptionQuery;
 
 /**
@@ -38,23 +36,29 @@ class ShoppingListProductOptionBusinessTester extends Actor
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
+     * @return \Generated\Shared\Transfer\ProductOptionValueTransfer|null
      */
-    public function createProductOptionValue(string $sku = 'sku_for_testing'): SpyProductOptionValue
+    public function createProductOptionGroupValueTransfer(string $sku): ?ProductOptionValueTransfer
     {
-        $productOptionGroup = (new SpyProductOptionGroupQuery())
-            ->filterByName('test')
-            ->findOneOrCreate();
-        $productOptionGroup->save();
+        $productOptionGroupTransfer = $this->haveProductOptionGroupWithValues(
+            [],
+            [
+                [
+                    [ProductOptionValueTransfer::SKU => $sku],
+                    [
+                        [],
+                    ],
+                ],
+            ]
+        );
 
-        $productOptionValue = (new SpyProductOptionValueQuery())
-            ->filterByValue('value.translation.key')
-            ->filterByFkProductOptionGroup($productOptionGroup->getIdProductOptionGroup())
-            ->filterBySku($sku)
-            ->findOneOrCreate();
-        $productOptionValue->save();
+        $ProductOptionValueTransfer = $productOptionGroupTransfer->getProductOptionValues()->offsetGet(0);
 
-        return $productOptionValue;
+        if (empty($ProductOptionValueTransfer)) {
+            return null;
+        }
+
+        return $ProductOptionValueTransfer;
     }
 
     /**
