@@ -55,7 +55,7 @@ class PluginUsageFinderConsole extends Console
             foreach ($modules as $moduleName => $usedPlugins) {
                 $applicationModule = sprintf('%s %s', $application, $moduleName);
                 $table = new Table($output);
-                $table->setHeaders(['Module/Application', 'Dependend Module', 'Organization', 'Application', 'Plugin name']);
+                $table->setHeaders(['Application & Module', 'Organization', 'Application', 'Module', 'Plugin name']);
 
                 foreach ($usedPlugins as $usedPlugin) {
                     array_unshift($usedPlugin, $applicationModule);
