@@ -148,7 +148,7 @@ class VariantGenerator implements VariantGeneratorInterface
      *          [red] => Red
      *          [blue] => Blue
      *      )
-     *     [flavour] => Array
+     *     [flavor] => Array
      *      (
      *          [sweet] => Cakes
      *      )

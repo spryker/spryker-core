@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantRelationship\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship;
 
@@ -46,6 +47,11 @@ class MerchantRelationshipMapper implements MerchantRelationshipMapperInterface
             $spyMerchantRelationship->toArray(),
             true
         );
+        if ($spyMerchantRelationship->getMerchant()) {
+            $merchantTransfer = $merchantRelationshipTransfer->getMerchant() ?: new MerchantTransfer();
+            $merchantTransfer->fromArray($spyMerchantRelationship->getMerchant()->toArray(), true);
+            $merchantRelationshipTransfer->setMerchant($merchantTransfer);
+        }
         $merchantRelationshipTransfer->setOwnerCompanyBusinessUnit(
             $this->mapCompanyBusinessUnitEntityToTransfer($spyMerchantRelationship->getCompanyBusinessUnit(), new CompanyBusinessUnitTransfer())
         );

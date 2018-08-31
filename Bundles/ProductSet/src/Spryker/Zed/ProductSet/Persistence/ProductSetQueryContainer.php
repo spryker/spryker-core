@@ -64,6 +64,20 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
     /**
      * @api
      *
+     * @param int[] $ids
+     *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     */
+    public function queryProductSetByIds(array $ids)
+    {
+        return $this->getFactory()
+            ->createProductSetQuery()
+            ->filterByIdProductSet_In($ids);
+    }
+
+    /**
+     * @api
+     *
      * @param int $idProductSet
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductAbstractSetQuery

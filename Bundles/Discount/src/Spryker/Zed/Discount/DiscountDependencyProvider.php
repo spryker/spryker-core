@@ -51,6 +51,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER = 'PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER';
     const PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER = 'PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER';
     const PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS = 'PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS';
+    const PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY = 'PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY';
     const DECISION_RULE_PLUGINS = 'DECISION_RULE_PLUGINS';
     const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
     const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
@@ -76,6 +77,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDiscountApplicableFilterPlugins($container);
         $container = $this->addCurrencyFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addDiscountableItemExpanderStrategyPlugins($container);
 
         return $container;
     }
@@ -109,6 +111,14 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
             static::PLUGIN_CALCULATOR_PERCENTAGE => new PercentagePlugin(),
             static::PLUGIN_CALCULATOR_FIXED => new FixedPlugin(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[]
+     */
+    protected function getDiscountableItemTransformerStrategyPlugins(): array
+    {
+        return [];
     }
 
     /**
@@ -460,6 +470,20 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::PLUGIN_STORE_RELATION_FORM_TYPE] = function () {
             return $this->getStoreRelationFormTypePlugin();
         };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDiscountableItemExpanderStrategyPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY] = function () {
+            return $this->getDiscountableItemTransformerStrategyPlugins();
+        };
+
         return $container;
     }
 

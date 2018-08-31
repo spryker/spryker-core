@@ -247,7 +247,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $storeName,
         $isRefresh = false
     ) {
-        if ($isRefresh) {
+        if ($isRefresh && $productAbstractPageSearchEntity && $productAbstractPageSearchEntity->getStructuredData()) {
             $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransferFromJson($productAbstractPageSearchEntity->getStructuredData());
         } else {
             $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransfer($productAbstractLocalizedEntity);
