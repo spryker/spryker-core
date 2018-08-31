@@ -72,7 +72,8 @@ class AddressesWriter implements AddressesWriterInterface
 
         $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
 
-        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference($customerReference);
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
         if (!$customerResponseTransfer->getHasCustomer()) {
@@ -117,7 +118,8 @@ class AddressesWriter implements AddressesWriterInterface
         $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
         $customerResponseTransfer = $this->customersReader->findCustomerByReference($customerReference);
 
-        $addressTransfer = (new AddressTransfer())->fromArray($addressAttributesTransfer->toArray(), true);
+        $addressTransfer = (new AddressTransfer())
+            ->fromArray($addressAttributesTransfer->toArray(), true);
         $addressTransfer = $this->customerClient->updateAddress($addressTransfer);
 
         if (!$addressTransfer->getUuid()) {
@@ -147,7 +149,8 @@ class AddressesWriter implements AddressesWriterInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $addressTransfer = (new AddressTransfer())->setUuid($restRequest->getResource()->getId());
+        $addressTransfer = (new AddressTransfer())
+            ->setUuid($restRequest->getResource()->getId());
         $addressTransfer = $this->customerClient->findAddressByUuid($addressTransfer);
 
         if (!$addressTransfer) {

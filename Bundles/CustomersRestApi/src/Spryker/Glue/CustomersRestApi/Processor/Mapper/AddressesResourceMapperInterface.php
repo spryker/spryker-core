@@ -20,7 +20,10 @@ interface AddressesResourceMapperInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function mapAddressTransferToRestResource(AddressTransfer $addressesTransfer, CustomerTransfer $customerTransfer): RestResourceInterface;
+    public function mapAddressTransferToRestResource(
+        AddressTransfer $addressesTransfer,
+        CustomerTransfer $customerTransfer
+    ): RestResourceInterface;
 
     /**
      * @param \Generated\Shared\Transfer\RestAddressAttributesTransfer $restAddressAttributesTransfer

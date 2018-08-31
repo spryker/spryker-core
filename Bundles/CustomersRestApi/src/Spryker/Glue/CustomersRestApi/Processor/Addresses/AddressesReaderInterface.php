@@ -13,21 +13,6 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface AddressesReaderInterface
 {
     /**
-     * @param string $customerReference
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function readByCustomerReference(string $customerReference): RestResponseInterface;
-
-    /**
-     * @param string $uuid
-     * @param string $customerReference
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function readByUuid(string $uuid, string $customerReference): RestResponseInterface;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

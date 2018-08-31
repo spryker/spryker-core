@@ -35,11 +35,15 @@ class AddressesResourceMapper implements AddressesResourceMapperInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function mapAddressTransferToRestResource(AddressTransfer $addressTransfer, CustomerTransfer $customerTransfer): RestResourceInterface
-    {
+    public function mapAddressTransferToRestResource(
+        AddressTransfer $addressTransfer,
+        CustomerTransfer $customerTransfer
+    ): RestResourceInterface {
         $restAddressAttributesTransfer = (new RestAddressAttributesTransfer())
             ->fromArray($addressTransfer->toArray(), true)
-            ->setCountry($addressTransfer->getCountry()->getName());
+            ->setCountry($addressTransfer->getCountry()->getName())
+            ->setIsDefaultShipping($customerTransfer->getDefaultShippingAddress() === $addressTransfer->getIdCustomerAddress())
+            ->setIsDefaultBilling($customerTransfer->getDefaultBillingAddress() === $addressTransfer->getIdCustomerAddress());
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CustomersRestApiConfig::RESOURCE_ADDRESSES,

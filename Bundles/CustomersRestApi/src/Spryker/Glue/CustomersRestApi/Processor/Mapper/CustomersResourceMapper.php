@@ -47,7 +47,8 @@ class CustomersResourceMapper implements CustomersResourceMapperInterface
      */
     public function mapCustomerToCustomersRestResource(CustomerTransfer $customerTransfer): RestResourceInterface
     {
-        $restCustomersResponseAttributesTransfer = (new RestCustomersResponseAttributesTransfer())->fromArray($customerTransfer->toArray(), true);
+        $restCustomersResponseAttributesTransfer = (new RestCustomersResponseAttributesTransfer())
+            ->fromArray($customerTransfer->toArray(), true);
 
         return $this->restResourceBuilder->createRestResource(
             CustomersRestApiConfig::RESOURCE_CUSTOMERS,

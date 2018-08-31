@@ -90,21 +90,27 @@ class CustomersWriter implements CustomersWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function updateCustomer(RestRequestInterface $restRequest, RestCustomersAttributesTransfer $restCustomerTransfer): RestResponseInterface
-    {
+    public function updateCustomer(
+        RestRequestInterface $restRequest,
+        RestCustomersAttributesTransfer $restCustomerTransfer
+    ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $customerTransfer = (new CustomerTransfer)->setCustomerReference($restRequest->getResource()->getId());
-        $customer = $this->customerClient->findCustomerByReference($customerTransfer);
+        $customerTransfer = (new CustomerTransfer)
+            ->setCustomerReference($restRequest->getResource()->getId());
+        $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        if (!$customer) {
+        if (!$customerResponseTransfer->getHasCustomer()) {
             $this->createCustomerNotFoundError($restResponse);
 
             return $restResponse;
         }
 
-        $customerTransfer = $this->customersResourceMapper->mapCustomerAttributesToCustomerTransfer($restCustomerTransfer);
-        $customerTransfer->setIdCustomer($customer->getIdCustomer());
+        $customerTransfer = $this
+            ->customersResourceMapper
+            ->mapCustomerAttributesToCustomerTransfer($restCustomerTransfer);
+        $customerTransfer->setIdCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer());
+
         $customerResponseTransfer = $this->customerClient->updateCustomer($customerTransfer);
 
         if (!$customerResponseTransfer->getIsSuccess()) {
@@ -113,7 +119,9 @@ class CustomersWriter implements CustomersWriterInterface
             return $restResponse;
         }
 
-        $restResource = $this->customersResourceMapper->mapCustomerTransferToRestResource($customerResponseTransfer->getCustomerTransfer());
+        $restResource = $this
+            ->customersResourceMapper
+            ->mapCustomerTransferToRestResource($customerResponseTransfer->getCustomerTransfer());
 
         return $restResponse->addResource($restResource);
     }
@@ -183,7 +191,8 @@ class CustomersWriter implements CustomersWriterInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $customerTransfer = (new CustomerTransfer)->setCustomerReference($restRequest->getResource()->getId());
+        $customerTransfer = (new CustomerTransfer)
+            ->setCustomerReference($restRequest->getResource()->getId());
         $customerTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
         if (!$customerTransfer) {
