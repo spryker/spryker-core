@@ -29,7 +29,9 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
     public function getFileByIdFile(int $idFile)
     {
         $query = $this->getFactory()->createFileQuery();
-        $fileEntity = $query->findOneByIdFile($idFile);
+        $query->filterByIdFile($idFile);
+
+        $fileEntity = $query->find()->getFirst();
 
         if ($fileEntity === null) {
             return $fileEntity;

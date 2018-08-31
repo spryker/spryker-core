@@ -116,6 +116,8 @@ class FileReader implements FileReaderInterface
     protected function getRequestedFileInfo(FileTransfer $fileTransfer, ?int $idFileInfo = null)
     {
         if ($idFileInfo === null) {
+//            echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($fileTransfer->getFileInfo()) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+
             return $fileTransfer->getFileInfo()[0] ?? null;
         }
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManager\Persistence;
 
+use Orm\Zed\FileManager\Persistence\Map\SpyFileInfoTableMap;
 use Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributesQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
@@ -26,7 +27,11 @@ class FileManagerPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createFileQuery()
     {
-        return SpyFileQuery::create();
+        $spyFileQuery = SpyFileQuery::create()
+            ->joinWithSpyFileInfo()
+            ->addDescendingOrderByColumn(SpyFileInfoTableMap::COL_VERSION);
+
+        return $spyFileQuery;
     }
 
     /**
