@@ -66,7 +66,7 @@ class AssignController extends AbstractController
     /**
      * @param int $idCategory
      *
-     * @return null|\Orm\Zed\Category\Persistence\SpyCategory
+     * @return \Orm\Zed\Category\Persistence\SpyCategory|null
      */
     protected function getCategoryEntity($idCategory)
     {
