@@ -248,7 +248,7 @@ class RequestFormatter implements RequestFormatterInterface
         $sortFields = explode(',', $queryParameters[RequestConstantsInterface::QUERY_SORT]);
         foreach ($sortFields as $field) {
             $direction = SortInterface::SORT_ASC;
-            if ($field[0] === '-') {
+            if (isset($field[0]) && $field[0] === '-') {
                 $direction = SortInterface::SORT_DESC;
                 $field = trim($field, '-');
             }
