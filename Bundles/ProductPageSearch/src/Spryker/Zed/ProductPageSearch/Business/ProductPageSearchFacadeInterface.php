@@ -77,4 +77,27 @@ interface ProductPageSearchFacadeInterface
      * @return void
      */
     public function unpublishConcreteProducts(array $productConcreteIds): void;
+
+    /**
+     * Specification
+     * - Finds product concrete page search entities by given concrete product ids.
+     * - Returns array of ProductConcretePageSearchTransfer objects.
+     *
+     * @api
+     *
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function findProductConcretePageSearchEntitiesByProductConcreteIds(array $ids = []): array;
+
+    /**
+     * Specification
+     * - Finds product concrete page search entities by given concrete product ids.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function findAllProductConcretePageSearchEntities(): array;
 }

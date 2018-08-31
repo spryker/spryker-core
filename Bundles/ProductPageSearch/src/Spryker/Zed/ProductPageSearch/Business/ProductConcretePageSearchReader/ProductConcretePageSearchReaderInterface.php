@@ -10,14 +10,15 @@ namespace Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader
 interface ProductConcretePageSearchReaderInterface
 {
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
     public function findAllProductConcretePageSearchEntities(): array;
 
     /**
      * @param int[] $ids
+     * @param bool $groupByStoreAndLocale
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function findProductConcretePageSearchEntitiesByProductConcreteIds(array $ids): array;
+    public function findProductConcretePageSearchEntitiesByProductConcreteIds(array $ids, bool $groupByStoreAndLocale = false): array;
 }

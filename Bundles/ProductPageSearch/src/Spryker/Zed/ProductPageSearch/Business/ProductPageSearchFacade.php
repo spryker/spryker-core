@@ -80,6 +80,8 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     /**
      * {@inheritdoc}
      *
+     * @
+     *
      * @api
      *
      * @param int[] $productConcreteIds
@@ -91,5 +93,35 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
         $this->getFactory()
             ->createProductConcretePageSearchPublisher()
             ->unpublish($productConcreteIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function findProductConcretePageSearchEntitiesByProductConcreteIds(array $ids = []): array
+    {
+        return $this->getFactory()
+            ->createProductConcretePageSearchReader()
+            ->findProductConcretePageSearchEntitiesByProductConcreteIds($ids);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function findAllProductConcretePageSearchEntities(): array
+    {
+        return $this->getFactory()
+            ->createProductConcretePageSearchReader()
+            ->findAllProductConcretePageSearchEntities();
     }
 }

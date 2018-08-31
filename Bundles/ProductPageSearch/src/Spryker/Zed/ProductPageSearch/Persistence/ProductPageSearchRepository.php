@@ -16,18 +16,18 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductPageSearchRepository extends AbstractRepository implements ProductPageSearchRepositoryInterface
 {
     /**
-     * @param int[] $ids
+     * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function findProductConcretePageSearchEntities(array $ids = []): array
+    public function findProductConcretePageSearchEntities(array $productConcreteIds = []): array
     {
         $productConcretePageSearchTransfers = [];
         $mapper = $this->getFactory()->createProductPageSearchMapper();
         $query = $this->getFactory()->createProductConcretePageSearchQuery();
 
-        if (!empty($ids)) {
-            $query->filterByFkProduct_In($ids);
+        if (!empty($productConcreteIds)) {
+            $query->filterByFkProduct_In($productConcreteIds);
         }
 
         $productConcretePageSearchEntities = $query->find();

@@ -34,14 +34,19 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
 
     /**
      * @param int[] $ids
+     * @param bool $groupByStoreAndLocale
      *
      * @return array
      */
-    public function findProductConcretePageSearchEntitiesByProductConcreteIds(array $ids): array
+    public function findProductConcretePageSearchEntitiesByProductConcreteIds(array $ids, bool $groupByStoreAndLocale = false): array
     {
         $productConcreteSearchPageTransfers = $this->repository->findProductConcretePageSearchEntities($ids);
 
-        return $this->getTransfersGrouppedByStoreAndLocale($productConcreteSearchPageTransfers);
+        if ($groupByStoreAndLocale) {
+            return $this->getTransfersGrouppedByStoreAndLocale($productConcreteSearchPageTransfers);
+        }
+
+        return $productConcreteSearchPageTransfers;
     }
 
     /**
