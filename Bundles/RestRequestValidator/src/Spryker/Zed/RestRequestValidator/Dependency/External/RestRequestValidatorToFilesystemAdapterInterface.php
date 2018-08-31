@@ -23,4 +23,11 @@ interface RestRequestValidatorToFilesystemAdapterInterface
      * @return void
      */
     public function dumpFile(string $filename, string $content): void;
+
+    /**
+     * @param array $files
+     *
+     * @return void
+     */
+    public function remove(array $files): void;
 }

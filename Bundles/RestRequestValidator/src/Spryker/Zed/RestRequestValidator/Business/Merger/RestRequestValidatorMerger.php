@@ -39,7 +39,7 @@ class RestRequestValidatorMerger implements RestRequestValidatorMergerInterface
 
         foreach ($validationConfigs as $validationSchemaScoped) {
             foreach ($validationSchemaScoped as $actionName => $fieldsConfig) {
-                $resultingConfiguration[] = $this->mergeOverlappingConfig($actionName, $resultingConfiguration, $fieldsConfig);
+                $resultingConfiguration = $this->mergeOverlappingConfig($actionName, $resultingConfiguration, $fieldsConfig);
             }
         }
 

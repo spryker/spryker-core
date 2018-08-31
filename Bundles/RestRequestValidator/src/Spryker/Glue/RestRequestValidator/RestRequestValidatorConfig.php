@@ -7,6 +7,7 @@
 namespace Spryker\Glue\RestRequestValidator;
 
 use Spryker\Glue\Kernel\AbstractBundleConfig;
+use Spryker\Shared\RestRequestValidator\RestRequestValidatorConfig as RestRequestValidatorConfigShared;
 
 class RestRequestValidatorConfig extends AbstractBundleConfig
 {
@@ -32,5 +33,13 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
             'PUT',
             'PATCH',
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getValidationCacheFilenamePattern(): string
+    {
+        return RestRequestValidatorConfigShared::VALIDATION_CACHE_FILENAME_PATTERN;
     }
 }

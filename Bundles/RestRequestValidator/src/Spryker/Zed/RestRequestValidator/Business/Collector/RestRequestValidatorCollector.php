@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Collector;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinderInterface;
 use Spryker\Zed\RestRequestValidator\Business\Exception\SchemaFileNotFound;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
@@ -45,15 +46,17 @@ class RestRequestValidatorCollector implements RestRequestValidatorCollectorInte
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
      * @throws \Spryker\Zed\RestRequestValidator\Business\Exception\SchemaFileNotFound
      *
      * @return array
      */
-    public function collect(): array
+    public function collect(StoreTransfer $storeTransfer): array
     {
         $resultingConfig = [];
 
-        foreach ($this->validationSchemaFinder->findSchemas() as $moduleValidationSchema) {
+        foreach ($this->validationSchemaFinder->findSchemas($storeTransfer) as $moduleValidationSchema) {
             if (!$this->filesystem->exists($moduleValidationSchema->getPathname())) {
                 throw new SchemaFileNotFound('Schema file does not exist: ' . $moduleValidationSchema);
             }
