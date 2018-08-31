@@ -208,7 +208,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
     }
 
     /**
-     * @param null|int $idStore
+     * @param int|null $idStore
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */

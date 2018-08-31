@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Development\Business;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
+use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -71,10 +73,11 @@ interface DevelopmentFacadeInterface
      * @api
      *
      * @param string $module
+     * @param string|null $dependencyType
      *
      * @return \Generated\Shared\Transfer\DependencyCollectionTransfer
      */
-    public function showOutgoingDependenciesForModule(string $module): DependencyCollectionTransfer;
+    public function showOutgoingDependenciesForModule(string $module, ?string $dependencyType = null): DependencyCollectionTransfer;
 
     /**
      * @api
@@ -88,9 +91,24 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
+     * @deprecated Please use `getModules()` instead.
+     *
      * @return array
      */
     public function getAllModules();
+
+    /**
+     * Specification:
+     * - Loads all modules in all added module directories.
+     * - Creates an array of ModuleTransfer objects.
+     * - ModuleTransfer objects also contain an OrganizationTransfer object.
+     * - The key of the returned array is `OrganizationName.ModuleName`.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getModules();
 
     /**
      * @api
@@ -309,4 +327,18 @@ interface DevelopmentFacadeInterface
      * @return bool
      */
     public function runPropelAbstractValidation(OutputInterface $output, ?string $module): bool;
+
+    /**
+     * Specification:
+     * - Parses all dependencies in src and tests directory of a given module.
+     * - Parses all defined composer dependencies.
+     * - Compares and validates the parsed results.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DependencyValidationRequestTransfer $dependencyValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\DependencyValidationResponseTransfer
+     */
+    public function validateModuleDependencies(DependencyValidationRequestTransfer $dependencyValidationRequestTransfer): DependencyValidationResponseTransfer;
 }
