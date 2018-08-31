@@ -8,7 +8,6 @@
 namespace Spryker\Client\Country\Zed;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
-use Generated\Shared\Transfer\CountryRequestTransfer;
 use Spryker\Client\Country\Dependency\Client\CountryToZedRequestClientInterface;
 
 class CountryStub implements CountryStubInterface
@@ -27,15 +26,15 @@ class CountryStub implements CountryStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CountryRequestTransfer $countryRequestTransfer
+     * @param \Generated\Shared\Transfer\CountryCollectionTransfer $countryCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function findCountriesByIso2Codes(CountryRequestTransfer $countryRequestTransfer): CountryCollectionTransfer
+    public function findCountriesByIso2Codes(CountryCollectionTransfer $countryCollectionTransfer): CountryCollectionTransfer
     {
-        /** @var \Generated\Shared\Transfer\CountryCollectionTransfer $countriesCollectionTransfer */
-        $countriesCollectionTransfer = $this->zedRequestClient->call('/country/gateway/find-countries-by-iso2-codes', $countryRequestTransfer);
+        /** @var \Generated\Shared\Transfer\CountryCollectionTransfer $countryCollectionTransfer */
+        $countryCollectionTransfer = $this->zedRequestClient->call('/country/gateway/find-countries-by-iso2-codes', $countryCollectionTransfer);
 
-        return $countriesCollectionTransfer;
+        return $countryCollectionTransfer;
     }
 }

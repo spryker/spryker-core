@@ -24,9 +24,5 @@
         <property name="iso2Code" type="string" />
     </transfer>
 
-    <transfer name="CountryRequest">
-        <property name="iso2Codes" type="string[]" singular="iso2Code" />
-    </transfer>
-
 </transfers>
 

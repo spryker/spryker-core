@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Country\Communication\Controller;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
-use Generated\Shared\Transfer\CountryRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -17,12 +16,12 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
-     * @param \Generated\Shared\Transfer\CountryRequestTransfer $countryRequestTransfer
+     * @param \Generated\Shared\Transfer\CountryCollectionTransfer $countryCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function findCountriesByIso2CodesAction(CountryRequestTransfer $countryRequestTransfer): CountryCollectionTransfer
+    public function findCountriesByIso2CodesAction(CountryCollectionTransfer $countryCollectionTransfer): CountryCollectionTransfer
     {
-        return $this->getFacade()->findCountriesByIso2Codes($countryRequestTransfer);
+        return $this->getFacade()->findCountriesByIso2Codes($countryCollectionTransfer);
     }
 }

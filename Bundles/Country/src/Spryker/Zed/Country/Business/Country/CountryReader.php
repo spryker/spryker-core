@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Country\Business\Country;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
-use Generated\Shared\Transfer\CountryRequestTransfer;
 use Spryker\Zed\Country\Persistence\CountryRepositoryInterface;
 
 class CountryReader implements CountryReaderInterface
@@ -28,12 +27,17 @@ class CountryReader implements CountryReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CountryRequestTransfer $countryRequestTransfer
+     * @param \Generated\Shared\Transfer\CountryCollectionTransfer $countryCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function findCountriesByIso2Codes(CountryRequestTransfer $countryRequestTransfer): CountryCollectionTransfer
+    public function findCountriesByIso2Codes(CountryCollectionTransfer $countryCollectionTransfer): CountryCollectionTransfer
     {
-        return $this->countryRepository->findCountriesByIso2Codes($countryRequestTransfer->getIso2Codes());
+        $iso2Codes = [];
+        foreach ($countryCollectionTransfer->getCountries() as $countryTransfer) {
+            $iso2Codes[] = $countryTransfer->getIso2Code();
+        }
+
+        return $this->countryRepository->findCountriesByIso2Codes($iso2Codes);
     }
 }

@@ -7,7 +7,8 @@
 
 namespace Spryker\Glue\StoresRestApi\Processor\Stores;
 
-use Generated\Shared\Transfer\CountryRequestTransfer;
+use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Spryker\Glue\StoresRestApi\Dependency\Client\StoresRestApiToCountryClientInterface;
 use Spryker\Glue\StoresRestApi\Processor\Mapper\StoresCountryResourceMapperInterface;
 
@@ -43,10 +44,13 @@ class StoresCountryReader implements StoresCountryReaderInterface
     public function getStoresCountryAttributes(array $iso2Codes): array
     {
         $storeCountryAttributes = [];
-        $countryCollectionTransfer = $this->countryClient->findCountriesByIso2Codes(
-            (new CountryRequestTransfer())
-                ->setIso2Codes($iso2Codes)
-        );
+
+        $countryCollectionTransfer = new CountryCollectionTransfer();
+        foreach ($iso2Codes as $iso2Code) {
+            $countryCollectionTransfer->addCountries((new CountryTransfer())->setIso2Code($iso2Code));
+        }
+        $countryCollectionTransfer = $this->countryClient->findCountriesByIso2Codes($countryCollectionTransfer);
+
         foreach ($countryCollectionTransfer->getCountries() as $countryTransfer) {
             $storeCountryAttributes[] = $this->storesCountryResourceMapper->mapCountryToStoresCountryRestAttributes(
                 $countryTransfer

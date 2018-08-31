@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Country\Business;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
-use Generated\Shared\Transfer\CountryRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -115,14 +114,14 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CountryRequestTransfer $countryRequestTransfer
+     * @param \Generated\Shared\Transfer\CountryCollectionTransfer $countryCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function findCountriesByIso2Codes(CountryRequestTransfer $countryRequestTransfer): CountryCollectionTransfer
+    public function findCountriesByIso2Codes(CountryCollectionTransfer $countryCollectionTransfer): CountryCollectionTransfer
     {
         return $this->getFactory()
             ->createCountryReader()
-            ->findCountriesByIso2Codes($countryRequestTransfer);
+            ->findCountriesByIso2Codes($countryCollectionTransfer);
     }
 }
