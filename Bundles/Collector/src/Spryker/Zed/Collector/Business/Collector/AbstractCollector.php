@@ -279,7 +279,7 @@ abstract class AbstractCollector
             $sqlParams['p' . $step] = $value;
             $statement->bindParam(':p' . $step, $value);
             $step++;
-        };
+        }
 
         $statement->execute($sqlParams);
 

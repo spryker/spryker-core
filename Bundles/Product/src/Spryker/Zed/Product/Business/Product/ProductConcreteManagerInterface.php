@@ -79,7 +79,7 @@ interface ProductConcreteManagerInterface
     /**
      * @param int $idConcrete
      *
-     * @return null|int
+     * @return int|null
      */
     public function findProductAbstractIdByConcreteId(int $idConcrete): ?int;
 

@@ -187,7 +187,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
         foreach ($namespaces as $namespace) {
             $path = $pathToRoot . 'src' . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR;
 
-            foreach (DevelopmentConfig::APPLICATION_LAYERS as $layer) {
+            foreach (DevelopmentConfig::APPLICATIONS as $layer) {
                 $layerPath = $path . $layer . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
                 if ($pathSuffix) {
                     $layerPath .= $pathSuffix;
