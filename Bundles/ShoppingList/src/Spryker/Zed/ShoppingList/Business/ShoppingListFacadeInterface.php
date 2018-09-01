@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShoppingList\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
@@ -73,6 +74,15 @@ interface ShoppingListFacadeInterface
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function addItems(ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer): ShoppingListResponseTransfer;
 
     /**
      * Specification:

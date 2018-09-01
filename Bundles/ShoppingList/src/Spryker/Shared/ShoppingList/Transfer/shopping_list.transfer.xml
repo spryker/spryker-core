@@ -100,12 +100,6 @@
         <property name="customer" type="Customer" />
     </transfer>
 
-    <transfer name="ShoppingListFromQuickOrderRequest">
-        <property name="shoppingListId" type="int" />
-        <property name="customerId" type="int" />
-        <property name="items" type="ShoppingListItem[]" singular="item" />
-    </transfer>
-
     <transfer name="ShoppingListCompanyBusinessUnit">
         <property name="idShoppingList" type="int" />
         <property name="idShoppingListPermissionGroup" type="int" />
@@ -125,6 +119,12 @@
     <transfer name="ShoppingListPreAddItemCheckResponse">
         <property name="isSuccess" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="ShoppingListAddItemsRequest">
+        <property name="shoppingListId" type="int" />
+        <property name="customer" type="Customer" />
+        <property name="items" type="ShoppingListItem[]" singular="item" />
     </transfer>
 
 </transfers>

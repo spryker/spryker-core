@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingList\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
@@ -65,6 +66,16 @@ class GatewayController extends AbstractGatewayController
     public function addItemAction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         return $this->getFacade()->addItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function addItemsAction(ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer): ShoppingListResponseTransfer
+    {
+        return $this->getFacade()->addItems($shoppingListAddItemsRequestTransfer);
     }
 
     /**
