@@ -34,8 +34,10 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
      * @param \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface $sharedCartRepository
      * @param \Spryker\Zed\SharedCart\Persistence\SharedCartEntityManagerInterface $sharedCartEntityManager
      */
-    public function __construct(SharedCartRepositoryInterface $sharedCartRepository, SharedCartEntityManagerInterface $sharedCartEntityManager)
-    {
+    public function __construct(
+        SharedCartRepositoryInterface $sharedCartRepository,
+        SharedCartEntityManagerInterface $sharedCartEntityManager
+    ) {
         $this->sharedCartRepository = $sharedCartRepository;
         $this->sharedCartEntityManager = $sharedCartEntityManager;
     }
@@ -69,27 +71,53 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int[] $currentQuoteCompanyUserIdCollection
+     * @param int[] $storedQuoteCompanyUserIdIndexes
      *
      * @return void
      */
-    protected function updateExistingQuoteCompanyUsers(QuoteTransfer $quoteTransfer, array $currentQuoteCompanyUserIdCollection): void
-    {
-        $quoteCompanyUserIdIndex = $this->indexQuoteCompanyUserId((array)$quoteTransfer->getShareDetails());
-        $commonCompanyUserIdIndexes = array_intersect($quoteCompanyUserIdIndex, $currentQuoteCompanyUserIdCollection);
+    protected function updateExistingQuoteCompanyUsers(
+        QuoteTransfer $quoteTransfer,
+        array $storedQuoteCompanyUserIdIndexes
+    ): void {
+        $quoteShareDetails = $quoteTransfer->getShareDetails();
+        $formQuoteCompanyUserIdIndexes = $this->indexQuoteCompanyUserId((array)$quoteShareDetails);
 
-        foreach ($quoteTransfer->getShareDetails() as $shareDetailTransfer) {
+        $commonQuoteCompanyUserIdIndexes = array_intersect(
+            $formQuoteCompanyUserIdIndexes,
+            $storedQuoteCompanyUserIdIndexes
+        );
+
+        foreach ($quoteShareDetails as $shareDetailTransfer) {
             if (!$shareDetailTransfer->getIdQuoteCompanyUser()) {
                 continue;
             }
 
-            if (in_array($shareDetailTransfer->getIdQuoteCompanyUser(), $commonCompanyUserIdIndexes, false)) {
+            $shareDetailTransfer->requireQuotePermissionGroup();
+
+            if (in_array($shareDetailTransfer->getIdQuoteCompanyUser(), $commonQuoteCompanyUserIdIndexes, false)
+                && $this->isQuotePermissionGroupChanged($shareDetailTransfer)
+            ) {
                 $this->sharedCartEntityManager->updateCompanyUserQuotePermissionGroup(
                     $quoteTransfer->getIdQuote(),
                     $shareDetailTransfer
                 );
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
+     *
+     * @return bool
+     */
+    protected function isQuotePermissionGroupChanged(ShareDetailTransfer $shareDetailTransfer): bool
+    {
+        $storedIdQuotePermissionGroup = $this->sharedCartRepository->findIdQuotePermissionGroupByIdQuoteCompanyUser(
+            $shareDetailTransfer
+        );
+
+        return $shareDetailTransfer->getQuotePermissionGroup()
+                ->getIdQuotePermissionGroup() !== $storedIdQuotePermissionGroup;
     }
 
     /**
@@ -150,8 +178,10 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
      *
      * @return void
      */
-    protected function removeQuoteCompanyUsers(array $shareDetailTransferCollection, array $currentQuoteCompanyUserIdCollection): void
-    {
+    protected function removeQuoteCompanyUsers(
+        array $shareDetailTransferCollection,
+        array $currentQuoteCompanyUserIdCollection
+    ): void {
         $quoteCompanyUserIdIndex = $this->indexQuoteCompanyUserId($shareDetailTransferCollection);
         foreach ($currentQuoteCompanyUserIdCollection as $idQuoteCompanyUser) {
             if (!in_array($idQuoteCompanyUser, $quoteCompanyUserIdIndex)) {

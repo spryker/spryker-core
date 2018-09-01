@@ -34,6 +34,8 @@ interface SharedCartClientInterface
      *
      * @api
      *
+     * @deprecated Please use SharedCartClientInterface::updateQuotePermissions() instead
+     *
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

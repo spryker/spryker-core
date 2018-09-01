@@ -10,6 +10,7 @@ namespace Spryker\Zed\SharedCart\Persistence;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ShareDetailTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
@@ -161,6 +162,22 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             ->select([SpyQuoteCompanyUserTableMap::COL_ID_QUOTE_COMPANY_USER])
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
+     *
+     * @return int|null
+     */
+    public function findIdQuotePermissionGroupByIdQuoteCompanyUser(ShareDetailTransfer $shareDetailTransfer): ?int
+    {
+        return $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByIdQuoteCompanyUser(
+                $shareDetailTransfer->getIdQuoteCompanyUser()
+            )
+            ->select([SpyQuoteCompanyUserTableMap::COL_FK_QUOTE_PERMISSION_GROUP])
+            ->findOne();
     }
 
     /**

@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class SharedCartEntityManager extends AbstractEntityManager implements SharedCartEntityManagerInterface
 {
+    protected const COL_FK_QUOTE_PERMISSION_GROUP = 'FkQuotePermissionGroup';
+
     /**
      * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
@@ -160,6 +162,9 @@ class SharedCartEntityManager extends AbstractEntityManager implements SharedCar
             ->filterByFkQuote($idQuote)
             ->filterByFkCompanyUser(
                 $shareDetailTransfer->getIdCompanyUser()
-            )->update(['FkQuotePermissionGroup' => $quotePermissionGroupTransfer->getIdQuotePermissionGroup()]);
+            )
+            ->update([
+                static::COL_FK_QUOTE_PERMISSION_GROUP => $quotePermissionGroupTransfer->getIdQuotePermissionGroup(),
+            ]);
     }
 }

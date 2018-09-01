@@ -9,6 +9,7 @@ namespace Spryker\Zed\SharedCart\Persistence;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ShareDetailTransfer;
 
 interface SharedCartRepositoryInterface
 {
@@ -68,4 +69,11 @@ interface SharedCartRepositoryInterface
      * @return bool
      */
     public function isSharedQuoteDefault(int $idQuote, int $idCompanyUser): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
+     *
+     * @return int|null
+     */
+    public function findIdQuotePermissionGroupByIdQuoteCompanyUser(ShareDetailTransfer $shareDetailTransfer): ?int;
 }
