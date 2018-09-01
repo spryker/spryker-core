@@ -17,11 +17,9 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/checkout": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
