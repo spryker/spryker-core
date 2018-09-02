@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -26,12 +27,35 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
      */
     public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array
     {
-        return $this->getFactory()
+        $customerReferencesArray = $this->getFactory()
             ->getShoppingListPropelQuery()
+
+            ->distinct()
+            ->useSpyShoppingListCompanyUserQuery()
+                ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)
+                    ->joinCustomer('companyUserCustomer', Criteria::LEFT_JOIN)
+                ->endUse()
+                ->withColumn('companyUserCustomer.customer_reference', 'companyUserReferences')
+            ->endUse()
+            ->useSpyShoppingListCompanyBusinessUnitQuery()
+                ->useSpyCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
+                    ->useCompanyUserQuery('companyBusinessUnitUser', Criteria::LEFT_JOIN)
+                        ->joinCustomer('companyBusinessUnitCustomer', Criteria::LEFT_JOIN)
+                    ->endUse()
+                ->endUse()
+                ->withColumn('companyBusinessUnitCustomer.customer_reference', 'companyBusinessUnitReferences')
+            ->endUse()
             ->filterByIdShoppingList_In($shoppingListIds)
             ->select([SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE])
             ->find()
             ->toArray();
+
+        $result = [];
+        foreach ($customerReferencesArray as $item) {
+            $result = \array_merge($result, array_filter(\array_values($item)));
+        };
+
+        return \array_unique($result);
     }
 
     /**

@@ -78,7 +78,7 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
 
     /**
      * @param string $customerReference
-     * @param null|\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage $shoppingListCustomerStorageEntity
+     * @param \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage|null $shoppingListCustomerStorageEntity
      *
      * @return void
      */
