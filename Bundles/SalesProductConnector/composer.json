@@ -13,7 +13,6 @@
   "require-dev": {
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

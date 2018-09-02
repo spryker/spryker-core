@@ -12,12 +12,13 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/application": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
+    "spryker/sales": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "suggest": {
     "spryker/installer": "If you want to use Installer plugin.",
