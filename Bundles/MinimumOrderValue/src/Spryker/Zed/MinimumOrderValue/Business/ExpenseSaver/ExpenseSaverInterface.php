@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValue\Business\OrderSaver;
+namespace Spryker\Zed\MinimumOrderValue\Business\ExpenseSaver;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
-interface OrderMinimumOrderValueFeesSaverInterface
+interface ExpenseSaverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -18,7 +18,7 @@ interface OrderMinimumOrderValueFeesSaverInterface
      *
      * @return void
      */
-    public function saveOrderMinimumOrderValueFees(
+    public function saveMinimumOrderValueExpense(
         QuoteTransfer $quoteTransfer,
         SaveOrderTransfer $saveOrderTransfer
     ): void;

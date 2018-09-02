@@ -59,6 +59,8 @@
 
         <property name="unitPriceToPayAggregation" type="int" />
         <property name="sumPriceToPayAggregation" type="int" />
+
+        <property name="fkSalesOrder" type="int" />
     </transfer>
 
     <transfer name="Item">

@@ -16,9 +16,9 @@ use Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy\SoftThresholdWit
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeBridge;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeBridge;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeBridge;
+use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToSalesFacadeBridge;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeBridge;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToTaxFacadeBridge;
-use Spryker\Zed\MinimumOrderValue\Dependency\QueryContainer\MinimumOrderValueToSalesQueryContainerBridge;
 
 class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -28,8 +28,8 @@ class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_TAX = 'FACADE_TAX';
+    public const FACADE_SALES = 'FACADE_SALES';
     public const PLUGINS_MINIMUM_ORDER_VALUE_STRATEGY = 'PLUGINS_MINIMUM_ORDER_VALUE_STRATEGY';
-    public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -45,8 +45,8 @@ class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addMoneyFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMessengerFacade($container);
-        $container = $this->addSalesQueryContainer($container);
         $container = $this->addTaxFacade($container);
+        $container = $this->addSalesFacade($container);
         $container = $this->addMinimumOrderValueStrategyPlugins($container);
 
         return $container;
@@ -127,20 +127,6 @@ class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesQueryContainer(Container $container): Container
-    {
-        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
-            return new MinimumOrderValueToSalesQueryContainerBridge($container->getLocator()->sales()->queryContainer());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addTaxFacade(Container $container): Container
     {
         $container[static::FACADE_TAX] = function (Container $container) {
@@ -167,6 +153,20 @@ class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container[static::PLUGINS_MINIMUM_ORDER_VALUE_STRATEGY] = function () {
             return $this->getMinimumOrderValueStrategyPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesFacade(Container $container): Container
+    {
+        $container[static::FACADE_SALES] = function (Container $container) {
+            return new MinimumOrderValueToSalesFacadeBridge($container->getLocator()->sales()->facade());
         };
 
         return $container;

@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\MinimumOrderValue\Business\MinimumOrderValueFacadeInterface getFacade()
  */
-class OrderMinimumOrderValueFeesSavePlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
+class MinimumOrderValueExpenseSavePlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
 {
     /**
      * {@inheritdoc}
@@ -27,6 +27,6 @@ class OrderMinimumOrderValueFeesSavePlugin extends AbstractPlugin implements Che
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
-        $this->getFacade()->saveOrderMinimumOrderValueFees($quoteTransfer, $saveOrderTransfer);
+        $this->getFacade()->saveOrderMinimumOrderValueExpense($quoteTransfer, $saveOrderTransfer);
     }
 }

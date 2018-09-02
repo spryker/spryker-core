@@ -200,4 +200,35 @@
         <property name="lastPage" type="int" />
     </transfer>
 
+    <transfer name="Expense">
+        <property name="idExpense" type="int" />
+        <property name="type" type="string" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="sumGrossPrice" type="int" />
+        <property name="name" type="string" />
+        <property name="taxRate" type="float" />
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
+        <property name="quantity" type="int" />
+
+        <property name="unitNetPrice" type="int" />
+        <property name="sumNetPrice" type="int" />
+
+        <property name="unitPrice" type="int" />
+        <property name="sumPrice" type="int" />
+
+        <property name="refundableAmount" type="int" />
+        <property name="canceledAmount" type="int" />
+
+        <property name="unitDiscountAmountAggregation" type="int" />
+        <property name="sumDiscountAmountAggregation" type="int" />
+
+        <property name="unitPriceToPayAggregation" type="int" />
+        <property name="sumPriceToPayAggregation" type="int" />
+
+        <property name="taxAmountAfterCancellation" type="int" />
+
+        <property name="isOrdered" type="bool" />
+        <property name="fkSalesOrder" type="int" />
+    </transfer>
+
 </transfers>

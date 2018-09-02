@@ -106,7 +106,7 @@ interface MinimumOrderValueFacadeInterface
      *
      * @return void
      */
-    public function saveOrderMinimumOrderValueFees(
+    public function saveOrderMinimumOrderValueExpense(
         QuoteTransfer $quoteTransfer,
         SaveOrderTransfer $saveOrderTransfer
     ): void;
