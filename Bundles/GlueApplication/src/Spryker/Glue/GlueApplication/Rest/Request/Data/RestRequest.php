@@ -78,13 +78,13 @@ class RestRequest implements RestRequestInterface
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface $metadata
      * @param array $filters
      * @param array $sort
-     * @param null|\Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface|null $page
      * @param array $routeContext
      * @param array $parentResources
      * @param array $include
      * @param array $fields
      * @param bool $excludeRelationship
-     * @param null|\Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface $user
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null $user
      */
     public function __construct(
         RestResourceInterface $resource,
@@ -118,7 +118,7 @@ class RestRequest implements RestRequestInterface
     /**
      * @param string $type
      *
-     * @return null|\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
     public function findParentResourceByType(string $type): ?RestResourceInterface
     {

@@ -66,7 +66,7 @@ class TransferGeneratorTest extends Unit
             __DIR__ . '/Fixtures/Vendor/Test2/Transfer/',
         ];
         $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
-        $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
+        $this->assertCount(2, $definitionBuilder->getDefinitions(), 'Expected to get 2 class definitions.');
 
         $messenger = $this->getMessenger();
         $generator = $this->getClassGenerator();
@@ -79,6 +79,8 @@ class TransferGeneratorTest extends Unit
             file_get_contents(__DIR__ . '/test_files/expected.merged.transfer.php'),
             file_get_contents($this->getTargetDirectory() . 'FooBarTransfer.php')
         );
+
+        $this->assertFileExists($this->getTargetDirectory() . 'AnEmptyOneTransfer.php');
     }
 
     /**

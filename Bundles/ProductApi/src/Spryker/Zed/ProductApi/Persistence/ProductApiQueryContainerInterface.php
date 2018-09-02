@@ -23,7 +23,7 @@ interface ProductApiQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idProductAbstract
      *
-     * @return null|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|null
      */
     public function queryGet($idProductAbstract);
 
@@ -32,7 +32,7 @@ interface ProductApiQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idProductAbstract
      *
-     * @return null|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|null
      */
     public function queryRemove($idProductAbstract);
 }

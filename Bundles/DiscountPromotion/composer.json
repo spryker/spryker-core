@@ -19,9 +19,7 @@
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*",
-    "spryker/transfer": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/calculation": "Used by plugin to reset promotional items.",

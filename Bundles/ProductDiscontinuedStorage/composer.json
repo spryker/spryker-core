@@ -14,9 +14,15 @@
     "spryker/synchronization": "^1.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/event": "*",
+    "spryker/product": "*",
     "spryker/product-storage": "*",
-    "spryker/propel-orm": "*"
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/propel-query-builder": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
