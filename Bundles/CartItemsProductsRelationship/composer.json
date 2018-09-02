@@ -10,7 +10,6 @@
     "spryker/products-rest-api": "^1.1.0"
   },
   "require-dev": {
-    "spryker/carts-rest-api": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
