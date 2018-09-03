@@ -124,15 +124,15 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function saveOrderMinimumOrderValueExpense(
+    public function saveSalesOrderMinimumOrderValueExpense(
         QuoteTransfer $quoteTransfer,
         SaveOrderTransfer $saveOrderTransfer
-    ): void {
-        $this->getFactory()
+    ): SaveOrderTransfer {
+        return $this->getFactory()
             ->createExpenseSaver()
-            ->saveMinimumOrderValueExpense($quoteTransfer, $saveOrderTransfer);
+            ->saveSalesOrderMinimumOrderValueExpense($quoteTransfer, $saveOrderTransfer);
     }
 
     /**

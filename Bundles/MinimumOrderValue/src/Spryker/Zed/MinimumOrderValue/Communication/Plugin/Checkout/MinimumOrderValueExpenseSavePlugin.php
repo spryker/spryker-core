@@ -9,7 +9,7 @@ namespace Spryker\Zed\MinimumOrderValue\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
+use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -27,6 +27,6 @@ class MinimumOrderValueExpenseSavePlugin extends AbstractPlugin implements Check
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
-        $this->getFacade()->saveOrderMinimumOrderValueExpense($quoteTransfer, $saveOrderTransfer);
+        $this->getFacade()->saveSalesOrderMinimumOrderValueExpense($quoteTransfer, $saveOrderTransfer);
     }
 }

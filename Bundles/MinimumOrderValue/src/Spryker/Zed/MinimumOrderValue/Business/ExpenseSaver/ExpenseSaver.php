@@ -32,33 +32,37 @@ class ExpenseSaver implements ExpenseSaverInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function saveMinimumOrderValueExpense(
+    public function saveSalesOrderMinimumOrderValueExpense(
         QuoteTransfer $quoteTransfer,
         SaveOrderTransfer $saveOrderTransfer
-    ): void {
+    ): SaveOrderTransfer {
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             if ($expenseTransfer->getType() !== MinimumOrderValueConfig::THRESHOLD_EXPENSE_TYPE) {
                 continue;
             }
 
-            $this->addExpenseToOrder($expenseTransfer, $saveOrderTransfer);
+            $saveOrderTransfer = $this->addExpenseToOrder($expenseTransfer, $saveOrderTransfer);
         }
+
+        return $saveOrderTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
     protected function addExpenseToOrder(
         ExpenseTransfer $expenseTransfer,
         SaveOrderTransfer $saveOrderTransfer
-    ): void {
+    ): SaveOrderTransfer {
         $expenseTransfer->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
         $expenseTransfer = $this->salesFacade->createSalesExpense($expenseTransfer);
         $saveOrderTransfer->addOrderExpense($expenseTransfer);
+
+        return $saveOrderTransfer;
     }
 }

@@ -19,5 +19,5 @@ interface SalesEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    public function createExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
+    public function createSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
 }

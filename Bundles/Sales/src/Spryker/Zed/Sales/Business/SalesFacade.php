@@ -268,6 +268,6 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     {
         return $this->getFactory()
             ->createExpenseWriter()
-            ->createExpense($expenseTransfer);
+            ->createSalesExpense($expenseTransfer);
     }
 }

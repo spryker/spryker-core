@@ -104,12 +104,12 @@ interface MinimumOrderValueFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function saveOrderMinimumOrderValueExpense(
+    public function saveSalesOrderMinimumOrderValueExpense(
         QuoteTransfer $quoteTransfer,
         SaveOrderTransfer $saveOrderTransfer
-    ): void;
+    ): SaveOrderTransfer;
 
     /**
      * Specification:

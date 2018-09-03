@@ -15,14 +15,14 @@ class ExpenseWriter implements ExpenseWriterInterface
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface
      */
-    protected $entityManager;
+    protected $salesEntityManager;
 
     /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface $salesEntityManager
      */
-    public function __construct(SalesEntityManagerInterface $entityManager)
+    public function __construct(SalesEntityManagerInterface $salesEntityManager)
     {
-        $this->entityManager = $entityManager;
+        $this->salesEntityManager = $salesEntityManager;
     }
 
     /**
@@ -30,8 +30,8 @@ class ExpenseWriter implements ExpenseWriterInterface
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    public function createExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer
+    public function createSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer
     {
-        return $this->entityManager->createExpense($expenseTransfer);
+        return $this->salesEntityManager->createSalesExpense($expenseTransfer);
     }
 }

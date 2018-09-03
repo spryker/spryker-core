@@ -7,22 +7,8 @@
 
 namespace Spryker\Zed\Checkout\Dependency\Plugin;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
+use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface as ExtensionCheckoutDoSaveOrderInterface;
 
-interface CheckoutDoSaveOrderInterface
+interface CheckoutDoSaveOrderInterface extends ExtensionCheckoutDoSaveOrderInterface
 {
-    /**
-     * Specification:
-     * - Retrieves (its) data from the quote object and saves it to the database.
-     * - These plugins are already enveloped into a transaction.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     *
-     * @return void
-     */
-    public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 }

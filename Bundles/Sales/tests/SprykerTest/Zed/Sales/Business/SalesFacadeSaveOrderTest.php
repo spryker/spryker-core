@@ -426,10 +426,12 @@ class SalesFacadeSaveOrderTest extends Unit
         $expenseTransfer->setFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
 
         // Act
-        $expenseTransfer = $this->salesFacade->createSalesExpense($expenseTransfer);
+        $savedExpenseTransfer = $this->salesFacade->createSalesExpense($expenseTransfer);
+        $expenseTransfer->setIdSalesExpense($savedExpenseTransfer->getIdSalesExpense());
 
         // Assert
-        $this->assertNotNull($expenseTransfer->getIdSalesExpense());
+        $this->assertNotNull($savedExpenseTransfer->getIdSalesExpense());
+        $this->assertEquals($savedExpenseTransfer->toArray(), $expenseTransfer->toArray());
     }
 
     /**
