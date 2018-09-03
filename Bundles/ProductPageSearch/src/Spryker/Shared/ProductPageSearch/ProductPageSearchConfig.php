@@ -18,4 +18,12 @@ class ProductPageSearchConfig extends AbstractBundleConfig
         'NET_MODE',
         'GROSS_MODE',
     ];
+
+    /**
+     * Specification:
+     * - This constant is used for extracting data from plugin array
+     *
+     * @api
+     */
+    public const PRODUCT_ABSTRACT_PAGE_LOAD_DATA = 'PRODUCT_ABSTRACT_PAGE_LOAD_DATA';
 }
