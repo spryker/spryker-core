@@ -96,6 +96,12 @@ class CustomersWriter implements CustomersWriterInterface
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
+        if ($restRequest->getUser()->getNaturalIdentifier() !== $restRequest->getResource()->getId()) {
+            $this->createCustomerNotFoundError($restResponse);
+
+            return $restResponse;
+        }
+
         $customerTransfer = (new CustomerTransfer)
             ->setCustomerReference($restRequest->getResource()->getId());
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);

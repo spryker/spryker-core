@@ -69,6 +69,12 @@ class AddressesReader implements AddressesReaderInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
 
+        if ($customerReference !== $restRequest->getUser()->getNaturalIdentifier()) {
+            $this->createCustomerNotFoundError($restResponse);
+
+            return $restResponse;
+        }
+
         $customerResponseTransfer = $this
             ->customerReader
             ->findCustomerByReference($customerReference);
