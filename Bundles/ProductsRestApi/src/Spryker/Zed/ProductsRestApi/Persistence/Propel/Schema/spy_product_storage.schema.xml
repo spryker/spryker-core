@@ -6,16 +6,12 @@
           package="src.Orm.Zed.ProductStorage.Persistence">
 
     <table name="spy_product_abstract_storage">
-        <column name="sku" required="false" type="VARCHAR" size="255"/>
-
         <behavior name="synchronization">
             <parameter name="mappings" value="sku:id_product_abstract"/>
         </behavior>
     </table>
 
     <table name="spy_product_concrete_storage">
-        <column name="sku" required="false" type="VARCHAR" size="255"/>
-
         <behavior name="synchronization">
             <parameter name="mappings" value="sku:id_product_concrete"/>
         </behavior>

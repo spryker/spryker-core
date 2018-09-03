@@ -79,7 +79,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
         }
 
         $abstractProductData = $this->productStorageClient
-            ->findProductAbstractStorageDataByMap(
+            ->findProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAP,
                 $resourceIdentifier,
                 $restRequest->getMetadata()->getLocale()

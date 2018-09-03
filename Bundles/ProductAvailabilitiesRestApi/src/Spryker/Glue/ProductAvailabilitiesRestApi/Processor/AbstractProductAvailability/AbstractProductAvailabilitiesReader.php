@@ -102,7 +102,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
     public function findAbstractProductAvailabilityByAbstractProductSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         $abstractProductData = $this->productStorageClient
-            ->findProductAbstractStorageDataByMap(
+            ->findProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING,
                 $abstractProductSku,
                 $restRequest->getMetadata()->getLocale()

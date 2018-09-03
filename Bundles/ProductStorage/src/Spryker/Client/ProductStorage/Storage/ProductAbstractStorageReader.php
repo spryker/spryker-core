@@ -100,15 +100,15 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
-     * @param string $mapping
+     * @param string $mappingType
      * @param string $identifier
      * @param string $localeName
      *
      * @return array|null
      */
-    public function findProductAbstractStorageDataByMap(string $mapping, string $identifier, string $localeName): ?array
+    public function findProductAbstractStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array
     {
-        $reference = $mapping . ':' . $identifier;
+        $reference = $mappingType . ':' . $identifier;
         $mappingKey = $this->getStorageKey($reference, $localeName);
         $mappingData = $this->storageClient->get($mappingKey);
 

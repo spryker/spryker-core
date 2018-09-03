@@ -141,17 +141,17 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
-     * @param string $mapping
+     * @param string $mappingType
      * @param string $identifier
      * @param string $localeName
      *
      * @return array|null
      */
-    public function findProductAbstractStorageDataByMap(string $mapping, string $identifier, string $localeName): ?array
+    public function findProductAbstractStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array
     {
         return $this->getFactory()
             ->createProductAbstractStorageReader()
-            ->findProductAbstractStorageDataByMap($mapping, $identifier, $localeName);
+            ->findProductAbstractStorageDataByMapping($mappingType, $identifier, $localeName);
     }
 
     /**
@@ -159,16 +159,16 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
-     * @param string $mapping
+     * @param string $mappingType
      * @param string $identifier
      * @param string $localeName
      *
      * @return array|null
      */
-    public function findProductConcreteStorageDataByMap(string $mapping, string $identifier, string $localeName): ?array
+    public function findProductConcreteStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array
     {
         return $this->getFactory()
             ->createProductConcreteStorageReader()
-            ->findProductConcreteStorageDataByMap($mapping, $identifier, $localeName);
+            ->findProductConcreteStorageDataByMapping($mappingType, $identifier, $localeName);
     }
 }

@@ -99,7 +99,7 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
     {
         $localeName = $restRequest->getMetadata()->getLocale();
             $productConcreteStorageData = $this->productStorageClient
-            ->findProductConcreteStorageDataByMap(static::PRODUCT_CONCRETE_MAPPING, $concreteProductSku, $localeName);
+            ->findProductConcreteStorageDataByMapping(static::PRODUCT_CONCRETE_MAPPING, $concreteProductSku, $localeName);
         if (!$productConcreteStorageData) {
             return null;
         }
