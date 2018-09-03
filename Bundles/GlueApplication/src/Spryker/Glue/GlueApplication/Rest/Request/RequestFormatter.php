@@ -141,10 +141,6 @@ class RequestFormatter implements RequestFormatterInterface
 
         $data = $requestData[RestResourceInterface::RESOURCE_DATA];
 
-        if (!isset($data[RestResourceInterface::RESOURCE_TYPE])) {
-            return null;
-        }
-
         return $this->restResourceBuilder->createRestResource(
             $data[RestResourceInterface::RESOURCE_TYPE],
             $httpRequest->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID),
