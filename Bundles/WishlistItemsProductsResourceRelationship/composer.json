@@ -11,8 +11,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/wishlists-rest-api": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/wishlists-rest-api": "If you want to expand wishlist items resource with concrete products relationship."
