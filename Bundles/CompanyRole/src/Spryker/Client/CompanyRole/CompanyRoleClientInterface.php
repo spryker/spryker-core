@@ -135,17 +135,17 @@ interface CompanyRoleClientInterface
 
     /**
      * Specification:
-     * - Filters company roles permissions and removes ones that is not available for manual configuration.
+     * - Retrieves company roles permissions, filtering infrastructural ones.
+     * - Sends Zed request to find all company role permissions.
+     * - Sends Zed request to find all available permissions.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
-     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $companyRolePermissions
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function filterCompanyRolePermissions(
-        CompanyRoleTransfer $companyRoleTransfer,
-        PermissionCollectionTransfer $companyRolePermissions
+    public function findFilteredCompanyRolePermissionsByIdCompanyRole(
+        CompanyRoleTransfer $companyRoleTransfer
     ): PermissionCollectionTransfer;
 }

@@ -32,7 +32,8 @@ class CompanyRoleFactory extends AbstractFactory
     public function createCompanyRolePermissionsHandler(): CompanyRolePermissionsHandlerInterface
     {
         return new CompanyRolePermissionsHandler(
-            $this->getPermissionClient()
+            $this->getPermissionClient(),
+            $this->createZedCompanyRoleStub()
         );
     }
 
