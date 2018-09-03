@@ -26,12 +26,11 @@ class ProductsRestApiResource extends AbstractRestResource implements ProductsRe
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findProductConcreteBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findProductAbstractBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        return $this
-            ->getFactory()
-            ->createConcreteProductsReader()
-            ->findOneByProductConcrete($sku, $restRequest);
+        return $this->getFactory()
+            ->createAbstractProductsReader()
+            ->findProductAbstractBySku($sku, $restRequest);
     }
 
     /**
@@ -44,10 +43,11 @@ class ProductsRestApiResource extends AbstractRestResource implements ProductsRe
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findProductAbstractBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findProductConcreteBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        return $this->getFactory()
-            ->createAbstractProductsReader()
-            ->findProductAbstractBySku($sku, $restRequest);
+        return $this
+            ->getFactory()
+            ->createConcreteProductsReader()
+            ->findOneByProductConcrete($sku, $restRequest);
     }
 }
