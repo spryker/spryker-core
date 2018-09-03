@@ -17,7 +17,7 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_SEARCH = 'search_client';
     public const CMS_PAGE_SEARCH_QUERY_PLUGIN = 'cms_page_search_query_plugin';
     public const CMS_PAGE_SEARCH_RESULT_FORMATTER_PLUGINS = 'cms_page_search_result_formatter_plugins';
-    public const CMS_PAGE_SEARCH_QUERY_EXPANDER_PLUGINS = 'cms_page_search_result_formatter_plugins';
+    public const CMS_PAGE_SEARCH_QUERY_EXPANDER_PLUGINS = 'cms_page_search_query_expander_plugins';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

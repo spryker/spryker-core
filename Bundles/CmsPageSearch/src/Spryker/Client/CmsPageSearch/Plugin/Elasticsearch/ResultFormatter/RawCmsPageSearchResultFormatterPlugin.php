@@ -35,7 +35,8 @@ class RawCmsPageSearchResultFormatterPlugin extends AbstractElasticsearchResultF
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters): array
     {
         $pages = [];
-        foreach ($searchResult->getResults() as $document) {
+        $results = $searchResult->getResults();
+        foreach ($results as $document) {
             $pages[] = $document->getSource()[PageIndexMap::SEARCH_RESULT_DATA];
         }
 

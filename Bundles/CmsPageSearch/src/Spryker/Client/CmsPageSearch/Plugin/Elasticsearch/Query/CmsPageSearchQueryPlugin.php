@@ -10,19 +10,22 @@ namespace Spryker\Client\CmsPageSearch\Plugin\Elasticsearch\Query;
 use Elastica\Query;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
+use Elastica\Query\Match;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
+use Elastica\Suggest;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
-use Spryker\Shared\CmsPageSearch\CmsPageSearchConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
 
 class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
+    protected const TYPE = 'cms_page';
+
     /**
      * @var string
      */
@@ -35,7 +38,7 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
 
     public function __construct()
     {
-        $this->query = $this->createSearchQuery();
+        //$this->query = $this->createSearchQuery();
     }
 
     /**
@@ -139,7 +142,7 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
     protected function setTypeFilter(BoolQuery $boolQuery): void
     {
         $typeFilter = (new Match())
-            ->setField(PageIndexMap::TYPE, CmsPageSearchConstants::CMS_PAGE_RESOURCE_NAME);
+            ->setField(PageIndexMap::TYPE, static::TYPE);
 
         $boolQuery->addMust($typeFilter);
     }

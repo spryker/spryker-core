@@ -7,9 +7,10 @@
 
 namespace Spryker\Client\CmsPageSearch;
 
-use Spryker\Client\CmsPageSearchPage\CmsPageSearchDependencyProvider;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
+use Spryker\Client\Search\SearchClientInterface;
 
 class CmsPageSearchFactory extends AbstractFactory
 {
