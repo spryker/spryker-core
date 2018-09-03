@@ -18,6 +18,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ShoppingListStorageRepository extends AbstractRepository implements ShoppingListStorageRepositoryInterface
 {
+    protected const COMPANY_USER_CUSTOMER_ALIAS = 'companyUserCustomer';
+    protected const CUSTOMER_REFERENCE_FIELD = 'customer_reference';
+    protected const COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS = 'companyBusinessUnitCustomer';
+
     /**
      * @module ShoppingList
      *
@@ -27,39 +31,28 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
      */
     public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array
     {
-        /*
-         * in order not to do several DB requests, we will fetch ShoppingList's customer references,
-         * Company User's customer references and Company Business Unit's customer references all at once.
-         *
-         * Theirs data will be in separate columns.
-         */
         $customerReferencesArray = $this->getFactory()
             ->getShoppingListPropelQuery()
             ->distinct()
             ->useSpyShoppingListCompanyUserQuery()
                 ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)
-                    ->joinCustomer('companyUserCustomer', Criteria::LEFT_JOIN)
+                    ->joinCustomer(static::COMPANY_USER_CUSTOMER_ALIAS, Criteria::LEFT_JOIN)
+                    ->withColumn(static::COMPANY_USER_CUSTOMER_ALIAS . '.' . static::CUSTOMER_REFERENCE_FIELD, 'companyUserReferences')
                 ->endUse()
-                ->withColumn('companyUserCustomer.customer_reference', 'companyUserReferences')
             ->endUse()
             ->useSpyShoppingListCompanyBusinessUnitQuery()
                 ->useSpyCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
-                    ->useCompanyUserQuery('companyBusinessUnitUser', Criteria::LEFT_JOIN)
-                        ->joinCustomer('companyBusinessUnitCustomer', Criteria::LEFT_JOIN)
+                    ->useCompanyUserQuery(null, Criteria::LEFT_JOIN)
+                        ->joinCustomer(static::COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS, Criteria::LEFT_JOIN)
+                        ->withColumn(static::COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS . '.' . static::CUSTOMER_REFERENCE_FIELD, 'companyBusinessUnitReferences')
                     ->endUse()
                 ->endUse()
-                ->withColumn('companyBusinessUnitCustomer.customer_reference', 'companyBusinessUnitReferences')
             ->endUse()
             ->filterByIdShoppingList_In($shoppingListIds)
             ->select([SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE])
             ->find()
             ->toArray();
 
-        /*
-         * Since we don't need result separated,
-         * we will make from query result
-         * a flat list of Customer References;
-         */
         $result = [];
         foreach ($customerReferencesArray as $item) {
             $result = array_merge($result, array_filter(array_values($item)));
