@@ -96,11 +96,12 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->assertEquals(1, $this->restSearchAttributesTransfer->getPagination()->getMaxPage());
         $this->assertEquals(3, $this->restSearchAttributesTransfer->getPagination()->getNumFound());
 
-        $this->assertCount(2, $this->restSearchAttributesTransfer->getFacets());
-        $this->assertSame('label', $this->restSearchAttributesTransfer->getFacets()[0]['name']);
-        $this->assertSame('rating', $this->restSearchAttributesTransfer->getFacets()[1]['name']);
-        $this->assertArrayNotHasKey('config', $this->restSearchAttributesTransfer->getFacets()[0]);
-        $this->assertArrayNotHasKey('config', $this->restSearchAttributesTransfer->getFacets()[1]);
+        $this->assertCount(1, $this->restSearchAttributesTransfer->getValueFacets());
+        $this->assertSame('label', $this->restSearchAttributesTransfer->getValueFacets()[0]['name']);
+        $this->assertCount(1, $this->restSearchAttributesTransfer->getRangeFacets());
+        $this->assertSame('rating', $this->restSearchAttributesTransfer->getRangeFacets()[0]['name']);
+        $this->assertArrayNotHasKey('config', $this->restSearchAttributesTransfer->getValueFacets()[0]);
+        $this->assertArrayNotHasKey('config', $this->restSearchAttributesTransfer->getRangeFacets()[0]);
     }
 
     /**

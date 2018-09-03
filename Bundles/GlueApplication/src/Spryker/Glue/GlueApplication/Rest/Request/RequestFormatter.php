@@ -241,7 +241,7 @@ class RequestFormatter implements RequestFormatterInterface
      */
     protected function setSortFields(RequestBuilderInterface $requestBuilder, array $queryParameters): void
     {
-        if (!isset($queryParameters[RequestConstantsInterface::QUERY_SORT])) {
+        if (!isset($queryParameters[RequestConstantsInterface::QUERY_SORT]) || empty($queryParameters[RequestConstantsInterface::QUERY_SORT])) {
             return;
         }
 
