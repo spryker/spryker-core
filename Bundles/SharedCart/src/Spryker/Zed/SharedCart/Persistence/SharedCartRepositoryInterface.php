@@ -72,7 +72,7 @@ interface SharedCartRepositoryInterface
     /**
      * @param int $idQuote
      *
-     * @return array
+     * @return int[]
      */
     public function findAllCompanyUserQuotePermissionGroupIdIndexes(int $idQuote): array;
 }

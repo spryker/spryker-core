@@ -95,7 +95,8 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
                 continue;
             }
 
-            $shareDetailTransfer->requireQuotePermissionGroup();
+            $shareDetailTransfer->requireIdCompanyUser()
+                ->requireQuotePermissionGroup();
 
             if (in_array($shareDetailTransfer->getIdQuoteCompanyUser(), $commonQuoteCompanyUserIdIndexes, false)
                 && $this->isQuotePermissionGroupChanged($shareDetailTransfer, $storedQuotePermissionGroupIdIndexes)
@@ -107,7 +108,7 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
-     * @param array $storedQuotePermissionGroupIdIndexes
+     * @param int[] $storedQuotePermissionGroupIdIndexes
      *
      * @return bool
      */
@@ -115,10 +116,7 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
         ShareDetailTransfer $shareDetailTransfer,
         array $storedQuotePermissionGroupIdIndexes
     ): bool {
-        $shareDetailTransfer->requireIdCompanyUser();
-        $quotePermissionGroup = $shareDetailTransfer->getQuotePermissionGroup();
-
-        return $quotePermissionGroup->getIdQuotePermissionGroup()
+        return $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()
             !== $storedQuotePermissionGroupIdIndexes[$shareDetailTransfer->getIdQuoteCompanyUser()];
     }
 

@@ -166,7 +166,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param int $idQuote
      *
-     * @return array
+     * @return int[]
      */
     public function findAllCompanyUserQuotePermissionGroupIdIndexes(int $idQuote): array
     {
@@ -190,16 +190,14 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param array $storedQuotePermissionGroupIdIndexes
      *
-     * @return array
+     * @return int[]
      */
     protected function mapStoredQuotePermissionGroupIdIndexesToAssociativeArray(array $storedQuotePermissionGroupIdIndexes): array
     {
         $mappedQuotePermissionGroupIdIndexes = [];
         foreach ($storedQuotePermissionGroupIdIndexes as $storedQuotePermissionGroupIdIndex) {
             $idQuoteCompanyUser = $storedQuotePermissionGroupIdIndex[SpyQuoteCompanyUserTableMap::COL_ID_QUOTE_COMPANY_USER];
-            $fkQuotePermissionGroup = $storedQuotePermissionGroupIdIndex[SpyQuoteCompanyUserTableMap::COL_FK_QUOTE_PERMISSION_GROUP];
-
-            $mappedQuotePermissionGroupIdIndexes[$idQuoteCompanyUser] = $fkQuotePermissionGroup;
+            $mappedQuotePermissionGroupIdIndexes[$idQuoteCompanyUser] = $storedQuotePermissionGroupIdIndex[SpyQuoteCompanyUserTableMap::COL_FK_QUOTE_PERMISSION_GROUP];
         }
 
         return $mappedQuotePermissionGroupIdIndexes;
