@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -17,6 +18,12 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ShoppingListStorageRepository extends AbstractRepository implements ShoppingListStorageRepositoryInterface
 {
+    protected const COMPANY_USER_CUSTOMER_ALIAS = 'companyUserCustomer';
+    protected const COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS = 'companyBusinessUnitCustomer';
+    protected const CUSTOMER_REFERENCE_FIELD = 'customer_reference';
+    protected const COMPANY_USER_REFERENCES_NAME = 'companyUserReferences';
+    protected const COMPANY_BUSINESS_UNIT_REFERENCES_NAME = 'companyBusinessUnitReferences';
+
     /**
      * @module ShoppingList
      *
@@ -26,12 +33,35 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
      */
     public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array
     {
-        return $this->getFactory()
+        $customerReferencesArray = $this->getFactory()
             ->getShoppingListPropelQuery()
+            ->distinct()
+            ->useSpyShoppingListCompanyUserQuery()
+                ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)
+                    ->joinCustomer(static::COMPANY_USER_CUSTOMER_ALIAS, Criteria::LEFT_JOIN)
+                    ->withColumn(static::COMPANY_USER_CUSTOMER_ALIAS . '.' . static::CUSTOMER_REFERENCE_FIELD, self::COMPANY_USER_REFERENCES_NAME)
+                ->endUse()
+            ->endUse()
+            ->useSpyShoppingListCompanyBusinessUnitQuery()
+                ->useSpyCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
+                    ->useCompanyUserQuery(null, Criteria::LEFT_JOIN)
+                        ->joinCustomer(static::COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS, Criteria::LEFT_JOIN)
+                        ->withColumn(static::COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS . '.' . static::CUSTOMER_REFERENCE_FIELD, self::COMPANY_BUSINESS_UNIT_REFERENCES_NAME)
+                    ->endUse()
+                ->endUse()
+            ->endUse()
             ->filterByIdShoppingList_In($shoppingListIds)
             ->select([SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE])
             ->find()
             ->toArray();
+
+        $result = [];
+        foreach ($customerReferencesArray as $item) {
+            $result = array_merge($result, array_filter(array_values($item)));
+        };
+        $result = array_unique($result);
+
+        return $result;
     }
 
     /**
@@ -44,9 +74,15 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
     {
         return $this->getFactory()
-            ->getCompanyUserPropelQuery()
-            ->joinWithCustomer()
-            ->filterByFkCompanyBusinessUnit_In($companyBusinessUnitIds)
+            ->getShoppingListPropelQuery()
+            ->useSpyShoppingListCompanyBusinessUnitQuery()
+                ->useSpyCompanyBusinessUnitQuery()
+                    ->useCompanyUserQuery()
+                        ->joinCustomer()
+                    ->endUse()
+                ->endUse()
+                ->filterByFkCompanyBusinessUnit_In($companyBusinessUnitIds)
+            ->endUse()
             ->select(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)
             ->find()
             ->toArray();
@@ -63,9 +99,13 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array
     {
         return $this->getFactory()
-            ->getCompanyUserPropelQuery()
-            ->joinWithCustomer()
-            ->filterByIdCompanyUser_In($companyUserIds)
+            ->getShoppingListPropelQuery()
+            ->useSpyShoppingListCompanyUserQuery()
+                ->useSpyCompanyUserQuery()
+                    ->joinWithCustomer()
+                ->endUse()
+                ->filterByFkCompanyUser_In($companyUserIds)
+            ->endUse()
             ->select(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)
             ->find()
             ->toArray();
