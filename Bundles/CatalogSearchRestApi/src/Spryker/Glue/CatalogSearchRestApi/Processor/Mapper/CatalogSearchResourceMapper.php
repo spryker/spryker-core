@@ -6,7 +6,11 @@
 
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\FacetSearchResultTransfer;
+use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
+use Generated\Shared\Transfer\RestFacetSearchResultAttributesTransfer;
+use Generated\Shared\Transfer\RestRangeSearchResultAttributesTransfer;
 use Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -36,11 +40,39 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
     {
         $restSearchAttributesTransfer = (new RestCatalogSearchAttributesTransfer())->fromArray($restSearchResponse, true);
         $restSearchAttributesTransfer->setCurrency($currency);
+        if (isset($restSearchResponse['facets'])) {
+            $restSearchAttributesTransfer = $this->mapSearchResponseFacetTransfersToSearchAttributesTransfer($restSearchResponse['facets'], $restSearchAttributesTransfer);
+        }
 
         return $this->restResourceBuilder->createRestResource(
             CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH,
             null,
             $restSearchAttributesTransfer
         );
+    }
+
+    /**
+     * @param array $facets
+     * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
+     */
+    protected function mapSearchResponseFacetTransfersToSearchAttributesTransfer(array $facets, RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer): RestCatalogSearchAttributesTransfer
+    {
+        foreach ($facets as $facet) {
+            if ($facet instanceof FacetSearchResultTransfer) {
+                $restSearchAttributesTransfer->addValueFacet(
+                    (new RestFacetSearchResultAttributesTransfer())->fromArray($facet->toArray(), true)
+                );
+                continue;
+            }
+            if ($facet instanceof RangeSearchResultTransfer) {
+                $restSearchAttributesTransfer->addRangeFacet(
+                    (new RestRangeSearchResultAttributesTransfer())->fromArray($facet->toArray(), true)
+                );
+            }
+        }
+
+        return $restSearchAttributesTransfer;
     }
 }

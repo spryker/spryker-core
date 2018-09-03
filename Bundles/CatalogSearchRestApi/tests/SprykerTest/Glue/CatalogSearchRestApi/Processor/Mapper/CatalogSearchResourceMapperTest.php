@@ -8,7 +8,11 @@
 namespace SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\FacetConfigTransfer;
+use Generated\Shared\Transfer\FacetSearchResultTransfer;
+use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 use Generated\Shared\Transfer\PaginationSearchResultTransfer;
+use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\SortSearchResultTransfer;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper;
@@ -91,6 +95,13 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->assertEquals(12, $this->restSearchAttributesTransfer->getPagination()->getCurrentItemsPerPage());
         $this->assertEquals(1, $this->restSearchAttributesTransfer->getPagination()->getMaxPage());
         $this->assertEquals(3, $this->restSearchAttributesTransfer->getPagination()->getNumFound());
+
+        $this->assertCount(1, $this->restSearchAttributesTransfer->getValueFacets());
+        $this->assertSame('label', $this->restSearchAttributesTransfer->getValueFacets()[0]['name']);
+        $this->assertCount(1, $this->restSearchAttributesTransfer->getRangeFacets());
+        $this->assertSame('rating', $this->restSearchAttributesTransfer->getRangeFacets()[0]['name']);
+        $this->assertArrayNotHasKey('config', $this->restSearchAttributesTransfer->getValueFacets()[0]);
+        $this->assertArrayNotHasKey('config', $this->restSearchAttributesTransfer->getRangeFacets()[0]);
     }
 
     /**
@@ -120,6 +131,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $mockRestSearchResponse['sort'] = $this->mockSort();
         $mockRestSearchResponse['pagination'] = $this->mockPagination();
         $mockRestSearchResponse['spellingSuggestion'] = 'cameras';
+        $mockRestSearchResponse['facets'] = $this->mockFacets();
 
         return $mockRestSearchResponse;
     }
@@ -202,5 +214,76 @@ class CatalogSearchResourceMapperTest extends Unit
         $pagination->setMaxPage(1);
 
         return $pagination;
+    }
+
+    /**
+     * @return array
+     */
+    protected function mockFacets(): array
+    {
+        $pagination = [];
+        $pagination['label'] = $this->mockLabelFacetSearchResult();
+        $pagination['rating'] = $this->mockRatingFacetSearchResult();
+
+        return $pagination;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\FacetSearchResultTransfer
+     */
+    protected function mockLabelFacetSearchResult(): FacetSearchResultTransfer
+    {
+        $facetSearchResultTransfer = new FacetSearchResultTransfer();
+        $facetSearchResultTransfer->setName('label');
+        $facetSearchResultTransfer->setDocCount(null);
+        $facetSearchResultTransfer->setActiveValue(null);
+
+        $facetSearchResultValue = new FacetSearchResultValueTransfer();
+        $facetSearchResultValue->setDocCount(17);
+        $facetSearchResultValue->setValue('SALE %');
+        $facetSearchResultTransfer->addValue($facetSearchResultValue);
+
+        $facetSearchResultValue = new FacetSearchResultValueTransfer();
+        $facetSearchResultValue->setDocCount(7);
+        $facetSearchResultValue->setValue('Standard Label');
+        $facetSearchResultTransfer->addValue($facetSearchResultValue);
+
+        $facetConfig = new FacetConfigTransfer();
+        $facetConfig->setName('label');
+        $facetConfig->setParameterName('label');
+        $facetConfig->setShortParameterName(null);
+        $facetConfig->setFieldName('string-facet');
+        $facetConfig->setType('enumeration');
+        $facetConfig->setIsMultiValued(true);
+        $facetConfig->setValueTransformer('Spryker\Client\ProductLabelStorage\Plugin\ProductLabelFacetValueTransformerPlugin');
+        $facetSearchResultTransfer->setConfig($facetConfig);
+
+        return $facetSearchResultTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RangeSearchResultTransfer
+     */
+    protected function mockRatingFacetSearchResult(): RangeSearchResultTransfer
+    {
+        $facetSearchResultTransfer = new RangeSearchResultTransfer();
+        $facetSearchResultTransfer->setName('rating');
+        $facetSearchResultTransfer->setDocCount(null);
+        $facetSearchResultTransfer->setMin(400);
+        $facetSearchResultTransfer->setMax(467);
+        $facetSearchResultTransfer->setActiveMin(400);
+        $facetSearchResultTransfer->setActiveMax(467);
+
+        $facetConfig = new FacetConfigTransfer();
+        $facetConfig->setName('rating');
+        $facetConfig->setParameterName('rating');
+        $facetConfig->setShortParameterName(null);
+        $facetConfig->setFieldName('integer-facet');
+        $facetConfig->setType('range');
+        $facetConfig->setIsMultiValued(null);
+        $facetConfig->setValueTransformer('Spryker\Client\ProductReview\Plugin\ProductRatingValueTransformer');
+        $facetSearchResultTransfer->setConfig($facetConfig);
+
+        return $facetSearchResultTransfer;
     }
 }

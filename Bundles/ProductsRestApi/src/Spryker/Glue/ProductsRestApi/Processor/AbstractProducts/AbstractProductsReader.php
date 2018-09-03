@@ -99,6 +99,27 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
     }
 
     /**
+     * @param string $sku
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     */
+    public function findProductAbstractBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
+    {
+        $abstractProductData = $this->productResourceAliasStorageClient->findProductAbstractStorageDataBySku(
+            $sku,
+            $restRequest->getMetadata()->getLocale()
+        );
+
+        if (!$abstractProductData) {
+            return null;
+        }
+
+        return $this->abstractProductsResourceMapper
+            ->mapAbstractProductsResponseAttributesTransferToRestResponse($abstractProductData);
+    }
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *

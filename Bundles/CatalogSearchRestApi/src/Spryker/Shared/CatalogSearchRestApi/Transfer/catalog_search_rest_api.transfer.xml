@@ -8,6 +8,8 @@
         <property name="sort" type="RestCatalogSearchSortAttributes"/>
         <property name="pagination" type="RestCatalogSearchPaginationAttributes"/>
         <property name="products" type="RestCatalogSearchProductsAttributes[]"/>
+        <property name="valueFacets" type="RestFacetSearchResultAttributes[]" singular="valueFacet"/>
+        <property name="rangeFacets" type="RestRangeSearchResultAttributes[]" singular="rangeFacet"/>
         <property name="spellingSuggestion" type="string"/>
     </transfer>
 
@@ -35,6 +37,22 @@
     <transfer name="RestCatalogSearchProductImageAttributes">
         <property name="externalUrlSmall" type="string"/>
         <property name="externalUrlLarge" type="string"/>
+    </transfer>
+
+    <transfer name="RestRangeSearchResultAttributes">
+        <property name="name" type="string" />
+        <property name="min" type="float" />
+        <property name="max" type="float" />
+        <property name="activeMin" type="float" />
+        <property name="activeMax" type="float" />
+        <property name="docCount" type="int" />
+    </transfer>
+
+    <transfer name="RestFacetSearchResultAttributes">
+        <property name="name" type="string" />
+        <property name="docCount" type="int" />
+        <property name="values" type="array" singular="value" />
+        <property name="activeValue" type="string" />
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionsAttributes">
