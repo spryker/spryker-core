@@ -15,7 +15,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/permission": "^1.0.0",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

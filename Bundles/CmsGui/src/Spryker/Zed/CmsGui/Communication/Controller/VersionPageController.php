@@ -138,7 +138,7 @@ class VersionPageController extends AbstractController
      * @param int $version
      * @param int $idCmsPage
      *
-     * @return null|string
+     * @return string|null
      */
     protected function submitVersionForm(Request $request, $version, $idCmsPage)
     {
