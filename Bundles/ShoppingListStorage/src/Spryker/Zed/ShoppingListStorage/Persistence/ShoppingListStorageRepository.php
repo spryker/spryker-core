@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyBusinessUnitTableMap;
+use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyUserTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -25,7 +27,7 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
      *
      * @return string[]
      */
-    public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array
+    public function getOwnCustomerReferencesByShoppingListIds(array $shoppingListIds): array
     {
         $customerReferencesArray = $this->getFactory()
             ->getShoppingListPropelQuery()
@@ -59,38 +61,82 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     }
 
     /**
+     * @module ShoppingList
+     * @module CompanyUser
      * @module Customer
      *
-     * @param int[] $companyBusinessUnitIds
+     * @param int[] $shoppingListIds
      *
      * @return string[]
      */
-    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
+    public function getSharedWithCompanyUserCustomerReferencesByShoppingListIds(array $shoppingListIds): array
     {
         return $this->getFactory()
-            ->getCompanyUserPropelQuery()
-            ->joinWithCustomer()
-            ->filterByFkCompanyBusinessUnit_In($companyBusinessUnitIds)
-            ->select(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)
+            ->getShoppingListCompanyUserQuery()
+            ->useSpyCompanyUserQuery()
+                    ->joinCustomer()
+            ->endUse()
+            ->filterByFkShoppingList_In($shoppingListIds)
+            ->select([SpyCustomerTableMap::COL_CUSTOMER_REFERENCE])
             ->find()
             ->toArray();
     }
 
     /**
+     * @module ShoppingList
+     * @module CompanyBusinessUnit
      * @module CompanyUser
      * @module Customer
      *
-     * @param int[] $companyUserIds
+     * @param int[] $shoppingListIds
      *
      * @return string[]
      */
-    public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array
+    public function getSharedWithCompanyBusinessUnitCustomerReferencesByShoppingListIds(array $shoppingListIds): array
     {
         return $this->getFactory()
-            ->getCompanyUserPropelQuery()
-            ->joinWithCustomer()
-            ->filterByIdCompanyUser_In($companyUserIds)
-            ->select(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)
+            ->getShoppingListCompanyBusinessUnitQuery()
+            ->useSpyCompanyBusinessUnitQuery()
+                ->useCompanyUserQuery()
+                    ->joinCustomer()
+                ->endUse()
+            ->endUse()
+            ->filterByFkShoppingList_In($shoppingListIds)
+            ->select([SpyCustomerTableMap::COL_CUSTOMER_REFERENCE])
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @module ShoppingList
+     *
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return int[]
+     */
+    public function getShoppingListIdsByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
+    {
+        return $this->getFactory()
+            ->getShoppingListCompanyBusinessUnitQuery()
+            ->filterByFkCompanyBusinessUnit_In($companyBusinessUnitIds)
+            ->select(SpyShoppingListCompanyBusinessUnitTableMap::COL_FK_SHOPPING_LIST)
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @module ShoppingList
+     *
+     * @param int[] $companyUserIds
+     *
+     * @return int[]
+     */
+    public function getShoppingListIdsByCompanyUserIds(array $companyUserIds): array
+    {
+        return $this->getFactory()
+            ->getShoppingListCompanyUserQuery()
+            ->filterByFkCompanyUser_In($companyUserIds)
+            ->select(SpyShoppingListCompanyUserTableMap::COL_FK_SHOPPING_LIST)
             ->find()
             ->toArray();
     }
