@@ -27,6 +27,12 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
      */
     public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array
     {
+        /*
+         * in order not to do several DB requests, we will fetch ShoppingList's customer references,
+         * Company User's customer references and Company Business Unit's customer references all at once.
+         *
+         * Theirs data will be in separate columns.
+         */
         $customerReferencesArray = $this->getFactory()
             ->getShoppingListPropelQuery()
             ->distinct()
@@ -49,12 +55,18 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
             ->find()
             ->toArray();
 
+        /*
+         * Since we don't need result separated,
+         * we will make from query result
+         * a flat list of Customer References;
+         */
         $result = [];
         foreach ($customerReferencesArray as $item) {
             $result = array_merge($result, array_filter(array_values($item)));
         };
+        $result = array_unique($result);
 
-        return array_unique($result);
+        return $result;
     }
 
     /**
