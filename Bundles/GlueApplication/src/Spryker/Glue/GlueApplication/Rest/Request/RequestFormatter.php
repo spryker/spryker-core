@@ -145,14 +145,9 @@ class RequestFormatter implements RequestFormatterInterface
             return null;
         }
 
-        $idResource = '';
-        if (isset($data[RestResourceInterface::RESOURCE_ID])) {
-            $idResource = $data[RestResourceInterface::RESOURCE_ID];
-        }
-
         return $this->restResourceBuilder->createRestResource(
             $data[RestResourceInterface::RESOURCE_TYPE],
-            $idResource,
+            $httpRequest->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID),
             $this->mapEntityTransfer($httpRequest, $data)
         );
     }
