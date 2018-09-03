@@ -166,8 +166,6 @@ class FileManagerFacadeTest extends Unit
     }
 
     /**
-     * @group singleTest
-     *
      * @return void
      */
     public function testReadsLatestVersionOfFile()
