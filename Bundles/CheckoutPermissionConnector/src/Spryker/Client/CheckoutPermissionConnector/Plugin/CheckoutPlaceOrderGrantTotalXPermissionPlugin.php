@@ -19,7 +19,7 @@ class CheckoutPlaceOrderGrantTotalXPermissionPlugin implements ExecutablePermiss
 
     /**
      * @param array $configuration
-     * @param array|int|null|string $centAmount
+     * @param array|int|string|null $centAmount
      *
      * @return bool
      */

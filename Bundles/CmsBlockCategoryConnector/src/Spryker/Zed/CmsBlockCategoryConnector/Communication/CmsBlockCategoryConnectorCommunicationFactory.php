@@ -22,7 +22,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @var string
+     * @var \Generated\Shared\Transfer\LocaleTransfer|null
      */
     protected $currentLocale;
 

@@ -20,10 +20,10 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/application": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "suggest": {
     "spryker/cms-block": "If you want to have separate content blocks on your pages."

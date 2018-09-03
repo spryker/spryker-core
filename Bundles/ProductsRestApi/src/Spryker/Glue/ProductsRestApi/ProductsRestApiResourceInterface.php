@@ -24,4 +24,17 @@ interface ProductsRestApiResourceInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
     public function findProductAbstractBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface;
+
+    /**
+     * Specification:
+     *  - Retrieves concrete product resource by sku.
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     */
+    public function findProductConcreteBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface;
 }
