@@ -69,7 +69,7 @@ class WishlistsWriter implements WishlistsWriterInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $wishlistTransfer = $this->wishlistsResourceMapper->mapWishlistAttributesToWishlistTransfer($attributesTransfer);
+        $wishlistTransfer = $this->wishlistsResourceMapper->mapWishlistAttributesToWishlistTransfer(new WishlistTransfer(), $attributesTransfer);
         $wishlistTransfer->setFkCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());
 
         $wishlistResponseTransfer = $this->wishlistClient->validateAndCreateWishlist($wishlistTransfer);
@@ -106,7 +106,7 @@ class WishlistsWriter implements WishlistsWriterInterface
 
             return $response->addError($restErrorTransfer);
         }
-        $wishlistTransfer = $this->wishlistsResourceMapper->updateWishlistTransferNameFromWishlistAttributesTransfer($wishlistTransfer, $attributesTransfer);
+        $wishlistTransfer = $this->wishlistsResourceMapper->mapWishlistAttributesToWishlistTransfer($wishlistTransfer, $attributesTransfer);
 
         $wishlistResponseTransfer = $this->wishlistClient->validateAndUpdateWishlist($wishlistTransfer);
         if (!$wishlistResponseTransfer->getIsSuccess()) {

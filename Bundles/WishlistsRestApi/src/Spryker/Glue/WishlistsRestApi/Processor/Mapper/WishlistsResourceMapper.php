@@ -70,26 +70,14 @@ class WishlistsResourceMapper implements WishlistsResourceMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $attributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    public function mapWishlistAttributesToWishlistTransfer(RestWishlistsAttributesTransfer $attributesTransfer): WishlistTransfer
-    {
-        return (new WishlistTransfer())->fromArray($attributesTransfer->toArray(), true);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      * @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $attributesTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function updateWishlistTransferNameFromWishlistAttributesTransfer(WishlistTransfer $wishlistTransfer, RestWishlistsAttributesTransfer $attributesTransfer): WishlistTransfer
+    public function mapWishlistAttributesToWishlistTransfer(WishlistTransfer $wishlistTransfer, RestWishlistsAttributesTransfer $attributesTransfer): WishlistTransfer
     {
-        $wishlistTransfer->setName($attributesTransfer->getName());
-
-        return $wishlistTransfer;
+        return $wishlistTransfer->fromArray($attributesTransfer->modifiedToArray(), true);
     }
 
     /**
