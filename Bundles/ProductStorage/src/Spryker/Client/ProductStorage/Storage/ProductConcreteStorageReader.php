@@ -69,14 +69,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
             return null;
         }
 
-        $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer
-            ->setLocale($localeName)
-            ->setReference($idProductConcrete);
-
-        $key = $this->synchronizationService
-            ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_CONCRETE_RESOURCE_NAME)
-            ->generateKey($synchronizationDataTransfer);
+        $key = $this->getStorageKey($idProductConcrete, $localeName);
 
         return $this->storageClient->get($key);
     }
@@ -95,5 +88,43 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         }
 
         return false;
+    }
+
+    /**
+     * @param string $mappingType
+     * @param string $identifier
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array
+    {
+        $reference = $mappingType . ':' . $identifier;
+        $mappingKey = $this->getStorageKey($reference, $localeName);
+        $mappingData = $this->storageClient->get($mappingKey);
+
+        if ($mappingData == null) {
+            return null;
+        }
+
+        return $this->findProductConcreteStorageData($mappingData['id'], $localeName);
+    }
+
+    /**
+     * @param string $reference
+     * @param string $localeName
+     *
+     * @return string
+     */
+    protected function getStorageKey(string $reference, string $localeName): string
+    {
+        $synchronizationDataTransfer = new SynchronizationDataTransfer();
+        $synchronizationDataTransfer
+            ->setReference($reference)
+            ->setLocale($localeName);
+
+        return $this->synchronizationService
+            ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_CONCRETE_RESOURCE_NAME)
+            ->generateKey($synchronizationDataTransfer);
     }
 }
