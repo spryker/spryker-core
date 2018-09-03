@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ShoppingListProductOption\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
@@ -319,5 +320,26 @@ class ShoppingListProductOptionFacadeTest extends Unit
         foreach ($actualResult->getProductOptions() as $productOptions) {
             $this->assertEmpty($productOptions);
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapCartItemProductOptionToShoppingListItemProductOption(): void
+    {
+        // Prepare
+        $shoppingListItemTransfer = new ShoppingListItemTransfer();
+        $productOptionTransfer = (new ProductOptionTransfer())->setValue($this->productOptionValueTransfer1);
+        $itemTransfer = (new ItemTransfer())->addProductOption($productOptionTransfer);
+
+        // Action
+        $actualResult = $this->tester->getFacade()->mapCartItemProductOptionToShoppingListItemProductOption(
+            $itemTransfer,
+            $shoppingListItemTransfer
+        );
+
+        // Assert
+        $this->assertCount(1, $actualResult->getProductOptions());
+        $this->assertContains($productOptionTransfer, $actualResult->getProductOptions());
     }
 }
