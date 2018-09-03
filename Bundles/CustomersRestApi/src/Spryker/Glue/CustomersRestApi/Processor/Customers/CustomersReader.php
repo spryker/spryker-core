@@ -59,7 +59,11 @@ class CustomersReader implements CustomersReaderInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $customerReference = $restRequest->getUser()->getNaturalIdentifier();
+        if ($restRequest->getResource()->getId() === '') {
+            $this->createCustomerReferenceMissingError($restResponse);
+
+            return $restResponse;
+        }
 
         if (!$this->isSameCustomerReference($restRequest)) {
             $this->createUnauthorizedError($restResponse);
@@ -67,6 +71,7 @@ class CustomersReader implements CustomersReaderInterface
             return $restResponse;
         }
 
+        $customerReference = $restRequest->getUser()->getNaturalIdentifier();
         $customersResponseTransfer = $this->findCustomerByReference($customerReference);
 
         if (!$customersResponseTransfer->getHasCustomer()) {
@@ -122,6 +127,21 @@ class CustomersReader implements CustomersReaderInterface
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED)
             ->setStatus(Response::HTTP_FORBIDDEN)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createCustomerReferenceMissingError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_REFERENCE_MISSING)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_REFERENCE_MISSING);
 
         return $restResponse->addError($restErrorTransfer);
     }

@@ -197,6 +197,12 @@ class CustomersWriter implements CustomersWriterInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
+        if ($restRequest->getResource()->getId() === '') {
+            $this->createCustomerReferenceMissingError($restResponse);
+
+            return $restResponse;
+        }
+
         if (!$this->isSameCustomerReference($restRequest)) {
             $this->createUnauthorizedError($restResponse);
 
