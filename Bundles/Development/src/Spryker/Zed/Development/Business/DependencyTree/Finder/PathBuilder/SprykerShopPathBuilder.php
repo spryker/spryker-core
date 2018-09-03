@@ -46,8 +46,8 @@ class SprykerShopPathBuilder implements PathBuilderInterface
         foreach ($this->applications as $application) {
             $paths[] = sprintf('%s/%s/src/SprykerShop/%s/%s', $this->basePath, $filteredModule, $application, $module);
             $paths[] = sprintf('%s/%s/src/SprykerShop/%s/%s', $this->basePath, $module, $application, $module);
-            $paths[] = sprintf('%s/%s/src/SprykerShopTest/%s/%s', $this->basePath, $filteredModule, $application, $module);
-            $paths[] = sprintf('%s/%s/src/SprykerShopTest/%s/%s', $this->basePath, $module, $application, $module);
+            $paths[] = sprintf('%s/%s/tests/SprykerShopTest/%s/%s', $this->basePath, $filteredModule, $application, $module);
+            $paths[] = sprintf('%s/%s/tests/SprykerShopTest/%s/%s', $this->basePath, $module, $application, $module);
         }
 
         return $paths;

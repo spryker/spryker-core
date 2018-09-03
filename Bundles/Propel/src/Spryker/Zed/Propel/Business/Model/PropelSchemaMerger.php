@@ -161,11 +161,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         $dom->formatOutput = true;
         $dom->loadXML($xml->asXML());
 
-        foreach (['unique', 'foreign-key'] as $tagName) {
-            foreach ($dom->getElementsByTagName($tagName) as $item) {
-                $item->parentNode->appendChild($item->parentNode->removeChild($item));
-            }
-        }
+        $this->moveConstraintNodesToTheBottom($dom);
 
         $callback = function ($matches) {
             $multiplier = (strlen($matches[1]) / 2) * 4;
@@ -261,5 +257,32 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         }
 
         return $toXmlElement;
+    }
+
+    /**
+     * @param \DOMDocument $dom
+     *
+     * @return void
+     */
+    protected function moveConstraintNodesToTheBottom(DOMDocument $dom): void
+    {
+        $nodesToMode = [];
+        foreach (['unique', 'foreign-key'] as $tagName) {
+            $items = $dom->getElementsByTagName($tagName);
+            foreach ($items as $item) {
+                $nodesToMode[] = [
+                    'item' => $item,
+                    'parent' => $item->parentNode,
+                ];
+            }
+        }
+
+        foreach ($nodesToMode as $node) {
+            $node['parent']->removeChild($node['item']);
+        }
+
+        foreach ($nodesToMode as $node) {
+            $node['parent']->appendChild($node['item']);
+        }
     }
 }

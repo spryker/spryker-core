@@ -68,7 +68,8 @@ class ResponseBuilder implements ResponseBuilderInterface
         );
 
         $data = $this->resourcesToArray($restResponse->getResources(), $restRequest);
-        if (count($data) === 1) {
+
+        if ($this->isSingleObjectRequest($restRequest, $data)) {
             $response[RestResponseInterface::RESPONSE_DATA] = $data[0];
         } else {
             $response[RestResponseInterface::RESPONSE_DATA] = $data;
@@ -86,6 +87,20 @@ class ResponseBuilder implements ResponseBuilderInterface
         }
 
         return $response;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param array $data
+     *
+     * @return bool
+     */
+    protected function isSingleObjectRequest(RestRequestInterface $restRequest, array $data): bool
+    {
+        $id = $restRequest->getResource()->getId();
+        $method = $restRequest->getMetadata()->getMethod();
+
+        return count($data) === 1 && ($id || $method === Request::METHOD_POST);
     }
 
     /**

@@ -20,22 +20,22 @@ abstract class AbstractFileDependencyFinder implements DependencyFinderInterface
     }
 
     /**
-     * @param string $file
+     * @param string $filePath
      *
      * @return bool
      */
-    protected function isPluginFile(string $file): bool
+    protected function isPluginFile(string $filePath): bool
     {
-        return (strpos($file, '/Plugin/') !== false);
+        return (strpos($filePath, '/Plugin/') !== false);
     }
 
     /**
-     * @param string $file
+     * @param string $filePath
      *
      * @return bool
      */
-    protected function isTestFile($file)
+    protected function isTestFile(string $filePath)
     {
-        return !strpos($file, '/src/');
+        return !strpos($filePath, '/src/');
     }
 }

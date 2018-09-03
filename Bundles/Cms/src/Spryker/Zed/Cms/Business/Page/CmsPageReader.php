@@ -155,7 +155,7 @@ class CmsPageReader implements CmsPageReaderInterface
      * @param array $urlLocaleMap
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity
      *
-     * @return null|string
+     * @return string|null
      */
     protected function getLocalizedUrl(
         array $urlLocaleMap,
