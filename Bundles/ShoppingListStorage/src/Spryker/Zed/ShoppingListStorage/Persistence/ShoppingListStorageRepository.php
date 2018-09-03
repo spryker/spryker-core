@@ -19,8 +19,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ShoppingListStorageRepository extends AbstractRepository implements ShoppingListStorageRepositoryInterface
 {
     protected const COMPANY_USER_CUSTOMER_ALIAS = 'companyUserCustomer';
-    protected const CUSTOMER_REFERENCE_FIELD = 'customer_reference';
     protected const COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS = 'companyBusinessUnitCustomer';
+    protected const CUSTOMER_REFERENCE_FIELD = 'customer_reference';
+    protected const COMPANY_USER_REFERENCES_NAME = 'companyUserReferences';
+    protected const COMPANY_BUSINESS_UNIT_REFERENCES_NAME = 'companyBusinessUnitReferences';
 
     /**
      * @module ShoppingList
@@ -37,14 +39,14 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
             ->useSpyShoppingListCompanyUserQuery()
                 ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)
                     ->joinCustomer(static::COMPANY_USER_CUSTOMER_ALIAS, Criteria::LEFT_JOIN)
-                    ->withColumn(static::COMPANY_USER_CUSTOMER_ALIAS . '.' . static::CUSTOMER_REFERENCE_FIELD, 'companyUserReferences')
+                    ->withColumn(static::COMPANY_USER_CUSTOMER_ALIAS . '.' . static::CUSTOMER_REFERENCE_FIELD, self::COMPANY_USER_REFERENCES_NAME)
                 ->endUse()
             ->endUse()
             ->useSpyShoppingListCompanyBusinessUnitQuery()
                 ->useSpyCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
                     ->useCompanyUserQuery(null, Criteria::LEFT_JOIN)
                         ->joinCustomer(static::COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS, Criteria::LEFT_JOIN)
-                        ->withColumn(static::COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS . '.' . static::CUSTOMER_REFERENCE_FIELD, 'companyBusinessUnitReferences')
+                        ->withColumn(static::COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS . '.' . static::CUSTOMER_REFERENCE_FIELD, self::COMPANY_BUSINESS_UNIT_REFERENCES_NAME)
                     ->endUse()
                 ->endUse()
             ->endUse()
