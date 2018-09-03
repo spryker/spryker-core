@@ -12,7 +12,7 @@ interface RestRequestValidatorConstraintResolverInterface
     /**
      * @param string $className
      *
-     * @return null|string
+     * @return string|null
      */
     public function resolveConstraintClassName(string $className): ?string;
 }
