@@ -37,10 +37,37 @@ class ShoppingListItemToItemMapper implements ShoppingListItemToItemMapperInterf
         $quoteTransfer = $this->cartClient->getQuote();
         $quoteItemTransfer = $this->cartClient->findQuoteItem($quoteTransfer, $itemTransfer->getSku());
 
-        if ($quoteItemTransfer) {
-            $itemTransfer->setProductOptions($shoppingListItemTransfer->getProductOptions());
+        if ($quoteItemTransfer && $this->haveSameProductOptions($quoteItemTransfer, $shoppingListItemTransfer)) {
+            $itemTransfer->setGroupKey($quoteItemTransfer->getGroupKey());
         }
 
+        $itemTransfer->setProductOptions($shoppingListItemTransfer->getProductOptions());
+
         return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $quoteItemTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return bool
+     */
+    protected function haveSameProductOptions(ItemTransfer $quoteItemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): bool
+    {
+        if ($quoteItemTransfer->getProductOptions()->count() !== $shoppingListItemTransfer->getProductOptions()->count()) {
+            return false;
+        }
+
+        $quoteItemProductOptions = [];
+        foreach ($quoteItemTransfer->getProductOptions() as $quoteProductOptionTransfer) {
+            $quoteItemProductOptions[$quoteProductOptionTransfer->getIdProductOptionValue()] = $quoteProductOptionTransfer->getIdProductOptionValue();
+        }
+
+        $shoppingListItemProductOptions = [];
+        foreach ($shoppingListItemTransfer->getProductOptions() as $productOptionTransfer) {
+            $shoppingListItemProductOptions[$productOptionTransfer->getIdProductOptionValue()] = $productOptionTransfer->getIdProductOptionValue();
+        }
+
+        return empty(array_diff_key($quoteItemProductOptions, $shoppingListItemProductOptions));
     }
 }
