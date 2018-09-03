@@ -36,6 +36,8 @@ class SharedCartClient extends AbstractClient implements SharedCartClientInterfa
      *
      * @api
      *
+     * @deprecated Please use SharedCartClientInterface::updateQuotePermissions() instead
+     *
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -73,5 +75,21 @@ class SharedCartClient extends AbstractClient implements SharedCartClientInterfa
         return $this->getFactory()
             ->createPermissionResolver()
             ->getQuoteAccessLevel($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuotePermissions(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartSharer()
+            ->updateQuotePermissions($shareCartRequestTransfer);
     }
 }

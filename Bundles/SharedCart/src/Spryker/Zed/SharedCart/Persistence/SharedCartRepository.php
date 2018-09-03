@@ -164,6 +164,46 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     }
 
     /**
+     * @param int $idQuote
+     *
+     * @return int[]
+     */
+    public function findAllCompanyUserQuotePermissionGroupIdIndexes(int $idQuote): array
+    {
+        $storedQuotePermissionGroupIdIndexes = $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByFkQuote($idQuote)
+            ->select([
+                SpyQuoteCompanyUserTableMap::COL_ID_QUOTE_COMPANY_USER,
+                SpyQuoteCompanyUserTableMap::COL_FK_QUOTE_PERMISSION_GROUP,
+            ])
+            ->find()
+            ->toArray();
+
+        $mappedQuotePermissionGroupIdIndexes = $this->mapStoredQuotePermissionGroupIdIndexesToAssociativeArray(
+            $storedQuotePermissionGroupIdIndexes
+        );
+
+        return $mappedQuotePermissionGroupIdIndexes;
+    }
+
+    /**
+     * @param array $storedQuotePermissionGroupIdIndexes
+     *
+     * @return int[]
+     */
+    protected function mapStoredQuotePermissionGroupIdIndexesToAssociativeArray(array $storedQuotePermissionGroupIdIndexes): array
+    {
+        $mappedQuotePermissionGroupIdIndexes = [];
+        foreach ($storedQuotePermissionGroupIdIndexes as $storedQuotePermissionGroupIdIndex) {
+            $idQuoteCompanyUser = $storedQuotePermissionGroupIdIndex[SpyQuoteCompanyUserTableMap::COL_ID_QUOTE_COMPANY_USER];
+            $mappedQuotePermissionGroupIdIndexes[$idQuoteCompanyUser] = $storedQuotePermissionGroupIdIndex[SpyQuoteCompanyUserTableMap::COL_FK_QUOTE_PERMISSION_GROUP];
+        }
+
+        return $mappedQuotePermissionGroupIdIndexes;
+    }
+
+    /**
      * @param int $idCompanyUser
      *
      * @return array

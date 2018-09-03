@@ -68,4 +68,11 @@ interface SharedCartRepositoryInterface
      * @return bool
      */
     public function isSharedQuoteDefault(int $idQuote, int $idCompanyUser): bool;
+
+    /**
+     * @param int $idQuote
+     *
+     * @return int[]
+     */
+    public function findAllCompanyUserQuotePermissionGroupIdIndexes(int $idQuote): array;
 }
