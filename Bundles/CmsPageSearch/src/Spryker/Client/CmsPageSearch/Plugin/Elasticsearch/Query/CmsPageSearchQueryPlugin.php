@@ -36,11 +36,6 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
      */
     protected $query;
 
-    public function __construct()
-    {
-        //$this->query = $this->createSearchQuery();
-    }
-
     /**
      * @return \Elastica\Query
      */
