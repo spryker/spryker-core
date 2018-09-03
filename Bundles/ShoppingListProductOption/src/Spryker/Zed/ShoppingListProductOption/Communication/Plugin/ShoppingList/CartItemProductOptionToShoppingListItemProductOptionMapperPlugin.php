@@ -13,9 +13,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface;
 
 /**
- * @method \Spryker\Zed\ShoppingListProductOption\Business\ShoppingListProductOptionFacade getFacade()
+ * @method \Spryker\Zed\ShoppingListProductOption\Business\ShoppingListProductOptionFacadeInterface getFacade()
  */
-class ItemCartProductOptionToShoppingListItemProductOptionMapperPlugin extends AbstractPlugin implements ItemToShoppingListItemMapperPluginInterface
+class CartItemProductOptionToShoppingListItemProductOptionMapperPlugin extends AbstractPlugin implements ItemToShoppingListItemMapperPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -29,8 +29,7 @@ class ItemCartProductOptionToShoppingListItemProductOptionMapperPlugin extends A
      */
     public function map(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        $shoppingListItemTransfer->setProductOptions($itemTransfer->getProductOptions());
-
-        return $shoppingListItemTransfer;
+        return $this->getFacade()
+            ->mapCartItemProductOptionToShoppingListItemProductOption($itemTransfer, $shoppingListItemTransfer);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListProductOption\Business;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -64,5 +65,22 @@ class ShoppingListProductOptionFacade extends AbstractFacade implements Shopping
         return $this->getFactory()
             ->createShoppingListItemExpander()
             ->expandItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Spryker\Zed\ShoppingListProductOption\Business\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function mapCartItemProductOptionToShoppingListItemProductOption(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    {
+        return $this->getFactory()
+            ->createCartItemToShoppingListItemMapper()
+            ->mapCartItemProductOptionToShoppingListItemProductOption($itemTransfer, $shoppingListItemTransfer);
     }
 }
