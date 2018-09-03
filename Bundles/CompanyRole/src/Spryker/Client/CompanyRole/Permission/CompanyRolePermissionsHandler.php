@@ -50,21 +50,17 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
     ): PermissionCollectionTransfer {
         $preparedPermissions = new ArrayObject();
 
-        $storedCompanyRolePermissions = $this->companyRoleStub->findCompanyRolePermissions($companyRoleTransfer)->getPermissions();
-        $allAvailablePermissions = $this->permissionClient->findAll()->getPermissions();
+        $allPermissions = $this->permissionClient->findAll()->getPermissions();
+        $storedCompanyRolePermissions = $this->companyRoleStub->findCompanyRolePermissions($companyRoleTransfer)
+            ->getPermissions();
 
-        $registeredPermissions = $this->permissionClient->getRegisteredPermissions()->getPermissions();
-        $infrastructuralPermissionKeys = $this->getInfrastructuralPermissionKeys($registeredPermissions);
+        $filteredPermissions = $this->filterUnassignedPermissions($allPermissions, $storedCompanyRolePermissions);
+        $filteredPermissions = $this->getFilteredPermissionKeyIndexes($filteredPermissions);
 
-        foreach ($allAvailablePermissions as $permissionTransfer) {
-            if (in_array($permissionTransfer->getKey(), $infrastructuralPermissionKeys, true)) {
-                continue;
-            }
-
+        foreach ($filteredPermissions as $filteredPermissionTransfer) {
             $permissionData = $this->transformPermissionTransferToArray(
                 $companyRoleTransfer->getIdCompanyRole(),
-                $permissionTransfer,
-                $storedCompanyRolePermissions
+                $filteredPermissions[$filteredPermissionTransfer->getKey()]
             );
 
             $preparedPermissions->append($permissionData);
@@ -76,30 +72,65 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
 
     /**
      * @param int $idCompanyRole
-     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $companyRolePermissions
+     * @param \Generated\Shared\Transfer\PermissionTransfer $storedPermissionTransfer
      *
      * @return array
      */
     protected function transformPermissionTransferToArray(
         int $idCompanyRole,
-        PermissionTransfer $permissionTransfer,
-        ArrayObject $companyRolePermissions
+        PermissionTransfer $storedPermissionTransfer
     ): array {
-        $permissionData = $permissionTransfer->toArray(false, true);
-        $permissionData[CompanyRoleTransfer::ID_COMPANY_ROLE] = null;
+        $permissionData = $storedPermissionTransfer->toArray(false, true);
 
         $permissionGlossaryKeyName = static::PERMISSION_KEY_GLOSSARY_PREFIX . $permissionData[PermissionTransfer::KEY];
         $permissionData[PermissionTransfer::KEY] = $permissionGlossaryKeyName;
+        $permissionData[CompanyRoleTransfer::ID_COMPANY_ROLE] = $idCompanyRole;
 
-        foreach ($companyRolePermissions as $companyRolePermission) {
-            if ($companyRolePermission->getKey() === $permissionTransfer->getKey()) {
-                $permissionData[CompanyRoleTransfer::ID_COMPANY_ROLE] = $idCompanyRole;
-                break;
+        return $permissionData;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $allPermissions
+     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $storedCompanyRolePermissions
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[]
+     */
+    protected function filterUnassignedPermissions(
+        ArrayObject $allPermissions,
+        ArrayObject $storedCompanyRolePermissions
+    ): ArrayObject {
+        $commonPermissions = new ArrayObject();
+        foreach ($allPermissions as $permissionTransfer) {
+            foreach ($storedCompanyRolePermissions as $storedCompanyRolePermission) {
+                if ($storedCompanyRolePermission->getKey() === $permissionTransfer->getKey()) {
+                    $commonPermissions[] = $permissionTransfer;
+                }
             }
         }
 
-        return $permissionData;
+        return $commonPermissions;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $allPermissions
+     *
+     * @return \Generated\Shared\Transfer\PermissionTransfer[]
+     */
+    protected function getFilteredPermissionKeyIndexes(ArrayObject $allPermissions): array
+    {
+        $registeredPermissions = $this->permissionClient->getRegisteredPermissions()->getPermissions();
+        $infrastructuralPermissionKeys = $this->getInfrastructuralPermissionKeys($registeredPermissions);
+
+        $filteredPermissions = [];
+        foreach ($allPermissions as $permissionTransfer) {
+            if (in_array($permissionTransfer->getKey(), $infrastructuralPermissionKeys, true)) {
+                continue;
+            }
+
+            $filteredPermissions[$permissionTransfer->getKey()] = $permissionTransfer;
+        }
+
+        return $filteredPermissions;
     }
 
     /**
