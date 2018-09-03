@@ -15,6 +15,8 @@ use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToF
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapter;
 use Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeBridge;
 use Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig;
+use const DIRECTORY_SEPARATOR;
+use function rmdir;
 
 /**
  * Auto-generated group annotations
@@ -32,6 +34,16 @@ class RestRequestValidatorFacadeTest extends Unit
      * @var \SprykerTest\Zed\RestRequestValidator\RestRequestValidatorBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        $this->deleteDirectory($this->getFixtureDirectory('Result'));
+    }
 
     /**
      * @return void
@@ -231,7 +243,7 @@ class RestRequestValidatorFacadeTest extends Unit
     protected function getExpectedResult(RestRequestValidatorBusinessFactory $mockFactory, StoreTransfer $store): array
     {
         return $expected = $mockFactory->getYaml()->parseFile(
-            $this->getFixtureDirectory('Merged') . DIRECTORY_SEPARATOR . $store->getName() . DIRECTORY_SEPARATOR . 'result.validation.yaml'
+            $this->getFixtureDirectory('Merged') . $store->getName() . DIRECTORY_SEPARATOR . 'result.validation.yaml'
         );
     }
 
@@ -244,7 +256,25 @@ class RestRequestValidatorFacadeTest extends Unit
     protected function getActualResult(RestRequestValidatorBusinessFactory $mockFactory, StoreTransfer $store): array
     {
         return $expected = $mockFactory->getYaml()->parseFile(
-            $this->getFixtureDirectory() . DIRECTORY_SEPARATOR . $store->getName() . DIRECTORY_SEPARATOR . 'validation.cache'
+            $this->getFixtureDirectory('Result') . $store->getName() . DIRECTORY_SEPARATOR . 'validation.cache'
         );
+    }
+
+    /**
+     * @param string $dir
+     *
+     * @return bool
+     */
+    protected function deleteDirectory(string $dir): bool
+    {
+        $files = array_diff(scandir($dir), ['.', '..']);
+        foreach ($files as $file) {
+            if (is_dir($dir . DIRECTORY_SEPARATOR . $file)) {
+                $this->deleteDirectory($dir . DIRECTORY_SEPARATOR . $file);
+            } else {
+                unlink($dir . DIRECTORY_SEPARATOR . $file);
+            }
+        }
+        return rmdir($dir);
     }
 }
