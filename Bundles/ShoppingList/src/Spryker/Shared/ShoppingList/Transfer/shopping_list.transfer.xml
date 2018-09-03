@@ -121,4 +121,10 @@
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
+    <transfer name="ShoppingListAddItemsRequest">
+        <property name="shoppingListId" type="int" />
+        <property name="customer" type="Customer" />
+        <property name="items" type="ShoppingListItem[]" singular="item" />
+    </transfer>
+
 </transfers>
