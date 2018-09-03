@@ -29,7 +29,6 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     {
         $customerReferencesArray = $this->getFactory()
             ->getShoppingListPropelQuery()
-
             ->distinct()
             ->useSpyShoppingListCompanyUserQuery()
                 ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)
@@ -52,10 +51,10 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
 
         $result = [];
         foreach ($customerReferencesArray as $item) {
-            $result = \array_merge($result, array_filter(\array_values($item)));
+            $result = array_merge($result, array_filter(array_values($item)));
         };
 
-        return \array_unique($result);
+        return array_unique($result);
     }
 
     /**
@@ -100,7 +99,6 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
                 ->endUse()
                 ->filterByFkCompanyUser_In($companyUserIds)
             ->endUse()
-
             ->select(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)
             ->find()
             ->toArray();
