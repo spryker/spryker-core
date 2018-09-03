@@ -77,10 +77,9 @@ interface SharedCartEntityManagerInterface
     public function deleteQuoteCompanyUserByQuote(QuoteTransfer $quoteTransfer): void;
 
     /**
-     * @param int $idQuote
      * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
      *
      * @return void
      */
-    public function updateCompanyUserQuotePermissionGroup(int $idQuote, ShareDetailTransfer $shareDetailTransfer): void;
+    public function updateCompanyUserQuotePermissionGroup(ShareDetailTransfer $shareDetailTransfer): void;
 }

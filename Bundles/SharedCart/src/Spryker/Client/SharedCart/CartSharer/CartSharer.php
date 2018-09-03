@@ -136,7 +136,7 @@ class CartSharer implements CartSharerInterface
     ): QuoteTransfer {
         $cartShareDetails = $shareCartRequestTransfer->getShareDetails();
 
-        $filteredShareDetails = $this->removeShareDetailsWithoutQuotePermissionGroup($cartShareDetails);
+        $filteredShareDetails = $this->filterShareDetailsWithoutQuotePermissionGroup($cartShareDetails);
         $quoteTransfer->setShareDetails($filteredShareDetails);
 
         return $quoteTransfer;
@@ -147,7 +147,7 @@ class CartSharer implements CartSharerInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[]
      */
-    protected function removeShareDetailsWithoutQuotePermissionGroup(ArrayObject $shareDetails): ArrayObject
+    protected function filterShareDetailsWithoutQuotePermissionGroup(ArrayObject $shareDetails): ArrayObject
     {
         $filteredShareDetails = new ArrayObject();
         foreach ($shareDetails as $shareDetail) {

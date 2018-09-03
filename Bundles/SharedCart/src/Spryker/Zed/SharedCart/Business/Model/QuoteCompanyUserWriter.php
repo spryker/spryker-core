@@ -87,6 +87,11 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
             $storedQuoteCompanyUserIdIndexes
         );
 
+        $quoteTransfer->requireIdQuote();
+        $storedQuotePermissionGroupIdIndexes = $this->sharedCartRepository->findAllCompanyUserQuotePermissionGroupIdIndexes(
+            $quoteTransfer->getIdQuote()
+        );
+
         foreach ($quoteShareDetails as $shareDetailTransfer) {
             if (!$shareDetailTransfer->getIdQuoteCompanyUser()) {
                 continue;
@@ -95,29 +100,28 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
             $shareDetailTransfer->requireQuotePermissionGroup();
 
             if (in_array($shareDetailTransfer->getIdQuoteCompanyUser(), $commonQuoteCompanyUserIdIndexes, false)
-                && $this->isQuotePermissionGroupChanged($shareDetailTransfer)
+                && $this->isQuotePermissionGroupChanged($shareDetailTransfer, $storedQuotePermissionGroupIdIndexes)
             ) {
-                $this->sharedCartEntityManager->updateCompanyUserQuotePermissionGroup(
-                    $quoteTransfer->getIdQuote(),
-                    $shareDetailTransfer
-                );
+                $this->sharedCartEntityManager->updateCompanyUserQuotePermissionGroup($shareDetailTransfer);
             }
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
+     * @param array $storedQuotePermissionGroupIdIndexes
      *
      * @return bool
      */
-    protected function isQuotePermissionGroupChanged(ShareDetailTransfer $shareDetailTransfer): bool
-    {
-        $storedIdQuotePermissionGroup = $this->sharedCartRepository->findIdQuotePermissionGroupByIdQuoteCompanyUser(
-            $shareDetailTransfer
-        );
+    protected function isQuotePermissionGroupChanged(
+        ShareDetailTransfer $shareDetailTransfer,
+        array $storedQuotePermissionGroupIdIndexes
+    ): bool {
+        $shareDetailTransfer->requireIdCompanyUser();
+        $quotePermissionGroup = $shareDetailTransfer->getQuotePermissionGroup();
 
-        return $shareDetailTransfer->getQuotePermissionGroup()
-                ->getIdQuotePermissionGroup() !== $storedIdQuotePermissionGroup;
+        return $quotePermissionGroup->getIdQuotePermissionGroup()
+            !== $storedQuotePermissionGroupIdIndexes[$shareDetailTransfer->getIdQuoteCompanyUser()];
     }
 
     /**

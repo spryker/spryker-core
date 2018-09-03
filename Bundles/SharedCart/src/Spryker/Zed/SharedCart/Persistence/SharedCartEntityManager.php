@@ -144,25 +144,17 @@ class SharedCartEntityManager extends AbstractEntityManager implements SharedCar
     }
 
     /**
-     * @param int $idQuote
      * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
      *
      * @return void
      */
-    public function updateCompanyUserQuotePermissionGroup(int $idQuote, ShareDetailTransfer $shareDetailTransfer): void
+    public function updateCompanyUserQuotePermissionGroup(ShareDetailTransfer $shareDetailTransfer): void
     {
-        $shareDetailTransfer->requireIdCompanyUser();
-        $shareDetailTransfer->requireQuotePermissionGroup();
-
         $quotePermissionGroupTransfer = $shareDetailTransfer->getQuotePermissionGroup();
-        $quotePermissionGroupTransfer->requireIdQuotePermissionGroup();
 
         $this->getFactory()
             ->createQuoteCompanyUserQuery()
-            ->filterByFkQuote($idQuote)
-            ->filterByFkCompanyUser(
-                $shareDetailTransfer->getIdCompanyUser()
-            )
+            ->filterByIdQuoteCompanyUser($shareDetailTransfer->getIdQuoteCompanyUser())
             ->update([
                 static::COL_FK_QUOTE_PERMISSION_GROUP => $quotePermissionGroupTransfer->getIdQuotePermissionGroup(),
             ]);

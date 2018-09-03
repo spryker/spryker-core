@@ -70,6 +70,7 @@ interface SharedCartClientInterface
     /**
      * Specification:
      * - Updates quote with permissions from share details.
+     * - Sends Zed request to update quote.
      *
      * @api
      *

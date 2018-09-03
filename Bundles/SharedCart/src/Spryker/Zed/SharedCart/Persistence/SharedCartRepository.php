@@ -10,7 +10,6 @@ namespace Spryker\Zed\SharedCart\Persistence;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
-use Generated\Shared\Transfer\ShareDetailTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
@@ -165,19 +164,45 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
+     * @param int $idQuote
      *
-     * @return int|null
+     * @return array
      */
-    public function findIdQuotePermissionGroupByIdQuoteCompanyUser(ShareDetailTransfer $shareDetailTransfer): ?int
+    public function findAllCompanyUserQuotePermissionGroupIdIndexes(int $idQuote): array
     {
-        return $this->getFactory()
+        $storedQuotePermissionGroupIdIndexes = $this->getFactory()
             ->createQuoteCompanyUserQuery()
-            ->filterByIdQuoteCompanyUser(
-                $shareDetailTransfer->getIdQuoteCompanyUser()
-            )
-            ->select([SpyQuoteCompanyUserTableMap::COL_FK_QUOTE_PERMISSION_GROUP])
-            ->findOne();
+            ->filterByFkQuote($idQuote)
+            ->select([
+                SpyQuoteCompanyUserTableMap::COL_ID_QUOTE_COMPANY_USER,
+                SpyQuoteCompanyUserTableMap::COL_FK_QUOTE_PERMISSION_GROUP,
+            ])
+            ->find()
+            ->toArray();
+
+        $mappedQuotePermissionGroupIdIndexes = $this->mapStoredQuotePermissionGroupIdIndexesToAssociativeArray(
+            $storedQuotePermissionGroupIdIndexes
+        );
+
+        return $mappedQuotePermissionGroupIdIndexes;
+    }
+
+    /**
+     * @param array $storedQuotePermissionGroupIdIndexes
+     *
+     * @return array
+     */
+    protected function mapStoredQuotePermissionGroupIdIndexesToAssociativeArray(array $storedQuotePermissionGroupIdIndexes): array
+    {
+        $mappedQuotePermissionGroupIdIndexes = [];
+        foreach ($storedQuotePermissionGroupIdIndexes as $storedQuotePermissionGroupIdIndex) {
+            $idQuoteCompanyUser = $storedQuotePermissionGroupIdIndex[SpyQuoteCompanyUserTableMap::COL_ID_QUOTE_COMPANY_USER];
+            $fkQuotePermissionGroup = $storedQuotePermissionGroupIdIndex[SpyQuoteCompanyUserTableMap::COL_FK_QUOTE_PERMISSION_GROUP];
+
+            $mappedQuotePermissionGroupIdIndexes[$idQuoteCompanyUser] = $fkQuotePermissionGroup;
+        }
+
+        return $mappedQuotePermissionGroupIdIndexes;
     }
 
     /**
