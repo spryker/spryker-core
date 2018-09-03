@@ -34,10 +34,8 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
      * @param \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface $sharedCartRepository
      * @param \Spryker\Zed\SharedCart\Persistence\SharedCartEntityManagerInterface $sharedCartEntityManager
      */
-    public function __construct(
-        SharedCartRepositoryInterface $sharedCartRepository,
-        SharedCartEntityManagerInterface $sharedCartEntityManager
-    ) {
+    public function __construct(SharedCartRepositoryInterface $sharedCartRepository, SharedCartEntityManagerInterface $sharedCartEntityManager)
+    {
         $this->sharedCartRepository = $sharedCartRepository;
         $this->sharedCartEntityManager = $sharedCartEntityManager;
     }
@@ -182,10 +180,8 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
      *
      * @return void
      */
-    protected function removeQuoteCompanyUsers(
-        array $shareDetailTransferCollection,
-        array $currentQuoteCompanyUserIdCollection
-    ): void {
+    protected function removeQuoteCompanyUsers(array $shareDetailTransferCollection, array $currentQuoteCompanyUserIdCollection): void
+    {
         $quoteCompanyUserIdIndex = $this->indexQuoteCompanyUserId($shareDetailTransferCollection);
         foreach ($currentQuoteCompanyUserIdCollection as $idQuoteCompanyUser) {
             if (!in_array($idQuoteCompanyUser, $quoteCompanyUserIdIndex)) {
