@@ -72,8 +72,8 @@ class AddressesWriter implements AddressesWriterInterface
 
         $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
 
-        if ($customerReference !== $restRequest->getUser()->getNaturalIdentifier()) {
-            $this->createErrorCustomerNotFound($restResponse);
+        if (!$this->isSameCustomerReference($restRequest)) {
+            $this->createUnauthorizedError($restResponse);
 
             return $restResponse;
         }
@@ -123,8 +123,8 @@ class AddressesWriter implements AddressesWriterInterface
 
         $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
 
-        if ($customerReference !== $restRequest->getUser()->getNaturalIdentifier()) {
-            $this->createErrorCustomerNotFound($restResponse);
+        if (!$this->isSameCustomerReference($restRequest)) {
+            $this->createUnauthorizedError($restResponse);
 
             return $restResponse;
         }
@@ -133,6 +133,8 @@ class AddressesWriter implements AddressesWriterInterface
 
         $addressTransfer = (new AddressTransfer())
             ->fromArray($addressAttributesTransfer->toArray(), true);
+        $addressTransfer->setFkCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer());
+
         $addressTransfer = $this->customerClient->updateAddress($addressTransfer);
 
         if (!$addressTransfer->getUuid()) {
@@ -164,8 +166,8 @@ class AddressesWriter implements AddressesWriterInterface
 
         $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
 
-        if ($customerReference !== $restRequest->getUser()->getNaturalIdentifier()) {
-            $this->createErrorCustomerNotFound($restResponse);
+        if (!$this->isSameCustomerReference($restRequest)) {
+            $this->createUnauthorizedError($restResponse);
 
             return $restResponse;
         }
@@ -236,5 +238,30 @@ class AddressesWriter implements AddressesWriterInterface
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_ADDRESS_NOT_FOUND);
 
         return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createUnauthorizedError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED)
+            ->setStatus(Response::HTTP_FORBIDDEN)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function isSameCustomerReference(RestRequestInterface $restRequest): bool
+    {
+        return $restRequest->getUser()->getNaturalIdentifier() === $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
     }
 }

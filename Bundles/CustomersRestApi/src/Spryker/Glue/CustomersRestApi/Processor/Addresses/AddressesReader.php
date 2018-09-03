@@ -69,8 +69,8 @@ class AddressesReader implements AddressesReaderInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
 
-        if ($customerReference !== $restRequest->getUser()->getNaturalIdentifier()) {
-            $this->createCustomerNotFoundError($restResponse);
+        if (!$this->isSameCustomerReference($restRequest)) {
+            $this->createUnauthorizedError($restResponse);
 
             return $restResponse;
         }
@@ -182,5 +182,30 @@ class AddressesReader implements AddressesReaderInterface
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
 
         return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createUnauthorizedError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED)
+            ->setStatus(Response::HTTP_FORBIDDEN)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function isSameCustomerReference(RestRequestInterface $restRequest): bool
+    {
+        return $restRequest->getUser()->getNaturalIdentifier() === $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
     }
 }

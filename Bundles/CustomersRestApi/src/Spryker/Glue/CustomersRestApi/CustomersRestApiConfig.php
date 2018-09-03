@@ -46,4 +46,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_CUSTOMER_FAILED_TO_SAVE = '410';
     public const RESPONSE_DETAILS_CUSTOMER_FAILED_TO_SAVE = 'Failed to save customer';
+
+    public const RESPONSE_CODE_CUSTOMER_UNAUTHORIZED = '411';
+    public const RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED = 'Unauthorized request';
 }
