@@ -241,14 +241,14 @@ class RequestFormatter implements RequestFormatterInterface
      */
     protected function setSortFields(RequestBuilderInterface $requestBuilder, array $queryParameters): void
     {
-        if (!isset($queryParameters[RequestConstantsInterface::QUERY_SORT])) {
+        if (!isset($queryParameters[RequestConstantsInterface::QUERY_SORT]) || empty($queryParameters[RequestConstantsInterface::QUERY_SORT])) {
             return;
         }
 
         $sortFields = explode(',', $queryParameters[RequestConstantsInterface::QUERY_SORT]);
         foreach ($sortFields as $field) {
             $direction = SortInterface::SORT_ASC;
-            if (isset($field[0]) && $field[0] === '-') {
+            if ($field[0] === '-') {
                 $direction = SortInterface::SORT_DESC;
                 $field = trim($field, '-');
             }
