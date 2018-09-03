@@ -35,7 +35,7 @@ class ConcreteProductsProductAvailabilitiesResourceRelationshipExpander implemen
     {
         foreach ($resources as $resource) {
             $concreteProductsAvailabilityResource = $this->productAvailabilitiesResource
-                ->findConcreteProductAvailabilityByConcreteProductId($resource->getId(), $restRequest);
+                ->findConcreteProductAvailabilityByConcreteProductSku($resource->getId(), $restRequest);
             if ($concreteProductsAvailabilityResource !== null) {
                 $resource->addRelationship($concreteProductsAvailabilityResource);
             }

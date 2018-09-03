@@ -20,16 +20,16 @@ class ProductAvailabilitiesRestApiResource extends AbstractRestResource implemen
      *
      * @api
      *
-     * @param string $abstractProductId
+     * @param string $abstractProductSku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findAbstractProductAvailabilityByAbstractProductId(string $abstractProductId, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findAbstractProductAvailabilityByAbstractProductSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         return $this->getFactory()
             ->createAbstractProductAvailabilitiesReader()
-            ->findAbstractProductAvailabilityByAbstractProductSku($abstractProductId, $restRequest);
+            ->findAbstractProductAvailabilityBySku($abstractProductSku, $restRequest);
     }
 
     /**
@@ -37,15 +37,15 @@ class ProductAvailabilitiesRestApiResource extends AbstractRestResource implemen
      *
      * @api
      *
-     * @param string $concreteProductId
+     * @param string $concreteProductSku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findConcreteProductAvailabilityByConcreteProductId(string $concreteProductId, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findConcreteProductAvailabilityByConcreteProductSku(string $concreteProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         return $this->getFactory()
             ->createConcreteProductsAvailabilitiesReader()
-            ->findConcreteProductAvailabilityByConcreteProductSku($concreteProductId, $restRequest);
+            ->findConcreteProductAvailabilityBySku($concreteProductSku, $restRequest);
     }
 }

@@ -7,21 +7,24 @@
 
 namespace Spryker\Glue\ProductsProductAvailabilitiesResourceRelationship\Dependency\RestResource;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+
 interface ProductsResourceRelationToProductAvailabilitiesRestApiInterface
 {
     /**
-     * @param string $abstractProductId
+     * @param string $abstractProductSku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findProductAbstractAvailabilityByAbstractProductId($abstractProductId, $restRequest);
+    public function findAbstractProductAvailabilityByAbstractProductSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface;
 
     /**
-     * @param string $concreteProductId
+     * @param string $concreteProductSku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findConcreteProductAvailabilityByConcreteProductId($concreteProductId, $restRequest);
+    public function findConcreteProductAvailabilityByConcreteProductSku(string $concreteProductSku, RestRequestInterface $restRequest): ?RestResourceInterface;
 }

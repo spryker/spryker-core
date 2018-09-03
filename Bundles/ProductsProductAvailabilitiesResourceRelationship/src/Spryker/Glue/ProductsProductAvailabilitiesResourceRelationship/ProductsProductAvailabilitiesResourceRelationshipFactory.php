@@ -17,17 +17,9 @@ use Spryker\Glue\ProductsProductAvailabilitiesResourceRelationship\Processor\Exp
 class ProductsProductAvailabilitiesResourceRelationshipFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ProductsProductAvailabilitiesResourceRelationship\Dependency\RestResource\ProductsResourceRelationToProductAvailabilitiesRestApiInterface
-     */
-    public function getProductAvailabilitiesResource(): ProductsResourceRelationToProductAvailabilitiesRestApiInterface
-    {
-        return $this->getProvidedDependency(ProductsProductAvailabilitiesResourceRelationshipDependencyProvider::RESOURCE_PRODUCT_AVAILABILITIES);
-    }
-
-    /**
      * @return \Spryker\Glue\ProductsProductAvailabilitiesResourceRelationship\Processor\Expander\AbstractProductsProductAvailabilitiesResourceRelationshipExpanderInterface
      */
-    public function createAbstractProductsProductAvailabilitiesResourceRelationshipMapper(): AbstractProductsProductAvailabilitiesResourceRelationshipExpanderInterface
+    public function createAbstractProductsProductAvailabilitiesResourceRelationshipExpander(): AbstractProductsProductAvailabilitiesResourceRelationshipExpanderInterface
     {
         return new AbstractProductsProductAvailabilitiesResourceRelationshipExpander($this->getProductAvailabilitiesResource());
     }
@@ -35,8 +27,16 @@ class ProductsProductAvailabilitiesResourceRelationshipFactory extends AbstractF
     /**
      * @return \Spryker\Glue\ProductsProductAvailabilitiesResourceRelationship\Processor\Expander\ConcreteProductsProductAvailabilitiesResourceRelationshipExpanderInterface
      */
-    public function createConcreteProductsProductAvailabilitiesResourceRelationshipMapper(): ConcreteProductsProductAvailabilitiesResourceRelationshipExpanderInterface
+    public function createConcreteProductsProductAvailabilitiesResourceRelationshipExpander(): ConcreteProductsProductAvailabilitiesResourceRelationshipExpanderInterface
     {
         return new ConcreteProductsProductAvailabilitiesResourceRelationshipExpander($this->getProductAvailabilitiesResource());
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductsProductAvailabilitiesResourceRelationship\Dependency\RestResource\ProductsResourceRelationToProductAvailabilitiesRestApiInterface
+     */
+    public function getProductAvailabilitiesResource(): ProductsResourceRelationToProductAvailabilitiesRestApiInterface
+    {
+        return $this->getProvidedDependency(ProductsProductAvailabilitiesResourceRelationshipDependencyProvider::RESOURCE_PRODUCT_AVAILABILITIES);
     }
 }

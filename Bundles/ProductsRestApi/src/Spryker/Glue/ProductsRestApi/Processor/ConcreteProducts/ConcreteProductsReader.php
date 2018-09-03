@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ConcreteProductsReader implements ConcreteProductsReaderInterface
 {
-    protected const PRODUCT_CONCRETE_MAP = 'sku';
+    protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
 
     /**
      * @var \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface
@@ -70,7 +70,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
 
         $concreteProductData = $this->productStorageClient
             ->findProductConcreteStorageDataByMapping(
-                static::PRODUCT_CONCRETE_MAP,
+                static::PRODUCT_CONCRETE_MAPPING_TYPE,
                 $resourceIdentifier,
                 $restRequest->getMetadata()->getLocale()
             );
@@ -118,7 +118,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     public function findOneByProductConcrete(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         $concreteProductData = $this->productStorageClient->findProductConcreteStorageDataByMapping(
-            static::PRODUCT_CONCRETE_MAP,
+            static::PRODUCT_CONCRETE_MAPPING_TYPE,
             $sku,
             $restRequest->getMetadata()->getLocale()
         );

@@ -20,10 +20,10 @@ interface AbstractProductAvailabilitiesReaderInterface
     public function getAbstractProductAvailability(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
-     * @param string $abstractProductSku
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findAbstractProductAvailabilityByAbstractProductSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface;
+    public function findAbstractProductAvailabilityBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface;
 }

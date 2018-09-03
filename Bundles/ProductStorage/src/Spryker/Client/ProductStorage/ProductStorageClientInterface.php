@@ -81,7 +81,7 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
-     * - Retrieves a current Store specific ProductConcrete resource from Storage using specified mapping..
+     * - Retrieves a current Store specific ProductConcrete resource from Storage using specified mapping.
      *
      * @api
      *

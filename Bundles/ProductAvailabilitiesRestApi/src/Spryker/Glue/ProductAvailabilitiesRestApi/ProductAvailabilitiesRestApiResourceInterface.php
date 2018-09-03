@@ -13,27 +13,27 @@ interface ProductAvailabilitiesRestApiResourceInterface
 {
     /**
      * Specification:
-     * - Retrieves abstract product availability by abstract product identifier.
+     * - Retrieves abstract product availability by abstract product sku.
      *
      * @api
      *
-     * @param string $abstractProductId
+     * @param string $abstractProductSku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findAbstractProductAvailabilityByAbstractProductId(string $abstractProductId, RestRequestInterface $restRequest): ?RestResourceInterface;
+    public function findAbstractProductAvailabilityByAbstractProductSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface;
 
     /**
      * Specification:
-     * - Retrieves concrete product availability by concrete product identifier.
+     * - Retrieves concrete product availability by concrete product sku.
      *
      * @api
      *
-     * @param string $concreteProductId
+     * @param string $concreteProductSku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findConcreteProductAvailabilityByConcreteProductId(string $concreteProductId, RestRequestInterface $restRequest): ?RestResourceInterface;
+    public function findConcreteProductAvailabilityByConcreteProductSku(string $concreteProductSku, RestRequestInterface $restRequest): ?RestResourceInterface;
 }

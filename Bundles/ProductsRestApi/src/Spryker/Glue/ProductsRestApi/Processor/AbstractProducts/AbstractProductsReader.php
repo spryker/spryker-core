@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AbstractProductsReader implements AbstractProductsReaderInterface
 {
     protected const PRODUCT_CONCRETE_IDS_KEY = 'product_concrete_ids';
-    protected const PRODUCT_ABSTRACT_MAP = 'sku';
+    protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
 
     /**
      * @var \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface
@@ -80,7 +80,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
 
         $abstractProductData = $this->productStorageClient
             ->findProductAbstractStorageDataByMapping(
-                static::PRODUCT_ABSTRACT_MAP,
+                static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $resourceIdentifier,
                 $restRequest->getMetadata()->getLocale()
             );

@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AbstractProductAvailabilitiesReader implements AbstractProductAvailabilitiesReaderInterface
 {
-    protected const PRODUCT_ABSTRACT_MAPPING = 'sku';
+    protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
@@ -80,7 +80,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
         }
         $abstractSku = $abstractProductResource->getId();
 
-        $restResource = $this->findAbstractProductAvailabilityByAbstractProductSku($abstractSku, $restRequest);
+        $restResource = $this->findAbstractProductAvailabilityBySku($abstractSku, $restRequest);
         if (!$restResource) {
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(ProductAvailabilitiesRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_AVAILABILITY_NOT_FOUND)
@@ -94,17 +94,17 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
     }
 
     /**
-     * @param string $abstractProductSku
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findAbstractProductAvailabilityByAbstractProductSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findAbstractProductAvailabilityBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         $abstractProductData = $this->productStorageClient
             ->findProductAbstractStorageDataByMapping(
-                static::PRODUCT_ABSTRACT_MAPPING,
-                $abstractProductSku,
+                static::PRODUCT_ABSTRACT_MAPPING_TYPE,
+                $sku,
                 $restRequest->getMetadata()->getLocale()
             );
         if (!$abstractProductData) {
@@ -122,7 +122,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
         $restResourceSelfLink = sprintf(
             '%s/%s/%s',
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            $abstractProductSku,
+            $sku,
             ProductAvailabilitiesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_AVAILABILITIES
         );
         $restResource->addLink('self', $restResourceSelfLink);

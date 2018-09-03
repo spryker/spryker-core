@@ -21,22 +21,6 @@ use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\ConcreteProductAv
 class ProductAvailabilitiesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface
-     */
-    public function getAvailabilityStorageClient(): ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface
-    {
-        return $this->getProvidedDependency(ProductAvailabilitiesRestApiDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
-    }
-
-    /**
-     * @return \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductStorageClientInterface
-     */
-    public function getProductStorageClient(): ProductAvailabilitiesRestApiToProductStorageClientInterface
-    {
-        return $this->getProvidedDependency(ProductAvailabilitiesRestApiDependencyProvider::CLIENT_PRODUCT_STORAGE);
-    }
-
-    /**
      * @return \Spryker\Glue\ProductAvailabilitiesRestApi\Processor\AbstractProductAvailability\AbstractProductAvailabilitiesReaderInterface
      */
     public function createAbstractProductAvailabilitiesReader(): AbstractProductAvailabilitiesReaderInterface
@@ -80,5 +64,21 @@ class ProductAvailabilitiesRestApiFactory extends AbstractFactory
         return new ConcreteProductAvailabilitiesResourceMapper(
             $this->getResourceBuilder()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface
+     */
+    public function getAvailabilityStorageClient(): ProductAvailabilitiesRestApiToAvailabilityStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductAvailabilitiesRestApiDependencyProvider::CLIENT_AVAILABILITY_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductAvailabilitiesRestApi\Dependency\Client\ProductAvailabilitiesRestApiToProductStorageClientInterface
+     */
+    public function getProductStorageClient(): ProductAvailabilitiesRestApiToProductStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductAvailabilitiesRestApiDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 }

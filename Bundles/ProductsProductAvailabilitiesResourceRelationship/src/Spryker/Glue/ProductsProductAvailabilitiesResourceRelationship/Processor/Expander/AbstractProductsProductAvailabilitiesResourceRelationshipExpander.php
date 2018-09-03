@@ -35,7 +35,7 @@ class AbstractProductsProductAvailabilitiesResourceRelationshipExpander implemen
     {
         foreach ($resources as $resource) {
             $abstractProductsAvailabilityResource = $this->productAvailabilitiesResource
-                ->findProductAbstractAvailabilityByAbstractProductId($resource->getId(), $restRequest);
+                ->findAbstractProductAvailabilityByAbstractProductSku($resource->getId(), $restRequest);
             if ($abstractProductsAvailabilityResource !== null) {
                 $resource->addRelationship($abstractProductsAvailabilityResource);
             }

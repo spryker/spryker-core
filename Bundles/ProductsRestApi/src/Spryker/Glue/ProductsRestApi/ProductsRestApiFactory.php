@@ -21,14 +21,6 @@ use Spryker\Glue\ProductsRestApi\Processor\Mapper\ConcreteProductsResourceMapper
 class ProductsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface
-     */
-    public function getProductStorageClient(): ProductsRestApiToProductStorageClientInterface
-    {
-        return $this->getProvidedDependency(ProductsRestApiDependencyProvider::CLIENT_PRODUCT_STORAGE);
-    }
-
-    /**
      * @return \Spryker\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapperInterface
      */
     public function createAbstractProductsResourceMapper(): AbstractProductsResourceMapperInterface
@@ -71,5 +63,13 @@ class ProductsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createConcreteProductsResourceMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface
+     */
+    public function getProductStorageClient(): ProductsRestApiToProductStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductsRestApiDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 }

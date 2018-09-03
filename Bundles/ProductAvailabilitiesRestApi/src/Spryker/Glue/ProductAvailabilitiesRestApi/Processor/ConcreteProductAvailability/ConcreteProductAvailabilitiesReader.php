@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabilitiesReaderInterface
 {
-    protected const PRODUCT_CONCRETE_MAPPING = 'sku';
+    protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
@@ -81,7 +81,7 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
         }
 
         $productConcreteSku = $concreteProductResource->getId();
-        $availabilityResource = $this->findConcreteProductAvailabilityByConcreteProductSku($productConcreteSku, $restRequest);
+        $availabilityResource = $this->findConcreteProductAvailabilityBySku($productConcreteSku, $restRequest);
         if (!$availabilityResource) {
             return $this->createErrorResponse($restResponse);
         }
@@ -90,16 +90,16 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
     }
 
     /**
-     * @param string $concreteProductSku
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findConcreteProductAvailabilityByConcreteProductSku(string $concreteProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findConcreteProductAvailabilityBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         $localeName = $restRequest->getMetadata()->getLocale();
             $productConcreteStorageData = $this->productStorageClient
-            ->findProductConcreteStorageDataByMapping(static::PRODUCT_CONCRETE_MAPPING, $concreteProductSku, $localeName);
+            ->findProductConcreteStorageDataByMapping(static::PRODUCT_CONCRETE_MAPPING_TYPE, $sku, $localeName);
         if (!$productConcreteStorageData) {
             return null;
         }
@@ -107,14 +107,14 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
 
         $availabilityAbstractEntityTransfer = $this->availabilityStorageClient->getAvailabilityAbstract((int)$idProductAbstract);
         foreach ($availabilityAbstractEntityTransfer->getSpyAvailabilities() as $availabilityEntityTransfer) {
-            if ($availabilityEntityTransfer->getSku() === $concreteProductSku) {
+            if ($availabilityEntityTransfer->getSku() === $sku) {
                 $restResource = $this->concreteProductsAvailabilityResourceMapper
                     ->mapConcreteProductsAvailabilityTransferToRestResource($availabilityEntityTransfer);
 
                 $restResourceSelfLink = sprintf(
                     '%s/%s/%s',
                     ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-                    $concreteProductSku,
+                    $sku,
                     ProductAvailabilitiesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_AVAILABILITIES
                 );
                 $restResource->addLink('self', $restResourceSelfLink);

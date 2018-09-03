@@ -7,6 +7,9 @@
 
 namespace Spryker\Glue\ProductsProductAvailabilitiesResourceRelationship\Dependency\RestResource;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+
 class ProductsResourceRelationToProductAvailabilitiesRestApiBridge implements ProductsResourceRelationToProductAvailabilitiesRestApiInterface
 {
     /**
@@ -23,26 +26,26 @@ class ProductsResourceRelationToProductAvailabilitiesRestApiBridge implements Pr
     }
 
     /**
-     * @param string $abstractProductId
+     * @param string $abstractProductSku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findProductAbstractAvailabilityByAbstractProductId($abstractProductId, $restRequest)
+    public function findAbstractProductAvailabilityByAbstractProductSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         return $this->productAvailabilitiesResource
-            ->findAbstractProductAvailabilityByAbstractProductId($abstractProductId, $restRequest);
+            ->findAbstractProductAvailabilityByAbstractProductSku($abstractProductSku, $restRequest);
     }
 
     /**
-     * @param string $concreteProductId
+     * @param string $concreteProductSku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findConcreteProductAvailabilityByConcreteProductId($concreteProductId, $restRequest)
+    public function findConcreteProductAvailabilityByConcreteProductSku(string $concreteProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         return $this->productAvailabilitiesResource
-            ->findConcreteProductAvailabilityByConcreteProductId($concreteProductId, $restRequest);
+            ->findConcreteProductAvailabilityByConcreteProductSku($concreteProductSku, $restRequest);
     }
 }

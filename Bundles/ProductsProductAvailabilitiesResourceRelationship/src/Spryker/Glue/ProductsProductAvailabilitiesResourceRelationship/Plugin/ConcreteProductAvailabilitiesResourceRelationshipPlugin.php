@@ -25,7 +25,7 @@ class ConcreteProductAvailabilitiesResourceRelationshipPlugin extends AbstractPl
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createConcreteProductsProductAvailabilitiesResourceRelationshipMapper()
+            ->createConcreteProductsProductAvailabilitiesResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 
