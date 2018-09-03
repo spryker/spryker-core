@@ -123,7 +123,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
             $spyProductConcreteImageStorage = new SpyProductConcreteImageStorage();
         }
 
-        if (empty($imageSets[$spyProductLocalizedEntity->getFkProduct()])) {
+        if (empty($imageSets[$spyProductLocalizedEntity->getIdProductAttributes()])) {
             if (!$spyProductConcreteImageStorage->isNew()) {
                 $spyProductConcreteImageStorage->delete();
             }
