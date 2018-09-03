@@ -29,10 +29,17 @@ interface WishlistsResourceMapperInterface
     public function mapWishlistOverviewResponseTransferToRestResource(WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer): RestResourceInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistItemTransfer
      * @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $attributesTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function updateWishlistTransferNameFromWishlistAttributesTransfer(WishlistTransfer $wishlistItemTransfer, RestWishlistsAttributesTransfer $attributesTransfer): WishlistTransfer;
+    public function mapWishlistAttributesToWishlistTransfer(RestWishlistsAttributesTransfer $attributesTransfer): WishlistTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     * @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $attributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function updateWishlistTransferNameFromWishlistAttributesTransfer(WishlistTransfer $wishlistTransfer, RestWishlistsAttributesTransfer $attributesTransfer): WishlistTransfer;
 }

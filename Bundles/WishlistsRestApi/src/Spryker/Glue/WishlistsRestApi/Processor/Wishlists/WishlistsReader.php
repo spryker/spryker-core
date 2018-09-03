@@ -59,10 +59,10 @@ class WishlistsReader implements WishlistsReaderInterface
      */
     public function findWishlists(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $idWishlist = $restRequest->getResource()->getId();
+        $wishlistUuid = $restRequest->getResource()->getId();
 
-        if ($idWishlist) {
-            return $this->readByIdentifier($idWishlist);
+        if ($wishlistUuid) {
+            return $this->readByIdentifier($wishlistUuid);
         }
 
         return $this->readCurrentCustomerWishlists();

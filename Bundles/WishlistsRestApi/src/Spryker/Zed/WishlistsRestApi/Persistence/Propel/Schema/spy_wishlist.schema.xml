@@ -3,7 +3,6 @@
 
     <table name="spy_wishlist" phpName="SpyWishlist">
         <behavior name="uuid">
-            <parameter name="key_prefix" value="wishlist"/>
             <parameter name="key_columns" value="fk_customer.id_wishlist"/>
         </behavior>
     </table>

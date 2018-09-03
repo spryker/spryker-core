@@ -12,6 +12,8 @@ use Spryker\Glue\WishlistItemsProductsResourceRelationship\Dependency\RestResour
 
 class WishlistItemsProductsResourceRelationshipExpander implements WishlistItemsProductsResourceRelationshipExpanderInterface
 {
+    protected const KEY_SKU = 'sku';
+
     /**
      * @var \Spryker\Glue\WishlistItemsProductsResourceRelationship\Dependency\RestResource\WishlistItemsProductsResourceRelationshipToProductsRestApiInterface
      */
@@ -34,8 +36,8 @@ class WishlistItemsProductsResourceRelationshipExpander implements WishlistItems
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            if (isset($resource->getAttributes()['sku'])) {
-                $concreteProduct = $this->productsResource->findProductConcreteBySku($resource->getAttributes()['sku'], $restRequest);
+            if (isset($resource->getAttributes()[static::KEY_SKU])) {
+                $concreteProduct = $this->productsResource->findProductConcreteBySku($resource->getAttributes()[static::KEY_SKU], $restRequest);
                 if ($concreteProduct !== null) {
                     $resource->addRelationship($concreteProduct);
                 }

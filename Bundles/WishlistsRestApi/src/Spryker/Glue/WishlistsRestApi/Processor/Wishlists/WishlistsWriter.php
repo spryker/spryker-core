@@ -69,8 +69,7 @@ class WishlistsWriter implements WishlistsWriterInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
 
-        $wishlistTransfer = new WishlistTransfer();
-        $wishlistTransfer->setName($attributesTransfer->getName());
+        $wishlistTransfer = $this->wishlistsResourceMapper->mapWishlistAttributesToWishlistTransfer($attributesTransfer);
         $wishlistTransfer->setFkCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());
 
         $wishlistResponseTransfer = $this->wishlistClient->validateAndCreateWishlist($wishlistTransfer);
@@ -82,9 +81,7 @@ class WishlistsWriter implements WishlistsWriterInterface
             );
         }
 
-        $wishlistTransfer = $this->wishlistsReader->findWishlistByUuid(
-            $wishlistResponseTransfer->getWishlist()->getUuid()
-        );
+        $wishlistTransfer = $wishlistResponseTransfer->getWishlist();
         $restResource = $this->wishlistsResourceMapper->mapWishlistTransferToRestResource($wishlistTransfer);
 
         return $response->addResource($restResource);
@@ -119,6 +116,7 @@ class WishlistsWriter implements WishlistsWriterInterface
                 $response
             );
         }
+
         $wishlistOverviewTransfer = $this->wishlistsReader->findWishlistOverviewByUuid($wishlistResponseTransfer->getWishlist()->getUuid());
         $restResource = $this->wishlistsResourceMapper->mapWishlistOverviewResponseTransferToRestResource($wishlistOverviewTransfer);
 
