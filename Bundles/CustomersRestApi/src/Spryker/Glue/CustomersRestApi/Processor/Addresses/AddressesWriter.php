@@ -83,7 +83,7 @@ class AddressesWriter implements AddressesWriterInterface
         }
 
         $addressTransfer = $this->addressesResourceMapper->mapRestAddressAttributesTransferToAddressTransfer($addressAttributesTransfer);
-        $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
+        $addressTransfer->setFkCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer());
 
         $addressTransfer = $this->customerClient->createAddress($addressTransfer);
 

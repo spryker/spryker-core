@@ -46,6 +46,7 @@
         <property name="zipCode" type="string" />
         <property name="city" type="string" />
         <property name="country" type="string" />
+        <property name="iso2Code" type="string" />
         <property name="company" type="string" />
         <property name="phone" type="string" />
         <property name="isDefaultShipping" type="bool" />
