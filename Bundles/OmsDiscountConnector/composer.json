@@ -8,10 +8,8 @@
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/oms": "*",
-    "spryker/sales": "*",
-    "spryker/testify": "*"
+    "spryker/sales": "*"
   },
   "suggest": {
     "spryker/oms": "If you want to use Oms command plugins.",
