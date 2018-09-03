@@ -16,6 +16,8 @@ use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocument
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\YamlRestApiDocumentationWriter;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToAnnotationsAnalyserInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToYamlDumperInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorDependencyProvider;
 
@@ -50,7 +52,11 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
      */
     public function createRestApiDocumentationPathsGenerator(): RestApiDocumentationPathGeneratorInterface
     {
-        return new RestApiDocumentationPathGenerator();
+        return new RestApiDocumentationPathGenerator(
+            $this->getConfig(),
+            $this->getAnnotationsAnalyser(),
+            $this->getFinder()
+        );
     }
 
     /**
@@ -78,5 +84,21 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
     public function getYamlDumper(): RestApiDocumentationGeneratorToYamlDumperInterface
     {
         return $this->getProvidedDependency(RestApiDocumentationGeneratorDependencyProvider::YAML_DUMPER);
+    }
+
+    /**
+     * @return \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToAnnotationsAnalyserInterface
+     */
+    public function getAnnotationsAnalyser(): RestApiDocumentationGeneratorToAnnotationsAnalyserInterface
+    {
+        return $this->getProvidedDependency(RestApiDocumentationGeneratorDependencyProvider::ANNOTATION_ANALYSER);
+    }
+
+    /**
+     * @return \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface
+     */
+    public function getFinder(): RestApiDocumentationGeneratorToFinderInterface
+    {
+        return $this->getProvidedDependency(RestApiDocumentationGeneratorDependencyProvider::FINDER);
     }
 }

@@ -9,6 +9,9 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 
 use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRouteCollection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToAnnotationsAnalyserInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,13 +23,62 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
     protected $paths = [];
 
     /**
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfig
+     */
+    protected $config;
+
+    /**
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToAnnotationsAnalyserInterface
+     */
+    protected $annotationsAnalyser;
+
+    /**
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface
+     */
+    protected $finder;
+
+    /**
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfig $config
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToAnnotationsAnalyserInterface $annotationsAnalyser
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface $finder
+     */
+    public function __construct(
+        RestApiDocumentationGeneratorConfig $config,
+        RestApiDocumentationGeneratorToAnnotationsAnalyserInterface $annotationsAnalyser,
+        RestApiDocumentationGeneratorToFinderInterface $finder
+    ) {
+        $this->config = $config;
+        $this->annotationsAnalyser = $annotationsAnalyser;
+        $this->finder = $finder;
+    }
+
+    /**
      * @return array
      */
     public function getPaths(): array
     {
-        ksort($this->paths);
-
         return $this->paths;
+    }
+
+    /**
+     * @return void
+     */
+    public function addPathsFromAnnotations(): void
+    {
+        $sourceDirTemplates = $this->config->getAnnotationsSourceDirectories();
+
+        $dirs = array_filter($sourceDirTemplates, function ($directory) {
+            return (bool)glob($directory, GLOB_ONLYDIR);
+        });
+
+        $this->finder->in($dirs)->name('*.php')->sortByName();
+
+        foreach ($this->finder as $file) {
+            $this->annotationsAnalyser->analyse($file->getPathname());
+        }
+        $this->annotationsAnalyser->process();
+        $this->annotationsAnalyser->validate();
+        $this->paths += $this->annotationsAnalyser->getPaths();
     }
 
     /**

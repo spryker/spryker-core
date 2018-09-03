@@ -55,14 +55,12 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
      */
     public function generateOpenApiSpecification(): void
     {
+        $this->restApiPathGenerator->addPathsFromAnnotations();
         $this->restApiSchemaGenerator->addSchemaFromTransferClassName(RestErrorMessageTransfer::class);
-        $errorTransferSchemaKey = $this->restApiSchemaGenerator->getLastAddedSchemaKey();
 
         foreach ($this->resourceRoutesPluginsProviderPlugins as $resourceRoutesPluginsProviderPlugin) {
             foreach ($resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins() as $plugin) {
                 $this->restApiSchemaGenerator->addSchemaFromTransferClassName($plugin->getResourceAttributesClassName());
-                $transferSchemaKey = $this->restApiSchemaGenerator->getLastAddedSchemaKey();
-                $this->restApiPathGenerator->addPathsForPlugin($plugin, $transferSchemaKey, $errorTransferSchemaKey);
             }
         }
 

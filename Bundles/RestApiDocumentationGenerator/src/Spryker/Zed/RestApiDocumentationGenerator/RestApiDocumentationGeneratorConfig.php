@@ -65,4 +65,28 @@ class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
     {
         return $this->get(GlueApplicationConstants::GLUE_APPLICATION_DOMAIN);
     }
+
+    /**
+     * @return array
+     */
+    public function getAnnotationsSourceDirectories(): array
+    {
+        return array_merge($this->getCoreAnnotationsSourceDirectoryGlobPatterns(), $this->getApplicationAnnotationsSourceDirectoryGlobPattern());
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCoreAnnotationsSourceDirectoryGlobPatterns(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getApplicationAnnotationsSourceDirectoryGlobPattern(): array
+    {
+        return [];
+    }
 }

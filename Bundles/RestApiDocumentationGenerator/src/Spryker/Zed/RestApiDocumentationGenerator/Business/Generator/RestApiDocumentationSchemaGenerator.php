@@ -12,10 +12,27 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaGeneratorInterface
 {
+    protected const KEY_ATTRIBUTES = 'attributes';
+
+    protected const KEY_DATA = 'data';
+    protected const KEY_ID = 'id';
+    protected const KEY_ITEMS = 'items';
+    protected const KEY_LINKS = 'links';
+    protected const KEY_REF = '$ref';
+    protected const KEY_RELATIONSHIPS = 'relationships';
+    protected const KEY_TYPE = 'type';
+    protected const VALUE_ARRAY = 'array';
+
+    protected const VALUE_BOOLEAN = 'boolean';
+    protected const VALUE_INTEGER = 'integer';
+    protected const VALUE_NUMBER = 'number';
+    protected const VALUE_OBJECT = 'object';
+    protected const VALUE_STRING = 'string';
+
     protected const DATA_TYPES_MAPPING_LIST = [
-        'int' => 'integer',
-        'bool' => 'boolean',
-        'float' => 'number',
+        'int' => self::VALUE_INTEGER,
+        'bool' => self::VALUE_BOOLEAN,
+        'float' => self::VALUE_NUMBER,
     ];
 
     /**
@@ -94,6 +111,12 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
         $schemaProperties = [];
         foreach ($transferMetadataValue as $key => $value) {
             if (class_exists($value['type'])) {
+                if ($value['is_collection']) {
+                    $schemaProperties[$key]['type'] = 'array';
+                    $schemaProperties[$key]['items']['$ref'] = $this->formatTransferClassToSchemaType($value['type']);
+                    continue;
+                }
+
                 $schemaProperties[$key]['$ref'] = $this->formatTransferClassToSchemaType($value['type']);
             } else {
                 $schemaProperties[$key]['type'] = $this->formatSchemaType($value['type']);
@@ -131,5 +154,88 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
         $this->addTransferToSchema(new $transferClassName, $this->getSchemaKeyFromTransferClassName($transferClassName));
 
         return sprintf('#/components/schemas/%s', $this->getSchemaKeyFromTransferClassName($transferClassName));
+    }
+
+    /**
+     * @return array
+     */
+    protected function wrapper(): array
+    {
+        return [
+            'data' => [
+                'type' => 'array',
+                'items' => [
+                    'type' => [
+                        'type' => 'string',
+                    ],
+                    'id' => [
+                        'type' => 'string',
+                    ],
+                    'attributes' => [
+                        '$ref' => [],
+                    ],
+                    'links' => [
+                        '$ref' => [],
+                    ],
+                    'relationships' => [
+                        '$ref' => [],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @param string $schemaName
+     * @param string $ref
+     *
+     * @return void
+     */
+    public function addResponseWithMultipleDataSchema(string $schemaName, string $ref): void
+    {
+        $this->schemas[$schemaName] = [
+            static::KEY_DATA => [
+                static::KEY_TYPE => static::VALUE_ARRAY,
+                static::KEY_ITEMS => [
+                    static::KEY_REF => $ref,
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @param string $schemaName
+     * @param string $ref
+     *
+     * @return void
+     */
+    public function addResponseSchema(string $schemaName, string $ref): void
+    {
+        $this->schemas[$schemaName] = [
+            static::KEY_DATA => [
+                static::KEY_REF => $ref,
+            ],
+        ];
+    }
+
+    /**
+     * @param string $schemaName
+     * @param string $ref
+     *
+     * @return void
+     */
+    public function addDataSchema(string $schemaName, string $ref): void
+    {
+        $this->schemas[$schemaName] = [
+            static::KEY_TYPE => [
+                static::KEY_TYPE => static::VALUE_STRING,
+            ],
+            static::KEY_ID => [
+                static::KEY_TYPE => static::VALUE_STRING,
+            ],
+            static::KEY_ATTRIBUTES => [
+                static::KEY_REF => $ref,
+            ],
+        ];
     }
 }

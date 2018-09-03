@@ -9,12 +9,16 @@ namespace Spryker\Zed\RestApiDocumentationGenerator;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToOpenApiAnnotationsAnalyserAdapter;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToSymfonyFinderAdapter;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToSymfonyYamlAdapter;
 
 class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS = 'PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS';
     public const YAML_DUMPER = 'YAML_DUMPER';
+    public const FINDER = 'FINDER';
+    public const ANNOTATION_ANALYSER = 'ANNOTATION_ANALYSER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,6 +28,8 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addYamlDumper($container);
+        $container = $this->addFinder($container);
+        $container = $this->addAnnotationsAnalyser($container);
         $container = $this->addResourceRoutePluginsProviderPlugins($container);
 
         return $container;
@@ -38,6 +44,34 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
     {
         $container[static::YAML_DUMPER] = function () {
             return new RestApiDocumentationGeneratorToSymfonyYamlAdapter();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFinder(Container $container): Container
+    {
+        $container[static::FINDER] = function () {
+            return new RestApiDocumentationGeneratorToSymfonyFinderAdapter();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAnnotationsAnalyser(Container $container): Container
+    {
+        $container[static::ANNOTATION_ANALYSER] = function () {
+            return new RestApiDocumentationGeneratorToOpenApiAnnotationsAnalyserAdapter();
         };
 
         return $container;

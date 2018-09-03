@@ -21,6 +21,11 @@ interface RestApiDocumentationPathGeneratorInterface
     public function addPathsForPlugin(ResourceRoutePluginInterface $resourceRoutePlugin, string $transferSchemaKey, string $restErrorTransferSchemaKey): void;
 
     /**
+     * @return void
+     */
+    public function addPathsFromAnnotations(): void;
+
+    /**
      * @return array
      */
     public function getPaths(): array;
