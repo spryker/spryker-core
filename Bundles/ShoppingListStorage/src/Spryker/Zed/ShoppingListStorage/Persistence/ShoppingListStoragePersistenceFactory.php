@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
-use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
 use Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -32,13 +31,5 @@ class ShoppingListStoragePersistenceFactory extends AbstractPersistenceFactory
     public function createShoppingListCustomerStoragePropelQuery(): SpyShoppingListCustomerStorageQuery
     {
         return SpyShoppingListCustomerStorageQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
-     */
-    public function getCompanyUserPropelQuery(): SpyCompanyUserQuery
-    {
-        return $this->getProvidedDependency(ShoppingListStorageDependencyProvider::PROPEL_QUERY_COMPANY_USER);
     }
 }

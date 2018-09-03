@@ -68,9 +68,15 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
     {
         return $this->getFactory()
-            ->getCompanyUserPropelQuery()
-            ->joinWithCustomer()
-            ->filterByFkCompanyBusinessUnit_In($companyBusinessUnitIds)
+            ->getShoppingListPropelQuery()
+            ->useSpyShoppingListCompanyBusinessUnitQuery()
+                ->useSpyCompanyBusinessUnitQuery()
+                    ->useCompanyUserQuery()
+                        ->joinCustomer()
+                    ->endUse()
+                ->endUse()
+                ->filterByFkCompanyBusinessUnit_In($companyBusinessUnitIds)
+            ->endUse()
             ->select(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)
             ->find()
             ->toArray();
@@ -87,9 +93,14 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array
     {
         return $this->getFactory()
-            ->getCompanyUserPropelQuery()
-            ->joinWithCustomer()
-            ->filterByIdCompanyUser_In($companyUserIds)
+            ->getShoppingListPropelQuery()
+            ->useSpyShoppingListCompanyUserQuery()
+                ->useSpyCompanyUserQuery()
+                    ->joinWithCustomer()
+                ->endUse()
+                ->filterByFkCompanyUser_In($companyUserIds)
+            ->endUse()
+
             ->select(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)
             ->find()
             ->toArray();
