@@ -18,13 +18,13 @@ class EntityManagerResolver extends AbstractClassResolver
      *
      * @throws \Spryker\Zed\Kernel\ClassResolver\EntityManager\EntityManagerNotFoundException
      *
-     * @return \Spryker\Zed\Kernel\Persistence\AbstractRepository
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractEntityManager
      */
     public function resolve($callerClass)
     {
         $this->setCallerClass($callerClass);
         if ($this->canResolve()) {
-            /** @var \Spryker\Zed\Kernel\Persistence\AbstractRepository $class */
+            /** @var \Spryker\Zed\Kernel\Persistence\AbstractEntityManager $class */
             $class = $this->getResolvedClassInstance();
 
             return $class;

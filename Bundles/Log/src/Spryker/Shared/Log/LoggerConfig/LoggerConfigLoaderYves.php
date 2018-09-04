@@ -31,6 +31,6 @@ class LoggerConfigLoaderYves implements LoggerConfigLoaderInterface
     {
         $loggerClassName = Config::get(LogConstants::LOGGER_CONFIG_YVES);
 
-        return new $loggerClassName;
+        return new $loggerClassName();
     }
 }

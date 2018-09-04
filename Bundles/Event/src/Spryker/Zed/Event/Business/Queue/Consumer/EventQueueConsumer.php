@@ -195,7 +195,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function createEventTransfer($transferClass)
     {
-        return new $transferClass;
+        return new $transferClass();
     }
 
     /**
@@ -205,7 +205,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function createEventListener($listenerClass)
     {
-        return new $listenerClass;
+        return new $listenerClass();
     }
 
     /**

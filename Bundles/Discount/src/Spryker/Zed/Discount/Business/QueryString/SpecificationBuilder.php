@@ -239,7 +239,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     protected function setClauseField($fieldName, ClauseTransfer $clauseTransfer)
     {
         if (strpos($fieldName, '.') !== false) {
-            list($fieldName, $attribute) = explode('.', $fieldName);
+            [$fieldName, $attribute] = explode('.', $fieldName);
             $clauseTransfer->setAttribute($attribute);
         }
 
