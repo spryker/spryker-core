@@ -13,7 +13,6 @@
     "spryker/touch": "^3.0.0 || ^4.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
@@ -21,8 +20,8 @@
     "spryker/util-text": "*"
   },
   "suggest": {
-    "spryker/twig": "Required because of the url component.",
-    "spryker/silex": "Required by url Twig component."
+    "spryker/silex": "Required by url Twig component.",
+    "spryker/twig": "Required because of the url component."
   },
   "autoload": {
     "psr-4": {

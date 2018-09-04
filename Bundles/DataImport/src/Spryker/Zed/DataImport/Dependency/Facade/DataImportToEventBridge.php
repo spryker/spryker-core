@@ -26,12 +26,12 @@ class DataImportToEventBridge implements DataImportToEventFacadeInterface
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
      * @return void
      */
-    public function trigger(string $eventName, TransferInterface $eventTransfer): void
+    public function trigger(string $eventName, TransferInterface $transfer): void
     {
-        $this->eventFacade->trigger($eventName, $eventTransfer);
+        $this->eventFacade->trigger($eventName, $transfer);
     }
 }

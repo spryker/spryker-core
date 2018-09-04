@@ -43,7 +43,7 @@ class IndexMapClassGeneratorTest extends Unit
      */
     public function testGenerateSimpleIndexMap()
     {
-        $generator = new IndexMapGenerator(self::TARGET_DIRECTORY);
+        $generator = new IndexMapGenerator(self::TARGET_DIRECTORY, 0777);
 
         $indexDefinition = $this->createIndexDefinition('index1', [], [
             'simple' => [
@@ -77,7 +77,7 @@ class IndexMapClassGeneratorTest extends Unit
      */
     public function testGenerateComplexIndexMap()
     {
-        $generator = new IndexMapGenerator(self::TARGET_DIRECTORY);
+        $generator = new IndexMapGenerator(self::TARGET_DIRECTORY, 0777);
 
         $indexDefinition = $this->createIndexDefinition('index-1', [], [
             'complex' => [

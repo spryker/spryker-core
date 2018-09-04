@@ -56,19 +56,19 @@ class EventDispatcher implements EventDispatcherInterface
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
      * @return void
      */
-    public function trigger($eventName, TransferInterface $eventTransfer)
+    public function trigger($eventName, TransferInterface $transfer)
     {
         foreach ($this->extractEventListeners($eventName) as $eventListener) {
             if ($eventListener->isHandledInQueue()) {
-                $this->eventQueueProducer->enqueueListener($eventName, $eventTransfer, $eventListener->getListenerName(), $eventListener->getQueuePoolName());
+                $this->eventQueueProducer->enqueueListener($eventName, $transfer, $eventListener->getListenerName(), $eventListener->getQueuePoolName());
             } elseif ($eventListener instanceof EventHandlerInterface) {
-                $eventListener->handle($eventTransfer, $eventName);
+                $eventListener->handle($transfer, $eventName);
             }
-            $this->logEventHandle($eventName, $eventTransfer, $eventListener);
+            $this->logEventHandle($eventName, $transfer, $eventListener);
         }
     }
 
@@ -88,14 +88,14 @@ class EventDispatcher implements EventDispatcherInterface
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
      *
      * @return void
      */
     protected function logEventHandle(
         $eventName,
-        TransferInterface $eventTransfer,
+        TransferInterface $transfer,
         EventListenerContextInterface $eventListener
     ) {
         $this->eventLogger->log(
@@ -103,8 +103,8 @@ class EventDispatcher implements EventDispatcherInterface
                 $this->createHandleMessage($eventListener),
                 $eventName,
                 $eventListener->getListenerName(),
-                get_class($eventTransfer),
-                $this->utilEncodingService->encodeJson($eventTransfer->toArray())
+                get_class($transfer),
+                $this->utilEncodingService->encodeJson($transfer->toArray())
             )
         );
     }
