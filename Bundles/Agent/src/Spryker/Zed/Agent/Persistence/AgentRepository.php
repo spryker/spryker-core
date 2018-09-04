@@ -51,6 +51,7 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
 
         $customersQuery = $this->getFactory()
             ->getCustomerQuery()
+            ->setIgnoreCase(true)
             ->select([
                 SpyCustomerTableMap::COL_ID_CUSTOMER,
                 SpyCustomerTableMap::COL_FIRST_NAME,
