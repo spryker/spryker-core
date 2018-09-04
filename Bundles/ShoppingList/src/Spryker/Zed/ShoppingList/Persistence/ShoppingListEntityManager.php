@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingList\Persistence;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
@@ -195,6 +196,19 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
         $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
             ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return void
+     */
+    public function deleteShoppingListCompanyBusinessUnitsByCompanyBusinessUnit(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): void
+    {
+        $this->getFactory()
+            ->createShoppingListCompanyBusinessUnitQuery()
+            ->filterByFkCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
             ->delete();
     }
 }
