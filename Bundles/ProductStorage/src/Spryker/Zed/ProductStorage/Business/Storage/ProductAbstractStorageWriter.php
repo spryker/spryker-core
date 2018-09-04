@@ -173,7 +173,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
 
         $pairs = [];
         foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
-            list($pairs, $mappedProductAbstractStorageEntities) = $this->pairProductAbstractLocalizedEntitiesWithProductAbstractStorageEntitiesByStoresAndLocale(
+            [$pairs, $mappedProductAbstractStorageEntities] = $this->pairProductAbstractLocalizedEntitiesWithProductAbstractStorageEntitiesByStoresAndLocale(
                 $productAbstractLocalizedEntity['SpyProductAbstract'][static::COL_ID_PRODUCT_ABSTRACT],
                 $productAbstractLocalizedEntity['Locale']['locale_name'],
                 $productAbstractLocalizedEntity['SpyProductAbstract']['SpyProductAbstractStores'],

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Development\Business;
 
+use Generated\Shared\Transfer\ComposerJsonValidationRequestTransfer;
+use Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer;
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
@@ -341,4 +343,16 @@ interface DevelopmentFacadeInterface
      * @return \Generated\Shared\Transfer\DependencyValidationResponseTransfer
      */
     public function validateModuleDependencies(DependencyValidationRequestTransfer $dependencyValidationRequestTransfer): DependencyValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Validates composer.json file for given module.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ComposerJsonValidationRequestTransfer $composerJsonValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer
+     */
+    public function validateComposerJson(ComposerJsonValidationRequestTransfer $composerJsonValidationRequestTransfer): ComposerJsonValidationResponseTransfer;
 }
