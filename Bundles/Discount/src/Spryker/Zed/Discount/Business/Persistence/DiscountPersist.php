@@ -103,7 +103,7 @@ class DiscountPersist implements DiscountPersistInterface
 
         $discountEntity->save();
 
-        $this->saveDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
+        $this->updateDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
         $this->saveDiscountStoreRelation(
             $discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation(),
             $discountEntity->getIdDiscount()
@@ -165,7 +165,7 @@ class DiscountPersist implements DiscountPersistInterface
 
         $affectedRows = $discountEntity->save();
 
-        $this->saveDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
+        $this->updateDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
         $this->updateDiscountStoreRelation($discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation());
 
         $this->executePostUpdatePlugins($discountConfiguratorTransfer);
@@ -197,7 +197,7 @@ class DiscountPersist implements DiscountPersistInterface
             );
         }
 
-         return $this->persistVoucherCodes($discountVoucherTransfer, $discountEntity);
+        return $this->persistVoucherCodes($discountVoucherTransfer, $discountEntity);
     }
 
     /**
@@ -381,10 +381,12 @@ class DiscountPersist implements DiscountPersistInterface
      *
      * @return void
      */
-    protected function saveDiscountMoneyValues(SpyDiscount $discountEntity, DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    protected function updateDiscountMoneyValues(SpyDiscount $discountEntity, DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {
         $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculator();
         if ($discountCalculatorTransfer->getCalculatorPlugin() !== DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED) {
+            $this->deleteDiscountMoneyValues($discountEntity);
+
             return;
         }
 
@@ -396,6 +398,18 @@ class DiscountPersist implements DiscountPersistInterface
             $discountAmountEntity->fromArray($moneyValueTransfer->modifiedToArray());
             $discountAmountEntity->setFkDiscount($discountEntity->getIdDiscount());
             $discountAmountEntity->save();
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     *
+     * @return void
+     */
+    protected function deleteDiscountMoneyValues(SpyDiscount $discountEntity): void
+    {
+        foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
+            $discountAmountEntity->delete();
         }
     }
 
