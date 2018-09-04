@@ -288,6 +288,11 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
         $composerDependencies = new ComposerDependencyCollectionTransfer();
 
         $composerJsonFilePath = sprintf('%s/composer.json', $moduleTransfer->getRootDirectory());
+
+        if (!file_exists($composerJsonFilePath)) {
+            return $composerDependencies;
+        }
+
         $content = file_get_contents($composerJsonFilePath);
         $content = json_decode($content, true);
 

@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Development\Business\DevelopmentBusinessFactory getFactory()
  */
-class DependencyViolationFixConsole extends AbstractDependencyViolationConsole
+class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
 {
     protected const COMMAND_NAME = 'dev:dependency:fix';
     protected const OPTION_DRY_RUN = 'dry-run';
