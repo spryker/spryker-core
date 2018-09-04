@@ -118,7 +118,7 @@ class UrlStorageListenerTest extends Unit
         $spyUrlStorage = SpyUrlStorageQuery::create()->orderByIdUrlStorage()->findOneByFkUrl(1);
         $this->assertNotNull($spyUrlStorage);
         $data = $spyUrlStorage->getData();
-        $this->assertSame('/de', $data['url']);
+        $this->assertSame('/en', $data['url']);
     }
 
     /**

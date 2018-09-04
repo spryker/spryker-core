@@ -422,11 +422,11 @@ class StateMachineFacadeTest extends Unit
 
         $stateMachineItemTransfer = $stateMachineItemsWithGivenFlag[0];
         $this->assertInstanceOf(StateMachineItemTransfer::class, $stateMachineItemTransfer);
-        $this->assertEquals('invoice created', $stateMachineItemTransfer->getStateName());
+        $this->assertEquals('invoice sent', $stateMachineItemTransfer->getStateName());
         $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
 
         $stateMachineItemTransfer = $stateMachineItemsWithGivenFlag[1];
-        $this->assertEquals('invoice sent', $stateMachineItemTransfer->getStateName());
+        $this->assertEquals('invoice created', $stateMachineItemTransfer->getStateName());
         $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
 
         $stateMachineItemsWithGivenFlag = $stateMachineFacade->getItemsWithFlag(
@@ -472,11 +472,11 @@ class StateMachineFacadeTest extends Unit
         );
 
         $stateMachineItemTransfer = $stateMachineItemsWithoutGivenFlag[0];
-        $this->assertEquals('invoice created', $stateMachineItemTransfer->getStateName());
+        $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
         $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
 
         $stateMachineItemTransfer = $stateMachineItemsWithoutGivenFlag[1];
-        $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
+        $this->assertEquals('invoice created', $stateMachineItemTransfer->getStateName());
         $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
 
         $this->assertCount(2, $stateMachineItemsWithoutGivenFlag);
