@@ -408,6 +408,10 @@ class DiscountPersist implements DiscountPersistInterface
      */
     protected function deleteDiscountMoneyValues(SpyDiscount $discountEntity): void
     {
+        if (!$discountEntity->getDiscountAmounts()) {
+            return;
+        }
+
         foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
             $discountAmountEntity->delete();
         }
