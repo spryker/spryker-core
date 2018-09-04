@@ -8,6 +8,7 @@ namespace Spryker\Zed\Sales\Business;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -196,4 +197,18 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function expandSalesOrder(QuoteTransfer $quoteTransfer, ?CheckoutResponseTransfer $checkoutResponseTransfer = null);
+
+    /**
+     * Specification:
+     * - Creates sales expense entity from transfer object.
+     * - Adds sales expense to sales order.
+     * - Returns expense transfer with fk to sales order.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function createSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
 }

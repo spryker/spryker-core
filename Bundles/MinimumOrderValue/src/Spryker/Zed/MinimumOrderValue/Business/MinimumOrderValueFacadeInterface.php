@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface MinimumOrderValueFacadeInterface
@@ -92,6 +93,23 @@ interface MinimumOrderValueFacadeInterface
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool;
+
+    /**
+     * Specification:
+     * - Retrieves minimum order value expenses from the quote and saves it to the database.
+     * - These plugins are already enveloped into a transaction.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    public function saveSalesOrderMinimumOrderValueExpense(
+        QuoteTransfer $quoteTransfer,
+        SaveOrderTransfer $saveOrderTransfer
+    ): SaveOrderTransfer;
 
     /**
      * Specification:

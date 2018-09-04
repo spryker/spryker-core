@@ -81,7 +81,7 @@ class ThresholdMessenger implements ThresholdMessengerInterface
 
         $thresholdMessages = [];
         foreach ($minimumOrderValueThresholdTransfers as $minimumOrderValueThresholdTransfer) {
-            $thresholdMessages[$minimumOrderValueThresholdTransfer->getThresholdNotMetMessageGlossaryKey()] =
+            $thresholdMessages[$minimumOrderValueThresholdTransfer->getMessageGlossaryKey()] =
                 $this->createMessageTransfer($minimumOrderValueThresholdTransfer, $quoteTransfer->getCurrency());
         }
 
