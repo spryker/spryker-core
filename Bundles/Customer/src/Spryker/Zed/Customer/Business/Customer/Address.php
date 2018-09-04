@@ -290,9 +290,7 @@ class Address implements AddressInterface
     protected function entityCollectionToTransferCollection(ObjectCollection $entities)
     {
         $addressTransferCollection = new AddressesTransfer();
-        /**
-         * @var \Orm\Zed\Customer\Persistence\SpyCustomerAddress $entity
-         */
+
         foreach ($entities->getData() as $entity) {
             $addressTransfer = $this->entityToAddressTransfer($entity);
 

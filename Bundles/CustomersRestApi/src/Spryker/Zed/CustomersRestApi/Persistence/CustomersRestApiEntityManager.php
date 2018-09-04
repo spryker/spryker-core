@@ -22,7 +22,7 @@ class CustomersRestApiEntityManager extends AbstractEntityManager implements Cus
      */
     public function updateAddressesWithoutUuid(): void
     {
-        $addressesQuery = $this->getFactory()->getAddressesQuery();
+        $addressesQuery = $this->getFactory()->getAddressesPropelQuery();
 
         do {
             $addresses = $addressesQuery

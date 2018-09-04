@@ -15,13 +15,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CustomerAddressesUuidWriterConsole extends Console
 {
-    const COMMAND_NAME = 'customer-addresses:uuid:generate';
-    const COMMAND_DESCRIPTION = 'Generates UUIDs for the existing customers addresses that do not have one.';
+    protected const COMMAND_NAME = 'customer-addresses:uuid:generate';
+    protected const COMMAND_DESCRIPTION = 'Generates UUIDs for the existing customers addresses that do not have one.';
 
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
         $this
@@ -36,7 +36,7 @@ class CustomerAddressesUuidWriterConsole extends Console
      *
      * @return void
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->getFacade()->updateCustomerAddressUuid();
     }

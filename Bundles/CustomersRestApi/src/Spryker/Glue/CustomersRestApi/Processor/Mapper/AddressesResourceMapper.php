@@ -50,14 +50,8 @@ class AddressesResourceMapper implements AddressesResourceMapperInterface
             $addressTransfer->getUuid(),
             $restAddressAttributesTransfer
         );
-        $restResourceSelfLink = sprintf(
-            '%s/%s/%s/%s',
-            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
-            $customerTransfer->getCustomerReference(),
-            CustomersRestApiConfig::RESOURCE_ADDRESSES,
-            $addressTransfer->getUuid()
-        );
-        $restResource->addLink('self', $restResourceSelfLink);
+
+        $restResource->addLink('self', $this->createSelfLink($customerTransfer, $addressTransfer));
 
         return $restResource;
     }
@@ -71,5 +65,22 @@ class AddressesResourceMapper implements AddressesResourceMapperInterface
         RestAddressAttributesTransfer $restAddressAttributesTransfer
     ): AddressTransfer {
         return (new AddressTransfer())->fromArray($restAddressAttributesTransfer->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return string
+     */
+    protected function createSelfLink(CustomerTransfer $customerTransfer, AddressTransfer $addressTransfer): string
+    {
+        return sprintf(
+            '%s/%s/%s/%s',
+            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
+            $customerTransfer->getCustomerReference(),
+            CustomersRestApiConfig::RESOURCE_ADDRESSES,
+            $addressTransfer->getUuid()
+        );
     }
 }

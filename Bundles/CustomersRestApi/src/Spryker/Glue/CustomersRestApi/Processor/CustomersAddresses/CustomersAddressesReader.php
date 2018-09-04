@@ -42,7 +42,7 @@ class CustomersAddressesReader implements CustomersAddressesReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function readByIdentifier(string $customerReference, RestResourceInterface $restResource): RestResourceInterface
+    public function getAddressesByCustomerReference(string $customerReference, RestResourceInterface $restResource): RestResourceInterface
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setCustomerReference($customerReference);
@@ -52,13 +52,13 @@ class CustomersAddressesReader implements CustomersAddressesReaderInterface
             return $restResource;
         }
 
-        $addresses = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
+        $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
 
-        foreach ($addresses->getAddresses() as $address) {
+        foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
             $restResource->addRelationship(
                 $this
                     ->addressesResourceMapper
-                    ->mapAddressTransferToRestResource($address, $customerResponseTransfer->getCustomerTransfer())
+                    ->mapAddressTransferToRestResource($addressTransfer, $customerResponseTransfer->getCustomerTransfer())
             );
         }
 

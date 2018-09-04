@@ -17,5 +17,5 @@ interface CustomersAddressesReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function readByIdentifier(string $customerReference, RestResourceInterface $resource): RestResourceInterface;
+    public function getAddressesByCustomerReference(string $customerReference, RestResourceInterface $resource): RestResourceInterface;
 }
