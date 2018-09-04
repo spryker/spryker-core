@@ -18,7 +18,7 @@ class CartItemToShoppingListItemMapper implements CartItemToShoppingListItemMapp
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function mapCartItemProductOptionToShoppingListItemProductOption(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    public function mapCartItemProductOptionsToShoppingListItemProductOptions(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         $shoppingListItemTransfer->setProductOptions($itemTransfer->getProductOptions());
 

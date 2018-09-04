@@ -18,5 +18,5 @@ interface ShoppingListItemToItemMapperInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function mapShoppingListItemProductOptionToItemProductOption(ShoppingListItemTransfer $shoppingListItemTransfer, ItemTransfer $itemTransfer): ItemTransfer;
+    public function mapShoppingListItemProductOptionsToItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer, ItemTransfer $itemTransfer): ItemTransfer;
 }

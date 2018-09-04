@@ -175,7 +175,7 @@ class ShoppingListProductOptionFacadeTest extends Unit
                 )
             );
 
-        $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+        $this->tester->getFacade()->saveShoppingListItemProductOption($shoppingListItemTransfer);
         $actualResult = $this->tester
             ->getFacade()
             ->getShoppingListItemProductOptionsByIdShoppingListItem(
@@ -203,7 +203,7 @@ class ShoppingListProductOptionFacadeTest extends Unit
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
 
-        $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+        $this->tester->getFacade()->saveShoppingListItemProductOption($shoppingListItemTransfer);
         $actualResult = $this->tester
             ->getFacade()
             ->getShoppingListItemProductOptionsByIdShoppingListItem(
@@ -226,7 +226,7 @@ class ShoppingListProductOptionFacadeTest extends Unit
                     $this->productOptionValueTransfer1->getIdProductOptionValue()
                 )
             );
-        $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+        $this->tester->getFacade()->saveShoppingListItemProductOption($shoppingListItemTransfer);
 
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setIdShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem())
@@ -236,7 +236,7 @@ class ShoppingListProductOptionFacadeTest extends Unit
                 )
             );
 
-        $this->tester->getFacade()->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+        $this->tester->getFacade()->saveShoppingListItemProductOption($shoppingListItemTransfer);
 
         $actualResult = $this->tester
             ->getFacade()
@@ -333,7 +333,7 @@ class ShoppingListProductOptionFacadeTest extends Unit
         $itemTransfer = (new ItemTransfer())->addProductOption($productOptionTransfer);
 
         // Action
-        $actualResult = $this->tester->getFacade()->mapCartItemProductOptionToShoppingListItemProductOption(
+        $actualResult = $this->tester->getFacade()->mapCartItemProductOptionsToShoppingListItemProductOptions(
             $itemTransfer,
             $shoppingListItemTransfer
         );

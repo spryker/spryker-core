@@ -28,11 +28,11 @@ class ShoppingListProductOptionFacade extends AbstractFacade implements Shopping
      *
      * @return void
      */
-    public function saveShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function saveShoppingListItemProductOption(ShoppingListItemTransfer $shoppingListItemTransfer): void
     {
         $this->getFactory()
             ->createShoppingListProductOptionWriter()
-            ->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+            ->saveShoppingListItemProductOption($shoppingListItemTransfer);
     }
 
     /**
@@ -77,10 +77,10 @@ class ShoppingListProductOptionFacade extends AbstractFacade implements Shopping
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function mapCartItemProductOptionToShoppingListItemProductOption(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    public function mapCartItemProductOptionsToShoppingListItemProductOptions(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         return $this->getFactory()
             ->createCartItemToShoppingListItemMapper()
-            ->mapCartItemProductOptionToShoppingListItemProductOption($itemTransfer, $shoppingListItemTransfer);
+            ->mapCartItemProductOptionsToShoppingListItemProductOptions($itemTransfer, $shoppingListItemTransfer);
     }
 }

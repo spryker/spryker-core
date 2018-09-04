@@ -87,6 +87,6 @@ class ShoppingListProductOptionBusinessTester extends Actor
             ->setIdShoppingListItem($idShoppingListItem);
 
         $this->getFacade()
-            ->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+            ->saveShoppingListItemProductOption($shoppingListItemTransfer);
     }
 }

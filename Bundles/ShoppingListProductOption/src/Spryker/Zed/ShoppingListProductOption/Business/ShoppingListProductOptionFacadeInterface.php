@@ -24,7 +24,7 @@ interface ShoppingListProductOptionFacadeInterface
      *
      * @return void
      */
-    public function saveShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): void;
+    public function saveShoppingListItemProductOption(ShoppingListItemTransfer $shoppingListItemTransfer): void;
 
     /**
      * Specification:
@@ -61,5 +61,5 @@ interface ShoppingListProductOptionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function mapCartItemProductOptionToShoppingListItemProductOption(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+    public function mapCartItemProductOptionsToShoppingListItemProductOptions(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 }

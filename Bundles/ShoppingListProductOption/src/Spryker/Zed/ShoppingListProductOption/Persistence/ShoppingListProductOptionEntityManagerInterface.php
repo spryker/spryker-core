@@ -15,7 +15,7 @@ interface ShoppingListProductOptionEntityManagerInterface
      *
      * @return void
      */
-    public function saveShoppingListItemProductOptions(int $idShoppingListItem, int $idProductOption): void;
+    public function saveShoppingListItemProductOption(int $idShoppingListItem, int $idProductOption): void;
 
     /**
      * @param int $idShoppingListItem

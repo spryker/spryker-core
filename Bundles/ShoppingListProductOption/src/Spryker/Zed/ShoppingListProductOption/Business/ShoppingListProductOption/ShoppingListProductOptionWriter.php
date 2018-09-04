@@ -34,7 +34,7 @@ class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriter
      *
      * @return void
      */
-    public function saveShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function saveShoppingListItemProductOption(ShoppingListItemTransfer $shoppingListItemTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfer) {
             $this->executeSaveShoppingListItemProductOptionsTransaction($shoppingListItemTransfer);
@@ -55,7 +55,7 @@ class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriter
 
         foreach ($shoppingListItemTransfer->getProductOptions() as $productOptionTransfer) {
             $this->shoppingListProductOptionEntityManager
-                ->saveShoppingListItemProductOptions(
+                ->saveShoppingListItemProductOption(
                     $shoppingListItemTransfer->getIdShoppingListItem(),
                     $productOptionTransfer->getIdProductOptionValue()
                 );
