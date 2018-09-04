@@ -98,18 +98,16 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Que
      */
     protected function createFulltextSearchQuery(): AbstractQuery
     {
-        if ($this->searchString === null || !strlen($this->searchString)) {
+        if ($this->searchString === null || !strlen($this->searchString) || !$this->filter || !$this->filter->getSearchFields()) {
             return new MatchAll();
         }
 
-        $fields = [
-            PageIndexMap::FULL_TEXT_BOOSTED . '^' . Config::get(SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE),
-        ];
+        $fields = $this->getSearchFields();
 
         $matchQuery = (new MultiMatch())
             ->setFields($fields)
             ->setQuery($this->searchString)
-            ->setType(MultiMatch::TYPE_CROSS_FIELDS);
+            ->setType(MultiMatch::TYPE_PHRASE_PREFIX);
 
         return $matchQuery;
     }
@@ -193,5 +191,23 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Que
         $query->setSource([PageIndexMap::SEARCH_RESULT_DATA]);
 
         return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getSearchFields()
+    {
+        if (!$this->filter || !$this->filter->getSearchFields()) {
+            return [];
+        }
+
+        foreach ($this->filter->getSearchFields() as &$searchField) {
+            if ($searchField === PageIndexMap::FULL_TEXT_BOOSTED) {
+                $searchField = PageIndexMap::FULL_TEXT_BOOSTED . '^' . Config::get(SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE);
+            }
+        }
+
+        return $this->filter->getSearchFields();
     }
 }

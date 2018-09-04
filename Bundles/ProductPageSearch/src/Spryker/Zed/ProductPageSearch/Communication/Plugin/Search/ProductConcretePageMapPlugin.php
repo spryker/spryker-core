@@ -39,7 +39,8 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
             ->setStore($data[ProductConcretePageSearchTransfer::STORE])
             ->setLocale($data[ProductConcretePageSearchTransfer::LOCALE])
             ->setType($data[ProductConcretePageSearchTransfer::TYPE])
-            ->setIsActive($data[ProductConcretePageSearchTransfer::IS_ACTIVE]);
+            ->setIsActive($data[ProductConcretePageSearchTransfer::IS_ACTIVE])
+            ->setSuggestionSku($data[ProductConcretePageSearchTransfer::SKU]);
 
         $pageMapBuilder
             ->addSearchResultData($pageMapTransfer, static::KEY_ID_PRODUCT, $data[ProductConcretePageSearchTransfer::FK_PRODUCT])
