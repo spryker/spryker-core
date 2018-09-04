@@ -19,13 +19,14 @@
     "spryker/code-sniffer": "*",
     "spryker/elastica": "*",
     "spryker/propel": "*",
-    "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0"
+    "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0",
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/cart": "*",
-    "spryker/checkout": "*",
-    "spryker/elastica": "*",
-    "spryker/search": "*"
+    "spryker/cart": "If you want to use Cart plugins.",
+    "spryker/checkout": "If you want to use Checkout plugins.",
+    "spryker/elastica": "If you want to use ElasticSearch query expander.",
+    "spryker/search": "If you want to use ElasticSearch query expander."
   },
   "autoload": {
     "psr-4": {

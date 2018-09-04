@@ -19,7 +19,8 @@ interface CompanyGuiToCompanyFacadeInterface
      */
     public function update(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
 
-    /** @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */

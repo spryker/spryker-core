@@ -20,7 +20,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getProductAbstractLabelSynchronizationPoolName(): ?string
     {
@@ -28,7 +28,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getProductLabelDictionarySynchronizationPoolName(): ?string
     {

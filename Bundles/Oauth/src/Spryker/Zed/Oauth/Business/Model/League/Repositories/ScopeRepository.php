@@ -64,7 +64,7 @@ class ScopeRepository implements ScopeRepositoryInterface
      * @param \League\OAuth2\Server\Entities\ScopeEntityInterface[] $scopes
      * @param string $grantType
      * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
-     * @param null|string $userIdentifier
+     * @param string|null $userIdentifier
      *
      * @return \League\OAuth2\Server\Entities\ScopeEntityInterface[]
      */
