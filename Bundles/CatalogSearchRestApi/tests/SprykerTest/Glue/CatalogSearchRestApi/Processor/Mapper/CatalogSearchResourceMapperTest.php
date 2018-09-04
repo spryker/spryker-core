@@ -74,7 +74,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->assertEquals("Toshiba CAMILEO S20", $this->restSearchAttributesTransfer->getProducts()[0]->getAbstractName());
         $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrice());
         $this->assertEquals("209", $this->restSearchAttributesTransfer->getProducts()[0]->getAbstractSku());
-        $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrices()['DEFAULT']);
+        $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrices()[0]['DEFAULT']);
         $this->assertArrayNotHasKey("id_product_abstract", $this->restSearchAttributesTransfer->getProducts()[0]);
         $this->assertArrayNotHasKey("id_product_labels", $this->restSearchAttributesTransfer->getProducts()[0]);
 
