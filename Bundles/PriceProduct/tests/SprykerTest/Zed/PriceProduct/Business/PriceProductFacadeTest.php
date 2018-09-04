@@ -432,6 +432,7 @@ class PriceProductFacadeTest extends Unit
                     'dummy price type 1' => 300,
                     'dummy price type 2' => 1300,
                 ],
+                'priceData' => null,
             ],
             'dummy currency 2' => [
                 'GROSS_MODE' => [
@@ -442,6 +443,7 @@ class PriceProductFacadeTest extends Unit
                     'dummy price type 1' => 400,
                     'dummy price type 2' => 1400,
                 ],
+                'priceData' => null,
             ],
         ];
         $priceProductCollection = [];

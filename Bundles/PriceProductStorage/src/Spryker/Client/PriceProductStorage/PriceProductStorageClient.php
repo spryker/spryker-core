@@ -37,7 +37,7 @@ class PriceProductStorageClient extends AbstractClient implements PriceProductSt
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getPriceProductConcreteTransfers(int $idProductConcrete): array
     {

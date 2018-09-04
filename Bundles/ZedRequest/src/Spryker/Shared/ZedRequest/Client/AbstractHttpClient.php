@@ -20,21 +20,26 @@ use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
     const META_TRANSFER_ERROR =
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
+    const HOST_NAME_ERROR =
+        'Incorrect HOST_ZED config, expected `%s`, got `%s`. Set the URLs in your Shared/config_default_%s.php or env specific config files.';
 
     const HEADER_USER_AGENT = 'User-Agent';
     const HEADER_HOST_YVES = 'X-Yves-Host';
     const HEADER_INTERNAL_REQUEST = 'X-Internal-Request';
     const HEADER_HOST_ZED = 'X-Zed-Host';
+    protected const SERVER_HTTP_HOST = 'HTTP_HOST';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
@@ -152,7 +157,10 @@ abstract class AbstractHttpClient implements HttpClientInterface
         try {
             $response = $this->sendRequest($request, $requestTransfer, $requestOptions);
         } catch (GuzzleRequestException $e) {
-            $message = $e->getMessage();
+            $symfonyRequest = SymfonyRequest::createFromGlobals();
+            $hostName = $symfonyRequest->server->get(static::SERVER_HTTP_HOST);
+            $configuredHostName = $request->getUri()->getHost();
+            $message = sprintf(static::HOST_NAME_ERROR, $hostName, $configuredHostName, Store::getInstance()->getStoreName());
             $response = $e->getResponse();
             if ($response) {
                 $message .= PHP_EOL . PHP_EOL . $response->getBody();

@@ -29,7 +29,7 @@ class CustomerApiQueryContainer extends AbstractQueryContainer implements Custom
      *
      * @param int $idCustomer
      *
-     * @return null|\Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery|null
      */
     public function queryGet($idCustomer)
     {
@@ -43,7 +43,7 @@ class CustomerApiQueryContainer extends AbstractQueryContainer implements Custom
      *
      * @param int $idCustomer
      *
-     * @return null|\Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery|null
      */
     public function queryRemove($idCustomer)
     {

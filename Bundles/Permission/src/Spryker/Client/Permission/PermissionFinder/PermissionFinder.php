@@ -62,7 +62,7 @@ class PermissionFinder implements PermissionFinderInterface
     }
 
     /**
-     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[] $permissionPlugins
+     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface[] $permissionPlugins
      *
      * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface[]
      */

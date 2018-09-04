@@ -144,7 +144,7 @@ class VersionDataMapper implements VersionDataMapperInterface
     /**
      * @param \Orm\Zed\Cms\Persistence\Base\SpyCmsGlossaryKeyMapping $spyCmsGlossaryKeyMapping
      *
-     * @return array
+     * @return \ArrayObject
      */
     protected function createCmsPlaceholderTranslationTransfers(SpyCmsGlossaryKeyMapping $spyCmsGlossaryKeyMapping)
     {

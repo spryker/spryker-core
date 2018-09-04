@@ -28,7 +28,7 @@ class TransferServer
     protected $repeatIsActive = false;
 
     /**
-     * @var \Spryker\Shared\ZedRequest\Client\RequestInterface
+     * @var \Spryker\Zed\ZedRequest\Business\Client\Request|null
      */
     private $request;
 
@@ -58,7 +58,7 @@ class TransferServer
     /**
      * @param \Spryker\Zed\ZedRequest\Business\Model\Repeater|null $repeater
      *
-     * @return $this
+     * @return static
      */
     public static function getInstance(?Repeater $repeater = null)
     {

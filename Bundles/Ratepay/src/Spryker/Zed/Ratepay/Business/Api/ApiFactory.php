@@ -10,7 +10,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Ratepay\Business\Api\Builder\BuilderFactory;
 use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 use Spryker\Zed\Ratepay\Business\Api\Model\Deliver\Confirm as DeliverConfirm;
-
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Calculation as PaymentCalculation;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Cancel as PaymentCancel;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Configuration as PaymentConfiguration;
