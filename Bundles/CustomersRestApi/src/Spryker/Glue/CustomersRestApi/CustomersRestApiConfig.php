@@ -49,4 +49,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_CUSTOMER_UNAUTHORIZED = '411';
     public const RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED = 'Unauthorized request';
+
+    public const RESPONSE_CODE_ADDRESS_UUID_MISSING = '412';
+    public const RESPONSE_DETAILS_ADDRESS_UUID_MISSING = 'Address UUID is missing.';
 }

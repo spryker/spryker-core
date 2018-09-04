@@ -129,11 +129,24 @@ class AddressesWriter implements AddressesWriterInterface
             return $restResponse;
         }
 
+        if ($restRequest->getResource()->getId() === '') {
+            $this->createAddressUuidMissingError($restResponse);
+
+            return $restResponse;
+        }
+
         $customerResponseTransfer = $this->customersReader->findCustomerByReference($customerReference);
+
+        if (!$customerResponseTransfer->getHasCustomer()) {
+            $this->createErrorCustomerNotFound($restResponse);
+
+            return $restResponse;
+        }
 
         $addressTransfer = (new AddressTransfer())
             ->fromArray($addressAttributesTransfer->toArray(), true);
-        $addressTransfer->setFkCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer());
+        $addressTransfer->setFkCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer())
+            ->setIdCustomerAddress($restRequest->getResource()->getId());
 
         $addressTransfer = $this->customerClient->updateAddress($addressTransfer);
 
@@ -168,6 +181,12 @@ class AddressesWriter implements AddressesWriterInterface
 
         if (!$this->isSameCustomerReference($restRequest)) {
             $this->createUnauthorizedError($restResponse);
+
+            return $restResponse;
+        }
+
+        if ($restRequest->getResource()->getId() === '') {
+            $this->createAddressUuidMissingError($restResponse);
 
             return $restResponse;
         }
@@ -251,6 +270,21 @@ class AddressesWriter implements AddressesWriterInterface
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED)
             ->setStatus(Response::HTTP_FORBIDDEN)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createAddressUuidMissingError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_UUID_MISSING)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_ADDRESS_UUID_MISSING);
 
         return $restResponse->addError($restErrorTransfer);
     }
