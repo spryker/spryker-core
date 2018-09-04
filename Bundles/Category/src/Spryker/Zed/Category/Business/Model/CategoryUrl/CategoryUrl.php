@@ -118,7 +118,7 @@ class CategoryUrl implements CategoryUrlInterface
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]
      */
     protected function getUrlPathPartsForCategoryNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
