@@ -56,9 +56,9 @@ class PermissionFinder implements PermissionFinderInterface
                 $permissionTransfer->setConfigurationSignature($permissionPlugin->getConfigurationSignature());
             }
 
-            if ($permissionPlugin instanceof InfrastructuralPermissionPluginInterface) {
-                $permissionTransfer->setIsInfrastructural(true);
-            }
+            $permissionTransfer->setIsInfrastructural(
+                $permissionPlugin instanceof InfrastructuralPermissionPluginInterface
+            );
 
             $permissionCollectionTransfer->addPermission($permissionTransfer);
         }
