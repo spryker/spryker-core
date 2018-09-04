@@ -33,7 +33,7 @@ class ShoppingListItemToItemMapper implements ShoppingListItemToItemMapperInterf
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function mapShoppingListItemProductOptionsToItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer, ItemTransfer $itemTransfer): ItemTransfer
+    public function map(ShoppingListItemTransfer $shoppingListItemTransfer, ItemTransfer $itemTransfer): ItemTransfer
     {
         $quoteItemTransfer = $this->findItemInQuote($itemTransfer);
 

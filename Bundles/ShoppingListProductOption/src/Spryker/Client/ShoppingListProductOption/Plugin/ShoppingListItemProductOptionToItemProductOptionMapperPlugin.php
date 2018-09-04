@@ -33,6 +33,6 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPlugin extends Abstr
     {
         return $this->getFactory()
             ->getShoppingListItemToItemMapper()
-            ->mapShoppingListItemProductOptionsToItemProductOptions($shoppingListItemTransfer, $itemTransfer);
+            ->map($shoppingListItemTransfer, $itemTransfer);
     }
 }

@@ -81,6 +81,6 @@ class ShoppingListProductOptionFacade extends AbstractFacade implements Shopping
     {
         return $this->getFactory()
             ->createCartItemToShoppingListItemMapper()
-            ->mapCartItemProductOptionsToShoppingListItemProductOptions($itemTransfer, $shoppingListItemTransfer);
+            ->map($itemTransfer, $shoppingListItemTransfer);
     }
 }
