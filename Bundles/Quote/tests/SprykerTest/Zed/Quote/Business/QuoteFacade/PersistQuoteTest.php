@@ -141,7 +141,7 @@ class PersistQuoteTest extends Unit
             ->addItem($itemTransfer2)
             ->setTotals($totalsTransfer)
             ->setPriceMode('foo')
-            ->setShippingAddress((new AddressBuilder)->build())
+            ->setShippingAddress((new AddressBuilder())->build())
             ->setBillingSameAsShipping(true)
             ->addCartRuleDiscount((new DiscountBuilder())->build());
 
