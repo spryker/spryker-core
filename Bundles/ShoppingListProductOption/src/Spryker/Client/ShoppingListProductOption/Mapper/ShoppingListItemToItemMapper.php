@@ -35,7 +35,7 @@ class ShoppingListItemToItemMapper implements ShoppingListItemToItemMapperInterf
      */
     public function mapShoppingListItemProductOptionsToItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer, ItemTransfer $itemTransfer): ItemTransfer
     {
-        $quoteItemTransfer = $this->findIteminQuote($itemTransfer);
+        $quoteItemTransfer = $this->findItemInQuote($itemTransfer);
 
         if ($quoteItemTransfer && $this->haveSameProductOptions($quoteItemTransfer, $shoppingListItemTransfer)) {
             $itemTransfer->setGroupKey($quoteItemTransfer->getGroupKey());
@@ -51,7 +51,7 @@ class ShoppingListItemToItemMapper implements ShoppingListItemToItemMapperInterf
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    protected function findIteminQuote(ItemTransfer $itemTransfer): ?ItemTransfer
+    protected function findItemInQuote(ItemTransfer $itemTransfer): ?ItemTransfer
     {
         $quoteTransfer = $this->cartClient->getQuote();
 
@@ -59,14 +59,14 @@ class ShoppingListItemToItemMapper implements ShoppingListItemToItemMapperInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $quoteItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return bool
      */
-    protected function haveSameProductOptions(ItemTransfer $quoteItemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): bool
+    protected function haveSameProductOptions(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): bool
     {
-        if ($quoteItemTransfer->getProductOptions()->count() !== $shoppingListItemTransfer->getProductOptions()->count()) {
+        if ($itemTransfer->getProductOptions()->count() !== $shoppingListItemTransfer->getProductOptions()->count()) {
             return false;
         }
 
@@ -76,7 +76,7 @@ class ShoppingListItemToItemMapper implements ShoppingListItemToItemMapperInterf
             return $productOptionValueTransfer->getIdProductOptionValue();
         };
 
-        $quoteItemProductOptions = array_map($mappingFunction, $quoteItemTransfer->getProductOptions()->getArrayCopy());
+        $quoteItemProductOptions = array_map($mappingFunction, $itemTransfer->getProductOptions()->getArrayCopy());
         $shoppingListItemProductOptions = array_map($mappingFunction, $shoppingListItemTransfer->getProductOptions()->getArrayCopy());
 
         return empty(array_diff($quoteItemProductOptions, $shoppingListItemProductOptions));
