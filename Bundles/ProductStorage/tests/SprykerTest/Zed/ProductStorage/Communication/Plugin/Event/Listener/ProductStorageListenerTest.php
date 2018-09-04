@@ -298,7 +298,7 @@ class ProductStorageListenerTest extends Unit
         $data = $spyProductAbstractStorage->getData();
         $this->assertSame('001', $data['sku']);
         $this->assertSame(6, count($data['attributes']));
-        $this->assertSame('/de/canon-ixus-160-001', $data['url']);
+        $this->assertSame('/en/canon-ixus-160-001', $data['url']);
     }
 
     /**
@@ -317,6 +317,6 @@ class ProductStorageListenerTest extends Unit
         $data = $spyProductConcreteStorage->getData();
         $this->assertSame('001_25904006', $data['sku']);
         $this->assertSame(6, count($data['attributes']));
-        $this->assertSame('/de/canon-ixus-160-001', $data['url']);
+        $this->assertSame('/en/canon-ixus-160-001', $data['url']);
     }
 }
