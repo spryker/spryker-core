@@ -19,7 +19,7 @@ class CustomersRestApiPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
      */
-    public function getAddressesQuery(): SpyCustomerAddressQuery
+    public function getAddressesPropelQuery(): SpyCustomerAddressQuery
     {
         return $this->getProvidedDependency(CustomersRestApiDependencyProvider::PROPEL_QUERY_CUSTOMER_ADDRESS);
     }
