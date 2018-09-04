@@ -23,7 +23,7 @@ class ProductAvailabilitiesRestApiDependencyProvider extends AbstractBundleDepen
      */
     public function provideDependencies(Container $container): Container
     {
-        parent::provideDependencies($container);
+        $container = parent::provideDependencies($container);
 
         $container = $this->addAvailabilityStorageClient($container);
         $container = $this->addProductStorageClient($container);
