@@ -13,8 +13,10 @@ use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
 use Spryker\Zed\Development\Business\CodeBuilder\Module\ModuleBuilder;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeTest\CodeTester;
+use Spryker\Zed\Development\Business\Composer\ComposerJson;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonFinder;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonFinderComposite;
+use Spryker\Zed\Development\Business\Composer\ComposerJsonInterface;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\BranchAliasUpdater;
@@ -23,6 +25,9 @@ use Spryker\Zed\Development\Business\Composer\Updater\DescriptionUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\LicenseUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\RequireUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\StabilityUpdater;
+use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonUnboundRequireConstraintValidator;
+use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorComposite;
+use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainer;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\CodeceptionDependencyFinder;
@@ -659,6 +664,34 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getPathToSdk(),
             $this->getConfig()->getPathToEco(),
         ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonInterface
+     */
+    public function createComposerJsonValidator(): ComposerJsonInterface
+    {
+        return new ComposerJson(
+            $this->createComposerJsonValidatorComposite()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorInterface
+     */
+    public function createComposerJsonValidatorComposite(): ComposerJsonValidatorInterface
+    {
+        return new ComposerJsonValidatorComposite([
+            $this->createComposerJsonUnboundRequireConstraintValidator(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorInterface
+     */
+    public function createComposerJsonUnboundRequireConstraintValidator(): ComposerJsonValidatorInterface
+    {
+        return new ComposerJsonUnboundRequireConstraintValidator();
     }
 
     /**

@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\InputOption;
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Development\Business\DevelopmentBusinessFactory getFactory()
  */
-class AbstractDependencyViolationConsole extends Console
+class AbstractCoreModuleAwareConsole extends Console
 {
     protected const ARGUMENT_MODULE = 'module';
     protected const OPTION_EXPLICIT_MODULE = 'explicit-module';
