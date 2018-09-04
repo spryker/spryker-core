@@ -13,10 +13,14 @@
     "spryker/util-date-time": "^1.0.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/code-sniffer": "*",
+    "spryker/config": "*",
+    "spryker/oms": "*",
     "spryker/propel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "autoload": {
     "psr-4": {

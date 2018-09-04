@@ -17,8 +17,7 @@
   },
   "suggest": {
     "spryker/gui": "If you want to use ProductListGui plugins. Minimum required version: ^1.0.0",
-    "spryker/product-list": "If you want to use Product List Gui plugins. Minimum required version: ^1.0.0",
-    "spryker/symfony": "Required to use form in plugin"
+    "spryker/product-list": "If you want to use Product List Gui plugins. Minimum required version: ^1.0.0"
   },
   "autoload": {
     "psr-4": {

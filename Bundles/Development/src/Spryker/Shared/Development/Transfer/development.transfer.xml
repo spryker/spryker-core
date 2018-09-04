@@ -21,7 +21,7 @@
     </transfer>
 
     <transfer name="DependencyCollection">
-        <property name="module" type="string"/>
+        <property name="module" type="Module"/>
         <property name="dependencyModules" type="DependencyModule[]" singular="dependencyModule"/>
     </transfer>
 
@@ -69,6 +69,56 @@
         <property name="toModuleLayer" type="string"/>
         <property name="toType" type="string"/>
         <property name="methods" type="string[]"/>
+    </transfer>
+
+    <transfer name="DependencyValidationRequest">
+        <property name="module" type="Module"/>
+        <property name="dependencyType" type="string"/>
+    </transfer>
+
+    <transfer name="DependencyValidationResponse">
+        <property name="moduleDependencies" type="ModuleDependency[]" singular="moduleDependency"/>
+    </transfer>
+
+    <transfer name="ModuleDependency">
+        <property name="module" type="string"/>
+        <property name="isValid" type="bool"/>
+        <property name="isSrcDependency" type="bool"/>
+        <property name="isTestDependency" type="bool"/>
+        <property name="isSuggested" type="bool"/>
+        <property name="isOptionalDependency" type="bool"/>
+        <property name="isOwnExtensionModule" type="bool"/>
+        <property name="isInComposerRequire" type="bool"/>
+        <property name="isInComposerRequireDev" type="bool"/>
+        <property name="dependencyTypes" type="string[]"/>
+        <property name="validationMessages" type="ValidationMessage[]" singular="validationMessage"/>
+    </transfer>
+
+    <transfer name="ValidationMessage">
+        <property name="message" type="string"/>
+        <property name="fixType" type="string"/>
+    </transfer>
+
+    <transfer name="Module">
+        <property name="name" type="string"/>
+        <property name="nameDashed" type="string"/>
+        <property name="organization" type="Organization"/>
+        <property name="rootDirectory" type="string"/>
+        <property name="isStandalone" type="bool"/>
+    </transfer>
+
+    <transfer name="Organization">
+        <property name="name" type="string"/>
+        <property name="nameDashed" type="string"/>
+        <property name="organization" type="Organization"/>
+    </transfer>
+
+    <transfer name="ComposerJsonValidationRequest">
+        <property name="module" type="Module"/>
+    </transfer>
+
+    <transfer name="ComposerJsonValidationResponse">
+        <property name="validationMessages" type="ValidationMessage[]" singular="validationMessage"/>
     </transfer>
 
 </transfers>

@@ -103,7 +103,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     /**
      * @param int $idProductConcrete
      *
-     * @return null|int
+     * @return int|null
      */
     public function findProductAbstractIdByConcreteId(int $idProductConcrete): ?int
     {

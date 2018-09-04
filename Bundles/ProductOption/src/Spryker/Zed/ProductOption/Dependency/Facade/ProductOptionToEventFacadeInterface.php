@@ -12,9 +12,9 @@ interface ProductOptionToEventFacadeInterface
 {
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
      * @return void
      */
-    public function trigger($eventName, TransferInterface $eventTransfer);
+    public function trigger($eventName, TransferInterface $transfer);
 }
