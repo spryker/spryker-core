@@ -81,7 +81,6 @@ class AbstractProductsResourceMapper implements AbstractProductsResourceMapperIn
      */
     protected function changeVariantsIdsToSkus(array $variants, array $productConcreteIds): array
     {
-//        var_dump($variants); die;
         foreach ($variants as $key => $data) {
             if (isset($variants[$key][static::KEY_ID_PRODUCT_CONCRETE])) {
                 $variants[$key][static::KEY_ID_PRODUCT_CONCRETE] =
