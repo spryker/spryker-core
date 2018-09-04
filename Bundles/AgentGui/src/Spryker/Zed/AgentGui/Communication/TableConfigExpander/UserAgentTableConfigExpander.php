@@ -52,8 +52,6 @@ class UserAgentTableConfigExpander implements UserAgentTableConfigExpanderInterf
     }
 
     /**
-     * Insert header after selected
-     *
      * @param array $array
      * @param string $key
      * @param array $new
