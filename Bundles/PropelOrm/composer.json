@@ -9,6 +9,11 @@
     "spryker/error-handler": "^2.0.0",
     "spryker/kernel": "^3.17.0"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
