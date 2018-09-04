@@ -123,7 +123,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
             $spyProductConcreteImageStorage = new SpyProductConcreteImageStorage();
         }
 
-        if (empty($imageSets[$spyProductLocalizedEntity->getIdProductAttributes()])) {
+        if (empty($imageSets[$spyProductLocalizedEntity->getFkProduct()])) {
             if (!$spyProductConcreteImageStorage->isNew()) {
                 $spyProductConcreteImageStorage->delete();
             }
@@ -133,7 +133,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
 
         $productConcreteStorageTransfer = new ProductConcreteImageStorageTransfer();
         $productConcreteStorageTransfer->setIdProductConcrete($spyProductLocalizedEntity->getFkProduct());
-        $productConcreteStorageTransfer->setImageSets($imageSets[$spyProductLocalizedEntity->getIdProductAttributes()]);
+        $productConcreteStorageTransfer->setImageSets($imageSets[$spyProductLocalizedEntity->getFkProduct()][$spyProductLocalizedEntity->getIdProductAttributes()]);
 
         $spyProductConcreteImageStorage->setFkProduct($spyProductLocalizedEntity->getFkProduct());
         $spyProductConcreteImageStorage->setData($productConcreteStorageTransfer->toArray());
@@ -152,23 +152,25 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
         $imageSetEntitiesByIdProduct = $this->getCombinedImageSets($productIds);
 
         $imageSets = [];
-        foreach ($imageSetEntitiesByIdProduct as $idProductAttributes => $imageSetEntities) {
-            if (!isset($imageSets[$idProductAttributes])) {
-                $imageSets[$idProductAttributes] = new ArrayObject();
+        foreach ($imageSetEntitiesByIdProduct as $idProduct => $imageLocalizedAttributes) {
+            if (!isset($imageSets[$idProduct])) {
+                $imageSets[$idProduct] = [];
             }
 
-            foreach ($imageSetEntities as $imageSetEntity) {
-                $imageSet = (new ProductImageSetStorageTransfer())
-                    ->setName($imageSetEntity->getName());
-                foreach ($imageSetEntity->getSpyProductImageSetToProductImages() as $imageSetToProductImage) {
-                    $productImage = $imageSetToProductImage->getSpyProductImage();
-                    $imageSet->addImage((new ProductImageStorageTransfer())
-                        ->setIdProductImage($productImage->getIdProductImage())
-                        ->setExternalUrlLarge($productImage->getExternalUrlLarge())
-                        ->setExternalUrlSmall($productImage->getExternalUrlSmall()));
+            foreach ($imageLocalizedAttributes as $idProductAttribute => $imageLocalizedSets) {
+                $imageSets[$idProduct][$idProductAttribute] = new ArrayObject();
+                foreach ($imageLocalizedSets as $imageLocalizedSet) {
+                    $imageSet = (new ProductImageSetStorageTransfer())
+                        ->setName($imageLocalizedSet->getName());
+                    foreach ($imageLocalizedSet->getSpyProductImageSetToProductImages() as $imageSetToProductImage) {
+                        $productImage = $imageSetToProductImage->getSpyProductImage();
+                        $imageSet->addImage((new ProductImageStorageTransfer())
+                            ->setIdProductImage($productImage->getIdProductImage())
+                            ->setExternalUrlLarge($productImage->getExternalUrlLarge())
+                            ->setExternalUrlSmall($productImage->getExternalUrlSmall()));
+                    }
+                    $imageSets[$idProduct][$idProductAttribute][] = $imageSet;
                 }
-
-                $imageSets[$idProductAttributes][] = $imageSet;
             }
         }
 
@@ -178,7 +180,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     /**
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][] [id_product_attributes => image_set[]]
+     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[][][] [id_product][id_product_attributes] => image_set[]
      */
     protected function getCombinedImageSets(array $productIds): array
     {
@@ -194,13 +196,10 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
 
         $combinedImageSets = [];
         foreach ($productLocalizedAttributes as $productLocalizedAttribute) {
+            $idProduct = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT];
             $colIdProductAttributes = $productLocalizedAttribute[SpyProductLocalizedAttributesTableMap::COL_ID_PRODUCT_ATTRIBUTES];
 
-            if (!isset($combinedImageSets[$colIdProductAttributes])) {
-                $combinedImageSets[$colIdProductAttributes] = new ArrayObject();
-            }
-
-            $combinedImageSets[$colIdProductAttributes] = $this->getCombinedImageSetForLocalizedAttribute(
+            $combinedImageSets[$idProduct][$colIdProductAttributes] = $this->getCombinedImageSetForLocalizedAttribute(
                 $productLocalizedAttribute,
                 $productImageSetsIndexedByFkProductAbstract,
                 $productImageSetsIndexedByFkProduct

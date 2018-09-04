@@ -71,8 +71,12 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
         );
 
         foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
-            $idAbstractAttributes = $spyProductAbstractLocalizedEntity->getIdAbstractAttributes();
-            $imageSets[$idAbstractAttributes] = $this->generateProductAbstractImageSets(
+            $idProductAbstract = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
+            if (!isset($productAbstractImageSetsBulk[$idProductAbstract])) {
+                continue;
+            }
+
+            $imageSets[$idProductAbstract][$spyProductAbstractLocalizedEntity->getIdAbstractAttributes()] = $this->generateProductAbstractImageSets(
                 $productAbstractImageSetsBulk[$spyProductAbstractLocalizedEntity->getFkProductAbstract()][$spyProductAbstractLocalizedEntity->getFkLocale()]
             );
         }
@@ -159,7 +163,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
 
         $productAbstractStorageTransfer = new ProductAbstractImageStorageTransfer();
         $productAbstractStorageTransfer->setIdProductAbstract($spyProductAbstractLocalizedEntity->getFkProductAbstract());
-        $productAbstractStorageTransfer->setImageSets($imageSets[$spyProductAbstractLocalizedEntity->getIdAbstractAttributes()]);
+        $productAbstractStorageTransfer->setImageSets($imageSets[$spyProductAbstractLocalizedEntity->getFkProductAbstract()][$spyProductAbstractLocalizedEntity->getIdAbstractAttributes()]);
 
         $spyProductAbstractImageStorage->setFkProductAbstract($spyProductAbstractLocalizedEntity->getFkProductAbstract());
         $spyProductAbstractImageStorage->setData($productAbstractStorageTransfer->toArray());
