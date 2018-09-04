@@ -39,7 +39,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     protected $isSendingToQueue = true;
 
     /**
-     * @var int[] Keys are store ids, values are store names.
+     * @var string[] Keys are store ids, values are store names.
      */
     protected $storeNameMapBuffer;
 

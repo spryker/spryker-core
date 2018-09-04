@@ -16,7 +16,7 @@ use Propel\Generator\Builder\Om\TableMapBuilder as PropelTableMapBuilder;
 class TableMapBuilder extends PropelTableMapBuilder
 {
     /**
-     * Change default propel behaviour
+     * Changes default Propel behavior.
      *
      * @param string $objName
      * @param string $clsName

@@ -13,9 +13,6 @@
     "spryker/user": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*",
     "spryker/util-text": "*"
   },
   "suggest": {

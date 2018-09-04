@@ -13,7 +13,7 @@ interface BundleMethodBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleTransfer
      *
-     * @return null|\Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer
+     * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer|null
      */
     public function getMethod(IdeAutoCompletionBundleTransfer $bundleTransfer);
 

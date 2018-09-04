@@ -59,7 +59,7 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
     /**
      * @param \DateTime|null $dateTime
      *
-     * @return null|string
+     * @return string|null
      */
     protected function formatDateTime(?DateTime $dateTime = null): ?string
     {
