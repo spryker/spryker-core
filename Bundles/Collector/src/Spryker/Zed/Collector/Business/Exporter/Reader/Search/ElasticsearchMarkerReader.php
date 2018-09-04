@@ -16,7 +16,7 @@ class ElasticsearchMarkerReader extends ElasticsearchReader
      * @param string $key
      * @param string $type
      *
-     * @return null|string
+     * @return string|null
      */
     public function read($key, $type = '')
     {
