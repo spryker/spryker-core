@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ShoppingListNote\Communication\Plugin;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface;
@@ -31,10 +30,6 @@ class ItemCartNoteToShoppingListItemNoteMapperPlugin extends AbstractPlugin impl
      */
     public function map(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        $shoppingListItemTransfer->setShoppingListItemNote(
-            (new ShoppingListItemNoteTransfer)->setNote($itemTransfer->getCartNote())
-        );
-
-        return $shoppingListItemTransfer;
+        return $this->getFacade()->mapItemCartNoteToShoppingListItemNote($itemTransfer, $shoppingListItemTransfer);
     }
 }

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ShoppingListNote\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ShoppingListNote\Business\Mapper\ItemToShoppingListItemMapper;
+use Spryker\Zed\ShoppingListNote\Business\Mapper\ItemToShoppingListItemMapperInterface;
 use Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote\ShoppingListItemExpander;
 use Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote\ShoppingListItemExpanderInterface;
 use Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote\ShoppingListItemNoteReader;
@@ -49,5 +51,13 @@ class ShoppingListNoteBusinessFactory extends AbstractBusinessFactory
     public function createShoppingListItemExpander(): ShoppingListItemExpanderInterface
     {
         return new ShoppingListItemExpander($this->createShoppingListNoteReader());
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListNote\Business\Mapper\ItemToShoppingListItemMapperInterface
+     */
+    public function createItemToShoppingListItemMapper(): ItemToShoppingListItemMapperInterface
+    {
+        return new ItemToShoppingListItemMapper();
     }
 }
