@@ -105,7 +105,9 @@ class RestRequestValidator implements RestRequestValidatorInterface
     {
         $configResult = [];
         foreach ($validationConfig as $fieldName => $validators) {
-            $configResult[$fieldName] = $this->mapFieldConstrains($validators);
+            if ($validators !== null) {
+                $configResult[$fieldName] = $this->mapFieldConstrains($validators);
+            }
         }
 
         return $configResult;

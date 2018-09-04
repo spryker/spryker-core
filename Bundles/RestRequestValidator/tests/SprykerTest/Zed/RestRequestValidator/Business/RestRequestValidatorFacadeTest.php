@@ -171,7 +171,7 @@ class RestRequestValidatorFacadeTest extends Unit
      *
      * @return string
      */
-    private function getFixtureDirectory($level = null)
+    protected function getFixtureDirectory($level = null)
     {
         $pathParts = [
             __DIR__,
