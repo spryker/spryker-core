@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductLabel\Storage\Dictionary;
 interface LabelDictionaryInterface
 {
     /**
-     * @param string $dictionaryKey
+     * @param string|int $dictionaryKey
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\StorageProductLabelTransfer|null

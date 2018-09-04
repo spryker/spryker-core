@@ -22,6 +22,7 @@ class LogConfig extends AbstractBundleConfig
         LogConstants::EXCEPTION_LOG_FILE_PATH_YVES,
         LogConstants::EXCEPTION_LOG_FILE_PATH_ZED,
         LogConstants::EXCEPTION_LOG_FILE_PATH,
+        LogConstants::LOG_FOLDER_PATH_INSTALLATION,
     ];
 
     /**

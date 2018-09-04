@@ -30,6 +30,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER = 'PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER';
     public const PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER = 'PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER';
     public const PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER = 'PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER';
+    public const PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR = 'PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -47,6 +48,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPriceDimensionAbstractSaverPlugins($container);
         $container = $this->addPriceDimensionConcreteSaverPlugins($container);
         $container = $this->addPriceProductDimensionExpanderStrategyPlugins($container);
+        $container = $this->addPriceProductPricesExtractorPlugins($container);
 
         return $container;
     }
@@ -190,6 +192,20 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductPricesExtractorPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR] = function (Container $container) {
+            return $this->getPriceProductPricesExtractorPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * The plugins in this stack will provide additional criteria to main price product query.
      *
      * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
@@ -225,6 +241,14 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface[]
      */
     protected function getPriceProductDimensionExpanderStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface[]
+     */
+    protected function getPriceProductPricesExtractorPlugins(): array
     {
         return [];
     }

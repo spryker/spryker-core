@@ -31,7 +31,7 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
     /**
      * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleTransfer
      *
-     * @return null|\Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer
+     * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer|null
      */
     public function getMethod(IdeAutoCompletionBundleTransfer $bundleTransfer)
     {
@@ -52,7 +52,7 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
     /**
      * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleTransfer
      *
-     * @return null|\Symfony\Component\Finder\SplFileInfo
+     * @return \Symfony\Component\Finder\SplFileInfo|null
      */
     protected function findFile(IdeAutoCompletionBundleTransfer $bundleTransfer)
     {
@@ -93,7 +93,7 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
      * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleTransfer
      * @param string $searchDirectory
      *
-     * @return null|\Symfony\Component\Finder\SplFileInfo
+     * @return \Symfony\Component\Finder\SplFileInfo|null
      */
     protected function findInterfaceFile(IdeAutoCompletionBundleTransfer $bundleTransfer, $searchDirectory)
     {
@@ -116,7 +116,7 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
      * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleTransfer
      * @param string $searchDirectory
      *
-     * @return null|\Symfony\Component\Finder\SplFileInfo
+     * @return \Symfony\Component\Finder\SplFileInfo|null
      */
     protected function findClassFile(IdeAutoCompletionBundleTransfer $bundleTransfer, $searchDirectory)
     {
@@ -139,7 +139,7 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
      * @param string $fileName
      * @param string $searchPath
      *
-     * @return null|\Symfony\Component\Finder\SplFileInfo
+     * @return \Symfony\Component\Finder\SplFileInfo|null
      */
     protected function findFileByName($fileName, $searchPath)
     {
@@ -182,7 +182,7 @@ abstract class AbstractBundleMethodBuilder implements BundleMethodBuilderInterfa
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $file
      *
-     * @return null|\Symfony\Component\Finder\SplFileInfo
+     * @return \Symfony\Component\Finder\SplFileInfo|null
      */
     protected function getFileDirectory(SplFileInfo $file)
     {

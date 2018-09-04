@@ -10,6 +10,9 @@ namespace Spryker\Zed\SprykGui\Communication\Form;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Spryk\SprykFacade;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\SprykGui\Communication\Form\Type\ArgumentCollectionType;
+use Spryker\Zed\SprykGui\Communication\Form\Type\ClassNameChoiceType;
+use Spryker\Zed\SprykGui\Communication\Form\Type\OutputChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -35,6 +38,12 @@ class SprykDetailsForm extends AbstractType
             static::SPRYK,
             static::MODULE,
         ]);
+
+        $resolver->setDefaults([
+            'classNameChoices' => [],
+            'outputChoices' => [],
+            'argumentChoices' => [],
+        ]);
     }
 
     /**
@@ -45,79 +54,145 @@ class SprykDetailsForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-//        $sprykDefinition = $this->getFacade()->getSprykDefinitionByName($options[static::SPRYK]);
-
-//        if (isset($sprykDefinition['arguments']['module']['type'])) {
-//            $builder->add(static::MODULE, NewModuleType::class, ['sprykDefinition' => $sprykDefinition]);
-//
-//            $this->addRunSprykButton($builder);
-//            $this->addCreateTemplateButton($builder);
-//
-//            return;
-//        }
-
-        $this->addSprykDetails($builder, $options);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
-    protected function addSprykDetails(FormBuilderInterface $builder, array $options): FormBuilderInterface
-    {
         $sprykDefinition = $this->getSprykDefinition($options[static::SPRYK]);
 
-        $this->addArgumentsToForm($builder, $sprykDefinition, $options);
+        $filteredArguments = $this->getRelevantArguments($sprykDefinition['arguments']);
 
-        return $builder;
+        $this->addArgumentsToForm($builder, $filteredArguments, $options);
+    }
+
+    /**
+     * @param array $arguments
+     *
+     * @return array
+     */
+    protected function getRelevantArguments(array $arguments): array
+    {
+        $filteredArguments = [];
+        foreach ($arguments as $argumentName => $argumentDefinition) {
+            if (in_array($argumentName, ['module', 'organization']) || !$this->requiresUserInput($argumentDefinition)) {
+                continue;
+            }
+            $filteredArguments[$argumentName] = $argumentDefinition;
+        }
+
+        return $filteredArguments;
+    }
+
+    /**
+     * @param array|null $argumentDefinition
+     *
+     * @return bool
+     */
+    protected function requiresUserInput(?array $argumentDefinition): bool
+    {
+        return (!isset($argumentDefinition['value']) && !isset($argumentDefinition['callbackOnly']) && !isset($argumentDefinition['default']));
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $sprykDefinition
+     * @param array $arguments
      * @param array $options
      *
      * @return void
      */
-    protected function addArgumentsToForm(FormBuilderInterface $builder, array $sprykDefinition, array $options): void
+    protected function addArgumentsToForm(FormBuilderInterface $builder, array $arguments, array $options): void
     {
-        foreach ($sprykDefinition['arguments'] as $argumentName => $argumentDefinition) {
-            if ($argumentName == 'module' || $argumentName === 'organization') {
-                continue;
-            }
+        foreach ($arguments as $argumentName => $argumentDefinition) {
+            if ($argumentName === 'className' && ($argumentDefinition !== null && isset($argumentDefinition['isChoice']))) {
+                $classNameChoiceTypeOptions = ['classNameChoices' => $options['classNameChoices']];
+                unset($options['classNameChoices']);
+                $builder->add($argumentName, ClassNameChoiceType::class, $classNameChoiceTypeOptions);
 
-            if (isset($argumentDefinition['value']) || isset($argumentDefinition['callbackOnly']) || isset($argumentDefinition['default'])) {
                 continue;
             }
 
             if (isset($argumentDefinition['type'])) {
-                $typeOptions = $options;
+                $typeOptions = $this->getFormTypeOptions($options, $argumentDefinition);
                 if (isset($argumentDefinition['isOptional'])) {
                     $typeOptions['required'] = false;
                 }
-                $builder->add($argumentName, 'Spryker\\Zed\\SprykGui\\Communication\\Form\\Type\\' . $argumentDefinition['type'] . 'Type', $typeOptions);
+                $formTypeName = 'Spryker\\Zed\\SprykGui\\Communication\\Form\\Type\\' . $argumentDefinition['type'] . 'Type';
+
+                $builder->add($argumentName, $formTypeName, $typeOptions);
 
                 continue;
             }
 
-            $type = TextType::class;
-            if (isset($argumentDefinition['multiline'])) {
-                $type = TextareaType::class;
+            if ($argumentName === 'input' || $argumentName === 'constructorArguments') {
+                $argumentCollectionTypeOptions = ['argumentChoices' => $options['argumentChoices']];
+                unset($options['argumentChoices']);
+                $builder->add($argumentName, ArgumentCollectionType::class, $argumentCollectionTypeOptions);
+
+                continue;
             }
 
-            $typeOptions = [
-                'attr' => [
-                    'class' => $argumentName,
-                ],
-            ];
-            if (isset($argumentDefinition['isOptional'])) {
-                $typeOptions['required'] = false;
+            if ($argumentName === 'output') {
+                $outputChoiceTypeOptions = ['outputChoices' => $options['outputChoices']];
+                unset($options['outputChoices']);
+                $builder->add($argumentName, OutputChoiceType::class, $outputChoiceTypeOptions);
+
+                continue;
             }
 
+            $type = $this->getType($argumentDefinition);
+            $typeOptions = $this->getTypeOptions($argumentName, $argumentDefinition);
             $builder->add($argumentName, $type, $typeOptions);
         }
+    }
+
+    /**
+     * @param array $options
+     * @param array $argumentDefinition
+     *
+     * @return array
+     */
+    protected function getFormTypeOptions(array $options, array $argumentDefinition): array
+    {
+        if (!isset($argumentDefinition['typeOptions'])) {
+            return $options;
+        }
+        $typeOptions = [];
+        foreach ($argumentDefinition['typeOptions'] as $typeOptionName) {
+            $typeOptions[$typeOptionName] = $options[$typeOptionName];
+        }
+
+        return $typeOptions;
+    }
+
+    /**
+     * @param array|null $argumentDefinition
+     *
+     * @return string
+     */
+    protected function getType(?array $argumentDefinition): string
+    {
+        $type = TextType::class;
+        if (isset($argumentDefinition['multiline'])) {
+            $type = TextareaType::class;
+        }
+
+        return $type;
+    }
+
+    /**
+     * @param string $argumentName
+     * @param array|null $argumentDefinition
+     *
+     * @return array
+     */
+    protected function getTypeOptions(string $argumentName, ?array $argumentDefinition): array
+    {
+        $typeOptions = [
+            'attr' => [
+                'class' => $argumentName,
+            ],
+        ];
+        if (isset($argumentDefinition['isOptional'])) {
+            $typeOptions['required'] = false;
+        }
+
+        return $typeOptions;
     }
 
     /**

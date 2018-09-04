@@ -80,4 +80,9 @@ interface StoreToStoreInterface
      * @return array
      */
     public function getCountries();
+
+    /**
+     * @return string
+     */
+    public function getTimezone();
 }

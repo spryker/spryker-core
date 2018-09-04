@@ -151,6 +151,7 @@ class IdeAutoCompletionWriterTest extends Unit
                     'Generated\%s\Ide',
                     IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
                 ),
+                IdeAutoCompletionConstants::DIRECTORY_PERMISSION => 0777,
             ]);
 
         return $configMock;

@@ -61,7 +61,7 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
     }
 
     /**
-     * @param string[] $indexedSkus
+     * @param array $indexedSkus
      *
      * @return void
      */
@@ -76,7 +76,7 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
     }
 
     /**
-     * @param string[] $indexedSkus
+     * @param array $indexedSkus
      *
      * @return void
      */
@@ -94,7 +94,7 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
     /**
      * @param string $sku
      * @param int[] $replacementIds
-     * @param null|\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage $productReplacementStorageEntity
+     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage|null $productReplacementStorageEntity
      *
      * @return void
      */

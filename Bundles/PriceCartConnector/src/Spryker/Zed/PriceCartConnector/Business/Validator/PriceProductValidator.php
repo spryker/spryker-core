@@ -78,16 +78,33 @@ class PriceProductValidator implements PriceProductValidatorInterface
         $currencyTransfer = $quoteTransfer->getCurrency();
         $storeName = $this->findStoreName($quoteTransfer);
 
-        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+        $priceProductFilterTransfer = $this->mapItemTransferToPriceProductFilterTransfer(
+            (new PriceProductFilterTransfer()),
+            $itemTransfer
+        )
             ->setStoreName($storeName)
             ->setPriceMode($priceMode)
             ->setCurrencyIsoCode($currencyTransfer->getCode())
-            ->setSku($itemTransfer->getSku())
             ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
 
         if ($this->isPriceProductDimensionEnabled($priceProductFilterTransfer)) {
             $priceProductFilterTransfer->setQuote($quoteTransfer);
         }
+
+        return $priceProductFilterTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
+     */
+    protected function mapItemTransferToPriceProductFilterTransfer(
+        PriceProductFilterTransfer $priceProductFilterTransfer,
+        ItemTransfer $itemTransfer
+    ): PriceProductFilterTransfer {
+        $priceProductFilterTransfer->fromArray($itemTransfer->toArray(), true);
 
         return $priceProductFilterTransfer;
     }
@@ -120,7 +137,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return null|string
+     * @return string|null
      */
     protected function findStoreName(QuoteTransfer $quoteTransfer): ?string
     {
