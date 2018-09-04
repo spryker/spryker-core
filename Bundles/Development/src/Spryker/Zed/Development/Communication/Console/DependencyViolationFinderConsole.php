@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Development\Business\DevelopmentBusinessFactory getFactory()
  */
-class DependencyViolationFinderConsole extends AbstractDependencyViolationConsole
+class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
 {
     const COMMAND_NAME = 'dev:dependency:find';
     const OPTION_DEPENDENCY_TYPE = 'dependency-type';

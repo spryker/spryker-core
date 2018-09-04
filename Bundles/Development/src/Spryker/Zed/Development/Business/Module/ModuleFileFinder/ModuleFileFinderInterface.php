@@ -18,4 +18,11 @@ interface ModuleFileFinderInterface
      * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     public function find(ModuleTransfer $moduleTransfer): Finder;
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return bool
+     */
+    public function hasFiles(ModuleTransfer $moduleTransfer): bool;
 }

@@ -61,7 +61,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
      */
     public function mapTransferCollection($transferClassName, ActiveRecordInterface $parentEntity)
     {
-        $transfer = new $transferClassName;
+        $transfer = new $transferClassName();
         $transfer->fromArray($parentEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true), true);
 
         return $transfer;
@@ -102,7 +102,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
      */
     protected function mapEntity(array $transferArray, $entityNamespace)
     {
-        $entity = new $entityNamespace;
+        $entity = new $entityNamespace();
         $entity->fromArray($transferArray);
 
         if ($entity->getPrimaryKey()) {
