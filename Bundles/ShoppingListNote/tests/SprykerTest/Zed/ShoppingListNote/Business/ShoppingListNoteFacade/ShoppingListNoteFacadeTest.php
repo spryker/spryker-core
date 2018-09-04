@@ -10,7 +10,9 @@ namespace SprykerTest\Zed\ShoppingListNote\Business\ShoppingListNoteFacade;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ShoppingListItemNoteBuilder;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Spryker\Shared\ShoppingList\ShoppingListConfig;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
@@ -33,6 +35,8 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 class ShoppingListNoteFacadeTest extends Unit
 {
     use LocatorHelperTrait;
+
+    protected const CART_TEST_NOTE = 'CART_TEST_NOTE';
 
     /**
      * @var \SprykerTest\Zed\ShoppingListNote\ShoppingListNoteBusinessTester
@@ -187,5 +191,22 @@ class ShoppingListNoteFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($expandedShoppingListItemTransfer->getShoppingListItemNote());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapItemCartNoteToShoppingListItemNote(): void
+    {
+        // Arrange
+        $itemTransfer = (new ItemTransfer)->setCartNote(static::CART_TEST_NOTE);
+
+        // Act
+        $mappedShoppingListItemTransfer = $this->tester
+            ->getFacade()
+            ->mapItemCartNoteToShoppingListItemNote($itemTransfer, new ShoppingListItemTransfer());
+
+        // Assert
+        $this->assertEquals(static::CART_TEST_NOTE, $mappedShoppingListItemTransfer->getShoppingListItemNote()->getNote());
     }
 }
