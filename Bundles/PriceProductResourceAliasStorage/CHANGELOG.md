@@ -1,3 +1,0 @@
-# PriceProductResourceAliasStorage Changelog
-
-[Release Changelog](https://github.com/spryker/price-product-resource-alias-storage/releases)

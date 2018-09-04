@@ -14,12 +14,8 @@ class ProductsRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_ABSTRACT_PRODUCTS = 'abstract-products';
     public const RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT = '301';
     public const RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT = 'Abstract product is not found.';
-    public const RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_MISSING = '311';
-    public const RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_MISSING = 'Abstract product sku is missing.';
 
     public const RESOURCE_CONCRETE_PRODUCTS = 'concrete-products';
     public const RESPONSE_CODE_CANT_FIND_CONCRETE_PRODUCT = '302';
     public const RESPONSE_DETAIL_CANT_FIND_CONCRETE_PRODUCT = 'Concrete product is not found.';
-    public const RESPONSE_CODE_CONCRETE_PRODUCT_SKU_IS_MISSING = '312';
-    public const RESPONSE_DETAIL_CONCRETE_PRODUCT_SKU_IS_MISSING = 'Concrete product sku is missing.';
 }
