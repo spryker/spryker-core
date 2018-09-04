@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade\MerchantRelationshipMinimumOrderValueGuiToLocaleFacadeInterface;
 
 class LocaleProvider
@@ -27,7 +28,7 @@ class LocaleProvider
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getLocaleCollection()
+    public function getLocaleCollection(): array
     {
         return $this->localeFacade->getLocaleCollection();
     }
@@ -37,7 +38,7 @@ class LocaleProvider
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleTransfer($localeCode)
+    public function getLocaleTransfer($localeCode): LocaleTransfer
     {
         return $this->localeFacade->getLocale($localeCode);
     }
@@ -45,7 +46,7 @@ class LocaleProvider
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();
     }

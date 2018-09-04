@@ -54,7 +54,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
         $cartMerchantRelationshipIds = $this->getCartMerchantRelationshipIds($customerMerchantRelationships, $itemMerchantRelationshipSubTotals);
 
         $merchantRelationshipMinimumOrderValueTransfers = $this->merchantRelationshipMinimumOrderValueRepository
-            ->getThresholdsForMerchantRelationshipIds(
+            ->getMerchantRelationshipMinimumOrderValues(
                 $quoteTransfer->getStore(),
                 $quoteTransfer->getCurrency(),
                 $cartMerchantRelationshipIds
@@ -70,12 +70,12 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[]
      */
-    public function getThresholdsForMerchantRelationshipIds(
+    public function getMerchantRelationshipMinimumOrderValues(
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
         array $merchantRelationshipIds
     ): array {
-        $merchantRelationshipMinimumOrderValueTransfers = $this->merchantRelationshipMinimumOrderValueRepository->getThresholdsForMerchantRelationshipIds(
+        $merchantRelationshipMinimumOrderValueTransfers = $this->merchantRelationshipMinimumOrderValueRepository->getMerchantRelationshipMinimumOrderValues(
             $storeTransfer,
             $currencyTransfer,
             $merchantRelationshipIds

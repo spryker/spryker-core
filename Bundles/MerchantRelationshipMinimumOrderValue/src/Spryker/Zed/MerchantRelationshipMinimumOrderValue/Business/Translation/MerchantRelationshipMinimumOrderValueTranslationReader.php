@@ -74,7 +74,7 @@ class MerchantRelationshipMinimumOrderValueTranslationReader implements Merchant
 
         foreach ($merchantRelationshipMinimumOrderValueTransfer->getLocalizedMessages() as $minimumOrderValueLocalizedMessageTransfer) {
             if ($minimumOrderValueLocalizedMessageTransfer->getLocaleCode() === $localeIsoCode) {
-                $minimumOrderValueLocalizedMessageTransfer->setMessage($translationValue ? $translationValue : null);
+                $minimumOrderValueLocalizedMessageTransfer->setMessage($translationValue);
 
                 return $merchantRelationshipMinimumOrderValueTransfer;
             }

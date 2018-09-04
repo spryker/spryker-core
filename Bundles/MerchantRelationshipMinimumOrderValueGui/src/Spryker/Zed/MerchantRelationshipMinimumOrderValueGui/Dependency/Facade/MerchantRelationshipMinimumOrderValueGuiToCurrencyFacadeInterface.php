@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
-
 interface MerchantRelationshipMinimumOrderValueGuiToCurrencyFacadeInterface
 {
     /**
@@ -16,17 +14,17 @@ interface MerchantRelationshipMinimumOrderValueGuiToCurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
      */
-    public function getAllStoresWithCurrencies(): array;
+    public function getAllStoresWithCurrencies();
 
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent(): CurrencyTransfer;
+    public function getCurrent();
 
     /**
      * @param string $isoCode
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode($isoCode): CurrencyTransfer;
+    public function fromIsoCode($isoCode);
 }

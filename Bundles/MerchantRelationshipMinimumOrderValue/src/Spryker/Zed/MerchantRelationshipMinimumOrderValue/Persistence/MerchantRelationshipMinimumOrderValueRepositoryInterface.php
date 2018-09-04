@@ -19,7 +19,7 @@ interface MerchantRelationshipMinimumOrderValueRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[]
      */
-    public function getThresholdsForMerchantRelationshipIds(
+    public function getMerchantRelationshipMinimumOrderValues(
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
         array $merchantRelationshipIds

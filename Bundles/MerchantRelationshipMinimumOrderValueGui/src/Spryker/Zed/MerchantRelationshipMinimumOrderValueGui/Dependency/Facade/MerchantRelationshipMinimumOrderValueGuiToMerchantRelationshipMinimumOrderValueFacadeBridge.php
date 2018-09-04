@@ -44,12 +44,12 @@ class MerchantRelationshipMinimumOrderValueGuiToMerchantRelationshipMinimumOrder
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[]
      */
-    public function getThresholdsForMerchantRelationshipIds(
+    public function getMerchantRelationshipMinimumOrderValues(
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
         array $merchantRelationshipIds
     ): array {
-        return $this->merchantRelationshipMinimumOrderValueFacade->getThresholdsForMerchantRelationshipIds(
+        return $this->merchantRelationshipMinimumOrderValueFacade->getMerchantRelationshipMinimumOrderValues(
             $storeTransfer,
             $currencyTransfer,
             $merchantRelationshipIds

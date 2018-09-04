@@ -314,28 +314,21 @@ class ThresholdType extends AbstractType
      */
     protected function convertIntToMoney(FormEvent $event, array $options): void
     {
-        $moneyFacade = $this->getFactory()->getMoneyFacade();
         $data = $event->getData();
 
         if (is_array($data)) {
-            if (isset($data[static::FIELD_HARD_THRESHOLD])) {
-                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_HARD_THRESHOLD]);
-                $data[static::FIELD_HARD_THRESHOLD] = $moneyFloat;
-            }
-
-            if (isset($data[static::FIELD_SOFT_THRESHOLD])) {
-                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_SOFT_THRESHOLD]);
-                $data[static::FIELD_SOFT_THRESHOLD] = $moneyFloat;
-            }
-
-            if (isset($data[static::FIELD_SOFT_FLEXIBLE_FEE])) {
-                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_SOFT_FLEXIBLE_FEE]);
-                $data[static::FIELD_SOFT_FLEXIBLE_FEE] = $moneyFloat;
-            }
-
-            if (isset($data[static::FIELD_SOFT_FIXED_FEE])) {
-                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_SOFT_FIXED_FEE]);
-                $data[static::FIELD_SOFT_FIXED_FEE] = $moneyFloat;
+            foreach ([
+                        static::FIELD_HARD_THRESHOLD,
+                        static::FIELD_SOFT_THRESHOLD,
+                        static::FIELD_SOFT_FLEXIBLE_FEE,
+                        static::FIELD_SOFT_FIXED_FEE,
+                     ] as $fieldName) {
+                $data = $this->convertMoneyValue(
+                    $data,
+                    $fieldName,
+                    [$this->getFactory()->getMoneyFacade(), 'convertIntegerToDecimal'],
+                    'intval'
+                );
             }
 
             $event->setData($data);
@@ -350,31 +343,42 @@ class ThresholdType extends AbstractType
      */
     protected function convertMoneyToInt(FormEvent $event, array $options): void
     {
-        $moneyFacade = $this->getFactory()->getMoneyFacade();
         $data = $event->getData();
 
         if (is_array($data)) {
-            if (isset($data[static::FIELD_HARD_THRESHOLD])) {
-                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_HARD_THRESHOLD]);
-                $data[static::FIELD_HARD_THRESHOLD] = $moneyInt;
-            }
-
-            if (isset($data[static::FIELD_SOFT_THRESHOLD])) {
-                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_SOFT_THRESHOLD]);
-                $data[static::FIELD_SOFT_THRESHOLD] = $moneyInt;
-            }
-
-            if (isset($data[static::FIELD_SOFT_FLEXIBLE_FEE])) {
-                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_SOFT_FLEXIBLE_FEE]);
-                $data[static::FIELD_SOFT_FLEXIBLE_FEE] = $moneyInt;
-            }
-
-            if (isset($data[static::FIELD_SOFT_FIXED_FEE])) {
-                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_SOFT_FIXED_FEE]);
-                $data[static::FIELD_SOFT_FIXED_FEE] = $moneyInt;
+            foreach ([
+                        static::FIELD_HARD_THRESHOLD,
+                        static::FIELD_SOFT_THRESHOLD,
+                        static::FIELD_SOFT_FLEXIBLE_FEE,
+                        static::FIELD_SOFT_FIXED_FEE,
+                     ] as $fieldName) {
+                $data = $this->convertMoneyValue(
+                    $data,
+                    $fieldName,
+                    [$this->getFactory()->getMoneyFacade(), 'convertDecimalToInteger'],
+                    'floatval'
+                );
             }
 
             $event->setData($data);
         }
+    }
+
+    /**
+     * @param array $data
+     * @param string $fieldName
+     * @param callable $moneyConvertFunction
+     * @param callable $typeConvertFunction
+     *
+     * @return array
+     */
+    protected function convertMoneyValue(array $data, string $fieldName, callable $moneyConvertFunction, callable $typeConvertFunction): array
+    {
+        if (!isset($data[$fieldName])) {
+            return $data;
+        }
+        $data[$fieldName] = $moneyConvertFunction($typeConvertFunction($data[$fieldName]));
+
+        return $data;
     }
 }

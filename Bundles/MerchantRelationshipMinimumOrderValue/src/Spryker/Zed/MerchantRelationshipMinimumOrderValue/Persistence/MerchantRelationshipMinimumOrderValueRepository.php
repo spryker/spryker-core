@@ -27,7 +27,7 @@ class MerchantRelationshipMinimumOrderValueRepository extends AbstractRepository
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[]
      */
-    public function getThresholdsForMerchantRelationshipIds(
+    public function getMerchantRelationshipMinimumOrderValues(
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
         array $merchantRelationshipIds

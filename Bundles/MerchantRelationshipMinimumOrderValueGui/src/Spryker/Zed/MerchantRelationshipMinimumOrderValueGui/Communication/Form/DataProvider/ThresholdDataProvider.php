@@ -74,10 +74,13 @@ class ThresholdDataProvider implements FormDataProviderInterface
                 $minimumOrderValueTransfer->getCurrency()
             );
 
-            if ($thresholdStrategyDataProvider = $this->minimumOrderValueGuiCommunicationFactory
+            if ($this->minimumOrderValueGuiCommunicationFactory
                 ->createSoftThresholdDataProviderResolver()
-                ->hasThresholdDataProviderByStrategyKey($minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->getKey())) {
-                $data = $thresholdStrategyDataProvider = $this->minimumOrderValueGuiCommunicationFactory
+                ->hasThresholdDataProviderByStrategyKey(
+                    $minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->getKey()
+                )
+            ) {
+                $data = $this->minimumOrderValueGuiCommunicationFactory
                     ->createSoftThresholdDataProviderResolver()
                     ->resolveThresholdDataProviderByStrategyKey($minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->getKey())
                     ->getData($data, $minimumOrderValueTransfer);
@@ -97,6 +100,8 @@ class ThresholdDataProvider implements FormDataProviderInterface
     }
 
     /**
+     * Array format: ['DE;EUR' => 'DE - Euro [EUR]']
+     *
      * @return array
      */
     protected function getStoreList(): array

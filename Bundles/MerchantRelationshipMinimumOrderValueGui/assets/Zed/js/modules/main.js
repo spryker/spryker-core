@@ -14,18 +14,25 @@ var softThresholdStrategyToggle = function() {
     var softFixedFeeBlock = $('#threshold_softFixedFee').parent();
     var softFlexibleFeeBlock = $('#threshold_softFlexibleFee').parent();
 
-    if (softStrategy == 'soft-threshold') {
-        softValueBlock.removeClass('hidden');
-        softFixedFeeBlock.addClass('hidden');
-        softFlexibleFeeBlock.addClass('hidden');
-    } else if (softStrategy == 'soft-threshold-fixed-fee') {
-        softValueBlock.removeClass('hidden');
-        softFixedFeeBlock.removeClass('hidden');
-        softFlexibleFeeBlock.addClass('hidden');
-    } else if (softStrategy == 'soft-threshold-flexible-fee') {
-        softValueBlock.removeClass('hidden');
-        softFixedFeeBlock.addClass('hidden');
-        softFlexibleFeeBlock.removeClass('hidden');
+    switch (softStrategy) {
+        case 'soft-threshold':
+            softValueBlock.removeClass('hidden');
+            softFixedFeeBlock.addClass('hidden');
+            softFlexibleFeeBlock.addClass('hidden');
+
+            break;
+        case 'soft-threshold-fixed-fee':
+            softValueBlock.removeClass('hidden');
+            softFixedFeeBlock.removeClass('hidden');
+            softFlexibleFeeBlock.addClass('hidden');
+
+            break;
+        case 'soft-threshold-flexible-fee':
+            softValueBlock.removeClass('hidden');
+            softFixedFeeBlock.addClass('hidden');
+            softFlexibleFeeBlock.removeClass('hidden');
+
+            break;
     }
 };
 
@@ -34,7 +41,7 @@ $(document).ready(function () {
     $('input[name="threshold[softStrategy]"]').click(softThresholdStrategyToggle);
 
     $('#threshold_storeCurrency').change(function() {
-        var idMerchantRelationship = $('#threshold_storeCurrency').val();
+        var idMerchantRelationship = $('#threshold_idMerchantRelationship').val();
         window.location.href = '/merchant-relationship-minimum-order-value-gui/edit?id-merchant-relationship=' + idMerchantRelationship
             +'&store_currency='+$(this).val();
     })
