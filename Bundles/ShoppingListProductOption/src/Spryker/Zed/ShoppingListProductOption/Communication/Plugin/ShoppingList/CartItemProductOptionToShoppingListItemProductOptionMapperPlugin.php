@@ -30,6 +30,6 @@ class CartItemProductOptionToShoppingListItemProductOptionMapperPlugin extends A
     public function map(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         return $this->getFacade()
-            ->map($itemTransfer, $shoppingListItemTransfer);
+            ->mapCartItemProductOptionsToShoppingListItemProductOptions($itemTransfer, $shoppingListItemTransfer);
     }
 }

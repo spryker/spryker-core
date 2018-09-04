@@ -72,7 +72,7 @@ class ShoppingListProductOptionFacade extends AbstractFacade implements Shopping
      *
      * @api
      *
-     * @param \Spryker\Zed\ShoppingListProductOption\Business\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
