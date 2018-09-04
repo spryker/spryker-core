@@ -151,7 +151,7 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
     }
 
     /**
-     * @param null|string $cacheFile
+     * @param string|null $cacheFile
      *
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCache
      */

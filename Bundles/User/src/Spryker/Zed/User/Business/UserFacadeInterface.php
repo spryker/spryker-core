@@ -154,13 +154,6 @@ interface UserFacadeInterface
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function getUsers();
-
-    /**
-     * @api
-     *
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\UserTransfer

@@ -95,7 +95,10 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUserFormDataProvider()
     {
-        return new UserFormDataProvider($this->getGroupPlugin(), $this->getFacade());
+        /** @var \Spryker\Zed\User\Business\UserFacade $userFacade */
+        $userFacade = $this->getFacade();
+
+        return new UserFormDataProvider($this->getGroupPlugin(), $userFacade);
     }
 
     /**
@@ -103,7 +106,10 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUserUpdateFormDataProvider()
     {
-        return new UserUpdateFormDataProvider($this->getGroupPlugin(), $this->getFacade());
+        /** @var \Spryker\Zed\User\Business\UserFacade $userFacade */
+        $userFacade = $this->getFacade();
+
+        return new UserUpdateFormDataProvider($this->getGroupPlugin(), $userFacade);
     }
 
     /**

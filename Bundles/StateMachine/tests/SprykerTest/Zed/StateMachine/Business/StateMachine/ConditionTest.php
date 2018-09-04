@@ -7,7 +7,6 @@
 namespace SprykerTest\Zed\StateMachine\Business\StateMachine;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
-
 use Spryker\Zed\StateMachine\Business\Process\State;
 use Spryker\Zed\StateMachine\Business\Process\Transition;
 use Spryker\Zed\StateMachine\Business\StateMachine\Condition;

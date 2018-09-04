@@ -12,7 +12,6 @@
     "spryker/code-sniffer": "*",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/propel": "^3.0.0",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {
