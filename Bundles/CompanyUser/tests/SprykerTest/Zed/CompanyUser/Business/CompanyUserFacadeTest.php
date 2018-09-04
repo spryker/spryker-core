@@ -284,7 +284,7 @@ class CompanyUserFacadeTest extends Test
     /**
      * @return void
      */
-    public function testEnableCompanyUser(): void
+    public function testEnableCompanyUserShouldEnableInactiveUser(): void
     {
         // Arrange
         $companyUserTransfer = $this->getCompanyUserTransfer(false);
@@ -300,7 +300,7 @@ class CompanyUserFacadeTest extends Test
     /**
      * @return void
      */
-    public function testActiveCompanyUserCannotBeEnabled(): void
+    public function testEnableCompanyUserShouldNotEnableActiveUser(): void
     {
         // Arrange
         $companyUserTransfer = $this->getCompanyUserTransfer();
@@ -316,7 +316,7 @@ class CompanyUserFacadeTest extends Test
     /**
      * @return void
      */
-    public function testDisableCompanyUser(): void
+    public function testDisableCompanyUserShouldDisableActiveUser(): void
     {
         // Arrange
         $companyUserTransfer = $this->getCompanyUserTransfer();
@@ -332,7 +332,7 @@ class CompanyUserFacadeTest extends Test
     /**
      * @return void
      */
-    public function testInactiveCompanyUserCannotBeDisabled(): void
+    public function testDisableCompanyUserShouldNotDisableInactiveUser(): void
     {
         // Arrange
         $companyUserTransfer = $this->getCompanyUserTransfer(false);
