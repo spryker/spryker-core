@@ -8,6 +8,7 @@
 namespace Spryker\Client\ShoppingListProductOption\Mapper;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Client\ShoppingListProductOption\Dependency\Client\ShoppingListProductOptionToCartClientInterface;
 
@@ -34,8 +35,7 @@ class ShoppingListItemToItemMapper implements ShoppingListItemToItemMapperInterf
      */
     public function mapShoppingListItemProductOptionsToItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer, ItemTransfer $itemTransfer): ItemTransfer
     {
-        $quoteTransfer = $this->cartClient->getQuote();
-        $quoteItemTransfer = $this->cartClient->findQuoteItem($quoteTransfer, $itemTransfer->getSku());
+        $quoteItemTransfer = $this->findIteminQuote($itemTransfer);
 
         if ($quoteItemTransfer && $this->haveSameProductOptions($quoteItemTransfer, $shoppingListItemTransfer)) {
             $itemTransfer->setGroupKey($quoteItemTransfer->getGroupKey());
@@ -44,6 +44,18 @@ class ShoppingListItemToItemMapper implements ShoppingListItemToItemMapperInterf
         $itemTransfer->setProductOptions($shoppingListItemTransfer->getProductOptions());
 
         return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    protected function findIteminQuote(ItemTransfer $itemTransfer): ?ItemTransfer
+    {
+        $quoteTransfer = $this->cartClient->getQuote();
+
+        return $this->cartClient->findQuoteItem($quoteTransfer, $itemTransfer->getSku());
     }
 
     /**
@@ -58,16 +70,15 @@ class ShoppingListItemToItemMapper implements ShoppingListItemToItemMapperInterf
             return false;
         }
 
-        $quoteItemProductOptions = [];
-        foreach ($quoteItemTransfer->getProductOptions() as $quoteProductOptionTransfer) {
-            $quoteItemProductOptions[$quoteProductOptionTransfer->getIdProductOptionValue()] = $quoteProductOptionTransfer->getIdProductOptionValue();
-        }
+        $mappingFunction = function (ProductOptionTransfer $productOptionTransfer) {
+            /** @var \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer */
+            $productOptionValueTransfer = $productOptionTransfer->getValue();
+            return $productOptionValueTransfer->getIdProductOptionValue();
+        };
 
-        $shoppingListItemProductOptions = [];
-        foreach ($shoppingListItemTransfer->getProductOptions() as $productOptionTransfer) {
-            $shoppingListItemProductOptions[$productOptionTransfer->getIdProductOptionValue()] = $productOptionTransfer->getIdProductOptionValue();
-        }
+        $quoteItemProductOptions = array_map($mappingFunction, $quoteItemTransfer->getProductOptions()->getArrayCopy());
+        $shoppingListItemProductOptions = array_map($mappingFunction, $shoppingListItemTransfer->getProductOptions()->getArrayCopy());
 
-        return empty(array_diff_key($quoteItemProductOptions, $shoppingListItemProductOptions));
+        return empty(array_diff($quoteItemProductOptions, $shoppingListItemProductOptions));
     }
 }

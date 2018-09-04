@@ -8,6 +8,7 @@
 namespace SprykerTest\Client\ShoppingListProductOption;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 
 /**
@@ -32,9 +33,9 @@ class ShoppingListProductOptionClientTester extends Actor
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\ProductOptionValueTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
-    public function createProductOptionGroupValueTransfer(string $sku): ?ProductOptionValueTransfer
+    public function createProductOptionGroupTransfer(string $sku): ProductOptionGroupTransfer
     {
         $productOptionGroupTransfer = $this->haveProductOptionGroupWithValues(
             [],
@@ -48,12 +49,6 @@ class ShoppingListProductOptionClientTester extends Actor
             ]
         );
 
-        $ProductOptionValueTransfer = $productOptionGroupTransfer->getProductOptionValues()->offsetGet(0);
-
-        if (empty($ProductOptionValueTransfer)) {
-            return null;
-        }
-
-        return $ProductOptionValueTransfer;
+        return $productOptionGroupTransfer;
     }
 }

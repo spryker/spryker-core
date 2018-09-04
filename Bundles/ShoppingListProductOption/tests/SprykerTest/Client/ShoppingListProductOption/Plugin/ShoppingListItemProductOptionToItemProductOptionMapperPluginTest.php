@@ -41,10 +41,16 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
     {
         // Prepare
         $productTransfer = $this->tester->haveProduct();
-        $productOptionValueTransfer = $this->tester->createProductOptionGroupValueTransfer($productTransfer->getSku());
-        $productOptionTransfer = (new ProductOptionTransfer())->setValue($productOptionValueTransfer);
+        $productOptionGroupTransfer = $this->tester->createProductOptionGroupTransfer($productTransfer->getSku());
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer());
+        foreach ($productOptionGroupTransfer->getProductOptionValues() as $productOptionValueTransfer) {
+            $productOptionTransfer = (new ProductOptionTransfer())
+                ->setGroupName($productOptionGroupTransfer->getName())
+                ->setValue($productOptionValueTransfer);
+
+            $shoppingListItemTransfer->addProductOption($productOptionTransfer);
+        }
         $itemTransfer = (new ItemTransfer())->setSku('sku_sample');
-        $shoppingListItemTransfer = (new ShoppingListItemTransfer())->addProductOption($productOptionTransfer);
 
         $container = new Container();
         $cartMock = $this->getCartMock();
@@ -67,7 +73,9 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
 
         // Assert
         $this->assertCount(1, $actualResult->getProductOptions());
-        $this->assertContains($productOptionTransfer, $actualResult->getProductOptions());
+        foreach ($actualResult->getProductOptions() as $productOptionTransfer) {
+            $this->assertContains($productOptionTransfer->getValue(), $productOptionGroupTransfer->getProductOptionValues());
+        }
     }
 
     /**
@@ -79,20 +87,21 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
         $sku = 'sku_sample';
         $groupKey = 'sample_group_key';
         $productTransfer = $this->tester->haveProduct();
-        $productOptionValueTransfer = $this->tester->createProductOptionGroupValueTransfer($productTransfer->getSku());
-        $productOptionTransfer = (new ProductOptionTransfer())->setValue($productOptionValueTransfer);
+        $productOptionGroupTransfer = $this->tester->createProductOptionGroupTransfer($productTransfer->getSku());
         $itemTransfer = (new ItemTransfer())->setSku($sku);
-        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-            ->setSku($sku)
-            ->addProductOption($productOptionTransfer);
+        $itemTransferInCart = (new ItemTransfer())->setSku($sku)->setGroupKey($groupKey);
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer())->setSku($sku);
+        foreach ($productOptionGroupTransfer->getProductOptionValues() as $productOptionValueTransfer) {
+            $productOptionTransfer = (new ProductOptionTransfer())
+                ->setGroupName($productOptionGroupTransfer->getName())
+                ->setValue($productOptionValueTransfer);
+
+            $shoppingListItemTransfer->addProductOption($productOptionTransfer);
+            $itemTransferInCart->addProductOption($productOptionTransfer);
+        }
 
         $container = new Container();
         $cartMock = $this->getCartMock();
-
-        $itemTransferInCart = (new ItemTransfer())
-            ->setSku($sku)
-            ->addProductOption($productOptionTransfer)
-            ->setGroupKey($groupKey);
 
         $cartMock->method('getQuote')
             ->will($this->returnValue((new QuoteTransfer())->addItem($itemTransferInCart)));
@@ -112,8 +121,10 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
 
         // Assert
         $this->assertCount(1, $actualResult->getProductOptions());
-        $this->assertContains($productOptionTransfer, $actualResult->getProductOptions());
         $this->assertSame($actualResult->getGroupKey(), $groupKey);
+        foreach ($actualResult->getProductOptions() as $productOptionTransfer) {
+            $this->assertContains($productOptionTransfer->getValue(), $productOptionGroupTransfer->getProductOptionValues());
+        }
     }
 
     /**

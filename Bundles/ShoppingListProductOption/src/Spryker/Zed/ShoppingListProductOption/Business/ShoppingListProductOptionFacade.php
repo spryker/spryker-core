@@ -28,11 +28,11 @@ class ShoppingListProductOptionFacade extends AbstractFacade implements Shopping
      *
      * @return void
      */
-    public function saveShoppingListItemProductOption(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function saveShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): void
     {
         $this->getFactory()
             ->createShoppingListProductOptionWriter()
-            ->saveShoppingListItemProductOption($shoppingListItemTransfer);
+            ->saveShoppingListItemProductOptions($shoppingListItemTransfer);
     }
 
     /**

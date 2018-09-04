@@ -36,9 +36,9 @@ class ShoppingListProductOptionBusinessTester extends Actor
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\ProductOptionValueTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOptionValueTransfer
      */
-    public function createProductOptionGroupValueTransfer(string $sku): ?ProductOptionValueTransfer
+    public function createProductOptionGroupValueTransfer(string $sku): ProductOptionValueTransfer
     {
         $productOptionGroupTransfer = $this->haveProductOptionGroupWithValues(
             [],
@@ -52,13 +52,9 @@ class ShoppingListProductOptionBusinessTester extends Actor
             ]
         );
 
-        $ProductOptionValueTransfer = $productOptionGroupTransfer->getProductOptionValues()->offsetGet(0);
+        $productOptionValueTransfer = $productOptionGroupTransfer->getProductOptionValues()->offsetGet(0);
 
-        if (empty($ProductOptionValueTransfer)) {
-            return null;
-        }
-
-        return $ProductOptionValueTransfer;
+        return $productOptionValueTransfer;
     }
 
     /**
@@ -87,6 +83,6 @@ class ShoppingListProductOptionBusinessTester extends Actor
             ->setIdShoppingListItem($idShoppingListItem);
 
         $this->getFacade()
-            ->saveShoppingListItemProductOption($shoppingListItemTransfer);
+            ->saveShoppingListItemProductOptions($shoppingListItemTransfer);
     }
 }
