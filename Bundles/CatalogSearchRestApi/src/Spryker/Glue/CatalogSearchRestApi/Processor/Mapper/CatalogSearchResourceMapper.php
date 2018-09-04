@@ -39,6 +39,7 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
     public function mapSearchResponseAttributesTransferToRestResponse(array $restSearchResponse, string $currency): RestResourceInterface
     {
         $restSearchAttributesTransfer = (new RestCatalogSearchAttributesTransfer())->fromArray($restSearchResponse, true);
+        $restSearchAttributesTransfer = $this->mapPrices($restSearchAttributesTransfer);
         $restSearchAttributesTransfer->setCurrency($currency);
         if (isset($restSearchResponse['facets'])) {
             $restSearchAttributesTransfer = $this->mapSearchResponseFacetTransfersToSearchAttributesTransfer($restSearchResponse['facets'], $restSearchAttributesTransfer);
@@ -71,6 +72,24 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
                     (new RestRangeSearchResultAttributesTransfer())->fromArray($facet->toArray(), true)
                 );
             }
+        }
+
+        return $restSearchAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
+     */
+    protected function mapPrices(RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer): RestCatalogSearchAttributesTransfer
+    {
+        foreach ($restSearchAttributesTransfer->getProducts() as $product) {
+            $prices = [];
+            foreach ($product->getPrices() as $priceType => $price) {
+                $prices[] = [$priceType => $price];
+            }
+            $product->setPrices($prices);
         }
 
         return $restSearchAttributesTransfer;
