@@ -55,7 +55,7 @@ class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriter
 
         foreach ($shoppingListItemTransfer->getProductOptions() as $productOptionTransfer) {
             $this->shoppingListProductOptionEntityManager
-                ->saveShoppingListItemProductOptions(
+                ->saveShoppingListItemProductOption(
                     $shoppingListItemTransfer->getIdShoppingListItem(),
                     $productOptionTransfer->getIdProductOptionValue()
                 );
