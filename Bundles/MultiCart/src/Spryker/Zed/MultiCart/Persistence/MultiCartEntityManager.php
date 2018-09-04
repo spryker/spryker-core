@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class MultiCartEntityManager extends AbstractEntityManager implements MultiCartEntityManagerInterface
 {
+    protected const IS_DEFAULT = 'IsDefault';
+
     /**
      * @param string $customerReference
      *
@@ -24,6 +26,19 @@ class MultiCartEntityManager extends AbstractEntityManager implements MultiCartE
         $this->getFactory()
             ->createQuoteQuery()
             ->filterByCustomerReference($customerReference)
-            ->update(['IsDefault' => false]);
+            ->update([static::IS_DEFAULT => false]);
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return void
+     */
+    public function setDefaultQuote(int $idQuote): void
+    {
+        $this->getFactory()
+            ->createQuoteQuery()
+            ->filterByIdQuote($idQuote)
+            ->update([static::IS_DEFAULT => true]);
     }
 }

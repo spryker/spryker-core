@@ -18,6 +18,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MultiCartRepository extends AbstractRepository implements MultiCartRepositoryInterface
 {
+    public const COL_ID_QUOTE = SpyQuoteTableMap::COL_ID_QUOTE;
+    public const COL_IS_DEFAULT = SpyQuoteTableMap::COL_IS_DEFAULT;
+    public const COL_NAME = SpyQuoteTableMap::COL_NAME;
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -64,5 +68,20 @@ class MultiCartRepository extends AbstractRepository implements MultiCartReposit
         $filterTransfer->setOrderDirection(Criteria::DESC);
 
         return !$this->buildQueryFromCriteria($quoteQuery, $filterTransfer)->count();
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return array
+     */
+    public function findCustomerQuoteData(string $customerReference): array
+    {
+        $quoteQuery = $this->getFactory()
+            ->createQuoteQuery()
+            ->filterByCustomerReference($customerReference);
+        $quoteQuery->select([SpyQuoteTableMap::COL_ID_QUOTE, SpyQuoteTableMap::COL_IS_DEFAULT, SpyQuoteTableMap::COL_NAME]);
+
+        return $quoteQuery->find()->toArray();
     }
 }
