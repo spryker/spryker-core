@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListProductOption\Business;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
@@ -48,4 +49,17 @@ interface ShoppingListProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * Specification:
+     * - Maps ItemTransfer product option to ShoppingListItemTransfer product option.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function mapCartItemProductOptionsToShoppingListItemProductOptions(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 }

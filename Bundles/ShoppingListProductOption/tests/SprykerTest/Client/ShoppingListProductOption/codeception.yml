@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\ShoppingListProductOption
+namespace: SprykerTest\Client\ShoppingListProductOption
 
 paths:
     tests: .
@@ -12,12 +12,12 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
+    Client:
         path: .
-        class_name: ShoppingListProductOptionBusinessTester
+        class_name: ShoppingListProductOptionClientTester
         modules:
             enabled:
-                - \SprykerTest\Zed\Company\Helper\CompanyHelper
+                - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
@@ -25,8 +25,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
-                - \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper
-                - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
-                - \SprykerTest\Shared\ShoppingList\Helper\ShoppingListHelper
-                - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
                 - \SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper

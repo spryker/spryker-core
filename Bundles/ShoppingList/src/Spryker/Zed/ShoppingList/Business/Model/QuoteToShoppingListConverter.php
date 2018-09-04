@@ -36,26 +36,42 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
     protected $shoppingListEntityManager;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface
+     */
+    protected $shoppingListItemOperation;
+
+    /**
      * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface[]
      */
     protected $quoteItemExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface[]
+     */
+    protected $itemToShoppingListItemMapperPlugins;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface $shoppingListResolver
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface $persistentCartFacade
+     * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface $shoppingListItemOperation
      * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface[] $quoteItemExpanderPlugins
+     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface[] $itemToShoppingListItemMapperPlugins
      */
     public function __construct(
         ShoppingListResolverInterface $shoppingListResolver,
         ShoppingListEntityManagerInterface $shoppingListEntityManager,
         ShoppingListToPersistentCartFacadeInterface $persistentCartFacade,
-        array $quoteItemExpanderPlugins
+        ShoppingListItemOperationInterface $shoppingListItemOperation,
+        array $quoteItemExpanderPlugins,
+        array $itemToShoppingListItemMapperPlugins
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->shoppingListResolver = $shoppingListResolver;
         $this->shoppingListEntityManager = $shoppingListEntityManager;
+        $this->shoppingListItemOperation = $shoppingListItemOperation;
         $this->quoteItemExpanderPlugins = $quoteItemExpanderPlugins;
+        $this->itemToShoppingListItemMapperPlugins = $itemToShoppingListItemMapperPlugins;
     }
 
     /**
@@ -130,7 +146,11 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
                 ->setQuantity($item->getQuantity())
                 ->setSku($item->getSku());
 
-            $this->shoppingListEntityManager->saveShoppingListItem($shoppingListItemTransfer);
+            foreach ($this->itemToShoppingListItemMapperPlugins as $itemToShoppingListItemMapperPlugin) {
+                $shoppingListItemTransfer = $itemToShoppingListItemMapperPlugin->map($item, $shoppingListItemTransfer);
+            }
+
+            $this->shoppingListItemOperation->saveShoppingListItemWithoutPermissionsCheck($shoppingListItemTransfer);
         }
     }
 }
