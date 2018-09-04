@@ -130,7 +130,7 @@ class AbstractCoreModuleAwareConsole extends Console
             return $module;
         }
 
-        list($organizationName, $moduleName) = explode('.', $module);
+        [$organizationName, $moduleName] = explode('.', $module);
 
         if ($moduleName === 'all') {
             return $organizationName . '.';
