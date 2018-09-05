@@ -17,7 +17,7 @@ class CompanyBusinessUnitWriterPluginExecutor implements CompanyBusinessUnitWrit
     protected $companyBusinessUnitPostSavePlugins;
 
     /**
-     * @var array
+     * @var \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface[]
      */
     protected $companyBusinessUnitPreDeletePlugins;
 
