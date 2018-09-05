@@ -8,11 +8,14 @@
 namespace Spryker\Zed\Country\Business;
 
 use Spryker\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
+use Spryker\Zed\Country\Business\Country\CountryReader;
+use Spryker\Zed\Country\Business\Country\CountryReaderInterface;
 use Spryker\Zed\Country\Business\Internal\Install;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Country\CountryConfig getConfig()
+ * @method \Spryker\Zed\Country\Persistence\CountryRepositoryInterface getRepository()
  * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
  */
 class CountryBusinessFactory extends AbstractBusinessFactory
@@ -57,6 +60,16 @@ class CountryBusinessFactory extends AbstractBusinessFactory
     {
         return new RegionManager(
             $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Country\Business\Country\CountryReaderInterface
+     */
+    public function createCountryReader(): CountryReaderInterface
+    {
+        return new CountryReader(
+            $this->getRepository()
         );
     }
 
