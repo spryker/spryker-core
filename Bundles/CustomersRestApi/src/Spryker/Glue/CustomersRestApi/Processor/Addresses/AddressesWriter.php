@@ -99,6 +99,8 @@ class AddressesWriter implements AddressesWriterInterface
             return $restResponse;
         }
 
+        $this->updateCustomerDefaultAddresses($addressTransfer, $customerResponseTransfer->getCustomerTransfer());
+
         $restResource = $this
             ->addressesResourceMapper
             ->mapAddressTransferToRestResource(
@@ -155,6 +157,8 @@ class AddressesWriter implements AddressesWriterInterface
 
             return $restResponse;
         }
+
+        $this->updateCustomerDefaultAddresses($addressTransfer, $customerResponseTransfer->getCustomerTransfer());
 
         $restResource = $this
             ->addressesResourceMapper
@@ -296,6 +300,76 @@ class AddressesWriter implements AddressesWriterInterface
      */
     protected function isSameCustomerReference(RestRequestInterface $restRequest): bool
     {
-        return $restRequest->getUser()->getNaturalIdentifier() === $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
+        return $restRequest->getUser()->getNaturalIdentifier()
+            === $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function updateCustomerDefaultAddresses(
+        AddressTransfer $addressTransfer,
+        CustomerTransfer $customerTransfer
+    ): void {
+        $this->checkCustomerDefaultBillingAddressChanged($addressTransfer, $customerTransfer);
+        $this->checkCustomerDefaultShippingAddressChanged($addressTransfer, $customerTransfer);
+
+        if ($customerTransfer->isPropertyModified(CustomerTransfer::DEFAULT_BILLING_ADDRESS)
+            || $customerTransfer->isPropertyModified(CustomerTransfer::DEFAULT_SHIPPING_ADDRESS)) {
+            $this->customerClient->updateCustomer($customerTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function checkCustomerDefaultBillingAddressChanged(
+        AddressTransfer $addressTransfer,
+        CustomerTransfer $customerTransfer
+    ): CustomerTransfer {
+        if ($customerTransfer->getDefaultBillingAddress() === $addressTransfer->getIdCustomerAddress()
+            && !$addressTransfer->getIsDefaultBilling()
+        ) {
+            $customerTransfer->setDefaultBillingAddress(null);
+        }
+
+        if ($addressTransfer->getIsDefaultBilling()
+            && $customerTransfer->getDefaultBillingAddress() !== $addressTransfer->getIdCustomerAddress()
+        ) {
+            $customerTransfer->setDefaultBillingAddress($addressTransfer->getIdCustomerAddress());
+        }
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function checkCustomerDefaultShippingAddressChanged(
+        AddressTransfer $addressTransfer,
+        CustomerTransfer $customerTransfer
+    ): CustomerTransfer {
+        if ($customerTransfer->getDefaultShippingAddress() === $addressTransfer->getIdCustomerAddress()
+            && !$addressTransfer->getIsDefaultShipping()
+        ) {
+            $customerTransfer->setDefaultShippingAddress(null);
+        }
+
+        if ($addressTransfer->getIsDefaultShipping()
+            && $customerTransfer->getDefaultShippingAddress() !== $addressTransfer->getIdCustomerAddress()
+        ) {
+            $customerTransfer->setDefaultShippingAddress($addressTransfer->getIdCustomerAddress());
+        }
+
+        return $customerTransfer;
     }
 }
