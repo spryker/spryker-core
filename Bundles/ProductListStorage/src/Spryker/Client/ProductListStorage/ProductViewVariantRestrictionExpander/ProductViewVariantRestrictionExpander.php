@@ -117,6 +117,6 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
      */
     protected function findIdProductConcreteByAttributeValueKey(string $attributeValueKey, array $attributeVariants): ?int
     {
-        return $attributeVariants[$attributeValueKey][static::ID_PRODUCT_CONCRETE] ?: null;
+        return $attributeVariants[$attributeValueKey][static::ID_PRODUCT_CONCRETE] ?? null;
     }
 }
