@@ -29,11 +29,11 @@ class ProductConcretePageSearchProductListener extends AbstractProductConcretePa
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_DELETE) {
+        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_DELETE || $eventName === ProductEvents::PRODUCT_CONCRETE_PUBLISH) {
             $this->unpublish($productConcreteIds);
         }
 
-        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_CREATE || $eventName === ProductEvents::ENTITY_SPY_PRODUCT_UPDATE) {
+        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_CREATE || $eventName === ProductEvents::ENTITY_SPY_PRODUCT_UPDATE || ProductEvents::PRODUCT_CONCRETE_UNPUBLISH) {
             $this->publish($productConcreteIds);
         }
     }
