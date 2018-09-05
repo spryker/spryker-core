@@ -124,7 +124,8 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
     {
         $flysystemTransferCollection = $this->getService()->listContents(
             $fileSystemListTransfer->getFileSystemName(),
-            $fileSystemListTransfer->getPath()
+            $fileSystemListTransfer->getPath(),
+            $fileSystemListTransfer->getRecursive()
         );
 
         $collection = [];
