@@ -68,6 +68,10 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
     {
         $priceProductTransfers = [];
 
+        if (!$idProductAbstract) {
+            return $priceProductTransfers;
+        }
+
         foreach ($this->priceDimensionPlugins as $priceDimensionPlugin) {
             $priceProductTransfers = array_merge($priceProductTransfers, $priceDimensionPlugin->findProductAbstractPrices($idProductAbstract));
         }
