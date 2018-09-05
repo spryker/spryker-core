@@ -113,7 +113,7 @@ interface SalesFacadeInterface
      * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
      * @param int $idAddress
      *
-     * @return boolean
+     * @return bool
      */
     public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress);
 

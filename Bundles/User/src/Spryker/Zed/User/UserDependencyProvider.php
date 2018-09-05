@@ -13,10 +13,15 @@ use Spryker\Zed\User\Dependency\Plugin\GroupPlugin;
 
 class UserDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGIN_GROUP = 'group plugin';
-    const PLUGINS_USERS_TABLE_EXTENDER = 'PLUGINS_USERS_TABLE_EXTENDER';
-    const CLIENT_SESSION = 'client session';
-    const SERVICE_DATE_FORMATTER = 'date formatter service';
+    public const PLUGIN_GROUP = 'group plugin';
+    public const PLUGINS_USERS_TABLE_EXTENDER = 'PLUGINS_USERS_TABLE_EXTENDER';
+    public const PLUGINS_USER_TABLE_ACTION_EXPANDER = 'PLUGINS_USERS_TABLE_ACTION_EXPANDER';
+    public const PLUGINS_USER_TABLE_CONFIG_EXPANDER = 'PLUGINS_USER_TABLE_CONFIG_EXPANDER';
+    public const PLUGINS_USER_TABLE_DATA_EXPANDER = 'PLUGINS_USER_TABLE_DATA_EXPANDER';
+    public const PLUGINS_POST_SAVE = 'PLUGINS_POST_SAVE';
+    public const PLUGINS_USER_FORM_EXPANDER = 'PLUGINS_USER_FORM_EXPANDER';
+    public const CLIENT_SESSION = 'client session';
+    public const SERVICE_DATE_FORMATTER = 'date formatter service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,6 +31,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addSession($container);
+        $container = $this->addPostSavePlugins($container);
 
         return $container;
     }
@@ -39,6 +45,10 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addDateFormatter($container);
         $container = $this->addGroupPlugin($container);
+        $container = $this->addUserTableActionExpanderPlugins($container);
+        $container = $this->addUserTableConfigExpanderPlugins($container);
+        $container = $this->addUserTableDataExpanderPlugins($container);
+        $container = $this->addUserFormExpanderPlugins($container);
         $container = $this->addUsersTableExtenderPlugins($container);
 
         return $container;
@@ -91,19 +101,130 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUsersTableExtenderPlugins(Container $container)
+    protected function addUserTableActionExpanderPlugins(Container $container)
     {
-        $container[static::PLUGINS_USERS_TABLE_EXTENDER] = function (Container $container) {
-            return $this->getUsersTableExtenderPlugins();
+        $container[static::PLUGINS_USER_TABLE_ACTION_EXPANDER] = function () {
+            return array_merge(
+                $this->getUserTableActionExpanderPlugins(),
+                $this->getUsersTableExtenderPlugins()
+            );
         };
 
         return $container;
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUsersTableExtenderPlugins(Container $container)
+    {
+        return $this->addUserTableActionExpanderPlugins($container);
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInterface[]
+     */
+    protected function getUserTableActionExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Use \Spryker\Zed\User\UserDependencyProvider::getUserTableActionExpanderPlugins instead.
+     *
      * @return \Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface[]
      */
     protected function getUsersTableExtenderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPostSavePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_POST_SAVE] = function (): array {
+            return $this->getPostSavePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface[]
+     */
+    protected function getPostSavePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUserTableConfigExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_USER_TABLE_CONFIG_EXPANDER] = function (): array {
+            return $this->getUserTableConfigExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableConfigExpanderPluginInterface[]
+     */
+    protected function getUserTableConfigExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUserTableDataExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_USER_TABLE_DATA_EXPANDER] = function (): array {
+            return $this->getUserTableDataExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableDataExpanderPluginInterface[]
+     */
+    protected function getUserTableDataExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUserFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_USER_FORM_EXPANDER] = function (): array {
+            return $this->getUserFormExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserFormExpanderPluginInterface[]
+     */
+    protected function getUserFormExpanderPlugins(): array
     {
         return [];
     }

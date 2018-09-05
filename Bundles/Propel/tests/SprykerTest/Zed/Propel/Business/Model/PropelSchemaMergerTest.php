@@ -45,6 +45,23 @@ class PropelSchemaMergerTest extends Unit
     /**
      * @return void
      */
+    public function testMergeMoreThanTwoSchemaFilesMustReturnStringWithMergedContent()
+    {
+        $filesToMerge = [
+            $this->getSplFileInfo('foo_bar.schema.xml', static::LEVEL_VENDOR),
+            $this->getSplFileInfo('bar_foo.schema.xml', static::LEVEL_VENDOR),
+            $this->getSplFileInfo('foo_bar.schema.xml', static::LEVEL_PROJECT),
+        ];
+
+        $merger = new PropelSchemaMerger();
+        $content = $merger->merge($filesToMerge);
+        $expected = file_get_contents($this->getFixtureDirectory() . 'expected.merged.three.uniques.schema.xml');
+        $this->assertSame($expected, $content);
+    }
+
+    /**
+     * @return void
+     */
     public function testMergeAllowsToChangeAttributeValue()
     {
         $filesToMerge = [
