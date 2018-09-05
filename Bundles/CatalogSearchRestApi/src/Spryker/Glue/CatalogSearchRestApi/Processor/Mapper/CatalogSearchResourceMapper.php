@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\RestFacetSearchResultAttributesTransfer;
 use Generated\Shared\Transfer\RestRangeSearchResultAttributesTransfer;
 use Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig;
+use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
@@ -23,10 +24,17 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
     protected $restResourceBuilder;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @var \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface
      */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    protected $priceClient;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface $priceClient
+     */
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder, CatalogSearchRestApiToPriceClientInterface $priceClient)
     {
+        $this->priceClient = $priceClient;
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
@@ -87,7 +95,11 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         foreach ($restSearchAttributesTransfer->getProducts() as $product) {
             $prices = [];
             foreach ($product->getPrices() as $priceType => $price) {
-                $prices[] = [$priceType => $price];
+                $prices[] = [
+                    'priceTypeName' => $priceType,
+                    $this->priceClient->getCurrentPriceMode() => $price,
+
+                ];
             }
             $product->setPrices($prices);
         }

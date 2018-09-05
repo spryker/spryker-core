@@ -40,7 +40,8 @@ class CatalogSearchRestApiFactory extends AbstractFactory
     public function createCatalogSearchResourceMapper(): CatalogSearchResourceMapperInterface
     {
         return new CatalogSearchResourceMapper(
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
+            $this->getProvidedDependency(CatalogSearchRestApiDependencyProvider::CLIENT_PRICE)
         );
     }
 

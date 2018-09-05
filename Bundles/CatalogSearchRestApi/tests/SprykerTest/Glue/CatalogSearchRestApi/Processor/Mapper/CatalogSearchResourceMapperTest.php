@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\PaginationSearchResultTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\SortSearchResultTransfer;
+use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 
@@ -50,7 +51,7 @@ class CatalogSearchResourceMapperTest extends Unit
         parent::setUp();
 
         $this->restSearchAttributesTransfer = new RestCatalogSearchAttributesTransfer();
-        $this->catalogSearchResourceMapper = new CatalogSearchResourceMapper(new RestResourceBuilder());
+        $this->catalogSearchResourceMapper = new CatalogSearchResourceMapper(new RestResourceBuilder(), $this->getPriceClientMock());
     }
 
     /**
@@ -74,7 +75,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->assertEquals("Toshiba CAMILEO S20", $this->restSearchAttributesTransfer->getProducts()[0]->getAbstractName());
         $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrice());
         $this->assertEquals("209", $this->restSearchAttributesTransfer->getProducts()[0]->getAbstractSku());
-        $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrices()[0]['DEFAULT']);
+        $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrices()[0]['GROSS_MODE']);
         $this->assertArrayNotHasKey("id_product_abstract", $this->restSearchAttributesTransfer->getProducts()[0]);
         $this->assertArrayNotHasKey("id_product_labels", $this->restSearchAttributesTransfer->getProducts()[0]);
 
@@ -285,5 +286,18 @@ class CatalogSearchResourceMapperTest extends Unit
         $facetSearchResultTransfer->setConfig($facetConfig);
 
         return $facetSearchResultTransfer;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject | \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface
+     */
+    protected function getPriceClientMock()
+    {
+        $mock = $this
+            ->createMock(CatalogSearchRestApiToPriceClientInterface::class);
+        $mock->method('getCurrentPriceMode')
+            ->willReturn('GROSS_MODE');
+
+        return $mock;
     }
 }
