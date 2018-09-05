@@ -108,10 +108,12 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
      */
     public function findProductAbstractBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $abstractProductData = $this->productResourceAliasStorageClient->findProductAbstractStorageDataBySku(
-            $sku,
-            $restRequest->getMetadata()->getLocale()
-        );
+        $abstractProductData = $this->productStorageClient
+            ->findProductAbstractStorageDataByMapping(
+                static::PRODUCT_ABSTRACT_MAPPING_TYPE,
+                $sku,
+                $restRequest->getMetadata()->getLocale()
+            );
 
         if (!$abstractProductData) {
             return null;
