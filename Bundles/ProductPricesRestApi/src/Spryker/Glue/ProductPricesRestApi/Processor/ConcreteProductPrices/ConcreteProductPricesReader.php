@@ -12,6 +12,8 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductResourceAliasStorageClientInterface;
+use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientInterface;
+use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ConcreteProductPricesResourceMapperInterface;
 use Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiConfig;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
@@ -20,7 +22,12 @@ use Symfony\Component\HttpFoundation\Response;
 class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterface
 {
     /**
-     * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductResourceAliasStorageClientInterface
+     * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface
+     */
+    protected $productStorageClient;
+
+    /**
+     * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientInterface
      */
     protected $priceProductStorageClient;
 
@@ -35,12 +42,14 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
     protected $concreteProductPricesResourceMapper;
 
     /**
-     * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductResourceAliasStorageClientInterface $priceProductStorageClient
+     * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface $productStorageClient
+     * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientInterface $priceProductStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ConcreteProductPricesResourceMapperInterface $concreteProductPricesResourceMapper
      */
     public function __construct(
-        ProductPricesRestApiToPriceProductResourceAliasStorageClientInterface $priceProductStorageClient,
+        ProductPricesRestApiToProductStorageClientInterface $productStorageClient,
+        ProductPricesRestApiToPriceProductStorageClientInterface $priceProductStorageClient,
         RestResourceBuilderInterface $restResourceBuilder,
         ConcreteProductPricesResourceMapperInterface $concreteProductPricesResourceMapper
     ) {
