@@ -526,19 +526,19 @@ class FileSystemServiceTest extends Unit
      */
     public function testListContents()
     {
-        //Arrange
-        $fileSystemListTransfer = new FileSystemListTransfer();
-        $fileSystemListTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
-        $fileSystemListTransfer->setPath('/');
-        $fileSystemListTransfer->setRecursive(false);
+        // Arrange
+        $fileSystemListTransfer = (new FileSystemListTransfer())
+            ->setFileSystemName(static::FILE_SYSTEM_DOCUMENT)
+            ->setPath('/')
+            ->setRecursive(false);
 
         $this->createDocumentFile();
         $this->createDocumentFileInRoot();
 
-        //Act
+        // Act
         $content = $this->fileSystemService->listContents($fileSystemListTransfer);
 
-        //Assert
+        // Assert
         $this->assertCount(1, $content);
     }
 
@@ -547,19 +547,19 @@ class FileSystemServiceTest extends Unit
      */
     public function testListContentsRecursive()
     {
-        //Arrange
-        $fileSystemListTransfer = new FileSystemListTransfer();
-        $fileSystemListTransfer->setFileSystemName(static::FILE_SYSTEM_DOCUMENT);
-        $fileSystemListTransfer->setPath('/');
-        $fileSystemListTransfer->setRecursive(true);
+        // Arrange
+        $fileSystemListTransfer = (new FileSystemListTransfer())
+            ->setFileSystemName(static::FILE_SYSTEM_DOCUMENT)
+            ->setPath('/')
+            ->setRecursive(true);
 
         $this->createDocumentFile();
         $this->createDocumentFileInRoot();
 
-        //Act
+        // Act
         $content = $this->fileSystemService->listContents($fileSystemListTransfer);
 
-        //Assert
+        // Assert
         $this->assertCount(2, $content);
     }
 
