@@ -28,6 +28,7 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
      */
     public function getMerchantRelationshipById(int $idMerchantRelationship): ?MerchantRelationshipTransfer
     {
+        /** @var \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship|null $spyMerchantRelation */
         $spyMerchantRelation = $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->filterByIdMerchantRelationship($idMerchantRelationship)
@@ -123,5 +124,33 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
         }
 
         return $merchantRelationshipCollection;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @module CompanyBusinessUnit
+     * @module Merchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     */
+    public function getMerchantRelationshipCollection(): array
+    {
+        $merchantRelationEntities = $this->getFactory()
+            ->createMerchantRelationshipQuery()
+            ->leftJoinCompanyBusinessUnit()
+            ->innerJoinWithMerchant()
+            ->find();
+
+        $merchantRelationTransfers = [];
+        foreach ($merchantRelationEntities as $merchantRelationEntity) {
+            $merchantRelationTransfers[] = $this->getFactory()
+                ->createPropelMerchantRelationshipMapper()
+                ->mapEntityToMerchantRelationshipTransfer($merchantRelationEntity, new MerchantRelationshipTransfer());
+        }
+
+        return $merchantRelationTransfers;
     }
 }

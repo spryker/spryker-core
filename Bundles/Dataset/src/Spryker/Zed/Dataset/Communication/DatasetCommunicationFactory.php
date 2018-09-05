@@ -31,7 +31,7 @@ class DatasetCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param null|int $idDataset
+     * @param int|null $idDataset
      *
      * @return \Symfony\Component\Form\FormInterface
      */

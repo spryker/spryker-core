@@ -203,7 +203,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 
         $pairs = [];
         foreach ($cmsBlockEntities as $cmsBlockEntity) {
-            list($pairs, $mappedCmsBlockStorageEntities) = $this->pairCmsBlockEntityWithCmsBlockStorageEntitiesByLocalesAndStores(
+            [$pairs, $mappedCmsBlockStorageEntities] = $this->pairCmsBlockEntityWithCmsBlockStorageEntitiesByLocalesAndStores(
                 $cmsBlockEntity[static::COLUMN_ID_CMS_BLOCK],
                 $localeNames,
                 $cmsBlockEntity[static::RELATION_CMS_BLOCK_STORES],

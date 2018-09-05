@@ -53,7 +53,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
         }
 
         $restResource = $restRequest->getResource();
-        if (!$restResource || !$restResource->getAttributes()) {
+        if (!$restResource->getAttributes()) {
             $restErrorMessageTransfer = new RestErrorMessageTransfer();
             $restErrorMessageTransfer->setDetail('Post data missing.');
 

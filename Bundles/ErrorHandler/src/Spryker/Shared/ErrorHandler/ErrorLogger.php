@@ -16,7 +16,7 @@ class ErrorLogger implements ErrorLoggerInterface
     use LoggerTrait;
 
     /**
-     * @var self
+     * @var self|null
      */
     protected static $instance;
 

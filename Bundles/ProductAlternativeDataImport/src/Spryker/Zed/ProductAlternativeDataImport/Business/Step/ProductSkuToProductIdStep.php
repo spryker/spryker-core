@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\ProductAlternativeDataImport\Business\Step;
@@ -32,6 +32,7 @@ class ProductSkuToProductIdStep implements DataImportStepInterface
         $productSku = $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_CONCRETE_SKU];
 
         if (!isset($this->idProductCache[$productSku])) {
+            /** @var \Orm\Zed\Product\Persistence\SpyProduct|null $productEntity */
             $productEntity = SpyProductQuery::create()->findOneBySku($productSku);
             if (!$productEntity) {
                 throw new EntityNotFoundException(sprintf('Could not find product by sku "%s"', $productSku));

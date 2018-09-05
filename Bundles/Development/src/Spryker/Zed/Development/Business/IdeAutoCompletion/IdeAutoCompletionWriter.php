@@ -98,7 +98,7 @@ class IdeAutoCompletionWriter implements IdeAutoCompletionWriterInterface
     protected function makeDirIfNotExists($directory)
     {
         if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
+            mkdir($directory, $this->options[IdeAutoCompletionConstants::DIRECTORY_PERMISSION], true);
         }
     }
 }
