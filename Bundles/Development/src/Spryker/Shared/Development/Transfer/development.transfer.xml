@@ -99,17 +99,23 @@
         <property name="fixType" type="string"/>
     </transfer>
 
+    <transfer name="Organization">
+        <property name="name" type="string"/>
+        <property name="nameDashed" type="string"/>
+    </transfer>
+
+    <transfer name="Application">
+        <property name="name" type="string"/>
+    </transfer>
+
     <transfer name="Module">
         <property name="name" type="string"/>
         <property name="nameDashed" type="string"/>
         <property name="organization" type="Organization"/>
+        <property name="application" type="Application"/>
         <property name="rootDirectory" type="string"/>
         <property name="isStandalone" type="bool"/>
-    </transfer>
-
-    <transfer name="Organization">
-        <property name="name" type="string"/>
-        <property name="nameDashed" type="string"/>
+        <property name="isInProject" type="bool"/>
     </transfer>
 
     <transfer name="ComposerJsonValidationRequest">
@@ -118,6 +124,21 @@
 
     <transfer name="ComposerJsonValidationResponse">
         <property name="validationMessages" type="ValidationMessage[]" singular="validationMessage"/>
+    </transfer>
+
+    <transfer name="DependencyProvider">
+        <property name="className" type="string"/>
+        <property name="module" type="Module"/>
+        <property name="usedPlugins" type="Plugin[]" singular="usedPlugin"/>
+    </transfer>
+
+    <transfer name="DependencyProviderCollection">
+        <property name="dependencyProvider" type="DependencyProvider[]"/>
+    </transfer>
+
+    <transfer name="Plugin">
+        <property name="className" type="string"/>
+        <property name="module" type="Module"/>
     </transfer>
 
 </transfers>

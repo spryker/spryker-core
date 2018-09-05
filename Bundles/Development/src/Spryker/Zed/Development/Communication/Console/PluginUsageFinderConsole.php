@@ -7,6 +7,14 @@
 
 namespace Spryker\Zed\Development\Communication\Console;
 
+use Generated\Shared\Transfer\ApplicationTransfer;
+use Generated\Shared\Transfer\DependencyProviderCollectionTransfer;
+use Generated\Shared\Transfer\DependencyProviderTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\OrganizationTransfer;
+use Generated\Shared\Transfer\PluginTransfer;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -25,6 +33,11 @@ class PluginUsageFinderConsole extends Console
     protected const ARGUMENT_MODULE = 'module';
 
     /**
+     * @var \Generated\Shared\Transfer\DependencyProviderCollectionTransfer|null
+     */
+    protected $dependencyProviderCollection;
+
+    /**
      * @return void
      */
     protected function configure()
@@ -33,7 +46,8 @@ class PluginUsageFinderConsole extends Console
 
         $this
             ->setName(static::COMMAND_NAME)
-            ->addArgument(static::ARGUMENT_MODULE, InputArgument::OPTIONAL, 'Module to run checks for. You must use dot syntax for namespaced ones, e.g. `SprykerEco.FooBar` or `Spryker.all` or `Spryker.M`. The latter syntax will find all modules starting with M, this can be more explicit by using more letters matching the modules you want to run checks for.');
+            ->addArgument(static::ARGUMENT_MODULE, InputArgument::OPTIONAL, 'Module to run checks for.')
+            ->setDescription('Finds all used plugins in the project\'s dependency provider.');
     }
 
     /**
@@ -44,29 +58,50 @@ class PluginUsageFinderConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $pluginUsages = [];
+        $dependencyProviderCollectionTransfer = new DependencyProviderCollectionTransfer();
 
-        $finder = $this->getFinder();
-        foreach ($finder as $splFileObject) {
-            $pluginUsages = $this->addPluginUsages($pluginUsages, $splFileObject);
-        }
+        $dependencyProviderPluginUsageList = $this->getDependencyProviderPluginUsageList($dependencyProviderCollectionTransfer);
 
-        foreach ($pluginUsages as $application => $modules) {
-            foreach ($modules as $moduleName => $usedPlugins) {
-                $applicationModule = sprintf('%s %s', $application, $moduleName);
-                $table = new Table($output);
-                $table->setHeaders(['Application & Module', 'Organization', 'Application', 'Module', 'Plugin name']);
-
-                foreach ($usedPlugins as $usedPlugin) {
-                    array_unshift($usedPlugin, $applicationModule);
-                    $table->addRow($usedPlugin);
-                }
-
-                $table->render();
-            }
-        }
+        $this->printDependencyProviderPluginUsageList($dependencyProviderPluginUsageList);
 
         return static::CODE_SUCCESS;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
+     */
+    protected function getDependencyProviderPluginUsageList(DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer): DependencyProviderCollectionTransfer
+    {
+        $finder = $this->getFinder();
+        foreach ($finder as $splFileObject) {
+            $dependencyProviderCollectionTransfer = $this->addPluginUsages($dependencyProviderCollectionTransfer, $splFileObject);
+        }
+
+        return $dependencyProviderCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer
+     *
+     * @return void
+     */
+    protected function printDependencyProviderPluginUsageList(DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer): void
+    {
+        foreach ($dependencyProviderCollectionTransfer->getDependencyProvider() as $dependencyProviderTransfer) {
+            if (count($dependencyProviderTransfer->getUsedPlugins()) === 0) {
+                continue;
+            }
+            $table = new Table($this->output);
+            $table->setHeaders([$dependencyProviderTransfer->getClassName()]);
+
+            foreach ($dependencyProviderTransfer->getUsedPlugins() as $pluginTransfer) {
+                $table->addRow([$pluginTransfer->getClassName()]);
+            }
+
+            $table->render();
+        }
     }
 
     /**
@@ -81,80 +116,117 @@ class PluginUsageFinderConsole extends Console
     }
 
     /**
-     * @param array $pluginUsages
+     * @param \Generated\Shared\Transfer\DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer
      * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
      */
-    protected function addPluginUsages(array $pluginUsages, SplFileInfo $splFileInfo): array
+    protected function addPluginUsages(DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer, SplFileInfo $splFileInfo): DependencyProviderCollectionTransfer
     {
         preg_match_all('/use (.*?);/', $splFileInfo->getContents(), $matches, PREG_SET_ORDER);
         if (count($matches) === 0) {
-            return $pluginUsages;
+            return $dependencyProviderCollectionTransfer;
         }
 
-        $usedPlugins = [];
+        $dependencyProviderTransfer = $this->buildDependencyProviderTransfer($splFileInfo);
+        $dependencyProviderTransfer = $this->addUsedPlugins($dependencyProviderTransfer, $matches);
 
-        foreach ($matches as $match) {
+        $dependencyProviderCollectionTransfer->addDependencyProvider($dependencyProviderTransfer);
+
+        return $dependencyProviderCollectionTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
+     *
+     * @return \Generated\Shared\Transfer\DependencyProviderTransfer
+     */
+    protected function buildDependencyProviderTransfer(SplFileInfo $splFileInfo): DependencyProviderTransfer
+    {
+        $dependencyProviderClassName = str_replace(['.php', DIRECTORY_SEPARATOR], ['', '\\'], $splFileInfo->getRelativePathname());
+
+        $moduleTransfer = $this->buildModuleTransferFromClassName($dependencyProviderClassName);
+
+        $dependencyProviderTransfer = new DependencyProviderTransfer();
+        $dependencyProviderTransfer
+            ->setClassName($dependencyProviderClassName)
+            ->setModule($moduleTransfer);
+
+        return $dependencyProviderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DependencyProviderTransfer $dependencyProviderTransfer
+     * @param array $useStatements
+     *
+     * @return \Generated\Shared\Transfer\DependencyProviderTransfer
+     */
+    protected function addUsedPlugins(DependencyProviderTransfer $dependencyProviderTransfer, array $useStatements): DependencyProviderTransfer
+    {
+        foreach ($useStatements as $match) {
             if (preg_match('/Plugin/', $match[1])) {
-                $usedPlugins[] = $this->getPluginInformation($match[1]);
+                $pluginTransfer = $this->buildPluginTransfer($match[1]);
+                $dependencyProviderTransfer->addUsedPlugin($pluginTransfer);
             }
         }
 
-        if (count($usedPlugins) === 0) {
-            return $pluginUsages;
-        }
-
-        $applicationName = $this->getApplicationName($splFileInfo);
-        $moduleName = $this->getModuleName($splFileInfo);
-
-        $pluginUsages[$applicationName][$moduleName] = $usedPlugins;
-
-        return $pluginUsages;
+        return $dependencyProviderTransfer;
     }
 
     /**
      * @param string $pluginClassName
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PluginTransfer
      */
-    protected function getPluginInformation(string $pluginClassName): array
+    protected function buildPluginTransfer(string $pluginClassName): PluginTransfer
     {
-        $pluginClassNameFragments = explode('\\', $pluginClassName);
+        $moduleTransfer = $this->buildModuleTransferFromClassName($pluginClassName);
 
-        return [
-            'organization' => $pluginClassNameFragments[0],
-            'application' => $pluginClassNameFragments[1],
-            'module' => $pluginClassNameFragments[2],
-            'pluginClassName' => $pluginClassName,
-        ];
+        $pluginTransfer = new PluginTransfer();
+        $pluginTransfer
+            ->setClassName($pluginClassName)
+            ->setModule($moduleTransfer);
+
+        return $pluginTransfer;
     }
 
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
+     * @param string $className
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\ModuleTransfer
      */
-    protected function getApplicationName(SplFileInfo $splFileInfo): string
+    protected function buildModuleTransferFromClassName(string $className): ModuleTransfer
     {
-        $pathFragments = explode(DIRECTORY_SEPARATOR, $splFileInfo->getPathname());
+        $classNameFragments = explode('\\', $className);
 
-        $organizationPosition = array_search('Pyz', $pathFragments);
+        $organizationTransfer = new OrganizationTransfer();
+        $organizationTransfer
+            ->setName($classNameFragments[0]);
 
-        return $pathFragments[$organizationPosition + 1];
+        $applicationTransfer = new ApplicationTransfer();
+        $applicationTransfer
+            ->setName($classNameFragments[1]);
+
+        $moduleTransfer = new ModuleTransfer();
+        $moduleTransfer
+            ->setName($classNameFragments[2])
+            ->setOrganization($organizationTransfer)
+            ->setApplication($applicationTransfer)
+            ->setIsStandalone(false)
+            ->setIsInProject($this->isProjectOrganization($classNameFragments[0]));
+
+        return $moduleTransfer;
     }
 
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
+     * @param string $organization
      *
-     * @return string
+     * @return bool
      */
-    protected function getModuleName(SplFileInfo $splFileInfo): string
+    protected function isProjectOrganization(string $organization): bool
     {
-        $pathFragments = explode(DIRECTORY_SEPARATOR, $splFileInfo->getPathname());
+        $projectNamespaces = Config::get(KernelConstants::PROJECT_NAMESPACES);
 
-        $organizationPosition = array_search('Pyz', $pathFragments);
-
-        return $pathFragments[$organizationPosition + 2];
+        return in_array($organization, $projectNamespaces, true);
     }
 }
