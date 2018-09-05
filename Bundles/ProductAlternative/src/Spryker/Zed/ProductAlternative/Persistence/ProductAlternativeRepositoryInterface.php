@@ -24,7 +24,7 @@ interface ProductAlternativeRepositoryInterface
     /**
      * @param int $idProductAlternative
      *
-     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer|null
      */
     public function findProductAlternativeByIdProductAlternative(int $idProductAlternative): ?ProductAlternativeTransfer;
 

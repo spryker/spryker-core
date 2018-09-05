@@ -13,13 +13,12 @@
   "require-dev": {
     "spryker/calculation": "*",
     "spryker/checkout": "*",
-    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/checkout": "If you want to use Checkout plugins.",
     "spryker/calculation": "To correctly calculate multiple payment methods",
-    "spryker/sales": "If you want to use SalesPayment saver plugin."
+    "spryker/checkout": "If you want to use Checkout plugins."
   },
   "autoload": {
     "psr-4": {
