@@ -15,12 +15,11 @@
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/application": "*",
+    "spryker/config": "*",
     "spryker/propel": "^3.0.0",
-    "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/util-encoding": "If you want to use its encoding functionality."
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "autoload": {
     "psr-4": {

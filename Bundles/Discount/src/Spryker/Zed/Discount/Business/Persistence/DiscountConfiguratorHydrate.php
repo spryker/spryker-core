@@ -135,7 +135,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     }
 
     /**
-     * @param integer $idDiscount
+     * @param int $idDiscount
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfigurator
      *
