@@ -524,7 +524,7 @@ class FileSystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testListContents()
+    public function testListContentsWithoutRecursiveShouldReturnOnlyFirstLevelFiles(): void
     {
         // Arrange
         $fileSystemListTransfer = (new FileSystemListTransfer())
@@ -545,7 +545,7 @@ class FileSystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testListContentsRecursive()
+    public function testListContentsWithRecursiveShouldReturnAllLevelsFiles(): void
     {
         // Arrange
         $fileSystemListTransfer = (new FileSystemListTransfer())
