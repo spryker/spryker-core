@@ -22,7 +22,7 @@ class Environment
     protected static $environment = APPLICATION_ENV;
 
     /**
-     * @var self
+     * @var self|null
      */
     protected static $instance;
 

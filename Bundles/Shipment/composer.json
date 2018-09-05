@@ -18,13 +18,15 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/calculation": "*",
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/country": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "suggest": {
     "spryker/calculation": "If you want to use Calculation plugins.",

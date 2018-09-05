@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\GlossaryStorage\Persistence;
 
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -46,5 +47,20 @@ class GlossaryStorageQueryContainer extends AbstractQueryContainer implements Gl
             ->joinWithLocale()
             ->addAnd('fk_glossary_key', $glossaryKeyIds, Criteria::IN)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $glossaryKeysIds
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
+     */
+    public function queryGlossaryKeysByIds(array $glossaryKeysIds): SpyGlossaryKeyQuery
+    {
+        return $this->getFactory()
+            ->getGlossaryQueryContainer()
+            ->queryKeys()
+            ->filterByIdGlossaryKey_In($glossaryKeysIds);
     }
 }

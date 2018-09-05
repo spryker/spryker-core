@@ -43,8 +43,10 @@ class ProductValidator implements ProductValidatorInterface
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getSku()) {
+                if ($this->validateConcreteItem($itemTransfer, $responseTransfer) === false) {
+                    continue;
+                }
                 $this->productStatusCheck($itemTransfer, $responseTransfer);
-                $this->validateConcreteItem($itemTransfer, $responseTransfer);
                 continue;
             }
 
@@ -58,14 +60,14 @@ class ProductValidator implements ProductValidatorInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
-     * @return void
+     * @return bool
      */
     protected function validateConcreteItem(ItemTransfer $itemTransfer, CartPreCheckResponseTransfer $responseTransfer)
     {
         $isValid = $this->productFacade->hasProductConcrete($itemTransfer->getSku());
 
         if ($isValid) {
-            return;
+            return true;
         }
 
         $message = $this->createViolationMessage(static::MESSAGE_ERROR_CONCRETE_PRODUCT_EXISTS);
@@ -74,6 +76,8 @@ class ProductValidator implements ProductValidatorInterface
         ]);
 
         $responseTransfer->addMessage($message);
+
+        return false;
     }
 
     /**

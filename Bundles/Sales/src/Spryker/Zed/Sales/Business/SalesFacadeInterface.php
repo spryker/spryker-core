@@ -113,7 +113,7 @@ interface SalesFacadeInterface
      * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
      * @param int $idAddress
      *
-     * @return boolean
+     * @return bool
      */
     public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress);
 
@@ -184,7 +184,9 @@ interface SalesFacadeInterface
     /**
      *
      * Specification:
-     *  - Expands order by quantity 1 recalculates order transfer with new values
+     * - Transforms provided cart items according configured cart item transformer strategies.
+     * - If no cart item transformer strategy is configured, explodes the provided items per quantity.
+     * - Recalculates order transfer with new values.
      *
      * @api
      *
