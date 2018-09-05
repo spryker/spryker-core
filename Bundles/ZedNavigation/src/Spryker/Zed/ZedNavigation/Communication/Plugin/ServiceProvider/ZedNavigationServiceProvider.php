@@ -12,8 +12,8 @@ use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ZedNavigation\Communication\Plugin\ZedNavigation;
 use Symfony\Component\HttpFoundation\Request;
-use Twig_SimpleFunction;
 use Twig_Environment;
+use Twig_SimpleFunction;
 
 /**
  * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface getFacade()

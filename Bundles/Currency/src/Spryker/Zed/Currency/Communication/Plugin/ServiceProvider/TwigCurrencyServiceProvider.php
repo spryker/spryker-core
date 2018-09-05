@@ -10,8 +10,8 @@ namespace Spryker\Zed\Currency\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Twig_SimpleFunction;
 use Twig_Environment;
+use Twig_SimpleFunction;
 
 /**
  * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
