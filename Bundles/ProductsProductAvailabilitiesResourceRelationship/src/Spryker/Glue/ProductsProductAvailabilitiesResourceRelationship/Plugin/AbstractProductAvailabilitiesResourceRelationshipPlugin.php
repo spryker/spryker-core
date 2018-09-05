@@ -14,7 +14,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Glue\ProductsProductAvailabilitiesResourceRelationship\ProductsProductAvailabilitiesResourceRelationshipFactory getFactory()
  */
-class ProductsProductAvailabilitiesResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class AbstractProductAvailabilitiesResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources

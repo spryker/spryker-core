@@ -71,10 +71,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $abstractProductResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
         if (!$abstractProductResource) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(ProductsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED)
-                ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED);
+            $restErrorTransfer = $this->createAbstractProductSkuIsNotSpecifiedError();
 
             return $restResponse->addError($restErrorTransfer);
         }
@@ -82,10 +79,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
 
         $restResource = $this->findAbstractProductAvailabilityBySku($abstractSku, $restRequest);
         if (!$restResource) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(ProductAvailabilitiesRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_AVAILABILITY_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(ProductAvailabilitiesRestApiConfig::RESPONSE_DETAILS_ABSTRACT_PRODUCT_AVAILABILITY_NOT_FOUND);
+            $restErrorTransfer = $this->createAbstractProductAvailabilityNotFoundError();
 
             return $restResponse->addError($restErrorTransfer);
         }
@@ -128,5 +122,31 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
         $restResource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $restResourceSelfLink);
 
         return $restResource;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createAbstractProductSkuIsNotSpecifiedError(): RestErrorMessageTransfer
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED);
+
+        return $restErrorTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createAbstractProductAvailabilityNotFoundError(): RestErrorMessageTransfer
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductAvailabilitiesRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_AVAILABILITY_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(ProductAvailabilitiesRestApiConfig::RESPONSE_DETAILS_ABSTRACT_PRODUCT_AVAILABILITY_NOT_FOUND);
+
+        return $restErrorTransfer;
     }
 }
