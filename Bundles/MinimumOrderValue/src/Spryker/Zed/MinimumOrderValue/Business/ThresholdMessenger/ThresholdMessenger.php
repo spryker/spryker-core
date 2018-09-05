@@ -14,12 +14,14 @@ use Generated\Shared\Transfer\MoneyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig;
 use Spryker\Zed\MinimumOrderValue\Business\DataSource\MinimumOrderValueDataSourceStrategyResolverInterface;
+use Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface;
 
 class ThresholdMessenger implements ThresholdMessengerInterface
 {
     protected const THRESHOLD_GLOSSARY_PARAMETER = '{{threshold}}';
+    protected const FEE_GLOSSARY_PARAMETER = '{{fee}}';
 
     /**
      * @var \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface
@@ -37,18 +39,26 @@ class ThresholdMessenger implements ThresholdMessengerInterface
     protected $minimumOrderValueDataSourceStrategyResolver;
 
     /**
+     * @var \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface
+     */
+    protected $minimumOrderValueStrategyResolver;
+
+    /**
      * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface $messengerFacade
      * @param \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\MinimumOrderValue\Business\DataSource\MinimumOrderValueDataSourceStrategyResolverInterface $minimumOrderValueDataSourceStrategyResolver
+     * @param \Spryker\Zed\MinimumOrderValue\Business\Strategy\Resolver\MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
      */
     public function __construct(
         MinimumOrderValueToMessengerFacadeInterface $messengerFacade,
         MinimumOrderValueToMoneyFacadeInterface $moneyFacade,
-        MinimumOrderValueDataSourceStrategyResolverInterface $minimumOrderValueDataSourceStrategyResolver
+        MinimumOrderValueDataSourceStrategyResolverInterface $minimumOrderValueDataSourceStrategyResolver,
+        MinimumOrderValueStrategyResolverInterface $minimumOrderValueStrategyResolver
     ) {
         $this->messengerFacade = $messengerFacade;
         $this->moneyFacade = $moneyFacade;
         $this->minimumOrderValueDataSourceStrategyResolver = $minimumOrderValueDataSourceStrategyResolver;
+        $this->minimumOrderValueStrategyResolver = $minimumOrderValueStrategyResolver;
     }
 
     /**
@@ -81,46 +91,71 @@ class ThresholdMessenger implements ThresholdMessengerInterface
 
         $thresholdMessages = [];
         foreach ($minimumOrderValueThresholdTransfers as $minimumOrderValueThresholdTransfer) {
+            $minimumOrderValueStrategy = $this->minimumOrderValueStrategyResolver->resolveMinimumOrderValueStrategy(
+                $minimumOrderValueThresholdTransfer->getMinimumOrderValueType()->getKey()
+            );
+
+            if (!$minimumOrderValueStrategy->isApplicable($minimumOrderValueThresholdTransfer)
+            ) {
+                continue;
+            }
+
             $thresholdMessages[$minimumOrderValueThresholdTransfer->getMessageGlossaryKey()] =
-                $this->createMessageTransfer($minimumOrderValueThresholdTransfer, $quoteTransfer->getCurrency());
+                $this->createMessageTransfer(
+                    $minimumOrderValueThresholdTransfer->getMessageGlossaryKey(),
+                    (string)$minimumOrderValueThresholdTransfer->getThreshold(),
+                    (string)$minimumOrderValueStrategy->calculateFee($minimumOrderValueThresholdTransfer),
+                    $quoteTransfer->getCurrency()
+                );
         }
 
         return $thresholdMessages;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
+     * @param string $messageGlossaryKey
+     * @param string $threshold
+     * @param string $fee
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
     protected function createMessageTransfer(
-        MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer,
+        string $messageGlossaryKey,
+        string $threshold,
+        string $fee,
         CurrencyTransfer $currencyTransfer
     ): MessageTransfer {
+        $messageParams = [
+            static::THRESHOLD_GLOSSARY_PARAMETER => $this->moneyFacade->formatWithSymbol(
+                $this->createMoneyTransfer($threshold, $currencyTransfer)
+            ),
+        ];
+
+        if ($fee) {
+            $messageParams[static::FEE_GLOSSARY_PARAMETER] = $this->moneyFacade->formatWithSymbol(
+                $this->createMoneyTransfer($fee, $currencyTransfer)
+            );
+        }
+
         return (new MessageTransfer())
-            ->setValue($minimumOrderValueThresholdTransfer->getMessageGlossaryKey())
-            ->setParameters([
-                static::THRESHOLD_GLOSSARY_PARAMETER => $this->moneyFacade->formatWithSymbol(
-                    $this->createMoneyTransfer($minimumOrderValueThresholdTransfer, $currencyTransfer)
-                ),
-            ]);
+            ->setValue($messageGlossaryKey)
+            ->setParameters($messageParams);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer
+     * @param string $moneyValue
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
     protected function createMoneyTransfer(
-        MinimumOrderValueThresholdTransfer $minimumOrderValueThresholdTransfer,
+        string $moneyValue,
         CurrencyTransfer $currencyTransfer
     ): MoneyTransfer {
         return (new MoneyTransfer())
-            ->setAmount(
-                (string)$minimumOrderValueThresholdTransfer->getThreshold()
-            )->setCurrency($currencyTransfer);
+            ->setAmount($moneyValue)
+            ->setCurrency($currencyTransfer);
     }
 
     /**

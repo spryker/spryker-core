@@ -212,7 +212,7 @@ class GlobalThresholdType extends AbstractType
     protected function addSoftFlexibleFeeField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_SOFT_FLEXIBLE_FEE, TextType::class, [
-            'label' => 'Enter flexible fee',
+            'label' => 'Enter flexible fee (percentage)',
             'required' => false,
             'constraints' => [
                 $this->createMoneyConstraint($options),
@@ -299,30 +299,21 @@ class GlobalThresholdType extends AbstractType
      */
     protected function convertIntToMoney(FormEvent $event, array $options): void
     {
-        $moneyFacade = $this->getFactory()->getMoneyFacade();
         $data = $event->getData();
-
         if (is_array($data)) {
-            if (isset($data[static::FIELD_HARD_VALUE])) {
-                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_HARD_VALUE]);
-                $data[static::FIELD_HARD_VALUE] = $moneyFloat;
+            foreach ([
+                         static::FIELD_HARD_VALUE,
+                         static::FIELD_SOFT_VALUE,
+                         static::FIELD_SOFT_FLEXIBLE_FEE,
+                         static::FIELD_SOFT_FIXED_FEE,
+                     ] as $fieldName) {
+                $data = $this->convertMoneyValue(
+                    $data,
+                    $fieldName,
+                    [$this->getFactory()->getMoneyFacade(), 'convertIntegerToDecimal'],
+                    'intval'
+                );
             }
-
-            if (isset($data[static::FIELD_SOFT_VALUE])) {
-                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_SOFT_VALUE]);
-                $data[static::FIELD_SOFT_VALUE] = $moneyFloat;
-            }
-
-            if (isset($data[static::FIELD_SOFT_FLEXIBLE_FEE])) {
-                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_SOFT_FLEXIBLE_FEE]);
-                $data[static::FIELD_SOFT_FLEXIBLE_FEE] = $moneyFloat;
-            }
-
-            if (isset($data[static::FIELD_SOFT_FIXED_FEE])) {
-                $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data[static::FIELD_SOFT_FIXED_FEE]);
-                $data[static::FIELD_SOFT_FIXED_FEE] = $moneyFloat;
-            }
-
             $event->setData($data);
         }
     }
@@ -335,31 +326,41 @@ class GlobalThresholdType extends AbstractType
      */
     protected function convertMoneyToInt(FormEvent $event, array $options): void
     {
-        $moneyFacade = $this->getFactory()->getMoneyFacade();
         $data = $event->getData();
-
         if (is_array($data)) {
-            if (isset($data[static::FIELD_HARD_VALUE])) {
-                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_HARD_VALUE]);
-                $data[static::FIELD_HARD_VALUE] = $moneyInt;
+            foreach ([
+                         static::FIELD_HARD_VALUE,
+                         static::FIELD_SOFT_VALUE,
+                         static::FIELD_SOFT_FLEXIBLE_FEE,
+                         static::FIELD_SOFT_FIXED_FEE,
+                     ] as $fieldName) {
+                $data = $this->convertMoneyValue(
+                    $data,
+                    $fieldName,
+                    [$this->getFactory()->getMoneyFacade(), 'convertDecimalToInteger'],
+                    'floatval'
+                );
             }
-
-            if (isset($data[static::FIELD_SOFT_VALUE])) {
-                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_SOFT_VALUE]);
-                $data[static::FIELD_SOFT_VALUE] = $moneyInt;
-            }
-
-            if (isset($data[static::FIELD_SOFT_FLEXIBLE_FEE])) {
-                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_SOFT_FLEXIBLE_FEE]);
-                $data[static::FIELD_SOFT_FLEXIBLE_FEE] = $moneyInt;
-            }
-
-            if (isset($data[static::FIELD_SOFT_FIXED_FEE])) {
-                $moneyInt = $moneyFacade->convertDecimalToInteger((float)$data[static::FIELD_SOFT_FIXED_FEE]);
-                $data[static::FIELD_SOFT_FIXED_FEE] = $moneyInt;
-            }
-
             $event->setData($data);
         }
+    }
+
+    /**
+     * @param array $data
+     * @param string $fieldName
+     * @param callable $moneyConvertFunction
+     * @param callable $typeConvertFunction
+     *
+     * @return array
+     */
+    protected function convertMoneyValue(array $data, string $fieldName, callable $moneyConvertFunction, callable $typeConvertFunction): array
+    {
+        if (!isset($data[$fieldName])) {
+            $data[$fieldName] = 0;
+
+            return $data;
+        }
+        $data[$fieldName] = $moneyConvertFunction($typeConvertFunction($data[$fieldName]));
+        return $data;
     }
 }

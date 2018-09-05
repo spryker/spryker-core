@@ -169,7 +169,8 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
         return new ThresholdMessenger(
             $this->getMessengerFacade(),
             $this->getMoneyFacade(),
-            $this->createMinimumOrderValueDataSourceStrategyResolver()
+            $this->createMinimumOrderValueDataSourceStrategyResolver(),
+            $this->createMinimumOrderValueStrategyResolver()
         );
     }
 
