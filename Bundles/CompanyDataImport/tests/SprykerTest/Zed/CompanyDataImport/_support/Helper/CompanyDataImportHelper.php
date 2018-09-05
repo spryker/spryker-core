@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\CompanyDataImport\Helper;
 use Codeception\Module;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Map\RelationMap;
 
 class CompanyDataImportHelper extends Module
 {
@@ -18,20 +20,30 @@ class CompanyDataImportHelper extends Module
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
-        $companyQuery = $this->getCompanyQuery();
-        $companyBusinessUnitQuery = $this->getCompanyBusinessUnitQuery();
-        $companyBusinessUnitQuery->update(['FkParentCompanyBusinessUnit' => null]);
-        foreach ($companyQuery->find() as $companyEntity) {
-            $companyEntity->getSpyCompanySupplierToProducts()->delete();
-            foreach ($companyEntity->getPriceProducts() as $priceProduct) {
-                $priceProduct->setFkCompany(null);
-                $priceProduct->save();
+        $this->cleanTableRelations($this->getCompanyQuery());
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param array $processedEntities
+     *
+     * @return void
+     */
+    protected function cleanTableRelations(ModelCriteria $query, array $processedEntities = []): void
+    {
+        $relations = $query->getTableMap()->getRelations();
+
+        foreach ($relations as $relationMap) {
+            $relationType = $relationMap->getType();
+            $fullyQualifiedQueryModel = $relationMap->getLocalTable()->getClassname() . 'Query';
+            if ($relationType == RelationMap::ONE_TO_MANY && !in_array($fullyQualifiedQueryModel, $processedEntities)) {
+                $processedEntities[] = $fullyQualifiedQueryModel;
+                $fullyQualifiedQueryModelObject = $fullyQualifiedQueryModel::create();
+                $this->cleanTableRelations($fullyQualifiedQueryModelObject, $processedEntities);
             }
-            $companyEntity->getCompanyUsers()->delete();
-            $companyEntity->getCompanyBusinessUnits()->delete();
-            $companyEntity->getCompanyUnitAddresses()->delete();
-            $companyEntity->delete();
         }
+
+        $query->deleteAll();
     }
 
     /**

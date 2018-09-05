@@ -105,7 +105,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     protected function isTransactionIgnorable(string $transaction): bool
     {
         foreach ($this->ignorableTransactions as $ignorableTransaction) {
-            if (strpos($transaction, $ignorableTransaction) !== false) {
+            if (strpos($transaction, $ignorableTransaction) === 0) {
                 return true;
             }
         }

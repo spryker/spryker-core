@@ -106,7 +106,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
             $token = $this->cleanToken($tokens[$currentTokenIndex]);
 
             switch (true) {
-                case self::OPEN_PARENTHESIS === $token:
+                case $token === self::OPEN_PARENTHESIS:
                     $parenthesisDepth++;
                     $currentTokenIndex++;
                     $childTree = $this->buildTree($tokens, $currentTokenIndex, $parenthesisDepth);
@@ -118,7 +118,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
                     }
                     break;
 
-                case self::CLOSE_PARENTHESIS === $token:
+                case $token === self::CLOSE_PARENTHESIS:
                     $parenthesisDepth--;
 
                     if ($compositeNode == null) {
@@ -239,7 +239,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     protected function setClauseField($fieldName, ClauseTransfer $clauseTransfer)
     {
         if (strpos($fieldName, '.') !== false) {
-            list($fieldName, $attribute) = explode('.', $fieldName);
+            [$fieldName, $attribute] = explode('.', $fieldName);
             $clauseTransfer->setAttribute($attribute);
         }
 

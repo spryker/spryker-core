@@ -22,17 +22,17 @@ class FooBarTransfer extends AbstractTransfer
     const SELF_REFERENCE = 'selfReference';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $name;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $bla;
 
     /**
-     * @var \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]
+     * @var \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]|null
      */
     protected $selfReference;
 
@@ -76,7 +76,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return $this
      */
@@ -91,7 +91,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return string
+     * @return string|null
      */
     public function getName()
     {
@@ -113,7 +113,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test|Test2
      *
-     * @param int $bla
+     * @param int|null $bla
      *
      * @return $this
      */
@@ -128,7 +128,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test|Test2
      *
-     * @return int
+     * @return int|null
      */
     public function getBla()
     {
@@ -165,7 +165,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test2
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]|null
      */
     public function getSelfReference()
     {

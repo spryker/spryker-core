@@ -98,6 +98,7 @@ abstract class AbstractCustomerTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->prepareQuery();
+        /** @var \Propel\Runtime\Collection\ObjectCollection $customerCollection */
         $customerCollection = $this->runQuery($query, $config, true);
         $data = $this->buildResultData($customerCollection);
 
