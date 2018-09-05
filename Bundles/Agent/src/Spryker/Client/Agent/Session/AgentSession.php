@@ -13,7 +13,7 @@ use Spryker\Client\Agent\Dependency\Client\AgentToSessionClientInterface;
 class AgentSession implements AgentSessionInterface
 {
     /**
-     * @var \Spryker\Client\Session\SessionClientInterface
+     * @var \Spryker\Client\Agent\Dependency\Client\AgentToSessionClientInterface
      */
     protected $sessionClient;
 

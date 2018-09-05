@@ -24,17 +24,18 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
      */
     public function findAgentByUsername(string $username): ?UserTransfer
     {
+        /** @var \Orm\Zed\User\Persistence\SpyUser|null $userEntity */
         $userEntity = $this->getFactory()
             ->getUserQuery()
             ->filterByIsAgent(true)
             ->filterByUsername($username)
             ->findOne();
 
-        $userTransfer = new UserTransfer();
-
         if ($userEntity === null) {
             return null;
         }
+
+        $userTransfer = new UserTransfer();
 
         return $userTransfer->fromArray($userEntity->toArray(), true);
     }
@@ -51,18 +52,18 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
 
         $customersQuery = $this->getFactory()
             ->getCustomerQuery()
-            ->setIgnoreCase(true)
+            ->filterByEmail_Like($queryPattern)
+            ->_or()
+            ->filterByLastName_Like($queryPattern)
+            ->_or()
+            ->filterByFirstName_Like($queryPattern)
             ->select([
                 SpyCustomerTableMap::COL_ID_CUSTOMER,
                 SpyCustomerTableMap::COL_FIRST_NAME,
                 SpyCustomerTableMap::COL_LAST_NAME,
                 SpyCustomerTableMap::COL_EMAIL,
             ])
-            ->filterByEmail_Like($queryPattern)
-            ->_or()
-            ->filterByLastName_Like($queryPattern)
-            ->_or()
-            ->filterByFirstName_Like($queryPattern);
+            ->setIgnoreCase(true);
 
         if ($limit !== null) {
             $customersQuery->limit($limit);

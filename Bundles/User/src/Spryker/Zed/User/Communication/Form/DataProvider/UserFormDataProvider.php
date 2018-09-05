@@ -19,7 +19,7 @@ class UserFormDataProvider
     protected $groupPlugin;
 
     /**
-     * @var \Spryker\Zed\User\Business\UserFacade
+     * @var \Spryker\Zed\User\Business\UserFacadeInterface
      */
     protected $userFacade;
 

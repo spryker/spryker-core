@@ -35,7 +35,10 @@ class AgentStub implements AgentStubInterface
      */
     public function findAgentByUsername(UserTransfer $userTransfer): FindAgentResponseTransfer
     {
-        return $this->zedRequestClient->call('/agent/gateway/find-agent-by-username', $userTransfer);
+        /** @var \Generated\Shared\Transfer\FindAgentResponseTransfer $findAgentResponseTransfer */
+        $findAgentResponseTransfer = $this->zedRequestClient->call('/agent/gateway/find-agent-by-username', $userTransfer);
+
+        return $findAgentResponseTransfer;
     }
 
     /**
@@ -45,6 +48,9 @@ class AgentStub implements AgentStubInterface
      */
     public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer
     {
-        return $this->zedRequestClient->call('/agent/gateway/find-customers-by-query', $customerQueryTransfer);
+        /** @var \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer $customerAutocompleteResponseTransfer */
+        $customerAutocompleteResponseTransfer = $this->zedRequestClient->call('/agent/gateway/find-customers-by-query', $customerQueryTransfer);
+
+        return $customerAutocompleteResponseTransfer;
     }
 }

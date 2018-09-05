@@ -38,8 +38,7 @@ class AgentFacade extends AbstractFacade implements AgentFacadeInterface
      *
      * @api
      *
-     * @param string $query
-     * @param int $limit
+     * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
      */

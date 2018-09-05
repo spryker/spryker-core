@@ -8,7 +8,6 @@
 namespace Spryker\Zed\User\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\User\Business\UserFacade;
 use Spryker\Zed\User\Communication\Form\DataProvider\UserFormDataProvider;
 use Spryker\Zed\User\Communication\Form\DataProvider\UserUpdateFormDataProvider;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
@@ -27,11 +26,9 @@ use Spryker\Zed\User\UserDependencyProvider;
 class UserCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createResetPasswordForm(UserFacade $userFacade)
+    public function createResetPasswordForm()
     {
         return $this->getFormFactory()->create(ResetPasswordForm::class);
     }

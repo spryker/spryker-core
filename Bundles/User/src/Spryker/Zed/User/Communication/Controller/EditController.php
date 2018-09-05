@@ -216,7 +216,7 @@ class EditController extends AbstractController
         $currentUserTransfer = $this->getFacade()->getCurrentUser();
         $resetPasswordForm = $this
             ->getFactory()
-            ->createResetPasswordForm($this->getFacade())
+            ->createResetPasswordForm()
             ->handleRequest($request);
 
         if ($resetPasswordForm->isSubmitted() && $resetPasswordForm->isValid()) {
