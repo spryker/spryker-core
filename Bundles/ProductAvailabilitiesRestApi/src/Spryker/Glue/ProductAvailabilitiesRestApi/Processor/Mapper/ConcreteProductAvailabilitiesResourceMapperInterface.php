@@ -6,15 +6,15 @@
 
 namespace Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer;
 use Generated\Shared\Transfer\SpyAvailabilityEntityTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 interface ConcreteProductAvailabilitiesResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SpyAvailabilityEntityTransfer $availabilityEntityTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer
      */
-    public function mapConcreteProductsAvailabilityTransferToRestResource(SpyAvailabilityEntityTransfer $availabilityEntityTransfer): RestResourceInterface;
+    public function mapAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer(SpyAvailabilityEntityTransfer $availabilityEntityTransfer): RestConcreteProductAvailabilityAttributesTransfer;
 }

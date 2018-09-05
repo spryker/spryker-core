@@ -7,6 +7,7 @@
 namespace Spryker\Glue\ProductAvailabilitiesRestApi\Processor\AbstractProductAvailability;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -111,17 +112,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
             return null;
         }
 
-        $restResource = $this->productsAvailabilityResourceMapper
-            ->mapAbstractProductsAvailabilityTransferToRestResource($availabilityAbstractEntityTransfer);
-        $restResourceSelfLink = sprintf(
-            '%s/%s/%s',
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            $sku,
-            ProductAvailabilitiesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_AVAILABILITIES
-        );
-        $restResource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $restResourceSelfLink);
-
-        return $restResource;
+        return $this->buildProductAvailabilitiesResource($sku, $availabilityAbstractEntityTransfer);
     }
 
     /**
@@ -148,5 +139,33 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
             ->setDetail(ProductAvailabilitiesRestApiConfig::RESPONSE_DETAILS_ABSTRACT_PRODUCT_AVAILABILITY_NOT_FOUND);
 
         return $restErrorTransfer;
+    }
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer $availabilityAbstractEntityTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function buildProductAvailabilitiesResource(string $sku, SpyAvailabilityAbstractEntityTransfer $availabilityAbstractEntityTransfer): RestResourceInterface
+    {
+        $restProductsAbstractAvailabilityAttributesTransfer = $this->productsAvailabilityResourceMapper
+            ->mapAvailabilityTransferToRestAbstractProductAvailabilityAttributesTransfer($availabilityAbstractEntityTransfer);
+
+        $restResource = $this->restResourceBuilder->createRestResource(
+            ProductAvailabilitiesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_AVAILABILITIES,
+            $sku,
+            $restProductsAbstractAvailabilityAttributesTransfer
+        );
+
+        $restResourceSelfLink = sprintf(
+            '%s/%s/%s',
+            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            $sku,
+            ProductAvailabilitiesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_AVAILABILITIES
+        );
+        $restResource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $restResourceSelfLink);
+
+        return $restResource;
     }
 }

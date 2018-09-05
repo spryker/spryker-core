@@ -108,18 +108,7 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
         $availabilityAbstractEntityTransfer = $this->availabilityStorageClient->getAvailabilityAbstract((int)$idProductAbstract);
         foreach ($availabilityAbstractEntityTransfer->getSpyAvailabilities() as $availabilityEntityTransfer) {
             if ($availabilityEntityTransfer->getSku() === $sku) {
-                $restResource = $this->concreteProductsAvailabilityResourceMapper
-                    ->mapConcreteProductsAvailabilityTransferToRestResource($availabilityEntityTransfer);
-
-                $restResourceSelfLink = sprintf(
-                    '%s/%s/%s',
-                    ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-                    $sku,
-                    ProductAvailabilitiesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_AVAILABILITIES
-                );
-                $restResource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $restResourceSelfLink);
-
-                return $restResource;
+                return $this->buildProductAvailabilitiesResource($availabilityEntityTransfer);
             }
         }
     }
@@ -137,5 +126,31 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
             ->setDetail(ProductAvailabilitiesRestApiConfig::RESPONSE_DETAILS_CONCRETE_PRODUCT_AVAILABILITY_NOT_FOUND);
 
         return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyAvailabilityEntityTransfer $availabilityEntityTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function buildProductAvailabilitiesResource(SpyAvailabilityEntityTransfer $availabilityEntityTransfer): RestResourceInterface
+    {
+        $restProductsConcreteAvailabilityAttributesTransfer = $this->concreteProductsAvailabilityResourceMapper
+            ->mapAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer($availabilityEntityTransfer);
+        $restResource = $this->restResourceBuilder->createRestResource(
+            ProductAvailabilitiesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_AVAILABILITIES,
+            $availabilityEntityTransfer->getSku(),
+            $restProductsConcreteAvailabilityAttributesTransfer
+        );
+
+        $restResourceSelfLink = sprintf(
+            '%s/%s/%s',
+            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
+            $availabilityEntityTransfer->getSku(),
+            ProductAvailabilitiesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_AVAILABILITIES
+        );
+        $restResource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $restResourceSelfLink);
+
+        return $restResource;
     }
 }

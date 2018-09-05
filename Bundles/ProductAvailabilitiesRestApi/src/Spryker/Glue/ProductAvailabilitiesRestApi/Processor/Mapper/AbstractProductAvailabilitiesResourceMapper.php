@@ -9,8 +9,6 @@ namespace Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\RestAbstractProductAvailabilityAttributesTransfer;
 use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\ProductAvailabilitiesRestApi\ProductAvailabilitiesRestApiConfig;
 
 class AbstractProductAvailabilitiesResourceMapper implements AbstractProductAvailabilitiesResourceMapperInterface
 {
@@ -30,18 +28,14 @@ class AbstractProductAvailabilitiesResourceMapper implements AbstractProductAvai
     /**
      * @param \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer $availabilityEntityTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\RestAbstractProductAvailabilityAttributesTransfer
      */
-    public function mapAbstractProductsAvailabilityTransferToRestResource(SpyAvailabilityAbstractEntityTransfer $availabilityEntityTransfer): RestResourceInterface
+    public function mapAvailabilityTransferToRestAbstractProductAvailabilityAttributesTransfer(SpyAvailabilityAbstractEntityTransfer $availabilityEntityTransfer): RestAbstractProductAvailabilityAttributesTransfer
     {
         $restProductsAbstractAvailabilityAttributesTransfer = (new RestAbstractProductAvailabilityAttributesTransfer())
             ->fromArray($availabilityEntityTransfer->toArray(true), true);
         $restProductsAbstractAvailabilityAttributesTransfer->setAvailability($availabilityEntityTransfer->getQuantity() > 0);
 
-        return $this->restResourceBuilder->createRestResource(
-            ProductAvailabilitiesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_AVAILABILITIES,
-            $availabilityEntityTransfer->getAbstractSku(),
-            $restProductsAbstractAvailabilityAttributesTransfer
-        );
+        return $restProductsAbstractAvailabilityAttributesTransfer;
     }
 }

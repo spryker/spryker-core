@@ -30,18 +30,14 @@ class ConcreteProductAvailabilitiesResourceMapper implements ConcreteProductAvai
     /**
      * @param \Generated\Shared\Transfer\SpyAvailabilityEntityTransfer $availabilityEntityTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer
      */
-    public function mapConcreteProductsAvailabilityTransferToRestResource(SpyAvailabilityEntityTransfer $availabilityEntityTransfer): RestResourceInterface
+    public function mapAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer(SpyAvailabilityEntityTransfer $availabilityEntityTransfer): RestConcreteProductAvailabilityAttributesTransfer
     {
         $restProductsConcreteAvailabilityAttributesTransfer = (new RestConcreteProductAvailabilityAttributesTransfer())
             ->fromArray($availabilityEntityTransfer->toArray(true), true);
         $restProductsConcreteAvailabilityAttributesTransfer->setAvailability($availabilityEntityTransfer->getQuantity() > 0);
 
-        return $this->restResourceBuilder->createRestResource(
-            ProductAvailabilitiesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_AVAILABILITIES,
-            $availabilityEntityTransfer->getSku(),
-            $restProductsConcreteAvailabilityAttributesTransfer
-        );
+        return $restProductsConcreteAvailabilityAttributesTransfer;
     }
 }
