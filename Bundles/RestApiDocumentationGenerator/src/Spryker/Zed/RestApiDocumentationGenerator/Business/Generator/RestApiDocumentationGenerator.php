@@ -55,7 +55,80 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
      */
     public function generateOpenApiSpecification(): void
     {
-        $this->restApiPathGenerator->addPathsFromAnnotations();
+//        $this->restApiPathGenerator->addPathsFromAnnotations();
+//        $paths = $this->restApiPathGenerator->getPaths();
+//        foreach ($paths as $path => $methods) {
+//            if (preg_match('/\{([^\}]*)\}[\W]*$/', $path)) {
+//                //have id
+//                if (isset($methods['get'])) {
+//                    //RESPONSE SCHEMA
+//                    $schemaRef = $methods['get']['responses']['200']['content']['application/json']['schema']['$ref'];
+//                    $schemaRef = explode('/', $schemaRef);
+//                    $schemaName = array_pop($schemaRef);
+//                    $schemaNameFiltered = str_replace(['Rest', 'Response'], '', $schemaName);
+//                    $transferClassName = 'Generated\Shared\Transfer\\' . 'Rest' . $schemaNameFiltered . 'AttributesTransfer';
+//                    $this->restApiSchemaGenerator->addSchemaFromTransferClassName($transferClassName);
+//
+//                    $responseSchemaName = 'Rest' . $schemaNameFiltered . 'Response';
+//                    $responseDataSchemaName = $responseSchemaName . 'Data';
+//
+//                    $this->restApiSchemaGenerator->addResponseSchema($responseSchemaName, $responseDataSchemaName);
+//                    $this->restApiSchemaGenerator->addResponseDataSchema($responseDataSchemaName, 'Rest' . $schemaNameFiltered . 'Attributes');
+//                }
+//                if (isset($methods['patch'])) {
+//                    //RESPONSE SCHEMA
+//                    $schemaRef = $methods['get']['responses']['200']['content']['application/json']['schema']['$ref'];
+//                    $schemaRef = explode('/', $schemaRef);
+//                    $schemaName = array_pop($schemaRef);
+//                    $schemaNameFiltered = str_replace(['Rest', 'Response', 'List'], '', $schemaName);
+//                    $transferClassName = 'Generated\Shared\Transfer\\' . 'Rest' . $schemaNameFiltered . 'AttributesTransfer';
+//                    $this->restApiSchemaGenerator->addSchemaFromTransferClassName($transferClassName);
+//
+//                    $responseSchemaName = 'Rest' . $schemaNameFiltered . 'Response';
+//                    $responseDataSchemaName = $responseSchemaName . 'Data';
+//
+//                    $this->restApiSchemaGenerator->addResponseSchema($responseSchemaName, $responseDataSchemaName);
+//                    $this->restApiSchemaGenerator->addResponseDataSchema($responseDataSchemaName, 'Rest' . $schemaNameFiltered . 'Attributes');
+//
+//                    //REQUEST SCHEMA TBD
+//                }
+//            } else {
+//                //don't have id
+//                if (isset($methods['get'])) {
+//                    //RESPONSE SCHEMA
+//                    $schemaRef = $methods['get']['responses']['200']['content']['application/json']['schema']['$ref'];
+//                    $schemaRef = explode('/', $schemaRef);
+//                    $schemaName = array_pop($schemaRef);
+//                    $schemaNameFiltered = str_replace(['Rest', 'Response', 'List'], '', $schemaName);
+//                    $transferClassName = 'Generated\Shared\Transfer\\' . 'Rest' . $schemaNameFiltered . 'AttributesTransfer';
+//                    $this->restApiSchemaGenerator->addSchemaFromTransferClassName($transferClassName);
+//
+//                    $responseSchemaName = 'Rest' . $schemaNameFiltered . 'ListResponse';
+//                    $responseDataSchemaName = $responseSchemaName . 'Data';
+//
+//                    $this->restApiSchemaGenerator->addResponseWithMultipleDataSchema($responseSchemaName, $responseDataSchemaName);
+//                    $this->restApiSchemaGenerator->addResponseDataSchema($responseDataSchemaName, 'Rest' . $schemaNameFiltered . 'Attributes');
+//                }
+//                if (isset($methods['post'])) {
+//                    //RESPONSE SCHEMA
+//                    $schemaRef = $methods['get']['responses']['200']['content']['application/json']['schema']['$ref'];
+//                    $schemaRef = explode('/', $schemaRef);
+//                    $schemaName = array_pop($schemaRef);
+//                    $schemaNameFiltered = str_replace(['Rest', 'Response', 'List'], '', $schemaName);
+//                    $transferClassName = 'Generated\Shared\Transfer\\' . 'Rest' . $schemaNameFiltered . 'AttributesTransfer';
+//                    $this->restApiSchemaGenerator->addSchemaFromTransferClassName($transferClassName);
+//
+//                    $responseSchemaName = 'Rest' . $schemaNameFiltered . 'Response';
+//                    $responseDataSchemaName = $responseSchemaName . 'Data';
+//
+//                    $this->restApiSchemaGenerator->addResponseSchema($responseSchemaName, $responseDataSchemaName);
+//                    $this->restApiSchemaGenerator->addResponseDataSchema($responseDataSchemaName, 'Rest' . $schemaNameFiltered . 'Attributes');
+//
+//                    //REQUEST SCHEMA TBD
+//                }
+//            }
+//        }
+
         $this->restApiSchemaGenerator->addSchemaFromTransferClassName(RestErrorMessageTransfer::class);
 
         foreach ($this->resourceRoutesPluginsProviderPlugins as $resourceRoutesPluginsProviderPlugin) {

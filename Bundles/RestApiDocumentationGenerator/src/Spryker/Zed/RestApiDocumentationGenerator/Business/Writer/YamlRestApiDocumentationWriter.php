@@ -8,6 +8,7 @@
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Writer;
 
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\FileNotCreatedException;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToSymfonyYamlAdapter;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToYamlDumperInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfig;
 
@@ -31,6 +32,7 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
     protected const KEY_SCHEMAS = 'schemas';
 
     protected const YAML_NESTING_LEVEL = 9;
+    protected const YAML_INDENT = 4;
 
     /**
      * @var \Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfig
@@ -70,7 +72,12 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
 
         $bytesWritten = file_put_contents(
             $this->resolveGeneratedFileName(),
-            $this->yamlDumper->dump($data, static::YAML_NESTING_LEVEL)
+            $this->yamlDumper->dump(
+                $data,
+                static::YAML_NESTING_LEVEL,
+                static::YAML_INDENT,
+                RestApiDocumentationGeneratorToSymfonyYamlAdapter::DUMP_EMPTY_ARRAY_AS_SEQUENCE
+            )
         );
         if (!$bytesWritten) {
             throw new FileNotCreatedException('Unable to create file, please check permissions and free space available on device.');
@@ -112,7 +119,7 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
     {
         $targetDirectory = $this->restApiDocumentationGeneratorConfig->getTargetDirectory();
         if (substr($targetDirectory, -1) !== DIRECTORY_SEPARATOR) {
-            $targetDirectory .= '/';
+            $targetDirectory .= DIRECTORY_SEPARATOR;
         }
 
         if (!is_dir($targetDirectory) && !mkdir($targetDirectory, static::TARGET_DIRECTORY_PERMISSIONS, true) && !is_dir($targetDirectory)) {

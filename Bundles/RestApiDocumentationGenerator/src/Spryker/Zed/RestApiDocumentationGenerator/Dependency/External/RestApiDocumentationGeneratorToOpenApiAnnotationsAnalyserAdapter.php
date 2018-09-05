@@ -68,7 +68,9 @@ class RestApiDocumentationGeneratorToOpenApiAnnotationsAnalyserAdapter implement
         $paths = [];
 
         foreach ($this->analysis->openapi->paths as $path) {
-            $paths[$path->path] = json_decode($path->toJson(0), true);
+            $generatedPath = json_decode($path->toJson(0), true);
+            unset($generatedPath['path']);
+            $paths[$path->path] = $generatedPath;
         }
 
         return $paths;

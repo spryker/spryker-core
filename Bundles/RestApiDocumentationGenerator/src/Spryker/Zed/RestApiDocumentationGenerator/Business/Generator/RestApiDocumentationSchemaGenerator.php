@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use ReflectionClass;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
@@ -18,11 +19,12 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     protected const KEY_ID = 'id';
     protected const KEY_ITEMS = 'items';
     protected const KEY_LINKS = 'links';
+    protected const KEY_PROPERTIES = 'properties';
     protected const KEY_REF = '$ref';
     protected const KEY_RELATIONSHIPS = 'relationships';
     protected const KEY_TYPE = 'type';
-    protected const VALUE_ARRAY = 'array';
 
+    protected const VALUE_ARRAY = 'array';
     protected const VALUE_BOOLEAN = 'boolean';
     protected const VALUE_INTEGER = 'integer';
     protected const VALUE_NUMBER = 'number';
@@ -35,6 +37,8 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
         'float' => self::VALUE_NUMBER,
     ];
 
+    protected const PATTERN_SCHEMA_REFERENCE = '#/components/schemas/%s';
+
     /**
      * @var array
      */
@@ -45,28 +49,54 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      */
     public function getSchemas(): array
     {
+        $this->addDefaultSchemas();
         ksort($this->schemas);
 
         return $this->schemas;
     }
 
     /**
-     * @param string $transferName
+     * TODO: refactor this
      *
      * @return void
      */
-    public function addSchemaFromTransferClassName(string $transferName): void
+    protected function addDefaultSchemas(): void
     {
-        if (!class_exists($transferName)) {
+        $restErrorSchemaName = $this->getResponseDataAttributesSchemaNameFromTransferClassName(RestErrorMessageTransfer::class);
+        $this->addResponseDataAttributesSchemaFromTransfer(new RestErrorMessageTransfer(), $restErrorSchemaName);
+
+        $this->schemas['RestLinks'] = [
+            static::KEY_LINKS => [
+                'self' => [
+                    static::KEY_TYPE => static::VALUE_STRING,
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @param string $transferClassName
+     *
+     * @return void
+     */
+    public function addSchemaFromTransferClassName(string $transferClassName): void
+    {
+        if (!class_exists($transferClassName)) {
             return;
         }
 
-        $transfer = new $transferName;
+        $transfer = new $transferClassName;
         if (!$transfer instanceof AbstractTransfer) {
             return;
         }
 
-        $this->addTransferToSchema($transfer, $this->getSchemaKeyFromTransferClassName($transferName));
+        $responseSchemaName = $this->getResponseSchemaNameFromTransferClassName($transferClassName);
+        $responseDataSchemaName = $this->getResponseDataSchemaNameFromTransferClassName($transferClassName);
+        $responseAttributesSchemaName = $this->getResponseDataAttributesSchemaNameFromTransferClassName($transferClassName);
+
+        $this->addResponseSchema($responseSchemaName, $responseDataSchemaName);
+        $this->addResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName);
+        $this->addResponseDataAttributesSchemaFromTransfer($transfer, $responseAttributesSchemaName);
     }
 
     /**
@@ -80,26 +110,14 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     }
 
     /**
-     * @param string $transferClassName
-     *
-     * @return string
-     */
-    protected function getSchemaKeyFromTransferClassName(string $transferClassName): string
-    {
-        $transferClassNameExploded = explode('\\', $transferClassName);
-
-        return str_replace('Transfer', '', end($transferClassNameExploded));
-    }
-
-    /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
-     * @param string $transferSchemaKey
+     * @param string $attributesSchemaName
      *
      * @return void
      */
-    protected function addTransferToSchema(AbstractTransfer $transfer, string $transferSchemaKey): void
+    protected function addResponseDataAttributesSchemaFromTransfer(AbstractTransfer $transfer, string $attributesSchemaName): void
     {
-        if (array_key_exists($transferSchemaKey, $this->schemas)) {
+        if (array_key_exists($attributesSchemaName, $this->schemas)) {
             return;
         }
 
@@ -110,20 +128,38 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
 
         $schemaProperties = [];
         foreach ($transferMetadataValue as $key => $value) {
-            if (class_exists($value['type'])) {
-                if ($value['is_collection']) {
-                    $schemaProperties[$key]['type'] = 'array';
-                    $schemaProperties[$key]['items']['$ref'] = $this->formatTransferClassToSchemaType($value['type']);
-                    continue;
-                }
-
-                $schemaProperties[$key]['$ref'] = $this->formatTransferClassToSchemaType($value['type']);
+            if (class_exists($value[static::KEY_TYPE])) {
+                $schemaProperties += $this->formatObjectSchemaType($key, $value);
             } else {
-                $schemaProperties[$key]['type'] = $this->formatSchemaType($value['type']);
+                $schemaProperties[$key][static::KEY_TYPE] = $this->formatBasicSchemaType($key, $value[static::KEY_TYPE]);
             }
         }
 
-        $this->schemas[$transferSchemaKey]['properties'] = $schemaProperties;
+        $this->schemas[$attributesSchemaName][static::KEY_PROPERTIES] = $schemaProperties;
+    }
+
+    /**
+     * @param string $key
+     * @param string $type
+     *
+     * @return array
+     */
+    protected function formatBasicSchemaType(string $key, string $type): array
+    {
+        if (substr($type, -2) === '[]') {
+            $schemaProperties[$key] = [
+                static::KEY_TYPE => static::VALUE_ARRAY,
+                static::KEY_ITEMS => [
+                    static::KEY_TYPE => $this->mapBasicSchemaType(substr($type, 0, -2)),
+                ],
+            ];
+
+            return $schemaProperties;
+        }
+
+        $schemaProperties[$key][static::KEY_TYPE] = $this->mapBasicSchemaType($type);
+
+        return $schemaProperties;
     }
 
     /**
@@ -131,17 +167,33 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      *
      * @return string
      */
-    protected function formatSchemaType(string $type): string
+    protected function mapBasicSchemaType(string $type): string
     {
         if (array_key_exists($type, static::DATA_TYPES_MAPPING_LIST)) {
             return static::DATA_TYPES_MAPPING_LIST[$type];
         }
 
-        if (substr($type, -2) === '[]') {
-            return 'array';
+        return $type;
+    }
+
+    /**
+     * @param string $key
+     * @param array $objectMetadata
+     *
+     * @return array
+     */
+    protected function formatObjectSchemaType(string $key, array $objectMetadata): array
+    {
+        if ($objectMetadata['is_collection']) {
+            $schemaProperties[$key][static::KEY_TYPE] = static::VALUE_ARRAY;
+            $schemaProperties[$key][static::KEY_ITEMS][static::KEY_REF] = $this->formatTransferClassToSchemaType($objectMetadata[static::KEY_TYPE]);
+
+            return $schemaProperties;
         }
 
-        return $type;
+        $schemaProperties[$key][static::KEY_REF] = $this->formatTransferClassToSchemaType($objectMetadata[static::KEY_TYPE]);
+
+        return $schemaProperties;
     }
 
     /**
@@ -151,38 +203,45 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      */
     protected function formatTransferClassToSchemaType(string $transferClassName): string
     {
-        $this->addTransferToSchema(new $transferClassName, $this->getSchemaKeyFromTransferClassName($transferClassName));
+        $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName, $this->getResponseDataAttributesSchemaNameFromTransferClassName($transferClassName));
 
-        return sprintf('#/components/schemas/%s', $this->getSchemaKeyFromTransferClassName($transferClassName));
+        return sprintf(static::PATTERN_SCHEMA_REFERENCE, $this->getResponseDataAttributesSchemaNameFromTransferClassName($transferClassName));
     }
 
     /**
-     * @return array
+     * @param string $transferClassName
+     *
+     * @return string
      */
-    protected function wrapper(): array
+    protected function getResponseSchemaNameFromTransferClassName(string $transferClassName): string
     {
-        return [
-            'data' => [
-                'type' => 'array',
-                'items' => [
-                    'type' => [
-                        'type' => 'string',
-                    ],
-                    'id' => [
-                        'type' => 'string',
-                    ],
-                    'attributes' => [
-                        '$ref' => [],
-                    ],
-                    'links' => [
-                        '$ref' => [],
-                    ],
-                    'relationships' => [
-                        '$ref' => [],
-                    ],
-                ],
-            ],
-        ];
+        $transferClassNameExploded = explode('\\', $transferClassName);
+
+        return str_replace('AttributesTransfer', 'Response', end($transferClassNameExploded));
+    }
+
+    /**
+     * @param string $transferClassName
+     *
+     * @return string
+     */
+    protected function getResponseDataSchemaNameFromTransferClassName(string $transferClassName): string
+    {
+        $transferClassNameExploded = explode('\\', $transferClassName);
+
+        return str_replace('AttributesTransfer', 'ResponseData', end($transferClassNameExploded));
+    }
+
+    /**
+     * @param string $transferClassName
+     *
+     * @return string
+     */
+    protected function getResponseDataAttributesSchemaNameFromTransferClassName(string $transferClassName): string
+    {
+        $transferClassNameExploded = explode('\\', $transferClassName);
+
+        return str_replace('Transfer', '', end($transferClassNameExploded));
     }
 
     /**
@@ -194,10 +253,12 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     public function addResponseWithMultipleDataSchema(string $schemaName, string $ref): void
     {
         $this->schemas[$schemaName] = [
-            static::KEY_DATA => [
-                static::KEY_TYPE => static::VALUE_ARRAY,
-                static::KEY_ITEMS => [
-                    static::KEY_REF => $ref,
+            static::KEY_PROPERTIES => [
+                static::KEY_DATA => [
+                    static::KEY_TYPE => static::VALUE_ARRAY,
+                    static::KEY_ITEMS => [
+                        static::KEY_REF => sprintf(static::PATTERN_SCHEMA_REFERENCE, $ref),
+                    ],
                 ],
             ],
         ];
@@ -212,8 +273,10 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     public function addResponseSchema(string $schemaName, string $ref): void
     {
         $this->schemas[$schemaName] = [
-            static::KEY_DATA => [
-                static::KEY_REF => $ref,
+            static::KEY_PROPERTIES => [
+                static::KEY_DATA => [
+                    static::KEY_REF => sprintf(static::PATTERN_SCHEMA_REFERENCE, $ref),
+                ],
             ],
         ];
     }
@@ -224,17 +287,65 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      *
      * @return void
      */
-    public function addDataSchema(string $schemaName, string $ref): void
+    public function addRequestDataSchemaWithId(string $schemaName, string $ref): void
     {
         $this->schemas[$schemaName] = [
-            static::KEY_TYPE => [
-                static::KEY_TYPE => static::VALUE_STRING,
+            static::KEY_PROPERTIES => [
+                static::KEY_TYPE => [
+                    static::KEY_TYPE => static::VALUE_STRING,
+                ],
+                static::KEY_ID => [
+                    static::KEY_TYPE => static::VALUE_STRING,
+                ],
+                static::KEY_ATTRIBUTES => [
+                    static::KEY_REF => sprintf(static::PATTERN_SCHEMA_REFERENCE, $ref),
+                ],
             ],
-            static::KEY_ID => [
-                static::KEY_TYPE => static::VALUE_STRING,
+        ];
+    }
+
+    /**
+     * @param string $schemaName
+     * @param string $ref
+     *
+     * @return void
+     */
+    public function addRequestDataSchemaWithoutId(string $schemaName, string $ref): void
+    {
+        $this->schemas[$schemaName] = [
+            static::KEY_PROPERTIES => [
+                static::KEY_TYPE => [
+                    static::KEY_TYPE => static::VALUE_STRING,
+                ],
+                static::KEY_ATTRIBUTES => [
+                    static::KEY_REF => sprintf(static::PATTERN_SCHEMA_REFERENCE, $ref),
+                ],
             ],
-            static::KEY_ATTRIBUTES => [
-                static::KEY_REF => $ref,
+        ];
+    }
+
+    /**
+     * @param string $schemaName
+     * @param string $ref
+     *
+     * @return void
+     */
+    public function addResponseDataSchema(string $schemaName, string $ref): void
+    {
+        $this->schemas[$schemaName] = [
+            static::KEY_PROPERTIES => [
+                static::KEY_TYPE => [
+                    static::KEY_TYPE => static::VALUE_STRING,
+                ],
+                static::KEY_ID => [
+                    static::KEY_TYPE => static::VALUE_STRING,
+                ],
+                static::KEY_ATTRIBUTES => [
+                    static::KEY_REF => sprintf(static::PATTERN_SCHEMA_REFERENCE, $ref),
+                ],
+                static::KEY_LINKS => [
+                    static::KEY_REF => sprintf(static::PATTERN_SCHEMA_REFERENCE, 'RestLinks'),
+                ],
             ],
         ];
     }

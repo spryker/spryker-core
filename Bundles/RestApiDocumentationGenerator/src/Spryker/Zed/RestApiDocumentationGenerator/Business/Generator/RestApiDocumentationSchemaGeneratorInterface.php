@@ -10,11 +10,11 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 interface RestApiDocumentationSchemaGeneratorInterface
 {
     /**
-     * @param string $transferName
+     * @param string $transferClassName
      *
      * @return void
      */
-    public function addSchemaFromTransferClassName(string $transferName): void;
+    public function addSchemaFromTransferClassName(string $transferClassName): void;
 
     /**
      * @return string
