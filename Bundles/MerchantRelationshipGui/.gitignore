@@ -12,5 +12,8 @@
 # OS
 .DS_Store
 
+/vendor
+/composer.lock
+
 /tests/_output/*
 !/tests/_output/.gitkeep

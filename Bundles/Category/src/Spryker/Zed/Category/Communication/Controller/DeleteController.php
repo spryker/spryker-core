@@ -123,6 +123,7 @@ class DeleteController extends AbstractController
     protected function getParentCategoryEntity(NodeTransfer $categoryNodeTransfer)
     {
         $localeTransfer = $this->getFactory()->getCurrentLocale();
+        /** @var \Orm\Zed\Category\Persistence\SpyCategory $parentCategoryEntity */
         $parentCategoryEntity = $this
             ->getQueryContainer()
             ->queryCategory($localeTransfer->getIdLocale())

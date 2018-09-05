@@ -292,7 +292,7 @@ class ProductRelationTable extends AbstractTable
     /**
      * @param array $product
      *
-     * @return null|string
+     * @return string|null
      */
     protected function findProductUrl(array $product)
     {

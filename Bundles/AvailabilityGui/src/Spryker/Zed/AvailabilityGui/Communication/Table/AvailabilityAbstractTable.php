@@ -249,7 +249,7 @@ class AvailabilityAbstractTable extends AbstractTable
                 continue;
             }
 
-            list($sku, $quantity) = $itemParts;
+            [$sku, $quantity] = $itemParts;
 
             $reservation += (int)$quantity;
             $reservation += $this->omsFacade->getReservationsFromOtherStores($sku, $this->storeTransfer);

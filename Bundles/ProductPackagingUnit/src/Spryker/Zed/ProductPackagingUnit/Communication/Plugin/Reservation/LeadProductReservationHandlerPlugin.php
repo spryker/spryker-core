@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductPackagingUnit\Communication\Plugin\Reservation;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-
 use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 
 /**

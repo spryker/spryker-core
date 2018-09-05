@@ -66,7 +66,7 @@ interface ProductAlternativeStorageRepositoryInterface
     /**
      * @param string $sku
      *
-     * @return null|\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage|null
      */
     public function findProductReplacementStorageEntitiesBySku(string $sku): ?SpyProductReplacementForStorage;
 
