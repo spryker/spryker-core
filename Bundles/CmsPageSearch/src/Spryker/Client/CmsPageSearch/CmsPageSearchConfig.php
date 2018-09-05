@@ -9,6 +9,11 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 
 class CmsPageSearchConfig extends AbstractBundleConfig
 {
+    protected const CMS_PAGES_SORT_OPTIONS = [
+        ['name' => 'name', 'parameterName' => 'name_asc', 'fieldName' => PageIndexMap::STRING_SORT, 'isDescending' => false],
+        ['name' => 'name', 'parameterName' => 'name_desc', 'fieldName' => PageIndexMap::STRING_SORT, 'isDescending' => true],
+    ];
+
     /**
      * @param \Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface $sortConfigBuilder
      *
@@ -16,20 +21,25 @@ class CmsPageSearchConfig extends AbstractBundleConfig
      */
     public function buildCmsPageSortConfig(SortConfigBuilderInterface $sortConfigBuilder): SortConfigBuilderInterface
     {
-        $nameAscendingConfigTransfer = (new SortConfigTransfer())
-            ->setName('name')
-            ->setParameterName('name_asc')
-            ->setFieldName(PageIndexMap::STRING_SORT);
-        $nameDescendingConfigTransfer = (new SortConfigTransfer())
-            ->setName('name')
-            ->setParameterName('name_desc')
-            ->setFieldName(PageIndexMap::STRING_SORT)
-            ->setIsDescending(true);
+        $sortingOptions = $this->getCmsPageSortOptions();
 
-        $sortConfigBuilder
-            ->addSort($nameAscendingConfigTransfer)
-            ->addSort($nameDescendingConfigTransfer);
+        foreach ($sortingOptions as $option) {
+            $sortConfigTransfer = (new SortConfigTransfer())
+                ->setName($option['name'])
+                ->setParameterName($option['parameterName'])
+                ->setFieldName($option['fieldName'])
+                ->setIsDescending($option['isDescending']);
+            $sortConfigBuilder->addSort($sortConfigTransfer);
+        }
 
         return $sortConfigBuilder;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCmsPageSortOptions(): array
+    {
+        return static::CMS_PAGES_SORT_OPTIONS;
     }
 }

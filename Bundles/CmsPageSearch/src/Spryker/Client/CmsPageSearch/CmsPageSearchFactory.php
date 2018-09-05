@@ -15,8 +15,6 @@ use Spryker\Client\CmsPageSearch\Config\CmsPageSortConfigBuilder;
 use Spryker\Client\Search\SearchClientInterface;
 
 /**
- * Class CmsPageSearchFactory
- * @package Spryker\Client\CmsPageSearch
  * @method \Spryker\Client\CmsPageSearch\CmsPageSearchConfig getConfig()
  */
 class CmsPageSearchFactory extends AbstractFactory
