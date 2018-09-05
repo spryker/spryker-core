@@ -10,7 +10,9 @@
 {% block action %}
     {{ parent() }}
     {{ createActionButton('/product-management/add', 'Create Product' | trans) }}
-    {{ createActionButton('/product-management/add/variant?id-product-abstract=' ~ idProductAbstract, 'Add Variant' | trans) }}
+    <span class="add-variant-button">
+        {{ createActionButton('/product-management/add/variant?id-product-abstract=' ~ idProductAbstract, 'Add Variant' | trans) }}
+    </span>
     {{ editActionButton('/product-attribute-gui/view/productAbstract?id-product-abstract=' ~ idProductAbstract, 'Manage Attributes' | trans) }}
 {% endblock %}
 
