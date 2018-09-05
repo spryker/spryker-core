@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Api;
 
+use Spryker\Shared\Api\ApiConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ApiConfig extends AbstractBundleConfig
@@ -129,5 +130,39 @@ class ApiConfig extends AbstractBundleConfig
         $methods = array_merge($methodsForItem, $methodsForCollection);
 
         return array_unique($methods);
+    }
+
+    /**
+     * @return string
+     */
+    public function getServerVariablesFilterStrategy(): string
+    {
+        return $this->get(ApiConstants::ENV_SERVER_VARIABLE_FILTER_STRATEGY, ApiConstants::ENV_SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST);
+    }
+
+    /**
+     * @return array
+     */
+    public function getServerVariablesWhitelist(): array
+    {
+        return $this->get(ApiConstants::ENV_SERVER_VARIABLE_WHITELIST, ['REQUEST_URI']);
+    }
+
+    /**
+     * @return array
+     */
+    public function getServerVariablesBlacklist(): array
+    {
+        return $this->get(ApiConstants::ENV_SERVER_VARIABLE_BLACKLIST, []);
+    }
+
+    /**
+     * @return callable
+     */
+    public function getServerVariablesCallback(): callable
+    {
+        return $this->get(ApiConstants::ENV_SERVER_VARIABLE_CALLBACK, function ($server) {
+            return $server;
+        });
     }
 }
