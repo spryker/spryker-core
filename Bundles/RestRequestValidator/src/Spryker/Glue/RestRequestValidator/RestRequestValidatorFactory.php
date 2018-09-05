@@ -9,7 +9,9 @@ namespace Spryker\Glue\RestRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientInterface;
+use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapterInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
+use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToValidationAdapterInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReader;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface;
@@ -30,6 +32,8 @@ class RestRequestValidatorFactory extends AbstractFactory
         return new RestRequestValidator(
             $this->createRestRequestConfigurationReader(),
             $this->createRestRequestValidatorConstraintResolver(),
+            $this->getValidator(),
+            $this->getConstraintCollection(),
             $this->getConfig()
         );
     }
@@ -77,5 +81,21 @@ class RestRequestValidatorFactory extends AbstractFactory
     public function getStoreClient(): RestRequestValidatorToStoreClientInterface
     {
         return $this->getProvidedDependency(RestRequestValidatorDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToValidationAdapterInterface
+     */
+    public function getValidator(): RestRequestValidatorToValidationAdapterInterface
+    {
+        return $this->getProvidedDependency(RestRequestValidatorDependencyProvider::VALIDATION);
+    }
+
+    /**
+     * @return \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapterInterface
+     */
+    protected function getConstraintCollection(): RestRequestValidatorToConstraintCollectionAdapterInterface
+    {
+        return $this->getProvidedDependency(RestRequestValidatorDependencyProvider::CONSTRAINT_COLLECTION);
     }
 }

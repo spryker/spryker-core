@@ -38,7 +38,7 @@ class RestRequestValidatorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -50,15 +50,12 @@ class RestRequestValidatorFacadeTest extends Unit
      */
     public function testBuildCacheWillCollectConfigsCorrectly(): void
     {
-        // prepare
         $restRequestValidatorFacade = $this->tester->getLocator()->restRequestValidator()->facade();
         $mockFactory = $this->createMockFactory();
         $restRequestValidatorFacade->setFactory($mockFactory);
 
-        // act
         $restRequestValidatorFacade->buildCache();
 
-        // assert
         foreach ($mockFactory->getStoreFacade()->getAllStores() as $store) {
             $expectedYaml = $this->getExpectedResult($mockFactory, $store);
             $actualYaml = $this->getActualResult($mockFactory, $store);
@@ -102,24 +99,24 @@ class RestRequestValidatorFacadeTest extends Unit
         $mockConfig = $this->createPartialMock(
             RestRequestValidatorConfig::class,
             [
-                'getStorePathMask',
-                'getProjectPathMask',
-                'getCorePathMask',
+                'getStorePathPattern',
+                'getProjectPathPattern',
+                'getCorePathPattern',
                 'getCacheFilePathPattern',
             ]
         );
         $mockConfig
-            ->method('getStorePathMask')
+            ->method('getStorePathPattern')
             ->willReturn(
                 $this->getFixtureDirectory('Project%s')
             );
         $mockConfig
-            ->method('getProjectPathMask')
+            ->method('getProjectPathPattern')
             ->willReturn(
                 $this->getFixtureDirectory('Project')
             );
         $mockConfig
-            ->method('getCorePathMask')
+            ->method('getCorePathPattern')
             ->willReturn(
                 $this->getFixtureDirectory('Vendor')
             );
@@ -171,7 +168,7 @@ class RestRequestValidatorFacadeTest extends Unit
      *
      * @return string
      */
-    protected function getFixtureDirectory($level = null)
+    protected function getFixtureDirectory($level = null): string
     {
         $pathParts = [
             __DIR__,

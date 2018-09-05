@@ -288,6 +288,6 @@ class RestRequest implements RestRequestInterface
      */
     public function getRawPostData(): array
     {
-        return $this->httpRequest->attributes->get(RestResourceInterface::RESOURCE_DATA)['data']['attributes'];
+        return $this->httpRequest->attributes->get(RestResourceInterface::RESOURCE_DATA)[RestResourceInterface::RESOURCE_ATTRIBUTES];
     }
 }

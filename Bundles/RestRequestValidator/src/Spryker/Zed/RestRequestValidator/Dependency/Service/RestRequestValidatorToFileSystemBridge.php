@@ -31,7 +31,7 @@ class RestRequestValidatorToFileSystemBridge implements RestRequestValidatorToFi
      *
      * @return void
      */
-    public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer): void
+    public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer)
     {
         $this->fileSystemService->createDirectory($fileSystemCreateDirectoryTransfer);
     }
@@ -41,7 +41,7 @@ class RestRequestValidatorToFileSystemBridge implements RestRequestValidatorToFi
      *
      * @return void
      */
-    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer): void
+    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         $this->fileSystemService->has($fileSystemQueryTransfer);
     }
@@ -51,7 +51,7 @@ class RestRequestValidatorToFileSystemBridge implements RestRequestValidatorToFi
      *
      * @return void
      */
-    public function write(FileSystemContentTransfer $fileSystemContentTransfer): void
+    public function write(FileSystemContentTransfer $fileSystemContentTransfer)
     {
         $this->fileSystemService->write($fileSystemContentTransfer);
     }

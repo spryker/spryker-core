@@ -37,11 +37,12 @@ class RestRequest
         if ($attributesTransfer !== null) {
             $request->attributes->set(
                 RestResourceInterface::RESOURCE_DATA,
-                ['data' => ['attributes' => $attributesTransfer->toArray(true, true)]]
+                ['attributes' => $attributesTransfer->toArray(true, true)]
             );
         }
 
         $restResource = new RestResource($resourceType, null, $attributesTransfer);
+
         return (new RequestBuilder($restResource))
             ->addMetadata($metadata)
             ->addHttpRequest($request)
@@ -65,6 +66,7 @@ class RestRequest
             true,
             $version
         );
+
         return $metadata;
     }
 }

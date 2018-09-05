@@ -13,6 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 class RestRequestValidatorConfig extends AbstractBundleConfig
 {
     public const RESPONSE_CODE_REQUEST_INVALID = '901';
+    protected const SYMFONY_COMPONENT_VALIDATOR_CONSTRAINTS_NAMESPACE = '\\Symfony\\Component\\Validator\\Constraints\\';
+    protected const ALLOW_EXTRA_FIELDS = 'allowExtraFields';
+    protected const ALLOW_EXTRA_FIELDS_VALUE = true;
+    protected const GROUPS = 'groups';
+    protected const GROUPS_VALUE = ['Default'];
 
     /**
      * @return string[]
@@ -20,7 +25,7 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     public function getAvailableConstraintNamespaces(): array
     {
         return [
-            '\\Symfony\\Component\\Validator\\Constraints\\',
+            static::SYMFONY_COMPONENT_VALIDATOR_CONSTRAINTS_NAMESPACE,
         ];
     }
 
@@ -42,5 +47,15 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     public function getValidationCacheFilenamePattern(): string
     {
         return APPLICATION_SOURCE_DIR . RestRequestValidatorConfigShared::VALIDATION_CACHE_FILENAME_PATTERN;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultValidationConfig(): array
+    {
+        return [
+            static::ALLOW_EXTRA_FIELDS => static::ALLOW_EXTRA_FIELDS_VALUE,
+            static::GROUPS => static::GROUPS_VALUE];
     }
 }

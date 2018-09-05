@@ -125,7 +125,7 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
      */
     protected function isStoreLevelPath(string $pathPattern): bool
     {
-        return $pathPattern === $this->config->getStorePathMask();
+        return $pathPattern === $this->config->getStorePathPattern();
     }
 
     /**
@@ -135,6 +135,6 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
      */
     protected function isProjectLevelPath(string $pathPattern): bool
     {
-        return $pathPattern === $this->config->getProjectPathMask();
+        return $pathPattern === $this->config->getProjectPathPattern();
     }
 }

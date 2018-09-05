@@ -136,12 +136,12 @@ class RequestFormatter implements RequestFormatterInterface
     ): ?RestResourceInterface {
 
         $requestData = $this->readRequestData($httpRequest, $metadata);
-        $httpRequest->attributes->set(RestResource::RESOURCE_DATA, $requestData);
         if (!$requestData) {
             return null;
         }
 
         $data = $requestData[RestResourceInterface::RESOURCE_DATA];
+        $httpRequest->attributes->set(RestResource::RESOURCE_DATA, $data);
 
         return $this->restResourceBuilder->createRestResource(
             $data[RestResourceInterface::RESOURCE_TYPE],

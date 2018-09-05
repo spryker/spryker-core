@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\RestRequestValidator\Dependency\Client;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 class RestRequestValidatorToStoreClientBridge implements RestRequestValidatorToStoreClientInterface
 {
     /**
@@ -27,7 +25,7 @@ class RestRequestValidatorToStoreClientBridge implements RestRequestValidatorToS
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer
+    public function getCurrentStore()
     {
         return $this->storeClient->getCurrentStore();
     }

@@ -18,19 +18,19 @@ interface RestRequestValidatorToFileSystemInterface
      *
      * @return void
      */
-    public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer): void;
+    public function createDirectory(FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
      * @return void
      */
-    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer): void;
+    public function has(FileSystemQueryTransfer $fileSystemQueryTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
      * @return void
      */
-    public function write(FileSystemContentTransfer $fileSystemContentTransfer): void;
+    public function write(FileSystemContentTransfer $fileSystemContentTransfer);
 }

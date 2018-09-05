@@ -14,9 +14,9 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
 {
     protected const VALIDATION_FILENAME_PATTERN = '*.validation.yaml';
     protected const VALIDATION_CACHE_FILENAME_PATTERN = '/src/Generated/Glue/Validator/validation.cache';
-    protected const PATH_MASK_PROJECT_STORE_VALIDATION = '/*/Glue/*%s/Validation';
-    protected const PATH_MASK_PROJECT_VALIDATION = '/*/Glue/*[^%s]/Validation';
-    protected const PATH_MASK_CORE_VALIDATION = '/*/*/*/*/*/*/Glue/*/Validation';
+    protected const PATH_PATTERN_PROJECT_STORE_VALIDATION = '/*/Glue/*%s/Validation';
+    protected const PATH_PATTERN_PROJECT_VALIDATION = '/*/Glue/*[^%s]/Validation';
+    protected const PATH_PATTERN_CORE_VALIDATION = '/*/*/*/*/*/*/Glue/*/Validation';
 
     /**
      * @return string[]
@@ -24,9 +24,9 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     public function getValidationSchemaPathPattern(): array
     {
         return [
-            $this->getCorePathMask(),
-            $this->getProjectPathMask(),
-            $this->getStorePathMask(),
+            $this->getCorePathPattern(),
+            $this->getProjectPathPattern(),
+            $this->getStorePathPattern(),
         ];
     }
 
@@ -49,25 +49,25 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getStorePathMask(): string
+    public function getStorePathPattern(): string
     {
-        return APPLICATION_SOURCE_DIR . static::PATH_MASK_PROJECT_STORE_VALIDATION;
+        return APPLICATION_SOURCE_DIR . static::PATH_PATTERN_PROJECT_STORE_VALIDATION;
     }
 
     /**
      * @return string
      */
-    public function getProjectPathMask(): string
+    public function getProjectPathPattern(): string
     {
-        return APPLICATION_SOURCE_DIR . static::PATH_MASK_PROJECT_VALIDATION;
+        return APPLICATION_SOURCE_DIR . static::PATH_PATTERN_PROJECT_VALIDATION;
     }
 
     /**
      * @return string
      */
-    public function getCorePathMask(): string
+    public function getCorePathPattern(): string
     {
-        return APPLICATION_VENDOR_DIR . static::PATH_MASK_CORE_VALIDATION;
+        return APPLICATION_VENDOR_DIR . static::PATH_PATTERN_CORE_VALIDATION;
     }
 
     /**

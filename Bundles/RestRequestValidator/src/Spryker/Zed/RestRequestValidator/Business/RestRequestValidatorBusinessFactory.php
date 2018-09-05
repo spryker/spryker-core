@@ -115,6 +115,6 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
      */
     public function getStoreFacade(): RestRequestValidatorToStoreFacadeInterface
     {
-        return $this->getProvidedDependency(RestRequestValidatorDependencyProvider::STORE_FACADE);
+        return $this->getProvidedDependency(RestRequestValidatorDependencyProvider::FACADE_STORE);
     }
 }

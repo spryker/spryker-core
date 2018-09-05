@@ -19,7 +19,7 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
     public const FINDER = 'FINDER';
     public const FILESYSTEM = 'FILESYSTEM';
     public const YAML = 'YAML';
-    public const STORE_FACADE = 'STORE_FACADE';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -33,7 +33,7 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addFinderDependency($container);
         $container = $this->addFilesystemDependency($container);
         $container = $this->addYamlDependency($container);
-        $container = $this->addStoreFacadeDependency($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -85,9 +85,9 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStoreFacadeDependency(Container $container): Container
+    protected function addStoreFacade(Container $container): Container
     {
-        $container[static::STORE_FACADE] = function (Container $container) {
+        $container[static::FACADE_STORE] = function (Container $container) {
             return new RestRequestValidatorToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 

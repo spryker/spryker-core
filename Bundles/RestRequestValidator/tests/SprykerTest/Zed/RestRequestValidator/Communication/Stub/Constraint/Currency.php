@@ -23,10 +23,10 @@ class Currency extends SymfonyConstraint
      */
     public function __construct($options = null)
     {
+        parent::__construct($options);
+
         $this->currencyQueryContainer =
             new RestRequestValidatorToCurrencyQueryContainerBridge(new CurrencyQueryContainer());
-
-        parent::__construct($options);
     }
 
     /**

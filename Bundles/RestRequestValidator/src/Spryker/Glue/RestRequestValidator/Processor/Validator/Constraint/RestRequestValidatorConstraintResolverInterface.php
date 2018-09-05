@@ -10,9 +10,9 @@ namespace Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint;
 interface RestRequestValidatorConstraintResolverInterface
 {
     /**
-     * @param string $className
+     * @param array $validationConfig
      *
-     * @return string|null
+     * @return array
      */
-    public function resolveConstraintClassName(string $className): ?string;
+    public function initializeConstraintCollection(array $validationConfig): array;
 }

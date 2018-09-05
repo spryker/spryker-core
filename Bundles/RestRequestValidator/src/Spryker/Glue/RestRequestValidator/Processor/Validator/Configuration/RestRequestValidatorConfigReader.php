@@ -69,11 +69,14 @@ class RestRequestValidatorConfigReader implements RestRequestValidatorConfigRead
 
         $configuration = $this->yaml->parseFile($this->getValidationConfigPath());
 
-        if (empty($configuration[$restRequest->getResource()->getType()][strtolower($restRequest->getMetadata()->getMethod())])) {
+        $resourceType = $restRequest->getResource()->getType();
+        $requestMethod = strtolower($restRequest->getMetadata()->getMethod());
+
+        if (empty($configuration[$resourceType][$requestMethod])) {
             return [];
         }
 
-        return $configuration[$restRequest->getResource()->getType()][strtolower($restRequest->getMetadata()->getMethod())];
+        return $configuration[$resourceType][$requestMethod];
     }
 
     /**
