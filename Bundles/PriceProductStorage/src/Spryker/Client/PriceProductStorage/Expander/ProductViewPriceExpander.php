@@ -96,6 +96,10 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
      */
     protected function getPriceAbstractData(ProductViewTransfer $productViewTransfer): array
     {
+        if (!$productViewTransfer->getIdProductAbstract()) {
+            return [];
+        }
+
         return $this->priceAbstractStorageReader->findPriceProductAbstractTransfers($productViewTransfer->getIdProductAbstract());
     }
 
