@@ -8,10 +8,10 @@
 namespace Spryker\Client\CmsPageSearch\Plugin\Elasticsearch\QueryExpander;
 
 use Elastica\Query;
+use Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface;
 
 /**
  * @method \Spryker\Client\CmsPageSearch\CmsPageSearchFactory getFactory()
