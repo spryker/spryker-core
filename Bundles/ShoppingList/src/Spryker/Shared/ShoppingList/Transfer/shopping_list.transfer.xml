@@ -66,6 +66,7 @@
         <property name="sku" type="string" />
         <property name="quantity" type="int" />
         <property name="idShoppingListItem" type="int" />
+        <property name="shoppingListItem" type="ShoppingListItem" />
     </transfer>
 
     <transfer name="ShoppingListAddToCartRequestCollection">

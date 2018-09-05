@@ -26,6 +26,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_ITEM_EXPANDER = 'PLUGINS_ITEM_EXPANDER';
     public const PLUGINS_QUOTE_ITEM_EXPANDER = 'PLUGINS_QUOTE_ITEM_EXPANDER';
     public const PLUGINS_ADD_ITEM_PRE_CHECK = 'PLUGINS_ADD_ITEM_PRE_CHECK';
+    public const PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER = 'PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER';
     public const PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE = 'PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE';
 
     /**
@@ -45,6 +46,7 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addItemExpanderPlugins($container);
         $container = $this->addQuoteItemExpanderPlugins($container);
         $container = $this->addAddItemPreCheckPlugins($container);
+        $container = $this->addItemToShoppingListItemMapperPlugins($container);
         $container = $this->addShoppingListItemPostSavePlugins($container);
 
         return $container;
@@ -196,6 +198,28 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface[]
      */
     protected function getQuoteItemExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addItemToShoppingListItemMapperPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER] = function () {
+            return $this->getItemToShoppingListItemMapperPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface[]
+     */
+    protected function getItemToShoppingListItemMapperPlugins(): array
     {
         return [];
     }
