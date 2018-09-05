@@ -137,7 +137,7 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addShoppingListItemRequestExpanderPlugins(Container $container)
+    protected function addShoppingListItemRequestExpanderPlugins(Container $container): Container
     {
         $container[static::PLUGINS_ADD_ITEMS_REQUEST_EXPANDER] = function () {
             return $this->getShoppingListItemRequestExpanderPlugins();
