@@ -75,4 +75,35 @@ class CustomerAccess implements CustomerAccessInterface
 
         return $permissionCollectionTransfer;
     }
+
+    /**
+     * @param string $customerSecuredPattern
+     *
+     * @return string
+     */
+    public function getCustomerSecuredPatternAccordingCustomerAccess(string $customerSecuredPattern): string
+    {
+        $unauthenticatedCustomerAccess = $this->customerAccessStorageReader->getUnauthenticatedCustomerAccess();
+        return $this->applyCustomerAccessPermissionOnSecuredPattern($unauthenticatedCustomerAccess, $customerSecuredPattern);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
+     * @param string $customerSecuredPattern
+     *
+     * @return string
+     */
+    protected function applyCustomerAccessPermissionOnSecuredPattern(
+        CustomerAccessTransfer $customerAccessTransfer,
+        string $customerSecuredPattern
+    ): string {
+        foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
+            $customerSecuredPatternRoute = $this->customerAccessConfig->getCustomerAccessByContentType($contentTypeAccess->getContentType());
+            $customerSecuredPattern = str_replace($customerSecuredPatternRoute, '', $customerSecuredPattern);
+        }
+
+        $customerSecuredPattern .= '$';
+
+        return $customerSecuredPattern;
+    }
 }

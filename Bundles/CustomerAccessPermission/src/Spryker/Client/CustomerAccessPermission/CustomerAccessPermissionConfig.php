@@ -28,6 +28,13 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
         'shopping-list' => SeeShoppingListPermissionPlugin::KEY,
     ];
 
+    public const CONTENT_TYPE_PERMISSION_ACCESS = [
+        'add-to-cart' => '/cart(?!/add)|^(/en|/de)?',
+        'order-place-submit' => '/checkout',
+        'wishlist' => '/wishlist|^(/en|/de)?',
+        'shopping-list' => '/shopping-list|^(/en|/de)?',
+    ];
+
     protected const MESSAGE_PLUGIN_NOT_FOUND_EXCEPTION = 'Plugin not found';
 
     /**
@@ -44,6 +51,20 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
         }
 
         return static::CONTENT_TYPE_PERMISSION_PLUGIN[$contentType];
+    }
+
+    /**
+     * @param string $contentType
+     *
+     * @return string
+     */
+    public function getCustomerAccessByContentType(string $contentType): string
+    {
+        if (!array_key_exists($contentType, static::CONTENT_TYPE_PERMISSION_ACCESS)) {
+            return '';
+        }
+
+        return static::CONTENT_TYPE_PERMISSION_ACCESS[$contentType];
     }
 
     /**

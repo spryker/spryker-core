@@ -20,4 +20,11 @@ interface CustomerAccessInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function getLoggedOutCustomerPermissions(): PermissionCollectionTransfer;
+
+    /**
+     * @param string $customerSecuredPattern
+     *
+     * @return string
+     */
+    public function getCustomerSecuredPatternAccordingCustomerAccess(string $customerSecuredPattern): string;
 }
