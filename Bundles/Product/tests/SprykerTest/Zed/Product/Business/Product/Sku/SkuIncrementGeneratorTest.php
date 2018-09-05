@@ -7,11 +7,11 @@
 
 namespace SprykerTest\Zed\Product\Business\Product\Sku;
 
-use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
+use Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGenerator;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface;
+use SprykerTest\Zed\Product\Business\FacadeTestAbstract;
 
 /**
  * Auto-generated group annotations
@@ -21,77 +21,37 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface;
  * @group Business
  * @group Product
  * @group Sku
- * @group SkuGeneratorTest
+ * @group SkuIncrementGeneratorTest
  * Add your own group annotations below this line
  */
-class SkuGeneratorTest extends Unit
+class SkuIncrementGeneratorTest extends FacadeTestAbstract
 {
     /**
      * @return void
      */
-    public function testGenerateProductAbstractSkuShouldSanitizeSku()
+    public function testGenerateProductConcreteSkuWithoutAttributesShouldIncrementMaxSku(): void
     {
         $skuGenerator = $this->createSkuGenerator();
 
-        $productAbstractTransfer = new ProductAbstractTransfer();
-        $productAbstractTransfer->setSku('one-ONE    ONE----Lietuviškai');
+        $productAbstractTransfer = $this->productAbstractManager->findProductAbstractById(1);
+        $productConcreteIds = $this->productConcreteManager->findProductConcreteIdsByAbstractProductId(1);
 
-        $sanitizedSku = $skuGenerator->generateProductAbstractSku($productAbstractTransfer);
+        $maxSku = 0;
+        foreach ($productConcreteIds as $productConcreteId) {
+            $productConcreteTransfer = $this->productConcreteManager->findProductConcreteById($productConcreteId);
+            $nextSkuPart = explode('_', $productConcreteTransfer->getSku())[1];
 
-        $this->assertEquals('one-ONEONE-Lietuviskai', $sanitizedSku);
-    }
+            if ($nextSkuPart > $maxSku) {
+                $maxSku = $nextSkuPart;
+            }
+        }
 
-    /**
-     * @return void
-     */
-    public function testGenerateProductConcreteSkuShouldSanitizeAndConcatSku()
-    {
-        $skuGenerator = $this->createSkuGenerator();
-
-        $productAbstractTransfer = new ProductAbstractTransfer();
-        $productAbstractTransfer->setSku('one-ONE    ONE----Lietuviškai');
+        $maxSku += 1;
 
         $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setAttributes([
-            'key' => 'value',
-            'key2' => 'value2',
-        ]);
-
-        $sanitizedSku = $skuGenerator->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
-
-        $this->assertEquals('one-ONEONE-Lietuviskai-key-value_key2-value2', $sanitizedSku);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGenerateProductConcreteSkuWithManyAttributesShouldTruncatesToMaxSkuLength(): void
-    {
-        $skuGenerator = $this->createSkuGenerator();
-
-        $productAbstractTransfer = new ProductAbstractTransfer();
-        $productAbstractTransfer->setSku('Long Sku');
-
-        $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setAttributes([
-            'color' => 'blue',
-            'flash_memory' => '4GB',
-            'form_factor' => 'Bar',
-            'internal_memory' => '32GB',
-            'internal_storage_capacity' => '1526MB',
-            'os_installed' => 'Android',
-            'processor_cache' => '4MB',
-            'processor_frequency' => '1.6GHz',
-            'series' => 'Ace2',
-            'storage_capacity' => '128GB',
-            'storage_media' => 'SSD',
-            'total-megapixels' => '16.1MP',
-            'total_storage_capacity' => '128GB',
-        ]);
-
         $formattedSku = $skuGenerator->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
 
-        $this->assertTrue(\strlen($formattedSku) <= SkuGenerator::SKU_MAX_LENGTH);
+        $this->assertEquals($formattedSku, ($productAbstractTransfer->getSku() . '_' . $maxSku));
     }
 
     /**
@@ -99,7 +59,7 @@ class SkuGeneratorTest extends Unit
      */
     protected function createSkuGenerator()
     {
-        return new SkuGenerator($this->createUtilTextServiceMock());
+        return new SkuGenerator($this->createUtilTextServiceMock(), $this->createSkuIncrementGeneratorMock());
     }
 
     /**
@@ -108,5 +68,13 @@ class SkuGeneratorTest extends Unit
     protected function createUtilTextServiceMock()
     {
         return $this->getMockBuilder(ProductToUtilTextInterface::class)->getMock();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGenerator
+     */
+    protected function createSkuIncrementGeneratorMock()
+    {
+        return new SkuIncrementGenerator($this->productConcreteManager);
     }
 }

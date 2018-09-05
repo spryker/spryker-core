@@ -5,26 +5,12 @@
  */
 namespace Spryker\Zed\Product\Business\Product\Sku;
 
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-
-interface SkuGeneratorInterface
+interface SkuIncrementGeneratorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param string $idProductAbstract
      *
      * @return string
      */
-    public function generateProductAbstractSku(ProductAbstractTransfer $productAbstractTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return string
-     */
-    public function generateProductConcreteSku(
-        ProductAbstractTransfer $productAbstractTransfer,
-        ProductConcreteTransfer $productConcreteTransfer
-    );
+    public function generateProductConcreteSkuIncrement(string $idProductAbstract): string;
 }

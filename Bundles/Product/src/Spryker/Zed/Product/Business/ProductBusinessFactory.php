@@ -31,6 +31,8 @@ use Spryker\Zed\Product\Business\Product\ProductConcreteActivator;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
+use Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGenerator;
+use Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGeneratorInterface;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusChecker;
 use Spryker\Zed\Product\Business\Product\Status\ProductConcreteStatusChecker;
 use Spryker\Zed\Product\Business\Product\Status\ProductConcreteStatusCheckerInterface;
@@ -183,7 +185,15 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createSkuGenerator()
     {
-        return new SkuGenerator($this->getUtilTextService());
+        return new SkuGenerator($this->getUtilTextService(), $this->createSkuIncrementGenerator());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGeneratorInterface
+     */
+    public function createSkuIncrementGenerator(): SkuIncrementGeneratorInterface
+    {
+        return new SkuIncrementGenerator($this->createProductConcreteManager());
     }
 
     /**

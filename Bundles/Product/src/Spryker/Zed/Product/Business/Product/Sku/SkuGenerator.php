@@ -12,9 +12,9 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface;
 
 class SkuGenerator implements SkuGeneratorInterface
 {
-    const SKU_ABSTRACT_SEPARATOR = '-';
-    const SKU_TYPE_SEPARATOR = '-';
-    const SKU_VALUE_SEPARATOR = '_';
+    const SKU_ABSTRACT_SEPARATOR = '_';
+    const SKU_TYPE_SEPARATOR = '_';
+    const SKU_VALUE_SEPARATOR = '-';
     public const SKU_MAX_LENGTH = 255;
 
     /**
@@ -23,11 +23,18 @@ class SkuGenerator implements SkuGeneratorInterface
     protected $utilTextService;
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface $utilTextService
+     * @var \Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGeneratorInterface
      */
-    public function __construct(ProductToUtilTextInterface $utilTextService)
+    protected $skuIncrementGenerator;
+
+    /**
+     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface $utilTextService
+     * @param \Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGeneratorInterface $skuIncrementGenerator
+     */
+    public function __construct(ProductToUtilTextInterface $utilTextService, SkuIncrementGeneratorInterface $skuIncrementGenerator)
     {
         $this->utilTextService = $utilTextService;
+        $this->skuIncrementGenerator = $skuIncrementGenerator;
     }
 
     /**
@@ -51,6 +58,11 @@ class SkuGenerator implements SkuGeneratorInterface
         ProductConcreteTransfer $productConcreteTransfer
     ) {
         $concreteSku = $this->generateConcreteSkuFromAttributes($productConcreteTransfer->getAttributes());
+
+        if (strlen($concreteSku) === 0) {
+            $concreteSku = $this->addSkuIncrementValue($productAbstractTransfer->getIdProductAbstract());
+        }
+
         $concreteSku = $this->formatConcreteSku($productAbstractTransfer->getSku(), $concreteSku);
 
         return $concreteSku;
@@ -115,5 +127,15 @@ class SkuGenerator implements SkuGeneratorInterface
         }
 
         return rtrim($sku, static::SKU_VALUE_SEPARATOR);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return string
+     */
+    protected function addSkuIncrementValue(int $idProductAbstract): string
+    {
+        return $this->skuIncrementGenerator->generateProductConcreteSkuIncrement($idProductAbstract);
     }
 }
