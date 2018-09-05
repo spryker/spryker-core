@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitPersistenceFactory getFactory()
+ * @method \Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer save(\Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer $spyCompanyBusinessUnitEntityTransfer)
  */
 class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements CompanyBusinessUnitEntityManagerInterface
 {
