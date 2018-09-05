@@ -7,7 +7,13 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/gui": "*",
+    "spryker/symfony": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/gui": "Required to use table in plugins.",
+    "spryker/symfony": "Required to use form in plugins."
   },
   "autoload": {
     "psr-4": {
