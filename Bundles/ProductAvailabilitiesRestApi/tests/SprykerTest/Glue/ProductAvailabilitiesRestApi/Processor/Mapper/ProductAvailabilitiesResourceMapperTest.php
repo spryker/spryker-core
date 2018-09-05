@@ -64,7 +64,7 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
     {
         $mapper = $this->getConcreteProductsAvailabilityResourceMapper();
         $transfer = $this->getProductConcreteAvailabilityTransferWithUnavailableProducts();
-        
+
         /** @var \Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer $attributesTransfer */
         $attributesTransfer = $mapper->mapAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer($transfer);
 
