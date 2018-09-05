@@ -22,9 +22,7 @@ interface CustomerAccessInterface
     public function getLoggedOutCustomerPermissions(): PermissionCollectionTransfer;
 
     /**
-     * @param string $customerSecuredPattern
-     *
      * @return string
      */
-    public function getCustomerSecuredPatternAccordingCustomerAccess(string $customerSecuredPattern): string;
+    public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string;
 }

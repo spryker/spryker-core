@@ -28,7 +28,7 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
         'shopping-list' => SeeShoppingListPermissionPlugin::KEY,
     ];
 
-    public const CONTENT_TYPE_PERMISSION_ACCESS = [
+    protected const CONTENT_TYPE_PERMISSION_ACCESS = [
         'add-to-cart' => '/cart(?!/add)|^(/en|/de)?',
         'order-place-submit' => '/checkout',
         'wishlist' => '/wishlist|^(/en|/de)?',

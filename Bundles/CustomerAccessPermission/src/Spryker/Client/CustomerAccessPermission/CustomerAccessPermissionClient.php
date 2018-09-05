@@ -19,12 +19,10 @@ class CustomerAccessPermissionClient extends AbstractClient implements CustomerA
      *
      * @api
      *
-     * @param string $customerSecuredPattern
-     *
      * @return string
      */
-    public function getCustomerSecuredPatternAccordingCustomerAccess(string $customerSecuredPattern): string
+    public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string
     {
-        return $this->getFactory()->createCustomerAccess()->getCustomerSecuredPatternAccordingCustomerAccess($customerSecuredPattern);
+        return $this->getFactory()->createCustomerAccess()->getCustomerSecuredPatternForUnauthenticatedCustomerAccess();
     }
 }

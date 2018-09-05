@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Client\CustomerAccessPermission\CustomerAccessPermissionConfig;
 use Spryker\Client\CustomerAccessPermission\Dependency\Client\CustomerAccessPermissionToCustomerAccessStorageClientInterface;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Customer\CustomerConstants;
 
 class CustomerAccess implements CustomerAccessInterface
 {
@@ -77,14 +79,14 @@ class CustomerAccess implements CustomerAccessInterface
     }
 
     /**
-     * @param string $customerSecuredPattern
-     *
      * @return string
      */
-    public function getCustomerSecuredPatternAccordingCustomerAccess(string $customerSecuredPattern): string
+    public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string
     {
+        $customerSecuredPattern = Config::get(CustomerConstants::CUSTOMER_SECURED_PATTERN);
         $unauthenticatedCustomerAccess = $this->customerAccessStorageReader->getUnauthenticatedCustomerAccess();
-        return $this->applyCustomerAccessPermissionOnSecuredPattern($unauthenticatedCustomerAccess, $customerSecuredPattern);
+
+        return $this->applyCustomerAccessOnCustomerSecuredPattern($unauthenticatedCustomerAccess, $customerSecuredPattern);
     }
 
     /**
@@ -93,7 +95,7 @@ class CustomerAccess implements CustomerAccessInterface
      *
      * @return string
      */
-    protected function applyCustomerAccessPermissionOnSecuredPattern(
+    protected function applyCustomerAccessOnCustomerSecuredPattern(
         CustomerAccessTransfer $customerAccessTransfer,
         string $customerSecuredPattern
     ): string {
