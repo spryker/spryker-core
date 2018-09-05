@@ -9,10 +9,6 @@ namespace Spryker\Zed\MinimumOrderValue;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy\HardThresholdStrategyPlugin;
-use Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy\SoftThresholdWithFixedFeeStrategyPlugin;
-use Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy\SoftThresholdWithFlexibleFeeStrategyPlugin;
-use Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy\SoftThresholdWithMessageStrategyPlugin;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeBridge;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeBridge;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeBridge;
@@ -177,11 +173,6 @@ class MinimumOrderValueDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function getMinimumOrderValueStrategyPlugins(): array
     {
-        return [
-            new HardThresholdStrategyPlugin(),
-            new SoftThresholdWithMessageStrategyPlugin(),
-            new SoftThresholdWithFixedFeeStrategyPlugin(),
-            new SoftThresholdWithFlexibleFeeStrategyPlugin(),
-        ];
+        return [];
     }
 }
