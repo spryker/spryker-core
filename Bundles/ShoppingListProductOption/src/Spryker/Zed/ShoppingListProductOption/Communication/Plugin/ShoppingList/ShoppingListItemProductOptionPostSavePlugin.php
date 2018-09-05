@@ -9,26 +9,26 @@ namespace Spryker\Zed\ShoppingListProductOption\Communication\Plugin\ShoppingLis
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface;
+use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface;
 
 /**
  * @method \Spryker\Zed\ShoppingListProductOption\Business\ShoppingListProductOptionFacadeInterface getFacade()
  */
-class ShoppingListItemProductOptionExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
+class ShoppingListItemProductOptionPostSavePlugin extends AbstractPlugin implements ShoppingListItemPostSavePluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Adds a product options to shopping list item.
+     * - Saves a product options to shopping list item.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     * @return void
      */
-    public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    public function execute(ShoppingListItemTransfer $shoppingListItemTransfer): void
     {
-        return $this->getFacade()
-            ->expandItem($shoppingListItemTransfer);
+        $this->getFacade()
+            ->saveShoppingListItemProductOptions($shoppingListItemTransfer);
     }
 }
