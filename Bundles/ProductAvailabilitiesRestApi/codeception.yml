@@ -1,4 +1,8 @@
 namespace: ProductAvailabilitiesRestApi
+
+include:
+    - tests/SprykerTest/Glue/ProductAvailabilitiesRestApi
+
 actor: Tester
 paths:
     tests: tests

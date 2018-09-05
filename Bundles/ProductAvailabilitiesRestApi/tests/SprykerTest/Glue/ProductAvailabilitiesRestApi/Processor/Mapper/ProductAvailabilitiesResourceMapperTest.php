@@ -82,15 +82,12 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         $mapper = $this->getAbstractProductsAvailabilityResourceMapper();
         $transfer = $this->getProductAbstractAvailabilityTransferWithAvailableProducts();
 
-        $restResource = $mapper->mapAbstractProductsAvailabilityTransferToRestResource($transfer);
-
         /** @var \Generated\Shared\Transfer\RestAbstractProductAvailabilityAttributesTransfer $attributesTransfer */
-        $attributesTransfer = $restResource->getAttributes();
+        $attributesTransfer = $mapper->mapAvailabilityTransferToRestAbstractProductAvailabilityAttributesTransfer($transfer);
 
         $this->tester->assertInstanceOf(RestAbstractProductAvailabilityAttributesTransfer::class, $attributesTransfer);
         $this->tester->assertTrue($attributesTransfer->getAvailability());
         $this->tester->assertEquals($attributesTransfer->getQuantity(), static::PRODUCTS_AVAILABILITY_QUANTITY);
-        $this->tester->assertEquals($restResource->getId(), static::PRODUCT_ABSTRACT_SKU);
     }
 
     /**
