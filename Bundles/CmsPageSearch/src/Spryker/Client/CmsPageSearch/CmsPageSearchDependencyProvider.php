@@ -14,10 +14,10 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
 {
-    public const CLIENT_SEARCH = 'search_client';
-    public const CMS_PAGE_SEARCH_QUERY_PLUGIN = 'cms_page_search_query_plugin';
-    public const CMS_PAGE_SEARCH_RESULT_FORMATTER_PLUGINS = 'cms_page_search_result_formatter_plugins';
-    public const CMS_PAGE_SEARCH_QUERY_EXPANDER_PLUGINS = 'cms_page_search_query_expander_plugins';
+    public const CLIENT_SEARCH = 'CLIENT_SEARCH';
+    public const PLUGIN_CMS_PAGE_SEARCH_QUERY = 'PLUGIN_CMS_PAGE_SEARCH_QUERY';
+    public const PLUGINS_CMS_PAGE_SEARCH_RESULT_FORMATTER = 'PLUGINS_CMS_PAGE_SEARCH_RESULT_FORMATTER';
+    public const PLUGINS_CMS_PAGE_SEARCH_QUERY_EXPANDER = 'PLUGINS_CMS_PAGE_SEARCH_QUERY_EXPANDER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -57,7 +57,7 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCmsPageSearchQueryPlugin(Container $container): Container
     {
-        $container[static::CMS_PAGE_SEARCH_QUERY_PLUGIN] = function () {
+        $container[static::PLUGIN_CMS_PAGE_SEARCH_QUERY] = function () {
             return $this->createCmsPageSearchQueryPlugin();
         };
 
@@ -71,7 +71,7 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCmsPageSearchResultFormatterPlugins(Container $container): Container
     {
-        $container[static::CMS_PAGE_SEARCH_RESULT_FORMATTER_PLUGINS] = function () {
+        $container[static::PLUGINS_CMS_PAGE_SEARCH_RESULT_FORMATTER] = function () {
             return $this->createCmsPageSearchResultFormatterPlugins();
         };
 
@@ -85,7 +85,7 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCmsPageSearchQueryExpanderPlugins(Container $container): Container
     {
-        $container[static::CMS_PAGE_SEARCH_QUERY_EXPANDER_PLUGINS] = function () {
+        $container[static::PLUGINS_CMS_PAGE_SEARCH_QUERY_EXPANDER] = function () {
             return $this->createCmsPageSearchQueryExpanderPlugins();
         };
 

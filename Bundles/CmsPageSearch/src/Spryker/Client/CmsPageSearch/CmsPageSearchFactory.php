@@ -43,7 +43,7 @@ class CmsPageSearchFactory extends AbstractFactory
      */
     public function getCmsPageSearchQueryPlugin(): QueryInterface
     {
-        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::CMS_PAGE_SEARCH_QUERY_PLUGIN);
+        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGIN_CMS_PAGE_SEARCH_QUERY);
     }
 
     /**
@@ -51,7 +51,7 @@ class CmsPageSearchFactory extends AbstractFactory
      */
     public function getCmsPageSearchQueryExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::CMS_PAGE_SEARCH_QUERY_EXPANDER_PLUGINS);
+        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGINS_CMS_PAGE_SEARCH_QUERY_EXPANDER);
     }
 
     /**
@@ -59,6 +59,6 @@ class CmsPageSearchFactory extends AbstractFactory
      */
     public function getCmsPageSearchResultFormatters(): array
     {
-        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::CMS_PAGE_SEARCH_RESULT_FORMATTER_PLUGINS);
+        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGINS_CMS_PAGE_SEARCH_RESULT_FORMATTER);
     }
 }
