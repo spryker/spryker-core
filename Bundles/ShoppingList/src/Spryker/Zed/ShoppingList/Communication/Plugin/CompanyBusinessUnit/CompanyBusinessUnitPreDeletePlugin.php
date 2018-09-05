@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingList\Communication\Plugin\CompanyBusinessUnit;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -24,10 +25,13 @@ class CompanyBusinessUnitPreDeletePlugin extends AbstractPlugin implements Compa
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     * @return void
      */
-    public function preDelete(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitTransfer
+    public function preDelete(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): void
     {
-        return $companyBusinessUnitTransfer;
+        $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
+            ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+
+        $this->getFacade()->unShareShoppingListWithCompanyBusinessUnit($shoppingListShareRequestTransfer);
     }
 }

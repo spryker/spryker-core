@@ -48,14 +48,12 @@ class CompanyBusinessUnitWriterPluginExecutor implements CompanyBusinessUnitWrit
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     * @return void
      */
-    public function executePreDeletePlugins(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitTransfer
+    public function executePreDeletePlugins(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): void
     {
         foreach ($this->companyBusinessUnitPreDeletePlugins as $plugin) {
-            $companyBusinessUnitTransfer = $plugin->preDelete($companyBusinessUnitTransfer);
+            $plugin->preDelete($companyBusinessUnitTransfer);
         }
-
-        return $companyBusinessUnitTransfer;
     }
 }

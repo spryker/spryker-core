@@ -122,5 +122,5 @@ interface ShoppingListRepositoryInterface
      *
      * @return bool
      */
-    public function hasCompanyBusinessUnitSharedWithShoppingLists(int $idCompanyBusinessUnit): bool;
+    public function isCompanyBusinessUnitSharedWithShoppingLists(int $idCompanyBusinessUnit): bool;
 }

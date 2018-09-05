@@ -311,7 +311,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return bool
      */
-    public function hasCompanyBusinessUnitSharedWithShoppingLists(int $idCompanyBusinessUnit): bool
+    public function isCompanyBusinessUnitSharedWithShoppingLists(int $idCompanyBusinessUnit): bool
     {
         $existsSpyCompanyBusinessUnit = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()

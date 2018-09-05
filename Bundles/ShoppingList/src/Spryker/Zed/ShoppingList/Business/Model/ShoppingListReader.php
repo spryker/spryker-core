@@ -224,7 +224,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
      */
     public function hasCompanyBusinessUnitSharedWithShoppingLists(int $idCompanyBusinessUnit): bool
     {
-        return $this->shoppingListRepository->hasCompanyBusinessUnitSharedWithShoppingLists($idCompanyBusinessUnit);
+        return $this->shoppingListRepository->isCompanyBusinessUnitSharedWithShoppingLists($idCompanyBusinessUnit);
     }
 
     /**

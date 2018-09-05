@@ -19,7 +19,7 @@ interface CompanyBusinessUnitPreDeletePluginInterface
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     * @return void
      */
-    public function preDelete(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitTransfer;
+    public function preDelete(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): void;
 }
