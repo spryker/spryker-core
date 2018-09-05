@@ -7,11 +7,11 @@
 
 namespace Spryker\Client\CmsPageSearch;
 
+use Spryker\Client\CmsPageSearch\Config\CmsPageSortConfigBuilder;
 use Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
-use Spryker\Client\CmsPageSearch\Config\CmsPageSortConfigBuilder;
 use Spryker\Client\Search\SearchClientInterface;
 
 /**
