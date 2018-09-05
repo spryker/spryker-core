@@ -64,7 +64,7 @@ class AgentFacadeTest extends Unit
      */
     public function testFindCustomersByQuery(): void
     {
-        $customerTransfer = $this->registerCustomer();
+        $customerTransfer = $this->tester->haveCustomer();
         $customerQueryTransfer = new CustomerQueryTransfer();
         $customerQueryTransfer->setQuery($customerTransfer->getFirstName());
         $customerQueryTransfer->setLimit(5);
@@ -88,16 +88,6 @@ class AgentFacadeTest extends Unit
             ->findCustomersByQuery($customerQueryTransfer);
 
         $this->assertEquals(0, $customerAutocompleteResponseTransfer->getCustomers()->count());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function registerCustomer(): CustomerTransfer
-    {
-        return $this->getCustomerFacade()
-            ->registerCustomer($this->createCustomer())
-            ->getCustomerTransfer();
     }
 
     /**

@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/agent.svg)](https://travis-ci.org/spryker/agent)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/agent/badge.svg)](https://coveralls.io/github/spryker/agent)
 
-Agent allows to create agents from ZED users who can manage selected YVES users.
+Agent allows to create agents from Zed users who can manage selected Yves users.
 
 ## Installation
 
