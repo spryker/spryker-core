@@ -10,6 +10,7 @@ namespace Spryker\Zed\Development\Business;
 use Generated\Shared\Transfer\ComposerJsonValidationRequestTransfer;
 use Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer;
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\DependencyProviderCollectionTransfer;
 use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
 use Symfony\Component\Console\Input\InputInterface;
@@ -355,4 +356,15 @@ interface DevelopmentFacadeInterface
      * @return \Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer
      */
     public function validateComposerJson(ComposerJsonValidationRequestTransfer $composerJsonValidationRequestTransfer): ComposerJsonValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns a collection of all inside the project used plugins.
+     * - Parses use statements of project dependency provider.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
+     */
+    public function getInProjectDependencyProviderUsedPlugins(): DependencyProviderCollectionTransfer;
 }

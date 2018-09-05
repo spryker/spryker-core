@@ -99,23 +99,27 @@
         <property name="fixType" type="string"/>
     </transfer>
 
-    <transfer name="Organization">
-        <property name="name" type="string"/>
-        <property name="nameDashed" type="string"/>
-    </transfer>
-
-    <transfer name="Application">
-        <property name="name" type="string"/>
-    </transfer>
-
     <transfer name="Module">
         <property name="name" type="string"/>
         <property name="nameDashed" type="string"/>
         <property name="organization" type="Organization"/>
         <property name="application" type="Application"/>
-        <property name="rootDirectory" type="string"/>
+        <property name="path" type="string"/>
         <property name="isStandalone" type="bool"/>
-        <property name="isInProject" type="bool"/>
+    </transfer>
+
+    <transfer name="ModuleCollection">
+        <property name="modules" type="Module[]" singular="module"/>
+    </transfer>
+
+    <transfer name="Organization">
+        <property name="name" type="string"/>
+        <property name="nameDashed" type="string"/>
+        <property name="isProject" type="bool"/>
+    </transfer>
+
+    <transfer name="Application">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ComposerJsonValidationRequest">

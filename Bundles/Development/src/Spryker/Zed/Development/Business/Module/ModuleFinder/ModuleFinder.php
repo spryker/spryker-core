@@ -9,6 +9,8 @@ namespace Spryker\Zed\Development\Business\Module\ModuleFinder;
 
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\FilterChain;
@@ -44,7 +46,7 @@ class ModuleFinder implements ModuleFinderInterface
         if (static::$moduleTransferCollection === null) {
             $moduleTransferCollection = [];
 
-            $moduleTransferCollection = $this->addStandAloneModulesToCollection($moduleTransferCollection);
+            $moduleTransferCollection = $this->addStandaloneModulesToCollection($moduleTransferCollection);
             $moduleTransferCollection = $this->addModulesToCollection($moduleTransferCollection);
 
             ksort($moduleTransferCollection);
@@ -56,11 +58,25 @@ class ModuleFinder implements ModuleFinderInterface
     }
 
     /**
+     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
+     */
+    protected function getProjectModuleFinder(): Finder
+    {
+        $projectOrganizations = Config::get(KernelConstants::PROJECT_NAMESPACES);
+        $projectOrganizationModuleDirectories = [];
+        foreach ($projectOrganizations as $projectOrganization) {
+            $projectOrganizationModuleDirectories[] = APPLICATION_SOURCE_DIR . DIRECTORY_SEPARATOR . $projectOrganization;
+        }
+
+        return (new Finder())->directories()->depth('== 0')->in($projectOrganizationModuleDirectories);
+    }
+
+    /**
      * @param array $moduleTransferCollection
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    protected function addStandAloneModulesToCollection(array $moduleTransferCollection): array
+    protected function addStandaloneModulesToCollection(array $moduleTransferCollection): array
     {
         $standAloneModuleDirectories = (new Finder())->directories()->depth('== 0')->in(APPLICATION_VENDOR_DIR . '/spryker/');
 
@@ -204,7 +220,7 @@ class ModuleFinder implements ModuleFinderInterface
         $moduleTransfer
             ->setName($moduleName)
             ->setNameDashed($moduleNameDashed)
-            ->setRootDirectory($directoryInfo->getRealPath())
+            ->setPath($directoryInfo->getRealPath())
             ->setIsStandalone(false);
 
         return $moduleTransfer;

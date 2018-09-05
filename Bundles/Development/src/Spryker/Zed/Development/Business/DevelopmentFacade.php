@@ -10,6 +10,7 @@ namespace Spryker\Zed\Development\Business;
 use Generated\Shared\Transfer\ComposerJsonValidationRequestTransfer;
 use Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer;
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\DependencyProviderCollectionTransfer;
 use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -447,5 +448,17 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function validateComposerJson(ComposerJsonValidationRequestTransfer $composerJsonValidationRequestTransfer): ComposerJsonValidationResponseTransfer
     {
         return $this->getFactory()->createComposerJsonValidator()->validate($composerJsonValidationRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
+     */
+    public function getInProjectDependencyProviderUsedPlugins(): DependencyProviderCollectionTransfer
+    {
+        return $this->getFactory()->createDependencyProviderUsedPluginFinder()->findUsedPlugins();
     }
 }

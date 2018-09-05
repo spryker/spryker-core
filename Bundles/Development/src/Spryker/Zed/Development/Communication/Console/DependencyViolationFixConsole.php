@@ -140,7 +140,7 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
      */
     protected function getComposerJsonAsArray(ModuleTransfer $moduleTransfer): array
     {
-        $composerJsonFile = $moduleTransfer->getRootDirectory() . '/composer.json';
+        $composerJsonFile = $moduleTransfer->getPath() . '/composer.json';
         $composerJsonContent = file_get_contents($composerJsonFile);
         $composerJsonArray = json_decode($composerJsonContent, true);
 
@@ -159,7 +159,7 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
             return;
         }
 
-        $composerJsonFile = $moduleTransfer->getRootDirectory() . '/composer.json';
+        $composerJsonFile = $moduleTransfer->getPath() . '/composer.json';
         $composerJsonArray = $this->orderEntriesInComposerJsonArray($composerJsonArray);
         $composerJsonArray = $this->removeEmptyEntriesInComposerJsonArray($composerJsonArray);
 
