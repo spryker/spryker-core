@@ -25,6 +25,7 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
+    public const PLUGINS_ADD_ITEMS_REQUEST_EXPANDER = 'PLUGINS_ADD_ITEMS_REQUEST_EXPANDER';
     public const PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER = 'PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER';
 
     /**
@@ -41,6 +42,7 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
         $container = $this->addPriceProductClient($container);
         $container = $this->addMessengerClient($container);
 
+        $container = $this->addShoppingListItemRequestExpanderPlugins($container);
         $container = $this->addShoppingListItemToItemMapperPlugins($container);
 
         return $container;
@@ -135,6 +137,20 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
+    protected function addShoppingListItemRequestExpanderPlugins(Container $container)
+    {
+        $container[static::PLUGINS_ADD_ITEMS_REQUEST_EXPANDER] = function () {
+            return $this->getShoppingListItemRequestExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
     protected function addShoppingListItemToItemMapperPlugins(Container $container): Container
     {
         $container[static::PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER] = function () {
@@ -142,6 +158,14 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemRequestExpanderPluginInterface[]
+     */
+    protected function getShoppingListItemRequestExpanderPlugins(): array
+    {
+        return [];
     }
 
     /**

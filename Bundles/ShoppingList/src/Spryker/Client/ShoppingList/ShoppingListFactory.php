@@ -20,6 +20,8 @@ use Spryker\Client\ShoppingList\PermissionUpdater\PermissionUpdater;
 use Spryker\Client\ShoppingList\PermissionUpdater\PermissionUpdaterInterface;
 use Spryker\Client\ShoppingList\Product\ProductStorage;
 use Spryker\Client\ShoppingList\Product\ProductStorageInterface;
+use Spryker\Client\ShoppingList\ShoppingList\ShoppingListAddItemRequestExpander;
+use Spryker\Client\ShoppingList\ShoppingList\ShoppingListAddItemRequestExpanderInterface;
 use Spryker\Client\ShoppingList\Zed\ShoppingListStub;
 use Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface;
 
@@ -62,6 +64,16 @@ class ShoppingListFactory extends AbstractFactory
             $this->createShoppingListStub(),
             $this->getMessengerClient(),
             $this->getShoppingListItemToItemMapperPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingList\ShoppingList\ShoppingListAddItemRequestExpanderInterface
+     */
+    public function createShoppingListAddItemRequestExpander(): ShoppingListAddItemRequestExpanderInterface
+    {
+        return new ShoppingListAddItemRequestExpander(
+            $this->getShoppingListItemRequestExpanderPlugins()
         );
     }
 
@@ -111,6 +123,14 @@ class ShoppingListFactory extends AbstractFactory
     public function createPermissionUpdater(): PermissionUpdaterInterface
     {
         return new PermissionUpdater($this->getCustomerClient());
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemRequestExpanderPluginInterface[]
+     */
+    public function getShoppingListItemRequestExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ADD_ITEMS_REQUEST_EXPANDER);
     }
 
     /**

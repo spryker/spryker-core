@@ -92,10 +92,11 @@ interface ShoppingListClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+    public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer, array $params = []): ShoppingListItemTransfer;
 
     /**
      * Specification:
