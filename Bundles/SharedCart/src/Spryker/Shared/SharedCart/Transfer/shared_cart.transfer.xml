@@ -35,6 +35,11 @@
         <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
     </transfer>
 
+    <transfer name="ShareDetailCollection">
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+    </transfer>
+
+
     <transfer name="Quote">
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
     </transfer>
