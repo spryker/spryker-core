@@ -47,4 +47,22 @@ interface PriceProductToProductFacadeInterface
      * @return string
      */
     public function getAbstractSkuFromProductConcrete($sku);
+
+    /**
+     * @param string $concreteSku
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return int
+     */
+    public function getProductAbstractIdByConcreteSku($concreteSku);
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return int
+     */
+    public function getProductAbstractIdByConcreteId(int $idProductConcrete): int;
 }

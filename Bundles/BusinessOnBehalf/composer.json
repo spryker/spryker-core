@@ -10,7 +10,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company": "*",
     "spryker/customer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

@@ -6,10 +6,6 @@
     "php": ">=7.1",
     "silex/silex": "^1.3.5"
   },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

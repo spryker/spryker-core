@@ -27,4 +27,32 @@ class ProductQuantityStorageFacade extends AbstractFacade implements ProductQuan
     {
         $this->getFactory()->createProductQuantityStorageWriter()->publish($productIds);
     }
+
+    /**
+     * Specification:
+     * - Retrieves all product quantity transfers.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findProductQuantityTransfers(): array
+    {
+        return $this->getFactory()->getProductQuantityFacade()->findProductQuantityTransfers();
+    }
+
+    /**
+     * Specification:
+     * - Retrieves product quantity transfers by product ids.
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findProductQuantityByProductIdsTransfers(array $productIds): array
+    {
+        return $this->getFactory()->getProductQuantityFacade()->findProductQuantityTransfersByProductIds($productIds);
+    }
 }

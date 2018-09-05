@@ -24,19 +24,19 @@ class SearchKeysQuery implements QueryInterface
     protected $searchString;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $limit;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $offset;
 
     /**
      * @param string $searchString
-     * @param string|null $limit
-     * @param string|null $offset
+     * @param int|null $limit
+     * @param int|null $offset
      */
     public function __construct($searchString, $limit = null, $offset = null)
     {

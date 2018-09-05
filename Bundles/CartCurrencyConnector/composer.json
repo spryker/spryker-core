@@ -10,8 +10,9 @@
     "spryker/kernel": "^3.0.0",
     "spryker/zed-request": "^3.0.0"
   },
-  "suggest": {
-    "spryker/currency": "If you want to use plugin to rebuild cart when currency changed"
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
