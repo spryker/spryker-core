@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Development;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface DevelopmentConstants
 {
     const COMPOSER_REQUIRE_VERSION = 'COMPOSER_REQUIRE_VERSION';
@@ -22,4 +25,12 @@ interface DevelopmentConstants
      * @see \Spryker\Shared\Kernel\KernelConstants::CORE_NAMESPACES
      */
     const CORE_NAMESPACES = 'CORE_NAMESPACES';
+
+    /**
+     * Specification:
+     * - Sets the permission mode for generated directories.
+     *
+     * @api
+     */
+    const DIRECTORY_PERMISSION = 'DEVELOPMENT:DIRECTORY_PERMISSION';
 }

@@ -76,7 +76,7 @@ class CompanyStoreRelationWriter implements CompanyStoreRelationWriterInterface
     /**
      * @param int $idCompany
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
+     * @return int[]
      */
     protected function getIdStoresByIdCompany($idCompany)
     {

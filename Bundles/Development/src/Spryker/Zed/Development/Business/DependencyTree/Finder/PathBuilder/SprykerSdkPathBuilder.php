@@ -45,7 +45,7 @@ class SprykerSdkPathBuilder implements PathBuilderInterface
         $paths = [];
         foreach ($this->applications as $application) {
             $paths[] = sprintf('%s/%s/src/SprykerSdk/%s/%s', $this->basePath, $filteredModule, $application, $module);
-            $paths[] = sprintf('%s/%s/src/SprykerSdkTest/%s/%s', $this->basePath, $filteredModule, $application, $module);
+            $paths[] = sprintf('%s/%s/tests/SprykerSdkTest/%s/%s', $this->basePath, $filteredModule, $application, $module);
         }
 
         return $paths;

@@ -94,7 +94,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
         return new IndexInstaller(
             $this->createJsonIndexDefinitionLoader(),
             $this->getElasticsearchClient(),
-            $messenger
+            $messenger,
+            $this->getConfig()
         );
     }
 
@@ -118,7 +119,10 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      */
     protected function createElasticsearchIndexMapGenerator()
     {
-        return new IndexMapGenerator($this->getConfig()->getClassTargetDirectory());
+        return new IndexMapGenerator(
+            $this->getConfig()->getClassTargetDirectory(),
+            $this->getConfig()->getPermissionMode()
+        );
     }
 
     /**
@@ -134,9 +138,12 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      */
     public function getElasticsearchClient()
     {
-        return $this
+        /** @var \Elastica\Client $client */
+        $client = $this
             ->createSearchClientProvider()
             ->getInstance();
+
+        return $client;
     }
 
     /**
@@ -148,7 +155,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param null|string $index
+     * @param string|null $index
      *
      * @return \Elastica\Index
      */

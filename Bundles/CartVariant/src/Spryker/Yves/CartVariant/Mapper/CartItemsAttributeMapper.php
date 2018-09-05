@@ -86,7 +86,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
             }
 
             $variantNameValue = $this->getParentNode($attributeMapIterator);
-            list($variantName, $variantValue) = explode(':', $variantNameValue);
+            [$variantName, $variantValue] = explode(':', $variantNameValue);
 
             if ($this->isVariantNotSet($variantName, $productVariants, $variantValue)) {
                 $productVariants[$variantName][$variantValue][CartVariantConstants::AVAILABLE] = false;
@@ -191,7 +191,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     /**
      * @param \RecursiveIteratorIterator $attributeMapIterator
      *
-     * @return \RecursiveIterator
+     * @return string
      */
     protected function getParentNode(RecursiveIteratorIterator $attributeMapIterator)
     {

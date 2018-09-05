@@ -216,8 +216,8 @@ class ProductRelationFacadeTest extends Unit
     }
 
     /**
-     * @param null|string $skuValueForFilter
-     * @param null|string $categoryName
+     * @param string|null $skuValueForFilter
+     * @param string|null $categoryName
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
      */

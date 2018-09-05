@@ -4,15 +4,21 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/event-behavior": "^1.0.0",
+    "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.21.0",
     "spryker/product-review": "^1.1.0 || ^2.0.0",
     "spryker/storage": "^3.4.0",
-    "spryker/synchronization": "^0.2.0"
+    "spryker/synchronization": "^0.2.0 || ^1.0.0",
+    "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/event": "*",
-    "spryker/propel-orm": "*"
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/propel-query-builder": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",

@@ -36,6 +36,8 @@ use Spryker\Zed\Product\Business\Product\Status\ProductConcreteStatusChecker;
 use Spryker\Zed\Product\Business\Product\Status\ProductConcreteStatusCheckerInterface;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReader;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriter;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggester;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggesterInterface;
 use Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouch;
 use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouch;
 use Spryker\Zed\Product\Business\Product\Url\ProductAbstractAfterUpdateUrlObserver;
@@ -99,7 +101,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractAssertion(),
             $this->createProductConcreteAssertion(),
             $this->createAttributeEncoder(),
-            $this->createProductTransferMapper()
+            $this->createProductTransferMapper(),
+            $this->getRepository()
         );
 
         $productConcreteManager->setEventFacade($this->getEventFacade());
@@ -561,5 +564,17 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function getEventFacade()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Suggest\ProductSuggesterInterface
+     */
+    public function createProductSuggester(): ProductSuggesterInterface
+    {
+        return new ProductSuggester(
+            $this->getConfig(),
+            $this->getRepository(),
+            $this->getLocaleFacade()
+        );
     }
 }
