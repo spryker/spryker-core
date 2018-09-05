@@ -18,7 +18,7 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\Search\ProductConcretePag
  */
 class ProductConcretePageSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-    protected const NAME = 'ProductConcretePageSearchResultFormatter';
+    public const NAME = 'ProductConcretePageSearchResultFormatter';
 
     /**
      * @api
