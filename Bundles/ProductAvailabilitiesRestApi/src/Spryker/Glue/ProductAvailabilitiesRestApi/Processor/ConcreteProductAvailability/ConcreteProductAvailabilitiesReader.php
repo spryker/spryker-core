@@ -117,7 +117,7 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
                     $sku,
                     ProductAvailabilitiesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_AVAILABILITIES
                 );
-                $restResource->addLink('self', $restResourceSelfLink);
+                $restResource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $restResourceSelfLink);
 
                 return $restResource;
             }

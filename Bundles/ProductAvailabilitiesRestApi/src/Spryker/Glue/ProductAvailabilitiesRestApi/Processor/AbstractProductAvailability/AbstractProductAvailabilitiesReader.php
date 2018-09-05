@@ -125,7 +125,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
             $sku,
             ProductAvailabilitiesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_AVAILABILITIES
         );
-        $restResource->addLink('self', $restResourceSelfLink);
+        $restResource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $restResourceSelfLink);
 
         return $restResource;
     }
