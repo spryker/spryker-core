@@ -290,7 +290,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @param int $idConcrete
      *
-     * @return null|int
+     * @return int|null
      */
     public function findProductAbstractIdByConcreteId(int $idConcrete): ?int
     {
@@ -308,13 +308,13 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @param string $idProductConcrete
+     * @param int $idProductConcrete
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
-    public function getProductAbstractIdByConcreteId(string $idProductConcrete): int
+    public function getProductAbstractIdByConcreteId(int $idProductConcrete): int
     {
         $productConcrete = $this->productQueryContainer
             ->queryProduct()
@@ -457,5 +457,25 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         }
 
         $this->productQueryContainer->getConnection()->commit();
+    }
+
+    /**
+     * @param string[] $skus
+     *
+     * @return array
+     */
+    public function getProductConcreteIdsByConcreteSkus(array $skus): array
+    {
+        return $this->productRepository->getProductConcreteIdsByConcreteSkus($skus);
+    }
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return array
+     */
+    public function getProductConcreteSkusByConcreteIds(array $productIds): array
+    {
+        return $this->productRepository->getProductConcreteSkusByConcreteIds($productIds);
     }
 }

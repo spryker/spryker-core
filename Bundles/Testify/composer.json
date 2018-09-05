@@ -13,7 +13,6 @@
     "spryker/silex": "^2.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0"
   },

@@ -23,8 +23,6 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
     protected $quoteFacade;
 
     /**
-     * QuoteActivator constructor.
-     *
      * @param \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface $quoteFacade
      */
     public function __construct(MultiCartToQuoteFacadeInterface $quoteFacade)

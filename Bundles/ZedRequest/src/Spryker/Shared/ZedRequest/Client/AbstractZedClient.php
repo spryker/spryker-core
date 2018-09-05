@@ -18,7 +18,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     private $httpClient;
 
     /**
-     * @var \Spryker\Shared\ZedRequest\Client\ResponseInterface
+     * @var \Spryker\Shared\ZedRequest\Client\ResponseInterface|null
      */
     private static $lastResponse = null;
 

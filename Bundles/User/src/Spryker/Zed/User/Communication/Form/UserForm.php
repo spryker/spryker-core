@@ -15,7 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Choice;
@@ -86,11 +85,11 @@ class UserForm extends AbstractType
     /**
      * @deprecated Use `configureOptions()` instead.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
         $this->configureOptions($resolver);
     }
@@ -112,6 +111,20 @@ class UserForm extends AbstractType
         $groupChoices = $options[self::OPTION_GROUP_CHOICES];
         if ($groupChoices) {
             $this->addGroupField($builder, $options[self::OPTION_GROUP_CHOICES]);
+        }
+
+        $this->executeFormExpanderPlugins($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function executeFormExpanderPlugins(FormBuilderInterface $builder): void
+    {
+        foreach ($this->getFactory()->getFormExpanderPlugins() as $formExpanderPlugin) {
+            $formExpanderPlugin->buildForm($builder);
         }
     }
 

@@ -234,9 +234,9 @@ TXT
     /**
      * @param string $pathToCacheFile
      *
-     * @return \Spryker\Shared\Twig\CacheLoader\FilesystemCacheLoader
+     * @return \Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader
      */
-    protected function getFilesystemCacheLoader($pathToCacheFile)
+    protected function getFilesystemCacheLoader(string $pathToCacheFile)
     {
         return new FilesystemCacheLoader($pathToCacheFile);
     }
@@ -246,8 +246,8 @@ TXT
      *
      * @return \Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter
      */
-    protected function getFilesystemCacheWriter($pathToCacheFile)
+    protected function getFilesystemCacheWriter(string $pathToCacheFile)
     {
-        return new FilesystemCacheWriter($pathToCacheFile);
+        return new FilesystemCacheWriter($pathToCacheFile, 0777);
     }
 }
