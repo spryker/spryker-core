@@ -363,8 +363,7 @@ class Service implements ServiceInterface
         return $result;
     }
 
-    /**a
-     *
+    /**
      * @param array $keys
      *
      * @return void
