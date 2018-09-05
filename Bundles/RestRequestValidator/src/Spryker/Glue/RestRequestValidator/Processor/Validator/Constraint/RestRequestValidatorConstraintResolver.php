@@ -7,7 +7,9 @@
 
 namespace Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint;
 
+use Spryker\Glue\RestRequestValidator\Business\Exception\ClassDoesNotExist;
 use Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraint;
 
 class RestRequestValidatorConstraintResolver implements RestRequestValidatorConstraintResolverInterface
@@ -79,6 +81,8 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     /**
      * @param string $className
      *
+     * @throws \Spryker\Glue\RestRequestValidator\Business\Exception\ClassDoesNotExist
+     *
      * @return string|null
      */
     protected function resolveConstraintClassName(string $className): ?string
@@ -89,6 +93,9 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
             }
         }
 
-        return null;
+        throw new ClassDoesNotExist(
+            sprintf(RestRequestValidatorConfig::EXCEPTION_MESSAGE_CLASS_NOT_FOUND, $className),
+            Response::HTTP_NOT_FOUND
+        );
     }
 }

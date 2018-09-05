@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 class RestRequestValidatorConfig extends AbstractBundleConfig
 {
     public const RESPONSE_CODE_REQUEST_INVALID = '901';
+    public const RESPONSE_CODE_CLASS_NOT_FOUND = '902';
+    public const EXCEPTION_MESSAGE_CLASS_NOT_FOUND = 'Class "%s" not found. Have you forgotten to add you custom validator namespace?';
     protected const SYMFONY_COMPONENT_VALIDATOR_CONSTRAINTS_NAMESPACE = '\\Symfony\\Component\\Validator\\Constraints\\';
     protected const ALLOW_EXTRA_FIELDS = 'allowExtraFields';
     protected const ALLOW_EXTRA_FIELDS_VALUE = true;

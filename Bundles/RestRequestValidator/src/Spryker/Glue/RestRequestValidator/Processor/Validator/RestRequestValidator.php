@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -96,8 +97,9 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function applyValidationToRequest(RestRequestInterface $restRequest, array $validationConfig): RestErrorCollectionTransfer
     {
         $validator = $this->validationAdapter->createValidator();
+        $initializedConstraintCollection = $this->constraintResolver->initializeConstraintCollection($validationConfig);
         $constraints = $this->constraintCollectionAdapter->createCollection(
-            ['fields' => $this->constraintResolver->initializeConstraintCollection($validationConfig)] + $this->getDefaultValidationConfig()
+            ['fields' => $initializedConstraintCollection] + $this->getDefaultValidationConfig()
         );
         $fieldsToValidate = $this->getFieldsForValidation($restRequest);
 
