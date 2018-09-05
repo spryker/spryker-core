@@ -23,7 +23,7 @@ abstract class AbstractProductConcretePageSearchListener extends AbstractPlugin 
      *
      * @return void
      */
-    protected function publish(array $productConcreteIds)
+    protected function publish(array $productConcreteIds): void
     {
         $this->getFacade()->publishConcreteProducts($productConcreteIds);
     }
@@ -33,7 +33,7 @@ abstract class AbstractProductConcretePageSearchListener extends AbstractPlugin 
      *
      * @return void
      */
-    protected function unpublish(array $productConcreteIds)
+    protected function unpublish(array $productConcreteIds): void
     {
         $this->getFacade()->unpublishConcreteProducts($productConcreteIds);
     }

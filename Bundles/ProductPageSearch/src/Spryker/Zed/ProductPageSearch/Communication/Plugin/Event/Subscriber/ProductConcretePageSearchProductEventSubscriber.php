@@ -43,7 +43,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
      *
      * @return void
      */
-    protected function addProductConcretePageProductConcreteCreateSearchListener(EventCollectionInterface $eventCollection)
+    protected function addProductConcretePageProductConcreteCreateSearchListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductConcretePageSearchProductListener());
     }
@@ -53,7 +53,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
      *
      * @return void
      */
-    protected function addProductConcretePageProductConcreteUpdateSearchListener(EventCollectionInterface $eventCollection)
+    protected function addProductConcretePageProductConcreteUpdateSearchListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductConcretePageSearchProductListener());
     }
@@ -63,7 +63,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
      *
      * @return void
      */
-    protected function addProductConcretePageProductConcreteDeleteSearchListener(EventCollectionInterface $eventCollection)
+    protected function addProductConcretePageProductConcreteDeleteSearchListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductConcretePageSearchProductListener());
     }
@@ -73,7 +73,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
      *
      * @return void
      */
-    protected function addProductConcretePageProductConcretePublishSearchListener(EventCollectionInterface $eventCollection)
+    protected function addProductConcretePageProductConcretePublishSearchListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_PUBLISH, new ProductConcretePageSearchProductListener());
     }
@@ -83,7 +83,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
      *
      * @return void
      */
-    protected function addProductConcretePageProductConcreteUnpublishSearchListener(EventCollectionInterface $eventCollection)
+    protected function addProductConcretePageProductConcreteUnpublishSearchListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_UNPUBLISH, new ProductConcretePageSearchProductListener());
     }

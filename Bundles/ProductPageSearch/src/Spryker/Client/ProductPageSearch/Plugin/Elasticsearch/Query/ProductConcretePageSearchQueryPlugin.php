@@ -196,7 +196,7 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Que
     /**
      * @return string[]
      */
-    protected function getSearchFields()
+    protected function getSearchFields(): array
     {
         if (!$this->filter || !$this->filter->getSearchFields()) {
             return [];

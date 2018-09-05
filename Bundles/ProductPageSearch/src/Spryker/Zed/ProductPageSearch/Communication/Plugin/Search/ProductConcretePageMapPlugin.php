@@ -33,7 +33,7 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $locale)
+    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $locale): PageMapTransfer
     {
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore($data[ProductConcretePageSearchTransfer::STORE])
@@ -69,7 +69,7 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    protected function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer)
+    protected function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
     {
         foreach ($this->getFactory()->getProductConcretePageMapExpanderPlugins() as $productConcretePageMapExpanderPlugin) {
             $pageMapTransfer = $productConcretePageMapExpanderPlugin->expandProductPageMap($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer);
@@ -81,7 +81,7 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME;
     }

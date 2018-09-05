@@ -40,7 +40,7 @@ class ProductConcretePageSearchProductLocalizedAttributesEventSubscriber extends
      *
      * @return void
      */
-    protected function addProductConcretePageProductConcreteLocalizedAttributesCreateSearchListener(EventCollectionInterface $eventCollection)
+    protected function addProductConcretePageProductConcreteLocalizedAttributesCreateSearchListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_CREATE, new ProductConcretePageSearchProductLocalizedAttributesListener());
     }
@@ -50,7 +50,7 @@ class ProductConcretePageSearchProductLocalizedAttributesEventSubscriber extends
      *
      * @return void
      */
-    protected function addProductConcretePageProductConcreteLocalizedAttributesUpdateSearchListener(EventCollectionInterface $eventCollection)
+    protected function addProductConcretePageProductConcreteLocalizedAttributesUpdateSearchListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE, new ProductConcretePageSearchProductLocalizedAttributesListener());
     }
@@ -60,7 +60,7 @@ class ProductConcretePageSearchProductLocalizedAttributesEventSubscriber extends
      *
      * @return void
      */
-    protected function addProductConcretePageProductConcreteLocalizedAttributesDeleteSearchListener(EventCollectionInterface $eventCollection)
+    protected function addProductConcretePageProductConcreteLocalizedAttributesDeleteSearchListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_DELETE, new ProductConcretePageSearchProductLocalizedAttributesListener());
     }

@@ -108,7 +108,7 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    protected function findProductConcretePageSearchEntities(array $ids)
+    protected function findProductConcretePageSearchEntities(array $ids): array
     {
         if (empty($ids)) {
             return $this->getFacade()->findAllProductConcretePageSearchEntities();

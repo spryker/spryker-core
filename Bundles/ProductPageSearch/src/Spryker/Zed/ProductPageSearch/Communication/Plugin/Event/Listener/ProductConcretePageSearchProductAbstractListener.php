@@ -22,7 +22,7 @@ class ProductConcretePageSearchProductAbstractListener extends AbstractProductCo
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()
@@ -45,7 +45,7 @@ class ProductConcretePageSearchProductAbstractListener extends AbstractProductCo
      *
      * @return int[]
      */
-    protected function getProductConcreteIds(array $productAbstractIds)
+    protected function getProductConcreteIds(array $productAbstractIds): array
     {
         $productConcreteIds = [];
 
