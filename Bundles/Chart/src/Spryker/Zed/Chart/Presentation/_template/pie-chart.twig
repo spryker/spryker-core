@@ -1,20 +1,19 @@
 {% set chartType = 'pie' %}
 <script>/*<![CDATA[*/
-    var chartData = [];
-    var chartLayout = {{ layout | json_encode() }};
-
+    {% set chartData = [] %}
     {% for trace in data.traces %}
-        chartData.push({
-            name: '{{ trace.name }}',
-            type: '{{ chartType }}',
-            labels: {{ trace.labels | json_encode | raw }},
-            values: {{ trace.values | json_encode | raw }}
-        });
+    {% set chartData = chartData | merge([{
+        'name': trace.name,
+        'type': chartType,
+        'labels': trace.labels,
+        'values': trace.values,
+    }]) %}
     {% endfor %}
 /*]]>*/</script>
 
 {% include '@Chart/_partials/plotly-chart.twig' with {
     chartType: chartType,
     layout: layout,
-    data: data
+    data: data,
+    chartData: chartData
 } %}

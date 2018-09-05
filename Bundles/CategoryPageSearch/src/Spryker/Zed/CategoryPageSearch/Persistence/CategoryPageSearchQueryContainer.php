@@ -10,6 +10,7 @@ namespace Spryker\Zed\CategoryPageSearch\Persistence;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -122,5 +123,22 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
             ->endUse()
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::ID_CATEGORY_NODE)
             ->select([static::ID_CATEGORY_NODE]);
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $ids
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryCategoryNodesByIds(array $ids): SpyCategoryNodeQuery
+    {
+        $query = $this->getFactory()
+            ->getCategoryQueryContainer()
+            ->queryAllCategoryNodes()
+            ->filterByIdCategoryNode_In($ids);
+
+        return $query;
     }
 }

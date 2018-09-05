@@ -30,7 +30,7 @@ class StorageProductImageReader implements StorageProductImageReaderInterface
      * @param int $idProductSet
      * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\StorageProductImageTransfer[]
+     * @return array
      */
     public function getProductSetImageSets($idProductSet, $idLocale)
     {

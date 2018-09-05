@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterStorage\Persistence;
 
+use Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -19,7 +20,7 @@ class ProductCategoryFilterStorageQueryContainer extends AbstractQueryContainer 
      *
      * @param array $idCategories
      *
-     * @return $this|\Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorageQuery
+     * @return \Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorageQuery
      */
     public function queryProductCategoryFilterStorageByFkCategories(array $idCategories)
     {
@@ -31,9 +32,24 @@ class ProductCategoryFilterStorageQueryContainer extends AbstractQueryContainer 
     /**
      * @api
      *
+     * @param int[] $productCategoryFilterIds
+     *
+     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
+     */
+    public function queryProductCategoryByCategoryFilterIds(array $productCategoryFilterIds): SpyProductCategoryFilterQuery
+    {
+        return $this->getFactory()
+            ->getProductCategoryFilterQuery()
+            ->queryProductCategoryFilter()
+            ->filterByIdProductCategoryFilter_In($productCategoryFilterIds);
+    }
+
+    /**
+     * @api
+     *
      * @param array $categoryIds
      *
-     * @return $this|\Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
+     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
      */
     public function queryProductCategoryByIdCategories(array $categoryIds)
     {

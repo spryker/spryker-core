@@ -9,20 +9,11 @@
 *.AppleDB
 *.AppleDesktop
 
-# built client resources
-/demoshop/vendor/spryker/spryker/Bundles/EventJournal/src/Spryker/Zed/*/Static/Public
-/demoshop/vendor/spryker/spryker/Bundles/EventJournal/src/Spryker/Zed/*/Static/Assets/sprite
-
-# propel classes
-/demoshop/vendor/spryker/spryker/Bundles/EventJournal/src/Spryker/Zed/*/Persistence/Propel/Base/*
-/demoshop/vendor/spryker/spryker/Bundles/EventJournal/src/Spryker/Zed/*/Persistence/Propel/Map/*
-
 # OS
 .DS_Store
 
-# grunt stuff
-.grunt
-.sass-cache
-/node_modules/
+/vendor
+/composer.lock
+
 /tests/_output/*
 !/tests/_output/.gitkeep
