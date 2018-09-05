@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ZedNavigation\Communication\Plugin\ZedNavigation;
 use Symfony\Component\HttpFoundation\Request;
 use Twig_SimpleFunction;
+use Twig_Environment;
 
 /**
  * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface getFacade()
@@ -36,7 +37,7 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
     public function register(Application $application)
     {
         $application['twig'] = $application->share(
-            $application->extend('twig', function (\Twig_Environment $twig) use ($application) {
+            $application->extend('twig', function (Twig_Environment $twig) use ($application) {
                 $twig->addFunction($this->getNavigationFunction($application));
                 $twig->addFunction($this->getBreadcrumbFunction($application));
 
