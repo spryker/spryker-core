@@ -218,16 +218,6 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
-     * @param int $idCompanyBusinessUnit
-     *
-     * @return bool
-     */
-    public function hasCompanyBusinessUnitSharedWithShoppingLists(int $idCompanyBusinessUnit): bool
-    {
-        return $this->shoppingListRepository->isCompanyBusinessUnitSharedWithShoppingLists($idCompanyBusinessUnit);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
      * @param array $shoppingListIds
      *
