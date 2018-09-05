@@ -18,23 +18,23 @@ interface SortConfigBuilderInterface
      *
      * @return $this
      */
-    public function addSort(SortConfigTransfer $sortConfigTransfer);
+    public function addSort(SortConfigTransfer $sortConfigTransfer): self;
 
     /**
      * @api
      *
-     * @param string $parameterName
+     * @param string|null $parameterName
      *
      * @return \Generated\Shared\Transfer\SortConfigTransfer|null
      */
-    public function get($parameterName);
+    public function get(?string $parameterName): ?SortConfigTransfer;
 
     /**
      * @api
      *
      * @return \Generated\Shared\Transfer\SortConfigTransfer[]
      */
-    public function getAll();
+    public function getAll(): array;
 
     /**
      * @api
@@ -43,14 +43,14 @@ interface SortConfigBuilderInterface
      *
      * @return string|null
      */
-    public function getActiveParamName(array $requestParameters);
+    public function getActiveParamName(array $requestParameters): ?string;
 
     /**
      * @api
      *
-     * @param string $sortParamName
+     * @param string|null $sortParamName
      *
      * @return string|null
      */
-    public function getSortDirection($sortParamName);
+    public function getSortDirection(?string $sortParamName): ?string;
 }

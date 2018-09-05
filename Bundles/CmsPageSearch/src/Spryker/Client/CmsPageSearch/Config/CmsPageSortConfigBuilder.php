@@ -12,10 +12,10 @@ use Spryker\Client\Kernel\AbstractPlugin;
 
 class CmsPageSortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInterface
 {
-    const DIRECTION_ASC = 'asc';
-    const DIRECTION_DESC = 'desc';
+    protected const DIRECTION_ASC = 'asc';
+    protected const DIRECTION_DESC = 'desc';
 
-    const DEFAULT_SORT_PARAM_KEY = 'sort';
+    protected const DEFAULT_SORT_PARAM_KEY = 'sort';
 
     /**
      * @var \Generated\Shared\Transfer\SortConfigTransfer[]
@@ -30,7 +30,7 @@ class CmsPageSortConfigBuilder extends AbstractPlugin implements SortConfigBuild
     /**
      * @param string $sortParamName
      */
-    public function __construct($sortParamName = self::DEFAULT_SORT_PARAM_KEY)
+    public function __construct(string $sortParamName = self::DEFAULT_SORT_PARAM_KEY)
     {
         $this->sortParamKey = $sortParamName;
     }
@@ -40,7 +40,7 @@ class CmsPageSortConfigBuilder extends AbstractPlugin implements SortConfigBuild
      *
      * @return $this
      */
-    public function addSort(SortConfigTransfer $sortConfigTransfer)
+    public function addSort(SortConfigTransfer $sortConfigTransfer): SortConfigBuilderInterface
     {
         $this->assertSortConfigTransfer($sortConfigTransfer);
 
@@ -50,23 +50,19 @@ class CmsPageSortConfigBuilder extends AbstractPlugin implements SortConfigBuild
     }
 
     /**
-     * @param string $parameterName
+     * @param string|null $parameterName
      *
      * @return \Generated\Shared\Transfer\SortConfigTransfer|null
      */
-    public function get($parameterName)
+    public function get(?string $parameterName): ?SortConfigTransfer
     {
-        if (isset($this->sortConfigTransfers[$parameterName])) {
-            return $this->sortConfigTransfers[$parameterName];
-        }
-
-        return null;
+        return $this->sortConfigTransfers[$parameterName] ?? null;
     }
 
     /**
      * @return \Generated\Shared\Transfer\SortConfigTransfer[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->sortConfigTransfers;
     }
@@ -76,19 +72,17 @@ class CmsPageSortConfigBuilder extends AbstractPlugin implements SortConfigBuild
      *
      * @return string|null
      */
-    public function getActiveParamName(array $requestParameters)
+    public function getActiveParamName(array $requestParameters): ?string
     {
-        $sortParamName = array_key_exists($this->sortParamKey, $requestParameters) ? $requestParameters[$this->sortParamKey] : null;
-
-        return $sortParamName;
+        return $requestParameters[$this->sortParamKey] ?? null;
     }
 
     /**
-     * @param string $sortParamName
+     * @param string|null $sortParamName
      *
      * @return string|null
      */
-    public function getSortDirection($sortParamName)
+    public function getSortDirection(?string $sortParamName): ?string
     {
         $sortConfigTransfer = $this->get($sortParamName);
 
@@ -97,10 +91,10 @@ class CmsPageSortConfigBuilder extends AbstractPlugin implements SortConfigBuild
         }
 
         if ($sortConfigTransfer->getIsDescending()) {
-            return self::DIRECTION_DESC;
+            return static::DIRECTION_DESC;
         }
 
-        return self::DIRECTION_ASC;
+        return static::DIRECTION_ASC;
     }
 
     /**
@@ -108,7 +102,7 @@ class CmsPageSortConfigBuilder extends AbstractPlugin implements SortConfigBuild
      *
      * @return void
      */
-    protected function assertSortConfigTransfer(SortConfigTransfer $sortConfigTransfer)
+    protected function assertSortConfigTransfer(SortConfigTransfer $sortConfigTransfer): void
     {
         $sortConfigTransfer
             ->requireName()
