@@ -329,7 +329,9 @@ class ShoppingListProductOptionFacadeTest extends Unit
     {
         // Prepare
         $shoppingListItemTransfer = new ShoppingListItemTransfer();
-        $productOptionTransfer = (new ProductOptionTransfer())->setValue($this->productOptionValueTransfer1);
+        $productOptionTransfer = (new ProductOptionTransfer())
+            ->setIdProductOptionValue($this->productOptionValueTransfer1->getIdProductOptionValue())
+            ->setValue($this->productOptionValueTransfer1->getValue());
         $itemTransfer = (new ItemTransfer())->addProductOption($productOptionTransfer);
 
         // Action
