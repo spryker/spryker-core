@@ -208,10 +208,11 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         }
 
         $collection = $this->buildQueryFromCriteria($query, $companyRoleCriteriaFilterTransfer->getFilter());
-        $collection = $this->getPaginatedCollection($collection, $companyRoleCriteriaFilterTransfer->getPagination());
+        /** @var \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole[] $spyCompanyRoleCollection */
+        $spyCompanyRoleCollection = $this->getPaginatedCollection($collection, $companyRoleCriteriaFilterTransfer->getPagination());
 
         $collectionTransfer = new CompanyRoleCollectionTransfer();
-        foreach ($collection as $spyCompanyRole) {
+        foreach ($spyCompanyRoleCollection as $spyCompanyRole) {
             $companyRoleTransfer = $this->prepareCompanyRoleTransfer($spyCompanyRole);
             $collectionTransfer->addRole($companyRoleTransfer);
         }

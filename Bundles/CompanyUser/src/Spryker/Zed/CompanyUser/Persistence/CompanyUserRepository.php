@@ -89,11 +89,12 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
         }
 
         $collection = $this->buildQueryFromCriteria($queryCompanyUser, $criteriaFilterTransfer->getFilter());
-        $collection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
+        /** @var \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[] $companyUserCollection */
+        $companyUserCollection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
 
         $collectionTransfer = $this->getFactory()
             ->createCompanyUserMapper()
-            ->mapCompanyUserCollection($collection);
+            ->mapCompanyUserCollection($companyUserCollection);
 
         $collectionTransfer->setPagination($criteriaFilterTransfer->getPagination());
 

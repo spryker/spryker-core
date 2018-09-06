@@ -22,17 +22,6 @@ class BalanceTransactionLogPaymentSaverPlugin extends AbstractPlugin implements 
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
-     *
-     * @return void
-     */
-    public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
-    {
-        $this->getFacade()->saveTransactionLog($quoteTransfer, $checkoutResponse);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
