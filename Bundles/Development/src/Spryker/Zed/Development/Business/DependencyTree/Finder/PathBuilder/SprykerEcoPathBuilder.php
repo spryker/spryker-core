@@ -45,7 +45,7 @@ class SprykerEcoPathBuilder implements PathBuilderInterface
         $paths = [];
         foreach ($this->applications as $application) {
             $paths[] = sprintf('%s/%s/src/SprykerEco/%s/%s', $this->basePath, $filteredModule, $application, $module);
-            $paths[] = sprintf('%s/%s/src/SprykerEcoTest/%s/%s', $this->basePath, $filteredModule, $application, $module);
+            $paths[] = sprintf('%s/%s/tests/SprykerEcoTest/%s/%s', $this->basePath, $filteredModule, $application, $module);
         }
 
         return $paths;

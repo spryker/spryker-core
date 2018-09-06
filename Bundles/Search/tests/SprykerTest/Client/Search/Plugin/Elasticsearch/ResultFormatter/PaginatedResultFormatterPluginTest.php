@@ -225,7 +225,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig
             ->getPaginationConfigBuilder()
-            ->setPagination((new PaginationConfigTransfer)
+            ->setPagination((new PaginationConfigTransfer())
                 ->setParameterName('page')
                 ->setItemsPerPageParameterName('ipp')
                 ->setDefaultItemsPerPage(10)
