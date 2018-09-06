@@ -8,32 +8,15 @@ namespace Spryker\Glue\ProductImageSetsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ProductConcreteImageStorageTransfer;
 use Generated\Shared\Transfer\RestProductImageSetsAttributesTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\ProductImageSetsRestApi\ProductImageSetsRestApiConfig;
 
 class ConcreteProductImageSetsMapper implements ConcreteProductImageSetsMapperInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
-    {
-        $this->restResourceBuilder = $restResourceBuilder;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductConcreteImageStorageTransfer $productConcreteImageStorageTransfer
-     * @param string $sku
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\RestProductImageSetsAttributesTransfer
      */
-    public function mapConcreteProductImageSetsTransferToRestResource(ProductConcreteImageStorageTransfer $productConcreteImageStorageTransfer, string $sku): RestResourceInterface
+    public function mapProductConcreteImageStorageTransferToRestProductImageSetsAttributesTransfer(ProductConcreteImageStorageTransfer $productConcreteImageStorageTransfer): RestProductImageSetsAttributesTransfer
     {
         $restProductAbstractImagesAttributesTransfer = new RestProductImageSetsAttributesTransfer();
         $restProductAbstractImagesAttributesTransfer->fromArray(
@@ -41,10 +24,6 @@ class ConcreteProductImageSetsMapper implements ConcreteProductImageSetsMapperIn
             true
         );
 
-        return $this->restResourceBuilder->createRestResource(
-            ProductImageSetsRestApiConfig::RESOURCE_CONCRETE_PRODUCT_IMAGE_SETS,
-            $sku,
-            $restProductAbstractImagesAttributesTransfer
-        );
+        return $restProductAbstractImagesAttributesTransfer;
     }
 }

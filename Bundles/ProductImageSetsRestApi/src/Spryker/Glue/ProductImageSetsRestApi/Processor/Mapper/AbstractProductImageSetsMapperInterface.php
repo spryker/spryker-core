@@ -7,14 +7,14 @@
 namespace Spryker\Glue\ProductImageSetsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ProductAbstractImageStorageTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Generated\Shared\Transfer\RestProductImageSetsAttributesTransfer;
 
 interface AbstractProductImageSetsMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractImageStorageTransfer $productAbstractImageStorageTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\RestProductImageSetsAttributesTransfer
      */
-    public function mapAbstractProductImageSetsTransferToRestResource(ProductAbstractImageStorageTransfer $productAbstractImageStorageTransfer): RestResourceInterface;
+    public function mapProductAbstractImageStorageTransferToRestProductImageSetsAttributesTransfer(ProductAbstractImageStorageTransfer $productAbstractImageStorageTransfer): RestProductImageSetsAttributesTransfer;
 }

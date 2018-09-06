@@ -5,20 +5,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductImageStorage;
+namespace Spryker\Glue\ProductImageSetsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductAbstractImageStorageTransfer;
 use Generated\Shared\Transfer\ProductConcreteImageStorageTransfer;
-use Spryker\Client\Kernel\AbstractClient;
 
-/**
- * @method \Spryker\Client\ProductImageStorage\ProductImageStorageFactory getFactory()
- */
-class ProductImageStorageClient extends AbstractClient implements ProductImageStorageClientInterface
+class ProductImageSetsRestApiToProductImageStorageClientBridge implements ProductImageSetsRestApiToProductImageStorageClientInterface
 {
     /**
-     * {@inheritdoc}
-     *
+     * @var \Spryker\Client\ProductImageStorage\ProductImageStorageClientInterface
+     */
+    protected $productImageStorageClient;
+
+    /**
+     * @param \Spryker\Client\ProductImageStorage\ProductImageStorageClientInterface $productImageStorageClient
+     */
+    public function __construct($productImageStorageClient)
+    {
+        $this->productImageStorageClient = $productImageStorageClient;
+    }
+
+    /**
      * @api
      *
      * @param int $idProductAbstract
@@ -28,14 +35,10 @@ class ProductImageStorageClient extends AbstractClient implements ProductImageSt
      */
     public function findProductImageAbstractStorageTransfer($idProductAbstract, $locale): ?ProductAbstractImageStorageTransfer
     {
-        return $this->getFactory()
-            ->createProductAbstractImageStorageReader()
-            ->findProductImageAbstractStorageTransfer($idProductAbstract, $locale);
+        return $this->productImageStorageClient->findProductImageAbstractStorageTransfer($idProductAbstract, $locale);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param int $idProductConcrete
@@ -45,8 +48,6 @@ class ProductImageStorageClient extends AbstractClient implements ProductImageSt
      */
     public function findProductImageConcreteStorageTransfer($idProductConcrete, $locale): ?ProductConcreteImageStorageTransfer
     {
-        return $this->getFactory()
-            ->createProductConcreteImageStorageReader()
-            ->findProductImageConcreteStorageTransfer($idProductConcrete, $locale);
+        return $this->productImageStorageClient->findProductImageConcreteStorageTransfer($idProductConcrete, $locale);
     }
 }

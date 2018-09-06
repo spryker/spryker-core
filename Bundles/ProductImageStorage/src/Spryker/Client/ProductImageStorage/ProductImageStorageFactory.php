@@ -26,7 +26,7 @@ class ProductImageStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductImageStorage\Storage\ProductAbstractImageStorageReaderInterface
      */
-    protected function createProductAbstractImageStorageReader()
+    public function createProductAbstractImageStorageReader()
     {
         return new ProductAbstractImageStorageReader($this->getStorage(), $this->createProductImageStorageKeyGenerator());
     }
@@ -34,7 +34,7 @@ class ProductImageStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductImageStorage\Storage\ProductConcreteImageStorageReaderInterface
      */
-    protected function createProductConcreteImageStorageReader()
+    public function createProductConcreteImageStorageReader()
     {
         return new ProductConcreteImageStorageReader($this->getStorage(), $this->createProductImageStorageKeyGenerator());
     }

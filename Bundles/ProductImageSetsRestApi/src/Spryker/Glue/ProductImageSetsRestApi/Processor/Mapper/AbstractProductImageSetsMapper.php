@@ -8,31 +8,15 @@ namespace Spryker\Glue\ProductImageSetsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ProductAbstractImageStorageTransfer;
 use Generated\Shared\Transfer\RestProductImageSetsAttributesTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\ProductImageSetsRestApi\ProductImageSetsRestApiConfig;
 
 class AbstractProductImageSetsMapper implements AbstractProductImageSetsMapperInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
-    {
-        $this->restResourceBuilder = $restResourceBuilder;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductAbstractImageStorageTransfer $productAbstractImageStorageTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\RestProductImageSetsAttributesTransfer
      */
-    public function mapAbstractProductImageSetsTransferToRestResource(ProductAbstractImageStorageTransfer $productAbstractImageStorageTransfer): RestResourceInterface
+    public function mapProductAbstractImageStorageTransferToRestProductImageSetsAttributesTransfer(ProductAbstractImageStorageTransfer $productAbstractImageStorageTransfer): RestProductImageSetsAttributesTransfer
     {
         $restProductAbstractImagesAttributesTransfer = new RestProductImageSetsAttributesTransfer();
         $restProductAbstractImagesAttributesTransfer->fromArray(
@@ -40,10 +24,6 @@ class AbstractProductImageSetsMapper implements AbstractProductImageSetsMapperIn
             true
         );
 
-        return $this->restResourceBuilder->createRestResource(
-            ProductImageSetsRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_IMAGE_SETS,
-            (string)$productAbstractImageStorageTransfer->getIdProductAbstract(),
-            $restProductAbstractImagesAttributesTransfer
-        );
+        return $restProductAbstractImagesAttributesTransfer;
     }
 }

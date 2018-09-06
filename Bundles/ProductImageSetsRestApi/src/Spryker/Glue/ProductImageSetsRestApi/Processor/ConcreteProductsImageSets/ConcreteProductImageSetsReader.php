@@ -6,12 +6,14 @@
 
 namespace Spryker\Glue\ProductImageSetsRestApi\Processor\ConcreteProductsImageSets;
 
+use Generated\Shared\Transfer\ProductConcreteImageStorageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductImageResourceAliasStorageClientInterface;
+use Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductImageStorageClientInterface;
+use Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductImageSetsRestApi\Processor\Mapper\ConcreteProductImageSetsMapperInterface;
 use Spryker\Glue\ProductImageSetsRestApi\ProductImageSetsRestApiConfig;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
@@ -19,8 +21,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderInterface
 {
+    protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+    protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+
     /**
-     * @var \Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductImageResourceAliasStorageClientInterface
+     * @var \Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductStorageClientInterface
+     */
+    protected $productStorageClient;
+
+    /**
+     * @var \Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductImageStorageClientInterface
      */
     protected $productImageStorageClient;
 
@@ -35,15 +45,18 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
     protected $productImagesMapper;
 
     /**
-     * @param \Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductImageResourceAliasStorageClientInterface $productImageStorageClient
+     * @param \Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductStorageClientInterface $productStorageClient
+     * @param \Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductImageStorageClientInterface $productImageStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $responseBuilder
      * @param \Spryker\Glue\ProductImageSetsRestApi\Processor\Mapper\ConcreteProductImageSetsMapperInterface $productImagesMapper
      */
     public function __construct(
-        ProductImageSetsRestApiToProductImageResourceAliasStorageClientInterface $productImageStorageClient,
+        ProductImageSetsRestApiToProductStorageClientInterface $productStorageClient,
+        ProductImageSetsRestApiToProductImageStorageClientInterface $productImageStorageClient,
         RestResourceBuilderInterface $responseBuilder,
         ConcreteProductImageSetsMapperInterface $productImagesMapper
     ) {
+        $this->productStorageClient = $productStorageClient;
         $this->productImageStorageClient = $productImageStorageClient;
         $this->resourceBuilder = $responseBuilder;
         $this->productImagesMapper = $productImagesMapper;
@@ -54,29 +67,22 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function findConcreteProductImageSets(RestRequestInterface $restRequest): RestResponseInterface
+    public function getConcreteProductImageSets(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->resourceBuilder->createRestResponse();
 
         $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS);
         if (!$parentResource) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_CONCRETE_PRODUCT)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_CONCRETE_PRODUCT);
+            $restErrorTransfer = $this->createConcreteProductNotFoundError();
 
             return $restResponse->addError($restErrorTransfer);
         }
 
         $parentResourceId = $parentResource->getId();
-        $locale = $restRequest->getMetadata()->getLocale();
-        $restResource = $this->findOne($parentResourceId, $locale);
+        $restResource = $this->findConcreteProductImageSetsBySku($parentResourceId, $restRequest);
 
         if ($restResource === null) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(ProductImageSetsRestApiConfig::RESPONSE_CODE_CONCRETE_PRODUCT_IMAGE_SETS_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(ProductImageSetsRestApiConfig::RESPONSE_DETAIL_CONCRETE_PRODUCT_IMAGE_SETS_NOT_FOUND);
+            $restErrorTransfer = $this->createConcreteProductImageSetsNotFoundError();
 
             return $restResponse->addError($restErrorTransfer);
         }
@@ -85,43 +91,85 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
     }
 
     /**
-     * @param string $concreteProductId
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findConcreteProductImageSetsByConcreteProductId(string $concreteProductId, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findConcreteProductImageSetsBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $locale = $restRequest->getMetadata()->getLocale();
+        $concreteProductData = $this->productStorageClient
+            ->findProductConcreteStorageDataByMapping(
+                static::PRODUCT_CONCRETE_MAPPING_TYPE,
+                $sku,
+                $restRequest->getMetadata()->getLocale()
+            );
 
-        return $this->findOne($concreteProductId, $locale);
-    }
-
-    /**
-     * @param string $idResource
-     * @param string $locale
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
-     */
-    protected function findOne(string $idResource, string $locale): ?RestResourceInterface
-    {
-        $productImageConcreteStorageTransfer = $this->productImageStorageClient
-            ->findProductImageConcreteStorageTransfer($idResource, $locale);
-
-        if ($productImageConcreteStorageTransfer === null) {
+        if (!$concreteProductData) {
             return null;
         }
 
-        $restResource = $this->productImagesMapper
-            ->mapConcreteProductImageSetsTransferToRestResource($productImageConcreteStorageTransfer, $idResource);
+        $productImageConcreteStorageTransfer = $this->productImageStorageClient
+            ->findProductImageConcreteStorageTransfer($concreteProductData[static::KEY_ID_PRODUCT_CONCRETE], $restRequest->getMetadata()->getLocale());
+
+        if (!$productImageConcreteStorageTransfer) {
+            return null;
+        }
+
+        return $this->buildProductImageSetsResource($sku, $productImageConcreteStorageTransfer);
+    }
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\ProductConcreteImageStorageTransfer $productImageConcreteStorageTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function buildProductImageSetsResource(string $sku, ProductConcreteImageStorageTransfer $productImageConcreteStorageTransfer): RestResourceInterface
+    {
+        $restProductConcreteImageSetAttributesTransfer = $this->productImagesMapper
+            ->mapProductConcreteImageStorageTransferToRestProductImageSetsAttributesTransfer($productImageConcreteStorageTransfer);
+
+        $restResource = $this->resourceBuilder->createRestResource(
+            ProductImageSetsRestApiConfig::RESOURCE_CONCRETE_PRODUCT_IMAGE_SETS,
+            $sku,
+            $restProductConcreteImageSetAttributesTransfer
+        );
+
         $restResourceSelfLink = sprintf(
             '%s/%s/%s',
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            $idResource,
+            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            $sku,
             ProductImageSetsRestApiConfig::RESOURCE_CONCRETE_PRODUCT_IMAGE_SETS
         );
-        $restResource->addLink('self', $restResourceSelfLink);
+        $restResource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $restResourceSelfLink);
 
         return $restResource;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createConcreteProductNotFoundError(): RestErrorMessageTransfer
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_CONCRETE_PRODUCT)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_CONCRETE_PRODUCT);
+
+        return $restErrorTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createConcreteProductImageSetsNotFoundError(): RestErrorMessageTransfer
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductImageSetsRestApiConfig::RESPONSE_CODE_CONCRETE_PRODUCT_IMAGE_SETS_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(ProductImageSetsRestApiConfig::RESPONSE_DETAIL_CONCRETE_PRODUCT_IMAGE_SETS_NOT_FOUND);
+
+        return $restErrorTransfer;
     }
 }

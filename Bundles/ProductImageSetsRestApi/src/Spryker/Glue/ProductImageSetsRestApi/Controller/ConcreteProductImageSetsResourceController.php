@@ -24,6 +24,6 @@ class ConcreteProductImageSetsResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createConcreteProductImageSetsReader()
-            ->findConcreteProductImageSets($restRequest);
+            ->getConcreteProductImageSets($restRequest);
     }
 }

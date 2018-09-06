@@ -17,13 +17,13 @@ interface AbstractProductImageSetsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function findAbstractProductImageSets(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getAbstractProductImageSets(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
-     * @param string $abstractProductId
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findAbstractProductImageSetsByAbstractProductId(string $abstractProductId, RestRequestInterface $restRequest): ?RestResourceInterface;
+    public function findAbstractProductImageSetsBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface;
 }

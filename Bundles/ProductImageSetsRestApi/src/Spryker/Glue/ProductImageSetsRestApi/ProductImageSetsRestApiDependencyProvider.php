@@ -8,11 +8,13 @@ namespace Spryker\Glue\ProductImageSetsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductImageResourceAliasStorageClientBridge;
+use Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductImageStorageClientBridge;
+use Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductStorageClientBridge;
 
 class ProductImageSetsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_PRODUCT_IMAGE_STORAGE = 'CLIENT_PRODUCT_IMAGE_STORAGE';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -21,7 +23,9 @@ class ProductImageSetsRestApiDependencyProvider extends AbstractBundleDependency
      */
     public function provideDependencies(Container $container): Container
     {
+        parent::provideDependencies($container);
         $container = $this->addProductImageStorageClientDependency($container);
+        $container = $this->addProductStorageClientDependency($container);
 
         return $container;
     }
@@ -31,11 +35,27 @@ class ProductImageSetsRestApiDependencyProvider extends AbstractBundleDependency
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    public function addProductImageStorageClientDependency(Container $container): Container
+    protected function addProductImageStorageClientDependency(Container $container): Container
     {
         $container[static::CLIENT_PRODUCT_IMAGE_STORAGE] = function (Container $container) {
-            return new ProductImageSetsRestApiToProductImageResourceAliasStorageClientBridge(
-                $container->getLocator()->productImageResourceAliasStorage()->client()
+            return new ProductImageSetsRestApiToProductImageStorageClientBridge(
+                $container->getLocator()->productImageStorage()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addProductStorageClientDependency(Container $container): Container
+    {
+        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+            return new ProductImageSetsRestApiToProductStorageClientBridge(
+                $container->getLocator()->productStorage()->client()
             );
         };
 

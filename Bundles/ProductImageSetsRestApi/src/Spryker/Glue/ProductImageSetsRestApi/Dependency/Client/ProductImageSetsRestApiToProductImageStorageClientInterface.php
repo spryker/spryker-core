@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductImageStorage;
+namespace Spryker\Glue\ProductImageSetsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductAbstractImageStorageTransfer;
 use Generated\Shared\Transfer\ProductConcreteImageStorageTransfer;
 
-interface ProductImageStorageClientInterface
+interface ProductImageSetsRestApiToProductImageStorageClientInterface
 {
     /**
-     * Specification:
-     *  - Retrieves abstract product main data from storage.
-     *
-     * @api
-     *
      * @param int $idProductAbstract
      * @param string $locale
      *
@@ -26,11 +21,6 @@ interface ProductImageStorageClientInterface
     public function findProductImageAbstractStorageTransfer($idProductAbstract, $locale): ?ProductAbstractImageStorageTransfer;
 
     /**
-     * Specification:
-     *  - Retrieves concrete product main data from storage.
-     *
-     * @api
-     *
      * @param int $idProductConcrete
      * @param string $locale
      *
