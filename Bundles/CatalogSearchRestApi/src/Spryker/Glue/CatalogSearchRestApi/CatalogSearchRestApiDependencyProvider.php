@@ -25,6 +25,8 @@ class CatalogSearchRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
+
         $container = $this->addCatalogClient($container);
         $container = $this->addStore($container);
         $container = $this->addPriceClient($container);

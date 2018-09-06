@@ -222,12 +222,12 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
      */
     protected function getPriceModeInformation(): RestPricePriceModeConfigurationTransfer
     {
-        $priceModeInformation = new RestPricePriceModeConfigurationTransfer();
+        $priceModeConfiguration = new RestPricePriceModeConfigurationTransfer();
 
-        $priceModeInformation->setCurrentPriceMode($this->priceClient->getCurrentPriceMode());
-        $priceModeInformation->setGrossModeIdentifier($this->priceClient->getGrossPriceModeIdentifier());
-        $priceModeInformation->setNetModeIdentifier($this->priceClient->getNetPriceModeIdentifier());
+        $priceModeConfiguration->setCurrentPriceMode($this->priceClient->getCurrentPriceMode());
+        $priceModeConfiguration->setGrossModeIdentifier($this->priceClient->getGrossPriceModeIdentifier());
+        $priceModeConfiguration->setNetModeIdentifier($this->priceClient->getNetPriceModeIdentifier());
 
-        return $priceModeInformation;
+        return $priceModeConfiguration;
     }
 }
