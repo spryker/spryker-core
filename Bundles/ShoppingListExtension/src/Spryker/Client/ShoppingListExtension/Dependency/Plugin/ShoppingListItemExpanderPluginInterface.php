@@ -5,17 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ShoppingList\ShoppingList;
+namespace Spryker\Client\ShoppingListExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
-interface ShoppingListAddItemRequestExpanderInterface
+interface ShoppingListItemExpanderPluginInterface
 {
     /**
+     * Specification:
+     * - Expands ShoppingListItemTransfer with the given params.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function expand(ShoppingListItemTransfer $shoppingListItemTransfer, array $params = []): ShoppingListItemTransfer;
+    public function expand(ShoppingListItemTransfer $shoppingListItemTransfer, array $params): ShoppingListItemTransfer;
 }

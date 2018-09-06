@@ -9,7 +9,7 @@ namespace SprykerTest\Client\ShoppingListProductOption\Plugin;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Spryker\Client\ShoppingListProductOption\Plugin\ShoppingListItemProductOptionRequestExpanderPlugin;
+use Spryker\Client\ShoppingListProductOption\Plugin\ShoppingListExtension\ShoppingListItemProductOptionRequestExpanderPlugin;
 
 /**
  * Auto-generated group annotations
@@ -37,8 +37,8 @@ class ShoppingListItemProductOptionRequestExpanderPluginTest extends Unit
         ];
 
         // Action
-        $shoppingListItemRequestExpanderPlugin = new ShoppingListItemProductOptionRequestExpanderPlugin();
-        $shoppingListItemRequestExpanderPlugin->expand($shoppingListItemTransfer, $params);
+        $shoppingListItemExpanderPlugin = new ShoppingListItemProductOptionRequestExpanderPlugin();
+        $shoppingListItemExpanderPlugin->expand($shoppingListItemTransfer, $params);
 
         // Assert
         $idProductOptions = [];
@@ -62,8 +62,8 @@ class ShoppingListItemProductOptionRequestExpanderPluginTest extends Unit
         ];
 
         // Action
-        $shoppingListItemRequestExpanderPlugin = new ShoppingListItemProductOptionRequestExpanderPlugin();
-        $shoppingListItemRequestExpanderPlugin->expand($shoppingListItemTransfer, $params);
+        $shoppingListItemExpanderPlugin = new ShoppingListItemProductOptionRequestExpanderPlugin();
+        $shoppingListItemExpanderPlugin->expand($shoppingListItemTransfer, $params);
 
         // Assert
         $this->assertEmpty($shoppingListItemTransfer->getProductOptions());

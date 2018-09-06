@@ -5,26 +5,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ShoppingListProductOption\Plugin;
+namespace Spryker\Client\ShoppingListProductOption\Plugin\ShoppingListExtension;
 
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemRequestExpanderPluginInterface;
+use Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemExpanderPluginInterface;
 
-class ShoppingListItemProductOptionRequestExpanderPlugin implements ShoppingListItemRequestExpanderPluginInterface
+class ShoppingListItemProductOptionRequestExpanderPlugin implements ShoppingListItemExpanderPluginInterface
 {
     protected const REQUEST_PARAM_PRODUCT_OPTION = 'product-option';
 
     /**
      * {@inheritdoc}
-     * - Expands ShoppingListItemTransfer with product-option from request.
+     * - Expands ShoppingListItemTransfer with product option Ids.
+     * - An array is expected in `product-option` index of $params.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function expand(ShoppingListItemTransfer $shoppingListItemTransfer, array $params = []): ShoppingListItemTransfer
+    public function expand(ShoppingListItemTransfer $shoppingListItemTransfer, array $params): ShoppingListItemTransfer
     {
         foreach ($this->getIdProductOptions($params) as $idProductOption) {
             $shoppingListItemTransfer->addProductOption(
@@ -38,7 +39,7 @@ class ShoppingListItemProductOptionRequestExpanderPlugin implements ShoppingList
     /**
      * @param array $params
      *
-     * @return array
+     * @return int[]
      */
     protected function getIdProductOptions(array $params): array
     {

@@ -20,8 +20,8 @@ use Spryker\Client\ShoppingList\PermissionUpdater\PermissionUpdater;
 use Spryker\Client\ShoppingList\PermissionUpdater\PermissionUpdaterInterface;
 use Spryker\Client\ShoppingList\Product\ProductStorage;
 use Spryker\Client\ShoppingList\Product\ProductStorageInterface;
-use Spryker\Client\ShoppingList\ShoppingList\ShoppingListAddItemRequestExpander;
-use Spryker\Client\ShoppingList\ShoppingList\ShoppingListAddItemRequestExpanderInterface;
+use Spryker\Client\ShoppingList\ShoppingList\ShoppingListAddItemExpander;
+use Spryker\Client\ShoppingList\ShoppingList\ShoppingListAddItemExpanderInterface;
 use Spryker\Client\ShoppingList\Zed\ShoppingListStub;
 use Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface;
 
@@ -68,12 +68,12 @@ class ShoppingListFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ShoppingList\ShoppingList\ShoppingListAddItemRequestExpanderInterface
+     * @return \Spryker\Client\ShoppingList\ShoppingList\ShoppingListAddItemExpanderInterface
      */
-    public function createShoppingListAddItemRequestExpander(): ShoppingListAddItemRequestExpanderInterface
+    public function createShoppingListAddItemExpander(): ShoppingListAddItemExpanderInterface
     {
-        return new ShoppingListAddItemRequestExpander(
-            $this->getShoppingListItemRequestExpanderPlugins()
+        return new ShoppingListAddItemExpander(
+            $this->getShoppingListItemExpanderPlugins()
         );
     }
 
@@ -126,11 +126,11 @@ class ShoppingListFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemRequestExpanderPluginInterface[]
+     * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemExpanderPluginInterface[]
      */
-    public function getShoppingListItemRequestExpanderPlugins(): array
+    public function getShoppingListItemExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ADD_ITEM_REQUEST_EXPANDER);
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ADD_ITEM_EXPANDER);
     }
 
     /**
