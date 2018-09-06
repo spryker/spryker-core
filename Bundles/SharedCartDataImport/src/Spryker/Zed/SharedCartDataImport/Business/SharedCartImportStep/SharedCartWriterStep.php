@@ -21,14 +21,13 @@ class SharedCartWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $companyUnitAddressEntity = SpyQuoteCompanyUserQuery::create()
+        $quoteCompanyUserEntity = SpyQuoteCompanyUserQuery::create()
             ->filterByFkQuote($dataSet[SharedCartDataSetInterface::ID_QUOTE])
             ->filterByFkCompanyUser($dataSet[SharedCartDataSetInterface::ID_COMPANY_USER])
-            ->filterByFkQuotePermissionGroup($dataSet[SharedCartDataSetInterface::ID_PERMISSION_GROUP])
             ->findOneOrCreate();
 
-        $companyUnitAddressEntity->fromArray($dataSet->getArrayCopy());
+        $quoteCompanyUserEntity->setFkQuotePermissionGroup($dataSet[SharedCartDataSetInterface::ID_PERMISSION_GROUP]);
 
-        $companyUnitAddressEntity->save();
+        $quoteCompanyUserEntity->save();
     }
 }

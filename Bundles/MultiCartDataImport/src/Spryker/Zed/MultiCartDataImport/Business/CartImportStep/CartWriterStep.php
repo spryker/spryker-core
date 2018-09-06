@@ -21,14 +21,14 @@ class CartWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet)
     {
-        $companyUnitAddressEntity = SpyQuoteQuery::create()
+        $quoteEntity = SpyQuoteQuery::create()
             ->filterByKey($dataSet[CartDataSetInterface::KEY_CART])
             ->findOneOrCreate();
 
-        $companyUnitAddressEntity->fromArray($dataSet->getArrayCopy());
-        $companyUnitAddressEntity
+        $quoteEntity->fromArray($dataSet->getArrayCopy());
+        $quoteEntity
             ->setFkStore($dataSet[CartDataSetInterface::ID_STORE]);
 
-        $companyUnitAddressEntity->save();
+        $quoteEntity->save();
     }
 }
