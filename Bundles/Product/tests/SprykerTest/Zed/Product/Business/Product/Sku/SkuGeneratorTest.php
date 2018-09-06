@@ -60,7 +60,7 @@ class SkuGeneratorTest extends FacadeTestAbstract
 
         $sanitizedSku = $skuGenerator->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
 
-        $this->assertEquals('one-ONEONE-Lietuviskai_key_value-key2_value2', $sanitizedSku);
+        $this->assertEquals('one-ONEONE-Lietuviskai-key-value_key2-value2', $sanitizedSku);
     }
 
     /**

@@ -39,10 +39,12 @@ class SkuIncrementGeneratorTest extends FacadeTestAbstract
         $maxSku = 0;
         foreach ($productConcreteIds as $productConcreteId) {
             $productConcreteTransfer = $this->productConcreteManager->findProductConcreteById($productConcreteId);
-            $nextSkuPart = explode('_', $productConcreteTransfer->getSku())[1];
+            if (mb_strpos($productConcreteTransfer->getSku(), SkuGenerator::SKU_ABSTRACT_SEPARATOR) !== false) {
+                $nextSkuPart = explode(SkuGenerator::SKU_ABSTRACT_SEPARATOR, $productConcreteTransfer->getSku())[1];
 
-            if ($nextSkuPart > $maxSku) {
-                $maxSku = $nextSkuPart;
+                if ($nextSkuPart > $maxSku) {
+                    $maxSku = $nextSkuPart;
+                }
             }
         }
 
@@ -51,7 +53,7 @@ class SkuIncrementGeneratorTest extends FacadeTestAbstract
         $productConcreteTransfer = new ProductConcreteTransfer();
         $formattedSku = $skuGenerator->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
 
-        $this->assertEquals($formattedSku, ($productAbstractTransfer->getSku() . '_' . $maxSku));
+        $this->assertEquals($formattedSku, ($productAbstractTransfer->getSku() . SkuGenerator::SKU_ABSTRACT_SEPARATOR . $maxSku));
     }
 
     /**
