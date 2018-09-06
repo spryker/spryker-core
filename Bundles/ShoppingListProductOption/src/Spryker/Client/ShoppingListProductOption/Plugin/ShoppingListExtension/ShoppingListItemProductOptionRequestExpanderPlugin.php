@@ -17,8 +17,8 @@ class ShoppingListItemProductOptionRequestExpanderPlugin implements ShoppingList
 
     /**
      * {@inheritdoc}
-     * - Expands ShoppingListItemTransfer with product option Ids.
-     * - An array is expected in `product-option` index of $params.
+     * - Expands ShoppingListItemTransfer with product option IDs.
+     * - Expects an array of product option IDs in `product-option` key of "params".
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param array $params
