@@ -25,8 +25,24 @@ class CatalogSearchRestApiToPriceClientBridge implements CatalogSearchRestApiToP
     /**
      * @return string
      */
-    public function getCurrentPriceMode(): string
+    public function getCurrentPriceMode()
     {
         return $this->priceClient->getCurrentPriceMode();
+    }
+
+    /**
+     * @return string
+     */
+    public function getGrossPriceModeIdentifier()
+    {
+        return $this->priceClient->getGrossPriceModeIdentifier();
+    }
+
+    /**
+     * @return string
+     */
+    public function getNetPriceModeIdentifier()
+    {
+        return $this->priceClient->getNetPriceModeIdentifier();
     }
 }

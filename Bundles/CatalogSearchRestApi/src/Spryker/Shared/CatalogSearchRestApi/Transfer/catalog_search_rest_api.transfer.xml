@@ -63,4 +63,10 @@
         <property name="cmsPages" type="array"/>
     </transfer>
 
+    <transfer name="RestPriceProductAttributes">
+        <property name="priceTypeName" type="string"/>
+        <property name="grossAmount" type="int"/>
+        <property name="netAmount" type="int"/>
+    </transfer>
+
 </transfers>

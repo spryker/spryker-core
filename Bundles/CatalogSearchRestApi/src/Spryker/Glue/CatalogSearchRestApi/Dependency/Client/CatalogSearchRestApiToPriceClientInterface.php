@@ -12,5 +12,15 @@ interface CatalogSearchRestApiToPriceClientInterface
     /**
      * @return string
      */
-    public function getCurrentPriceMode(): string;
+    public function getCurrentPriceMode();
+
+    /**
+     * @return string
+     */
+    public function getGrossPriceModeIdentifier();
+
+    /**
+     * @return string
+     */
+    public function getNetPriceModeIdentifier();
 }

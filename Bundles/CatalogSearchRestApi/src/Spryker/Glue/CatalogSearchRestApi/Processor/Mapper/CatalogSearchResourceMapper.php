@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\RestFacetSearchResultAttributesTransfer;
+use Generated\Shared\Transfer\RestPriceProductAttributesTransfer;
 use Generated\Shared\Transfer\RestRangeSearchResultAttributesTransfer;
 use Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
@@ -34,8 +35,8 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
      */
     public function __construct(RestResourceBuilderInterface $restResourceBuilder, CatalogSearchRestApiToPriceClientInterface $priceClient)
     {
-        $this->priceClient = $priceClient;
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->priceClient = $priceClient;
     }
 
     /**
@@ -95,15 +96,33 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         foreach ($restSearchAttributesTransfer->getProducts() as $product) {
             $prices = [];
             foreach ($product->getPrices() as $priceType => $price) {
-                $prices[] = [
-                    'priceTypeName' => $priceType,
-                    $this->priceClient->getCurrentPriceMode() => $price,
-
-                ];
+                $prices[] = $this->getPriceTransfer($priceType, $price);
             }
             $product->setPrices($prices);
         }
 
         return $restSearchAttributesTransfer;
+    }
+
+    /**
+     * @param string $priceType
+     * @param int $price
+     *
+     * @return array
+     */
+    protected function getPriceTransfer(string $priceType, int $price): array
+    {
+        $currentPriceMode = $this->priceClient->getCurrentPriceMode();
+
+        $restPriceProductAttributes = new RestPriceProductAttributesTransfer();
+        $restPriceProductAttributes->setPriceTypeName($priceType);
+        if ($currentPriceMode == $this->priceClient->getGrossPriceModeIdentifier()) {
+            $restPriceProductAttributes->setGrossAmount($price);
+        } elseif ($currentPriceMode == $this->priceClient->getGrossPriceModeIdentifier()) {
+            $restPriceProductAttributes->setNetAmount($price);
+        }
+
+        return $restPriceProductAttributes->modifiedToArray(true, true)
+            + [$priceType => $price];
     }
 }
