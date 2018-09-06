@@ -375,6 +375,8 @@ class ThresholdType extends AbstractType
     protected function convertMoneyValue(array $data, string $fieldName, callable $moneyConvertFunction, callable $typeConvertFunction): array
     {
         if (!isset($data[$fieldName])) {
+            $data[$fieldName] = 0;
+
             return $data;
         }
         $data[$fieldName] = $moneyConvertFunction($typeConvertFunction($data[$fieldName]));
