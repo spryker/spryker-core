@@ -7,20 +7,23 @@
 namespace Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductResourceAliasStorageClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface;
-use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ConcreteProductPricesResourceMapperInterface;
+use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapperInterface;
 use Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiConfig;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterface
 {
+    protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+    protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+
     /**
      * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface
      */
@@ -37,25 +40,26 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ConcreteProductPricesResourceMapperInterface
+     * @var \Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapperInterface
      */
-    protected $concreteProductPricesResourceMapper;
+    protected $productPricesMapper;
 
     /**
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientInterface $priceProductStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ConcreteProductPricesResourceMapperInterface $concreteProductPricesResourceMapper
+     * @param \Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapperInterface $productPricesMapper
      */
     public function __construct(
         ProductPricesRestApiToProductStorageClientInterface $productStorageClient,
         ProductPricesRestApiToPriceProductStorageClientInterface $priceProductStorageClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        ConcreteProductPricesResourceMapperInterface $concreteProductPricesResourceMapper
+        ProductPricesMapperInterface $productPricesMapper
     ) {
         $this->priceProductStorageClient = $priceProductStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->concreteProductPricesResourceMapper = $concreteProductPricesResourceMapper;
+        $this->productPricesMapper = $productPricesMapper;
+        $this->productStorageClient = $productStorageClient;
     }
 
     /**
@@ -69,44 +73,97 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
 
         $concreteProductResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS);
         if (!$concreteProductResource) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CONCRETE_PRODUCT_SKU_IS_MISSING)
-                ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CONCRETE_PRODUCT_SKU_IS_MISSING);
-
-            return $restResponse->addError($restErrorTransfer);
+            return $restResponse->addError($this->createConcreteProductSkuIsNotSpecifiedError());
         }
 
         $productConcreteSku = $concreteProductResource->getId();
-        $priceProductStorageTransfer = $this->priceProductStorageClient->findPriceProductConcreteStorageTransfer($productConcreteSku);
+        $restResource = $this->findConcreteProductPricesBySku($productConcreteSku, $restRequest);
 
-        if ($priceProductStorageTransfer === null) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_CONCRETE_PRODUCT_PRICES_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_CONCRETE_PRODUCT_PRICES_NOT_FOUND);
-
-            return $restResponse->addError($restErrorTransfer);
+        if (!$restResource) {
+            return $restResponse->addError($this->createConcreteProductPricesNotFoundError());
         }
-
-        $restResource = $this->concreteProductPricesResourceMapper->mapConcreteProductPricesTransferToRestResource($priceProductStorageTransfer, $productConcreteSku);
 
         return $restResponse->addResource($restResource);
     }
 
     /**
-     * @param string $idConcreteProduct
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findConcreteProductPricesByConcreteProductId(string $idConcreteProduct, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findConcreteProductPricesBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $priceProductStorageTransfer = $this->priceProductStorageClient->findPriceProductConcreteStorageTransfer($idConcreteProduct);
-        if (!$priceProductStorageTransfer) {
+        $concreteProductData = $this->productStorageClient
+            ->findProductConcreteStorageDataByMapping(
+                static::PRODUCT_CONCRETE_MAPPING_TYPE,
+                $sku,
+                $restRequest->getMetadata()->getLocale()
+            );
+        if (!$concreteProductData) {
             return null;
         }
 
-        return $this->concreteProductPricesResourceMapper->mapConcreteProductPricesTransferToRestResource($priceProductStorageTransfer, $idConcreteProduct);
+        $priceProductTransfers = $this->priceProductStorageClient
+            ->getPriceProductConcreteTransfers($concreteProductData[static::KEY_ID_PRODUCT_CONCRETE]);
+
+        if (!$priceProductTransfers) {
+            return null;
+        }
+        $restProductPricesAttributesTransfer = $this->productPricesMapper
+            ->mapProductPricesTransfersToRestProductPricesAttributesTransfer($priceProductTransfers);
+
+        return $this->buildProductPricesResource($sku, $restProductPricesAttributesTransfer);
+    }
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\RestProductPricesAttributesTransfer $restProductPricesAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function buildProductPricesResource(string $sku, RestProductPricesAttributesTransfer $restProductPricesAttributesTransfer): ?RestResourceInterface
+    {
+        $restResource = $this->restResourceBuilder->createRestResource(
+            ProductPricesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_PRICES,
+            $sku,
+            $restProductPricesAttributesTransfer
+        );
+
+        $restResourceSelfLink = sprintf(
+            '%s/%s/%s',
+            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
+            $sku,
+            ProductPricesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_PRICES
+        );
+        $restResource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $restResourceSelfLink);
+
+        return $restResource;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createConcreteProductSkuIsNotSpecifiedError(): RestErrorMessageTransfer
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED);
+
+        return $restErrorTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createConcreteProductPricesNotFoundError(): RestErrorMessageTransfer
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_CONCRETE_PRODUCT_PRICES_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_CONCRETE_PRODUCT_PRICES_NOT_FOUND);
+
+        return $restErrorTransfer;
     }
 }

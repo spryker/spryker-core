@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ProductPricesRestApi\Dependency\Client;
 
-
 class ProductPricesRestApiToProductStorageClientBridge implements ProductPricesRestApiToProductStorageClientInterface
 {
     /**
@@ -34,6 +33,7 @@ class ProductPricesRestApiToProductStorageClientBridge implements ProductPricesR
     {
         return $this->productStorageClient->findProductAbstractStorageDataByMapping($mappingType, $identifier, $localeName);
     }
+
     /**
      * @param string $mappingType
      * @param string $identifier

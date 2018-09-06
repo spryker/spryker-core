@@ -7,20 +7,23 @@
 namespace Spryker\Glue\ProductPricesRestApi\Processor\AbstractProductPrices;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductResourceAliasStorageClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface;
-use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\AbstractProductPricesResourceMapperInterface;
+use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapperInterface;
 use Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiConfig;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class AbstractProductPricesReader implements AbstractProductPricesReaderInterface
 {
+    protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface
      */
@@ -37,26 +40,26 @@ class AbstractProductPricesReader implements AbstractProductPricesReaderInterfac
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ProductPricesRestApi\Processor\Mapper\AbstractProductPricesResourceMapperInterface
+     * @var \Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapperInterface
      */
-    protected $abstractProductPricesResourceMapper;
+    protected $productPricesMapper;
 
     /**
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientInterface $priceProductStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ProductPricesRestApi\Processor\Mapper\AbstractProductPricesResourceMapperInterface $abstractProductPricesResourceMapper
+     * @param \Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapperInterface $productPricesMapper
      */
     public function __construct(
         ProductPricesRestApiToProductStorageClientInterface $productStorageClient,
         ProductPricesRestApiToPriceProductStorageClientInterface $priceProductStorageClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        AbstractProductPricesResourceMapperInterface $abstractProductPricesResourceMapper
+        ProductPricesMapperInterface $productPricesMapper
     ) {
         $this->productStorageClient = $productStorageClient;
         $this->priceProductStorageClient = $priceProductStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->abstractProductPricesResourceMapper = $abstractProductPricesResourceMapper;
+        $this->productPricesMapper = $productPricesMapper;
     }
 
     /**
@@ -73,7 +76,7 @@ class AbstractProductPricesReader implements AbstractProductPricesReaderInterfac
             return $restResponse->addError($this->createAbstractProductSkuIsNotSpecifiedError());
         }
         $abstractProductSku = $abstractProductResource->getId();
-        $restResource = $this->findAbstractProductPricesByAbstractProductSku($abstractProductSku, $restRequest);
+        $restResource = $this->findAbstractProductPricesBySku($abstractProductSku, $restRequest);
 
         if (!$restResource) {
             return $restResponse->addError($this->createAbstractProductPricesNotFoundError());
@@ -83,37 +86,55 @@ class AbstractProductPricesReader implements AbstractProductPricesReaderInterfac
     }
 
     /**
-     * @param string $abstractProductSku
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findAbstractProductPricesByAbstractProductSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findAbstractProductPricesBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $priceProductStorageTransfer = $this->priceProductStorageClient
-            ->findPriceProductAbstractStorageTransfer($abstractProductSku);
-        if (!$priceProductStorageTransfer) {
+        $abstractProductData = $this->productStorageClient
+            ->findProductAbstractStorageDataByMapping(
+                static::PRODUCT_ABSTRACT_MAPPING_TYPE,
+                $sku,
+                $restRequest->getMetadata()->getLocale()
+            );
+        if (!$abstractProductData) {
             return null;
         }
 
-        $restProductPricesAttributesTransfer = $this->abstractProductPricesResourceMapper
-            ->mapAbstractProductPricesTransferToRestProductPricesAttributesTransfer($priceProductStorageTransfer, $abstractProductSku);
+        $priceProductTransfers = $this->priceProductStorageClient
+            ->getPriceProductAbstractTransfers($abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]);
 
-        return $this->buildPorductPricesResource($abstractProductSku, $restProductPricesAttributesTransfer);
+        $restProductPricesAttributesTransfer = $this->productPricesMapper
+            ->mapProductPricesTransfersToRestProductPricesAttributesTransfer($priceProductTransfers);
+
+        return $this->buildProductPricesResource($sku, $restProductPricesAttributesTransfer);
     }
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\RestProductPricesAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestProductPricesAttributesTransfer $restProductPricesAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function buildPorductPricesResource(string $sku, RestProductPricesAttributesTransfer $restProductPricesAttributesTransfer) {
-        return $this->restResourceBuilder->createRestResource(
+    protected function buildProductPricesResource(string $sku, RestProductPricesAttributesTransfer $restProductPricesAttributesTransfer): ?RestResourceInterface
+    {
+        $restResource = $this->restResourceBuilder->createRestResource(
             ProductPricesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_PRICES,
             $sku,
             $restProductPricesAttributesTransfer
         );
+
+        $restResourceSelfLink = sprintf(
+            '%s/%s/%s',
+            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            $sku,
+            ProductPricesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_PRICES
+        );
+        $restResource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $restResourceSelfLink);
+
+        return $restResource;
     }
 
     /**
@@ -141,5 +162,4 @@ class AbstractProductPricesReader implements AbstractProductPricesReaderInterfac
 
         return $restErrorTransfer;
     }
-
 }

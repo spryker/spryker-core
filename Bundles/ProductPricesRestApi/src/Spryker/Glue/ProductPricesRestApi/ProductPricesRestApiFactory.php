@@ -8,38 +8,23 @@
 namespace Spryker\Glue\ProductPricesRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductResourceAliasStorageClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\AbstractProductPrices\AbstractProductPricesReader;
 use Spryker\Glue\ProductPricesRestApi\Processor\AbstractProductPrices\AbstractProductPricesReaderInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices\ConcreteProductPricesReader;
 use Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices\ConcreteProductPricesReaderInterface;
-use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\AbstractProductPricesResourceMapper;
-use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\AbstractProductPricesResourceMapperInterface;
-use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ConcreteProductPricesResourceMapper;
-use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ConcreteProductPricesResourceMapperInterface;
+use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapper;
+use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapperInterface;
 
 class ProductPricesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ProductPricesRestApi\Processor\Mapper\AbstractProductPricesResourceMapperInterface
+     * @return \Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapperInterface
      */
-    public function createAbstractProductPricesResourceMapper(): AbstractProductPricesResourceMapperInterface
+    public function createProductPricesMapper(): ProductPricesMapperInterface
     {
-        return new AbstractProductPricesResourceMapper(
-            $this->getResourceBuilder()
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ConcreteProductPricesResourceMapperInterface
-     */
-    public function createConcreteProductPricesResourceMapper(): ConcreteProductPricesResourceMapperInterface
-    {
-        return new ConcreteProductPricesResourceMapper(
-            $this->getResourceBuilder()
-        );
+        return new ProductPricesMapper();
     }
 
     /**
@@ -51,7 +36,7 @@ class ProductPricesRestApiFactory extends AbstractFactory
             $this->getProductStorageClient(),
             $this->getPriceProductStorageClient(),
             $this->getResourceBuilder(),
-            $this->createAbstractProductPricesResourceMapper()
+            $this->createProductPricesMapper()
         );
     }
 
@@ -64,7 +49,7 @@ class ProductPricesRestApiFactory extends AbstractFactory
             $this->getProductStorageClient(),
             $this->getPriceProductStorageClient(),
             $this->getResourceBuilder(),
-            $this->createConcreteProductPricesResourceMapper()
+            $this->createProductPricesMapper()
         );
     }
 

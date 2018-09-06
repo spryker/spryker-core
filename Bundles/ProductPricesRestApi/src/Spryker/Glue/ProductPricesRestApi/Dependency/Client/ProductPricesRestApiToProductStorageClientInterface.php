@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ProductPricesRestApi\Dependency\Client;
 
-
 interface ProductPricesRestApiToProductStorageClientInterface
 {
     /**

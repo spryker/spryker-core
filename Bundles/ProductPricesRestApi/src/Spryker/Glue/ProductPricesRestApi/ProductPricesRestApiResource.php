@@ -30,7 +30,7 @@ class ProductPricesRestApiResource extends AbstractRestResource implements Produ
     {
         return $this->getFactory()
             ->createAbstractProductPricesReader()
-            ->findAbstractProductPricesByAbstractProductSku($abstractProductSku, $restRequest);
+            ->findAbstractProductPricesBySku($abstractProductSku, $restRequest);
     }
 
     /**
@@ -47,6 +47,6 @@ class ProductPricesRestApiResource extends AbstractRestResource implements Produ
     {
         return $this->getFactory()
             ->createConcreteProductPricesReader()
-            ->findConcreteProductPricesByConcreteProductId($concreteProductSku, $restRequest);
+            ->findConcreteProductPricesBySku($concreteProductSku, $restRequest);
     }
 }
