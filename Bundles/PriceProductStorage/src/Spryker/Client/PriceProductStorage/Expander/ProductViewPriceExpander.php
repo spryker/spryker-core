@@ -53,13 +53,13 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
      */
     public function expandProductViewPriceData(ProductViewTransfer $productViewTransfer)
     {
-        $priceProductAbstractTransfers = $this->getPriceAbstractData($productViewTransfer);
+        $priceProductAbstractTransfers = $this->findPriceAbstractData($productViewTransfer);
         $currentProductAbstractPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
             $priceProductAbstractTransfers,
             $this->getPriceProductFilterFromProductView($productViewTransfer)
         );
 
-        $priceProductConcreteTransfers = $this->getPriceConcreteData($productViewTransfer);
+        $priceProductConcreteTransfers = $this->findPriceConcreteData($productViewTransfer);
         if (!$priceProductConcreteTransfers) {
             return $productViewTransfer
                 ->setPrice($currentProductAbstractPriceTransfer->getPrice())
@@ -94,7 +94,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function getPriceAbstractData(ProductViewTransfer $productViewTransfer): array
+    protected function findPriceAbstractData(ProductViewTransfer $productViewTransfer): array
     {
         if (!$productViewTransfer->getIdProductAbstract()) {
             return [];
@@ -108,7 +108,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function getPriceConcreteData(ProductViewTransfer $productViewTransfer): array
+    protected function findPriceConcreteData(ProductViewTransfer $productViewTransfer): array
     {
         if (!$productViewTransfer->getIdProductConcrete()) {
             return [];
