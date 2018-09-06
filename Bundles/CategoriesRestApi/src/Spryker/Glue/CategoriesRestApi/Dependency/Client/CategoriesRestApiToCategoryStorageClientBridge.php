@@ -15,8 +15,6 @@ class CategoriesRestApiToCategoryStorageClientBridge implements CategoriesRestAp
     protected $categoryStorageClient;
 
     /**
-     * CategoriesRestApiToCategoryStorageClientBridge constructor.
-     *
      * @param \Spryker\Client\CategoryStorage\CategoryStorageClientInterface $categoryStorageClient
      */
     public function __construct($categoryStorageClient)
