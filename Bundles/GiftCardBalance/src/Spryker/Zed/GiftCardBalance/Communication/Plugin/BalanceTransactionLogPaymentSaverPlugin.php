@@ -9,7 +9,6 @@ namespace Spryker\Zed\GiftCardBalance\Communication\Plugin;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
