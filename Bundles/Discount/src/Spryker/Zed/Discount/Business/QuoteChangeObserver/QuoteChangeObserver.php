@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Shared\Discount\DiscountConfig;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 
 class QuoteChangeObserver implements QuoteChangeObserverInterface
@@ -205,18 +205,20 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      */
     protected function isVoucherUsableForCurrentCurrency(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer): bool
     {
-        $grossModeEnabled = $quoteTransfer->getPriceMode() === DiscountConstants::PRICE_MODE_GROSS;
-        $netModeEnabled = $quoteTransfer->getPriceMode() === DiscountConstants::PRICE_MODE_NET;
+        $grossModeEnabled = $quoteTransfer->getPriceMode() === DiscountConfig::PRICE_MODE_GROSS;
+        $netModeEnabled = $quoteTransfer->getPriceMode() === DiscountConfig::PRICE_MODE_NET;
 
         foreach ($discountTransfer->getMoneyValueCollection() as $moneyValueTransfer) {
-            if ($moneyValueTransfer->getCurrency()->getCode() === $quoteTransfer->getCurrency()->getCode()) {
-                if ($netModeEnabled && $moneyValueTransfer->getNetAmount()) {
-                    return true;
-                }
+            if ($moneyValueTransfer->getCurrency()->getCode() !== $quoteTransfer->getCurrency()->getCode()) {
+                continue;
+            }
 
-                if ($grossModeEnabled && $moneyValueTransfer->getGrossAmount()) {
-                    return true;
-                }
+            if ($netModeEnabled && $moneyValueTransfer->getNetAmount()) {
+                return true;
+            }
+
+            if ($grossModeEnabled && $moneyValueTransfer->getGrossAmount()) {
+                return true;
             }
         }
 

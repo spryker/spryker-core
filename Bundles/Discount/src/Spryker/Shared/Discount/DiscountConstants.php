@@ -69,7 +69,4 @@ interface DiscountConstants
      * @api
      */
     const CALCULATOR_MONEY_INPUT_TYPE = 'calculator-money-input-type';
-
-    public const PRICE_MODE_NET = 'NET_MODE';
-    public const PRICE_MODE_GROSS = 'GROSS_MODE';
 }
