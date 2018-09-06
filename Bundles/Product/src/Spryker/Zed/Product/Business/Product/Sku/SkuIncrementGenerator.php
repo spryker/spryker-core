@@ -62,11 +62,13 @@ class SkuIncrementGenerator implements SkuIncrementGeneratorInterface
      */
     protected function getProductConcreteSkuLastPartIncremented(string $productConcreteSku): int
     {
-        if (strpos($productConcreteSku, SkuGenerator::SKU_ABSTRACT_SEPARATOR) !== false) {
-            $productConcreteSku = substr($productConcreteSku, strrpos($productConcreteSku, SkuGenerator::SKU_ABSTRACT_SEPARATOR) + 1);
+        if (mb_strpos($productConcreteSku, SkuGenerator::SKU_ABSTRACT_SEPARATOR) === false) {
+            return 0;
         }
 
-        if (!is_numeric($productConcreteSku)) {
+        $productConcreteSku = mb_substr($productConcreteSku, mb_strpos($productConcreteSku, SkuGenerator::SKU_ABSTRACT_SEPARATOR) + 1);
+
+        if (!is_numeric($productConcreteSku) || (int)$productConcreteSku < 0) {
             return 0;
         }
 

@@ -59,7 +59,7 @@ class SkuGenerator implements SkuGeneratorInterface
     ) {
         $concreteSku = $this->generateConcreteSkuFromAttributes($productConcreteTransfer->getAttributes());
 
-        if (strlen($concreteSku) === 0) {
+        if ($concreteSku === '') {
             $concreteSku = $this->addSkuIncrementValue($productAbstractTransfer->getIdProductAbstract());
         }
 
