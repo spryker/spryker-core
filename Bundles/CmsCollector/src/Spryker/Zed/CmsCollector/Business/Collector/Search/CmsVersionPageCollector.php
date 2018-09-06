@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CmsCollector\Business\Collector\Search;
 
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
-
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchInterface;
 use Spryker\Zed\Collector\Business\Collector\Search\AbstractSearchPropelCollector;
