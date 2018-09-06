@@ -69,7 +69,7 @@
         <property name="netAmount" type="int"/>
     </transfer>
 
-    <transfer name="RestPricePriceModeConfiguration">
+    <transfer name="PriceModeConfiguration">
         <property name="currentPriceMode" type="string"/>
         <property name="grossModeIdentifier" type="string"/>
         <property name="netModeIdentifier" type="string"/>

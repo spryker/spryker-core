@@ -6,8 +6,8 @@
 
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Catalog;
 
+use Generated\Shared\Transfer\PriceModeConfigurationTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestPricePriceModeConfigurationTransfer;
 use Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCatalogClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
@@ -224,11 +224,11 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestPricePriceModeConfigurationTransfer
+     * @return \Generated\Shared\Transfer\PriceModeConfigurationTransfer
      */
-    protected function getPriceModeInformation(): RestPricePriceModeConfigurationTransfer
+    protected function getPriceModeInformation(): PriceModeConfigurationTransfer
     {
-        $priceModeConfiguration = new RestPricePriceModeConfigurationTransfer();
+        $priceModeConfiguration = new PriceModeConfigurationTransfer();
 
         $priceModeConfiguration->setCurrentPriceMode($this->priceClient->getCurrentPriceMode());
         $priceModeConfiguration->setGrossModeIdentifier($this->priceClient->getGrossPriceModeIdentifier());

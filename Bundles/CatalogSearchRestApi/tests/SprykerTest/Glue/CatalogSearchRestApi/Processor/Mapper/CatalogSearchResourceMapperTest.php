@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 use Generated\Shared\Transfer\PaginationSearchResultTransfer;
+use Generated\Shared\Transfer\PriceModeConfigurationTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
-use Generated\Shared\Transfer\RestPricePriceModeConfigurationTransfer;
 use Generated\Shared\Transfer\SortSearchResultTransfer;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper;
@@ -81,7 +81,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->assertEquals("Toshiba CAMILEO S20", $this->restSearchAttributesTransfer->getProducts()[0]->getAbstractName());
         $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrice());
         $this->assertEquals("209", $this->restSearchAttributesTransfer->getProducts()[0]->getAbstractSku());
-        $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrices()[0][self::GROSS_AMOUNT]);
+        $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrices()[0][static::GROSS_AMOUNT]);
         $this->assertArrayNotHasKey("id_product_abstract", $this->restSearchAttributesTransfer->getProducts()[0]);
         $this->assertArrayNotHasKey("id_product_labels", $this->restSearchAttributesTransfer->getProducts()[0]);
 
@@ -307,11 +307,11 @@ class CatalogSearchResourceMapperTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestPricePriceModeConfigurationTransfer
+     * @return \Generated\Shared\Transfer\PriceModeConfigurationTransfer
      */
     protected function getPriceModeInformation()
     {
-        return (new RestPricePriceModeConfigurationTransfer())
+        return (new PriceModeConfigurationTransfer())
             ->setCurrentPriceMode(static::GROSS_MODE)
             ->setGrossModeIdentifier(static::GROSS_MODE)
             ->setNetModeIdentifier(static::NET_MODE);

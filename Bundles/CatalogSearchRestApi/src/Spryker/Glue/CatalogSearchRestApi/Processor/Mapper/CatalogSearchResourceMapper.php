@@ -7,10 +7,10 @@
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
+use Generated\Shared\Transfer\PriceModeConfigurationTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\RestFacetSearchResultAttributesTransfer;
-use Generated\Shared\Transfer\RestPricePriceModeConfigurationTransfer;
 use Generated\Shared\Transfer\RestPriceProductAttributesTransfer;
 use Generated\Shared\Transfer\RestRangeSearchResultAttributesTransfer;
 
@@ -28,9 +28,9 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
     {
         $restSearchAttributesTransfer = (new RestCatalogSearchAttributesTransfer())->fromArray($restSearchResponse, true);
         $restSearchAttributesTransfer->setCurrency($currency);
-        if (isset($restSearchResponse[self::FACETS])) {
+        if (isset($restSearchResponse[static::FACETS])) {
             $restSearchAttributesTransfer = $this->mapSearchResponseFacetTransfersToSearchAttributesTransfer(
-                $restSearchResponse[self::FACETS],
+                $restSearchResponse[static::FACETS],
                 $restSearchAttributesTransfer
             );
         }
@@ -65,13 +65,13 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
 
     /**
      * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
-     * @param \Generated\Shared\Transfer\RestPricePriceModeConfigurationTransfer $priceModeInformation
+     * @param \Generated\Shared\Transfer\PriceModeConfigurationTransfer $priceModeInformation
      *
      * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
      */
     public function mapPrices(
         RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer,
-        RestPricePriceModeConfigurationTransfer $priceModeInformation
+        PriceModeConfigurationTransfer $priceModeInformation
     ): RestCatalogSearchAttributesTransfer {
         foreach ($restSearchAttributesTransfer->getProducts() as $product) {
             $prices = [];
@@ -91,14 +91,14 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
     /**
      * @param string $priceType
      * @param int $price
-     * @param \Generated\Shared\Transfer\RestPricePriceModeConfigurationTransfer $priceModeInformation
+     * @param \Generated\Shared\Transfer\PriceModeConfigurationTransfer $priceModeInformation
      *
      * @return \Generated\Shared\Transfer\RestPriceProductAttributesTransfer
      */
     protected function getPriceTransfer(
         string $priceType,
         int $price,
-        RestPricePriceModeConfigurationTransfer $priceModeInformation
+        PriceModeConfigurationTransfer $priceModeInformation
     ): RestPriceProductAttributesTransfer {
         $restPriceProductAttributes = new RestPriceProductAttributesTransfer();
         $restPriceProductAttributes->setPriceTypeName($priceType);
