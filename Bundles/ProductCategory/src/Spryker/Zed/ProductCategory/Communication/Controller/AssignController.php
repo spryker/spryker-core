@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -66,7 +67,7 @@ class AssignController extends AbstractController
     /**
      * @param int $idCategory
      *
-     * @return null|\Orm\Zed\Category\Persistence\SpyCategory
+     * @return \Orm\Zed\Category\Persistence\SpyCategory|null
      */
     protected function getCategoryEntity($idCategory)
     {

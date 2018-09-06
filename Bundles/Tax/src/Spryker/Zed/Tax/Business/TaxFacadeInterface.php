@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -330,4 +331,29 @@ interface TaxFacadeInterface
      * @return void
      */
     public function calculateTaxRateAverageAggregation(CalculableObjectTransfer $calculableObjectTransfer);
+
+    /**
+     * Specification:
+     *  - Check if tax set with a given name exist
+     *
+     * @api
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function taxSetWithSameNameExists(string $name): bool;
+
+    /**
+     * Specification:
+     *  - Check if tax set with a given Name and Id exist
+     *
+     * @api
+     *
+     * @param string $name
+     * @param int $idTaxSet
+     *
+     * @return bool
+     */
+    public function taxSetWithSameNameAndIdExists(string $name, int $idTaxSet): bool;
 }

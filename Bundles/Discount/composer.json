@@ -12,6 +12,7 @@
     "spryker/log": "^3.0.0",
     "spryker/messenger": "^3.0.0",
     "spryker/money": "^2.0.0",
+    "spryker/product-option": "^6.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
     "spryker/store": "^1.1.0",
@@ -19,16 +20,16 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*",
-    "spryker/transfer": "*"
+    "spryker/zed-navigation": "*"
   },
   "suggest": {
-    "spryker/checkout": "If you want to use Checkout plugins.",
-    "spryker/store": "StoreQuoteTransferExpander plugin can help to populate current Store into Quote, minimum required version: 1.4.0"
+    "spryker/checkout": "If you want to use Checkout plugins."
   },
   "autoload": {
     "psr-4": {

@@ -539,8 +539,8 @@ class FileSystemServiceTest extends Unit
     }
 
     /**
-     * @param null|string $content
-     * @param null|string $modifiedTimestamp
+     * @param string|null $content
+     * @param string|null $modifiedTimestamp
      *
      * @return void
      */
@@ -563,8 +563,8 @@ class FileSystemServiceTest extends Unit
     }
 
     /**
-     * @param null|string $content
-     * @param null|string $modifiedTimestamp
+     * @param string|null $content
+     * @param string|null $modifiedTimestamp
      *
      * @return void
      */

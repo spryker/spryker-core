@@ -28,13 +28,13 @@ class BulkWriter extends Writer implements BulkWriterInterface
 
         $this->loadPriceProductTransfer($priceProductTransfer);
 
-        $priceProductEntity = $this->savePriceProductEntity($priceProductTransfer, new SpyPriceProduct());
+        $persistedPriceProductTransfer = $this->savePriceProductEntity($priceProductTransfer, new SpyPriceProduct());
 
         if ($priceProductTransfer->getIdProduct()) {
             $this->addRecordToTouch(static::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
         }
 
-        return $priceProductEntity->getPriceProduct();
+        return $persistedPriceProductTransfer->getPriceProduct();
     }
 
     /**

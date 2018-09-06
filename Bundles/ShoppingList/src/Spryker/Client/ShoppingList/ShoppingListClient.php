@@ -322,7 +322,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
             return $this->getZedStub()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
         }
 
-        return (new ShoppingListShareResponseTransfer)->setIsSuccess(false);
+        return (new ShoppingListShareResponseTransfer())->setIsSuccess(false);
     }
 
     /**

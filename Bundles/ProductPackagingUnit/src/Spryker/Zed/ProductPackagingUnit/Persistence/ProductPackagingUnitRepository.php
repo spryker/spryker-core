@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -162,21 +162,15 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      */
     public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {
-        $query = $this->getFactory()
+        return $this->getFactory()
             ->createProductPackagingUnitQuery()
-            ->innerJoinWithProductPackagingUnitType()
             ->useProductPackagingUnitTypeQuery()
                 ->filterByIdProductPackagingUnitType_In($productPackagingUnitTypeIds)
             ->endUse()
-            ->innerJoinWithProduct()
-            ->useProductQuery()
-                ->innerJoinWithSpyProductAbstract()
-                ->useSpyProductAbstractQuery()
-                    ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT])
-                ->endUse()
-            ->endUse();
-
-        return $this->buildQueryFromCriteria($query)->find();
+            ->joinProduct()
+            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->find()
+            ->toArray();
     }
 
     /**

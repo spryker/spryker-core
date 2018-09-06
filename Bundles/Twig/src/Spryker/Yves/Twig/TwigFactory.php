@@ -58,7 +58,10 @@ class TwigFactory extends AbstractFactory
      */
     protected function createFilesystemCacheWriter()
     {
-        return new FilesystemCacheWriter($this->getConfig()->getCacheFilePath());
+        return new FilesystemCacheWriter(
+            $this->getConfig()->getCacheFilePath(),
+            $this->getConfig()->getPermissionMode()
+        );
     }
 
     /**
