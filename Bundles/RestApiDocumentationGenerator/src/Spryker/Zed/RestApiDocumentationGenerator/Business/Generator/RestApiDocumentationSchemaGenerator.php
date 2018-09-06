@@ -45,6 +45,11 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     protected $schemas = [];
 
     /**
+     * @var string
+     */
+    protected $lastAddedResponseSchema;
+
+    /**
      * @return array
      */
     public function getSchemas(): array
@@ -56,7 +61,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     }
 
     /**
-     * TODO: refactor this
+     * TODO: improve this somehow
      *
      * @return void
      */
@@ -66,8 +71,19 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
         $this->addResponseDataAttributesSchemaFromTransfer(new RestErrorMessageTransfer(), $restErrorSchemaName);
 
         $this->schemas['RestLinks'] = [
-            static::KEY_LINKS => [
+            static::KEY_PROPERTIES => [
                 'self' => [
+                    static::KEY_TYPE => static::VALUE_STRING,
+                ],
+            ],
+        ];
+
+        $this->schemas['RestRelationships'] = [
+            static::KEY_PROPERTIES => [
+                static::KEY_ID => [
+                    static::KEY_TYPE => static::VALUE_STRING,
+                ],
+                static::KEY_TYPE => [
                     static::KEY_TYPE => static::VALUE_STRING,
                 ],
             ],
@@ -76,10 +92,11 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
 
     /**
      * @param string $transferClassName
+     * @param array $resourceRelationships
      *
      * @return void
      */
-    public function addSchemaFromTransferClassName(string $transferClassName): void
+    public function addSchemaFromTransferClassName(string $transferClassName, array $resourceRelationships = []): void
     {
         if (!class_exists($transferClassName)) {
             return;
@@ -97,6 +114,13 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
         $this->addResponseSchema($responseSchemaName, $responseDataSchemaName);
         $this->addResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName);
         $this->addResponseDataAttributesSchemaFromTransfer($transfer, $responseAttributesSchemaName);
+
+        if ($resourceRelationships) {
+            $resourceRelationshipsSchemaName = $this->getResponseDataRelationshipsSchemaNameFromTransferClass($transferClassName);
+            $this->addRelationshipsDataToResponseDataSchema($responseDataSchemaName, $resourceRelationshipsSchemaName, $resourceRelationships);
+        }
+
+        $this->lastAddedResponseSchema = $responseSchemaName;
     }
 
     /**
@@ -104,9 +128,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      */
     public function getLastAddedSchemaKey(): string
     {
-        $schemaKeys = array_keys($this->schemas);
-
-        return array_pop($schemaKeys);
+        return $this->lastAddedResponseSchema;
     }
 
     /**
@@ -121,6 +143,8 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
             return;
         }
 
+        //to avoid infinite loop
+        $this->schemas[$attributesSchemaName][static::KEY_PROPERTIES] = [];
         $transferReflection = new ReflectionClass($transfer);
         $transferMetadata = $transferReflection->getProperty('transferMetadata');
         $transferMetadata->setAccessible(true);
@@ -131,7 +155,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
             if (class_exists($value[static::KEY_TYPE])) {
                 $schemaProperties += $this->formatObjectSchemaType($key, $value);
             } else {
-                $schemaProperties[$key][static::KEY_TYPE] = $this->formatBasicSchemaType($key, $value[static::KEY_TYPE]);
+                $schemaProperties += $this->formatBasicSchemaType($key, $value[static::KEY_TYPE]);
             }
         }
 
@@ -245,6 +269,18 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     }
 
     /**
+     * @param string $transferClassName
+     *
+     * @return string
+     */
+    protected function getResponseDataRelationshipsSchemaNameFromTransferClass(string $transferClassName): string
+    {
+        $transferClassNameExploded = explode('\\', $transferClassName);
+
+        return str_replace('AttributesTransfer', 'Relationships', end($transferClassNameExploded));
+    }
+
+    /**
      * @param string $schemaName
      * @param string $ref
      *
@@ -347,6 +383,34 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
                     static::KEY_REF => sprintf(static::PATTERN_SCHEMA_REFERENCE, 'RestLinks'),
                 ],
             ],
+        ];
+    }
+
+    /**
+     * @param string $dataSchemaName
+     * @param string $relationshipsSchemaName
+     * @param array $resourceRelationships
+     *
+     * @return void
+     */
+    protected function addRelationshipsDataToResponseDataSchema(string $dataSchemaName, string $relationshipsSchemaName, array $resourceRelationships): void
+    {
+        $this->schemas[$dataSchemaName][static::KEY_PROPERTIES][static::KEY_RELATIONSHIPS] = [
+            static::KEY_REF => sprintf(static::PATTERN_SCHEMA_REFERENCE, $relationshipsSchemaName),
+        ];
+
+        $properties = [];
+        foreach ($resourceRelationships as $resourceRelationship) {
+            $properties[$resourceRelationship] = [
+                static::KEY_TYPE => static::VALUE_ARRAY,
+                static::KEY_ITEMS => [
+                    static::KEY_REF => sprintf(static::PATTERN_SCHEMA_REFERENCE, 'RestRelationships'),
+                ],
+            ];
+        }
+
+        $this->schemas[$relationshipsSchemaName] = [
+            static::KEY_PROPERTIES => $properties,
         ];
     }
 }

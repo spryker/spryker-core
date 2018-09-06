@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator;
 
+use Spryker\Glue\GlueApplication\Plugin\Rest\ResourceRelationshipCollectionProviderPlugin;
+use Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToOpenApiAnnotationsAnalyserAdapter;
@@ -16,6 +18,7 @@ use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumen
 class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS = 'PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS';
+    public const PLUGIN_RESOURCE_RELATIONSHIPS_COLLECTION_PROVIDER = 'PLUGIN_RESOURCE_RELATIONSHIPS_COLLECTION_PROVIDER';
     public const YAML_DUMPER = 'YAML_DUMPER';
     public const FINDER = 'FINDER';
     public const ANNOTATION_ANALYSER = 'ANNOTATION_ANALYSER';
@@ -31,6 +34,7 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
         $container = $this->addFinder($container);
         $container = $this->addAnnotationsAnalyser($container);
         $container = $this->addResourceRoutePluginsProviderPlugins($container);
+        $container = $this->addResourceRelationshipsCollectionProviderPlugin($container);
 
         return $container;
     }
@@ -97,5 +101,27 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
     protected function getResourceRoutePluginsProviderPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addResourceRelationshipsCollectionProviderPlugin(Container $container): Container
+    {
+        $container[static::PLUGIN_RESOURCE_RELATIONSHIPS_COLLECTION_PROVIDER] = function () {
+            return $this->getResourceRelationshipsCollectionProviderPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface
+     */
+    protected function getResourceRelationshipsCollectionProviderPlugin(): ResourceRelationshipCollectionProviderPluginInterface
+    {
+        return new ResourceRelationshipCollectionProviderPlugin();
     }
 }

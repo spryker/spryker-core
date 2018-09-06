@@ -11,10 +11,11 @@ interface RestApiDocumentationSchemaGeneratorInterface
 {
     /**
      * @param string $transferClassName
+     * @param array $resourceRelationships
      *
      * @return void
      */
-    public function addSchemaFromTransferClassName(string $transferClassName): void;
+    public function addSchemaFromTransferClassName(string $transferClassName, array $resourceRelationships = []): void;
 
     /**
      * @return string

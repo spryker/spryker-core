@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGeneratorInterface
 {
+    protected const REST_ERROR_SCHEMA_NAME = 'RestErrorMessage';
+
     /**
      * @var array
      */
@@ -85,16 +87,19 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $resourceRoutePlugin
      * @param string $transferSchemaKey
      * @param string $restErrorTransferSchemaKey
+     * @param array|null $parents
      *
      * @return void
      */
-    public function addPathsForPlugin(ResourceRoutePluginInterface $resourceRoutePlugin, string $transferSchemaKey, string $restErrorTransferSchemaKey): void
+    public function addPathsForPlugin(ResourceRoutePluginInterface $resourceRoutePlugin, string $transferSchemaKey, string $restErrorTransferSchemaKey, ?array $parents = null): void
     {
         $resource = $resourceRoutePlugin->getResourceType();
         $collection = $resourceRoutePlugin->configure(new ResourceRouteCollection());
 
+        $resourcePath = $this->parseParentToPath('/' . $resource, $parents);
+
         if ($collection->has(Request::METHOD_GET)) {
-            $this->paths['/' . $resource]['get'] = [
+            $this->paths[$resourcePath]['get'] = [
                 'summary' => "List all $resource",
                 'tags' => [$resource],
                 'responses' => [
@@ -104,7 +109,7 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
             ];
         }
         if ($collection->has(Request::METHOD_POST)) {
-            $this->paths['/' . $resource]['post'] = [
+            $this->paths[$resourcePath]['post'] = [
                 'summary' => "Create $resource",
                 'tags' => [$resource],
                 'responses' => [
@@ -114,7 +119,7 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
             ];
         }
         if ($collection->has(Request::METHOD_PATCH)) {
-            $this->paths['/' . $resource]['patch'] = [
+            $this->paths[$resourcePath]['patch'] = [
                 'summary' => "Update $resource",
                 'tags' => [$resource],
                 'responses' => [
@@ -124,11 +129,13 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
             ];
         }
         if ($collection->has(Request::METHOD_DELETE)) {
-            $this->paths['/' . $resource]['delete'] = [
+            $this->paths[$resourcePath]['delete'] = [
                 'summary' => "Delete $resource",
                 'tags' => [$resource],
                 'responses' => [
-                    (string)Response::HTTP_NO_CONTENT => $this->getDefaultSuccessResponse($transferSchemaKey),
+                    (string)Response::HTTP_NO_CONTENT => [
+                        'description' => 'Expected response to a valid request',
+                    ],
                     'default' => $this->getDefaultErrorResponse($restErrorTransferSchemaKey),
                 ],
             ];
@@ -173,5 +180,20 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
                 ],
             ],
         ];
+    }
+
+    /**
+     * @param string $path
+     * @param array|null $parent
+     *
+     * @return string
+     */
+    protected function parseParentToPath(string $path, ?array $parent): string
+    {
+        if (!$parent) {
+            return $path;
+        }
+
+        return $this->parseParentToPath('/' . $parent['name'] . '/' . $parent['id'] . $path, $parent['parent']);
     }
 }

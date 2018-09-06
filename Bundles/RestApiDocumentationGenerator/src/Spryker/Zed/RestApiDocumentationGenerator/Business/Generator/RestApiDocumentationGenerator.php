@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
+use Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface;
 
 class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInterface
@@ -16,6 +18,11 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
      * @var \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[]
      */
     protected $resourceRoutesPluginsProviderPlugins;
+
+    /**
+     * @var \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface
+     */
+    protected $resourceRelationshipCollectionPlugin;
 
     /**
      * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface
@@ -34,17 +41,20 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
 
     /**
      * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[] $resourceRoutesPluginsProviderPlugins
+     * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface $resourceRelationshipCollectionPlugin
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface $restApiSchemaGenerator
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGeneratorInterface $restApiPathGenerator
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface $restApiDocumentationWriter
      */
     public function __construct(
         array $resourceRoutesPluginsProviderPlugins,
+        ResourceRelationshipCollectionProviderPluginInterface $resourceRelationshipCollectionPlugin,
         RestApiDocumentationSchemaGeneratorInterface $restApiSchemaGenerator,
         RestApiDocumentationPathGeneratorInterface $restApiPathGenerator,
         RestApiDocumentationWriterInterface $restApiDocumentationWriter
     ) {
         $this->resourceRoutesPluginsProviderPlugins = $resourceRoutesPluginsProviderPlugins;
+        $this->resourceRelationshipCollectionPlugin = $resourceRelationshipCollectionPlugin;
         $this->restApiSchemaGenerator = $restApiSchemaGenerator;
         $this->restApiPathGenerator = $restApiPathGenerator;
         $this->restApiDocumentationWriter = $restApiDocumentationWriter;
@@ -55,85 +65,21 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
      */
     public function generateOpenApiSpecification(): void
     {
-//        $this->restApiPathGenerator->addPathsFromAnnotations();
-//        $paths = $this->restApiPathGenerator->getPaths();
-//        foreach ($paths as $path => $methods) {
-//            if (preg_match('/\{([^\}]*)\}[\W]*$/', $path)) {
-//                //have id
-//                if (isset($methods['get'])) {
-//                    //RESPONSE SCHEMA
-//                    $schemaRef = $methods['get']['responses']['200']['content']['application/json']['schema']['$ref'];
-//                    $schemaRef = explode('/', $schemaRef);
-//                    $schemaName = array_pop($schemaRef);
-//                    $schemaNameFiltered = str_replace(['Rest', 'Response'], '', $schemaName);
-//                    $transferClassName = 'Generated\Shared\Transfer\\' . 'Rest' . $schemaNameFiltered . 'AttributesTransfer';
-//                    $this->restApiSchemaGenerator->addSchemaFromTransferClassName($transferClassName);
-//
-//                    $responseSchemaName = 'Rest' . $schemaNameFiltered . 'Response';
-//                    $responseDataSchemaName = $responseSchemaName . 'Data';
-//
-//                    $this->restApiSchemaGenerator->addResponseSchema($responseSchemaName, $responseDataSchemaName);
-//                    $this->restApiSchemaGenerator->addResponseDataSchema($responseDataSchemaName, 'Rest' . $schemaNameFiltered . 'Attributes');
-//                }
-//                if (isset($methods['patch'])) {
-//                    //RESPONSE SCHEMA
-//                    $schemaRef = $methods['get']['responses']['200']['content']['application/json']['schema']['$ref'];
-//                    $schemaRef = explode('/', $schemaRef);
-//                    $schemaName = array_pop($schemaRef);
-//                    $schemaNameFiltered = str_replace(['Rest', 'Response', 'List'], '', $schemaName);
-//                    $transferClassName = 'Generated\Shared\Transfer\\' . 'Rest' . $schemaNameFiltered . 'AttributesTransfer';
-//                    $this->restApiSchemaGenerator->addSchemaFromTransferClassName($transferClassName);
-//
-//                    $responseSchemaName = 'Rest' . $schemaNameFiltered . 'Response';
-//                    $responseDataSchemaName = $responseSchemaName . 'Data';
-//
-//                    $this->restApiSchemaGenerator->addResponseSchema($responseSchemaName, $responseDataSchemaName);
-//                    $this->restApiSchemaGenerator->addResponseDataSchema($responseDataSchemaName, 'Rest' . $schemaNameFiltered . 'Attributes');
-//
-//                    //REQUEST SCHEMA TBD
-//                }
-//            } else {
-//                //don't have id
-//                if (isset($methods['get'])) {
-//                    //RESPONSE SCHEMA
-//                    $schemaRef = $methods['get']['responses']['200']['content']['application/json']['schema']['$ref'];
-//                    $schemaRef = explode('/', $schemaRef);
-//                    $schemaName = array_pop($schemaRef);
-//                    $schemaNameFiltered = str_replace(['Rest', 'Response', 'List'], '', $schemaName);
-//                    $transferClassName = 'Generated\Shared\Transfer\\' . 'Rest' . $schemaNameFiltered . 'AttributesTransfer';
-//                    $this->restApiSchemaGenerator->addSchemaFromTransferClassName($transferClassName);
-//
-//                    $responseSchemaName = 'Rest' . $schemaNameFiltered . 'ListResponse';
-//                    $responseDataSchemaName = $responseSchemaName . 'Data';
-//
-//                    $this->restApiSchemaGenerator->addResponseWithMultipleDataSchema($responseSchemaName, $responseDataSchemaName);
-//                    $this->restApiSchemaGenerator->addResponseDataSchema($responseDataSchemaName, 'Rest' . $schemaNameFiltered . 'Attributes');
-//                }
-//                if (isset($methods['post'])) {
-//                    //RESPONSE SCHEMA
-//                    $schemaRef = $methods['get']['responses']['200']['content']['application/json']['schema']['$ref'];
-//                    $schemaRef = explode('/', $schemaRef);
-//                    $schemaName = array_pop($schemaRef);
-//                    $schemaNameFiltered = str_replace(['Rest', 'Response', 'List'], '', $schemaName);
-//                    $transferClassName = 'Generated\Shared\Transfer\\' . 'Rest' . $schemaNameFiltered . 'AttributesTransfer';
-//                    $this->restApiSchemaGenerator->addSchemaFromTransferClassName($transferClassName);
-//
-//                    $responseSchemaName = 'Rest' . $schemaNameFiltered . 'Response';
-//                    $responseDataSchemaName = $responseSchemaName . 'Data';
-//
-//                    $this->restApiSchemaGenerator->addResponseSchema($responseSchemaName, $responseDataSchemaName);
-//                    $this->restApiSchemaGenerator->addResponseDataSchema($responseDataSchemaName, 'Rest' . $schemaNameFiltered . 'Attributes');
-//
-//                    //REQUEST SCHEMA TBD
-//                }
-//            }
-//        }
-
-        $this->restApiSchemaGenerator->addSchemaFromTransferClassName(RestErrorMessageTransfer::class);
-
+        $resourceRouteCollection = $this->resourceRelationshipCollectionPlugin->getResourceRelationshipCollection();
         foreach ($this->resourceRoutesPluginsProviderPlugins as $resourceRoutesPluginsProviderPlugin) {
             foreach ($resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins() as $plugin) {
-                $this->restApiSchemaGenerator->addSchemaFromTransferClassName($plugin->getResourceAttributesClassName());
+                $resourceRelationships = [];
+                if ($resourceRouteCollection->hasRelationships($plugin->getResourceType())) {
+                    $relationshipPlugins = $resourceRouteCollection->getRelationships($plugin->getResourceType());
+                    foreach ($relationshipPlugins as $relationshipPlugin) {
+                        $resourceRelationships[] = $relationshipPlugin->getRelationshipResourceType();
+                    }
+                }
+                $this->restApiSchemaGenerator->addSchemaFromTransferClassName($plugin->getResourceAttributesClassName(), $resourceRelationships);
+                $transferSchemaKey = $this->restApiSchemaGenerator->getLastAddedSchemaKey();
+
+                $parents = $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins());
+                $this->restApiPathGenerator->addPathsForPlugin($plugin, $transferSchemaKey, 'RestErrorMessage', $parents);
             }
         }
 
@@ -141,5 +87,31 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
             $this->restApiPathGenerator->getPaths(),
             $this->restApiSchemaGenerator->getSchemas()
         );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param array $pluginsStack
+     *
+     * @return array|null
+     */
+    protected function getParentResource(ResourceRoutePluginInterface $plugin, array $pluginsStack): ?array
+    {
+        if ($plugin instanceof ResourceWithParentPluginInterface) {
+            $parent = [];
+            foreach ($pluginsStack as $parentPlugin) {
+                if ($plugin->getParentResourceType() === $parentPlugin->getResourceType()) {
+                    $parent = [
+                        'name' => $parentPlugin->getResourceType(),
+                        'id' => '{' . $parentPlugin->getResourceType() . '-id}',
+                        'parent' => $this->getParentResource($parentPlugin, $pluginsStack),
+                    ];
+                    break;
+                }
+            }
+            return $parent;
+        }
+
+        return null;
     }
 }
