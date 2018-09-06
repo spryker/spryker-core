@@ -40,19 +40,19 @@ class EventQueueProducer implements EventQueueProducerInterface
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      * @param string $listener
      * @param string|null $queuePoolName
      *
      * @return void
      */
-    public function enqueueListener($eventName, TransferInterface $eventTransfer, $listener, $queuePoolName = null)
+    public function enqueueListener($eventName, TransferInterface $transfer, $listener, $queuePoolName = null)
     {
         $messageTransfer = new QueueSendMessageTransfer();
         $messageTransfer->setQueuePoolName($queuePoolName);
         $messageTransfer->setBody(
             $this->utilEncodingService->encodeJson(
-                $this->mapQueueMessageBody($eventTransfer, $listener, $eventName)
+                $this->mapQueueMessageBody($transfer, $listener, $eventName)
             )
         );
 
@@ -60,18 +60,18 @@ class EventQueueProducer implements EventQueueProducerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      * @param string $listenerClassName
      * @param string $eventName
      *
      * @return array
      */
-    protected function mapQueueMessageBody(TransferInterface $eventTransfer, $listenerClassName, $eventName)
+    protected function mapQueueMessageBody(TransferInterface $transfer, $listenerClassName, $eventName)
     {
         return [
             EventQueueSendMessageBodyTransfer::LISTENER_CLASS_NAME => $listenerClassName,
-            EventQueueSendMessageBodyTransfer::TRANSFER_CLASS_NAME => get_class($eventTransfer),
-            EventQueueSendMessageBodyTransfer::TRANSFER_DATA => $eventTransfer->toArray(),
+            EventQueueSendMessageBodyTransfer::TRANSFER_CLASS_NAME => get_class($transfer),
+            EventQueueSendMessageBodyTransfer::TRANSFER_DATA => $transfer->toArray(),
             EventQueueSendMessageBodyTransfer::EVENT_NAME => $eventName,
         ];
     }

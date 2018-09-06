@@ -201,7 +201,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     /**
      * @param array $transferDefinition
      *
-     * @return null|string
+     * @return string|null
      */
     protected function findEntityNamespace(array $transferDefinition)
     {

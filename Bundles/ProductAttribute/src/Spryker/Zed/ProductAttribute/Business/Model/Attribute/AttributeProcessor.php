@@ -136,7 +136,7 @@ class AttributeProcessor implements AttributeProcessorInterface
     }
 
     /**
-     * @param null|string $localeCode
+     * @param string|null $localeCode
      *
      * @return array
      */

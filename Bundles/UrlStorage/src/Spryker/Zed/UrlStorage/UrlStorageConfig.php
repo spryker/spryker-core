@@ -20,7 +20,7 @@ class UrlStorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getUrlSynchronizationPoolName(): ?string
     {
@@ -28,7 +28,7 @@ class UrlStorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getUrlRedirectSynchronizationPoolName(): ?string
     {

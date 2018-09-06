@@ -5,10 +5,10 @@
         <column name="string_column" type="VARCHAR" size="255" required="false"/>
         <column name="integer_column" type="INTEGER"/>
         <unique>
-            <unique-column name="integer_column"/>
+            <unique-column name="string_column"/>
         </unique>
         <unique>
-            <unique-column name="string_column"/>
+            <unique-column name="integer_column"/>
         </unique>
     </table>
     <table name="table_b" phpName="TableB">

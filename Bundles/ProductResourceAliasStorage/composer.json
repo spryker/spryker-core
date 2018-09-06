@@ -12,7 +12,9 @@
     "spryker/synchronization": "^1.0.0"
   },
   "require-dev": {
-    "spryker/event": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/event": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.0.0"
