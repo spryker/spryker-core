@@ -24,7 +24,7 @@ class MerchantRelationshipMinimumOrderValueGlossaryKeyGenerator implements Merch
     ): MerchantRelationshipMinimumOrderValueTransfer {
         $this->assertRequired($merchantRelationshipMinimumOrderValueTransfer);
 
-        $merchantRelationshipMinimumOrderValueTransfer->getThreshold()->setMessageGlossaryKey(
+        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueThreshold()->setMessageGlossaryKey(
             $this->generateMessageGlossaryKey($merchantRelationshipMinimumOrderValueTransfer)
         );
 
@@ -42,7 +42,7 @@ class MerchantRelationshipMinimumOrderValueGlossaryKeyGenerator implements Merch
             '.',
             [
                 static::MINIMUM_ORDER_VALUE_GLOSSARY_PREFIX,
-                $merchantRelationshipMinimumOrderValueTransfer->getThreshold()->getMinimumOrderValueType()->getThresholdGroup(),
+                $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->getThresholdGroup(),
                 $merchantRelationshipMinimumOrderValueTransfer->getStore()->getName(),
                 $merchantRelationshipMinimumOrderValueTransfer->getCurrency()->getCode(),
                 $merchantRelationshipMinimumOrderValueTransfer->getMerchantRelationship()->getMerchantRelationshipKey(),
@@ -52,16 +52,16 @@ class MerchantRelationshipMinimumOrderValueGlossaryKeyGenerator implements Merch
     }
 
     /**
-     * @param \Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business\Translation\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
      * @return void
      */
     protected function assertRequired(MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): void
     {
-        $merchantRelationshipMinimumOrderValueTransfer->getThreshold()
+        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueThreshold()
             ->requireMinimumOrderValueType();
 
-        $merchantRelationshipMinimumOrderValueTransfer->getThreshold()->getMinimumOrderValueType()
+        $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()
             ->requireThresholdGroup();
 
         $merchantRelationshipMinimumOrderValueTransfer->getStore()

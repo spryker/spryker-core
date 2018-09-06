@@ -10,7 +10,7 @@ require('../../scss/main.scss');
 
 var softThresholdStrategyToggle = function() {
     var softStrategy = $('input[name="global-threshold[softStrategy]"]:checked').val();
-    var softValueBlock = $('#global-threshold_softValue').parent();
+    var softValueBlock = $('#global-threshold_softThreshold').parent();
     var softFixedFeeBlock = $('#global-threshold_softFixedFee').parent();
     var softFlexibleFeeBlock = $('#global-threshold_softFlexibleFee').parent();
 

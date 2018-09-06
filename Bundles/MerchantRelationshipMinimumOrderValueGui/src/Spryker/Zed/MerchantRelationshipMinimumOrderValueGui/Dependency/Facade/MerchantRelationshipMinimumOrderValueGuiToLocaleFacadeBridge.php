@@ -5,9 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MinimumOrderValueGui\Dependency\Facade;
+namespace Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Dependency\Facade;
 
-class MinimumOrderValueGuiToLocaleBridge implements MinimumOrderValueGuiToLocaleInterface
+use Generated\Shared\Transfer\LocaleTransfer;
+
+class MerchantRelationshipMinimumOrderValueGuiToLocaleFacadeBridge implements MerchantRelationshipMinimumOrderValueGuiToLocaleFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
@@ -25,7 +27,7 @@ class MinimumOrderValueGuiToLocaleBridge implements MinimumOrderValueGuiToLocale
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();
     }
@@ -35,7 +37,7 @@ class MinimumOrderValueGuiToLocaleBridge implements MinimumOrderValueGuiToLocale
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName)
+    public function getLocale($localeName): LocaleTransfer
     {
         return $this->localeFacade->getLocale($localeName);
     }
@@ -45,7 +47,7 @@ class MinimumOrderValueGuiToLocaleBridge implements MinimumOrderValueGuiToLocale
      *
      * @return bool
      */
-    public function hasLocale($localeName)
+    public function hasLocale($localeName): bool
     {
         return $this->localeFacade->hasLocale($localeName);
     }
@@ -53,7 +55,7 @@ class MinimumOrderValueGuiToLocaleBridge implements MinimumOrderValueGuiToLocale
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getLocaleCollection()
+    public function getLocaleCollection(): array
     {
         return $this->localeFacade->getLocaleCollection();
     }

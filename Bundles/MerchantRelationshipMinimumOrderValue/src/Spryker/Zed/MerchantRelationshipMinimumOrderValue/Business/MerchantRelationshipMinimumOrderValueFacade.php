@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\MerchantRelationshipMinimumOrderValue\Business;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -40,9 +42,6 @@ class MerchantRelationshipMinimumOrderValueFacade extends AbstractFacade impleme
      *
      * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
      *
-     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueTypeNotFoundException
-     * @throws \Spryker\Zed\MinimumOrderValue\Business\Strategy\Exception\MinimumOrderValueThresholdInvalidArgumentException
-     *
      * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer
      */
     public function saveMerchantRelationshipMinimumOrderValue(
@@ -52,6 +51,31 @@ class MerchantRelationshipMinimumOrderValueFacade extends AbstractFacade impleme
             ->createMerchantRelationshipThresholdWriter()
             ->saveMerchantRelationshipMinimumOrderValue(
                 $merchantRelationshipMinimumOrderValueTransfer
+            );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     * @param int[] $merchantRelationshipIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[]
+     */
+    public function getMerchantRelationshipMinimumOrderValues(
+        StoreTransfer $storeTransfer,
+        CurrencyTransfer $currencyTransfer,
+        array $merchantRelationshipIds
+    ): array {
+        return $this->getFactory()
+            ->createMerchantRelationshipThresholdReader()
+            ->getMerchantRelationshipMinimumOrderValues(
+                $storeTransfer,
+                $currencyTransfer,
+                $merchantRelationshipIds
             );
     }
 }

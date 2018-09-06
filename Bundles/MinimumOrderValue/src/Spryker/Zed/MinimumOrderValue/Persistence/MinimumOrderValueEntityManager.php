@@ -82,7 +82,7 @@ class MinimumOrderValueEntityManager extends AbstractEntityManager implements Mi
         }
 
         $minimumOrderValueEntity
-            ->setValue($minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getThreshold())
+            ->setThreshold($minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getThreshold())
             ->setFee($minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getFee())
             ->setFkMinOrderValueType(
                 $minimumOrderValueTypeTransfer->getIdMinimumOrderValueType()

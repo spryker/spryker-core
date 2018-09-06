@@ -29,10 +29,10 @@ class GlobalThresholdType extends AbstractType
     public const PREFIX_SOFT = 'soft';
 
     public const FIELD_STORE_CURRENCY = 'storeCurrency';
-    public const FIELD_HARD_VALUE = 'hardValue';
+    public const FIELD_HARD_THRESHOLD = 'hardThreshold';
 
     public const FIELD_SOFT_STRATEGY = 'softStrategy';
-    public const FIELD_SOFT_VALUE = 'softValue';
+    public const FIELD_SOFT_THRESHOLD = 'softThreshold';
     public const FIELD_SOFT_FIXED_FEE = 'softFixedFee';
     public const FIELD_SOFT_FLEXIBLE_FEE = 'softFlexibleFee';
 
@@ -115,11 +115,9 @@ class GlobalThresholdType extends AbstractType
      */
     protected function addStoreCurrencyField(FormBuilderInterface $builder, array $options): self
     {
-        $storesList = $options[static::OPTION_STORES_ARRAY];
-
         $builder->add(static::FIELD_STORE_CURRENCY, Select2ComboBoxType::class, [
             'label' => 'Store and Currency',
-            'choices' => $storesList,
+            'choices' => $options[static::OPTION_STORES_ARRAY],
             'choices_as_values' => true,
             'multiple' => false,
             'required' => true,
@@ -136,7 +134,7 @@ class GlobalThresholdType extends AbstractType
      */
     protected function addHardValueField(FormBuilderInterface $builder, array $options): self
     {
-        $builder->add(static::FIELD_HARD_VALUE, TextType::class, [
+        $builder->add(static::FIELD_HARD_THRESHOLD, TextType::class, [
             'label' => 'Enter minimum order value',
             'required' => false,
             'constraints' => [
@@ -173,7 +171,7 @@ class GlobalThresholdType extends AbstractType
      */
     protected function addSoftValueField(FormBuilderInterface $builder, array $options): self
     {
-        $builder->add(static::FIELD_SOFT_VALUE, TextType::class, [
+        $builder->add(static::FIELD_SOFT_THRESHOLD, TextType::class, [
             'label' => 'Enter minimum order value',
             'required' => false,
             'constraints' => [
@@ -235,7 +233,7 @@ class GlobalThresholdType extends AbstractType
             ->getLocaleCollection();
 
         foreach ($localeCollection as $localeTransfer) {
-            $name = self::getLocalizedFormName($localizedFormPrefix, $localeTransfer->getLocaleName());
+            $name = static::getLocalizedFormName($localizedFormPrefix, $localeTransfer->getLocaleName());
             $this->addLocalizedForm($builder, $name);
         }
 
@@ -302,8 +300,8 @@ class GlobalThresholdType extends AbstractType
         $data = $event->getData();
         if (is_array($data)) {
             foreach ([
-                         static::FIELD_HARD_VALUE,
-                         static::FIELD_SOFT_VALUE,
+                         static::FIELD_HARD_THRESHOLD,
+                         static::FIELD_SOFT_THRESHOLD,
                          static::FIELD_SOFT_FLEXIBLE_FEE,
                          static::FIELD_SOFT_FIXED_FEE,
                      ] as $fieldName) {
@@ -329,8 +327,8 @@ class GlobalThresholdType extends AbstractType
         $data = $event->getData();
         if (is_array($data)) {
             foreach ([
-                         static::FIELD_HARD_VALUE,
-                         static::FIELD_SOFT_VALUE,
+                         static::FIELD_HARD_THRESHOLD,
+                         static::FIELD_SOFT_THRESHOLD,
                          static::FIELD_SOFT_FLEXIBLE_FEE,
                          static::FIELD_SOFT_FIXED_FEE,
                      ] as $fieldName) {
