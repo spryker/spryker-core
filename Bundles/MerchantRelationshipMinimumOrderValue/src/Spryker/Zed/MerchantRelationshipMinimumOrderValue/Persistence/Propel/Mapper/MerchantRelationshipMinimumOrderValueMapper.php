@@ -28,14 +28,14 @@ class MerchantRelationshipMinimumOrderValueMapper implements MerchantRelationshi
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {
         $minimumOrderValueTypeEntity = $merchantRelationshipMinimumOrderValueEntity->getMinimumOrderValueType();
-        $merchantRelationshipMinimumOrderValueTransfer->setThreshold(
-            $merchantRelationshipMinimumOrderValueTransfer->getThreshold() ?? (new MinimumOrderValueThresholdTransfer())
+        $merchantRelationshipMinimumOrderValueTransfer->setMinimumOrderValueThreshold(
+            $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueThreshold() ?? (new MinimumOrderValueThresholdTransfer())
         );
 
         $merchantRelationshipMinimumOrderValueTransfer->fromArray($merchantRelationshipMinimumOrderValueEntity->toArray(), true)
             ->setIdMerchantRelationshipMinimumOrderValue($merchantRelationshipMinimumOrderValueEntity->getIdMerchantRelationshipMinOrderValue())
-            ->setThreshold(
-                $merchantRelationshipMinimumOrderValueTransfer->getThreshold()->fromArray($merchantRelationshipMinimumOrderValueEntity->toArray(), true)
+            ->setMinimumOrderValueThreshold(
+                $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueThreshold()->fromArray($merchantRelationshipMinimumOrderValueEntity->toArray(), true)
                     ->setMinimumOrderValueType(
                         (new MinimumOrderValueTypeTransfer())->fromArray($minimumOrderValueTypeEntity->toArray(), true)
                             ->setIdMinimumOrderValueType($minimumOrderValueTypeEntity->getIdMinOrderValueType())

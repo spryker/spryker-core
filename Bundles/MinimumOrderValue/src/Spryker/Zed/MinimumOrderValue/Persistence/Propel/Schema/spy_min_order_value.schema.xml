@@ -10,7 +10,7 @@
         <column name="fk_min_order_value_type" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
         <column name="fk_currency" type="INTEGER" required="true"/>
-        <column name="value" type="INTEGER" required="true"/>
+        <column name="threshold" type="INTEGER" required="true"/>
         <column name="fee" type="INTEGER" required="false"/>
         <column name="message_glossary_key" type="VARCHAR" required="true"/>
 

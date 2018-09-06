@@ -33,9 +33,9 @@ class GlobalController extends AbstractController
 
         $currencyTransfer = $this->getCurrencyTransferFromRequest($storeCurrencyRequestParam);
         $storeTransfer = $this->getStoreTransferFromRequest($storeCurrencyRequestParam);
-        $minimumOrderValueTValueTransfers = $this->getMinimumOrderValueTransfers($storeTransfer, $currencyTransfer);
+        $minimumOrderValueTransfers = $this->getMinimumOrderValueTransfers($storeTransfer, $currencyTransfer);
 
-        $globalThresholdForm = $this->getFactory()->createGlobalThresholdForm($minimumOrderValueTValueTransfers, $storeTransfer, $currencyTransfer);
+        $globalThresholdForm = $this->getFactory()->createGlobalThresholdForm($minimumOrderValueTransfers, $storeTransfer, $currencyTransfer);
         $globalThresholdForm->handleRequest($request);
 
         if ($globalThresholdForm->isSubmitted() && $globalThresholdForm->isValid()) {
