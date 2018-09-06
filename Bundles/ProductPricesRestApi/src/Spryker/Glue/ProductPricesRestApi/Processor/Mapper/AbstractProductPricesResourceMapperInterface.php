@@ -8,7 +8,7 @@
 namespace Spryker\Glue\ProductPricesRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
 
 interface AbstractProductPricesResourceMapperInterface
 {
@@ -16,7 +16,10 @@ interface AbstractProductPricesResourceMapperInterface
      * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
      * @param string $idResource
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\RestProductPricesAttributesTransfer
      */
-    public function mapAbstractProductPricesTransferToRestResource(PriceProductStorageTransfer $priceProductStorageTransfer, string $idResource): RestResourceInterface;
+    public function mapAbstractProductPricesTransferToRestProductPricesAttributesTransfer(
+        PriceProductStorageTransfer $priceProductStorageTransfer,
+        string $idResource
+    ): RestProductPricesAttributesTransfer;
 }

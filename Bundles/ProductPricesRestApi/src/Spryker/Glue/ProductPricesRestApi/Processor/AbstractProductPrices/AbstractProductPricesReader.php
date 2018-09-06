@@ -70,28 +70,14 @@ class AbstractProductPricesReader implements AbstractProductPricesReaderInterfac
 
         $abstractProductResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
         if (!$abstractProductResource) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(ProductsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_MISSING)
-                ->setStatus(Response::HTTP_BAD_REQUEST)
-                ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_MISSING);
-
-            return $restResponse->addError($restErrorTransfer);
+            return $restResponse->addError($this->createAbstractProductSkuIsNotSpecifiedError());
         }
         $abstractProductSku = $abstractProductResource->getId();
+        $restResource = $this->findAbstractProductPricesByAbstractProductSku($abstractProductSku, $restRequest);
 
-        $priceProductStorageTransfer = $this->priceProductStorageClient
-            ->findPriceProductAbstractStorageTransfer($abstractProductSku);
-
-        if ($priceProductStorageTransfer === null) {
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_PRICES_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_ABSTRACT_PRODUCT_PRICES_NOT_FOUND);
-
-            return $restResponse->addError($restErrorTransfer);
+        if (!$restResource) {
+            return $restResponse->addError($this->createAbstractProductPricesNotFoundError());
         }
-
-        $restResource = $this->abstractProductPricesResourceMapper->mapAbstractProductPricesTransferToRestResource($priceProductStorageTransfer, $abstractProductSku);
 
         return $restResponse->addResource($restResource);
     }
@@ -110,7 +96,50 @@ class AbstractProductPricesReader implements AbstractProductPricesReaderInterfac
             return null;
         }
 
-        return $this->abstractProductPricesResourceMapper
-            ->mapAbstractProductPricesTransferToRestResource($priceProductStorageTransfer, $abstractProductSku);
+        $restProductPricesAttributesTransfer = $this->abstractProductPricesResourceMapper
+            ->mapAbstractProductPricesTransferToRestProductPricesAttributesTransfer($priceProductStorageTransfer, $abstractProductSku);
+
+        return $this->buildPorductPricesResource($abstractProductSku, $restProductPricesAttributesTransfer);
     }
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\RestProductPricesAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function buildPorductPricesResource(string $sku, RestProductPricesAttributesTransfer $restProductPricesAttributesTransfer) {
+        return $this->restResourceBuilder->createRestResource(
+            ProductPricesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_PRICES,
+            $sku,
+            $restProductPricesAttributesTransfer
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createAbstractProductSkuIsNotSpecifiedError(): RestErrorMessageTransfer
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED);
+
+        return $restErrorTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createAbstractProductPricesNotFoundError(): RestErrorMessageTransfer
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_PRICES_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_ABSTRACT_PRODUCT_PRICES_NOT_FOUND);
+
+        return $restErrorTransfer;
+    }
+
 }
