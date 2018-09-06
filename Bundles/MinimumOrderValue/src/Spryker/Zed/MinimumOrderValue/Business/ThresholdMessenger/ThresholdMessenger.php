@@ -95,8 +95,7 @@ class ThresholdMessenger implements ThresholdMessengerInterface
                 $minimumOrderValueThresholdTransfer->getMinimumOrderValueType()->getKey()
             );
 
-            if (!$minimumOrderValueStrategy->isApplicable($minimumOrderValueThresholdTransfer)
-            ) {
+            if (!$minimumOrderValueStrategy->isApplicable($minimumOrderValueThresholdTransfer)) {
                 continue;
             }
 
