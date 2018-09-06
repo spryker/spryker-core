@@ -92,7 +92,9 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $searchString = $this->getRequestParameter($restRequest, CatalogSearchRestApiConfig::QUERY_STRING_PARAMETER);
         $requestParameters = $this->getAllRequestParameters($restRequest);
         $restSearchResponseAttributesTransfer = $this->catalogClient->catalogSearch($searchString, $requestParameters);
-        $restSearchAttributesTransfer = $this->catalogSearchResourceMapper->mapSearchResponseAttributesTransferToRestResponse($restSearchResponseAttributesTransfer, $currency);
+        $restSearchAttributesTransfer = $this
+            ->catalogSearchResourceMapper
+            ->mapSearchResponseAttributesTransferToRestAttributesTransfer($restSearchResponseAttributesTransfer, $currency);
         $priceModeInformation = $this->getPriceModeInformation();
         $this->catalogSearchResourceMapper->mapPrices($restSearchAttributesTransfer, $priceModeInformation);
 
@@ -125,7 +127,9 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         }
         $requestParameters = $this->getAllRequestParameters($restRequest);
         $restSuggestionsAttributeTransfer = $this->catalogClient->catalogSuggestSearch($searchString, $requestParameters);
-        $restSuggestionsAttributesTransfer = $this->catalogSearchSuggestionsResourceMapper->mapSuggestionsResponseAttributesTransferToRestResponse($restSuggestionsAttributeTransfer, $currency);
+        $restSuggestionsAttributesTransfer = $this
+            ->catalogSearchSuggestionsResourceMapper
+            ->mapSuggestionsResponseAttributesTransferToRestAttributesTransfer($restSuggestionsAttributeTransfer, $currency);
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH_SUGGESTIONS,
@@ -165,10 +169,12 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
      */
     protected function createEmptyResponse(RestResponseInterface $response, string $currency): RestResponseInterface
     {
-        $restSuggestionsAttributesTransfer = $this->catalogSearchSuggestionsResourceMapper->mapSuggestionsResponseAttributesTransferToRestResponse(
-            $this->catalogSearchSuggestionsResourceMapper->getEmptySearchResponse(),
-            $currency
-        );
+        $restSuggestionsAttributesTransfer = $this
+            ->catalogSearchSuggestionsResourceMapper
+            ->mapSuggestionsResponseAttributesTransferToRestAttributesTransfer(
+                $this->catalogSearchSuggestionsResourceMapper->getEmptySearchResponse(),
+                $currency
+            );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH_SUGGESTIONS,

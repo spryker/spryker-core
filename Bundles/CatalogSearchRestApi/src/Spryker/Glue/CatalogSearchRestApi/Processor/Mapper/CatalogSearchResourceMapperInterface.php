@@ -17,7 +17,7 @@ interface CatalogSearchResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
      */
-    public function mapSearchResponseAttributesTransferToRestResponse(array $restSearchResponse, string $currency): RestCatalogSearchAttributesTransfer;
+    public function mapSearchResponseAttributesTransferToRestAttributesTransfer(array $restSearchResponse, string $currency): RestCatalogSearchAttributesTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer

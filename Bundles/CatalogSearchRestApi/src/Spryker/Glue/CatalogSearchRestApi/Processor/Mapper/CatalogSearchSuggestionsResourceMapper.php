@@ -45,7 +45,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
      *
      * @return \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer
      */
-    public function mapSuggestionsResponseAttributesTransferToRestResponse(array $restSearchResponse, string $currency): RestCatalogSearchSuggestionsAttributesTransfer
+    public function mapSuggestionsResponseAttributesTransferToRestAttributesTransfer(array $restSearchResponse, string $currency): RestCatalogSearchSuggestionsAttributesTransfer
     {
         $restSuggestionsAttributesTransfer = new RestCatalogSearchSuggestionsAttributesTransfer();
         $restSuggestionsAttributesTransfer->fromArray($restSearchResponse, true);

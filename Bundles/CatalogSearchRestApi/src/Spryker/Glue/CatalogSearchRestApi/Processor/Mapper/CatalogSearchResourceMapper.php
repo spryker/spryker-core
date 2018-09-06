@@ -24,7 +24,7 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
      *
      * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
      */
-    public function mapSearchResponseAttributesTransferToRestResponse(array $restSearchResponse, string $currency): RestCatalogSearchAttributesTransfer
+    public function mapSearchResponseAttributesTransferToRestAttributesTransfer(array $restSearchResponse, string $currency): RestCatalogSearchAttributesTransfer
     {
         $restSearchAttributesTransfer = (new RestCatalogSearchAttributesTransfer())->fromArray($restSearchResponse, true);
         $restSearchAttributesTransfer->setCurrency($currency);
