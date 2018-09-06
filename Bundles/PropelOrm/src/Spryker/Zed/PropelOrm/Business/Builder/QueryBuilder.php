@@ -30,7 +30,6 @@ class QueryBuilder extends PropelQueryBuilder
         if ($col->isNumericType() || $col->isTemporalType() || $col->getType() == PropelTypes::ENUM || $col->isTextType()) {
             $colPhpName = $col->getPhpName();
             $variableName = $col->getCamelCaseName();
-            $queryClassName = $this->getQueryClassName();
 
             $script .= <<<SCRIPT
 
@@ -64,7 +63,6 @@ SCRIPT;
         if ($col->isNumericType() || $col->isTemporalType()) {
             $colPhpName = $col->getPhpName();
             $variableName = $col->getCamelCaseName();
-            $queryClassName = $this->getQueryClassName();
 
             $script .= <<<SCRIPT
 
@@ -103,7 +101,6 @@ SCRIPT;
         if ($col->isTextType()) {
             $colPhpName = $col->getPhpName();
             $variableName = $col->getCamelCaseName();
-            $queryClassName = $this->getQueryClassName();
 
             $script .= <<<SCRIPT
 
@@ -223,7 +220,7 @@ SCRIPT;
      * \$query->filterBy$colPhpName('yes'); // WHERE $colName = true
      * </code>
      *
-     * @param     boolean|string \$$variableName The value to use as filter.
+     * @param     bool|string \$$variableName The value to use as filter.
      *              Non-boolean arguments are converted using the following rules:
      *                * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *                * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
