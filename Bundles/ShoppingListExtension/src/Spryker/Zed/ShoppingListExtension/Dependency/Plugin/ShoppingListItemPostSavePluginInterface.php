@@ -21,5 +21,5 @@ interface ShoppingListItemPostSavePluginInterface
      *
      * @return void
      */
-    public function execute(ShoppingListItemTransfer $shoppingListItemTransfer): void;
+    public function postSave(ShoppingListItemTransfer $shoppingListItemTransfer): void;
 }

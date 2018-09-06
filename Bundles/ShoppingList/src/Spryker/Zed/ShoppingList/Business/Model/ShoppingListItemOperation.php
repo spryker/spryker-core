@@ -194,9 +194,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             return $shoppingListItemTransfer;
         }
 
-        $shoppingListItemTransfer = $this->createOrUpdateShoppingListItem($shoppingListItemTransfer);
-
-        return $shoppingListItemTransfer;
+        return $this->createOrUpdateShoppingListItem($shoppingListItemTransfer);
     }
 
     /**
@@ -335,7 +333,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     protected function runShoppingListItemPostSavePlugins(ShoppingListItemTransfer $shoppingListItemTransfer): void
     {
         foreach ($this->shoppingListItemPostSavePlugins as $shoppingListItemPostSavePlugin) {
-            $shoppingListItemPostSavePlugin->execute($shoppingListItemTransfer);
+            $shoppingListItemPostSavePlugin->postSave($shoppingListItemTransfer);
         }
     }
 }

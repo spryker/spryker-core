@@ -18,7 +18,7 @@ class ShoppingListItemProductOptionPostSavePlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritdoc}
-     * - Saves a product options to shopping list item.
+     * - Saves product options to shopping list item.
      *
      * @api
      *
@@ -26,7 +26,7 @@ class ShoppingListItemProductOptionPostSavePlugin extends AbstractPlugin impleme
      *
      * @return void
      */
-    public function execute(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function postSave(ShoppingListItemTransfer $shoppingListItemTransfer): void
     {
         $this->getFacade()
             ->saveShoppingListItemProductOptions($shoppingListItemTransfer);
