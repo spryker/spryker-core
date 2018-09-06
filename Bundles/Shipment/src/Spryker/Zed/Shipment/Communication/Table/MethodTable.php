@@ -291,11 +291,11 @@ class MethodTable extends AbstractTable
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MoneyTransfer[][] $groupedMoneyTransferCollections
+     * @param \Generated\Shared\Transfer\MoneyTransfer[][] $groupedMoneyTransferCollection
      *
      * @return string
      */
-    protected function getPricesFromGrouped(array $groupedMoneyTransferCollections): string
+    protected function getPricesFromGrouped(array $groupedMoneyTransferCollection): string
     {
         $result = '';
         foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
@@ -303,8 +303,8 @@ class MethodTable extends AbstractTable
                 static::STORE_TAG,
                 $storeTransfer->getName(),
                 $storeTransfer->getIdStore(),
-                (array_key_exists($storeTransfer->getIdStore(), $groupedMoneyTransferCollections)
-                    ? $this->getPrices($groupedMoneyTransferCollections[$storeTransfer->getIdStore()])
+                (array_key_exists($storeTransfer->getIdStore(), $groupedMoneyTransferCollection)
+                    ? $this->getPrices($groupedMoneyTransferCollection[$storeTransfer->getIdStore()])
                     : self::NO_PRICE_FOR_STORE_PLACEHOLDER)
             );
         }
