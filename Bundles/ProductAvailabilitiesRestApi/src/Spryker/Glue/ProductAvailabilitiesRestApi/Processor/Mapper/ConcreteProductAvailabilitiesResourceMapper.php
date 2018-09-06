@@ -8,23 +8,9 @@ namespace Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer;
 use Generated\Shared\Transfer\SpyAvailabilityEntityTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 
 class ConcreteProductAvailabilitiesResourceMapper implements ConcreteProductAvailabilitiesResourceMapperInterface
 {
-    /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
-    {
-        $this->restResourceBuilder = $restResourceBuilder;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\SpyAvailabilityEntityTransfer $availabilityEntityTransfer
      *
@@ -33,7 +19,7 @@ class ConcreteProductAvailabilitiesResourceMapper implements ConcreteProductAvai
     public function mapAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer(SpyAvailabilityEntityTransfer $availabilityEntityTransfer): RestConcreteProductAvailabilityAttributesTransfer
     {
         $restProductsConcreteAvailabilityAttributesTransfer = (new RestConcreteProductAvailabilityAttributesTransfer())
-            ->fromArray($availabilityEntityTransfer->toArray(true), true);
+            ->fromArray($availabilityEntityTransfer->toArray(), true);
         $restProductsConcreteAvailabilityAttributesTransfer->setAvailability($availabilityEntityTransfer->getQuantity() > 0);
 
         return $restProductsConcreteAvailabilityAttributesTransfer;

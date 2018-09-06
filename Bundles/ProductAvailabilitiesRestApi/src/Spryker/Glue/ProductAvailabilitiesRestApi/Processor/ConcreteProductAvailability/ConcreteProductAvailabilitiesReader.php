@@ -112,6 +112,8 @@ class ConcreteProductAvailabilitiesReader implements ConcreteProductAvailabiliti
                 return $this->buildProductAvailabilitiesResource($availabilityEntityTransfer);
             }
         }
+
+        return null;
     }
 
     /**
