@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
+    protected const ERROR_MESSAGE_YOU_CANNOT_DEACTIVATE_LAST_PRODUCT_OPTION = 'You cannot deactivate last Product Option.';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -28,6 +30,11 @@ class IndexController extends AbstractController
         $idDiscount = $this->castId($request->query->get(BaseOptionController::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
         $isActive = $request->query->get(BaseOptionController::URL_PARAM_ACTIVE);
         $redirectUrl = $request->query->get(BaseOptionController::URL_PARAM_REDIRECT_URL);
+
+        if (!$isActive && $this->getActiveProductOptionGroupsCount() <= 1) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_YOU_CANNOT_DEACTIVATE_LAST_PRODUCT_OPTION);
+            return $this->redirectResponse($redirectUrl);
+        }
 
         $isChanged = $this->getFacade()->toggleOptionActive($idDiscount, (bool)$isActive);
 
@@ -41,5 +48,16 @@ class IndexController extends AbstractController
         }
 
         return new RedirectResponse($redirectUrl);
+    }
+
+    /**
+     * @return int
+     */
+    protected function getActiveProductOptionGroupsCount(): int
+    {
+        return $this->getQueryContainer()
+            ->queryAllProductOptionGroups()
+            ->filterByActive(true)
+            ->count();
     }
 }
