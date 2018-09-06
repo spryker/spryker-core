@@ -22,7 +22,6 @@
     "spryker/util-data-reader": "^1.2.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "autoload": {

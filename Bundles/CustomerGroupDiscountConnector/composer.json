@@ -9,10 +9,7 @@
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
-    "spryker/assertion": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/config": "*",
-    "spryker/propel-orm": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {
