@@ -54,7 +54,8 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->createTranslationSaver(),
             $this->createAbstractProductOptionSaver(),
-            $this->createProductOptionValueSaver()
+            $this->createProductOptionValueSaver(),
+            $this->getEventFacade()
         );
     }
 

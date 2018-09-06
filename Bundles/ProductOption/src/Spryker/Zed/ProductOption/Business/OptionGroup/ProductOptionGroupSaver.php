@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTableMap;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface;
+use Spryker\Zed\ProductOption\Dependency\ProductOptionEvents;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
 
@@ -42,24 +46,32 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     protected $productOptionValueSaver;
 
     /**
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface
+     */
+    protected $eventFacade;
+
+    /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface $touchFacade
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface $translationSaver
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface $abstractProductOptionSaver
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface $productOptionValueSaver
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface $eventFacade
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
         ProductOptionToTouchFacadeInterface $touchFacade,
         TranslationSaverInterface $translationSaver,
         AbstractProductOptionSaverInterface $abstractProductOptionSaver,
-        ProductOptionValueSaverInterface $productOptionValueSaver
+        ProductOptionValueSaverInterface $productOptionValueSaver,
+        ProductOptionToEventFacadeInterface $eventFacade
     ) {
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->touchFacade = $touchFacade;
         $this->translationSaver = $translationSaver;
         $this->abstractProductOptionSaver = $abstractProductOptionSaver;
         $this->productOptionValueSaver = $productOptionValueSaver;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -173,9 +185,19 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     protected function touchProductOptionGroupAbstractProducts(SpyProductOptionGroup $productOptionGroupEntity)
     {
         foreach ($productOptionGroupEntity->getSpyProductAbstractProductOptionGroups() as $productAbstractProductOptionEntity) {
+            $idProductAbstract = $productAbstractProductOptionEntity->getFkProductAbstract();
+
+            $eventTransfer = (new EventEntityTransfer())->setForeignKeys([
+                SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT => $idProductAbstract,
+            ]);
+
+            $this->eventFacade->trigger(
+                ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_UPDATE,
+                $eventTransfer
+            );
             $this->touchFacade->touchActive(
                 ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION,
-                $productAbstractProductOptionEntity->getFkProductAbstract()
+                $idProductAbstract
             );
         }
     }
