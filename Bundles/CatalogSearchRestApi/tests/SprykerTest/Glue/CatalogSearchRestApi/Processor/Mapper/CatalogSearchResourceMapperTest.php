@@ -14,10 +14,10 @@ use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 use Generated\Shared\Transfer\PaginationSearchResultTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
+use Generated\Shared\Transfer\RestPricePriceModeConfigurationTransfer;
 use Generated\Shared\Transfer\SortSearchResultTransfer;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 
 /**
  * Auto-generated group annotations
@@ -32,6 +32,9 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 class CatalogSearchResourceMapperTest extends Unit
 {
     protected const REQUESTED_CURRENCY = 'CHF';
+    protected const GROSS_AMOUNT = 'grossAmount';
+    protected const GROSS_MODE = 'GROSS_MODE';
+    protected const NET_MODE = 'NET_MODE';
 
     /**
      * @var \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper
@@ -51,7 +54,7 @@ class CatalogSearchResourceMapperTest extends Unit
         parent::setUp();
 
         $this->restSearchAttributesTransfer = new RestCatalogSearchAttributesTransfer();
-        $this->catalogSearchResourceMapper = new CatalogSearchResourceMapper(new RestResourceBuilder(), $this->getPriceClientMock());
+        $this->catalogSearchResourceMapper = new CatalogSearchResourceMapper();
     }
 
     /**
@@ -64,8 +67,11 @@ class CatalogSearchResourceMapperTest extends Unit
             ->mapSearchResponseAttributesTransferToRestResponse(
                 $this->mockRestSearchResponseTransfer(),
                 static::REQUESTED_CURRENCY
-            )
-            ->getAttributes();
+            );
+
+        $this->restSearchAttributesTransfer = $this->restSearchAttributesTransfer = $this
+            ->catalogSearchResourceMapper
+            ->mapPrices($this->restSearchAttributesTransfer, $this->getPriceModeInformation());
 
         $this->assertEquals(static::REQUESTED_CURRENCY, $this->restSearchAttributesTransfer->getCurrency());
 
@@ -75,7 +81,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->assertEquals("Toshiba CAMILEO S20", $this->restSearchAttributesTransfer->getProducts()[0]->getAbstractName());
         $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrice());
         $this->assertEquals("209", $this->restSearchAttributesTransfer->getProducts()[0]->getAbstractSku());
-        $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrices()[0]['GROSS_MODE']);
+        $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrices()[0][self::GROSS_AMOUNT]);
         $this->assertArrayNotHasKey("id_product_abstract", $this->restSearchAttributesTransfer->getProducts()[0]);
         $this->assertArrayNotHasKey("id_product_labels", $this->restSearchAttributesTransfer->getProducts()[0]);
 
@@ -115,8 +121,7 @@ class CatalogSearchResourceMapperTest extends Unit
             ->mapSearchResponseAttributesTransferToRestResponse(
                 $this->mockEmptyRestSearchResponseTransfer(),
                 static::REQUESTED_CURRENCY
-            )
-            ->getAttributes();
+            );
 
         $this->assertEquals(static::REQUESTED_CURRENCY, $this->restSearchAttributesTransfer->getCurrency());
         $this->assertEmpty($this->restSearchAttributesTransfer->getProducts());
@@ -296,8 +301,19 @@ class CatalogSearchResourceMapperTest extends Unit
         $mock = $this
             ->createMock(CatalogSearchRestApiToPriceClientInterface::class);
         $mock->method('getCurrentPriceMode')
-            ->willReturn('GROSS_MODE');
+            ->willReturn(static::GROSS_MODE);
 
         return $mock;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestPricePriceModeConfigurationTransfer
+     */
+    protected function getPriceModeInformation()
+    {
+        return (new RestPricePriceModeConfigurationTransfer())
+            ->setCurrentPriceMode(static::GROSS_MODE)
+            ->setGrossModeIdentifier(static::GROSS_MODE)
+            ->setNetModeIdentifier(static::NET_MODE);
     }
 }
