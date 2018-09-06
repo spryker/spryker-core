@@ -9,11 +9,11 @@ namespace Spryker\Glue\ProductsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductResourceAliasStorageClientBridge;
+use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientBridge;
 
 class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_PRODUCT_RESOURCE_ALIAS_STORAGE = 'CLIENT_PRODUCT_RESOURCE_ALIAS_STORAGE';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -22,7 +22,7 @@ class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container): Container
     {
-        $container = $this->addProductResourceAliasStorageClient($container);
+        $container = $this->addProductStorageClient($container);
 
         return $container;
     }
@@ -32,10 +32,10 @@ class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addProductResourceAliasStorageClient(Container $container): Container
+    protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_RESOURCE_ALIAS_STORAGE] = function (Container $container) {
-            return new ProductsRestApiToProductResourceAliasStorageClientBridge($container->getLocator()->productResourceAliasStorage()->client());
+        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+            return new ProductsRestApiToProductStorageClientBridge($container->getLocator()->productStorage()->client());
         };
 
         return $container;
