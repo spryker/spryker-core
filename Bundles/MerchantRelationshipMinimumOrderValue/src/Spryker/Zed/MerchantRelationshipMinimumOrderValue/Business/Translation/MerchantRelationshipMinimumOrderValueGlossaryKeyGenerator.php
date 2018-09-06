@@ -24,7 +24,7 @@ class MerchantRelationshipMinimumOrderValueGlossaryKeyGenerator implements Merch
     ): MerchantRelationshipMinimumOrderValueTransfer {
         $this->assertRequired($merchantRelationshipMinimumOrderValueTransfer);
 
-        $merchantRelationshipMinimumOrderValueTransfer->getThreshold()->setThresholdNotMetMessageGlossaryKey(
+        $merchantRelationshipMinimumOrderValueTransfer->getThreshold()->setMessageGlossaryKey(
             $this->generateMessageGlossaryKey($merchantRelationshipMinimumOrderValueTransfer)
         );
 
