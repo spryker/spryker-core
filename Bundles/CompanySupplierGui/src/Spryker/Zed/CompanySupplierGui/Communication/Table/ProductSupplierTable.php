@@ -118,6 +118,7 @@ class ProductSupplierTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection $productSupplierCollection */
         $productSupplierCollection = $this->runQuery(
             $this->prepareQuery(),
             $config,

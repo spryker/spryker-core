@@ -70,14 +70,15 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         }
 
         $collection = $this->buildQueryFromCriteria($query, $criteriaFilterTransfer->getFilter());
-        $collection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
+        /** @var \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer[] $companyUnitAddressEntityTransfers */
+        $companyUnitAddressEntityTransfers = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
 
         $collectionTransfer = new CompanyUnitAddressCollectionTransfer();
-        foreach ($collection as $companyRoleEntity) {
+        foreach ($companyUnitAddressEntityTransfers as $companyUnitAddressEntityTransfer) {
             $unitAddressTransfer = $this->getFactory()
                 ->createCompanyUniAddressMapper()
                 ->mapEntityTransferToCompanyUnitAddressTransfer(
-                    $companyRoleEntity,
+                    $companyUnitAddressEntityTransfer,
                     new CompanyUnitAddressTransfer()
                 );
 

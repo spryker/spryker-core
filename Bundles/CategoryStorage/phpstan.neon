@@ -1,6 +1,9 @@
 parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
+    ignoreErrors:
+    - '#Method .+CategoryStorageQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
+
 services:
     -
         class: PhpStan\DynamicType\FacadeDynamicTypeExtension
