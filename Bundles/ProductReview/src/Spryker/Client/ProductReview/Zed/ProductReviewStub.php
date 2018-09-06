@@ -8,7 +8,6 @@
 namespace Spryker\Client\ProductReview\Zed;
 
 use Generated\Shared\Transfer\ProductReviewRequestTransfer;
-use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestBridge;
 use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestInterface;
 
 class ProductReviewStub implements ProductReviewStubInterface

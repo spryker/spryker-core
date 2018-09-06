@@ -25,6 +25,8 @@ class JsonFileCldrDataProvider implements CldrDataProviderInterface
     }
 
     /**
+     * @throws \RuntimeException
+     *
      * @return array
      */
     public function getCldrData()

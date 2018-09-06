@@ -403,7 +403,7 @@ SCRIPT;
 
         $search = [
             ' findOne(ConnectionInterface',
-            ' findOneBy'
+            ' findOneBy',
         ];
         $replace = [
             '|null findOne(ConnectionInterface',
