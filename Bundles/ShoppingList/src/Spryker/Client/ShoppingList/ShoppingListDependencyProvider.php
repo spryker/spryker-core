@@ -25,7 +25,7 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
-    public const PLUGINS_ADD_ITEMS_REQUEST_EXPANDER = 'PLUGINS_ADD_ITEMS_REQUEST_EXPANDER';
+    public const PLUGINS_ADD_ITEM_REQUEST_EXPANDER = 'PLUGINS_ADD_ITEM_REQUEST_EXPANDER';
     public const PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER = 'PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER';
 
     /**
@@ -139,7 +139,7 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      */
     protected function addShoppingListItemRequestExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ADD_ITEMS_REQUEST_EXPANDER] = function () {
+        $container[static::PLUGINS_ADD_ITEM_REQUEST_EXPANDER] = function () {
             return $this->getShoppingListItemRequestExpanderPlugins();
         };
 

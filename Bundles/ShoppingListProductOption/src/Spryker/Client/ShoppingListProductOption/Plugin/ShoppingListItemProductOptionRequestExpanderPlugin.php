@@ -17,7 +17,7 @@ class ShoppingListItemProductOptionRequestExpanderPlugin implements ShoppingList
 
     /**
      * {@inheritdoc}
-     * - Expands ShoppingListItemTransfer with product options.
+     * - Expands ShoppingListItemTransfer with product-option from request.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param array $params

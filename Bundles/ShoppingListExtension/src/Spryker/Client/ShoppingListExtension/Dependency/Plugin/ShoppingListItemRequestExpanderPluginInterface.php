@@ -13,7 +13,7 @@ interface ShoppingListItemRequestExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands ShoppingListItemTransfer requests with the given params.
+     * - Expands ShoppingListItemTransfer with the given request params.
      *
      * @api
      *

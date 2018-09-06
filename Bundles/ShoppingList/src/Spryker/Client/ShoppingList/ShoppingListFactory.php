@@ -130,7 +130,7 @@ class ShoppingListFactory extends AbstractFactory
      */
     public function getShoppingListItemRequestExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ADD_ITEMS_REQUEST_EXPANDER);
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ADD_ITEM_REQUEST_EXPANDER);
     }
 
     /**
