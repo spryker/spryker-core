@@ -60,7 +60,7 @@ class CatalogSearchResourceMapperTest extends Unit
     /**
      * @return void
      */
-    public function testMapperWillReturnRestResponseWithNotEmptyAttributesData(): void
+    public function testMapperWillReturnNotEmptyAttributesData(): void
     {
         $this->restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
@@ -114,7 +114,7 @@ class CatalogSearchResourceMapperTest extends Unit
     /**
      * @return void
      */
-    public function testMapperWillReturnRestResponseWithEmptyAttributesData(): void
+    public function testMapperWillReturnEmptyAttributesData(): void
     {
         $this->restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper

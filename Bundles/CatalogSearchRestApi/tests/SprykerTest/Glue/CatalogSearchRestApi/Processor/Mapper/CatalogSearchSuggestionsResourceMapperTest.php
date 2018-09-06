@@ -52,7 +52,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     /**
      * @return void
      */
-    public function testEmptySearchSuggestionsResponseWillMapIntoRestResponseWithEmptyAttributes(): void
+    public function testEmptySearchSuggestionsResponseWillMapEmptyAttributes(): void
     {
         $mapper = $this->getMapper();
         $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsResponseAttributesTransferToRestAttributesTransfer([], static::REQUESTED_CURRENCY);
