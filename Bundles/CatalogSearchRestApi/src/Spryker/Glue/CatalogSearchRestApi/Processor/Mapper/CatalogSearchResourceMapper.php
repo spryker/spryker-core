@@ -118,7 +118,7 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         $restPriceProductAttributes->setPriceTypeName($priceType);
         if ($currentPriceMode == $this->priceClient->getGrossPriceModeIdentifier()) {
             $restPriceProductAttributes->setGrossAmount($price);
-        } elseif ($currentPriceMode == $this->priceClient->getGrossPriceModeIdentifier()) {
+        } elseif ($currentPriceMode == $this->priceClient->getNetPriceModeIdentifier()) {
             $restPriceProductAttributes->setNetAmount($price);
         }
 
