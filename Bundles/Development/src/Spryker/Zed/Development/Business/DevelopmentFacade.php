@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyProviderCollectionTransfer;
 use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
+use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -455,10 +456,26 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
      */
-    public function getInProjectDependencyProviderUsedPlugins(): DependencyProviderCollectionTransfer
+    public function getInProjectDependencyProviderUsedPlugins(?ModuleFilterTransfer $moduleFilterTransfer = null): DependencyProviderCollectionTransfer
     {
-        return $this->getFactory()->createDependencyProviderUsedPluginFinder()->findUsedPlugins();
+        return $this->getFactory()->createDependencyProviderUsedPluginFinder()->findUsedPlugins($moduleFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     */
+    public function findProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
+    {
+        return $this->getFactory()->createProjectModuleFinder()->find($moduleFilterTransfer);
     }
 }

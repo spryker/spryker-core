@@ -135,6 +135,8 @@ use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerEcoModulePathBuil
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerModulePathBuilder;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerShopModulePathBuilder;
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerStandaloneModulePathBuilder;
+use Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinder;
+use Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinderInterface;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
 use Spryker\Zed\Development\Business\Phpstan\PhpstanRunner;
 use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidator;
@@ -701,7 +703,10 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createDependencyProviderUsedPluginFinder(): DependencyProviderUsedPluginFinderInterface
     {
-        return new DependencyProviderUsedPluginFinder($this->getConfig());
+        return new DependencyProviderUsedPluginFinder(
+            $this->createProjectModuleFinder(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -1746,5 +1751,13 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createCamelCaseToDashFilter()
     {
         return new CamelCaseToDash();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinderInterface
+     */
+    public function createProjectModuleFinder(): ProjectModuleFinderInterface
+    {
+        return new ProjectModuleFinder($this->getConfig());
     }
 }

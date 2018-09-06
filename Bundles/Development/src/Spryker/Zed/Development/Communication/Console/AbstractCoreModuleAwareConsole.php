@@ -108,7 +108,7 @@ class AbstractCoreModuleAwareConsole extends Console
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    protected function getModulesToCheckForViolations(InputInterface $input): array
+    protected function getModulesToExecute(InputInterface $input): array
     {
         $module = $input->getArgument(static::ARGUMENT_MODULE);
 

@@ -9,8 +9,6 @@ namespace Spryker\Zed\Development\Business\Module\ModuleFinder;
 
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\KernelConstants;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\FilterChain;
@@ -58,29 +56,13 @@ class ModuleFinder implements ModuleFinderInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
-     */
-    protected function getProjectModuleFinder(): Finder
-    {
-        $projectOrganizations = Config::get(KernelConstants::PROJECT_NAMESPACES);
-        $projectOrganizationModuleDirectories = [];
-        foreach ($projectOrganizations as $projectOrganization) {
-            $projectOrganizationModuleDirectories[] = APPLICATION_SOURCE_DIR . DIRECTORY_SEPARATOR . $projectOrganization;
-        }
-
-        return (new Finder())->directories()->depth('== 0')->in($projectOrganizationModuleDirectories);
-    }
-
-    /**
      * @param array $moduleTransferCollection
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
     protected function addStandaloneModulesToCollection(array $moduleTransferCollection): array
     {
-        $standAloneModuleDirectories = (new Finder())->directories()->depth('== 0')->in(APPLICATION_VENDOR_DIR . '/spryker/');
-
-        foreach ($standAloneModuleDirectories as $directoryInfo) {
+        foreach ($this->getStandaloneModuleFinder() as $directoryInfo) {
             if (in_array($directoryInfo->getFilename(), ['spryker', 'spryker-shop'])) {
                 continue;
             }
@@ -92,6 +74,14 @@ class ModuleFinder implements ModuleFinderInterface
         }
 
         return $moduleTransferCollection;
+    }
+
+    /**
+     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
+     */
+    protected function getStandaloneModuleFinder(): Finder
+    {
+        return (new Finder())->directories()->depth('== 0')->in(APPLICATION_VENDOR_DIR . '/spryker/');
     }
 
     /**
@@ -121,6 +111,14 @@ class ModuleFinder implements ModuleFinderInterface
         }
 
         return $moduleTransferCollection;
+    }
+
+    /**
+     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
+     */
+    protected function getModuleFinder(): Finder
+    {
+        return (new Finder())->directories()->depth('== 0')->in($this->moduleDirectories);
     }
 
     /**

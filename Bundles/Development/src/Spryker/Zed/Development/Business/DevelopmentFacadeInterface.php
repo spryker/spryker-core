@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyProviderCollectionTransfer;
 use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
+use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -359,12 +360,26 @@ interface DevelopmentFacadeInterface
 
     /**
      * Specification:
-     * - Returns a collection of all inside the project used plugins.
+     * - Returns a collection of all Plugins used inside projects DependencyProvider.
      * - Parses use statements of project dependency provider.
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
      */
-    public function getInProjectDependencyProviderUsedPlugins(): DependencyProviderCollectionTransfer;
+    public function getInProjectDependencyProviderUsedPlugins(?ModuleFilterTransfer $moduleFilterTransfer = null): DependencyProviderCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds all project modules.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     */
+    public function findProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
 }

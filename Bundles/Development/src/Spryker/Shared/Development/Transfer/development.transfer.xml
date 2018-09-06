@@ -99,6 +99,12 @@
         <property name="fixType" type="string"/>
     </transfer>
 
+    <transfer name="ModuleFilter">
+        <property name="organization" type="Organization"/>
+        <property name="module" type="Module"/>
+        <property name="application" type="Application"/>
+    </transfer>
+
     <transfer name="Module">
         <property name="name" type="string"/>
         <property name="nameDashed" type="string"/>
@@ -106,10 +112,6 @@
         <property name="application" type="Application"/>
         <property name="path" type="string"/>
         <property name="isStandalone" type="bool"/>
-    </transfer>
-
-    <transfer name="ModuleCollection">
-        <property name="modules" type="Module[]" singular="module"/>
     </transfer>
 
     <transfer name="Organization">
@@ -131,6 +133,7 @@
     </transfer>
 
     <transfer name="DependencyProvider">
+        <property name="fullyQualifiedClassName" type="string"/>
         <property name="className" type="string"/>
         <property name="module" type="Module"/>
         <property name="usedPlugins" type="Plugin[]" singular="usedPlugin"/>
@@ -141,6 +144,7 @@
     </transfer>
 
     <transfer name="Plugin">
+        <property name="fullyQualifiedClassName" type="string"/>
         <property name="className" type="string"/>
         <property name="module" type="Module"/>
     </transfer>
