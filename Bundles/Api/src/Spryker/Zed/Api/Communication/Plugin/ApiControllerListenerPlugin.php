@@ -35,7 +35,6 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      */
     public function onKernelController(FilterControllerEvent $event)
     {
-        /** @var array $currentController */
         $currentController = $event->getController();
         $controller = $currentController[0];
         $action = $currentController[1];
@@ -118,7 +117,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $queryData = $request->query->all();
         $requestTransfer->setQueryData($queryData);
 
-        $serverData = $this->getFactory()->createServerVariableFilterer()->filter($request->server->all());
+        $serverData = [$request->server->get('REQUEST_URI')];
         $requestTransfer->setServerData($serverData);
 
         $headerData = $request->headers->all();
