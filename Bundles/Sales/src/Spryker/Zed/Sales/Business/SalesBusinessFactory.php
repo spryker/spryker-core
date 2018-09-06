@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Sales\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Sales\Business\Expense\ExpenseWriter;
+use Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface;
 use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
@@ -29,6 +31,7 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface getEntityManager()
  */
 class SalesBusinessFactory extends AbstractBusinessFactory
 {
@@ -278,5 +281,15 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getItemTransformerStrategyPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::ITEM_TRANSFORMER_STRATEGY_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface
+     */
+    public function createExpenseWriter(): ExpenseWriterInterface
+    {
+        return new ExpenseWriter(
+            $this->getEntityManager()
+        );
     }
 }

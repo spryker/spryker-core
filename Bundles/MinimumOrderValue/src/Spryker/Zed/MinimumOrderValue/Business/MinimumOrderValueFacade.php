@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MinimumOrderValueThresholdTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTransfer;
 use Generated\Shared\Transfer\MinimumOrderValueTypeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -113,6 +114,25 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
         return $this->getFactory()
             ->createHardThresholdChecker()
             ->checkQuoteForHardThreshold($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    public function saveSalesOrderMinimumOrderValueExpense(
+        QuoteTransfer $quoteTransfer,
+        SaveOrderTransfer $saveOrderTransfer
+    ): SaveOrderTransfer {
+        return $this->getFactory()
+            ->createExpenseSaver()
+            ->saveSalesOrderMinimumOrderValueExpense($quoteTransfer, $saveOrderTransfer);
     }
 
     /**

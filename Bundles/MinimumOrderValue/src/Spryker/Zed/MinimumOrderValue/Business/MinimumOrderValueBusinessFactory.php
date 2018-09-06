@@ -14,6 +14,8 @@ use Spryker\Zed\MinimumOrderValue\Business\ExpenseCalculator\ExpenseCalculator;
 use Spryker\Zed\MinimumOrderValue\Business\ExpenseCalculator\ExpenseCalculatorInterface;
 use Spryker\Zed\MinimumOrderValue\Business\ExpenseRemover\ExpenseRemover;
 use Spryker\Zed\MinimumOrderValue\Business\ExpenseRemover\ExpenseRemoverInterface;
+use Spryker\Zed\MinimumOrderValue\Business\ExpenseSaver\ExpenseSaver;
+use Spryker\Zed\MinimumOrderValue\Business\ExpenseSaver\ExpenseSaverInterface;
 use Spryker\Zed\MinimumOrderValue\Business\HardThresholdCheck\HardThresholdChecker;
 use Spryker\Zed\MinimumOrderValue\Business\HardThresholdCheck\HardThresholdCheckerInterface;
 use Spryker\Zed\MinimumOrderValue\Business\Installer\MinimumOrderValueTypeInstaller;
@@ -39,6 +41,7 @@ use Spryker\Zed\MinimumOrderValue\Business\Translation\MinimumOrderValueTranslat
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToGlossaryFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMessengerFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToMoneyFacadeInterface;
+use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToSalesFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToStoreFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToTaxFacadeInterface;
 use Spryker\Zed\MinimumOrderValue\MinimumOrderValueDependencyProvider;
@@ -145,6 +148,16 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
             $this->createMinimumOrderValueStrategyResolver(),
             $this->getMessengerFacade(),
             $this->getMoneyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Business\ExpenseSaver\ExpenseSaverInterface
+     */
+    public function createExpenseSaver(): ExpenseSaverInterface
+    {
+        return new ExpenseSaver(
+            $this->getSalesFacade()
         );
     }
 
@@ -256,5 +269,13 @@ class MinimumOrderValueBusinessFactory extends AbstractBusinessFactory
     public function getMinimumOrderValueStrategyPlugins(): array
     {
         return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::PLUGINS_MINIMUM_ORDER_VALUE_STRATEGY);
+    }
+
+    /**
+     * @return \Spryker\Zed\MinimumOrderValue\Dependency\Facade\MinimumOrderValueToSalesFacadeInterface
+     */
+    public function getSalesFacade(): MinimumOrderValueToSalesFacadeInterface
+    {
+        return $this->getProvidedDependency(MinimumOrderValueDependencyProvider::FACADE_SALES);
     }
 }
