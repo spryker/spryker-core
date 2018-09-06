@@ -213,7 +213,7 @@ class CustomersWriter implements CustomersWriterInterface
             ->setCustomerReference($restRequest->getResource()->getId());
         $customerTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        if (!$customerTransfer) {
+        if (!$customerTransfer->getHasCustomer()) {
             $this->createCustomerNotFoundError($restResponse);
 
             return $restResponse;
