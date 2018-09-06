@@ -14,7 +14,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "^3.0.0",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -24,12 +23,6 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ],
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

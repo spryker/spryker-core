@@ -253,6 +253,22 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
+     * @param int $idConcrete
+     *
+     * @return int|null
+     */
+    public function findProductAbstractIdByConcreteId(int $idConcrete): ?int
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->findProductAbstractIdByConcreteId($idConcrete);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
@@ -822,5 +838,103 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createAttributeEncoder()
             ->decodeAttributes($attributes);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return int
+     */
+    public function getProductAbstractIdByConcreteId(int $idProductConcrete): int
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->getProductAbstractIdByConcreteId($idProductConcrete);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $suggestion
+     *
+     * @return string[]
+     */
+    public function suggestProductAbstract(string $suggestion): array
+    {
+        return $this->getFactory()
+            ->createProductSuggester()
+            ->suggestProductAbstract($suggestion);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $suggestion
+     *
+     * @return string[]
+     */
+    public function suggestProductConcrete(string $suggestion): array
+    {
+        return $this->getFactory()
+            ->createProductSuggester()
+            ->suggestProductConcrete($suggestion);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->findProductConcreteIdsByAbstractProductId($idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string[] $skus
+     *
+     * @return array
+     */
+    public function getProductConcreteIdsByConcreteSkus(array $skus): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->getProductConcreteIdsByConcreteSkus($skus);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return array
+     */
+    public function getProductConcreteSkusByConcreteIds(array $productIds): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->getProductConcreteSkusByConcreteIds($productIds);
     }
 }

@@ -35,6 +35,9 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryNodeById($idNode);
 
     /**
+     * Specification:
+     * - Finds all category-node entities sorted by node order
+     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -501,4 +504,14 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
      */
     public function queryCategoryTemplateByName($nameCategoryTemplate);
+
+    /**
+     * @api
+     *
+     * @param int $idNode
+     * @param string $nodeName
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryFirstLevelChildrenByName(int $idNode, string $nodeName);
 }

@@ -9,6 +9,9 @@ namespace Spryker\Shared\Application;
 
 use Spryker\Shared\Kernel\KernelConstants;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface ApplicationConstants
 {
     const COUCHBASE_BUCKET_PREFIX = 'COUCHBASE_BUCKET_PREFIX';

@@ -116,7 +116,7 @@ class ContainerGlobals implements ArrayAccess
         return function ($c) use ($callable) {
             static $object;
 
-            if (null === $object) {
+            if ($object === null) {
                 $object = $callable($c);
             }
 

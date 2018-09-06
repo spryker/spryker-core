@@ -10,10 +10,6 @@
     "spryker/util-network": "^1.1.0",
     "spryker/util-text": "^1.1.0"
   },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
-  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

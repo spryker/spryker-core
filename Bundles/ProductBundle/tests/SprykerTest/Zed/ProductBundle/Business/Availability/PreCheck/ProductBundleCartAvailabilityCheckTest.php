@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -14,6 +15,7 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInter
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
 /**
  * Auto-generated group annotations
@@ -131,8 +133,10 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
             $storeFacadeMock = $this->buildStoreFacadeMock();
         }
 
+        $productBundleConfig = $this->createProductBundleConfigMock();
+
         $productBundleCartAvailabilityCheckMock = $this->getMockBuilder(ProductBundleCartAvailabilityCheck::class)
-            ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $availabilityQueryContainerMock, $storeFacadeMock])
+            ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $availabilityQueryContainerMock, $storeFacadeMock, $productBundleConfig])
             ->setMethods(['findBundledProducts', 'findAvailabilityEntityBySku'])
             ->getMock();
 
@@ -145,5 +149,13 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     protected function createStoreFacadeMock()
     {
         return $this->getMockBuilder(ProductBundleToStoreFacadeInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\ProductBundleConfig
+     */
+    protected function createProductBundleConfigMock(): ProductBundleConfig
+    {
+        return $this->getMockBuilder(ProductBundleConfig::class)->getMock();
     }
 }
