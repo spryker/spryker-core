@@ -14,6 +14,8 @@ use Symfony\Component\Validator\Constraint;
 
 class RestRequestValidatorConstraintResolver implements RestRequestValidatorConstraintResolverInterface
 {
+    protected const INSTANTIATE_CONSTRAINT_FROM_CONFIG_METHOD = 'instantiateConstraintFromConfig';
+
     /**
      * @var \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig
      */
@@ -58,7 +60,7 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
         }
 
         return array_map(
-            [$this, 'instantiateConstraintFromConfig'],
+            [$this, static::INSTANTIATE_CONSTRAINT_FROM_CONFIG_METHOD],
             $validators
         );
     }

@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class RestRequestValidatorConfig extends AbstractBundleConfig
 {
+    public const EXCEPTION_MESSAGE_SCHEMA_FILE_NO_FOUND = 'Schema file does not exist: %s';
+
     protected const VALIDATION_FILENAME_PATTERN = '*.validation.yaml';
     protected const VALIDATION_CACHE_FILENAME_PATTERN = '/src/Generated/Glue/Validator/validation.cache';
     protected const PATH_PATTERN_PROJECT_STORE_VALIDATION = '/*/Glue/*%s/Validation';

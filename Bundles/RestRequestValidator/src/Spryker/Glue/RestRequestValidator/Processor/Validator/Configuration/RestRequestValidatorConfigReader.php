@@ -65,7 +65,7 @@ class RestRequestValidatorConfigReader implements RestRequestValidatorConfigRead
     public function getValidationConfiguration(RestRequestInterface $restRequest): array
     {
         if (!$this->filesystem->exists($this->getValidationConfigPath())) {
-            throw new CacheFileNotFound('Validation cache is enabled, but there is no cache file.');
+            throw new CacheFileNotFound(RestRequestValidatorConfig::EXCEPTION_MESSAGE_CACHE_FILE_NO_FOUND);
         }
 
         $configuration = $this->yaml->parseFile($this->getValidationConfigPath());
