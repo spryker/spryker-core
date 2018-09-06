@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
-    protected const ERROR_MESSAGE_YOU_CANNOT_DEACTIVATE_LAST_PRODUCT_OPTION = 'You cannot deactivate last Product Option.';
+    protected const ERROR_MESSAGE_YOU_CANNOT_DEACTIVATE_LAST_PRODUCT_OPTION = 'You cannot deactivate last product option.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
