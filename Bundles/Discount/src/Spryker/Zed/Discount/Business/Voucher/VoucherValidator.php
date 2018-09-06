@@ -14,11 +14,11 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class VoucherValidator implements VoucherValidatorInterface
 {
-    const REASON_VOUCHER_CODE_NOT_ACTIVE = 'discount.voucher_code.not_active';
-    const REASON_VOUCHER_CODE_POOL_MISSING = 'discount.voucher_code.pool_not_set';
-    const REASON_VOUCHER_CODE_POOL_NOT_ACTIVE = 'discount.voucher_code.pool_not_active';
-    const REASON_VOUCHER_CODE_LIMIT_REACHED = 'discount.voucher_code.usage_limit.reached';
-    const REASON_VOUCHER_CODE_NOT_FOUND = 'discount.voucher_code.code_not_found';
+    protected const REASON_VOUCHER_CODE_NOT_ACTIVE = 'discount.voucher_code.not_active';
+    protected const REASON_VOUCHER_CODE_POOL_MISSING = 'discount.voucher_code.pool_not_set';
+    protected const REASON_VOUCHER_CODE_POOL_NOT_ACTIVE = 'discount.voucher_code.pool_not_active';
+    protected const REASON_VOUCHER_CODE_LIMIT_REACHED = 'discount.voucher_code.usage_limit.reached';
+    protected const REASON_VOUCHER_CODE_NOT_FOUND = 'discount.voucher_code.code_not_found';
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface

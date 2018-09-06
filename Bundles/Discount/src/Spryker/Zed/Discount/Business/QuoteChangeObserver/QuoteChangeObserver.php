@@ -8,14 +8,17 @@
 namespace Spryker\Zed\Discount\Business\QuoteChangeObserver;
 
 use ArrayObject;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 
 class QuoteChangeObserver implements QuoteChangeObserverInterface
 {
     public const GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_NOT_AVAILABLE = 'discount.quote_change.discount.not_available';
     public const GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_AMOUNT_CHANGED = 'discount.quote_change.discount.amount_changed';
+    protected const GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DOES_NOT_APPLY_FOR_CURRENCY = 'discount.quote_change.does_not_apply_for_currency';
 
     /**
      * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
@@ -48,7 +51,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
             $this->checkRemovedDiscountsItemsSku($indexResultCartRuleTransferCollection, $indexSourceCartRuleTransferCollection, $sourceQuoteTransfer)
         );
         if (!empty($itemSkuCollection)) {
-            $this->createInfoMessage(static::GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_NOT_AVAILABLE, $itemSkuCollection);
+            $this->createInfoMessageWithSkuCollection(static::GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_NOT_AVAILABLE, $itemSkuCollection);
         }
 
         $itemSkuCollection = array_merge(
@@ -56,8 +59,10 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
             $this->checkCurrentDiscountsDiffItemsSku($indexResultCartRuleTransferCollection, $indexSourceCartRuleTransferCollection, $resultQuoteTransfer)
         );
         if (!empty($itemSkuCollection)) {
-            $this->createInfoMessage(static::GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_AMOUNT_CHANGED, $itemSkuCollection);
+            $this->createInfoMessageWithSkuCollection(static::GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_AMOUNT_CHANGED, $itemSkuCollection);
         }
+
+        $this->checkIsVouchersUsableForCurrentCurrency($resultQuoteTransfer);
     }
 
     /**
@@ -147,12 +152,74 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      *
      * @return void
      */
-    protected function createInfoMessage(string $key, array $skuCollection): void
+    protected function createInfoMessageWithSkuCollection(string $key, array $skuCollection): void
     {
         $skuCollection = array_unique($skuCollection);
+        $this->createInfoMessage($key, ['skus' => implode(', ', $skuCollection)]);
+    }
+
+    /**
+     * @param string $key
+     * @param array $parameters
+     *
+     * @return void
+     */
+    protected function createInfoMessage(string $key, array $parameters = []): void
+    {
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue($key);
-        $messageTransfer->setParameters(['skus' => implode(', ', $skuCollection)]);
+        $messageTransfer->setParameters($parameters);
+
         $this->messengerFacade->addInfoMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function checkIsVouchersUsableForCurrentCurrency(QuoteTransfer $quoteTransfer): void
+    {
+        $voucherDiscounts = $quoteTransfer->getVoucherDiscounts();
+
+        if ($voucherDiscounts->count() === 0) {
+            return;
+        }
+
+        foreach ($voucherDiscounts as $key => $discountTransfer) {
+            if (!$this->isVoucherUsableForCurrentCurrency($discountTransfer, $quoteTransfer)) {
+                $voucherDiscounts->offsetUnset($key);
+
+                $this->createInfoMessage(static::GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DOES_NOT_APPLY_FOR_CURRENCY, [
+                    '%code%' => $discountTransfer->getVoucherCode(),
+                ]);
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isVoucherUsableForCurrentCurrency(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer): bool
+    {
+        $grossModeEnabled = $quoteTransfer->getPriceMode() === DiscountConstants::PRICE_MODE_GROSS;
+        $netModeEnabled = $quoteTransfer->getPriceMode() === DiscountConstants::PRICE_MODE_NET;
+
+        foreach ($discountTransfer->getMoneyValueCollection() as $moneyValueTransfer) {
+            if ($moneyValueTransfer->getCurrency()->getCode() === $quoteTransfer->getCurrency()->getCode()) {
+                if ($netModeEnabled && $moneyValueTransfer->getNetAmount()) {
+                    return true;
+                }
+
+                if ($grossModeEnabled && $moneyValueTransfer->getGrossAmount()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
