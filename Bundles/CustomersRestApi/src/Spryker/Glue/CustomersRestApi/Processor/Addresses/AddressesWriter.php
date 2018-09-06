@@ -145,29 +145,32 @@ class AddressesWriter implements AddressesWriterInterface
             return $restResponse;
         }
 
-        $addressTransfer = (new AddressTransfer())
-            ->fromArray($addressAttributesTransfer->toArray(), true);
-        $addressTransfer->setFkCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer())
-            ->setIdCustomerAddress($restRequest->getResource()->getId());
+        $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
 
-        $addressTransfer = $this->customerClient->updateAddress($addressTransfer);
+        foreach ($addressesTransfer->getAddresses() as $address) {
+            if ($address->getUuid() === $restRequest->getResource()->getId()) {
+                $address->fromArray($addressAttributesTransfer->modifiedToArray(), true);
 
-        if (!$addressTransfer->getUuid()) {
-            $this->createErrorAddressNotSaved($restResponse);
+                $addressTransfer = $this->customerClient->updateAddress($address);
 
-            return $restResponse;
+                if (!$addressTransfer->getUuid()) {
+                    $this->createErrorAddressNotSaved($restResponse);
+
+                    return $restResponse;
+                }
+
+                $this->updateCustomerDefaultAddresses($address, $customerResponseTransfer->getCustomerTransfer());
+
+                $restResource = $this
+                    ->addressesResourceMapper
+                    ->mapAddressTransferToRestResource(
+                        $addressTransfer,
+                        $customerResponseTransfer->getCustomerTransfer()
+                    );
+
+                $restResponse->addResource($restResource);
+            }
         }
-
-        $this->updateCustomerDefaultAddresses($addressTransfer, $customerResponseTransfer->getCustomerTransfer());
-
-        $restResource = $this
-            ->addressesResourceMapper
-            ->mapAddressTransferToRestResource(
-                $addressTransfer,
-                $customerResponseTransfer->getCustomerTransfer()
-            );
-
-        $restResponse->addResource($restResource);
 
         return $restResponse;
     }
@@ -359,12 +362,12 @@ class AddressesWriter implements AddressesWriterInterface
         CustomerTransfer $customerTransfer
     ): CustomerTransfer {
         if ($customerTransfer->getDefaultShippingAddress() === $addressTransfer->getIdCustomerAddress()
-            && !$addressTransfer->getIsDefaultShipping()
+            && $addressTransfer->getIsDefaultShipping() === false
         ) {
             $customerTransfer->setDefaultShippingAddress(null);
         }
 
-        if ($addressTransfer->getIsDefaultShipping()
+        if ($addressTransfer->getIsDefaultShipping() === true
             && $customerTransfer->getDefaultShippingAddress() !== $addressTransfer->getIdCustomerAddress()
         ) {
             $customerTransfer->setDefaultShippingAddress($addressTransfer->getIdCustomerAddress());
