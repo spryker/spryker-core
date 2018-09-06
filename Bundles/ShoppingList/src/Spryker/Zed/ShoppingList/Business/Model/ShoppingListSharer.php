@@ -128,7 +128,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         );
 
         if (!$isCompanyBusinessUnitSharedWithShoppingLists) {
-            return (new ShoppingListShareResponseTransfer())->setIsSuccess(true);
+            return (new ShoppingListShareResponseTransfer())->setIsSuccess(false);
         }
 
         return $this->getTransactionHandler()->handleTransaction(
