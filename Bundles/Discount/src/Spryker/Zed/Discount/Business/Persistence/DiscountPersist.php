@@ -103,7 +103,7 @@ class DiscountPersist implements DiscountPersistInterface
 
         $discountEntity->save();
 
-        $this->updateDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
+        $this->saveDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
         $this->saveDiscountStoreRelation(
             $discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation(),
             $discountEntity->getIdDiscount()
@@ -165,7 +165,7 @@ class DiscountPersist implements DiscountPersistInterface
 
         $affectedRows = $discountEntity->save();
 
-        $this->updateDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
+        $this->saveDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
         $this->updateDiscountStoreRelation($discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation());
 
         $this->executePostUpdatePlugins($discountConfiguratorTransfer);
@@ -381,7 +381,7 @@ class DiscountPersist implements DiscountPersistInterface
      *
      * @return void
      */
-    protected function updateDiscountMoneyValues(SpyDiscount $discountEntity, DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    protected function saveDiscountMoneyValues(SpyDiscount $discountEntity, DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {
         $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculator();
         if ($discountCalculatorTransfer->getCalculatorPlugin() !== DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED) {
