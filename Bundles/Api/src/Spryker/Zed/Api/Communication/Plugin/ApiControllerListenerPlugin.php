@@ -22,11 +22,12 @@ use Throwable;
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
- * @method \Spryker\Zed\Api\ApiConfig getConfig()
  */
 class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControllerListenerInterface
 {
     use LoggerTrait;
+
+    protected const REQUEST_URI = 'REQUEST_URI';
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
@@ -35,6 +36,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      */
     public function onKernelController(FilterControllerEvent $event)
     {
+        /** @var array $currentController */
         $currentController = $event->getController();
         $controller = $currentController[0];
         $action = $currentController[1];
@@ -117,7 +119,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $queryData = $request->query->all();
         $requestTransfer->setQueryData($queryData);
 
-        $serverData = [$request->server->get('REQUEST_URI')];
+        $serverData = $this->getDataFromServer($request);
         $requestTransfer->setServerData($serverData);
 
         $headerData = $request->headers->all();
@@ -131,7 +133,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $requestData = $request->request->all();
         $requestTransfer->setRequestData($requestData);
 
-        $requestTransfer->setRequestUri($serverData['REQUEST_URI']);
+        $requestTransfer->setRequestUri($serverData[self::REQUEST_URI]);
 
         return $requestTransfer;
     }
@@ -165,5 +167,15 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
             $responseTransfer->getCode(),
             json_encode($array)
         ));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function getDataFromServer(Request $request): array
+    {
+        return [self::REQUEST_URI => $request->server->get(self::REQUEST_URI)];
     }
 }
