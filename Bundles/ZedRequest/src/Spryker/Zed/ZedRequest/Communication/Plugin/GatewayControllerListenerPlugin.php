@@ -81,10 +81,11 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     /**
      * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
      *
-     * @return null|\Generated\Shared\Transfer\LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer|null
      */
     protected function getLocaleMetaTransfer(Request $request)
     {
+        /** @var \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer */
         $localeTransfer = $request->getMetaTransfer('locale');
 
         return $localeTransfer;
@@ -106,10 +107,11 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     /**
      * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
      *
-     * @return null|\Generated\Shared\Transfer\CurrencyTransfer
+     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
      */
     protected function getCurrencyMetaTransfer(Request $request)
     {
+        /** @var \Generated\Shared\Transfer\CurrencyTransfer|null $currencyTransfer */
         $currencyTransfer = $request->getMetaTransfer('currency');
 
         return $currencyTransfer;

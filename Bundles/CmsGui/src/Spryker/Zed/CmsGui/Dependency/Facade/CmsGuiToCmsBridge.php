@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -151,11 +152,11 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
     /**
      * @param int $idCmsPage
      *
-     * @return bool
+     * @return void
      */
     public function revert($idCmsPage)
     {
-        return $this->cmsFacade->revert($idCmsPage);
+        $this->cmsFacade->revert($idCmsPage);
     }
 
     /**

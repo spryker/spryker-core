@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -58,7 +59,7 @@ class ReSortController extends AbstractController
     public function saveAction(Request $request)
     {
         $categoryNodesToReorder = (array)json_decode($request->request->get('nodes'), true);
-        $positionCursor = (count($categoryNodesToReorder) - 1);
+        $positionCursor = count($categoryNodesToReorder);
 
         foreach ($categoryNodesToReorder as $index => $nodeData) {
             $idCategoryNode = $this->castId($nodeData['id']);

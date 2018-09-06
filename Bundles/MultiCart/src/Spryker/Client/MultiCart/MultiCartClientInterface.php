@@ -8,6 +8,7 @@
 namespace Spryker\Client\MultiCart;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -144,4 +145,18 @@ interface MultiCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function clearQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns quote collection by criteria from Zed.
+     * - Collection is filtered by customer reference.
+     * - Pagination and ordering options can be passed to criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
 }

@@ -277,7 +277,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     {
         foreach ($items as $cartItemTransfer) {
             if ($itemTransfer->getBundleItemIdentifier() === $cartItemTransfer->getRelatedBundleItemIdentifier()
-                && count($cartItemTransfer->getProductOptions()) > 0) {
+                && $cartItemTransfer->getProductOptions() && count($cartItemTransfer->getProductOptions()) > 0) {
                 return (array)$cartItemTransfer->getProductOptions();
             }
         }
@@ -286,7 +286,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $groupedBundleItems
+     * @param array $groupedBundleItems
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
@@ -294,6 +294,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     protected function updateGroupedBundleItemsAggregatedSubtotal(array $groupedBundleItems, ArrayObject $bundleItems)
     {
         foreach ($groupedBundleItems as $groupedBundle) {
+            /** @var \Generated\Shared\Transfer\ItemTransfer $groupedBundleItemTransfer */
             $groupedBundleItemTransfer = $groupedBundle[static::BUNDLE_PRODUCT];
 
             foreach ($bundleItems as $bundleItemTransfer) {

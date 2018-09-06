@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="RestCatalogSearchAttributes">
+        <property name="currency" type="string"/>
+        <property name="sort" type="RestCatalogSearchSortAttributes"/>
+        <property name="pagination" type="RestCatalogSearchPaginationAttributes"/>
+        <property name="products" type="RestCatalogSearchProductsAttributes[]"/>
+        <property name="valueFacets" type="RestFacetSearchResultAttributes[]" singular="valueFacet"/>
+        <property name="rangeFacets" type="RestRangeSearchResultAttributes[]" singular="rangeFacet"/>
+        <property name="spellingSuggestion" type="string"/>
+    </transfer>
+
+    <transfer name="RestCatalogSearchSortAttributes">
+        <property name="sortParamNames" type="array"/>
+        <property name="currentSortParam" type="string"/>
+        <property name="currentSortOrder" type="string"/>
+    </transfer>
+
+    <transfer name="RestCatalogSearchPaginationAttributes">
+        <property name="numFound" type="int" />
+        <property name="currentPage" type="int" />
+        <property name="maxPage" type="int" />
+        <property name="currentItemsPerPage" type="int" />
+    </transfer>
+
+    <transfer name="RestCatalogSearchProductsAttributes">
+        <property name="images" type="RestCatalogSearchProductImageAttributes[]"/>
+        <property name="price" type="int"/>
+        <property name="abstractName" type="string"/>
+        <property name="prices" type="array"/>
+        <property name="abstractSku" type="string"/>
+    </transfer>
+
+    <transfer name="RestCatalogSearchProductImageAttributes">
+        <property name="externalUrlSmall" type="string"/>
+        <property name="externalUrlLarge" type="string"/>
+    </transfer>
+
+    <transfer name="RestRangeSearchResultAttributes">
+        <property name="name" type="string" />
+        <property name="min" type="float" />
+        <property name="max" type="float" />
+        <property name="activeMin" type="float" />
+        <property name="activeMax" type="float" />
+        <property name="docCount" type="int" />
+    </transfer>
+
+    <transfer name="RestFacetSearchResultAttributes">
+        <property name="name" type="string" />
+        <property name="docCount" type="int" />
+        <property name="values" type="array" singular="value" />
+        <property name="activeValue" type="string" />
+    </transfer>
+
+    <transfer name="RestCatalogSearchSuggestionsAttributes">
+        <property name="currency" type="string"/>
+        <property name="completion" type="string[]"/>
+        <property name="products" type="array"/>
+        <property name="categories" type="array"/>
+        <property name="cmsPages" type="array"/>
+    </transfer>
+
+</transfers>

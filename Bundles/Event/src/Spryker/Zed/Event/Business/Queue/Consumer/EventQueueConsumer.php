@@ -195,7 +195,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function createEventTransfer($transferClass)
     {
-        return new $transferClass;
+        return new $transferClass();
     }
 
     /**
@@ -205,7 +205,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function createEventListener($listenerClass)
     {
-        return new $listenerClass;
+        return new $listenerClass();
     }
 
     /**
@@ -258,9 +258,10 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function mapEventTransfer(EventQueueSendMessageBodyTransfer $eventQueueSentMessageBodyTransfer)
     {
-        $eventTransfer = $this->createEventTransfer($eventQueueSentMessageBodyTransfer->getTransferClassName());
-        $eventTransfer->fromArray($eventQueueSentMessageBodyTransfer->getTransferData(), true);
+        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer */
+        $transfer = $this->createEventTransfer($eventQueueSentMessageBodyTransfer->getTransferClassName());
+        $transfer->fromArray($eventQueueSentMessageBodyTransfer->getTransferData(), true);
 
-        return $eventTransfer;
+        return $transfer;
     }
 }

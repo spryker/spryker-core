@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Search;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface SearchConstants
 {
     /**
@@ -84,4 +87,12 @@ interface SearchConstants
      * @api
      */
     const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
+
+    /**
+     * Specification:
+     * - Sets the permission mode for generated directories.
+     *
+     * @api
+     */
+    const DIRECTORY_PERMISSION = 'SEARCH:DIRECTORY_PERMISSION';
 }

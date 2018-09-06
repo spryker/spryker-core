@@ -181,7 +181,7 @@ class RatepayCommunicationFactory extends AbstractCommunicationFactory
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setIdSalesOrderItem($orderItemEntity->getIdSalesOrderItem());
-        $itemTransfer->setUnitGrossPrice($orderItemEntity->getGrossPrice());
+        $itemTransfer->setUnitGrossPrice((int)round($orderItemEntity->getGrossPrice() / $orderItemEntity->getQuantity()));
         $itemTransfer->setQuantity($orderItemEntity->getQuantity());
 
         return $itemTransfer;
