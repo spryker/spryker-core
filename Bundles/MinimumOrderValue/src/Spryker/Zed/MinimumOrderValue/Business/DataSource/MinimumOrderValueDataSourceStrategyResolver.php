@@ -43,15 +43,12 @@ class MinimumOrderValueDataSourceStrategyResolver implements MinimumOrderValueDa
      */
     public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {
+        $minimumOrderValueTransfers = [];
         foreach ($this->minimumOrderValueDataSourceStrategyPlugins as $minimumOrderValueDataSourceStrategyPlugin) {
-            $minimumOrderValueTransfers = $minimumOrderValueDataSourceStrategyPlugin->findApplicableThresholds($quoteTransfer);
-
-            if (!empty($minimumOrderValueTransfers)) {
-                return $minimumOrderValueTransfers;
-            }
+            $minimumOrderValueTransfers = array_merge($minimumOrderValueTransfers, $minimumOrderValueDataSourceStrategyPlugin->findApplicableThresholds($quoteTransfer));
         }
 
-        return $this->findGlobalApplicableThresholds($quoteTransfer);
+        return array_merge($minimumOrderValueTransfers, $this->findGlobalApplicableThresholds($quoteTransfer));
     }
 
     /**

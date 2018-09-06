@@ -42,7 +42,7 @@ class MinimumOrderValueGlossaryKeyGenerator implements MinimumOrderValueGlossary
             '.',
             [
                 static::MINIMUM_ORDER_VALUE_GLOSSARY_PREFIX,
-                $minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->getThresholdGroup(),
+                $minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->getKey(),
                 $minimumOrderValueTransfer->getStore()->getName(),
                 $minimumOrderValueTransfer->getCurrency()->getCode(),
                 static::MINIMUM_ORDER_VALUE_GLOSSARY_MESSAGE,

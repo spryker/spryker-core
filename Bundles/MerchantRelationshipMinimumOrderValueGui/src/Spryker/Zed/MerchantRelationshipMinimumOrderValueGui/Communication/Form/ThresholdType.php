@@ -326,8 +326,8 @@ class ThresholdType extends AbstractType
                 $data = $this->convertMoneyValue(
                     $data,
                     $fieldName,
-                    [$this->getFactory()->getMoneyFacade(), 'convertIntegerToDecimal'],
-                    'intval'
+                    'intval',
+                    [$this->getFactory()->getMoneyFacade(), 'convertIntegerToDecimal']
                 );
             }
 
@@ -355,8 +355,8 @@ class ThresholdType extends AbstractType
                 $data = $this->convertMoneyValue(
                     $data,
                     $fieldName,
-                    [$this->getFactory()->getMoneyFacade(), 'convertDecimalToInteger'],
-                    'floatval'
+                    'floatval',
+                    [$this->getFactory()->getMoneyFacade(), 'convertDecimalToInteger']
                 );
             }
 
@@ -367,14 +367,16 @@ class ThresholdType extends AbstractType
     /**
      * @param array $data
      * @param string $fieldName
-     * @param callable $moneyConvertFunction
      * @param callable $typeConvertFunction
+     * @param callable $moneyConvertFunction
      *
      * @return array
      */
-    protected function convertMoneyValue(array $data, string $fieldName, callable $moneyConvertFunction, callable $typeConvertFunction): array
+    protected function convertMoneyValue(array $data, string $fieldName, callable $typeConvertFunction, callable $moneyConvertFunction): array
     {
         if (!isset($data[$fieldName])) {
+            $data[$fieldName] = 0;
+
             return $data;
         }
         $data[$fieldName] = $moneyConvertFunction($typeConvertFunction($data[$fieldName]));
