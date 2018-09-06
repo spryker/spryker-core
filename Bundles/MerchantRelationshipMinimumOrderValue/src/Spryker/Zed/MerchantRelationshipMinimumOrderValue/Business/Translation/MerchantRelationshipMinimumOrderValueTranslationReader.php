@@ -83,7 +83,7 @@ class MerchantRelationshipMinimumOrderValueTranslationReader implements Merchant
         $merchantRelationshipMinimumOrderValueTransfer->addLocalizedMessage(
             (new MinimumOrderValueLocalizedMessageTransfer())
                 ->setLocaleCode($localeIsoCode)
-                ->setMessage($translationTransfer)
+                ->setMessage($translationValue)
         );
 
         return $merchantRelationshipMinimumOrderValueTransfer;
