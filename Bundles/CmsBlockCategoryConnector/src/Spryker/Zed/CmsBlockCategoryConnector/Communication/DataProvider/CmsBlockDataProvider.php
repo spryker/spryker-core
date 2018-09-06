@@ -159,6 +159,7 @@ class CmsBlockDataProvider
     protected function getCategoryTemplateName(SpyCategory $categoryEntity)
     {
         $categoryTemplateName = '';
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryTemplate|null $categoryTemplateEntity */
         $categoryTemplateEntity = $categoryEntity->getCategoryTemplate();
 
         if ($categoryTemplateEntity) {
