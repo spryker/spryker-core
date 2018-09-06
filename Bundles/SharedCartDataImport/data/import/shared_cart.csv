@@ -1,0 +1,8 @@
+quote_key,company_user_key,permission_group_name,is_default
+quote-22,Rif--1,FULL_ACCESS,
+quote-23,Rif--1,FULL_ACCESS,
+quote-23,Rif--2,FULL_ACCESS,
+quote-23,Rif--3,FULL_ACCESS,
+quote-23,Rif--6,FULL_ACCESS,
+quote-23,Rif--4,READ_ONLY,
+quote-23,Rif--5,READ_ONLY,
