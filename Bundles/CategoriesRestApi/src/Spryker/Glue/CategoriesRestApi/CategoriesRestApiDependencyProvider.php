@@ -24,8 +24,7 @@ class CategoriesRestApiDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideDependencies(Container $container): Container
     {
-        $container = $this->getCategoryStorageClient($container);
-        $container = $this->getProductCategoryResourceAliasStorageClient($container);
+        $container = $this->addCategoryStorageClient($container);
 
         return $container;
     }
@@ -35,27 +34,11 @@ class CategoriesRestApiDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function getCategoryStorageClient(Container $container): Container
+    protected function addCategoryStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_CATEGORY_STORAGE] = function () use ($container) {
+        $container[static::CLIENT_CATEGORY_STORAGE] = function (Container $container) {
             return new CategoriesRestApiToCategoryStorageClientBridge(
                 $container->getLocator()->categoryStorage()->client()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function getProductCategoryResourceAliasStorageClient(Container $container): Container
-    {
-        $container[static::CLIENT_PRODUCT_CATEGORY_RESOURCE_ALIAS_STORAGE] = function () use ($container) {
-            return new CategoriesRestApiToProductCategoryResourceAliasStorageClientBridge(
-                $container->getLocator()->productCategoryResourceAliasStorage()->client()
             );
         };
 

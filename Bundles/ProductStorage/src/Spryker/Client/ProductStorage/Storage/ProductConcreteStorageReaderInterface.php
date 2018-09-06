@@ -33,4 +33,13 @@ interface ProductConcreteStorageReaderInterface
      * @return bool
      */
     public function isProductConcreteRestricted(int $idProductConcrete): bool;
+
+    /**
+     * @param string $mappingType
+     * @param string $identifier
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array;
 }

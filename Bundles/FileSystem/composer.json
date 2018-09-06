@@ -8,12 +8,11 @@
     "spryker/kernel": "^3.5.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/flysystem-aws3v3-file-system": "*",
+    "spryker/flysystem-ftp-file-system": "*",
     "spryker/flysystem-local-file-system": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/fly-system": "For filesystem handling via Flysystem library."
   },
   "autoload": {
     "psr-4": {

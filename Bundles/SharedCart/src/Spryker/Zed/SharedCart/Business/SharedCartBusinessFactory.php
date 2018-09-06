@@ -32,7 +32,7 @@ use Spryker\Zed\SharedCart\SharedCartDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SharedCart\Persistence\SharedCartEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface getRepository()()
+ * @method \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface getRepository()
  * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
  */
 class SharedCartBusinessFactory extends AbstractBusinessFactory
