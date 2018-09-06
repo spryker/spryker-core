@@ -32,7 +32,7 @@ class SkuIncrementGenerator implements SkuIncrementGeneratorInterface
     {
         $productConcreteTransfers = $this->productConcreteManager->getConcreteProductsByAbstractProductId($idProductAbstract);
 
-        return $this->generateProductConcreteSkuIncrementValue($productConcreteTransfers);
+        return $this->generateProductConcreteSkuIncrementalValue($productConcreteTransfers);
     }
 
     /**
@@ -40,19 +40,19 @@ class SkuIncrementGenerator implements SkuIncrementGeneratorInterface
      *
      * @return string
      */
-    protected function generateProductConcreteSkuIncrementValue(array $productConcreteTransfers): string
+    protected function generateProductConcreteSkuIncrementalValue(array $productConcreteTransfers): string
     {
-        $productConcreteSkuMaxLastId = 1;
+        $productConcreteSkuMaxLastIncrementalValue = 1;
 
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
-            $productConcreteSkuLastId = $this->getProductConcreteSkuLastPartIncremented($productConcreteTransfer->getSku());
+            $productConcreteSkuLastValue = $this->getProductConcreteSkuLastPartIncremented($productConcreteTransfer->getSku());
 
-            if ($productConcreteSkuLastId > $productConcreteSkuMaxLastId) {
-                $productConcreteSkuMaxLastId = $productConcreteSkuLastId;
+            if ($productConcreteSkuLastValue > $productConcreteSkuMaxLastIncrementalValue) {
+                $productConcreteSkuMaxLastIncrementalValue = $productConcreteSkuLastValue;
             }
         }
 
-        return (string)$productConcreteSkuMaxLastId;
+        return (string)$productConcreteSkuMaxLastIncrementalValue;
     }
 
     /**
