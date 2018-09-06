@@ -43,9 +43,7 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
      */
     public function extractProductPricesForProductAbstract(array $priceProductTransfers): array
     {
-        $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($priceProductTransfers);
-
-        return array_merge($extractedPrices, $priceProductTransfers);
+        return $this->extractPriceProductVolumeTransfersFromArray($priceProductTransfers);
     }
 
     /**
