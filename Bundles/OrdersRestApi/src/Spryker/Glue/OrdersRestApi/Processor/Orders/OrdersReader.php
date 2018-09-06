@@ -18,7 +18,6 @@ use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToProductBundleCli
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapperInterface;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrdersReader implements OrdersReaderInterface
@@ -41,7 +40,7 @@ class OrdersReader implements OrdersReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapperInterface $ordersResourceMapper
+     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapperInterface
      */
     protected $ordersResourceMapper;
 
@@ -80,14 +79,15 @@ class OrdersReader implements OrdersReaderInterface
             $offset = $restRequest->getPage()->getOffset();
             $limit = $restRequest->getPage()->getLimit();
             $totalOrdersCount = $this->salesClient->getCustomerOrders($orderListTransfer)->getOrders()->count();
-            $this->addPaginationToOrderListData($offset, $limit, $orderListTransfer);
+
+            $orderListTransfer->setPagination($this->createPaginationTransfer($offset, $limit));
         }
 
         $response = $this->restResourceBuilder->createRestResponse($totalOrdersCount, $limit);
         $orderListData = $this->salesClient->getCustomerOrders($orderListTransfer)->getOrders();
 
         foreach ($orderListData as $orderData) {
-            $ordersRestAttributes = $this->ordersResourceMapper->mapOrderToOrdersRestAttribute(
+            $ordersRestAttributes = $this->ordersResourceMapper->mapOrderToOrdersRestAttributes(
                 $orderData,
                 $this->getTransformedBundleItems($orderData)
             );
@@ -118,10 +118,10 @@ class OrdersReader implements OrdersReaderInterface
         $orderData = $this->salesClient->getCustomerOrderByOrderReference($orderTransfer);
 
         if (!$orderData->getItems()->count()) {
-            return $this->createErrorResponse($response);
+            return $this->createOrderNotFoundErrorResponse($response);
         }
 
-        $ordersRestAttributes = $this->ordersResourceMapper->mapOrderToOrdersRestAttribute(
+        $ordersRestAttributes = $this->ordersResourceMapper->mapOrderToOrdersRestAttributes(
             $orderData,
             $this->getTransformedBundleItems($orderData)
         );
@@ -139,7 +139,7 @@ class OrdersReader implements OrdersReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createErrorResponse(RestResponseInterface $restResponse): RestResponseInterface
+    protected function createOrderNotFoundErrorResponse(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(OrdersRestApiConfig::RESPONSE_CODE_CANT_FIND_ORDER)
@@ -152,17 +152,14 @@ class OrdersReader implements OrdersReaderInterface
     /**
      * @param int $offset
      * @param int $limit
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PaginationTransfer
      */
-    protected function addPaginationToOrderListData(int $offset, int $limit, $orderListTransfer): void
+    protected function createPaginationTransfer(int $offset, int $limit): PaginationTransfer
     {
-        $pagination = (new PaginationTransfer())
+        return (new PaginationTransfer())
             ->setPage($offset)
             ->setMaxPerPage($limit);
-
-        $orderListTransfer->setPagination($pagination);
     }
 
     /**
@@ -177,18 +174,6 @@ class OrdersReader implements OrdersReaderInterface
             $orderTransfer->getBundleItems()
         );
 
-        $transformedItems = [];
-
-        foreach ($items as $item) {
-            if ($item instanceof AbstractTransfer) {
-                $transformedItems[] = $item;
-
-                continue;
-            }
-
-            $transformedItems[] = $item[self::BUNDLE_PRODUCT];
-        }
-
-        return $transformedItems;
+        return $this->ordersResourceMapper->mapTransformedBundleItems($orderTransfer, $items);
     }
 }
