@@ -15,7 +15,7 @@ use Propel\Runtime\Collection\Collection;
 interface ShoppingListCompanyUserMapperInterface
 {
     /**
-     * @param null|\Propel\Runtime\Collection\Collection $companyUserEntityCollection
+     * @param \Propel\Runtime\Collection\Collection|null $companyUserEntityCollection
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer[]|\ArrayObject
      */

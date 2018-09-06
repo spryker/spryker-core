@@ -15,7 +15,7 @@ use Propel\Runtime\Collection\Collection;
 class ShoppingListCompanyBusinessUnitMapper implements ShoppingListCompanyBusinessUnitMapperInterface
 {
     /**
-     * @param null|\Propel\Runtime\Collection\Collection $companyBusinessUnitEntityTransferCollection
+     * @param \Propel\Runtime\Collection\Collection|null $companyBusinessUnitEntityTransferCollection
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer[]|\ArrayObject
      */
