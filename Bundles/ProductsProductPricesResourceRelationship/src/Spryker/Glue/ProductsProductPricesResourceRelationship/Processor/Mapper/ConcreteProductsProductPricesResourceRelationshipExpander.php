@@ -9,7 +9,7 @@ namespace Spryker\Glue\ProductsProductPricesResourceRelationship\Processor\Mappe
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsProductPricesResourceRelationship\Dependency\RestResource\ProductsProductPricesResourceRelationToProductPricesRestApiInterface;
 
-class ConcreteProductsProductPricesResourceRelationshipMapper implements ConcreteProductsProductPricesResourceRelationshipMapperInterface
+class ConcreteProductsProductPricesResourceRelationshipExpander implements ConcreteProductsProductPricesResourceRelationshipExpanderInterface
 {
     /**
      * @var \Spryker\Glue\ProductsProductPricesResourceRelationship\Dependency\RestResource\ProductsProductPricesResourceRelationToProductPricesRestApiInterface
@@ -30,12 +30,12 @@ class ConcreteProductsProductPricesResourceRelationshipMapper implements Concret
      *
      * @return void
      */
-    public function mapResourceRelationships(array $resources, RestRequestInterface $restRequest): void
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
             $abstractProductPricesResource = $this->productPricesResource
                 ->findConcreteProductPricesByConcreteProductSku($resource->getId(), $restRequest);
-            if ($abstractProductPricesResource !== null) {
+            if ($abstractProductPricesResource) {
                 $resource->addRelationship($abstractProductPricesResource);
             }
         }

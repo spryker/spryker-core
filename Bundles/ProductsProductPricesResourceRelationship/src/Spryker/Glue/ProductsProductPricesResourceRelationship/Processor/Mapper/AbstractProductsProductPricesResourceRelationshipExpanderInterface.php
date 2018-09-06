@@ -8,7 +8,7 @@ namespace Spryker\Glue\ProductsProductPricesResourceRelationship\Processor\Mappe
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface AbstractProductsProductPricesResourceRelationshipMapperInterface
+interface AbstractProductsProductPricesResourceRelationshipExpanderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
@@ -16,5 +16,5 @@ interface AbstractProductsProductPricesResourceRelationshipMapperInterface
      *
      * @return void
      */
-    public function mapResourceRelationships(array $resources, RestRequestInterface $restRequest): void;
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void;
 }

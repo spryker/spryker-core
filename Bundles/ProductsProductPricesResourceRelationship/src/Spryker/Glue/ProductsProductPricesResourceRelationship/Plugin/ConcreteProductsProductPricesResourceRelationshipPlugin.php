@@ -28,8 +28,8 @@ class ConcreteProductsProductPricesResourceRelationshipPlugin extends AbstractPl
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createConcreteProductsProductPricesResourceRelationshipMapper()
-            ->mapResourceRelationships($resources, $restRequest);
+            ->createConcreteProductsProductPricesResourceRelationshipExpander()
+            ->addResourceRelationships($resources, $restRequest);
     }
 
     /**

@@ -21,6 +21,8 @@ class ProductsProductPricesResourceRelationshipDependencyProvider extends Abstra
      */
     public function provideDependencies(Container $container)
     {
+        $container = parent::provideDependencies($container);
+
         $container = $this->addProductPricesResource($container);
 
         return $container;
