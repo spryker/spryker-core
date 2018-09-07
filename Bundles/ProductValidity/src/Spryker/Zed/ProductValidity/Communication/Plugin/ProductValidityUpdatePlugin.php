@@ -17,6 +17,8 @@ use Spryker\Zed\Product\Business\Product\Observer\ProductConcreteUpdateObserverI
 class ProductValidityUpdatePlugin extends AbstractPlugin implements ProductConcreteUpdateObserverInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
