@@ -12,7 +12,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductResourceAliasStorageClientInterface;
+use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReaderInterface;
 use Spryker\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapperInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
@@ -21,11 +21,12 @@ use Symfony\Component\HttpFoundation\Response;
 class AbstractProductsReader implements AbstractProductsReaderInterface
 {
     protected const PRODUCT_CONCRETE_IDS_KEY = 'product_concrete_ids';
+    protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
 
     /**
-     * @var \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductResourceAliasStorageClientInterface
+     * @var \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface
      */
-    protected $productResourceAliasStorageClient;
+    protected $productStorageClient;
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -43,18 +44,18 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
     protected $concreteProductsReader;
 
     /**
-     * @param \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductResourceAliasStorageClientInterface $productResourceAliasStorageClient
+     * @param \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapperInterface $abstractProductsResourceMapper
      * @param \Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReaderInterface $concreteProductsReader
      */
     public function __construct(
-        ProductsRestApiToProductResourceAliasStorageClientInterface $productResourceAliasStorageClient,
+        ProductsRestApiToProductStorageClientInterface $productStorageClient,
         RestResourceBuilderInterface $restResourceBuilder,
         AbstractProductsResourceMapperInterface $abstractProductsResourceMapper,
         ConcreteProductsReaderInterface $concreteProductsReader
     ) {
-        $this->productResourceAliasStorageClient = $productResourceAliasStorageClient;
+        $this->productStorageClient = $productStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->abstractProductsResourceMapper = $abstractProductsResourceMapper;
         $this->concreteProductsReader = $concreteProductsReader;
@@ -77,8 +78,9 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             return $response->addError($restErrorTransfer);
         }
 
-        $abstractProductData = $this->productResourceAliasStorageClient
-            ->findProductAbstractStorageDataBySku(
+        $abstractProductData = $this->productStorageClient
+            ->findProductAbstractStorageDataByMapping(
+                static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $resourceIdentifier,
                 $restRequest->getMetadata()->getLocale()
             );
@@ -106,10 +108,12 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
      */
     public function findProductAbstractBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $abstractProductData = $this->productResourceAliasStorageClient->findProductAbstractStorageDataBySku(
-            $sku,
-            $restRequest->getMetadata()->getLocale()
-        );
+        $abstractProductData = $this->productStorageClient
+            ->findProductAbstractStorageDataByMapping(
+                static::PRODUCT_ABSTRACT_MAPPING_TYPE,
+                $sku,
+                $restRequest->getMetadata()->getLocale()
+            );
 
         if (!$abstractProductData) {
             return null;
