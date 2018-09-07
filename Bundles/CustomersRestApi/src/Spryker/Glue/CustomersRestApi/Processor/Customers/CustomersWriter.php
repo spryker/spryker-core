@@ -112,12 +112,8 @@ class CustomersWriter implements CustomersWriterInterface
             return $restResponse;
         }
 
-        $customerTransfer = $this
-            ->customersResourceMapper
-            ->mapCustomerAttributesToCustomerTransfer($restCustomerTransfer);
-        $customerTransfer->setIdCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer());
-
-        $customerResponseTransfer = $this->customerClient->updateCustomer($customerTransfer);
+        $customerResponseTransfer->getCustomerTransfer()->fromArray($restCustomerTransfer->modifiedToArray());
+        $customerResponseTransfer = $this->customerClient->updateCustomer($customerResponseTransfer->getCustomerTransfer());
 
         if (!$customerResponseTransfer->getIsSuccess()) {
             $this->createCustomerNotSavedError($restResponse);
