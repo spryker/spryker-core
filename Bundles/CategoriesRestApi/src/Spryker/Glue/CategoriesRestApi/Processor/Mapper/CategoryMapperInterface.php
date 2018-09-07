@@ -8,17 +8,17 @@
 namespace Spryker\Glue\CategoriesRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
-use Generated\Shared\Transfer\RestCategoriesTreeTransfer;
 use Generated\Shared\Transfer\RestCategoryNodesAttributesTransfer;
+use Generated\Shared\Transfer\RestCategoryTreesTransfer;
 
 interface CategoryMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\RestCategoriesTreeTransfer
+     * @return \Generated\Shared\Transfer\RestCategoryTreesTransfer
      */
-    public function mapCategoryTreeToRestCategoryTreesTransfer(array $categoryNodeStorageTransfers): RestCategoriesTreeTransfer;
+    public function mapCategoryTreeToRestCategoryTreesTransfer(array $categoryNodeStorageTransfers): RestCategoryTreesTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer $categoryNodeStorageTransfer

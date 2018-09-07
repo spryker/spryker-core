@@ -8,19 +8,14 @@
 namespace Spryker\Glue\CategoriesRestApi;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface CategoriesRestApiResourceInterface
 {
     /**
-     * Specification:
-     * - Retrieves abstract product categories by abstract product identifier.
+     * @param int $nodeId
+     * @param string $locale
      *
-     * @api
-     *
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function getCategoriesByAbstractProductSku(RestRequestInterface $restRequest): RestResourceInterface;
+    public function findCategoryNodeById(int $nodeId, string $locale): ?RestResourceInterface;
 }

@@ -7,17 +7,6 @@
         <property name="categoryNodesStorage" type="RestCategoryTreesAttributes[]"/>
     </transfer>
 
-    <transfer name="RestProductCategoriesTree">
-        <property name="productCategoriesStorage" type="RestProductCategoriesAttributes[]"/>
-    </transfer>
-
-    <transfer name="RestProductCategoriesAttributes">
-        <property name="categoryNodeId" type="int"/>
-        <property name="categoryId" type="int"/>
-        <property name="name" type="string"/>
-        <property name="url" type="string"/>
-    </transfer>
-
     <transfer name="RestCategoryTreesAttributes">
         <property name="nodeId" type="int"/>
         <property name="order" type="int"/>

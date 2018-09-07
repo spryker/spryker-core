@@ -8,20 +8,17 @@
 namespace Spryker\Glue\CategoriesRestApi\Processor\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
-use Generated\Shared\Transfer\RestCategoriesTreeTransfer;
 use Generated\Shared\Transfer\RestCategoryTreesAttributesTransfer;
-use Generated\Shared\Transfer\RestProductCategoriesAttributesTransfer;
-use Generated\Shared\Transfer\RestProductCategoriesTreeTransfer;
+use Generated\Shared\Transfer\RestCategoryTreesTransfer;
 
 class CategoriesResourceMapper implements CategoriesResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\RestCategoriesTreeTransfer
+     * @return \Generated\Shared\Transfer\RestCategoryTreesTransfer
      */
-    public function mapCategoriesResourceToRestCategoriesTransfer(array $categoryNodeStorageTransfers): RestCategoriesTreeTransfer
+    public function mapCategoriesResourceToRestCategoriesTransfer(array $categoryNodeStorageTransfers): RestCategoryTreesTransfer
     {
         $rootCategories = new ArrayObject();
         foreach ($categoryNodeStorageTransfers as $categoryNodeStorageTransfer) {
@@ -32,29 +29,6 @@ class CategoriesResourceMapper implements CategoriesResourceMapperInterface
                 );
             $rootCategories->append($categoriesResourceTransfer);
         }
-        return (new RestCategoriesTreeTransfer())->setCategoryNodesStorage($rootCategories);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer $productAbstractCategoryStorageTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestProductCategoriesTreeTransfer
-     */
-    public function mapProductCategoriesToRestProductCategoriesTransfer(ProductAbstractCategoryStorageTransfer $productAbstractCategoryStorageTransfer): RestProductCategoriesTreeTransfer
-    {
-        $productCategories = new RestProductCategoriesTreeTransfer();
-        $productCategoriesResource = $productAbstractCategoryStorageTransfer->getCategories();
-
-        if ($productCategoriesResource === null) {
-            return $productCategories;
-        }
-
-        foreach ($productCategoriesResource as $productCategoriesResourceItem) {
-            $productCategoriesResourceTransfer = (new RestProductCategoriesAttributesTransfer())
-                ->fromArray($productCategoriesResourceItem->toArray(), true);
-            $productCategories->addProductCategoriesStorage($productCategoriesResourceTransfer);
-        }
-
-        return $productCategories;
+        return (new RestCategoryTreesTransfer())->setCategoryNodesStorage($rootCategories);
     }
 }

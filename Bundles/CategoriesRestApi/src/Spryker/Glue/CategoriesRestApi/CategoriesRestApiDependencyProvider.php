@@ -8,14 +8,12 @@
 namespace Spryker\Glue\CategoriesRestApi;
 
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientBridge;
-use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToProductCategoryResourceAliasStorageClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
 class CategoriesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CATEGORY_STORAGE = 'CLIENT_CATEGORY_STORAGE';
-    public const CLIENT_PRODUCT_CATEGORY_RESOURCE_ALIAS_STORAGE = 'CLIENT_PRODUCT_CATEGORY_RESOURCE_ALIAS_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container

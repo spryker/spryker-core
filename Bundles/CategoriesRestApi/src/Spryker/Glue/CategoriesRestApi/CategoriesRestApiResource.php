@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CategoriesRestApi;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\AbstractRestResource;
 
 /**
@@ -17,18 +16,15 @@ use Spryker\Glue\Kernel\AbstractRestResource;
 class CategoriesRestApiResource extends AbstractRestResource implements CategoriesRestApiResourceInterface
 {
     /**
-     * {@inheritdoc}
+     * @param int $nodeId
+     * @param string $locale
      *
-     * @api
-     *
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function getCategoriesByAbstractProductSku(RestRequestInterface $restRequest): RestResourceInterface
+    public function findCategoryNodeById(int $nodeId, string $locale): ?RestResourceInterface
     {
         return $this->getFactory()
             ->createCategoryReader()
-            ->getProductCategoriesResourceBySku($restRequest);
+            ->findCategoryNodeById($nodeId, $locale);
     }
 }

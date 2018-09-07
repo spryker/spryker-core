@@ -25,7 +25,7 @@ class CategoriesRestApiToCategoryStorageClientBridge implements CategoriesRestAp
     /**
      * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\RestCategoriesTreeTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
     public function getCategories(string $locale)
     {
@@ -38,7 +38,7 @@ class CategoriesRestApiToCategoryStorageClientBridge implements CategoriesRestAp
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById($idCategoryNode, $localeName)
+    public function getCategoryNodeById(int $idCategoryNode, string $localeName)
     {
         return $this->categoryStorageClient->getCategoryNodeById($idCategoryNode, $localeName);
     }

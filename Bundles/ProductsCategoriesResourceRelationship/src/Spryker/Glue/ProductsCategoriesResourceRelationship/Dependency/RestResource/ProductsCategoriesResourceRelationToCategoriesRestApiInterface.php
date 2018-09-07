@@ -8,14 +8,14 @@
 namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface ProductsCategoriesResourceRelationToCategoriesRestApiInterface
 {
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param int $nodeId
+     * @param string $locale
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function getProductCategoriesResourceBySku(RestRequestInterface $restRequest): RestResourceInterface;
+    public function findCategoryNodeById(int $nodeId, string $locale): ?RestResourceInterface;
 }

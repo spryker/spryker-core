@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductCategoryResourceAliasStorage\Storage;
+namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 
-interface ProductAbstractCategoryStorageReaderInterface
+interface ProductsCategoriesResourceRelationshipToProductCategoryStorageClientInterface
 {
     /**
-     * @param string $sku
-     * @param string $localeName
+     * @param int $idProductAbstract
+     * @param string $locale
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
-    public function findProductAbstractCategoryStorageData(string $sku, string $localeName): ?ProductAbstractCategoryStorageTransfer;
+    public function findProductAbstractCategory($idProductAbstract, $locale): ?ProductAbstractCategoryStorageTransfer;
 }
