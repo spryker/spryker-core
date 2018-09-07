@@ -100,6 +100,15 @@ class AddressesWriter implements AddressesWriterInterface
             return $restResponse;
         }
 
+        $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
+
+        if (count($addressesTransfer->getAddresses()) !== 1) {
+            $addressTransfer->setIsDefaultBilling($addressAttributesTransfer->getIsDefaultBilling());
+            $addressTransfer->setIsDefaultShipping($addressAttributesTransfer->getIsDefaultShipping());
+        } else {
+            $addressTransfer->setIsDefaultBilling(true);
+            $addressTransfer->setIsDefaultShipping(true);
+        }
         $this->updateCustomerDefaultAddresses($addressTransfer, $customerResponseTransfer->getCustomerTransfer());
 
         $restResource = $this
