@@ -14,6 +14,7 @@ use Spryker\Client\CustomerAccessPermission\Plugin\SeePricePermissionPlugin;
 use Spryker\Client\CustomerAccessPermission\Plugin\SeeShoppingListPermissionPlugin;
 use Spryker\Client\CustomerAccessPermission\Plugin\SeeWishlistPermissionPlugin;
 use Spryker\Client\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Customer\CustomerConstants;
 
 class CustomerAccessPermissionConfig extends AbstractBundleConfig
 {
@@ -75,5 +76,13 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
     public function hasPluginToSeeContentType(string $contentType): bool
     {
         return array_key_exists($contentType, static::CONTENT_TYPE_PERMISSION_PLUGIN);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerSecuredPattern(): string
+    {
+        return $this->get(CustomerConstants::CUSTOMER_SECURED_PATTERN);
     }
 }
