@@ -140,7 +140,7 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
 
         $restResourceSelfLink = sprintf(
             static::SELF_LINK_FORMAT,
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
             $sku,
             ProductImageSetsRestApiConfig::RESOURCE_CONCRETE_PRODUCT_IMAGE_SETS
         );

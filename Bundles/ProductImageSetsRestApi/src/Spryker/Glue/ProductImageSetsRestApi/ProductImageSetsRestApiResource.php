@@ -21,16 +21,16 @@ class ProductImageSetsRestApiResource extends AbstractRestResource implements Pr
      *
      * @api
      *
-     * @param string $abstractProductId
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findAbstractProductImageSetsByAbstractProductId(string $abstractProductId, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findAbstractProductImageSetsBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         return $this->getFactory()
             ->createAbstractProductImageSetsReader()
-            ->findAbstractProductImageSetsByAbstractProductId($abstractProductId, $restRequest);
+            ->findAbstractProductImageSetsBySku($sku, $restRequest);
     }
 
     /**
@@ -38,15 +38,15 @@ class ProductImageSetsRestApiResource extends AbstractRestResource implements Pr
      *
      * @api
      *
-     * @param string $concreteProductId
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findConcreteProductImageSetsByConcreteProductId(string $concreteProductId, RestRequestInterface $restRequest): ?RestResourceInterface
+    public function findConcreteProductImageSetsBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
         return $this->getFactory()
             ->createConcreteProductImageSetsReader()
-            ->findConcreteProductImageSetsByConcreteProductId($concreteProductId, $restRequest);
+            ->findConcreteProductImageSetsBySku($sku, $restRequest);
     }
 }

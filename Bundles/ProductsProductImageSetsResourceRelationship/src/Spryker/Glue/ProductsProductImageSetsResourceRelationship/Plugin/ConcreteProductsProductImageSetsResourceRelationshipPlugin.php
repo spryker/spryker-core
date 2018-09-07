@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -28,8 +29,8 @@ class ConcreteProductsProductImageSetsResourceRelationshipPlugin extends Abstrac
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createConcreteProductsProductImageSetsResourceRelationshipMapper()
-            ->mapResourceRelationships($resources, $restRequest);
+            ->createConcreteProductsProductImageSetsResourceRelationshipExpander()
+            ->expandResourceRelationships($resources, $restRequest);
     }
 
     /**

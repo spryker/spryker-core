@@ -14,27 +14,27 @@ interface ProductImageSetsRestApiResourceInterface
 {
     /**
      * Specification:
-     * - Retrieves abstract product image sets by abstract product identifier.
+     * - Retrieves abstract product image sets by abstract product sku.
      *
      * @api
      *
-     * @param string $abstractProductId
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findAbstractProductImageSetsByAbstractProductId(string $abstractProductId, RestRequestInterface $restRequest): ?RestResourceInterface;
+    public function findAbstractProductImageSetsBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface;
 
     /**
      * Specification:
-     * - Retrieves concrete product image sets by concrete product identifier.
+     * - Retrieves concrete product image sets by concrete product sku.
      *
      * @api
      *
-     * @param string $concreteProductId
+     * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findConcreteProductImageSetsByConcreteProductId(string $concreteProductId, RestRequestInterface $restRequest): ?RestResourceInterface;
+    public function findConcreteProductImageSetsBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface;
 }
