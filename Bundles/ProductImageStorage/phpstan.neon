@@ -2,8 +2,7 @@ parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
     ignoreErrors:
-    - '#.+ has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface.#'
-    - '#Argument of an invalid type .+RolesTransfer supplied for foreach, only iterables are supported.#'
+        - '#Method .+ProductImageStorageQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\Criteria#'
 
 services:
     -

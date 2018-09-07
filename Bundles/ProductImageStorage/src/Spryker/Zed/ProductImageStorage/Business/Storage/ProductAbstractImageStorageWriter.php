@@ -136,7 +136,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return array
+     * @return \ArrayObject
      */
     protected function generateProductAbstractImageSets($idProductAbstract, $idLocale)
     {

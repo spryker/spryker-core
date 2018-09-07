@@ -138,11 +138,13 @@ class AttributeReader implements AttributeReaderInterface
      */
     public function suggestUnusedKeys($searchText = '', $limit = 10)
     {
+        /** @var array $query */
         $query = $this->productAttributeQueryContainer
             ->queryUnusedProductAttributeKeys($searchText, $limit)
-            ->setFormatter(new PropelArraySetFormatter());
+            ->setFormatter(new PropelArraySetFormatter())
+            ->find();
 
-        return $query->find();
+        return $query;
     }
 
     /**
