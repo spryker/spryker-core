@@ -54,9 +54,6 @@ class ConfigHelper extends Module
         $config = $configProperty->getValue();
         $config[$key] = $value;
         $configProperty->setValue($config);
-
-        $reflection = $this->getConfigReflectionProperty();
-        $config = $reflection->getValue()->getArrayCopy();
     }
 
     /**

@@ -137,6 +137,8 @@ use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerShopModulePathBui
 use Spryker\Zed\Development\Business\Module\PathBuilder\SprykerStandaloneModulePathBuilder;
 use Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinder;
 use Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinderInterface;
+use Spryker\Zed\Development\Business\Package\PackageFinder\PackageFinder;
+use Spryker\Zed\Development\Business\Package\PackageFinder\PackageFinderInterface;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
 use Spryker\Zed\Development\Business\Phpstan\PhpstanRunner;
 use Spryker\Zed\Development\Business\Propel\PropelAbstractClassValidator;
@@ -1759,5 +1761,13 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createProjectModuleFinder(): ProjectModuleFinderInterface
     {
         return new ProjectModuleFinder($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Package\PackageFinder\PackageFinderInterface
+     */
+    public function createPackageFinder(): PackageFinderInterface
+    {
+        return new PackageFinder($this->getConfig());
     }
 }

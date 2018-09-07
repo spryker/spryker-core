@@ -40,11 +40,15 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
     {
         parent::configure();
 
+        $parentDescription = $this->getDescription();
+
         $this
             ->setName(static::COMMAND_NAME)
             ->addOption(static::OPTION_DEPENDENCY_TYPE, static::OPTION_DEPENDENCY_TYPE_SHORT, InputOption::VALUE_REQUIRED, 'Runs only one specific dependency type check.')
             ->addOption(static::OPTION_STOP_ON_VIOLATION, static::OPTION_STOP_ON_VIOLATION_SHORT, InputOption::VALUE_NONE, 'Stop execution when a violation was found.')
-            ->setDescription('Find dependency violations in the modules.');
+            ->setDescription('
+Find dependency violations in the modules.
+' . $parentDescription);
 
         $this->setAliases(['dev:dependency:find-violations']);
     }
@@ -71,28 +75,10 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
             if (!$this->isNamespacedModuleName($index)) {
                 continue;
             }
-            if ($moduleTransfer->getIsStandalone()) {
-                $this->notifyStandaloneModuleExecution($output, $moduleTransfer);
-                continue;
-            }
             $this->validateModule($moduleTransfer, $output, $dependencyType);
         }
 
         return $this->endValidation();
-    }
-
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
-     *
-     * @return void
-     */
-    protected function notifyStandaloneModuleExecution(OutputInterface $output, ModuleTransfer $moduleTransfer): void
-    {
-        if ($output->isVerbose()) {
-            $output->writeln(sprintf('<fg=yellow>%s</> is a standalone module and will be skipped.', $moduleTransfer->getName()));
-            $output->writeln('');
-        }
     }
 
     /**

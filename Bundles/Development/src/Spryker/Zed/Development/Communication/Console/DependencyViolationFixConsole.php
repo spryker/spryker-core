@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Development\Communication\Console;
 
-use Exception;
 use Generated\Shared\Transfer\ModuleDependencyTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\ValidationMessageTransfer;
@@ -29,16 +28,30 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
     protected const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
 
     /**
+     * @var array
+     */
+    protected $moduleTransferCollectionGroupedByModuleName;
+
+    /**
+     * @var array
+     */
+    protected $packageTransferCollectionGroupedByPackageName;
+
+    /**
      * @return void
      */
     protected function configure()
     {
         parent::configure();
 
+        $parentDescription = $this->getDescription();
+
         $this
             ->setName(static::COMMAND_NAME)
             ->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-run the command, changed composer.json will not be saved.')
-            ->setDescription('Fix dependency violations in composer.json.');
+            ->setDescription('
+Fix dependency violations in composer.json.
+' . $parentDescription);
     }
 
     /**
@@ -56,7 +69,7 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
         }
 
         foreach ($modulesToValidate as $index => $moduleTransfer) {
-            if (!$this->isNamespacedModuleName($index) || $moduleTransfer->getIsStandalone()) {
+            if (!$this->isNamespacedModuleName($index)) {
                 continue;
             }
             $this->executeModuleTransfer($moduleTransfer);
@@ -92,14 +105,15 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
         $composerJsonArray = $this->getComposerJsonAsArray($moduleTransfer);
 
         foreach ($this->getModuleDependencies($moduleTransfer) as $moduleDependencyTransfer) {
-            if (!$this->canFixDependencies($moduleTransfer, $moduleDependencyTransfer)) {
+            $composerNameToFix = $this->getComposerNameToFix($moduleDependencyTransfer);
+
+            if ($composerNameToFix === null) {
+                $this->output->writeln(sprintf('Could not get a composer name for "%s"', $moduleDependencyTransfer->getModule()));
+                $this->output->writeln(sprintf('Please check the module <fg=yellow>%s.%s</> manually.', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
                 continue;
             }
 
-            $dependencyModuleTransfer = $this->getModuleTransfer($moduleDependencyTransfer->getModule());
-
-            $moduleNameToFix = sprintf('%s/%s', $dependencyModuleTransfer->getOrganization()->getNameDashed(), $dependencyModuleTransfer->getNameDashed());
-            $composerJsonArray = $this->fixDependencyViolations($moduleDependencyTransfer, $composerJsonArray, $moduleNameToFix);
+            $composerJsonArray = $this->fixDependencyViolations($moduleDependencyTransfer, $composerJsonArray, $composerNameToFix);
         }
 
         $this->output->writeln(sprintf('Fixed dependencies in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
@@ -108,29 +122,121 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      * @param \Generated\Shared\Transfer\ModuleDependencyTransfer $moduleDependencyTransfer
      *
-     * @return bool
+     * @return string|null
      */
-    protected function canFixDependencies(ModuleTransfer $moduleTransfer, ModuleDependencyTransfer $moduleDependencyTransfer): bool
+    protected function getComposerNameToFix(ModuleDependencyTransfer $moduleDependencyTransfer): ?string
     {
-        if ($moduleDependencyTransfer->getIsValid()) {
-            return false;
+        $moduleName = $moduleDependencyTransfer->getModule();
+
+        $composerName = $this->getComposerNameFromModuleCollection($moduleName);
+        if ($composerName !== null) {
+            return $composerName;
         }
 
-        $module = $moduleDependencyTransfer->getModule();
-        try {
-            $this->getModuleTransfer($module);
-        } catch (Exception $exception) {
-            $this->output->writeln(sprintf('<bg=red>%s</>', $exception->getMessage()));
-            $this->output->writeln(sprintf('Please check the module <fg=yellow>%s.%s</> manually.', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
-            $this->output->writeln('');
-
-            return false;
+        $composerName = $this->getComposerNameFromPackageCollection($moduleName);
+        if ($composerName !== null) {
+            return $composerName;
         }
 
-        return true;
+        return null;
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return null|string
+     */
+    protected function getComposerNameFromModuleCollection(string $moduleName): ?string
+    {
+        if ($this->isNamespacedModuleName($moduleName)) {
+            $moduleTransfer = $this->getModuleTransferCollection()[$moduleName];
+
+            return sprintf('%s/%s', $moduleTransfer->getOrganization()->getNameDashed(), $moduleTransfer->getNameDashed());
+        }
+
+        $moduleTransferCollection = $this->getModuleTransferCollectionGroupedByModuleName();
+
+        if (!isset($moduleTransferCollection[$moduleName])) {
+            return null;
+        }
+
+        if (count($moduleTransferCollection[$moduleName]) > 1) {
+            $this->output->writeln(sprintf('Found more than one moduleTransfer for the module name "%s"', $moduleName));
+
+            return null;
+        }
+
+        $moduleTransfer = $this->getCurrentModuleTransfer($moduleTransferCollection[$moduleName]);
+
+        return sprintf('%s/%s', $moduleTransfer->getOrganization()->getNameDashed(), $moduleTransfer->getNameDashed());
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return null|string
+     */
+    protected function getComposerNameFromPackageCollection(string $moduleName): ?string
+    {
+        $packageTransferCollection = $this->getPackageTransferCollectionGroupedByPackageName();
+
+        if (isset($packageTransferCollection[$moduleName])) {
+            $packageTransfer = $packageTransferCollection[$moduleName];
+
+            return $packageTransfer->getComposerName();
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array $moduleTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer
+     */
+    protected function getCurrentModuleTransfer(array $moduleTransferCollection): ModuleTransfer
+    {
+        return current($moduleTransferCollection);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getModuleTransferCollectionGroupedByModuleName(): array
+    {
+        if ($this->moduleTransferCollectionGroupedByModuleName !== null) {
+            return $this->moduleTransferCollectionGroupedByModuleName;
+        }
+
+        $moduleTransferCollection = $this->getModuleTransferCollection();
+        $this->moduleTransferCollectionGroupedByModuleName = [];
+
+        foreach ($moduleTransferCollection as $moduleTransfer) {
+            $this->moduleTransferCollectionGroupedByModuleName[$moduleTransfer->getName()][] = $moduleTransfer;
+        }
+
+        return $this->moduleTransferCollectionGroupedByModuleName;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PackageTransfer[]
+     */
+    protected function getPackageTransferCollectionGroupedByPackageName(): array
+    {
+        if ($this->packageTransferCollectionGroupedByPackageName !== null) {
+            return $this->packageTransferCollectionGroupedByPackageName;
+        }
+
+        $packageTransferCollection = $this->getFacade()->findPackages();
+        $this->packageTransferCollectionGroupedByPackageName = [];
+
+        foreach ($packageTransferCollection as $packageTransfer) {
+            $this->packageTransferCollectionGroupedByPackageName[$packageTransfer->getPackageName()] = $packageTransfer;
+        }
+
+        return $this->packageTransferCollectionGroupedByPackageName;
     }
 
     /**
@@ -172,16 +278,16 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
     /**
      * @param \Generated\Shared\Transfer\ModuleDependencyTransfer $moduleDependencyTransfer
      * @param array $composerJsonArray
-     * @param string $moduleNameToFix
+     * @param string $composerName
      *
      * @return array
      */
-    protected function fixDependencyViolations(ModuleDependencyTransfer $moduleDependencyTransfer, array $composerJsonArray, string $moduleNameToFix): array
+    protected function fixDependencyViolations(ModuleDependencyTransfer $moduleDependencyTransfer, array $composerJsonArray, string $composerName): array
     {
         foreach ($moduleDependencyTransfer->getValidationMessages() as $validationMessageTransfer) {
-            $composerJsonArray = $this->fixDependencyViolationsInRequire($validationMessageTransfer, $composerJsonArray, $moduleNameToFix);
-            $composerJsonArray = $this->fixDependencyViolationsInRequireDev($validationMessageTransfer, $composerJsonArray, $moduleNameToFix);
-            $composerJsonArray = $this->fixDependencyViolationsInSuggest($validationMessageTransfer, $composerJsonArray, $moduleNameToFix);
+            $composerJsonArray = $this->fixDependencyViolationsInRequire($validationMessageTransfer, $composerJsonArray, $composerName);
+            $composerJsonArray = $this->fixDependencyViolationsInRequireDev($validationMessageTransfer, $composerJsonArray, $composerName);
+            $composerJsonArray = $this->fixDependencyViolationsInSuggest($validationMessageTransfer, $composerJsonArray, $composerName);
         }
 
         return $composerJsonArray;
@@ -190,19 +296,19 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
     /**
      * @param \Generated\Shared\Transfer\ValidationMessageTransfer $validationMessageTransfer
      * @param array $composerJsonArray
-     * @param string $moduleNameToFix
+     * @param string $composerName
      *
      * @return array
      */
-    protected function fixDependencyViolationsInRequire(ValidationMessageTransfer $validationMessageTransfer, array $composerJsonArray, string $moduleNameToFix): array
+    protected function fixDependencyViolationsInRequire(ValidationMessageTransfer $validationMessageTransfer, array $composerJsonArray, string $composerName): array
     {
         if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::ADD_REQUIRE) {
-            $composerJsonArray['require'][$moduleNameToFix] = '*';
-            $this->writeIfVerbose(sprintf('<fg=green>%s</> added to require', $moduleNameToFix));
+            $composerJsonArray['require'][$composerName] = '*';
+            $this->writeIfVerbose(sprintf('<fg=green>%s</> added to require', $composerName));
         }
         if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::REMOVE_REQUIRE) {
-            unset($composerJsonArray['require'][$moduleNameToFix]);
-            $this->writeIfVerbose(sprintf('<fg=green>%s</> removed from require', $moduleNameToFix));
+            unset($composerJsonArray['require'][$composerName]);
+            $this->writeIfVerbose(sprintf('<fg=green>%s</> removed from require', $composerName));
         }
 
         return $composerJsonArray;
@@ -211,19 +317,19 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
     /**
      * @param \Generated\Shared\Transfer\ValidationMessageTransfer $validationMessageTransfer
      * @param array $composerJsonArray
-     * @param string $moduleNameToFix
+     * @param string $composerName
      *
      * @return array
      */
-    protected function fixDependencyViolationsInRequireDev(ValidationMessageTransfer $validationMessageTransfer, array $composerJsonArray, string $moduleNameToFix): array
+    protected function fixDependencyViolationsInRequireDev(ValidationMessageTransfer $validationMessageTransfer, array $composerJsonArray, string $composerName): array
     {
         if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::ADD_REQUIRE_DEV) {
-            $composerJsonArray['require-dev'][$moduleNameToFix] = '*';
-            $this->writeIfVerbose(sprintf('<fg=green>%s</> added to require-dev', $moduleNameToFix));
+            $composerJsonArray['require-dev'][$composerName] = '*';
+            $this->writeIfVerbose(sprintf('<fg=green>%s</> added to require-dev', $composerName));
         }
         if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::REMOVE_REQUIRE_DEV) {
-            unset($composerJsonArray['require-dev'][$moduleNameToFix]);
-            $this->writeIfVerbose(sprintf('<fg=green>%s</> removed from require-dev', $moduleNameToFix));
+            unset($composerJsonArray['require-dev'][$composerName]);
+            $this->writeIfVerbose(sprintf('<fg=green>%s</> removed from require-dev', $composerName));
         }
 
         return $composerJsonArray;
@@ -232,19 +338,19 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
     /**
      * @param \Generated\Shared\Transfer\ValidationMessageTransfer $validationMessageTransfer
      * @param array $composerJsonArray
-     * @param string $moduleNameToFix
+     * @param string $composerName
      *
      * @return array
      */
-    protected function fixDependencyViolationsInSuggest(ValidationMessageTransfer $validationMessageTransfer, array $composerJsonArray, string $moduleNameToFix): array
+    protected function fixDependencyViolationsInSuggest(ValidationMessageTransfer $validationMessageTransfer, array $composerJsonArray, string $composerName): array
     {
         if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::ADD_SUGGEST) {
-            $composerJsonArray['suggest'][$moduleNameToFix] = 'ADD SUGGEST DESCRIPTION';
-            $this->writeIfVerbose(sprintf('<fg=green>%s</> added to suggests', $moduleNameToFix));
+            $composerJsonArray['suggest'][$composerName] = 'ADD SUGGEST DESCRIPTION';
+            $this->writeIfVerbose(sprintf('<fg=green>%s</> added to suggests', $composerName));
         }
         if ($validationMessageTransfer->getFixType() === ValidationRuleInterface::REMOVE_SUGGEST) {
-            unset($composerJsonArray['suggest'][$moduleNameToFix]);
-            $this->writeIfVerbose(sprintf('<fg=green>%s</> removed from suggests', $moduleNameToFix));
+            unset($composerJsonArray['suggest'][$composerName]);
+            $this->writeIfVerbose(sprintf('<fg=green>%s</> removed from suggests', $composerName));
         }
 
         return $composerJsonArray;
@@ -298,29 +404,5 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
         }
 
         return $composerJsonArray;
-    }
-
-    /**
-     * @param string $module
-     *
-     * @throws \Exception
-     *
-     * @return \Generated\Shared\Transfer\ModuleTransfer
-     */
-    protected function findInModuleTransferCollectionByModuleName(string $module): ModuleTransfer
-    {
-        $moduleTransferCollection = $this->getModuleTransferCollection();
-
-        if (!isset($moduleTransferCollection[$module])) {
-            throw new Exception(sprintf('Module name "%s" not not found in module transfer collection.', $module));
-        }
-
-        $moduleTransferCollection = $moduleTransferCollection[$module];
-
-        if (count($moduleTransferCollection) > 1) {
-            throw new Exception(sprintf('Module name "%s" is not unique across namespaces.', $module));
-        }
-
-        return current($moduleTransferCollection);
     }
 }

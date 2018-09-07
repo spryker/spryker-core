@@ -140,18 +140,6 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
-     */
-    public function getModules(): array
-    {
-        return $this->getFactory()->createModuleFinder()->find();
-    }
-
-    /**
      * @api
      *
      * @deprecated Use `getAllModules()` instead.
@@ -477,5 +465,45 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function findProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
         return $this->getFactory()->createProjectModuleFinder()->find($moduleFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @deprecated Use `findModules()` instead.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     */
+    public function getModules(): array
+    {
+        return $this->findModules();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     */
+    public function findModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
+    {
+        return $this->getFactory()->createModuleFinder()->find($moduleFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PackageTransfer[]
+     */
+    public function findPackages(): array
+    {
+        return $this->getFactory()->createPackageFinder()->findPackages();
     }
 }
