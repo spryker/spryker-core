@@ -26,8 +26,6 @@ class ProductImageSetsRestApiToProductImageStorageClientBridge implements Produc
     }
 
     /**
-     * @api
-     *
      * @param int $idProductAbstract
      * @param string $locale
      *
@@ -39,8 +37,6 @@ class ProductImageSetsRestApiToProductImageStorageClientBridge implements Produc
     }
 
     /**
-     * @api
-     *
      * @param int $idProductConcrete
      * @param string $locale
      *
