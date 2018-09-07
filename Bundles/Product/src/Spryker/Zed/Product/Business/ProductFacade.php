@@ -647,9 +647,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function activateProductConcrete($idProductConcrete)
     {
-         $this->getFactory()
-             ->createProductConcreteActivator()
-             ->activateProductConcrete($idProductConcrete);
+        $this->getFactory()
+            ->createProductConcreteActivator()
+            ->activateProductConcrete($idProductConcrete);
     }
 
     /**
@@ -936,5 +936,21 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createProductConcreteManager()
             ->getProductConcreteSkusByConcreteIds($productIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function findConcreteProductsByIds(array $productConcreteIds): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteReader()
+            ->findConcreteProductsByIds($productConcreteIds);
     }
 }

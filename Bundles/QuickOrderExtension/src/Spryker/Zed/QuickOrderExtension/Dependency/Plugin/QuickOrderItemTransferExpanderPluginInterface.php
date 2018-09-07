@@ -13,7 +13,7 @@ interface QuickOrderItemTransferExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands provided ItemTransfer with additional data or replaces existing one.
+     * - Expands provided ItemTransfer with additional data.
      * - Will be executed before adding items into cart.
      *
      * @api

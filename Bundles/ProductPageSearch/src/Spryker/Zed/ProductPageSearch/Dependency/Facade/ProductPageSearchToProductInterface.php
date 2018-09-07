@@ -32,4 +32,18 @@ interface ProductPageSearchToProductInterface
      * @return array
      */
     public function generateAttributePermutations(array $superAttributes, $idProductConcrete);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract);
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function findConcreteProductsByIds(array $productConcreteIds): array;
 }
