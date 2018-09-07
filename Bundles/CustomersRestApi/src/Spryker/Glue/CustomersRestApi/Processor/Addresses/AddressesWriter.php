@@ -141,7 +141,7 @@ class AddressesWriter implements AddressesWriterInterface
             return $restResponse;
         }
 
-        if ($restRequest->getResource()->getId() === '') {
+        if (!$restRequest->getResource()->getId()) {
             $this->createAddressUuidMissingError($restResponse);
 
             return $restResponse;
@@ -204,7 +204,7 @@ class AddressesWriter implements AddressesWriterInterface
             return $restResponse;
         }
 
-        if ($restRequest->getResource()->getId() === '') {
+        if (!$restRequest->getResource()->getId()) {
             $this->createAddressUuidMissingError($restResponse);
 
             return $restResponse;

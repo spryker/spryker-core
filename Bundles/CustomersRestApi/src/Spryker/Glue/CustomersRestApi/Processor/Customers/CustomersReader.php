@@ -59,7 +59,7 @@ class CustomersReader implements CustomersReaderInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        if ($restRequest->getResource()->getId() === '') {
+        if (!$restRequest->getResource()->getId()) {
             $this->createCustomerReferenceMissingError($restResponse);
 
             return $restResponse;
