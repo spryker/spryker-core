@@ -11,6 +11,15 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company": "*",
+    "spryker/company-business-unit": "*",
+    "spryker/company-user": "*",
+    "spryker/customer": "*",
+    "spryker/permission": "*",
+    "spryker/product": "*",
+    "spryker/propel": "*",
+    "spryker/quote": "*",
+    "spryker/stock": "*",
     "spryker/testify": "*"
   },
   "autoload": {
