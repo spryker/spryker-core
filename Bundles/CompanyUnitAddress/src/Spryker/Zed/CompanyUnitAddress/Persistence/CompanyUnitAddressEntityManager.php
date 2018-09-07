@@ -36,14 +36,9 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
                 $companyUnitAddressTransfer,
                 new SpyCompanyUnitAddressEntityTransfer()
             );
-        $companyUnitAddressExist = $entityTransfer->getIdCompanyUnitAddress() !== null;
         $entityTransfer = $this->save($entityTransfer);
         $idCompanyUnitAddress = $entityTransfer->getIdCompanyUnitAddress();
         $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
-
-        if (!$companyUnitAddressExist) {
-            $this->createAddressToBusinessUnitRelations($companyUnitAddressTransfer, $idCompanyUnitAddress);
-        }
 
         return $companyUnitAddressTransfer;
     }
@@ -102,27 +97,12 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     * @param int $idCompanyUnitAddress
+     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $companyUnitAddressToCompanyBusinessUnitEntityTransfer
      *
      * @return void
      */
-    protected function createAddressToBusinessUnitRelations(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer,
-        int $idCompanyUnitAddress
-    ): void {
-        $businessUnits = $companyUnitAddressTransfer->getCompanyBusinessUnits();
-
-        if (!$businessUnits || !$businessUnits->getCompanyBusinessUnits()) {
-            return;
-        }
-
-        foreach ($businessUnits->getCompanyBusinessUnits() as $companyBusinessUnit) {
-            $entityTransfer = new SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer();
-            $entityTransfer
-                ->setFkCompanyBusinessUnit($companyBusinessUnit->getIdCompanyBusinessUnit())
-                ->setFkCompanyUnitAddress($idCompanyUnitAddress);
-            $this->save($entityTransfer);
-        }
+    public function saveAddressToBusinessUnitRelation(SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $companyUnitAddressToCompanyBusinessUnitEntityTransfer): void
+    {
+        $this->save($companyUnitAddressToCompanyBusinessUnitEntityTransfer);
     }
 }

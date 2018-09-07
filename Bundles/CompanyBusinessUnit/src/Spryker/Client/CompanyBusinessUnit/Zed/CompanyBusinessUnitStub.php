@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyBusinessUnitTreeTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\CompanyBusinessUnit\Dependency\Client\CompanyBusinessUnitToZedRequestClientInterface;
 
@@ -118,16 +118,16 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
      */
-    public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeTransfer
+    public function getCustomerCompanyBusinessUnitTree(CustomerTransfer $customerTransfer): CompanyBusinessUnitTreeNodeCollectionTransfer
     {
-        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTreeTransfer $companyBusinessUnitTreeTransfer */
-        $companyBusinessUnitTreeTransfer = $this->zedRequestClient->call(
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer $companyBusinessUnitTreeNodeCollection */
+        $companyBusinessUnitTreeNodeCollection = $this->zedRequestClient->call(
             '/company-business-unit/gateway/get-customer-company-business-unit-tree',
             $customerTransfer
         );
 
-        return $companyBusinessUnitTreeTransfer;
+        return $companyBusinessUnitTreeNodeCollection;
     }
 }
