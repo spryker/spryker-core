@@ -62,7 +62,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
             $this->createInfoMessageWithSkuCollection(static::GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_AMOUNT_CHANGED, $itemSkuCollection);
         }
 
-        $this->checkIsVouchersUsableForCurrentCurrency($resultQuoteTransfer);
+        $this->filterNotUsableVouchersForCurrentCurrency($resultQuoteTransfer);
     }
 
     /**
@@ -178,7 +178,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      *
      * @return void
      */
-    protected function checkIsVouchersUsableForCurrentCurrency(QuoteTransfer $quoteTransfer): void
+    protected function filterNotUsableVouchersForCurrentCurrency(QuoteTransfer $quoteTransfer): void
     {
         $voucherDiscounts = $quoteTransfer->getVoucherDiscounts();
 
