@@ -234,7 +234,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     /**
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
      * @param array $productAbstractLocalizedEntity
-     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch|null $productAbstractPageSearchEntity
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productAbstractPageSearchEntity
      * @param string $storeName
      * @param bool $isRefresh
      *
@@ -243,16 +243,15 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     protected function getProductPageSearchTransfer(
         array $pageDataExpanderPlugins,
         array $productAbstractLocalizedEntity,
-        ?SpyProductAbstractPageSearch $productAbstractPageSearchEntity,
+        SpyProductAbstractPageSearch $productAbstractPageSearchEntity,
         $storeName,
         $isRefresh = false
     ) {
-        if ($isRefresh && $productAbstractPageSearchEntity && $productAbstractPageSearchEntity->getStructuredData()) {
+        if ($isRefresh) {
             $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransferFromJson($productAbstractPageSearchEntity->getStructuredData());
-        } else {
-            $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransfer($productAbstractLocalizedEntity);
         }
 
+        $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransfer($productAbstractLocalizedEntity);
         $productPageSearchTransfer->setStore($storeName);
 
         $this->expandPageSearchTransferWithPlugins($pageDataExpanderPlugins, $productAbstractLocalizedEntity, $productPageSearchTransfer);
