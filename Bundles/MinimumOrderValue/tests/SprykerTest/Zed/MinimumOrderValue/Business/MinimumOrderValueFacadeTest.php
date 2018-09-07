@@ -200,7 +200,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
     /**
      * @return void
      */
-    public function testFindMinimumOrderValues(): void
+    public function testGetMinimumOrderValues(): void
     {
         $this->setupDependencies();
 
@@ -227,7 +227,7 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
             );
 
         // Action
-        $globalThresholds = $this->getFacade()->findMinimumOrderValues(
+        $globalThresholds = $this->getFacade()->getMinimumOrderValues(
             $storeTransfer,
             $currencyTransfer
         );

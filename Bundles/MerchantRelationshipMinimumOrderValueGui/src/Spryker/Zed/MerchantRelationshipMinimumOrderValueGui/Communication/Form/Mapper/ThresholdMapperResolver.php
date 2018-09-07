@@ -54,7 +54,7 @@ class ThresholdMapperResolver implements ThresholdMapperResolverInterface
             throw new MissingThresholdFormMapperException();
         }
         /** @var \Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\Mapper\ThresholdFormMapperInterface $mapperClass */
-        $mapperClass = $this->config->getThresholdMappers()[$minimumOrderValueTypeKey];
+        $mapperClass = $this->config->getStrategyTypeToFormTypeMap()[$minimumOrderValueTypeKey];
 
         return new $mapperClass($this->localeProvider, $this->storeCurrencyFinder);
     }
@@ -66,6 +66,6 @@ class ThresholdMapperResolver implements ThresholdMapperResolverInterface
      */
     public function hasThresholdMapperByStrategyKey(string $minimumOrderValueTypeKey): bool
     {
-        return array_key_exists($minimumOrderValueTypeKey, $this->config->getThresholdMappers());
+        return array_key_exists($minimumOrderValueTypeKey, $this->config->getStrategyTypeToFormTypeMap());
     }
 }

@@ -63,7 +63,7 @@ class MinimumOrderValueDataSourceStrategyResolver implements MinimumOrderValueDa
             ->requireCurrency();
 
         $minimumOrderValueTransfers = $this->minimumOrderValueReader
-            ->findMinimumOrderValues($quoteTransfer->getStore(), $quoteTransfer->getCurrency());
+            ->getMinimumOrderValues($quoteTransfer->getStore(), $quoteTransfer->getCurrency());
 
         $cartSubTotal = $this->getCartSubtotal($quoteTransfer);
 

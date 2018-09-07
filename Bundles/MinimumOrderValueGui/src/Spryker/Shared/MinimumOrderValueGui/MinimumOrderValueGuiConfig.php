@@ -9,8 +9,6 @@ namespace Spryker\Shared\MinimumOrderValueGui;
 
 interface MinimumOrderValueGuiConfig
 {
-    public const STORE_CURRENCY_DELIMITER = ';';
-
     /**
      * @uses \Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig::GROUP_HARD
      */
@@ -24,14 +22,17 @@ interface MinimumOrderValueGuiConfig
      * @uses \Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig::THRESHOLD_STRATEGY_KEY_HARD
      */
     public const HARD_TYPE_STRATEGY = 'hard-threshold';
+
     /**
      * @uses \Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig::THRESHOLD_STRATEGY_KEY_SOFT
      */
     public const SOFT_TYPE_STRATEGY_MESSAGE = 'soft-threshold';
+
     /**
      * @uses \Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig::THRESHOLD_STRATEGY_KEY_SOFT_FIXED_FEE
      */
     public const SOFT_TYPE_STRATEGY_FIXED = 'soft-threshold-fixed-fee';
+
     /**
      * @uses \Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig::THRESHOLD_STRATEGY_KEY_SOFT_FLEXIBLE_FEE
      */

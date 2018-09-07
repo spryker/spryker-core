@@ -28,7 +28,7 @@ interface MinimumOrderValueGuiToMinimumOrderValueFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
      */
-    public function findMinimumOrderValues(
+    public function getMinimumOrderValues(
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array;

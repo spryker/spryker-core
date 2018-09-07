@@ -9,15 +9,22 @@ namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConfig;
+use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConfig as SharedMinimumOrderValueGuiConfig;
+use Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\GlobalThresholdDataProviderResolverInterface;
 use Spryker\Zed\MinimumOrderValueGui\Communication\Form\GlobalThresholdType;
-use Spryker\Zed\MinimumOrderValueGui\Communication\MinimumOrderValueGuiCommunicationFactory;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface;
+use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMinimumOrderValueFacadeInterface;
+use Spryker\Zed\MinimumOrderValueGui\MinimumOrderValueGuiConfig;
 
-class GlobalThresholdDataProvider implements FormDataProviderInterface
+class GlobalThresholdDataProvider
 {
     protected const FORMAT_STORE_CURRENCY_ROW_LABEL = "%s - %s [%s]";
     protected const FORMAT_STORE_CURRENCY_ROW_VALUE = "%s%s%s";
+
+    /**
+     * @var \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMinimumOrderValueFacadeInterface
+     */
+    protected $minimumOrderValueFacade;
 
     /**
      * @var \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface
@@ -25,20 +32,23 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
     protected $currencyFacade;
 
     /**
-     * @var \Spryker\Zed\MinimumOrderValueGui\Communication\MinimumOrderValueGuiCommunicationFactory
+     * @var \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\GlobalThresholdDataProviderResolverInterface
      */
-    protected $minimumOrderValueGuiCommunicationFactory;
+    protected $globalThresholdDataProviderResolver;
 
     /**
+     * @param \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToMinimumOrderValueFacadeInterface $minimumOrderValueFacade
      * @param \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface $currencyFacade
-     * @param \Spryker\Zed\MinimumOrderValueGui\Communication\MinimumOrderValueGuiCommunicationFactory $minimumOrderValueGuiCommunicationFactory
+     * @param \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\GlobalThresholdDataProviderResolverInterface $globalThresholdDataProviderResolver
      */
     public function __construct(
+        MinimumOrderValueGuiToMinimumOrderValueFacadeInterface $minimumOrderValueFacade,
         MinimumOrderValueGuiToCurrencyFacadeInterface $currencyFacade,
-        MinimumOrderValueGuiCommunicationFactory $minimumOrderValueGuiCommunicationFactory
+        GlobalThresholdDataProviderResolverInterface $globalThresholdDataProviderResolver
     ) {
+        $this->minimumOrderValueFacade = $minimumOrderValueFacade;
         $this->currencyFacade = $currencyFacade;
-        $this->minimumOrderValueGuiCommunicationFactory = $minimumOrderValueGuiCommunicationFactory;
+        $this->globalThresholdDataProviderResolver = $globalThresholdDataProviderResolver;
     }
 
     /**
@@ -54,40 +64,31 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer[] $minimumOrderValueTValueTransfers
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return array
      */
     public function getData(
-        array $minimumOrderValueTValueTransfers,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array {
+        $minimumOrderValueTValueTransfers = $this->getMinimumOrderValueTransfers($storeTransfer, $currencyTransfer);
+
         $data = [];
         foreach ($minimumOrderValueTValueTransfers as $minimumOrderValueTValueTransfer) {
-            $data[GlobalThresholdType::FIELD_STORE_CURRENCY] = $this->formatStoreCurrencyRowValue(
-                $minimumOrderValueTValueTransfer->getStore(),
-                $minimumOrderValueTValueTransfer->getCurrency()
-            );
-
-            if ($thresholdStrategyDataProvider = $this->minimumOrderValueGuiCommunicationFactory
-                ->createGlobalSoftThresholdDataProviderResolver()
+            if ($thresholdStrategyDataProvider = $this->globalThresholdDataProviderResolver
                 ->hasGlobalThresholdDataProviderByStrategyKey($minimumOrderValueTValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->getKey())) {
-                $data = $thresholdStrategyDataProvider = $this->minimumOrderValueGuiCommunicationFactory
-                    ->createGlobalSoftThresholdDataProviderResolver()
+                $data = $thresholdStrategyDataProvider = $this->globalThresholdDataProviderResolver
                     ->resolveGlobalThresholdDataProviderByStrategyKey($minimumOrderValueTValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->getKey())
                     ->getData($data, $minimumOrderValueTValueTransfer);
             }
         }
 
-        if (empty($minimumOrderValueTValueTransfers)) {
-            $data[GlobalThresholdType::FIELD_STORE_CURRENCY] = $this->formatStoreCurrencyRowValue(
-                $storeTransfer,
-                $currencyTransfer
-            );
-        }
+        $data[GlobalThresholdType::FIELD_STORE_CURRENCY] = $this->formatStoreCurrencyRowValue(
+            $storeTransfer,
+            $currencyTransfer
+        );
 
         return $data;
     }
@@ -136,9 +137,9 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
     protected function getSoftTypesList(): array
     {
         return [
-            "Soft Threshold with message" => MinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_MESSAGE,
-            "Soft Threshold with fixed fee" => MinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_FIXED,
-            "Soft Threshold with flexible fee" => MinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE,
+            "Soft Threshold with message" => SharedMinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_MESSAGE,
+            "Soft Threshold with fixed fee" => SharedMinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_FIXED,
+            "Soft Threshold with flexible fee" => SharedMinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE,
         ];
     }
 
@@ -158,5 +159,20 @@ class GlobalThresholdDataProvider implements FormDataProviderInterface
             MinimumOrderValueGuiConfig::STORE_CURRENCY_DELIMITER,
             $currencyTransfer->getCode()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
+     */
+    protected function getMinimumOrderValueTransfers(StoreTransfer $storeTransfer, CurrencyTransfer $currencyTransfer): array
+    {
+        return $this->minimumOrderValueFacade
+            ->getMinimumOrderValues(
+                $storeTransfer,
+                $currencyTransfer
+            );
     }
 }

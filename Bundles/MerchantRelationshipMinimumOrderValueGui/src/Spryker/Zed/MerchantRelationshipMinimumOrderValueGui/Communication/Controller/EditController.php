@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-    protected const STORE_CURRENCY_REQUEST_PARAM = 'store_currency';
+    protected const PARAM_STORE_CURRENCY_REQUEST = 'store_currency';
     protected const REQUEST_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
     protected const MESSAGE_UPDATE_SUCCESSFUL = 'The Merchant Relationship Threshold is saved successfully.';
 
@@ -33,17 +33,14 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $storeCurrencyRequestParam = $request->query->get(static::STORE_CURRENCY_REQUEST_PARAM);
+        $storeCurrencyRequestParam = $request->query->get(static::PARAM_STORE_CURRENCY_REQUEST);
         $idMerchantRelationship = $request->query->getInt(static::REQUEST_ID_MERCHANT_RELATIONSHIP);
 
-        $currencyTransfer = $this->getCurrencyTransferFromRequest($storeCurrencyRequestParam);
-        $storeTransfer = $this->getStoreTransferFromRequest($storeCurrencyRequestParam);
-
-        $minimumOrderValueTransfers = $this->getMinimumOrderValueTransfers($storeTransfer, $currencyTransfer, $idMerchantRelationship);
+        $currencyTransfer = $this->getCurrencyTransferFromRequestParam($storeCurrencyRequestParam);
+        $storeTransfer = $this->getStoreTransferFromRequestParam($storeCurrencyRequestParam);
 
         $thresholdForm = $this->getFactory()->createThresholdForm(
             $idMerchantRelationship,
-            $minimumOrderValueTransfers,
             $storeTransfer,
             $currencyTransfer
         );
@@ -99,33 +96,15 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param int $idMerchantRelationship
-     *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[]
-     */
-    protected function getMinimumOrderValueTransfers(StoreTransfer $storeTransfer, CurrencyTransfer $currencyTransfer, int $idMerchantRelationship): array
-    {
-        return $this->getFactory()
-            ->getMerchantRelationshipMinimumOrderValueFacade()
-            ->getMerchantRelationshipMinimumOrderValues(
-                $storeTransfer,
-                $currencyTransfer,
-                [$idMerchantRelationship]
-            );
-    }
-
-    /**
      * @param string|null $storeCurrencyRequestParam
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    protected function getCurrencyTransferFromRequest(?string $storeCurrencyRequestParam): CurrencyTransfer
+    protected function getCurrencyTransferFromRequestParam(?string $storeCurrencyRequestParam): CurrencyTransfer
     {
         return $this->getFactory()
             ->createStoreCurrencyFinder()
-            ->getCurrencyTransferFromRequest($storeCurrencyRequestParam);
+            ->getCurrencyTransferFromRequestParam($storeCurrencyRequestParam);
     }
 
     /**
@@ -133,11 +112,11 @@ class EditController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function getStoreTransferFromRequest(?string $storeCurrencyRequestParam): StoreTransfer
+    protected function getStoreTransferFromRequestParam(?string $storeCurrencyRequestParam): StoreTransfer
     {
         return $this->getFactory()
             ->createStoreCurrencyFinder()
-            ->getStoreTransferFromRequest($storeCurrencyRequestParam);
+            ->getStoreTransferFromRequestParam($storeCurrencyRequestParam);
     }
 
     /**

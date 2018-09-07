@@ -38,7 +38,7 @@ class ThresholdDataProviderResolver implements ThresholdDataProviderResolverInte
             throw new MissingThresholdDataProviderException();
         }
         /** @var \Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdStrategyDataProviderInterface $dataProvider */
-        $dataProvider = $this->config->getThresholdDataProviders()[$minimumOrderValueTypeKey];
+        $dataProvider = $this->config->getStrategyTypeToDataProviderMap()[$minimumOrderValueTypeKey];
 
         return new $dataProvider();
     }
@@ -50,6 +50,6 @@ class ThresholdDataProviderResolver implements ThresholdDataProviderResolverInte
      */
     public function hasThresholdDataProviderByStrategyKey(string $minimumOrderValueTypeKey): bool
     {
-        return array_key_exists($minimumOrderValueTypeKey, $this->config->getThresholdDataProviders());
+        return array_key_exists($minimumOrderValueTypeKey, $this->config->getStrategyTypeToDataProviderMap());
     }
 }

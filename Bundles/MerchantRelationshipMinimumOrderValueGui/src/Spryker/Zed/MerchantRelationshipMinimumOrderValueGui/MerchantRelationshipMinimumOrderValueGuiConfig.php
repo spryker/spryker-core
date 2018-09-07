@@ -20,14 +20,16 @@ use Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\Mapp
 
 class MerchantRelationshipMinimumOrderValueGuiConfig extends AbstractBundleConfig
 {
-    protected const MAPPERS_THRESHOLD = [
+    public const STORE_CURRENCY_DELIMITER = ';';
+
+    protected const STRATEGY_TYPE_TO_FORM_TYPE_MAP = [
         SharedMerchantRelationshipMinimumOrderValueGuiConfig::HARD_TYPE_STRATEGY => HardThresholdFormMapper::class,
         SharedMerchantRelationshipMinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_MESSAGE => SoftThresholdFormMapper::class,
         SharedMerchantRelationshipMinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE => SoftThresholdFlexibleFeeFormMapper::class,
         SharedMerchantRelationshipMinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_FIXED => SoftThresholdFixedFeeFormMapper::class,
     ];
 
-    protected const DATA_PROVIDERS_THRESHOLD = [
+    protected const STRATEGY_TYPE_TO_DATA_PROVIDER_MAP = [
         SharedMerchantRelationshipMinimumOrderValueGuiConfig::HARD_TYPE_STRATEGY => HardThresholdDataProvider::class,
         SharedMerchantRelationshipMinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_MESSAGE => SoftThresholdDataProvider::class,
         SharedMerchantRelationshipMinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE => SoftThresholdFlexibleFeeDataProvider::class,
@@ -37,16 +39,16 @@ class MerchantRelationshipMinimumOrderValueGuiConfig extends AbstractBundleConfi
     /**
      * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\Mapper\ThresholdFormMapperInterface[]
      */
-    public function getThresholdMappers(): array
+    public function getStrategyTypeToFormTypeMap(): array
     {
-        return static::MAPPERS_THRESHOLD;
+        return static::STRATEGY_TYPE_TO_FORM_TYPE_MAP;
     }
 
     /**
      * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\Mapper\ThresholdFormMapperInterface[]
      */
-    public function getThresholdDataProviders(): array
+    public function getStrategyTypeToDataProviderMap(): array
     {
-        return static::DATA_PROVIDERS_THRESHOLD;
+        return static::STRATEGY_TYPE_TO_DATA_PROVIDER_MAP;
     }
 }

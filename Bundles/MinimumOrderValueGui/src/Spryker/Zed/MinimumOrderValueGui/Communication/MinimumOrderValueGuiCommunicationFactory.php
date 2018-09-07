@@ -38,14 +38,12 @@ use Symfony\Component\Form\FormInterface;
 class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @param \Generated\Shared\Transfer\MinimumOrderValueTransfer[] $minimumOrderValueTransfers
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createGlobalThresholdForm(
-        array $minimumOrderValueTransfers,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): FormInterface {
@@ -53,7 +51,7 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
 
         return $this->getFormFactory()->create(
             GlobalThresholdType::class,
-            $formDataProvider->getData($minimumOrderValueTransfers, $storeTransfer, $currencyTransfer),
+            $formDataProvider->getData($storeTransfer, $currencyTransfer),
             $formDataProvider->getOptions()
         );
     }
@@ -89,8 +87,9 @@ class MinimumOrderValueGuiCommunicationFactory extends AbstractCommunicationFact
     public function createGlobalThresholdFormDataProvider(): GlobalThresholdDataProvider
     {
         return new GlobalThresholdDataProvider(
+            $this->getMinimumOrderValueFacade(),
             $this->getCurrencyFacade(),
-            $this
+            $this->createGlobalSoftThresholdDataProviderResolver()
         );
     }
 

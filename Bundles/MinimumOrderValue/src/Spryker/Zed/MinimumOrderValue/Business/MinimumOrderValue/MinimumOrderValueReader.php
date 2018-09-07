@@ -42,12 +42,12 @@ class MinimumOrderValueReader implements MinimumOrderValueReaderInterface
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
      */
-    public function findMinimumOrderValues(
+    public function getMinimumOrderValues(
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array {
         $minimumOrderValueTransfers = $this->minimumOrderValueRepository
-            ->findMinimumOrderValues(
+            ->getMinimumOrderValues(
                 $storeTransfer,
                 $currencyTransfer
             );

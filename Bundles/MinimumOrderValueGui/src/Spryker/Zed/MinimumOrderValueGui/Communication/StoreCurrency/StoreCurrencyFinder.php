@@ -9,9 +9,9 @@ namespace Spryker\Zed\MinimumOrderValueGui\Communication\StoreCurrency;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Shared\MinimumOrderValueGui\MinimumOrderValueGuiConfig;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToCurrencyFacadeInterface;
 use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToStoreFacadeInterface;
+use Spryker\Zed\MinimumOrderValueGui\MinimumOrderValueGuiConfig;
 
 class StoreCurrencyFinder implements StoreCurrencyFinderInterface
 {
@@ -42,16 +42,16 @@ class StoreCurrencyFinder implements StoreCurrencyFinderInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrencyTransferFromRequest(?string $storeCurrencyRequestParam): CurrencyTransfer
+    public function getCurrencyTransferFromRequestParam(?string $storeCurrencyRequestParam): CurrencyTransfer
     {
         if (!$storeCurrencyRequestParam) {
             return $this->currencyFacade->getCurrent();
         }
 
-        list($storeName, $currencyCode) = explode(
+        $currencyCode = array_pop(explode(
             MinimumOrderValueGuiConfig::STORE_CURRENCY_DELIMITER,
             $storeCurrencyRequestParam
-        );
+        ));
 
         return $this->currencyFacade->fromIsoCode($currencyCode);
     }
@@ -61,16 +61,16 @@ class StoreCurrencyFinder implements StoreCurrencyFinderInterface
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreTransferFromRequest(?string $storeCurrencyRequestParam): StoreTransfer
+    public function getStoreTransferFromRequestParam(?string $storeCurrencyRequestParam): StoreTransfer
     {
         if (!$storeCurrencyRequestParam) {
             return $this->storeFacade->getCurrentStore();
         }
 
-        list($storeName, $currencyCode) = explode(
+        $storeName = array_shift(explode(
             MinimumOrderValueGuiConfig::STORE_CURRENCY_DELIMITER,
             $storeCurrencyRequestParam
-        );
+        ));
 
         return $this->storeFacade->getStoreByName($storeName);
     }

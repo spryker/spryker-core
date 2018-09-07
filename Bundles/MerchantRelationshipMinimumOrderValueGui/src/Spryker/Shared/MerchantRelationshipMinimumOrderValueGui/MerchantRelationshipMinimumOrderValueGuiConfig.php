@@ -9,31 +9,33 @@ namespace Spryker\Shared\MerchantRelationshipMinimumOrderValueGui;
 
 interface MerchantRelationshipMinimumOrderValueGuiConfig
 {
-    public const STORE_CURRENCY_DELIMITER = ';';
-
     /**
-     * @uses \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface::GROUP_HARD
+     * @uses \Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig::GROUP_HARD
      */
     public const GROUP_HARD = 'Hard';
+
     /**
-     * @uses \Spryker\Zed\MinimumOrderValue\Business\Strategy\MinimumOrderValueStrategyInterface::GROUP_SOFT
+     * @uses \Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig::GROUP_SOFT
      */
     public const GROUP_SOFT = 'Soft';
 
     /**
-     * @uses \Spryker\Zed\MinimumOrderValue\Business\Strategy\HardThresholdStrategy::STRATEGY_KEY
+     * @uses \Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig::STRATEGY_KEY
      */
     public const HARD_TYPE_STRATEGY = 'hard-threshold';
+
     /**
-     * @uses \Spryker\Zed\MinimumOrderValue\Business\Strategy\SoftThresholdWithMessageStrategy::STRATEGY_KEY
+     * @uses \Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig::STRATEGY_KEY
      */
     public const SOFT_TYPE_STRATEGY_MESSAGE = 'soft-threshold';
+
     /**
-     * @uses \Spryker\Zed\MinimumOrderValue\Business\Strategy\SoftThresholdWithFixedFeeStrategy::STRATEGY_KEY
+     * @uses \Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig::STRATEGY_KEY
      */
     public const SOFT_TYPE_STRATEGY_FIXED = 'soft-threshold-fixed-fee';
+
     /**
-     * @uses \Spryker\Zed\MinimumOrderValue\Business\Strategy\SoftThresholdWithFlexibleFeeStrategy::STRATEGY_KEY
+     * @uses \Spryker\Shared\MinimumOrderValue\MinimumOrderValueConfig::STRATEGY_KEY
      */
     public const SOFT_TYPE_STRATEGY_FLEXIBLE = 'soft-threshold-flexible-fee';
 }

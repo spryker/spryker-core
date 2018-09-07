@@ -48,6 +48,7 @@ interface MerchantRelationshipMinimumOrderValueFacadeInterface
     /**
      * Specification:
      * - Gets array of MerchantRelationshipMinimumOrderValueTransfer for merchant relationships, store and currency.
+     * - Adds localized messages based on store locales for every merchant relationships
      *
      * @api
      *

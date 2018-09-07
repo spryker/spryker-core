@@ -63,7 +63,8 @@ interface MinimumOrderValueFacadeInterface
 
     /**
      * Specification:
-     * - Get Global Thresholds by Store and Currency.
+     * - Gets Global Thresholds by Store and Currency.
+     * - Adds localized messages based on store locales for every merchant relationships
      *
      * @api
      *
@@ -72,7 +73,7 @@ interface MinimumOrderValueFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
      */
-    public function findMinimumOrderValues(
+    public function getMinimumOrderValues(
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array;

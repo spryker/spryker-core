@@ -50,7 +50,6 @@ class MerchantRelationshipMinimumOrderValueGuiCommunicationFactory extends Abstr
 
     /**
      * @param int $idMerchantRelationship
-     * @param \Generated\Shared\Transfer\MerchantRelationshipMinimumOrderValueTransfer[] $minimumOrderValueTransfers
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
@@ -58,15 +57,14 @@ class MerchantRelationshipMinimumOrderValueGuiCommunicationFactory extends Abstr
      */
     public function createThresholdForm(
         int $idMerchantRelationship,
-        array $minimumOrderValueTransfers,
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): FormInterface {
-        $formDataProvider = $this->createGlobalThresholdFormDataProvider();
+        $formDataProvider = $this->createThresholdFormDataProvider();
 
         return $this->getFormFactory()->create(
             ThresholdType::class,
-            $formDataProvider->getData($idMerchantRelationship, $minimumOrderValueTransfers, $storeTransfer, $currencyTransfer),
+            $formDataProvider->getData($idMerchantRelationship, $storeTransfer, $currencyTransfer),
             $formDataProvider->getOptions()
         );
     }
@@ -74,11 +72,12 @@ class MerchantRelationshipMinimumOrderValueGuiCommunicationFactory extends Abstr
     /**
      * @return \Spryker\Zed\MerchantRelationshipMinimumOrderValueGui\Communication\Form\DataProvider\ThresholdDataProvider
      */
-    public function createGlobalThresholdFormDataProvider(): ThresholdDataProvider
+    public function createThresholdFormDataProvider(): ThresholdDataProvider
     {
         return new ThresholdDataProvider(
+            $this->getMerchantRelationshipMinimumOrderValueFacade(),
             $this->getCurrencyFacade(),
-            $this
+            $this->createSoftThresholdDataProviderResolver()
         );
     }
 

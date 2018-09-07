@@ -38,7 +38,7 @@ class GlobalThresholdDataProviderResolver implements GlobalThresholdDataProvider
             throw new MissingThresholdDataProviderException();
         }
         /** @var \Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdStrategyDataProviderInterface $dataProvider */
-        $dataProvider = $this->config->getGlobalThresholdDataProviders()[$minimumOrderValueTypeKey];
+        $dataProvider = $this->config->getStrategyTypeToDataProviderMap()[$minimumOrderValueTypeKey];
 
         return new $dataProvider();
     }
@@ -50,6 +50,6 @@ class GlobalThresholdDataProviderResolver implements GlobalThresholdDataProvider
      */
     public function hasGlobalThresholdDataProviderByStrategyKey(string $minimumOrderValueTypeKey): bool
     {
-        return array_key_exists($minimumOrderValueTypeKey, $this->config->getGlobalThresholdDataProviders());
+        return array_key_exists($minimumOrderValueTypeKey, $this->config->getStrategyTypeToDataProviderMap());
     }
 }

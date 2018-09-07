@@ -17,12 +17,12 @@ interface StoreCurrencyFinderInterface
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreTransferFromRequest(?string $storeCurrencyRequestParam): StoreTransfer;
+    public function getStoreTransferFromRequestParam(?string $storeCurrencyRequestParam): StoreTransfer;
 
     /**
      * @param string|null $storeCurrencyRequestParam
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrencyTransferFromRequest(?string $storeCurrencyRequestParam): CurrencyTransfer;
+    public function getCurrencyTransferFromRequestParam(?string $storeCurrencyRequestParam): CurrencyTransfer;
 }

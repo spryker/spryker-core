@@ -48,8 +48,8 @@ abstract class AbstractThresholdFormMapper
         array $data,
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {
-        $storeTransfer = $this->storeCurrencyFinder->getStoreTransferFromRequest($data[ThresholdType::FIELD_STORE_CURRENCY]);
-        $currencyTransfer = $this->storeCurrencyFinder->getCurrencyTransferFromRequest($data[ThresholdType::FIELD_STORE_CURRENCY]);
+        $storeTransfer = $this->storeCurrencyFinder->getStoreTransferFromRequestParam($data[ThresholdType::FIELD_STORE_CURRENCY]);
+        $currencyTransfer = $this->storeCurrencyFinder->getCurrencyTransferFromRequestParam($data[ThresholdType::FIELD_STORE_CURRENCY]);
 
         $merchantRelationshipMinimumOrderValueTransfer->setStore($storeTransfer);
         $merchantRelationshipMinimumOrderValueTransfer->setCurrency($currencyTransfer);
