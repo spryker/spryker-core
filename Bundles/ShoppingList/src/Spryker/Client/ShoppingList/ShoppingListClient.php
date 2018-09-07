@@ -295,6 +295,18 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function updateShoppingListPermissions(): void
+    {
+        $this->updatePermissions();
+    }
+
+    /**
      * @return \Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface
      */
     protected function getZedStub(): ShoppingListStubInterface
