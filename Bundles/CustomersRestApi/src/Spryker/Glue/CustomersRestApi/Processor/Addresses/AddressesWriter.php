@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Addresses;
 
+use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
@@ -146,31 +147,33 @@ class AddressesWriter implements AddressesWriterInterface
         }
 
         $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
+        $addressTransfer = $this->findAddressByUuid($addressesTransfer, $restRequest->getResource()->getId());
 
-        foreach ($addressesTransfer->getAddresses() as $address) {
-            if ($address->getUuid() === $restRequest->getResource()->getId()) {
-                $address->fromArray($addressAttributesTransfer->modifiedToArray(), true);
+        if (!$addressTransfer) {
+            $this->createAddressNotFoundError($restResponse);
 
-                $addressTransfer = $this->customerClient->updateAddress($address);
-
-                if (!$addressTransfer->getUuid()) {
-                    $this->createErrorAddressNotSaved($restResponse);
-
-                    return $restResponse;
-                }
-
-                $this->updateCustomerDefaultAddresses($address, $customerResponseTransfer->getCustomerTransfer());
-
-                $restResource = $this
-                    ->addressesResourceMapper
-                    ->mapAddressTransferToRestResource(
-                        $addressTransfer,
-                        $customerResponseTransfer->getCustomerTransfer()
-                    );
-
-                $restResponse->addResource($restResource);
-            }
+            return $restResponse;
         }
+
+        $addressTransfer->fromArray($addressAttributesTransfer->modifiedToArray(), true);
+
+        $this->updateCustomerDefaultAddresses($addressTransfer, $customerResponseTransfer->getCustomerTransfer());
+        $addressTransfer = $this->customerClient->updateAddress($addressTransfer);
+
+        if (!$addressTransfer->getUuid()) {
+            $this->createErrorAddressNotSaved($restResponse);
+
+            return $restResponse;
+        }
+
+        $restResource = $this
+            ->addressesResourceMapper
+            ->mapAddressTransferToRestResource(
+                $addressTransfer,
+                $customerResponseTransfer->getCustomerTransfer()
+            );
+
+        $restResponse->addResource($restResource);
 
         return $restResponse;
     }
@@ -207,16 +210,15 @@ class AddressesWriter implements AddressesWriterInterface
         }
 
         $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
+        $addressTransfer = $this->findAddressByUuid($addressesTransfer, $restRequest->getResource()->getId());
 
-        foreach ($addressesTransfer->getAddresses() as $address) {
-            if ($address->getUuid() === $restRequest->getResource()->getId()) {
-                $this->customerClient->deleteAddress($address);
+        if (!$addressTransfer) {
+            $this->createAddressNotFoundError($restResponse);
 
-                return $restResponse;
-            }
+            return $restResponse;
         }
 
-        $this->createAddressNotFoundError($restResponse);
+        $this->customerClient->deleteAddress($addressTransfer);
 
         return $restResponse;
     }
@@ -374,5 +376,22 @@ class AddressesWriter implements AddressesWriterInterface
         }
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function findAddressByUuid(AddressesTransfer $addressesTransfer, string $uuid): ?AddressTransfer
+    {
+        foreach ($addressesTransfer->getAddresses() as $address) {
+            if ($address->getUuid() === $uuid) {
+                return $address;
+            }
+        }
+
+        return null;
     }
 }
