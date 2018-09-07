@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
 interface ProductPricesMapperInterface
 {
     /**
-    /**
-     *
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      *
      * @return \Generated\Shared\Transfer\RestProductPricesAttributesTransfer
