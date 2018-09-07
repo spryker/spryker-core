@@ -33,7 +33,7 @@ class ProductImageSetsRestApiToProductImageStorageClientBridge implements Produc
      *
      * @return \Generated\Shared\Transfer\ProductAbstractImageStorageTransfer|null
      */
-    public function findProductImageAbstractStorageTransfer($idProductAbstract, $locale): ?ProductAbstractImageStorageTransfer
+    public function findProductImageAbstractStorageTransfer(int $idProductAbstract, string $locale): ?ProductAbstractImageStorageTransfer
     {
         return $this->productImageStorageClient->findProductImageAbstractStorageTransfer($idProductAbstract, $locale);
     }
@@ -46,7 +46,7 @@ class ProductImageSetsRestApiToProductImageStorageClientBridge implements Produc
      *
      * @return \Generated\Shared\Transfer\ProductConcreteImageStorageTransfer|null
      */
-    public function findProductImageConcreteStorageTransfer($idProductConcrete, $locale): ?ProductConcreteImageStorageTransfer
+    public function findProductImageConcreteStorageTransfer(int $idProductConcrete, string $locale): ?ProductConcreteImageStorageTransfer
     {
         return $this->productImageStorageClient->findProductImageConcreteStorageTransfer($idProductConcrete, $locale);
     }

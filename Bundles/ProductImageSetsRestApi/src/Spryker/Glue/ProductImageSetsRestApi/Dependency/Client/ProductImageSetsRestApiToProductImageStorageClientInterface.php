@@ -18,7 +18,7 @@ interface ProductImageSetsRestApiToProductImageStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractImageStorageTransfer|null
      */
-    public function findProductImageAbstractStorageTransfer($idProductAbstract, $locale): ?ProductAbstractImageStorageTransfer;
+    public function findProductImageAbstractStorageTransfer(int $idProductAbstract, string $locale): ?ProductAbstractImageStorageTransfer;
 
     /**
      * @param int $idProductConcrete
@@ -26,5 +26,5 @@ interface ProductImageSetsRestApiToProductImageStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteImageStorageTransfer|null
      */
-    public function findProductImageConcreteStorageTransfer($idProductConcrete, $locale): ?ProductConcreteImageStorageTransfer;
+    public function findProductImageConcreteStorageTransfer(int $idProductConcrete, string $locale): ?ProductConcreteImageStorageTransfer;
 }
