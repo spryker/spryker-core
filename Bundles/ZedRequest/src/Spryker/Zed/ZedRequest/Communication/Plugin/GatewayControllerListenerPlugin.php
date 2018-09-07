@@ -138,7 +138,6 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
             throw new LogicException('Only one transfer object can be received in yves-action');
         }
 
-        /** @var \ReflectionParameter $parameter */
         $parameter = array_shift($parameters);
         if ($parameter) {
             $class = $parameter->getClass();
@@ -196,6 +195,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     {
         $messengerFacade = $this->getFactory()->getMessengerFacade();
 
+        /** @var \Generated\Shared\Transfer\FlashMessagesTransfer|null $messagesTransfer */
         $messagesTransfer = $messengerFacade->getStoredMessages();
         if ($messagesTransfer === null) {
             return;

@@ -23,7 +23,7 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
     /**
      * @deprecated Please don't use this property anymore. The needed ControllerListenerInterface is now retrieved by the Factory.
      *
-     * @var \Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerInterface
+     * @var \Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerInterface|null
      */
     protected $controllerListener;
 

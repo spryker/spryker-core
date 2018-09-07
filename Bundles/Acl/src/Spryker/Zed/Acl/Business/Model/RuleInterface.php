@@ -47,6 +47,8 @@ interface RuleInterface
     public function getRoleRules($idRole);
 
     /**
+     * @deprecated Will be removed in the next major.
+     *
      * @param \Generated\Shared\Transfer\RolesTransfer $roles
      * @param string $bundle
      * @param string $controller
