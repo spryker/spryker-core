@@ -19,6 +19,11 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 class SortedCmsPageQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
+     * Specification:
+     *  - Expands query with sorting
+     *
+     * @api
+     *
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
      *
@@ -26,8 +31,11 @@ class SortedCmsPageQueryExpanderPlugin extends AbstractPlugin implements QueryEx
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
-        $sortConfig = $this->getFactory()->getCmsPageSortConfig();
-        $this->addSortingToQuery($searchQuery->getSearchQuery(), $sortConfig, $requestParameters);
+        $this->addSortingToQuery(
+            $searchQuery->getSearchQuery(),
+            $this->getFactory()->getCmsPageSortConfig(),
+            $requestParameters
+        );
 
         return $searchQuery;
     }
@@ -42,7 +50,7 @@ class SortedCmsPageQueryExpanderPlugin extends AbstractPlugin implements QueryEx
     protected function addSortingToQuery(Query $query, SortConfigBuilderInterface $sortConfig, array $requestParameters): void
     {
         $sortParamName = $sortConfig->getActiveParamName($requestParameters);
-        $sortConfigTransfer = $sortConfig->get($sortParamName);
+        $sortConfigTransfer = $sortConfig->getSortConfigTransfer($sortParamName);
 
         if ($sortConfigTransfer === null) {
             return;
@@ -53,7 +61,6 @@ class SortedCmsPageQueryExpanderPlugin extends AbstractPlugin implements QueryEx
             [
                 $nestedSortField => [
                     'order' => $sortConfig->getSortDirection($sortParamName),
-                    'mode' => 'min',
                 ],
             ]
         );

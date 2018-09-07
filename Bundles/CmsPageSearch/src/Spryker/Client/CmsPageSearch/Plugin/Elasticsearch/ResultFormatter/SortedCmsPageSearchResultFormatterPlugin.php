@@ -41,7 +41,7 @@ class SortedCmsPageSearchResultFormatterPlugin extends AbstractElasticsearchResu
         $sortParamName = $sortConfig->getActiveParamName($requestParameters);
 
         $sortSearchResultTransfer = (new SortSearchResultTransfer())
-            ->setSortParamNames(array_keys($sortConfig->getAll()))
+            ->setSortParamNames(array_keys($sortConfig->getAllSortConfigTransfers()))
             ->setCurrentSortParam($sortParamName)
             ->setCurrentSortOrder($sortConfig->getSortDirection($sortParamName));
 

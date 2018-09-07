@@ -8,9 +8,8 @@
 namespace Spryker\Client\CmsPageSearch\Config;
 
 use Generated\Shared\Transfer\SortConfigTransfer;
-use Spryker\Client\Kernel\AbstractPlugin;
 
-class CmsPageSortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInterface
+class CmsPageSortConfigBuilder implements SortConfigBuilderInterface
 {
     protected const DIRECTION_ASC = 'asc';
     protected const DIRECTION_DESC = 'desc';
@@ -54,7 +53,7 @@ class CmsPageSortConfigBuilder extends AbstractPlugin implements SortConfigBuild
      *
      * @return \Generated\Shared\Transfer\SortConfigTransfer|null
      */
-    public function get(?string $parameterName): ?SortConfigTransfer
+    public function getSortConfigTransfer(?string $parameterName): ?SortConfigTransfer
     {
         return $this->sortConfigTransfers[$parameterName] ?? null;
     }
@@ -62,7 +61,7 @@ class CmsPageSortConfigBuilder extends AbstractPlugin implements SortConfigBuild
     /**
      * @return \Generated\Shared\Transfer\SortConfigTransfer[]
      */
-    public function getAll(): array
+    public function getAllSortConfigTransfers(): array
     {
         return $this->sortConfigTransfers;
     }
@@ -84,7 +83,10 @@ class CmsPageSortConfigBuilder extends AbstractPlugin implements SortConfigBuild
      */
     public function getSortDirection(?string $sortParamName): ?string
     {
-        $sortConfigTransfer = $this->get($sortParamName);
+        if (!$sortParamName) {
+            return null;
+        }
+        $sortConfigTransfer = $this->getSortConfigTransfer($sortParamName);
 
         if (!$sortConfigTransfer) {
             return null;

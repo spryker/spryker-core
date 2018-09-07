@@ -30,7 +30,7 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
     const TYPE = 'type';
     const ID_CMS_PAGE = 'id_cms_page';
     const NAME = 'name';
-    public const COL_NAME = 'name';
+    protected const COL_NAME = 'name';
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
