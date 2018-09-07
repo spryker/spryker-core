@@ -10,6 +10,9 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 interface QueryExpanderPluginInterface
 {
     /**
+     * Specification:
+     *  - Expands base query
+     *
      * @api
      *
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery

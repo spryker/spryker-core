@@ -8,7 +8,6 @@
 namespace Spryker\Client\CmsPageSearch\Plugin\Elasticsearch\QueryExpander;
 
 use Elastica\Query;
-use Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
@@ -19,8 +18,8 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 class SortedCmsPageQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
-     * Specification:
-     *  - Expands query with sorting
+     * {@inheritdoc}
+     * - Adds possibility to sort cms pages search result. Options are provided by cms page sort config builder.
      *
      * @api
      *
@@ -33,7 +32,6 @@ class SortedCmsPageQueryExpanderPlugin extends AbstractPlugin implements QueryEx
     {
         $this->addSortingToQuery(
             $searchQuery->getSearchQuery(),
-            $this->getFactory()->getCmsPageSortConfig(),
             $requestParameters
         );
 
@@ -42,13 +40,13 @@ class SortedCmsPageQueryExpanderPlugin extends AbstractPlugin implements QueryEx
 
     /**
      * @param \Elastica\Query $query
-     * @param \Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface $sortConfig
      * @param array $requestParameters
      *
      * @return void
      */
-    protected function addSortingToQuery(Query $query, SortConfigBuilderInterface $sortConfig, array $requestParameters): void
+    protected function addSortingToQuery(Query $query, array $requestParameters): void
     {
+        $sortConfig = $this->getFactory()->getCmsPageSortConfig();
         $sortParamName = $sortConfig->getActiveParamName($requestParameters);
         $sortConfigTransfer = $sortConfig->getSortConfigTransfer($sortParamName);
 
