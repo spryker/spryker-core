@@ -68,4 +68,18 @@ interface CatalogClientInterface
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function setCatalogViewMode($mode, Response $response);
+
+    /**
+     * Specification:
+     * - A query based on the given search string and request parameters will be executed
+     * - The result is a number of hits
+     *
+     * @api
+     *
+     * @param string $searchString
+     * @param array $requestParameters
+     *
+     * @return int
+     */
+    public function catalogSearchCount(string $searchString, array $requestParameters): int;
 }

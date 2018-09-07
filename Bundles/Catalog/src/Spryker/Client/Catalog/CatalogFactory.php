@@ -124,4 +124,12 @@ class CatalogFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CatalogDependencyProvider::PLUGIN_SORT_CONFIG_TRANSFER_BUILDERS);
     }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     */
+    public function getCatalogSearchCounterQueryExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CatalogDependencyProvider::PLUGINS_CATALOG_SEARCH_COUNT_QUERY_EXPANDER);
+    }
 }

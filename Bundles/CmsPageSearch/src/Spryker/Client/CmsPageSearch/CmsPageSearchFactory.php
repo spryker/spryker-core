@@ -82,4 +82,12 @@ class CmsPageSearchFactory extends AbstractFactory
     {
         return new CmsPageSortConfigBuilder();
     }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     */
+    public function getCmsPageSearchCountQueryExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGINS_CMS_PAGE_SEARCH_COUNT_QUERY_EXPANDER);
+    }
 }
