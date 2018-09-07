@@ -204,7 +204,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     /**
      * @param \Generated\Shared\Transfer\NavigationTreeNodeTransfer[]|\ArrayObject $navigationTreeNodeTransfers
      *
-     * @return array
+     * @return \ArrayObject
      */
     protected function mapToNavigationNodeStorageTransfer(ArrayObject $navigationTreeNodeTransfers)
     {

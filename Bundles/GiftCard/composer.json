@@ -24,12 +24,11 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/payment": "If you want to use Payment plugins",
-    "spryker/oms": "If you want to use OMS plugins",
-    "spryker/discount": "If you want to make sure GiftCards have no Discount applied",
     "spryker/calculation": "To correctly calculate gift card payments",
     "spryker/cart": "To expand information about gift card products",
     "spryker/checkout": "To save gift card payments using order savers",
+    "spryker/discount": "If you want to make sure GiftCards have no Discount applied",
+    "spryker/oms": "If you want to use OMS plugins",
     "spryker/shipment": "To filter shipment methods based on gift card rules"
   },
   "autoload": {
@@ -45,12 +44,6 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ],
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

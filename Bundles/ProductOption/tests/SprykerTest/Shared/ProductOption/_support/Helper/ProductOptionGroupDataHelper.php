@@ -87,7 +87,7 @@ class ProductOptionGroupDataHelper extends Module
             $this->createProductOptionTranslationTransfer($productOptionGroupTransfer->getName())
         );
 
-        foreach ($overrideValues as list($overrideValue, $overridePrices)) {
+        foreach ($overrideValues as [$overrideValue, $overridePrices]) {
             $productOptionValueTransfer = $this->createProductOptionValueTransfer($overrideValue, $overridePrices);
             $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
             $productOptionGroupTransfer->addProductOptionValueTranslation(

@@ -30,7 +30,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
                 self::KEY_CONTAINING_BUNDLE => $transferDefinition[self::KEY_CONTAINING_BUNDLE],
                 self::KEY_NAME => $transferDefinition[self::KEY_NAME],
                 self::KEY_DEPRECATED => isset($transferDefinition[self::KEY_DEPRECATED]) ? $transferDefinition[self::KEY_DEPRECATED] : null,
-                self::KEY_PROPERTY => $this->normalizeAttributes($transferDefinition[self::KEY_PROPERTY], $transferDefinition[self::KEY_BUNDLE]),
+                self::KEY_PROPERTY => $this->normalizeAttributes($transferDefinition[self::KEY_PROPERTY] ?? [], $transferDefinition[self::KEY_BUNDLE]),
             ];
 
             $normalizedDefinitions[] = $normalizedDefinition;
@@ -47,6 +47,10 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
      */
     protected function normalizeAttributes(array $attributes, $bundle)
     {
+        if ($attributes === []) {
+            return [];
+        }
+
         if (isset($attributes[0])) {
             return $this->addBundleToAttributes($attributes, $bundle);
         }

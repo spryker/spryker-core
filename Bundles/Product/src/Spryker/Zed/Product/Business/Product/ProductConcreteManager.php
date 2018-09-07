@@ -311,7 +311,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @param int $idConcrete
      *
-     * @return null|int
+     * @return int|null
      */
     public function findProductAbstractIdByConcreteId(int $idConcrete): ?int
     {
@@ -329,13 +329,13 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @param string $idProductConcrete
+     * @param int $idProductConcrete
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return int
      */
-    public function getProductAbstractIdByConcreteId(string $idProductConcrete): int
+    public function getProductAbstractIdByConcreteId(int $idProductConcrete): int
     {
         $productConcrete = $this->productQueryContainer
             ->queryProduct()
