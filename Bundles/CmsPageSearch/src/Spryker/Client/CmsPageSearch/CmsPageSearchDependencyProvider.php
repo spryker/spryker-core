@@ -18,6 +18,7 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
     public const PLUGIN_CMS_PAGE_SEARCH_QUERY = 'PLUGIN_CMS_PAGE_SEARCH_QUERY';
     public const PLUGINS_CMS_PAGE_SEARCH_RESULT_FORMATTER = 'PLUGINS_CMS_PAGE_SEARCH_RESULT_FORMATTER';
     public const PLUGINS_CMS_PAGE_SEARCH_QUERY_EXPANDER = 'PLUGINS_CMS_PAGE_SEARCH_QUERY_EXPANDER';
+    public const PLUGINS_CMS_PAGE_SEARCH_COUNT_QUERY_EXPANDER = 'PLUGINS_CMS_PAGE_SEARCH_QUERY_EXPANDER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -93,6 +94,19 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCmsPageSearchQueryCountExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_CMS_PAGE_SEARCH_COUNT_QUERY_EXPANDER] = function () {
+            return $this->createCmsPageSearchCountQueryExpanderPlugins();
+        };
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     protected function createCmsPageSearchQueryPlugin(): QueryInterface
@@ -112,6 +126,14 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected function createCmsPageSearchQueryExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     */
+    protected function createCmsPageSearchCountQueryExpanderPlugins(): array
     {
         return [];
     }

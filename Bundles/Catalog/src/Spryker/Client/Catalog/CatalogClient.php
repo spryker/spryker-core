@@ -110,4 +110,27 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
             ->createCatalogViewModePersistence()
             ->setViewMode($mode, $response);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $searchString
+     * @param array $requestParameters
+     *
+     * @return int
+     */
+    public function catalogSearchCount(string $searchString, array $requestParameters): int
+    {
+        $searchClient = $this
+            ->getFactory()
+            ->getSearchClient();
+        $searchQuery = $this
+            ->getFactory()
+            ->createCatalogSearchQuery($searchString);
+        $searchQuery = $searchClient
+            ->expandQuery($searchQuery, $this->getFactory()->getCatalogSearchCounterQueryExpanderPlugins(), $requestParameters);
+        return $searchClient->search($searchQuery, [], $requestParameters)->getTotalHits();
+    }
 }
