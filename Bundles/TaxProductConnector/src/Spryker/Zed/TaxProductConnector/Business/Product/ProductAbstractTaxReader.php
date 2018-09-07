@@ -43,6 +43,8 @@ class ProductAbstractTaxReader implements ProductAbstractTaxReaderInterface
                     $productAbstractTransfer->getIdProductAbstract()
                 )
             );
+
+            return $taxSetResponse;
         }
 
         $taxSetResponse->setTaxRateSet($taxRateSet);

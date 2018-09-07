@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\TaxProductConnector\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetResponseTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Product\Business\ProductFacade;
@@ -121,6 +123,45 @@ class TaxProductConnectorFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGettingTaxRatesByProductAbstract()
+    {
+        $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
+
+        $taxSetTransfer = $this->createTaxSet();
+        $productAbstractTransfer = $this->createProductAbstract();
+
+        $productAbstractTransfer->setIdTaxSet($taxSetTransfer->getIdTaxSet());
+
+        $productAbstractTransfer = $taxProductConnectorFacade->saveTaxSetToProductAbstract($productAbstractTransfer);
+
+        $taxSetsResponseTransfer = $taxProductConnectorFacade->getTaxSetForProductAbstract($productAbstractTransfer);
+
+        $this->assertInstanceOf(TaxSetResponseTransfer::class, $taxSetsResponseTransfer);
+        $this->assertTrue($taxSetsResponseTransfer->getIsSuccess());
+        $this->assertEmpty($taxSetsResponseTransfer->getError());
+        $this->assertNotEmpty($taxSetsResponseTransfer->getTaxRateSet()->getUuid());
+        $this->assertCount(1, $taxSetsResponseTransfer->getTaxRateSet()->getTaxRateSetItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGettingTaxRatesByNonExistentProductAbstract()
+    {
+        $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
+        $productAbstractTransfer = (new ProductAbstractTransfer())->setSku('non-existent-sku-52892');
+
+        $taxSetsResponseTransfer = $taxProductConnectorFacade->getTaxSetForProductAbstract($productAbstractTransfer);
+
+        $this->assertInstanceOf(TaxSetResponseTransfer::class, $taxSetsResponseTransfer);
+        $this->assertFalse($taxSetsResponseTransfer->getIsSuccess());
+        $this->assertNotEmpty($taxSetsResponseTransfer->getError());
+        $this->assertNull($taxSetsResponseTransfer->getTaxRateSet());
+    }
+
+    /**
      * @return \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade
      */
     protected function createTaxProductConnectorFacade()
@@ -155,6 +196,12 @@ class TaxProductConnectorFacadeTest extends Unit
         $taxSetTransfer->setAmount(50);
         $taxSetTransfer->setEffectiveRate(15);
         $taxSetTransfer->setName('test tax set');
+        $taxSetTransfer->addTaxRate(
+            (new TaxRateTransfer())
+                ->setName('test tax rate')
+                ->setFkCountry(60)
+                ->setRate(19.00)
+        );
 
         $taxSetTransfer = $taxFacade->createTaxSet($taxSetTransfer);
 

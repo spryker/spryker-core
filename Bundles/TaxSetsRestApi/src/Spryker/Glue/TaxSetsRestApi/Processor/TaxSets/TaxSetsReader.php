@@ -67,6 +67,9 @@ class TaxSetsReader implements TaxSetsReaderInterface
             return $this->createAbstractProductNotFoundError();
         }
 
+        /**
+         * @var \Generated\Shared\Transfer\TaxSetResponseTransfer $taxSetResponseTransfer
+         */
         $taxSetResponseTransfer = $this->taxProductConnectorClient->getTaxSetForProductAbstract(
             (new ProductAbstractTransfer())->setSku($parentResource->getId())
         );
@@ -79,7 +82,7 @@ class TaxSetsReader implements TaxSetsReaderInterface
         }
 
         $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxRateSetTransferToRestTaxSetsAttributes($taxSetResponseTransfer->getTaxRateSet());
-        $restResource = $this->formatRestResource($restTaxSetTransfer, $parentResource->getId());
+        $restResource = $this->formatRestResource($restTaxSetTransfer, $taxSetResponseTransfer->getTaxRateSet()->getUuid(), $parentResource->getId());
 
         return $restResponse->addResource($restResource);
     }
@@ -101,20 +104,21 @@ class TaxSetsReader implements TaxSetsReaderInterface
 
         $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxRateSetTransferToRestTaxSetsAttributes($taxSetResponseTransfer->getTaxRateSet());
 
-        return $this->formatRestResource($restTaxSetTransfer, $abstractProductSku);
+        return $this->formatRestResource($restTaxSetTransfer, $taxSetResponseTransfer->getTaxRateSet()->getUuid(), $abstractProductSku);
     }
 
     /**
      * @param \Generated\Shared\Transfer\RestTaxSetsAttributesTransfer $restTaxSetsAttributesTransfer
+     * @param string $uuid
      * @param string $parentResourceId
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function formatRestResource(RestTaxSetsAttributesTransfer $restTaxSetsAttributesTransfer, string $parentResourceId): RestResourceInterface
+    protected function formatRestResource(RestTaxSetsAttributesTransfer $restTaxSetsAttributesTransfer, string $uuid, string $parentResourceId): RestResourceInterface
     {
         $restResource = $this->restResourceBuilder->createRestResource(
             TaxSetsRestApiConfig::RESOURCE_TAX_SETS,
-            $restTaxSetsAttributesTransfer->getUuid(),
+            $uuid,
             $restTaxSetsAttributesTransfer
         );
 
