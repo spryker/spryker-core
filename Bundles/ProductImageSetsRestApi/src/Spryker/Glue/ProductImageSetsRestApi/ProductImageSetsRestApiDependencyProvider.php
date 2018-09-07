@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -23,7 +24,7 @@ class ProductImageSetsRestApiDependencyProvider extends AbstractBundleDependency
      */
     public function provideDependencies(Container $container): Container
     {
-        parent::provideDependencies($container);
+        $container = parent::provideDependencies($container);
         $container = $this->addProductImageStorageClientDependency($container);
         $container = $this->addProductStorageClientDependency($container);
 

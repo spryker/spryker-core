@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -23,6 +24,7 @@ class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderIn
 {
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    protected const SELF_LINK_FORMAT = '%s/%s/%s';
 
     /**
      * @var \Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductStorageClientInterface
@@ -77,8 +79,8 @@ class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderIn
             return $restResponse->addError($restErrorTransfer);
         }
 
-        $parentResourceId = $parentResource->getId();
-        $restResource = $this->findAbstractProductImageSetsBySku($parentResourceId, $restRequest);
+        $abstractSku = $parentResource->getId();
+        $restResource = $this->findAbstractProductImageSetsBySku($abstractSku, $restRequest);
 
         if ($restResource === null) {
             $restErrorTransfer = $this->createAbstractProductImageSetsNotFoundError();
@@ -136,7 +138,7 @@ class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderIn
         );
 
         $restResourceSelfLink = sprintf(
-            '%s/%s/%s',
+            static::SELF_LINK_FORMAT,
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
             $sku,
             ProductImageSetsRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_IMAGE_SETS

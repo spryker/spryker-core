@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -23,6 +24,7 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
 {
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    protected const SELF_LINK_FORMAT = '%s/%s/%s';
 
     /**
      * @var \Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductStorageClientInterface
@@ -78,8 +80,8 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
             return $restResponse->addError($restErrorTransfer);
         }
 
-        $parentResourceId = $parentResource->getId();
-        $restResource = $this->findConcreteProductImageSetsBySku($parentResourceId, $restRequest);
+        $concreteSku = $parentResource->getId();
+        $restResource = $this->findConcreteProductImageSetsBySku($concreteSku, $restRequest);
 
         if ($restResource === null) {
             $restErrorTransfer = $this->createConcreteProductImageSetsNotFoundError();
@@ -137,7 +139,7 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
         );
 
         $restResourceSelfLink = sprintf(
-            '%s/%s/%s',
+            static::SELF_LINK_FORMAT,
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
             $sku,
             ProductImageSetsRestApiConfig::RESOURCE_CONCRETE_PRODUCT_IMAGE_SETS

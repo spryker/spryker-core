@@ -26,7 +26,7 @@ class ProductImageStorageClient extends AbstractClient implements ProductImageSt
      *
      * @return \Generated\Shared\Transfer\ProductAbstractImageStorageTransfer|null
      */
-    public function findProductImageAbstractStorageTransfer($idProductAbstract, $locale): ?ProductAbstractImageStorageTransfer
+    public function findProductImageAbstractStorageTransfer(int $idProductAbstract, string $locale): ?ProductAbstractImageStorageTransfer
     {
         return $this->getFactory()
             ->createProductAbstractImageStorageReader()
@@ -43,7 +43,7 @@ class ProductImageStorageClient extends AbstractClient implements ProductImageSt
      *
      * @return \Generated\Shared\Transfer\ProductConcreteImageStorageTransfer|null
      */
-    public function findProductImageConcreteStorageTransfer($idProductConcrete, $locale): ?ProductConcreteImageStorageTransfer
+    public function findProductImageConcreteStorageTransfer(int $idProductConcrete, string $locale): ?ProductConcreteImageStorageTransfer
     {
         return $this->getFactory()
             ->createProductConcreteImageStorageReader()
