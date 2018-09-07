@@ -28,7 +28,7 @@ class ProductsTaxSetsResourceRelationshipPlugin extends AbstractPlugin implement
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createProductsTaxSetsResourceRelationshipMapper()
+            ->createProductsTaxSetsResourceRelationshipExpander()
             ->mapResourceRelationships($resources, $restRequest);
     }
 

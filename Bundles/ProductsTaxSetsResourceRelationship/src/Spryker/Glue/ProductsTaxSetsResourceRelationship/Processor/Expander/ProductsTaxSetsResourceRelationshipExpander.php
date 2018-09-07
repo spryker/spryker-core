@@ -4,12 +4,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsTaxSetsResourceRelationship\Processor\Mapper;
+namespace Spryker\Glue\ProductsTaxSetsResourceRelationship\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiInterface;
 
-class ProductsTaxSetsResourceRelationshipMapper implements ProductsTaxSetsResourceRelationshipMapperInterface
+class ProductsTaxSetsResourceRelationshipExpander implements ProductsTaxSetsResourceRelationshipExpanderInterface
 {
     /**
      * @var \Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiInterface

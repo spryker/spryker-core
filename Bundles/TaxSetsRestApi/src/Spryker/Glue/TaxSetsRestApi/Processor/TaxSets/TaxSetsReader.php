@@ -8,7 +8,8 @@ namespace Spryker\Glue\TaxSetsRestApi\Processor\TaxSets;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\TaxRateSetTransfer;
+use Generated\Shared\Transfer\RestTaxSetsAttributesTransfer;
+use Generated\Shared\Transfer\TaxSetResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -63,7 +64,7 @@ class TaxSetsReader implements TaxSetsReaderInterface
 
         $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
         if (!$parentResource) {
-            return $restResponse->addError($this->createAbstractProductNotFoundError());
+            return $this->createAbstractProductNotFoundError();
         }
 
         $taxSetResponseTransfer = $this->taxProductConnectorClient->getTaxSetForProductAbstract(
@@ -72,18 +73,13 @@ class TaxSetsReader implements TaxSetsReaderInterface
 
         if ($taxSetResponseTransfer->getError()) {
             if ($taxSetResponseTransfer->getError() === static::TAX_SET_RESPONSE_ERROR_ABSTRACT_PRODUCT_NOT_FOUND) {
-                $restErrorTransfer = $this->createAbstractProductNotFoundError();
-
-                return $restResponse->addError($restErrorTransfer);
+                return $this->createAbstractProductNotFoundError();
             }
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(TaxSetsRestApiConfig::RESPONSE_CODE_CANT_FIND_PRODUCT_TAX_SETS)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail($taxSetResponseTransfer->getError());
-
-            return $restResponse->addError($restErrorTransfer);
+            return $this->createTaxSetsNotFoundError($taxSetResponseTransfer);
         }
-        $restResource = $this->mapTransferToRestResource($taxSetResponseTransfer->getTaxRateSet(), $parentResource->getId());
+
+        $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxRateSetTransferToRestTaxSetsAttributes($taxSetResponseTransfer->getTaxRateSet());
+        $restResource = $this->formatRestResource($restTaxSetTransfer, $parentResource->getId());
 
         return $restResponse->addResource($restResource);
     }
@@ -96,63 +92,73 @@ class TaxSetsReader implements TaxSetsReaderInterface
      */
     public function findAbstractProductTaxSetsByAbstractProductSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        return $this->findOne($abstractProductSku);
-    }
-
-    /**
-     * @param string $idResource
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
-     */
-    protected function findOne(string $idResource): ?RestResourceInterface
-    {
         $taxSetResponseTransfer = $this->taxProductConnectorClient->getTaxSetForProductAbstract(
-            (new ProductAbstractTransfer())->setSku($idResource)
+            (new ProductAbstractTransfer())->setSku($abstractProductSku)
         );
         if ($taxSetResponseTransfer->getError()) {
             return null;
         }
 
-        return $this->mapTransferToRestResource($taxSetResponseTransfer->getTaxRateSet(), $idResource);
+        $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxRateSetTransferToRestTaxSetsAttributes($taxSetResponseTransfer->getTaxRateSet());
+
+        return $this->formatRestResource($restTaxSetTransfer, $abstractProductSku);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TaxRateSetTransfer $taxRateSetTransfer
+     * @param \Generated\Shared\Transfer\RestTaxSetsAttributesTransfer $restTaxSetsAttributesTransfer
      * @param string $parentResourceId
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function mapTransferToRestResource(TaxRateSetTransfer $taxRateSetTransfer, string $parentResourceId): RestResourceInterface
+    protected function formatRestResource(RestTaxSetsAttributesTransfer $restTaxSetsAttributesTransfer, string $parentResourceId): RestResourceInterface
     {
-        $restResource = $this->taxSetsResourceMapper->mapTaxSetsResponseAttributesTransferToRestResponse($taxRateSetTransfer);
-        $restResource->addLink('self', $this->getSelfLink($parentResourceId));
+        $restResource = $this->restResourceBuilder->createRestResource(
+            TaxSetsRestApiConfig::RESOURCE_TAX_SETS,
+            $restTaxSetsAttributesTransfer->getUuid(),
+            $restTaxSetsAttributesTransfer
+        );
 
-        return $restResource;
-    }
-
-    /**
-     * @param string $parentResourceId
-     *
-     * @return string
-     */
-    protected function getSelfLink(string $parentResourceId): string
-    {
-        return sprintf(
+        $selfLink = sprintf(
             '%s/%s/%s',
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
             $parentResourceId,
             TaxSetsRestApiConfig::RESOURCE_TAX_SETS
         );
+
+        $restResource->addLink('self', $selfLink);
+
+        return $restResource;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createAbstractProductNotFoundError(): RestErrorMessageTransfer
+    protected function createAbstractProductNotFoundError(): RestResponseInterface
     {
-        return (new RestErrorMessageTransfer())
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        $errorTransfer = (new RestErrorMessageTransfer())
             ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT)
             ->setStatus(Response::HTTP_NOT_FOUND)
             ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT);
+
+        return $restResponse->addError($errorTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TaxSetResponseTransfer $taxSetResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createTaxSetsNotFoundError(TaxSetResponseTransfer $taxSetResponseTransfer): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(TaxSetsRestApiConfig::RESPONSE_CODE_CANT_FIND_PRODUCT_TAX_SETS)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail($taxSetResponseTransfer->getError());
+
+        return $restResponse->addError($restErrorTransfer);
     }
 }

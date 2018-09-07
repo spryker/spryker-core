@@ -8,8 +8,8 @@ namespace Spryker\Glue\ProductsTaxSetsResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiInterface;
-use Spryker\Glue\ProductsTaxSetsResourceRelationship\Processor\Mapper\ProductsTaxSetsResourceRelationshipMapper;
-use Spryker\Glue\ProductsTaxSetsResourceRelationship\Processor\Mapper\ProductsTaxSetsResourceRelationshipMapperInterface;
+use Spryker\Glue\ProductsTaxSetsResourceRelationship\Processor\Expander\ProductsTaxSetsResourceRelationshipExpander;
+use Spryker\Glue\ProductsTaxSetsResourceRelationship\Processor\Expander\ProductsTaxSetsResourceRelationshipExpanderInterface;
 
 class ProductsTaxSetsResourceRelationshipFactory extends AbstractFactory
 {
@@ -22,10 +22,10 @@ class ProductsTaxSetsResourceRelationshipFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductsTaxSetsResourceRelationship\Processor\Mapper\ProductsTaxSetsResourceRelationshipMapperInterface
+     * @return \Spryker\Glue\ProductsTaxSetsResourceRelationship\Processor\Expander\ProductsTaxSetsResourceRelationshipExpanderInterface
      */
-    public function createProductsTaxSetsResourceRelationshipMapper(): ProductsTaxSetsResourceRelationshipMapperInterface
+    public function createProductsTaxSetsResourceRelationshipExpander(): ProductsTaxSetsResourceRelationshipExpanderInterface
     {
-        return new ProductsTaxSetsResourceRelationshipMapper($this->getProductTaxSetsResource());
+        return new ProductsTaxSetsResourceRelationshipExpander($this->getProductTaxSetsResource());
     }
 }

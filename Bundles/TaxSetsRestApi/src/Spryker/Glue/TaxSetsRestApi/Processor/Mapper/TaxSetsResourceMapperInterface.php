@@ -6,15 +6,15 @@
 
 namespace Spryker\Glue\TaxSetsRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\RestTaxSetsAttributesTransfer;
 use Generated\Shared\Transfer\TaxRateSetTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 interface TaxSetsResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\TaxRateSetTransfer $taxRateSetTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\RestTaxSetsAttributesTransfer
      */
-    public function mapTaxSetsResponseAttributesTransferToRestResponse(TaxRateSetTransfer $taxRateSetTransfer): RestResourceInterface;
+    public function mapTaxRateSetTransferToRestTaxSetsAttributes(TaxRateSetTransfer $taxRateSetTransfer): RestTaxSetsAttributesTransfer;
 }

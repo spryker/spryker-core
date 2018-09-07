@@ -28,9 +28,7 @@ class TaxSetsRestApiFactory extends AbstractFactory
      */
     public function createTaxSetsResourceMapper(): TaxSetsResourceMapperInterface
     {
-        return new TaxSetsResourceMapper(
-            $this->getResourceBuilder()
-        );
+        return new TaxSetsResourceMapper();
     }
 
     /**
