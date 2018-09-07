@@ -9,6 +9,13 @@
     "spryker/symfony": "^3.0.0",
     "spryker/zend": "^2.0.0"
   },
+  "require-dev": {
+    "spryker/application": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

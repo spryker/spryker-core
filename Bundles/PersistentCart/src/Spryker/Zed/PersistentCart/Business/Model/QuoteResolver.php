@@ -82,7 +82,7 @@ class QuoteResolver implements QuoteResolverInterface
      * @param int $idQuote
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return null|\Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
     protected function findCustomerQuoteById(int $idQuote, CustomerTransfer $customerTransfer): ?QuoteTransfer
     {
@@ -171,7 +171,7 @@ class QuoteResolver implements QuoteResolverInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param null|\Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer|null $quoteUpdateRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */

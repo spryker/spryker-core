@@ -11,10 +11,8 @@
   },
   "require-dev": {
     "spryker/calculation": "*",
-    "spryker/code-sniffer": "*",
     "spryker/country": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

@@ -16,15 +16,12 @@
   },
   "require-dev": {
     "spryker/availability": "*",
-    "spryker/code-sniffer": "*",
     "spryker/country": "*",
     "spryker/customer": "*",
     "spryker/locale": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/sales": "*",
-    "spryker/sequence-number": "*",
-    "spryker/silex": "*",
     "spryker/stock": "*",
     "spryker/testify": "*"
   },

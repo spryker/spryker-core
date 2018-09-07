@@ -111,7 +111,7 @@ class RepositoryExporter implements ExporterInterface
      * @param bool $hasStore
      * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $entity
      *
-     * @return null|string
+     * @return string|null
      */
     protected function getStore(bool $hasStore, SynchronizationDataTransfer $entity): ?string
     {

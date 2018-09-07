@@ -21,7 +21,10 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company": "*",
+    "spryker/company-business-unit": "*",
     "spryker/installer": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {
