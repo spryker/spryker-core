@@ -37,8 +37,7 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
                 new SpyCompanyUnitAddressEntityTransfer()
             );
         $entityTransfer = $this->save($entityTransfer);
-        $idCompanyUnitAddress = $entityTransfer->getIdCompanyUnitAddress();
-        $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
+        $companyUnitAddressTransfer->setIdCompanyUnitAddress($entityTransfer->getIdCompanyUnitAddress());
 
         return $companyUnitAddressTransfer;
     }
