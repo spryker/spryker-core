@@ -16,12 +16,12 @@ interface PaginationConfigBuilderInterface
      *
      * @return void
      */
-    public function setPagination(PaginationConfigTransfer $paginationConfigTransfer): void;
+    public function setPaginationConfigTransfer(PaginationConfigTransfer $paginationConfigTransfer): void;
 
     /**
      * @return \Generated\Shared\Transfer\PaginationConfigTransfer
      */
-    public function get(): PaginationConfigTransfer;
+    public function getPaginationConfigTransfer(): PaginationConfigTransfer;
 
     /**
      * @param array $requestParameters

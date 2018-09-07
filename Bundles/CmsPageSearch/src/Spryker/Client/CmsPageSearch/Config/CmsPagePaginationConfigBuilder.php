@@ -21,7 +21,7 @@ class CmsPagePaginationConfigBuilder implements PaginationConfigBuilderInterface
      *
      * @return void
      */
-    public function setPagination(PaginationConfigTransfer $paginationConfigTransfer): void
+    public function setPaginationConfigTransfer(PaginationConfigTransfer $paginationConfigTransfer): void
     {
         $this->paginationConfigTransfer = $paginationConfigTransfer;
     }
@@ -29,7 +29,7 @@ class CmsPagePaginationConfigBuilder implements PaginationConfigBuilderInterface
     /**
      * @return \Generated\Shared\Transfer\PaginationConfigTransfer
      */
-    public function get(): PaginationConfigTransfer
+    public function getPaginationConfigTransfer(): PaginationConfigTransfer
     {
         return $this->paginationConfigTransfer;
     }

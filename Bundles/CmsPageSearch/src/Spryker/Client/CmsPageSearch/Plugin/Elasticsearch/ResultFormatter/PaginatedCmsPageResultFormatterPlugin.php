@@ -48,7 +48,7 @@ class PaginatedCmsPageResultFormatterPlugin extends AbstractElasticsearchResultF
             ->setCurrentPage($currentPage)
             ->setMaxPage($maxPage)
             ->setCurrentItemsPerPage($itemsPerPage)
-            ->setConfig(clone $paginationConfig->get());
+            ->setConfig(clone $paginationConfig->getPaginationConfigTransfer());
 
         return $paginationSearchResultTransfer;
     }

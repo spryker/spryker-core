@@ -29,7 +29,6 @@ class PaginatedCmsPageQueryExpanderPlugin extends AbstractPlugin implements Quer
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
-
         $this->addPaginationToQuery($searchQuery->getSearchQuery(), $requestParameters);
 
         return $searchQuery;

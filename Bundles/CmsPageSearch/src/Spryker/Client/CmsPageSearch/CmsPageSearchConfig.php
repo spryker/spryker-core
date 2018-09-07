@@ -68,7 +68,7 @@ class CmsPageSearchConfig extends AbstractBundleConfig
             ->setDefaultItemsPerPage($this->getCmsPagePaginationDefaultItemsPerPage())
             ->setValidItemsPerPageOptions($this->getCmsPagePaginationValidItemsPerPageOptions());
 
-        $paginationConfigBuilder->setPagination($paginationConfigTransfer);
+        $paginationConfigBuilder->setPaginationConfigTransfer($paginationConfigTransfer);
 
         return $paginationConfigBuilder;
     }
