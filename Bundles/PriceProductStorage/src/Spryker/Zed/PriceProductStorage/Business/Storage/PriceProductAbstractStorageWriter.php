@@ -212,13 +212,14 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
      *
      * @return array
      */
-    protected function getProductAbstractPriceGroups(array $productAbstractIds)
+    protected function getProductAbstractPriceGroups(array $productAbstractIds): array
     {
         $priceGroups = [];
         $priceGroupsCollection = [];
         $priceProductCriteria = $this->getPriceCriteriaTransfer();
         foreach ($productAbstractIds as $idProductAbstract) {
             $productAbstractPriceProductTransfers = $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteria);
+            $priceGroups[$idProductAbstract] = [];
             foreach ($productAbstractPriceProductTransfers as $priceProductTransfer) {
                 $storeName = $this->getStoreNameById($priceProductTransfer->getMoneyValue()->getFkStore());
                 $priceGroups[$idProductAbstract][$storeName][] = $priceProductTransfer;
