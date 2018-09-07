@@ -19,6 +19,7 @@ class PaginatedCmsPageQueryExpanderPlugin extends AbstractPlugin implements Quer
 {
     /**
      * {@inheritdoc}
+     *  - Allows to fetch cms pages result by page
      *
      * @api
      *
