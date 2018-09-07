@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\RestFacetSearchResultAttributesTransfer;
 use Generated\Shared\Transfer\RestPriceProductAttributesTransfer;
 use Generated\Shared\Transfer\RestRangeSearchResultAttributesTransfer;
+use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
 
 class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterface
 {
@@ -28,9 +29,9 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
     {
         $restSearchAttributesTransfer = (new RestCatalogSearchAttributesTransfer())->fromArray($restSearchResponse, true);
         $restSearchAttributesTransfer->setCurrency($currency);
-        if (isset($restSearchResponse[static::FACETS])) {
+        if (isset($restSearchResponse[FacetResultFormatterPlugin::NAME])) {
             $restSearchAttributesTransfer = $this->mapSearchResponseFacetTransfersToSearchAttributesTransfer(
-                $restSearchResponse[static::FACETS],
+                $restSearchResponse[FacetResultFormatterPlugin::NAME],
                 $restSearchAttributesTransfer
             );
         }
