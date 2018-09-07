@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaGeneratorInterface
 {
     protected const KEY_ATTRIBUTES = 'attributes';
-
     protected const KEY_DATA = 'data';
     protected const KEY_ID = 'id';
     protected const KEY_ITEMS = 'items';
@@ -39,6 +38,19 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
 
     protected const PATTERN_SCHEMA_REFERENCE = '#/components/schemas/%s';
 
+    protected const TRANSFER_NAME_PARTIAL_ATTRIBUTE = 'Attribute';
+    protected const TRANSFER_NAME_PARTIAL_TRANSFER = 'Transfer';
+
+    protected const SCHEMA_NAME_PARTIAL_REQUEST = 'Request';
+    protected const SCHEMA_NAME_PARTIAL_RESPONSE = 'Response';
+    protected const SCHEMA_NAME_PARTIAL_DATA = 'Data';
+    protected const SCHEMA_NAME_PARTIAL_ATTRIBUTE = 'Attribute';
+    protected const SCHEMA_NAME_PARTIAL_RELATIONSHIPS = 'Relationships';
+
+    protected const KEY_REST_REQUEST_PARAMETER = 'rest_request_parameter';
+    protected const REST_REQUEST_BODY_PARAMETER_REQUIRED = 'required';
+    protected const REST_REQUEST_BODY_PARAMETER_UNNEEDED = 'no';
+
     /**
      * @var array
      */
@@ -47,7 +59,12 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     /**
      * @var string
      */
-    protected $lastAddedResponseSchema;
+    protected $lastAddedRequestSchemaKey;
+
+    /**
+     * @var string
+     */
+    protected $lastAddedResponseSchemaKey;
 
     /**
      * @return array
@@ -61,33 +78,34 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     }
 
     /**
-     * TODO: improve this somehow
+     * @return string
+     */
+    public function getLastAddedRequestSchemaKey(): string
+    {
+        return $this->lastAddedResponseSchemaKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastAddedResponseSchemaKey(): string
+    {
+        return $this->lastAddedResponseSchemaKey;
+    }
+
+    /**
+     * @param string $transferClassName
      *
      * @return void
      */
-    protected function addDefaultSchemas(): void
+    public function addRequestSchemaFromTransferClassName(string $transferClassName): void
     {
-        $restErrorSchemaName = $this->getResponseDataAttributesSchemaNameFromTransferClassName(RestErrorMessageTransfer::class);
-        $this->addResponseDataAttributesSchemaFromTransfer(new RestErrorMessageTransfer(), $restErrorSchemaName);
+        if (!$this->isTransferValid($transferClassName)) {
+            return;
+        }
 
-        $this->schemas['RestLinks'] = [
-            static::KEY_PROPERTIES => [
-                'self' => [
-                    static::KEY_TYPE => static::VALUE_STRING,
-                ],
-            ],
-        ];
-
-        $this->schemas['RestRelationships'] = [
-            static::KEY_PROPERTIES => [
-                static::KEY_ID => [
-                    static::KEY_TYPE => static::VALUE_STRING,
-                ],
-                static::KEY_TYPE => [
-                    static::KEY_TYPE => static::VALUE_STRING,
-                ],
-            ],
-        ];
+        $transfer = new $transferClassName;
+        $this->addRequestSchema($transferClassName, $transfer);
     }
 
     /**
@@ -96,39 +114,76 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      *
      * @return void
      */
-    public function addSchemaFromTransferClassName(string $transferClassName, array $resourceRelationships = []): void
+    public function addResponseSchemaFromTransferClassName(string $transferClassName, array $resourceRelationships = []): void
     {
-        if (!class_exists($transferClassName)) {
+        if (!$this->isTransferValid($transferClassName)) {
             return;
         }
 
         $transfer = new $transferClassName;
-        if (!$transfer instanceof AbstractTransfer) {
-            return;
-        }
+        $this->addResponseSchema($transferClassName, $resourceRelationships, $transfer);
+    }
 
-        $responseSchemaName = $this->getResponseSchemaNameFromTransferClassName($transferClassName);
-        $responseDataSchemaName = $this->getResponseDataSchemaNameFromTransferClassName($transferClassName);
-        $responseAttributesSchemaName = $this->getResponseDataAttributesSchemaNameFromTransferClassName($transferClassName);
+    /**
+     * @param string $transferClassName
+     *
+     * @return bool
+     */
+    protected function isTransferValid(string $transferClassName): bool
+    {
+        return class_exists($transferClassName) && is_subclass_of($transferClassName, AbstractTransfer::class);
+    }
 
-        $this->addResponseSchema($responseSchemaName, $responseDataSchemaName);
+    /**
+     * @param string $transferClassName
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
+     *
+     * @return void
+     */
+    protected function addRequestSchema(string $transferClassName, AbstractTransfer $transfer): void
+    {
+        $transferClassNamePartial = $this->getTransferClassNamePartial($transferClassName);
+
+        $requestSchemaName = $this->createSchemaNameFromTransferClassName(
+            $transferClassNamePartial,
+            static::TRANSFER_NAME_PARTIAL_ATTRIBUTE . static::TRANSFER_NAME_PARTIAL_TRANSFER,
+            'Request'
+        );
+        $requestDataSchemaName = $this->createSchemaNameFromTransferClassName($transferClassNamePartial, static::TRANSFER_NAME_PARTIAL_ATTRIBUTE . static::TRANSFER_NAME_PARTIAL_TRANSFER, 'RequestData');
+        $requestAttributesSchemaName = $this->createSchemaNameFromTransferClassName($transferClassNamePartial, static::TRANSFER_NAME_PARTIAL_ATTRIBUTE . static::TRANSFER_NAME_PARTIAL_TRANSFER, 'RequestAttributes');
+
+        $this->addBaseSchema($requestSchemaName, $requestDataSchemaName);
+        $this->addRequestDataSchema($requestDataSchemaName, $requestAttributesSchemaName);
+        $this->addRequestDataAttributesSchemaFromTransfer($transfer, $requestAttributesSchemaName);
+
+        $this->lastAddedRequestSchemaKey = $requestSchemaName;
+    }
+
+    /**
+     * @param string $transferClassName
+     * @param array $resourceRelationships
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
+     *
+     * @return void
+     */
+    protected function addResponseSchema(string $transferClassName, array $resourceRelationships, AbstractTransfer $transfer): void
+    {
+        $transferClassNamePartial = $this->getTransferClassNamePartial($transferClassName);
+
+        $responseSchemaName = $this->createSchemaNameFromTransferClassName($transferClassNamePartial, static::TRANSFER_NAME_PARTIAL_ATTRIBUTE . static::TRANSFER_NAME_PARTIAL_TRANSFER, 'Request');
+        $responseDataSchemaName = $this->createSchemaNameFromTransferClassName($transferClassNamePartial, static::TRANSFER_NAME_PARTIAL_ATTRIBUTE . static::TRANSFER_NAME_PARTIAL_TRANSFER, 'RequestData');
+        $responseAttributesSchemaName = $this->createSchemaNameFromTransferClassName($transferClassNamePartial, 'Transfer', '');
+
+        $this->addBaseSchema($responseSchemaName, $responseDataSchemaName);
         $this->addResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName);
         $this->addResponseDataAttributesSchemaFromTransfer($transfer, $responseAttributesSchemaName);
 
         if ($resourceRelationships) {
-            $resourceRelationshipsSchemaName = $this->getResponseDataRelationshipsSchemaNameFromTransferClass($transferClassName);
+            $resourceRelationshipsSchemaName = $this->createSchemaNameFromTransferClassName($transferClassNamePartial, static::TRANSFER_NAME_PARTIAL_ATTRIBUTE . static::TRANSFER_NAME_PARTIAL_TRANSFER, 'Relationships');
             $this->addRelationshipsDataToResponseDataSchema($responseDataSchemaName, $resourceRelationshipsSchemaName, $resourceRelationships);
         }
 
-        $this->lastAddedResponseSchema = $responseSchemaName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastAddedSchemaKey(): string
-    {
-        return $this->lastAddedResponseSchema;
+        $this->lastAddedResponseSchemaKey = $responseSchemaName;
     }
 
     /**
@@ -142,24 +197,80 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
         if (array_key_exists($attributesSchemaName, $this->schemas)) {
             return;
         }
+        $this->schemas[$attributesSchemaName] = [];
 
-        //to avoid infinite loop
-        $this->schemas[$attributesSchemaName][static::KEY_PROPERTIES] = [];
-        $transferReflection = new ReflectionClass($transfer);
-        $transferMetadata = $transferReflection->getProperty('transferMetadata');
-        $transferMetadata->setAccessible(true);
-        $transferMetadataValue = $transferMetadata->getValue($transfer);
+        $transferMetadataValue = $this->getTransferMetadata($transfer);
 
         $schemaProperties = [];
         foreach ($transferMetadataValue as $key => $value) {
-            if (class_exists($value[static::KEY_TYPE])) {
-                $schemaProperties += $this->formatObjectSchemaType($key, $value);
-            } else {
-                $schemaProperties += $this->formatBasicSchemaType($key, $value[static::KEY_TYPE]);
-            }
+            $schemaProperties = $this->addSchemaProperty($schemaProperties, $key, $value);
         }
 
         $this->schemas[$attributesSchemaName][static::KEY_PROPERTIES] = $schemaProperties;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
+     * @param string $attributesSchemaName
+     *
+     * @return void
+     */
+    protected function addRequestDataAttributesSchemaFromTransfer(AbstractTransfer $transfer, string $attributesSchemaName): void
+    {
+        if (array_key_exists($attributesSchemaName, $this->schemas)) {
+            return;
+        }
+        $this->schemas[$attributesSchemaName] = [];
+
+        $transferMetadataValue = $this->getTransferMetadata($transfer);
+
+        $schemaProperties = [];
+        $required = [];
+        foreach ($transferMetadataValue as $key => $value) {
+            if ($value[static::KEY_REST_REQUEST_PARAMETER] === static::REST_REQUEST_BODY_PARAMETER_UNNEEDED) {
+                continue;
+            }
+            if ($value[static::KEY_REST_REQUEST_PARAMETER] === static::REST_REQUEST_BODY_PARAMETER_REQUIRED) {
+                $required[] = $key;
+            }
+            $schemaProperties = $this->addSchemaProperty($schemaProperties, $key, $value);
+        }
+
+        if ($required) {
+            $this->schemas[$attributesSchemaName][static::REST_REQUEST_BODY_PARAMETER_REQUIRED] = $required;
+        }
+        $this->schemas[$attributesSchemaName][static::KEY_PROPERTIES] = $schemaProperties;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
+     *
+     * @return array
+     */
+    protected function getTransferMetadata(AbstractTransfer $transfer): array
+    {
+        $transferReflection = new ReflectionClass($transfer);
+        $transferMetadata = $transferReflection->getProperty('transferMetadata');
+        $transferMetadata->setAccessible(true);
+
+        return $transferMetadata->getValue($transfer);
+    }
+
+    /**
+     * @param array $schemaProperties
+     * @param string $metadataKey
+     * @param array $metadataValue
+     *
+     * @return array
+     */
+    protected function addSchemaProperty(array $schemaProperties, string $metadataKey, array $metadataValue): array
+    {
+        if (class_exists($metadataValue[static::KEY_TYPE])) {
+            $schemaProperties += $this->formatObjectSchemaType($metadataKey, $metadataValue);
+        } else {
+            $schemaProperties += $this->formatBasicSchemaType($metadataKey, $metadataValue[static::KEY_TYPE]);
+        }
+        return $schemaProperties;
     }
 
     /**
@@ -227,57 +338,23 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      */
     protected function formatTransferClassToSchemaType(string $transferClassName): string
     {
-        $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName, $this->getResponseDataAttributesSchemaNameFromTransferClassName($transferClassName));
+        $transferClassNameExploded = $this->getTransferClassNameExploded($transferClassName);
+        $schemaName = $this->createSchemaNameFromTransferClassName(end($transferClassNameExploded), 'Transfer', '');
+        $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName, $schemaName);
 
-        return sprintf(static::PATTERN_SCHEMA_REFERENCE, $this->getResponseDataAttributesSchemaNameFromTransferClassName($transferClassName));
+        return sprintf(static::PATTERN_SCHEMA_REFERENCE, $schemaName);
     }
 
     /**
      * @param string $transferClassName
+     * @param string $removal
+     * @param string $addition
      *
      * @return string
      */
-    protected function getResponseSchemaNameFromTransferClassName(string $transferClassName): string
+    protected function createSchemaNameFromTransferClassName(string $transferClassName, string $removal, string $addition): string
     {
-        $transferClassNameExploded = explode('\\', $transferClassName);
-
-        return str_replace('AttributesTransfer', 'Response', end($transferClassNameExploded));
-    }
-
-    /**
-     * @param string $transferClassName
-     *
-     * @return string
-     */
-    protected function getResponseDataSchemaNameFromTransferClassName(string $transferClassName): string
-    {
-        $transferClassNameExploded = explode('\\', $transferClassName);
-
-        return str_replace('AttributesTransfer', 'ResponseData', end($transferClassNameExploded));
-    }
-
-    /**
-     * @param string $transferClassName
-     *
-     * @return string
-     */
-    protected function getResponseDataAttributesSchemaNameFromTransferClassName(string $transferClassName): string
-    {
-        $transferClassNameExploded = explode('\\', $transferClassName);
-
-        return str_replace('Transfer', '', end($transferClassNameExploded));
-    }
-
-    /**
-     * @param string $transferClassName
-     *
-     * @return string
-     */
-    protected function getResponseDataRelationshipsSchemaNameFromTransferClass(string $transferClassName): string
-    {
-        $transferClassNameExploded = explode('\\', $transferClassName);
-
-        return str_replace('AttributesTransfer', 'Relationships', end($transferClassNameExploded));
+        return str_replace($removal, $addition, $transferClassName);
     }
 
     /**
@@ -306,7 +383,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      *
      * @return void
      */
-    public function addResponseSchema(string $schemaName, string $ref): void
+    public function addBaseSchema(string $schemaName, string $ref): void
     {
         $this->schemas[$schemaName] = [
             static::KEY_PROPERTIES => [
@@ -323,30 +400,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      *
      * @return void
      */
-    public function addRequestDataSchemaWithId(string $schemaName, string $ref): void
-    {
-        $this->schemas[$schemaName] = [
-            static::KEY_PROPERTIES => [
-                static::KEY_TYPE => [
-                    static::KEY_TYPE => static::VALUE_STRING,
-                ],
-                static::KEY_ID => [
-                    static::KEY_TYPE => static::VALUE_STRING,
-                ],
-                static::KEY_ATTRIBUTES => [
-                    static::KEY_REF => sprintf(static::PATTERN_SCHEMA_REFERENCE, $ref),
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @param string $schemaName
-     * @param string $ref
-     *
-     * @return void
-     */
-    public function addRequestDataSchemaWithoutId(string $schemaName, string $ref): void
+    public function addRequestDataSchema(string $schemaName, string $ref): void
     {
         $this->schemas[$schemaName] = [
             static::KEY_PROPERTIES => [
@@ -411,6 +465,61 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
 
         $this->schemas[$relationshipsSchemaName] = [
             static::KEY_PROPERTIES => $properties,
+        ];
+    }
+
+    /**
+     * @param string $transferClassName
+     *
+     * @return array
+     */
+    protected function getTransferClassNameExploded(string $transferClassName): array
+    {
+        return explode('\\', $transferClassName);
+    }
+
+    /**
+     * @param string $transferClassName
+     *
+     * @return string
+     */
+    protected function getTransferClassNamePartial(string $transferClassName): string
+    {
+        $transferClassNameExploded = $this->getTransferClassNameExploded($transferClassName);
+
+        return end($transferClassNameExploded);
+    }
+
+    /**
+     * TODO: improve this somehow
+     *
+     * @return void
+     */
+    protected function addDefaultSchemas(): void
+    {
+        $transferClassNameExploded = $this->getTransferClassNameExploded(RestErrorMessageTransfer::class);
+        $transferClassNamePartial = end($transferClassNameExploded);
+
+        $restErrorSchemaName = $this->createSchemaNameFromTransferClassName($transferClassNamePartial, 'Transfer', '');
+        $this->addResponseDataAttributesSchemaFromTransfer(new RestErrorMessageTransfer(), $restErrorSchemaName);
+
+        $this->schemas['RestLinks'] = [
+            static::KEY_PROPERTIES => [
+                'self' => [
+                    static::KEY_TYPE => static::VALUE_STRING,
+                ],
+            ],
+        ];
+
+        $this->schemas['RestRelationships'] = [
+            static::KEY_PROPERTIES => [
+                static::KEY_ID => [
+                    static::KEY_TYPE => static::VALUE_STRING,
+                ],
+                static::KEY_TYPE => [
+                    static::KEY_TYPE => static::VALUE_STRING,
+                ],
+            ],
         ];
     }
 }

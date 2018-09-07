@@ -9,6 +9,9 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Dependency\External;
 
 use IteratorAggregate;
 
+/**
+ * @SuppressWarnings(PHPMD.ShortMethodName)
+ */
 interface RestApiDocumentationGeneratorToFinderInterface extends IteratorAggregate
 {
     /**

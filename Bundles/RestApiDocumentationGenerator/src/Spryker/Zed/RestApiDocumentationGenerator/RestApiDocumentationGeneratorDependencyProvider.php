@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator;
 
-use Spryker\Glue\GlueApplication\Plugin\Rest\ResourceRelationshipCollectionProviderPlugin;
-use Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToOpenApiAnnotationsAnalyserAdapter;
@@ -118,10 +116,10 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
     }
 
     /**
-     * @return \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface
+     * @return \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[]
      */
-    protected function getResourceRelationshipsCollectionProviderPlugin(): ResourceRelationshipCollectionProviderPluginInterface
+    protected function getResourceRelationshipsCollectionProviderPlugin(): array
     {
-        return new ResourceRelationshipCollectionProviderPlugin();
+        return [];
     }
 }

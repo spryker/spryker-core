@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business;
 
-use Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationGenerator;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationGeneratorInterface;
@@ -105,9 +104,9 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
     }
 
     /**
-     * @return \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface
+     * @return \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[]
      */
-    public function getResourceRelationshipsCollectionProviderPlugin(): ResourceRelationshipCollectionProviderPluginInterface
+    public function getResourceRelationshipsCollectionProviderPlugin(): array
     {
         return $this->getProvidedDependency(RestApiDocumentationGeneratorDependencyProvider::PLUGIN_RESOURCE_RELATIONSHIPS_COLLECTION_PROVIDER);
     }

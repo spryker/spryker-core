@@ -9,7 +9,6 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
-use Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface;
 
 class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInterface
@@ -20,9 +19,9 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
     protected $resourceRoutesPluginsProviderPlugins;
 
     /**
-     * @var \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface
+     * @var \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[]
      */
-    protected $resourceRelationshipCollectionPlugin;
+    protected $resourceRelationshipCollectionPlugins;
 
     /**
      * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface
@@ -41,20 +40,20 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
 
     /**
      * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[] $resourceRoutesPluginsProviderPlugins
-     * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface $resourceRelationshipCollectionPlugin
+     * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[] $resourceRelationshipCollectionPlugins
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface $restApiSchemaGenerator
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGeneratorInterface $restApiPathGenerator
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface $restApiDocumentationWriter
      */
     public function __construct(
         array $resourceRoutesPluginsProviderPlugins,
-        ResourceRelationshipCollectionProviderPluginInterface $resourceRelationshipCollectionPlugin,
+        array $resourceRelationshipCollectionPlugins,
         RestApiDocumentationSchemaGeneratorInterface $restApiSchemaGenerator,
         RestApiDocumentationPathGeneratorInterface $restApiPathGenerator,
         RestApiDocumentationWriterInterface $restApiDocumentationWriter
     ) {
         $this->resourceRoutesPluginsProviderPlugins = $resourceRoutesPluginsProviderPlugins;
-        $this->resourceRelationshipCollectionPlugin = $resourceRelationshipCollectionPlugin;
+        $this->resourceRelationshipCollectionPlugins = $resourceRelationshipCollectionPlugins;
         $this->restApiSchemaGenerator = $restApiSchemaGenerator;
         $this->restApiPathGenerator = $restApiPathGenerator;
         $this->restApiDocumentationWriter = $restApiDocumentationWriter;
@@ -65,21 +64,25 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
      */
     public function generateOpenApiSpecification(): void
     {
-        $resourceRouteCollection = $this->resourceRelationshipCollectionPlugin->getResourceRelationshipCollection();
         foreach ($this->resourceRoutesPluginsProviderPlugins as $resourceRoutesPluginsProviderPlugin) {
             foreach ($resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins() as $plugin) {
                 $resourceRelationships = [];
-                if ($resourceRouteCollection->hasRelationships($plugin->getResourceType())) {
-                    $relationshipPlugins = $resourceRouteCollection->getRelationships($plugin->getResourceType());
-                    foreach ($relationshipPlugins as $relationshipPlugin) {
-                        $resourceRelationships[] = $relationshipPlugin->getRelationshipResourceType();
+                foreach ($this->resourceRelationshipCollectionPlugins as $resourceRelationshipCollectionPlugin) {
+                    $resourceRouteCollection = $resourceRelationshipCollectionPlugin->getResourceRelationshipCollection();
+                    if ($resourceRouteCollection->hasRelationships($plugin->getResourceType())) {
+                        $relationshipPlugins = $resourceRouteCollection->getRelationships($plugin->getResourceType());
+                        foreach ($relationshipPlugins as $relationshipPlugin) {
+                            $resourceRelationships[] = $relationshipPlugin->getRelationshipResourceType();
+                        }
                     }
                 }
-                $this->restApiSchemaGenerator->addSchemaFromTransferClassName($plugin->getResourceAttributesClassName(), $resourceRelationships);
-                $transferSchemaKey = $this->restApiSchemaGenerator->getLastAddedSchemaKey();
+                $this->restApiSchemaGenerator->addResponseSchemaFromTransferClassName($plugin->getResourceAttributesClassName(), $resourceRelationships);
+                $this->restApiSchemaGenerator->addRequestSchemaFromTransferClassName($plugin->getResourceAttributesClassName());
+                $responseSchemaKey = $this->restApiSchemaGenerator->getLastAddedResponseSchemaKey();
+                $requestSchemaName = $this->restApiSchemaGenerator->getLastAddedRequestSchemaKey();
 
                 $parents = $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins());
-                $this->restApiPathGenerator->addPathsForPlugin($plugin, $transferSchemaKey, 'RestErrorMessage', $parents);
+                $this->restApiPathGenerator->addPathsForPlugin($plugin, $responseSchemaKey, 'RestErrorMessage', $parents);
             }
         }
 

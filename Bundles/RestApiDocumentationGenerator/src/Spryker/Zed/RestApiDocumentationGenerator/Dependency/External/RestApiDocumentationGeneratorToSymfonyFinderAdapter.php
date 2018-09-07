@@ -9,6 +9,9 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Dependency\External;
 
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @SuppressWarnings(PHPMD.ShortMethodName)
+ */
 class RestApiDocumentationGeneratorToSymfonyFinderAdapter implements RestApiDocumentationGeneratorToFinderInterface
 {
     /**
