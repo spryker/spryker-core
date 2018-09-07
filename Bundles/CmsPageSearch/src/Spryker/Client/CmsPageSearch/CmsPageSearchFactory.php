@@ -7,11 +7,16 @@
 
 namespace Spryker\Client\CmsPageSearch;
 
+use Spryker\Client\CmsPageSearch\Config\CmsPageSortConfigBuilder;
+use Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 use Spryker\Client\Search\SearchClientInterface;
 
+/**
+ * @method \Spryker\Client\CmsPageSearch\CmsPageSearchConfig getConfig()
+ */
 class CmsPageSearchFactory extends AbstractFactory
 {
     /**
@@ -60,5 +65,21 @@ class CmsPageSearchFactory extends AbstractFactory
     public function getCmsPageSearchResultFormatters(): array
     {
         return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PLUGINS_CMS_PAGE_SEARCH_RESULT_FORMATTER);
+    }
+
+    /**
+     * @return \Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface
+     */
+    public function getCmsPageSortConfig(): SortConfigBuilderInterface
+    {
+        return $this->getConfig()->buildCmsPageSortConfig($this->createSortConfigBuilder());
+    }
+
+    /**
+     * @return \Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface
+     */
+    public function createSortConfigBuilder(): SortConfigBuilderInterface
+    {
+        return new CmsPageSortConfigBuilder();
     }
 }
