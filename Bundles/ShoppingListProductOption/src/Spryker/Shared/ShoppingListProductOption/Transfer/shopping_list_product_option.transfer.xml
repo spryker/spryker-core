@@ -8,7 +8,7 @@
     </transfer>
 
     <transfer name="ProductOptionValueStorage">
-        <property name="isSelected" type="boolean"/>
+        <property name="isSelected" type="bool"/>
     </transfer>
 
 </transfers>
