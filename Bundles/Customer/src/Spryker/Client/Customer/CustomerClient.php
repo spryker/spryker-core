@@ -145,6 +145,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
+        $customerTransfer->setCompanyUserTransfer($this->getCustomer()->getCompanyUserTransfer());
 
         $customerTransfer = $this->getFactory()
             ->createZedCustomerStub()
