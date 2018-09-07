@@ -39,7 +39,7 @@ class MerchantRelationshipProductListDataImportPluginTest extends Unit
     public function testImportImportsData(): void
     {
         // Assign
-        $this->tester->ensureProductListTableIsEmpty();
+        $this->tester->ensureDatabaseTableIsEmpty();
         $this->tester->haveProductLists();
         $this->tester->createMerchantRelationship('mr-008');
 

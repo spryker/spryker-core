@@ -47,25 +47,10 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
     /**
      * @return void
      */
-    public function setUp(): void
-    {
-        $this->strategies = [
-            new HardThresholdStrategyPlugin(),
-            new SoftThresholdWithMessageStrategyPlugin(),
-            new SoftThresholdWithFixedFeeStrategyPlugin(),
-            new SoftThresholdWithFlexibleFeeStrategyPlugin(),
-        ];
-
-        $this->tester->setDependency(MinimumOrderValueDependencyProvider::PLUGINS_MINIMUM_ORDER_VALUE_STRATEGY, $this->strategies);
-
-        parent::setUp();
-    }
-
-    /**
-     * @return void
-     */
     public function testInstallMinimumOrderValueTypesShouldPersistTypes(): void
     {
+        $this->setupDependencies();
+
         // Action
         $this->getFacade()->installMinimumOrderValueTypes();
 
@@ -78,6 +63,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
      */
     public function testSaveHardAndSoftMinimumOrderValues(): void
     {
+        $this->setupDependencies();
+
         // Prepare
         $minimumOrderValueHardTypeTransfer = $this->findMinimumOrderValueTypeTransferForGroup(
             MinimumOrderValueConfig::GROUP_HARD
@@ -153,6 +140,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
      */
     public function testSaveMinimumOrderValueWithInvalidKeyThrowsException(): void
     {
+        $this->setupDependencies();
+
         // Prepare
         $storeTransferUS = (new StoreTransfer())->setIdStore(2)->setName('US');
         $currencyTransferUSD = (new CurrencyTransfer())->setIdCurrency(2)->setCode('USD');
@@ -174,6 +163,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
      */
     public function testSaveMinimumOrderValueWithLocalizedMessages(): void
     {
+        $this->setupDependencies();
+
         // Prepare
         $minimumOrderValueSoftStrategy = $this->findMinimumOrderValueTypeTransferForGroup(
             MinimumOrderValueConfig::GROUP_SOFT
@@ -211,6 +202,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
      */
     public function testFindMinimumOrderValues(): void
     {
+        $this->setupDependencies();
+
         // Prepare
         $storeTransfer = $this->tester->getStoreTransfer();
         $currencyTransfer = $this->tester->getCurrencyTransfer();
@@ -251,6 +244,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
      */
     public function testCartPostSaveMinimumOrderValueCheck(): void
     {
+        $this->setupDependencies();
+
         // Prepare
         $quoteTransfer = $this->tester->createTestQuoteTransfer();
 
@@ -263,6 +258,8 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
      */
     public function testCheckCheckoutMinimumOrderValue(): void
     {
+        $this->setupDependencies();
+
         // Prepare
         $quoteTransfer = $this->tester->createTestQuoteTransfer();
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
@@ -315,6 +312,21 @@ class MinimumOrderValueFacadeTest extends MinimumOrderValueMocks
         }
 
         return null;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupDependencies(): void
+    {
+        $this->strategies = [
+            new HardThresholdStrategyPlugin(),
+            new SoftThresholdWithMessageStrategyPlugin(),
+            new SoftThresholdWithFixedFeeStrategyPlugin(),
+            new SoftThresholdWithFlexibleFeeStrategyPlugin(),
+        ];
+
+        $this->tester->setDependency(MinimumOrderValueDependencyProvider::PLUGINS_MINIMUM_ORDER_VALUE_STRATEGY, $this->strategies);
     }
 
     /**
