@@ -31,6 +31,7 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
 
         $productEntityTransferList = [];
 
+        /** @var \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle|\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle $productBundleEntity */
         foreach ($productBundleEntities as $productBundleEntity) {
             $productEntityTransfer = new SpyProductEntityTransfer();
             $productEntityTransfer->fromArray($productBundleEntity->getSpyProductRelatedByFkBundledProduct()->toArray(), true);
