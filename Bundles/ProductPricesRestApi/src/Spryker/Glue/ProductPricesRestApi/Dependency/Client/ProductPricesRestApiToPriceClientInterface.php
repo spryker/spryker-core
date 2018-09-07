@@ -12,15 +12,15 @@ interface ProductPricesRestApiToPriceClientInterface
     /**
      * @return string
      */
-    public function getCurrentPriceMode(): string;
+    public function getCurrentPriceMode();
 
     /**
      * @return string
      */
-    public function getGrossPriceModeIdentifier(): string;
+    public function getGrossPriceModeIdentifier();
 
     /**
      * @return string
      */
-    public function getNetPriceModeIdentifier(): string;
+    public function getNetPriceModeIdentifier();
 }

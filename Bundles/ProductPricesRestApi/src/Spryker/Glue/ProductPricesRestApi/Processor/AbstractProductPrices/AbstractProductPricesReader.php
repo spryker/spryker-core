@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -24,6 +25,7 @@ class AbstractProductPricesReader implements AbstractProductPricesReaderInterfac
 {
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    protected const SELF_LINK_TEMPLATE = '%s/%s/%s';
 
     /**
      * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface
@@ -138,7 +140,7 @@ class AbstractProductPricesReader implements AbstractProductPricesReaderInterfac
         );
 
         $restResourceSelfLink = sprintf(
-            '%s/%s/%s',
+            static::SELF_LINK_TEMPLATE,
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
             $sku,
             ProductPricesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_PRICES

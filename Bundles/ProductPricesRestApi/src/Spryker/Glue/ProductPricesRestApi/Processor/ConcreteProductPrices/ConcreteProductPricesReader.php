@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -24,6 +25,7 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
 {
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    protected const SELF_LINK_TEMPLATE = '%s/%s/%s';
 
     /**
      * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface
@@ -139,7 +141,7 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
         );
 
         $restResourceSelfLink = sprintf(
-            '%s/%s/%s',
+            static::SELF_LINK_TEMPLATE,
             ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
             $sku,
             ProductPricesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_PRICES

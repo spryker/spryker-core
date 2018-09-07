@@ -36,9 +36,7 @@ class ProductPricesMapper implements ProductPricesMapperInterface
     public function mapCurrentProductPriceTransferToRestProductPricesAttributesTransfer(
         CurrentProductPriceTransfer $currentProductPriceTransfer
     ): RestProductPricesAttributesTransfer {
-        /**
-         * This mapping should be changed after decision about price filtering in api.
-         */
+        /** @todo: This mapping should be changed after decision about price filtering in api. */
         $productPricesRestAttributesTransfer = (new RestProductPricesAttributesTransfer())
             ->setPrice($currentProductPriceTransfer->getPrice());
         foreach ($currentProductPriceTransfer->getPrices() as $priceType => $amount) {
@@ -52,6 +50,7 @@ class ProductPricesMapper implements ProductPricesMapperInterface
             }
             $productPricesRestAttributesTransfer->addPrice($restProductPriceAttributesTransfer);
         }
+
         return $productPricesRestAttributesTransfer;
     }
 }
