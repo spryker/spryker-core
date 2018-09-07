@@ -201,7 +201,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
      *
      * @return array First level keys are product concrete ids, second level keys are store names, values are grouped prices.
      */
-    protected function getProductConcretePriceGroup(array $productAbstractIdMap): array
+    protected function getProductConcretePriceGroup(array $productAbstractIdMap)
     {
         $priceGroups = [];
         $priceProductCriteria = $this->getPriceCriteriaTransfer();

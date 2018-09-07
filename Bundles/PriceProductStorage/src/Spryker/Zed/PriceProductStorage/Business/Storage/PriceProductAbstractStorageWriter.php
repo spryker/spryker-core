@@ -212,7 +212,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
      *
      * @return array
      */
-    protected function getProductAbstractPriceGroups(array $productAbstractIds): array
+    protected function getProductAbstractPriceGroups(array $productAbstractIds)
     {
         $priceGroups = [];
         $priceGroupsCollection = [];
