@@ -12,6 +12,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapperInterface;
@@ -35,6 +36,11 @@ class AbstractProductPricesReader implements AbstractProductPricesReaderInterfac
     protected $priceProductStorageClient;
 
     /**
+     * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductClientInterface
+     */
+    protected $priceProductClient;
+
+    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
@@ -47,17 +53,20 @@ class AbstractProductPricesReader implements AbstractProductPricesReaderInterfac
     /**
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientInterface $priceProductStorageClient
+     * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductClientInterface $priceProductClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductPricesRestApi\Processor\Mapper\ProductPricesMapperInterface $productPricesMapper
      */
     public function __construct(
         ProductPricesRestApiToProductStorageClientInterface $productStorageClient,
         ProductPricesRestApiToPriceProductStorageClientInterface $priceProductStorageClient,
+        ProductPricesRestApiToPriceProductClientInterface $priceProductClient,
         RestResourceBuilderInterface $restResourceBuilder,
         ProductPricesMapperInterface $productPricesMapper
     ) {
         $this->productStorageClient = $productStorageClient;
         $this->priceProductStorageClient = $priceProductStorageClient;
+        $this->priceProductClient = $priceProductClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->productPricesMapper = $productPricesMapper;
     }
@@ -106,8 +115,10 @@ class AbstractProductPricesReader implements AbstractProductPricesReaderInterfac
         $priceProductTransfers = $this->priceProductStorageClient
             ->getPriceProductAbstractTransfers($abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]);
 
+        $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransfer($priceProductTransfers);
+
         $restProductPricesAttributesTransfer = $this->productPricesMapper
-            ->mapProductPricesTransfersToRestProductPricesAttributesTransfer($priceProductTransfers);
+            ->mapCurrentProductPriceTransferToRestProductPricesAttributesTransfer($currentProductPriceTransfer);
 
         return $this->buildProductPricesResource($sku, $restProductPricesAttributesTransfer);
     }

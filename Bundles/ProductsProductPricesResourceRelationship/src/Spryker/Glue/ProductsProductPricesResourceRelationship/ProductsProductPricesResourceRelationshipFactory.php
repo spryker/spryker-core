@@ -8,15 +8,15 @@ namespace Spryker\Glue\ProductsProductPricesResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductsProductPricesResourceRelationship\Dependency\RestResource\ProductsProductPricesResourceRelationToProductPricesRestApiInterface;
-use Spryker\Glue\ProductsProductPricesResourceRelationship\Processor\Mapper\AbstractProductsProductPricesResourceRelationshipExpander;
-use Spryker\Glue\ProductsProductPricesResourceRelationship\Processor\Mapper\AbstractProductsProductPricesResourceRelationshipExpanderInterface;
-use Spryker\Glue\ProductsProductPricesResourceRelationship\Processor\Mapper\ConcreteProductsProductPricesResourceRelationshipExpander;
-use Spryker\Glue\ProductsProductPricesResourceRelationship\Processor\Mapper\ConcreteProductsProductPricesResourceRelationshipExpanderInterface;
+use Spryker\Glue\ProductsProductPricesResourceRelationship\Processor\Expander\AbstractProductsProductPricesResourceRelationshipExpander;
+use Spryker\Glue\ProductsProductPricesResourceRelationship\Processor\Expander\AbstractProductsProductPricesResourceRelationshipExpanderInterface;
+use Spryker\Glue\ProductsProductPricesResourceRelationship\Processor\Expander\ConcreteProductsProductPricesResourceRelationshipExpander;
+use Spryker\Glue\ProductsProductPricesResourceRelationship\Processor\Expander\ConcreteProductsProductPricesResourceRelationshipExpanderInterface;
 
 class ProductsProductPricesResourceRelationshipFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ProductsProductPricesResourceRelationship\Processor\Mapper\AbstractProductsProductPricesResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\ProductsProductPricesResourceRelationship\Processor\Expander\AbstractProductsProductPricesResourceRelationshipExpanderInterface
      */
     public function createAbstractProductsProductPricesResourceRelationshipExpander(): AbstractProductsProductPricesResourceRelationshipExpanderInterface
     {
@@ -24,7 +24,7 @@ class ProductsProductPricesResourceRelationshipFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductsProductPricesResourceRelationship\Processor\Mapper\ConcreteProductsProductPricesResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\ProductsProductPricesResourceRelationship\Processor\Expander\ConcreteProductsProductPricesResourceRelationshipExpanderInterface
      */
     public function createConcreteProductsProductPricesResourceRelationshipExpander(): ConcreteProductsProductPricesResourceRelationshipExpanderInterface
     {

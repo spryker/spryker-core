@@ -7,26 +7,49 @@
 
 namespace Spryker\Glue\ProductPricesRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\RestProductPriceAttributesTransfer;
 use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
+use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface;
 
 class ProductPricesMapper implements ProductPricesMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface
+     */
+    protected $priceClient;
+
+    /**
+     * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface $priceClient
+     */
+    public function __construct(
+        ProductPricesRestApiToPriceClientInterface $priceClient
+    ) {
+        $this->priceClient = $priceClient;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      *
      * @return \Generated\Shared\Transfer\RestProductPricesAttributesTransfer
      */
-    public function mapProductPricesTransfersToRestProductPricesAttributesTransfer(
-        array $priceProductTransfers
+    public function mapCurrentProductPriceTransferToRestProductPricesAttributesTransfer(
+        CurrentProductPriceTransfer $currentProductPriceTransfer
     ): RestProductPricesAttributesTransfer {
-        $productPricesRestAttributesTransfer = new RestProductPricesAttributesTransfer();
-        foreach ($priceProductTransfers as $priceProductTransfer) {
-            $restProductPriceAttributesTransfer = new RestProductPriceAttributesTransfer();
-            $restProductPriceAttributesTransfer->fromArray($priceProductTransfer->toArray(), true);
-            $restProductPriceAttributesTransfer->setGrossAmount($priceProductTransfer->getMoneyValue()->getGrossAmount());
-            $restProductPriceAttributesTransfer->setNetAmount($priceProductTransfer->getMoneyValue()->getNetAmount());
-            $restProductPriceAttributesTransfer->setCurrency($priceProductTransfer->getMoneyValue()->getCurrency()->getCode());
+        /**
+         * This mapping should be changed after decision about price filtering in api.
+         */
+        $productPricesRestAttributesTransfer = (new RestProductPricesAttributesTransfer())
+            ->setPrice($currentProductPriceTransfer->getPrice());
+        foreach ($currentProductPriceTransfer->getPrices() as $priceType => $amount) {
+            $restProductPriceAttributesTransfer = (new RestProductPriceAttributesTransfer())
+                ->setPriceTypeName($priceType);
+            if ($this->priceClient->getCurrentPriceMode() === $this->priceClient->getGrossPriceModeIdentifier()) {
+                $restProductPriceAttributesTransfer->setGrossAmount($amount);
+            }
+            if ($this->priceClient->getCurrentPriceMode() === $this->priceClient->getNetPriceModeIdentifier()) {
+                $restProductPriceAttributesTransfer->setNetAmount($amount);
+            }
             $productPricesRestAttributesTransfer->addPrice($restProductPriceAttributesTransfer);
         }
         return $productPricesRestAttributesTransfer;

@@ -9,6 +9,8 @@ namespace Spryker\Glue\ProductPricesRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientBridge;
+use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductClientBridge;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientBridge;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientBridge;
 
@@ -16,6 +18,8 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
 {
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
+    public const CLIENT_PRICE = 'CLIENT_PRICE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -28,6 +32,8 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
 
         $container = $this->addPriceProductStorageClient($container);
         $container = $this->addProductStorageClient($container);
+        $container = $this->addPriceProductClient($container);
+        $container = $this->addPriceClient($container);
 
         return $container;
     }
@@ -58,6 +64,38 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
         $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
             return new ProductPricesRestApiToProductStorageClientBridge(
                 $container->getLocator()->productStorage()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addPriceProductClient(Container $container): Container
+    {
+        $container[static::CLIENT_PRICE_PRODUCT] = function (Container $container) {
+            return new ProductPricesRestApiToPriceProductClientBridge(
+                $container->getLocator()->priceProduct()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addPriceClient(Container $container): Container
+    {
+        $container[static::CLIENT_PRICE] = function (Container $container) {
+            return new ProductPricesRestApiToPriceClientBridge(
+                $container->getLocator()->price()->client()
             );
         };
 

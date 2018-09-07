@@ -8,6 +8,8 @@
 namespace Spryker\Glue\ProductPricesRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface;
+use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductStorageClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Processor\AbstractProductPrices\AbstractProductPricesReader;
@@ -24,7 +26,9 @@ class ProductPricesRestApiFactory extends AbstractFactory
      */
     public function createProductPricesMapper(): ProductPricesMapperInterface
     {
-        return new ProductPricesMapper();
+        return new ProductPricesMapper(
+            $this->getPriceClient()
+        );
     }
 
     /**
@@ -35,6 +39,7 @@ class ProductPricesRestApiFactory extends AbstractFactory
         return new AbstractProductPricesReader(
             $this->getProductStorageClient(),
             $this->getPriceProductStorageClient(),
+            $this->getPriceProductClient(),
             $this->getResourceBuilder(),
             $this->createProductPricesMapper()
         );
@@ -48,6 +53,7 @@ class ProductPricesRestApiFactory extends AbstractFactory
         return new ConcreteProductPricesReader(
             $this->getProductStorageClient(),
             $this->getPriceProductStorageClient(),
+            $this->getPriceProductClient(),
             $this->getResourceBuilder(),
             $this->createProductPricesMapper()
         );
@@ -67,5 +73,21 @@ class ProductPricesRestApiFactory extends AbstractFactory
     public function getProductStorageClient(): ProductPricesRestApiToProductStorageClientInterface
     {
         return $this->getProvidedDependency(ProductPricesRestApiDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceProductClientInterface
+     */
+    public function getPriceProductClient(): ProductPricesRestApiToPriceProductClientInterface
+    {
+        return $this->getProvidedDependency(ProductPricesRestApiDependencyProvider::CLIENT_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface
+     */
+    public function getPriceClient(): ProductPricesRestApiToPriceClientInterface
+    {
+        return $this->getProvidedDependency(ProductPricesRestApiDependencyProvider::CLIENT_PRICE);
     }
 }
