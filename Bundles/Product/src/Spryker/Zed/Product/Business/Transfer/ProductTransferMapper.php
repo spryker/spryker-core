@@ -79,9 +79,11 @@ class ProductTransferMapper implements ProductTransferMapperInterface
         $productTransfer->setAttributes($attributes);
         $productTransfer->setIdProductConcrete($productEntity->getIdProduct());
 
-        if ($productEntity->getSpyProductAbstract()) {
-            $productTransfer->setAbstractSku($productEntity->getSpyProductAbstract()->getSku());
-            $productTransfer->setFkProductAbstract($productEntity->getSpyProductAbstract()->getIdProductAbstract());
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract|null $productAbstractEntity */
+        $productAbstractEntity = $productEntity->getSpyProductAbstract();
+        if ($productAbstractEntity) {
+            $productTransfer->setAbstractSku($productAbstractEntity->getSku());
+            $productTransfer->setFkProductAbstract($productAbstractEntity->getIdProductAbstract());
         }
 
         return $productTransfer;
