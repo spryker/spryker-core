@@ -130,7 +130,7 @@ class TaxSetsReader implements TaxSetsReaderInterface
             TaxSetsRestApiConfig::RESOURCE_TAX_SETS
         );
 
-        $restResource->addLink('self', $selfLink);
+        $restResource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $selfLink);
 
         return $restResource;
     }
