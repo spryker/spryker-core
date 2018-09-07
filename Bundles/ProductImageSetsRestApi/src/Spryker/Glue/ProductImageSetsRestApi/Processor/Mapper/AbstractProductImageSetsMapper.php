@@ -16,11 +16,13 @@ class AbstractProductImageSetsMapper implements AbstractProductImageSetsMapperIn
      *
      * @return \Generated\Shared\Transfer\RestProductImageSetsAttributesTransfer
      */
-    public function mapProductAbstractImageStorageTransferToRestProductImageSetsAttributesTransfer(ProductAbstractImageStorageTransfer $productAbstractImageStorageTransfer): RestProductImageSetsAttributesTransfer
-    {
+    public function mapProductAbstractImageStorageTransferToRestProductImageSetsAttributesTransfer(
+        ProductAbstractImageStorageTransfer $productAbstractImageStorageTransfer
+    ): RestProductImageSetsAttributesTransfer {
         $restProductAbstractImagesAttributesTransfer = new RestProductImageSetsAttributesTransfer();
+
         $restProductAbstractImagesAttributesTransfer->fromArray(
-            ($productAbstractImageStorageTransfer->getImageSets()[0])->toArray(),
+            $productAbstractImageStorageTransfer->toArray(),
             true
         );
 

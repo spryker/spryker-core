@@ -18,12 +18,13 @@ class ConcreteProductImageSetsMapper implements ConcreteProductImageSetsMapperIn
      */
     public function mapProductConcreteImageStorageTransferToRestProductImageSetsAttributesTransfer(ProductConcreteImageStorageTransfer $productConcreteImageStorageTransfer): RestProductImageSetsAttributesTransfer
     {
-        $restProductAbstractImagesAttributesTransfer = new RestProductImageSetsAttributesTransfer();
-        $restProductAbstractImagesAttributesTransfer->fromArray(
-            ($productConcreteImageStorageTransfer->getImageSets()[0])->toArray(),
+        $restProductConcreteImagesAttributesTransfer = new RestProductImageSetsAttributesTransfer();
+
+        $restProductConcreteImagesAttributesTransfer->fromArray(
+            $productConcreteImageStorageTransfer->toArray(),
             true
         );
 
-        return $restProductAbstractImagesAttributesTransfer;
+        return $restProductConcreteImagesAttributesTransfer;
     }
 }
