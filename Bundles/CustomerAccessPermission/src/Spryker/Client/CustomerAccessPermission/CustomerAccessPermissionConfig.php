@@ -14,7 +14,6 @@ use Spryker\Client\CustomerAccessPermission\Plugin\SeePricePermissionPlugin;
 use Spryker\Client\CustomerAccessPermission\Plugin\SeeShoppingListPermissionPlugin;
 use Spryker\Client\CustomerAccessPermission\Plugin\SeeWishlistPermissionPlugin;
 use Spryker\Client\Kernel\AbstractBundleConfig;
-use Spryker\Shared\Customer\CustomerConstants;
 
 class CustomerAccessPermissionConfig extends AbstractBundleConfig
 {
@@ -37,6 +36,11 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
     ];
 
     protected const MESSAGE_PLUGIN_NOT_FOUND_EXCEPTION = 'Plugin not found';
+
+    /**
+     * @uses \Spryker\Shared\Customer\CustomerConstants::CUSTOMER_SECURED_PATTERN
+     */
+    protected const CUSTOMER_SECURED_PATTERN = 'CUSTOMER_SECURED_PATTERN';
 
     /**
      * @param string $contentType
@@ -83,6 +87,6 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
      */
     public function getCustomerSecuredPattern(): string
     {
-        return $this->get(CustomerConstants::CUSTOMER_SECURED_PATTERN);
+        return $this->get(static::CUSTOMER_SECURED_PATTERN);
     }
 }
