@@ -20,6 +20,8 @@ class ChangeProductOptionQuantityPlugin extends AbstractPlugin implements PostSa
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

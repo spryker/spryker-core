@@ -27,6 +27,8 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      *
      * @return callable|null
