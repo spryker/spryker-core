@@ -25,13 +25,17 @@ class MoneyFormatter implements MoneyFormatterWithTypeInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
+     * @param \Generated\Shared\Transfer\MoneyTransfer|null $moneyTransfer
      * @param string $type
      *
      * @return string
      */
-    public function format(MoneyTransfer $moneyTransfer, $type)
+    public function format(?MoneyTransfer $moneyTransfer, $type)
     {
+        if (!$moneyTransfer) {
+            return '';
+        }
+
         $formatter = $this->formatterCollection->getFormatter($type);
 
         return $formatter->format($moneyTransfer);
