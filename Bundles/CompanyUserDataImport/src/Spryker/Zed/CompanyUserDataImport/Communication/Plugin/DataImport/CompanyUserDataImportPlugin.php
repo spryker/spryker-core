@@ -19,6 +19,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CompanyUserDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -30,6 +34,10 @@ class CompanyUserDataImportPlugin extends AbstractPlugin implements DataImportPl
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getImportType(): string

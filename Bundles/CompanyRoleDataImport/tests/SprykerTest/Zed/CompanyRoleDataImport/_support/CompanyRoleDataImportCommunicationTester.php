@@ -79,7 +79,7 @@ class CompanyRoleDataImportCommunicationTester extends Actor
         ]);
 
         foreach (static::PERMISSION_PLUGINS as $permissionPlugin) {
-            $this->havePermission(new $permissionPlugin);
+            $this->havePermission(new $permissionPlugin());
         }
     }
 }

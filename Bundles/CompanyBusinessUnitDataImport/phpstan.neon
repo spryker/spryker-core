@@ -2,7 +2,6 @@ parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
     ignoreErrors:
-    - '#Strict comparison using === between [a-zA-Z\\]* and null will always evaluate to false.#'
     - '#Call to an undefined method .+Criteria::.+\(\).#'
 
 services:
