@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ZedLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInterface
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getChannelName()
@@ -26,6 +28,8 @@ class ZedLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInterf
     }
 
     /**
+     * @api
+     *
      * @return \Monolog\Handler\HandlerInterface[]
      */
     public function getHandlers()
@@ -34,6 +38,8 @@ class ZedLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInterf
     }
 
     /**
+     * @api
+     *
      * @return callable[]
      */
     public function getProcessors()

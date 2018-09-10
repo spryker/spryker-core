@@ -14,7 +14,6 @@ use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitAmount;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
@@ -43,8 +42,6 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected static $productHeapSize = 0;
 
-    /**
-     */
     public function __construct()
     {
         $this->initIdProductPackagingUnitTypeHeap();
@@ -61,33 +58,18 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     public function execute(DataSetInterface $dataSet): void
     {
         $dataSet = $this->normalizeDataSet($dataSet);
+        $productPackagingUnitTypeId = $this->getIdProductPackagingUnitTypeByName($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_TYPE_NAME]);
+        $productConcreteId = $this->getIdProductBySku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]);
 
         $productPackagingUnitEntity = $this->getProductPackagingUnitQuery()
-            ->useProductQuery()
-                ->filterBySku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU])
-            ->endUse()
-            ->useProductPackagingUnitTypeQuery(null, Criteria::LEFT_JOIN)
-                ->filterByName($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_TYPE_NAME])
-            ->endUse()
-            ->leftJoinWithSpyProductPackagingUnitAmount()
-            ->find()
-            ->getFirst();
+            ->filterByFkProduct($productConcreteId)
+            ->findOneOrCreate();
 
-        if ($productPackagingUnitEntity === null) {
-            $productPackagingUnitEntity = new SpyProductPackagingUnit();
-        }
-
-        $productConcreteId = $this->getIdProductBySku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]);
         $this->persistLeadProduct($dataSet, $productConcreteId);
 
         $productPackagingUnitEntity
-            ->setHasLeadProduct($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_HAS_LEAD_PRODUCT]);
-
-        if ($productPackagingUnitEntity->isNew()) {
-            $productPackagingUnitEntity
-                ->setFkProduct($productConcreteId)
-                ->setFkProductPackagingUnitType($this->getIdProductPackagingUnitTypeByName($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_TYPE_NAME]));
-        }
+            ->setHasLeadProduct($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_HAS_LEAD_PRODUCT])
+            ->setFkProductPackagingUnitType($productPackagingUnitTypeId);
 
         $productPackagingUnitEntity->save();
 

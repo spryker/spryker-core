@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Customer\Communication\Controller;
 
 use Codeception\Util\Stub;
-
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;

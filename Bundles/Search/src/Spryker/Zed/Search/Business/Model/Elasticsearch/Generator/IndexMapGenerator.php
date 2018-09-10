@@ -39,11 +39,18 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
     protected $twig;
 
     /**
-     * @param string $targetDirectory
+     * @var int
      */
-    public function __construct($targetDirectory)
+    protected $permissionMode;
+
+    /**
+     * @param string $targetDirectory
+     * @param int $permissionMode
+     */
+    public function __construct(string $targetDirectory, int $permissionMode)
     {
         $this->targetBaseDirectory = rtrim($targetDirectory, '/') . '/';
+        $this->permissionMode = $permissionMode;
 
         $loader = new Twig_Loader_Filesystem(__DIR__ . self::TWIG_TEMPLATES_LOCATION);
         $this->twig = new Twig_Environment($loader, []);
@@ -92,7 +99,7 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
         $fileContent = $this->twig->render('class.php.twig', $templateData);
 
         if (!is_dir($this->targetBaseDirectory)) {
-            mkdir($this->targetBaseDirectory, 0755, true);
+            mkdir($this->targetBaseDirectory, $this->permissionMode, true);
         }
 
         file_put_contents($this->targetBaseDirectory . $fileName, $fileContent);

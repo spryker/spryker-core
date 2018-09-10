@@ -52,7 +52,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return null|\Generated\Shared\Transfer\ShoppingListTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
      */
     public function findCustomerShoppingListById(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer
     {
@@ -73,7 +73,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return null|\Generated\Shared\Transfer\ShoppingListTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
      */
     public function findShoppingListById(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer
     {

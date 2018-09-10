@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -239,7 +240,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     protected function setClauseField($fieldName, ClauseTransfer $clauseTransfer)
     {
         if (strpos($fieldName, '.') !== false) {
-            list($fieldName, $attribute) = explode('.', $fieldName);
+            [$fieldName, $attribute] = explode('.', $fieldName);
             $clauseTransfer->setAttribute($attribute);
         }
 

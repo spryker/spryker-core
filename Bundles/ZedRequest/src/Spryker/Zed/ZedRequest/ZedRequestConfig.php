@@ -37,7 +37,7 @@ class ZedRequestConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param null|string $bundleControllerAction
+     * @param string|null $bundleControllerAction
      *
      * @return string
      */
@@ -49,5 +49,13 @@ class ZedRequestConfig extends AbstractBundleConfig
         }
 
         return $fileName . '.log';
+    }
+
+    /**
+     * @return int
+     */
+    public function getPermissionMode(): int
+    {
+        return $this->get(ZedRequestConstants::DIRECTORY_PERMISSION, 0777);
     }
 }

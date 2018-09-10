@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\Storage;
 
+/**
+ * @method void persistCacheForRequest(\Symfony\Component\HttpFoundation\Request $request, $storageCacheStrategyName = \Spryker\Shared\Storage\StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE)
+ */
 interface StorageClientInterface
 {
     /**
