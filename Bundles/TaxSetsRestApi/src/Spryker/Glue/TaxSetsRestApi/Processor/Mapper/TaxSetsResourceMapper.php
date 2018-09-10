@@ -18,7 +18,7 @@ class TaxSetsResourceMapper implements TaxSetsResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestTaxSetsAttributesTransfer
      */
-    public function mapTaxRateSetTransferToRestTaxSetsAttributes(TaxRateSetTransfer $taxRateSetTransfer): RestTaxSetsAttributesTransfer
+    public function mapTaxRateSetTransferToRestTaxSetsAttributesTransfer(TaxRateSetTransfer $taxRateSetTransfer): RestTaxSetsAttributesTransfer
     {
         $restTaxSetTransfer = (new RestTaxSetsAttributesTransfer())->fromArray($taxRateSetTransfer->toArray(), true);
         foreach ($taxRateSetTransfer->getTaxRateSetItems() as $taxRateSetItem) {

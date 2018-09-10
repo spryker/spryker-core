@@ -51,7 +51,8 @@ interface TaxProductConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Returns tax set for abstract product
+     *  - Returns response with tax set for abstract product.
+     *  - If tax set is null - sets error message and isSuccess to false.
      *
      * @api
      *

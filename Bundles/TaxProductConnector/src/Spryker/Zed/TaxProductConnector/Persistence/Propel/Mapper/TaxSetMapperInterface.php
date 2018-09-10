@@ -17,5 +17,5 @@ interface TaxSetMapperInterface
      *
      * @return \Generated\Shared\Transfer\TaxRateSetTransfer
      */
-    public function mapTaxSetToTransfer(SpyTaxSet $taxSetEntity): TaxRateSetTransfer;
+    public function mapTaxSetEntityToTaxRateSetTransfer(SpyTaxSet $taxSetEntity): TaxRateSetTransfer;
 }

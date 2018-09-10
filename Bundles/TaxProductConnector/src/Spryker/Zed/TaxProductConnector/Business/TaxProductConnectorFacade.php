@@ -69,7 +69,7 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @api
      *
@@ -81,6 +81,6 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
     {
         return $this->getFactory()
             ->createProductAbstractTaxReader()
-            ->readTaxSetByProductAbstract($productAbstractTransfer);
+            ->getTaxSetByProductAbstract($productAbstractTransfer);
     }
 }

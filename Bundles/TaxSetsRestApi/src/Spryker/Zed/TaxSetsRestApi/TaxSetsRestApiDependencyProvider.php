@@ -22,6 +22,8 @@ class TaxSetsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
+        $container = parent::providePersistenceLayerDependencies($container);
+
         $container = $this->addTaxSetPropelQuery($container);
 
         return $container;

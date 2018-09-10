@@ -18,7 +18,7 @@ interface TaxSetsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readTaxSets(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getTaxSets(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
      * @param string $abstractProductSku

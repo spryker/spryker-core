@@ -10,20 +10,21 @@ namespace Spryker\Zed\TaxProductConnector\Business\Product;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\TaxSetResponseTransfer;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorRepositoryInterface;
+use Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig;
 
 class ProductAbstractTaxReader implements ProductAbstractTaxReaderInterface
 {
     /**
      * @var \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorRepositoryInterface
      */
-    protected $taxRepository;
+    protected $taxProductConnectorRepository;
 
     /**
-     * @param \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorRepositoryInterface $taxRepositoryInterface
+     * @param \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorRepositoryInterface $taxProductConnectorRepository
      */
-    public function __construct(TaxProductConnectorRepositoryInterface $taxRepositoryInterface)
+    public function __construct(TaxProductConnectorRepositoryInterface $taxProductConnectorRepository)
     {
-        $this->taxRepository = $taxRepositoryInterface;
+        $this->taxProductConnectorRepository = $taxProductConnectorRepository;
     }
 
     /**
@@ -31,16 +32,16 @@ class ProductAbstractTaxReader implements ProductAbstractTaxReaderInterface
      *
      * @return \Generated\Shared\Transfer\TaxSetResponseTransfer
      */
-    public function readTaxSetByProductAbstract(ProductAbstractTransfer $productAbstractTransfer): TaxSetResponseTransfer
+    public function getTaxSetByProductAbstract(ProductAbstractTransfer $productAbstractTransfer): TaxSetResponseTransfer
     {
         $taxSetResponse = new TaxSetResponseTransfer();
-        $taxRateSet = $this->taxRepository->getTaxSetByProductAbstractSku($productAbstractTransfer->getSku());
+        $taxRateSet = $this->taxProductConnectorRepository->findTaxSetByProductAbstractSku($productAbstractTransfer->getSku());
 
         if ($taxRateSet === null) {
             $taxSetResponse->setIsSuccess(false);
             $taxSetResponse->setError(
                 sprintf(
-                    'Could not get tax set, product abstract with id "%d" not found.',
+                    TaxProductConnectorConfig::EXCEPTION_MESSAGE_TAX_SET_NOT_FOUND_FOR_ABSTRACT,
                     $productAbstractTransfer->getIdProductAbstract()
                 )
             );

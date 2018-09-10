@@ -17,5 +17,5 @@ interface TaxSetsResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestTaxSetsAttributesTransfer
      */
-    public function mapTaxRateSetTransferToRestTaxSetsAttributes(TaxRateSetTransfer $taxRateSetTransfer): RestTaxSetsAttributesTransfer;
+    public function mapTaxRateSetTransferToRestTaxSetsAttributesTransfer(TaxRateSetTransfer $taxRateSetTransfer): RestTaxSetsAttributesTransfer;
 }

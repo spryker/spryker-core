@@ -14,7 +14,7 @@ interface TaxProductConnectorClientInterface
 {
     /**
      * Specification:
-     *  - Returns tax set for abstract product
+     *  - Returns tax set for abstract product.
      *
      * @api
      *

@@ -30,7 +30,7 @@ class ProductsTaxSetsResourceRelationshipPlugin extends AbstractPlugin implement
     {
         $this->getFactory()
             ->createProductsTaxSetsResourceRelationshipExpander()
-            ->mapResourceRelationships($resources, $restRequest);
+            ->addResourceRelationships($resources, $restRequest);
     }
 
     /**

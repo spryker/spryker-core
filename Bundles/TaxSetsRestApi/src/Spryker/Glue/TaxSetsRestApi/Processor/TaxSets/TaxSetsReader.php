@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TaxSetsReader implements TaxSetsReaderInterface
 {
     protected const TAX_SET_RESPONSE_ERROR_ABSTRACT_PRODUCT_NOT_FOUND = 'Could not get tax set, product abstract with id "0" not found.';
+
     /**
      * @var \Spryker\Glue\TaxSetsRestApi\Dependency\Client\TaxSetsRestApiToTaxProductConnectorClientInterface
      */
@@ -59,7 +60,7 @@ class TaxSetsReader implements TaxSetsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function readTaxSets(RestRequestInterface $restRequest): RestResponseInterface
+    public function getTaxSets(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
@@ -68,9 +69,6 @@ class TaxSetsReader implements TaxSetsReaderInterface
             return $this->createAbstractProductNotFoundError();
         }
 
-        /**
-         * @var \Generated\Shared\Transfer\TaxSetResponseTransfer $taxSetResponseTransfer
-         */
         $taxSetResponseTransfer = $this->taxProductConnectorClient->getTaxSetForProductAbstract(
             (new ProductAbstractTransfer())->setSku($parentResource->getId())
         );
@@ -82,7 +80,7 @@ class TaxSetsReader implements TaxSetsReaderInterface
             return $this->createTaxSetsNotFoundError($taxSetResponseTransfer);
         }
 
-        $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxRateSetTransferToRestTaxSetsAttributes($taxSetResponseTransfer->getTaxRateSet());
+        $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxRateSetTransferToRestTaxSetsAttributesTransfer($taxSetResponseTransfer->getTaxRateSet());
         $restResource = $this->formatRestResource($restTaxSetTransfer, $taxSetResponseTransfer->getTaxRateSet()->getUuid(), $parentResource->getId());
 
         return $restResponse->addResource($restResource);
@@ -103,7 +101,7 @@ class TaxSetsReader implements TaxSetsReaderInterface
             return null;
         }
 
-        $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxRateSetTransferToRestTaxSetsAttributes($taxSetResponseTransfer->getTaxRateSet());
+        $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxRateSetTransferToRestTaxSetsAttributesTransfer($taxSetResponseTransfer->getTaxRateSet());
 
         return $this->formatRestResource($restTaxSetTransfer, $taxSetResponseTransfer->getTaxRateSet()->getUuid(), $abstractProductSku);
     }

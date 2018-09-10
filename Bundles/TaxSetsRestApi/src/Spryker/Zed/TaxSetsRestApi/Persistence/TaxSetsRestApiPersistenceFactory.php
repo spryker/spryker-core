@@ -13,8 +13,6 @@ use Spryker\Zed\TaxSetsRestApi\TaxSetsRestApiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\TaxSetsRestApi\TaxSetsRestApiConfig getConfig()
- * @method \Spryker\Zed\TaxSetsRestApi\Persistence\TaxSetsRestApiEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\TaxSetsRestApi\Persistence\TaxSetsRestApiRepositoryInterface getRepository()
  */
 class TaxSetsRestApiPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -24,13 +22,5 @@ class TaxSetsRestApiPersistenceFactory extends AbstractPersistenceFactory
     public function getTaxSetPropelQuery(): SpyTaxSetQuery
     {
         return $this->getProvidedDependency(TaxSetsRestApiDependencyProvider::PROPEL_QUERY_TAX_SET);
-    }
-
-    /**
-     * @return \Spryker\Zed\TaxSetsRestApi\Persistence\TaxSetsRestApiRepositoryInterface
-     */
-    public function getTaxSetsRestApiRepository(): TaxSetsRestApiRepositoryInterface
-    {
-        return $this->getRepository();
     }
 }

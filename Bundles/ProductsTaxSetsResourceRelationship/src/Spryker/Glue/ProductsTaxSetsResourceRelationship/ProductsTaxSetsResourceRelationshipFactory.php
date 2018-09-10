@@ -8,16 +8,16 @@
 namespace Spryker\Glue\ProductsTaxSetsResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiInterface;
+use Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface;
 use Spryker\Glue\ProductsTaxSetsResourceRelationship\Processor\Expander\ProductsTaxSetsResourceRelationshipExpander;
 use Spryker\Glue\ProductsTaxSetsResourceRelationship\Processor\Expander\ProductsTaxSetsResourceRelationshipExpanderInterface;
 
 class ProductsTaxSetsResourceRelationshipFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiInterface
+     * @return \Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface
      */
-    public function getProductTaxSetsResource(): ProductsTaxSetsResourceRelationshipToTaxSetsRestApiInterface
+    public function getProductTaxSetsResource(): ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface
     {
         return $this->getProvidedDependency(ProductsTaxSetsResourceRelationshipDependencyProvider::RESOURCE_TAX_SETS);
     }

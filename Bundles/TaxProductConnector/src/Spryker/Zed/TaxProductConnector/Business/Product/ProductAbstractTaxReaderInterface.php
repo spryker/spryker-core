@@ -17,5 +17,5 @@ interface ProductAbstractTaxReaderInterface
      *
      * @return \Generated\Shared\Transfer\TaxSetResponseTransfer
      */
-    public function readTaxSetByProductAbstract(ProductAbstractTransfer $productAbstractTransfer): TaxSetResponseTransfer;
+    public function getTaxSetByProductAbstract(ProductAbstractTransfer $productAbstractTransfer): TaxSetResponseTransfer;
 }

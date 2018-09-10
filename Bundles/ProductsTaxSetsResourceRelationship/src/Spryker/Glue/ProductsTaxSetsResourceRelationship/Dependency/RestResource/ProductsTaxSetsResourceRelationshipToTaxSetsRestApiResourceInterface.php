@@ -10,7 +10,7 @@ namespace Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResour
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface ProductsTaxSetsResourceRelationshipToTaxSetsRestApiInterface
+interface ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface
 {
     /**
      * @param string $abstractProductSku

@@ -8,19 +8,19 @@
 namespace Spryker\Glue\ProductsTaxSetsResourceRelationship\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiInterface;
+use Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface;
 
 class ProductsTaxSetsResourceRelationshipExpander implements ProductsTaxSetsResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiInterface
+     * @var \Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface
      */
     protected $productTaxSetsResource;
 
     /**
-     * @param \Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiInterface $productTaxSetsResource
+     * @param \Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface $productTaxSetsResource
      */
-    public function __construct(ProductsTaxSetsResourceRelationshipToTaxSetsRestApiInterface $productTaxSetsResource)
+    public function __construct(ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface $productTaxSetsResource)
     {
         $this->productTaxSetsResource = $productTaxSetsResource;
     }
@@ -31,7 +31,7 @@ class ProductsTaxSetsResourceRelationshipExpander implements ProductsTaxSetsReso
      *
      * @return void
      */
-    public function mapResourceRelationships(array $resources, RestRequestInterface $restRequest): void
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
             $abstractProductSku = $resource->getId();

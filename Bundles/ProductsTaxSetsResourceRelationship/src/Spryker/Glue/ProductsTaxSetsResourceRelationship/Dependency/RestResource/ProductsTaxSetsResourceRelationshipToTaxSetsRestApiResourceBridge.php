@@ -10,15 +10,15 @@ namespace Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResour
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class ProductsTaxSetsResourceRelationshipToTaxSetsRestApiBridge implements ProductsTaxSetsResourceRelationshipToTaxSetsRestApiInterface
+class ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceBridge implements ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface
 {
     /**
-     * @var \Spryker\Glue\TaxSetsRestApi\TaxSetsRestApiResource
+     * @var \Spryker\Glue\TaxSetsRestApi\TaxSetsRestApiResourceInterface
      */
     protected $taxSetsRestApiResource;
 
     /**
-     * @param \Spryker\Glue\TaxSetsRestApi\TaxSetsRestApiResource $taxSetsRestApiResource
+     * @param \Spryker\Glue\TaxSetsRestApi\TaxSetsRestApiResourceInterface $taxSetsRestApiResource
      */
     public function __construct($taxSetsRestApiResource)
     {

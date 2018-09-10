@@ -23,6 +23,6 @@ class TaxSetsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createTaxSetsReader()->readTaxSets($restRequest);
+        return $this->getFactory()->createTaxSetsReader()->getTaxSets($restRequest);
     }
 }

@@ -11,7 +11,7 @@ interface TaxSetsRestApiFacadeInterface
 {
     /**
      * Specification:
-     *  - Updates tax sets without UUID
+     *  - Updates tax sets without UUID.
      *
      * @api
      *

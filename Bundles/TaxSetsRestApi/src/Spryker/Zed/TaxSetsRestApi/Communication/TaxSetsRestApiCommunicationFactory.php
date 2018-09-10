@@ -10,7 +10,6 @@ namespace Spryker\Zed\TaxSetsRestApi\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\TaxSetsRestApi\Persistence\TaxSetsRestApiQueryContainer getQueryContainer()
  * @method \Spryker\Zed\TaxSetsRestApi\TaxSetsRestApiConfig getConfig()
  */
 class TaxSetsRestApiCommunicationFactory extends AbstractCommunicationFactory

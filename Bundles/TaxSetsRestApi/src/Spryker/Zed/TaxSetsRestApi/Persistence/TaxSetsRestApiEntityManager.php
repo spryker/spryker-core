@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\TaxSetsRestApi\Persistence;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -14,15 +15,21 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class TaxSetsRestApiEntityManager extends AbstractEntityManager implements TaxSetsRestApiEntityManagerInterface
 {
+    protected const BATCH_SIZE = 200;
+
     /**
      * @return void
      */
     public function updateTaxSetsWithoutUuid(): void
     {
-        $taxSetsRepository = $this->getFactory()->getTaxSetsRestApiRepository();
+        $taxSetsQuery = $this->getFactory()->getTaxSetPropelQuery();
 
         do {
-            $taxSetEntities = $taxSetsRepository->getTaxSetEntitiesWithoutUuid();
+            $taxSetEntities = $taxSetsQuery
+                ->filterByUuid(null, Criteria::ISNULL)
+                ->limit(static::BATCH_SIZE)
+                ->find();
+
             foreach ($taxSetEntities as $taxSetEntity) {
                 $taxSetEntity->save();
             }

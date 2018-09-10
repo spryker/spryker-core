@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/products-tax-sets-resource-relationship.svg)](https://travis-ci.org/spryker/products-tax-sets-resource-relationship)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/products-tax-sets-resource-relationship/badge.svg)](https://coveralls.io/github/spryker/products-tax-sets-resource-relationship)
 
-ProductsTaxSetsResourceRelationship module provides relation between products and product tax sets
+ProductsTaxSetsResourceRelationship module provides relation between products and product tax sets.
 
 
 ## Installation

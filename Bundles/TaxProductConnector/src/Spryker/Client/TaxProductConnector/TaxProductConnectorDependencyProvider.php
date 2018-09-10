@@ -13,7 +13,7 @@ use Spryker\Client\TaxProductConnector\Dependency\Client\TaxProductConnectorToZe
 
 class TaxProductConnectorDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -22,6 +22,8 @@ class TaxProductConnectorDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
+        $container = parent::provideServiceLayerDependencies($container);
+
         $container = $this->addZedRequestClient($container);
 
         return $container;

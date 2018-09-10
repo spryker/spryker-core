@@ -20,7 +20,7 @@ class TaxProductConnectorRepository extends AbstractRepository implements TaxPro
      *
      * @return \Generated\Shared\Transfer\TaxRateSetTransfer|null
      */
-    public function getTaxSetByProductAbstractSku(string $productAbstractSku): ?TaxRateSetTransfer
+    public function findTaxSetByProductAbstractSku(string $productAbstractSku): ?TaxRateSetTransfer
     {
         $taxSet = $this->getFactory()->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
@@ -34,6 +34,6 @@ class TaxProductConnectorRepository extends AbstractRepository implements TaxPro
 
         return $this->getFactory()
             ->createTaxSetMapper()
-            ->mapTaxSetToTransfer($taxSet);
+            ->mapTaxSetEntityToTaxRateSetTransfer($taxSet);
     }
 }

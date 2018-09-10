@@ -18,13 +18,11 @@ class TaxSetMapper implements TaxSetMapperInterface
      *
      * @return \Generated\Shared\Transfer\TaxRateSetTransfer
      */
-    public function mapTaxSetToTransfer(SpyTaxSet $taxSetEntity): TaxRateSetTransfer
+    public function mapTaxSetEntityToTaxRateSetTransfer(SpyTaxSet $taxSetEntity): TaxRateSetTransfer
     {
         $taxRateSetTransfer = new TaxRateSetTransfer();
-        $taxRates = $taxSetEntity->getSpyTaxRates();
-        $taxRateSetTransfer->setName($taxSetEntity->getName());
-        $taxRateSetTransfer->setUuid($taxSetEntity->getUuid());
-        foreach ($taxRates as $taxRate) {
+        $taxRateSetTransfer->fromArray($taxSetEntity->toArray(), true);
+        foreach ($taxSetEntity->getSpyTaxRates() as $taxRate) {
             $taxRateSetItemTransfer = (new TaxRateSetItemTransfer())->fromArray($taxRate->toArray(), true);
             if ($taxRate->getCountry()) {
                 $taxRateSetItemTransfer->setCountry($taxRate->getCountry()->getIso2Code());

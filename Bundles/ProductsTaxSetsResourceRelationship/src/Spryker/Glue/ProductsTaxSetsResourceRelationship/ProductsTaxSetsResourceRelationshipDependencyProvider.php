@@ -9,7 +9,7 @@ namespace Spryker\Glue\ProductsTaxSetsResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiBridge;
+use Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceBridge;
 
 class ProductsTaxSetsResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -20,8 +20,10 @@ class ProductsTaxSetsResourceRelationshipDependencyProvider extends AbstractBund
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
+
         $container = $this->addProductTaxSetsResource($container);
 
         return $container;
@@ -35,7 +37,7 @@ class ProductsTaxSetsResourceRelationshipDependencyProvider extends AbstractBund
     protected function addProductTaxSetsResource(Container $container): Container
     {
         $container[static::RESOURCE_TAX_SETS] = function (Container $container) {
-            return new ProductsTaxSetsResourceRelationshipToTaxSetsRestApiBridge(
+            return new ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceBridge(
                 $container->getLocator()->taxSetsRestApi()->resource()
             );
         };

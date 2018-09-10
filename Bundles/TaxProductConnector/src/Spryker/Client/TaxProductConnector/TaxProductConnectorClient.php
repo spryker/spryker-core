@@ -27,14 +27,6 @@ class TaxProductConnectorClient extends AbstractClient implements TaxProductConn
      */
     public function getTaxSetForProductAbstract(ProductAbstractTransfer $productAbstractTransfer): TaxSetResponseTransfer
     {
-        return $this->getZedStub()->getTaxSetForProductAbstract($productAbstractTransfer);
-    }
-
-    /**
-     * @return \Spryker\Client\TaxProductConnector\Zed\TaxProductConnectorStubInterface
-     */
-    protected function getZedStub()
-    {
-        return $this->getFactory()->createZedStub();
+        return $this->getFactory()->createZedStub()->getTaxSetForProductAbstract($productAbstractTransfer);
     }
 }
