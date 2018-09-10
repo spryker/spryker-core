@@ -11,15 +11,15 @@
     "twig/twig": "^1.20.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/application": "*",
     "spryker/config": "*",
+    "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/config": "If you want to use the TwigServiceProvider.",
-    "spryker/silex": "If you want to use the TwigServiceProvider.",
-    "spryker/symfony": "If you want to use the TwigServiceProvider."
+    "spryker/silex": "If you want to use the TwigServiceProvider."
   },
   "autoload": {
     "psr-4": {

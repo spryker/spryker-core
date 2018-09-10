@@ -9,8 +9,6 @@
     "spryker/product": "^5.0.0 || ^6.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {

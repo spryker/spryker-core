@@ -30,7 +30,7 @@ trait EntityManagerResolverAwareTrait
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Persistence\AbstractRepository
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractEntityManager
      */
     protected function getEntityManager()
     {
@@ -42,7 +42,7 @@ trait EntityManagerResolverAwareTrait
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Persistence\AbstractRepository
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractEntityManager
      */
     private function resolveEntityManager()
     {

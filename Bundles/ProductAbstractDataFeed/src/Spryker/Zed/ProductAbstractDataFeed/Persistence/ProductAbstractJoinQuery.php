@@ -178,7 +178,7 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
     }
 
     /**
-     * @param integer|null $localeId
+     * @param int|null $localeId
      *
      * @return array
      */
