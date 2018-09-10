@@ -30,6 +30,8 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
     protected const REQUEST_URI = 'REQUEST_URI';
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      *
      * @return callable|null
@@ -119,7 +121,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $queryData = $request->query->all();
         $requestTransfer->setQueryData($queryData);
 
-        $serverData = $this->getDataFromServer($request);
+        $serverData = $this->getFactory()->createServerVariableFilterer()->filter($request->server->all());
         $requestTransfer->setServerData($serverData);
 
         $headerData = $request->headers->all();
@@ -167,15 +169,5 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
             $responseTransfer->getCode(),
             json_encode($array)
         ));
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    protected function getDataFromServer(Request $request): array
-    {
-        return [self::REQUEST_URI => $request->server->get(self::REQUEST_URI)];
     }
 }

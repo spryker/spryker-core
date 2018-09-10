@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Api;
 
+use Spryker\Zed\Api\Communication\Plugin\BlacklistServerVariableFilterStrategy;
+use Spryker\Zed\Api\Communication\Plugin\CallbackServerVariableFilterStrategy;
+use Spryker\Zed\Api\Communication\Plugin\WhitelistServerVariableFilterStrategy;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ApiConfig extends AbstractBundleConfig
@@ -36,6 +39,15 @@ class ApiConfig extends AbstractBundleConfig
     const HTTP_CODE_NOT_ALLOWED = 405;
     const HTTP_CODE_VALIDATION_ERRORS = 422;
     const HTTP_CODE_INTERNAL_ERROR = 500;
+
+    public const SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST = 'SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST';
+    public const SERVER_VARIABLE_FILTER_STRATEGY_BLACKLIST = 'SERVER_VARIABLE_FILTER_STRATEGY_BLACKLIST';
+    public const SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK = 'SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK';
+    public const SERVER_VARIABLE_STRATEGY_FILTERER_MAP = [
+        self::SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST => WhitelistServerVariableFilterStrategy::class,
+        self::SERVER_VARIABLE_FILTER_STRATEGY_BLACKLIST => BlacklistServerVariableFilterStrategy::class,
+        self::SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK => CallbackServerVariableFilterStrategy::class,
+    ];
 
     /**
      * @return int
@@ -129,5 +141,39 @@ class ApiConfig extends AbstractBundleConfig
         $methods = array_merge($methodsForItem, $methodsForCollection);
 
         return array_unique($methods);
+    }
+
+    /**
+     * @return string
+     */
+    public function getServerVariablesFilterStrategy(): string
+    {
+        return static::SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST;
+    }
+
+    /**
+     * @return array
+     */
+    public function getServerVariablesWhitelist(): array
+    {
+        return ['REQUEST_URI'];
+    }
+
+    /**
+     * @return array
+     */
+    public function getServerVariablesBlacklist(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return callable
+     */
+    public function getServerVariablesCallback(): callable
+    {
+        return function ($serverVariables) {
+            return $serverVariables;
+        };
     }
 }
