@@ -20,7 +20,6 @@
     "spryker/cms-block-gui": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

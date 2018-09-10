@@ -86,7 +86,10 @@ class ProductReviewStatusUpdater implements ProductReviewStatusUpdaterInterface
      */
     protected function mapTransferToEntity(ProductReviewTransfer $productReviewTransfer, SpyProductReview $productReviewEntity)
     {
-        $productReviewEntity->setStatus($productReviewTransfer->getStatus());
+        /** @var string $status */
+        $status = $productReviewTransfer->getStatus();
+
+        $productReviewEntity->setStatus($status);
 
         return $productReviewEntity;
     }
