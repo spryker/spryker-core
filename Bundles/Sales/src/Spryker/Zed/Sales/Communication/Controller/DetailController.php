@@ -70,10 +70,6 @@ class DetailController extends AbstractController
             $orderTransfer
         );
 
-        if ($blockData instanceof RedirectResponse) {
-            return $blockData;
-        }
-
         return [
             'add_comments' => $addCommentBlock,
             'blocks' => $blockData,

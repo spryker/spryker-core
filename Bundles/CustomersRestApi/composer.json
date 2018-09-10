@@ -15,9 +15,6 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "suggest": {
-    "spryker/glue-application": "If you want to use Glue infrastructure."
-  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

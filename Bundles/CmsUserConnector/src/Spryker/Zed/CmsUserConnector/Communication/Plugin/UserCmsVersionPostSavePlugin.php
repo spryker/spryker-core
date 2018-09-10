@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class UserCmsVersionPostSavePlugin extends AbstractPlugin implements CmsVersionPostSavePluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer

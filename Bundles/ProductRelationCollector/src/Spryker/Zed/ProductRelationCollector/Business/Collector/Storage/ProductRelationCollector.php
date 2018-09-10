@@ -71,7 +71,7 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
 
         $results = [];
         foreach ($relatedProductIds as $idProductRelation) {
-            $relationProducts = $this->findRelationProducts($idProductRelation);
+            $relationProducts = $this->findRelationProducts((int)$idProductRelation);
 
             foreach ($relationProducts as $relationProduct) {
                 if (!isset($results[$relationProduct[SpyProductRelationTypeTableMap::COL_KEY]])) {

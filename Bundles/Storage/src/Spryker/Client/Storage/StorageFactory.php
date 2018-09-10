@@ -19,7 +19,7 @@ class StorageFactory extends AbstractFactory
     const DEFAULT_REDIS_DATABASE = 0;
 
     /**
-     * @var \Spryker\Client\Storage\StorageClientInterface
+     * @var \Spryker\Client\Storage\Redis\ServiceInterface
      */
     protected static $storageService;
 
@@ -34,7 +34,7 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\StorageClientInterface
+     * @return \Spryker\Client\Storage\Redis\ServiceInterface
      */
     public function createCachedService()
     {
