@@ -19,6 +19,8 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterf
 class RatepayPostCheckPlugin extends AbstractPlugin implements CheckoutPostCheckPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
