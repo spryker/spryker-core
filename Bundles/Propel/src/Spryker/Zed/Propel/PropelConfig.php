@@ -132,4 +132,19 @@ class PropelConfig extends AbstractBundleConfig
     {
         return [];
     }
+
+    /**
+     * @return string[]
+     */
+    public function getTableElementHierarchy(): array
+    {
+        return [
+            'column',
+            'foreign-key',
+            'index',
+            'unique',
+            'id-method-parameter',
+            'behavior',
+        ];
+    }
 }

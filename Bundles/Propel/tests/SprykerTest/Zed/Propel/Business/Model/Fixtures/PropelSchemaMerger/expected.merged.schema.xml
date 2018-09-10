@@ -2,8 +2,8 @@
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Namespace" package="Package">
     <table name="table_a" phpName="TableA">
         <column name="id_column" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="string_column" type="VARCHAR" size="255" required="false"/>
         <column name="integer_column" type="INTEGER"/>
+        <column name="string_column" type="VARCHAR" size="255" required="false"/>
         <unique>
             <unique-column name="string_column"/>
         </unique>
@@ -21,12 +21,12 @@
     <table name="spy_foo" idMethod="native">
         <column name="core_column" type="BOOLEAN"/>
         <column name="project_column" type="BOOLEAN"/>
+        <foreign-key name="spy_foo-some_other" foreignTable="spy_bar" phpName="Bar">
+            <reference foreign="id_bar" local="core_column"/>
+        </foreign-key>
         <unique name="spy_foo-unique">
             <unique-column name="project_column"/>
             <unique-column name="core_column"/>
         </unique>
-        <foreign-key name="spy_foo-some_other" foreignTable="spy_bar" phpName="Bar">
-            <reference foreign="id_bar" local="core_column"/>
-        </foreign-key>
     </table>
 </database>

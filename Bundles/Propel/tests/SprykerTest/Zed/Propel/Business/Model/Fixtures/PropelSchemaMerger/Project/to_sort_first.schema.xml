@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<database name="zed"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+    namespace="Namespace"
+    package="Package">
+
+    <table name="table_a" phpName="TableA">
+        <foreign-key name="table_a-fk_column" foreignTable="table_b">
+            <reference local="fk_column" foreign="id_column"/>
+        </foreign-key>
+        <behavior name="timestampable"/>
+        <column name="id_column" type="INTEGER" />
+        <column name="fk_column" type="INTEGER" />
+        <column name="column_c" type="INTEGER" />
+        <column name="column_a" type="INTEGER" />
+        <unique>
+            <unique-column name="integer_column"/>
+        </unique>
+    </table>
+
+</database>

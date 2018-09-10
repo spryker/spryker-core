@@ -9,13 +9,28 @@ namespace Spryker\Zed\Propel\Business\Model;
 
 use ArrayObject;
 use DOMDocument;
+use DOMNodeList;
 use SimpleXMLElement;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Propel\Business\Exception\SchemaMergeException;
+use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaMerger implements PropelSchemaMergerInterface
 {
+    /**
+     * @var \Spryker\Zed\Propel\PropelConfig|null
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Propel\PropelConfig|null $config
+     */
+    public function __construct(?PropelConfig $config = null)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
      *
@@ -146,7 +161,9 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
             $mergeTargetXmlElement = $this->mergeSchemasRecursive($mergeTargetXmlElement, $schemaXmlElement);
         }
 
-        return $this->prettyPrint($mergeTargetXmlElement);
+        $content = $this->prettyPrint($mergeTargetXmlElement);
+
+        return $content;
     }
 
     /**
@@ -161,7 +178,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         $dom->formatOutput = true;
         $dom->loadXML($xml->asXML());
 
-        $this->moveConstraintNodesToTheBottom($dom);
+        $dom = $this->ensureElementHierarchy($dom);
 
         $callback = function ($matches) {
             $multiplier = (strlen($matches[1]) / 2) * 4;
@@ -262,27 +279,84 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     /**
      * @param \DOMDocument $dom
      *
-     * @return void
+     * @return \DOMDocument
      */
-    protected function moveConstraintNodesToTheBottom(DOMDocument $dom): void
+    protected function ensureElementHierarchy(DOMDocument $dom): DOMDocument
     {
-        $nodesToMode = [];
-        foreach (['unique', 'foreign-key'] as $tagName) {
+        $elementHierarchy = ['unique', 'foreign-key'];
+
+        if ($this->config !== null) {
+            $elementHierarchy = $this->config->getTableElementHierarchy();
+        }
+
+        $nodesToOrder = $this->getNodesToOrder($dom, $elementHierarchy);
+
+        foreach ($nodesToOrder as $node) {
+            $node['parent']->removeChild($node['item']);
+            $node['parent']->appendChild($node['item']);
+        }
+
+        return $dom;
+    }
+
+    /**
+     * @param \DOMDocument $dom
+     * @param array $elementHierarchy
+     *
+     * @return array
+     */
+    protected function getNodesToOrder(DOMDocument $dom, array $elementHierarchy): array
+    {
+        $nodesToOrder = [];
+        foreach ($elementHierarchy as $tagName) {
             $items = $dom->getElementsByTagName($tagName);
+
+            if ($tagName === 'column') {
+                $items = $this->orderItemsInDomNodeList($items);
+            }
+
             foreach ($items as $item) {
-                $nodesToMode[] = [
+                $nodesToOrder[] = [
                     'item' => $item,
                     'parent' => $item->parentNode,
                 ];
             }
         }
 
-        foreach ($nodesToMode as $node) {
-            $node['parent']->removeChild($node['item']);
+        return $nodesToOrder;
+    }
+
+    /**
+     * @param \DOMNodeList $nodeList
+     *
+     * @return array
+     */
+    protected function orderItemsInDomNodeList(DOMNodeList $nodeList): array
+    {
+        $idNodes = [];
+        $fkNodes = [];
+        $otherNodes = [];
+
+        foreach ($nodeList as $node) {
+            $columnName = $node->attributes['name']->value;
+            if (strpos($columnName, 'id_') === 0) {
+                $idNodes[$columnName] = $node;
+                continue;
+            }
+            if (strpos($columnName, 'fk_') === 0) {
+                $fkNodes[$columnName] = $node;
+                continue;
+            }
+
+            $otherNodes[$columnName] = $node;
         }
 
-        foreach ($nodesToMode as $node) {
-            $node['parent']->appendChild($node['item']);
-        }
+        ksort($idNodes);
+        ksort($fkNodes);
+        ksort($otherNodes);
+
+        $nodes = array_merge($idNodes, $fkNodes, $otherNodes);
+
+        return $nodes;
     }
 }
