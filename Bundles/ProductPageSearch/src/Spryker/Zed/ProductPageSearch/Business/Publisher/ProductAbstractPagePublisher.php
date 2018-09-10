@@ -198,17 +198,16 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         array $pageDataExpanderPlugins,
         $isRefresh = false
     ) {
-        $productAbstractPageSearchEntity->setStore($storeName);
-        $productAbstractPageSearchEntity->setLocale($localeName);
-
         $productPageSearchTransfer = $this->getProductPageSearchTransfer(
-            $pageDataExpanderPlugins,
             $productAbstractLocalizedEntity,
             $productAbstractPageSearchEntity,
-            $storeName,
             $isRefresh
         );
+
+        $productPageSearchTransfer->setStore($storeName);
         $productPageSearchTransfer->setLocale($localeName);
+
+        $this->expandPageSearchTransferWithPlugins($pageDataExpanderPlugins, $productAbstractLocalizedEntity, $productPageSearchTransfer);
 
         $searchDocument = $this->productPageSearchMapper->mapToSearchData($productPageSearchTransfer);
 
@@ -232,31 +231,33 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
      * @param array $productAbstractLocalizedEntity
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productAbstractPageSearchEntity
-     * @param string $storeName
      * @param bool $isRefresh
      *
      * @return \Generated\Shared\Transfer\ProductPageSearchTransfer
      */
     protected function getProductPageSearchTransfer(
-        array $pageDataExpanderPlugins,
         array $productAbstractLocalizedEntity,
         SpyProductAbstractPageSearch $productAbstractPageSearchEntity,
-        $storeName,
         $isRefresh = false
-    ) {
-        if ($isRefresh) {
-            $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransferFromJson($productAbstractPageSearchEntity->getStructuredData());
+    ): ProductPageSearchTransfer {
+        if ($isRefresh && !$productAbstractPageSearchEntity->isNew()) {
+            return $this->refreshProductPageSearchTransfer($productAbstractPageSearchEntity);
         }
 
-        $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransfer($productAbstractLocalizedEntity);
-        $productPageSearchTransfer->setStore($storeName);
+        return $this->productPageSearchMapper->mapToProductPageSearchTransfer($productAbstractLocalizedEntity);
+    }
 
-        $this->expandPageSearchTransferWithPlugins($pageDataExpanderPlugins, $productAbstractLocalizedEntity, $productPageSearchTransfer);
-
-        return $productPageSearchTransfer;
+    /**
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productAbstractPageSearchEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductPageSearchTransfer
+     */
+    protected function refreshProductPageSearchTransfer(
+        SpyProductAbstractPageSearch $productAbstractPageSearchEntity
+    ): ProductPageSearchTransfer {
+        return $this->productPageSearchMapper->mapToProductPageSearchTransferFromJson($productAbstractPageSearchEntity->getStructuredData());
     }
 
     /**
