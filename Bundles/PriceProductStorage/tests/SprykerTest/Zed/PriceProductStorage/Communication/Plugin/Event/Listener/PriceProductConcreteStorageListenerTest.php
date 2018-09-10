@@ -59,9 +59,9 @@ class PriceProductConcreteStorageListenerTest extends Unit
     {
         parent::setUp();
 
-//        if (!$this->tester->isSuiteProject()) {
-//            throw new SkippedTestError('Warning: not in suite environment');
-//        }
+        if (!$this->tester->isSuiteProject()) {
+            throw new SkippedTestError('Warning: not in suite environment');
+        }
 
         $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
         if ($dbEngine !== 'pgsql') {
