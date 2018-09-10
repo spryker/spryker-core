@@ -31,8 +31,6 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
     protected $shoppingListStorageRepository;
 
     /**
-     * ShoppingListCustomerStorageWriter constructor.
-     *
      * @param \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageEntityManagerInterface $shoppingListStorageEntityManager
      * @param \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepositoryInterface $shoppingListStorageRepository
      */

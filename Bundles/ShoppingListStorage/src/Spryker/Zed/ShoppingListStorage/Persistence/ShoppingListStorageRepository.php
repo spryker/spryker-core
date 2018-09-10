@@ -58,7 +58,7 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
         $result = [];
         foreach ($customerReferencesArray as $item) {
             $result = array_merge($result, array_filter(array_values($item)));
-        };
+        }
         $result = array_unique($result);
 
         return $result;
