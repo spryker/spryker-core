@@ -131,9 +131,9 @@ class ProductOptionListTable extends AbstractTable
 
         $productQuery = $this->productOptionQueryContainer->queryAllProductOptionGroups();
 
+        /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup[] $queryResult */
         $queryResult = $this->runQuery($productQuery, $config, true);
 
-        /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity */
         foreach ($queryResult as $productOptionGroupEntity) {
             $formattedPrices = $this->getFormattedPrices($productOptionGroupEntity);
 
