@@ -159,7 +159,7 @@ class SalesFacadeTest extends Unit
         );
 
         $this->assertNotNull($order);
-        $this->assertEquals($orderEntity->getIdSalesOrder(), $order->getIdSalesOrder());
+        $this->assertSame($orderEntity->getIdSalesOrder(), $order->getIdSalesOrder());
     }
 
     /**
