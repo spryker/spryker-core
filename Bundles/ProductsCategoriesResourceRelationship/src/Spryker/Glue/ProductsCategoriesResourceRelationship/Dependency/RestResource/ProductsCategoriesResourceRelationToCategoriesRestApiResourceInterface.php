@@ -9,7 +9,7 @@ namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestRes
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-interface ProductsCategoriesResourceRelationToCategoriesRestApiInterface
+interface ProductsCategoriesResourceRelationToCategoriesRestApiResourceInterface
 {
     /**
      * @param int $nodeId

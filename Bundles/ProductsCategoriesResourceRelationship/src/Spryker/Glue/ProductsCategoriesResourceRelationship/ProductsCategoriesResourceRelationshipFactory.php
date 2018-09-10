@@ -10,28 +10,28 @@ namespace Spryker\Glue\ProductsCategoriesResourceRelationship;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductCategoryStorageClientInterface;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductStorageClientInterface;
-use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiInterface;
-use Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Expander\AbstractProductsCategoriesResourceRelationshipExpander;
-use Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Expander\AbstractProductsCategoriesResourceRelationshipExpanderInterface;
+use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiResourceInterface;
+use Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Expander\CategoriesResourceRelationshipExpander;
+use Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Expander\CategoriesResourceRelationshipExpanderInterface;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Reader\AbstractProductsCategoriesReader;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Reader\AbstractProductsCategoriesReaderInterface;
 
 class ProductsCategoriesResourceRelationshipFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiInterface
+     * @return \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiResourceInterface
      */
-    public function getCategoriesResource(): ProductsCategoriesResourceRelationToCategoriesRestApiInterface
+    public function getCategoriesResource(): ProductsCategoriesResourceRelationToCategoriesRestApiResourceInterface
     {
         return $this->getProvidedDependency(ProductsCategoriesResourceRelationshipDependencyProvider::RESOURCE_CATEGORY);
     }
 
     /**
-     * @return \Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Expander\AbstractProductsCategoriesResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Expander\CategoriesResourceRelationshipExpanderInterface
      */
-    public function createAbstractProductsCategoriesResourceRelationshipExpander(): AbstractProductsCategoriesResourceRelationshipExpanderInterface
+    public function createAbstractProductsCategoriesResourceRelationshipExpander(): CategoriesResourceRelationshipExpanderInterface
     {
-        return new AbstractProductsCategoriesResourceRelationshipExpander(
+        return new CategoriesResourceRelationshipExpander(
             $this->getCategoriesResource(),
             $this->createAbstractProductsCategoriesReader()
         );

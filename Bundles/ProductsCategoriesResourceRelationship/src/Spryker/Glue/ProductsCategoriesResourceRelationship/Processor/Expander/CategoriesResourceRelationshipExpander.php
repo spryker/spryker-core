@@ -8,15 +8,15 @@
 namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiInterface;
+use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiResourceInterface;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Reader\AbstractProductsCategoriesReaderInterface;
 
-class AbstractProductsCategoriesResourceRelationshipExpander implements AbstractProductsCategoriesResourceRelationshipExpanderInterface
+class CategoriesResourceRelationshipExpander implements CategoriesResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiInterface
+     * @var \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiResourceInterface
      */
-    protected $categoriesResource;
+    protected $categoriesRestApiResource;
 
     /**
      * @var \Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Reader\AbstractProductsCategoriesReaderInterface
@@ -24,14 +24,14 @@ class AbstractProductsCategoriesResourceRelationshipExpander implements Abstract
     protected $abstractProductsCategoriesReader;
 
     /**
-     * @param \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiInterface $categoriesResource
+     * @param \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiResourceInterface $categoriesRestApiResource
      * @param \Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Reader\AbstractProductsCategoriesReaderInterface $abstractProductsCategoriesReader
      */
     public function __construct(
-        ProductsCategoriesResourceRelationToCategoriesRestApiInterface $categoriesResource,
+        ProductsCategoriesResourceRelationToCategoriesRestApiResourceInterface $categoriesRestApiResource,
         AbstractProductsCategoriesReaderInterface $abstractProductsCategoriesReader
     ) {
-        $this->categoriesResource = $categoriesResource;
+        $this->categoriesRestApiResource = $categoriesRestApiResource;
         $this->abstractProductsCategoriesReader = $abstractProductsCategoriesReader;
     }
 
@@ -45,12 +45,11 @@ class AbstractProductsCategoriesResourceRelationshipExpander implements Abstract
     {
         $locale = $restRequest->getMetadata()->getLocale();
         foreach ($resources as $resource) {
-            $sku = $resource->getId();
             $productCategoryNodeIds = $this->abstractProductsCategoriesReader
-                ->findProductAbstractCategoryBySku($sku, $locale);
+                ->findProductCategoryNodeIds($resource->getId(), $locale);
 
             foreach ($productCategoryNodeIds as $categoriesNodeId) {
-                $resource->addRelationship($this->categoriesResource->findCategoryNodeById($categoriesNodeId, $locale));
+                $resource->addRelationship($this->categoriesRestApiResource->findCategoryNodeById($categoriesNodeId, $locale));
             }
         }
     }

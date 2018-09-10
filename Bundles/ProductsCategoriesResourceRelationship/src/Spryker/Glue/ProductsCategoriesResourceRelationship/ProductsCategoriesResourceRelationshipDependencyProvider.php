@@ -11,7 +11,7 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductCategoryStorageClientBridge;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductStorageClientBridge;
-use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiBridge;
+use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiResourceBridge;
 
 class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -24,8 +24,9 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
+        parent::provideDependencies($container);
         $container = $this->addCategoriesResource($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addProductCategoryStorageClient($container);
@@ -41,7 +42,7 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
     protected function addCategoriesResource(Container $container): Container
     {
         $container[static::RESOURCE_CATEGORY] = function (Container $container) {
-            return new ProductsCategoriesResourceRelationToCategoriesRestApiBridge(
+            return new ProductsCategoriesResourceRelationToCategoriesRestApiResourceBridge(
                 $container->getLocator()->categoriesRestApi()->resource()
             );
         };
@@ -57,7 +58,12 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
     protected function addProductStorageClient(Container $container): Container
     {
         $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
-            return new ProductsCategoriesResourceRelationshipToProductStorageClientBridge($container->getLocator()->productStorage()->client());
+            return new ProductsCategoriesResourceRelationshipToProductStorageClientBridge(
+                $container
+                    ->getLocator()
+                    ->productStorage()
+                    ->client()
+            );
         };
 
         return $container;
@@ -71,7 +77,12 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
     protected function addProductCategoryStorageClient(Container $container): Container
     {
         $container[static::CLIENT_PRODUCT_CATEGORY_STORAGE] = function (Container $container) {
-            return new ProductsCategoriesResourceRelationshipToProductCategoryStorageClientBridge($container->getLocator()->productCategoryStorage()->client());
+            return new ProductsCategoriesResourceRelationshipToProductCategoryStorageClientBridge(
+                $container
+                    ->getLocator()
+                    ->productCategoryStorage()
+                    ->client()
+            );
         };
 
         return $container;

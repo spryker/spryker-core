@@ -9,7 +9,7 @@ namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestRes
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-class ProductsCategoriesResourceRelationToCategoriesRestApiBridge implements ProductsCategoriesResourceRelationToCategoriesRestApiInterface
+class ProductsCategoriesResourceRelationToCategoriesRestApiResourceBridge implements ProductsCategoriesResourceRelationToCategoriesRestApiResourceInterface
 {
     /**
      * @var \Spryker\Glue\CategoriesRestApi\CategoriesRestApiResourceInterface

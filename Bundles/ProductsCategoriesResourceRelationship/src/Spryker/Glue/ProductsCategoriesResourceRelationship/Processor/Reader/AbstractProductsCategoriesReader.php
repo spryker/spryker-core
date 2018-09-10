@@ -43,7 +43,7 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
      *
      * @return int[]|null
      */
-    public function findProductAbstractCategoryBySku(string $sku, string $locale): ?array
+    public function findProductCategoryNodeIds(string $sku, string $locale): ?array
     {
         $abstractProductData = $this->productStorageClient
             ->findProductAbstractStorageDataByMapping(
@@ -55,6 +55,17 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
             return null;
         }
 
+        return $this->getProductCategoryNodeIds($abstractProductData, $locale);
+    }
+
+    /**
+     * @param array $abstractProductData
+     * @param string $locale
+     *
+     * @return array
+     */
+    protected function getProductCategoryNodeIds(array $abstractProductData, string $locale): array
+    {
         $productCategoryNodeIds = [];
         $idProductAbstract = $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT];
         $productCategories = $this->productCategoryStorageClient

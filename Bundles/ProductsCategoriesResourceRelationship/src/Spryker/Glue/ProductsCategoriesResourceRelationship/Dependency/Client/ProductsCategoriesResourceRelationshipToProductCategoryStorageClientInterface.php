@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
-
 interface ProductsCategoriesResourceRelationshipToProductCategoryStorageClientInterface
 {
     /**
@@ -17,5 +15,5 @@ interface ProductsCategoriesResourceRelationshipToProductCategoryStorageClientIn
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
-    public function findProductAbstractCategory($idProductAbstract, $locale): ?ProductAbstractCategoryStorageTransfer;
+    public function findProductAbstractCategory($idProductAbstract, $locale);
 }

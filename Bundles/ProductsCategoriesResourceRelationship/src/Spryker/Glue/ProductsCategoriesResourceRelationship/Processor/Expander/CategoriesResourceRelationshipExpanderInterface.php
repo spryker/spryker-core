@@ -9,7 +9,7 @@ namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Expander
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface AbstractProductsCategoriesResourceRelationshipExpanderInterface
+interface CategoriesResourceRelationshipExpanderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
