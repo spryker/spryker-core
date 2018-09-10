@@ -6,7 +6,7 @@
 
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
 
 interface CatalogSearchSuggestionsResourceMapperInterface
 {
@@ -14,9 +14,9 @@ interface CatalogSearchSuggestionsResourceMapperInterface
      * @param array $restSearchResponse
      * @param string $currency
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer
      */
-    public function mapSuggestionsResponseAttributesTransferToRestResponse(array $restSearchResponse, string $currency): RestResourceInterface;
+    public function mapSuggestionsResponseAttributesTransferToRestAttributesTransfer(array $restSearchResponse, string $currency): RestCatalogSearchSuggestionsAttributesTransfer;
 
     /**
      * @return array

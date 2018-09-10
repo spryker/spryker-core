@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -10,7 +11,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Ratepay\Business\Api\Builder\BuilderFactory;
 use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 use Spryker\Zed\Ratepay\Business\Api\Model\Deliver\Confirm as DeliverConfirm;
-
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Calculation as PaymentCalculation;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Cancel as PaymentCancel;
 use Spryker\Zed\Ratepay\Business\Api\Model\Payment\Configuration as PaymentConfiguration;

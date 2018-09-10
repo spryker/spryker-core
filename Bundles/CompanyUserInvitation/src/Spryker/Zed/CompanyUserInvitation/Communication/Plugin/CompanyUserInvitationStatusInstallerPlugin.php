@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CompanyUserInvitationStatusInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
     /**
+     * @api
+     *
      * @return void
      */
     public function install()
