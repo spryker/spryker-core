@@ -4,3 +4,7 @@ packaging_unit_type.box.name
 packaging_unit_type.palette.name
 packaging_unit_type.giftbox.name
 packaging_unit_type.valentines_special.name
+packaging_unit_type.pack_mixed.name
+packaging_unit_type.pack_20.name
+packaging_unit_type.pack_100.name
+packaging_unit_type.pack_500.name
