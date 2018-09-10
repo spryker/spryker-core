@@ -84,9 +84,9 @@ class SetTable extends AbstractTable
     {
         $result = [];
 
+        /** @var \Orm\Zed\Tax\Persistence\SpyTaxSet[] $queryResult */
         $queryResult = $this->runQuery($this->taxSetQuery, $config, true);
 
-        /** @var \Orm\Zed\Tax\Persistence\SpyTaxSet $taxSetEntity */
         foreach ($queryResult as $taxSetEntity) {
             $result[] = [
                 SpyTaxSetTableMap::COL_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),

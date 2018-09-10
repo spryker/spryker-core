@@ -23,6 +23,8 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
     protected const TEXT_TEMPLATE = 'company-user-invitation/mail/invitation.text.twig';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName()
@@ -31,6 +33,8 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      *
      * @return void
