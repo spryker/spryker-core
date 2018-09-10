@@ -31,7 +31,7 @@ class PermissionUpdater implements PermissionUpdaterInterface
     {
         $customerTransfer = $this->customerClient->getCustomer();
 
-        $customerTransferFromStorage = $this->customerClient->getCustomerById($customerTransfer->getIdCustomer());
+        $customerTransferFromStorage = $this->customerClient->reloadCustomerTransfer($customerTransfer);
         $customerTransfer->setPermissions($customerTransferFromStorage->getPermissions());
 
         $this->customerClient->setCustomer($customerTransfer);

@@ -359,4 +359,17 @@ interface CustomerClientInterface
      * @return void
      */
     public function markCustomerAsDirty();
+
+    /**
+     * Specification:
+     * - Retrieves customer information with customer addresses by customer ID from persistent storage.
+     * - Also triggered permissions check using current company user transfer object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function reloadCustomerTransfer(CustomerTransfer $customerTransfer): CustomerTransfer;
 }

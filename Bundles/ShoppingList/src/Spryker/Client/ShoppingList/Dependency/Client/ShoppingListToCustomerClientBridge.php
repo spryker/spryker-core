@@ -51,4 +51,14 @@ class ShoppingListToCustomerClientBridge implements ShoppingListToCustomerClient
     {
         return $this->customerClient->getCustomer();
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function reloadCustomerTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        return $this->customerClient->reloadCustomerTransfer($customerTransfer);
+    }
 }

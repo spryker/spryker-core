@@ -145,12 +145,6 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
-        $currentCustomerTransfer = $this->getCustomer();
-        if ($currentCustomerTransfer && ($currentCustomerTransfer->getIdCustomer() === $idCustomer)) {
-            $customerTransfer->setCompanyUserTransfer(
-                $currentCustomerTransfer->getCompanyUserTransfer()
-            );
-        }
 
         $customerTransfer = $this->getFactory()
             ->createZedCustomerStub()
@@ -467,5 +461,23 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
         $this->getFactory()
             ->createSessionCustomerSession()
             ->markCustomerAsDirty();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function reloadCustomerTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        $customerTransfer = $this->getFactory()
+            ->createZedCustomerStub()
+            ->get($customerTransfer);
+
+        return $customerTransfer;
     }
 }
