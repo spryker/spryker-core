@@ -33,7 +33,7 @@ class InitializeDatabaseConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return null|int null
+     * @return int|null null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -70,7 +70,7 @@ class InitializeDatabaseConsole extends Console
      */
     protected function getPluginNameFromClass($className)
     {
-        $pattern = '#^(.+)\\\(.+)\\\(.+)\\\(.+)\\\(.*)$#i';
-        return preg_replace($pattern, '${2}', $className);
+        $pattern = '#^.+?\\\.+?\\\(.+?)\\\.+$#i';
+        return preg_replace($pattern, '${1}', $className);
     }
 }

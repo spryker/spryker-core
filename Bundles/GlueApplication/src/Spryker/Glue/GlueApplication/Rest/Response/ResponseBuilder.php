@@ -68,7 +68,8 @@ class ResponseBuilder implements ResponseBuilderInterface
         );
 
         $data = $this->resourcesToArray($restResponse->getResources(), $restRequest);
-        if (count($data) === 1) {
+
+        if ($this->isSingleObjectRequest($restRequest, $data)) {
             $response[RestResponseInterface::RESPONSE_DATA] = $data[0];
         } else {
             $response[RestResponseInterface::RESPONSE_DATA] = $data;
@@ -89,6 +90,20 @@ class ResponseBuilder implements ResponseBuilderInterface
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param array $data
+     *
+     * @return bool
+     */
+    protected function isSingleObjectRequest(RestRequestInterface $restRequest, array $data): bool
+    {
+        $id = $restRequest->getResource()->getId();
+        $method = $restRequest->getMetadata()->getMethod();
+
+        return count($data) === 1 && ($id || $method === Request::METHOD_POST);
+    }
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -98,12 +113,12 @@ class ResponseBuilder implements ResponseBuilderInterface
     {
         $data = [];
         foreach ($resources as $resource) {
-            if (!$resource->hasLink('self')) {
+            if (!$resource->hasLink(RestResourceInterface::RESOURCE_LINKS_SELF)) {
                 $link = $resource->getType();
                 if ($resource->getId()) {
                     $link .= '/' . $resource->getId();
                 }
-                $resource->addLink('self', $link);
+                $resource->addLink(RestResourceInterface::RESOURCE_LINKS_SELF, $link);
             }
             $data[] = $this->resourceToArray(
                 $resource,
@@ -176,7 +191,7 @@ class ResponseBuilder implements ResponseBuilderInterface
         $idResource = $restRequest->getResource()->getId();
         if ($method === Request::METHOD_GET && $idResource === null) {
             return $this->formatLinks([
-                'self' => $restRequest->getResource()->getType(),
+                RestResourceInterface::RESOURCE_LINKS_SELF => $restRequest->getResource()->getType(),
             ]);
         }
         return [];

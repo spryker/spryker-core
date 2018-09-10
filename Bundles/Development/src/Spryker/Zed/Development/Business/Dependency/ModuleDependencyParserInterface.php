@@ -8,13 +8,15 @@
 namespace Spryker\Zed\Development\Business\Dependency;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 
 interface ModuleDependencyParserInterface
 {
     /**
-     * @param string $module
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     * @param string|null $dependencyType
      *
      * @return \Generated\Shared\Transfer\DependencyCollectionTransfer
      */
-    public function parseOutgoingDependencies(string $module): DependencyCollectionTransfer;
+    public function parseOutgoingDependencies(ModuleTransfer $moduleTransfer, ?string $dependencyType = null): DependencyCollectionTransfer;
 }
