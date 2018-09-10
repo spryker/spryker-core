@@ -48,8 +48,8 @@ abstract class AbstractGlobalThresholdFormMapper
         array $data,
         MinimumOrderValueTransfer $minimumOrderValueTValueTransfer
     ): MinimumOrderValueTransfer {
-        $storeTransfer = $this->storeCurrencyFinder->getStoreTransferFromRequest($data[GlobalThresholdType::FIELD_STORE_CURRENCY]);
-        $currencyTransfer = $this->storeCurrencyFinder->getCurrencyTransferFromRequest($data[GlobalThresholdType::FIELD_STORE_CURRENCY]);
+        $storeTransfer = $this->storeCurrencyFinder->getStoreTransferFromRequestParam($data[GlobalThresholdType::FIELD_STORE_CURRENCY]);
+        $currencyTransfer = $this->storeCurrencyFinder->getCurrencyTransferFromRequestParam($data[GlobalThresholdType::FIELD_STORE_CURRENCY]);
 
         $minimumOrderValueTValueTransfer->setStore($storeTransfer);
         $minimumOrderValueTValueTransfer->setCurrency($currencyTransfer);

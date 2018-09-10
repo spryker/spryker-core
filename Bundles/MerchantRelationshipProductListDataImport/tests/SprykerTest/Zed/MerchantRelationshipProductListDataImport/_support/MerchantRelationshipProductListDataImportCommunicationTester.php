@@ -12,7 +12,6 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
-use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 
 /**
  * Inherited Methods
@@ -49,9 +48,6 @@ class MerchantRelationshipProductListDataImportCommunicationTester extends Actor
         ?string $companyBusinessUnitOwnerKey = null,
         array $assigneeCompanyBusinessUnitKeys = []
     ): MerchantRelationshipTransfer {
-
-        $this->ensureMerchantRelationshipTableIsEmpty();
-
         $merchant = $this->haveMerchant();
 
         $companyBusinessUnitSeed = $companyBusinessUnitOwnerKey ? [CompanyBusinessUnitTransfer::KEY => $companyBusinessUnitOwnerKey] : [];
@@ -79,13 +75,5 @@ class MerchantRelationshipProductListDataImportCommunicationTester extends Actor
             MerchantRelationshipTransfer::OWNER_COMPANY_BUSINESS_UNIT => $companyBusinessUnitOwner,
             MerchantRelationshipTransfer::ASSIGNEE_COMPANY_BUSINESS_UNITS => $assigneeCompanyBusinessUnitCollectionTransfer,
         ]);
-    }
-
-    /**
-     * @return void
-     */
-    protected function ensureMerchantRelationshipTableIsEmpty(): void
-    {
-        SpyMerchantRelationshipQuery::create()->deleteAll();
     }
 }

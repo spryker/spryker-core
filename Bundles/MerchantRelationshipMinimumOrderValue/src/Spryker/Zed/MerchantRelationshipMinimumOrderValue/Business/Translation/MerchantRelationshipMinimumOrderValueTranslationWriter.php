@@ -37,7 +37,7 @@ class MerchantRelationshipMinimumOrderValueTranslationWriter implements Merchant
     public function saveLocalizedMessages(MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer): MerchantRelationshipMinimumOrderValueTransfer
     {
         $keyTranslationTransfer = $this->createKeyTranslationTransfer(
-            $merchantRelationshipMinimumOrderValueTransfer->getThreshold(),
+            $merchantRelationshipMinimumOrderValueTransfer->getMinimumOrderValueThreshold(),
             $this->createTranslationsLocaleMap($merchantRelationshipMinimumOrderValueTransfer->getLocalizedMessages())
         );
 

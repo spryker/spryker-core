@@ -80,7 +80,7 @@ class MinimumOrderValueMapper implements MinimumOrderValueMapperInterface
         $minimumOrderValueThresholdTransfer = $minimumOrderValueThresholdTransfer
             ->fromArray($minimumOrderValueEntity->toArray(), true)
             ->setFee($minimumOrderValueEntity->getFee())
-            ->setThreshold($minimumOrderValueEntity->getValue())
+            ->setThreshold($minimumOrderValueEntity->getThreshold())
             ->setMessageGlossaryKey($minimumOrderValueEntity->getMessageGlossaryKey());
 
         return $minimumOrderValueThresholdTransfer;

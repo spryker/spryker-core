@@ -20,14 +20,16 @@ use Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalSoftThresho
 
 class MinimumOrderValueGuiConfig extends AbstractBundleConfig
 {
-    protected const MAPPERS_GLOBAL_THRESHOLD = [
+    public const STORE_CURRENCY_DELIMITER = ';';
+
+    protected const STRATEGY_TYPE_TO_FORM_TYPE_MAP = [
         SharedMinimumOrderValueGuiConfig::HARD_TYPE_STRATEGY => GlobalHardThresholdFormMapper::class,
         SharedMinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_MESSAGE => GlobalSoftThresholdFormMapper::class,
         SharedMinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE => GlobalSoftThresholdFlexibleFeeFormMapper::class,
         SharedMinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_FIXED => GlobalSoftThresholdFixedFeeFormMapper::class,
     ];
 
-    protected const DATA_PROVIDERS_GLOBAL_THRESHOLD = [
+    protected const STRATEGY_TYPE_TO_DATA_PROVIDER_MAP = [
         SharedMinimumOrderValueGuiConfig::HARD_TYPE_STRATEGY => HardThresholdDataProvider::class,
         SharedMinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_MESSAGE => SoftThresholdDataProvider::class,
         SharedMinimumOrderValueGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE => SoftThresholdFlexibleFeeDataProvider::class,
@@ -37,16 +39,16 @@ class MinimumOrderValueGuiConfig extends AbstractBundleConfig
     /**
      * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalThresholdFormMapperInterface[]
      */
-    public function getGlobalThresholdMappers(): array
+    public function getStrategyTypeToFormTypeMap(): array
     {
-        return static::MAPPERS_GLOBAL_THRESHOLD;
+        return static::STRATEGY_TYPE_TO_FORM_TYPE_MAP;
     }
 
     /**
      * @return \Spryker\Zed\MinimumOrderValueGui\Communication\Form\Mapper\GlobalThresholdFormMapperInterface[]
      */
-    public function getGlobalThresholdDataProviders(): array
+    public function getStrategyTypeToDataProviderMap(): array
     {
-        return static::DATA_PROVIDERS_GLOBAL_THRESHOLD;
+        return static::STRATEGY_TYPE_TO_DATA_PROVIDER_MAP;
     }
 }

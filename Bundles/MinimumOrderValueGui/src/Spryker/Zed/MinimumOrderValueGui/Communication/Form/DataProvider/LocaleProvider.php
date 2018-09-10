@@ -7,19 +7,19 @@
 
 namespace Spryker\Zed\MinimumOrderValueGui\Communication\Form\DataProvider;
 
-use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToLocaleInterface;
+use Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToLocaleFacadeInterface;
 
 class LocaleProvider
 {
     /**
-     * @var \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToLocaleInterface
+     * @var \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToLocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\MinimumOrderValueGui\Dependency\Facade\MinimumOrderValueGuiToLocaleFacadeInterface $localeFacade
      */
-    public function __construct(MinimumOrderValueGuiToLocaleInterface $localeFacade)
+    public function __construct(MinimumOrderValueGuiToLocaleFacadeInterface $localeFacade)
     {
         $this->localeFacade = $localeFacade;
     }

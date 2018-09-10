@@ -59,7 +59,7 @@ class MinimumOrderValueRepository extends AbstractRepository implements MinimumO
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
      */
-    public function findMinimumOrderValues(
+    public function getMinimumOrderValues(
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array {

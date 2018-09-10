@@ -88,13 +88,13 @@ class MinimumOrderValueFacade extends AbstractFacade implements MinimumOrderValu
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
      */
-    public function findMinimumOrderValues(
+    public function getMinimumOrderValues(
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array {
         return $this->getFactory()
             ->createMinimumOrderValueReader()
-            ->findMinimumOrderValues($storeTransfer, $currencyTransfer);
+            ->getMinimumOrderValues($storeTransfer, $currencyTransfer);
     }
 
     /**

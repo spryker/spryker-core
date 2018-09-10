@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GlobalController extends AbstractController
 {
-    protected const STORE_CURRENCY_REQUEST_PARAM = 'store_currency';
+    protected const PARAM_STORE_CURRENCY_REQUEST = 'store_currency';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -29,13 +29,12 @@ class GlobalController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $storeCurrencyRequestParam = $request->query->get(static::STORE_CURRENCY_REQUEST_PARAM);
+        $storeCurrencyRequestParam = $request->query->get(static::PARAM_STORE_CURRENCY_REQUEST);
 
         $currencyTransfer = $this->getCurrencyTransferFromRequest($storeCurrencyRequestParam);
         $storeTransfer = $this->getStoreTransferFromRequest($storeCurrencyRequestParam);
-        $minimumOrderValueTValueTransfers = $this->getMinimumOrderValueTransfers($storeTransfer, $currencyTransfer);
 
-        $globalThresholdForm = $this->getFactory()->createGlobalThresholdForm($minimumOrderValueTValueTransfers, $storeTransfer, $currencyTransfer);
+        $globalThresholdForm = $this->getFactory()->createGlobalThresholdForm($storeTransfer, $currencyTransfer);
         $globalThresholdForm->handleRequest($request);
 
         if ($globalThresholdForm->isSubmitted() && $globalThresholdForm->isValid()) {
@@ -73,22 +72,6 @@ class GlobalController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     *
-     * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
-     */
-    protected function getMinimumOrderValueTransfers(StoreTransfer $storeTransfer, CurrencyTransfer $currencyTransfer): array
-    {
-        return $this->getFactory()
-            ->getMinimumOrderValueFacade()
-            ->findMinimumOrderValues(
-                $storeTransfer,
-                $currencyTransfer
-            );
-    }
-
-    /**
      * @param string|null $storeCurrencyRequestParam
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
@@ -97,7 +80,7 @@ class GlobalController extends AbstractController
     {
         return $this->getFactory()
             ->createStoreCurrencyFinder()
-            ->getCurrencyTransferFromRequest($storeCurrencyRequestParam);
+            ->getCurrencyTransferFromRequestParam($storeCurrencyRequestParam);
     }
 
     /**
@@ -109,7 +92,7 @@ class GlobalController extends AbstractController
     {
         return $this->getFactory()
             ->createStoreCurrencyFinder()
-            ->getStoreTransferFromRequest($storeCurrencyRequestParam);
+            ->getStoreTransferFromRequestParam($storeCurrencyRequestParam);
     }
 
     /**

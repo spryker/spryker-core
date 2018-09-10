@@ -22,7 +22,7 @@ class MinimumOrderValueGlossaryKeyGenerator implements MinimumOrderValueGlossary
     public function assignMessageGlossaryKey(
         MinimumOrderValueTransfer $minimumOrderValueTransfer
     ): MinimumOrderValueTransfer {
-        $this->assertRequired($minimumOrderValueTransfer);
+        $this->assertRequiredTransferAttributes($minimumOrderValueTransfer);
 
         $minimumOrderValueTransfer->getMinimumOrderValueThreshold()->setMessageGlossaryKey(
             $this->generateMessageGlossaryKey($minimumOrderValueTransfer)
@@ -42,7 +42,7 @@ class MinimumOrderValueGlossaryKeyGenerator implements MinimumOrderValueGlossary
             '.',
             [
                 static::MINIMUM_ORDER_VALUE_GLOSSARY_PREFIX,
-                $minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->getThresholdGroup(),
+                $minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()->getKey(),
                 $minimumOrderValueTransfer->getStore()->getName(),
                 $minimumOrderValueTransfer->getCurrency()->getCode(),
                 static::MINIMUM_ORDER_VALUE_GLOSSARY_MESSAGE,
@@ -55,12 +55,11 @@ class MinimumOrderValueGlossaryKeyGenerator implements MinimumOrderValueGlossary
      *
      * @return void
      */
-    protected function assertRequired(MinimumOrderValueTransfer $minimumOrderValueTransfer): void
+    protected function assertRequiredTransferAttributes(MinimumOrderValueTransfer $minimumOrderValueTransfer): void
     {
         $minimumOrderValueTransfer->getMinimumOrderValueThreshold()
-            ->requireMinimumOrderValueType();
-
-        $minimumOrderValueTransfer->getMinimumOrderValueThreshold()->getMinimumOrderValueType()
+            ->requireMinimumOrderValueType()
+            ->getMinimumOrderValueType()
             ->requireThresholdGroup();
 
         $minimumOrderValueTransfer->getStore()

@@ -61,10 +61,6 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
     public function saveMerchantRelationshipMinimumOrderValue(
         MerchantRelationshipMinimumOrderValueTransfer $merchantRelationshipMinimumOrderValueTransfer
     ): MerchantRelationshipMinimumOrderValueTransfer {
-        $this->minimumOrderValueFacade->isThresholdValid(
-            $merchantRelationshipMinimumOrderValueTransfer->getThreshold()
-        );
-
         $this->hydrateMinimumOrderValueType($merchantRelationshipMinimumOrderValueTransfer);
 
         $this->glossaryKeyGenerator->assignMessageGlossaryKey($merchantRelationshipMinimumOrderValueTransfer);
@@ -87,12 +83,12 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
         $minimumOrderValueTypeTransfer = $this->minimumOrderValueFacade
             ->getMinimumOrderValueTypeByKey(
                 $merchantRelationshipMinimumOrderValueTransfer
-                    ->getThreshold()
+                    ->getMinimumOrderValueThreshold()
                     ->getMinimumOrderValueType()
             );
 
         $merchantRelationshipMinimumOrderValueTransfer
-            ->getThreshold()
+            ->getMinimumOrderValueThreshold()
             ->setMinimumOrderValueType($minimumOrderValueTypeTransfer);
 
         return $merchantRelationshipMinimumOrderValueTransfer;

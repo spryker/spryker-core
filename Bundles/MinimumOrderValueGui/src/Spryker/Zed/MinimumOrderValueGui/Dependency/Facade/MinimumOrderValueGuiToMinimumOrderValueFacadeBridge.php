@@ -43,11 +43,11 @@ class MinimumOrderValueGuiToMinimumOrderValueFacadeBridge implements MinimumOrde
      *
      * @return \Generated\Shared\Transfer\MinimumOrderValueTransfer[]
      */
-    public function findMinimumOrderValues(
+    public function getMinimumOrderValues(
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array {
-        return $this->minimumOrderValueFacade->findMinimumOrderValues($storeTransfer, $currencyTransfer);
+        return $this->minimumOrderValueFacade->getMinimumOrderValues($storeTransfer, $currencyTransfer);
     }
 
     /**

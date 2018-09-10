@@ -9,6 +9,9 @@ namespace SprykerTest\Zed\MerchantRelationshipMinimumOrderValue\Business;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy\HardThresholdStrategyPlugin;
+use Spryker\Zed\MinimumOrderValue\Communication\Plugin\Strategy\SoftThresholdWithMessageStrategyPlugin;
+use Spryker\Zed\MinimumOrderValue\MinimumOrderValueDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -33,10 +36,17 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
     protected $tester;
 
     /**
+     * @var \Spryker\Zed\MinimumOrderValueExtension\Dependency\Plugin\MinimumOrderValueStrategyPluginInterface[]
+     */
+    protected $strategies;
+
+    /**
      * @return void
      */
     public function testSaveMerchantRelationshipHardAndSoftThresholds(): void
     {
+        $this->setupDependencies();
+
         $merchantRelationshipTransfer = $this->tester->createTestMerchantRelationship(static::MERCHANT_RELATIONSHIP_KEY);
 
         $storeTransferDE = $this->tester->createTestStoreTransfer();
@@ -124,5 +134,18 @@ class MerchantRelationshipMinimumOrderValueFacadeTest extends MerchantRelationsh
     protected function getFacade()
     {
         return $this->tester->getFacade();
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupDependencies(): void
+    {
+        $this->strategies = [
+            new HardThresholdStrategyPlugin(),
+            new SoftThresholdWithMessageStrategyPlugin(),
+        ];
+
+        $this->tester->setDependency(MinimumOrderValueDependencyProvider::PLUGINS_MINIMUM_ORDER_VALUE_STRATEGY, $this->strategies);
     }
 }
