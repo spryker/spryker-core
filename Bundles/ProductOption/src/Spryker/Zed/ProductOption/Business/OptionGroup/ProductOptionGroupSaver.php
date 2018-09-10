@@ -187,19 +187,32 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
         foreach ($productOptionGroupEntity->getSpyProductAbstractProductOptionGroups() as $productAbstractProductOptionEntity) {
             $idProductAbstract = $productAbstractProductOptionEntity->getFkProductAbstract();
 
-            $eventTransfer = (new EventEntityTransfer())->setForeignKeys([
-                SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT => $idProductAbstract,
-            ]);
+            if ($productAbstractProductOptionEntity->getSpyProductOptionGroup()->isActive()) {
+                $this->triggerProductOptionGroupDeleteEvent($idProductAbstract);
+            }
 
-            $this->eventFacade->trigger(
-                ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_UPDATE,
-                $eventTransfer
-            );
             $this->touchFacade->touchActive(
                 ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION,
                 $idProductAbstract
             );
         }
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    protected function triggerProductOptionGroupDeleteEvent(int $idProductAbstract): void
+    {
+        $eventTransfer = (new EventEntityTransfer())->setForeignKeys([
+            SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT => $idProductAbstract,
+        ]);
+
+        $this->eventFacade->trigger(
+            ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_DELETE,
+            $eventTransfer
+        );
     }
 
     /**
