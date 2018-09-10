@@ -22,7 +22,7 @@ class TaxSetsRestApiConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME)
             ->setDescription(static::DESCRIPTION)
@@ -35,7 +35,7 @@ class TaxSetsRestApiConsole extends Console
      *
      * @return void
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->getFacade()->updateTaxSetsWithoutUuid();
     }
