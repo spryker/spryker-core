@@ -50,7 +50,7 @@ class CustomerGroupRepository extends AbstractRepository implements CustomerGrou
         foreach ($customerGroupNames as $customerGroupName) {
             $customerGroupTransfer = new CustomerGroupTransfer();
             $customerGroupTransfer->setName($customerGroupName);
-            $customerGroupCollectionTransfer->addGroups($customerGroupTransfer);
+            $customerGroupCollectionTransfer->addGroup($customerGroupTransfer);
         }
 
         return $customerGroupCollectionTransfer;

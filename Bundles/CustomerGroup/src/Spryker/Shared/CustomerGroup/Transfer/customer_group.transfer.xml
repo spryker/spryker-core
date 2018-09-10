@@ -13,7 +13,7 @@
     </transfer>
 
     <transfer name="CustomerGroupCollection">
-        <property name="groups" type="CustomerGroup[]"/>
+        <property name="groups" type="CustomerGroup[]" singular="group"/>
     </transfer>
 
     <transfer name="CustomerGroupToCustomer">
