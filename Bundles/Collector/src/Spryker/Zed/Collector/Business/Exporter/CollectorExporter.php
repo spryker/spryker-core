@@ -146,7 +146,7 @@ class CollectorExporter
                     'Processed %d from %d for locale %s, where %d were deleted and %d failed.',
                     $result->getProcessedCount(),
                     $result->getTotalCount(),
-                    $result->getProcessedLocale(),
+                    $result->getProcessedLocale() ? $result->getProcessedLocale()->getLocaleName() : null,
                     $result->getDeletedCount(),
                     $result->getFailedCount()
                 )
