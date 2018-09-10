@@ -16,6 +16,10 @@ use Spryker\Glue\Kernel\AbstractRestResource;
 class CategoriesRestApiResource extends AbstractRestResource implements CategoriesRestApiResourceInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $nodeId
      * @param string $locale
      *

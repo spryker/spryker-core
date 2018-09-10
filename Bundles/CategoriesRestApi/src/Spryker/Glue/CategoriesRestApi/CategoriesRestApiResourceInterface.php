@@ -12,6 +12,11 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 interface CategoriesRestApiResourceInterface
 {
     /**
+     * Specification:
+     *  - Retrieves category node resource by node id.
+     *
+     * @api
+     *
      * @param int $nodeId
      * @param string $locale
      *

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig;
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface;
-use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapperInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -31,11 +30,6 @@ class CategoryReader implements CategoryReaderInterface
     protected $categoryStorageClient;
 
     /**
-     * @var \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapperInterface
-     */
-    protected $categoriesResourceMapper;
-
-    /**
      * @var \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface
      */
     protected $categoryMapper;
@@ -43,18 +37,15 @@ class CategoryReader implements CategoryReaderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface $categoryStorageClient
-     * @param \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapperInterface $categoriesResourceMapper
      * @param \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface $categoryMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CategoriesRestApiToCategoryStorageClientInterface $categoryStorageClient,
-        CategoriesResourceMapperInterface $categoriesResourceMapper,
         CategoryMapperInterface $categoryMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->categoryStorageClient = $categoryStorageClient;
-        $this->categoriesResourceMapper = $categoriesResourceMapper;
         $this->categoryMapper = $categoryMapper;
     }
 
