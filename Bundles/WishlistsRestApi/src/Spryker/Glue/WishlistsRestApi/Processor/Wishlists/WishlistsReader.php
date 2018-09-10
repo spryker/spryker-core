@@ -154,7 +154,7 @@ class WishlistsReader implements WishlistsReaderInterface
      */
     protected function getWishlistOverviewWithoutProductDetails(WishlistTransfer $wishlistTransfer): WishlistOverviewResponseTransfer
     {
-        $wishlistOverviewRequestTransfer = new WishlistOverviewRequestTransfer;
+        $wishlistOverviewRequestTransfer = new WishlistOverviewRequestTransfer();
         $wishlistOverviewRequestTransfer->setWishlist($wishlistTransfer);
         $wishlistOverviewRequestTransfer->setPage(0);
         $wishlistOverviewRequestTransfer->setItemsPerPage(PHP_INT_MAX);
