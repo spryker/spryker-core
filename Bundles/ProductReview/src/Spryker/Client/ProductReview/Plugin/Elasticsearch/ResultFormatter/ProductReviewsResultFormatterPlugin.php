@@ -17,8 +17,6 @@ class ProductReviewsResultFormatterPlugin extends AbstractElasticsearchResultFor
     const NAME = 'productReviews';
 
     /**
-     * @api
-     *
      * @return string
      */
     public function getName()
@@ -27,8 +25,6 @@ class ProductReviewsResultFormatterPlugin extends AbstractElasticsearchResultFor
     }
 
     /**
-     * @api
-     *
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *

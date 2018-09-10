@@ -15,8 +15,6 @@ class CategoriesRestApiToCategoryStorageClientBridge implements CategoriesRestAp
     protected $categoryStorageClient;
 
     /**
-     * CategoriesRestApiToCategoryStorageClientBridge constructor.
-     *
      * @param \Spryker\Client\CategoryStorage\CategoryStorageClientInterface $categoryStorageClient
      */
     public function __construct($categoryStorageClient)
@@ -27,7 +25,7 @@ class CategoriesRestApiToCategoryStorageClientBridge implements CategoriesRestAp
     /**
      * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\RestCategoryTreesTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
     public function getCategories(string $locale)
     {
