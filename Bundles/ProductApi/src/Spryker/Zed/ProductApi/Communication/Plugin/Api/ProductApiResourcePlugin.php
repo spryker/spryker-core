@@ -22,6 +22,8 @@ use Spryker\Zed\ProductApi\ProductApiConfig;
 class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
@@ -32,6 +34,8 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
     }
 
     /**
+     * @api
+     *
      * @internal param ApiFilterTransfer $apiFilterTransfer
      *
      * @param int $id
@@ -44,6 +48,8 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
@@ -55,6 +61,8 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
     }
 
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      *
      * @throws \RuntimeException
@@ -67,6 +75,8 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer

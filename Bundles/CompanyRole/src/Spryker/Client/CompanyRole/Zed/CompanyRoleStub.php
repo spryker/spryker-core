@@ -40,7 +40,10 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     public function createCompanyRole(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\CompanyRoleResponseTransfer $companyRoleResponseTransfer */
-        $companyRoleResponseTransfer = $this->zedRequestClient->call('/company-role/gateway/create', $companyRoleTransfer);
+        $companyRoleResponseTransfer = $this->zedRequestClient->call(
+            '/company-role/gateway/create',
+            $companyRoleTransfer
+        );
 
         return $companyRoleResponseTransfer;
     }

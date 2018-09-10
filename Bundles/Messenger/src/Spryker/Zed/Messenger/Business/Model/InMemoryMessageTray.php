@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\FlashMessagesTransfer
+     * @var \Generated\Shared\Transfer\FlashMessagesTransfer|null
      */
     protected static $messages;
 
@@ -67,7 +67,7 @@ class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterfac
      */
     public function getMessages()
     {
-        return self::$messages;
+        return self::$messages ?: static::getFlashMessagesTransfer();
     }
 
     /**
