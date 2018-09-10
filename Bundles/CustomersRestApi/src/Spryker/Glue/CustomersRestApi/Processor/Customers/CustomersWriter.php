@@ -194,15 +194,7 @@ class CustomersWriter implements CustomersWriterInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$restRequest->getResource()->getId()) {
-            $this->createCustomerReferenceMissingError($restResponse);
-
-            return $restResponse;
-        }
-
-        if (!$this->isSameCustomerReference($restRequest)) {
-            $this->createUnauthorizedError($restResponse);
-
-            return $restResponse;
+            return $this->createCustomerReferenceMissingError($restResponse);
         }
 
         $customerTransfer = (new CustomerTransfer)
@@ -210,9 +202,11 @@ class CustomersWriter implements CustomersWriterInterface
         $customerTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
         if (!$customerTransfer->getHasCustomer()) {
-            $this->createCustomerNotFoundError($restResponse);
+            return $this->createCustomerNotFoundError($restResponse);
+        }
 
-            return $restResponse;
+        if (!$this->isSameCustomerReference($restRequest)) {
+            return $this->createUnauthorizedError($restResponse);
         }
 
         $this->customerClient->anonymizeCustomer($customerTransfer->getCustomerTransfer());
