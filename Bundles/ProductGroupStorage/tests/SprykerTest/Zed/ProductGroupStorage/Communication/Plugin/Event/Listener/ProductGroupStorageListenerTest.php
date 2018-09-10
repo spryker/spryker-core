@@ -53,7 +53,7 @@ class ProductGroupStorageListenerTest extends Unit
      */
     public function testProductAbstractGroupStorageListenerStoreData()
     {
-        SpyProductAbstractGroupStorageQuery::create()->filterByFkProductAbstract_in([1, 2, 3])->delete();
+        SpyProductAbstractGroupStorageQuery::create()->filterByFkProductAbstract_in([4])->delete();
         $beforeCount = SpyProductAbstractGroupStorageQuery::create()->count();
 
         $productAbstractGroupStorageListener = new ProductAbstractGroupStorageListener();
@@ -61,7 +61,7 @@ class ProductGroupStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_ABSTRACT => 1,
+                SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_ABSTRACT => 4,
             ]),
         ];
         $productAbstractGroupStorageListener->handleBulk($eventTransfers, ProductGroupEvents::ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_CREATE);
@@ -75,14 +75,14 @@ class ProductGroupStorageListenerTest extends Unit
      */
     public function testProductAbstractGroupPublishStorageListenerStoreData()
     {
-        SpyProductAbstractGroupStorageQuery::create()->filterByFkProductAbstract_in([1, 2, 3])->delete();
+        SpyProductAbstractGroupStorageQuery::create()->filterByFkProductAbstract_in([4])->delete();
         $beforeCount = SpyProductAbstractGroupStorageQuery::create()->count();
 
         $productAbstractGroupPublishStorageListener = new ProductAbstractGroupPublishStorageListener();
         $productAbstractGroupPublishStorageListener->setFacade($this->getProductGroupStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId(4),
         ];
         $productAbstractGroupPublishStorageListener->handleBulk($eventTransfers, ProductGroupEvents::PRODUCT_GROUP_PUBLISH);
 
@@ -112,8 +112,8 @@ class ProductGroupStorageListenerTest extends Unit
     protected function assertProductAbstractGroupStorage($beforeCount)
     {
         $productGroupStorageCount = SpyProductAbstractGroupStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 3, $productGroupStorageCount);
-        $spyProductAbstractGroupStorage = SpyProductAbstractGroupStorageQuery::create()->orderByIdProductAbstractGroupStorage()->findOneByFkProductAbstract(1);
+        $this->assertSame($beforeCount + 1, $productGroupStorageCount);
+        $spyProductAbstractGroupStorage = SpyProductAbstractGroupStorageQuery::create()->orderByIdProductAbstractGroupStorage()->findOneByFkProductAbstract(4);
         $this->assertNotNull($spyProductAbstractGroupStorage);
         $data = $spyProductAbstractGroupStorage->getData();
         $this->assertSame(3, count($data['group_product_abstract_ids']));
