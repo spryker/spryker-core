@@ -30,6 +30,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     protected $localeName;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName()
@@ -38,6 +40,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getFilters()
@@ -119,6 +123,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * @api
+     *
      * @param string $localeName
      *
      * @return $this
@@ -131,6 +137,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getLocale()
@@ -139,6 +147,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return $this

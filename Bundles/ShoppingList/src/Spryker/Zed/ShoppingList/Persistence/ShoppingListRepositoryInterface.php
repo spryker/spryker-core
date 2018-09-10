@@ -92,14 +92,14 @@ interface ShoppingListRepositoryInterface
     /**
      * @param int $idCompanyBusinessUnit
      *
-     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit[]
      */
     public function findCompanyBusinessUnitSharedShoppingListsIds(int $idCompanyBusinessUnit);
 
     /**
      * @param int $idCompanyUser
      *
-     * @return mixed|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]
      */
     public function findCompanyUserSharedShoppingListsIds(int $idCompanyUser);
 

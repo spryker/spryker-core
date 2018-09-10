@@ -32,7 +32,6 @@ class ProductSkuToProductIdStep implements DataImportStepInterface
         $productSku = $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_CONCRETE_SKU];
 
         if (!isset($this->idProductCache[$productSku])) {
-            /** @var \Orm\Zed\Product\Persistence\SpyProduct|null $productEntity */
             $productEntity = SpyProductQuery::create()->findOneBySku($productSku);
             if (!$productEntity) {
                 throw new EntityNotFoundException(sprintf('Could not find product by sku "%s"', $productSku));
