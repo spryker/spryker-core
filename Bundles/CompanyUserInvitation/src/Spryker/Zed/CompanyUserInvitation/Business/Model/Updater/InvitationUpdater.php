@@ -114,9 +114,9 @@ class InvitationUpdater implements InvitationUpdaterInterface
     {
         return sprintf(
             '%s@%s.%s',
-            strtolower(md5(mt_rand())),
-            strtolower(md5(mt_rand())),
-            strtolower(md5(mt_rand()))
+            strtolower(md5((string)mt_rand())),
+            strtolower(md5((string)mt_rand())),
+            strtolower(md5((string)mt_rand()))
         );
     }
 }
