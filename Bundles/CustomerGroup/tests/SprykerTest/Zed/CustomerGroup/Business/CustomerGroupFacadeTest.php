@@ -85,6 +85,20 @@ class CustomerGroupFacadeTest extends Unit
     }
 
     /**
+     * @param int $idCustomer
+     * @param int $idGroup
+     *
+     * @return array
+     */
+    protected function assignCustomerToGroup(int $idCustomer, int $idGroup) : array
+    {
+        return (new SpyCustomerGroupToCustomer())
+            ->setFkCustomer($idCustomer)
+            ->setFkCustomerGroup($idGroup)
+            ->save();
+    }
+
+    /**
      * @return void
      */
     public function testFindCustomerGroupNamesByIdCustomer(): void
@@ -96,15 +110,15 @@ class CustomerGroupFacadeTest extends Unit
 
         $customerGroupToCustomerEntities = [];
 
-        $customerGroupToCustomerEntities[] = (new SpyCustomerGroupToCustomer())
-            ->setFkCustomer($customerEntity->getIdCustomer())
-            ->setFkCustomerGroup($customerGroupFirstEntity->getIdCustomerGroup())
-            ->save();
+        $customerGroupToCustomerEntities[] = $this->assignCustomerToGroup(
+            $customerEntity->getIdCustomer(),
+            $customerGroupFirstEntity->getIdCustomerGroup()
+        );
 
-        $customerGroupToCustomerEntities[] = (new SpyCustomerGroupToCustomer())
-            ->setFkCustomer($customerEntity->getIdCustomer())
-            ->setFkCustomerGroup($customerGroupSecondEntity->getIdCustomerGroup())
-            ->save();
+        $customerGroupToCustomerEntities[] = $this->assignCustomerToGroup(
+            $customerEntity->getIdCustomer(),
+            $customerGroupSecondEntity->getIdCustomerGroup()
+        );
 
         $customerGroupCollectionTransfer = $this->getCustomerGroupFacade()
             ->getCustomerGroupCollectionByIdCustomer($customerEntity->getIdCustomer());
