@@ -70,9 +70,7 @@ class AddressesReader implements AddressesReaderInterface
         $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
 
         if (!$this->isSameCustomerReference($restRequest)) {
-            $this->createUnauthorizedError($restResponse);
-
-            return $restResponse;
+            return $this->createUnauthorizedError($restResponse);
         }
 
         $customerResponseTransfer = $this
@@ -80,17 +78,13 @@ class AddressesReader implements AddressesReaderInterface
             ->findCustomerByReference($customerReference);
 
         if (!$customerResponseTransfer->getHasCustomer()) {
-            $this->createCustomerNotFoundError($restResponse);
-
-            return $restResponse;
+            return $this->createCustomerNotFoundError($restResponse);
         }
 
         $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
 
         if (!count($addressesTransfer->getAddresses())) {
-            $this->createCustomerAddressesNotFoundError($restResponse);
-
-            return $restResponse;
+            return $this->createCustomerAddressesNotFoundError($restResponse);
         }
 
         if (!$restRequest->getResource()->getId()) {
@@ -105,15 +99,12 @@ class AddressesReader implements AddressesReaderInterface
                     $address,
                     $customerResponseTransfer->getCustomerTransfer()
                 );
-                $restResponse->addResource($addressesResource);
 
-                return $restResponse;
+                return $restResponse->addResource($addressesResource);
             }
         }
 
-        $this->createAddressNotFoundError($restResponse);
-
-        return $restResponse;
+        return $this->createAddressNotFoundError($restResponse);
     }
 
     /**

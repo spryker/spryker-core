@@ -191,9 +191,33 @@ class ResponseBuilder implements ResponseBuilderInterface
         $idResource = $restRequest->getResource()->getId();
         if ($method === Request::METHOD_GET && $idResource === null) {
             return $this->formatLinks([
-                RestResourceInterface::RESOURCE_LINKS_SELF => $restRequest->getResource()->getType(),
+                RestResourceInterface::RESOURCE_LINKS_SELF => $this->createSelfLink($restRequest),
             ]);
         }
         return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return string
+     */
+    protected function createSelfLink(RestRequestInterface $restRequest): string
+    {
+        if (count($restRequest->getParentResources()) === 0) {
+            return $restRequest->getResource()->getType();
+        }
+
+        $link = null;
+
+        foreach ($restRequest->getParentResources() as $resource) {
+            $link .= $resource->getType() . '/';
+
+            if ($resource->getId()) {
+                $link .= $resource->getId() . '/';
+            }
+        }
+
+        return $link . $restRequest->getResource()->getType();
     }
 }
