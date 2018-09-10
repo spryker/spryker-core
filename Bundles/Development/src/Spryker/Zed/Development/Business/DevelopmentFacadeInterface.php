@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\DependencyProviderCollectionTransfer;
 use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
 use Generated\Shared\Transfer\ModuleFilterTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -76,15 +77,19 @@ interface DevelopmentFacadeInterface
      *
      * @api
      *
-     * @param string $module
+     * @internal
+     *
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      * @param string|null $dependencyType
      *
      * @return \Generated\Shared\Transfer\DependencyCollectionTransfer
      */
-    public function showOutgoingDependenciesForModule(string $module, ?string $dependencyType = null): DependencyCollectionTransfer;
+    public function showOutgoingDependenciesForModule(ModuleTransfer $moduleTransfer, ?string $dependencyType = null): DependencyCollectionTransfer;
 
     /**
      * @api
+     *
+     * @internal
      *
      * @param string $moduleName
      *

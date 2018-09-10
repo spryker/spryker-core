@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Development\Communication\Controller;
 
+use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\OrganizationTransfer;
 use Spryker\Zed\Development\Communication\Form\BundlesFormType;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,8 +61,16 @@ class DependencyController extends AbstractController
      */
     public function outgoingGraphAction(Request $request)
     {
-        $bundleName = $request->query->getAlnum(self::QUERY_KEY_MODULE);
-        $dataProvider = $this->getFactory()->createBundleFormDataProvider($request, $bundleName);
+        $moduleName = $request->query->getAlnum(self::QUERY_KEY_MODULE);
+
+        $organizationTransfer = new OrganizationTransfer();
+        $organizationTransfer->setName('Spryker');
+        $moduleTransfer = new ModuleTransfer();
+        $moduleTransfer
+            ->setName($moduleName)
+            ->setOrganization($organizationTransfer);
+
+        $dataProvider = $this->getFactory()->createBundleFormDataProvider($request, $moduleTransfer);
 
         $form = $this->getFactory()
             ->createBundlesForm(
@@ -82,7 +92,7 @@ class DependencyController extends AbstractController
             }
         }
 
-        $graph = $this->getFacade()->drawOutgoingDependencyTreeGraph($bundleName, $excludedBundles, $showIncoming);
+        $graph = $this->getFacade()->drawOutgoingDependencyTreeGraph($moduleName, $excludedBundles, $showIncoming);
 
         return $this->viewResponse([
             'form' => $form->createView(),

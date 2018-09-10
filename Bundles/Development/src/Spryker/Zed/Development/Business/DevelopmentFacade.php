@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\DependencyProviderCollectionTransfer;
 use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
 use Generated\Shared\Transfer\ModuleFilterTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -105,20 +106,26 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * @param string $module
+     * @api
+     * @internal
+     *
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      * @param string|null $dependencyType
      *
      * @return \Generated\Shared\Transfer\DependencyCollectionTransfer
      */
-    public function showOutgoingDependenciesForModule(string $module, ?string $dependencyType = null): DependencyCollectionTransfer
+    public function showOutgoingDependenciesForModule(ModuleTransfer $moduleTransfer, ?string $dependencyType = null): DependencyCollectionTransfer
     {
-        return $this->getFactory()->createModuleDependencyParser()->parseOutgoingDependencies($module, $dependencyType);
+        return $this->getFactory()->createModuleDependencyParser()->parseOutgoingDependencies($moduleTransfer, $dependencyType);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
+     * @internal
      *
      * @param string $moduleName
      *
