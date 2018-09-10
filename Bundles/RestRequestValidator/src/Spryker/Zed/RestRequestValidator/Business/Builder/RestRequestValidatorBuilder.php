@@ -10,6 +10,7 @@ namespace Spryker\Zed\RestRequestValidator\Business\Builder;
 use Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCollectorInterface;
 use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorMergerInterface;
 use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaverInterface;
+use Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface;
 
 class RestRequestValidatorBuilder implements RestRequestValidatorBuilderInterface
 {
@@ -29,18 +30,26 @@ class RestRequestValidatorBuilder implements RestRequestValidatorBuilderInterfac
     protected $validatorSaver;
 
     /**
+     * @var \Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCollectorInterface $validatorCollector
      * @param \Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorMergerInterface $validatorMerger
      * @param \Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaverInterface $validatorSaver
+     * @param \Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         RestRequestValidatorCollectorInterface $validatorCollector,
         RestRequestValidatorMergerInterface $validatorMerger,
-        RestRequestValidatorSaverInterface $validatorSaver
+        RestRequestValidatorSaverInterface $validatorSaver,
+        RestRequestValidatorToStoreFacadeInterface $storeFacade
     ) {
         $this->validatorCollector = $validatorCollector;
         $this->validatorMerger = $validatorMerger;
         $this->validatorSaver = $validatorSaver;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -48,8 +57,10 @@ class RestRequestValidatorBuilder implements RestRequestValidatorBuilderInterfac
      */
     public function build(): void
     {
-        $config = $this->validatorCollector->collect();
-        $config = $this->validatorMerger->merge($config);
-        $this->validatorSaver->store($config);
+        foreach ($this->storeFacade->getAllStores() as $store) {
+            $config = $this->validatorCollector->collect($store);
+            $config = $this->validatorMerger->merge($config);
+            $this->validatorSaver->store($config, $store);
+        }
     }
 }

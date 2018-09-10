@@ -1,5 +1,7 @@
 namespace: RestRequestValidator
 actor: Tester
+include:
+    - tests/SprykerTest/Zed/RestRequestValidator
 paths:
     tests: tests
     log: tests/_output

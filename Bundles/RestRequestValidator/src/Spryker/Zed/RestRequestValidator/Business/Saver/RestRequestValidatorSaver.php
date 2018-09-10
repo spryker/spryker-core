@@ -7,15 +7,17 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Saver;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface;
+use Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig;
 
 class RestRequestValidatorSaver implements RestRequestValidatorSaverInterface
 {
     /**
-     * @var string
+     * @var \Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig
      */
-    protected $cacheFile;
+    protected $config;
 
     /**
      * @var \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface
@@ -30,25 +32,51 @@ class RestRequestValidatorSaver implements RestRequestValidatorSaverInterface
     /**
      * @param \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface $filesystem
      * @param \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface $yaml
-     * @param string $cacheFile
+     * @param \Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig $config
      */
     public function __construct(
         RestRequestValidatorToFilesystemAdapterInterface $filesystem,
         RestRequestValidatorToYamlAdapterInterface $yaml,
-        string $cacheFile
+        RestRequestValidatorConfig $config
     ) {
         $this->filesystem = $filesystem;
         $this->yaml = $yaml;
-        $this->cacheFile = $cacheFile;
+        $this->config = $config;
     }
 
     /**
      * @param array $validatorConfig
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
-    public function store(array $validatorConfig): void
+    public function store(array $validatorConfig, StoreTransfer $storeTransfer): void
     {
-        $this->filesystem->dumpFile($this->cacheFile, $this->yaml->dump($validatorConfig));
+        $this->filesystem->remove($this->getOutdatedConfig($storeTransfer));
+
+        $this->filesystem->dumpFile(
+            $this->getStoreCacheFilePath($storeTransfer),
+            $this->yaml->dump($validatorConfig)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return string
+     */
+    protected function getStoreCacheFilePath(StoreTransfer $storeTransfer): string
+    {
+        return sprintf($this->config->getCacheFilePathPattern(), $storeTransfer->getName());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array
+     */
+    protected function getOutdatedConfig(StoreTransfer $storeTransfer): array
+    {
+        return glob(sprintf($this->config->getCacheFilePathPattern(), $storeTransfer->getName()));
     }
 }

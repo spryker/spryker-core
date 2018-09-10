@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface;
 
 interface RestRequestValidatorSchemaFinderInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
      * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
      */
-    public function findSchemas(): RestRequestValidatorToFinderAdapterInterface;
+    public function findSchemas(StoreTransfer $storeTransfer): RestRequestValidatorToFinderAdapterInterface;
 }

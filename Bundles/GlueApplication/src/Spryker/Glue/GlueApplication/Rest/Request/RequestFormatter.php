@@ -6,6 +6,7 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Request;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResource;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface;
@@ -140,6 +141,7 @@ class RequestFormatter implements RequestFormatterInterface
         }
 
         $data = $requestData[RestResourceInterface::RESOURCE_DATA];
+        $httpRequest->attributes->set(RestResource::RESOURCE_DATA, $data);
 
         return $this->restResourceBuilder->createRestResource(
             $data[RestResourceInterface::RESOURCE_TYPE],

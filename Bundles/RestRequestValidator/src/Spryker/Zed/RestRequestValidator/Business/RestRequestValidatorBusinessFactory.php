@@ -21,6 +21,7 @@ use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorSaverInt
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface;
+use Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface;
 use Spryker\Zed\RestRequestValidator\RestRequestValidatorDependencyProvider;
 
 /**
@@ -36,7 +37,8 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
         return new RestRequestValidatorBuilder(
             $this->createValidatorCollector(),
             $this->createValidatorMerger(),
-            $this->createValidatorSaver()
+            $this->createValidatorSaver(),
+            $this->getStoreFacade()
         );
     }
 
@@ -68,7 +70,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
         return new RestRequestValidatorSaver(
             $this->getFilesystem(),
             $this->getYaml(),
-            $this->getConfig()->getValidationSchemaCacheFile()
+            $this->getConfig()
         );
     }
 
@@ -79,8 +81,8 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     {
         return new RestRequestValidatorSchemaFinder(
             $this->getFinder(),
-            $this->getConfig()->getValidationSchemaPathPattern(),
-            $this->getConfig()->getValidationSchemaFileNamePattern()
+            $this->getStoreFacade(),
+            $this->getConfig()
         );
     }
 
@@ -106,5 +108,13 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
     public function getYaml(): RestRequestValidatorToYamlAdapterInterface
     {
         return $this->getProvidedDependency(RestRequestValidatorDependencyProvider::YAML);
+    }
+
+    /**
+     * @return \Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface
+     */
+    public function getStoreFacade(): RestRequestValidatorToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(RestRequestValidatorDependencyProvider::FACADE_STORE);
     }
 }
