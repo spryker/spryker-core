@@ -8,10 +8,12 @@
 namespace Spryker\Glue\CategoriesRestApi;
 
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface;
-use Spryker\Glue\CategoriesRestApi\Processor\Category\CategoryReader;
-use Spryker\Glue\CategoriesRestApi\Processor\Category\CategoryReaderInterface;
+use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapper;
+use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapperInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapper;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface;
+use Spryker\Glue\CategoriesRestApi\Processor\Reader\CategoryReader;
+use Spryker\Glue\CategoriesRestApi\Processor\Reader\CategoryReaderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -20,13 +22,14 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class CategoriesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\CategoriesRestApi\Processor\Category\CategoryReaderInterface
+     * @return \Spryker\Glue\CategoriesRestApi\Processor\Reader\CategoryReaderInterface
      */
     public function createCategoryReader(): CategoryReaderInterface
     {
         return new CategoryReader(
             $this->getResourceBuilder(),
             $this->getCategoryStorageClient(),
+            $this->createCategoriesResourceMapper(),
             $this->createCategoryMapper()
         );
     }
@@ -37,6 +40,14 @@ class CategoriesRestApiFactory extends AbstractFactory
     protected function getCategoryStorageClient(): CategoriesRestApiToCategoryStorageClientInterface
     {
         return $this->getProvidedDependency(CategoriesRestApiDependencyProvider::CLIENT_CATEGORY_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoriesResourceMapperInterface
+     */
+    protected function createCategoriesResourceMapper(): CategoriesResourceMapperInterface
+    {
+        return new CategoriesResourceMapper();
     }
 
     /**
