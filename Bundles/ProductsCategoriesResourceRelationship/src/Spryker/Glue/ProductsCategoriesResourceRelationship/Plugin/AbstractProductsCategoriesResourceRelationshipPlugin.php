@@ -42,6 +42,6 @@ class AbstractProductsCategoriesResourceRelationshipPlugin extends AbstractPlugi
      */
     public function getRelationshipResourceType(): string
     {
-        return 'product-categories';
+        return 'category-nodes';
     }
 }
