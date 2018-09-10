@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CustomerGroup\Business\CustomerGroup;
 
-use Generated\Shared\Transfer\CustomerGroupNamesTransfer;
+use Generated\Shared\Transfer\CustomerGroupCollectionTransfer;
 use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupRepositoryInterface;
 
 class CustomerGroupFinder implements CustomerGroupFinderInterface
@@ -28,10 +28,10 @@ class CustomerGroupFinder implements CustomerGroupFinderInterface
     /**
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\CustomerGroupNamesTransfer
+     * @return \Generated\Shared\Transfer\CustomerGroupCollectionTransfer
      */
-    public function getCustomerGroupNamesByIdCustomer(int $idCustomer): CustomerGroupNamesTransfer
+    public function getCustomerGroupCollectionByIdCustomer(int $idCustomer): CustomerGroupCollectionTransfer
     {
-        return $this->customerGroupRepository->getCustomerGroupNamesByIdCustomer($idCustomer);
+        return $this->customerGroupRepository->getCustomerGroupCollectionByIdCustomer($idCustomer);
     }
 }

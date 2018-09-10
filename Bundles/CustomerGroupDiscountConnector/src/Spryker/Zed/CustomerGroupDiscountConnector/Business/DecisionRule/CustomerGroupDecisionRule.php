@@ -49,29 +49,28 @@ class CustomerGroupDecisionRule implements CustomerGroupDecisionRuleInterface
         ItemTransfer $currentItemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         if (!$this->rulePreCheck($quoteTransfer)) {
             return false;
         }
 
         $customerTransfer = $quoteTransfer->getCustomer();
 
-        $customerGroupNamesTransfer = $this->customerGroupFacade
-            ->getCustomerGroupNamesByIdCustomer($customerTransfer->getIdCustomer());
+        $customerGroupCollectionTransfer = $this->customerGroupFacade
+            ->getCustomerGroupCollectionByIdCustomer($customerTransfer->getIdCustomer());
 
-        $customerGroupNames = $customerGroupNamesTransfer->getCustomerGroupNames();
-        if (empty($customerGroupNames)) {
+        $customerGroups = $customerGroupCollectionTransfer->getGroups();
+        if (empty($customerGroups)) {
             return false;
         }
 
-        foreach ($customerGroupNames as $customerGroupName) {
-            $lowerCustomerGrouName = strtolower($customerGroupName);
+        foreach ($customerGroups as $customerGroup) {
+            $lowerCustomerGroupName = strtolower($customerGroup->getName());
 
-            if ($clauseTransfer->getValue() !== $lowerCustomerGrouName) {
+            if ($clauseTransfer->getValue() !== $lowerCustomerGroupName) {
                 continue;
             }
 
-            if ($this->discountFacade->queryStringCompare($clauseTransfer, $lowerCustomerGrouName)) {
+            if ($this->discountFacade->queryStringCompare($clauseTransfer, $lowerCustomerGroupName)) {
                 return true;
             }
         }

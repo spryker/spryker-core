@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\CustomerGroup\Persistence;
 
-use Generated\Shared\Transfer\CustomerGroupNamesTransfer;
+use Generated\Shared\Transfer\CustomerGroupCollectionTransfer;
+use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\CustomerGroup\Persistence\Map\SpyCustomerGroupTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -20,9 +21,9 @@ class CustomerGroupRepository extends AbstractRepository implements CustomerGrou
     /**
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\CustomerGroupNamesTransfer
+     * @return \Generated\Shared\Transfer\CustomerGroupCollectionTransfer
      */
-    public function getCustomerGroupNamesByIdCustomer(int $idCustomer): CustomerGroupNamesTransfer
+    public function getCustomerGroupCollectionByIdCustomer(int $idCustomer): CustomerGroupCollectionTransfer
     {
         $customerGroupNames = $this->getCustomerQuery()
             ->filterByIdCustomer($idCustomer)
@@ -34,18 +35,25 @@ class CustomerGroupRepository extends AbstractRepository implements CustomerGrou
             ->find()
             ->toArray();
 
-        return $this->mapCustomerGroupNamesToCustomerGroupNamesTransfer($customerGroupNames);
+        return $this->mapCustomerGroupNamesToCustomerGroupCollectionTransfer($customerGroupNames);
     }
 
     /**
      * @param array $customerGroupNames
      *
-     * @return \Generated\Shared\Transfer\CustomerGroupNamesTransfer
+     * @return \Generated\Shared\Transfer\CustomerGroupCollectionTransfer
      */
-    public function mapCustomerGroupNamesToCustomerGroupNamesTransfer(array $customerGroupNames): CustomerGroupNamesTransfer
+    public function mapCustomerGroupNamesToCustomerGroupCollectionTransfer(array $customerGroupNames): CustomerGroupCollectionTransfer
     {
-        return (new CustomerGroupNamesTransfer())
-            ->setCustomerGroupNames($customerGroupNames);
+        $customerGroupCollectionTransfer = new CustomerGroupCollectionTransfer();
+
+        foreach ($customerGroupNames as $customerGroupName) {
+            $customerGroupTransfer = new CustomerGroupTransfer();
+            $customerGroupTransfer->setName($customerGroupName);
+            $customerGroupCollectionTransfer->addGroups($customerGroupTransfer);
+        }
+
+        return $customerGroupCollectionTransfer;
     }
 
     /**

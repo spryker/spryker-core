@@ -6,14 +6,14 @@
  */
 namespace Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\CustomerGroupNamesTransfer;
+use Generated\Shared\Transfer\CustomerGroupCollectionTransfer;
 
 interface CustomerGroupDiscountConnectorToCustomerGroupFacadeInterface
 {
     /**
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\CustomerGroupNamesTransfer
+     * @return \Generated\Shared\Transfer\CustomerGroupCollectionTransfer
      */
-    public function getCustomerGroupNamesByIdCustomer($idCustomer): CustomerGroupNamesTransfer;
+    public function getCustomerGroupCollectionByIdCustomer($idCustomer): CustomerGroupCollectionTransfer;
 }

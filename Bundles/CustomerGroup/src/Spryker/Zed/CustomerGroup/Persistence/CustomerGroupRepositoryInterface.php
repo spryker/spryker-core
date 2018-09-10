@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\CustomerGroup\Persistence;
 
-use Generated\Shared\Transfer\CustomerGroupNamesTransfer;
+use Generated\Shared\Transfer\CustomerGroupCollectionTransfer;
 
 interface CustomerGroupRepositoryInterface
 {
     /**
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\CustomerGroupNamesTransfer
+     * @return \Generated\Shared\Transfer\CustomerGroupCollectionTransfer
      */
-    public function getCustomerGroupNamesByIdCustomer(int $idCustomer): CustomerGroupNamesTransfer;
+    public function getCustomerGroupCollectionByIdCustomer(int $idCustomer): CustomerGroupCollectionTransfer;
 }
