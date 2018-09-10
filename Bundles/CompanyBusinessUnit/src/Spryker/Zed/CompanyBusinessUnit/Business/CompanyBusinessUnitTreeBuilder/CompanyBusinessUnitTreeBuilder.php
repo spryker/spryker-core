@@ -10,7 +10,6 @@ namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilde
 use ArrayObject;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -49,9 +48,9 @@ class CompanyBusinessUnitTreeBuilder implements CompanyBusinessUnitTreeBuilderIn
 
         $idCompany = $customerTransfer->getCompanyUserTransfer()->getFkCompany();
         $companyBusinessUnits = $this->getCompanyBusinessUnitCollection($idCompany);
-        $companyBusinessUnitTree = $this->buildTree($companyBusinessUnits->getCompanyBusinessUnits(), null, 0);
+        $companyBusinessUnitTreeNodes = $this->buildTree($companyBusinessUnits->getCompanyBusinessUnits(), null, 0);
 
-        return $companyBusinessUnitTree;
+        return (new CompanyBusinessUnitTreeNodeCollectionTransfer())->setCompanyBusinessUnitTreeNodes($companyBusinessUnitTreeNodes);
     }
 
     /**
@@ -72,46 +71,34 @@ class CompanyBusinessUnitTreeBuilder implements CompanyBusinessUnitTreeBuilderIn
      * @param int|null $idParentCompanyBusinessUnit
      * @param int $indent
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeTransfer[]|\ArrayObject
      */
-    protected function buildTree(ArrayObject $companyBusinessUnits, ?int $idParentCompanyBusinessUnit, int $indent): CompanyBusinessUnitTreeNodeCollectionTransfer
+    protected function buildTree(ArrayObject $companyBusinessUnits, ?int $idParentCompanyBusinessUnit, int $indent): ArrayObject
     {
-        $companyBusinessUnitTree = new CompanyBusinessUnitTreeNodeCollectionTransfer();
-        $companyBusinessUnitTreeItems = new ArrayObject();
+        $companyBusinessUnitTreeNodes = [];
         foreach ($companyBusinessUnits as $companyBusinessUnit) {
-            $companyBusinessUnitArray = $companyBusinessUnit->toArray();
-            if ($companyBusinessUnitArray[static::FK_PARENT_COMPANY_BUSINESS_UNIT_KEY] === $idParentCompanyBusinessUnit) {
-                $companyBusinessUnitArray[static::CHILDREN_KEY] = [];
-                $companyBusinessUnitArray[static::LEVEL_KEY] = $indent;
-                $children = $this->buildTree($companyBusinessUnits, $companyBusinessUnitArray[static::ID_COMPANY_BUSINESS_UNIT_KEY], $indent++);
-                $companyBusinessUnitArray[static::CHILDREN_KEY] = $children;
-
-                $companyBusinessUnitTreeItem = new CompanyBusinessUnitTreeNodeTransfer();
-                $this->hydrateCompanyBusinessUnitTreeItemTransfer($companyBusinessUnitTreeItem, $companyBusinessUnitArray);
-                $companyBusinessUnitTreeItems[] = $companyBusinessUnitTreeItem;
+            if ($companyBusinessUnit->getFkParentCompanyBusinessUnit() !== $idParentCompanyBusinessUnit) {
+                continue;
             }
-        }
-        $companyBusinessUnitTree->setCompanyBusinessUnitTreeNodes($companyBusinessUnitTreeItems);
 
-        return $companyBusinessUnitTree;
+            $children = $this->buildTree($companyBusinessUnits, $companyBusinessUnit->getIdCompanyBusinessUnit(), $indent + 1);
+
+            $companyBusinessUnitTreeNodes[] = $this
+                ->createEmptyTreeNode()
+                ->setLevel($indent)
+                ->setCompanyBusinessUnit($companyBusinessUnit)
+                ->setChildren($children);
+        }
+
+        return new ArrayObject($companyBusinessUnitTreeNodes);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeTransfer $companyBusinessUnitTreeItem
-     * @param array $companyBusinessUnitArray
-     *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeTransfer
      */
-    protected function hydrateCompanyBusinessUnitTreeItemTransfer(
-        CompanyBusinessUnitTreeNodeTransfer $companyBusinessUnitTreeItem,
-        array $companyBusinessUnitArray
-    ): void {
-        $companyBusinessUnitTreeItem->setChildren($companyBusinessUnitArray[static::CHILDREN_KEY]);
-        $companyBusinessUnitTreeItem->setLevel($companyBusinessUnitArray[static::LEVEL_KEY]);
-
-        $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
-        $companyBusinessUnitTransfer->fromArray($companyBusinessUnitArray, true);
-
-        $companyBusinessUnitTreeItem->setCompanyBusinessUnit($companyBusinessUnitTransfer);
+    protected function createEmptyTreeNode(): CompanyBusinessUnitTreeNodeTransfer
+    {
+        return (new CompanyBusinessUnitTreeNodeTransfer())
+            ->setChildren(new ArrayObject());
     }
 }

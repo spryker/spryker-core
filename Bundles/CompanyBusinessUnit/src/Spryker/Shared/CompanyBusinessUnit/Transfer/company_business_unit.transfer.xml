@@ -61,7 +61,7 @@
     </transfer>
 
     <transfer name="CompanyBusinessUnitTreeNode">
-        <property name="children" type="CompanyBusinessUnitTreeNodeCollection"/>
+        <property name="children" type="CompanyBusinessUnitTreeNode[]"/>
         <property name="level" type="int"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
     </transfer>
