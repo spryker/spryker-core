@@ -69,16 +69,16 @@ class AddressesReader implements AddressesReaderInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
 
-        if (!$this->isSameCustomerReference($restRequest)) {
-            return $this->createUnauthorizedError($restResponse);
-        }
-
         $customerResponseTransfer = $this
             ->customerReader
             ->findCustomerByReference($customerReference);
 
         if (!$customerResponseTransfer->getHasCustomer()) {
             return $this->createCustomerNotFoundError($restResponse);
+        }
+
+        if (!$this->isSameCustomerReference($restRequest)) {
+            return $this->createUnauthorizedError($restResponse);
         }
 
         $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
