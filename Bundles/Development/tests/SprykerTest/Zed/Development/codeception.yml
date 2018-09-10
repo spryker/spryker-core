@@ -25,3 +25,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\Development\Helper\IdeAutoCompletion
+                - \SprykerTest\Zed\Development\Helper\DependencyValidatorModule

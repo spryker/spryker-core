@@ -87,4 +87,12 @@ interface SearchConstants
      * @api
      */
     const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
+
+    /**
+     * Specification:
+     * - Sets the permission mode for generated directories.
+     *
+     * @api
+     */
+    const DIRECTORY_PERMISSION = 'SEARCH:DIRECTORY_PERMISSION';
 }

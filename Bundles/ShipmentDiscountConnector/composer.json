@@ -11,9 +11,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/country": "*",
-    "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {

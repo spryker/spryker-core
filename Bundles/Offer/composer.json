@@ -20,13 +20,14 @@
     "spryker/calculation": "*",
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
-    "spryker/oms": "*",
-    "spryker/testify": "*"
+    "spryker/locale": "*",
+    "spryker/testify": "*",
+    "spryker/touch": "*"
   },
   "suggest": {
-    "spryker/oms": "If you use offer state in you state machine, with commands and conditions from offer",
+    "spryker/calculation": "If you need offer items subtotal to be calculated",
     "spryker/checkout": "If you want to use checkout plugin from order module",
-    "spryker/calculation": "If you need offer items subtotal to be calculated"
+    "spryker/oms": "If you use offer state in you state machine, with commands and conditions from offer"
   },
   "autoload": {
     "psr-4": {
