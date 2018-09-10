@@ -52,7 +52,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
     public function matchUrl($url, $localeName)
     {
         $urlDetails = $this->getUrlFromStorage($url);
-        if ($urlDetails === null) {
+        if (!$urlDetails) {
             return [];
         }
 
@@ -83,8 +83,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
     public function findUrlStorageTransferByUrl($url)
     {
         $urlDetails = $this->getUrlFromStorage($url);
-
-        if ($urlDetails === null) {
+        if (!$urlDetails) {
             return null;
         }
 

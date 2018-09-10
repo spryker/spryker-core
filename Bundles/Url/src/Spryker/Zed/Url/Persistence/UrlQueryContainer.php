@@ -24,7 +24,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      *
      * @param string $url
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrl($url)
     {
