@@ -154,7 +154,7 @@ class ProductSetStorageListenerTest extends Unit
 
         // Assert
         $productSetStorageCount = SpyProductSetStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 4, $productSetStorageCount);
+        $this->assertSame($beforeCount, $productSetStorageCount);
     }
 
     /**
