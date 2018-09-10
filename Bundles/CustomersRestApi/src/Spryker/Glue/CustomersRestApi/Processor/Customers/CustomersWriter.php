@@ -163,7 +163,7 @@ class CustomersWriter implements CustomersWriterInterface
         $customerResponseTransfer = $this->customerClient->updateCustomerPassword($customerTransfer);
         if (!$customerResponseTransfer->getIsSuccess()) {
             foreach ($customerResponseTransfer->getErrors() as $error) {
-                if ($error === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
+                if ($error->getMessage() === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
                     return $this->createPasswordNotValid($restResponse);
                 }
 
