@@ -14,8 +14,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesMapper;
-use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesMapperInterface;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
@@ -71,13 +69,5 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
     public function createOmsOrderItemStateHistoryQuery()
     {
         return SpyOmsOrderItemStateHistoryQuery::create();
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesMapperInterface
-     */
-    public function createSalesMapper(): SalesMapperInterface
-    {
-        return new SalesMapper();
     }
 }
