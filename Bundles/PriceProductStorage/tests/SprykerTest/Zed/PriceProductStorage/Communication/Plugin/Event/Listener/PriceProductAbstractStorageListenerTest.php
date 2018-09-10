@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PriceProductStorage\Communication\Plugin\Event\Listene
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorageQuery;
@@ -58,16 +59,23 @@ class PriceProductAbstractStorageListenerTest extends Unit
     {
         parent::setUp();
 
-//        if (!$this->tester->isSuiteProject()) {
-//            throw new SkippedTestError('Warning: not in suite environment');
-//        }
+        if (!$this->tester->isSuiteProject()) {
+            throw new SkippedTestError('Warning: not in suite environment');
+        }
 
         $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
         if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
 
-        $this->priceProductTransfer = $this->tester->havePriceProduct($this->tester->haveProduct());
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+
+        $priceProductOverride = [
+            PriceProductTransfer::ID_PRICE_PRODUCT => $productAbstractTransfer->getIdProductAbstract(),
+            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productAbstractTransfer->getSku(),
+        ];
+
+        $this->priceProductTransfer = $this->tester->havePriceProduct($priceProductOverride);
     }
 
     /**

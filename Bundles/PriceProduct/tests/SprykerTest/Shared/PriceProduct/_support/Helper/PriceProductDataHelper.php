@@ -8,17 +8,18 @@
 namespace SprykerTest\Shared\PriceProduct\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\PriceProductBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
+use Spryker\Zed\PriceProductStorage\Business\PriceProductStorageFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -34,76 +35,52 @@ class PriceProductDataHelper extends Module
     use LocatorHelperTrait;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param array $priceProductOverride
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function havePriceProduct(ProductConcreteTransfer $productConcreteTransfer): PriceProductTransfer
+    public function havePriceProduct(array $priceProductOverride = []): PriceProductTransfer
     {
         $priceProductFacade = $this->getPriceProductFacade();
 
-        $priceProductTransfer = $priceProductFacade->createPriceForProduct(
-            $this->createPriceProductTransferWithPriceType($priceProductFacade, $productConcreteTransfer)
+        $priceProductTransfer = $this->createPriceProductTransfer(
+            $priceProductOverride,
+            static::NET_PRICE,
+            static::GROSS_PRICE,
+            static::EUR_ISO_CODE
         );
+
+        $priceProductTransfer = $priceProductFacade->createPriceForProduct($priceProductTransfer);
 
         $this->debug(sprintf(
             'Inserted Price Product Concrete: %d',
-            $priceProductTransfer->getIdProduct()
+            $priceProductTransfer->getIdPriceProduct()
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($priceProductTransfer) {
-            $this->cleanupPriceProductConcrete($priceProductTransfer->getIdProduct());
+            $this->cleanupPriceProduct($priceProductTransfer->getIdPriceProduct());
         });
 
         return $priceProductTransfer;
     }
 
     /**
-     * @param int $idProduct
+     * @param int $idPriceProduct
      *
      * @return void
      */
-    private function cleanupPriceProductConcrete(int $idProduct): void
+    private function cleanupPriceProduct(int $idPriceProduct): void
     {
-        $this->debug(sprintf('Deleting Price Product: %d', $idProduct));
+        $this->debug(sprintf('Deleting Price Product: %d', $idPriceProduct));
 
         $this->getPriceProductQueryContainer()
             ->queryPriceProduct()
-            ->findByFkProduct($idProduct)
+            ->findByIdPriceProduct($idPriceProduct)
             ->delete();
     }
 
     /**
-     * @param \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface $priceProductFacade
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function createPriceProductTransferWithPriceType(
-        PriceProductFacadeInterface $priceProductFacade,
-        ProductConcreteTransfer $productConcreteTransfer
-    ): PriceProductTransfer {
-        $defaultPriceTypeName = $priceProductFacade->getDefaultPriceTypeName();
-
-        $priceTypeTransfer = new PriceTypeTransfer();
-        $priceTypeTransfer->setName($defaultPriceTypeName);
-
-        $priceProductTransfer = $this->createPriceProductTransfer(
-            $productConcreteTransfer,
-            $priceTypeTransfer,
-            static::NET_PRICE,
-            static::GROSS_PRICE,
-            self::EUR_ISO_CODE
-        );
-
-        $priceProductTransfer->setFkPriceType($this->getPriceTypeId($defaultPriceTypeName));
-
-        return $priceProductTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
+     * @param array $priceProductOverride
      * @param int $netPrice
      * @param int $grossPrice
      * @param string $currencyIsoCode
@@ -111,24 +88,34 @@ class PriceProductDataHelper extends Module
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     protected function createPriceProductTransfer(
-        ProductConcreteTransfer $productConcreteTransfer,
-        PriceTypeTransfer $priceTypeTransfer,
-        $netPrice,
-        $grossPrice,
-        $currencyIsoCode
+        array $priceProductOverride,
+        int $netPrice,
+        int $grossPrice,
+        string $currencyIsoCode
     ): PriceProductTransfer {
         $config = $this->getSharedPriceProductConfig();
+
         $priceDimensionTransfer = (new PriceProductDimensionTransfer())
             ->setType($config->getPriceDimensionDefault());
 
-        $priceProductTransfer = (new PriceProductTransfer())
-            ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
-            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
-            ->setSkuProductAbstract($productConcreteTransfer->getAbstractSku())
-            ->setSkuProduct($productConcreteTransfer->getSku())
-            ->setPriceTypeName($this->getPriceProductFacade()->getDefaultPriceTypeName())
-            ->setPriceType($priceTypeTransfer)
-            ->setPriceDimension($priceDimensionTransfer);
+        $defaultPriceTypeName = $this->getPriceProductFacade()->getDefaultPriceTypeName();
+
+        $priceTypeId = $this->getPriceTypeId($defaultPriceTypeName);
+
+        $priceTypeTransfer = (new PriceTypeTransfer())
+            ->setName($defaultPriceTypeName)
+            ->setIdPriceType($priceTypeId);
+
+        $priceProductDefaultData = [
+            PriceProductTransfer::PRICE_TYPE_NAME => $defaultPriceTypeName,
+            PriceProductTransfer::PRICE_TYPE => $priceTypeTransfer,
+            PriceProductTransfer::PRICE_DIMENSION => $priceDimensionTransfer,
+            PriceProductTransfer::FK_PRICE_TYPE => $priceTypeId,
+        ];
+
+        $priceProductTransfer = (new PriceProductBuilder($priceProductDefaultData))
+            ->seed($priceProductOverride)
+            ->build();
 
         $currencyTransfer = $this->getCurrencyFacade()->fromIsoCode($currencyIsoCode);
         $storeTransfer = $this->getStoreFacade()->getCurrentStore();
@@ -189,6 +176,14 @@ class PriceProductDataHelper extends Module
     protected function getSharedPriceProductConfig(): PriceProductConfig
     {
         return new PriceProductConfig();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductStorage\Business\PriceProductStorageFacadeInterface
+     */
+    protected function getPriceProductStorageFacade(): PriceProductStorageFacadeInterface
+    {
+        return $this->getLocator()->priceProductStorage()->facade();
     }
 
     /**
