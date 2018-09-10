@@ -654,4 +654,21 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
             ->createCategory()
             ->getAllCategoryCollection($localeTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer[]
+     */
+    public function getCategoriesByAbstractProductId(int $idProduct, LocaleTransfer $localeTransfer): array
+    {
+        return $this->getFactory()
+            ->createCategory()->
+            getCategoryTransfersByAbstractProductId($idProduct, $localeTransfer);
+    }
 }

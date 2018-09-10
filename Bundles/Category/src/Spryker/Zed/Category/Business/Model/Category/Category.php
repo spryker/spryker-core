@@ -143,4 +143,28 @@ class Category implements CategoryInterface
 
         return $categoryCollectionTransfer;
     }
+
+    /**
+     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer[]
+     */
+    public function getCategoryTransfersByAbstractProductId(int $idProduct, LocaleTransfer $localeTransfer): array
+    {
+        $categoryCollection = $this->queryContainer
+            ->queryCategoriesByAbstractProductId($idProduct, $localeTransfer->getIdLocale())
+            ->find();
+
+        $categoryTransferCollection = [];
+
+        /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
+        foreach ($categoryCollection as $categoryEntity) {
+            $categoryTransfer = (new CategoryTransfer())->fromArray($categoryEntity->toArray(), true);
+
+            $categoryTransferCollection[] = $categoryTransfer;
+        }
+
+        return $categoryTransferCollection;
+    }
 }

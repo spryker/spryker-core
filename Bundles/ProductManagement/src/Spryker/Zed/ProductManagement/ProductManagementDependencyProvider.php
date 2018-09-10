@@ -34,7 +34,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 {
     const STORE = 'STORE';
 
-    const FACADE_CATEGORY = 'FACADE_LOCALE';
+    const FACADE_CATEGORY = 'FACADE_CATEGORY';
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
     const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';

@@ -110,7 +110,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Category\Business\Model\Category
+     * @return \Spryker\Zed\Category\Business\Model\CategoryInterface
      */
     public function createCategory()
     {

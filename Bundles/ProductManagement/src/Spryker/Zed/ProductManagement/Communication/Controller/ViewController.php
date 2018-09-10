@@ -82,6 +82,10 @@ class ViewController extends AddController
             ->createProductTypeHelper()
             ->isGiftCardByProductAbstractTransfer($productAbstractTransfer);
 
+        $categories = $this->getFactory()
+            ->getCategoryFacade()
+            ->getCategoriesByAbstractProductId($idProductAbstract, $localeProvider->getCurrentLocale());
+
         return $this->viewResponse([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
@@ -100,6 +104,7 @@ class ViewController extends AddController
             'relatedStoreNames' => $relatedStoreNames,
             'isProductBundle' => $isProductBundle,
             'isGiftCard' => $isGiftCard,
+            'categories' => $categories,
         ]);
     }
 

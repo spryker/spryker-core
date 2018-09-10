@@ -7,6 +7,15 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface ProductManagementToCategoryInterface
 {
+    /**
+     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer[]
+     */
+    public function getCategoriesByAbstractProductId(int $idProduct, LocaleTransfer $localeTransfer): array;
 }

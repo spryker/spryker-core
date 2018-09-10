@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class ProductManagementToCategoryBridge implements ProductManagementToCategoryInterface
 {
     /**
@@ -20,5 +22,16 @@ class ProductManagementToCategoryBridge implements ProductManagementToCategoryIn
     public function __construct($categoryFacade)
     {
         $this->categoryFacade = $categoryFacade;
+    }
+
+    /**
+     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer[]
+     */
+    public function getCategoriesByAbstractProductId(int $idProduct, LocaleTransfer $localeTransfer): array
+    {
+        return $this->categoryFacade->getCategoriesByAbstractProductId($idProduct, $localeTransfer);
     }
 }

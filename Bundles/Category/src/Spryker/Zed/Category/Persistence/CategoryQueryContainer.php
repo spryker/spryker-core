@@ -11,7 +11,9 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
@@ -1149,5 +1151,41 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
                     ->filterByName($nodeName)
                 ->endUse()
             ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    public function queryCategoriesByAbstractProductId(int $idProduct, int $idLocale): SpyCategoryQuery
+    {
+        return $this->getFactory()->createCategoryQuery()
+            ->joinAttribute()
+            ->innerJoinNode()
+            ->addJoin(
+                SpyCategoryTableMap::COL_ID_CATEGORY,
+                SpyProductCategoryTableMap::COL_FK_CATEGORY,
+                Criteria::INNER_JOIN
+            )
+            ->addAnd(
+                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
+                $idLocale,
+                Criteria::EQUAL
+            )
+            ->addAnd(
+                SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
+                $idProduct,
+                Criteria::EQUAL
+            )
+            ->withColumn(SpyCategoryTableMap::COL_ID_CATEGORY, 'id_category')
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
+            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, 'category_key')
+            ->withColumn(SpyCategoryTableMap::COL_IS_ACTIVE, 'is_active')
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node')
+            ->addAscendingOrderByColumn(SpyCategoryAttributeTableMap::COL_NAME);
     }
 }

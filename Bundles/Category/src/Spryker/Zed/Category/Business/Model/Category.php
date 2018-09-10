@@ -13,13 +13,14 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Category\Business\Model\Category\CategoryInterface;
 use Spryker\Zed\Category\Business\Model\CategoryAttribute\CategoryAttributeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryExtraParents\CategoryExtraParentsInterface;
+use Spryker\Zed\Category\Business\Model\CategoryInterface as BaseCategoryInterface;
 use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNodeInterface;
 use Spryker\Zed\Category\Business\Model\CategoryUrl\CategoryUrlInterface;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
-class Category
+class Category implements BaseCategoryInterface
 {
     /**
      * @var \Spryker\Zed\Category\Business\Model\Category\CategoryInterface
@@ -210,6 +211,17 @@ class Category
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
         return $this->category->getAllCategoryCollection($localeTransfer);
+    }
+
+    /**
+     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getCategoryTransfersByAbstractProductId(int $idProduct, LocaleTransfer $localeTransfer): array
+    {
+        return $this->category->getCategoryTransfersByAbstractProductId($idProduct, $localeTransfer);
     }
 
     /**

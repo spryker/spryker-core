@@ -490,4 +490,18 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns all categories that are assigned to the given abstract product.
+     * - The data of the returned categories are localized based on the given locale transfer.
+     *
+     * @api
+     *
+     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer[]
+     */
+    public function getCategoriesByAbstractProductId(int $idProduct, LocaleTransfer $localeTransfer): array;
 }
