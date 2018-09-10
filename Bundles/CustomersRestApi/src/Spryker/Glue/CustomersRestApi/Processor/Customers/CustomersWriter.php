@@ -154,22 +154,23 @@ class CustomersWriter implements CustomersWriterInterface
             return $this->createPasswordsNotMatchError($restResponse);
         }
 
+        if (!$this->assertPasswordNotEmpty($passwordAttributesTransfer)) {
+            return $this->createPasswordNotValid($restResponse);
+        }
+
         $customerTransfer->fromArray($passwordAttributesTransfer->toArray(), true);
 
         $customerResponseTransfer = $this->customerClient->updateCustomerPassword($customerTransfer);
         if (!$customerResponseTransfer->getIsSuccess()) {
             foreach ($customerResponseTransfer->getErrors() as $error) {
                 if ($error === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
-                    $restErrorTransfer = (new RestErrorMessageTransfer())
-                        ->setStatus(Response::HTTP_BAD_REQUEST)
-                        ->setCode(CustomersRestApiConfig::RESPONSE_CODE_INVALID_PASSWORD)
-                        ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_INVALID_PASSWORD);
-                } else {
-                    $restErrorTransfer = (new RestErrorMessageTransfer())
-                        ->setStatus(Response::HTTP_BAD_REQUEST)
-                        ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORD_CHANGE_FAILED)
-                        ->setDetail($error->getMessage());
+                    return $this->createPasswordNotValid($restResponse);
                 }
+
+                $restErrorTransfer = (new RestErrorMessageTransfer())
+                    ->setStatus(Response::HTTP_BAD_REQUEST)
+                    ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORD_CHANGE_FAILED)
+                    ->setDetail($error->getMessage());
 
                 $restResponse->addError($restErrorTransfer);
             }
@@ -222,6 +223,16 @@ class CustomersWriter implements CustomersWriterInterface
     protected function assertPasswordsAreIdentical(RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer): bool
     {
         return strcmp($passwordAttributesTransfer->getNewPassword(), $passwordAttributesTransfer->getConfirmPassword()) === 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer
+     *
+     * @return bool
+     */
+    protected function assertPasswordNotEmpty(RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer): bool
+    {
+        return mb_strlen($passwordAttributesTransfer->getNewPassword()) > 1;
     }
 
     /**
@@ -307,6 +318,21 @@ class CustomersWriter implements CustomersWriterInterface
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORDS_DONT_MATCH)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORDS_DONT_MATCH);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createPasswordNotValid(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_INVALID_PASSWORD)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_INVALID_PASSWORD);
 
         return $restResponse->addError($restErrorTransfer);
     }
