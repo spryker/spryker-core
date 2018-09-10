@@ -10,7 +10,7 @@ namespace Spryker\Glue\ProductsProductImageSetsResourceRelationship\Processor\Ex
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiInterface;
 
-class ConcreteProductsProductProductImageSetsResourceRelationshipExpander implements ConcreteProductsProductImageSetsResourceRelationshipExpanderInterface
+class ConcreteProductsProductImageSetsResourceRelationshipExpander implements ConcreteProductsProductImageSetsResourceRelationshipExpanderInterface
 {
     /**
      * @var \Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiInterface
@@ -34,10 +34,10 @@ class ConcreteProductsProductProductImageSetsResourceRelationshipExpander implem
     public function expandResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            $abstractProductImageSetsResource = $this->productImageSetsResource
+            $concreteProductImageSetsResource = $this->productImageSetsResource
                 ->findConcreteProductImageSetsBySku($resource->getId(), $restRequest);
-            if ($abstractProductImageSetsResource !== null) {
-                $resource->addRelationship($abstractProductImageSetsResource);
+            if ($concreteProductImageSetsResource !== null) {
+                $resource->addRelationship($concreteProductImageSetsResource);
             }
         }
     }

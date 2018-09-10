@@ -11,8 +11,8 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiInterface;
 use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Processor\Expander\AbstractProductsProductImageSetsResourceRelationshipExpander;
 use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Processor\Expander\AbstractProductsProductImageSetsResourceRelationshipExpanderInterface;
+use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Processor\Expander\ConcreteProductsProductImageSetsResourceRelationshipExpander;
 use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Processor\Expander\ConcreteProductsProductImageSetsResourceRelationshipExpanderInterface;
-use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Processor\Expander\ConcreteProductsProductProductImageSetsResourceRelationshipExpander;
 
 class ProductsProductImageSetsResourceRelationshipFactory extends AbstractFactory
 {
@@ -29,7 +29,7 @@ class ProductsProductImageSetsResourceRelationshipFactory extends AbstractFactor
      */
     public function createConcreteProductsProductImageSetsResourceRelationshipExpander(): ConcreteProductsProductImageSetsResourceRelationshipExpanderInterface
     {
-        return new ConcreteProductsProductProductImageSetsResourceRelationshipExpander($this->getProductImageSetsResource());
+        return new ConcreteProductsProductImageSetsResourceRelationshipExpander($this->getProductImageSetsResource());
     }
 
     /**
