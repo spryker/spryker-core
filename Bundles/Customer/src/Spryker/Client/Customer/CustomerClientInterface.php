@@ -362,8 +362,8 @@ interface CustomerClientInterface
 
     /**
      * Specification:
-     * - Retrieves customer information with customer addresses by customer ID from persistent storage.
-     * - Also triggered permissions check using current company user transfer object.
+     * - Retrieves customer information by customer ID from persistent storage.
+     * - Permissions check using $customerTransfer->companyUserTransfer object is being triggered.
      *
      * @api
      *
