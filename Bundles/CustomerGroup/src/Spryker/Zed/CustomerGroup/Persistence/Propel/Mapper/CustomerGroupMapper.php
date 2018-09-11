@@ -9,25 +9,23 @@ namespace Spryker\Zed\CustomerGroup\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CustomerGroupCollectionTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
-use Orm\Zed\CustomerGroup\Persistence\Map\SpyCustomerGroupTableMap;
-use Propel\Runtime\Collection\ArrayCollection;
 
 class CustomerGroupMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ArrayCollection $customerGroupEntities
+     * @param \Generated\Shared\Transfer\SpyCustomerGroupEntityTransfer[] $customerGroupEntities
      *
      * @return \Generated\Shared\Transfer\CustomerGroupCollectionTransfer
      */
-    public function mapCustomerGroupNamesToCustomerGroupCollectionTransfer(ArrayCollection $customerGroupEntities): CustomerGroupCollectionTransfer
+    public function mapCustomerGroupNamesToCustomerGroupCollectionTransfer(array $customerGroupEntities): CustomerGroupCollectionTransfer
     {
         $customerGroupCollectionTransfer = new CustomerGroupCollectionTransfer();
 
-        foreach ($customerGroupEntities->getData() as $customerGroupEntity) {
+        foreach ($customerGroupEntities as $customerGroupEntity) {
             $customerGroupTransfer = new CustomerGroupTransfer();
-            $customerGroupTransfer->setName($customerGroupEntity[SpyCustomerGroupTableMap::COL_NAME]);
-            $customerGroupTransfer->setDescription($customerGroupEntity[SpyCustomerGroupTableMap::COL_DESCRIPTION]);
-            $customerGroupTransfer->setIdCustomerGroup($customerGroupEntity[SpyCustomerGroupTableMap::COL_ID_CUSTOMER_GROUP]);
+            $customerGroupTransfer->setName($customerGroupEntity->getName());
+            $customerGroupTransfer->setDescription($customerGroupEntity->getDescription());
+            $customerGroupTransfer->setIdCustomerGroup($customerGroupEntity->getIdCustomerGroup());
             $customerGroupCollectionTransfer->addGroup($customerGroupTransfer);
         }
 

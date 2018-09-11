@@ -8,8 +8,6 @@
 namespace Spryker\Zed\CustomerGroup\Persistence;
 
 use Generated\Shared\Transfer\CustomerGroupCollectionTransfer;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Orm\Zed\CustomerGroup\Persistence\Map\SpyCustomerGroupTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -26,28 +24,14 @@ class CustomerGroupRepository extends AbstractRepository implements CustomerGrou
      */
     public function getCustomerGroupCollectionByIdCustomer(int $idCustomer): CustomerGroupCollectionTransfer
     {
-        $customerGroupEntities = $this->getCustomerQuery()
-            ->filterByIdCustomer($idCustomer)
+        $query = $this->getFactory()->createCustomerGroupQuery()
             ->innerJoinSpyCustomerGroupToCustomer()
             ->useSpyCustomerGroupToCustomerQuery()
-                ->innerJoinCustomerGroup()
-            ->endUse()
-            ->select([
-                SpyCustomerGroupTableMap::COL_NAME,
-                SpyCustomerGroupTableMap::COL_ID_CUSTOMER_GROUP,
-                SpyCustomerGroupTableMap::COL_DESCRIPTION,
-            ])
-            ->find();
+            ->filterByFkCustomer($idCustomer)
+            ->endUse();
+        $customerGroupEntities = $this->buildQueryFromCriteria($query)->find();
 
         return $this->getFactory()->createCustomerGroupMapper()
             ->mapCustomerGroupNamesToCustomerGroupCollectionTransfer($customerGroupEntities);
-    }
-
-    /**
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
-     */
-    protected function getCustomerQuery(): SpyCustomerQuery
-    {
-        return $this->getFactory()->createCustomerQuery();
     }
 }
