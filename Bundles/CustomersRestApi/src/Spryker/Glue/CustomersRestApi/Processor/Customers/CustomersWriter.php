@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
+use Generated\Shared\Transfer\RestCustomersRegisterAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
@@ -64,24 +65,28 @@ class CustomersWriter implements CustomersWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCustomersRegisterAttributesTransfer $restCustomersAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function registerCustomer(RestCustomersAttributesTransfer $restCustomersAttributesTransfer): RestResponseInterface
+    public function registerCustomer(RestCustomersRegisterAttributesTransfer $restCustomersAttributesTransfer): RestResponseInterface
     {
-        $response = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $customerTransfer = $this->customersResourceMapper->mapCustomerAttributesToCustomerTransfer($restCustomersAttributesTransfer);
+        if (!$restCustomersAttributesTransfer->getAcceptedTerms()) {
+            return $this->createNotAcceptedTermsError($restResponse);
+        }
+
+        $customerTransfer = (new CustomerTransfer())->fromArray($restCustomersAttributesTransfer->toArray(), true);
         $customerResponseTransfer = $this->customerClient->registerCustomer($customerTransfer);
 
         if (!$customerResponseTransfer->getIsSuccess()) {
-            return $this->createErrorResponse($customerResponseTransfer, $response);
+            return $this->createErrorResponse($customerResponseTransfer, $restResponse);
         }
 
-        $restResource = $this->customersResourceMapper->mapCustomerToCustomersRestResource($customerResponseTransfer->getCustomerTransfer());
+        $restResource = $this->customersResourceMapper->mapCustomerTransferToRestResource($customerResponseTransfer->getCustomerTransfer());
 
-        return $response->addResource($restResource);
+        return $restResponse->addResource($restResource);
     }
 
     /**
@@ -97,9 +102,7 @@ class CustomersWriter implements CustomersWriterInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$this->isSameCustomerReference($restRequest)) {
-            $this->createUnauthorizedError($restResponse);
-
-            return $restResponse;
+            return $this->createUnauthorizedError($restResponse);
         }
 
         $customerTransfer = (new CustomerTransfer)
@@ -107,18 +110,16 @@ class CustomersWriter implements CustomersWriterInterface
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
         if (!$customerResponseTransfer->getHasCustomer()) {
-            $this->createCustomerNotFoundError($restResponse);
-
-            return $restResponse;
+            return $this->createCustomerNotFoundError($restResponse);
         }
 
-        $customerResponseTransfer->getCustomerTransfer()->fromArray($restCustomerTransfer->modifiedToArray());
+        $customerResponseTransfer->getCustomerTransfer()->fromArray(
+            $this->getCustomerData($restCustomerTransfer)
+        );
         $customerResponseTransfer = $this->customerClient->updateCustomer($customerResponseTransfer->getCustomerTransfer());
 
         if (!$customerResponseTransfer->getIsSuccess()) {
-            $this->createCustomerNotSavedError($restResponse);
-
-            return $restResponse;
+            return $this->createCustomerNotSavedError($restResponse);
         }
 
         $restResource = $this
@@ -368,6 +369,21 @@ class CustomersWriter implements CustomersWriterInterface
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createNotAcceptedTermsError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_NOT_ACCEPTED_TERMS)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_NOT_ACCEPTED_TERMS);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return bool
@@ -375,5 +391,31 @@ class CustomersWriter implements CustomersWriterInterface
     protected function isSameCustomerReference(RestRequestInterface $restRequest): bool
     {
         return $restRequest->getUser()->getNaturalIdentifier() === $restRequest->getResource()->getId();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $customerTransfer
+     *
+     * @return array
+     */
+    protected function getCustomerData(RestCustomersAttributesTransfer $customerTransfer): array
+    {
+        $customerData = $customerTransfer->modifiedToArray(true, true);
+
+        return $this->cleanUpCustomerAttributes($customerData);
+    }
+
+    /**
+     * @param array $customerAttributes
+     *
+     * @return array
+     */
+    protected function cleanUpCustomerAttributes(array $customerAttributes): array
+    {
+        unset($customerAttributes[RestCustomersAttributesTransfer::CREATED_AT]);
+        unset($customerAttributes[RestCustomersAttributesTransfer::UPDATED_AT]);
+        unset($customerAttributes[RestCustomersAttributesTransfer::REGISTERED]);
+
+        return $customerAttributes;
     }
 }

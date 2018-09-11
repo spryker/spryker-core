@@ -9,8 +9,6 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
-use Generated\Shared\Transfer\RestCustomersInfoAttributesTransfer;
-use Generated\Shared\Transfer\RestCustomersResponseAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -45,26 +43,9 @@ class CustomersResourceMapper implements CustomersResourceMapperInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function mapCustomerToCustomersRestResource(CustomerTransfer $customerTransfer): RestResourceInterface
-    {
-        $restCustomersResponseAttributesTransfer = (new RestCustomersResponseAttributesTransfer())
-            ->fromArray($customerTransfer->toArray(), true);
-
-        return $this->restResourceBuilder->createRestResource(
-            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
-            $customerTransfer->getCustomerReference(),
-            $restCustomersResponseAttributesTransfer
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
     public function mapCustomerTransferToRestResource(CustomerTransfer $customerTransfer): RestResourceInterface
     {
-        $restCustomersAttributesTransfer = (new RestCustomersInfoAttributesTransfer())
+        $restCustomersAttributesTransfer = (new RestCustomersAttributesTransfer())
             ->fromArray($customerTransfer->toArray(), true);
 
         return $this->restResourceBuilder->createRestResource(

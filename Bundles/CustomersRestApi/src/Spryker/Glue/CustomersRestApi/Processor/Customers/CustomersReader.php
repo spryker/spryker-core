@@ -60,24 +60,18 @@ class CustomersReader implements CustomersReaderInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$restRequest->getResource()->getId()) {
-            $this->createCustomerReferenceMissingError($restResponse);
-
-            return $restResponse;
+            return $this->createCustomerReferenceMissingError($restResponse);
         }
 
         if (!$this->isSameCustomerReference($restRequest)) {
-            $this->createUnauthorizedError($restResponse);
-
-            return $restResponse;
+            return $this->createUnauthorizedError($restResponse);
         }
 
         $customerReference = $restRequest->getUser()->getNaturalIdentifier();
         $customersResponseTransfer = $this->findCustomerByReference($customerReference);
 
         if (!$customersResponseTransfer->getHasCustomer()) {
-            $this->createCustomerNotFoundError($restResponse);
-
-            return $restResponse;
+            return $this->createCustomerNotFoundError($restResponse);
         }
 
         $customersResource = $this
