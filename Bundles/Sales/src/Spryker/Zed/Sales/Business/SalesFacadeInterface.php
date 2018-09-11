@@ -185,6 +185,7 @@ interface SalesFacadeInterface
     /**
      * Specification:
      * - Returns the order for the given order reference.
+     * - OrderTransfer should have the customerReference and orderReference set.
      *
      * @api
      *
