@@ -191,7 +191,7 @@ class TranslationManager implements TranslationManagerInterface
     {
         if ($this->hasTranslationByIds($idKey, $idLocale)) {
             throw new TranslationExistsException(sprintf('Tried to create a translation for keyId %s, localeId %s, but it already exists', $idKey, $idLocale));
-        };
+        }
     }
 
     /**

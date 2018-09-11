@@ -28,7 +28,8 @@ class ZedBusinessDependencyType extends AbstractType
     protected const MODULE = 'module';
     protected const SPRYK = 'spryk';
 
-    /**w
+    /**
+     * w
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *

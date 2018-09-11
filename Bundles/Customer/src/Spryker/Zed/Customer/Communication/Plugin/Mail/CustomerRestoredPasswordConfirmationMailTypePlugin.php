@@ -20,6 +20,8 @@ class CustomerRestoredPasswordConfirmationMailTypePlugin extends AbstractPlugin 
     const MAIL_TYPE = 'customer restored password confirmation';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName()
@@ -28,6 +30,8 @@ class CustomerRestoredPasswordConfirmationMailTypePlugin extends AbstractPlugin 
     }
 
     /**
+     * @api
+     *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      *
      * @return void

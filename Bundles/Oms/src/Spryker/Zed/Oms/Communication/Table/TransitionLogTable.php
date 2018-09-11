@@ -32,6 +32,7 @@ class TransitionLogTable extends AbstractTable
 
     /**
      * @inheritDoc
+     *
      * @throws \UnexpectedValueException
      * @throws \Spryker\Zed\Oms\Business\Exception\TransitionLogException
      */

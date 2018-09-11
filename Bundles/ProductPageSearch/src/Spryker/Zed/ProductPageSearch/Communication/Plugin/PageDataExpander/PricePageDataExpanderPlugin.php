@@ -25,6 +25,8 @@ class PricePageDataExpanderPlugin extends AbstractPlugin implements ProductPageD
     protected $idStoreMapBuffer;
 
     /**
+     * @api
+     *
      * @param array $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *

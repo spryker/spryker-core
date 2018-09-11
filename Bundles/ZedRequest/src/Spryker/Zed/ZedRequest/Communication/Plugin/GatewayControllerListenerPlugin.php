@@ -27,6 +27,8 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      *
      * @return callable|null
@@ -81,7 +83,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     /**
      * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
      *
-     * @return null|\Generated\Shared\Transfer\LocaleTransfer
+     * @return \Generated\Shared\Transfer\LocaleTransfer|null
      */
     protected function getLocaleMetaTransfer(Request $request)
     {
@@ -106,7 +108,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     /**
      * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
      *
-     * @return null|\Generated\Shared\Transfer\CurrencyTransfer
+     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
      */
     protected function getCurrencyMetaTransfer(Request $request)
     {

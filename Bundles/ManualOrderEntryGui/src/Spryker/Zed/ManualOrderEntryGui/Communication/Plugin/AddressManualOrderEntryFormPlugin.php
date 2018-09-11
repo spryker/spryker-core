@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getName(): string
@@ -27,6 +29,8 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -38,6 +42,8 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -54,6 +60,8 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -64,6 +72,8 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
