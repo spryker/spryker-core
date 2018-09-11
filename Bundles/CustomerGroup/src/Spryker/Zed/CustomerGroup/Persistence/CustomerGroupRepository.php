@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CustomerGroup\Persistence;
 
 use Generated\Shared\Transfer\CustomerGroupCollectionTransfer;
-use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\CustomerGroup\Persistence\Map\SpyCustomerGroupTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -19,6 +18,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CustomerGroupRepository extends AbstractRepository implements CustomerGroupRepositoryInterface
 {
     /**
+     * @module Customer
+     *
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CustomerGroupCollectionTransfer
@@ -31,29 +32,16 @@ class CustomerGroupRepository extends AbstractRepository implements CustomerGrou
             ->useSpyCustomerGroupToCustomerQuery()
                 ->innerJoinCustomerGroup()
             ->endUse()
-            ->select(SpyCustomerGroupTableMap::COL_NAME)
+            ->select([
+                SpyCustomerGroupTableMap::COL_NAME,
+                SpyCustomerGroupTableMap::COL_ID_CUSTOMER_GROUP,
+                SpyCustomerGroupTableMap::COL_DESCRIPTION,
+            ])
             ->find()
             ->toArray();
 
-        return $this->mapCustomerGroupNamesToCustomerGroupCollectionTransfer($customerGroupNames);
-    }
-
-    /**
-     * @param array $customerGroupNames
-     *
-     * @return \Generated\Shared\Transfer\CustomerGroupCollectionTransfer
-     */
-    public function mapCustomerGroupNamesToCustomerGroupCollectionTransfer(array $customerGroupNames): CustomerGroupCollectionTransfer
-    {
-        $customerGroupCollectionTransfer = new CustomerGroupCollectionTransfer();
-
-        foreach ($customerGroupNames as $customerGroupName) {
-            $customerGroupTransfer = new CustomerGroupTransfer();
-            $customerGroupTransfer->setName($customerGroupName);
-            $customerGroupCollectionTransfer->addGroup($customerGroupTransfer);
-        }
-
-        return $customerGroupCollectionTransfer;
+        return $this->getFactory()->createCustomerGroupMapper()
+            ->mapCustomerGroupNamesToCustomerGroupCollectionTransfer($customerGroupNames);
     }
 
     /**
