@@ -88,18 +88,16 @@ class ApiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createServerVariableFilterStrategy(): ServerVariableFilterStrategyInterface
     {
-        if (!array_key_exists(
-            $this->getConfig()->getServerVariablesFilterStrategy(),
-            $this->getConfig()::SERVER_VARIABLE_STRATEGY_FILTERER_MAP
-        )) {
+        $currentServerVariablesFilterStrategy = $this->getConfig()->getCurrentServerVariablesFilterStrategy();
+        $serverVariablesFilterStrategyFiltererMap = $this->getConfig()->getServerVariablesFilterStrategyFiltererMap();
+        if (!array_key_exists($currentServerVariablesFilterStrategy, $serverVariablesFilterStrategyFiltererMap)) {
             throw new InvalidArgumentException(sprintf(
                 "%s is not a valid Server Variables Filter Strategy",
-                $this->getConfig()->getServerVariablesFilterStrategy()
+                $currentServerVariablesFilterStrategy
             ));
         }
+        $serverVariablesFilterStrategy = $serverVariablesFilterStrategyFiltererMap[$currentServerVariablesFilterStrategy];
 
-        $strategyClass = $this->getConfig()::SERVER_VARIABLE_STRATEGY_FILTERER_MAP[$this->getConfig()->getServerVariablesFilterStrategy()];
-
-        return new $strategyClass();
+        return (new $serverVariablesFilterStrategy());
     }
 }

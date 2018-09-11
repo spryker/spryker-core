@@ -43,11 +43,6 @@ class ApiConfig extends AbstractBundleConfig
     public const SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST = 'SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST';
     public const SERVER_VARIABLE_FILTER_STRATEGY_BLACKLIST = 'SERVER_VARIABLE_FILTER_STRATEGY_BLACKLIST';
     public const SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK = 'SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK';
-    public const SERVER_VARIABLE_STRATEGY_FILTERER_MAP = [
-        self::SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST => WhitelistServerVariableFilterStrategy::class,
-        self::SERVER_VARIABLE_FILTER_STRATEGY_BLACKLIST => BlacklistServerVariableFilterStrategy::class,
-        self::SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK => CallbackServerVariableFilterStrategy::class,
-    ];
 
     /**
      * @return int
@@ -144,11 +139,27 @@ class ApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * Stores current strategy for filtering of Server Variable
+     *
      * @return string
      */
-    public function getServerVariablesFilterStrategy(): string
+    public function getCurrentServerVariablesFilterStrategy(): string
     {
         return static::SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST;
+    }
+
+    /**
+     * Defines set of available strategies for filtering of Server Variables
+     *
+     * @return \Spryker\Zed\Api\Communication\Plugin\ServerVariableFilterStrategyInterface[]
+     */
+    public function getServerVariablesFilterStrategyFiltererMap(): array
+    {
+        return [
+            self::SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST => WhitelistServerVariableFilterStrategy::class,
+            self::SERVER_VARIABLE_FILTER_STRATEGY_BLACKLIST => BlacklistServerVariableFilterStrategy::class,
+            self::SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK => CallbackServerVariableFilterStrategy::class,
+        ];
     }
 
     /**
