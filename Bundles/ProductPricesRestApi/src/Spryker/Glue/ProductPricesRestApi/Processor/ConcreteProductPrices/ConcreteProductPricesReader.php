@@ -116,13 +116,12 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
             return null;
         }
 
-        $priceProductTransfers = $this->priceProductStorageClient
-            ->getPriceProductConcreteTransfers($concreteProductData[static::KEY_ID_PRODUCT_CONCRETE]);
-
-        if (!$priceProductTransfers) {
-            $priceProductTransfers = $this->priceProductStorageClient
-                ->getPriceProductAbstractTransfers($concreteProductData[static::KEY_ID_PRODUCT_ABSTRACT]);
-        }
+        $priceProductTransfers = $this
+            ->priceProductStorageClient
+            ->resolvePriceProductConcrete(
+                $concreteProductData[static::KEY_ID_PRODUCT_CONCRETE],
+                $concreteProductData[static::KEY_ID_PRODUCT_ABSTRACT]
+            );
 
         $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransfer($priceProductTransfers);
 
