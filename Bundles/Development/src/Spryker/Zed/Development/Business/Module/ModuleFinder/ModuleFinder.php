@@ -43,7 +43,7 @@ class ModuleFinder implements ModuleFinderInterface
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function find(?ModuleFilterTransfer $moduleFilterTransfer = null): array
+    public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
         if ($moduleFilterTransfer === null && static::$moduleTransferCollection !== null) {
             return static::$moduleTransferCollection;

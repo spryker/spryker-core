@@ -373,24 +373,11 @@ interface DevelopmentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function findProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
+    public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
 
     /**
      * Specification:
-     * - Loads all modules in all added module directories.
-     * - Creates an array of ModuleTransfer objects.
-     * - ModuleTransfer objects also contain an OrganizationTransfer object.
-     * - The key of the returned array is `OrganizationName.ModuleName`.
-     *
-     * @api
-     *
-     * @return array
-     */
-    public function getModules();
-
-    /**
-     * Specification:
-     * - Find all modules.
+     * - Gets all modules.
      * - Creates an array of ModuleTransfer objects.
      * - The key of the returned array is `OrganizationName.ModuleName`.
      * - A ModuleFilterTransfer can be used to filter the returned collection.
@@ -401,7 +388,7 @@ interface DevelopmentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function findModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
+    public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
 
     /**
      * Specification:
@@ -412,5 +399,5 @@ interface DevelopmentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PackageTransfer[]
      */
-    public function findPackages(): array;
+    public function getPackages(): array;
 }

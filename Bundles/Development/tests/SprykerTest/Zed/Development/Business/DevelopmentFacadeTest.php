@@ -33,9 +33,9 @@ class DevelopmentFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindsModules(): void
+    public function testGetsModules(): void
     {
-        $moduleTransferCollection = $this->getFacade()->findModules();
+        $moduleTransferCollection = $this->getFacade()->getModules();
 
         $this->assertInternalType('array', $moduleTransferCollection);
     }
@@ -49,7 +49,7 @@ class DevelopmentFacadeTest extends Unit
      *
      * @return void
      */
-    public function testFindsModulesWithModuleFilter(string $organizationName, string $moduleName, int $expectedModuleCount): void
+    public function testGetsModulesWithModuleFilter(string $organizationName, string $moduleName, int $expectedModuleCount): void
     {
         $organizationTransfer = new OrganizationTransfer();
         $organizationTransfer->setName($organizationName);
@@ -62,7 +62,7 @@ class DevelopmentFacadeTest extends Unit
             ->setOrganization($organizationTransfer)
             ->setModule($moduleTransfer);
 
-        $moduleTransferCollection = $this->getFacade()->findModules($moduleFilterTransfer);
+        $moduleTransferCollection = $this->getFacade()->getModules($moduleFilterTransfer);
 
         $this->assertInternalType('array', $moduleTransferCollection);
         $this->assertCount($expectedModuleCount, $moduleTransferCollection);
@@ -89,9 +89,9 @@ class DevelopmentFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindsProjectModules(): void
+    public function testGetsProjectModules(): void
     {
-        $moduleTransferCollection = $this->getFacade()->findProjectModules();
+        $moduleTransferCollection = $this->getFacade()->getProjectModules();
 
         $this->assertInternalType('array', $moduleTransferCollection);
     }
@@ -99,9 +99,9 @@ class DevelopmentFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindsPackages(): void
+    public function testGetsPackages(): void
     {
-        $packageTransferCollection = $this->getFacade()->findPackages();
+        $packageTransferCollection = $this->getFacade()->getPackages();
 
         $this->assertInternalType('array', $packageTransferCollection);
     }

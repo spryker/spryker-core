@@ -28,12 +28,12 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
     protected const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
 
     /**
-     * @var array
+     * @var array|null
      */
     protected $moduleTransferCollectionGroupedByModuleName;
 
     /**
-     * @var array
+     * @var array|null
      */
     protected $packageTransferCollectionGroupedByPackageName;
 
@@ -229,7 +229,7 @@ Fix dependency violations in composer.json.
             return $this->packageTransferCollectionGroupedByPackageName;
         }
 
-        $packageTransferCollection = $this->getFacade()->findPackages();
+        $packageTransferCollection = $this->getFacade()->getPackages();
         $this->packageTransferCollectionGroupedByPackageName = [];
 
         foreach ($packageTransferCollection as $packageTransfer) {

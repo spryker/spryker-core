@@ -16,5 +16,5 @@ interface ProjectModuleFinderInterface
      *
      * @return array
      */
-    public function find(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
+    public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
 }

@@ -12,5 +12,5 @@ interface PackageFinderInterface
     /**
      * @return \Generated\Shared\Transfer\PackageTransfer[]
      */
-    public function findPackages(): array;
+    public function getPackages(): array;
 }

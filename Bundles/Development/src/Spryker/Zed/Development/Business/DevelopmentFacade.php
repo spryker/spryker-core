@@ -457,7 +457,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function getInProjectDependencyProviderUsedPlugins(?ModuleFilterTransfer $moduleFilterTransfer = null): DependencyProviderCollectionTransfer
     {
-        return $this->getFactory()->createDependencyProviderUsedPluginFinder()->findUsedPlugins($moduleFilterTransfer);
+        return $this->getFactory()->createDependencyProviderUsedPluginFinder()->getUsedPlugins($moduleFilterTransfer);
     }
 
     /**
@@ -469,23 +469,9 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function findProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
+    public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
-        return $this->getFactory()->createProjectModuleFinder()->find($moduleFilterTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated Use `findModules()` instead.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
-     */
-    public function getModules(): array
-    {
-        return $this->findModules();
+        return $this->getFactory()->createProjectModuleFinder()->getProjectModules($moduleFilterTransfer);
     }
 
     /**
@@ -497,9 +483,9 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function findModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
+    public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
-        return $this->getFactory()->createModuleFinder()->find($moduleFilterTransfer);
+        return $this->getFactory()->createModuleFinder()->getModules($moduleFilterTransfer);
     }
 
     /**
@@ -509,8 +495,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return \Generated\Shared\Transfer\PackageTransfer[]
      */
-    public function findPackages(): array
+    public function getPackages(): array
     {
-        return $this->getFactory()->createPackageFinder()->findPackages();
+        return $this->getFactory()->createPackageFinder()->getPackages();
     }
 }

@@ -16,5 +16,5 @@ interface ModuleFinderInterface
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function find(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
+    public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
 }

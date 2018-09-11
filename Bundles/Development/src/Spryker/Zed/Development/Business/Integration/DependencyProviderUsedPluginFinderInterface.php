@@ -17,5 +17,5 @@ interface DependencyProviderUsedPluginFinderInterface
      *
      * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
      */
-    public function findUsedPlugins(?ModuleFilterTransfer $moduleFilterTransfer = null): DependencyProviderCollectionTransfer;
+    public function getUsedPlugins(?ModuleFilterTransfer $moduleFilterTransfer = null): DependencyProviderCollectionTransfer;
 }

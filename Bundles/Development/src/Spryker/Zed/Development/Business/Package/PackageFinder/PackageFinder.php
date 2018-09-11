@@ -32,7 +32,7 @@ class PackageFinder implements PackageFinderInterface
     /**
      * @return \Generated\Shared\Transfer\PackageTransfer[]
      */
-    public function findPackages(): array
+    public function getPackages(): array
     {
         $packageTransferCollection = [];
 
@@ -127,6 +127,6 @@ class PackageFinder implements PackageFinderInterface
         $composerJsonAsArray = $this->getComposerJsonAsArray($packageTransfer->getPath());
         $description = $composerJsonAsArray['description'];
 
-        return preg_match('/module$/', $description);
+        return preg_match('/\smodule$/', $description);
     }
 }

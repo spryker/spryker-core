@@ -130,7 +130,7 @@ Asterisk can also be used more than once in all parts. Currently, it\'s not poss
             return $this->getModuleTransferCollection();
         }
 
-        return $this->getFacade()->findModules($moduleFilterTransfer);
+        return $this->getFacade()->getModules($moduleFilterTransfer);
     }
 
     /**
@@ -272,7 +272,7 @@ Asterisk can also be used more than once in all parts. Currently, it\'s not poss
     protected function getModuleTransferCollection(): array
     {
         if (!$this->moduleTransferCollection) {
-            $this->moduleTransferCollection = $this->getFacade()->findModules();
+            $this->moduleTransferCollection = $this->getFacade()->getModules();
         }
 
         return $this->moduleTransferCollection;

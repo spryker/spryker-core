@@ -26,7 +26,7 @@ class DependencyProviderPluginUsageController extends AbstractController
     public function indexAction(): array
     {
         return $this->viewResponse([
-            'projectModules' => $this->getFacade()->findProjectModules(),
+            'projectModules' => $this->getFacade()->getProjectModules(),
         ]);
     }
 

@@ -46,9 +46,9 @@ class DependencyProviderUsedPluginFinder implements DependencyProviderUsedPlugin
      *
      * @return \Generated\Shared\Transfer\DependencyProviderCollectionTransfer
      */
-    public function findUsedPlugins(?ModuleFilterTransfer $moduleFilterTransfer = null): DependencyProviderCollectionTransfer
+    public function getUsedPlugins(?ModuleFilterTransfer $moduleFilterTransfer = null): DependencyProviderCollectionTransfer
     {
-        $projectModules = $this->projectModuleFinder->find($moduleFilterTransfer);
+        $projectModules = $this->projectModuleFinder->getProjectModules($moduleFilterTransfer);
         $dependencyProviderCollectionTransfer = new DependencyProviderCollectionTransfer();
 
         foreach ($projectModules as $moduleTransferCollection) {
