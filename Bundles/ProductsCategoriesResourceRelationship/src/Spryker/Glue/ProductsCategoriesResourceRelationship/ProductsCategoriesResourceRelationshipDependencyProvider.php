@@ -59,10 +59,7 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
     {
         $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
             return new ProductsCategoriesResourceRelationshipToProductStorageClientBridge(
-                $container
-                    ->getLocator()
-                    ->productStorage()
-                    ->client()
+                $container->getLocator()->productStorage()->client()
             );
         };
 
@@ -78,10 +75,7 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
     {
         $container[static::CLIENT_PRODUCT_CATEGORY_STORAGE] = function (Container $container) {
             return new ProductsCategoriesResourceRelationshipToProductCategoryStorageClientBridge(
-                $container
-                    ->getLocator()
-                    ->productCategoryStorage()
-                    ->client()
+                $container->getLocator()->productCategoryStorage()->client()
             );
         };
 
