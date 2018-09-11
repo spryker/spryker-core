@@ -188,7 +188,7 @@ class ProductQuery implements QueryInterface
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      * @param \Generated\Shared\Transfer\RuleQueryDataProviderTransfer|null $ruleQueryDataProviderTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
@@ -203,7 +203,6 @@ class ProductQuery implements QueryInterface
 
         $ruleQueryDataProviderTransfer->requireIdProductAbstract();
 
-        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query */
         $query->filterByIdProductAbstract($ruleQueryDataProviderTransfer->getIdProductAbstract());
 
         return $query;

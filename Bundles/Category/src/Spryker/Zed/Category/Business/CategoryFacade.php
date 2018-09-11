@@ -566,7 +566,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @deprecated Will be removed with next major release
      *
-     * @param array $categoryKey
+     * @param string $categoryKey
      * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
