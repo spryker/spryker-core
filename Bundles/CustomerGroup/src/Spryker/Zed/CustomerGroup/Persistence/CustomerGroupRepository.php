@@ -32,6 +32,6 @@ class CustomerGroupRepository extends AbstractRepository implements CustomerGrou
         $customerGroupEntities = $this->buildQueryFromCriteria($query)->find();
 
         return $this->getFactory()->createCustomerGroupMapper()
-            ->mapCustomerGroupNamesToCustomerGroupCollectionTransfer($customerGroupEntities);
+            ->mapCustomerGroupEntitiesToCustomerGroupCollectionTransfer($customerGroupEntities);
     }
 }

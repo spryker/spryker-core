@@ -17,7 +17,7 @@ class CustomerGroupMapper
      *
      * @return \Generated\Shared\Transfer\CustomerGroupCollectionTransfer
      */
-    public function mapCustomerGroupNamesToCustomerGroupCollectionTransfer(array $customerGroupEntities): CustomerGroupCollectionTransfer
+    public function mapCustomerGroupEntitiesToCustomerGroupCollectionTransfer(array $customerGroupEntities): CustomerGroupCollectionTransfer
     {
         $customerGroupCollectionTransfer = new CustomerGroupCollectionTransfer();
 
