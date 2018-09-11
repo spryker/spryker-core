@@ -39,14 +39,36 @@ class AssignDefaultCompanyUserRolePlugin extends AbstractPlugin implements Compa
      */
     protected function assignDefaultRoleToCompanyUser(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
-        $defaultCompanyRole = $this->getFacade()->getDefaultCompanyRole();
-        $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
+        $this->assertRequiredProperties($companyUserResponseTransfer);
+
+        $defaultCompanyRoleTransfer = $this->getFacade()->getDefaultCompanyRoleForCompany(
+            $companyUserResponseTransfer->getCompanyUser()->getFkCompany()
+        );
+
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
-        $companyUserTransfer->setCompanyRoleCollection($companyRoleCollectionTransfer);
-        $companyUserTransfer->getCompanyRoleCollection()->addRole($defaultCompanyRole);
+        $companyUserTransfer->setCompanyRoleCollection(
+            (new CompanyRoleCollectionTransfer())
+                ->addRole($defaultCompanyRoleTransfer)
+        );
+
         $this->getFacade()->saveCompanyUser($companyUserTransfer);
         $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
 
         return $companyUserResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
+     *
+     * @return void
+     */
+    protected function assertRequiredProperties(CompanyUserResponseTransfer $companyUserResponseTransfer): void
+    {
+        $companyUserResponseTransfer
+            ->requireCompanyUser();
+
+        $companyUserResponseTransfer
+            ->getCompanyUser()
+            ->requireFkCompany();
     }
 }

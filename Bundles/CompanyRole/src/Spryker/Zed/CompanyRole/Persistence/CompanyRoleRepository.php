@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRole;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Exception\EntityNotFoundException;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -314,6 +315,8 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     }
 
     /**
+     * @deprecated Use CompanyRoleRepository::getDefaultCompanyRoleForCompany() instead.
+     *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
     public function getDefaultCompanyRole(): CompanyRoleTransfer
@@ -325,6 +328,29 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         $spyCompanyRole = $this->buildQueryFromCriteria($query)->findOne();
 
         return $this->prepareCompanyRoleTransfer($spyCompanyRole);
+    }
+
+    /**
+     * @param int $idCompany
+     *
+     * @throws \Propel\Runtime\Exception\EntityNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     */
+    public function getDefaultCompanyRoleForCompany(int $idCompany): CompanyRoleTransfer
+    {
+        $query = $this->getFactory()
+            ->createCompanyRoleQuery()
+            ->filterByFkCompany($idCompany)
+            ->filterByIsDefault(true);
+
+        $companyRoleEntity = $this->buildQueryFromCriteria($query)->findOne();
+
+        if (!$companyRoleEntity) {
+            throw new EntityNotFoundException(sprintf('Company default role was not found for company: %s', $idCompany));
+        }
+
+        return $this->prepareCompanyRoleTransfer($companyRoleEntity);
     }
 
     /**
