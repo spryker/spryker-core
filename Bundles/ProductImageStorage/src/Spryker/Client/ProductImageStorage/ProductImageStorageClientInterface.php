@@ -14,7 +14,7 @@ interface ProductImageStorageClientInterface
 {
     /**
      * Specification:
-     *  - Retrieves abstract product main data from storage.
+     *  - Retrieves abstract product image data from storage according locale.
      *
      * @api
      *
@@ -27,7 +27,7 @@ interface ProductImageStorageClientInterface
 
     /**
      * Specification:
-     *  - Retrieves concrete product main data from storage.
+     *  - Retrieves concrete product image data from storage according locale.
      *
      * @api
      *
