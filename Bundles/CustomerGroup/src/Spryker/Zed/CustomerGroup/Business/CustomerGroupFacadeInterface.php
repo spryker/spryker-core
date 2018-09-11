@@ -105,7 +105,7 @@ interface CustomerGroupFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves all customer group names by customer id
+     *  - Retrieves all customer groups by customer id
      *
      * @api
      *
