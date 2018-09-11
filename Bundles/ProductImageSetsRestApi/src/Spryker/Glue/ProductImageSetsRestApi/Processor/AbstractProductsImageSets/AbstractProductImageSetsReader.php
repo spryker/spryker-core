@@ -39,29 +39,29 @@ class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderIn
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
-    protected $resourceBuilder;
+    protected $restResourceBuilder;
 
     /**
      * @var \Spryker\Glue\ProductImageSetsRestApi\Processor\Mapper\AbstractProductImageSetsMapperInterface
      */
-    protected $productImagesMapper;
+    protected $abstractProductImageSetsMapper;
 
     /**
      * @param \Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductImageStorageClientInterface $productImageStorageClient
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $responseBuilder
-     * @param \Spryker\Glue\ProductImageSetsRestApi\Processor\Mapper\AbstractProductImageSetsMapperInterface $productImagesMapper
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\ProductImageSetsRestApi\Processor\Mapper\AbstractProductImageSetsMapperInterface $abstractProductImageSetsMapper
      */
     public function __construct(
         ProductImageSetsRestApiToProductStorageClientInterface $productStorageClient,
         ProductImageSetsRestApiToProductImageStorageClientInterface $productImageStorageClient,
-        RestResourceBuilderInterface $responseBuilder,
-        AbstractProductImageSetsMapperInterface $productImagesMapper
+        RestResourceBuilderInterface $restResourceBuilder,
+        AbstractProductImageSetsMapperInterface $abstractProductImageSetsMapper
     ) {
         $this->productStorageClient = $productStorageClient;
         $this->productImageStorageClient = $productImageStorageClient;
-        $this->resourceBuilder = $responseBuilder;
-        $this->productImagesMapper = $productImagesMapper;
+        $this->restResourceBuilder = $restResourceBuilder;
+        $this->abstractProductImageSetsMapper = $abstractProductImageSetsMapper;
     }
 
     /**
@@ -71,12 +71,12 @@ class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderIn
      */
     public function getAbstractProductImageSets(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restResponse = $this->resourceBuilder->createRestResponse();
+        $restResponse = $this->restResourceBuilder->createRestResponse();
         $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
         if (!$parentResource) {
-            $restErrorTransfer = $this->createAbstractProductNotFoundError();
-
-            return $restResponse->addError($restErrorTransfer);
+            return $restResponse->addError(
+                $this->createAbstractProductNotFoundError()
+            );
         }
 
         $abstractSku = $parentResource->getId();
@@ -128,10 +128,10 @@ class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderIn
      */
     protected function buildProductImageSetsResource(string $sku, ProductAbstractImageStorageTransfer $productImageAbstractStorageTransfer): RestResourceInterface
     {
-        $restProductAbstractImageSetAttributesTransfer = $this->productImagesMapper
+        $restProductAbstractImageSetAttributesTransfer = $this->abstractProductImageSetsMapper
             ->mapProductAbstractImageStorageTransferToRestProductImageSetsAttributesTransfer($productImageAbstractStorageTransfer);
 
-        $restResource = $this->resourceBuilder->createRestResource(
+        $restResource = $this->restResourceBuilder->createRestResource(
             ProductImageSetsRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_IMAGE_SETS,
             $sku,
             $restProductAbstractImageSetAttributesTransfer

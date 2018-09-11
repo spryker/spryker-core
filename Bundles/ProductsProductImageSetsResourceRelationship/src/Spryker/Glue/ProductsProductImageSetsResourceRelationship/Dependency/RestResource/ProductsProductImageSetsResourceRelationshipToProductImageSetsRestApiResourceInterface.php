@@ -7,7 +7,9 @@
 
 namespace Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource;
 
-interface ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiInterface
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+
+interface ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface
 {
     /**
      * @param string $sku
@@ -15,7 +17,7 @@ interface ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiI
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findAbstractProductImageSetsBySku($sku, $restRequest);
+    public function findAbstractProductImageSetsBySku($sku, $restRequest): ?RestResourceInterface;
 
     /**
      * @param string $sku
@@ -23,5 +25,5 @@ interface ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiI
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findConcreteProductImageSetsBySku($sku, $restRequest);
+    public function findConcreteProductImageSetsBySku($sku, $restRequest): ?RestResourceInterface;
 }

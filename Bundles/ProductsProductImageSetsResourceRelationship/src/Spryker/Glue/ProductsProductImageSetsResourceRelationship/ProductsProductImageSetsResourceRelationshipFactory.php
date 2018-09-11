@@ -8,7 +8,7 @@
 namespace Spryker\Glue\ProductsProductImageSetsResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiInterface;
+use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface;
 use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Processor\Expander\AbstractProductsProductImageSetsResourceRelationshipExpander;
 use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Processor\Expander\AbstractProductsProductImageSetsResourceRelationshipExpanderInterface;
 use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Processor\Expander\ConcreteProductsProductImageSetsResourceRelationshipExpander;
@@ -33,9 +33,9 @@ class ProductsProductImageSetsResourceRelationshipFactory extends AbstractFactor
     }
 
     /**
-     * @return \Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiInterface
+     * @return \Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface
      */
-    public function getProductImageSetsResource(): ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiInterface
+    public function getProductImageSetsResource(): ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface
     {
         return $this->getProvidedDependency(ProductsProductImageSetsResourceRelationshipDependencyProvider::RESOURCE_PRODUCT_IMAGE_SETS);
     }

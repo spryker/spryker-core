@@ -9,7 +9,7 @@ namespace Spryker\Glue\ProductsProductImageSetsResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiBridge;
+use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceBridge;
 
 class ProductsProductImageSetsResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -20,7 +20,7 @@ class ProductsProductImageSetsResourceRelationshipDependencyProvider extends Abs
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
         $container = $this->addProductImageSetsResource($container);
@@ -36,7 +36,7 @@ class ProductsProductImageSetsResourceRelationshipDependencyProvider extends Abs
     protected function addProductImageSetsResource(Container $container): Container
     {
         $container[static::RESOURCE_PRODUCT_IMAGE_SETS] = function (Container $container) {
-            return new ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiBridge(
+            return new ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceBridge(
                 $container->getLocator()->productImageSetsRestApi()->resource()
             );
         };

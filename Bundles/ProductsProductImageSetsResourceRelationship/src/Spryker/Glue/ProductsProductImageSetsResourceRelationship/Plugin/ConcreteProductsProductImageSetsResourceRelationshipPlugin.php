@@ -30,7 +30,7 @@ class ConcreteProductsProductImageSetsResourceRelationshipPlugin extends Abstrac
     {
         $this->getFactory()
             ->createConcreteProductsProductImageSetsResourceRelationshipExpander()
-            ->expandResourceRelationships($resources, $restRequest);
+            ->addResourceRelationships($resources, $restRequest);
     }
 
     /**

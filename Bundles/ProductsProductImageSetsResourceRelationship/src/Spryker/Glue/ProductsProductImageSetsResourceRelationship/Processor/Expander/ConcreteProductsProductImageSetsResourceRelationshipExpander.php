@@ -8,21 +8,21 @@
 namespace Spryker\Glue\ProductsProductImageSetsResourceRelationship\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiInterface;
+use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface;
 
 class ConcreteProductsProductImageSetsResourceRelationshipExpander implements ConcreteProductsProductImageSetsResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiInterface
+     * @var \Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface
      */
-    protected $productImageSetsResource;
+    protected $productImageSetsRestApiResource;
 
     /**
-     * @param \Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiInterface $productImageSetsResource
+     * @param \Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface $productImageSetsRestApiResource
      */
-    public function __construct(ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiInterface $productImageSetsResource)
+    public function __construct(ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface $productImageSetsRestApiResource)
     {
-        $this->productImageSetsResource = $productImageSetsResource;
+        $this->productImageSetsRestApiResource = $productImageSetsRestApiResource;
     }
 
     /**
@@ -31,10 +31,10 @@ class ConcreteProductsProductImageSetsResourceRelationshipExpander implements Co
      *
      * @return void
      */
-    public function expandResourceRelationships(array $resources, RestRequestInterface $restRequest): void
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            $concreteProductImageSetsResource = $this->productImageSetsResource
+            $concreteProductImageSetsResource = $this->productImageSetsRestApiResource
                 ->findConcreteProductImageSetsBySku($resource->getId(), $restRequest);
             if ($concreteProductImageSetsResource !== null) {
                 $resource->addRelationship($concreteProductImageSetsResource);

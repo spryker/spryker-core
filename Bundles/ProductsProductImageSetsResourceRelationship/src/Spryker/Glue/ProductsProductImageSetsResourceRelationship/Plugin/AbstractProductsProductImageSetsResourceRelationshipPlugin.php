@@ -30,7 +30,7 @@ class AbstractProductsProductImageSetsResourceRelationshipPlugin extends Abstrac
     {
         $this->getFactory()
             ->createAbstractProductsProductImageSetsResourceRelationshipExpander()
-            ->expandResourceRelationships($resources, $restRequest);
+            ->addResourceRelationships($resources, $restRequest);
     }
 
     /**

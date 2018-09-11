@@ -17,5 +17,5 @@ interface ConcreteProductsProductImageSetsResourceRelationshipExpanderInterface
      *
      * @return void
      */
-    public function expandResourceRelationships(array $resources, RestRequestInterface $restRequest): void;
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void;
 }
