@@ -26,7 +26,7 @@ class CustomerGroupRepository extends AbstractRepository implements CustomerGrou
      */
     public function getCustomerGroupCollectionByIdCustomer(int $idCustomer): CustomerGroupCollectionTransfer
     {
-        $customerGroupNames = $this->getCustomerQuery()
+        $customerGroups = $this->getCustomerQuery()
             ->filterByIdCustomer($idCustomer)
             ->innerJoinSpyCustomerGroupToCustomer()
             ->useSpyCustomerGroupToCustomerQuery()
@@ -37,11 +37,10 @@ class CustomerGroupRepository extends AbstractRepository implements CustomerGrou
                 SpyCustomerGroupTableMap::COL_ID_CUSTOMER_GROUP,
                 SpyCustomerGroupTableMap::COL_DESCRIPTION,
             ])
-            ->find()
-            ->toArray();
+            ->find();
 
         return $this->getFactory()->createCustomerGroupMapper()
-            ->mapCustomerGroupNamesToCustomerGroupCollectionTransfer($customerGroupNames);
+            ->mapCustomerGroupNamesToCustomerGroupCollectionTransfer($customerGroups);
     }
 
     /**

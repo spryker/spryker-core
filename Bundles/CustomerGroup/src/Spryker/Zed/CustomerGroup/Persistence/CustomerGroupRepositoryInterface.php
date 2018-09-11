@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\CustomerGroupCollectionTransfer;
 interface CustomerGroupRepositoryInterface
 {
     /**
+     * @module Customer
+     *
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CustomerGroupCollectionTransfer
