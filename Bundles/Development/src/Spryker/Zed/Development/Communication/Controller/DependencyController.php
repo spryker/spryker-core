@@ -42,13 +42,20 @@ class DependencyController extends AbstractController
      */
     public function outgoingAction(Request $request)
     {
-        $bundleName = $request->query->getAlnum(static::QUERY_KEY_MODULE);
+        $moduleName = $request->query->getAlnum(static::QUERY_KEY_MODULE);
 
-        $bundleDependencyCollectionTransfer = $this->getFacade()->showOutgoingDependenciesForModule($bundleName);
+        $organizationTransfer = new OrganizationTransfer();
+        $organizationTransfer->setName('Spryker');
+        $moduleTransfer = new ModuleTransfer();
+        $moduleTransfer
+            ->setName($moduleName)
+            ->setOrganization($organizationTransfer);
+
+        $bundleDependencyCollectionTransfer = $this->getFacade()->showOutgoingDependenciesForModule($moduleTransfer);
         $composerDependencies = $this->getFacade()->getComposerDependencyComparison($bundleDependencyCollectionTransfer);
 
         return $this->viewResponse([
-            static::QUERY_KEY_MODULE => $bundleName,
+            static::QUERY_KEY_MODULE => $moduleName,
             'dependencies' => $bundleDependencyCollectionTransfer,
             'composerDependencies' => $composerDependencies,
         ]);
