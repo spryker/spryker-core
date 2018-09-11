@@ -5,27 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource;
+namespace Spryker\Glue\ProductTaxSetsRestApi;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\Kernel\AbstractRestResource;
 
-class ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceBridge implements ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface
+/**
+ * @method \Spryker\Glue\ProductTaxSetsRestApi\ProductTaxSetsRestApiFactory getFactory()
+ */
+class ProductTaxSetsRestApiResource extends AbstractRestResource implements ProductTaxSetsRestApiResourceInterface
 {
     /**
-     * @var \Spryker\Glue\ProductTaxSetsRestApi\ProductTaxSetsRestApiResourceInterface
-     */
-    protected $taxSetsRestApiResource;
-
-    /**
-     * @param \Spryker\Glue\ProductTaxSetsRestApi\ProductTaxSetsRestApiResourceInterface $taxSetsRestApiResource
-     */
-    public function __construct($taxSetsRestApiResource)
-    {
-        $this->taxSetsRestApiResource = $taxSetsRestApiResource;
-    }
-
-    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $abstractProductSku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -33,7 +28,8 @@ class ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceBridge implemen
      */
     public function findAbstractProductTaxSetsByAbstractProductSku(string $abstractProductSku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        return $this->taxSetsRestApiResource
+        return $this->getFactory()
+            ->createTaxSetsReader()
             ->findAbstractProductTaxSetsByAbstractProductSku($abstractProductSku, $restRequest);
     }
 }

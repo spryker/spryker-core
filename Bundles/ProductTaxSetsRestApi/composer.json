@@ -1,20 +1,21 @@
 {
-  "name": "spryker/products-tax-sets-resource-relationship",
-  "description": "ProductsTaxSetsResourceRelationship module",
+  "name": "spryker/product-tax-sets-rest-api",
+  "description": "TaxSetsRestApi module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/glue-application": "^1.0.0",
+    "spryker/glue-application": "^1.1.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.22.0",
-    "spryker/product-tax-sets-rest-api": "^1.0.0"
+    "spryker/products-rest-api": "^1.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/tax": "^4.0.0",
+    "spryker/tax-product-connector": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/products-rest-api": "If you want to use ProductsRestApi module"
   },
   "autoload": {
     "psr-4": {

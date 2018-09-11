@@ -37,7 +37,7 @@ class ProductsTaxSetsResourceRelationshipDependencyProvider extends AbstractBund
     {
         $container[static::RESOURCE_TAX_SETS] = function (Container $container) {
             return new ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceBridge(
-                $container->getLocator()->taxSetsRestApi()->resource()
+                $container->getLocator()->productTaxSetsRestApi()->resource()
             );
         };
 
