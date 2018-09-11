@@ -15,7 +15,7 @@ use Spryker\Zed\IndexGenerator\Business\ForeignKeysProvider\ForeignKeysProviderI
 use Spryker\Zed\IndexGenerator\IndexGeneratorConfig;
 use Symfony\Component\Finder\Finder;
 
-class PostgresPostgresIndexGenerator implements PostgresIndexGeneratorInterface
+class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
 {
     const POSTGRES_INDEX_NAME_MAX_LENGTH = 63;
 
@@ -44,18 +44,7 @@ class PostgresPostgresIndexGenerator implements PostgresIndexGeneratorInterface
      */
     public function generateIndexes(): void
     {
-        $this->deleteOldSchemaFiles();
         $this->generateSchemaFiles();
-    }
-
-    /**
-     * @return void
-     */
-    protected function deleteOldSchemaFiles(): void
-    {
-        foreach ($this->getSchemaFinder() as $schemaFileInfo) {
-            unlink($schemaFileInfo->getPathname());
-        }
     }
 
     /**

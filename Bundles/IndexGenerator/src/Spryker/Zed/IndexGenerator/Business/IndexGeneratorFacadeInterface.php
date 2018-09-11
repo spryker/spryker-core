@@ -20,4 +20,14 @@ interface IndexGeneratorFacadeInterface
      * @return void
      */
     public function generateIndexes(): void;
+
+    /**
+     * Specification:
+     * - Deletes all generated schema files.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeIndexes(): void;
 }

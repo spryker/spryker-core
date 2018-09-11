@@ -15,10 +15,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\IndexGenerator\Business\IndexGeneratorFacadeInterface getFacade()
  */
-class PostgresIndexGeneratorConsole extends Console
+class PostgresIndexRemoverConsole extends Console
 {
-    protected const COMMAND_NAME = 'propel:postgres-index-generator:generate';
-    protected const DESCRIPTION = 'Generates propel files with index definition for each foreign key, this is only relevant for postgres.';
+    protected const COMMAND_NAME = 'propel:postgres-index-generator:remove';
+    protected const DESCRIPTION = 'Deletes generated index files.';
 
     /**
      * @return void
@@ -39,7 +39,6 @@ class PostgresIndexGeneratorConsole extends Console
     {
         try {
             $this->getFacade()->removeIndexes();
-            $this->getFacade()->generateIndexes();
         } catch (Exception $e) {
             $this->getMessenger()->error($e->getMessage());
 
