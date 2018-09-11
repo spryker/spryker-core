@@ -32,6 +32,7 @@ class IndexGeneratorFacadeTest extends Unit
     public function testGeneratesSchemaFileWithIndexWhenIndexIsMissing(): void
     {
         $indexGeneratorFacade = $this->tester->getFacadeWithMockedConfig('SchemaWithMissingIndex');
+        $indexGeneratorFacade->removeIndexes();
         $indexGeneratorFacade->generateIndexes();
 
         $this->tester->assertSchemaHasIndex();
@@ -43,6 +44,7 @@ class IndexGeneratorFacadeTest extends Unit
     public function testDoesNotGenerateSchemaFileWhenIndexIsDefined(): void
     {
         $indexGeneratorFacade = $this->tester->getFacadeWithMockedConfig('SchemaWithIndex');
+        $indexGeneratorFacade->removeIndexes();
         $indexGeneratorFacade->generateIndexes();
 
         $this->tester->assertSchemaFileNotExists();
@@ -54,6 +56,7 @@ class IndexGeneratorFacadeTest extends Unit
     public function testDoesNotGenerateSchemaFileWhenTableNotIndexable(): void
     {
         $indexGeneratorFacade = $this->tester->getFacadeWithMockedConfig('SchemaWithArchivableBehavior');
+        $indexGeneratorFacade->removeIndexes();
         $indexGeneratorFacade->generateIndexes();
 
         $this->tester->assertSchemaFileNotExists();
@@ -65,6 +68,7 @@ class IndexGeneratorFacadeTest extends Unit
     public function testDoesNotGenerateSchemaFileWhenTableIsExcluded(): void
     {
         $indexGeneratorFacade = $this->tester->getFacadeWithMockedConfig('SchemaWithMissingIndex', ['spy_foo_bar']);
+        $indexGeneratorFacade->removeIndexes();
         $indexGeneratorFacade->generateIndexes();
 
         $this->tester->assertSchemaFileNotExists();
