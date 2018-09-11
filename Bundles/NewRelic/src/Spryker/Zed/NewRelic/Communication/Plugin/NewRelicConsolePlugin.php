@@ -21,6 +21,8 @@ class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInt
     const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
 
     /**
+     * @api
+     *
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
      *
      * @return void
@@ -50,6 +52,8 @@ class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInt
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public static function getSubscribedEvents()

@@ -127,7 +127,7 @@ class RequestFormatter implements RequestFormatterInterface
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface $metadata
      *
-     * @return null|\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
     public function processPostData(
         HttpRequest $httpRequest,
@@ -141,14 +141,9 @@ class RequestFormatter implements RequestFormatterInterface
 
         $data = $requestData[RestResourceInterface::RESOURCE_DATA];
 
-        $idResource = '';
-        if (isset($data[RestResourceInterface::RESOURCE_ID])) {
-            $idResource = $data[RestResourceInterface::RESOURCE_ID];
-        }
-
         return $this->restResourceBuilder->createRestResource(
             $data[RestResourceInterface::RESOURCE_TYPE],
-            $idResource,
+            $httpRequest->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID),
             $this->mapEntityTransfer($httpRequest, $data)
         );
     }
@@ -241,7 +236,7 @@ class RequestFormatter implements RequestFormatterInterface
      */
     protected function setSortFields(RequestBuilderInterface $requestBuilder, array $queryParameters): void
     {
-        if (!isset($queryParameters[RequestConstantsInterface::QUERY_SORT])) {
+        if (!isset($queryParameters[RequestConstantsInterface::QUERY_SORT]) || empty($queryParameters[RequestConstantsInterface::QUERY_SORT])) {
             return;
         }
 

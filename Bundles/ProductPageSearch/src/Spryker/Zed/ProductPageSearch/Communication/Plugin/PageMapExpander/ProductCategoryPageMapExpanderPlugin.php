@@ -34,6 +34,8 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
     protected static $categoryName;
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $productData
