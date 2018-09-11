@@ -56,12 +56,12 @@ class ProductMoneyNotBlankValidator extends ConstraintValidator
         foreach ($priceGroup as $priceProductTransfer) {
             $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
-            if ($moneyValueTransfer->getGrossAmount() === null || $moneyValueTransfer->getNetAmount() === null) {
-                return false;
+            if ($moneyValueTransfer->getGrossAmount() !== null || $moneyValueTransfer->getNetAmount() !== null) {
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 
     /**
