@@ -219,7 +219,7 @@ Asterisk can also be used more than once in all parts. Currently, it\'s not poss
 
     /**
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
-     * @param null|string $application
+     * @param string|null $application
      *
      * @return \Generated\Shared\Transfer\ModuleFilterTransfer
      */

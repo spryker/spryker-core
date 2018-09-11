@@ -146,7 +146,7 @@ Fix dependency violations in composer.json.
     /**
      * @param string $moduleName
      *
-     * @return null|string
+     * @return string|null
      */
     protected function getComposerNameFromModuleCollection(string $moduleName): ?string
     {
@@ -176,7 +176,7 @@ Fix dependency violations in composer.json.
     /**
      * @param string $moduleName
      *
-     * @return null|string
+     * @return string|null
      */
     protected function getComposerNameFromPackageCollection(string $moduleName): ?string
     {

@@ -165,7 +165,7 @@ class PluginUsageFinderConsole extends Console
 
     /**
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer $moduleFilterTransfer
-     * @param null|string $application
+     * @param string|null $application
      *
      * @return \Generated\Shared\Transfer\ModuleFilterTransfer
      */
