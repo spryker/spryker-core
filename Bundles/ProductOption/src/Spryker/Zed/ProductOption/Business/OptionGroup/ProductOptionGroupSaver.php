@@ -121,7 +121,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
             );
         }
 
-        $this->touchProductOptionGroupAbstractProducts($productOptionGroupEntity);
+        $this->touchProductOptionGroupAbstractProducts($productOptionGroupEntity, $isActive);
 
         $productOptionGroupEntity->setActive($isActive);
 
@@ -179,15 +179,16 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 
     /**
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
+     * @param bool|null $isActive
      *
      * @return void
      */
-    protected function touchProductOptionGroupAbstractProducts(SpyProductOptionGroup $productOptionGroupEntity)
+    protected function touchProductOptionGroupAbstractProducts(SpyProductOptionGroup $productOptionGroupEntity, ?bool $isActive = null): void
     {
         foreach ($productOptionGroupEntity->getSpyProductAbstractProductOptionGroups() as $productAbstractProductOptionEntity) {
             $idProductAbstract = $productAbstractProductOptionEntity->getFkProductAbstract();
 
-            if ($productAbstractProductOptionEntity->getSpyProductOptionGroup()->isActive()) {
+            if ($isActive === false && $productAbstractProductOptionEntity->getSpyProductOptionGroup()->isActive() !== $isActive) {
                 $this->triggerProductOptionGroupDeleteEvent($idProductAbstract);
             }
 
