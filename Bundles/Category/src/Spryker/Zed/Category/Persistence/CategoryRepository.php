@@ -104,9 +104,27 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * @param int $idProductAbstract
      * @param int $idLocale
      *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getCategoriesByAbstractProductId(int $idProductAbstract, int $idLocale): CategoryCollectionTransfer
+    {
+        $spyCategoryCollection = $this->queryCategoriesByAbstractProductId(
+            $idProductAbstract,
+            $idLocale
+        )->find();
+
+        return $this->getFactory()
+            ->createCategoryMapper()
+            ->mapCategoryCollection($spyCategoryCollection, new CategoryCollectionTransfer());
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
-    public function queryCategoriesByAbstractProductId(int $idProductAbstract, int $idLocale): SpyCategoryQuery
+    protected function queryCategoriesByAbstractProductId(int $idProductAbstract, int $idLocale): SpyCategoryQuery
     {
         return $this->getFactory()->createCategoryQuery()
             ->joinAttribute()

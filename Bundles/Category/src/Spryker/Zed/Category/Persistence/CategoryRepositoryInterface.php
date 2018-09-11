@@ -9,7 +9,6 @@ namespace Spryker\Zed\Category\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 
 interface CategoryRepositoryInterface
 {
@@ -34,7 +33,7 @@ interface CategoryRepositoryInterface
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function queryCategoriesByAbstractProductId(int $idProductAbstract, int $idLocale): SpyCategoryQuery;
+    public function getCategoriesByAbstractProductId(int $idProductAbstract, int $idLocale): CategoryCollectionTransfer;
 }

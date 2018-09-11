@@ -148,13 +148,12 @@ class Category implements CategoryInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getCategoryTransfersByAbstractProductId(int $idProductAbstract, LocaleTransfer $localeTransfer): array
+    public function getCategoryTransfersByAbstractProductId(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
         $categoryCollection = $this->categoryRepository
-            ->queryCategoriesByAbstractProductId($idProductAbstract, $localeTransfer->getIdLocale())
-            ->find();
+            ->getCategoriesByAbstractProductId($idProductAbstract, $localeTransfer->getIdLocale());
 
         $categoryTransferCollection = [];
 

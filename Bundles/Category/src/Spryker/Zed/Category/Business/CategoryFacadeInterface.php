@@ -501,7 +501,7 @@ interface CategoryFacadeInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getCategoriesByAbstractProductId(int $idProductAbstract, LocaleTransfer $localeTransfer): array;
+    public function getCategoriesByAbstractProductId(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 }
