@@ -15,19 +15,19 @@ use Propel\Runtime\Collection\ArrayCollection;
 class CustomerGroupMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ArrayCollection $customerGroups
+     * @param \Propel\Runtime\Collection\ArrayCollection $customerGroupEntities
      *
      * @return \Generated\Shared\Transfer\CustomerGroupCollectionTransfer
      */
-    public function mapCustomerGroupNamesToCustomerGroupCollectionTransfer(ArrayCollection $customerGroups): CustomerGroupCollectionTransfer
+    public function mapCustomerGroupNamesToCustomerGroupCollectionTransfer(ArrayCollection $customerGroupEntities): CustomerGroupCollectionTransfer
     {
         $customerGroupCollectionTransfer = new CustomerGroupCollectionTransfer();
 
-        foreach ($customerGroups->getData() as $customerGroup) {
+        foreach ($customerGroupEntities->getData() as $customerGroupEntity) {
             $customerGroupTransfer = new CustomerGroupTransfer();
-            $customerGroupTransfer->setName($customerGroup[SpyCustomerGroupTableMap::COL_NAME]);
-            $customerGroupTransfer->setDescription($customerGroup[SpyCustomerGroupTableMap::COL_DESCRIPTION]);
-            $customerGroupTransfer->setIdCustomerGroup($customerGroup[SpyCustomerGroupTableMap::COL_ID_CUSTOMER_GROUP]);
+            $customerGroupTransfer->setName($customerGroupEntity[SpyCustomerGroupTableMap::COL_NAME]);
+            $customerGroupTransfer->setDescription($customerGroupEntity[SpyCustomerGroupTableMap::COL_DESCRIPTION]);
+            $customerGroupTransfer->setIdCustomerGroup($customerGroupEntity[SpyCustomerGroupTableMap::COL_ID_CUSTOMER_GROUP]);
             $customerGroupCollectionTransfer->addGroup($customerGroupTransfer);
         }
 
