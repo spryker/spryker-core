@@ -27,7 +27,7 @@ class CategoriesRestApiToCategoryStorageClientBridge implements CategoriesRestAp
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories(string $locale)
+    public function getCategories($locale)
     {
         return $this->categoryStorageClient->getCategories($locale);
     }
