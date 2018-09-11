@@ -152,18 +152,7 @@ class Category implements CategoryInterface
      */
     public function getCategoryTransfersByAbstractProductId(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
-        $categoryCollection = $this->categoryRepository
+        return $this->categoryRepository
             ->getCategoriesByAbstractProductId($idProductAbstract, $localeTransfer->getIdLocale());
-
-        $categoryTransferCollection = [];
-
-        /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
-        foreach ($categoryCollection as $categoryEntity) {
-            $categoryTransfer = (new CategoryTransfer())->fromArray($categoryEntity->toArray(), true);
-
-            $categoryTransferCollection[] = $categoryTransfer;
-        }
-
-        return $categoryTransferCollection;
     }
 }
