@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsProductImageSetsResourceRelationship\Plugin;
+namespace Spryker\Glue\ProductImageSetsRestApi\Plugin\Relationship;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\ProductsProductImageSetsResourceRelationship\ProductsProductImageSetsResourceRelationshipFactory getFactory()
+ * @method \Spryker\Glue\ProductImageSetsRestApi\ProductImageSetsRestApiFactory getFactory()
  */
 class AbstractProductsProductImageSetsResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {

@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsProductImageSetsResourceRelationship\Processor\Expander;
+namespace Spryker\Glue\ProductImageSetsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface;
+use Spryker\Glue\ProductImageSetsRestApi\Processor\Reader\AbstractProductImageSetsReaderInterface;
 
 class AbstractProductsProductImageSetsResourceRelationshipExpander implements AbstractProductsProductImageSetsResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface
+     * @var \Spryker\Glue\ProductImageSetsRestApi\Processor\Reader\AbstractProductImageSetsReaderInterface
      */
-    protected $productImageSetsRestApiResource;
+    protected $abstractProductImageSetsReader;
 
     /**
-     * @param \Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface $productImageSetsRestApiResource
+     * @param \Spryker\Glue\ProductImageSetsRestApi\Processor\Reader\AbstractProductImageSetsReaderInterface $abstractProductImageSetsReader
      */
-    public function __construct(ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface $productImageSetsRestApiResource)
+    public function __construct(AbstractProductImageSetsReaderInterface $abstractProductImageSetsReader)
     {
-        $this->productImageSetsRestApiResource = $productImageSetsRestApiResource;
+        $this->abstractProductImageSetsReader = $abstractProductImageSetsReader;
     }
 
     /**
@@ -34,7 +34,7 @@ class AbstractProductsProductImageSetsResourceRelationshipExpander implements Ab
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            $abstractProductImageSetsResource = $this->productImageSetsRestApiResource
+            $abstractProductImageSetsResource = $this->abstractProductImageSetsReader
                 ->findAbstractProductImageSetsBySku($resource->getId(), $restRequest);
             if ($abstractProductImageSetsResource !== null) {
                 $resource->addRelationship($abstractProductImageSetsResource);

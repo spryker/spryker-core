@@ -10,14 +10,18 @@ namespace Spryker\Glue\ProductImageSetsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductImageStorageClientInterface;
 use Spryker\Glue\ProductImageSetsRestApi\Dependency\Client\ProductImageSetsRestApiToProductStorageClientInterface;
-use Spryker\Glue\ProductImageSetsRestApi\Processor\AbstractProductsImageSets\AbstractProductImageSetsReader;
-use Spryker\Glue\ProductImageSetsRestApi\Processor\AbstractProductsImageSets\AbstractProductImageSetsReaderInterface;
-use Spryker\Glue\ProductImageSetsRestApi\Processor\ConcreteProductsImageSets\ConcreteProductImageSetsReader;
-use Spryker\Glue\ProductImageSetsRestApi\Processor\ConcreteProductsImageSets\ConcreteProductImageSetsReaderInterface;
+use Spryker\Glue\ProductImageSetsRestApi\Processor\Expander\AbstractProductsProductImageSetsResourceRelationshipExpander;
+use Spryker\Glue\ProductImageSetsRestApi\Processor\Expander\AbstractProductsProductImageSetsResourceRelationshipExpanderInterface;
+use Spryker\Glue\ProductImageSetsRestApi\Processor\Expander\ConcreteProductsProductImageSetsResourceRelationshipExpander;
+use Spryker\Glue\ProductImageSetsRestApi\Processor\Expander\ConcreteProductsProductImageSetsResourceRelationshipExpanderInterface;
 use Spryker\Glue\ProductImageSetsRestApi\Processor\Mapper\AbstractProductImageSetsMapper;
 use Spryker\Glue\ProductImageSetsRestApi\Processor\Mapper\AbstractProductImageSetsMapperInterface;
 use Spryker\Glue\ProductImageSetsRestApi\Processor\Mapper\ConcreteProductImageSetsMapper;
 use Spryker\Glue\ProductImageSetsRestApi\Processor\Mapper\ConcreteProductImageSetsMapperInterface;
+use Spryker\Glue\ProductImageSetsRestApi\Processor\Reader\AbstractProductImageSetsReader;
+use Spryker\Glue\ProductImageSetsRestApi\Processor\Reader\AbstractProductImageSetsReaderInterface;
+use Spryker\Glue\ProductImageSetsRestApi\Processor\Reader\ConcreteProductImageSetsReader;
+use Spryker\Glue\ProductImageSetsRestApi\Processor\Reader\ConcreteProductImageSetsReaderInterface;
 
 class ProductImageSetsRestApiFactory extends AbstractFactory
 {
@@ -38,7 +42,7 @@ class ProductImageSetsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductImageSetsRestApi\Processor\AbstractProductsImageSets\AbstractProductImageSetsReaderInterface
+     * @return \Spryker\Glue\ProductImageSetsRestApi\Processor\Reader\AbstractProductImageSetsReaderInterface
      */
     public function createAbstractProductImageSetsReader(): AbstractProductImageSetsReaderInterface
     {
@@ -51,7 +55,7 @@ class ProductImageSetsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductImageSetsRestApi\Processor\ConcreteProductsImageSets\ConcreteProductImageSetsReaderInterface
+     * @return \Spryker\Glue\ProductImageSetsRestApi\Processor\Reader\ConcreteProductImageSetsReaderInterface
      */
     public function createConcreteProductImageSetsReader(): ConcreteProductImageSetsReaderInterface
     {
@@ -61,6 +65,22 @@ class ProductImageSetsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createConcreteProductImageSetsMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductImageSetsRestApi\Processor\Expander\AbstractProductsProductImageSetsResourceRelationshipExpanderInterface
+     */
+    public function createAbstractProductsProductImageSetsResourceRelationshipExpander(): AbstractProductsProductImageSetsResourceRelationshipExpanderInterface
+    {
+        return new AbstractProductsProductImageSetsResourceRelationshipExpander($this->createAbstractProductImageSetsReader());
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductImageSetsRestApi\Processor\Expander\ConcreteProductsProductImageSetsResourceRelationshipExpanderInterface
+     */
+    public function createConcreteProductsProductImageSetsResourceRelationshipExpander(): ConcreteProductsProductImageSetsResourceRelationshipExpanderInterface
+    {
+        return new ConcreteProductsProductImageSetsResourceRelationshipExpander($this->createConcreteProductImageSetsReader());
     }
 
     /**

@@ -49,4 +49,25 @@ class ProductImageStorageClient extends AbstractClient implements ProductImageSt
             ->createProductConcreteImageStorageReader()
             ->findProductImageConcreteStorageTransfer($idProductConcrete, $locale);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     * @param string $locale
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetStorageTransfer[]|null
+     */
+    public function resolveProductImageSetStorageTransfers(
+        int $idProductConcrete,
+        int $idProductAbstract,
+        string $locale
+    ): ?array {
+        return $this->getFactory()
+            ->createProductConcreteImageInheritanceResolver()
+            ->resolveProductImageSetStorageTransfers($idProductConcrete, $idProductAbstract, $locale);
+    }
 }

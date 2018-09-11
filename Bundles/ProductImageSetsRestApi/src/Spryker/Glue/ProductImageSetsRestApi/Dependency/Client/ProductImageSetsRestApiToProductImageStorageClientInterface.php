@@ -8,7 +8,6 @@
 namespace Spryker\Glue\ProductImageSetsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductAbstractImageStorageTransfer;
-use Generated\Shared\Transfer\ProductConcreteImageStorageTransfer;
 
 interface ProductImageSetsRestApiToProductImageStorageClientInterface
 {
@@ -22,9 +21,14 @@ interface ProductImageSetsRestApiToProductImageStorageClientInterface
 
     /**
      * @param int $idProductConcrete
+     * @param int $idProductAbstract
      * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteImageStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductImageSetStorageTransfer[]|null
      */
-    public function findProductImageConcreteStorageTransfer(int $idProductConcrete, string $locale): ?ProductConcreteImageStorageTransfer;
+    public function resolveProductImageSetStorageTransfers(
+        int $idProductConcrete,
+        int $idProductAbstract,
+        string $locale
+    ): ?array;
 }

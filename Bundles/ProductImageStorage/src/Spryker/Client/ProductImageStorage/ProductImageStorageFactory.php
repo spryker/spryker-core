@@ -9,6 +9,8 @@ namespace Spryker\Client\ProductImageStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductImageStorage\Expander\ProductViewImageExpander;
+use Spryker\Client\ProductImageStorage\Resolver\ProductConcreteImageInheritanceResolver;
+use Spryker\Client\ProductImageStorage\Resolver\ProductConcreteImageInheritanceResolverInterface;
 use Spryker\Client\ProductImageStorage\Storage\ProductAbstractImageStorageReader;
 use Spryker\Client\ProductImageStorage\Storage\ProductConcreteImageStorageReader;
 use Spryker\Client\ProductImageStorage\Storage\ProductImageStorageKeyGenerator;
@@ -42,15 +44,26 @@ class ProductImageStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductImageStorage\Storage\ProductImageStorageKeyGeneratorInterface
      */
-    protected function createProductImageStorageKeyGenerator()
+    public function createProductImageStorageKeyGenerator()
     {
         return new ProductImageStorageKeyGenerator($this->getSynchronizationService());
     }
 
     /**
+     * @return \Spryker\Client\ProductImageStorage\Resolver\ProductConcreteImageInheritanceResolverInterface
+     */
+    public function createProductConcreteImageInheritanceResolver(): ProductConcreteImageInheritanceResolverInterface
+    {
+        return new ProductConcreteImageInheritanceResolver(
+            $this->createProductConcreteImageStorageReader(),
+            $this->createProductAbstractImageStorageReader()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageInterface
      */
-    protected function getStorage()
+    public function getStorage()
     {
         return $this->getProvidedDependency(ProductImageStorageDependencyProvider::CLIENT_STORAGE);
     }
@@ -58,7 +71,7 @@ class ProductImageStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductImageStorage\Dependency\Service\ProductImageStorageToSynchronizationServiceBridge
      */
-    protected function getSynchronizationService()
+    public function getSynchronizationService()
     {
         return $this->getProvidedDependency(ProductImageStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }

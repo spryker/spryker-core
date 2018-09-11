@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsProductImageSetsResourceRelationship\Processor\Expander;
+namespace Spryker\Glue\ProductImageSetsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface;
+use Spryker\Glue\ProductImageSetsRestApi\Processor\Reader\ConcreteProductImageSetsReaderInterface;
 
 class ConcreteProductsProductImageSetsResourceRelationshipExpander implements ConcreteProductsProductImageSetsResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface
+     * @var \Spryker\Glue\ProductImageSetsRestApi\Processor\Reader\ConcreteProductImageSetsReaderInterface
      */
-    protected $productImageSetsRestApiResource;
+    protected $concreteProductImageSetsReader;
 
     /**
-     * @param \Spryker\Glue\ProductsProductImageSetsResourceRelationship\Dependency\RestResource\ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface $productImageSetsRestApiResource
+     * @param \Spryker\Glue\ProductImageSetsRestApi\Processor\Reader\ConcreteProductImageSetsReaderInterface $concreteProductImageSetsReader
      */
-    public function __construct(ProductsProductImageSetsResourceRelationshipToProductImageSetsRestApiResourceInterface $productImageSetsRestApiResource)
+    public function __construct(ConcreteProductImageSetsReaderInterface $concreteProductImageSetsReader)
     {
-        $this->productImageSetsRestApiResource = $productImageSetsRestApiResource;
+        $this->concreteProductImageSetsReader = $concreteProductImageSetsReader;
     }
 
     /**
@@ -34,7 +34,7 @@ class ConcreteProductsProductImageSetsResourceRelationshipExpander implements Co
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            $concreteProductImageSetsResource = $this->productImageSetsRestApiResource
+            $concreteProductImageSetsResource = $this->concreteProductImageSetsReader
                 ->findConcreteProductImageSetsBySku($resource->getId(), $restRequest);
             if ($concreteProductImageSetsResource !== null) {
                 $resource->addRelationship($concreteProductImageSetsResource);

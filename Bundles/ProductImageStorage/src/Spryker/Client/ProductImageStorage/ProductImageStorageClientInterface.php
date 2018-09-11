@@ -37,4 +37,24 @@ interface ProductImageStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductConcreteImageStorageTransfer|null
      */
     public function findProductImageConcreteStorageTransfer(int $idProductConcrete, string $locale): ?ProductConcreteImageStorageTransfer;
+
+    /**
+     * Specification:
+     *  - Retrieves product image data from storage according locale.
+     *  - Returns product concrete image data if it exists.
+     *  - Returns product abstract image data otherwise.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     * @param string $locale
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetStorageTransfer[]|null
+     */
+    public function resolveProductImageSetStorageTransfers(
+        int $idProductConcrete,
+        int $idProductAbstract,
+        string $locale
+    ): ?array;
 }
