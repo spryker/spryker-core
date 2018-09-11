@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ReadProductCategoryRelationPlugin extends AbstractPlugin implements CategoryRelationReadPluginInterface
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getRelationName()
@@ -27,6 +29,8 @@ class ReadProductCategoryRelationPlugin extends AbstractPlugin implements Catego
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
