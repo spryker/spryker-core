@@ -13,6 +13,7 @@ use Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderProductAdditiona
 
 /**
  * @method \Spryker\Client\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageClientInterface getClient()
+ * @method \Spryker\Client\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageFactory getFactory()
  */
 class QuickOrderProductAdditionalDataTransferMeasurementUnitExpanderPlugin extends AbstractPlugin implements QuickOrderProductAdditionalDataTransferExpanderPluginInterface
 {
@@ -31,6 +32,14 @@ class QuickOrderProductAdditionalDataTransferMeasurementUnitExpanderPlugin exten
             return;
         }
 
+        $translatedName = $this->getFactory()
+            ->getGlossaryStorageClient()
+            ->translate(
+                $productMeasurementUnitTransfer->getName(),
+                $this->getFactory()->getLocaleClient()->getCurrentLocale()
+            );
+
+        $productMeasurementUnitTransfer->setName($translatedName);
         $quickOrderProductAdditionalDataTransfer->setBaseMeasurementUnit($productMeasurementUnitTransfer);
     }
 }
