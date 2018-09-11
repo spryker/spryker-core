@@ -101,7 +101,7 @@ class CustomerGroupFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindCustomerGroupNamesByIdCustomer(): void
+    public function testFindCustomerGroupsByIdCustomer(): void
     {
         $customerEntity = $this->createCustomer();
 
