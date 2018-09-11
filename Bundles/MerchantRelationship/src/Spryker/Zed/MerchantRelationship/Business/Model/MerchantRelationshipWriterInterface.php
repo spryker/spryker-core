@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
+use Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 interface MerchantRelationshipWriterInterface
@@ -26,9 +27,18 @@ interface MerchantRelationshipWriterInterface
     public function update(MerchantRelationshipTransfer $merchantRelationTransfer): MerchantRelationshipTransfer;
 
     /**
+     * @deprecated Use MerchantRelationshipWriterInterface::deleteWithPreCheck() instead
+     *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
      *
      * @return void
      */
     public function delete(MerchantRelationshipTransfer $merchantRelationTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer
+     */
+    public function deleteWithPreCheck(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipDeleteResponseTransfer;
 }

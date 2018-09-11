@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
+use ArrayObject;
+use Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGeneratorInterface;
 use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipEntityManagerInterface;
@@ -30,18 +32,26 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     protected $merchantRelationshipKeyGenerator;
 
     /**
+     * @var \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface[]
+     */
+    protected $merchantRelationshipPreDeletePlugins;
+
+    /**
      * @param \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipEntityManagerInterface $entityManager
      * @param \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface $repository
      * @param \Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGeneratorInterface $merchantRelationshipKeyGenerator
+     * @param \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface[] $merchantRelationshipPreDeletePlugins
      */
     public function __construct(
         MerchantRelationshipEntityManagerInterface $entityManager,
         MerchantRelationshipRepositoryInterface $repository,
-        MerchantRelationshipKeyGeneratorInterface $merchantRelationshipKeyGenerator
+        MerchantRelationshipKeyGeneratorInterface $merchantRelationshipKeyGenerator,
+        array $merchantRelationshipPreDeletePlugins
     ) {
         $this->entityManager = $entityManager;
         $this->repository = $repository;
         $this->merchantRelationshipKeyGenerator = $merchantRelationshipKeyGenerator;
+        $this->merchantRelationshipPreDeletePlugins = $merchantRelationshipPreDeletePlugins;
     }
 
     /**
@@ -93,6 +103,8 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     }
 
     /**
+     * @deprecated Use MerchantRelationshipWriter::deleteWithPreCheck() instead
+     *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
      *
      * @return void
@@ -102,6 +114,29 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
         $merchantRelationTransfer->requireIdMerchantRelationship();
 
         $this->entityManager->deleteMerchantRelationshipById($merchantRelationTransfer->getIdMerchantRelationship());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer
+     */
+    public function deleteWithPreCheck(MerchantRelationshipTransfer $merchantRelationTransfer): MerchantRelationshipDeleteResponseTransfer
+    {
+        $merchantRelationTransfer->requireIdMerchantRelationship();
+
+        $merchantRelationshipDeleteResponseTransfer = (new MerchantRelationshipDeleteResponseTransfer())->setIsSuccess(false);
+        $preDeletePluginsErrorMessages = $this->executeMerchantRelationshipPreDeletePlugins($merchantRelationTransfer);
+
+        if ($preDeletePluginsErrorMessages->count()) {
+            $merchantRelationshipDeleteResponseTransfer->setMessages($preDeletePluginsErrorMessages);
+            return $merchantRelationshipDeleteResponseTransfer;
+        }
+
+        $this->entityManager->deleteMerchantRelationshipById($merchantRelationTransfer->getIdMerchantRelationship());
+        $merchantRelationshipDeleteResponseTransfer->setIsSuccess(true);
+
+        return $merchantRelationshipDeleteResponseTransfer;
     }
 
     /**
@@ -150,5 +185,25 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
         }
 
         return $ids;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
+     *
+     * @return \ArrayObject
+     */
+    protected function executeMerchantRelationshipPreDeletePlugins(MerchantRelationshipTransfer $merchantRelationTransfer): ArrayObject
+    {
+        $errorMessages = new ArrayObject();
+        foreach ($this->merchantRelationshipPreDeletePlugins as $merchantRelationshipPreDeletePlugin) {
+            $merchantRelationshipDeleteResponseTransfer = $merchantRelationshipPreDeletePlugin->execute($merchantRelationTransfer);
+            if (!$merchantRelationshipDeleteResponseTransfer->getIsSuccess()) {
+                foreach ($merchantRelationshipDeleteResponseTransfer->getMessages() as $errorMessage) {
+                    $errorMessages->append($errorMessage);
+                }
+            }
+        }
+
+        return $errorMessages;
     }
 }

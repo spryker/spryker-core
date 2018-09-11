@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business;
 
+use Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 interface MerchantRelationshipFacadeInterface
@@ -44,7 +45,7 @@ interface MerchantRelationshipFacadeInterface
      */
     public function updateMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer;
 
-    /**
+    /***
      * Specification:
      * - Removes related business units by assigneeCompanyBusinessUnitCollection.
      * - Finds a merchant relationship record by ID in DB.
@@ -52,11 +53,29 @@ interface MerchantRelationshipFacadeInterface
      *
      * @api
      *
+     * @deprecated Use MerchantRelationshipFacadeInterface::deleteMerchantRelationshipWithPreCheck() instead
+     *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
      * @return void
      */
     public function deleteMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): void;
+
+    /**
+     * Specification:
+     * - Runs all MerchantRelationshipPreDeletePlugins to check if the relationship can be safely deleted.
+     * - Removes related business units by assigneeCompanyBusinessUnitCollection.
+     * - Finds a merchant relationship record by ID in DB.
+     * - Removes the merchant relationship record.
+     * - Returns MerchantRelationshipDeleteResponseTransfer which contains the operation result as well as the error messages of any.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer
+     */
+    public function deleteMerchantRelationshipWithPreCheck(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipDeleteResponseTransfer;
 
     /**
      * Specification:
