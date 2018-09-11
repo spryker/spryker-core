@@ -8,6 +8,7 @@
 namespace Spryker\Client\PriceProductStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToCurrencyClientInterface;
 use Spryker\Client\PriceProductStorage\Expander\ProductViewPriceExpander;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReader;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReader;
@@ -79,6 +80,14 @@ class PriceProductStorageFactory extends AbstractFactory
     public function getStoreClient()
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToCurrencyClientInterface
+     */
+    public function getCurrencyClient(): PriceProductStorageToCurrencyClientInterface
+    {
+        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::CLIENT_CURRENCY);
     }
 
     /**
