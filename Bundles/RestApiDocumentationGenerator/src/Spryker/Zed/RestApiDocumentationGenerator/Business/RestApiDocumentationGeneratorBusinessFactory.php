@@ -8,6 +8,8 @@
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Annotation\GlueAnnotationAnalyzer;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Annotation\GlueAnnotationAnalyzerInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationGenerator;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationGeneratorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGenerator;
@@ -16,8 +18,6 @@ use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocument
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\YamlRestApiDocumentationWriter;
-use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToAnnotationsAnalyserInterface;
-use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToYamlDumperInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorDependencyProvider;
 
@@ -33,7 +33,6 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
     {
         return new RestApiDocumentationGenerator(
             $this->getResourceRoutesPluginsProviderPlugins(),
-            $this->getResourceRelationshipsCollectionProviderPlugin(),
             $this->createRestApiDocumentationSchemaGenerator(),
             $this->createRestApiDocumentationPathsGenerator(),
             $this->createYamlRestApiDocumentationWriter()
@@ -45,7 +44,7 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
      */
     public function createRestApiDocumentationSchemaGenerator(): RestApiDocumentationSchemaGeneratorInterface
     {
-        return new RestApiDocumentationSchemaGenerator();
+        return new RestApiDocumentationSchemaGenerator($this->getResourceRelationshipsCollectionProviderPlugin());
     }
 
     /**
@@ -55,8 +54,8 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
     {
         return new RestApiDocumentationPathGenerator(
             $this->getConfig(),
-            $this->getAnnotationsAnalyser(),
-            $this->getFinder()
+            $this->createRestApiDocumentationSchemaGenerator(),
+            $this->createGlueAnnotationAnalyzer()
         );
     }
 
@@ -69,6 +68,14 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
             $this->getConfig(),
             $this->getYamlDumper()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\RestApiDocumentationGenerator\Business\Annotation\GlueAnnotationAnalyzerInterface
+     */
+    public function createGlueAnnotationAnalyzer(): GlueAnnotationAnalyzerInterface
+    {
+        return new GlueAnnotationAnalyzer();
     }
 
     /**
@@ -85,22 +92,6 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
     public function getYamlDumper(): RestApiDocumentationGeneratorToYamlDumperInterface
     {
         return $this->getProvidedDependency(RestApiDocumentationGeneratorDependencyProvider::YAML_DUMPER);
-    }
-
-    /**
-     * @return \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToAnnotationsAnalyserInterface
-     */
-    public function getAnnotationsAnalyser(): RestApiDocumentationGeneratorToAnnotationsAnalyserInterface
-    {
-        return $this->getProvidedDependency(RestApiDocumentationGeneratorDependencyProvider::ANNOTATION_ANALYSER);
-    }
-
-    /**
-     * @return \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface
-     */
-    public function getFinder(): RestApiDocumentationGeneratorToFinderInterface
-    {
-        return $this->getProvidedDependency(RestApiDocumentationGeneratorDependencyProvider::FINDER);
     }
 
     /**

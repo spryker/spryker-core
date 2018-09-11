@@ -9,8 +9,7 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 
 use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRouteCollection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
-use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToAnnotationsAnalyserInterface;
-use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Annotation\GlueAnnotationAnalyzerInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,28 +29,28 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
     protected $config;
 
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToAnnotationsAnalyserInterface
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface
+     */
+    protected $schemaGenerator;
+
+    /**
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Annotation\GlueAnnotationAnalyzerInterface
      */
     protected $annotationsAnalyser;
 
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface
-     */
-    protected $finder;
-
-    /**
      * @param \Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfig $config
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToAnnotationsAnalyserInterface $annotationsAnalyser
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface $finder
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface $schemaGenerator
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Annotation\GlueAnnotationAnalyzerInterface $annotationsAnalyser
      */
     public function __construct(
         RestApiDocumentationGeneratorConfig $config,
-        RestApiDocumentationGeneratorToAnnotationsAnalyserInterface $annotationsAnalyser,
-        RestApiDocumentationGeneratorToFinderInterface $finder
+        RestApiDocumentationSchemaGeneratorInterface $schemaGenerator,
+        GlueAnnotationAnalyzerInterface $annotationsAnalyser
     ) {
         $this->config = $config;
+        $this->schemaGenerator = $schemaGenerator;
         $this->annotationsAnalyser = $annotationsAnalyser;
-        $this->finder = $finder;
     }
 
     /**
@@ -63,67 +62,62 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
     }
 
     /**
-     * @return void
-     */
-    public function addPathsFromAnnotations(): void
-    {
-        $sourceDirTemplates = $this->config->getAnnotationsSourceDirectories();
-
-        $dirs = array_filter($sourceDirTemplates, function ($directory) {
-            return (bool)glob($directory, GLOB_ONLYDIR);
-        });
-
-        $this->finder->in($dirs)->name('*.php')->sortByName();
-
-        foreach ($this->finder as $file) {
-            $this->annotationsAnalyser->analyse($file->getPathname());
-        }
-        $this->annotationsAnalyser->process();
-        $this->annotationsAnalyser->validate();
-        $this->paths += $this->annotationsAnalyser->getPaths();
-    }
-
-    /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $resourceRoutePlugin
-     * @param string $transferSchemaKey
-     * @param string $restErrorTransferSchemaKey
      * @param array|null $parents
      *
      * @return void
      */
-    public function addPathsForPlugin(ResourceRoutePluginInterface $resourceRoutePlugin, string $transferSchemaKey, string $restErrorTransferSchemaKey, ?array $parents = null): void
+    public function addPathsForPlugin(ResourceRoutePluginInterface $resourceRoutePlugin, ?array $parents = null): void
     {
         $resource = $resourceRoutePlugin->getResourceType();
         $collection = $resourceRoutePlugin->configure(new ResourceRouteCollection());
+        $annotationParameters = $this->annotationsAnalyser->getParametersFromPlugin($resourceRoutePlugin);
 
         $resourcePath = $this->parseParentToPath('/' . $resource, $parents);
-
+        $restErrorTransferSchemaKey = $this->schemaGenerator->getRestErrorSchemaName();
         if ($collection->has(Request::METHOD_GET)) {
-            $this->paths[$resourcePath]['get'] = [
-                'summary' => "List all $resource",
-                'tags' => [$resource],
-                'responses' => [
-                    (string)Response::HTTP_OK => $this->getDefaultSuccessResponse($transferSchemaKey),
-                    'default' => $this->getDefaultErrorResponse($restErrorTransferSchemaKey),
-                ],
-            ];
+            if ($annotationParameters && isset($annotationParameters['getCollection']) && $annotationParameters['getCollection']) {
+                $responseSchemaKey = $this->schemaGenerator->addResponseCollectionSchemaForPlugin($resourceRoutePlugin);
+                $this->paths[$resourcePath]['get'] = [
+                    'summary' => "List all $resource",
+                    'tags' => [$resource],
+                    'responses' => [
+                        (string)Response::HTTP_OK => $this->getDefaultSuccessResponse($responseSchemaKey),
+                        'default' => $this->getDefaultErrorResponse($restErrorTransferSchemaKey),
+                    ],
+                ];
+            }
+
+            if ($annotationParameters && isset($annotationParameters['getResource']) && $annotationParameters['getResource']) {
+                $responseSchemaKey = $this->schemaGenerator->addResponseResourceSchemaForPlugin($resourceRoutePlugin);
+                $this->paths[$resourcePath]['get'] = [
+                    'summary' => "List all $resource",
+                    'tags' => [$resource],
+                    'responses' => [
+                        (string)Response::HTTP_OK => $this->getDefaultSuccessResponse($responseSchemaKey),
+                        'default' => $this->getDefaultErrorResponse($restErrorTransferSchemaKey),
+                    ],
+                ];
+            }
         }
         if ($collection->has(Request::METHOD_POST)) {
+            $responseSchemaKey = $this->schemaGenerator->addResponseResourceSchemaForPlugin($resourceRoutePlugin);
             $this->paths[$resourcePath]['post'] = [
                 'summary' => "Create $resource",
                 'tags' => [$resource],
                 'responses' => [
-                    (string)Response::HTTP_CREATED => $this->getDefaultSuccessResponse($transferSchemaKey),
+                    (string)Response::HTTP_CREATED => $this->getDefaultSuccessResponse($responseSchemaKey),
                     'default' => $this->getDefaultErrorResponse($restErrorTransferSchemaKey),
                 ],
             ];
         }
         if ($collection->has(Request::METHOD_PATCH)) {
+            $responseSchemaKey = $this->schemaGenerator->addResponseResourceSchemaForPlugin($resourceRoutePlugin);
             $this->paths[$resourcePath]['patch'] = [
                 'summary' => "Update $resource",
                 'tags' => [$resource],
                 'responses' => [
-                    (string)Response::HTTP_ACCEPTED => $this->getDefaultSuccessResponse($transferSchemaKey),
+                    (string)Response::HTTP_ACCEPTED => $this->getDefaultSuccessResponse($responseSchemaKey),
                     'default' => $this->getDefaultErrorResponse($restErrorTransferSchemaKey),
                 ],
             ];

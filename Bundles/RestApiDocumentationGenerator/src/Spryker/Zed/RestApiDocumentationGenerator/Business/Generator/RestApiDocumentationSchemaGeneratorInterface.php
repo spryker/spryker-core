@@ -7,32 +7,35 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+
 interface RestApiDocumentationSchemaGeneratorInterface
 {
     /**
-     * @param string $transferClassName
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return void
+     * @return string
      */
-    public function addRequestSchemaFromTransferClassName(string $transferClassName): void;
+    public function addRequestSchemaForPlugin(ResourceRoutePluginInterface $plugin): string;
 
     /**
-     * @param string $transferClassName
-     * @param array $resourceRelationships
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return void
+     * @return string
      */
-    public function addResponseSchemaFromTransferClassName(string $transferClassName, array $resourceRelationships = []): void;
+    public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin): string;
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     *
+     * @return string
+     */
+    public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin): string;
 
     /**
      * @return string
      */
-    public function getLastAddedRequestSchemaKey(): string;
-
-    /**
-     * @return string
-     */
-    public function getLastAddedResponseSchemaKey(): string;
+    public function getRestErrorSchemaName(): string;
 
     /**
      * @return array

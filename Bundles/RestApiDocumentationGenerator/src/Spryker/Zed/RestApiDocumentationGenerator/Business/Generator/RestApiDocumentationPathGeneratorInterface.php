@@ -13,18 +13,11 @@ interface RestApiDocumentationPathGeneratorInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $resourceRoutePlugin
-     * @param string $transferSchemaKey
-     * @param string $restErrorTransferSchemaKey
      * @param array|null $parents
      *
      * @return void
      */
-    public function addPathsForPlugin(ResourceRoutePluginInterface $resourceRoutePlugin, string $transferSchemaKey, string $restErrorTransferSchemaKey, ?array $parents = null): void;
-
-    /**
-     * @return void
-     */
-    public function addPathsFromAnnotations(): void;
+    public function addPathsForPlugin(ResourceRoutePluginInterface $resourceRoutePlugin, ?array $parents = null): void;
 
     /**
      * @return array

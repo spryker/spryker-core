@@ -19,11 +19,6 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
     protected $resourceRoutesPluginsProviderPlugins;
 
     /**
-     * @var \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[]
-     */
-    protected $resourceRelationshipCollectionPlugins;
-
-    /**
      * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface
      */
     protected $restApiSchemaGenerator;
@@ -40,20 +35,17 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
 
     /**
      * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[] $resourceRoutesPluginsProviderPlugins
-     * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[] $resourceRelationshipCollectionPlugins
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface $restApiSchemaGenerator
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGeneratorInterface $restApiPathGenerator
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface $restApiDocumentationWriter
      */
     public function __construct(
         array $resourceRoutesPluginsProviderPlugins,
-        array $resourceRelationshipCollectionPlugins,
         RestApiDocumentationSchemaGeneratorInterface $restApiSchemaGenerator,
         RestApiDocumentationPathGeneratorInterface $restApiPathGenerator,
         RestApiDocumentationWriterInterface $restApiDocumentationWriter
     ) {
         $this->resourceRoutesPluginsProviderPlugins = $resourceRoutesPluginsProviderPlugins;
-        $this->resourceRelationshipCollectionPlugins = $resourceRelationshipCollectionPlugins;
         $this->restApiSchemaGenerator = $restApiSchemaGenerator;
         $this->restApiPathGenerator = $restApiPathGenerator;
         $this->restApiDocumentationWriter = $restApiDocumentationWriter;
@@ -66,23 +58,8 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
     {
         foreach ($this->resourceRoutesPluginsProviderPlugins as $resourceRoutesPluginsProviderPlugin) {
             foreach ($resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins() as $plugin) {
-                $resourceRelationships = [];
-                foreach ($this->resourceRelationshipCollectionPlugins as $resourceRelationshipCollectionPlugin) {
-                    $resourceRouteCollection = $resourceRelationshipCollectionPlugin->getResourceRelationshipCollection();
-                    if ($resourceRouteCollection->hasRelationships($plugin->getResourceType())) {
-                        $relationshipPlugins = $resourceRouteCollection->getRelationships($plugin->getResourceType());
-                        foreach ($relationshipPlugins as $relationshipPlugin) {
-                            $resourceRelationships[] = $relationshipPlugin->getRelationshipResourceType();
-                        }
-                    }
-                }
-                $this->restApiSchemaGenerator->addResponseSchemaFromTransferClassName($plugin->getResourceAttributesClassName(), $resourceRelationships);
-                $this->restApiSchemaGenerator->addRequestSchemaFromTransferClassName($plugin->getResourceAttributesClassName());
-                $responseSchemaKey = $this->restApiSchemaGenerator->getLastAddedResponseSchemaKey();
-                $requestSchemaName = $this->restApiSchemaGenerator->getLastAddedRequestSchemaKey();
-
                 $parents = $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins());
-                $this->restApiPathGenerator->addPathsForPlugin($plugin, $responseSchemaKey, 'RestErrorMessage', $parents);
+                $this->restApiPathGenerator->addPathsForPlugin($plugin, $parents);
             }
         }
 
