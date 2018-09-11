@@ -202,7 +202,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getAvailableStockTypes()
     {
