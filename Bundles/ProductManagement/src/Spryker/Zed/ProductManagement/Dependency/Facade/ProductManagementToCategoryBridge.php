@@ -25,13 +25,13 @@ class ProductManagementToCategoryBridge implements ProductManagementToCategoryIn
     }
 
     /**
-     * @param int $idProduct
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer[]
      */
-    public function getCategoriesByAbstractProductId(int $idProduct, LocaleTransfer $localeTransfer): array
+    public function getCategoriesByAbstractProductId(int $idProductAbstract, LocaleTransfer $localeTransfer): array
     {
-        return $this->categoryFacade->getCategoriesByAbstractProductId($idProduct, $localeTransfer);
+        return $this->categoryFacade->getCategoriesByAbstractProductId($idProductAbstract, $localeTransfer);
     }
 }

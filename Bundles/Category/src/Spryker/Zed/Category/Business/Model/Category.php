@@ -214,14 +214,14 @@ class Category implements BaseCategoryInterface
     }
 
     /**
-     * @param int $idProduct
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
-    public function getCategoryTransfersByAbstractProductId(int $idProduct, LocaleTransfer $localeTransfer): array
+    public function getCategoryTransfersByAbstractProductId(int $idProductAbstract, LocaleTransfer $localeTransfer): array
     {
-        return $this->category->getCategoryTransfersByAbstractProductId($idProduct, $localeTransfer);
+        return $this->category->getCategoryTransfersByAbstractProductId($idProductAbstract, $localeTransfer);
     }
 
     /**

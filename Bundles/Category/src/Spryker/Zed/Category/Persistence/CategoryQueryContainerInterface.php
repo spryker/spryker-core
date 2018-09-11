@@ -9,7 +9,6 @@ namespace Spryker\Zed\Category\Persistence;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
@@ -515,14 +514,4 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryFirstLevelChildrenByName(int $idNode, string $nodeName);
-
-    /**
-     * @api
-     *
-     * @param int $idProduct
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
-     */
-    public function queryCategoriesByAbstractProductId(int $idProduct, int $idLocale): SpyCategoryQuery;
 }

@@ -51,10 +51,10 @@ interface CategoryInterface
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 
     /**
-     * @param int $idProduct
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
      */
-    public function getCategoryTransfersByAbstractProductId(int $idProduct, LocaleTransfer $localeTransfer): array;
+    public function getCategoryTransfersByAbstractProductId(int $idProductAbstract, LocaleTransfer $localeTransfer): array;
 }
