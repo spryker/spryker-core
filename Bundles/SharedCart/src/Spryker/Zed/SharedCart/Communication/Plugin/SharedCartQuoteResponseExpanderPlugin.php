@@ -18,6 +18,8 @@ use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteResponseExpanderP
 class SharedCartQuoteResponseExpanderPlugin extends AbstractPlugin implements QuoteResponseExpanderPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
