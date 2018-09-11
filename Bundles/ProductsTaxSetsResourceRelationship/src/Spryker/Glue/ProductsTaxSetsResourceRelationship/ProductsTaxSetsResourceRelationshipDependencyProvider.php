@@ -23,7 +23,6 @@ class ProductsTaxSetsResourceRelationshipDependencyProvider extends AbstractBund
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-
         $container = $this->addProductTaxSetsResource($container);
 
         return $container;

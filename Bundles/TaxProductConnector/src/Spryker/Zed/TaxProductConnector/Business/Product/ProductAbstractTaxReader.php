@@ -10,10 +10,11 @@ namespace Spryker\Zed\TaxProductConnector\Business\Product;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\TaxSetResponseTransfer;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorRepositoryInterface;
-use Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig;
 
 class ProductAbstractTaxReader implements ProductAbstractTaxReaderInterface
 {
+    protected const EXCEPTION_MESSAGE_TAX_SET_NOT_FOUND_FOR_ABSTRACT = 'Could not get tax set, product abstract with id "%d" not found.';
+
     /**
      * @var \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorRepositoryInterface
      */
@@ -41,7 +42,7 @@ class ProductAbstractTaxReader implements ProductAbstractTaxReaderInterface
             $taxSetResponse->setIsSuccess(false);
             $taxSetResponse->setError(
                 sprintf(
-                    TaxProductConnectorConfig::EXCEPTION_MESSAGE_TAX_SET_NOT_FOUND_FOR_ABSTRACT,
+                    static::EXCEPTION_MESSAGE_TAX_SET_NOT_FOUND_FOR_ABSTRACT,
                     $productAbstractTransfer->getIdProductAbstract()
                 )
             );

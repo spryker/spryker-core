@@ -23,7 +23,6 @@ class TaxSetsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-
         $container = $this->addTaxProductConnectorClient($container);
 
         return $container;

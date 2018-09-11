@@ -77,6 +77,7 @@ class TaxSetsReader implements TaxSetsReaderInterface
             if ($taxSetResponseTransfer->getError() === static::TAX_SET_RESPONSE_ERROR_ABSTRACT_PRODUCT_NOT_FOUND) {
                 return $this->createAbstractProductNotFoundError();
             }
+
             return $this->createTaxSetsNotFoundError($taxSetResponseTransfer);
         }
 
