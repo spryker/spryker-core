@@ -3,7 +3,6 @@
 
     <table name="spy_company_user" phpName="SpyCompanyUser">
         <column name="id_company_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="key" type="VARCHAR" size="255" description="Key is an identifier for existing entities. This should never be changed."/>
 
         <column name="fk_company" type="INTEGER" required="true"/>
         <column name="fk_customer" type="INTEGER" required="true"/>
