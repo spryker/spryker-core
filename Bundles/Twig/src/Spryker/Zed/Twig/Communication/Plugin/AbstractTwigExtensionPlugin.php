@@ -22,6 +22,8 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
      *
      * This is where you can load some file that contains filter functions for instance.
      *
+     * @api
+     *
      * @param \Twig_Environment $environment The current Twig_Environment instance
      *
      * @return void
@@ -33,6 +35,8 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     /**
      * Returns the token parser instances to add to the existing list.
      *
+     * @api
+     *
      * @return array An array of Twig_TokenParserInterface or Twig_TokenParserBrokerInterface instances
      */
     public function getTokenParsers()
@@ -42,6 +46,8 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
 
     /**
      * Returns the node visitor instances to add to the existing list.
+     *
+     * @api
      *
      * @return \Twig_NodeVisitorInterface[] An array of Twig_NodeVisitorInterface instances
      */
@@ -53,6 +59,8 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     /**
      * Returns a list of filters to add to the existing list.
      *
+     * @api
+     *
      * @return array An array of filters
      */
     public function getFilters()
@@ -62,6 +70,8 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
 
     /**
      * Returns a list of tests to add to the existing list.
+     *
+     * @api
      *
      * @return array An array of tests
      */
@@ -73,6 +83,8 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     /**
      * Returns a list of functions to add to the existing list.
      *
+     * @api
+     *
      * @return array An array of functions
      */
     public function getFunctions()
@@ -83,6 +95,8 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     /**
      * Returns a list of operators to add to the existing list.
      *
+     * @api
+     *
      * @return array An array of operators
      */
     public function getOperators()
@@ -92,6 +106,8 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
 
     /**
      * Returns a list of global variables to add to the existing list.
+     *
+     * @api
      *
      * @return array An array of global variables
      */
