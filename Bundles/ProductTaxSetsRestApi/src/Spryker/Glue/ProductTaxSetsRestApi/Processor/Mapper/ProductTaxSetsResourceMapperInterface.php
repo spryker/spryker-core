@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\TaxSetTransfer;
 interface ProductTaxSetsResourceMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxRateSetTransfer
+     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
      * @return \Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer
      */
-    public function mapTaxSetTransferToRestTaxSetsAttributesTransfer(TaxSetTransfer $taxRateSetTransfer): RestProductTaxSetsAttributesTransfer;
+    public function mapTaxSetTransferToRestTaxSetsAttributesTransfer(TaxSetTransfer $taxSetTransfer): RestProductTaxSetsAttributesTransfer;
 }

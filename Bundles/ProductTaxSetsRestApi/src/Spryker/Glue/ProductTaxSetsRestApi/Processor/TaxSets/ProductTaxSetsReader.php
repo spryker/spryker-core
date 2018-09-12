@@ -81,8 +81,8 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
             return $this->createTaxSetsNotFoundError($taxSetResponseTransfer);
         }
 
-        $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxSetTransferToRestTaxSetsAttributesTransfer($taxSetResponseTransfer->getTaxRateSet());
-        $restResource = $this->formatRestResource($restTaxSetTransfer, $taxSetResponseTransfer->getTaxRateSet()->getUuid(), $parentResource->getId());
+        $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxSetTransferToRestTaxSetsAttributesTransfer($taxSetResponseTransfer->getTaxSet());
+        $restResource = $this->formatRestResource($restTaxSetTransfer, $taxSetResponseTransfer->getTaxSet()->getUuid(), $parentResource->getId());
 
         return $restResponse->addResource($restResource);
     }

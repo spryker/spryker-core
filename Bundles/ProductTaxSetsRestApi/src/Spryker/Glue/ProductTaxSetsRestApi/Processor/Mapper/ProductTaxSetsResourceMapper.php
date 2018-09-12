@@ -14,17 +14,17 @@ use Generated\Shared\Transfer\TaxSetTransfer;
 class ProductTaxSetsResourceMapper implements ProductTaxSetsResourceMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxRateSetTransfer
+     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
      * @return \Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer
      */
-    public function mapTaxSetTransferToRestTaxSetsAttributesTransfer(TaxSetTransfer $taxRateSetTransfer): RestProductTaxSetsAttributesTransfer
+    public function mapTaxSetTransferToRestTaxSetsAttributesTransfer(TaxSetTransfer $taxSetTransfer): RestProductTaxSetsAttributesTransfer
     {
-        $restTaxSetTransfer = (new RestProductTaxSetsAttributesTransfer())->fromArray($taxRateSetTransfer->toArray(), true);
-        foreach ($taxRateSetTransfer->getTaxRates() as $taxRate) {
-            $restProductTaxRateTransfer = (new RestProductTaxRateTransfer())->fromArray($taxRate->toArray(), true);
-            if ($taxRate->getCountry()) {
-                $restProductTaxRateTransfer->setCountry($taxRate->getCountry()->getIso2Code());
+        $restTaxSetTransfer = (new RestProductTaxSetsAttributesTransfer())->fromArray($taxSetTransfer->toArray(), true);
+        foreach ($taxSetTransfer->getTaxRates() as $taxRateTransfer) {
+            $restProductTaxRateTransfer = (new RestProductTaxRateTransfer())->fromArray($taxRateTransfer->toArray(), true);
+            if ($taxRateTransfer->getCountry()) {
+                $restProductTaxRateTransfer->setCountry($taxRateTransfer->getCountry()->getIso2Code());
             }
             $restTaxSetTransfer->addRestProductTaxRate($restProductTaxRateTransfer);
         }

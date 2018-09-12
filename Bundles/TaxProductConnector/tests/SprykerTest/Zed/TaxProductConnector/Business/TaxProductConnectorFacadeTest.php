@@ -144,8 +144,8 @@ class TaxProductConnectorFacadeTest extends Unit
         $this->assertInstanceOf(TaxSetResponseTransfer::class, $taxSetsResponseTransfer);
         $this->assertTrue($taxSetsResponseTransfer->getIsSuccess());
         $this->assertEmpty($taxSetsResponseTransfer->getError());
-        $this->assertNotEmpty($taxSetsResponseTransfer->getTaxRateSet()->getUuid());
-        $this->assertCount(1, $taxSetsResponseTransfer->getTaxRateSet()->getTaxRateSetItems());
+        $this->assertNotEmpty($taxSetsResponseTransfer->getTaxSet()->getUuid());
+        $this->assertCount(1, $taxSetsResponseTransfer->getTaxSet()->getTaxRates());
     }
 
     /**
@@ -161,7 +161,7 @@ class TaxProductConnectorFacadeTest extends Unit
         $this->assertInstanceOf(TaxSetResponseTransfer::class, $taxSetsResponseTransfer);
         $this->assertFalse($taxSetsResponseTransfer->getIsSuccess());
         $this->assertNotEmpty($taxSetsResponseTransfer->getError());
-        $this->assertNull($taxSetsResponseTransfer->getTaxRateSet());
+        $this->assertNull($taxSetsResponseTransfer->getTaxSet());
     }
 
     /**
