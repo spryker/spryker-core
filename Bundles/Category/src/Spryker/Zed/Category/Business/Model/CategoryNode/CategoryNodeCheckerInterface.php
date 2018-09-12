@@ -18,4 +18,12 @@ interface CategoryNodeCheckerInterface
      * @return bool
      */
     public function hasFirstLevelChildrenByName(string $name, CategoryTransfer $categoryTransfer): bool;
+
+    /**
+     * @param string $name
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return bool
+     */
+    public function hasSameLevelCategoryByName(string $name, CategoryTransfer $categoryTransfer): bool;
 }

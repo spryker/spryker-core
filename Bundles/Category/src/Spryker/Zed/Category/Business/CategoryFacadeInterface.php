@@ -481,6 +481,19 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
+     * - Check exist a first level children by the category name except injected category
+     *
+     * @api
+     *
+     * @param string $name
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return bool
+     */
+    public function hasSameLevelCategoryByName(string $name, CategoryTransfer $categoryTransfer): bool;
+
+    /**
+     * Specification:
      * - Retrieves collection with all categories from DB.
      *
      * @api

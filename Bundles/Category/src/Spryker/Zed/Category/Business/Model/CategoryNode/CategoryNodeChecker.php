@@ -47,4 +47,23 @@ class CategoryNodeChecker implements CategoryNodeCheckerInterface
 
         return false;
     }
+
+    /**
+     * @param string $name
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return bool
+     */
+    public function hasSameLevelCategoryByName(string $name, CategoryTransfer $categoryTransfer): bool
+    {
+        $existingCategoryNode = $this
+            ->queryContainer
+            ->queryFirstLevelChildrenByName(
+                $categoryTransfer->getParentCategoryNode()->getIdCategoryNode(),
+                $name
+            )
+            ->findOne();
+
+        return $existingCategoryNode && $existingCategoryNode->getIdCategoryNode() !== $categoryTransfer->getIdCategory();
+    }
 }
