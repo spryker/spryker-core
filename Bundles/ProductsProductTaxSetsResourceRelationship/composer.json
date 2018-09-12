@@ -7,14 +7,11 @@
     "spryker/glue-application": "^1.0.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.22.0",
-    "spryker/product-tax-sets-rest-api": "^1.0.0"
+    "spryker/tax-sets-rest-api": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/products-rest-api": "If you want to use ProductsRestApi module"
   },
   "autoload": {
     "psr-4": {
