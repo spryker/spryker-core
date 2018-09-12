@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\PriceProductStorage\Plugin\QuickOrderPage;
 
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderProductPriceTransferExpanderPluginInterface;
@@ -32,9 +33,12 @@ class QuickOrderProductPriceTransferExpanderPlugin extends AbstractPlugin implem
             $quickOrderProductPriceTransfer->getIdProductConcrete()
         );
 
+        $priceProductFilterTransfer = new PriceProductFilterTransfer();
+        $priceProductFilterTransfer->setQuantity($quickOrderProductPriceTransfer->getQuantity());
+
         $currentProductPriceTransfer = $this->getFactory()
             ->getPriceProductClient()
-            ->resolveProductPriceTransfer($priceProductConcreteTransfers);
+            ->resolveProductPriceTransferByPriceProductFilter($priceProductConcreteTransfers, $priceProductFilterTransfer);
 
         $quickOrderProductPriceTransfer->setCurrentProductPrice($currentProductPriceTransfer);
         $quickOrderProductPriceTransfer->setTotal($currentProductPriceTransfer->getPrice() * $quickOrderProductPriceTransfer->getQuantity());
