@@ -101,16 +101,16 @@ class CustomersWriter implements CustomersWriterInterface
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        if (!$this->isSameCustomerReference($restRequest)) {
-            return $this->createUnauthorizedError($restResponse);
-        }
-
         $customerTransfer = (new CustomerTransfer)
             ->setCustomerReference($restRequest->getResource()->getId());
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
         if (!$customerResponseTransfer->getHasCustomer()) {
             return $this->createCustomerNotFoundError($restResponse);
+        }
+
+        if (!$this->isSameCustomerReference($restRequest)) {
+            return $this->createUnauthorizedError($restResponse);
         }
 
         $customerResponseTransfer->getCustomerTransfer()->fromArray(
