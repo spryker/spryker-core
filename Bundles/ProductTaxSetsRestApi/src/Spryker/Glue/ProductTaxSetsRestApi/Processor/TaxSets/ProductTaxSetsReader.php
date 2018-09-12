@@ -9,7 +9,7 @@ namespace Spryker\Glue\ProductTaxSetsRestApi\Processor\TaxSets;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestTaxSetsAttributesTransfer;
+use Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer;
 use Generated\Shared\Transfer\TaxSetResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -108,13 +108,13 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestTaxSetsAttributesTransfer $restTaxSetsAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer $restTaxSetsAttributesTransfer
      * @param string $uuid
      * @param string $parentResourceId
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function formatRestResource(RestTaxSetsAttributesTransfer $restTaxSetsAttributesTransfer, string $uuid, string $parentResourceId): RestResourceInterface
+    protected function formatRestResource(RestProductTaxSetsAttributesTransfer $restTaxSetsAttributesTransfer, string $uuid, string $parentResourceId): RestResourceInterface
     {
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductTaxSetsRestApiConfig::RESOURCE_TAX_SETS,

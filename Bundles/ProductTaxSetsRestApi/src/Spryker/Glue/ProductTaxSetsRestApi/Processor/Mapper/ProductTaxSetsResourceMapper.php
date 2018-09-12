@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\ProductTaxSetsRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\RestTaxRateTransfer;
-use Generated\Shared\Transfer\RestTaxSetsAttributesTransfer;
+use Generated\Shared\Transfer\RestProductTaxRateTransfer;
+use Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer;
 use Generated\Shared\Transfer\TaxRateSetTransfer;
 
 class ProductTaxSetsResourceMapper implements ProductTaxSetsResourceMapperInterface
@@ -16,13 +16,13 @@ class ProductTaxSetsResourceMapper implements ProductTaxSetsResourceMapperInterf
     /**
      * @param \Generated\Shared\Transfer\TaxRateSetTransfer $taxRateSetTransfer
      *
-     * @return \Generated\Shared\Transfer\RestTaxSetsAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer
      */
-    public function mapTaxRateSetTransferToRestTaxSetsAttributesTransfer(TaxRateSetTransfer $taxRateSetTransfer): RestTaxSetsAttributesTransfer
+    public function mapTaxRateSetTransferToRestTaxSetsAttributesTransfer(TaxRateSetTransfer $taxRateSetTransfer): RestProductTaxSetsAttributesTransfer
     {
-        $restTaxSetTransfer = (new RestTaxSetsAttributesTransfer())->fromArray($taxRateSetTransfer->toArray(), true);
+        $restTaxSetTransfer = (new RestProductTaxSetsAttributesTransfer())->fromArray($taxRateSetTransfer->toArray(), true);
         foreach ($taxRateSetTransfer->getTaxRateSetItems() as $taxRateSetItem) {
-            $restTaxSetTransfer->addRestTaxRate((new RestTaxRateTransfer())->fromArray($taxRateSetItem->toArray(), true));
+            $restTaxSetTransfer->addRestProductTaxRate((new RestProductTaxRateTransfer())->fromArray($taxRateSetItem->toArray(), true));
         }
 
         return $restTaxSetTransfer;

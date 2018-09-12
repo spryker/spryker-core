@@ -14,11 +14,11 @@
         <property name="country" type="string" />
     </transfer>
 
-    <transfer name="TaxProductSet">
+    <transfer name="TaxSet">
         <property name="uuid" type="string" />
     </transfer>
 
-    <transfer name="TaxProductRateSet">
+    <transfer name="TaxRateSet">
         <property name="uuid" type="string" />
     </transfer>
 
