@@ -29,7 +29,7 @@ class PageDataMapper implements PageDataMapperInterface
     protected $pageMapBuilder;
 
     /**
-     * @var \Zend\Filter\Word\CamelCaseToDash
+     * @var \Zend\Filter\Word\UnderscoreToDash
      */
     protected $underscoreToDashFilter;
 

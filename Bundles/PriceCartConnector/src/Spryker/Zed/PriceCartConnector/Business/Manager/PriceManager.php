@@ -279,7 +279,7 @@ class PriceManager implements PriceManagerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return null|string
+     * @return string|null
      */
     protected function findStoreName(QuoteTransfer $quoteTransfer): ?string
     {
