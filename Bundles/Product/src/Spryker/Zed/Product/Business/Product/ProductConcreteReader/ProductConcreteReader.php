@@ -14,14 +14,14 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductRepositoryInterface
      */
-    protected $repository;
+    protected $productRepository;
 
     /**
-     * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $repository
+     * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
      */
-    public function __construct(ProductRepositoryInterface $repository)
+    public function __construct(ProductRepositoryInterface $productRepository)
     {
-        $this->repository = $repository;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -29,16 +29,16 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findConcreteProductsByIds(array $ids): array
+    public function findProductConcreteByIds(array $ids): array
     {
-        return $this->repository->findConcreteProductsByIds($ids);
+        return $this->productRepository->findProductConcreteByIds($ids);
     }
 
     /**
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findAllConcreteProducts(): array
+    public function findAllProductConcrete(): array
     {
-        return $this->repository->findAllConcreteProducts();
+        return $this->productRepository->findAllProductConcrete();
     }
 }

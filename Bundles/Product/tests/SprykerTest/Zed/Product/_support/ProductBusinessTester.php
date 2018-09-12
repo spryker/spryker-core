@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
@@ -82,9 +83,9 @@ class ProductBusinessTester extends Actor
     }
 
     /**
-     * @return void
+     * @return int[]
      */
-    protected function insertProducts(): void
+    protected function insertProducts(): array
     {
         $productConcreteIds = [];
         $productFacade = $this->getProductFacade();
@@ -99,6 +100,14 @@ class ProductBusinessTester extends Actor
         }
 
         return $productConcreteIds;
+    }
+
+    /**
+     * @return int
+     */
+    public function getProductConcreteDatabaseEntriesCount(): int
+    {
+        return (new SpyProductQuery())->count();
     }
 
     /**

@@ -224,7 +224,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findConcreteProductsByIds(array $ids): array
+    public function findProductConcreteByIds(array $ids): array
     {
         $productConcreteTransfers = [];
         $mapper = $this->getFactory()->createProductMapper();
@@ -259,7 +259,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     /**
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findAllConcreteProducts(): array
+    public function findAllProductConcrete(): array
     {
         $productConcreteTransfers = [];
         $mapper = $this->getFactory()->createProductMapper();

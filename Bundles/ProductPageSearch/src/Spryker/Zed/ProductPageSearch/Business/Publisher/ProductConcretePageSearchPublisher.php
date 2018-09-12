@@ -84,7 +84,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      */
     public function publish(array $ids): void
     {
-        $productConcreteTransfers = $this->productFacade->findConcreteProductsByIds($ids);
+        $productConcreteTransfers = $this->productFacade->findProductConcreteByIds($ids);
         $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->findProductConcretePageSearchEntitiesByProductConcreteIds($ids, true);
 
         $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteTransfers, $productConcretePageSearchTransfers) {

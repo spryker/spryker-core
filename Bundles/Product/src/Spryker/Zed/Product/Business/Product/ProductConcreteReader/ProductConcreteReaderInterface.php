@@ -14,10 +14,10 @@ interface ProductConcreteReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findConcreteProductsByIds(array $ids): array;
+    public function findProductConcreteByIds(array $ids): array;
 
     /**
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findAllConcreteProducts(): array;
+    public function findAllProductConcrete(): array;
 }

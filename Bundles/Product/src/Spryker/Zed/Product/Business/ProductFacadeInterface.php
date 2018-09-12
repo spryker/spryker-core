@@ -825,7 +825,7 @@ interface ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function findConcreteProductsByIds(array $productConcreteIds): array;
+    public function findProductConcreteByIds(array $productConcreteIds): array;
 
     /**
      * Specification:
@@ -836,5 +836,5 @@ interface ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function findAllConcreteProducts(): array;
+    public function findAllProductConcrete(): array;
 }
