@@ -58,7 +58,7 @@ class ProductTaxSetsResourceRoutePlugin extends AbstractPlugin implements Resour
      */
     public function getController(): string
     {
-        return 'tax-sets-resource';
+        return 'product-tax-sets-resource';
     }
 
     /**
