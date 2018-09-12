@@ -99,12 +99,17 @@ class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderIn
      */
     public function findAbstractProductImageSetsBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $abstractProductTransfer = (new ProductAbstractStorageTransfer())->fromArray($this->productStorageClient
+        $abstractProductData = $this->productStorageClient
             ->findProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $sku,
                 $restRequest->getMetadata()->getLocale()
-            ), true);
+            );
+
+        $abstractProductTransfer = (new ProductAbstractStorageTransfer())->fromArray(
+            $abstractProductData,
+            true
+        );
 
         if (!$abstractProductTransfer) {
             return null;

@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\RestProductImageSetsAttributesTransfer;
 interface ConcreteProductImageSetsMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductImageStorageTransfer[] $productAbstractImageStorageTransfers
+     * @param \Generated\Shared\Transfer\ProductImageStorageTransfer[] $productImageSetStorageTransfers
      *
      * @return \Generated\Shared\Transfer\RestProductImageSetsAttributesTransfer
      */
-    public function mapProductImageStorageTransfersToRestProductImageSetsAttributesTransfer(array $productAbstractImageStorageTransfers): RestProductImageSetsAttributesTransfer;
+    public function mapProductImageSetStorageTransfersToRestProductImageSetsAttributesTransfer(array $productImageSetStorageTransfers): RestProductImageSetsAttributesTransfer;
 }

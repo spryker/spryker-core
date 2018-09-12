@@ -99,12 +99,17 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
      */
     public function findConcreteProductImageSetsBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $concreteProductStorageTransfer = (new ProductConcreteStorageTransfer())->fromArray($this->productStorageClient
+        $concreteProductStorageData = $this->productStorageClient
             ->findProductConcreteStorageDataByMapping(
                 static::PRODUCT_CONCRETE_MAPPING_TYPE,
                 $sku,
                 $restRequest->getMetadata()->getLocale()
-            ), true);
+            );
+
+        $concreteProductStorageTransfer = (new ProductConcreteStorageTransfer())->fromArray(
+            $concreteProductStorageData,
+            true
+        );
 
         if (!$concreteProductStorageTransfer) {
             return null;
@@ -132,13 +137,13 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
      */
     protected function buildProductImageSetsResource(string $sku, array $productImageConcreteStorageTransfers): RestResourceInterface
     {
-        $restProductConcreteImageSetAttributesTransfer = $this->concreteProductImageSetsMapper
-            ->mapProductImageStorageTransfersToRestProductImageSetsAttributesTransfer($productImageConcreteStorageTransfers);
+        $restProductImageSetsAttributesTransfer = $this->concreteProductImageSetsMapper
+            ->mapProductImageSetStorageTransfersToRestProductImageSetsAttributesTransfer($productImageConcreteStorageTransfers);
 
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductImageSetsRestApiConfig::RESOURCE_CONCRETE_PRODUCT_IMAGE_SETS,
             $sku,
-            $restProductConcreteImageSetAttributesTransfer
+            $restProductImageSetsAttributesTransfer
         );
 
         $restResourceSelfLink = sprintf(
