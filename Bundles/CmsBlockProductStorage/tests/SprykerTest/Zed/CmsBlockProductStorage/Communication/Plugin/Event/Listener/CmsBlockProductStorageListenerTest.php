@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\CmsBlockProductStorage\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\CmsBlockProductConnector\Persistence\Map\SpyCmsBlockProductConnectorTableMap;
 use Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorageQuery;
@@ -64,11 +63,10 @@ class CmsBlockProductStorageListenerTest extends Unit
 
         $idProductAbstracts = [$this->productAbstractTransfer->getIdProductAbstract()];
 
-        $cmsBlockTransfer = $this->createCmsBlock($idProductAbstracts);
+        $cmsBlockTransfer = $this->tester->haveCmsBlock();
+        $cmsBlockTransfer->setIdProductAbstracts($idProductAbstracts);
 
-        $this->getCmsBlockProductConnectorFacade()->updateCmsBlockProductAbstractRelations($cmsBlockTransfer);
-
-        $this->getCmsBlockProductStorageFacade()->publish($idProductAbstracts);
+        $this->tester->getCmsBlockProductConnectorFacade()->updateCmsBlockProductAbstractRelations($cmsBlockTransfer);
     }
 
     /**
@@ -140,24 +138,5 @@ class CmsBlockProductStorageListenerTest extends Unit
         $this->assertNotNull($cmsBlockProductStorage);
         $data = $cmsBlockProductStorage->getData();
         $this->assertSame(1, count($data['block_names']));
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsBlockProductConnector\Business\CmsBlockProductConnectorFacadeInterface
-     */
-    protected function getCmsBlockProductConnectorFacade()
-    {
-        return $this->tester->getLocator()->cmsBlockProductConnector()->facade();
-    }
-
-    /**
-     * @param array $idProductAbstracts
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer
-     */
-    protected function createCmsBlock(array $idProductAbstracts): CmsBlockTransfer
-    {
-        $cmsBlockTransfer = $this->tester->haveCmsBlock()->setIdProductAbstracts($idProductAbstracts);
-        return $cmsBlockTransfer;
     }
 }

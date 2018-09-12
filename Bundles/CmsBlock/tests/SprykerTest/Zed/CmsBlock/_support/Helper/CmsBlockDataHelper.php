@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\CmsBlockBuilder;
 use Generated\Shared\DataBuilder\CmsBlockTemplateBuilder;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Spryker\Zed\CmsBlockProductConnector\Business\CmsBlockProductConnectorFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CmsBlockDataHelper extends Module
@@ -80,5 +81,13 @@ class CmsBlockDataHelper extends Module
     protected function getCmsBlockFacade()
     {
         return $this->getLocator()->cmsBlock()->facade();
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockProductConnector\Business\CmsBlockProductConnectorFacadeInterface
+     */
+    public function getCmsBlockProductConnectorFacade(): CmsBlockProductConnectorFacadeInterface
+    {
+        return $this->getLocator()->cmsBlockProductConnector()->facade();
     }
 }

@@ -26,13 +26,13 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class PriceProductDataHelper extends Module
 {
+    use DataCleanupHelperTrait;
+    use LocatorHelperTrait;
+
     const EUR_ISO_CODE = 'EUR';
     const USD_ISO_CODE = 'USD';
     const NET_PRICE = 10;
     const GROSS_PRICE = 9;
-
-    use DataCleanupHelperTrait;
-    use LocatorHelperTrait;
 
     /**
      * @param array $priceProductOverride

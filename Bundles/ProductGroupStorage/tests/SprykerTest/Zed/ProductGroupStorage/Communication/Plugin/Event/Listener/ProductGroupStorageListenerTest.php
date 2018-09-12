@@ -7,8 +7,10 @@
 
 namespace SprykerTest\Zed\ProductGroupStorage\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\ProductGroupTransfer;
 use Orm\Zed\ProductGroup\Persistence\Map\SpyProductAbstractGroupTableMap;
 use Orm\Zed\ProductGroupStorage\Persistence\SpyProductAbstractGroupStorageQuery;
 use PHPUnit\Framework\SkippedTestError;
@@ -36,16 +38,47 @@ use SprykerTest\Zed\ProductGroupStorage\ProductGroupStorageConfigMock;
 class ProductGroupStorageListenerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\ProductGroupStorage\ProductGroupStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductGroupTransfer
+     */
+    protected $productGroupTransfer;
+
+    /**
      * @throws \PHPUnit\Framework\SkippedTestError
      *
      * @return void
      */
     protected function setUp()
     {
+        parent::setUp();
+
         $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
+
         if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
+
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $productAbstractTransfer2 = $this->tester->haveProductAbstract();
+
+        $productAbstractTransfer->setLocalizedAttributes(
+            new ArrayObject($this->tester->generateLocalizedAttributes())
+        );
+
+        $this->tester->getProductFacade()->saveProduct($productAbstractTransfer, []);
+
+        $productGroupOverride = [
+            ProductGroupTransfer::ID_PRODUCT_ABSTRACTS => [
+                $productAbstractTransfer->getIdProductAbstract(),
+                $productAbstractTransfer2->getIdProductAbstract(),
+            ],
+        ];
+
+        $this->productGroupTransfer = $this->tester->haveProductGroup($productGroupOverride);
     }
 
     /**
@@ -53,17 +86,23 @@ class ProductGroupStorageListenerTest extends Unit
      */
     public function testProductAbstractGroupStorageListenerStoreData()
     {
-        SpyProductAbstractGroupStorageQuery::create()->filterByFkProductAbstract_in([4])->delete();
+        $fkProductAbstracts = $this->productGroupTransfer->getIdProductAbstracts();
+
+        SpyProductAbstractGroupStorageQuery::create()->filterByFkProductAbstract_in($fkProductAbstracts)->delete();
+
         $beforeCount = SpyProductAbstractGroupStorageQuery::create()->count();
 
         $productAbstractGroupStorageListener = new ProductAbstractGroupStorageListener();
         $productAbstractGroupStorageListener->setFacade($this->getProductGroupStorageFacade());
 
-        $eventTransfers = [
-            (new EventEntityTransfer())->setForeignKeys([
-                SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_ABSTRACT => 4,
-            ]),
-        ];
+        $eventTransfers = [];
+
+        foreach ($fkProductAbstracts as $fkProductAbstract) {
+            $eventTransfers[] = (new EventEntityTransfer())->setForeignKeys([
+                SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_ABSTRACT => $fkProductAbstract,
+            ]);
+        };
+
         $productAbstractGroupStorageListener->handleBulk($eventTransfers, ProductGroupEvents::ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_CREATE);
 
         // Assert
@@ -75,15 +114,20 @@ class ProductGroupStorageListenerTest extends Unit
      */
     public function testProductAbstractGroupPublishStorageListenerStoreData()
     {
-        SpyProductAbstractGroupStorageQuery::create()->filterByFkProductAbstract_in([4])->delete();
+        $fkProductAbstracts = $this->productGroupTransfer->getIdProductAbstracts();
+
+        SpyProductAbstractGroupStorageQuery::create()->filterByFkProductAbstract_in($fkProductAbstracts)->delete();
         $beforeCount = SpyProductAbstractGroupStorageQuery::create()->count();
 
         $productAbstractGroupPublishStorageListener = new ProductAbstractGroupPublishStorageListener();
         $productAbstractGroupPublishStorageListener->setFacade($this->getProductGroupStorageFacade());
 
-        $eventTransfers = [
-            (new EventEntityTransfer())->setId(4),
-        ];
+        $eventTransfers = [];
+
+        foreach ($fkProductAbstracts as $fkProductAbstract) {
+            $eventTransfers[] = (new EventEntityTransfer())->setId($fkProductAbstract);
+        };
+
         $productAbstractGroupPublishStorageListener->handleBulk($eventTransfers, ProductGroupEvents::PRODUCT_GROUP_PUBLISH);
 
         // Assert
@@ -113,9 +157,13 @@ class ProductGroupStorageListenerTest extends Unit
     {
         $productGroupStorageCount = SpyProductAbstractGroupStorageQuery::create()->count();
         $this->assertSame($beforeCount + 1, $productGroupStorageCount);
-        $spyProductAbstractGroupStorage = SpyProductAbstractGroupStorageQuery::create()->orderByIdProductAbstractGroupStorage()->findOneByFkProductAbstract(4);
+
+        $fkProductAbstracts = $this->productGroupTransfer->getIdProductAbstracts();
+        $fkProductAbstract = current($fkProductAbstracts);
+
+        $spyProductAbstractGroupStorage = SpyProductAbstractGroupStorageQuery::create()->orderByIdProductAbstractGroupStorage()->findOneByFkProductAbstract($fkProductAbstract);
         $this->assertNotNull($spyProductAbstractGroupStorage);
         $data = $spyProductAbstractGroupStorage->getData();
-        $this->assertSame(3, count($data['group_product_abstract_ids']));
+        $this->assertSame(2, count($data['group_product_abstract_ids']));
     }
 }

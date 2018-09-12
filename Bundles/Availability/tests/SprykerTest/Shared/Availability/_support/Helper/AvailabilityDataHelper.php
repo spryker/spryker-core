@@ -22,6 +22,8 @@ class AvailabilityDataHelper extends Module
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
+    const QUANTITY = 10;
+
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
@@ -30,7 +32,7 @@ class AvailabilityDataHelper extends Module
     public function haveAvailabilityAbstract(ProductConcreteTransfer $productConcreteTransfer): SpyAvailabilityAbstractEntityTransfer
     {
         $availabilityFacade = $this->getAvailabilityFacade();
-        $idAvailabilityAbstract = $availabilityFacade->saveProductAvailability($productConcreteTransfer->getSku(), 10);
+        $idAvailabilityAbstract = $availabilityFacade->saveProductAvailability($productConcreteTransfer->getSku(), static::QUANTITY);
 
         $storageClient = $this->getStorageClient();
 
@@ -39,9 +41,11 @@ class AvailabilityDataHelper extends Module
 
         $spyAvailabilityAbstract = $this->getSpyAvailabilityAbstract($productConcreteTransfer);
 
-        if ($spyAvailabilityAbstract) {
-            $availabilityAbstractEntityTransfer->setQuantity($spyAvailabilityAbstract->getQuantity());
+        if (!$spyAvailabilityAbstract) {
+            return $availabilityAbstractEntityTransfer;
         }
+
+        $availabilityAbstractEntityTransfer->setQuantity($spyAvailabilityAbstract->getQuantity());
 
         return $availabilityAbstractEntityTransfer;
     }

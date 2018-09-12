@@ -7,7 +7,9 @@
 
 namespace SprykerTest\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
@@ -39,16 +41,54 @@ use SprykerTest\Zed\ProductLabelStorage\ProductLabelStorageConfigMock;
 class ProductLabelStorageListenerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\ProductLabelStorage\ProductLabelStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductLabelTransfer
+     */
+    protected $productLabelTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected $productAbstractTransfer;
+
+    /**
      * @throws \PHPUnit\Framework\SkippedTestError
      *
      * @return void
      */
     protected function setUp()
     {
+        parent::setUp();
+
         $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
         if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
+
+        $localeTransfer = $this->tester->haveLocale();
+
+        $this->productAbstractTransfer = $this->tester->haveProductAbstract();
+        $this->productLabelTransfer = $this->tester->haveProductLabel();
+
+        $this->productAbstractTransfer->setLocalizedAttributes(
+            new ArrayObject($this->tester->generateLocalizedAttributes())
+        );
+
+        $this->productLabelTransfer->addLocalizedAttributes(
+            $this->generateLocalizedAttributesTransfer($localeTransfer->getIdLocale(), $this->productLabelTransfer->getIdProductLabel())
+        );
+
+        $this->tester->getProductFacade()->saveProductAbstract($this->productAbstractTransfer);
+        $this->getProductLabelFacade()->updateLabel($this->productLabelTransfer);
+
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $this->productLabelTransfer->getIdProductLabel(),
+            $this->productAbstractTransfer->getIdProductAbstract()
+        );
     }
 
     /**
@@ -56,14 +96,14 @@ class ProductLabelStorageListenerTest extends Unit
      */
     public function testProductLabelPublishStorageListenerStoreData()
     {
-        SpyProductAbstractLabelStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        SpyProductAbstractLabelStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractLabelStorageQuery::create()->count();
 
         $productLabelPublishStorageListener = new ProductLabelPublishStorageListener();
         $productLabelPublishStorageListener->setFacade($this->getProductLabelStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
         ];
         $productLabelPublishStorageListener->handleBulk($eventTransfers, ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH);
 
@@ -76,7 +116,7 @@ class ProductLabelStorageListenerTest extends Unit
      */
     public function testProductLabelStorageListenerStoreData()
     {
-        SpyProductAbstractLabelStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        SpyProductAbstractLabelStorageQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractLabelStorageQuery::create()->count();
 
         $productLabelStorageListener = new ProductLabelStorageListener();
@@ -84,7 +124,7 @@ class ProductLabelStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT => 1,
+                SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
             ]),
         ];
         $productLabelStorageListener->handleBulk($eventTransfers, ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE);
@@ -114,7 +154,7 @@ class ProductLabelStorageListenerTest extends Unit
         $spyProductLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()->findOne();
         $this->assertNotNull($spyProductLabelDictionaryStorage);
         $data = $spyProductLabelDictionaryStorage->getData();
-        $this->assertSame($labelsCount, count($data['items']));
+        $this->assertSame(5, count($data['items']));
     }
 
     /**
@@ -142,18 +182,42 @@ class ProductLabelStorageListenerTest extends Unit
         $this->assertSame($beforeCount + 348, $productLabelStorageCount);
     }
 
-        /**
-         * @param int $beforeCount
-         *
-         * @return void
-         */
+    /**
+     * @param int $beforeCount
+     *
+     * @return void
+     */
     protected function assertProductAbstractLabelStorage($beforeCount)
     {
         $productLabelStorageCount = SpyProductAbstractLabelStorageQuery::create()->count();
         $this->assertSame($beforeCount + 1, $productLabelStorageCount);
-        $spyProductAbstractLabelStorage = SpyProductAbstractLabelStorageQuery::create()->orderByIdProductAbstractLabelStorage()->findOneByFkProductAbstract(1);
+        $spyProductAbstractLabelStorage = SpyProductAbstractLabelStorageQuery::create()->orderByIdProductAbstractLabelStorage()->findOneByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract());
         $this->assertNotNull($spyProductAbstractLabelStorage);
         $data = $spyProductAbstractLabelStorage->getData();
-        $this->assertSame(2, count($data['product_label_ids']));
+        $this->assertSame(1, count($data['product_label_ids']));
+    }
+
+    /**
+     * @param int|null $fkLocale
+     * @param int|null $fkProductLabel
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer
+     */
+    protected function generateLocalizedAttributesTransfer($fkLocale = null, $fkProductLabel = null)
+    {
+        $builder = new ProductLabelLocalizedAttributesBuilder([
+            'fkProductLabel' => $fkProductLabel,
+            'fkLocale' => $fkLocale,
+        ]);
+
+        return $builder->build();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
+     */
+    protected function getProductLabelFacade()
+    {
+        return $this->tester->getLocator()->productLabel()->facade();
     }
 }
