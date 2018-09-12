@@ -72,6 +72,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     {
         $spyProductAbstractImageStorageEntities = $this->findProductAbstractImageStorageEntitiesByProductAbstractIds($productAbstractIds);
         foreach ($spyProductAbstractImageStorageEntities as $spyProductAbstractImageStorageLocalizedEntities) {
+            /** @var \Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorage $spyProductAbstractImageStorageLocalizedEntity */
             foreach ($spyProductAbstractImageStorageLocalizedEntities as $spyProductAbstractImageStorageLocalizedEntity) {
                 $spyProductAbstractImageStorageLocalizedEntity->delete();
             }
@@ -136,7 +137,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return array
+     * @return \ArrayObject
      */
     protected function generateProductAbstractImageSets($idProductAbstract, $idLocale)
     {
