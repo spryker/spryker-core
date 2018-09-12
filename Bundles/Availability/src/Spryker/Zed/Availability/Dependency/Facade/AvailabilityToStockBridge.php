@@ -88,7 +88,7 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAvailableStockTypes()
     {

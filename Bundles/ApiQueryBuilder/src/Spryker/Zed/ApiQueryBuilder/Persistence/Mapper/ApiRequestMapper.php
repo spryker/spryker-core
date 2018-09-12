@@ -131,10 +131,6 @@ class ApiRequestMapper implements ApiRequestMapperInterface
      */
     protected function buildColumnSelection(array $selectedColumns, PropelQueryBuilderColumnSelectionTransfer $columnSelectionTransfer)
     {
-        if ($columnSelectionTransfer->getTableColumns() === null) {
-            return $columnSelectionTransfer;
-        }
-
         foreach ($selectedColumns as $selectedColumnAlias) {
             $columnTransfer = $this->getColumnByAlias((array)$columnSelectionTransfer->getTableColumns(), $selectedColumnAlias);
             if ($columnTransfer) {
@@ -155,10 +151,6 @@ class ApiRequestMapper implements ApiRequestMapperInterface
     {
         $paginationTransfer = new PropelQueryBuilderPaginationTransfer();
         $paginationTransfer->fromArray($apiFilterTransfer->toArray(), true);
-
-        if ($columnSelectionTransfer->getTableColumns() === null) {
-            return $paginationTransfer;
-        }
 
         foreach ($apiFilterTransfer->getSort() as $columnAlias => $direction) {
             $sortDirection = Criteria::ASC;
