@@ -22,7 +22,10 @@ class ProductImageStorageFactory extends AbstractFactory
      */
     public function createProductViewImageExpander()
     {
-        return new ProductViewImageExpander($this->createProductAbstractImageStorageReader(), $this->createProductConcreteImageStorageReader());
+        return new ProductViewImageExpander(
+            $this->createProductAbstractImageStorageReader(),
+            $this->createProductConcreteImageInheritanceResolver()
+        );
     }
 
     /**
