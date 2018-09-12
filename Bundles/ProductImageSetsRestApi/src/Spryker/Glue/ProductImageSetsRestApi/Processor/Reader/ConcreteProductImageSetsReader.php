@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductImageSetsRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -22,8 +23,6 @@ use Symfony\Component\HttpFoundation\Response;
 class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderInterface
 {
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
-    protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
-    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     protected const SELF_LINK_FORMAT = '%s/%s/%s';
 
     /**
@@ -100,21 +99,21 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
      */
     public function findConcreteProductImageSetsBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $concreteProductData = $this->productStorageClient
+        $concreteProductStorageTransfer = (new ProductConcreteStorageTransfer())->fromArray($this->productStorageClient
             ->findProductConcreteStorageDataByMapping(
                 static::PRODUCT_CONCRETE_MAPPING_TYPE,
                 $sku,
                 $restRequest->getMetadata()->getLocale()
-            );
+            ), true);
 
-        if (!$concreteProductData) {
+        if (!$concreteProductStorageTransfer) {
             return null;
         }
 
         $productImageConcreteStorageTransfers = $this->productImageStorageClient
             ->resolveProductImageSetStorageTransfers(
-                $concreteProductData[static::KEY_ID_PRODUCT_CONCRETE],
-                $concreteProductData[static::KEY_ID_PRODUCT_ABSTRACT],
+                $concreteProductStorageTransfer->getIdProductConcrete(),
+                $concreteProductStorageTransfer->getIdProductAbstract(),
                 $restRequest->getMetadata()->getLocale()
             );
 

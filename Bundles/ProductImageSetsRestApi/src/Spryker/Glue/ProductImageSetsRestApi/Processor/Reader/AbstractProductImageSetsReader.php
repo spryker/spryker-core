@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ProductImageSetsRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\ProductAbstractImageStorageTransfer;
+use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -23,7 +24,6 @@ use Symfony\Component\HttpFoundation\Response;
 class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderInterface
 {
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
-    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     protected const SELF_LINK_FORMAT = '%s/%s/%s';
 
     /**
@@ -99,19 +99,19 @@ class AbstractProductImageSetsReader implements AbstractProductImageSetsReaderIn
      */
     public function findAbstractProductImageSetsBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $abstractProductData = $this->productStorageClient
+        $abstractProductTransfer = (new ProductAbstractStorageTransfer())->fromArray($this->productStorageClient
             ->findProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $sku,
                 $restRequest->getMetadata()->getLocale()
-            );
+            ), true);
 
-        if (!$abstractProductData) {
+        if (!$abstractProductTransfer) {
             return null;
         }
 
         $productImageAbstractStorageTransfer = $this->productImageStorageClient
-            ->findProductImageAbstractStorageTransfer($abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT], $restRequest->getMetadata()->getLocale());
+            ->findProductImageAbstractStorageTransfer($abstractProductTransfer->getIdProductAbstract(), $restRequest->getMetadata()->getLocale());
 
         if (!$productImageAbstractStorageTransfer) {
             return null;
