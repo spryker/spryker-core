@@ -191,7 +191,7 @@ interface CompanyRoleFacadeInterface
      *
      * @api
      *
-     * @deprecated Use CompanyRoleFacadeInterface::getDefaultCompanyRoleForCompany() instead.
+     * @deprecated Use CompanyRoleFacadeInterface::getDefaultCompanyRoleByIdCompany() instead.
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
@@ -205,7 +205,9 @@ interface CompanyRoleFacadeInterface
      *
      * @param int $idCompany
      *
+     * @throws \Propel\Runtime\Exception\EntityNotFoundException
+     *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
-    public function getDefaultCompanyRoleForCompany(int $idCompany): CompanyRoleTransfer;
+    public function getDefaultCompanyRoleByIdCompany(int $idCompany): CompanyRoleTransfer;
 }

@@ -59,7 +59,7 @@ interface CompanyRoleRepositoryInterface
     ): CompanyRoleCollectionTransfer;
 
     /**
-     * @deprecated Use CompanyRoleRepositoryInterface::getDefaultCompanyRoleForCompany() instead.
+     * @deprecated Use CompanyRoleRepositoryInterface::getDefaultCompanyRoleByIdCompany() instead.
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
@@ -68,9 +68,11 @@ interface CompanyRoleRepositoryInterface
     /**
      * @param int $idCompany
      *
+     * @throws \Propel\Runtime\Exception\EntityNotFoundException
+     *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
-    public function getDefaultCompanyRoleForCompany(int $idCompany): CompanyRoleTransfer;
+    public function getDefaultCompanyRoleByIdCompany(int $idCompany): CompanyRoleTransfer;
 
     /**
      * @param int $idCompanyRole

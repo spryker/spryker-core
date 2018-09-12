@@ -315,7 +315,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     }
 
     /**
-     * @deprecated Use CompanyRoleRepository::getDefaultCompanyRoleForCompany() instead.
+     * @deprecated Use CompanyRoleRepository::getDefaultCompanyRoleByIdCompany() instead.
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
@@ -337,14 +337,13 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
-    public function getDefaultCompanyRoleForCompany(int $idCompany): CompanyRoleTransfer
+    public function getDefaultCompanyRoleByIdCompany(int $idCompany): CompanyRoleTransfer
     {
-        $query = $this->getFactory()
+        $companyRoleEntity = $this->getFactory()
             ->createCompanyRoleQuery()
             ->filterByFkCompany($idCompany)
-            ->filterByIsDefault(true);
-
-        $companyRoleEntity = $this->buildQueryFromCriteria($query)->findOne();
+            ->filterByIsDefault(true)
+            ->findOne();
 
         if (!$companyRoleEntity) {
             throw new EntityNotFoundException(sprintf('Company default role was not found for company: %s', $idCompany));

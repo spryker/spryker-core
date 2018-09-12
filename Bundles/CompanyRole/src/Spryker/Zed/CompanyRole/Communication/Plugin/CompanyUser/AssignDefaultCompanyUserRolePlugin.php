@@ -41,7 +41,7 @@ class AssignDefaultCompanyUserRolePlugin extends AbstractPlugin implements Compa
     {
         $this->assertRequiredProperties($companyUserResponseTransfer);
 
-        $defaultCompanyRoleTransfer = $this->getFacade()->getDefaultCompanyRoleForCompany(
+        $defaultCompanyRoleTransfer = $this->getFacade()->getDefaultCompanyRoleByIdCompany(
             $companyUserResponseTransfer->getCompanyUser()->getFkCompany()
         );
 
