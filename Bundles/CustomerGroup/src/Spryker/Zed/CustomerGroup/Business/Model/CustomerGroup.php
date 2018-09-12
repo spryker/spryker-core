@@ -44,11 +44,9 @@ class CustomerGroup implements CustomerGroupInterface
         $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
 
         $customerGroupToCustomerCollection = $customerGroupEntity->getSpyCustomerGroupToCustomers();
-        if ($customerGroupToCustomerCollection) {
-            $customerGroupTransfer->setCustomers(
-                $this->entityCollectionToTransferCollection($customerGroupToCustomerCollection)
-            );
-        }
+        $customerGroupTransfer->setCustomers(
+            $this->entityCollectionToTransferCollection($customerGroupToCustomerCollection)
+        );
 
         return $customerGroupTransfer;
     }
