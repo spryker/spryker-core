@@ -129,10 +129,6 @@ class AddressesWriter implements AddressesWriterInterface
 
         $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
 
-        if (!$this->isSameCustomerReference($restRequest)) {
-            return $this->createUnauthorizedError($restResponse);
-        }
-
         if (!$restRequest->getResource()->getId()) {
             return $this->createAddressUuidMissingError($restResponse);
         }
@@ -141,6 +137,10 @@ class AddressesWriter implements AddressesWriterInterface
 
         if (!$customerResponseTransfer->getHasCustomer()) {
             return $this->createErrorCustomerNotFound($restResponse);
+        }
+
+        if (!$this->isSameCustomerReference($restRequest)) {
+            return $this->createUnauthorizedError($restResponse);
         }
 
         $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
@@ -182,10 +182,6 @@ class AddressesWriter implements AddressesWriterInterface
 
         $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
 
-        if (!$this->isSameCustomerReference($restRequest)) {
-            return $this->createUnauthorizedError($restResponse);
-        }
-
         if (!$restRequest->getResource()->getId()) {
             return $this->createAddressUuidMissingError($restResponse);
         }
@@ -194,6 +190,10 @@ class AddressesWriter implements AddressesWriterInterface
 
         if (!$customerResponseTransfer->getHasCustomer()) {
             return $this->createErrorCustomerNotFound($restResponse);
+        }
+
+        if (!$this->isSameCustomerReference($restRequest)) {
+            return $this->createUnauthorizedError($restResponse);
         }
 
         $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
