@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class EditCompanyUnitAddressController extends AbstractController
 {
     const URL_PARAM_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
-    protected const LIST_URL = '/company-unit-address-gui/list-company-unit-address';
+    protected const COMPANY_UNIT_ADDRESS_LIST = '/company-unit-address-gui/list-company-unit-address';
 
     const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS = 'Company unit address has been successfully updated.';
     const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_ERROR = 'Company unit address update failed.';
@@ -42,7 +42,7 @@ class EditCompanyUnitAddressController extends AbstractController
         if (!$companyUnitAddressForm->getData()->getIdCompanyUnitAddress()) {
             $this->addErrorMessage(static::MESSAGE_COMPANY_UNIT_ADDRESS_NOT_FOUND);
 
-            return $this->redirectResponse(static::LIST_URL);
+            return $this->redirectResponse(static::COMPANY_UNIT_ADDRESS_LIST);
         }
 
         if ($companyUnitAddressForm->isSubmitted()) {
