@@ -117,6 +117,20 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     /**
      * @api
      *
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function createUser(UserTransfer $userTransfer): UserTransfer
+    {
+        return $this->getFactory()
+            ->createUserModel()
+            ->createUser($userTransfer);
+    }
+
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -205,18 +219,6 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
         return $this->getFactory()
             ->createUserModel()
             ->getSystemUsers();
-    }
-
-    /**
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function getUsers()
-    {
-        return $this->getFactory()
-            ->createUserModel()
-            ->getUsers();
     }
 
     /**

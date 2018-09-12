@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Cart;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -82,17 +83,14 @@ class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterfa
      */
     protected function getProductImages(array $imageSets)
     {
-        $firstProductImageSetImages = [];
         foreach ($imageSets as $imageSet) {
             if ($imageSet->getName() === static::DEFAULT_IMAGE_SET_NAME) {
                 return $imageSet->getProductImages();
             }
 
-            if (!$firstProductImageSetImages) {
-                $firstProductImageSetImages = $imageSet->getProductImages();
-            }
+            return $imageSet->getProductImages();
         }
 
-        return $firstProductImageSetImages;
+        return new ArrayObject();
     }
 }
