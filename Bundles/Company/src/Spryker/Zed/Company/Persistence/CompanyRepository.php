@@ -61,6 +61,10 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
             ->filterByIdCompany($idCompany)
             ->findOne();
 
+        if (!$spyCompany) {
+            return new CompanyTransfer();
+        }
+
         return $this->getFactory()
             ->createCompanyMapper()
             ->mapEntityToCompanyTransfer($spyCompany, new CompanyTransfer());

@@ -35,6 +35,10 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
             ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
 
+        if (!$entityTransfer) {
+            return new CompanyBusinessUnitTransfer();
+        }
+
         return $this->getFactory()
             ->createCompanyBusinessUnitMapper()
             ->mapEntityTransferToBusinessUnitTransfer($entityTransfer, new CompanyBusinessUnitTransfer());

@@ -25,6 +25,8 @@ class EditCompanyBusinessUnitController extends AbstractController
      */
     protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';
 
+    protected const MESSAGE_BUSINESS_UNIT_NOT_FOUND = 'Company business unit not found';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -36,9 +38,17 @@ class EditCompanyBusinessUnitController extends AbstractController
         $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL, static::URL_BUSINESS_UNIT_LIST);
 
         $dataProvider = $this->getFactory()->createCompanyBusinessUnitFormDataProvider();
+        $formData = $dataProvider->getData($idCompanyBusinessUnit);
+
+        if (!$formData->getIdCompanyBusinessUnit()) {
+            $this->addErrorMessage(static::MESSAGE_BUSINESS_UNIT_NOT_FOUND);
+
+            return $this->redirectResponse(static::URL_BUSINESS_UNIT_LIST);
+        }
+
         $form = $this->getFactory()
             ->getCompanyBusinessUnitEditForm(
-                $dataProvider->getData($idCompanyBusinessUnit),
+                $formData,
                 $dataProvider->getOptions($idCompanyBusinessUnit)
             )
             ->handleRequest($request);
