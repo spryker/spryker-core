@@ -35,7 +35,7 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
         }
 
         if (!isset($configuration[static::FIELD_CENT_AMOUNT])) {
-            return false;
+            return true;
         }
 
         if ($configuration[static::FIELD_CENT_AMOUNT] <= (int)$centAmount) {
