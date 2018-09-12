@@ -21,9 +21,11 @@ class ProductListMerchantRelationshipPreDeletePlugin extends AbstractPlugin impl
     public const ERROR_MESSAGE = 'merchant.relationship.product.list.pre.delete.check';
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipDeleteResponseTransfer $merchantRelationshipDeleteResponseTransfer
      */
     public function execute(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipDeleteResponseTransfer
     {
