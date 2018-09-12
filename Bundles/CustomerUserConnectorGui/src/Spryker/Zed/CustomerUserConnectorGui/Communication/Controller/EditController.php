@@ -21,6 +21,8 @@ class EditController extends AbstractController
     const PAGE_EDIT = '/customer-user-connector-gui/edit';
     const PAGE_EDIT_WITH_PARAMS = '/customer-user-connector-gui/edit?%s=%d';
 
+    public const PAGE_USER = '/user';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -43,6 +45,13 @@ class EditController extends AbstractController
         }
 
         $userTransfer = $this->getUserTransfer($idUser);
+
+        if (!$userTransfer->getIdUser()) {
+            $this->addErrorMessage("User couldn't be found");
+
+            return $this->redirectResponse(static::PAGE_USER);
+        }
+
         return $this->viewResponse([
             'availableCustomers' => $this->getFactory()->createAvailableCustomerTable($userTransfer)->render(),
             'assignedCustomers' => $this->getFactory()->createAssignedCustomerTable($userTransfer)->render(),
@@ -59,6 +68,11 @@ class EditController extends AbstractController
     protected function getUserTransfer($idUser)
     {
         $userEntity = $this->getFactory()->getUserQueryContainer()->queryUserById($idUser)->findOne();
+
+        if (!$userEntity) {
+            return new UserTransfer();
+        }
+
         $userTransfer = (new UserTransfer())->fromArray($userEntity->toArray(), true);
 
         return $userTransfer;

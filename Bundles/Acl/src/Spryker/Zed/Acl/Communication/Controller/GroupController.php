@@ -24,6 +24,7 @@ class GroupController extends AbstractController
     const USER_LIST_URL = '/acl/users';
     const PARAMETER_ID_GROUP = 'id-group';
     const PARAMETER_ID_USER = 'id-user';
+    public const GROUP_LIST_URL = '/acl/group';
 
     const MESSAGE_GROUP_CREATE_SUCCESS = 'Group was created successfully.';
     const MESSAGE_GROUP_UPDATE_SUCCESS = 'Group was updated successfully.';
@@ -100,9 +101,17 @@ class GroupController extends AbstractController
 
         $dataProvider = $this->getFactory()->createGroupFormDataProvider();
 
+        $formData = $dataProvider->getData($idAclGroup);
+
+        if (!$formData) {
+            $this->addErrorMessage("Group couldn't be found");
+
+            return $this->redirectResponse(static::GROUP_LIST_URL);
+        }
+
         $form = $this->getFactory()
             ->createGroupForm(
-                $dataProvider->getData($idAclGroup),
+                $formData,
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Acl\Communication\Controller;
 
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
+use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
 use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
 use Spryker\Zed\Acl\Communication\Form\RoleForm;
@@ -105,9 +106,15 @@ class RoleController extends AbstractController
 
         $dataProvider = $this->getFactory()->createAclRoleFormDataProvider();
 
-        $roleForm = $this->getFactory()
-            ->createRoleForm($dataProvider->getData($idAclRole))
-            ->handleRequest($request);
+        try {
+            $roleForm = $this->getFactory()
+                ->createRoleForm($dataProvider->getData($idAclRole))
+                ->handleRequest($request);
+        } catch (EmptyEntityException $e) {
+            $this->addErrorMessage("Role couldn't be found");
+
+            return $this->redirectResponse(static::ACL_ROLE_LIST_URL);
+        }
 
         $this->handleRoleForm($request, $roleForm);
 

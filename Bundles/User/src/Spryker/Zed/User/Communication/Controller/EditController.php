@@ -98,12 +98,18 @@ class EditController extends AbstractController
 
         $dataProvider = $this->getFactory()->createUserUpdateFormDataProvider();
 
-        $userForm = $this->getFactory()
-            ->createUpdateUserForm(
-                $dataProvider->getData($idUser),
-                $dataProvider->getOptions()
-            )
-            ->handleRequest($request);
+        try {
+            $userForm = $this->getFactory()
+                ->createUpdateUserForm(
+                    $dataProvider->getData($idUser),
+                    $dataProvider->getOptions()
+                )
+                ->handleRequest($request);
+        } catch (UserNotFoundException $e) {
+            $this->addErrorMessage("User couldn't be found");
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
 
         if ($userForm->isSubmitted() && $userForm->isValid()) {
             $formData = $userForm->getData();
