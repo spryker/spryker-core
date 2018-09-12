@@ -250,7 +250,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     }
 
     /**
-     * @param int $fkCategoryNodeParent
+     * @param int|null $fkCategoryNodeParent
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[] $categoryNodes
      *
      * @return array

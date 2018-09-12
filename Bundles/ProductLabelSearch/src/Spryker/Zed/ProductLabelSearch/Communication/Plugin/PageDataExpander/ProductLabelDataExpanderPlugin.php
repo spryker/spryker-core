@@ -20,6 +20,8 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
 class ProductLabelDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
+     * @api
+     *
      * @param array $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *

@@ -13,7 +13,7 @@ use Spryker\Shared\ZedRequest\Client\Middleware\MiddlewareInterface;
 class HandlerStackContainer
 {
     /**
-     * @var \GuzzleHttp\HandlerStack
+     * @var \GuzzleHttp\HandlerStack|null
      */
     protected static $handlerStack;
 

@@ -163,7 +163,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return array
+     * @return \ArrayObject
      */
     protected function generateCategories($idProductAbstract, $idLocale)
     {
@@ -189,12 +189,13 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      * @param \ArrayObject $productCategoryCollection
      * @param int $idLocale
      *
-     * @return array
+     * @return \ArrayObject
      */
     protected function generateProductCategoryData(SpyProductCategory $productCategory, $productCategoryCollection, $idLocale)
     {
         foreach ($productCategory->getSpyCategory()->getNodes() as $node) {
             $queryPath = $this->queryContainer->queryPath($node->getIdCategoryNode(), $idLocale);
+            /** @var array $pathTokens */
             $pathTokens = $queryPath->find();
 
             $productCategoryCollection = $this->generateCategoryData($pathTokens, $productCategoryCollection, $idLocale);
@@ -208,7 +209,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      * @param \ArrayObject $productCategoryCollection
      * @param int $idLocale
      *
-     * @return array
+     * @return \ArrayObject
      */
     protected function generateCategoryData(array $pathTokens, $productCategoryCollection, $idLocale)
     {

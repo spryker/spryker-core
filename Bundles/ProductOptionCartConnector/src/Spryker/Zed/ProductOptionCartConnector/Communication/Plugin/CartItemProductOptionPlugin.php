@@ -20,6 +20,8 @@ class CartItemProductOptionPlugin extends AbstractPlugin implements ItemExpander
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
