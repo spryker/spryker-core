@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\CmsPageSearch;
 
+use Spryker\Client\CmsPageSearch\Config\CmsPagePaginationConfigBuilder;
 use Spryker\Client\CmsPageSearch\Config\CmsPageSortConfigBuilder;
+use Spryker\Client\CmsPageSearch\Config\PaginationConfigBuilderInterface;
 use Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
@@ -81,6 +83,22 @@ class CmsPageSearchFactory extends AbstractFactory
     public function createSortConfigBuilder(): SortConfigBuilderInterface
     {
         return new CmsPageSortConfigBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\CmsPageSearch\Config\PaginationConfigBuilderInterface
+     */
+    public function getCmsPagePaginationConfig(): PaginationConfigBuilderInterface
+    {
+        return $this->getConfig()->buildCmsPagePaginationConfig($this->createPaginationConfigBuilder());
+    }
+
+    /**
+     * @return \Spryker\Client\CmsPageSearch\Config\PaginationConfigBuilderInterface
+     */
+    public function createPaginationConfigBuilder(): PaginationConfigBuilderInterface
+    {
+        return new CmsPagePaginationConfigBuilder();
     }
 
     /**

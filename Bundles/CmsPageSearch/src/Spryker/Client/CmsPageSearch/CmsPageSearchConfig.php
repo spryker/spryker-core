@@ -8,7 +8,9 @@
 namespace Spryker\Client\CmsPageSearch;
 
 use Generated\Shared\Search\PageIndexMap;
+use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Generated\Shared\Transfer\SortConfigTransfer;
+use Spryker\Client\CmsPageSearch\Config\PaginationConfigBuilderInterface;
 use Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface;
 use Spryker\Client\Kernel\AbstractBundleConfig;
 
@@ -18,6 +20,11 @@ class CmsPageSearchConfig extends AbstractBundleConfig
         ['name' => 'name', 'parameterName' => 'name_asc', 'fieldName' => PageIndexMap::STRING_SORT, 'isDescending' => false],
         ['name' => 'name', 'parameterName' => 'name_desc', 'fieldName' => PageIndexMap::STRING_SORT, 'isDescending' => true],
     ];
+
+    protected const CMS_PAGES_PAGINATION_DEFAULT_ITEMS_PER_PAGE = 12;
+    protected const CMS_PAGES_PAGINATION_VALID_ITEMS_PER_PAGE_OPTIONS = [12, 24, 36];
+    protected const CMS_PAGES_PAGINATION_PARAMETER_NAME_PAGE = 'page';
+    protected const CMS_PAGES_PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME = 'ipp';
 
     /**
      * @param \Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface $sortConfigBuilder
@@ -46,5 +53,55 @@ class CmsPageSearchConfig extends AbstractBundleConfig
     public function getCmsPageSortOptions(): array
     {
         return static::CMS_PAGES_SORT_OPTIONS;
+    }
+
+    /**
+     * @param \Spryker\Client\CmsPageSearch\Config\PaginationConfigBuilderInterface $paginationConfigBuilder
+     *
+     * @return \Spryker\Client\CmsPageSearch\Config\PaginationConfigBuilderInterface
+     */
+    public function buildCmsPagePaginationConfig(PaginationConfigBuilderInterface $paginationConfigBuilder): PaginationConfigBuilderInterface
+    {
+        $paginationConfigTransfer = (new PaginationConfigTransfer())
+            ->setParameterName($this->getCmsPagePaginationParameterNamePage())
+            ->setItemsPerPageParameterName($this->getCmsPagePaginationItemsPerPageParameterName())
+            ->setDefaultItemsPerPage($this->getCmsPagePaginationDefaultItemsPerPage())
+            ->setValidItemsPerPageOptions($this->getCmsPagePaginationValidItemsPerPageOptions());
+
+        $paginationConfigBuilder->setPaginationConfigTransfer($paginationConfigTransfer);
+
+        return $paginationConfigBuilder;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCmsPagePaginationParameterNamePage(): string
+    {
+        return static::CMS_PAGES_PAGINATION_PARAMETER_NAME_PAGE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCmsPagePaginationItemsPerPageParameterName(): string
+    {
+        return static::CMS_PAGES_PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCmsPagePaginationDefaultItemsPerPage(): int
+    {
+        return static::CMS_PAGES_PAGINATION_DEFAULT_ITEMS_PER_PAGE;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCmsPagePaginationValidItemsPerPageOptions(): array
+    {
+        return static::CMS_PAGES_PAGINATION_VALID_ITEMS_PER_PAGE_OPTIONS;
     }
 }
