@@ -35,7 +35,7 @@ class CompanyRoleConfig extends AbstractBundleConfig
     /**
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer[]
      */
-    public function getCompanyRoles(): array
+    public function getPredefinedCompanyRoles(): array
     {
         return [
             $this->getAdminRole(),

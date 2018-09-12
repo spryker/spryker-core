@@ -107,6 +107,8 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
      *
      * @api
      *
+     * @uses \SprykerShop\Shared\CompanyPage\Plugin\CompanyUserStatusChangePermissionPlugin
+     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
@@ -128,6 +130,8 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
      * {@inheritdoc}
      *
      * @api
+     *
+     * @uses \SprykerShop\Shared\CompanyPage\Plugin\CompanyUserStatusChangePermissionPlugin
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *

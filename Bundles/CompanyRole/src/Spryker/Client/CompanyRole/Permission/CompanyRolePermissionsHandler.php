@@ -50,11 +50,11 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
     ): PermissionCollectionTransfer {
         $preparedPermissions = new ArrayObject();
 
-        $allPermissions = $this->permissionClient->findAll()->getPermissions();
+        $availablePermissions = $this->permissionClient->findAll()->getPermissions();
         $storedCompanyRolePermissions = $this->companyRoleStub->findCompanyRolePermissions($companyRoleTransfer)
             ->getPermissions();
 
-        $filteredPermissions = $this->filterUnassignedPermissions($allPermissions, $storedCompanyRolePermissions);
+        $filteredPermissions = $this->filterAvailableCompanyRolePermissions($availablePermissions, $storedCompanyRolePermissions);
         $filteredPermissions = $this->getFilteredPermissionKeyIndexes($filteredPermissions);
 
         foreach ($filteredPermissions as $filteredPermissionTransfer) {
@@ -95,20 +95,20 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[]
      */
-    protected function filterUnassignedPermissions(
+    protected function filterAvailableCompanyRolePermissions(
         ArrayObject $allPermissions,
         ArrayObject $storedCompanyRolePermissions
     ): ArrayObject {
-        $commonPermissions = new ArrayObject();
+        $availableCompanyRolePermissions = new ArrayObject();
         foreach ($allPermissions as $permissionTransfer) {
             foreach ($storedCompanyRolePermissions as $storedCompanyRolePermission) {
                 if ($storedCompanyRolePermission->getKey() === $permissionTransfer->getKey()) {
-                    $commonPermissions[] = $permissionTransfer;
+                    $availableCompanyRolePermissions[] = $permissionTransfer;
                 }
             }
         }
 
-        return $commonPermissions;
+        return $availableCompanyRolePermissions;
     }
 
     /**

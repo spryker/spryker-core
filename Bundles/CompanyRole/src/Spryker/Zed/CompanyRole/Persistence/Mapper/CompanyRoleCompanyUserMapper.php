@@ -31,7 +31,7 @@ class CompanyRoleCompanyUserMapper implements CompanyRoleCompanyUserMapperInterf
             $companyUserTransfer = (new CompanyUserTransfer())
                 ->fromArray($spyCompanyRoleToCompanyUser->getCompanyUser()->toArray(), true);
 
-            /** @var \Orm\Zed\Customer\Persistence\SpyCustomer|null $spyCustomer */
+            /** @var \Orm\Zed\Customer\Persistence\SpyCustomer $spyCustomer */
             $spyCustomer = $spyCompanyRoleToCompanyUser->getCompanyUser()->getCustomer();
 
             $customerTransfer = new CustomerTransfer();
