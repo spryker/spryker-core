@@ -68,10 +68,18 @@ class ProductPageSearchToProductBridge implements ProductPageSearchToProductInte
     /**
      * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function findConcreteProductsByIds(array $productConcreteIds): array
     {
         return $this->productFacade->findConcreteProductsByIds($productConcreteIds);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     */
+    public function findAllConcreteProducts(): array
+    {
+        return $this->productFacade->findAllConcreteProducts();
     }
 }

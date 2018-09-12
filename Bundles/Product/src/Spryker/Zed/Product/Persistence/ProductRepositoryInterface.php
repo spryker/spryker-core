@@ -71,4 +71,9 @@ interface ProductRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function findConcreteProductsByIds(array $ids): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function findAllConcreteProducts(): array;
 }

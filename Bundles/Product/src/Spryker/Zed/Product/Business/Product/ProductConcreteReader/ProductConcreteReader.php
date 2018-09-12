@@ -33,4 +33,12 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     {
         return $this->repository->findConcreteProductsByIds($ids);
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function findAllConcreteProducts(): array
+    {
+        return $this->repository->findAllConcreteProducts();
+    }
 }
