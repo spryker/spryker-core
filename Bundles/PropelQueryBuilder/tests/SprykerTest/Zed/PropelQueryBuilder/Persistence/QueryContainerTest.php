@@ -405,14 +405,13 @@ class QueryContainerTest extends Unit
     }
 
     /**
-     * @param mixed $collection
+     * @param \Orm\Zed\Product\Persistence\SpyProduct[] $collection
      * @param array $expectedSkuCollection
      *
      * @return void
      */
     protected function assertSkuCollection($collection, array $expectedSkuCollection)
     {
-        /** @var \Orm\Zed\Product\Persistence\SpyProduct|\Orm\Zed\Product\Persistence\SpyProduct $productEntity */
         foreach ($collection as $productEntity) {
             $sku = $productEntity->getSku();
             $this->assertContains($sku, $expectedSkuCollection);
@@ -420,14 +419,13 @@ class QueryContainerTest extends Unit
     }
 
     /**
-     * @param mixed $collection
+     * @param \Orm\Zed\Product\Persistence\SpyProduct[] $collection
      * @param array $expectedSkuCollection
      *
      * @return void
      */
     protected function assertSkuCollectionWithSelectedColumns($collection, array $expectedSkuCollection)
     {
-        /** @var \Orm\Zed\Product\Persistence\SpyProduct|\Orm\Zed\Product\Persistence\SpyProduct $productData */
         foreach ($collection as $productData) {
             $this->assertContains($productData['sku'], $expectedSkuCollection);
         }

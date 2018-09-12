@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -83,9 +84,9 @@ class SetTable extends AbstractTable
     {
         $result = [];
 
+        /** @var \Orm\Zed\Tax\Persistence\SpyTaxSet[] $queryResult */
         $queryResult = $this->runQuery($this->taxSetQuery, $config, true);
 
-        /** @var \Orm\Zed\Tax\Persistence\SpyTaxSet $taxSetEntity */
         foreach ($queryResult as $taxSetEntity) {
             $result[] = [
                 SpyTaxSetTableMap::COL_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),

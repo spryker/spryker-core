@@ -19,6 +19,8 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 class NopaymentCommandPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
     /**
+     * @api
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data

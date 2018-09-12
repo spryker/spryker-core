@@ -108,7 +108,7 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface[]
      */
     protected function getUrlBeforeDeletePlugins()
     {
@@ -116,7 +116,7 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
+     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface[]
      */
     protected function getUrlAfterDeletePlugins()
     {

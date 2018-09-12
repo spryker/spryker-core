@@ -30,14 +30,11 @@ class GroupKeyExpander implements GroupKeyExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return string
+     * @return string|null
      */
     protected function buildGroupKey(ItemTransfer $itemTransfer)
     {
         $currentGroupKey = $itemTransfer->getGroupKey();
-        if (!$itemTransfer->getProductOptions()) {
-            return $currentGroupKey;
-        }
 
         $sortedProductOptions = $this->sortOptions((array)$itemTransfer->getProductOptions());
         $optionGroupKey = $this->combineOptionParts($sortedProductOptions);

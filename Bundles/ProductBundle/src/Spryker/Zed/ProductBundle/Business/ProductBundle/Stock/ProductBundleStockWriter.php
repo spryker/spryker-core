@@ -233,7 +233,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle|null
      */
     protected function findProductBundleBySku($sku)
     {
