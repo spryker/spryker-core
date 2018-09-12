@@ -1,6 +1,9 @@
 parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
+    ignoreErrors:
+        - '#Casting to int something that.+s already int\.#'
+
 services:
     -
         class: PhpStan\DynamicType\FacadeDynamicTypeExtension
