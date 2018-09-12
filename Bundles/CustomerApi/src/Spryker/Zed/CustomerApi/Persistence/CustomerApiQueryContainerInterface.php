@@ -23,7 +23,7 @@ interface CustomerApiQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idCustomer
      *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery|null
+     * @return null|\Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryGet($idCustomer);
 
@@ -32,7 +32,7 @@ interface CustomerApiQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idCustomer
      *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery|null
+     * @return null|\Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryRemove($idCustomer);
 }

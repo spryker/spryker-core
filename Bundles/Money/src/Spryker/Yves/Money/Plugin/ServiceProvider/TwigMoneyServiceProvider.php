@@ -12,7 +12,6 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
 use Twig_SimpleFilter;
 
 /**
@@ -28,7 +27,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) {
+            $app->extend('twig', function (\Twig_Environment $twig) {
                 $twig->addFilter($this->getMoneyFilter());
                 $twig->addFilter($this->getMoneyRawFilter());
 
@@ -88,7 +87,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
 
     /**
      * @param int|string|float $money
-     * @param string|null $isoCode
+     * @param null|string $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */

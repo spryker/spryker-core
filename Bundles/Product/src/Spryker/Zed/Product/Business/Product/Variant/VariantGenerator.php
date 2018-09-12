@@ -47,7 +47,7 @@ class VariantGenerator implements VariantGeneratorInterface
     {
         $tokens = [];
         for ($a = 0; $a < $attributeCount; $a++) {
-            [$type, $value] = each($attributeCollection[$a][$current[$a]]);
+            list($type, $value) = each($attributeCollection[$a][$current[$a]]);
             $tokens[$type] = $value;
         }
 

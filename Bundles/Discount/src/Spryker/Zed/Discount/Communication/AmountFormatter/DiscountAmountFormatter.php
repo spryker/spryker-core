@@ -54,7 +54,7 @@ class DiscountAmountFormatter implements DiscountAmountFormatterInterface
     /**
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface $calculatorPlugin
      * @param int $amount
-     * @param string|null $isoCode
+     * @param null|string $isoCode
      *
      * @return string
      */

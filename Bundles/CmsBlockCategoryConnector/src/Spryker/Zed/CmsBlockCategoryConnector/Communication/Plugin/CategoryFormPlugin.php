@@ -20,8 +20,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInterface, CategoryRelationUpdatePluginInterface
 {
     /**
-     * @api
-     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return void
@@ -44,8 +42,6 @@ class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInt
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void

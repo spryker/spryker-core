@@ -33,8 +33,6 @@ class BalanceTransactionLogPaymentSaverPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *

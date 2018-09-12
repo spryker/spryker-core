@@ -290,7 +290,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @param int $idConcrete
      *
-     * @return int|null
+     * @return null|int
      */
     public function findProductAbstractIdByConcreteId(int $idConcrete): ?int
     {

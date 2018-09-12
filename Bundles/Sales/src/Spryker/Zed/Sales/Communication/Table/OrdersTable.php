@@ -200,7 +200,7 @@ class OrdersTable extends AbstractTable
     /**
      * @param int $value
      * @param bool $includeSymbol
-     * @param string|null $currencyIsoCode
+     * @param null|string $currencyIsoCode
      *
      * @return string
      */

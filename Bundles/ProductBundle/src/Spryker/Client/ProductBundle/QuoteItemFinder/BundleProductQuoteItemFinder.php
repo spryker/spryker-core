@@ -32,7 +32,7 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
-     * @param string|null $groupKey
+     * @param null|string $groupKey
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */

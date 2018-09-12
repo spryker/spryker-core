@@ -88,7 +88,7 @@ class EditController extends AddController
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-        }
+        };
 
         $type = $request->query->get(self::PARAM_PRODUCT_TYPE);
 
@@ -188,7 +188,7 @@ class EditController extends AddController
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-        }
+        };
 
         return $this->viewResponse([
             'form' => $form->createView(),

@@ -24,8 +24,6 @@ class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterfa
     public const DAYS = 7;
 
     /**
-     * @api
-     *
      * @return string
      */
     public function getName(): string
@@ -34,8 +32,6 @@ class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterfa
     }
 
     /**
-     * @api
-     *
      * @param string|null $dataIdentifier
      *
      * @return \Generated\Shared\Transfer\ChartDataTransfer
@@ -53,8 +49,6 @@ class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterfa
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public function render(): string

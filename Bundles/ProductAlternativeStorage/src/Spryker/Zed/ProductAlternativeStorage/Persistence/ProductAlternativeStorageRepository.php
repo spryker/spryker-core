@@ -135,7 +135,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage|null
+     * @return null|\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage
      */
     public function findProductReplacementStorageEntitiesBySku(string $sku): ?SpyProductReplacementForStorage
     {

@@ -34,7 +34,7 @@ class EventSubscriberCollection implements EventSubscriberCollectionInterface
      *
      * @param mixed $offset
      *
-     * @return bool true on success or false on failure.
+     * @return boolean true on success or false on failure.
      */
     public function offsetExists($offset)
     {

@@ -165,7 +165,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
 
         $pairs = [];
         foreach ($productConcreteLocalizedEntities as $productConcreteLocalizedEntity) {
-            [$pairs, $mappedProductConcreteStorageEntities] = $this->pairProductConcreteLocalizedEntityWithProductConcreteStorageEntitiesByStoresAndLocale(
+            list($pairs, $mappedProductConcreteStorageEntities) = $this->pairProductConcreteLocalizedEntityWithProductConcreteStorageEntitiesByStoresAndLocale(
                 $productConcreteLocalizedEntity[static::COL_FK_PRODUCT],
                 $productConcreteLocalizedEntity['Locale']['locale_name'],
                 $productConcreteLocalizedEntity,

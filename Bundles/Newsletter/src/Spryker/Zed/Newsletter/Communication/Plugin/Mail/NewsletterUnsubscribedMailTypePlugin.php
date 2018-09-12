@@ -20,8 +20,6 @@ class NewsletterUnsubscribedMailTypePlugin extends AbstractPlugin implements Mai
     const MAIL_TYPE = 'newsletter unsubscribed mail';
 
     /**
-     * @api
-     *
      * @return string
      */
     public function getName()
@@ -30,8 +28,6 @@ class NewsletterUnsubscribedMailTypePlugin extends AbstractPlugin implements Mai
     }
 
     /**
-     * @api
-     *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      *
      * @return void

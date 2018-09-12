@@ -21,9 +21,7 @@ class ProductValidator implements ProductValidatorInterface
     const MESSAGE_PARAM_SKU = 'sku';
     public const MESSAGE_ERROR_CONCRETE_PRODUCT_INACTIVE = 'product-cart.validation.error.concrete-product-inactive';
 
-    /**
-     * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface
-     */
+    /** @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface */
     protected $productFacade;
 
     /**

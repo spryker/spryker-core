@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -114,7 +113,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     public function getAcceptedTypesByFieldName($fieldName)
     {
         if (strpos($fieldName, '.') !== false) {
-            [$fieldName, $attribute] = explode('.', $fieldName);
+            list($fieldName, $attribute) = explode('.', $fieldName);
         }
 
         foreach ($this->specificationPlugins as $specificationPlugin) {

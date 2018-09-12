@@ -78,7 +78,7 @@ class ZedBootstrap
         $serviceProviders = $this->getServiceProvider();
         foreach ($serviceProviders as $serviceProvider) {
             if (!($serviceProvider instanceof ServiceProviderInterface)) {
-                $serviceProvider = new $serviceProvider();
+                $serviceProvider = new $serviceProvider;
             }
             $this->application->register($serviceProvider);
         }

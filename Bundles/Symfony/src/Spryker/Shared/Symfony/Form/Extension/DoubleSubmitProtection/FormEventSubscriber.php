@@ -173,7 +173,7 @@ class FormEventSubscriber implements EventSubscriberInterface
      * @param array $data
      * @param string $formName
      *
-     * @return bool
+     * @return boolean
      */
     protected function isTokenValid($data, $formName)
     {

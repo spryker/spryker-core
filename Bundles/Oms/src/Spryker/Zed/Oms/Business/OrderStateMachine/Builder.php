@@ -98,7 +98,7 @@ class Builder implements BuilderInterface
             /** @var \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processMap */
             $processMap = [];
 
-            [$processMap, $mainProcess] = $this->createSubProcess($processMap);
+            list($processMap, $mainProcess) = $this->createSubProcess($processMap);
 
             $stateToProcessMap = $this->createStates($processMap);
 

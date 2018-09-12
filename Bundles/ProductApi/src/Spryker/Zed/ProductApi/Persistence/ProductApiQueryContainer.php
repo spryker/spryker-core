@@ -29,7 +29,7 @@ class ProductApiQueryContainer extends AbstractQueryContainer implements Product
      *
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|null
+     * @return null|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryGet($idProductAbstract)
     {
@@ -43,7 +43,7 @@ class ProductApiQueryContainer extends AbstractQueryContainer implements Product
      *
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|null
+     * @return null|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryRemove($idProductAbstract)
     {

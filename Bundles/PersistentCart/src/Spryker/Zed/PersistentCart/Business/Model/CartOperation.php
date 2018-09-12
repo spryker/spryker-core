@@ -274,7 +274,7 @@ class CartOperation implements CartOperationInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     * @return null|\Generated\Shared\Transfer\ItemTransfer
      */
     protected function findItemInQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): ?ItemTransfer
     {

@@ -198,9 +198,9 @@ class FileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|null $uploadedFile
+     * @param null|\Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile
      *
-     * @return \Generated\Shared\Transfer\FileUploadTransfer|null
+     * @return null|\Generated\Shared\Transfer\FileUploadTransfer
      */
     protected function mapUploadedFileToTransfer(?UploadedFile $uploadedFile = null)
     {

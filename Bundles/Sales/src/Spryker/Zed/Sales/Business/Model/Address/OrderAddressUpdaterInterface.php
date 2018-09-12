@@ -15,7 +15,7 @@ interface OrderAddressUpdaterInterface
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      * @param int $idAddress
      *
-     * @return bool
+     * @return boolean
      */
     public function update(AddressTransfer $addressTransfer, $idAddress);
 }

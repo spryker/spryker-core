@@ -21,8 +21,6 @@ class SynchronizationSearchQueueMessageProcessorPlugin extends AbstractPlugin im
     const DELETE_TYPE = 'delete';
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
@@ -47,8 +45,6 @@ class SynchronizationSearchQueueMessageProcessorPlugin extends AbstractPlugin im
     }
 
     /**
-     * @api
-     *
      * @return int
      */
     public function getChunkSize()

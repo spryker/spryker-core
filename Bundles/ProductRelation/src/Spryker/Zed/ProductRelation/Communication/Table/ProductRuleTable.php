@@ -237,7 +237,7 @@ class ProductRuleTable extends AbstractProductTable
     /**
      * @param array $product
      *
-     * @return string|null
+     * @return null|string
      */
     protected function getProductUrl(array $product)
     {

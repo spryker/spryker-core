@@ -65,7 +65,7 @@ class ProductMeasurementUnitMapper implements ProductMeasurementUnitMapperInterf
         $productMeasurementBaseUnitTransfer->fromArray($productMeasurementBaseUnitEntity->toArray(), true);
 
         $productMeasurementBaseUnitTransfer->setProductMeasurementUnit(
-            (new ProductMeasurementUnitTransfer())->fromArray($productMeasurementBaseUnitEntity->getProductMeasurementUnit()->toArray(), true)
+            (new ProductMeasurementUnitTransfer)->fromArray($productMeasurementBaseUnitEntity->getProductMeasurementUnit()->toArray(), true)
         );
 
         return $productMeasurementBaseUnitTransfer;

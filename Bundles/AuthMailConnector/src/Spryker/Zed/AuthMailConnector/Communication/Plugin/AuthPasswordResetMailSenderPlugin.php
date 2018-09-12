@@ -21,8 +21,6 @@ class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPa
     const TEMPLATE = 'Auth.password.reset';
 
     /**
-     * @api
-     *
      * @param string $email
      * @param string $token
      *

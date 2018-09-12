@@ -19,8 +19,6 @@ use Spryker\Zed\MerchantRelationshipDataImport\MerchantRelationshipDataImportCon
 class MerchantRelationshipDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -32,8 +30,6 @@ class MerchantRelationshipDataImportPlugin extends AbstractPlugin implements Dat
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public function getImportType(): string

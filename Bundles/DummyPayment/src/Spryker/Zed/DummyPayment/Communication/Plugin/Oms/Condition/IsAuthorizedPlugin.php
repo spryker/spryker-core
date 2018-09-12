@@ -19,8 +19,6 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 class IsAuthorizedPlugin extends AbstractPlugin implements ConditionInterface
 {
     /**
-     * @api
-     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
      * @return bool

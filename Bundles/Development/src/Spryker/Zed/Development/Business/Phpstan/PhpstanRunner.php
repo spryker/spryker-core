@@ -252,7 +252,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
     protected function resolveCorePaths($module)
     {
         $paths = [];
-         [$namespace, $module] = explode('.', $module, 2);
+        list ($namespace, $module) = explode('.', $module, 2);
 
         if ($module === 'all') {
             if ($namespace === static::NAMESPACE_SPRYKER_SHOP) {

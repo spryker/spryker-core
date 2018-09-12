@@ -94,7 +94,7 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
     /**
      * @param string $sku
      * @param int[] $replacementIds
-     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage|null $productReplacementStorageEntity
+     * @param null|\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage $productReplacementStorageEntity
      *
      * @return void
      */

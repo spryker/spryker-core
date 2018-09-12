@@ -66,8 +66,6 @@ class ProductSetPageMapPlugin extends AbstractPlugin implements NamedPageMapInte
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public function getName()

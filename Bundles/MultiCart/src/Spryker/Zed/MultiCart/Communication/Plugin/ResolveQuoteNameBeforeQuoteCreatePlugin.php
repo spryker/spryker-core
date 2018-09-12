@@ -23,8 +23,6 @@ class ResolveQuoteNameBeforeQuoteCreatePlugin extends AbstractPlugin implements 
      * Specification:
      *  - Resolve quote name to make it unique for customer before quote save.
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

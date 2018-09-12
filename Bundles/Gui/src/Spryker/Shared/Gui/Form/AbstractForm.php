@@ -73,7 +73,7 @@ abstract class AbstractForm implements FormTypeInterface
      * is discouraged because it leads to a performance penalty. The support
      * for returning type instances may be dropped from future releases.
      *
-     * @return string|\Symfony\Component\Form\FormTypeInterface|null The name of the parent type if any, null otherwise.
+     * @return string|null|\Symfony\Component\Form\FormTypeInterface The name of the parent type if any, null otherwise.
      */
     public function getParent()
     {

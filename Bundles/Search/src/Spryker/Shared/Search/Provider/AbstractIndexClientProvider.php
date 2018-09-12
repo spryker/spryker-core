@@ -13,7 +13,7 @@ use Spryker\Shared\Search\SearchConstants;
 abstract class AbstractIndexClientProvider extends AbstractSearchClientProvider
 {
     /**
-     * @param string|null $index
+     * @param null|string $index
      *
      * @return \Elastica\Index
      */

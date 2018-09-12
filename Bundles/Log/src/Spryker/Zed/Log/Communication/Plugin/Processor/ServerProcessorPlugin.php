@@ -18,8 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ServerProcessorPlugin extends AbstractPlugin implements LogProcessorPluginInterface
 {
     /**
-     * @api
-     *
      * @param array $data
      *
      * @return array

@@ -93,8 +93,6 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public function getInputType()

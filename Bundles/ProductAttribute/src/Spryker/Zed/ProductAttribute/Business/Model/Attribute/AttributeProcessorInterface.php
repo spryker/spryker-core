@@ -66,7 +66,7 @@ interface AttributeProcessorInterface
     public function setAbstractLocalizedAttributes(array $abstractLocalizedAttributes);
 
     /**
-     * @param string|null $localeCode
+     * @param null|string $localeCode
      *
      * @return array
      */

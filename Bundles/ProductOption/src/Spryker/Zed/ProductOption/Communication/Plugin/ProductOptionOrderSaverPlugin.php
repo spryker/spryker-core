@@ -23,8 +23,6 @@ class ProductOptionOrderSaverPlugin extends AbstractPlugin implements CheckoutSa
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *

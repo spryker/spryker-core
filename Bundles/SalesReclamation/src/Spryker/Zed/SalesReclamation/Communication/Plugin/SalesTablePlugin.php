@@ -17,8 +17,6 @@ class SalesTablePlugin implements SalesTablePluginInterface
     const URL_CREATE_RECLAMATION = '/sales-reclamation/create';
 
     /**
-     * @api
-     *
      * @param callable $buttonGenerator
      * @param array $item
      *

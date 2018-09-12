@@ -11,7 +11,7 @@ interface ProductSuggesterInterface
 {
     /**
      * @param string $suggestion
-     * @param int|null $limit
+     * @param null|int $limit
      *
      * @return string[]
      */
@@ -19,7 +19,7 @@ interface ProductSuggesterInterface
 
     /**
      * @param string $suggestion
-     * @param int|null $limit
+     * @param null|int $limit
      *
      * @return string[]
      */

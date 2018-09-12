@@ -24,19 +24,13 @@ class GiftCardBalanceTable extends AbstractTable
     const COL_ID_SALES_ORDER = 'id_sales_order';
     const COL_BALANCE = 'balance';
 
-    /**
-     * @var \Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceQueryContainerInterface
-     */
+    /** @var \Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceQueryContainerInterface */
     protected $giftCardBalanceQueryContainer;
 
-    /**
-     * @var \Spryker\Zed\GiftCardBalance\Dependency\Facade\GiftCardBalanceToMoneyFacadeInterface
-     */
+    /** @var \Spryker\Zed\GiftCardBalance\Dependency\Facade\GiftCardBalanceToMoneyFacadeInterface */
     protected $moneyFacade;
 
-    /**
-     * @var int|null
-     */
+    /** @var int|null*/
     protected $idGiftCard;
 
     /**

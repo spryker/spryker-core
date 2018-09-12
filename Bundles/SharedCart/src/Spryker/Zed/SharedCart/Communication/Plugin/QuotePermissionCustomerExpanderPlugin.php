@@ -21,8 +21,6 @@ class QuotePermissionCustomerExpanderPlugin extends AbstractPlugin implements Cu
      * Specification:
      *  - Add quote permissions for customer company user to customer.
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer

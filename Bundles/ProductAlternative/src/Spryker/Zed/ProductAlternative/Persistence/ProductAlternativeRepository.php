@@ -47,7 +47,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     /**
      * @param int $idProductAlternative
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer|null
+     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
      */
     public function findProductAlternativeByIdProductAlternative(int $idProductAlternative): ?ProductAlternativeTransfer
     {

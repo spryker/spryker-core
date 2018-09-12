@@ -18,7 +18,7 @@ class AddProductAlternativeForm extends AbstractType
     public const FIELD_PRODUCT_ALTERNATIVE = 'alternative_products';
 
     /**
-     * @return string|null
+     * @return null|string
      */
     public function getBlockPrefix()
     {

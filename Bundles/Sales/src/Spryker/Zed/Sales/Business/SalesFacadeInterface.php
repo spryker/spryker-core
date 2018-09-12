@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -114,7 +113,7 @@ interface SalesFacadeInterface
      * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
      * @param int $idAddress
      *
-     * @return bool
+     * @return boolean
      */
     public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress);
 

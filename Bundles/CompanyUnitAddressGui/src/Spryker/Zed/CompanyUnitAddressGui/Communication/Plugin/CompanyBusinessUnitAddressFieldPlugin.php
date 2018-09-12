@@ -19,8 +19,6 @@ class CompanyBusinessUnitAddressFieldPlugin extends AbstractPlugin implements Co
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return void

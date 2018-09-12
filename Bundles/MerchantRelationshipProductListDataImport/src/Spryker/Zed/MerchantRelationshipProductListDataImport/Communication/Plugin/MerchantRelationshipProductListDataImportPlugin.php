@@ -21,8 +21,6 @@ class MerchantRelationshipProductListDataImportPlugin extends AbstractPlugin imp
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -34,8 +32,6 @@ class MerchantRelationshipProductListDataImportPlugin extends AbstractPlugin imp
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @return string
      */

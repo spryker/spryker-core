@@ -20,8 +20,6 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 class AddSuccessMessageAfterQuoteCreatedPlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

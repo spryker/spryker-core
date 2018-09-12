@@ -18,8 +18,6 @@ use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfi
 class ProductDiscontinuedDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -30,8 +28,6 @@ class ProductDiscontinuedDataImportPlugin extends AbstractPlugin implements Data
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public function getImportType()

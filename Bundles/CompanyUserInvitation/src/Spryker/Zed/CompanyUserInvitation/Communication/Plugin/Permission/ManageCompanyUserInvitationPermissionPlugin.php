@@ -19,8 +19,6 @@ class ManageCompanyUserInvitationPermissionPlugin extends AbstractPlugin impleme
     public const KEY = 'ManageCompanyUserInvitationPermissionPlugin';
 
     /**
-     * @api
-     *
      * @return string
      */
     public function getKey(): string

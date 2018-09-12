@@ -38,9 +38,9 @@ class Monitoring implements MonitoringInterface
     }
 
     /**
-     * @param string|null $application
-     * @param string|null $store
-     * @param string|null $environment
+     * @param null|string $application
+     * @param null|string $store
+     * @param null|string $environment
      *
      * @return void
      */

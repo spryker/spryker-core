@@ -208,7 +208,7 @@ class ProductAttributeBusinessTester extends Actor
 
     /**
      * @param string $sku
-     * @param array|null $data
+     * @param null|array $data
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
@@ -233,7 +233,7 @@ class ProductAttributeBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param string $sku
-     * @param array|null $data
+     * @param null|array $data
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */

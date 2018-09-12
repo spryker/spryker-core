@@ -29,7 +29,7 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
         $this->provideFormTypeExtension($app);
 
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) {
+            $app->extend('twig', function (\Twig_Environment $twig) {
 
                 $this->registerTwigFunctions($twig);
                 $this->registerTwigFilters($twig);

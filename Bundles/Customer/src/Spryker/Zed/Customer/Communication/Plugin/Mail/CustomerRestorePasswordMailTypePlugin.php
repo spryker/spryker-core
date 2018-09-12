@@ -20,8 +20,6 @@ class CustomerRestorePasswordMailTypePlugin extends AbstractPlugin implements Ma
     const MAIL_TYPE = 'customer restore password';
 
     /**
-     * @api
-     *
      * @return string
      */
     public function getName()
@@ -30,8 +28,6 @@ class CustomerRestorePasswordMailTypePlugin extends AbstractPlugin implements Ma
     }
 
     /**
-     * @api
-     *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      *
      * @return void

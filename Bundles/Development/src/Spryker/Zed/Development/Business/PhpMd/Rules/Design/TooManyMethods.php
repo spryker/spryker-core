@@ -59,7 +59,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
      *
      * @param \PHPMD\Node\AbstractTypeNode $node
      *
-     * @return int
+     * @return integer
      */
     private function countMethods(AbstractTypeNode $node)
     {

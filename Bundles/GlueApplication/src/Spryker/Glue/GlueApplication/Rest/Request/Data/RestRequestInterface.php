@@ -14,7 +14,7 @@ interface RestRequestInterface
     /**
      * @param string $type
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     * @return null|\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function findParentResourceByType(string $type): ?RestResourceInterface;
 

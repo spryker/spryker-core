@@ -13,7 +13,7 @@ interface BarcodeGeneratorInterface
 {
     /**
      * @param string $text
-     * @param string|null $generatorPlugin
+     * @param null|string $generatorPlugin
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */

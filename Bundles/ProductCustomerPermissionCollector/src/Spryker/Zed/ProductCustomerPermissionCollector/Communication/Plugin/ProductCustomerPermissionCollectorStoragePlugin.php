@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -22,8 +21,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProductCustomerPermissionCollectorStoragePlugin extends AbstractCollectorPlugin
 {
     /**
-     * @api
-     *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result

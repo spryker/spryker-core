@@ -18,8 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CompanyUserInvitationPostCustomerRegistrationPlugin extends AbstractPlugin implements PostCustomerRegistrationPluginInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void

@@ -215,7 +215,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     /**
      * @param \DateTime|null $dateTime
      *
-     * @return string|null
+     * @return null|string
      */
     protected function convertDateTimeToString(?DateTime $dateTime = null)
     {

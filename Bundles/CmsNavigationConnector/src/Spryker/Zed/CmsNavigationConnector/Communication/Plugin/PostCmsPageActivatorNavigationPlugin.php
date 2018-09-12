@@ -18,8 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class PostCmsPageActivatorNavigationPlugin extends AbstractPlugin implements PostCmsPageActivatorPluginInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
      * @return void

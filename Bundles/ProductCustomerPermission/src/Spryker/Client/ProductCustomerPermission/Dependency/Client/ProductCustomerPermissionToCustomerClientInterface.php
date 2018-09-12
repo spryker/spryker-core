@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 interface ProductCustomerPermissionToCustomerClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     * @return null|\Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer(): ?CustomerTransfer;
 }

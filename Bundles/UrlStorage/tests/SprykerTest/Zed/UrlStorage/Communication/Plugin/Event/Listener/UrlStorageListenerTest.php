@@ -93,7 +93,8 @@ class UrlStorageListenerTest extends Unit
     }
 
     /**
-     * /**
+
+    /**
      *
      * @return \Spryker\Zed\UrlStorage\Business\UrlStorageFacade
      */

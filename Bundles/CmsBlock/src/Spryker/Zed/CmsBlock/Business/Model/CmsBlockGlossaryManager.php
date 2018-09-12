@@ -271,7 +271,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryKey $spyGlossaryKey
      * @param int $idLocale
      *
-     * @return string|null
+     * @return null|string
      */
     protected function findTranslation(SpyGlossaryKey $spyGlossaryKey, $idLocale)
     {

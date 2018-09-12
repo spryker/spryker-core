@@ -30,7 +30,7 @@ class PermissionFinder implements PermissionFinderInterface
     /**
      * @param string $permissionKey
      *
-     * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface|null
+     * @return null|\Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface
      */
     public function findPermissionPlugin($permissionKey): ?PermissionPluginInterface
     {

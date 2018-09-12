@@ -15,7 +15,7 @@ interface ResourceRouteLoaderInterface
      * @param array $resources
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
-     * @return array|null
+     * @return null|array
      */
     public function load(string $resourceType, array $resources, Request $httpRequest): ?array;
 

@@ -54,7 +54,7 @@ class SessionHandlerRedisLockingTest extends Unit
     }
 
     /**
-     * @param string|null $returnValue
+     * @param null|string $returnValue
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Predis\Client
      */

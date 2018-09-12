@@ -221,7 +221,7 @@ abstract class AbstractDataBuilder
     protected function generateDependencies(AbstractTransfer $transfer)
     {
         foreach ($this->nestedBuilders as $builderInfo) {
-            [$name, $dependencyBuilder, $randomize] = $builderInfo;
+            list($name, $dependencyBuilder, $randomize) = $builderInfo;
 
             if (!$randomize) { // add currently generated values
                 $dependencyBuilder->seed($this->seedData);

@@ -23,8 +23,6 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
     private $graph;
 
     /**
-     * @api
-     *
      * @param string $name
      * @param array $attributes
      * @param bool $directed
@@ -54,8 +52,6 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
     }
 
     /**
-     * @api
-     *
      * @param string $name
      * @param array $attributes
      * @param string $group
@@ -70,8 +66,6 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
     }
 
     /**
-     * @api
-     *
      * @param string $fromNode
      * @param string $toNode
      * @param array $attributes
@@ -86,8 +80,6 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
     }
 
     /**
-     * @api
-     *
      * @param string $name
      * @param array $attributes
      *
@@ -101,8 +93,6 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
     }
 
     /**
-     * @api
-     *
      * @param string $type
      * @param string|null $fileName
      *

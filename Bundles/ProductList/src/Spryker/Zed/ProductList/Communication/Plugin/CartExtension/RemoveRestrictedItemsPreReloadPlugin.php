@@ -19,8 +19,6 @@ class RemoveRestrictedItemsPreReloadPlugin extends AbstractPlugin implements Pre
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

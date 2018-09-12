@@ -35,8 +35,6 @@ class StreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInte
     }
 
     /**
-     * @api
-     *
      * @param array $record
      *
      * @return bool
@@ -47,8 +45,6 @@ class StreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInte
     }
 
     /**
-     * @api
-     *
      * @param array $record
      *
      * @return bool
@@ -59,8 +55,6 @@ class StreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInte
     }
 
     /**
-     * @api
-     *
      * @param array $records
      *
      * @return mixed
@@ -71,8 +65,6 @@ class StreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInte
     }
 
     /**
-     * @api
-     *
      * @param callable $callback
      *
      * @return \Monolog\Handler\HandlerInterface
@@ -83,8 +75,6 @@ class StreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInte
     }
 
     /**
-     * @api
-     *
      * @return callable
      */
     public function popProcessor()
@@ -93,8 +83,6 @@ class StreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInte
     }
 
     /**
-     * @api
-     *
      * @param \Monolog\Formatter\FormatterInterface $formatter
      *
      * @return \Monolog\Handler\HandlerInterface
@@ -105,8 +93,6 @@ class StreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInte
     }
 
     /**
-     * @api
-     *
      * @return \Monolog\Formatter\FormatterInterface
      */
     public function getFormatter()

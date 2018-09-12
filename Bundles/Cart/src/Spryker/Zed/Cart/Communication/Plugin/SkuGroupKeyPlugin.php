@@ -21,8 +21,6 @@ class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInte
     public const GROUP_KEY_DELIMITER = '_';
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer

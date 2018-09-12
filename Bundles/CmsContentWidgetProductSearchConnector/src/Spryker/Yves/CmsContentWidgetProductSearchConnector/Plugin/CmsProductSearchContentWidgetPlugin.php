@@ -45,7 +45,7 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
      * @param \Twig_Environment $twig
      * @param array $context Data related to twig function
      * @param string $searchString String for direct search in elastic
-     * @param string|null $templateIdentifier
+     * @param null|string $templateIdentifier
      *
      * @return string
      */

@@ -17,8 +17,6 @@ use Spryker\Zed\ProductManagement\Communication\Plugin\ProductAbstractViewPlugin
 class CmsBlockProductAbstractBlockListViewPlugin extends AbstractPlugin implements ProductAbstractViewPluginInterface
 {
     /**
-     * @api
-     *
      * @return string
      */
     public function getName()
@@ -27,8 +25,6 @@ class CmsBlockProductAbstractBlockListViewPlugin extends AbstractPlugin implemen
     }
 
     /**
-     * @api
-     *
      * @param int $idProductAbstract
      *
      * @return string[]

@@ -12,7 +12,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 class IdStoresDataTransformer implements DataTransformerInterface
 {
     /**
-     * @param array|null $idStoresArray
+     * @param null|array $idStoresArray
      *
      * @return string
      */

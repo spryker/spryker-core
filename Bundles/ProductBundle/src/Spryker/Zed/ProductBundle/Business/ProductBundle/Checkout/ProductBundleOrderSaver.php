@@ -104,7 +104,7 @@ class ProductBundleOrderSaver implements ProductBundleOrderSaverInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return string|null
+     * @return null|string
      */
     protected function determineImage(ItemTransfer $itemTransfer)
     {

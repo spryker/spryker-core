@@ -29,7 +29,7 @@ class DependencyHelper extends Module
     /**
      * @param string $key
      * @param mixed $value
-     * @param string|null $onlyFor
+     * @param null|string $onlyFor
      *
      * @return void
      */

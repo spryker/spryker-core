@@ -27,8 +27,6 @@ class CustomerUnsubscribePlugin extends AbstractPlugin implements CustomerAnonym
     protected $newsletterTypes;
 
     /**
-     * @api
-     *
      * @param array $newsletterTypes
      */
     public function __construct(array $newsletterTypes)
@@ -38,8 +36,6 @@ class CustomerUnsubscribePlugin extends AbstractPlugin implements CustomerAnonym
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *

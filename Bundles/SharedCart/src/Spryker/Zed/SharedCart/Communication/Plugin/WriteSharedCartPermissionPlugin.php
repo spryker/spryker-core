@@ -20,8 +20,6 @@ class WriteSharedCartPermissionPlugin extends AbstractPlugin implements Executab
     public const KEY = 'WriteSharedCartPermissionPlugin';
 
     /**
-     * @api
-     *
      * @return string
      */
     public function getKey(): string

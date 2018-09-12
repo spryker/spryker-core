@@ -18,7 +18,7 @@ class RouteResolver
      */
     public function buildRouteFromControllerServiceName($controllerServiceName)
     {
-        [$serviceName, $actionName] = explode(':', $controllerServiceName);
+        list($serviceName, $actionName) = explode(':', $controllerServiceName);
         $serviceNameParts = explode('.', $serviceName);
 
         $serviceNameParts[4] = $this->getCamelCaseToDash($serviceNameParts[4]);

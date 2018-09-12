@@ -55,7 +55,7 @@ class ArrayBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @return bool
+     * @return boolean
      */
     public function valid()
     {

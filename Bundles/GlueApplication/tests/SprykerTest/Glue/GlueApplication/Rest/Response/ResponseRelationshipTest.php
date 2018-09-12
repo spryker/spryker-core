@@ -59,7 +59,7 @@ class ResponseRelationshipTest extends Unit
 
         $resource = $restResponseBuilder->createRestResource('tests', 1);
 
-        $restRequest = (new RestRequest())->createRestRequest();
+        $restRequest = (new RestRequest)->createRestRequest();
 
         $responseRelationship->loadRelationships('tests', [$resource], $restRequest);
 
@@ -82,7 +82,7 @@ class ResponseRelationshipTest extends Unit
         $resourceRelated = $restResponseBuilder->createRestResource('related', 1);
         $resource->addRelationship($resourceRelated);
 
-        $restRequest = (new RestRequest())->createRestRequest();
+        $restRequest = (new RestRequest)->createRestRequest();
 
         $included = $responseRelationship->processIncluded([$resource], $restRequest);
 
@@ -98,7 +98,7 @@ class ResponseRelationshipTest extends Unit
     {
         $responseRelationship = $this->createResponseRelationship();
 
-        $restRequest = (new RestRequest())->createRestRequest();
+        $restRequest = (new RestRequest)->createRestRequest();
 
         $this->assertTrue($responseRelationship->hasRelationship('test', $restRequest));
     }

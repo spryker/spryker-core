@@ -20,7 +20,7 @@ interface TokenGeneratorInterface
      * @param mixed $expected
      * @param mixed $actual
      *
-     * @return bool
+     * @return boolean
      */
     public function checkTokenEquals($expected, $actual);
 }

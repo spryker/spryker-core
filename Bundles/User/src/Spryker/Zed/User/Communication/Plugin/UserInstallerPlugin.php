@@ -17,8 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class UserInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
     /**
-     * @api
-     *
      * @return void
      */
     public function install()

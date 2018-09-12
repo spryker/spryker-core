@@ -231,7 +231,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      * @param int $idNode
      * @param int $idLocale
      *
-     * @return string|null
+     * @return null|string
      */
     protected function generateUrl($idNode, $idLocale)
     {

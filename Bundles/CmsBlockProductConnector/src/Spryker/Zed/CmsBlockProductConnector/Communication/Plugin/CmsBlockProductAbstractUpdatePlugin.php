@@ -18,8 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CmsBlockProductAbstractUpdatePlugin extends AbstractPlugin implements CmsBlockUpdatePluginInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void

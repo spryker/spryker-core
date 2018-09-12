@@ -28,8 +28,6 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
     use LoggerTrait;
 
     /**
-     * @api
-     *
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      *
      * @return callable|null

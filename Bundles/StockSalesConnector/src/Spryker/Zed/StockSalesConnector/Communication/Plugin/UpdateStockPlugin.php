@@ -18,8 +18,6 @@ class UpdateStockPlugin extends AbstractPlugin
     // TODO not sure this Connector/Plugin will be needed after refactor sales Bundle!
 
     /**
-     * @api
-     *
      * @param string $sku
      * @param string $stockType
      * @param int $incrementBy
@@ -32,8 +30,6 @@ class UpdateStockPlugin extends AbstractPlugin
     }
 
     /**
-     * @api
-     *
      * @param string $sku
      * @param string $stockType
      * @param int $decrementBy
@@ -46,8 +42,6 @@ class UpdateStockPlugin extends AbstractPlugin
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
      * @return int

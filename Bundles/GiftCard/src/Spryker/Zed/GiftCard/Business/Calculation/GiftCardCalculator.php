@@ -73,7 +73,7 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
             return;
         }
 
-        [$applicableGiftCards, $nonApplicableGiftCards] = $this->partitionGiftCardsByApplicability($giftCards, $calculableObjectTransfer);
+        list($applicableGiftCards, $nonApplicableGiftCards) = $this->partitionGiftCardsByApplicability($giftCards, $calculableObjectTransfer);
 
         $this->addGiftCardPaymentsToQuote($calculableObjectTransfer, $applicableGiftCards);
         $calculableObjectTransfer->setGiftCards($applicableGiftCards);

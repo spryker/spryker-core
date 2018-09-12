@@ -178,7 +178,7 @@ class EditOfferType extends AbstractType
                 $data = $event->getData();
 
                 $storeCurrency = $data[static::FIELD_STORE_CURRENCY];
-                [$storeName, $currencyCode] = $this->getStoreAndCurrency($storeCurrency);
+                list($storeName, $currencyCode) = $this->getStoreAndCurrency($storeCurrency);
 
                 $data[static::FIELD_STORE_NAME] = $storeName;
                 $data[static::FIELD_CURRENCY_CODE] = $currencyCode;

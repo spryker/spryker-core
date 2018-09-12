@@ -45,7 +45,7 @@ class StoreFormHandler implements FormHandlerInterface
             return $quoteTransfer;
         }
 
-        [$storeName, $currencyCode] = explode(static::STORE_CURRENCY_DELIMITER, $storeCurrencyString);
+        list($storeName, $currencyCode) = explode(static::STORE_CURRENCY_DELIMITER, $storeCurrencyString);
         $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
 
         foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {

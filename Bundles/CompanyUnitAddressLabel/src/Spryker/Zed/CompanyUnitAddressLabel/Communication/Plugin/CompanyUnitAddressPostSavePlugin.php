@@ -21,8 +21,6 @@ class CompanyUnitAddressPostSavePlugin extends AbstractPlugin implements Company
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer

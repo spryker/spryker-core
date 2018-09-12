@@ -21,8 +21,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductLabelDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -38,8 +36,6 @@ class ProductLabelDecisionRulePlugin extends AbstractPlugin implements DecisionR
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public function getFieldName()
@@ -48,8 +44,6 @@ class ProductLabelDecisionRulePlugin extends AbstractPlugin implements DecisionR
     }
 
     /**
-     * @api
-     *
      * @return array
      */
     public function acceptedDataTypes()
@@ -60,8 +54,6 @@ class ProductLabelDecisionRulePlugin extends AbstractPlugin implements DecisionR
     }
 
     /**
-     * @api
-     *
      * @return array
      */
     public function getQueryStringValueOptions()

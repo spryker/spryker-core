@@ -11,7 +11,7 @@ interface MoneyBuilderInterface
 {
     /**
      * @param int $amount
-     * @param string|null $isoCode
+     * @param null|string $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
@@ -19,7 +19,7 @@ interface MoneyBuilderInterface
 
     /**
      * @param float $amount
-     * @param string|null $isoCode
+     * @param null|string $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
@@ -27,7 +27,7 @@ interface MoneyBuilderInterface
 
     /**
      * @param string $amount
-     * @param string|null $isoCode
+     * @param null|string $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */

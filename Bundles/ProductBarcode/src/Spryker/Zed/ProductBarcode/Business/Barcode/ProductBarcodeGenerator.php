@@ -38,7 +38,7 @@ class ProductBarcodeGenerator implements ProductBarcodeGeneratorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param string|null $generatorPlugin
+     * @param null|string $generatorPlugin
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */

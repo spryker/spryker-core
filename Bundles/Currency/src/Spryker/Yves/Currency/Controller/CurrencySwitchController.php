@@ -8,6 +8,7 @@
 namespace Spryker\Yves\Currency\Controller;
 
 use Spryker\Yves\Kernel\Controller\AbstractController;
+
 use Symfony\Component\HttpFoundation\Request;
 
 /**

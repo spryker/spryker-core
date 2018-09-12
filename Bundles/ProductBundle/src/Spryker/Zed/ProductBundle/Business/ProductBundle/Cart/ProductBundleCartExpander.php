@@ -116,7 +116,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             if ($bundledProducts->count() == 0) {
                 $cartChangeItems->append($itemTransfer);
                 continue;
-            }
+            };
 
             $addToCartItems = $this->buildBundle($itemTransfer, $quoteTransfer, $bundledProducts);
 

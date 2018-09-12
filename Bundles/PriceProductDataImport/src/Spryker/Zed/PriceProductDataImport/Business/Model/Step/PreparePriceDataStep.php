@@ -122,7 +122,7 @@ class PreparePriceDataStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @return array|null
+     * @return null|array
      */
     protected function getPriceData(DataSetInterface $dataSet): ?array
     {

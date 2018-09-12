@@ -107,7 +107,7 @@ class RequestFormatterTest extends Unit
 
         $requestMetaDataExtractorMock
             ->method('extract')
-            ->willReturn((new RestRequest())->createMetadata());
+            ->willReturn((new RestRequest)->createMetadata());
 
         return $requestMetaDataExtractorMock;
     }

@@ -20,7 +20,7 @@ class ProductGroupStorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string|null
+     * @return null|string
      */
     public function getProductGroupSynchronizationPoolName(): ?string
     {

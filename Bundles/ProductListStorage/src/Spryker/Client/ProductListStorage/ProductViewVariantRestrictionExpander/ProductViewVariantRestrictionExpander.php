@@ -113,7 +113,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
      * @param string $attributeValueKey
      * @param array $attributeVariants
      *
-     * @return int|null
+     * @return null|int
      */
     protected function findIdProductConcreteByAttributeValueKey(string $attributeValueKey, array $attributeVariants): ?int
     {

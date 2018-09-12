@@ -72,8 +72,8 @@ class BundledProductAvailabilityTable extends AbstractTable
      * @param \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface $omsFacade
-     * @param int|null $idProductBundle
-     * @param int|null $idBundleProductAbstract
+     * @param null|int $idProductBundle
+     * @param null|int $idBundleProductAbstract
      */
     public function __construct(
         SpyProductAbstractQuery $productAbstractQuery,

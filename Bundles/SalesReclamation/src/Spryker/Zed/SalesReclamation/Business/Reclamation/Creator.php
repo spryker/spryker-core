@@ -21,7 +21,7 @@ class Creator implements CreatorInterface
     /**
      * @param \Generated\Shared\Transfer\ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationTransfer|null
+     * @return null|\Generated\Shared\Transfer\ReclamationTransfer
      */
     public function createReclamation(ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer): ?ReclamationTransfer
     {

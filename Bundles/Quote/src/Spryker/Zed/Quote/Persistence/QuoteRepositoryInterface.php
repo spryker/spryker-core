@@ -22,7 +22,7 @@ interface QuoteRepositoryInterface
      *
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     * @return null|\Generated\Shared\Transfer\QuoteTransfer
      */
     public function findQuoteByCustomer($customerReference): ?QuoteTransfer;
 

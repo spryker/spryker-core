@@ -128,7 +128,7 @@ class GatewayController extends AbstractGatewayController
     {
         $this->getFacade()->updateCompanyRolePermission($permissionTransfer);
 
-        return (new CompanyRolePermissionResponseTransfer())
+        return (new CompanyRolePermissionResponseTransfer)
             ->setPermission($permissionTransfer)
             ->setIsSuccessful(true);
     }

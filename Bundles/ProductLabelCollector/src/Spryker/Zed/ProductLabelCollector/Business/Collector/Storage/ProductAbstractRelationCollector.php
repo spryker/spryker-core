@@ -69,7 +69,7 @@ class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
     {
         $activeIds = [];
         foreach ($productLabelIds as $labelId) {
-            [$idProductLabel, $isActive] = explode(ProductAbstractRelationCollectorQuery::LABEL_DELIMITER, $labelId);
+            list($idProductLabel, $isActive) = explode(ProductAbstractRelationCollectorQuery::LABEL_DELIMITER, $labelId);
 
             $isActive = $this->normalizeIsActive($isActive);
             if (!$isActive) {

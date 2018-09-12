@@ -31,8 +31,6 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     ];
 
     /**
-     * @api
-     *
      * @param string $terminationEventName
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $calculatedQuoteTransfer
@@ -53,8 +51,6 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     }
 
     /**
-     * @api
-     *
      * @param array $configuration
      * @param int|null $centAmount
      *
@@ -78,8 +74,6 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     }
 
     /**
-     * @api
-     *
      * @return array
      */
     public function getConfigurationSignature(): array
@@ -90,8 +84,6 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public function getKey(): string

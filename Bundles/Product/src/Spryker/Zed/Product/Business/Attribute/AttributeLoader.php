@@ -60,7 +60,7 @@ class AttributeLoader implements AttributeLoaderInterface
 
     /**
      * @param int[] $productIds
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null|null $localeTransfer
      *
      * @return array
      */

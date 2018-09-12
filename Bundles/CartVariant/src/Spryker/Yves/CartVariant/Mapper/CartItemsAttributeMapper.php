@@ -86,7 +86,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
             }
 
             $variantNameValue = $this->getParentNode($attributeMapIterator);
-            [$variantName, $variantValue] = explode(':', $variantNameValue);
+            list($variantName, $variantValue) = explode(':', $variantNameValue);
 
             if ($this->isVariantNotSet($variantName, $productVariants, $variantValue)) {
                 $productVariants[$variantName][$variantValue][CartVariantConstants::AVAILABLE] = false;

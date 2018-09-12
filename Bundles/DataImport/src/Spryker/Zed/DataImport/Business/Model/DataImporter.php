@@ -219,7 +219,7 @@ class DataImporter implements
 
     /**
      * @param \Exception $exception
-     * @param int|null $dataSetPosition
+     * @param null|int $dataSetPosition
      *
      * @return string
      */

@@ -20,8 +20,6 @@ class ProductOptionOrderHydratePlugin extends AbstractPlugin implements HydrateO
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer

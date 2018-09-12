@@ -17,8 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class StorageHealthIndicatorPlugin extends AbstractPlugin implements HealthIndicatorInterface
 {
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
     public function doHealthCheck()

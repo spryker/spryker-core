@@ -106,7 +106,7 @@ class Builder implements BuilderInterface
 
         $this->mergeSubProcessFiles($pathToXml);
 
-        [$processMap, $mainProcess] = $this->createMainSubProcess();
+        list($processMap, $mainProcess) = $this->createMainSubProcess();
 
         $stateToProcessMap = $this->createStates($processMap);
 

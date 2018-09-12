@@ -26,9 +26,9 @@ class FileValidator extends SymfonyFileValidator
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileUploadTransfer|null $fileUploadTransfer
+     * @param null|\Generated\Shared\Transfer\FileUploadTransfer $fileUploadTransfer
      *
-     * @return \Symfony\Component\HttpFoundation\File\UploadedFile|null
+     * @return null|\Symfony\Component\HttpFoundation\File\UploadedFile
      */
     protected function createSymfonyUploadedFileFromTransfer(?FileUploadTransfer $fileUploadTransfer = null)
     {

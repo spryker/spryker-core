@@ -24,7 +24,7 @@ interface SalesReclamationFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationTransfer|null
+     * @return null|\Generated\Shared\Transfer\ReclamationTransfer
      */
     public function createReclamation(ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer): ?ReclamationTransfer;
 
@@ -38,7 +38,7 @@ interface SalesReclamationFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationTransfer|null
+     * @return null|\Generated\Shared\Transfer\ReclamationTransfer
      */
     public function hydrateReclamationByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
 

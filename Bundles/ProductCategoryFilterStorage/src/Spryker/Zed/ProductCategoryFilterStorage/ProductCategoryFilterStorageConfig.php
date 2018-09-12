@@ -20,7 +20,7 @@ class ProductCategoryFilterStorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string|null
+     * @return null|string
      */
     public function getProductCategoryFilterSynchronizationPoolName(): ?string
     {

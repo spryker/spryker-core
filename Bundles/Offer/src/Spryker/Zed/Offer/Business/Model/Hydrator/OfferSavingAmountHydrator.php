@@ -13,9 +13,7 @@ use Spryker\Zed\Offer\OfferConfig;
 
 class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
 {
-    /**
-     * @var \Spryker\Zed\Offer\OfferConfig
-     */
+    /** @var \Spryker\Zed\Offer\OfferConfig */
     protected $offerConfig;
 
     /**

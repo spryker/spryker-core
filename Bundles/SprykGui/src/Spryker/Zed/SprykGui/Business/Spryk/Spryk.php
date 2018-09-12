@@ -251,6 +251,7 @@ class Spryk implements SprykInterface
                 if ($argumentName === 'constructorArguments') {
                     $commandLineArguments['constructorArguments'] = $userInput;
                     $commandLineArguments['dependencyMethods'] = $this->getUserInputForArgument('dependencyMethods', $formData);
+                    ;
                     continue;
                 }
             }

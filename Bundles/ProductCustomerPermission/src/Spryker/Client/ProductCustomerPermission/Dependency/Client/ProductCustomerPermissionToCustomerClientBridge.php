@@ -25,7 +25,7 @@ class ProductCustomerPermissionToCustomerClientBridge implements ProductCustomer
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     * @return null|\Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer(): ?CustomerTransfer
     {

@@ -17,8 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CmsBlockProductAbstractListViewPlugin extends AbstractPlugin implements CmsBlockViewPluginInterface
 {
     /**
-     * @api
-     *
      * @return string
      */
     public function getName()
@@ -27,8 +25,6 @@ class CmsBlockProductAbstractListViewPlugin extends AbstractPlugin implements Cm
     }
 
     /**
-     * @api
-     *
      * @param int $idCmsBlock
      * @param int $idLocale
      *

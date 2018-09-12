@@ -14,7 +14,7 @@ interface EncoderMatcherInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface $metadata
      *
-     * @return \Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface|null
+     * @return null|\Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface
      */
     public function match(MetadataInterface $metadata): ?EncoderInterface;
 }

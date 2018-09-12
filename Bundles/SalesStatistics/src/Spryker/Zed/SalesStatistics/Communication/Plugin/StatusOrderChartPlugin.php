@@ -23,8 +23,6 @@ class StatusOrderChartPlugin extends AbstractPlugin implements ChartPluginInterf
     public const TITLE = 'Status orders';
 
     /**
-     * @api
-     *
      * @return string
      */
     public function getName(): string
@@ -33,8 +31,6 @@ class StatusOrderChartPlugin extends AbstractPlugin implements ChartPluginInterf
     }
 
     /**
-     * @api
-     *
      * @param string|null $dataIdentifier
      *
      * @return \Generated\Shared\Transfer\ChartDataTransfer
@@ -52,8 +48,6 @@ class StatusOrderChartPlugin extends AbstractPlugin implements ChartPluginInterf
     }
 
     /**
-     * @api
-     *
      * @return string
      */
     public function render(): string

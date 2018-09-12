@@ -70,7 +70,7 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Psr\Log\LoggerInterface|null $logger
+     * @param null|\Psr\Log\LoggerInterface $logger
      *
      * @return \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedDeactivator\ProductDiscontinuedDeactivatorInterface
      */

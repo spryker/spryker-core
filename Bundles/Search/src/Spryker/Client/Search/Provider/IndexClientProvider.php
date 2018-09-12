@@ -12,7 +12,7 @@ use Spryker\Shared\Search\Provider\AbstractIndexClientProvider;
 class IndexClientProvider extends AbstractIndexClientProvider
 {
     /**
-     * @param string|null $index
+     * @param null|string $index
      *
      * @return \Elastica\Index
      */

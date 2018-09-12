@@ -265,8 +265,8 @@ class BridgeBuilder
      */
     protected function getBridgeBuilderData(string $source, string $target, array $methods): BridgeBuilderDataTransfer
     {
-        [$vendor, $module, $type] = $this->interpretInputParameter($source);
-        [$toVendor, $toModule, $toType] = $this->interpretInputParameter($target);
+        list($vendor, $module, $type) = $this->interpretInputParameter($source);
+        list($toVendor, $toModule, $toType) = $this->interpretInputParameter($target);
 
         $bridgeBuilderDataTransfer = new BridgeBuilderDataTransfer();
         $bridgeBuilderDataTransfer

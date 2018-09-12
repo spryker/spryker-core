@@ -44,7 +44,7 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
      * @param \Twig_Environment $twig
      * @param array $context
      * @param array|string $productAbstractSkuList $productAbstractSkuList
-     * @param string|null $templateIdentifier
+     * @param null|string $templateIdentifier
      *
      * @return string
      */
@@ -57,7 +57,7 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
     }
 
     /**
-     * @param string|null $templateIdentifier
+     * @param null|string $templateIdentifier
      *
      * @return string
      */

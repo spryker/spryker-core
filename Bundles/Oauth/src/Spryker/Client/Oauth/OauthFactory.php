@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Oauth;
 
+;
+
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Oauth\Dependency\Client\OauthToZedRequestClientInterface;

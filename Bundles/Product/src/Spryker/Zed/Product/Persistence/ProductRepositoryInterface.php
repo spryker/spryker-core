@@ -33,7 +33,7 @@ interface ProductRepositoryInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return int|null
+     * @return null|int
      */
     public function findProductAbstractIdByConcreteId(int $idProductConcrete): ?int;
 

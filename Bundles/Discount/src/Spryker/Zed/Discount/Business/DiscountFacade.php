@@ -291,7 +291,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return bool
+     * @return boolean
      */
     public function isTimeSatisfiedBy(
         QuoteTransfer $quoteTransfer,

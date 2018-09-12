@@ -20,8 +20,6 @@ class CompanyUnitAddressEditFormExpanderPlugin extends AbstractPlugin implements
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return void

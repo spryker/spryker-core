@@ -107,7 +107,7 @@ class ShortVariable extends PHPMDShortVariable
      *
      * @param \PHPMD\AbstractNode $node
      *
-     * @return bool
+     * @return boolean
      */
     private function isNameAllowedInContext(AbstractNode $node)
     {
@@ -124,7 +124,7 @@ class ShortVariable extends PHPMDShortVariable
      * @param \PHPMD\AbstractNode $node
      * @param string $type
      *
-     * @return bool
+     * @return boolean
      */
     private function isChildOf(AbstractNode $node, $type)
     {

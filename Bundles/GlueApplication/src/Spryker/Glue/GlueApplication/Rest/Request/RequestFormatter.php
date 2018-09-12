@@ -127,7 +127,7 @@ class RequestFormatter implements RequestFormatterInterface
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface $metadata
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     * @return null|\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function processPostData(
         HttpRequest $httpRequest,

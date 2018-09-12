@@ -20,8 +20,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class PaymentSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *

@@ -137,7 +137,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string|null
+     * @return null|string
      */
     protected function findStoreName(QuoteTransfer $quoteTransfer): ?string
     {

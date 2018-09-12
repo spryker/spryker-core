@@ -19,8 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
-     * @api
-     *
      * @return string
      */
     public function getName(): string
@@ -29,8 +27,6 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
-     * @api
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -42,8 +38,6 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -60,8 +54,6 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
@@ -78,8 +70,6 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
-     * @api
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

@@ -34,7 +34,7 @@ class TouchAwareStep implements DataImportStepAfterExecuteInterface
 
     /**
      * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface $touchFacade
-     * @param int|null $bulkSize
+     * @param null|int $bulkSize
      */
     public function __construct(DataImportToTouchInterface $touchFacade, $bulkSize = null)
     {
