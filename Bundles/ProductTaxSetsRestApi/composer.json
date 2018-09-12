@@ -1,6 +1,6 @@
 {
   "name": "spryker/product-tax-sets-rest-api",
-  "description": "TaxSetsRestApi module",
+  "description": "ProductTaxSetsRestApi module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
