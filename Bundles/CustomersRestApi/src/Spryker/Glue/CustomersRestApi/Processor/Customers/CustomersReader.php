@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
-use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
@@ -63,9 +62,10 @@ class CustomersReader implements CustomersReaderInterface
             return $this->createCustomerReferenceMissingError($restResponse);
         }
 
-        $customersResponseTransfer = $this->findCustomerByReference($restRequest->getResource()->getId());
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getResource()->getId());
+        $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        if (!$customersResponseTransfer->getHasCustomer()) {
+        if (!$customerResponseTransfer->getHasCustomer()) {
             return $this->createCustomerNotFoundError($restResponse);
         }
 
@@ -75,23 +75,10 @@ class CustomersReader implements CustomersReaderInterface
 
         $customersResource = $this
             ->customersResourceMapper
-            ->mapCustomerTransferToRestResource($customersResponseTransfer->getCustomerTransfer());
+            ->mapCustomerTransferToRestResource($customerResponseTransfer->getCustomerTransfer());
         $restResponse->addResource($customersResource);
 
         return $restResponse;
-    }
-
-    /**
-     * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     */
-    public function findCustomerByReference(string $customerReference): CustomerResponseTransfer
-    {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setCustomerReference($customerReference);
-
-        return $this->customerClient->findCustomerByReference($customerTransfer);
     }
 
     /**

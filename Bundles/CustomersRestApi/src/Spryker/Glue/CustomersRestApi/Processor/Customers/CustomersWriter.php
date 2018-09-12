@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
-use Generated\Shared\Transfer\RestCustomersRegisterAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
@@ -37,11 +36,6 @@ class CustomersWriter implements CustomersWriterInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface
-     */
-    protected $customersReader;
-
-    /**
      * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface
      */
     protected $customersResourceMapper;
@@ -49,28 +43,26 @@ class CustomersWriter implements CustomersWriterInterface
     /**
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface $customersReader
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface $customersResourceMapper
      */
     public function __construct(
         CustomersRestApiToCustomerClientInterface $customerClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        CustomersReaderInterface $customersReader,
         CustomersResourceMapperInterface $customersResourceMapper
     ) {
         $this->customerClient = $customerClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->customersReader = $customersReader;
         $this->customersResourceMapper = $customersResourceMapper;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCustomersRegisterAttributesTransfer $restCustomersAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function registerCustomer(RestCustomersRegisterAttributesTransfer $restCustomersAttributesTransfer): RestResponseInterface
-    {
+    public function registerCustomer(
+        RestCustomersAttributesTransfer $restCustomersAttributesTransfer
+    ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$restCustomersAttributesTransfer->getAcceptedTerms()) {
@@ -135,8 +127,10 @@ class CustomersWriter implements CustomersWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function updateCustomerPassword(RestRequestInterface $restRequest, RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer): RestResponseInterface
-    {
+    public function updateCustomerPassword(
+        RestRequestInterface $restRequest,
+        RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer
+    ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $user = $restRequest->getUser();
@@ -144,7 +138,9 @@ class CustomersWriter implements CustomersWriterInterface
             return $this->createCustomerReferenceMissingError($restResponse);
         }
 
-        $customerResponseTransfer = $this->customersReader->findCustomerByReference($user->getNaturalIdentifier());
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference($user->getNaturalIdentifier());
+        $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
         $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
 
         if (!$customerTransfer) {
