@@ -63,8 +63,7 @@ class CustomersReader implements CustomersReaderInterface
             return $this->createCustomerReferenceMissingError($restResponse);
         }
 
-        $customerReference = $restRequest->getUser()->getNaturalIdentifier();
-        $customersResponseTransfer = $this->findCustomerByReference($customerReference);
+        $customersResponseTransfer = $this->findCustomerByReference($restRequest->getResource()->getId());
 
         if (!$customersResponseTransfer->getHasCustomer()) {
             return $this->createCustomerNotFoundError($restResponse);
