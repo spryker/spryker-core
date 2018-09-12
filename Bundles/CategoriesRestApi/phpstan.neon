@@ -1,7 +1,5 @@
 parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
-    ignoreErrors:
-        - '#Casting to array\<.*\> something that#'
 
 services:
     -

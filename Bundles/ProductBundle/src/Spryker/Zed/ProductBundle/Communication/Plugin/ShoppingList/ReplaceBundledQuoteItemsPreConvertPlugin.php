@@ -31,10 +31,6 @@ class ReplaceBundledQuoteItemsPreConvertPlugin extends AbstractPlugin implements
      */
     public function expand(ItemCollectionTransfer $itemCollectionTransfer, QuoteTransfer $quoteTransfer): ItemCollectionTransfer
     {
-        if (!$quoteTransfer->getBundleItems()) {
-            return $itemCollectionTransfer;
-        }
-
         return $this->getFacade()
             ->extractQuoteItems($quoteTransfer);
     }
