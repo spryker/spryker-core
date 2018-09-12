@@ -62,6 +62,16 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
     }
 
     /**
+     * @api
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $productData
@@ -76,13 +86,5 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
         }
 
         return $pageMapTransfer;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME;
     }
 }
