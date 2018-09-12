@@ -247,14 +247,4 @@ interface ShoppingListClientInterface
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
     public function shareShoppingList(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
-
-    /**
-     * Specification:
-     *  - Updates customer permissions (makes Zed request inside).
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function updateShoppingListPermissions(): void;
 }
