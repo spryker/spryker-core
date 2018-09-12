@@ -115,10 +115,6 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
             true
         );
 
-        if (!$concreteProductStorageTransfer) {
-            return null;
-        }
-
         $productImageConcreteStorageTransfers = $this->productImageStorageClient
             ->resolveProductImageSetStorageTransfers(
                 $concreteProductStorageTransfer->getIdProductConcrete(),
@@ -135,7 +131,7 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\ProductImageStorageTransfer[] $productImageConcreteStorageTransfers
+     * @param \Generated\Shared\Transfer\ProductImageSetStorageTransfer[] $productImageConcreteStorageTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */

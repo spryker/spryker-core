@@ -56,7 +56,7 @@ class ProductConcreteImageInheritanceResolver implements ProductConcreteImageInh
             return null;
         }
 
-        if ($productImageStorageTransfer->getImageSets() === null) {
+        if (!$productImageStorageTransfer->getImageSets()) {
             return null;
         }
 
