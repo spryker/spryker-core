@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsTaxSetsResourceRelationship\Plugin;
+namespace Spryker\Glue\ProductsProductTaxSetsResourceRelationship\Plugin;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\ProductsTaxSetsResourceRelationship\ProductsTaxSetsResourceRelationshipFactory getFactory()
+ * @method \Spryker\Glue\ProductsProductTaxSetsResourceRelationship\ProductsProductTaxSetsResourceRelationshipFactory getFactory()
  */
-class ProductsTaxSetsResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class ProductsProductTaxSetsResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritdoc}

@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsTaxSetsResourceRelationship;
+namespace Spryker\Glue\ProductsProductTaxSetsResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 
-class ProductsTaxSetsResourceRelationshipConfig extends AbstractBundleConfig
+class ProductsProductTaxSetsResourceRelationshipConfig extends AbstractBundleConfig
 {
 }

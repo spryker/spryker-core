@@ -1,4 +1,4 @@
-namespace: ProductsTaxSetsResourceRelationship
+namespace: ProductsProductTaxSetsResourceRelationship
 actor: Tester
 paths:
     tests: tests

@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsTaxSetsResourceRelationship\Processor\Expander;
+namespace Spryker\Glue\ProductsProductTaxSetsResourceRelationship\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface;
+use Spryker\Glue\ProductsProductTaxSetsResourceRelationship\Dependency\RestResource\ProductsProductTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface;
 
-class ProductsTaxSetsResourceRelationshipExpander implements ProductsTaxSetsResourceRelationshipExpanderInterface
+class ProductsProductTaxSetsResourceRelationshipExpander implements ProductsProductTaxSetsResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface
+     * @var \Spryker\Glue\ProductsProductTaxSetsResourceRelationship\Dependency\RestResource\ProductsProductTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface
      */
     protected $productTaxSetsResource;
 
     /**
-     * @param \Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface $productTaxSetsResource
+     * @param \Spryker\Glue\ProductsProductTaxSetsResourceRelationship\Dependency\RestResource\ProductsProductTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface $productTaxSetsResource
      */
-    public function __construct(ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface $productTaxSetsResource)
+    public function __construct(ProductsProductTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface $productTaxSetsResource)
     {
         $this->productTaxSetsResource = $productTaxSetsResource;
     }

@@ -1,6 +1,6 @@
 {
-  "name": "spryker/products-tax-sets-resource-relationship",
-  "description": "ProductsTaxSetsResourceRelationship module",
+  "name": "spryker/products-product-tax-sets-resource-relationship",
+  "description": "ProductsProductTaxSetsResourceRelationship module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",

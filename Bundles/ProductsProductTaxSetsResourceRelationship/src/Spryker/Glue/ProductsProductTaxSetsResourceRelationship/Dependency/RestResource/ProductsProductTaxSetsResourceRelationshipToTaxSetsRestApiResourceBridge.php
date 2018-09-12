@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource;
+namespace Spryker\Glue\ProductsProductTaxSetsResourceRelationship\Dependency\RestResource;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceBridge implements ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface
+class ProductsProductTaxSetsResourceRelationshipToTaxSetsRestApiResourceBridge implements ProductsProductTaxSetsResourceRelationshipToTaxSetsRestApiResourceInterface
 {
     /**
      * @var \Spryker\Glue\TaxSetsRestApi\TaxSetsRestApiResourceInterface

@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductsTaxSetsResourceRelationship;
+namespace Spryker\Glue\ProductsProductTaxSetsResourceRelationship;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\ProductsTaxSetsResourceRelationship\Dependency\RestResource\ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceBridge;
+use Spryker\Glue\ProductsProductTaxSetsResourceRelationship\Dependency\RestResource\ProductsProductTaxSetsResourceRelationshipToTaxSetsRestApiResourceBridge;
 
-class ProductsTaxSetsResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
+class ProductsProductTaxSetsResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const RESOURCE_TAX_SETS = 'RESOURCE_TAX_SETS';
 
@@ -36,7 +36,7 @@ class ProductsTaxSetsResourceRelationshipDependencyProvider extends AbstractBund
     protected function addProductTaxSetsResource(Container $container): Container
     {
         $container[static::RESOURCE_TAX_SETS] = function (Container $container) {
-            return new ProductsTaxSetsResourceRelationshipToTaxSetsRestApiResourceBridge(
+            return new ProductsProductTaxSetsResourceRelationshipToTaxSetsRestApiResourceBridge(
                 $container->getLocator()->taxSetsRestApi()->resource()
             );
         };
