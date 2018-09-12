@@ -8,8 +8,10 @@
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Annotation\GlueAnnotationAnalyzer;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Annotation\GlueAnnotationAnalyzerInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\GlueAnnotationAnalyzer;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\GlueAnnotationAnalyzerInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\PluginAnalyzer;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\PluginAnalyzerInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationGenerator;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationGeneratorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGenerator;
@@ -71,11 +73,25 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
     }
 
     /**
-     * @return \Spryker\Zed\RestApiDocumentationGenerator\Business\Annotation\GlueAnnotationAnalyzerInterface
+     * @return \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\GlueAnnotationAnalyzerInterface
      */
     public function createGlueAnnotationAnalyzer(): GlueAnnotationAnalyzerInterface
     {
         return new GlueAnnotationAnalyzer();
+    }
+
+    /**
+     * @return \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\PluginAnalyzerInterface
+     */
+    public function createPluginAnalyzer(): PluginAnalyzerInterface
+    {
+        return new PluginAnalyzer(
+            $this->createRestApiDocumentationPathsGenerator(),
+            $this->createRestApiDocumentationSchemaGenerator(),
+            $this->getResourceRoutesPluginsProviderPlugins(),
+            $this->getResourceRelationshipsCollectionProviderPlugin(),
+            $this->createGlueAnnotationAnalyzer()
+        );
     }
 
     /**

@@ -34,6 +34,11 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
     protected $restApiDocumentationWriter;
 
     /**
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\PluginAnalyzerInterface
+     */
+    protected $pluginAnalyzer;
+
+    /**
      * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[] $resourceRoutesPluginsProviderPlugins
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface $restApiSchemaGenerator
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGeneratorInterface $restApiPathGenerator
@@ -56,13 +61,7 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
      */
     public function generateOpenApiSpecification(): void
     {
-        foreach ($this->resourceRoutesPluginsProviderPlugins as $resourceRoutesPluginsProviderPlugin) {
-            foreach ($resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins() as $plugin) {
-                $parents = $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins());
-                $this->restApiPathGenerator->addPathsForPlugin($plugin, $parents);
-            }
-        }
-
+        $this->pluginAnalyzer->createRestApiDocumentationFromPlugins();
         $this->restApiDocumentationWriter->write(
             $this->restApiPathGenerator->getPaths(),
             $this->restApiSchemaGenerator->getSchemas()

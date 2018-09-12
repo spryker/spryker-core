@@ -18,6 +18,9 @@ class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
     public const REST_API_DOCUMENTATION_INFO_TITLE = 'Spryker API';
     public const REST_API_DOCUMENTATION_INFO_LICENSE_NAME = 'MIT';
 
+    public const ANNOTATION_KEY_GET_COLLECTION = 'getCollection';
+    public const ANNOTATION_KEY_GET_RESOURCE = 'getResource';
+
     /**
      * @return string
      */
