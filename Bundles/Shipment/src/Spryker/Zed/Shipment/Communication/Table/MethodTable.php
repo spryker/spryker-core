@@ -50,7 +50,7 @@ class MethodTable extends AbstractTable
     protected $moneyFacade;
 
     /**
-     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
+     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface
      */
     protected $storeFacade;
 
