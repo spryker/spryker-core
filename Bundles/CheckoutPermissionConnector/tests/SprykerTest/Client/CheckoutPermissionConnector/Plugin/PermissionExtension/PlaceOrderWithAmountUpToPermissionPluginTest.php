@@ -61,7 +61,9 @@ class PlaceOrderWithAmountUpToPermissionPluginTest extends Unit
      */
     public function testCanReturnsFalseWhenConfiguredAmountIsExceeded(): void
     {
-        $configuration[static::FIELD_CENT_AMOUNT] = 10;
+        $configuration = [
+            static::FIELD_CENT_AMOUNT => 10,
+        ];
         $centAmount = 100;
 
         $placeOrderWithAmountUpToPermissionPlugin = new PlaceOrderWithAmountUpToPermissionPlugin();
@@ -76,7 +78,9 @@ class PlaceOrderWithAmountUpToPermissionPluginTest extends Unit
      */
     public function testCanReturnsTrueWhenAmountIsBelowConfiguredValue(): void
     {
-        $configuration[static::FIELD_CENT_AMOUNT] = 100;
+        $configuration = [
+            static::FIELD_CENT_AMOUNT => 100,
+        ];
         $centAmount = 10;
 
         $placeOrderWithAmountUpToPermissionPlugin = new PlaceOrderWithAmountUpToPermissionPlugin();
