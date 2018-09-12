@@ -190,16 +190,9 @@ class ResponseBuilder implements ResponseBuilderInterface
         $method = $restRequest->getMetadata()->getMethod();
         $idResource = $restRequest->getResource()->getId();
         if ($method === Request::METHOD_GET && $idResource === null) {
-            if (is_array($restRequest->getParentResources())) {
-                $link = '';
-                foreach ($restRequest->getParentResources() as $parentResource) {
-                    $link .= $parentResource->getType() . '/' . $parentResource->getId();
-                }
-
-                return $this->formatLinks([
-                    RestResourceInterface::RESOURCE_LINKS_SELF => $link . '/' . $restRequest->getResource()->getType(),
-                ]);
-            }
+            return $this->formatLinks([
+                RestResourceInterface::RESOURCE_LINKS_SELF => $restRequest->getResource()->getType(),
+            ]);
         }
         return [];
     }
