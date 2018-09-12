@@ -101,7 +101,7 @@ class CustomersWriter implements CustomersWriterInterface
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $customerTransfer = (new CustomerTransfer)
+        $customerTransfer = (new CustomerTransfer())
             ->setCustomerReference($restRequest->getResource()->getId());
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
@@ -199,7 +199,7 @@ class CustomersWriter implements CustomersWriterInterface
             return $this->createCustomerReferenceMissingError($restResponse);
         }
 
-        $customerTransfer = (new CustomerTransfer)
+        $customerTransfer = (new CustomerTransfer())
             ->setCustomerReference($restRequest->getResource()->getId());
         $customerTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
