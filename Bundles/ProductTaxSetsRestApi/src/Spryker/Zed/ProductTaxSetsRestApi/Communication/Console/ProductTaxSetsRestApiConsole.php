@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProductTaxSetsRestApiConsole extends Console
 {
     protected const COMMAND_NAME = 'tax-sets:uuid:update';
-    protected const DESCRIPTION = 'Generates UUIDs for existed tax_set records without UUID';
+    protected const DESCRIPTION = 'Generates UUIDs for existing spy_tax_set records without UUID';
 
     /**
      * @return void
