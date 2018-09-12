@@ -29,7 +29,9 @@ class PlaceOrderWithAmountUpToPermissionPluginTest extends Unit
      */
     public function testCanReturnsFalseWhenAmountIsNotProvided(): void
     {
-        $configuration[static::FIELD_CENT_AMOUNT] = 10;
+        $configuration = [
+            static::FIELD_CENT_AMOUNT => 10,
+        ];
         $centAmount = null;
 
         $placeOrderWithAmountUpToPermissionPlugin = new PlaceOrderWithAmountUpToPermissionPlugin();
@@ -42,7 +44,7 @@ class PlaceOrderWithAmountUpToPermissionPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCanReturnsFalseWhenConfigurationIsMissing(): void
+    public function testCanReturnsTrueWhenConfigurationIsMissing(): void
     {
         $configuration = [];
         $centAmount = 100;
@@ -51,7 +53,7 @@ class PlaceOrderWithAmountUpToPermissionPluginTest extends Unit
         $placeOrderWithAmountUpToPermissionPluginResult = $placeOrderWithAmountUpToPermissionPlugin
             ->can($configuration, $centAmount);
 
-        $this->assertFalse($placeOrderWithAmountUpToPermissionPluginResult);
+        $this->assertTrue($placeOrderWithAmountUpToPermissionPluginResult);
     }
 
     /**
