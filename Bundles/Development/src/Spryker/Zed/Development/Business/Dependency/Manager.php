@@ -113,7 +113,7 @@ class Manager implements ManagerInterface
         $filterChain->attach(new DashToCamelCase());
 
         foreach ($modules as $module) {
-            $allModules[] = $filterChain->filter($module->getFilename());
+            $allModules[$module->getPathname()] = $filterChain->filter($module->getFilename());
         }
         asort($allModules);
 

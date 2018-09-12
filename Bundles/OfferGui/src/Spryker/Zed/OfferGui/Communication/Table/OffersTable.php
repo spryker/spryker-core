@@ -213,7 +213,7 @@ class OffersTable extends AbstractTable
     /**
      * @param int $value
      * @param bool $includeSymbol
-     * @param null|string $currencyIsoCode
+     * @param string|null $currencyIsoCode
      *
      * @return string
      */

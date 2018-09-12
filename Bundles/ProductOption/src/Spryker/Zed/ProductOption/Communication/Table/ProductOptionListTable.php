@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -130,9 +131,9 @@ class ProductOptionListTable extends AbstractTable
 
         $productQuery = $this->productOptionQueryContainer->queryAllProductOptionGroups();
 
+        /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup[] $queryResult */
         $queryResult = $this->runQuery($productQuery, $config, true);
 
-        /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity */
         foreach ($queryResult as $productOptionGroupEntity) {
             $formattedPrices = $this->getFormattedPrices($productOptionGroupEntity);
 

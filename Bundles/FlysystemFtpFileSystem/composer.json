@@ -8,8 +8,8 @@
     "spryker/kernel": "^3.5.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/flysystem": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

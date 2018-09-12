@@ -45,7 +45,6 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
             return $productConcreteTransfer;
         }
 
-        /** @var \Orm\Zed\ProductValidity\Persistence\SpyProductValidity $validityEntity */
         $productConcreteTransfer->setValidFrom(
             $this->formatDateTime($productValidityEntity->getValidFrom())
         );
@@ -59,7 +58,7 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
     /**
      * @param \DateTime|null $dateTime
      *
-     * @return null|string
+     * @return string|null
      */
     protected function formatDateTime(?DateTime $dateTime = null): ?string
     {
