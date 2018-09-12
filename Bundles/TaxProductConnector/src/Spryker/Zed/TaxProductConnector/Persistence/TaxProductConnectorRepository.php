@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\TaxProductConnector\Persistence;
 
-use Generated\Shared\Transfer\TaxRateSetTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -18,9 +18,9 @@ class TaxProductConnectorRepository extends AbstractRepository implements TaxPro
     /**
      * @param string $productAbstractSku
      *
-     * @return \Generated\Shared\Transfer\TaxRateSetTransfer|null
+     * @return \Generated\Shared\Transfer\TaxSetTransfer|null
      */
-    public function findTaxSetByProductAbstractSku(string $productAbstractSku): ?TaxRateSetTransfer
+    public function findTaxSetByProductAbstractSku(string $productAbstractSku): ?TaxSetTransfer
     {
         $taxSet = $this->getFactory()->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
@@ -34,6 +34,6 @@ class TaxProductConnectorRepository extends AbstractRepository implements TaxPro
 
         return $this->getFactory()
             ->createTaxSetMapper()
-            ->mapTaxSetEntityToTaxRateSetTransfer($taxSet);
+            ->mapTaxSetEntityToTaxSetTransfer($taxSet);
     }
 }

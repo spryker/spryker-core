@@ -81,7 +81,7 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
             return $this->createTaxSetsNotFoundError($taxSetResponseTransfer);
         }
 
-        $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxRateSetTransferToRestTaxSetsAttributesTransfer($taxSetResponseTransfer->getTaxRateSet());
+        $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxSetTransferToRestTaxSetsAttributesTransfer($taxSetResponseTransfer->getTaxRateSet());
         $restResource = $this->formatRestResource($restTaxSetTransfer, $taxSetResponseTransfer->getTaxRateSet()->getUuid(), $parentResource->getId());
 
         return $restResponse->addResource($restResource);
@@ -102,9 +102,9 @@ class ProductTaxSetsReader implements ProductTaxSetsReaderInterface
             return null;
         }
 
-        $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxRateSetTransferToRestTaxSetsAttributesTransfer($taxSetResponseTransfer->getTaxRateSet());
+        $restTaxSetTransfer = $this->taxSetsResourceMapper->mapTaxSetTransferToRestTaxSetsAttributesTransfer($taxSetResponseTransfer->getTaxSet());
 
-        return $this->formatRestResource($restTaxSetTransfer, $taxSetResponseTransfer->getTaxRateSet()->getUuid(), $abstractProductSku);
+        return $this->formatRestResource($restTaxSetTransfer, $taxSetResponseTransfer->getTaxSet()->getUuid(), $abstractProductSku);
     }
 
     /**

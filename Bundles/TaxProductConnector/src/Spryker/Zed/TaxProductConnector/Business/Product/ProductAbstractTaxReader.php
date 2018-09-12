@@ -35,24 +35,24 @@ class ProductAbstractTaxReader implements ProductAbstractTaxReaderInterface
      */
     public function getTaxSetByProductAbstract(ProductAbstractTransfer $productAbstractTransfer): TaxSetResponseTransfer
     {
-        $taxSetResponse = new TaxSetResponseTransfer();
-        $taxRateSet = $this->taxProductConnectorRepository->findTaxSetByProductAbstractSku($productAbstractTransfer->getSku());
+        $taxSetResponseTransfer = new TaxSetResponseTransfer();
+        $taxSetTransfer = $this->taxProductConnectorRepository->findTaxSetByProductAbstractSku($productAbstractTransfer->getSku());
 
-        if ($taxRateSet === null) {
-            $taxSetResponse->setIsSuccess(false);
-            $taxSetResponse->setError(
+        if ($taxSetTransfer === null) {
+            $taxSetResponseTransfer->setIsSuccess(false);
+            $taxSetResponseTransfer->setError(
                 sprintf(
                     static::EXCEPTION_MESSAGE_TAX_SET_NOT_FOUND_FOR_ABSTRACT,
                     $productAbstractTransfer->getIdProductAbstract()
                 )
             );
 
-            return $taxSetResponse;
+            return $taxSetResponseTransfer;
         }
 
-        $taxSetResponse->setTaxRateSet($taxRateSet);
-        $taxSetResponse->setIsSuccess(true);
+        $taxSetResponseTransfer->setTaxSet($taxSetTransfer);
+        $taxSetResponseTransfer->setIsSuccess(true);
 
-        return $taxSetResponse;
+        return $taxSetResponseTransfer;
     }
 }

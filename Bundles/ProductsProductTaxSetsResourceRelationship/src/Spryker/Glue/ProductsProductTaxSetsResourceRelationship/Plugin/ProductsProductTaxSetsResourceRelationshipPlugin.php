@@ -42,6 +42,6 @@ class ProductsProductTaxSetsResourceRelationshipPlugin extends AbstractPlugin im
      */
     public function getRelationshipResourceType(): string
     {
-        return 'tax-sets';
+        return 'product-tax-sets';
     }
 }

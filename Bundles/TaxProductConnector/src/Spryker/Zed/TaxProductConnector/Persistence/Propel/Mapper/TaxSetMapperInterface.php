@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\TaxProductConnector\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\TaxRateSetTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 
 interface TaxSetMapperInterface
@@ -15,7 +15,7 @@ interface TaxSetMapperInterface
     /**
      * @param \Orm\Zed\Tax\Persistence\SpyTaxSet $taxSetEntity
      *
-     * @return \Generated\Shared\Transfer\TaxRateSetTransfer
+     * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
-    public function mapTaxSetEntityToTaxRateSetTransfer(SpyTaxSet $taxSetEntity): TaxRateSetTransfer;
+    public function mapTaxSetEntityToTaxSetTransfer(SpyTaxSet $taxSetEntity): TaxSetTransfer;
 }

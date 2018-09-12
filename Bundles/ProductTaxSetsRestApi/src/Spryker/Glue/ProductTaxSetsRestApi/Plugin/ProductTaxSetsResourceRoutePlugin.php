@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ProductTaxSetsRestApi\Plugin;
 
-use Generated\Shared\Transfer\RestTaxSetsAttributesTransfer;
+use Generated\Shared\Transfer\RestProductTaxSetsAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
@@ -70,7 +70,7 @@ class ProductTaxSetsResourceRoutePlugin extends AbstractPlugin implements Resour
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestTaxSetsAttributesTransfer::class;
+        return RestProductTaxSetsAttributesTransfer::class;
     }
 
     /**

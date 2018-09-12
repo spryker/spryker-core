@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\TaxProductConnector\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\TaxRateSetItemTransfer;
-use Generated\Shared\Transfer\TaxRateSetTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
+use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 
 class TaxSetMapper implements TaxSetMapperInterface
@@ -16,20 +17,24 @@ class TaxSetMapper implements TaxSetMapperInterface
     /**
      * @param \Orm\Zed\Tax\Persistence\SpyTaxSet $taxSetEntity
      *
-     * @return \Generated\Shared\Transfer\TaxRateSetTransfer
+     * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
-    public function mapTaxSetEntityToTaxRateSetTransfer(SpyTaxSet $taxSetEntity): TaxRateSetTransfer
+    public function mapTaxSetEntityToTaxSetTransfer(SpyTaxSet $taxSetEntity): TaxSetTransfer
     {
-        $taxRateSetTransfer = new TaxRateSetTransfer();
-        $taxRateSetTransfer->fromArray($taxSetEntity->toArray(), true);
+        $taxSetTransfer = new TaxSetTransfer();
+        $taxSetTransfer->fromArray($taxSetEntity->toArray(), true);
         foreach ($taxSetEntity->getSpyTaxRates() as $taxRate) {
-            $taxRateSetItemTransfer = (new TaxRateSetItemTransfer())->fromArray($taxRate->toArray(), true);
+            $taxRateTransfer = (new TaxRateTransfer())->fromArray($taxRate->toArray(), true);
             if ($taxRate->getCountry()) {
-                $taxRateSetItemTransfer->setCountry($taxRate->getCountry()->getIso2Code());
+                $countryTransfer = (new CountryTransfer())->fromArray(
+                    $taxRate->getCountry()->toArray(),
+                    true
+                );
+                $taxRateTransfer->setCountry($countryTransfer);
             }
-            $taxRateSetTransfer->addTaxRateSetItem($taxRateSetItemTransfer);
+            $taxSetTransfer->addTaxRate($taxRateTransfer);
         }
 
-        return $taxRateSetTransfer;
+        return $taxSetTransfer;
     }
 }

@@ -10,20 +10,7 @@
     <transfer name="TaxSetResponse">
         <property name="isSuccess" type="bool" />
         <property name="error" type="string" />
-        <property name="taxRateSet" type="TaxRateSet" />
-    </transfer>
-
-    <transfer name="TaxRateSet">
-        <property name="idTaxSet" type="int" />
-        <property name="name" type="string" />
-        <property name="TaxRateSetItems" type="TaxRateSetItem[]" singular="TaxRateSetItem"/>
-    </transfer>
-
-    <transfer name="TaxRateSetItem">
-        <property name="idTaxRate" type="int" />
-        <property name="name" type="string" />
-        <property name="rate" type="string" />
-        <property name="country" type="string" />
+        <property name="taxSet" type="TaxSet" />
     </transfer>
 
 </transfers>

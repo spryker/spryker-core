@@ -18,8 +18,4 @@
         <property name="uuid" type="string" />
     </transfer>
 
-    <transfer name="TaxRateSet">
-        <property name="uuid" type="string" />
-    </transfer>
-
 </transfers>

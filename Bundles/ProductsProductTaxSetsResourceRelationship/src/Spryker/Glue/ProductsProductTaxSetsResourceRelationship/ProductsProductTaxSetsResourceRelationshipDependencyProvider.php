@@ -37,7 +37,7 @@ class ProductsProductTaxSetsResourceRelationshipDependencyProvider extends Abstr
     {
         $container[static::RESOURCE_TAX_SETS] = function (Container $container) {
             return new ProductsProductTaxSetsResourceRelationshipToTaxSetsRestApiResourceBridge(
-                $container->getLocator()->taxSetsRestApi()->resource()
+                $container->getLocator()->productTaxSetsRestApi()->resource()
             );
         };
 
