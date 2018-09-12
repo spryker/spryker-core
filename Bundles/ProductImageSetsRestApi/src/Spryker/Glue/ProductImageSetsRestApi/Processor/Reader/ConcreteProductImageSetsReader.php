@@ -106,6 +106,10 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
                 $restRequest->getMetadata()->getLocale()
             );
 
+        if (!$concreteProductStorageData) {
+            return null;
+        }
+
         $concreteProductStorageTransfer = (new ProductConcreteStorageTransfer())->fromArray(
             $concreteProductStorageData,
             true
