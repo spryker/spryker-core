@@ -47,10 +47,8 @@ class ExpenseRefundCalculator extends AbstractRefundCalculator
      */
     protected function calculateRefundableExpenseAmount(RefundTransfer $refundTransfer)
     {
-        if ($refundTransfer->getExpenses()) {
-            foreach ($refundTransfer->getExpenses() as $expenseTransfer) {
-                $refundTransfer->setAmount($refundTransfer->getAmount() + $expenseTransfer->getRefundableAmount());
-            }
+        foreach ($refundTransfer->getExpenses() as $expenseTransfer) {
+            $refundTransfer->setAmount($refundTransfer->getAmount() + $expenseTransfer->getRefundableAmount());
         }
     }
 
@@ -61,10 +59,8 @@ class ExpenseRefundCalculator extends AbstractRefundCalculator
      */
     protected function setCanceledExpenseAmount(RefundTransfer $refundTransfer)
     {
-        if ($refundTransfer->getExpenses()) {
-            foreach ($refundTransfer->getExpenses() as $expenseTransfer) {
-                $expenseTransfer->setCanceledAmount($expenseTransfer->getRefundableAmount());
-            }
+        foreach ($refundTransfer->getExpenses() as $expenseTransfer) {
+            $expenseTransfer->setCanceledAmount($expenseTransfer->getRefundableAmount());
         }
     }
 }
