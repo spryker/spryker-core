@@ -11,6 +11,8 @@ use Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @api
+ *
  * @method \Spryker\Zed\CustomerAccess\Business\CustomerAccessFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerAccess\Communication\CustomerAccessCommunicationFactory getFactory()
  */
