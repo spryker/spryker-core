@@ -15,6 +15,8 @@ use Spryker\Client\CustomerAccessPermission\Dependency\Client\CustomerAccessPerm
 
 class CustomerAccess implements CustomerAccessInterface
 {
+    protected const CUSTOMER_SECURED_PATTERN_REGEX_TEMPLATE = '%s$';
+
     /**
      * @var \Spryker\Client\CustomerAccessPermission\Dependency\Client\CustomerAccessPermissionToCustomerAccessStorageClientInterface
      */
@@ -74,5 +76,46 @@ class CustomerAccess implements CustomerAccessInterface
         }
 
         return $permissionCollectionTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerSecuredPatternForUnauthenticatedCustomerAccess(): string
+    {
+        $customerSecuredPattern = $this->customerAccessConfig->getCustomerSecuredPattern();
+        $unauthenticatedCustomerAccess = $this->customerAccessStorageReader->getUnauthenticatedCustomerAccess();
+        $customerSecuredPattern = $this->applyCustomerAccessOnCustomerSecuredPattern($unauthenticatedCustomerAccess, $customerSecuredPattern);
+        $customerSecuredPattern = $this->applyRegexTemplateOnCustomerSecuredPattern($customerSecuredPattern);
+
+        return $customerSecuredPattern;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
+     * @param string $customerSecuredPattern
+     *
+     * @return string
+     */
+    protected function applyCustomerAccessOnCustomerSecuredPattern(
+        CustomerAccessTransfer $customerAccessTransfer,
+        string $customerSecuredPattern
+    ): string {
+        foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
+            $customerSecuredPatternRoute = $this->customerAccessConfig->getCustomerAccessByContentType($contentTypeAccess->getContentType());
+            $customerSecuredPattern = str_replace($customerSecuredPatternRoute, '', $customerSecuredPattern);
+        }
+
+        return $customerSecuredPattern;
+    }
+
+    /**
+     * @param string $customerSecuredPattern
+     *
+     * @return string
+     */
+    protected function applyRegexTemplateOnCustomerSecuredPattern(string $customerSecuredPattern): string
+    {
+        return sprintf(static::CUSTOMER_SECURED_PATTERN_REGEX_TEMPLATE, $customerSecuredPattern);
     }
 }

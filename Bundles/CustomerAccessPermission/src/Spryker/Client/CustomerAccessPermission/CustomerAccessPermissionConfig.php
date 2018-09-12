@@ -28,7 +28,19 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
         'shopping-list' => SeeShoppingListPermissionPlugin::KEY,
     ];
 
+    protected const CONTENT_TYPE_PERMISSION_ACCESS = [
+        'add-to-cart' => '/cart(?!/add)|^(/en|/de)?',
+        'order-place-submit' => '/checkout',
+        'wishlist' => '/wishlist|^(/en|/de)?',
+        'shopping-list' => '/shopping-list|^(/en|/de)?',
+    ];
+
     protected const MESSAGE_PLUGIN_NOT_FOUND_EXCEPTION = 'Plugin not found';
+
+    /**
+     * @uses \Spryker\Shared\Customer\CustomerConstants::CUSTOMER_SECURED_PATTERN
+     */
+    protected const CUSTOMER_SECURED_PATTERN = 'CUSTOMER_SECURED_PATTERN';
 
     /**
      * @param string $contentType
@@ -49,10 +61,32 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
     /**
      * @param string $contentType
      *
+     * @return string
+     */
+    public function getCustomerAccessByContentType(string $contentType): string
+    {
+        if (!array_key_exists($contentType, static::CONTENT_TYPE_PERMISSION_ACCESS)) {
+            return '';
+        }
+
+        return static::CONTENT_TYPE_PERMISSION_ACCESS[$contentType];
+    }
+
+    /**
+     * @param string $contentType
+     *
      * @return bool
      */
     public function hasPluginToSeeContentType(string $contentType): bool
     {
         return array_key_exists($contentType, static::CONTENT_TYPE_PERMISSION_PLUGIN);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerSecuredPattern(): string
+    {
+        return $this->get(static::CUSTOMER_SECURED_PATTERN);
     }
 }
