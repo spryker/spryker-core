@@ -14,4 +14,8 @@
         <property name="sku" type="string"/>
     </transfer>
 
+    <transfer name="Wishlist">
+        <property name="uuid" type="string" />
+    </transfer>
+
 </transfers>
