@@ -30,6 +30,7 @@ use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcre
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteProductAbstractStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteProductAbstractUrlStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteStorageListener;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 use SprykerTest\Zed\ProductStorage\ProductStorageConfigMock;
 
@@ -292,13 +293,13 @@ class ProductStorageListenerTest extends Unit
         $afterCount = SpyProductAbstractStorageQuery::create()->count();
         $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $afterCount);
         $spyProductAbstractStorage = SpyProductAbstractStorageQuery::create()
-            ->orderByIdProductAbstractStorage()
+            ->orderByIdProductAbstractStorage(Criteria::ASC)
             ->findOneByFkProductAbstract(1);
         $this->assertNotNull($spyProductAbstractStorage);
         $data = $spyProductAbstractStorage->getData();
         $this->assertSame('001', $data['sku']);
         $this->assertSame(6, count($data['attributes']));
-        $this->assertSame('/en/canon-ixus-160-001', $data['url']);
+        $this->assertSame('/de/canon-ixus-160-001', $data['url']);
     }
 
     /**
