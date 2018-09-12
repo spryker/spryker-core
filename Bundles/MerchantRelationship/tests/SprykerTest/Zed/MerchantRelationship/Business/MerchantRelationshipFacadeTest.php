@@ -179,6 +179,42 @@ class MerchantRelationshipFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testDeleteMerchantRelationshipWithPreCheck(): void
+    {
+        $merchantRelationship = $this->haveMerchantRelationship('mr-test');
+        $idMerchantRelationship = $merchantRelationship->getIdMerchantRelationship();
+
+        $merchantRelationshipDeleteResponseTransfer = (new MerchantRelationshipFacade())
+            ->deleteMerchantRelationshipWithPreCheck($merchantRelationship);
+
+        $this->tester->assertTrue($merchantRelationshipDeleteResponseTransfer->getIsSuccess());
+        $this->tester->assertMerchantRelationshipNotExists($idMerchantRelationship);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteMerchantRelationshipWithPreCheckAndAssigneeDeletesAssignee(): void
+    {
+        $merchantRelationship = $this->haveMerchantRelationship(
+            'mr-test',
+            'unit-owner',
+            ['unit-owner', 'unit-1', 'unit-2']
+        );
+        $idMerchantRelationship = $merchantRelationship->getIdMerchantRelationship();
+
+        $merchantRelationshipDeleteResponseTransfer = (new MerchantRelationshipFacade())->deleteMerchantRelationshipWithPreCheck(
+            (new MerchantRelationshipTransfer())
+                ->setIdMerchantRelationship($idMerchantRelationship)
+        );
+
+        $this->tester->assertTrue($merchantRelationshipDeleteResponseTransfer->getIsSuccess());
+        $this->tester->assertMerchantRelationshipToCompanyBusinessUnitNotExists($idMerchantRelationship);
+    }
+
+    /**
      * @param string $merchantRelationshipKey
      * @param string|null $companyBusinessUnitOwnerKey
      * @param array $assigneeCompanyBusinessUnitKeys

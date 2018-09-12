@@ -45,7 +45,7 @@ interface MerchantRelationshipFacadeInterface
      */
     public function updateMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer;
 
-    /***
+    /**
      * Specification:
      * - Removes related business units by assigneeCompanyBusinessUnitCollection.
      * - Finds a merchant relationship record by ID in DB.
