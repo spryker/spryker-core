@@ -282,6 +282,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
     /**
      * @api
      *
+     * @deprecated Broken and will be removed in the next major.
+     *
      * @param \Generated\Shared\Transfer\RolesTransfer $roles
      * @param string $bundle
      * @param string $controller

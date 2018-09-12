@@ -15,13 +15,13 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  */
 class CatFaceTransfer extends AbstractTransfer
 {
-    const NAME = 'name';
+    public const NAME = 'name';
 
-    const ITEM = 'item';
+    public const ITEM = 'item';
 
-    const ITEMS = 'items';
+    public const ITEMS = 'items';
 
-    const TYPED_ARRAY = 'typedArray';
+    public const TYPED_ARRAY = 'typedArray';
 
     /**
      * @var string|null
@@ -34,14 +34,14 @@ class CatFaceTransfer extends AbstractTransfer
     protected $item;
 
     /**
-     * @var \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]|null
+     * @var \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     protected $items;
 
     /**
      * @var string[]
      */
-    protected $typedArray;
+    protected $typedArray = [];
 
     /**
      * @var array
@@ -180,7 +180,7 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]|null
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     public function getItems()
     {
