@@ -9,7 +9,7 @@ namespace Spryker\Zed\DataImport\Business\Model\Publisher;
 
 interface DataImporterPublisherInterface
 {
-    public const FLUSH_CHUNK_SIZE = 1000000;
+    public const FLUSH_CHUNK_SIZE = 10000000;
 
     /**
      * @param string $eventName

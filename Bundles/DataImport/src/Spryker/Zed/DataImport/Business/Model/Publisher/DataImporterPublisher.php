@@ -12,6 +12,8 @@ use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
 
 class DataImporterPublisher implements DataImporterPublisherInterface
 {
+    const CHUNK_SIZE = 20000;
+
     /**
      * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface
      */
@@ -47,7 +49,11 @@ class DataImporterPublisher implements DataImporterPublisherInterface
             return;
         }
 
-        static::$importedEntityEvents[$eventName][] = $entityId;
+        static::$importedEntityEvents[$eventName][$entityId] = true;
+
+        if (count(static::$importedEntityEvents, COUNT_RECURSIVE) >= static::CHUNK_SIZE) {
+            $this->triggerEvents();
+        }
     }
 
     /**
@@ -69,15 +75,15 @@ class DataImporterPublisher implements DataImporterPublisherInterface
      */
     public function triggerEvents($flushChunkSize = self::FLUSH_CHUNK_SIZE): void
     {
-        $uniqueEvents = $this->getUniqueEvents();
-        foreach ($uniqueEvents as $event => $ids) {
-            $uniqueIds = array_unique($ids, SORT_REGULAR);
+        $uniqueEvents = static::$importedEntityEvents;
+        foreach ($uniqueEvents as $eventName => $ids) {
             $events = [];
-            foreach ($uniqueIds as $id) {
-                $events[] = (new EventEntityTransfer())->setId($id);
-                static::$triggeredEventIds[$event][$id] = true;
+            foreach ($ids as $key => $value) {
+                $events[] = (new EventEntityTransfer())->setId($key);
+                static::$triggeredEventIds[$eventName][$key] = true;
             }
-            $this->eventFacade->triggerBulk($event, $events);
+
+            $this->eventFacade->triggerBulk($eventName, $events);
         }
 
         static::$importedEntityEvents = [];
@@ -88,32 +94,20 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     }
 
     /**
+     * @deprecated $ids will be unique by calling DataImporterPublisher::addEvent(),
+     * No necessary to call this method anymore
+     *
+     * @param array $mergedArray
+     *
      * @return array
      */
-    protected static function getUniqueImportedEntityEvents(): array
+    protected static function getUniqueArray(array $mergedArray): array
     {
         $uniqueArray = [];
-        foreach (static::$importedEntityEvents as $event => $ids) {
+        foreach ($mergedArray as $event => $ids) {
             $uniqueArray[$event] = array_unique($ids, SORT_REGULAR);
         }
 
         return $uniqueArray;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getUniqueEvents(): array
-    {
-        $uniqueEvents = static::getUniqueImportedEntityEvents();
-        foreach ($uniqueEvents as $eventName => $events) {
-            foreach ($events as $entityKey => $entityId) {
-                if (isset(static::$triggeredEventIds[$eventName][(int)$entityId])) {
-                    unset($uniqueEvents[$eventName][$entityKey]);
-                }
-            }
-        }
-
-        return $uniqueEvents;
     }
 }
