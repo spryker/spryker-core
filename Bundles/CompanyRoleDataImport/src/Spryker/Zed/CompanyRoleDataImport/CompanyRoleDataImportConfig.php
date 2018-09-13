@@ -58,7 +58,7 @@ class CompanyRoleDataImportConfig extends DataImportConfig
             $this->getModuleRoot(),
             'data',
             'import',
-        ]);
+        ]) . DIRECTORY_SEPARATOR;
     }
 
     /**

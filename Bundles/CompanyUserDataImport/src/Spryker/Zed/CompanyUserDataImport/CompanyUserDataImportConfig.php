@@ -34,7 +34,7 @@ class CompanyUserDataImportConfig extends DataImportConfig
             $this->getModuleRoot(),
             'data',
             'import',
-        ]);
+        ]) . DIRECTORY_SEPARATOR;
     }
 
     /**
