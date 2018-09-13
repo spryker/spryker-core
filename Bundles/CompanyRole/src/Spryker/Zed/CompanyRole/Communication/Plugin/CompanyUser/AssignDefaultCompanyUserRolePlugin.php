@@ -19,11 +19,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class AssignDefaultCompanyUserRolePlugin extends AbstractPlugin implements CompanyUserPostCreatePluginInterface
 {
     /**
-     * Specification:
-     * - Assigns default role to company user after he is being created.
-     * - Uses CompanyUserFacade to retrieve default company role.
-     * - Uses CompanyUserFacade to save company user after assigning default role to him.
-     * - Doesn't change company user, if his role collection is not empty.
+     * {@inheritdoc}
+     * - Assigns default role to company user after it was created.
+     * - Company user will not be changed if it has at least one assigned role.
      *
      * @api
      *
