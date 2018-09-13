@@ -151,7 +151,7 @@ class ApiConfig extends AbstractBundleConfig
     /**
      * Defines set of available strategies for filtering of Server Variables
      *
-     * @return \Spryker\Zed\Api\Communication\Plugin\ServerVariableFilterStrategyInterface[]
+     * @return array
      */
     public function getServerVariablesFilterStrategyFiltererMap(): array
     {
