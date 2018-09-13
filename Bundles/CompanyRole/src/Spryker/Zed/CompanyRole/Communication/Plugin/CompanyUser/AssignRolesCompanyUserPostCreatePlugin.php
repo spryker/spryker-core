@@ -17,10 +17,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class AssignRolesCompanyUserPostCreatePlugin extends AbstractPlugin implements CompanyUserPostCreatePluginInterface
 {
     /**
-     * Specification:
-     * - Saves company user role collection if it's not empty.
-     * - Uses CompanyRoleFacade to save company user.
-     * - Is being called after new company user has been created and company roles were added to company user transfer.
+     * {@inheritdoc}
+     * - Saves company user if it has at least one assigned company role.
      *
      * @api
      *

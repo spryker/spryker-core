@@ -21,7 +21,7 @@ class AssignDefaultCompanyUserRolePlugin extends AbstractPlugin implements Compa
     /**
      * {@inheritdoc}
      * - Assigns default role to company user after it was created.
-     * - Company user will not be changed if it has at least one assigned role.
+     * - Company user will not be changed if it has at least one assigned company role.
      *
      * @api
      *
