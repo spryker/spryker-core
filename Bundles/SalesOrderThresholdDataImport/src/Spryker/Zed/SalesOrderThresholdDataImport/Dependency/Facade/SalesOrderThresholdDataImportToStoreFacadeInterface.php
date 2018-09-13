@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\SalesOrderThresholdDataImport\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 interface SalesOrderThresholdDataImportToStoreFacadeInterface
 {
     /**
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName(string $storeName): ?StoreTransfer;
+    public function getStoreByName($storeName);
 }

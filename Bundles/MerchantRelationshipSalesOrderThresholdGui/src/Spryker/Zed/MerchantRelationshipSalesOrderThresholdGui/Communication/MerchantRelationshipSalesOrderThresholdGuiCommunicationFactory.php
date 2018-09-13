@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThresholdQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdDataProvider;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdDataProviderResolver;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdDataProviderResolverInterface;
@@ -82,16 +81,6 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\LocaleProvider
-     */
-    public function createLocaleProvider(): LocaleProvider
-    {
-        return new LocaleProvider(
-            $this->getLocaleFacade()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface
      */
     public function createStoreCurrencyFinder(): StoreCurrencyFinderInterface
@@ -108,7 +97,7 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
     public function createHardThresholdFormMapper(): ThresholdFormMapperInterface
     {
         return new HardThresholdFormMapper(
-            $this->createLocaleProvider(),
+            $this->getLocaleFacade(),
             $this->createStoreCurrencyFinder()
         );
     }
@@ -119,7 +108,7 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
     public function createSoftThresholdFormMapperResolver(): ThresholdMapperResolverInterface
     {
         return new ThresholdMapperResolver(
-            $this->createLocaleProvider(),
+            $this->getLocaleFacade(),
             $this->createStoreCurrencyFinder(),
             $this->getConfig()
         );

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 class MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeBridge implements MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeInterface
 {
     /**
@@ -22,34 +20,6 @@ class MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeBridge implements 
     public function __construct($localeFacade)
     {
         $this->localeFacade = $localeFacade;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getCurrentLocale(): LocaleTransfer
-    {
-        return $this->localeFacade->getCurrentLocale();
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocale($localeName): LocaleTransfer
-    {
-        return $this->localeFacade->getLocale($localeName);
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return bool
-     */
-    public function hasLocale($localeName): bool
-    {
-        return $this->localeFacade->hasLocale($localeName);
     }
 
     /**

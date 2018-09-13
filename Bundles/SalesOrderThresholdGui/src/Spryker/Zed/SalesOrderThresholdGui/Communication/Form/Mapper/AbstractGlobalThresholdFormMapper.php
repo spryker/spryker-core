@@ -9,17 +9,17 @@ namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper;
 
 use Generated\Shared\Transfer\SalesOrderThresholdLocalizedMessageTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\LocalizedForm;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface;
+use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToLocaleFacadeInterface;
 
 abstract class AbstractGlobalThresholdFormMapper
 {
     /**
-     * @var \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\LocaleProvider
+     * @var \Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToLocaleFacadeInterface
      */
-    protected $localeProvider;
+    protected $localeFacade;
 
     /**
      * @var \Spryker\Zed\SalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface
@@ -27,14 +27,14 @@ abstract class AbstractGlobalThresholdFormMapper
     protected $storeCurrencyFinder;
 
     /**
-     * @param \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\LocaleProvider $localeProvider
+     * @param \Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\SalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface $storeCurrencyFinder
      */
     public function __construct(
-        LocaleProvider $localeProvider,
+        SalesOrderThresholdGuiToLocaleFacadeInterface $localeFacade,
         StoreCurrencyFinderInterface $storeCurrencyFinder
     ) {
-        $this->localeProvider = $localeProvider;
+        $this->localeFacade = $localeFacade;
         $this->storeCurrencyFinder = $storeCurrencyFinder;
     }
 
@@ -69,7 +69,7 @@ abstract class AbstractGlobalThresholdFormMapper
         SalesOrderThresholdTransfer $salesOrderThresholdTransfer,
         string $localizedFormPrefix
     ): SalesOrderThresholdTransfer {
-        $localeCollection = $this->localeProvider->getLocaleCollection();
+        $localeCollection = $this->localeFacade->getLocaleCollection();
         foreach ($localeCollection as $localeTransfer) {
             $localizedFieldName = GlobalThresholdType::getLocalizedFormName($localizedFormPrefix, $localeTransfer->getLocaleName());
             $localizedMessage = (new SalesOrderThresholdLocalizedMessageTransfer())

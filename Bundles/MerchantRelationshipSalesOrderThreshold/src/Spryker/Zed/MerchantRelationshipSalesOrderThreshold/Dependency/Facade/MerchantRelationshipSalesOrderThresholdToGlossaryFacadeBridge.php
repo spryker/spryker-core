@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Dependency\Facade;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 
 class MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge implements MerchantRelationshipSalesOrderThresholdToGlossaryFacadeInterface
 {
@@ -31,7 +32,7 @@ class MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge implements M
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null)
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null): bool
     {
         return $this->glossaryFacade->hasTranslation($keyName, $locale);
     }
@@ -42,7 +43,7 @@ class MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge implements M
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale)
+    public function getTranslation($keyName, LocaleTransfer $locale): TranslationTransfer
     {
         return $this->glossaryFacade->getTranslation($keyName, $locale);
     }
@@ -52,7 +53,7 @@ class MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge implements M
      *
      * @return bool
      */
-    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer)
+    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer): bool
     {
         return $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
     }

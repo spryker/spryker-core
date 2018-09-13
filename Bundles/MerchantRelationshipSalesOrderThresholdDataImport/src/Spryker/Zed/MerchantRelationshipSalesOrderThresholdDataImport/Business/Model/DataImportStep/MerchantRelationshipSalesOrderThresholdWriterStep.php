@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\Business\Model\DataSet\MerchantRelationshipSalesOrderThresholdDataSetInterface;
@@ -20,6 +21,7 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\Dependency\Fac
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\Dependency\Facade\MerchantRelationshipSalesOrderThresholdDataImportToMerchantRelationshipFacadeInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\Dependency\Facade\MerchantRelationshipSalesOrderThresholdDataImportToMerchantRelationshipSalesOrderThresholdFacadeInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\Dependency\Facade\MerchantRelationshipSalesOrderThresholdDataImportToStoreFacadeInterface;
+use Throwable;
 
 class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportStepInterface
 {
@@ -90,22 +92,11 @@ class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportSte
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $merchantRelationshipTransfer = $this->findMerchantRelationshipByKey(
+        $storeTransfer = $this->getStoreByName($dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_STORE]);
+        $currencyTransfer = $this->getCurrencyByCode($dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_CURRENCY]);
+        $merchantRelationshipTransfer = $this->getMerchantRelationshipByKey(
             $dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_MERCHANT_RELATIONSHIP_KEY]
         );
-        if ($merchantRelationshipTransfer === null) {
-            return;
-        }
-
-        $storeTransfer = $this->findStoreByName($dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_STORE]);
-        if ($storeTransfer === null) {
-            return;
-        }
-
-        $currencyTransfer = $this->findCurrencyByCode($dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_CURRENCY]);
-        if ($currencyTransfer === null) {
-            return;
-        }
 
         if ($dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_SALES_ORDER_THRESHOLD_TYPE_KEY] && $dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_THRESHOLD]) {
             $merchantRelationshipSalesOrderThresholdTransfer = $this->createMerchantRelationshipSalesOrderThresholdTransfer(
@@ -159,9 +150,11 @@ class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportSte
     /**
      * @param string $merchantRelationshipKey
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
+     * @throws \Pyz\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
-    protected function findMerchantRelationshipByKey(string $merchantRelationshipKey): ?MerchantRelationshipTransfer
+    protected function getMerchantRelationshipByKey(string $merchantRelationshipKey): MerchantRelationshipTransfer
     {
         if ($this->merchantRelationshipsHeapSize > static::MERCHANT_RELATIONSHIPS_HEAP_LIMIT) {
             $this->merchantRelationshipsHeapSize = 0;
@@ -174,7 +167,7 @@ class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportSte
             );
 
             if (!$merchantRelationshipTransfer) {
-                return null;
+                throw new EntityNotFoundException(sprintf('Merchant relationship not found: %s', $merchantRelationshipKey));
             }
 
             $this->merchantRelationshipsHeap[$merchantRelationshipKey] = $merchantRelationshipTransfer;
@@ -187,17 +180,20 @@ class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportSte
     /**
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     * @throws \Pyz\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function findStoreByName(string $storeName): ?StoreTransfer
+    protected function getStoreByName(string $storeName): StoreTransfer
     {
         if (!isset($this->storesHeap[$storeName])) {
-            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
-            if ($storeTransfer === null) {
-                return null;
-            }
+            try {
+                $storeTransfer = $this->storeFacade->getStoreByName($storeName);
 
-            $this->storesHeap[$storeName] = $storeTransfer;
+                $this->storesHeap[$storeName] = $storeTransfer;
+            } catch (Throwable $throwable) {
+                throw new EntityNotFoundException(sprintf('Store not found: %s', $storeName));
+            }
         }
 
         return $this->storesHeap[$storeName];
@@ -206,17 +202,20 @@ class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportSte
     /**
      * @param string $isoCode
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
+     * @throws \Pyz\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    protected function findCurrencyByCode(string $isoCode): ?CurrencyTransfer
+    protected function getCurrencyByCode(string $isoCode): CurrencyTransfer
     {
         if (!isset($this->currenciesHeap[$isoCode])) {
-            $currencyTransfer = $this->currencyFacade->fromIsoCode($isoCode);
-            if ($currencyTransfer === null) {
-                return null;
-            }
+            try {
+                $currencyTransfer = $this->currencyFacade->fromIsoCode($isoCode);
 
-            $this->currenciesHeap[$isoCode] = $currencyTransfer;
+                $this->currenciesHeap[$isoCode] = $currencyTransfer;
+            } catch (Throwable $throwable) {
+                throw new EntityNotFoundException(sprintf('Currency not found: %s', $isoCode));
+            }
         }
 
         return $this->currenciesHeap[$isoCode];

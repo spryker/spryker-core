@@ -19,5 +19,5 @@ interface MerchantRelationshipSalesOrderThresholdGuiToStoreFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName(string $storeName);
+    public function getStoreByName($storeName);
 }

@@ -29,7 +29,7 @@ class SalesOrderThresholdToMoneyFacadeBridge implements SalesOrderThresholdToMon
      *
      * @return string
      */
-    public function formatWithSymbol(MoneyTransfer $moneyTransfer)
+    public function formatWithSymbol(MoneyTransfer $moneyTransfer): string
     {
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }

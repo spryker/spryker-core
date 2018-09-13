@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\GlobalThresholdDataProvider;
-use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\SettingsFormDataProvider;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy\GlobalThresholdDataProviderResolver;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy\GlobalThresholdDataProviderResolverInterface;
@@ -94,16 +93,6 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\LocaleProvider
-     */
-    public function createLocaleProvider(): LocaleProvider
-    {
-        return new LocaleProvider(
-            $this->getLocaleFacade()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface
      */
     public function createStoreCurrencyFinder(): StoreCurrencyFinderInterface
@@ -120,7 +109,7 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
     public function createGlobalHardThresholdFormMapper(): GlobalThresholdFormMapperInterface
     {
         return new GlobalHardThresholdFormMapper(
-            $this->createLocaleProvider(),
+            $this->getLocaleFacade(),
             $this->createStoreCurrencyFinder()
         );
     }
@@ -131,7 +120,7 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
     public function createGlobalSoftThresholdFormMapperResolver(): GlobalThresholdMapperResolverInterface
     {
         return new GlobalThresholdMapperResolver(
-            $this->createLocaleProvider(),
+            $this->getLocaleFacade(),
             $this->createStoreCurrencyFinder(),
             $this->getConfig()
         );

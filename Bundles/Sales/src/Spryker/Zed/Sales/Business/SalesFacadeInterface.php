@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Sales\Business;
 
 use Generated\Shared\Transfer\AddressTransfer;
@@ -203,7 +204,6 @@ interface SalesFacadeInterface
      * Specification:
      * - Creates sales expense entity from transfer object.
      * - Adds sales expense to sales order.
-     * - Returns expense transfer with fk to sales order.
      *
      * @api
      *

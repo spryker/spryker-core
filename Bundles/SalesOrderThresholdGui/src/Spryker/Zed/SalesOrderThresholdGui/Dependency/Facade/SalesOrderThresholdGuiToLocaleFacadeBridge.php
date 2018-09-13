@@ -23,37 +23,9 @@ class SalesOrderThresholdGuiToLocaleFacadeBridge implements SalesOrderThresholdG
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getCurrentLocale()
-    {
-        return $this->localeFacade->getCurrentLocale();
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocale($localeName)
-    {
-        return $this->localeFacade->getLocale($localeName);
-    }
-
-    /**
-     * @param string $localeName
-     *
-     * @return bool
-     */
-    public function hasLocale($localeName)
-    {
-        return $this->localeFacade->hasLocale($localeName);
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getLocaleCollection()
+    public function getLocaleCollection(): array
     {
         return $this->localeFacade->getLocaleCollection();
     }

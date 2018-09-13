@@ -63,10 +63,12 @@ class GlobalController extends AbstractController
                 'The Global Threshold is saved successfully.'
             ));
         }
-        $localeProvider = $this->getFactory()->createLocaleProvider();
+        $localeCollection = $this->getFactory()
+            ->getLocaleFacade()
+            ->getLocaleCollection();
 
         return $this->viewResponse([
-            'localeCollection' => $localeProvider->getLocaleCollection(),
+            'localeCollection' => $localeCollection,
             'globalThresholdForm' => $globalThresholdForm->createView(),
         ]);
     }

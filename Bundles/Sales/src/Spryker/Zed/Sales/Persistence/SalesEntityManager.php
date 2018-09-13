@@ -25,7 +25,9 @@ class SalesEntityManager extends AbstractEntityManager implements SalesEntityMan
         $salesOrderExpenseEntity = $this->getFactory()
             ->createSalesExpenseMapper()
             ->mapExpenseTransferToSalesExpenseEntity($expenseTransfer);
+
         $salesOrderExpenseEntity->save();
+
         $expenseTransfer->setIdSalesExpense($salesOrderExpenseEntity->getIdSalesExpense());
 
         return $expenseTransfer;

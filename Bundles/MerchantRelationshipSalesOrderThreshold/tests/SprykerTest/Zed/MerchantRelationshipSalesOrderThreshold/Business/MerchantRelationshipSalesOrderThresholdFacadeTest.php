@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MerchantRelationshipSalesOrderThreshold\Business;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipSalesOrderThresholdFacadeInterface;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Strategy\HardMinimumThresholdStrategyPlugin;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Strategy\SoftMinimumThresholdWithMessageStrategyPlugin;
 use Spryker\Zed\SalesOrderThreshold\SalesOrderThresholdDependencyProvider;
@@ -129,9 +130,9 @@ class MerchantRelationshipSalesOrderThresholdFacadeTest extends MerchantRelation
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipSalesOrderThresholdFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
+     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipSalesOrderThresholdFacadeInterface
      */
-    protected function getFacade()
+    protected function getFacade(): MerchantRelationshipSalesOrderThresholdFacadeInterface
     {
         return $this->tester->getFacade();
     }

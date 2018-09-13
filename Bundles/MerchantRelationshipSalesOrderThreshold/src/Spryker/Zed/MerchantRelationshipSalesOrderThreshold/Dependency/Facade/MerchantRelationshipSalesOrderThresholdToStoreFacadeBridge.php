@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class MerchantRelationshipSalesOrderThresholdToStoreFacadeBridge implements MerchantRelationshipSalesOrderThresholdToStoreFacadeInterface
 {
     /**
@@ -27,7 +29,7 @@ class MerchantRelationshipSalesOrderThresholdToStoreFacadeBridge implements Merc
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName($storeName)
+    public function getStoreByName($storeName): StoreTransfer
     {
         return $this->storeFacade->getStoreByName($storeName);
     }

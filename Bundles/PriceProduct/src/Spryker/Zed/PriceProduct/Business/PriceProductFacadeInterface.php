@@ -65,7 +65,6 @@ interface PriceProductFacadeInterface
      *  - If currency not set it will use default store currency.
      *  - If store not set it will use default store.
      *  - If product price type is not set it will use default.
-     *  - returns a PriceProductTransfer or null.
      *
      * @api
      *

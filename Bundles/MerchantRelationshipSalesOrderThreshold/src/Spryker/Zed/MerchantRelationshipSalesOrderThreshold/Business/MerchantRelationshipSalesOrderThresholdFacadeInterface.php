@@ -30,7 +30,7 @@ interface MerchantRelationshipSalesOrderThresholdFacadeInterface
 
     /**
      * Specification:
-     * - Set merchant relationship specific minimum order value threshold.
+     * - Saves merchant relationship specific minimum order value threshold.
      *
      * @api
      *

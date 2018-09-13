@@ -229,7 +229,7 @@ class GlobalThresholdType extends AbstractType
     protected function addLocalizedForms(FormBuilderInterface $builder, string $localizedFormPrefix): self
     {
         $localeCollection = $this->getFactory()
-            ->createLocaleProvider()
+            ->getLocaleFacade()
             ->getLocaleCollection();
 
         foreach ($localeCollection as $localeTransfer) {
