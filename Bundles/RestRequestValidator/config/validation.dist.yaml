@@ -1,4 +1,4 @@
-access_tokens:
+access-tokens:
   post:
     username:
       - NotBlank
@@ -8,7 +8,7 @@ access_tokens:
     password:
       - NotBlank
 
-refresh_tokens:
+refresh-tokens:
   post:
     refresh_token:
     - Required

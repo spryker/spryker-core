@@ -118,7 +118,7 @@ class ControllerFilter implements ControllerFilterInterface
                 $restErrorCollectionTransfer = $this->restRequestValidator->validate($httpRequest, $restRequest);
             }
 
-            if ($restErrorCollectionTransfer === null || $restErrorCollectionTransfer->getRestErrors() === null) {
+            if (!$restErrorCollectionTransfer || empty($restErrorCollectionTransfer->getRestErrors())) {
                 $restResponse = $this->executeAction($controller, $action, $restRequest);
             } else {
                 $restResponse = $this->restResourceBuilder->createRestResponse();
