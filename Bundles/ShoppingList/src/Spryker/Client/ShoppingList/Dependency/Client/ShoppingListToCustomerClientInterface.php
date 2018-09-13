@@ -29,4 +29,17 @@ interface ShoppingListToCustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer(): ?CustomerTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves customer information by customer ID from persistent storage.
+     * - Permissions check using $customerTransfer->companyUserTransfer object is being triggered.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function reloadCustomerTransfer(CustomerTransfer $customerTransfer): CustomerTransfer;
 }
