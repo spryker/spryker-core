@@ -13,16 +13,10 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface;
-use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface;
 use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface;
 
 class Hydrator implements HydratorInterface
 {
-    /**
-     * @var \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface
-     */
-    protected $queryContainer;
-
     /**
      * @var \Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface
      */
@@ -31,21 +25,18 @@ class Hydrator implements HydratorInterface
     /**
      * @var \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface
      */
-    protected $repository;
+    protected $salesReclamationRepository;
 
     /**
-     * @param \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface $salesFacade
-     * @param \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface $repository
+     * @param \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface $salesReclamationRepository
      */
     public function __construct(
-        SalesReclamationQueryContainerInterface $queryContainer,
         SalesReclamationToSalesFacadeInterface $salesFacade,
-        SalesReclamationRepositoryInterface $repository
+        SalesReclamationRepositoryInterface $salesReclamationRepository
     ) {
-        $this->queryContainer = $queryContainer;
         $this->salesFacade = $salesFacade;
-        $this->repository = $repository;
+        $this->salesReclamationRepository = $salesReclamationRepository;
     }
 
     /**
@@ -55,13 +46,13 @@ class Hydrator implements HydratorInterface
      */
     public function hydrateByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
     {
-        $reclamationTransfer = $this->repository->findReclamationById($reclamationTransfer);
+        $reclamationTransfer = $this->salesReclamationRepository->findReclamationById($reclamationTransfer);
 
         if (!$reclamationTransfer) {
             return null;
         }
 
-        $createdOrderCollection = $this->repository->findCreatedOrdersByReclamationId($reclamationTransfer);
+        $createdOrderCollection = $this->salesReclamationRepository->findCreatedOrdersByReclamationId($reclamationTransfer);
         if ($createdOrderCollection) {
             $reclamationTransfer->setCreatedOrders($createdOrderCollection->getOrders());
         }
@@ -70,7 +61,6 @@ class Hydrator implements HydratorInterface
         $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($orderTransfer->getIdSalesOrder());
         $reclamationTransfer->setOrder($orderTransfer);
 
-        /** @var \Generated\Shared\Transfer\ReclamationItemTransfer[]|\ArrayObject $reclamationItems */
         $reclamationItems = new ArrayObject();
         foreach ($reclamationTransfer->getReclamationItems() as $reclamationItemTransfer) {
             $itemTransfer = $this->getOrderItemById($orderTransfer, $reclamationItemTransfer->getOrderItem()->getIdSalesOrderItem());

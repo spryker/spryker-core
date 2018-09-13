@@ -7,11 +7,10 @@
 
 namespace Spryker\Zed\SalesReclamation\Persistence;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OrderCollectionTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\SalesReclamation\Persistence\Mapper\SalesReclamationMapperInterface;
+use Spryker\Zed\SalesReclamation\Persistence\Propel\Mapper\SalesReclamationMapperInterface;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationPersistenceFactory getFactory()
@@ -27,7 +26,7 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
     {
         $reclamationTransfer->requireIdSalesReclamation();
 
-        $query = $this->getFactory()
+        $salesReclamationQuery = $this->getFactory()
             ->createSalesReclamationQuery()
             ->leftJoinWithSpySalesReclamationItem()
                 ->useSpySalesReclamationItemQuery()
@@ -36,13 +35,12 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
             ->leftJoinWithOrder()
             ->filterByIdSalesReclamation($reclamationTransfer->getIdSalesReclamation());
 
-        $query = $this->buildQueryFromCriteria($query);
-        if (!$query->count()) {
+        $salesReclamationQuery = $this->buildQueryFromCriteria($salesReclamationQuery);
+        if (!$salesReclamationQuery->count()) {
             return null;
         }
 
-        /** @var \Generated\Shared\Transfer\SpySalesReclamationEntityTransfer[] $spyReclamationsEntityTransfer */
-        $spyReclamationsEntityTransfer = $query->find();
+        $spyReclamationsEntityTransfer = $salesReclamationQuery->find();
         $spyReclamationEntityTransfer = $spyReclamationsEntityTransfer[0];
 
         return $this->getMapper()->mapEntityTransferToReclamationTransfer($spyReclamationEntityTransfer);
@@ -58,24 +56,20 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
         $reclamationTransfer->requireIdSalesReclamation();
         $createdOrdersCollectionTransfer = new OrderCollectionTransfer();
 
-        $query = $this->getFactory()
+        $salesOrderQuery = $this->getFactory()
             ->createSalesOrderQuery()
             ->filterByFkSalesReclamation($reclamationTransfer->getIdSalesReclamation());
-        /** @var \Generated\Shared\Transfer\SpySalesOrderEntityTransfer[] $createdOrdersEntityTransfer */
-        $createdOrdersEntityTransfer = $this->buildQueryFromCriteria($query)->find();
+        $createdOrdersEntityTransfer = $this->buildQueryFromCriteria($salesOrderQuery)->find();
 
-        $orders = new ArrayObject();
         foreach ($createdOrdersEntityTransfer as $createdOrderEntity) {
-            $orders->append($this->getMapper()->mapOrderEntityToOrderTransfer($createdOrderEntity));
+            $createdOrdersCollectionTransfer->addOrder($createdOrderEntity);
         }
-
-        $createdOrdersCollectionTransfer->setOrders($orders);
 
         return $createdOrdersCollectionTransfer;
     }
 
     /**
-     * @return \Spryker\Zed\SalesReclamation\Persistence\Mapper\SalesReclamationMapperInterface
+     * @return \Spryker\Zed\SalesReclamation\Persistence\Propel\Mapper\SalesReclamationMapperInterface
      */
     protected function getMapper(): SalesReclamationMapperInterface
     {

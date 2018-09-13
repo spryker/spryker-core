@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesReclamation\Persistence\Mapper;
+namespace Spryker\Zed\SalesReclamation\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
@@ -24,7 +24,7 @@ interface SalesReclamationMapperInterface
     public function mapReclamationTransferToEntityTransfer(ReclamationTransfer $reclamationTransfer): SpySalesReclamationEntityTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\SpySalesReclamationEntityTransfer $reclamationEntityTransfer
+     * @param \Generated\Shared\Transfer\SpySalesReclamationEntityTransfer|\Spryker\Shared\Kernel\Transfer\EntityTransferInterface $reclamationEntityTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
@@ -38,7 +38,7 @@ interface SalesReclamationMapperInterface
     public function mapReclamationItemTransferToEntityTransfer(ReclamationItemTransfer $reclamationItemTransfer): SpySalesReclamationItemEntityTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\SpySalesReclamationItemEntityTransfer $reclamationItemEntityTransfer
+     * @param \Generated\Shared\Transfer\SpySalesReclamationItemEntityTransfer|\Spryker\Shared\Kernel\Transfer\EntityTransferInterface $reclamationItemEntityTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationItemTransfer
      */

@@ -10,13 +10,23 @@ namespace Spryker\Zed\SalesReclamation\Persistence;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
-use Spryker\Zed\SalesReclamation\Persistence\Mapper\SalesReclamationMapperInterface;
+use Spryker\Zed\SalesReclamation\Persistence\Propel\Mapper\SalesReclamationMapperInterface;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationPersistenceFactory getFactory()
  */
 class SalesReclamationEntityManager extends AbstractEntityManager implements SalesReclamationEntityManagerInterface
 {
+    /**
+     * @see \Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap::COL_STATE_OPEN
+     */
+    public const RECLAMATION_STATE_OPEN = 'Open';
+
+    /**
+     * @see \Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap::COL_STATE_OPEN
+     */
+    public const RECLAMATION_ITEM_STATE_OPEN = 'Open';
+
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
@@ -25,24 +35,35 @@ class SalesReclamationEntityManager extends AbstractEntityManager implements Sal
     public function saveReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
     {
         $reclamationTransfer
-            ->requireStatus()
-            ->requireReclamationItems();
-        $reclamationItemsTransfer = $reclamationTransfer->getReclamationItems()->getArrayCopy();
+            ->requireState();
 
         $reclamationEntityTransfer = $this->getMapper()
             ->mapReclamationTransferToEntityTransfer($reclamationTransfer);
 
-        /** @var \Generated\Shared\Transfer\SpySalesReclamationEntityTransfer $reclamationEntityTransfer */
         $reclamationEntityTransfer = $this->save($reclamationEntityTransfer);
         $reclamationTransfer = $this->getMapper()
             ->mapEntityTransferToReclamationTransfer($reclamationEntityTransfer);
+
+        return $reclamationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer[]
+     */
+    public function saveReclamationItems(ReclamationTransfer $reclamationTransfer): array
+    {
+        $reclamationTransfer->requireReclamationItems();
+
+        $reclamationItemsTransfer = $reclamationTransfer->getReclamationItems()->getArrayCopy();
 
         foreach ($reclamationItemsTransfer as $reclamationItemTransfer) {
             $reclamationItemTransfer = $this->saveReclamationItem($reclamationTransfer, $reclamationItemTransfer);
             $reclamationTransfer->addReclamationItem($reclamationItemTransfer);
         }
 
-        return $reclamationTransfer;
+        return $reclamationItemsTransfer;
     }
 
     /**
@@ -58,12 +79,11 @@ class SalesReclamationEntityManager extends AbstractEntityManager implements Sal
         $reclamationTransfer->requireIdSalesReclamation();
         $reclamationItemTransfer
             ->requireOrderItem()
-            ->requireStatus();
+            ->requireState();
 
         $reclamationItemEntityTransfer = $this->getMapper()
             ->mapReclamationItemTransferToEntityTransfer($reclamationItemTransfer);
         $reclamationItemEntityTransfer->setFkSalesReclamation($reclamationTransfer->getIdSalesReclamation());
-        /** @var \Generated\Shared\Transfer\SpySalesReclamationItemEntityTransfer $reclamationItemEntityTransfer */
         $reclamationItemEntityTransfer = $this->save($reclamationItemEntityTransfer);
 
         return $this->getMapper()
@@ -71,7 +91,7 @@ class SalesReclamationEntityManager extends AbstractEntityManager implements Sal
     }
 
     /**
-     * @return \Spryker\Zed\SalesReclamation\Persistence\Mapper\SalesReclamationMapperInterface
+     * @return \Spryker\Zed\SalesReclamation\Persistence\Propel\Mapper\SalesReclamationMapperInterface
      */
     protected function getMapper(): SalesReclamationMapperInterface
     {

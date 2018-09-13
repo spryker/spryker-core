@@ -10,10 +10,10 @@ namespace Spryker\Zed\SalesReclamation\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaver;
 use Spryker\Zed\SalesReclamation\Business\Order\ReclamationSaverInterface;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\EntityManager;
-use Spryker\Zed\SalesReclamation\Business\Reclamation\EntityManagerInterface;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\Hydrator;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\HydratorInterface;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationWriter;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationWriterInterface;
 use Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface;
 use Spryker\Zed\SalesReclamation\SalesReclamationDependencyProvider;
 
@@ -26,11 +26,11 @@ use Spryker\Zed\SalesReclamation\SalesReclamationDependencyProvider;
 class SalesReclamationBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\EntityManagerInterface
+     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\ReclamationWriterInterface
      */
-    public function createReclamationCreator(): EntityManagerInterface
+    public function createReclamationCreator(): ReclamationWriterInterface
     {
-        return new EntityManager(
+        return new ReclamationWriter(
             $this->getEntityManager()
         );
     }
@@ -41,7 +41,6 @@ class SalesReclamationBusinessFactory extends AbstractBusinessFactory
     public function createReclamationHydrator(): HydratorInterface
     {
         return new Hydrator(
-            $this->getQueryContainer(),
             $this->getSalesFacade(),
             $this->getRepository()
         );

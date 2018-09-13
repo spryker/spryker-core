@@ -107,7 +107,7 @@ class ReclamationTable extends AbstractTable
                 ),
                 SpySalesReclamationTableMap::COL_CUSTOMER_NAME => $item[SpySalesReclamationTableMap::COL_CUSTOMER_NAME],
                 SpySalesReclamationTableMap::COL_CUSTOMER_EMAIL => $item[SpySalesReclamationTableMap::COL_CUSTOMER_EMAIL],
-                SpySalesReclamationTableMap::COL_STATE => $this->createStatusLabel(
+                SpySalesReclamationTableMap::COL_STATE => $this->createStateLabel(
                     $item[SpySalesReclamationTableMap::COL_STATE]
                 ),
                 SpySalesReclamationTableMap::COL_FK_SALES_ORDER => $item[SpySalesReclamationTableMap::COL_FK_SALES_ORDER],
@@ -123,19 +123,19 @@ class ReclamationTable extends AbstractTable
      *
      * @return string
      */
-    protected function createStatusLabel(string $state): string
+    protected function createStateLabel(string $state): string
     {
-        $statusLabel = '';
+        $stateLabel = '';
         switch ($state) {
             case SpySalesReclamationTableMap::COL_STATE_OPEN:
-                $statusLabel = '<span class="label label-success" title="Active">Open</span>';
+                $stateLabel = '<span class="label label-success" title="Active">Open</span>';
                 break;
             case SpySalesReclamationTableMap::COL_STATE_CLOSE:
-                $statusLabel = '<span class="label label-danger" title="Deactivated">Closed</span>';
+                $stateLabel = '<span class="label label-danger" title="Deactivated">Closed</span>';
                 break;
         }
 
-        return $statusLabel;
+        return $stateLabel;
     }
 
     /**

@@ -71,19 +71,19 @@
     </div>
 </td>
 <td>
-    {% if reclamationItem.status == 'Open' %}
+    {% if reclamationItem.state == 'Open' %}
         {% set label = 'label-success' %}
     {% else %}
         {% set label = 'label-danger' %}
     {% endif %}
 
-    <span class="label {{ label }}" title="Deactivated">{{ reclamationItem.status }}</span>
+    <span class="label {{ label }}" title="Deactivated">{{ reclamationItem.state }}</span>
 </td>
 <td>
-    {% if reclamationItem.status != 'Refunded' %}
+    {% if reclamationItem.state != 'Refunded' %}
         <a href="{{ url('/sales-reclamation/detail/close-item', {
             'id-reclamation': reclamation.idSalesReclamation,
-            'id-reclamation-item': reclamationItem.id,
+            'id-reclamation-item': reclamationItem.idSalesReclamationItem,
         }) }}"
            class="btn btn-xs btn-outline btn-view btn-remove"><i class="fa fa-close"></i>Refund
         </a>

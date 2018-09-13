@@ -7,26 +7,28 @@
 
 namespace Spryker\Zed\SalesReclamation\Business\Reclamation;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
+use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManager;
 use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface;
 
-class EntityManager implements EntityManagerInterface
+class ReclamationWriter implements ReclamationWriterInterface
 {
     /**
      * @var \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface
      */
-    protected $reclamationManager;
+    protected $salesReclamationEntityManager;
 
     /**
-     * @param \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface $reclamationManager
+     * @param \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface $salesReclamationEntityManager
      */
     public function __construct(
-        SalesReclamationEntityManagerInterface $reclamationManager
+        SalesReclamationEntityManagerInterface $salesReclamationEntityManager
     ) {
-        $this->reclamationManager = $reclamationManager;
+        $this->salesReclamationEntityManager = $salesReclamationEntityManager;
     }
 
     /**
@@ -64,7 +66,10 @@ class EntityManager implements EntityManagerInterface
         $reclamationTransfer->setCustomerName($customer);
         $reclamationTransfer->setCustomerReference($orderTransfer->getCustomerReference());
         $reclamationTransfer->setCustomerEmail($orderTransfer->getEmail());
-        $reclamationTransfer->setStatus(SalesReclamationEntityManagerInterface::RECLAMATION_STATE_OPEN);
+        $reclamationTransfer->setState(SalesReclamationEntityManager::RECLAMATION_STATE_OPEN);
+        $reclamationTransfer->setReclamationItems(new ArrayObject());
+
+        $reclamationTransfer = $this->salesReclamationEntityManager->saveReclamation($reclamationTransfer);
 
         $orderItemsTransfer = $reclamationCreateRequestTransfer->getOrderItems();
         foreach ($orderItemsTransfer as $orderItemTransfer) {
@@ -72,7 +77,7 @@ class EntityManager implements EntityManagerInterface
             $reclamationTransfer->addReclamationItem($reclamationItemTransfer);
         }
 
-        $reclamationTransfer = $this->reclamationManager->saveReclamation($reclamationTransfer);
+        $this->salesReclamationEntityManager->saveReclamationItems($reclamationTransfer);
 
         return $reclamationTransfer;
     }
@@ -88,7 +93,7 @@ class EntityManager implements EntityManagerInterface
 
         $reclamationItemTransfer = new ReclamationItemTransfer();
         $reclamationItemTransfer->setOrderItem($orderItemTransfer);
-        $reclamationItemTransfer->setStatus(SalesReclamationEntityManagerInterface::RECLAMATION_ITEM_STATE_OPEN);
+        $reclamationItemTransfer->setState(SalesReclamationEntityManager::RECLAMATION_ITEM_STATE_OPEN);
 
         return $reclamationItemTransfer;
     }
