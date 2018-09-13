@@ -107,7 +107,7 @@ class AvailabilityStockFormDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityStockTransfer
-     * @param \Orm\Zed\Stock\Persistence\SpyStock $type
+     * @param string $type
      *
      * @return bool
      */
