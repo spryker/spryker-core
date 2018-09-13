@@ -199,8 +199,8 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      */
     protected function expandProductConcretePageSearchTransferWithPlugins(ProductConcreteTransfer $productConcreteTransfer, ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): void
     {
-        foreach ($this->pageDataExpanderPlugins as $plugin) {
-            $plugin->expand($productConcreteTransfer, $productConcretePageSearchTransfer);
+        foreach ($this->pageDataExpanderPlugins as $pageDataExpanderPlugin) {
+            $pageDataExpanderPlugin->expand($productConcreteTransfer, $productConcretePageSearchTransfer);
         }
     }
 

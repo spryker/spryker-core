@@ -98,14 +98,14 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Que
      */
     protected function createFulltextSearchQuery(): AbstractQuery
     {
-        if ($this->searchString === null || !strlen($this->searchString) || !$this->filter || !$this->filter->getSearchFields()) {
+        $searchFields = $this->getSearchFields();
+
+        if ($this->searchString === null || !strlen($this->searchString) || !$searchFields) {
             return new MatchAll();
         }
 
-        $fields = $this->getSearchFields();
-
         $matchQuery = (new MultiMatch())
-            ->setFields($fields)
+            ->setFields($searchFields)
             ->setQuery($this->searchString)
             ->setType(MultiMatch::TYPE_PHRASE_PREFIX);
 
@@ -121,8 +121,8 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Que
     {
         $boolQuery = new BoolQuery();
         $boolQuery->addMust($matchQuery);
-        $this->setTypeFilter($boolQuery);
-        $this->setLocaleFilter($boolQuery);
+        $boolQuery = $this->setTypeFilter($boolQuery);
+        $boolQuery = $this->setLocaleFilter($boolQuery);
 
         return $boolQuery;
     }
@@ -130,27 +130,31 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Que
     /**
      * @param \Elastica\Query\BoolQuery $boolQuery
      *
-     * @return void
+     * @return \Elastica\Query\BoolQuery
      */
-    protected function setTypeFilter(BoolQuery $boolQuery): void
+    protected function setTypeFilter(BoolQuery $boolQuery): BoolQuery
     {
         $typeFilter = new Match();
         $typeFilter->setField(PageIndexMap::TYPE, ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME);
         $boolQuery->addMust($typeFilter);
+
+        return $boolQuery;
     }
 
     /**
      * @param \Elastica\Query\BoolQuery $boolQuery
      *
-     * @return void
+     * @return \Elastica\Query\BoolQuery
      */
-    protected function setLocaleFilter(BoolQuery $boolQuery): void
+    protected function setLocaleFilter(BoolQuery $boolQuery): BoolQuery
     {
         if ($this->locale && $this->locale->getLocaleName()) {
             $typeFilter = new Match();
             $typeFilter->setField(PageIndexMap::LOCALE, $this->locale->getLocaleName());
             $boolQuery->addMust($typeFilter);
         }
+
+        return $boolQuery;
     }
 
     /**

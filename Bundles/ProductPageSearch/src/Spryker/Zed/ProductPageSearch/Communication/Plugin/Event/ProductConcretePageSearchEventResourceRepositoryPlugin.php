@@ -43,11 +43,11 @@ class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlu
      */
     public function getData(array $productConcreteIds = []): array
     {
-        if (!empty($productConcreteIds)) {
-            return $this->getFactory()->getProductFacade()->findProductConcretesByProductConcreteIds($productConcreteIds);
+        if (empty($productConcreteIds)) {
+            return $this->getFactory()->getProductFacade()->findAllProductConcretes();
         }
 
-        return $this->getFactory()->getProductFacade()->findAllProductConcretes();
+        return $this->getFactory()->getProductFacade()->findProductConcretesByProductConcreteIds($productConcreteIds);
     }
 
     /**
