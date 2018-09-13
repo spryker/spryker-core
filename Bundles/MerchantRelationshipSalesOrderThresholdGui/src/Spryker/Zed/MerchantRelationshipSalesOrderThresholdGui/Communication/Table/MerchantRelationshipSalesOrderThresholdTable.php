@@ -195,9 +195,9 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
 
         $resultThresholds = [];
         foreach ($thresholds as $threshold) {
-            $resultThresholds[$threshold[static::COL_THRESHOLD_GROUP]] = "<span class='sales-order-threshold-label'>" . $threshold[static::COL_THRESHOLD_GROUP] . "</span>";
+            $resultThresholds[$threshold[static::COL_THRESHOLD_GROUP]] = "<span class='label label-info'>" . $threshold[static::COL_THRESHOLD_GROUP] . "</span>";
         }
 
-        return implode('', $resultThresholds);
+        return implode(' ', $resultThresholds);
     }
 }

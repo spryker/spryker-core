@@ -48,10 +48,10 @@ class StoreCurrencyFinder implements StoreCurrencyFinderInterface
             return $this->currencyFacade->getCurrent();
         }
 
-        $currencyCode = array_pop(explode(
+        [$_, $currencyCode] = explode(
             SalesOrderThresholdGuiConfig::STORE_CURRENCY_DELIMITER,
             $storeCurrencyRequestParam
-        ));
+        );
 
         return $this->currencyFacade->fromIsoCode($currencyCode);
     }
@@ -67,10 +67,10 @@ class StoreCurrencyFinder implements StoreCurrencyFinderInterface
             return $this->storeFacade->getCurrentStore();
         }
 
-        $storeName = array_shift(explode(
+        [$storeName] = explode(
             SalesOrderThresholdGuiConfig::STORE_CURRENCY_DELIMITER,
             $storeCurrencyRequestParam
-        ));
+        );
 
         return $this->storeFacade->getStoreByName($storeName);
     }
