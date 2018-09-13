@@ -13,9 +13,6 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 
-/**
- * @method \Spryker\Glue\OrdersRestApi\OrdersRestApiFactory getFactory()
- */
 class OrdersResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**

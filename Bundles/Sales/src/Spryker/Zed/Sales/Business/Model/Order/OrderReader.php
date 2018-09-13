@@ -89,8 +89,8 @@ class OrderReader implements OrderReaderInterface
     public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer
     {
         $idSalesOrder = $this->salesRepository->findCustomerOrderIdByOrderReference(
-            $orderTransfer->getCustomerReference(),
-            $orderTransfer->getOrderReference()
+            $orderTransfer->requireCustomerReference()->getCustomerReference(),
+            $orderTransfer->requireOrderReference()->getOrderReference()
         );
 
         if ($idSalesOrder === null) {

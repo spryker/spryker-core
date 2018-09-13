@@ -22,8 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OrdersReader implements OrdersReaderInterface
 {
-    protected const BUNDLE_PRODUCT = 'bundleProduct';
-
     /**
      * @var \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface
      */
@@ -78,13 +76,13 @@ class OrdersReader implements OrdersReaderInterface
         if ($restRequest->getPage()) {
             $offset = $restRequest->getPage()->getOffset();
             $limit = $restRequest->getPage()->getLimit();
-            $totalOrdersCount = $this->salesClient->getCustomerOrders($orderListTransfer)->getOrders()->count();
+            $totalOrdersCount = $this->salesClient->getPaginatedOrder($orderListTransfer)->getOrders()->count();
 
             $orderListTransfer->setPagination($this->createPaginationTransfer($offset, $limit));
         }
 
         $response = $this->restResourceBuilder->createRestResponse($totalOrdersCount, $limit);
-        $orderListData = $this->salesClient->getCustomerOrders($orderListTransfer)->getOrders();
+        $orderListData = $this->salesClient->getPaginatedOrder($orderListTransfer)->getOrders();
 
         foreach ($orderListData as $orderData) {
             $ordersRestAttributes = $this->ordersResourceMapper->mapOrderToOrdersRestAttributes(

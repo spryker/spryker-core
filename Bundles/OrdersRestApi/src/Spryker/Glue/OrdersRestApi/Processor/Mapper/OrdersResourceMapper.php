@@ -43,7 +43,7 @@ class OrdersResourceMapper implements OrdersResourceMapperInterface
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param array $orderItems
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\OrderItemsTransfer[]
      */
     public function mapTransformedBundleItems(OrderTransfer $orderTransfer, array $orderItems): array
     {

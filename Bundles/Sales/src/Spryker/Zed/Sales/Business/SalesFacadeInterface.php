@@ -184,8 +184,9 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Returns the order for the given order reference.
-     * - OrderTransfer should have the customerReference and orderReference set.
+     * - Gets hydrated OrderTransfer by given order reference and customer reference.
+     * - OrderTransfer must have customerReference and orderReference, otherwise method fails.
+     * - Returns empty OrderTransfer if order entity not found in the database.
      *
      * @api
      *

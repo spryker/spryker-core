@@ -25,7 +25,6 @@ class OrdersRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-
         $container = $this->addSalesClient($container);
         $container = $this->addProductBundleClient($container);
 
