@@ -361,7 +361,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * @deprecated Use constructor instead of it
+     * @deprecated For BC reasons the PropelConfig is optional in the constructor. With the next major it will be required.
      *
      * @return bool
      */
