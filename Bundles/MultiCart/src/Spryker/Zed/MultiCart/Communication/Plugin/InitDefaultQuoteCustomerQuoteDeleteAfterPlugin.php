@@ -20,7 +20,7 @@ class InitDefaultQuoteCustomerQuoteDeleteAfterPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritdoc}
-     * - Activates customer quote, if active customer quote was removed.
+     * - Activates any customer quote, if active customer quote was removed.
      *
      * @api
      *

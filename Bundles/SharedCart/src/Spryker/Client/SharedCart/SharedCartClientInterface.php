@@ -84,7 +84,7 @@ interface SharedCartClientInterface
     /**
      * Specification:
      *  - Returns share detail collection by quote id.
-     *  - Sends Zed request.
+     *  - Retrieves ShareDetails collection from Zed.
      *
      * @api
      *

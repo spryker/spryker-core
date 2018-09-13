@@ -13,7 +13,7 @@ interface QuoteDeleteAfterPluginInterface
 {
     /**
      * Specification:
-     * - Plugins which can be called before or after quote save
+     * - Plugins which can be called after quote deleted
      *
      * @api
      *

@@ -58,7 +58,7 @@ class MultiCartConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getQuoteFieldsAllowedForDuplicateQuote(): array
+    public function getQuoteFieldsAllowedForQuoteDuplicate(): array
     {
         return [
             QuoteTransfer::ITEMS,

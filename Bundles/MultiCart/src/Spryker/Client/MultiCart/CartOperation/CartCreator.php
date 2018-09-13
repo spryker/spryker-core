@@ -109,7 +109,7 @@ class CartCreator implements CartCreatorInterface
     {
         $data = [];
         $quoteData = $quoteTransfer->modifiedToArray(true, true);
-        foreach ($this->multiCartConfig->getQuoteFieldsAllowedForDuplicateQuote() as $dataKey) {
+        foreach ($this->multiCartConfig->getQuoteFieldsAllowedForQuoteDuplicate() as $dataKey) {
             if (isset($quoteData[$dataKey])) {
                 $data[$dataKey] = $quoteData[$dataKey];
             }
