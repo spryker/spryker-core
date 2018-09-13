@@ -229,22 +229,21 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         $productConcreteTransfers = [];
         $mapper = $this->getFactory()->createProductMapper();
 
-        $query = $this->getFactory()
+        $productConcreteEntities = $this->getFactory()
             ->createProductQuery()
             ->joinWithSpyProductAbstract()
             ->joinWithSpyProductLocalizedAttributes()
             ->useSpyProductLocalizedAttributesQuery()
-            ->joinWithLocale()
+                ->joinWithLocale()
             ->endUse()
             ->useSpyProductAbstractQuery()
-            ->joinWithSpyProductAbstractStore()
-            ->useSpyProductAbstractStoreQuery()
-            ->joinWithSpyStore()
+                ->joinWithSpyProductAbstractStore()
+                ->useSpyProductAbstractStoreQuery()
+                    ->joinWithSpyStore()
+                ->endUse()
             ->endUse()
-            ->endUse()
-            ->filterByIdProduct_In($ids);
-
-        $productConcreteEntities = $query->find();
+            ->filterByIdProduct_In($ids)
+            ->find();
 
         foreach ($productConcreteEntities as $productConcreteEntity) {
             $productConcreteTransfers[] = $mapper->mapProductConcreteEntityToTransfer(
