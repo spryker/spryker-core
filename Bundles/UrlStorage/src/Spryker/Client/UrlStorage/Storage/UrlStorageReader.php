@@ -7,10 +7,15 @@
 
 namespace Spryker\Client\UrlStorage\Storage;
 
+use ArrayObject;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface;
 use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface;
+use Spryker\Client\UrlStorage\UrlStorageConfig;
+use Spryker\Shared\Kernel\Store;
+use Symfony\Component\VarDumper\VarDumper;
 
 class UrlStorageReader implements UrlStorageReaderInterface
 {
@@ -51,6 +56,13 @@ class UrlStorageReader implements UrlStorageReaderInterface
      */
     public function matchUrl($url, $localeName)
     {
+        if (UrlStorageConfig::isCollectorCompatibilityMode()) {
+            /** @var UrlClientInterface $urlClient */
+            $urlClient = Locator::getInstance()->url()->client();
+
+            return $urlClient->matchUrl($url, $localeName);
+        }
+
         $urlDetails = $this->getUrlFromStorage($url);
         if (!$urlDetails) {
             return [];
@@ -82,6 +94,45 @@ class UrlStorageReader implements UrlStorageReaderInterface
      */
     public function findUrlStorageTransferByUrl($url)
     {
+        // NOT TESTED
+        if (UrlStorageConfig::isCollectorCompatibilityMode()) {
+            /** @var UrlClientInterface $urlClient */
+            $urlClient = Locator::getInstance()->url()->client();
+            $localeName = Store::getInstance()->getCurrentLocale();
+            $urlCollectorStorageTransfer = $urlClient->findUrl($url, $localeName);
+
+            if (!$urlCollectorStorageTransfer) {
+                return null;
+            }
+
+            /** @var LocaleFacadeInterface $localeFacade */
+            $localeFacade = Locator::getInstance()->locale()->facade();
+            $localeTransfer = $localeFacade->getLocale($localeName);
+
+            $primaryUrlTransfer = null;
+            $urlStorageLocaleUrlTransferCollection = new ArrayObject();
+            foreach ($urlCollectorStorageTransfer->getLocaleUrls() as $localeUrlTransfer) {
+                $urlStorageTransfer = new UrlStorageTransfer();
+                $urlStorageTransfer->fromArray($localeUrlTransfer->toArray(), true);
+                $urlStorageLocaleUrlTransferCollection->append($urlStorageTransfer);
+                if ($localeUrlTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
+                    $primaryUrlTransfer = $localeUrlTransfer;
+                }
+            }
+
+            if (!$primaryUrlTransfer) {
+                return null;
+            }
+
+            echo '<pre>' . PHP_EOL . VarDumper::dump($urlCollectorStorageTransfer) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+
+            $urlStorageTransfer = new UrlStorageTransfer();
+            $urlStorageTransfer->fromArray($primaryUrlTransfer->toArray(), true);
+            $urlStorageTransfer->setLocaleUrls($urlStorageLocaleUrlTransferCollection);
+
+            return $urlStorageTransfer;
+        }
+
         $urlDetails = $this->getUrlFromStorage($url);
         if (!$urlDetails) {
             return null;

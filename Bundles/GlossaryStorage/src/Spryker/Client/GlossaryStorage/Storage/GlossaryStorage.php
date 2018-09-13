@@ -10,6 +10,8 @@ namespace Spryker\Client\GlossaryStorage\Storage;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientInterface;
 use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchronizationServiceInterface;
+use Spryker\Client\GlossaryStorage\GlossaryStorageConfig;
+use Spryker\Client\Kernel\Locator;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConstants;
 
 class GlossaryStorage implements GlossaryStorageInterface
@@ -48,6 +50,12 @@ class GlossaryStorage implements GlossaryStorageInterface
      */
     public function translate($keyName, $localeName, array $parameters = [])
     {
+        if (GlossaryStorageConfig::isCollectorCompatibilityMode()) {
+            $glossaryClient = Locator::getInstance()->glossary()->client();
+
+            return $glossaryClient->translate($keyName, $localeName, $parameters);
+        }
+
         if ((string)$keyName === '') {
             return $keyName;
         }
