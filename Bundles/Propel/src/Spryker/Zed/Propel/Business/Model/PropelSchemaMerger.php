@@ -285,7 +285,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     {
         $elementHierarchy = ['unique', 'foreign-key'];
 
-        if ($this->config !== null) {
+        if ($this->hasConfig()) {
             $elementHierarchy = $this->config->getTableElementHierarchy();
         }
 
@@ -358,5 +358,15 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         $nodes = array_merge($idNodes, $fkNodes, $otherNodes);
 
         return $nodes;
+    }
+
+    /**
+     * @deprecated Use constructor instead of it
+     *
+     * @return bool
+     */
+    protected function hasConfig(): bool
+    {
+        return $this->config !== null;
     }
 }

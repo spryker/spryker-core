@@ -38,7 +38,7 @@ class PostgresIndexRemoverConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
-            $this->getFacade()->removeIndexes();
+            $this->getFacade()->removeIndexSchemaFiles();
         } catch (Exception $e) {
             $this->getMessenger()->error($e->getMessage());
 

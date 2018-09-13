@@ -16,8 +16,10 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
@@ -120,7 +122,10 @@ class OrderHydrator implements OrderHydratorInterface
             );
         }
 
-        $this->queryContainer->fillOrderItemsWithLatestStates($orderEntity->getItems());
+        $criteria = new Criteria();
+        $criteria->addDescendingOrderByColumn(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM);
+
+        $this->queryContainer->fillOrderItemsWithLatestStates($orderEntity->getItems($criteria));
 
         $orderTransfer = $this->createOrderTransfer($orderEntity);
 

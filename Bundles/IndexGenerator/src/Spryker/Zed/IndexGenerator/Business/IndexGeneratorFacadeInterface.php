@@ -11,7 +11,7 @@ interface IndexGeneratorFacadeInterface
 {
     /**
      * Specification:
-     * - Loads all merged schema files from src/Propel/{STORE}/Schema.
+     * - Loads all merged schema files from src/Propel/{STORE}/Schema on a project level.
      * - Checks all loaded files for foreign key references and if they have an index defined.
      * - Generates new schema files in the projects IndexGenerator module with all missing foreign key indexes.
      *
@@ -19,15 +19,15 @@ interface IndexGeneratorFacadeInterface
      *
      * @return void
      */
-    public function generateIndexes(): void;
+    public function generateIndexSchemaFiles(): void;
 
     /**
      * Specification:
-     * - Deletes all generated schema files.
+     * - Remove all generated index schema files.
      *
      * @api
      *
      * @return void
      */
-    public function removeIndexes(): void;
+    public function removeIndexSchemaFiles(): void;
 }

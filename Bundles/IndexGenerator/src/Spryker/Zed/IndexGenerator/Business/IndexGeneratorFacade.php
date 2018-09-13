@@ -21,7 +21,7 @@ class IndexGeneratorFacade extends AbstractFacade implements IndexGeneratorFacad
      *
      * @return void
      */
-    public function generateIndexes(): void
+    public function generateIndexSchemaFiles(): void
     {
         $this->getFactory()
             ->createPostgresIndexGenerator()
@@ -35,7 +35,7 @@ class IndexGeneratorFacade extends AbstractFacade implements IndexGeneratorFacad
      *
      * @return void
      */
-    public function removeIndexes(): void
+    public function removeIndexSchemaFiles(): void
     {
         $this->getFactory()
             ->createPostgresIndexRemover()

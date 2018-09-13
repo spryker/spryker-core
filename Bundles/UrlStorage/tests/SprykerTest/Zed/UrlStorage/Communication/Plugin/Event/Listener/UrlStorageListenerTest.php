@@ -18,6 +18,7 @@ use Orm\Zed\UrlStorage\Persistence\SpyUrlStorageQuery;
 use PHPUnit\Framework\SkippedTestError;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 use Spryker\Zed\UrlStorage\Business\UrlStorageBusinessFactory;
 use Spryker\Zed\UrlStorage\Business\UrlStorageFacade;
@@ -115,7 +116,7 @@ class UrlStorageListenerTest extends Unit
     {
         $urlStorageCount = SpyUrlStorageQuery::create()->count();
         $this->assertSame($beforeCount + 1, $urlStorageCount);
-        $spyUrlStorage = SpyUrlStorageQuery::create()->orderByIdUrlStorage()->findOneByFkUrl(1);
+        $spyUrlStorage = SpyUrlStorageQuery::create()->orderByIdUrlStorage(Criteria::DESC)->findOneByFkUrl(1);
         $this->assertNotNull($spyUrlStorage);
         $data = $spyUrlStorage->getData();
         $this->assertSame('/en', $data['url']);

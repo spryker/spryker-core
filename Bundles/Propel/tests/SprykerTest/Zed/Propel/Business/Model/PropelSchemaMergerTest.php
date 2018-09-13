@@ -41,9 +41,6 @@ class PropelSchemaMergerTest extends Unit
         $content = $merger->merge($filesToMerge);
         $expected = file_get_contents($this->getFixtureDirectory() . 'expected.merged.schema.xml');
 
-//        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($content) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__;
-//        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($expected) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
-
         $this->assertSame($expected, $content);
     }
 

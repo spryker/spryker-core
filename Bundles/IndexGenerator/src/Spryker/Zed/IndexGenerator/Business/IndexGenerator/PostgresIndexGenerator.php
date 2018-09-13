@@ -9,16 +9,17 @@ namespace Spryker\Zed\IndexGenerator\Business\IndexGenerator;
 
 use ArrayObject;
 use DOMDocument;
+use DOMElement;
 use Generated\Shared\Transfer\ForeignKeyFileTransfer;
+use Generated\Shared\Transfer\ForeignKeyTableTransfer;
 use Spryker\Zed\IndexGenerator\Business\Exception\IndexGeneratorException;
 use Spryker\Zed\IndexGenerator\Business\ForeignKeysProvider\ForeignKeysProviderInterface;
 use Spryker\Zed\IndexGenerator\IndexGeneratorConfig;
+use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Finder\Finder;
 
 class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
 {
-    const POSTGRES_INDEX_NAME_MAX_LENGTH = 63;
-
     /**
      * @var \Spryker\Zed\IndexGenerator\IndexGeneratorConfig
      */
@@ -85,25 +86,9 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
     {
         $domDocument = $this->createDomDocument($foreignKeyFileTransfer);
 
-        foreach ($this->getForeignKeyTableTransferCollection($foreignKeyFileTransfer) as $foreignKeyTableTransfer) {
-            $tableElement = $domDocument->createElement('table');
-            $foreignTableName = (string)$foreignKeyTableTransfer->getTableName();
-            $tableElement->setAttribute('name', $foreignTableName);
-            $domDocument->documentElement->appendChild($tableElement);
+        $foreignKeyTableTransferCollection = $this->getForeignKeyTableTransferCollection($foreignKeyFileTransfer);
 
-            foreach ($foreignKeyTableTransfer->getColumns() as $column) {
-                $indexName = $this->getIndexName($foreignTableName, $column);
-
-                $indexElement = $domDocument->createElement('index');
-                $tableElement->appendChild($indexElement);
-
-                $indexColumnElement = $domDocument->createElement('index-column');
-                $indexColumnElement->setAttribute('name', $column);
-
-                $indexElement->setAttribute('name', $indexName);
-                $indexElement->appendChild($indexColumnElement);
-            }
-        }
+        $this->addForeignKeyTableElements($foreignKeyTableTransferCollection, $domDocument);
 
         if (!$this->isDocumentEmpty($domDocument) && $foreignKeyFileTransfer->getFilename() !== null) {
             $this->saveDocument($domDocument, $foreignKeyFileTransfer->getFilename());
@@ -189,7 +174,7 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
      */
     protected function isLongerThanIndexNameMaxLength(string $indexName): bool
     {
-        return (mb_strlen($indexName) > static::POSTGRES_INDEX_NAME_MAX_LENGTH);
+        return (mb_strlen($indexName) > PropelConfig::POSTGRES_INDEX_NAME_MAX_LENGTH);
     }
 
     /**
@@ -215,5 +200,51 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
           xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
           namespace="%s"
           package="%s"/>';
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ForeignKeyTableTransfer[] $foreignKeyTableTransferCollection
+     * @param \DOMDocument $domDocument
+     *
+     * @return void
+     */
+    protected function addForeignKeyTableElements(ArrayObject $foreignKeyTableTransferCollection, DOMDocument $domDocument): void
+    {
+        foreach ($foreignKeyTableTransferCollection as $foreignKeyTableTransfer) {
+            $tableElement = $domDocument->createElement('table');
+            $foreignTableName = (string)$foreignKeyTableTransfer->getTableName();
+            $tableElement->setAttribute('name', $foreignTableName);
+            $domDocument->documentElement->appendChild($tableElement);
+
+            $this->addForeignKeyTableColumnElements($foreignKeyTableTransfer, $tableElement, $domDocument);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ForeignKeyTableTransfer $foreignKeyTableTransfer
+     * @param \DOMElement $tableElement
+     * @param \DOMDocument $domDocument
+     *
+     * @return void
+     */
+    protected function addForeignKeyTableColumnElements(
+        ForeignKeyTableTransfer $foreignKeyTableTransfer,
+        DOMElement $tableElement,
+        DOMDocument $domDocument
+    ): void {
+        $foreignTableName = (string)$foreignKeyTableTransfer->getTableName();
+
+        foreach ($foreignKeyTableTransfer->getColumns() as $column) {
+            $indexName = $this->getIndexName($foreignTableName, $column);
+
+            $indexElement = $domDocument->createElement('index');
+            $tableElement->appendChild($indexElement);
+
+            $indexColumnElement = $domDocument->createElement('index-column');
+            $indexColumnElement->setAttribute('name', $column);
+
+            $indexElement->setAttribute('name', $indexName);
+            $indexElement->appendChild($indexColumnElement);
+        }
     }
 }

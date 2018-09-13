@@ -38,8 +38,8 @@ class PostgresIndexGeneratorConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
-            $this->getFacade()->removeIndexes();
-            $this->getFacade()->generateIndexes();
+            $this->getFacade()->removeIndexSchemaFiles();
+            $this->getFacade()->generateIndexSchemaFiles();
         } catch (Exception $e) {
             $this->getMessenger()->error($e->getMessage());
 
