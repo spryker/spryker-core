@@ -17,11 +17,6 @@ use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInt
 
 class CompanyBusinessUnitTreeBuilder implements CompanyBusinessUnitTreeBuilderInterface
 {
-    protected const FK_PARENT_COMPANY_BUSINESS_UNIT_KEY = 'fk_parent_company_business_unit';
-    protected const ID_COMPANY_BUSINESS_UNIT_KEY = 'id_company_business_unit';
-    protected const LEVEL_KEY = 'level';
-    protected const CHILDREN_KEY = 'children';
-
     /**
      * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface
      */
