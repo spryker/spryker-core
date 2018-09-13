@@ -24,7 +24,7 @@ class ProductPageSearchClient extends AbstractClient implements ProductPageSearc
      *
      * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
      *
-     * @return array
+     * @return array|\Elastica\ResultSet
      */
     public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): array
     {
@@ -40,7 +40,7 @@ class ProductPageSearchClient extends AbstractClient implements ProductPageSearc
      *
      * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
      *
-     * @return array
+     * @return array|\Elastica\ResultSet
      */
     public function searchProductConcretesBySku(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): array
     {
@@ -67,7 +67,7 @@ class ProductPageSearchClient extends AbstractClient implements ProductPageSearc
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
      *
-     * @return array
+     * @return array|\Elastica\ResultSet
      */
     protected function search(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): array
     {

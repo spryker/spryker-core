@@ -22,11 +22,10 @@ class ProductPageSearchEntityManager extends AbstractEntityManager implements Pr
      */
     public function saveProductConcretePageSearch(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): ProductConcretePageSearchTransfer
     {
-        $query = $this->getFactory()
+        $productConcreteSearchPageEntity = $this->getFactory()
             ->createProductConcretePageSearchQuery()
-            ->filterByIdProductConcretePageSearch($productConcretePageSearchTransfer->getIdProductConcretePageSearch());
-
-        $productConcreteSearchPageEntity = $query->findOneOrCreate();
+            ->filterByIdProductConcretePageSearch($productConcretePageSearchTransfer->getIdProductConcretePageSearch())
+            ->findOneOrCreate();
 
         $productConcreteSearchPageEntity = $this->getFactory()
             ->createProductPageSearchMapper()
@@ -46,11 +45,10 @@ class ProductPageSearchEntityManager extends AbstractEntityManager implements Pr
      */
     public function deleteProductConcretePageSearch(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): bool
     {
-        $query = $this->getFactory()
+        $productConcreteSearchPageEntity = $this->getFactory()
             ->createProductConcretePageSearchQuery()
-            ->filterByIdProductConcretePageSearch($productConcretePageSearchTransfer->getIdProductConcretePageSearch());
-
-        $productConcreteSearchPageEntity = $query->findOne();
+            ->filterByIdProductConcretePageSearch($productConcretePageSearchTransfer->getIdProductConcretePageSearch())
+            ->findOne();
 
         if ($productConcreteSearchPageEntity === null) {
             return false;

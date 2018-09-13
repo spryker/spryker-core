@@ -152,7 +152,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $productConcretePageSearchTransfer = $localizedProductConcretePageSearchTransfers[$localizedAttribute->getLocale()->getLocaleName()] ?? new ProductConcretePageSearchTransfer();
 
-            if ($productConcreteTransfer->getIsActive() !== true && $productConcretePageSearchTransfer->getIdProductConcretePageSearch() !== null) {
+            if (!$productConcreteTransfer->getIsActive() && $productConcretePageSearchTransfer->getIdProductConcretePageSearch() !== null) {
                 $this->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
             }
 
@@ -186,7 +186,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      */
     protected function deleteProductConcretePageSearch(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): void
     {
-        if ($this->productConcretePageSearchWriter->deleteProductConcretePageSearch($productConcretePageSearchTransfer) === false) {
+        if (!$this->productConcretePageSearchWriter->deleteProductConcretePageSearch($productConcretePageSearchTransfer)) {
             throw new ProductConcretePageSearchNotFoundException(sprintf('Target storage entry for product with id %s not found', $productConcretePageSearchTransfer->getFkProduct()));
         }
     }
