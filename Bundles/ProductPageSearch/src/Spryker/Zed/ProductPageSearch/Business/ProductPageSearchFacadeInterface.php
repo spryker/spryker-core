@@ -85,11 +85,11 @@ interface ProductPageSearchFacadeInterface
      *
      * @api
      *
-     * @param int[] $ids
+     * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function findProductConcretePageSearchEntitiesByProductConcreteIds(array $ids = []): array;
+    public function findProductConcretePageSearchTransfersByProductConcreteIds(array $productConcreteIds = []): array;
 
     /**
      * Specification
@@ -99,5 +99,5 @@ interface ProductPageSearchFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function findAllProductConcretePageSearchEntities(): array;
+    public function findAllProductConcretePageSearchTransfers(): array;
 }

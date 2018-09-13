@@ -41,7 +41,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     /**
      * @var \Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface
      */
-    protected $mapper;
+    protected $productPageSearchMapper;
 
     /**
      * @var \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface
@@ -72,20 +72,20 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
         $this->productConcretePageSearchReader = $productConcretePageSearchReader;
         $this->productConcretePageSearchWriter = $productConcretePageSearchWriter;
         $this->productFacade = $productFacade;
-        $this->mapper = $productPageSearchMapper;
+        $this->productPageSearchMapper = $productPageSearchMapper;
         $this->pageDataExpanderPlugins = $pageDataExpanderPlugins;
         $this->utilEncoding = $utilEncoding;
     }
 
     /**
-     * @param array $ids
+     * @param array $productConcreteIds
      *
      * @return void
      */
-    public function publish(array $ids): void
+    public function publish(array $productConcreteIds): void
     {
-        $productConcreteTransfers = $this->productFacade->findProductConcreteByIds($ids);
-        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->findProductConcretePageSearchEntitiesByProductConcreteIds($ids, true);
+        $productConcreteTransfers = $this->productFacade->findProductConcretesByProductConcreteIds($productConcreteIds);
+        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->findProductConcretePageSearchTransfersByProductConcreteIdsGrouppedByStoreAndLocale($productConcreteIds);
 
         $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteTransfers, $productConcretePageSearchTransfers) {
             $this->executePublishTransaction($productConcreteTransfers, $productConcretePageSearchTransfers);
@@ -93,13 +93,13 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     }
 
     /**
-     * @param int[] $ids
+     * @param int[] $productConcreteIds
      *
      * @return void
      */
-    public function unpublish(array $ids): void
+    public function unpublish(array $productConcreteIds): void
     {
-        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->findProductConcretePageSearchEntitiesByProductConcreteIds($ids, true);
+        $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->findProductConcretePageSearchTransfersByProductConcreteIdsGrouppedByStoreAndLocale($productConcreteIds);
 
         $this->getTransactionHandler()->handleTransaction(function () use ($productConcretePageSearchTransfers) {
             $this->executeUnpublishTransaction($productConcretePageSearchTransfers);
@@ -156,7 +156,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
                 $this->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
             }
 
-            $productConcretePageSearchTransfer = $this->mapper->mapProductConcreteTransferToProductConcretePageSearchTransfer(
+            $productConcretePageSearchTransfer = $this->productPageSearchMapper->mapProductConcreteTransferToProductConcretePageSearchTransfer(
                 $productConcreteTransfer,
                 $productConcretePageSearchTransfer,
                 $storeTransfer,
@@ -166,7 +166,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
             $this->expandProductConcretePageSearchTransferWithPlugins($productConcreteTransfer, $productConcretePageSearchTransfer);
 
             $productConcretePageSearchTransfer->setData(
-                $this->mapper->mapToSearchData($productConcretePageSearchTransfer)
+                $this->productPageSearchMapper->mapToSearchData($productConcretePageSearchTransfer)
             );
 
             $productConcretePageSearchTransfer->setStructuredData(

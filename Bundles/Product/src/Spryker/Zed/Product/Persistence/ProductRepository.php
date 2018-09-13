@@ -220,11 +220,11 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param int[] $ids
+     * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findProductConcreteByIds(array $ids): array
+    public function findProductConcretesByProductConcreteIds(array $productConcreteIds): array
     {
         $productConcreteTransfers = [];
         $mapper = $this->getFactory()->createProductMapper();
@@ -242,7 +242,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
                     ->joinWithSpyStore()
                 ->endUse()
             ->endUse()
-            ->filterByIdProduct_In($ids)
+            ->filterByIdProduct_In($productConcreteIds)
             ->find();
 
         foreach ($productConcreteEntities as $productConcreteEntity) {
@@ -258,7 +258,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     /**
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findAllProductConcrete(): array
+    public function findAllProductConcretes(): array
     {
         $productConcreteTransfers = [];
         $mapper = $this->getFactory()->createProductMapper();

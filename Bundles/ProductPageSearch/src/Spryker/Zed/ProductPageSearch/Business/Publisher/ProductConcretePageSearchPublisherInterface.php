@@ -10,16 +10,16 @@ namespace Spryker\Zed\ProductPageSearch\Business\Publisher;
 interface ProductConcretePageSearchPublisherInterface
 {
     /**
-     * @param int[] $ids
+     * @param int[] $productConcreteIds
      *
      * @return void
      */
-    public function publish(array $ids): void;
+    public function publish(array $productConcreteIds): void;
 
     /**
-     * @param int[] $ids
+     * @param int[] $productConcreteIds
      *
      * @return void
      */
-    public function unpublish(array $ids): void;
+    public function unpublish(array $productConcreteIds): void;
 }

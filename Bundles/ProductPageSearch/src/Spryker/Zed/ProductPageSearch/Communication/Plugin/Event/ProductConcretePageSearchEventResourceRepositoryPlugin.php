@@ -37,17 +37,17 @@ class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlu
      *
      * @api
      *
-     * @param int[] $ids
+     * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function getData(array $ids = []): array
+    public function getData(array $productConcreteIds = []): array
     {
-        if (!empty($ids)) {
-            return $this->getFactory()->getProductFacade()->findProductConcreteByIds($ids);
+        if (!empty($productConcreteIds)) {
+            return $this->getFactory()->getProductFacade()->findProductConcretesByProductConcreteIds($productConcreteIds);
         }
 
-        return $this->getFactory()->getProductFacade()->findAllProductConcrete();
+        return $this->getFactory()->getProductFacade()->findAllProductConcretes();
     }
 
     /**

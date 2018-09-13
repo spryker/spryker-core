@@ -40,13 +40,13 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductConcreteByIds()
+    public function testFindProductConcretesByProductConcreteIds()
     {
         $productConcreteIds = $this->tester->getProductConcreteIds();
 
         $this->assertTrue(count($productConcreteIds) > 0);
 
-        $productConcreteTransfers = $this->tester->getProductFacade()->findProductConcreteByIds($productConcreteIds);
+        $productConcreteTransfers = $this->tester->getProductFacade()->findProductConcretesByProductConcreteIds($productConcreteIds);
         $this->assertSame(count($productConcreteIds), count($productConcreteTransfers));
 
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
@@ -58,9 +58,9 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindAllProductConcrete()
+    public function testFindAllProductConcretes()
     {
-        $productConcreteTransfers = $this->tester->getProductFacade()->findAllProductConcrete();
+        $productConcreteTransfers = $this->tester->getProductFacade()->findAllProductConcretes();
         $this->assertSame($this->tester->getProductConcreteDatabaseEntriesCount(), count($productConcreteTransfers));
     }
 }

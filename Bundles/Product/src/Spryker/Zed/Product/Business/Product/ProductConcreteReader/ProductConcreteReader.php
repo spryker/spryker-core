@@ -25,20 +25,20 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     }
 
     /**
-     * @param int[] $ids
+     * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findProductConcreteByIds(array $ids): array
+    public function findProductConcretesByProductConcreteIds(array $productConcreteIds): array
     {
-        return $this->productRepository->findProductConcreteByIds($ids);
+        return $this->productRepository->findProductConcretesByProductConcreteIds($productConcreteIds);
     }
 
     /**
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findAllProductConcrete(): array
+    public function findAllProductConcretes(): array
     {
-        return $this->productRepository->findAllProductConcrete();
+        return $this->productRepository->findAllProductConcretes();
     }
 }

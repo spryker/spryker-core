@@ -10,7 +10,6 @@ namespace Spryker\Client\ProductPageSearch;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductPageSearch\Dependency\Client\ProductPageSearchToSearchClientBridge;
-use Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\ResultFormatter\ProductConcretePageSearchResultFormatterPlugin;
 
 class ProductPageSearchDependencyProvider extends AbstractDependencyProvider
 {
@@ -81,9 +80,7 @@ class ProductPageSearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function getProductConcretePageSearchResultFormatterPlugins(): array
     {
-        return [
-            new ProductConcretePageSearchResultFormatterPlugin(),
-        ];
+        return [];
     }
 
     /**

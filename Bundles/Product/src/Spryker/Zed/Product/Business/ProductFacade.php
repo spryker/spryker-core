@@ -947,11 +947,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function findProductConcreteByIds(array $productConcreteIds): array
+    public function findProductConcretesByProductConcreteIds(array $productConcreteIds): array
     {
         return $this->getFactory()
             ->createProductConcreteReader()
-            ->findProductConcreteByIds($productConcreteIds);
+            ->findProductConcretesByProductConcreteIds($productConcreteIds);
     }
 
     /**
@@ -961,10 +961,10 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function findAllProductConcrete(): array
+    public function findAllProductConcretes(): array
     {
         return $this->getFactory()
             ->createProductConcreteReader()
-            ->findAllProductConcrete();
+            ->findAllProductConcretes();
     }
 }

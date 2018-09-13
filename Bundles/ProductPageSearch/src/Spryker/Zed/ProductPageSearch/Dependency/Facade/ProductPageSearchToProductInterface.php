@@ -38,17 +38,17 @@ interface ProductPageSearchToProductInterface
      *
      * @return int[]
      */
-    public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract);
+    public function findProductConcreteIdsByIdProductAbstract(int $idProductAbstract);
 
     /**
      * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function findProductConcreteByIds(array $productConcreteIds): array;
+    public function findProductConcretesByProductConcreteIds(array $productConcreteIds): array;
 
     /**
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function findAllProductConcrete(): array;
+    public function findAllProductConcretes(): array;
 }

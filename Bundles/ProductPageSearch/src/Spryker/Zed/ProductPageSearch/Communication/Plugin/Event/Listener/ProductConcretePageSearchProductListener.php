@@ -33,7 +33,7 @@ class ProductConcretePageSearchProductListener extends AbstractProductConcretePa
             $this->unpublish($productConcreteIds);
         }
 
-        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_CREATE || $eventName === ProductEvents::ENTITY_SPY_PRODUCT_UPDATE || ProductEvents::PRODUCT_CONCRETE_UNPUBLISH) {
+        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_CREATE || $eventName === ProductEvents::ENTITY_SPY_PRODUCT_UPDATE || $eventName === ProductEvents::PRODUCT_CONCRETE_UNPUBLISH) {
             $this->publish($productConcreteIds);
         }
     }
