@@ -78,9 +78,8 @@ interface CompanyUserClientInterface
 
     /**
      * Specification:
-     * - Enables company user.
-     * - Uses idCompanyUser from company user transfer to find company user.
-     * - Sets company user's 'is_active' flag to true.
+     * - Marks company user as enabled.
+     * - Checks if current company user has `CompanyUserChangePermissionPlugin` permission before taking any action.
      *
      * @api
      *
@@ -92,9 +91,8 @@ interface CompanyUserClientInterface
 
     /**
      * Specification:
-     * - Disables company user.
-     * - Uses idCompanyUser from company user transfer to find company user.
-     * - Sets company user's 'is_active' flag to false.
+     * - Marks company user as disabled.
+     * - Checks if current company user has `CompanyUserChangePermissionPlugin` permission before taking any action.
      *
      * @api
      *
