@@ -9,6 +9,7 @@ namespace Spryker\Zed\Category\Business\Model\CategoryNode;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 
 class CategoryNodeChecker implements CategoryNodeCheckerInterface
 {
@@ -18,12 +19,20 @@ class CategoryNodeChecker implements CategoryNodeCheckerInterface
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
+     */
+    protected $categoryRepository;
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
      */
     public function __construct(
-        CategoryQueryContainerInterface $queryContainer
+        CategoryQueryContainerInterface $queryContainer,
+        CategoryRepositoryInterface $categoryRepository
     ) {
         $this->queryContainer = $queryContainer;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -56,14 +65,6 @@ class CategoryNodeChecker implements CategoryNodeCheckerInterface
      */
     public function hasSameLevelCategoryByName(string $name, CategoryTransfer $categoryTransfer): bool
     {
-        $existingCategoryNode = $this
-            ->queryContainer
-            ->queryFirstLevelChildrenByName(
-                $categoryTransfer->getParentCategoryNode()->getIdCategoryNode(),
-                $name
-            )
-            ->findOne();
-
-        return $existingCategoryNode && $existingCategoryNode->getIdCategoryNode() !== $categoryTransfer->getIdCategory();
+        return $this->categoryRepository->hasSameLevelCategoryByName($name, $categoryTransfer);
     }
 }

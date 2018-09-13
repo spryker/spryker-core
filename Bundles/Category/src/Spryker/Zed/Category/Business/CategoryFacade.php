@@ -47,13 +47,13 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getNodeById($idNode)
     {
-        $factory = $this->getFactory();
-
-        $nodeEntity = $factory
+        $nodeEntity = $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getNodeById($idNode);
 
-        return $factory
+        return $this
+            ->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNode($nodeEntity);
     }
@@ -105,13 +105,13 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getAllNodesByIdCategory($idCategory)
     {
-        $factory = $this->getFactory();
-
-        $nodeEntities = $factory
+        $nodeEntities = $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getAllNodesByIdCategory($idCategory);
 
-        return $factory
+        return $this
+            ->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($nodeEntities);
     }
@@ -127,13 +127,13 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getMainNodesByIdCategory($idCategory)
     {
-        $factory = $this->getFactory();
-
-        $nodeEntities = $factory
+        $nodeEntities = $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getMainNodesByIdCategory($idCategory);
 
-        return $factory
+        return $this
+            ->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($nodeEntities);
     }
@@ -149,13 +149,13 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getNotMainNodesByIdCategory($idCategory)
     {
-        $factory = $this->getFactory();
-
-        $nodeEntities = $factory
+        $nodeEntities = $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getNotMainNodesByIdCategory($idCategory);
 
-        return $factory
+        return $this
+            ->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($nodeEntities);
     }
@@ -427,13 +427,13 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getRootNodes()
     {
-        $factory = $this->getFactory();
-
-        $rootNodes = $factory
+        $rootNodes = $this
+            ->getFactory()
             ->createCategoryTreeReader()
             ->getRootNodes();
 
-        return $factory
+        return $this
+            ->getFactory()
             ->createCategoryTransferGenerator()
             ->convertCategoryNodeCollection($rootNodes);
     }
