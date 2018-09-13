@@ -86,6 +86,10 @@ class ResourceRouter implements ResourceRouterInterface
             return $this->createResourceNotFoundRoute();
         }
 
+        if ($httpRequest->getMethod() === Request::METHOD_POST && isset($resourceType['id'])) {
+            return $this->createResourceNotFoundRoute();
+        }
+
         return $this->buildRouteParameters($route, $resourceType, $resources);
     }
 
