@@ -1,7 +1,6 @@
 # IndexGenerator Module
 
-Postgres does not auto create indexes for foreign-key columns. This module brings a console command to create schema files with index definitions for all tables and their foreign-key columns which do not have an index definition.
-It provides a console commands.
+Postgres does not auto create indexes for foreign-key columns. This module provides a console command to create schema files with index definitions for all tables and their foreign-key columns which do not have an index definition.
 
 ## Installation
 
