@@ -164,10 +164,6 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
      */
     protected function hasProductPackagingUnit(SpyProductEntityTransfer $productEntityTransfer): bool
     {
-        if ($productEntityTransfer->getSpyProductPackagingUnits() === null) {
-            return false;
-        }
-
         return $productEntityTransfer->getSpyProductPackagingUnits()->count() > 0;
     }
 

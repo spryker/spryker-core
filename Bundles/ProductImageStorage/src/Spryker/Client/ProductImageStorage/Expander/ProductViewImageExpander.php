@@ -8,8 +8,8 @@
 namespace Spryker\Client\ProductImageStorage\Expander;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Spryker\Client\ProductImageStorage\Resolver\ProductConcreteImageInheritanceResolverInterface;
 use Spryker\Client\ProductImageStorage\Storage\ProductAbstractImageStorageReaderInterface;
-use Spryker\Client\ProductImageStorage\Storage\ProductConcreteImageStorageReaderInterface;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
 
 class ProductViewImageExpander implements ProductViewImageExpanderInterface
@@ -20,18 +20,18 @@ class ProductViewImageExpander implements ProductViewImageExpanderInterface
     protected $productAbstractImageSetReader;
 
     /**
-     * @var \Spryker\Client\ProductImageStorage\Storage\ProductConcreteImageStorageReaderInterface
+     * @var \Spryker\Client\ProductImageStorage\Resolver\ProductConcreteImageInheritanceResolverInterface
      */
-    protected $productConcreteImageSetReader;
+    protected $productConcreteImageInheritanceResolverInterface;
 
     /**
      * @param \Spryker\Client\ProductImageStorage\Storage\ProductAbstractImageStorageReaderInterface $productAbstractImageSetReader
-     * @param \Spryker\Client\ProductImageStorage\Storage\ProductConcreteImageStorageReaderInterface $productConcreteImageSetReader
+     * @param \Spryker\Client\ProductImageStorage\Resolver\ProductConcreteImageInheritanceResolverInterface $productConcreteImageInheritanceResolverInterface
      */
-    public function __construct(ProductAbstractImageStorageReaderInterface $productAbstractImageSetReader, ProductConcreteImageStorageReaderInterface $productConcreteImageSetReader)
+    public function __construct(ProductAbstractImageStorageReaderInterface $productAbstractImageSetReader, ProductConcreteImageInheritanceResolverInterface $productConcreteImageInheritanceResolverInterface)
     {
         $this->productAbstractImageSetReader = $productAbstractImageSetReader;
-        $this->productConcreteImageSetReader = $productConcreteImageSetReader;
+        $this->productConcreteImageInheritanceResolverInterface = $productConcreteImageInheritanceResolverInterface;
     }
 
     /**
@@ -62,14 +62,18 @@ class ProductViewImageExpander implements ProductViewImageExpanderInterface
     protected function getImages(ProductViewTransfer $productViewTransfer, $locale, $imageSetName)
     {
         if ($productViewTransfer->getIdProductConcrete()) {
-            $productConcreteImageSetCollection = $this->productConcreteImageSetReader
-                ->findProductImageConcreteStorageTransfer($productViewTransfer->getIdProductConcrete(), $locale);
+            $productConcreteImageSets = $this->productConcreteImageInheritanceResolverInterface
+                ->resolveProductImageSetStorageTransfers(
+                    $productViewTransfer->getIdProductConcrete(),
+                    $productViewTransfer->getIdProductAbstract(),
+                    $locale
+                );
 
-            if (!$productConcreteImageSetCollection) {
+            if (!$productConcreteImageSets) {
                 return null;
             }
 
-            return $this->getImageSetImages($productConcreteImageSetCollection->getImageSets(), $imageSetName);
+            return $this->getImageSetImages($productConcreteImageSets, $imageSetName);
         }
 
         $productAbstractImageSetCollection = $this->productAbstractImageSetReader
