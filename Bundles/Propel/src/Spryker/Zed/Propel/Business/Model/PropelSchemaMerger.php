@@ -312,7 +312,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
             $items = $dom->getElementsByTagName($tagName);
 
             if ($tagName === 'column') {
-                $items = $this->orderItemsInDomNodeList($items);
+                $items = $this->orderColumns($items);
             }
 
             foreach ($items as $item) {
@@ -331,31 +331,31 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      *
      * @return array
      */
-    protected function orderItemsInDomNodeList(DOMNodeList $nodeList): array
+    protected function orderColumns(DOMNodeList $nodeList): array
     {
-        $idNodes = [];
-        $fkNodes = [];
-        $otherNodes = [];
+        $idColumns = [];
+        $fkColumns = [];
+        $otherColumns = [];
 
         foreach ($nodeList as $node) {
             $columnName = $node->attributes['name']->value;
             if (strpos($columnName, 'id_') === 0) {
-                $idNodes[$columnName] = $node;
+                $idColumns[$columnName] = $node;
                 continue;
             }
             if (strpos($columnName, 'fk_') === 0) {
-                $fkNodes[$columnName] = $node;
+                $fkColumns[$columnName] = $node;
                 continue;
             }
 
-            $otherNodes[$columnName] = $node;
+            $otherColumns[$columnName] = $node;
         }
 
-        ksort($idNodes);
-        ksort($fkNodes);
-        ksort($otherNodes);
+        ksort($idColumns);
+        ksort($fkColumns);
+        ksort($otherColumns);
 
-        $nodes = array_merge($idNodes, $fkNodes, $otherNodes);
+        $nodes = array_merge($idColumns, $fkColumns, $otherColumns);
 
         return $nodes;
     }
