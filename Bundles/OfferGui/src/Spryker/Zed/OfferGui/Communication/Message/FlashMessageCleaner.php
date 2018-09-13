@@ -45,7 +45,7 @@ class FlashMessageCleaner implements FlashMessageCleanerInterface
      */
     protected function clearSuccessDuplicateMessages(FlashMessagesTransfer $flashMessagesTransfer): void
     {
-        $successMessages = $this->uniqueMessages($flashMessagesTransfer->getSuccessMessages());
+        $successMessages = array_unique($flashMessagesTransfer->getSuccessMessages());
         foreach ($successMessages as $successMessage) {
             $this->messengerFacade->addSuccessMessage($this->createMessageTransfer($successMessage));
         }
@@ -58,7 +58,7 @@ class FlashMessageCleaner implements FlashMessageCleanerInterface
      */
     protected function clearInfoDuplicateMessages(FlashMessagesTransfer $flashMessagesTransfer): void
     {
-        $successMessages = $this->uniqueMessages($flashMessagesTransfer->getInfoMessages());
+        $successMessages = array_unique($flashMessagesTransfer->getInfoMessages());
         foreach ($successMessages as $successMessage) {
             $this->messengerFacade->addInfoMessage($this->createMessageTransfer($successMessage));
         }
@@ -71,29 +71,10 @@ class FlashMessageCleaner implements FlashMessageCleanerInterface
      */
     protected function clearErrorDuplicateMessages(FlashMessagesTransfer $flashMessagesTransfer): void
     {
-        $successMessages = $this->uniqueMessages($flashMessagesTransfer->getErrorMessages());
+        $successMessages = array_unique($flashMessagesTransfer->getErrorMessages());
         foreach ($successMessages as $successMessage) {
             $this->messengerFacade->addErrorMessage($this->createMessageTransfer($successMessage));
         }
-    }
-
-    /**
-     * @param string[] $messages
-     *
-     * @return string[]
-     */
-    protected function uniqueMessages(array $messages): array
-    {
-        $result = [];
-        foreach ($messages as $message) {
-            if (is_array($message)) {
-                $result = array_merge($result, $message);
-                continue;
-            }
-            $result[] = $message;
-        }
-
-        return array_unique($result);
     }
 
     /**
