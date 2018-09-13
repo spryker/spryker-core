@@ -101,7 +101,7 @@ class ItemTransferPackagingUnitExpander implements ItemTransferPackagingUnitExpa
      */
     protected function extractProductConcretePackagingStorageTransfer(ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer, ProductConcreteTransfer $productConcreteTransfer): ?ProductConcretePackagingStorageTransfer
     {
-        if ($productAbstractPackagingStorageTransfer->getTypes() === null) {
+        if (!$productAbstractPackagingStorageTransfer->getTypes()->count()) {
             return null;
         }
 

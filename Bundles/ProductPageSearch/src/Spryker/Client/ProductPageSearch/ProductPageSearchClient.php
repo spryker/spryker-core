@@ -26,7 +26,7 @@ class ProductPageSearchClient extends AbstractClient implements ProductPageSearc
      *
      * @return array|\Elastica\ResultSet
      */
-    public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): array
+    public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
     {
         $this->setSearchFields($productConcreteCriteriaFilterTransfer, [PageIndexMap::FULL_TEXT_BOOSTED]);
 
@@ -42,7 +42,7 @@ class ProductPageSearchClient extends AbstractClient implements ProductPageSearc
      *
      * @return array|\Elastica\ResultSet
      */
-    public function searchProductConcretesBySku(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): array
+    public function searchProductConcretesBySku(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
     {
         $this->setSearchFields($productConcreteCriteriaFilterTransfer, [PageIndexMap::SUGGESTION_SKU]);
 
@@ -69,7 +69,7 @@ class ProductPageSearchClient extends AbstractClient implements ProductPageSearc
      *
      * @return array|\Elastica\ResultSet
      */
-    protected function search(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): array
+    protected function search(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
     {
         $searchQuery = $this->getFactory()->createProductConcretePageSearchQuery($productConcreteCriteriaFilterTransfer);
         $resultFormatters = $this->getFactory()->getProductConcretePageSearchResultFormatterPlugins();

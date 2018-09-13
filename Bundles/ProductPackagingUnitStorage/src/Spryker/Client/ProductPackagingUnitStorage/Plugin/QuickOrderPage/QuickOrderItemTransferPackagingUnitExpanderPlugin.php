@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductPackagingUnitStorage\Plugin\QuickOrderPage;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface;
+use Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface;
 
 /**
  * @method \Spryker\Client\ProductPackagingUnitStorage\ProductPackagingUnitStorageClientInterface getClient()

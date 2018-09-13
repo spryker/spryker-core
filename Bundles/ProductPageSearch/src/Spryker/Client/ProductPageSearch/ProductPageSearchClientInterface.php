@@ -21,9 +21,9 @@ interface ProductPageSearchClientInterface
      *
      * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
      *
-     * @return array
+     * @return array|\Elastica\ResultSet
      */
-    public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): array;
+    public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer);
 
     /**
      * Specification:
@@ -35,7 +35,7 @@ interface ProductPageSearchClientInterface
      *
      * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
      *
-     * @return array
+     * @return array|\Elastica\ResultSet
      */
-    public function searchProductConcretesBySku(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): array;
+    public function searchProductConcretesBySku(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer);
 }
