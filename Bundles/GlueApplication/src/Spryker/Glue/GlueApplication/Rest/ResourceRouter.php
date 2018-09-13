@@ -224,6 +224,16 @@ class ResourceRouter implements ResourceRouterInterface
      */
     protected function isParentValid(array $route, array $resources): bool
     {
+        if (isset($route[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE])
+            && $route[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE] !== $resources[0][RequestConstantsInterface::ATTRIBUTE_TYPE]) {
+            return false;
+        }
+
+        if (!isset($route[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE])
+            && $route[RequestConstantsInterface::ATTRIBUTE_TYPE] !== $resources[0][RequestConstantsInterface::ATTRIBUTE_TYPE]) {
+            return false;
+        }
+
         return !isset($route[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE]) || $this->isValidPath($resources, $route);
     }
 }
