@@ -5,7 +5,7 @@
 
     <transfer name="ShoppingListSession">
         <property name="shoppingLists" type="ShoppingListCollection"/>
-        <property name="updatedAt" type="integer"/>
+        <property name="updatedAt" type="int"/>
     </transfer>
 
 </transfers>
