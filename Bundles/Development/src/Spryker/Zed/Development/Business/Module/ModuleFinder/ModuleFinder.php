@@ -115,7 +115,7 @@ class ModuleFinder implements ModuleFinderInterface
     }
 
     /**
-     * Packages which are standalone, can also be normal modules. This can be detected by the composer.json description
+     * Modules which are standalone, can also be normal modules. This can be detected by the composer.json description
      * which contains `module` at the end of the description.
      *
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
@@ -125,9 +125,14 @@ class ModuleFinder implements ModuleFinderInterface
     protected function isModule(ModuleTransfer $moduleTransfer): bool
     {
         $composerJsonAsArray = $this->getComposerJsonAsArray($moduleTransfer->getPath());
+
+        if (!isset($composerJsonAsArray['description'])) {
+            return false;
+        }
+
         $description = $composerJsonAsArray['description'];
 
-        return preg_match('/module$/', $description);
+        return preg_match('/\smodule$/', $description);
     }
 
     /**
