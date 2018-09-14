@@ -8,10 +8,10 @@
 namespace Spryker\Zed\MultiCart\Business\Quote;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\MultiCart\Business\Activator\QuoteActivator;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface;
 use Spryker\Zed\MultiCart\Persistence\MultiCartEntityManagerInterface;
-use Spryker\Zed\MultiCart\Persistence\MultiCartRepository;
 use Spryker\Zed\MultiCart\Persistence\MultiCartRepositoryInterface;
 
 class QuoteWriter implements QuoteWriterInterface
@@ -60,8 +60,8 @@ class QuoteWriter implements QuoteWriterInterface
 
         if (!$this->hasActiveQuote($customerQuoteData)) {
             $quoteToActivateData = reset($customerQuoteData);
-            $this->multiCartEntityManager->setDefaultQuote($quoteToActivateData[MultiCartRepository::COL_ID_QUOTE]);
-            $this->addSuccessMessage($quoteToActivateData[MultiCartRepository::COL_NAME]);
+            $this->multiCartEntityManager->setDefaultQuote($quoteToActivateData[QuoteTransfer::ID_QUOTE]);
+            $this->addSuccessMessage($quoteToActivateData[QuoteTransfer::NAME]);
         }
     }
 
@@ -74,8 +74,8 @@ class QuoteWriter implements QuoteWriterInterface
     {
         $numberOfCustomerQuoteDataRows = count($customerQuoteData);
         for ($i = 0; $i < $numberOfCustomerQuoteDataRows; $i++) {
-            if ($customerQuoteData[$i][MultiCartRepository::COL_IS_DEFAULT]) {
-                return $customerQuoteData[$i][MultiCartRepository::COL_ID_QUOTE];
+            if ($customerQuoteData[$i][QuoteTransfer::IS_DEFAULT]) {
+                return $customerQuoteData[$i][QuoteTransfer::ID_QUOTE];
             }
         }
 

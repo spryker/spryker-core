@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MultiCart\Persistence;
 
+use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -14,8 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class MultiCartEntityManager extends AbstractEntityManager implements MultiCartEntityManagerInterface
 {
-    protected const IS_DEFAULT = 'IsDefault';
-
     /**
      * @param string $customerReference
      *
@@ -26,7 +25,7 @@ class MultiCartEntityManager extends AbstractEntityManager implements MultiCartE
         $this->getFactory()
             ->createQuoteQuery()
             ->filterByCustomerReference($customerReference)
-            ->update([static::IS_DEFAULT => false]);
+            ->update([ucfirst(SpyQuoteEntityTransfer::IS_DEFAULT) => false]);
     }
 
     /**
@@ -39,6 +38,6 @@ class MultiCartEntityManager extends AbstractEntityManager implements MultiCartE
         $this->getFactory()
             ->createQuoteQuery()
             ->filterByIdQuote($idQuote)
-            ->update([static::IS_DEFAULT => true]);
+            ->update([ucfirst(SpyQuoteEntityTransfer::IS_DEFAULT) => true]);
     }
 }
