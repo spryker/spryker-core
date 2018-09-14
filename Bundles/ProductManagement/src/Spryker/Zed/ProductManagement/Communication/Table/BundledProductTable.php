@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -30,6 +31,7 @@ class BundledProductTable extends AbstractTable
     const COL_AVAILABILITY = 'availability';
     const COL_ID_PRODUCT_CONCRETE = 'id_product_concrete';
     const SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME = 'Name';
+    const SPY_STOCK_PRODUCT_ALIAS_QUANTITY = 'stockQuantity';
     const IS_NEVER_OUT_OF_STOCK = 'isNeverOutOfStock';
 
     /**
@@ -127,7 +129,7 @@ class BundledProductTable extends AbstractTable
             SpyProductLocalizedAttributesTableMap::COL_NAME => 'Product name',
             SpyProductTableMap::COL_SKU => 'SKU',
             static::COL_PRICE => $priceLabel,
-            SpyStockProductTableMap::COL_QUANTITY => 'Stock',
+            static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY => 'Stock',
             static::COL_AVAILABILITY => 'Availability',
             SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => 'Is never out of stock',
         ]);
@@ -147,7 +149,7 @@ class BundledProductTable extends AbstractTable
         $config->setSortable([
             SpyProductLocalizedAttributesTableMap::COL_NAME,
             SpyProductTableMap::COL_SKU,
-            SpyStockProductTableMap::COL_QUANTITY,
+            static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY,
             SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK,
         ]);
 
@@ -168,7 +170,7 @@ class BundledProductTable extends AbstractTable
             ->joinSpyProductLocalizedAttributes()
             ->joinStockProduct()
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, self::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
-            ->withColumn(sprintf('SUM(%s)', SpyStockProductTableMap::COL_QUANTITY), 'stockQuantity')
+            ->withColumn(sprintf('SUM(%s)', SpyStockProductTableMap::COL_QUANTITY), static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY)
             ->withColumn(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK, self::IS_NEVER_OUT_OF_STOCK)
             ->where(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE . ' = ?', $this->localeTransfer->getIdLocale())
             ->add(SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE, null, Criteria::ISNULL)
@@ -186,7 +188,7 @@ class BundledProductTable extends AbstractTable
                 SpyProductLocalizedAttributesTableMap::COL_NAME => $item->getName(),
                 SpyProductTableMap::COL_SKU => $this->getProductEditPageLink($item->getSku(), $item->getFkProductAbstract(), $item->getIdProduct()),
                 static::COL_PRICE => $this->getFormattedPrice($item->getSku()),
-                SpyStockProductTableMap::COL_QUANTITY => $item->getStockQuantity(),
+                static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY => $item->getStockQuantity(),
                 static::COL_AVAILABILITY => $this->getAvailability($item),
                 SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => $item->getIsNeverOutOfStock(),
             ];

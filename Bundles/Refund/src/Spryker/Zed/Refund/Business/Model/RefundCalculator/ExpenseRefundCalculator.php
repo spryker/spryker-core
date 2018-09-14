@@ -15,7 +15,7 @@ class ExpenseRefundCalculator extends AbstractRefundCalculator
     /**
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] array $salesOrderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
      *
      * @return \Generated\Shared\Transfer\RefundTransfer
      */
@@ -47,10 +47,8 @@ class ExpenseRefundCalculator extends AbstractRefundCalculator
      */
     protected function calculateRefundableExpenseAmount(RefundTransfer $refundTransfer)
     {
-        if ($refundTransfer->getExpenses()) {
-            foreach ($refundTransfer->getExpenses() as $expenseTransfer) {
-                $refundTransfer->setAmount($refundTransfer->getAmount() + $expenseTransfer->getRefundableAmount());
-            }
+        foreach ($refundTransfer->getExpenses() as $expenseTransfer) {
+            $refundTransfer->setAmount($refundTransfer->getAmount() + $expenseTransfer->getRefundableAmount());
         }
     }
 
@@ -61,10 +59,8 @@ class ExpenseRefundCalculator extends AbstractRefundCalculator
      */
     protected function setCanceledExpenseAmount(RefundTransfer $refundTransfer)
     {
-        if ($refundTransfer->getExpenses()) {
-            foreach ($refundTransfer->getExpenses() as $expenseTransfer) {
-                $expenseTransfer->setCanceledAmount($expenseTransfer->getRefundableAmount());
-            }
+        foreach ($refundTransfer->getExpenses() as $expenseTransfer) {
+            $expenseTransfer->setCanceledAmount($expenseTransfer->getRefundableAmount());
         }
     }
 }

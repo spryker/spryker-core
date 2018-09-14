@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -14,6 +15,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -22,6 +24,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
  * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface getRepository()
  */
 class TaxSetForm extends AbstractType
 {
@@ -56,6 +59,7 @@ class TaxSetForm extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
+                    $this->createUniqueTaxSetNameConstraint(),
                 ],
             ]
         );
@@ -147,5 +151,26 @@ class TaxSetForm extends AbstractType
     public function getName()
     {
         return $this->getBlockPrefix();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createUniqueTaxSetNameConstraint(): Constraint
+    {
+        return new Callback([
+            'callback' => function ($name, ExecutionContextInterface $context) {
+                /** @var \Symfony\Component\Form\Form $form */
+                $form = $context->getObject();
+                $idTaxSet = $form->getParent()->getData()->getIdTaxSet();
+                if (empty($idTaxSet) && $this->getFacade()->taxSetWithSameNameExists($name) ||
+                    !empty($idTaxSet) && $this->getFacade()->taxSetWithSameNameAndIdExists($name, $idTaxSet)
+                ) {
+                    $context->addViolation('Tax Set with name "%name%" already exists.', [
+                        '%name%' => $name,
+                    ]);
+                }
+            },
+        ]);
     }
 }

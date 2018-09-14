@@ -174,6 +174,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $propertyInfo = [
             'name' => $property['name'],
             'type' => $this->getPropertyType($property),
+            'is_typed_array' => $property['is_typed_array'],
             'bundles' => $property['bundles'],
         ];
 
@@ -216,6 +217,11 @@ class ClassDefinition implements ClassDefinitionInterface
 
             if ($this->isTransferOrTransferArray($property['type'])) {
                 $property = $this->buildTransferPropertyDefinition($property);
+            }
+
+            $property['is_typed_array'] = false;
+            if ($this->isTypedArray($property)) {
+                $property['is_typed_array'] = true;
             }
 
             $normalizedProperties[] = $property;
@@ -281,10 +287,10 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isTypeTransferObject($property)) {
-            return '\Generated\Shared\Transfer\\' . $property['type'];
+            return '\Generated\Shared\Transfer\\' . $property['type'] . '|null';
         }
 
-        return $property['type'];
+        return $property['type'] . '|null';
     }
 
     /**
@@ -322,7 +328,7 @@ class ClassDefinition implements ClassDefinitionInterface
             return '\Generated\Shared\Transfer\\' . $property['type'];
         }
 
-        return $property['type'];
+        return $property['type'] . '|null';
     }
 
     /**
@@ -339,7 +345,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isArray($property)) {
-            return 'array';
+            return 'mixed';
         }
 
         if ($this->isCollection($property)) {
@@ -490,10 +496,10 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isTypeTransferObject($property)) {
-            return '\Generated\Shared\Transfer\\' . $property['type'];
+            return '\Generated\Shared\Transfer\\' . $property['type'] . '|null';
         }
 
-        return $property['type'];
+        return $property['type'] . '|null';
     }
 
     /**

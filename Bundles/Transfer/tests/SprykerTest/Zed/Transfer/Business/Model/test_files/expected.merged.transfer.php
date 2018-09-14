@@ -15,19 +15,19 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  */
 class FooBarTransfer extends AbstractTransfer
 {
-    const NAME = 'name';
+    public const NAME = 'name';
 
-    const BLA = 'bla';
+    public const BLA = 'bla';
 
-    const SELF_REFERENCE = 'selfReference';
+    public const SELF_REFERENCE = 'selfReference';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $name;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $bla;
 
@@ -76,7 +76,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @param string $name
+     * @param string|null $name
      *
      * @return $this
      */
@@ -91,7 +91,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @return string
+     * @return string|null
      */
     public function getName()
     {
@@ -113,7 +113,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test|Test2
      *
-     * @param int $bla
+     * @param int|null $bla
      *
      * @return $this
      */
@@ -128,7 +128,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test|Test2
      *
-     * @return int
+     * @return int|null
      */
     public function getBla()
     {

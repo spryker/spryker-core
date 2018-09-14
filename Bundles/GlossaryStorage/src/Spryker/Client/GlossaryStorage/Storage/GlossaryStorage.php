@@ -99,7 +99,7 @@ class GlossaryStorage implements GlossaryStorageInterface
     /**
      * @param string $key
      *
-     * @return null|string
+     * @return string|null
      */
     protected function getTranslation($key)
     {

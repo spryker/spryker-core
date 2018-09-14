@@ -43,8 +43,6 @@ class QuoteDeleter implements QuoteDeleterInterface
     protected $customerClient;
 
     /**
-     * QuoteDeleter constructor.
-     *
      * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedRequestClient
      * @param \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToCustomerClientInterface $customerClient

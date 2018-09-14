@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Twig;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface TwigConstants
 {
     /**
@@ -67,4 +70,12 @@ interface TwigConstants
      * @api
      */
     const ZED_PATH_CACHE_ENABLED = 'ZED_PATH_CACHE_ENABLED';
+
+    /**
+     * Specification:
+     * - Sets the permission mode for generated directories.
+     *
+     * @api
+     */
+    const DIRECTORY_PERMISSION = 'TWIG:DIRECTORY_PERMISSION';
 }

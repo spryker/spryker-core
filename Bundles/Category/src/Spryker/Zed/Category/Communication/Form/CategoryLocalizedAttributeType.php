@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -7,13 +8,16 @@
 namespace Spryker\Zed\Category\Communication\Form;
 
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
@@ -108,6 +112,17 @@ class CategoryLocalizedAttributeType extends AbstractType
             ->add(self::FIELD_NAME, TextType::class, [
                 'constraints' => [
                     new NotBlank(),
+                    new Callback([
+                        'callback' => function ($nameKey, ExecutionContextInterface $context) {
+                            $categoryTransfer = $context->getRoot()->getData();
+
+                            if ($categoryTransfer instanceof CategoryTransfer && $nameKey) {
+                                if ($this->getFacade()->hasFirstLevelChildrenByName($nameKey, $categoryTransfer)) {
+                                    $context->addViolation(sprintf('Category with name "%s" already in use in this category level, please choose another one.', $nameKey));
+                                }
+                            }
+                        },
+                    ]),
                 ],
                 'required' => false,
             ]);

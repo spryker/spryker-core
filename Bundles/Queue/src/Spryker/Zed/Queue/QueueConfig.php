@@ -18,7 +18,7 @@ class QueueConfig extends AbstractBundleConfig
     const DEFAULT_THRESHOLD = 59;
 
     /**
-     * @return null
+     * @return array|null
      */
     public function getWorkerMessageCheckOption()
     {

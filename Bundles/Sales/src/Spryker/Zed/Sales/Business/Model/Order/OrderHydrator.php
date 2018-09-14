@@ -216,28 +216,48 @@ class OrderHydrator implements OrderHydratorInterface
         $itemTransfer->fromArray($orderItemEntity->toArray(), true);
         $itemTransfer->setProcess($orderItemEntity->getProcess()->getName());
 
-        $itemTransfer->setUnitGrossPrice($orderItemEntity->getGrossPrice());
-        $itemTransfer->setUnitNetPrice($orderItemEntity->getNetPrice());
-        $itemTransfer->setUnitPrice($orderItemEntity->getPrice());
+        $itemTransfer->setQuantity($orderItemEntity->getQuantity());
+        $itemTransfer->setSumGrossPrice($orderItemEntity->getGrossPrice());
+        $itemTransfer->setSumNetPrice($orderItemEntity->getNetPrice());
         $itemTransfer->setSumPrice($orderItemEntity->getPrice());
-
-        $itemTransfer->setUnitSubtotalAggregation($orderItemEntity->getSubtotalAggregation());
-
+        $itemTransfer->setSumSubtotalAggregation($orderItemEntity->getSubtotalAggregation());
         $itemTransfer->setRefundableAmount($orderItemEntity->getRefundableAmount());
+        $itemTransfer->setSumDiscountAmountAggregation($orderItemEntity->getDiscountAmountAggregation());
+        $itemTransfer->setSumDiscountAmountFullAggregation($orderItemEntity->getDiscountAmountFullAggregation());
+        $itemTransfer->setSumExpensePriceAggregation($orderItemEntity->getExpensePriceAggregation());
+        $itemTransfer->setSumTaxAmount($orderItemEntity->getTaxAmount());
+        $itemTransfer->setSumTaxAmountFullAggregation($orderItemEntity->getTaxAmountFullAggregation());
+        $itemTransfer->setSumPriceToPayAggregation($orderItemEntity->getPriceToPayAggregation());
 
-        $itemTransfer->setUnitDiscountAmountAggregation($orderItemEntity->getDiscountAmountAggregation());
-        $itemTransfer->setUnitDiscountAmountFullAggregation($orderItemEntity->getDiscountAmountFullAggregation());
+        $itemTransfer->setIsOrdered(true);
 
-        $itemTransfer->setUnitExpensePriceAggregation($orderItemEntity->getExpensePriceAggregation());
-
-        $itemTransfer->setUnitTaxAmount($orderItemEntity->getTaxAmount());
-        $itemTransfer->setUnitTaxAmountFullAggregation($orderItemEntity->getTaxAmountFullAggregation());
-        $itemTransfer->setUnitPriceToPayAggregation($orderItemEntity->getPriceToPayAggregation());
+        $this->deriveOrderItemUnitPrices($itemTransfer);
 
         $this->hydrateStateHistory($orderItemEntity, $itemTransfer);
         $this->hydrateCurrentSalesOrderItemState($orderItemEntity, $itemTransfer);
 
         return $itemTransfer;
+    }
+
+    /**
+     * Unit prices are populated for presentation purposes only. For further calculations use sum prices or properly populated unit prices.
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function deriveOrderItemUnitPrices(ItemTransfer $itemTransfer)
+    {
+        $itemTransfer->setUnitGrossPrice((int)round($itemTransfer->getSumGrossPrice() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitNetPrice((int)round($itemTransfer->getSumNetPrice() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitPrice((int)round($itemTransfer->getSumPrice() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitSubtotalAggregation((int)round($itemTransfer->getSumSubtotalAggregation() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitDiscountAmountAggregation((int)round($itemTransfer->getSumDiscountAmountAggregation() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitDiscountAmountFullAggregation((int)round($itemTransfer->getSumDiscountAmountFullAggregation() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitExpensePriceAggregation((int)round($itemTransfer->getSumExpensePriceAggregation() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitTaxAmount((int)round($itemTransfer->getSumTaxAmount() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitTaxAmountFullAggregation((int)round($itemTransfer->getSumTaxAmountFullAggregation() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitPriceToPayAggregation((int)round($itemTransfer->getSumPriceToPayAggregation() / $itemTransfer->getQuantity()));
     }
 
     /**
@@ -302,14 +322,34 @@ class OrderHydrator implements OrderHydratorInterface
             $expenseTransfer->fromArray($expenseEntity->toArray(), true);
 
             $expenseTransfer->setQuantity(1);
-            $expenseTransfer->setUnitGrossPrice($expenseEntity->getGrossPrice());
-            $expenseTransfer->setUnitNetPrice($expenseEntity->getNetPrice());
-            $expenseTransfer->setUnitPrice($expenseEntity->getPrice());
-            $expenseTransfer->setUnitPriceToPayAggregation($expenseEntity->getPriceToPayAggregation());
-            $expenseTransfer->setUnitTaxAmount($expenseEntity->getTaxAmount());
+            $expenseTransfer->setSumGrossPrice($expenseEntity->getGrossPrice());
+            $expenseTransfer->setSumNetPrice($expenseEntity->getNetPrice());
+            $expenseTransfer->setSumPrice($expenseEntity->getPrice());
+            $expenseTransfer->setSumPriceToPayAggregation($expenseEntity->getPriceToPayAggregation());
+            $expenseTransfer->setSumTaxAmount($expenseEntity->getTaxAmount());
+
+            $expenseTransfer->setIsOrdered(true);
+
+            $this->deriveExpenseUnitPrices($expenseTransfer);
 
             $orderTransfer->addExpense($expenseTransfer);
         }
+    }
+
+    /**
+     * Unit prices are populated for presentation purposes only. For further calculations use sum prices or properly populated unit prices.
+     *
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return void
+     */
+    protected function deriveExpenseUnitPrices(ExpenseTransfer $expenseTransfer)
+    {
+        $expenseTransfer->setUnitGrossPrice((int)round($expenseTransfer->getSumGrossPrice() / $expenseTransfer->getQuantity()));
+        $expenseTransfer->setUnitNetPrice((int)round($expenseTransfer->getSumNetPrice() / $expenseTransfer->getQuantity()));
+        $expenseTransfer->setUnitPrice((int)round($expenseTransfer->getSumPrice() / $expenseTransfer->getQuantity()));
+        $expenseTransfer->setUnitPriceToPayAggregation((int)round($expenseTransfer->getSumPriceToPayAggregation() / $expenseTransfer->getQuantity()));
+        $expenseTransfer->setUnitTaxAmount((int)round($expenseTransfer->getSumTaxAmount() / $expenseTransfer->getQuantity()));
     }
 
     /**
@@ -355,7 +395,7 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
-     * @param int|null $customerReference
+     * @param string|null $customerReference
      *
      * @return int
      */

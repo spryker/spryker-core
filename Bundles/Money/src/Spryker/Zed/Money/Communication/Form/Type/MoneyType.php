@@ -173,6 +173,7 @@ class MoneyType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $viewData */
         $viewData = $form->getViewData();
         if (!method_exists($viewData, 'getCurrency')) {
             throw new Exception(sprintf(
