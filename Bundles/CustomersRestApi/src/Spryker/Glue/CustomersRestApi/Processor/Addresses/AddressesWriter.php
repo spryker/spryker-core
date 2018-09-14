@@ -317,12 +317,12 @@ class AddressesWriter implements AddressesWriterInterface
         CustomerTransfer $customerTransfer
     ): CustomerTransfer {
         if ($customerTransfer->getDefaultBillingAddress() === $addressTransfer->getIdCustomerAddress()
-            && !$addressTransfer->getIsDefaultBilling()
+            && $addressTransfer->getIsDefaultBilling() === false
         ) {
             $customerTransfer->setDefaultBillingAddress(null);
         }
 
-        if ($addressTransfer->getIsDefaultBilling()
+        if ($addressTransfer->getIsDefaultBilling() === true
             && $customerTransfer->getDefaultBillingAddress() !== $addressTransfer->getIdCustomerAddress()
         ) {
             $customerTransfer->setDefaultBillingAddress($addressTransfer->getIdCustomerAddress());
