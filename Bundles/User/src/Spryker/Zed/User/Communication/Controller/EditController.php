@@ -63,12 +63,11 @@ class EditController extends AbstractController
         if ($userForm->isSubmitted() && $userForm->isValid()) {
             $formData = $userForm->getData();
 
-            $userTransfer = $this->getFacade()->addUser(
-                $formData[UserForm::FIELD_FIRST_NAME],
-                $formData[UserForm::FIELD_LAST_NAME],
-                $formData[UserForm::FIELD_USERNAME],
-                $formData[UserForm::FIELD_PASSWORD]
-            );
+            $userTransfer = new UserTransfer();
+            $userTransfer->fromArray($formData, true);
+
+            $userTransfer = $this->getFacade()
+                ->createUser($userTransfer);
 
             if ($userTransfer->getIdUser()) {
                 $this->addAclGroups($formData, $userTransfer);
@@ -217,7 +216,7 @@ class EditController extends AbstractController
         $currentUserTransfer = $this->getFacade()->getCurrentUser();
         $resetPasswordForm = $this
             ->getFactory()
-            ->createResetPasswordForm($this->getFacade())
+            ->createResetPasswordForm()
             ->handleRequest($request);
 
         if ($resetPasswordForm->isSubmitted() && $resetPasswordForm->isValid()) {

@@ -44,36 +44,26 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     public function testRestResponseAttributesIsInstanceOfRestSearchSuggestionsAttributesTransfer(): void
     {
         $mapper = $this->getMapper();
-        $restResponse = $mapper->mapSuggestionsResponseAttributesTransferToRestResponse([], static::REQUESTED_CURRENCY);
+        $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsResponseAttributesTransferToRestAttributesTransfer([], static::REQUESTED_CURRENCY);
 
-        $this->assertInstanceOf(RestCatalogSearchSuggestionsAttributesTransfer::class, $restResponse->getAttributes());
+        $this->assertInstanceOf(RestCatalogSearchSuggestionsAttributesTransfer::class, $restCatalogSearchSuggestionsAttributes);
     }
 
     /**
      * @return void
      */
-    public function testEmptySearchSuggestionsResponseWillMapIntoRestResponseWithEmptyAttributes(): void
+    public function testEmptySearchSuggestionsResponseWillMapEmptyAttributes(): void
     {
         $mapper = $this->getMapper();
-        $restResponse = $mapper->mapSuggestionsResponseAttributesTransferToRestResponse([], static::REQUESTED_CURRENCY);
+        $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsResponseAttributesTransferToRestAttributesTransfer([], static::REQUESTED_CURRENCY);
 
-        $attributes = $restResponse->getAttributes();
+        $attributes = $restCatalogSearchSuggestionsAttributes;
 
-        $this->assertEquals(static::REQUESTED_CURRENCY, $restResponse->getAttributes()->getCurrency());
+        $this->assertEquals(static::REQUESTED_CURRENCY, $restCatalogSearchSuggestionsAttributes->getCurrency());
         $this->assertEmpty($attributes->getCompletion());
         $this->assertEmpty($attributes->getProducts());
         $this->assertEmpty($attributes->getCategories());
         $this->assertEmpty($attributes->getCmsPages());
-    }
-
-    /**
-     * @return void
-     */
-    public function testRestSearchSuggestionsResponseIdIsNull(): void
-    {
-        $restResponse = $this->getMapper()->mapSuggestionsResponseAttributesTransferToRestResponse([], static::REQUESTED_CURRENCY);
-
-        $this->assertNull($restResponse->getId());
     }
 
     /**
@@ -89,13 +79,13 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
             ->addCmsPagesData()
             ->getData();
 
-        $restResponse = $mapper->mapSuggestionsResponseAttributesTransferToRestResponse(
+        $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsResponseAttributesTransferToRestAttributesTransfer(
             $searchSuggestionsResponseDataMock,
             static::REQUESTED_CURRENCY
         );
 
-        $this->assertEquals(static::REQUESTED_CURRENCY, $restResponse->getAttributes()->getCurrency());
-        foreach ($restResponse->getAttributes()->getProducts() as $product) {
+        $this->assertEquals(static::REQUESTED_CURRENCY, $restCatalogSearchSuggestionsAttributes->getCurrency());
+        foreach ($restCatalogSearchSuggestionsAttributes->getProducts() as $product) {
             $this->assertArrayHasKey('abstract_sku', $product);
             $this->assertArrayHasKey('abstract_name', $product);
             $this->assertArrayHasKey('price', $product);
@@ -103,12 +93,12 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
             $this->assertArrayNotHasKey('id_product_abstract', $product);
         }
 
-        foreach ($restResponse->getAttributes()->getCategories() as $category) {
+        foreach ($restCatalogSearchSuggestionsAttributes->getCategories() as $category) {
             $this->assertArrayHasKey('name', $category);
             $this->assertArrayNotHasKey('id_category', $category);
         }
 
-        foreach ($restResponse->getAttributes()->getCmsPages() as $cmsPage) {
+        foreach ($restCatalogSearchSuggestionsAttributes->getCmsPages() as $cmsPage) {
             $this->assertArrayHasKey('name', $cmsPage);
             $this->assertArrayNotHasKey('id_cms_page', $cmsPage);
         }
@@ -119,7 +109,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
      */
     protected function getMapper(): CatalogSearchSuggestionsResourceMapperInterface
     {
-        return new CatalogSearchSuggestionsResourceMapper($this->getResourceBuilder());
+        return new CatalogSearchSuggestionsResourceMapper();
     }
 
     /**

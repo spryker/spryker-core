@@ -143,7 +143,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param int $customerReference
+     * @param string $customerReference
      *
      * @return \Spryker\Zed\Sales\Communication\Table\CustomerOrdersTable
      */

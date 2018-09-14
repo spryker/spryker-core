@@ -1,9 +1,6 @@
 parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
-    ignoreErrors:
-    - '#.+ has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface.#'
-
 services:
     -
         class: PhpStan\DynamicType\FacadeDynamicTypeExtension

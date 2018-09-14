@@ -124,7 +124,10 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createAclRoleFormDataProvider()
     {
-        return new AclRoleFormDataProvider($this->getFacade());
+        /** @var \Spryker\Zed\Acl\Business\AclFacade $facade */
+        $facade = $this->getFacade();
+
+        return new AclRoleFormDataProvider($facade);
     }
 
     /**
@@ -143,7 +146,10 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createAclRuleFormDataProvider()
     {
-        return new AclRuleFormDataProvider($this->getFacade());
+        /** @var \Spryker\Zed\Acl\Business\AclFacade $facade */
+        $facade = $this->getFacade();
+
+        return new AclRuleFormDataProvider($facade);
     }
 
     /**
