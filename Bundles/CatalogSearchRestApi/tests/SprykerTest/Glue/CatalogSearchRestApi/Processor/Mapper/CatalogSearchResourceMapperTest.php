@@ -8,11 +8,16 @@
 namespace SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\FacetConfigTransfer;
+use Generated\Shared\Transfer\FacetSearchResultTransfer;
+use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 use Generated\Shared\Transfer\PaginationSearchResultTransfer;
+use Generated\Shared\Transfer\PriceModeConfigurationTransfer;
+use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\SortSearchResultTransfer;
+use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 
 /**
  * Auto-generated group annotations
@@ -27,6 +32,9 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 class CatalogSearchResourceMapperTest extends Unit
 {
     protected const REQUESTED_CURRENCY = 'CHF';
+    protected const GROSS_AMOUNT = 'grossAmount';
+    protected const GROSS_MODE = 'GROSS_MODE';
+    protected const NET_MODE = 'NET_MODE';
 
     /**
      * @var \Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper
@@ -46,21 +54,24 @@ class CatalogSearchResourceMapperTest extends Unit
         parent::setUp();
 
         $this->restSearchAttributesTransfer = new RestCatalogSearchAttributesTransfer();
-        $this->catalogSearchResourceMapper = new CatalogSearchResourceMapper(new RestResourceBuilder());
+        $this->catalogSearchResourceMapper = new CatalogSearchResourceMapper();
     }
 
     /**
      * @return void
      */
-    public function testMapperWillReturnRestResponseWithNotEmptyAttributesData(): void
+    public function testMapperWillReturnNotEmptyAttributesData(): void
     {
         $this->restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
-            ->mapSearchResponseAttributesTransferToRestResponse(
+            ->mapSearchResponseAttributesTransferToRestAttributesTransfer(
                 $this->mockRestSearchResponseTransfer(),
                 static::REQUESTED_CURRENCY
-            )
-            ->getAttributes();
+            );
+
+        $this->restSearchAttributesTransfer = $this->restSearchAttributesTransfer = $this
+            ->catalogSearchResourceMapper
+            ->mapPrices($this->restSearchAttributesTransfer, $this->getPriceModeInformation());
 
         $this->assertEquals(static::REQUESTED_CURRENCY, $this->restSearchAttributesTransfer->getCurrency());
 
@@ -70,7 +81,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->assertEquals("Toshiba CAMILEO S20", $this->restSearchAttributesTransfer->getProducts()[0]->getAbstractName());
         $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrice());
         $this->assertEquals("209", $this->restSearchAttributesTransfer->getProducts()[0]->getAbstractSku());
-        $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrices()['DEFAULT']);
+        $this->assertEquals(19568, $this->restSearchAttributesTransfer->getProducts()[0]->getPrices()[0][static::GROSS_AMOUNT]);
         $this->assertArrayNotHasKey("id_product_abstract", $this->restSearchAttributesTransfer->getProducts()[0]);
         $this->assertArrayNotHasKey("id_product_labels", $this->restSearchAttributesTransfer->getProducts()[0]);
 
@@ -91,20 +102,26 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->assertEquals(12, $this->restSearchAttributesTransfer->getPagination()->getCurrentItemsPerPage());
         $this->assertEquals(1, $this->restSearchAttributesTransfer->getPagination()->getMaxPage());
         $this->assertEquals(3, $this->restSearchAttributesTransfer->getPagination()->getNumFound());
+
+        $this->assertCount(1, $this->restSearchAttributesTransfer->getValueFacets());
+        $this->assertSame('label', $this->restSearchAttributesTransfer->getValueFacets()[0]['name']);
+        $this->assertCount(1, $this->restSearchAttributesTransfer->getRangeFacets());
+        $this->assertSame('rating', $this->restSearchAttributesTransfer->getRangeFacets()[0]['name']);
+        $this->assertArrayNotHasKey('config', $this->restSearchAttributesTransfer->getValueFacets()[0]);
+        $this->assertArrayNotHasKey('config', $this->restSearchAttributesTransfer->getRangeFacets()[0]);
     }
 
     /**
      * @return void
      */
-    public function testMapperWillReturnRestResponseWithEmptyAttributesData(): void
+    public function testMapperWillReturnEmptyAttributesData(): void
     {
         $this->restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
-            ->mapSearchResponseAttributesTransferToRestResponse(
+            ->mapSearchResponseAttributesTransferToRestAttributesTransfer(
                 $this->mockEmptyRestSearchResponseTransfer(),
                 static::REQUESTED_CURRENCY
-            )
-            ->getAttributes();
+            );
 
         $this->assertEquals(static::REQUESTED_CURRENCY, $this->restSearchAttributesTransfer->getCurrency());
         $this->assertEmpty($this->restSearchAttributesTransfer->getProducts());
@@ -120,6 +137,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $mockRestSearchResponse['sort'] = $this->mockSort();
         $mockRestSearchResponse['pagination'] = $this->mockPagination();
         $mockRestSearchResponse['spellingSuggestion'] = 'cameras';
+        $mockRestSearchResponse['facets'] = $this->mockFacets();
 
         return $mockRestSearchResponse;
     }
@@ -202,5 +220,100 @@ class CatalogSearchResourceMapperTest extends Unit
         $pagination->setMaxPage(1);
 
         return $pagination;
+    }
+
+    /**
+     * @return array
+     */
+    protected function mockFacets(): array
+    {
+        $pagination = [];
+        $pagination['label'] = $this->mockLabelFacetSearchResult();
+        $pagination['rating'] = $this->mockRatingFacetSearchResult();
+
+        return $pagination;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\FacetSearchResultTransfer
+     */
+    protected function mockLabelFacetSearchResult(): FacetSearchResultTransfer
+    {
+        $facetSearchResultTransfer = new FacetSearchResultTransfer();
+        $facetSearchResultTransfer->setName('label');
+        $facetSearchResultTransfer->setDocCount(null);
+        $facetSearchResultTransfer->setActiveValue(null);
+
+        $facetSearchResultValue = new FacetSearchResultValueTransfer();
+        $facetSearchResultValue->setDocCount(17);
+        $facetSearchResultValue->setValue('SALE %');
+        $facetSearchResultTransfer->addValue($facetSearchResultValue);
+
+        $facetSearchResultValue = new FacetSearchResultValueTransfer();
+        $facetSearchResultValue->setDocCount(7);
+        $facetSearchResultValue->setValue('Standard Label');
+        $facetSearchResultTransfer->addValue($facetSearchResultValue);
+
+        $facetConfig = new FacetConfigTransfer();
+        $facetConfig->setName('label');
+        $facetConfig->setParameterName('label');
+        $facetConfig->setShortParameterName(null);
+        $facetConfig->setFieldName('string-facet');
+        $facetConfig->setType('enumeration');
+        $facetConfig->setIsMultiValued(true);
+        $facetConfig->setValueTransformer('Spryker\Client\ProductLabelStorage\Plugin\ProductLabelFacetValueTransformerPlugin');
+        $facetSearchResultTransfer->setConfig($facetConfig);
+
+        return $facetSearchResultTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RangeSearchResultTransfer
+     */
+    protected function mockRatingFacetSearchResult(): RangeSearchResultTransfer
+    {
+        $facetSearchResultTransfer = new RangeSearchResultTransfer();
+        $facetSearchResultTransfer->setName('rating');
+        $facetSearchResultTransfer->setDocCount(null);
+        $facetSearchResultTransfer->setMin(400);
+        $facetSearchResultTransfer->setMax(467);
+        $facetSearchResultTransfer->setActiveMin(400);
+        $facetSearchResultTransfer->setActiveMax(467);
+
+        $facetConfig = new FacetConfigTransfer();
+        $facetConfig->setName('rating');
+        $facetConfig->setParameterName('rating');
+        $facetConfig->setShortParameterName(null);
+        $facetConfig->setFieldName('integer-facet');
+        $facetConfig->setType('range');
+        $facetConfig->setIsMultiValued(null);
+        $facetConfig->setValueTransformer('Spryker\Client\ProductReview\Plugin\ProductRatingValueTransformer');
+        $facetSearchResultTransfer->setConfig($facetConfig);
+
+        return $facetSearchResultTransfer;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject | \Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface
+     */
+    protected function getPriceClientMock()
+    {
+        $mock = $this
+            ->createMock(CatalogSearchRestApiToPriceClientInterface::class);
+        $mock->method('getCurrentPriceMode')
+            ->willReturn(static::GROSS_MODE);
+
+        return $mock;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceModeConfigurationTransfer
+     */
+    protected function getPriceModeInformation()
+    {
+        return (new PriceModeConfigurationTransfer())
+            ->setCurrentPriceMode(static::GROSS_MODE)
+            ->setGrossModeIdentifier(static::GROSS_MODE)
+            ->setNetModeIdentifier(static::NET_MODE);
     }
 }

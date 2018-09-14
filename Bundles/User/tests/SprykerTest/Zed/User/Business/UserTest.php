@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\User\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\UserBuilder;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
@@ -17,6 +18,7 @@ use Spryker\Zed\User\UserConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group User
@@ -58,6 +60,14 @@ class UserTest extends Unit
     }
 
     /**
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function getUserDataTransfer(): UserTransfer
+    {
+        return (new UserBuilder())->build();
+    }
+
+    /**
      * @param array $data
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -82,6 +92,23 @@ class UserTest extends Unit
         $this->assertEquals($data['lastName'], $user->getLastName());
         $this->assertEquals($data['username'], $user->getUsername());
         $this->assertNotEquals($data['password'], $user->getPassword());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateUser()
+    {
+        $data = $this->getUserDataTransfer();
+
+        $user = $this->getUserFacade()->createUser($data);
+
+        $this->assertInstanceOf(UserTransfer::class, $user);
+        $this->assertNotNull($user->getIdUser());
+        $this->assertEquals($data->getFirstName(), $user->getFirstName());
+        $this->assertEquals($data->getLastName(), $user->getLastName());
+        $this->assertEquals($data->getUsername(), $user->getUsername());
+        $this->assertNotEquals($data->getPassword(), $user->getPassword());
     }
 
     /**
