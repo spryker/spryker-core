@@ -5,8 +5,8 @@
   "require": {
     "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/propel": "^3.0.0"
+    "spryker/propel": "^3.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

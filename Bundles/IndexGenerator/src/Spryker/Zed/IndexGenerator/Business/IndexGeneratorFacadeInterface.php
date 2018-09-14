@@ -23,7 +23,7 @@ interface IndexGeneratorFacadeInterface
 
     /**
      * Specification:
-     * - Remove all generated index schema files.
+     * - Removes all generated index schema files.
      *
      * @api
      *

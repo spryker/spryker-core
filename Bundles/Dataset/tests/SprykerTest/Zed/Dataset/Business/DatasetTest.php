@@ -67,8 +67,6 @@ class DatasetTest extends Unit
     }
 
     /**
-     * @group singleTest
-     *
      * @return void
      */
     public function testCsvByDataset(): void
