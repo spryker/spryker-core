@@ -12,13 +12,10 @@
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
         <property name="registered" type="string" />
-
-        # @TODO Remove this block after architect decision on swagger doc conflict
         <property name="email" type="string"/>
         <property name="password" type="string" />
         <property name="confirmPassword" type="string" />
         <property name="acceptedTerms" type="bool"/>
-        #
     </transfer>
 
     <transfer name="RestCustomersRegisterAttributes">
