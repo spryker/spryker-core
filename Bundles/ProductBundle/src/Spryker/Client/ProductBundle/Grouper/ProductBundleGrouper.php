@@ -277,7 +277,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     {
         foreach ($items as $cartItemTransfer) {
             if ($itemTransfer->getBundleItemIdentifier() === $cartItemTransfer->getRelatedBundleItemIdentifier()
-                && $cartItemTransfer->getProductOptions() && count($cartItemTransfer->getProductOptions()) > 0) {
+                && count($cartItemTransfer->getProductOptions()) > 0) {
                 return (array)$cartItemTransfer->getProductOptions();
             }
         }

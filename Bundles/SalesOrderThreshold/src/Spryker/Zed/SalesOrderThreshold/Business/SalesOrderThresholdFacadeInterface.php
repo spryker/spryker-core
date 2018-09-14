@@ -21,7 +21,7 @@ interface SalesOrderThresholdFacadeInterface
 {
     /**
      * Specification:
-     * - Populates the database with minimum order value strategies of `SalesOrderThresholdConfig`.
+     * - Populates the database with sales order threshold strategies of `SalesOrderThresholdConfig`.
      *
      * @api
      *
@@ -31,7 +31,7 @@ interface SalesOrderThresholdFacadeInterface
 
     /**
      * Specification:
-     * - Set store minimum order value threshold.
+     * - Sets store sales order threshold
      *
      * @api
      *
@@ -47,7 +47,7 @@ interface SalesOrderThresholdFacadeInterface
 
     /**
      * Specification:
-     * - Get minimum order value strategy for a given key.
+     * - Get sales order threshold strategy for a given key.
      *
      * @api
      *
@@ -80,7 +80,7 @@ interface SalesOrderThresholdFacadeInterface
 
     /**
      * Specification:
-     * - Checks quote value/values against minimum order value hard thresholds.
+     * - Checks quote value/values against sales order hard thresholds.
      * - Also adds the messages to CheckoutResponseTransfer, if any
      *
      * @api
@@ -97,7 +97,7 @@ interface SalesOrderThresholdFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves minimum order value expenses from the quote and saves it to the database.
+     * - Retrieves sales order threshold expenses from the quote and saves it to the database.
      * - These plugins are already enveloped into a transaction.
      *
      * @api
@@ -142,7 +142,7 @@ interface SalesOrderThresholdFacadeInterface
 
     /**
      * Specification:
-     * - Removes minimum order value expenses from CalculableObjectTransfer.
+     * - Removes sales order threshold expenses from CalculableObjectTransfer.
      *
      * @api
      *

@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/sales-order-threshold.svg)](https://travis-ci.org/spryker/sales-order-threshold)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/sales-order-threshold/badge.svg)](https://coveralls.io/github/spryker/sales-order-threshold)
 
-SalesOrderThreshold module provides the core functionality to manage minimum order values and strategies to set threshold for customer orders.
+SalesOrderThreshold module provides the core functionality to set sales order thresholds and threshold strategies to customer orders.
 
 ## Installation
 

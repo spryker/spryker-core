@@ -208,7 +208,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     {
         $request = $this->getRequest();
         $request->setSessionId(session_id());
-        $request->setTime(time());
+        $request->setTime((string)time());
         $request->setHost($this->utilNetworkService->getHostName() ?: 'n/a');
 
         foreach ($metaTransfers as $name => $metaTransfer) {
