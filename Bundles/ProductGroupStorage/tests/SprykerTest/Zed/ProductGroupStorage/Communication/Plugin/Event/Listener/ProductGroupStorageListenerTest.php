@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductGroupStorage\Communication\Plugin\Event\Listene
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductGroupTransfer;
 use Orm\Zed\ProductGroup\Persistence\Map\SpyProductAbstractGroupTableMap;
 use Orm\Zed\ProductGroupStorage\Persistence\SpyProductAbstractGroupStorageQuery;
@@ -65,11 +66,7 @@ class ProductGroupStorageListenerTest extends Unit
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $productAbstractTransfer2 = $this->tester->haveProductAbstract();
 
-        $productAbstractTransfer->setLocalizedAttributes(
-            new ArrayObject($this->tester->generateLocalizedAttributes())
-        );
-
-        $this->tester->getProductFacade()->saveProduct($productAbstractTransfer, []);
+        $this->addLocalizedAttributesToProductAbstract($productAbstractTransfer);
 
         $productGroupOverride = [
             ProductGroupTransfer::ID_PRODUCT_ABSTRACTS => [
@@ -165,5 +162,19 @@ class ProductGroupStorageListenerTest extends Unit
         $this->assertNotNull($spyProductAbstractGroupStorage);
         $data = $spyProductAbstractGroupStorage->getData();
         $this->assertSame(2, count($data['group_product_abstract_ids']));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    protected function addLocalizedAttributesToProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
+    {
+        $productAbstractTransfer->setLocalizedAttributes(
+            new ArrayObject($this->tester->generateLocalizedAttributes())
+        );
+
+        $this->tester->getProductFacade()->saveProduct($productAbstractTransfer, []);
     }
 }

@@ -100,7 +100,7 @@ class ProductOptionStorageListenerTest extends Unit
 
         $this->productAbstractTransfer = $this->tester->haveProductAbstract();
 
-        $this->updateProductAbstract($this->productAbstractTransfer);
+        $this->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer);
 
         $this->assignOptionGroupToProductAbstract($this->productOptionGroupTransfer, $this->productAbstractTransfer);
     }
@@ -270,13 +270,13 @@ class ProductOptionStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function updateProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
+    protected function addLocalizedAttributesToProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
     {
         $productAbstractTransfer->setLocalizedAttributes(
             new ArrayObject($this->tester->generateLocalizedAttributes())
         );
 
-        $this->tester->getProductFacade()->saveProductAbstract($this->productAbstractTransfer);
+        $this->tester->getProductFacade()->saveProductAbstract($productAbstractTransfer);
     }
 
     /**

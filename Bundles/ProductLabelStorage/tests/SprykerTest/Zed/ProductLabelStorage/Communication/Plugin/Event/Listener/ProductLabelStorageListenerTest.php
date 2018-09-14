@@ -20,6 +20,7 @@ use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuer
 use PHPUnit\Framework\SkippedTestError;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
+use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
 use Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageBusinessFactory;
 use Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade;
@@ -74,8 +75,8 @@ class ProductLabelStorageListenerTest extends Unit
         $this->productAbstractTransfer = $this->tester->haveProductAbstract();
         $this->productLabelTransfer = $this->tester->haveProductLabel();
 
-        $this->updateProductAbstractLocalizedAttributes($this->productAbstractTransfer);
-        $this->updateProductLabelLocalizedAttributes($this->productLabelTransfer);
+        $this->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer);
+        $this->addLocalizedAttributesToProductLabel($this->productLabelTransfer);
 
         $this->tester->haveProductLabelToAbstractProductRelation(
             $this->productLabelTransfer->getIdProductLabel(),
@@ -210,7 +211,7 @@ class ProductLabelStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function updateProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer): void
+    protected function addLocalizedAttributesToProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
     {
         $productAbstractTransfer->setLocalizedAttributes(
             new ArrayObject($this->tester->generateLocalizedAttributes())
@@ -224,7 +225,7 @@ class ProductLabelStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function updateProductLabelLocalizedAttributes(ProductLabelTransfer $productLabelTransfer): void
+    protected function addLocalizedAttributesToProductLabel(ProductLabelTransfer $productLabelTransfer): void
     {
         $localizedAttributes = $this->generateLocalizedAttributesTransfer(
             $this->tester->haveLocale()->getIdLocale(),
@@ -239,7 +240,7 @@ class ProductLabelStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
-    protected function getProductLabelFacade()
+    protected function getProductLabelFacade(): ProductLabelFacadeInterface
     {
         return $this->tester->getLocator()->productLabel()->facade();
     }
