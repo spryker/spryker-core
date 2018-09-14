@@ -68,7 +68,7 @@ class Url
      *
      * @throws \Spryker\Service\UtilText\Model\Url\UrlInvalidException
      *
-     * @return $this
+     * @return self
      */
     public static function parse($url)
     {
@@ -100,7 +100,7 @@ class Url
      * @param array $query
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public static function generate($url, array $query = [], array $options = [])
     {
@@ -176,10 +176,7 @@ class Url
      */
     protected function escape($url)
     {
-        $charset = mb_internal_encoding();
-        if ($charset === null) {
-            $charset = 'UTF-8';
-        }
+        $charset = mb_internal_encoding() ?: 'UTF-8';
 
         return htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, $charset);
     }

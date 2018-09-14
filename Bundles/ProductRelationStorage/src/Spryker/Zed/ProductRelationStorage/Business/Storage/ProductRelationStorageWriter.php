@@ -193,7 +193,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      * @param int $idProductRelation
      * @param int $idLocale
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelation[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findRelationProducts($idProductRelation, $idLocale)
     {

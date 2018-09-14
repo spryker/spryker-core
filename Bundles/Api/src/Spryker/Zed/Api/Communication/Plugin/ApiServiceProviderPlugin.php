@@ -26,6 +26,8 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     protected $controllerListener;
 
     /**
+     * @api
+     *
      * @deprecated Please remove usage of this setter. The needed ControllerListenerInterface is now retrieved by the Factory.
      *
      * @param \Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerInterface $controllerListener
@@ -38,6 +40,8 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     }
 
     /**
+     * @api
+     *
      * @param \Silex\Application $app
      *
      * @return void
@@ -66,6 +70,8 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     }
 
     /**
+     * @api
+     *
      * @param \Silex\Application $app
      *
      * @return void

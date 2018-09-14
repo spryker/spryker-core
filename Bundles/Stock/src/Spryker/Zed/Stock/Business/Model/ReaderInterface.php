@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface ReaderInterface
 {
     /**
-     * @return array
+     * @return string[]
      */
     public function getStockTypes();
 
