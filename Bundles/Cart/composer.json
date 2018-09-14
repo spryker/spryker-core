@@ -12,14 +12,11 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/application": "*",
     "spryker/customer": "*",
-    "spryker/persistent-cart": "*",
     "spryker/price-product": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {

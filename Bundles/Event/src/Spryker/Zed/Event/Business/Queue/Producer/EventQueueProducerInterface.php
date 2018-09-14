@@ -13,11 +13,11 @@ interface EventQueueProducerInterface
 {
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      * @param string $listener
      * @param string|null $queuePoolName
      *
      * @return void
      */
-    public function enqueueListener($eventName, TransferInterface $eventTransfer, $listener, $queuePoolName = null);
+    public function enqueueListener($eventName, TransferInterface $transfer, $listener, $queuePoolName = null);
 }

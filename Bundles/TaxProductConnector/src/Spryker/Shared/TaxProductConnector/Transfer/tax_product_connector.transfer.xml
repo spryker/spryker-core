@@ -7,4 +7,10 @@
         <property name="idTaxSet" type="int" />
     </transfer>
 
+    <transfer name="TaxSetResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="error" type="string" />
+        <property name="taxSet" type="TaxSet" />
+    </transfer>
+
 </transfers>

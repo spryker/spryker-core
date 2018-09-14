@@ -81,6 +81,8 @@ class ProductPageMapPlugin extends AbstractPlugin implements NamedPageMapInterfa
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getName()
