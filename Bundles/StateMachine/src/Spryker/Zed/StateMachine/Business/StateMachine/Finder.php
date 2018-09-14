@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 
@@ -371,7 +370,7 @@ class Finder implements FinderInterface
             $stateMachineProcessTransfer->getStateMachineName(),
             $stateMachineProcessTransfer->getProcessName(),
             $statesByFlag
-        )->orderByIdStateMachineItemState(Criteria::DESC)->find();
+        )->find();
 
         return $itemStateCollection;
     }
