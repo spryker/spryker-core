@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantRelationshipSalesOrderThreshold">
+        <property name="idMerchantRelationshipSalesOrderThreshold" type="int"/>
+        <property name="merchantRelationship" type="MerchantRelationship"/>
+        <property name="salesOrderThresholdValue" type="SalesOrderThresholdValue"/>
+        <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
+        <property name="localizedMessages" type="SalesOrderThresholdLocalizedMessage[]" singular="localizedMessage" />
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="idMerchantRelationship" type="int" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="store" type="Store" />
+        <property name="currency" type="Currency" />
+    </transfer>
+</transfers>

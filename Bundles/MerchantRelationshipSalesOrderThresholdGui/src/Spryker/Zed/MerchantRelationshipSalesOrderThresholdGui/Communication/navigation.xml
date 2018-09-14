@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <threshold>
+        <pages>
+            <merchant-relationship-sales-order-threshold-gui>
+                <label>Merchant relationships</label>
+                <title>Merchant relationships</title>
+                <uri>/merchant-relationship-sales-order-threshold-gui</uri>
+                <icon>fa-angle-double-right</icon>
+            </merchant-relationship-sales-order-threshold-gui>
+        </pages>
+    </threshold>
+</config>
+
