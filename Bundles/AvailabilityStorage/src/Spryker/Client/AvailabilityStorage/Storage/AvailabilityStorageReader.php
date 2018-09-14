@@ -10,6 +10,7 @@ namespace Spryker\Client\AvailabilityStorage\Storage;
 use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\AvailabilityStorage\AvailabilityStorageConfig;
 use Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientInterface;
 use Spryker\Client\AvailabilityStorage\Dependency\Service\AvailabilityStorageToSynchronizationServiceInterface;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
@@ -67,11 +68,39 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
      */
     public function getAvailabilityAbstract($idProductAbstract)
     {
+        if (AvailabilityStorageConfig::isCollectorCompatibilityMode()) {
+            return $this->getAvailabilityAbstractFromCollectorData($idProductAbstract);
+        }
         $key = $this->generateKey($idProductAbstract);
         $availability = $this->storageClient->get($key);
 
         $spyAvailabilityAbstractEntityTransfer = new SpyAvailabilityAbstractEntityTransfer();
         if ($availability === null) {
+            return $spyAvailabilityAbstractEntityTransfer;
+        }
+
+        return $spyAvailabilityAbstractEntityTransfer->fromArray($availability, true);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
+     */
+    protected function getAvailabilityAbstractFromCollectorData($idProductAbstract)
+    {
+        $key = $this->generateKey($idProductAbstract);
+        $availability = $this->storageClient->get($key);
+
+        $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
+        /** @var \Spryker\Client\Availability\AvailabilityClientInterface $availabilityClient */
+        $availabilityClient = $clientLocatorClassName::getInstance()->availability()->client();
+        $availabilityData = $availabilityClient->findProductAvailabilityByIdProductAbstract($idProductAbstract);
+
+        // TODO needs to be finalized, data matching seems a bit tricky here up to not doable
+
+        $spyAvailabilityAbstractEntityTransfer = new SpyAvailabilityAbstractEntityTransfer();
+        if ($availabilityData === null) {
             return $spyAvailabilityAbstractEntityTransfer;
         }
 

@@ -5,20 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\NavigationStorage;
+namespace Spryker\Client\AvailabilityStorage;
 
-use Spryker\Client\Kernel\AbstractBundleConfig;
-
-class NavigationStorageConfig extends AbstractBundleConfig
+class AvailabilityStorageConfig
 {
     /**
      * To be able to work with data exported with collectors to redis, we need to bring this module into compatibility
-     * mode. If this is turned on the NavigationClient will be used instead.
+     * mode. If this is turned on the AvailabilityClient will be used instead.
      *
      * @return bool
      */
     public static function isCollectorCompatibilityMode()
     {
-        return false;
+        return true;
     }
 }
