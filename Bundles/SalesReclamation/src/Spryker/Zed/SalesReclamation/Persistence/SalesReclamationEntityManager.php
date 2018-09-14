@@ -37,14 +37,12 @@ class SalesReclamationEntityManager extends AbstractEntityManager implements Sal
         $reclamationTransfer
             ->requireState();
 
-        $reclamationEntityTransfer = $this->getMapper()
-            ->mapReclamationTransferToEntityTransfer($reclamationTransfer);
+        $spySalesReclamation = $this->getMapper()->mapReclamationTransferToEntity($reclamationTransfer);
 
-        $reclamationEntityTransfer = $this->save($reclamationEntityTransfer);
-        $reclamationTransfer = $this->getMapper()
-            ->mapEntityTransferToReclamationTransfer($reclamationEntityTransfer);
+        $spySalesReclamation->save();
 
-        return $reclamationTransfer;
+        return $this->getMapper()
+            ->mapEntityToReclamationTransfer($spySalesReclamation);
     }
 
     /**
@@ -81,13 +79,13 @@ class SalesReclamationEntityManager extends AbstractEntityManager implements Sal
             ->requireOrderItem()
             ->requireState();
 
-        $reclamationItemEntityTransfer = $this->getMapper()
-            ->mapReclamationItemTransferToEntityTransfer($reclamationItemTransfer);
-        $reclamationItemEntityTransfer->setFkSalesReclamation($reclamationTransfer->getIdSalesReclamation());
-        $reclamationItemEntityTransfer = $this->save($reclamationItemEntityTransfer);
+        $spySalesReclamation = $this->getMapper()->mapReclamationItemTransferToEntity($reclamationItemTransfer);
+
+        $spySalesReclamation->setFkSalesReclamation($reclamationTransfer->getIdSalesReclamation());
+        $spySalesReclamation->save();
 
         return $this->getMapper()
-            ->mapEntityTransferToReclamationItemTransfer($reclamationItemEntityTransfer);
+            ->mapEntityToReclamationItemTransfer($spySalesReclamation);
     }
 
     /**

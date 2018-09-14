@@ -30,5 +30,5 @@ interface SalesReclamationRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\OrderCollectionTransfer
      */
-    public function findCreatedOrdersByReclamationId(ReclamationTransfer $reclamationTransfer): OrderCollectionTransfer;
+    public function findCreatedOrdersByReclamationId(ReclamationTransfer $reclamationTransfer): ?OrderCollectionTransfer;
 }

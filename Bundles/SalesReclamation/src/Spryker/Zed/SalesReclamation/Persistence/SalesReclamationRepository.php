@@ -35,15 +35,13 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
             ->leftJoinWithOrder()
             ->filterByIdSalesReclamation($reclamationTransfer->getIdSalesReclamation());
 
-        $salesReclamationQuery = $this->buildQueryFromCriteria($salesReclamationQuery);
-        if (!$salesReclamationQuery->count()) {
+        $spyReclamations = $salesReclamationQuery->find();
+
+        if (!$spyReclamations->count()) {
             return null;
         }
 
-        $spyReclamationsEntityTransfer = $salesReclamationQuery->find();
-        $spyReclamationEntityTransfer = $spyReclamationsEntityTransfer[0];
-
-        return $this->getMapper()->mapEntityTransferToReclamationTransfer($spyReclamationEntityTransfer);
+        return $this->getMapper()->mapEntityToReclamationTransfer($spyReclamations[0]);
     }
 
     /**
@@ -51,21 +49,20 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
      *
      * @return \Generated\Shared\Transfer\OrderCollectionTransfer
      */
-    public function findCreatedOrdersByReclamationId(ReclamationTransfer $reclamationTransfer): OrderCollectionTransfer
+    public function findCreatedOrdersByReclamationId(ReclamationTransfer $reclamationTransfer): ?OrderCollectionTransfer
     {
         $reclamationTransfer->requireIdSalesReclamation();
-        $createdOrdersCollectionTransfer = new OrderCollectionTransfer();
 
         $salesOrderQuery = $this->getFactory()
             ->createSalesOrderQuery()
             ->filterByFkSalesReclamation($reclamationTransfer->getIdSalesReclamation());
-        $createdOrdersEntityTransfer = $this->buildQueryFromCriteria($salesOrderQuery)->find();
+        $spyCreatedSalesOrders = $salesOrderQuery->find();
 
-        foreach ($createdOrdersEntityTransfer as $createdOrderEntity) {
-            $createdOrdersCollectionTransfer->addOrder($createdOrderEntity);
+        if (!$spyCreatedSalesOrders->count()) {
+            return null;
         }
 
-        return $createdOrdersCollectionTransfer;
+        return $this->getMapper()->mapSalesOrdersToOrderCollectionTransfer($spyCreatedSalesOrders);
     }
 
     /**
