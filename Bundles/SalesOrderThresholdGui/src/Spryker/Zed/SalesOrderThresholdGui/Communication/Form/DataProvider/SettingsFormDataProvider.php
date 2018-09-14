@@ -59,7 +59,7 @@ class SettingsFormDataProvider
     protected function createTaxSetsList(): array
     {
         $taxSetCollection = $this->taxFacade->getTaxSets();
-        if (!$taxSetCollection) {
+        if (empty($taxSetCollection)) {
             return [];
         }
 
