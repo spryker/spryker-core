@@ -110,7 +110,7 @@ class ProductReviewFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     * @return \Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestInterface
      */
     protected function getZedRequestClient()
     {

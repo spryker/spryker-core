@@ -39,6 +39,20 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
+     * - Retrieves a current Store specific ProductAbstract resource from Storage using specified mapping.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string $identifier
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductAbstractStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array;
+
+    /**
+     * Specification:
      * - Retrieves a current Store specific ProductConcrete resource from Storage.
      *
      * @api
@@ -64,6 +78,20 @@ interface ProductStorageClientInterface
      * @return array|null
      */
     public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array;
+
+    /**
+     * Specification:
+     * - Retrieves a current Store specific ProductConcrete resource from Storage using specified mapping.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string $identifier
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array;
 
     /**
      * Specification:

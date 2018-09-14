@@ -185,7 +185,7 @@ class Worker implements WorkerInterface
         $numberOfWorkers = $this->getMaxQueueWorker($queue) - $busyProcessNumber;
 
         $processes = [];
-        $message = $this->queueClient->receiveMessage($queue, $this->queueConfig->getWorkerMessageCheckOption());
+        $message = $this->queueClient->receiveMessage($queue, $this->queueConfig->getWorkerMessageCheckOption() ?: []);
         if ($message->getQueueMessage() !== null) {
             $this->queueClient->reject($message);
             for ($i = 0; $i < $numberOfWorkers; $i++) {
