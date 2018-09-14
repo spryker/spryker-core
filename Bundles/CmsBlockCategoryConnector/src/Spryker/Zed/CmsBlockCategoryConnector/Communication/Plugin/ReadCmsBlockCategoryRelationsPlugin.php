@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ReadCmsBlockCategoryRelationsPlugin extends AbstractPlugin implements CategoryRelationReadPluginInterface
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getRelationName()
@@ -27,6 +29,8 @@ class ReadCmsBlockCategoryRelationsPlugin extends AbstractPlugin implements Cate
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *

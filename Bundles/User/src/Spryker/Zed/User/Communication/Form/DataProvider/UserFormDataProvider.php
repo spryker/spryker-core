@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\User\Communication\Form\DataProvider;
 
-use Spryker\Zed\User\Business\UserFacade;
+use Spryker\Zed\User\Business\UserFacadeInterface;
 use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Dependency\Plugin\GroupPluginInterface;
 
@@ -19,15 +19,15 @@ class UserFormDataProvider
     protected $groupPlugin;
 
     /**
-     * @var \Spryker\Zed\User\Business\UserFacade
+     * @var \Spryker\Zed\User\Business\UserFacadeInterface
      */
     protected $userFacade;
 
     /**
      * @param \Spryker\Zed\User\Dependency\Plugin\GroupPluginInterface $groupPlugin
-     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
+     * @param \Spryker\Zed\User\Business\UserFacadeInterface $userFacade
      */
-    public function __construct(GroupPluginInterface $groupPlugin, UserFacade $userFacade)
+    public function __construct(GroupPluginInterface $groupPlugin, UserFacadeInterface $userFacade)
     {
         $this->groupPlugin = $groupPlugin;
         $this->userFacade = $userFacade;
