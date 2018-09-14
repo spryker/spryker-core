@@ -14,7 +14,7 @@ interface SalesOrderThresholdDataImportFacadeInterface
 {
     /**
      * Specification:
-     * - Imports minimum order values.
+     * - Imports sales order threshold values.
      *
      * @api
      *

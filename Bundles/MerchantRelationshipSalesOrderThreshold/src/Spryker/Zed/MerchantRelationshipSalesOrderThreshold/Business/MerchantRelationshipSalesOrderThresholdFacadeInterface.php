@@ -18,7 +18,7 @@ interface MerchantRelationshipSalesOrderThresholdFacadeInterface
      * Specification:
      * - Finds the applicable thresholds for a given QuoteTransfer.
      * - Based on quote the customer and the respective merchant relationships.
-     * - Also prepares the minimum order value objects to be provided for the minimum order value strategies.
+     * - Also prepares the sales order threshold objects to be provided for the sales order threshold strategies.
      *
      * @api
      *
@@ -30,7 +30,7 @@ interface MerchantRelationshipSalesOrderThresholdFacadeInterface
 
     /**
      * Specification:
-     * - Set merchant relationship specific minimum order value threshold.
+     * - Sets merchant relationship specific sales order threshold.
      *
      * @api
      *

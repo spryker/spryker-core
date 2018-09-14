@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/sales-order-threshold-gui.svg)](https://travis-ci.org/spryker/sales-order-threshold-gui)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/sales-order-threshold-gui/badge.svg)](https://coveralls.io/github/spryker/sales-order-threshold-gui)
 
-SalesOrderThresholdGui provides functionality for editing minimum order value thresholds.
+SalesOrderThresholdGui provides functionality for editing sales order thresholds.
 
 ## Installation
 
