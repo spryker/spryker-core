@@ -15,11 +15,11 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  */
 class FooBarTransfer extends AbstractTransfer
 {
-    const NAME = 'name';
+    public const NAME = 'name';
 
-    const BLA = 'bla';
+    public const BLA = 'bla';
 
-    const SELF_REFERENCE = 'selfReference';
+    public const SELF_REFERENCE = 'selfReference';
 
     /**
      * @var string|null
@@ -32,7 +32,7 @@ class FooBarTransfer extends AbstractTransfer
     protected $bla;
 
     /**
-     * @var \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]|null
+     * @var \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]
      */
     protected $selfReference;
 
@@ -165,7 +165,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test2
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]|null
+     * @return \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]
      */
     public function getSelfReference()
     {
