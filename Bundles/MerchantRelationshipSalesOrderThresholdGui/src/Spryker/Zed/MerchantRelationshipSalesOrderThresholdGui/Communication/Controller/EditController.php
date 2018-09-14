@@ -49,10 +49,13 @@ class EditController extends AbstractController
         if ($thresholdForm->isSubmitted() && $thresholdForm->isValid()) {
             $this->handleFormSubmission($thresholdForm, $idMerchantRelationship);
         }
-        $localeProvider = $this->getFactory()->createLocaleProvider();
+
+        $localeCollection = $this->getFactory()
+            ->getLocaleFacade()
+            ->getLocaleCollection();
 
         return $this->viewResponse([
-            'localeCollection' => $localeProvider->getLocaleCollection(),
+            'localeCollection' => $localeCollection,
             'form' => $thresholdForm->createView(),
         ]);
     }

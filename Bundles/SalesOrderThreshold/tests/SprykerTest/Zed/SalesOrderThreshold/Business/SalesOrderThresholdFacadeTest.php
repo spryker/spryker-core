@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
+use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Strategy\HardMinimumThresholdStrategyPlugin;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Strategy\SoftMinimumThresholdWithFixedFeeStrategyPlugin;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Strategy\SoftMinimumThresholdWithFlexibleFeeStrategyPlugin;
@@ -330,9 +331,9 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
     }
 
     /**
-     * @return \Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
+     * @return \Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface
      */
-    protected function getFacade()
+    protected function getFacade(): SalesOrderThresholdFacadeInterface
     {
         $factory = $this->createSalesOrderThresholdBusinessFactoryMock();
         return $this->createSalesOrderThresholdFacadeMock($factory);

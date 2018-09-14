@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesOrderThreshold\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class SalesOrderThresholdToStoreFacadeBridge implements SalesOrderThresholdToStoreFacadeInterface
 {
     /**
@@ -27,7 +29,7 @@ class SalesOrderThresholdToStoreFacadeBridge implements SalesOrderThresholdToSto
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName($storeName)
+    public function getStoreByName($storeName): StoreTransfer
     {
         return $this->storeFacade->getStoreByName($storeName);
     }

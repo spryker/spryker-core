@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\Dependency\Facade;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
-
 interface MerchantRelationshipSalesOrderThresholdDataImportToCurrencyFacadeInterface
 {
     /**
      * @param string $isoCode
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode(string $isoCode): ?CurrencyTransfer;
+    public function fromIsoCode($isoCode);
 }

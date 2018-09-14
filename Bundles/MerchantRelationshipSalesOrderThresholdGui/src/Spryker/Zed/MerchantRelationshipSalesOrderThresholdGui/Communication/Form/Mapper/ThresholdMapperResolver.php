@@ -8,16 +8,16 @@
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper;
 
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Exception\MissingThresholdFormMapperException;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig;
 
 class ThresholdMapperResolver implements ThresholdMapperResolverInterface
 {
     /**
-     * @var \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\LocaleProvider
+     * @var \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeInterface
      */
-    protected $localeProvider;
+    protected $localeFacade;
 
     /**
      * @var \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface
@@ -30,13 +30,16 @@ class ThresholdMapperResolver implements ThresholdMapperResolverInterface
     protected $config;
 
     /**
-     * @param \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\LocaleProvider $localeProvider
+     * @param \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface $storeCurrencyFinder
      * @param \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig $config
      */
-    public function __construct(LocaleProvider $localeProvider, StoreCurrencyFinderInterface $storeCurrencyFinder, MerchantRelationshipSalesOrderThresholdGuiConfig $config)
-    {
-        $this->localeProvider = $localeProvider;
+    public function __construct(
+        MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeInterface $localeFacade,
+        StoreCurrencyFinderInterface $storeCurrencyFinder,
+        MerchantRelationshipSalesOrderThresholdGuiConfig $config
+    ) {
+        $this->localeFacade = $localeFacade;
         $this->storeCurrencyFinder = $storeCurrencyFinder;
         $this->config = $config;
     }
@@ -56,7 +59,7 @@ class ThresholdMapperResolver implements ThresholdMapperResolverInterface
         /** @var \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdFormMapperInterface $mapperClass */
         $mapperClass = $this->config->getStrategyTypeToFormTypeMap()[$salesOrderThresholdTypeKey];
 
-        return new $mapperClass($this->localeProvider, $this->storeCurrencyFinder);
+        return new $mapperClass($this->localeFacade, $this->storeCurrencyFinder);
     }
 
     /**

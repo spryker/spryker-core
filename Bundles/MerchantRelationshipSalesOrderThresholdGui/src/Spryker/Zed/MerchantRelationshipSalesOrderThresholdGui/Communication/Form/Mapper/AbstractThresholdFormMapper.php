@@ -9,17 +9,17 @@ namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\F
 
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdLocalizedMessageTransfer;
-use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\LocalizedForm;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\ThresholdType;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeInterface;
 
 abstract class AbstractThresholdFormMapper
 {
     /**
-     * @var \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\LocaleProvider
+     * @var \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeInterface
      */
-    protected $localeProvider;
+    protected $localeFacade;
 
     /**
      * @var \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface
@@ -27,14 +27,14 @@ abstract class AbstractThresholdFormMapper
     protected $storeCurrencyFinder;
 
     /**
-     * @param \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\LocaleProvider $localeProvider
+     * @param \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\StoreCurrency\StoreCurrencyFinderInterface $storeCurrencyFinder
      */
     public function __construct(
-        LocaleProvider $localeProvider,
+        MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeInterface $localeFacade,
         StoreCurrencyFinderInterface $storeCurrencyFinder
     ) {
-        $this->localeProvider = $localeProvider;
+        $this->localeFacade = $localeFacade;
         $this->storeCurrencyFinder = $storeCurrencyFinder;
     }
 
@@ -69,7 +69,7 @@ abstract class AbstractThresholdFormMapper
         MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer,
         string $localizedFormPrefix
     ): MerchantRelationshipSalesOrderThresholdTransfer {
-        $localeCollection = $this->localeProvider->getLocaleCollection();
+        $localeCollection = $this->localeFacade->getLocaleCollection();
         foreach ($localeCollection as $localeTransfer) {
             $localizedFieldName = ThresholdType::getLocalizedFormName($localizedFormPrefix, $localeTransfer->getLocaleName());
             $localizedMessage = (new SalesOrderThresholdLocalizedMessageTransfer())

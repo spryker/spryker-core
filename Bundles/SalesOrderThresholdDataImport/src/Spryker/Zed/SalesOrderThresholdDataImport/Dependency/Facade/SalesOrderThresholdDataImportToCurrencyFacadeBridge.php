@@ -27,9 +27,9 @@ class SalesOrderThresholdDataImportToCurrencyFacadeBridge implements SalesOrderT
     /**
      * @param string $isoCode
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode(string $isoCode): ?CurrencyTransfer
+    public function fromIsoCode($isoCode): CurrencyTransfer
     {
         return $this->currencyFacade->fromIsoCode($isoCode);
     }

@@ -10,25 +10,6 @@ namespace Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade;
 interface SalesOrderThresholdGuiToLocaleFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getCurrentLocale();
-
-    /**
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocale($localeName);
-
-    /**
-     * @param string $localeName
-     *
-     * @return bool
-     */
-    public function hasLocale($localeName);
-
-    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection();

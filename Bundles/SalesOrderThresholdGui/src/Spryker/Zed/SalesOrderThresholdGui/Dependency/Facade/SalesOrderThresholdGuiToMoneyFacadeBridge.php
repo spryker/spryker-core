@@ -27,7 +27,7 @@ class SalesOrderThresholdGuiToMoneyFacadeBridge implements SalesOrderThresholdGu
      *
      * @return float
      */
-    public function convertIntegerToDecimal($value)
+    public function convertIntegerToDecimal($value): float
     {
         return $this->moneyFacade->convertIntegerToDecimal($value);
     }
@@ -37,7 +37,7 @@ class SalesOrderThresholdGuiToMoneyFacadeBridge implements SalesOrderThresholdGu
      *
      * @return int
      */
-    public function convertDecimalToInteger($value)
+    public function convertDecimalToInteger($value): int
     {
         return $this->moneyFacade->convertDecimalToInteger($value);
     }

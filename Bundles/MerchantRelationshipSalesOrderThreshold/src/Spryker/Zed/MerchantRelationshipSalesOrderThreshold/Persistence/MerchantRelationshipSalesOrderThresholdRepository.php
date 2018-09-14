@@ -41,10 +41,10 @@ class MerchantRelationshipSalesOrderThresholdRepository extends AbstractReposito
             ->filterByFkMerchantRelationship_In(array_values($merchantRelationshipIds))
             ->filterByStoreTransfer($storeTransfer)
             ->filterByCurrencyTransfer($currencyTransfer)
-            ->joinStore()
-            ->joinCurrency()
-            ->joinMerchantRelationship()
-            ->joinSalesOrderThresholdType()
+            ->joinWithStore()
+            ->joinWithCurrency()
+            ->joinWithMerchantRelationship()
+            ->joinWithSalesOrderThresholdType()
             ->find();
 
         if (empty($merchantRelationshipSalesOrderThresholdEntities)) {
