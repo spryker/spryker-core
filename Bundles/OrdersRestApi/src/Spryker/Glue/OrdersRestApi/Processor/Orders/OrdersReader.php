@@ -70,29 +70,31 @@ class OrdersReader implements OrdersReaderInterface
         $customerId = $restRequest->getUser()->getSurrogateIdentifier();
         $orderListTransfer = (new OrderListTransfer())->setIdCustomer((int)$customerId);
 
-        $totalOrdersCount = 0;
         $limit = 0;
-
         if ($restRequest->getPage()) {
             $offset = $restRequest->getPage()->getOffset();
             $limit = $restRequest->getPage()->getLimit();
-            $totalOrdersCount = $this->salesClient->getPaginatedOrder($orderListTransfer)->getOrders()->count();
 
-            $orderListTransfer->setPagination($this->createPaginationTransfer($offset, $limit));
+            $orderListTransfer->setPagination($this->createPaginationTransfer(++$offset, $limit));
         }
 
-        $response = $this->restResourceBuilder->createRestResponse($totalOrdersCount, $limit);
-        $orderListData = $this->salesClient->getPaginatedOrder($orderListTransfer)->getOrders();
+        $orderListTransfer = $this->salesClient->getPaginatedOrder($orderListTransfer);
+        $response = $this
+            ->restResourceBuilder
+            ->createRestResponse(
+                $orderListTransfer->getPagination()->getNbResults(),
+                $limit
+            );
 
-        foreach ($orderListData as $orderData) {
-            $ordersRestAttributes = $this->ordersResourceMapper->mapOrderToOrdersRestAttributes(
-                $orderData,
-                $this->getTransformedBundleItems($orderData)
+        foreach ($orderListTransfer->getOrders() as $orderTransfer) {
+            $ordersRestAttributesTransfer = $this->ordersResourceMapper->mapOrderToOrdersRestAttributes(
+                $orderTransfer,
+                $this->getTransformedBundleItems($orderTransfer)
             );
             $restResource = $this->restResourceBuilder->createRestResource(
                 OrdersRestApiConfig::RESOURCE_ORDERS,
-                $orderData->getOrderReference(),
-                $ordersRestAttributes
+                $orderTransfer->getOrderReference(),
+                $ordersRestAttributesTransfer
             );
 
             $response->addResource($restResource);
@@ -112,21 +114,23 @@ class OrdersReader implements OrdersReaderInterface
         $orderReference = $restRequest->getResource()->getId();
         $customerReference = $restRequest->getUser()->getNaturalIdentifier();
 
-        $orderTransfer = (new OrderTransfer())->setOrderReference($orderReference)->setCustomerReference($customerReference);
-        $orderData = $this->salesClient->getCustomerOrderByOrderReference($orderTransfer);
+        $orderTransfer = (new OrderTransfer())
+            ->setOrderReference($orderReference)
+            ->setCustomerReference($customerReference);
+        $orderTransfer = $this->salesClient->getCustomerOrderByOrderReference($orderTransfer);
 
-        if (!$orderData->getItems()->count()) {
+        if (!$orderTransfer->getItems()->count()) {
             return $this->createOrderNotFoundErrorResponse($response);
         }
 
-        $ordersRestAttributes = $this->ordersResourceMapper->mapOrderToOrdersRestAttributes(
-            $orderData,
-            $this->getTransformedBundleItems($orderData)
+        $ordersRestAttributesTransfer = $this->ordersResourceMapper->mapOrderToOrdersRestAttributes(
+            $orderTransfer,
+            $this->getTransformedBundleItems($orderTransfer)
         );
         $restResource = $this->restResourceBuilder->createRestResource(
             OrdersRestApiConfig::RESOURCE_ORDERS,
             $orderReference,
-            $ordersRestAttributes
+            $ordersRestAttributesTransfer
         );
 
         return $response->addResource($restResource);

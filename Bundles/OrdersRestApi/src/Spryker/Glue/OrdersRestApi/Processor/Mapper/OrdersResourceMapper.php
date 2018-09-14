@@ -19,20 +19,20 @@ class OrdersResourceMapper implements OrdersResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\OrdersRestAttributesTransfer
      */
-    public function mapOrderToOrdersRestAttributes(OrderTransfer $orderTransfer, array $items): OrdersRestAttributesTransfer
+    public function mapOrderToOrdersRestAttributes(OrderTransfer $orderTransfer, array $itemTransfers): OrdersRestAttributesTransfer
     {
         $ordersRestAttributesTransfer = (new OrdersRestAttributesTransfer())->fromArray($orderTransfer->toArray(), true);
         $ordersRestAttributesTransfer->getTotals()->setTaxTotal($orderTransfer->getTotals()->getTaxTotal()->getAmount());
 
         $ordersRestAttributesTransfer->setItems(new ArrayObject());
 
-        foreach ($items as $item) {
+        foreach ($itemTransfers as $orderItem) {
             $ordersRestAttributesTransfer->addItems(
-                (new OrderItemsRestAttributesTransfer())->fromArray($item->toArray(), true)
+                (new OrderItemsRestAttributesTransfer())->fromArray($orderItem->toArray(), true)
             );
         }
 
@@ -47,18 +47,18 @@ class OrdersResourceMapper implements OrdersResourceMapperInterface
      */
     public function mapTransformedBundleItems(OrderTransfer $orderTransfer, array $orderItems): array
     {
-        $transformedItems = [];
+        $transformedItemTransfers = [];
 
-        foreach ($orderItems as $item) {
-            if ($item instanceof AbstractTransfer) {
-                $transformedItems[] = $item;
+        foreach ($orderItems as $orderItem) {
+            if ($orderItem instanceof AbstractTransfer) {
+                $transformedItemTransfers[] = $orderItem;
 
                 continue;
             }
 
-            $transformedItems[] = $item[static::BUNDLE_PRODUCT];
+            $transformedItemTransfers[] = $orderItem[static::BUNDLE_PRODUCT];
         }
 
-        return $transformedItems;
+        return $transformedItemTransfers;
     }
 }

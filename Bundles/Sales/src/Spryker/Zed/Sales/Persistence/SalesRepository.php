@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class SalesRepository extends AbstractRepository implements SalesRepositoryInterface
 {
+    protected const ID_SALES_ORDER = 'id_sales_order';
+
     /**
      * @param string $customerReference
      * @param string $orderReference
@@ -26,12 +28,9 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             ->createSalesOrderQuery()
             ->filterByCustomerReference($customerReference)
             ->filterByOrderReference($orderReference)
+            ->select([static::ID_SALES_ORDER])
             ->findOne();
 
-        if (!$idSalesOrder) {
-            return null;
-        }
-
-        return $idSalesOrder->getIdSalesOrder();
+        return $idSalesOrder;
     }
 }

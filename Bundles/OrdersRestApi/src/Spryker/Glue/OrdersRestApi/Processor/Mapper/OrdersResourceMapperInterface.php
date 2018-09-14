@@ -14,17 +14,17 @@ interface OrdersResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\OrdersRestAttributesTransfer
      */
-    public function mapOrderToOrdersRestAttributes(OrderTransfer $orderTransfer, array $items): OrdersRestAttributesTransfer;
+    public function mapOrderToOrdersRestAttributes(OrderTransfer $orderTransfer, array $itemTransfers): OrdersRestAttributesTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param array $orderItems
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\OrderItemsTransfer[]
      */
     public function mapTransformedBundleItems(OrderTransfer $orderTransfer, array $orderItems): array;
 }
