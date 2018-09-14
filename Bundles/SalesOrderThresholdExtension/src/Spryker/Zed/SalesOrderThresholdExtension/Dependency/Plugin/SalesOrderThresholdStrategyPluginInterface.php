@@ -24,7 +24,7 @@ interface SalesOrderThresholdStrategyPluginInterface
 
     /**
      * Specification:
-     * - Returns strategy group.
+     * - Returns strategy group name.
      *
      * @api
      *
@@ -59,6 +59,8 @@ interface SalesOrderThresholdStrategyPluginInterface
     /**
      * Specification:
      * - Calculates fee for threshold.
+     * - Fee is expected as an integer in cents.
+     * - If no fee is applicable it should return null.
      *
      * @api
      *
