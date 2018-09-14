@@ -82,7 +82,7 @@ class OrdersReader implements OrdersReaderInterface
         $response = $this
             ->restResourceBuilder
             ->createRestResponse(
-                $orderListTransfer->getPagination()->getNbResults(),
+                $orderListTransfer->getPagination() !== null ? $orderListTransfer->getPagination()->getNbResults() : 0,
                 $limit
             );
 
@@ -167,7 +167,7 @@ class OrdersReader implements OrdersReaderInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\OrderItemsTransfer[]
      */
     protected function getTransformedBundleItems(OrderTransfer $orderTransfer): array
     {
