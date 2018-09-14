@@ -31,7 +31,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
     const COL_FK_CUSTOMER = 'fk_customer';
 
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderTotals
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderTotals|null
      */
     public function getLastOrderTotals()
     {
@@ -76,7 +76,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      *
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $con Optional Connection object.
      *
-     * @return \Orm\Zed\Customer\Persistence\SpyCustomer The associated SpyCustomer object.
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer|null The associated SpyCustomer object.
      */
     public function getCustomer(?ConnectionInterface $con = null)
     {

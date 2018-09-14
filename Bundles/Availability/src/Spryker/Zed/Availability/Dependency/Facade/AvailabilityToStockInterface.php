@@ -57,7 +57,7 @@ interface AvailabilityToStockInterface
     public function updateStockProduct(StockProductTransfer $stockProductTransfer);
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAvailableStockTypes();
 

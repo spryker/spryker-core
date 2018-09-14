@@ -174,6 +174,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $propertyInfo = [
             'name' => $property['name'],
             'type' => $this->getPropertyType($property),
+            'is_typed_array' => $property['is_typed_array'],
             'bundles' => $property['bundles'],
         ];
 
@@ -216,6 +217,11 @@ class ClassDefinition implements ClassDefinitionInterface
 
             if ($this->isTransferOrTransferArray($property['type'])) {
                 $property = $this->buildTransferPropertyDefinition($property);
+            }
+
+            $property['is_typed_array'] = false;
+            if ($this->isTypedArray($property)) {
+                $property['is_typed_array'] = true;
             }
 
             $normalizedProperties[] = $property;
@@ -277,7 +283,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'] . '|null';
+            return '\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'];
         }
 
         if ($this->isTypeTransferObject($property)) {
@@ -486,7 +492,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'] . '|null';
+            return '\\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'];
         }
 
         if ($this->isTypeTransferObject($property)) {
