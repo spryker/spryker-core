@@ -32,6 +32,7 @@ class CompanyRoleEntityManager extends AbstractEntityManager implements CompanyR
             ->mapCompanyRoleTransferToEntity($companyRoleTransfer, new SpyCompanyRole());
 
         $this->cleanupDefaultRoles($spyCompanyRole);
+
         $spyCompanyRole->save();
 
         return $this->getFactory()

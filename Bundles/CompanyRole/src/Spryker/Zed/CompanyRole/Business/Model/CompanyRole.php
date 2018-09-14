@@ -198,11 +198,11 @@ class CompanyRole implements CompanyRoleInterface
 
         if ($hasUsers) {
             $companyRoleResponseTransfer
+                ->setIsSuccessful(false)
                 ->addMessage(
                     (new ResponseMessageTransfer())
                         ->setText(static::ERROR_MESSAGE_HAS_RELATED_USERS)
-                )
-                ->setIsSuccessful(false);
+                );
 
             return $companyRoleResponseTransfer;
         }
