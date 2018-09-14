@@ -9,7 +9,13 @@ namespace SprykerTest\Zed\Synchronization\Business;
 
 use Codeception\Test\Unit;
 use Elastica\Exception\NotFoundException;
+use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
+use Generated\Shared\Transfer\QueueSendMessageTransfer;
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use PHPUnit\Framework\SkippedTestError;
+use Spryker\Client\Search\SearchClient;
+use Spryker\Client\Storage\StorageClient;
+use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Synchronization\AvailabilitySynchronizationDataPlugin;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Synchronization\CategoryPageSynchronizationDataPlugin;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Synchronization\CategoryNodeSynchronizationDataPlugin;
@@ -49,13 +55,16 @@ use Spryker\Zed\Synchronization\Business\SynchronizationFacade;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface;
+use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceBridge;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
+use Spryker\Zed\Synchronization\SynchronizationConfig;
 use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
 use Spryker\Zed\UrlStorage\Communication\Plugin\Synchronization\UrlRedirectSynchronizationDataPlugin;
 use Spryker\Zed\UrlStorage\Communication\Plugin\Synchronization\UrlSynchronizationDataPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Synchronization
@@ -78,6 +87,269 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testProcessSearchMessagesBulk(): void
+    {
+        $queueMessageBody = [
+            'write' => [
+                'key' => 'test',
+                'value' => [
+                    'some' => 'data',
+                ],
+            ],
+            'delete' => [
+                'key' => 'test1',
+                'value' => [
+                    'some' => 'data',
+                ],
+            ],
+        ];
+
+        $queueMessage = new QueueSendMessageTransfer();
+        $queueMessage->setBody(json_encode($queueMessageBody));
+
+        $queueMessageTransfer = new QueueReceiveMessageTransfer();
+        $queueMessageTransfer->setQueueName('test');
+        $queueMessageTransfer->setQueueMessage($queueMessage);
+
+        $container = new Container();
+
+        $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = $this->createUtilEncodingServiceBridge();
+
+        $searchClientBridgeMock = $this->createSearchClientBridge();
+        $searchClientBridgeMock
+            ->method('read')
+            ->willReturn(new SynchronizationDataTransfer());
+
+        $searchClientBridgeMock
+            ->expects($this->once())
+            ->method('write')
+            ->with($this->callback(function (array $data) use ($queueMessageBody) {
+                $this->assertEquals([$queueMessageBody['write']['key'] => $queueMessageBody['write']['value']], $data);
+
+                return true;
+            }));
+
+        $searchClientBridgeMock
+            ->expects($this->once())
+            ->method('delete')
+            ->with($this->callback(function (array $data) use ($queueMessageBody) {
+                $this->assertEquals([$queueMessageBody['delete']['key'] => $queueMessageBody['delete']['value']], $data);
+
+                return true;
+            }));
+
+        $container[SynchronizationDependencyProvider::CLIENT_SEARCH] = $searchClientBridgeMock;
+
+        $configMock = $this->createMock(SynchronizationConfig::class);
+        $configMock
+            ->method('isBulkModeEnabled')
+            ->willReturn(true);
+
+        $this->prepareFacade($container, $configMock);
+
+        $this->synchronizationFacade->processSearchMessages([$queueMessageTransfer]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProcessSearchMessagesPlain(): void
+    {
+        $queueMessageBody = [
+            'write' => [
+                'key' => 'test',
+                'value' => [
+                    'some' => 'data',
+                ],
+            ],
+            'delete' => [
+                'key' => 'test1',
+                'value' => [
+                    'some' => 'data',
+                ],
+            ],
+        ];
+
+        $queueMessage = new QueueSendMessageTransfer();
+        $queueMessage->setBody(json_encode($queueMessageBody));
+
+        $queueMessageTransfer = new QueueReceiveMessageTransfer();
+        $queueMessageTransfer->setQueueName('test');
+        $queueMessageTransfer->setQueueMessage($queueMessage);
+
+        $container = new Container();
+
+        $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = $this->createUtilEncodingServiceBridge();
+
+        $searchClientBridgeMock = $this->createSearchClientBridge();
+        $searchClientBridgeMock
+            ->method('read')
+            ->willReturn(new SynchronizationDataTransfer());
+
+        $searchClientBridgeMock
+            ->expects($this->once())
+            ->method('write')
+            ->with($this->callback(function (array $data) use ($queueMessageBody) {
+                $this->assertEquals([$queueMessageBody['write']['key'] => $queueMessageBody['write']['value']], $data);
+
+                return true;
+            }));
+
+        $searchClientBridgeMock
+            ->expects($this->once())
+            ->method('delete')
+            ->with($this->callback(function (array $data) use ($queueMessageBody) {
+                $this->assertEquals([$queueMessageBody['delete']['key'] => []], $data);
+
+                return true;
+            }));
+
+        $container[SynchronizationDependencyProvider::CLIENT_SEARCH] = $searchClientBridgeMock;
+
+        $configMock = $this->createMock(SynchronizationConfig::class);
+        $configMock
+            ->method('isBulkModeEnabled')
+            ->willReturn(false);
+
+        $this->prepareFacade($container, $configMock);
+
+        $this->synchronizationFacade->processSearchMessages([$queueMessageTransfer]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProcessStorageMessagesBulk(): void
+    {
+        $queueMessageBody = [
+            'write' => [
+                'key' => 'test',
+                'value' => [
+                    'some' => 'data',
+                ],
+            ],
+            'delete' => [
+                'key' => 'test1',
+                'value' => [
+                    'some' => 'data',
+                ],
+            ],
+        ];
+
+        $queueMessage = new QueueSendMessageTransfer();
+        $queueMessage->setBody(json_encode($queueMessageBody));
+
+        $queueMessageTransfer = new QueueReceiveMessageTransfer();
+        $queueMessageTransfer->setQueueName('test');
+        $queueMessageTransfer->setQueueMessage($queueMessage);
+
+        $container = new Container();
+
+        $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = $this->createUtilEncodingServiceBridge();
+
+        $storageClientMock = $this->createStorageClientBridge();
+        $storageClientMock
+            ->expects($this->once())
+            ->method('setMulti')
+            ->with($this->callback(function (array $data) use ($queueMessageBody) {
+                $this->assertEquals([$queueMessageBody['write']['key'] => $queueMessageBody['write']['value']], $data);
+
+                return true;
+            }));
+
+        $storageClientMock
+            ->expects($this->once())
+            ->method('deleteMulti')
+            ->with($this->callback(function (array $data) use ($queueMessageBody) {
+                $this->assertEquals([$queueMessageBody['delete']['key']], $data);
+
+                return true;
+            }));
+
+        $container[SynchronizationDependencyProvider::CLIENT_STORAGE] = $storageClientMock;
+
+        $configMock = $this->createMock(SynchronizationConfig::class);
+        $configMock
+            ->method('isBulkModeEnabled')
+            ->willReturn(true);
+
+        $this->prepareFacade($container, $configMock);
+
+        $this->synchronizationFacade->processStorageMessages([$queueMessageTransfer]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProcessStorageMessagesPlain(): void
+    {
+        $queueMessageBody = [
+            'write' => [
+                'key' => 'test',
+                'value' => [
+                    'some' => 'data',
+                ],
+            ],
+            'delete' => [
+                'key' => 'test1',
+                'value' => [
+                    'some' => 'data',
+                ],
+            ],
+        ];
+
+        $queueMessage = new QueueSendMessageTransfer();
+        $queueMessage->setBody(json_encode($queueMessageBody));
+
+        $queueMessageTransfer = new QueueReceiveMessageTransfer();
+        $queueMessageTransfer->setQueueName('test');
+        $queueMessageTransfer->setQueueMessage($queueMessage);
+
+        $container = new Container();
+
+        $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = $this->createUtilEncodingServiceBridge();
+
+        $storageClientMock = $this->createStorageClientBridge();
+        $storageClientMock
+            ->expects($this->once())
+            ->method('set')
+            ->with(
+                $this->callback(function ($key) use ($queueMessageBody) {
+                    $this->assertEquals($queueMessageBody['write']['key'], $key);
+
+                    return true;
+                }),
+                $this->callback(function ($value) use ($queueMessageBody) {
+                    $this->assertEquals(json_encode($queueMessageBody['write']['value']), $value);
+
+                    return true;
+                }
+                ));
+
+        $storageClientMock
+            ->expects($this->once())
+            ->method('delete')
+            ->with($this->callback(function (string $data) use ($queueMessageBody) {
+                $this->assertEquals($queueMessageBody['delete']['key'], $data);
+
+                return true;
+            }));
+
+        $container[SynchronizationDependencyProvider::CLIENT_STORAGE] = $storageClientMock;
+
+        $configMock = $this->createMock(SynchronizationConfig::class);
+        $configMock
+            ->method('isBulkModeEnabled')
+            ->willReturn(false);
+
+        $this->prepareFacade($container, $configMock);
+
+        $this->synchronizationFacade->processStorageMessages([$queueMessageTransfer]);
+    }
+
+    /**
+     * @return void
+     */
     public function testSynchronizationWritesDataToStorage()
     {
         $container = new Container();
@@ -96,7 +368,7 @@ class SynchronizationFacadeTest extends Unit
         };
 
         $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            $utilEncodingMock = $this->createUtilEncodingServiceBridge();
+            $utilEncodingMock = $this->createUtilEncodingServiceBridgeMock();
             $utilEncodingMock->expects($this->once())->method('encodeJson')->willReturnArgument(0);
 
             return $utilEncodingMock;
@@ -129,7 +401,7 @@ class SynchronizationFacadeTest extends Unit
         };
 
         $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return $this->createUtilEncodingServiceBridge();
+            return $this->createUtilEncodingServiceBridgeMock();
         };
 
         $this->prepareFacade($container);
@@ -167,7 +439,7 @@ class SynchronizationFacadeTest extends Unit
         };
 
         $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            $utilEncodingMock = $this->createUtilEncodingServiceBridge();
+            $utilEncodingMock = $this->createUtilEncodingServiceBridgeMock();
 
             return $utilEncodingMock;
         };
@@ -207,7 +479,7 @@ class SynchronizationFacadeTest extends Unit
         };
 
         $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            $utilEncodingMock = $this->createUtilEncodingServiceBridge();
+            $utilEncodingMock = $this->createUtilEncodingServiceBridgeMock();
 
             return $utilEncodingMock;
         };
@@ -335,6 +607,8 @@ class SynchronizationFacadeTest extends Unit
                 'set',
                 'get',
                 'delete',
+                'setMulti',
+                'deleteMulti',
             ])
             ->getMock();
     }
@@ -357,7 +631,7 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    protected function createUtilEncodingServiceBridge()
+    protected function createUtilEncodingServiceBridgeMock()
     {
         return $this->getMockBuilder(SynchronizationToUtilEncodingServiceInterface::class)
             ->disableOriginalConstructor()
@@ -369,14 +643,30 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
+     * @return \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceBridge
+     */
+    protected function createUtilEncodingServiceBridge()
+    {
+        return new SynchronizationToUtilEncodingServiceBridge(
+            new UtilEncodingService()
+        );
+    }
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @param SynchronizationConfig $config
      *
      * @return void
      */
-    protected function prepareFacade($container)
+    protected function prepareFacade($container, $config = null)
     {
         $synchronizationBusinessFactory = new SynchronizationBusinessFactory();
         $synchronizationBusinessFactory->setContainer($container);
+
+        if ($config !== null) {
+            $synchronizationBusinessFactory->setConfig($config);
+        }
 
         $this->synchronizationFacade = new SynchronizationFacade();
         $this->synchronizationFacade->setFactory($synchronizationBusinessFactory);

@@ -23,5 +23,21 @@ interface SynchronizationInterface
      *
      * @return void
      */
+    public function writeBulk(array $data, string $queueName): void;
+
+    /**
+     * @param array $data
+     * @param string $queueName
+     *
+     * @return void
+     */
     public function delete(array $data, $queueName);
+
+    /**
+     * @param array $data
+     * @param string $queueName
+     *
+     * @return void
+     */
+    public function deleteBulk(array $data, string $queueName): void;
 }

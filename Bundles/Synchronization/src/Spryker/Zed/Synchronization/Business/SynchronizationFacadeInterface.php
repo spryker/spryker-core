@@ -10,6 +10,8 @@ namespace Spryker\Zed\Synchronization\Business;
 interface SynchronizationFacadeInterface
 {
     /**
+     * @deprecated Use \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processStorageMessages instead.
+     *
      * Specification:
      * - Writes json encoded data to storage
      * - Will not write if the data is outdated compare to storage timestamp
@@ -24,6 +26,8 @@ interface SynchronizationFacadeInterface
     public function storageWrite(array $data, $queueName);
 
     /**
+     * @deprecated Use \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processStorageMessages instead.
+     *
      * Specification:
      * - Deletes all data keys from storage
      * - Will not delete if the data is outdated compare to storage timestamp
@@ -38,6 +42,8 @@ interface SynchronizationFacadeInterface
     public function storageDelete(array $data, $queueName);
 
     /**
+     * @deprecated Use \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processSearchMessages instead.
+     *
      * Specification:
      * - Writes json encoded data to search
      * - Will not write if the data is outdated compare to search timestamp
@@ -52,6 +58,8 @@ interface SynchronizationFacadeInterface
     public function searchWrite(array $data, $queueName);
 
     /**
+     * @deprecated Use \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processSearchMessages instead.
+     *
      * Specification:
      * - Deletes all data keys from search
      * - Will not delete if the data is outdated compare to search timestamp
@@ -64,6 +72,32 @@ interface SynchronizationFacadeInterface
      * @return void
      */
     public function searchDelete(array $data, $queueName);
+
+    /**
+     * Specification:
+     * - Syncs the queue messages to search.
+     * - Marks the messages as failed if error occurs.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function processSearchMessages(array $queueMessageTransfers): array;
+
+    /**
+     * Specification:
+     * - Syncs the queue messages to storage.
+     * - Marks the messages as failed if error occurs.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function processStorageMessages(array $queueMessageTransfers): array;
 
     /**
      * @api
