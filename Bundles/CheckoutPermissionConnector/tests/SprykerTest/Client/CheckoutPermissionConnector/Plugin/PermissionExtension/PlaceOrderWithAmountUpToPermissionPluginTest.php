@@ -8,7 +8,7 @@
 namespace SprykerTest\Client\CheckoutPermissionConnector\Plugin\PermissionExtension;
 
 use Codeception\Test\Unit;
-use Spryker\Client\CheckoutPermissionConnector\Plugin\PermissionExtension\PlaceOrderWithAmountUpToPermissionPlugin;
+use Spryker\Shared\CheckoutPermissionConnector\Plugin\Permission\PlaceOrderWithAmountUpToPermissionPlugin;
 
 /**
  * Auto-generated group annotations
