@@ -5,17 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CompanyUser\Plugin;
+namespace Spryker\Shared\CompanyUserInvitation\Plugin;
 
-use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 
 /**
  * For Client PermissionDependencyProvider::getPermissionPlugins() registration
  */
-class AddCompanyUserPermissionPlugin extends AbstractPlugin implements PermissionPluginInterface
+class ManageCompanyUserInvitationPermissionPlugin implements PermissionPluginInterface
 {
-    public const KEY = 'AddCompanyUserPermissionPlugin';
+    public const KEY = 'ManageCompanyUserInvitationPermissionPlugin';
 
     /**
      * @return string
