@@ -115,10 +115,10 @@ class DiscountsTable extends AbstractTable
     {
         $result = [];
 
-        $queryResult = $this->runQuery($this->discountQuery, $config, true);
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscount[] $discountEntities */
+        $discountEntities = $this->runQuery($this->discountQuery, $config, true);
 
-        /** @var \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity */
-        foreach ($queryResult as $discountEntity) {
+        foreach ($discountEntities as $discountEntity) {
             $result[] = [
                 SpyDiscountTableMap::COL_ID_DISCOUNT => $discountEntity->getIdDiscount(),
                 SpyDiscountTableMap::COL_DISPLAY_NAME => $discountEntity->getDisplayName(),

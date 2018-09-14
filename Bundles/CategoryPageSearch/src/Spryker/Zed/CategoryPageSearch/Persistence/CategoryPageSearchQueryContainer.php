@@ -46,6 +46,7 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      */
     public function queryCategoryNodeTree(array $categoryNodeIds, $idLocale)
     {
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $query */
         $query = $this->getFactory()
             ->getCategoryQueryContainer()
             ->queryAllCategoryNodes()
