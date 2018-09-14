@@ -246,6 +246,10 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      */
     protected function skipBundledItem(?SpyAvailability $bundledProductAvailabilityEntity)
     {
+        if ($bundledProductAvailabilityEntity === null) {
+            return false;
+        }
+
         return $bundledProductAvailabilityEntity->getIsNeverOutOfStock();
     }
 
