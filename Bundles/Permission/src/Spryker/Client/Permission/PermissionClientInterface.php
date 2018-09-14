@@ -50,4 +50,15 @@ interface PermissionClientInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function getRegisteredPermissions(): PermissionCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves registered permissions from Zed and filters non-infrastructural ones
+     * - Returns filtered permission collection transfer
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer;
 }

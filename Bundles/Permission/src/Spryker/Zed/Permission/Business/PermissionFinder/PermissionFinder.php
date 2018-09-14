@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\Permission\Business\PermissionFinder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\InfrastructuralPermissionPluginInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
+use Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface;
 
 class PermissionFinder implements PermissionFinderInterface
 {
@@ -21,11 +23,18 @@ class PermissionFinder implements PermissionFinderInterface
     protected $permissionPlugins = [];
 
     /**
-     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[] $permissionPlugins
+     * @var \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface
      */
-    public function __construct(array $permissionPlugins)
+    protected $permissionRepository;
+
+    /**
+     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[] $permissionPlugins
+     * @param \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface $permissionRepository
+     */
+    public function __construct(array $permissionPlugins, PermissionRepositoryInterface $permissionRepository)
     {
         $this->permissionPlugins = $this->indexPermissions($permissionPlugins);
+        $this->permissionRepository = $permissionRepository;
     }
 
     /**
@@ -65,6 +74,24 @@ class PermissionFinder implements PermissionFinderInterface
         }
 
         return $permissionCollectionTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer
+    {
+        $availablePermissions = $this->permissionRepository->findAll()->getPermissions();
+
+        $nonInfrastructuralPermissions = new ArrayObject();
+        foreach ($availablePermissions as $permissionTransfer) {
+            if (!$permissionTransfer->getIsInfrastructural()) {
+                $nonInfrastructuralPermissions->append($permissionTransfer);
+            }
+        }
+
+        return (new PermissionCollectionTransfer())
+            ->setPermissions($nonInfrastructuralPermissions);
     }
 
     /**

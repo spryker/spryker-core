@@ -14,10 +14,5 @@ interface CompanyRoleToPermissionClientInterface
     /**
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findAll(): PermissionCollectionTransfer;
-
-    /**
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
-     */
-    public function getRegisteredPermissions(): PermissionCollectionTransfer;
+    public function getRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer;
 }

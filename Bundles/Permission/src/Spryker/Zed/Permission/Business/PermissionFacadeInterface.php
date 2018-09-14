@@ -64,4 +64,15 @@ interface PermissionFacadeInterface
      * @return \Generated\Shared\Transfer\PermissionTransfer|null
      */
     public function findPermissionByKey(string $key): ?PermissionTransfer;
+
+    /**
+     * Specification:
+     * - Finds registered permissions and filters non-infrastructural ones
+     * - Returns filtered permission collection transfer
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer;
 }

@@ -27,16 +27,8 @@ class CompanyRoleToPermissionClientBridge implements CompanyRoleToPermissionClie
     /**
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findAll(): PermissionCollectionTransfer
+    public function getRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer
     {
-        return $this->permissionClient->findAll();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
-     */
-    public function getRegisteredPermissions(): PermissionCollectionTransfer
-    {
-        return $this->permissionClient->getRegisteredPermissions();
+        return $this->permissionClient->getRegisteredNonInfrastructuralPermissions();
     }
 }
