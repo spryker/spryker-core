@@ -11,6 +11,8 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery;
@@ -51,7 +53,7 @@ class ProductLabelStorageListenerTest extends Unit
     protected $productLabelTransfer;
 
     /**
-     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @var \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     protected $productAbstractTransfer;
 
@@ -69,21 +71,11 @@ class ProductLabelStorageListenerTest extends Unit
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
 
-        $localeTransfer = $this->tester->haveLocale();
-
         $this->productAbstractTransfer = $this->tester->haveProductAbstract();
         $this->productLabelTransfer = $this->tester->haveProductLabel();
 
-        $this->productAbstractTransfer->setLocalizedAttributes(
-            new ArrayObject($this->tester->generateLocalizedAttributes())
-        );
-
-        $this->productLabelTransfer->addLocalizedAttributes(
-            $this->generateLocalizedAttributesTransfer($localeTransfer->getIdLocale(), $this->productLabelTransfer->getIdProductLabel())
-        );
-
-        $this->tester->getProductFacade()->saveProductAbstract($this->productAbstractTransfer);
-        $this->getProductLabelFacade()->updateLabel($this->productLabelTransfer);
+        $this->updateProductAbstractLocalizedAttributes($this->productAbstractTransfer);
+        $this->updateProductLabelLocalizedAttributes($this->productLabelTransfer);
 
         $this->tester->haveProductLabelToAbstractProductRelation(
             $this->productLabelTransfer->getIdProductLabel(),
@@ -211,6 +203,37 @@ class ProductLabelStorageListenerTest extends Unit
         ]);
 
         return $builder->build();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    protected function updateProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer): void
+    {
+        $productAbstractTransfer->setLocalizedAttributes(
+            new ArrayObject($this->tester->generateLocalizedAttributes())
+        );
+
+        $this->tester->getProductFacade()->saveProductAbstract($this->productAbstractTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return void
+     */
+    protected function updateProductLabelLocalizedAttributes(ProductLabelTransfer $productLabelTransfer): void
+    {
+        $localizedAttributes = $this->generateLocalizedAttributesTransfer(
+            $this->tester->haveLocale()->getIdLocale(),
+            $productLabelTransfer->getIdProductLabel()
+        );
+
+        $productLabelTransfer->addLocalizedAttributes($localizedAttributes);
+
+        $this->getProductLabelFacade()->updateLabel($productLabelTransfer);
     }
 
     /**
