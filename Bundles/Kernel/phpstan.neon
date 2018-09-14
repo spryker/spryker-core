@@ -8,6 +8,7 @@ parameters:
         - '#Call to an undefined method .+ActiveRecordInterface::toArray\(\).#'
         - '#Access to undefined constant .+ActiveRecordInterface::TABLE_MAP.#'
         - '#Method .+Abstract.+::resolveBundleConfig\(\) should return .+AbstractBundleConfig but returns Spryker\\Shared\\Kernel\\AbstractBundleConfig#'
+        - '#Call to function method\_exists\(\) with string and .+ will always evaluate to false\.#'
 
 services:
     -

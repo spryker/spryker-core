@@ -30,7 +30,6 @@ class QueryBuilder extends PropelQueryBuilder
         if ($col->isNumericType() || $col->isTemporalType() || $col->getType() == PropelTypes::ENUM || $col->isTextType()) {
             $colPhpName = $col->getPhpName();
             $variableName = $col->getCamelCaseName();
-            $queryClassName = $this->getQueryClassName();
 
             $script .= <<<SCRIPT
 
@@ -39,7 +38,7 @@ class QueryBuilder extends PropelQueryBuilder
      *
      * @param array \$${variableName}s Filter value.
      *
-     * @return \$this|$queryClassName The current query, for fluid interface
+     * @return \$this The current query, for fluid interface
      */
     public function filterBy${colPhpName}_In(array \$${variableName}s)
     {
@@ -64,7 +63,6 @@ SCRIPT;
         if ($col->isNumericType() || $col->isTemporalType()) {
             $colPhpName = $col->getPhpName();
             $variableName = $col->getCamelCaseName();
-            $queryClassName = $this->getQueryClassName();
 
             $script .= <<<SCRIPT
 
@@ -78,7 +76,7 @@ SCRIPT;
      *
      * 'min' and 'max' are optional, when neither is specified, throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException.
      *
-     * @return \$this|$queryClassName The current query, for fluid interface
+     * @return \$this The current query, for fluid interface
      */
     public function filterBy${colPhpName}_Between(array \$$variableName)
     {
@@ -103,7 +101,6 @@ SCRIPT;
         if ($col->isTextType()) {
             $colPhpName = $col->getPhpName();
             $variableName = $col->getCamelCaseName();
-            $queryClassName = $this->getQueryClassName();
 
             $script .= <<<SCRIPT
 
@@ -112,7 +109,7 @@ SCRIPT;
      *
      * @param string \$$variableName Filter value.
      *
-     * @return \$this|$queryClassName The current query, for fluid interface
+     * @return \$this The current query, for fluid interface
      */
     public function filterBy${colPhpName}_Like(\$$variableName)
     {
@@ -223,7 +220,7 @@ SCRIPT;
      * \$query->filterBy$colPhpName('yes'); // WHERE $colName = true
      * </code>
      *
-     * @param     boolean|string \$$variableName The value to use as filter.
+     * @param     bool|string \$$variableName The value to use as filter.
      *              Non-boolean arguments are converted using the following rules:
      *                * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *                * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
@@ -235,7 +232,7 @@ SCRIPT;
         $script .= "
      * @param     string \$comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return \$this|" . $this->getQueryClassName() . " The current query, for fluid interface
+     * @return \$this The current query, for fluid interface
      *
      * @throws \\Spryker\\Zed\\Propel\\Business\\Exception\\AmbiguousComparisonException
      */
@@ -398,6 +395,25 @@ SCRIPT;
     }
 
     /**
+     * @inheritdoc
+     */
+    protected function addClassOpen(&$script)
+    {
+        parent::addClassOpen($script);
+
+        $search = [
+            ' findOne(ConnectionInterface',
+            ' findOneBy',
+        ];
+        $replace = [
+            '|null findOne(ConnectionInterface',
+            '|null findOneBy',
+        ];
+
+        $script = str_replace($search, $replace, $script);
+    }
+
+    /**
      * @param string $script
      *
      * @return void
@@ -425,7 +441,7 @@ SCRIPT;
     /**
      * @param bool \$isForUpdateEnabled
      *
-     * @return \$this|" . $this->getQueryClassName() . " The primary criteria object
+     * @return \$this The primary criteria object
      */
     public function forUpdate(\$isForUpdateEnabled)
     {
@@ -453,7 +469,7 @@ SCRIPT;
      * Clear the conditions to allow the reuse of the query object.
      * The ModelCriteria's Model and alias 'all the properties set by construct) will remain.
      *
-     * @return \$this|ModelCriteria The primary criteria object
+     * @return \$this The primary criteria object
      */
     public function clear()
     {
