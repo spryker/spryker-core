@@ -9,6 +9,7 @@ namespace Spryker\Client\PriceProductStorage\Storage;
 
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface;
+use Spryker\Client\PriceProductStorage\PriceProductStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 
 class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
@@ -84,8 +85,7 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
      */
     protected function findDefaultPriceDimensionPriceProductTransfers(int $idProductConcrete): array
     {
-        $key = $this->priceStorageKeyGenerator->generateKey(PriceProductStorageConstants::PRICE_CONCRETE_RESOURCE_NAME, $idProductConcrete);
-        $priceData = $this->storageClient->get($key);
+        $priceData = $this->findProductConcretePriceData($idProductConcrete);
 
         if (!$priceData) {
             return [];
@@ -98,6 +98,29 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
         $priceProductTransfers = $this->applyPriceProductExtractorPlugins($idProductConcrete, $priceProductTransfers);
 
         return $priceProductTransfers;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return array|null
+     */
+    protected function findProductConcretePriceData(int $idProductConcrete): ?array
+    {
+        if (PriceProductStorageConfig::isCollectorCompatibilityMode()) {
+            $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
+            /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
+            $productClient = $clientLocatorClassName::getInstance()->product()->client();
+            $collectorData = $productClient->getProductConcreteByIdForCurrentLocale($idProductConcrete);
+            $priceData['prices'] = $collectorData['prices'];
+
+            return $priceData;
+        }
+
+        $key = $this->priceStorageKeyGenerator->generateKey(PriceProductStorageConstants::PRICE_CONCRETE_RESOURCE_NAME, $idProductConcrete);
+        $priceData = $this->storageClient->get($key);
+
+        return $priceData;
     }
 
     /**

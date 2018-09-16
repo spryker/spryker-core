@@ -9,6 +9,7 @@ namespace Spryker\Client\PriceProductStorage\Storage;
 
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface;
+use Spryker\Client\PriceProductStorage\PriceProductStorageConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 
 class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
@@ -84,8 +85,7 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
      */
     protected function findDefaultPriceDimensionPriceProductTransfers(int $idProductAbstract): array
     {
-        $key = $this->priceStorageKeyGenerator->generateKey(PriceProductStorageConstants::PRICE_ABSTRACT_RESOURCE_NAME, $idProductAbstract);
-        $priceData = $this->storageClient->get($key);
+        $priceData = $this->findProductAbstractPriceData($idProductAbstract);
 
         if (!$priceData) {
             return [];
@@ -98,6 +98,29 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
         $priceProductTransfers = $this->applyPriceProductExtractorPlugins($priceProductTransfers);
 
         return $priceProductTransfers;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array|null
+     */
+    protected function findProductAbstractPriceData(int $idProductAbstract): ?array
+    {
+        if (PriceProductStorageConfig::isCollectorCompatibilityMode()) {
+            $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
+            /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
+            $productClient = $clientLocatorClassName::getInstance()->product()->client();
+            $collectorData = $productClient->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
+            $priceData['prices'] = $collectorData['prices'];
+
+            return $priceData;
+        }
+
+        $key = $this->priceStorageKeyGenerator->generateKey(PriceProductStorageConstants::PRICE_ABSTRACT_RESOURCE_NAME, $idProductAbstract);
+        $priceData = $this->storageClient->get($key);
+
+        return $priceData;
     }
 
     /**
