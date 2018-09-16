@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductManagement\Communication\Transfer;
 use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -195,6 +198,10 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
         $productConcreteTransfer->setValidFrom($formData[ProductConcreteFormEdit::FIELD_VALID_FROM]);
         $productConcreteTransfer->setValidTo($formData[ProductConcreteFormEdit::FIELD_VALID_TO]);
+
+        if (!empty($formData[ProductConcreteFormAdd::FIELD_PRICE_SOURCE])) {
+            $this->setAbstractProductPricesToConcreteProduct($productConcreteTransfer, $productAbstractTransfer);
+        }
 
         foreach ($this->productFormTransferMapperExpanderPlugins as $plugin) {
             $productConcreteTransfer = $plugin->map($productConcreteTransfer, $formData);
@@ -558,5 +565,80 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             ->setBundlesToRemove($form->getData()[ProductConcreteFormEdit::BUNDLED_PRODUCTS_TO_BE_REMOVED]);
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    protected function setAbstractProductPricesToConcreteProduct(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): void {
+        $abstractProductPriceProductTransfers = $productAbstractTransfer->getPrices();
+        $concreteProductPriceProductTransfers = new ArrayObject();
+
+        foreach ($abstractProductPriceProductTransfers as $abstractProductPriceProductTransfer) {
+            $concreteProductPriceProductTransfer = $this->createPriceProductTransfer(
+                $productConcreteTransfer,
+                $abstractProductPriceProductTransfer
+            );
+
+            $concreteProductPriceProductTransfers->append($concreteProductPriceProductTransfer);
+        }
+
+        $productConcreteTransfer->setPrices($concreteProductPriceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $abstractProductPriceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer
+     */
+    protected function createMoneyValueTransfer(
+        PriceProductTransfer $abstractProductPriceProductTransfer
+    ): MoneyValueTransfer {
+        return (new MoneyValueTransfer())
+            ->setCurrency($abstractProductPriceProductTransfer->getMoneyValue()->getCurrency())
+            ->setFkCurrency($abstractProductPriceProductTransfer->getMoneyValue()->getFkCurrency())
+            ->setFkStore($abstractProductPriceProductTransfer->getMoneyValue()->getFkStore())
+            ->setNetAmount($abstractProductPriceProductTransfer->getMoneyValue()->getNetAmount())
+            ->setGrossAmount($abstractProductPriceProductTransfer->getMoneyValue()->getGrossAmount());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $abstractProductPriceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
+     */
+    protected function createPriceDimensionTransfer(
+        PriceProductTransfer $abstractProductPriceProductTransfer
+    ): PriceProductDimensionTransfer {
+        return (new PriceProductDimensionTransfer())
+            ->setType($abstractProductPriceProductTransfer->getPriceDimension()->getType());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $abstractProductPriceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function createPriceProductTransfer(
+        ProductConcreteTransfer $productConcreteTransfer,
+        PriceProductTransfer $abstractProductPriceProductTransfer
+    ): PriceProductTransfer {
+        return (new PriceProductTransfer())
+            ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
+            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
+            ->setSkuProductAbstract($productConcreteTransfer->getAbstractSku())
+            ->setSkuProduct($productConcreteTransfer->getSku())
+            ->setPriceTypeName($abstractProductPriceProductTransfer->getPriceTypeName())
+            ->setFkPriceType($abstractProductPriceProductTransfer->getFkPriceType())
+            ->setPriceType($abstractProductPriceProductTransfer->getPriceType())
+            ->setPriceDimension($this->createPriceDimensionTransfer($abstractProductPriceProductTransfer))
+            ->setMoneyValue($this->createMoneyValueTransfer($abstractProductPriceProductTransfer));
     }
 }

@@ -20,6 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -38,6 +39,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
     public const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES_LABEL = 'Super attributes';
     public const OPTION_SUPER_ATTRIBUTES = 'option_super_attributes';
     public const OPTION_ID_PRODUCT_ABSTRACT = 'option_id_product_abstract';
+    public const FIELD_PRICE_SOURCE = 'price_source';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -59,7 +61,8 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
             ->addImageLocalizedForms($builder)
             ->addAssignBundledProductForm($builder, $options)
             ->addBundledProductsToBeRemoved($builder)
-            ->addProductConcreteSuperAttributeForm($builder, $options);
+            ->addProductConcreteSuperAttributeForm($builder, $options)
+            ->addPriceSourceCheckbox($builder);
     }
 
     /**
@@ -118,6 +121,21 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
                 'label' => 'Autogenerate SKU',
             ]);
         }
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addPriceSourceCheckbox(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_PRICE_SOURCE, CheckboxType::class, [
+            'label' => 'Use prices from abstract product',
+            'required' => false,
+        ]);
 
         return $this;
     }
@@ -211,5 +229,22 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
                 return $submittedAttribute !== null && $submittedAttribute !== '';
             }
         );
+    }
+
+    /**
+     * @param array $validationGroups
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return array
+     */
+    protected function prepareDefaultsValidationGroups(array $validationGroups, FormInterface $form): array
+    {
+        if ($form->get(static::FIELD_PRICE_SOURCE)->getData() === true &&
+            ($key = array_search(static::VALIDATION_GROUP_PRICE_SOURCE, $validationGroups, true)) !== false
+        ) {
+            unset($validationGroups[$key]);
+        }
+
+        return $validationGroups;
     }
 }

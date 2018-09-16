@@ -137,6 +137,20 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePricesWithoutProductAbstractPrices(
+        int $idProductConcrete,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array {
+        return $this->priceProductConcreteReader
+            ->findProductConcretePricesById($idProductConcrete, $priceProductCriteriaTransfer);
+    }
+
+    /**
      * @param string $sku
      * @param string|null $priceTypeName
      *
