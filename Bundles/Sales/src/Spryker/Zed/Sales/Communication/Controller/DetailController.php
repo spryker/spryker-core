@@ -34,7 +34,6 @@ class DetailController extends AbstractController
         try {
             $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
         } catch (InvalidSalesOrderException $exception) {
-
             $this->addErrorMessage($exception->getMessage());
             return $this->redirectResponse(Url::generate('/sales')->build());
         }
