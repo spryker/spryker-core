@@ -9,6 +9,8 @@ namespace Spryker\Zed\TaxProductConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator;
+use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxReader;
+use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxReaderInterface;
 use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxSetMapper;
 use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxWriter;
 use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
@@ -16,6 +18,7 @@ use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
 /**
  * @method \Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig getConfig()
  * @method \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorRepositoryInterface getRepository()
  */
 class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
 {
@@ -49,5 +52,13 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     protected function getTaxFacade()
     {
         return $this->getProvidedDependency(TaxProductConnectorDependencyProvider::FACADE_TAX);
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxReaderInterface
+     */
+    public function createProductAbstractTaxReader(): ProductAbstractTaxReaderInterface
+    {
+        return new ProductAbstractTaxReader($this->getRepository());
     }
 }
