@@ -64,7 +64,7 @@ class AddressesWriter implements AddressesWriterInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $customerResponseTransfer = $this->findCustomer($restRequest);
-        $this->validateCustomerResponseTransfer($customerResponseTransfer, $restRequest, $restResponse);
+        $restResponse = $this->validateCustomerResponseTransfer($customerResponseTransfer, $restRequest, $restResponse);
 
         if (count($restResponse->getErrors()) > 0) {
             return $restResponse;
@@ -116,7 +116,7 @@ class AddressesWriter implements AddressesWriterInterface
         }
 
         $customerResponseTransfer = $this->findCustomer($restRequest);
-        $this->validateCustomerResponseTransfer($customerResponseTransfer, $restRequest, $restResponse);
+        $restResponse = $this->validateCustomerResponseTransfer($customerResponseTransfer, $restRequest, $restResponse);
 
         if (count($restResponse->getErrors()) > 0) {
             return $restResponse;
