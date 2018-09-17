@@ -3,8 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/spryker/customers-wishlists-resource-relationship/badge.svg)](https://coveralls.io/github/spryker/customers-wishlists-resource-relationship)
 
 
-CustomersWishlistsResourceRelationship module provides relation between customers and customers wishlists
-
+CustomersWishlistsResourceRelationship module provides relation between customers and wishlists resources.
 ## Installation
 
 ```
