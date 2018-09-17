@@ -11,7 +11,8 @@ use Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToStorageClientInterface;
 use Spryker\Client\ProductRelationStorage\Dependency\Service\ProductRelationStorageToSynchronizationServiceInterface;
-use Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig;
+use Spryker\Client\ProductRelationStorage\ProductRelationStorageConfig;
+use Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig as SharedProductRelationStorageConfig;
 
 class ProductAbstractRelationStorageReader implements ProductAbstractRelationStorageReaderInterface
 {
@@ -42,8 +43,7 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
      */
     public function findProductAbstractRelation($idProductAbstract)
     {
-        $key = $this->generateKey($idProductAbstract);
-        $productAbstractRelationStorageData = $this->storageClient->get($key);
+        $productAbstractRelationStorageData = $this->getStorageData($idProductAbstract);
 
         if (!$productAbstractRelationStorageData) {
             return null;
@@ -57,6 +57,48 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
     /**
      * @param int|string $idProductAbstract
      *
+     * @return array
+     */
+    protected function getStorageData(int $idProductAbstract): array
+    {
+        if (ProductRelationStorageConfig::isCollectorCompatibilityMode()) {
+            $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
+            /** @var \Spryker\Client\ProductRelation\ProductRelationClientInterface $productRelationClient */
+            $productRelationClient = $clientLocatorClassName::getInstance()->productRelation()->client();
+
+            $collectorData = $productRelationClient->getProductRelationsByIdProductAbstract($idProductAbstract);
+
+            $productAbstractRelationCollectorData = [
+                'id_product_abstract' => $idProductAbstract,
+                'product_relations' => [],
+            ];
+
+            foreach ($collectorData as $key => $storageProductRelationsTransfer) {
+                $relation = [
+                    'key' => 'related-products',
+                    'product_abstract_ids' => [],
+                    'is_active' => $storageProductRelationsTransfer->getIsActive(),
+                ];
+
+                $abstractProducts = $storageProductRelationsTransfer->getAbstractProducts();
+                foreach ($abstractProducts as $position => $storageProductAbstractRelationTransfer) {
+                    $relation['product_abstract_ids'][$storageProductAbstractRelationTransfer->getIdProductAbstract()] = $position + 1;
+                }
+
+                $productAbstractRelationCollectorData['product_relations'][] = $relation;
+            }
+
+            return $productAbstractRelationCollectorData;
+        }
+        $key = $this->generateKey($idProductAbstract);
+        $productAbstractRelationStorageData = $this->storageClient->get($key);
+
+        return $productAbstractRelationStorageData;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
      * @return string
      */
     protected function generateKey($idProductAbstract)
@@ -66,7 +108,7 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
             ->setReference($idProductAbstract);
 
         return $this->synchronizationService
-            ->getStorageKeyBuilder(ProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_RESOURCE_NAME)
+            ->getStorageKeyBuilder(SharedProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
     }
 }
