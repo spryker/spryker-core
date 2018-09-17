@@ -50,8 +50,6 @@
 
     <transfer name="ProductConcreteCriteriaFilter">
         <property name="searchString" type="string"/>
-        <property name="searchFields" type="string[]"/>
-        <property name="locale" type="Locale"/>
         <property name="limit" type="int"/>
         <property name="requestParams" type="array"/>
     </transfer>

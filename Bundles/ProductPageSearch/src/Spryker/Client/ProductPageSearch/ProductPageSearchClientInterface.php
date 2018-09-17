@@ -24,18 +24,4 @@ interface ProductPageSearchClientInterface
      * @return array|\Elastica\ResultSet
      */
     public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer);
-
-    /**
-     * Specification:
-     * - Finds concrete products at Elasticsearch by SKU.
-     * - Filters results by searchString and locale.
-     * - Limit and offset can be specified.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
-     *
-     * @return array|\Elastica\ResultSet
-     */
-    public function searchProductConcretesBySku(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer);
 }

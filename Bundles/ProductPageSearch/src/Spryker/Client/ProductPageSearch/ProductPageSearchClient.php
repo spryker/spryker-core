@@ -30,20 +30,4 @@ class ProductPageSearchClient extends AbstractClient implements ProductPageSearc
             ->createProductConcreteReader()
             ->searchProductConcretesByFullText($productConcreteCriteriaFilterTransfer);
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
-     *
-     * @return array|\Elastica\ResultSet
-     */
-    public function searchProductConcretesBySku(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
-    {
-        return $this->getFactory()
-            ->createProductConcreteReader()
-            ->searchProductConcretesBySku($productConcreteCriteriaFilterTransfer);
-    }
 }

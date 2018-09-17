@@ -14,7 +14,6 @@ use Elastica\Query\Match;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
-use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
@@ -33,19 +32,9 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Pro
     protected $searchString;
 
     /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer|null
-     */
-    protected $locale;
-
-    /**
      * @var int
      */
     protected $limit;
-
-    /**
-     * @var string[]
-     */
-    protected $searchFields;
 
     /**
      * @return \Elastica\Query
@@ -56,18 +45,23 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Pro
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
+     * @param string $searchString
      *
-     * @return \Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPluginInterface
+     * @return void
      */
-    public function setProductConcreteCriteriaFilter(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): ProductConcretePageSearchQueryPluginInterface
+    public function setSearchString($searchString)
     {
-        $this->searchString = $productConcreteCriteriaFilterTransfer->getSearchString();
-        $this->searchFields = $productConcreteCriteriaFilterTransfer->getSearchFields();
-        $this->locale = $productConcreteCriteriaFilterTransfer->getLocale();
-        $this->limit = $productConcreteCriteriaFilterTransfer->getLimit();
+        $this->searchString = $searchString;
+    }
 
-        return $this;
+    /**
+     * @param int $limit
+     *
+     * @return void
+     */
+    public function setLimit(int $limit): void
+    {
+        $this->limit = $limit;
     }
 
     /**
@@ -98,14 +92,16 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Pro
      */
     protected function createFulltextSearchQuery(): AbstractQuery
     {
-        $this->prepareSearchFields();
-
-        if ($this->searchString === null || !strlen($this->searchString) || !$this->searchFields) {
+        if ($this->searchString === null || !strlen($this->searchString)) {
             return new MatchAll();
         }
 
+        $fields = [
+            PageIndexMap::FULL_TEXT_BOOSTED . '^' . Config::get(SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE),
+        ];
+
         $matchQuery = (new MultiMatch())
-            ->setFields($this->searchFields)
+            ->setFields($fields)
             ->setQuery($this->searchString)
             ->setType(MultiMatch::TYPE_PHRASE_PREFIX);
 
@@ -122,7 +118,6 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Pro
         $boolQuery = new BoolQuery();
         $boolQuery->addMust($matchQuery);
         $boolQuery = $this->setTypeFilter($boolQuery);
-        $boolQuery = $this->setLocaleFilter($boolQuery);
 
         return $boolQuery;
     }
@@ -137,22 +132,6 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Pro
         $typeFilter = new Match();
         $typeFilter->setField(PageIndexMap::TYPE, ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME);
         $boolQuery->addMust($typeFilter);
-
-        return $boolQuery;
-    }
-
-    /**
-     * @param \Elastica\Query\BoolQuery $boolQuery
-     *
-     * @return \Elastica\Query\BoolQuery
-     */
-    protected function setLocaleFilter(BoolQuery $boolQuery): BoolQuery
-    {
-        if ($this->locale && $this->locale->getLocaleName()) {
-            $typeFilter = new Match();
-            $typeFilter->setField(PageIndexMap::LOCALE, $this->locale->getLocaleName());
-            $boolQuery->addMust($typeFilter);
-        }
 
         return $boolQuery;
     }
@@ -173,21 +152,5 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Pro
     protected function setQuerySource(): void
     {
         $this->query->setSource([PageIndexMap::SEARCH_RESULT_DATA]);
-    }
-
-    /**
-     * @return void
-     */
-    protected function prepareSearchFields(): void
-    {
-        if (!$this->searchFields) {
-            return;
-        }
-
-        foreach ($this->searchFields as &$searchField) {
-            if ($searchField === PageIndexMap::FULL_TEXT_BOOSTED) {
-                $searchField = PageIndexMap::FULL_TEXT_BOOSTED . '^' . Config::get(SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE);
-            }
-        }
     }
 }

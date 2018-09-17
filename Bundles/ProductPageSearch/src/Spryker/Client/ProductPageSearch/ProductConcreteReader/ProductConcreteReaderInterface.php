@@ -17,11 +17,4 @@ interface ProductConcreteReaderInterface
      * @return array|\Elastica\ResultSet
      */
     public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
-     *
-     * @return array|\Elastica\ResultSet
-     */
-    public function searchProductConcretesBySku(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer);
 }

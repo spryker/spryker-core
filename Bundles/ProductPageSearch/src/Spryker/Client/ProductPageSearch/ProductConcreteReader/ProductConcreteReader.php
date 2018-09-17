@@ -7,10 +7,9 @@
 
 namespace Spryker\Client\ProductPageSearch\ProductConcreteReader;
 
-use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Spryker\Client\ProductPageSearch\Dependency\Client\ProductPageSearchToSearchClientInterface;
-use Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPluginInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 class ProductConcreteReader implements ProductConcreteReaderInterface
 {
@@ -42,7 +41,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
      */
     public function __construct(
         ProductPageSearchToSearchClientInterface $searchClient,
-        ProductConcretePageSearchQueryPluginInterface $productConcretePageSearchQueryPlugin,
+        QueryInterface $productConcretePageSearchQueryPlugin,
         array $productConcretePageSearchQueryExpanderPlugins,
         array $productConcretePageSearchResultFormatterPlugins
     ) {
@@ -59,21 +58,6 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
      */
     public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
     {
-        $productConcreteCriteriaFilterTransfer->setSearchFields([PageIndexMap::FULL_TEXT_BOOSTED]);
-        $this->buildProductConcretePageSearchQueryPlugin($productConcreteCriteriaFilterTransfer);
-        $this->expandQuery($productConcreteCriteriaFilterTransfer->getRequestParams() ?? []);
-
-        return $this->searchClient->search($this->productConcretePageSearchQueryPlugin, $this->productConcretePageSearchResultFormatterPlugins);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
-     *
-     * @return array|\Elastica\ResultSet
-     */
-    public function searchProductConcretesBySku(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
-    {
-        $productConcreteCriteriaFilterTransfer->setSearchFields([PageIndexMap::SUGGESTION_SKU]);
         $this->buildProductConcretePageSearchQueryPlugin($productConcreteCriteriaFilterTransfer);
         $this->expandQuery($productConcreteCriteriaFilterTransfer->getRequestParams() ?? []);
 
@@ -87,7 +71,14 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
      */
     protected function buildProductConcretePageSearchQueryPlugin(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): void
     {
-        $this->productConcretePageSearchQueryPlugin->setProductConcreteCriteriaFilter($productConcreteCriteriaFilterTransfer);
+        if ($productConcreteCriteriaFilterTransfer->getSearchString()) {
+            $this->productConcretePageSearchQueryPlugin->setSearchString($productConcreteCriteriaFilterTransfer->getSearchString());
+        }
+
+        if ($productConcreteCriteriaFilterTransfer->getLimit()) {
+            $this->productConcretePageSearchQueryPlugin->setLimit($productConcreteCriteriaFilterTransfer->getLimit());
+        }
+
         $this->productConcretePageSearchQueryPlugin->buildQuery();
     }
 

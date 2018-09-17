@@ -7,18 +7,11 @@
 
 namespace Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query;
 
-use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
+use Spryker\Client\Search\Dependency\Plugin\LimitSetterInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchPostponedQueryBuildingInterface;
+use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 
-interface ProductConcretePageSearchQueryPluginInterface extends QueryInterface, SearchPostponedQueryBuildingInterface
+interface ProductConcretePageSearchQueryPluginInterface extends QueryInterface, SearchStringSetterInterface, LimitSetterInterface, SearchPostponedQueryBuildingInterface
 {
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilter
-     *
-     * @return \Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPluginInterface
-     */
-    public function setProductConcreteCriteriaFilter(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilter): self;
 }
