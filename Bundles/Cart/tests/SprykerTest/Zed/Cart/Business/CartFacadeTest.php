@@ -206,7 +206,7 @@ class CartFacadeTest extends Unit
     {
         // Arrange
         $quoteTransfer = new QuoteTransfer();
-        $cartItem = (new ItemTransfer)->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+        $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
             ->setQuantity(3)
             ->setUnitGrossPrice(1)
             ->setGroupKeyPrefix(uniqid('', true));
@@ -227,12 +227,12 @@ class CartFacadeTest extends Unit
     {
         // Arrange
         $quoteTransfer = new QuoteTransfer();
-        $cartItem = (new ItemTransfer)->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+        $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
             ->setQuantity(3)
             ->setUnitGrossPrice(1)
             ->setGroupKeyPrefix(uniqid('', true));
 
-        $newItem = (new ItemTransfer)->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+        $newItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
             ->setQuantity(1)
             ->setUnitGrossPrice(1);
 
