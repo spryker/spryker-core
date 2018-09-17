@@ -14,11 +14,11 @@ interface OrdersResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\OrderItemsTransfer[] $orderItemTransfers
      *
      * @return \Generated\Shared\Transfer\OrdersRestAttributesTransfer
      */
-    public function mapOrderToOrdersRestAttributes(OrderTransfer $orderTransfer, array $itemTransfers): OrdersRestAttributesTransfer;
+    public function mapOrderToOrdersRestAttributes(OrderTransfer $orderTransfer, array $orderItemTransfers): OrdersRestAttributesTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

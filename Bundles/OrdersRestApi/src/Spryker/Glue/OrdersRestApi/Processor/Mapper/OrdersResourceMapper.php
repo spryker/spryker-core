@@ -19,18 +19,18 @@ class OrdersResourceMapper implements OrdersResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\OrderItemsTransfer[] $orderItemTransfers
      *
      * @return \Generated\Shared\Transfer\OrdersRestAttributesTransfer
      */
-    public function mapOrderToOrdersRestAttributes(OrderTransfer $orderTransfer, array $itemTransfers): OrdersRestAttributesTransfer
+    public function mapOrderToOrdersRestAttributes(OrderTransfer $orderTransfer, array $orderItemTransfers): OrdersRestAttributesTransfer
     {
         $ordersRestAttributesTransfer = (new OrdersRestAttributesTransfer())->fromArray($orderTransfer->toArray(), true);
         $ordersRestAttributesTransfer->getTotals()->setTaxTotal($orderTransfer->getTotals()->getTaxTotal()->getAmount());
 
         $ordersRestAttributesTransfer->setItems(new ArrayObject());
 
-        foreach ($itemTransfers as $orderItem) {
+        foreach ($orderItemTransfers as $orderItem) {
             $ordersRestAttributesTransfer->addItems(
                 (new OrderItemsRestAttributesTransfer())->fromArray($orderItem->toArray(), true)
             );
