@@ -132,7 +132,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 
         $this->touchProductOptionGroupAbstractProducts($productOptionGroupEntity);
 
-        if ($isActive === false) {
+        if (!$isActive) {
             $productAbstractProductOptionGroupDeleteIdIndexes = $this->productOptionRepository->findChangedProductOptionGroupProductAbstractIdIndexes(
                 $productOptionGroupEntity->getIdProductOptionGroup(),
                 $isActive
