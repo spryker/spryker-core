@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\ProductPageSearch;
 
-use Generated\Shared\Search\PageIndexMap;
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -28,9 +26,9 @@ class ProductPageSearchClient extends AbstractClient implements ProductPageSearc
      */
     public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
     {
-        $this->setSearchFields($productConcreteCriteriaFilterTransfer, [PageIndexMap::FULL_TEXT_BOOSTED]);
-
-        return $this->search($productConcreteCriteriaFilterTransfer);
+        return $this->getFactory()
+            ->createProductConcreteReader()
+            ->searchProductConcretesByFullText($productConcreteCriteriaFilterTransfer);
     }
 
     /**
@@ -44,38 +42,8 @@ class ProductPageSearchClient extends AbstractClient implements ProductPageSearc
      */
     public function searchProductConcretesBySku(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
     {
-        $this->setSearchFields($productConcreteCriteriaFilterTransfer, [PageIndexMap::SUGGESTION_SKU]);
-
-        return $this->search($productConcreteCriteriaFilterTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
-     * @param array $searchFields
-     *
-     * @return void
-     */
-    protected function setSearchFields(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer, array $searchFields): void
-    {
-        if ($productConcreteCriteriaFilterTransfer->getFilter() === null) {
-            $productConcreteCriteriaFilterTransfer->setFilter(new FilterTransfer());
-        }
-
-        $productConcreteCriteriaFilterTransfer->getFilter()->setSearchFields($searchFields);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
-     *
-     * @return array|\Elastica\ResultSet
-     */
-    protected function search(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
-    {
-        $searchQuery = $this->getFactory()->createProductConcretePageSearchQuery($productConcreteCriteriaFilterTransfer);
-        $resultFormatters = $this->getFactory()->getProductConcretePageSearchResultFormatterPlugins();
-
         return $this->getFactory()
-            ->getSearchClient()
-            ->search($searchQuery, $resultFormatters);
+            ->createProductConcreteReader()
+            ->searchProductConcretesBySku($productConcreteCriteriaFilterTransfer);
     }
 }

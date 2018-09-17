@@ -7,31 +7,31 @@
 
 namespace Spryker\Client\ProductPageSearch;
 
-use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductPageSearch\Dependency\Client\ProductPageSearchToSearchClientInterface;
-use Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPlugin;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPluginInterface;
+use Spryker\Client\ProductPageSearch\ProductConcreteReader\ProductConcreteReader;
+use Spryker\Client\ProductPageSearch\ProductConcreteReader\ProductConcreteReaderInterface;
 
 class ProductPageSearchFactory extends AbstractFactory
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\ProductPageSearch\ProductConcreteReader\ProductConcreteReaderInterface
      */
-    public function createProductConcretePageSearchQuery(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer): QueryInterface
+    public function createProductConcreteReader(): ProductConcreteReaderInterface
     {
-        $searchQuery = new ProductConcretePageSearchQueryPlugin($productConcreteCriteriaFilterTransfer);
-        $searchQuery = $this->getSearchClient()->expandQuery($searchQuery, []);
-
-        return $searchQuery;
+        return new ProductConcreteReader(
+            $this->getSearchClient(),
+            $this->getProductConcretePageSearchQueryPlugin(),
+            $this->getProductConcretePageSearchQueryExpanderPlugins(),
+            $this->getProductConcretePageSearchResultFormatterPlugins()
+        );
     }
 
     /**
      * @return \Spryker\Client\ProductPageSearch\Dependency\Client\ProductPageSearchToSearchClientInterface
      */
-    public function getSearchCLient(): ProductPageSearchToSearchClientInterface
+    public function getSearchClient(): ProductPageSearchToSearchClientInterface
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::CLIENT_SEARCH);
     }
@@ -42,6 +42,14 @@ class ProductPageSearchFactory extends AbstractFactory
     public function getProductConcretePageSearchResultFormatterPlugins(): array
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_CONCRETE_PAGE_SEARCH_RESULT_FORMATTER);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPluginInterface
+     */
+    public function getProductConcretePageSearchQueryPlugin(): ProductConcretePageSearchQueryPluginInterface
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_CONCRETE_PAGE_SEARCH_QUERY);
     }
 
     /**

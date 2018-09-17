@@ -11,7 +11,6 @@ use Elastica\ResultSet;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\Search\ProductConcretePageMapPlugin;
 
 /**
  * @method \Spryker\Client\ProductPageSearch\ProductPageSearchFactory getFactory()

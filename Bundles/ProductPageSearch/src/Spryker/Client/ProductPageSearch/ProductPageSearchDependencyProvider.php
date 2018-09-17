@@ -10,10 +10,13 @@ namespace Spryker\Client\ProductPageSearch;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductPageSearch\Dependency\Client\ProductPageSearchToSearchClientBridge;
+use Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPlugin;
+use Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPluginInterface;
 
 class ProductPageSearchDependencyProvider extends AbstractDependencyProvider
 {
     const CLIENT_SEARCH = 'CLIENT_SEARCH';
+    const PLUGIN_PRODUCT_CONCRETE_PAGE_SEARCH_QUERY = 'PLUGIN_PRODUCT_CONCRETE_PAGE_SEARCH_QUERY';
     const PLUGINS_PRODUCT_CONCRETE_PAGE_SEARCH_RESULT_FORMATTER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_SEARCH_RESULT_FORMATTER';
     const PLUGINS_PRODUCT_CONCRETE_PAGE_SEARCH_QUERY_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_SEARCH_QUERY_EXPANDER';
 
@@ -26,6 +29,7 @@ class ProductPageSearchDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addSearchClient($container);
         $container = $this->addProductConcretePageSearchResultFormatterPlugins($container);
+        $container = $this->addProductConcretePageSearchQueryPlugin($container);
         $container = $this->addProductConcretePageSearchQueryExpanderPlugins($container);
 
         return $container;
@@ -73,6 +77,28 @@ class ProductPageSearchDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductConcretePageSearchQueryPlugin(Container $container): Container
+    {
+        $container[static::PLUGIN_PRODUCT_CONCRETE_PAGE_SEARCH_QUERY] = function (Container $container) {
+            return $this->createProductConcretePageSearchQueryPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcretePageSearchQueryPluginInterface
+     */
+    protected function createProductConcretePageSearchQueryPlugin(): ProductConcretePageSearchQueryPluginInterface
+    {
+        return new ProductConcretePageSearchQueryPlugin();
     }
 
     /**
