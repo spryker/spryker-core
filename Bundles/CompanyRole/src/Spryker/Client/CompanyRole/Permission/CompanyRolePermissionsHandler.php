@@ -48,41 +48,40 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
     public function findFilteredCompanyRolePermissionsByIdCompanyRole(
         CompanyRoleTransfer $companyRoleTransfer
     ): PermissionCollectionTransfer {
-        $preparedPermissions = new ArrayObject();
-
         $availablePermissions = $this->permissionClient->getRegisteredNonInfrastructuralPermissions()->getPermissions();
         $companyRolePermissions = $this->companyRoleStub->findCompanyRolePermissions($companyRoleTransfer)
             ->getPermissions();
 
-        $filteredPermissions = $this->getAvailableCompanyRolePermissionKeyIndexes(
+        $availableCompanyRolePermissions = $this->getAvailableCompanyRolePermissions(
             $availablePermissions,
             $companyRolePermissions
         );
 
-        foreach ($filteredPermissions as $filteredPermissionTransfer) {
+        $permissions = new ArrayObject();
+        foreach ($availableCompanyRolePermissions as $permissionTransfer) {
             $permissionData = $this->transformPermissionTransferToArray(
                 $companyRoleTransfer->getIdCompanyRole(),
-                $filteredPermissions[$filteredPermissionTransfer->getKey()]
+                $availableCompanyRolePermissions[$permissionTransfer->getKey()]
             );
 
-            $preparedPermissions->append($permissionData);
+            $permissions->append($permissionData);
         }
 
         return (new PermissionCollectionTransfer())
-            ->setPermissions($preparedPermissions);
+            ->setPermissions($permissions);
     }
 
     /**
      * @param int $idCompanyRole
-     * @param \Generated\Shared\Transfer\PermissionTransfer $storedPermissionTransfer
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
      * @return array
      */
     protected function transformPermissionTransferToArray(
         int $idCompanyRole,
-        PermissionTransfer $storedPermissionTransfer
+        PermissionTransfer $permissionTransfer
     ): array {
-        $permissionData = $storedPermissionTransfer->toArray(false, true);
+        $permissionData = $permissionTransfer->toArray(false, true);
 
         $permissionGlossaryKeyName = static::PERMISSION_KEY_GLOSSARY_PREFIX . $permissionData[PermissionTransfer::KEY];
         $permissionData[PermissionTransfer::KEY] = $permissionGlossaryKeyName;
@@ -97,7 +96,7 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
      *
      * @return \Generated\Shared\Transfer\PermissionTransfer[] Keys are permission keys
      */
-    protected function getAvailableCompanyRolePermissionKeyIndexes(
+    protected function getAvailableCompanyRolePermissions(
         ArrayObject $availablePermissions,
         ArrayObject $companyRolePermissions
     ): array {
