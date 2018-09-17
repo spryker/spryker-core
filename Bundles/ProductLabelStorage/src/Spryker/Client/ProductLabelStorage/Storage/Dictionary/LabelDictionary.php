@@ -11,7 +11,8 @@ use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface;
 use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface;
-use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
+use Spryker\Client\ProductLabelStorage\ProductLabelStorageConfig;
+use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig as SharedProductLabelStorageConfig;
 
 class LabelDictionary implements LabelDictionaryInterface
 {
@@ -53,6 +54,13 @@ class LabelDictionary implements LabelDictionaryInterface
      */
     public function findLabel($dictionaryKey, $localeName)
     {
+        if (ProductLabelStorageConfig::isCollectorCompatibilityMode()) {
+            $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
+            /** @var \Spryker\Client\ProductLabel\ProductLabelClientInterface $productLabelClient */
+            $productLabelClient = $clientLocatorClassName::getInstance()->productLabel()->client();
+//            $collectorData = $productLabelClient->findLabelByLocalizedName();
+        }
+
         $dictionary = $this->getDictionary($localeName);
 
         if (!array_key_exists($dictionaryKey, $dictionary)) {
@@ -105,10 +113,11 @@ class LabelDictionary implements LabelDictionaryInterface
      */
     protected function readLabelDictionary($localeName)
     {
-        $storageKey = $this->getStorageKey($localeName);
         $productLabelDictionaryStorageTransfer = new ProductLabelDictionaryStorageTransfer();
 
+        $storageKey = $this->getStorageKey($localeName);
         $productLabelDictionaryStorageData = $this->storageClient->get($storageKey);
+
         if (!$productLabelDictionaryStorageData) {
             return $productLabelDictionaryStorageTransfer;
         }
@@ -130,7 +139,7 @@ class LabelDictionary implements LabelDictionaryInterface
             ->setLocale($localeName);
 
         return $this->synchronizationService
-            ->getStorageKeyBuilder(ProductLabelStorageConfig::PRODUCT_LABEL_DICTIONARY_RESOURCE_NAME)
+            ->getStorageKeyBuilder(SharedProductLabelStorageConfig::PRODUCT_LABEL_DICTIONARY_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
     }
 }
