@@ -29,10 +29,10 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
     ];
 
     protected const CONTENT_TYPE_PERMISSION_ACCESS = [
-        'add-to-cart' => '/cart(?!/add)|^(/en|/de)?',
-        'order-place-submit' => '/checkout',
-        'wishlist' => '/wishlist|^(/en|/de)?',
-        'shopping-list' => '/shopping-list|^(/en|/de)?',
+        'add-to-cart' => '|^(/en|/de)?/cart(?!/add)',
+        'order-place-submit' => '|^(/en|/de)?/checkout',
+        'wishlist' => '|^(/en|/de)?/wishlist',
+        'shopping-list' => '|^(/en|/de)?/shopping-list',
     ];
 
     protected const MESSAGE_PLUGIN_NOT_FOUND_EXCEPTION = 'Plugin not found';

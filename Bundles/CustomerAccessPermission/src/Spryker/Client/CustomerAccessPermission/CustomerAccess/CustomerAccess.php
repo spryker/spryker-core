@@ -15,8 +15,6 @@ use Spryker\Client\CustomerAccessPermission\Dependency\Client\CustomerAccessPerm
 
 class CustomerAccess implements CustomerAccessInterface
 {
-    protected const CUSTOMER_SECURED_PATTERN_REGEX_TEMPLATE = '%s$';
-
     /**
      * @var \Spryker\Client\CustomerAccessPermission\Dependency\Client\CustomerAccessPermissionToCustomerAccessStorageClientInterface
      */
@@ -86,7 +84,6 @@ class CustomerAccess implements CustomerAccessInterface
         $customerSecuredPattern = $this->customerAccessConfig->getCustomerSecuredPattern();
         $unauthenticatedCustomerAccess = $this->customerAccessStorageReader->getUnauthenticatedCustomerAccess();
         $customerSecuredPattern = $this->applyCustomerAccessOnCustomerSecuredPattern($unauthenticatedCustomerAccess, $customerSecuredPattern);
-        $customerSecuredPattern = $this->applyRegexTemplateOnCustomerSecuredPattern($customerSecuredPattern);
 
         return $customerSecuredPattern;
     }
@@ -107,15 +104,5 @@ class CustomerAccess implements CustomerAccessInterface
         }
 
         return $customerSecuredPattern;
-    }
-
-    /**
-     * @param string $customerSecuredPattern
-     *
-     * @return string
-     */
-    protected function applyRegexTemplateOnCustomerSecuredPattern(string $customerSecuredPattern): string
-    {
-        return sprintf(static::CUSTOMER_SECURED_PATTERN_REGEX_TEMPLATE, $customerSecuredPattern);
     }
 }
