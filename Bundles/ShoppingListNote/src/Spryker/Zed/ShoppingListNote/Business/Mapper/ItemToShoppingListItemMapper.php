@@ -22,7 +22,7 @@ class ItemToShoppingListItemMapper implements ItemToShoppingListItemMapperInterf
     public function mapItemCartNoteToShoppingListItemNote(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         $shoppingListItemTransfer->setShoppingListItemNote(
-            (new ShoppingListItemNoteTransfer)->setNote($itemTransfer->getCartNote())
+            (new ShoppingListItemNoteTransfer())->setNote($itemTransfer->getCartNote())
         );
 
         return $shoppingListItemTransfer;

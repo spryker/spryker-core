@@ -199,7 +199,7 @@ class ShoppingListNoteFacadeTest extends Unit
     public function testMapItemCartNoteToShoppingListItemNote(): void
     {
         // Arrange
-        $itemTransfer = (new ItemTransfer)->setCartNote(static::CART_TEST_NOTE);
+        $itemTransfer = (new ItemTransfer())->setCartNote(static::CART_TEST_NOTE);
 
         // Act
         $mappedShoppingListItemTransfer = $this->tester
