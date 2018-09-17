@@ -8,7 +8,7 @@
 namespace Spryker\Client\ShoppingListSession;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface;
+use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientInterface;
 use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListClientBridgeInterface;
 use Spryker\Client\ShoppingListSession\ShoppingList\ShoppingListSessionReader;
 use Spryker\Client\ShoppingListSession\ShoppingList\ShoppingListSessionReaderInterface;
@@ -52,9 +52,9 @@ class ShoppingListSessionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface
+     * @return \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientInterface
      */
-    public function getSessionClient(): ShoppingListSessionToSessionClientBridgeInterface
+    public function getSessionClient(): ShoppingListSessionToSessionClientInterface
     {
         return $this->getProvidedDependency(ShoppingListSessionDependencyProvider::SHOPPING_LIST_SESSION_SESSION_CLIENT);
     }

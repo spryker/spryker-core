@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -17,15 +17,13 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ShoppingListStorage\Communication\ShoppingListStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ShoppingListStorage\Persistence\ShoppingListStorageRepository getRepository()
  */
-class ShoppingListStorageCustomListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ShoppingListStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
      * {@inheritdoc}
-     *
-     *  - Handles custom Delete event, that unlike of regular contains needed data in ModifiedColumns, uses this data
-     *    for Publish.
+     *  - Handles unpublish shipping list event.
      *
      * @api
      *
@@ -34,7 +32,7 @@ class ShoppingListStorageCustomListener extends AbstractPlugin implements EventB
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
         $customerReferences = [];
@@ -42,11 +40,11 @@ class ShoppingListStorageCustomListener extends AbstractPlugin implements EventB
         $validEventTransfers = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransfersByModifiedColumns($eventTransfers, [
-                SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE,
+                ShoppingListTransfer::CUSTOMER_REFERENCE,
             ]);
 
         foreach ($validEventTransfers as $eventTransfer) {
-            $customerReferences[] = $eventTransfer->getModifiedColumns()[SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE];
+            $customerReferences[] = $eventTransfer->getModifiedColumns()[ShoppingListTransfer::CUSTOMER_REFERENCE];
         }
 
         $customerReferences = array_unique($customerReferences);

@@ -35,14 +35,6 @@ interface ShoppingListEvents
 
     /**
      * Specification:
-     * - This event will be used for Custom triggered shopping_list delete.
-     *
-     * @api
-     */
-    public const ENTITY_SPY_SHOPPING_LIST_DELETE_CUSTOM = 'Entity.shopping_list.deleteCustom';
-
-    /**
-     * Specification:
      * - This event will be used for spy_shopping_list_item entity create.
      *
      * @api
@@ -115,9 +107,9 @@ interface ShoppingListEvents
 
     /**
      * Specification:
-     * - This constant event will be used as name of custom delete event for spy_shopping_list entity
+     * - This event is used for shopping_list unpublishing.
      *
      * @api
      */
-    public const ENTITY_SPY_SHOPPING_LIST_DELETE_CUSTOM_EVENT_NAME = 'spy_shopping_list';
+    public const SHOPPING_LIST_UNPUBLISH = 'ShoppingList.shopping_list.unpublish';
 }

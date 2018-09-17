@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ShoppingListStorage\Persistence;
 
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -33,24 +33,12 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
      */
     public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array
     {
-        $customerReferencesArray = $this->getFactory()
-            ->getShoppingListPropelQuery()
-            ->distinct()
-            ->useSpyShoppingListCompanyUserQuery()
-                ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)
-                    ->joinCustomer(static::COMPANY_USER_CUSTOMER_ALIAS, Criteria::LEFT_JOIN)
-                    ->withColumn(static::COMPANY_USER_CUSTOMER_ALIAS . '.' . static::CUSTOMER_REFERENCE_FIELD, self::COMPANY_USER_REFERENCES_NAME)
-                ->endUse()
-            ->endUse()
-            ->useSpyShoppingListCompanyBusinessUnitQuery()
-                ->useSpyCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
-                    ->useCompanyUserQuery(null, Criteria::LEFT_JOIN)
-                        ->joinCustomer(static::COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS, Criteria::LEFT_JOIN)
-                        ->withColumn(static::COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS . '.' . static::CUSTOMER_REFERENCE_FIELD, self::COMPANY_BUSINESS_UNIT_REFERENCES_NAME)
-                    ->endUse()
-                ->endUse()
-            ->endUse()
-            ->filterByIdShoppingList_In($shoppingListIds)
+        $shoppingListQuery = $this->getFactory()
+            ->getShoppingListPropelQuery();
+        $shoppingListQuery->distinct();
+        $this->addCompanyUserCustomerReferences($shoppingListQuery);
+        $this->addCompanyBusinessUnitCustomerReferences($shoppingListQuery);
+        $customerReferencesArray = $shoppingListQuery->filterByIdShoppingList_In($shoppingListIds)
             ->select([SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE])
             ->find()
             ->toArray();
@@ -62,53 +50,6 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
         $result = array_unique($result);
 
         return $result;
-    }
-
-    /**
-     * @module Customer
-     *
-     * @param int[] $companyBusinessUnitIds
-     *
-     * @return string[]
-     */
-    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
-    {
-        return $this->getFactory()
-            ->getShoppingListPropelQuery()
-            ->useSpyShoppingListCompanyBusinessUnitQuery()
-                ->useSpyCompanyBusinessUnitQuery()
-                    ->useCompanyUserQuery()
-                        ->joinCustomer()
-                    ->endUse()
-                ->endUse()
-                ->filterByFkCompanyBusinessUnit_In($companyBusinessUnitIds)
-            ->endUse()
-            ->select(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)
-            ->find()
-            ->toArray();
-    }
-
-    /**
-     * @module CompanyUser
-     * @module Customer
-     *
-     * @param int[] $companyUserIds
-     *
-     * @return string[]
-     */
-    public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array
-    {
-        return $this->getFactory()
-            ->getShoppingListPropelQuery()
-            ->useSpyShoppingListCompanyUserQuery()
-                ->useSpyCompanyUserQuery()
-                    ->joinWithCustomer()
-                ->endUse()
-                ->filterByFkCompanyUser_In($companyUserIds)
-            ->endUse()
-            ->select(SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)
-            ->find()
-            ->toArray();
     }
 
     /**
@@ -148,5 +89,39 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
             ->createShoppingListCustomerStoragePropelQuery()
             ->filterByIdShoppingListCustomerStorage_In($shoppingListCustomerStorageIds)
             ->find();
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery $shoppingListQuery
+     *
+     * @return void
+     */
+    protected function addCompanyUserCustomerReferences(SpyShoppingListQuery $shoppingListQuery): void
+    {
+        $shoppingListQuery
+            ->useSpyShoppingListCompanyUserQuery()
+                ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)
+                    ->joinCustomer(static::COMPANY_USER_CUSTOMER_ALIAS, Criteria::LEFT_JOIN)
+                    ->withColumn(static::COMPANY_USER_CUSTOMER_ALIAS . '.' . static::CUSTOMER_REFERENCE_FIELD, static::COMPANY_USER_REFERENCES_NAME)
+                ->endUse()
+            ->endUse();
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery $shoppingListQuery
+     *
+     * @return void
+     */
+    protected function addCompanyBusinessUnitCustomerReferences(SpyShoppingListQuery $shoppingListQuery): void
+    {
+        $shoppingListQuery
+            ->useSpyShoppingListCompanyBusinessUnitQuery()
+                ->useSpyCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
+                    ->useCompanyUserQuery(null, Criteria::LEFT_JOIN)
+                        ->joinCustomer(static::COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS, Criteria::LEFT_JOIN)
+                        ->withColumn(static::COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS . '.' . static::CUSTOMER_REFERENCE_FIELD, static::COMPANY_BUSINESS_UNIT_REFERENCES_NAME)
+                    ->endUse()
+                ->endUse()
+            ->endUse();
     }
 }

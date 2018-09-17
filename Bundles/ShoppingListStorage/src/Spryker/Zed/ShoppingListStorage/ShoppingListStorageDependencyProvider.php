@@ -11,6 +11,8 @@ use Orm\Zed\ShoppingList\Persistence\SpyShoppingListItemQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ShoppingListStorage\Dependency\Facade\ShoppingListStorageToCompanyBusinessUnitFacadeBridge;
+use Spryker\Zed\ShoppingListStorage\Dependency\Facade\ShoppingListStorageToCompanyUserFacadeBridge;
 use Spryker\Zed\ShoppingListStorage\Dependency\Facade\ShoppingListStorageToEventBehaviorFacadeBridge;
 
 class ShoppingListStorageDependencyProvider extends AbstractBundleDependencyProvider
@@ -18,6 +20,8 @@ class ShoppingListStorageDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const PROPEL_QUERY_SHOPPING_LIST = 'PROPEL_QUERY_SHOPPING_LIST';
     public const PROPEL_QUERY_SHOPPING_LIST_ITEM = 'PROPEL_QUERY_SHOPPING_LIST_ITEM';
+    public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+    public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -28,6 +32,8 @@ class ShoppingListStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addCompanyUserFacade($container);
+        $container = $this->addCompanyBusinessUnitFacade($container);
 
         return $container;
     }
@@ -55,6 +61,34 @@ class ShoppingListStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new ShoppingListStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserFacade(Container $container): Container
+    {
+        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+            return new ShoppingListStorageToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyBusinessUnitFacade(Container $container): Container
+    {
+        $container[static::FACADE_COMPANY_BUSINESS_UNIT] = function (Container $container) {
+            return new ShoppingListStorageToCompanyBusinessUnitFacadeBridge($container->getLocator()->companyBusinessUnit()->facade());
         };
 
         return $container;

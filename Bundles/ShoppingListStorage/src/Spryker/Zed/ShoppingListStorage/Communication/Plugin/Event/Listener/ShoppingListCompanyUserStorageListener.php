@@ -22,6 +22,7 @@ class ShoppingListCompanyUserStorageListener extends AbstractPlugin implements E
 
     /**
      * {@inheritdoc}
+     *  - Handles shipping list to company user relation create and update events.
      *
      * @api
      *
@@ -30,14 +31,17 @@ class ShoppingListCompanyUserStorageListener extends AbstractPlugin implements E
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
+
         $companyUserIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyShoppingListCompanyUserTableMap::COL_FK_COMPANY_USER);
 
-        $customerReferences = $this->getFacade()->getCustomerReferencesByCompanyUserIds($companyUserIds);
+        $customerReferences = $this->getFactory()
+            ->getCompanyUserFacade()
+            ->getCustomerReferencesByCompanyUserIds($companyUserIds);
 
         $this->getFacade()->publish($customerReferences);
     }

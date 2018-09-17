@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ShoppingListStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConstants;
+use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
@@ -29,7 +29,7 @@ class ShoppingListSynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function getResourceName(): string
     {
-        return ShoppingListStorageConstants::SHOPPING_LIST_RESOURCE_NAME;
+        return ShoppingListStorageConfig::SHOPPING_LIST_RESOURCE_NAME;
     }
 
     /**
@@ -89,7 +89,7 @@ class ShoppingListSynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function getQueueName(): string
     {
-        return ShoppingListStorageConstants::SHOPPING_LIST_SYNC_STORAGE_QUEUE;
+        return ShoppingListStorageConfig::SHOPPING_LIST_SYNC_STORAGE_QUEUE;
     }
 
     /**

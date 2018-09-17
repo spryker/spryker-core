@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ShoppingListSession\Dependency\Client;
 
-class ShoppingListSessionToSessionClientBridge implements ShoppingListSessionToSessionClientBridgeInterface
+class ShoppingListSessionToSessionClientBridge implements ShoppingListSessionToSessionClientInterface
 {
     /**
      * @var \Spryker\Client\Session\SessionClientInterface

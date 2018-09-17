@@ -14,8 +14,8 @@ use Spryker\Zed\ShoppingList\Dependency\ShoppingListEvents;
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListCompanyBusinessUnitStorageListener;
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListCompanyUserStorageListener;
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListItemStorageListener;
-use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListStorageCustomListener;
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListStorageListener;
+use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListStorageUnpublishListener;
 
 /**
  * @method \Spryker\Zed\ShoppingListStorage\Business\ShoppingListStorageFacade getFacade()
@@ -81,8 +81,8 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     protected function addShoppingListDeleteListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(
-            ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_DELETE_CUSTOM,
-            new ShoppingListStorageCustomListener()
+            ShoppingListEvents::SHOPPING_LIST_UNPUBLISH,
+            new ShoppingListStorageUnpublishListener()
         );
     }
 

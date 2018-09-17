@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ShoppingListStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ShoppingListStorage\Business\Model\ShoppingListStorageReader;
 use Spryker\Zed\ShoppingListStorage\Business\ShoppingListCustomerPublisher\ShoppingListCustomerStoragePublisher;
 use Spryker\Zed\ShoppingListStorage\Business\ShoppingListCustomerPublisher\ShoppingListCustomerStoragePublisherInterface;
 
@@ -26,16 +25,6 @@ class ShoppingListStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ShoppingListCustomerStoragePublisher(
             $this->getEntityManager(),
-            $this->getRepository()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ShoppingListStorage\Business\Model\ShoppingListStorageReader
-     */
-    public function createShoppingListStorage()
-    {
-        return new ShoppingListStorageReader(
             $this->getRepository()
         );
     }

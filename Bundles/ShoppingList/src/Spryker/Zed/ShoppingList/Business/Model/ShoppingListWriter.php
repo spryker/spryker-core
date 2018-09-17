@@ -217,16 +217,25 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         $this->shoppingListEntityManager->deleteShoppingListCompanyUsers($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnits($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListByName($shoppingListTransfer);
-
-        $eventTransfer = (new EventEntityTransfer())
-            ->setName(ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_DELETE_CUSTOM_EVENT_NAME)
-            ->setId($shoppingListTransfer->getIdShoppingList())
-            ->setEvent(ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_DELETE_CUSTOM)
-            ->setModifiedColumns([
-                static::CUSTOM_EVENT_COL_CUSTOMER_REFERENCE => $shoppingListTransfer->getCustomerReference(),
-            ]);
-        $this->eventFacade->trigger(ShoppingListEvents::ENTITY_SPY_SHOPPING_LIST_DELETE_CUSTOM, $eventTransfer);
+        $this->triggerShoppingListUnpublishEvent($shoppingListTransfer);
 
         return (new ShoppingListResponseTransfer())->setIsSuccess(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    protected function triggerShoppingListUnpublishEvent(ShoppingListTransfer $shoppingListTransfer): void
+    {
+        $eventTransfer = (new EventEntityTransfer())
+            ->setName(ShoppingListEvents::SHOPPING_LIST_UNPUBLISH)
+            ->setId($shoppingListTransfer->getIdShoppingList())
+            ->setEvent(ShoppingListEvents::SHOPPING_LIST_UNPUBLISH)
+            ->setModifiedColumns([
+                 ShoppingListTransfer::CUSTOMER_REFERENCE => $shoppingListTransfer->getCustomerReference(),
+            ]);
+        $this->eventFacade->trigger(ShoppingListEvents::SHOPPING_LIST_UNPUBLISH, $eventTransfer);
     }
 }

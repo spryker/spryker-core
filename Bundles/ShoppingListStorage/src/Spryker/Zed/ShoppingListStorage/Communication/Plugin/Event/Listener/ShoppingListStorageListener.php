@@ -22,6 +22,7 @@ class ShoppingListStorageListener extends AbstractPlugin implements EventBulkHan
 
     /**
      * {@inheritdoc}
+     *  - Handles shipping list create and update events.
      *
      * @api
      *
@@ -30,12 +31,14 @@ class ShoppingListStorageListener extends AbstractPlugin implements EventBulkHan
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
+
         $shoppingListIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
-        $customerReferences = $this->getFacade()->getCustomerReferencesByShoppingListIds($shoppingListIds);
+        $customerReferences = $this->getRepository()->getCustomerReferencesByShoppingListIds($shoppingListIds);
         $customerReferences = array_unique($customerReferences);
+
         $this->getFacade()->publish($customerReferences);
     }
 }

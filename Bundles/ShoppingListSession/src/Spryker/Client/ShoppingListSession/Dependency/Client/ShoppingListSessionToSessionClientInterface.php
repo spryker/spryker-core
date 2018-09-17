@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ShoppingListSession\Dependency\Client;
 
-interface ShoppingListSessionToSessionClientBridgeInterface
+interface ShoppingListSessionToSessionClientInterface
 {
     /**
      * @param string $name

@@ -19,20 +19,6 @@ interface ShoppingListStorageRepositoryInterface
     public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array;
 
     /**
-     * @param int[] $companyBusinessUnitIds
-     *
-     * @return string[]
-     */
-    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
-
-    /**
-     * @param int[] $companyUserIds
-     *
-     * @return string[]
-     */
-    public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
-
-    /**
      * @param string[] $customerReference
      *
      * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection

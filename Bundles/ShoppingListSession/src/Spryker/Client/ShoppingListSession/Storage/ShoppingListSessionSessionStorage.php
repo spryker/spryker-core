@@ -8,22 +8,22 @@
 namespace Spryker\Client\ShoppingListSession\Storage;
 
 use Generated\Shared\Transfer\ShoppingListSessionTransfer;
-use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface;
+use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientInterface;
 
 class ShoppingListSessionSessionStorage implements ShoppingListSessionStorageInterface
 {
     protected const SESSION_KEY_SHOPPING_LIST_COLLECTION = 'SESSION_KEY_SHOPPING_LIST_COLLECTION';
 
     /**
-     * @var \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface
+     * @var \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientInterface
      */
     protected $sessionClient;
 
     /**
-     * @param \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface $sessionClient
+     * @param \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientInterface $sessionClient
      */
     public function __construct(
-        ShoppingListSessionToSessionClientBridgeInterface $sessionClient
+        ShoppingListSessionToSessionClientInterface $sessionClient
     ) {
         $this->sessionClient = $sessionClient;
     }

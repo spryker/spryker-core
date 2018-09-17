@@ -22,6 +22,7 @@ class ShoppingListCompanyBusinessUnitStorageListener extends AbstractPlugin impl
 
     /**
      * {@inheritdoc}
+     *  - Handles shipping list to company business unit relation create and update events.
      *
      * @api
      *
@@ -30,14 +31,17 @@ class ShoppingListCompanyBusinessUnitStorageListener extends AbstractPlugin impl
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
+
         $companyBusinessUnitIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyShoppingListCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT);
 
-        $customerReferences = $this->getFacade()->getCustomerReferencesByCompanyBusinessUnitIds($companyBusinessUnitIds);
+        $customerReferences = $this->getFactory()
+            ->getCompanyBusinessUnitFacade()
+            ->getCustomerReferencesByCompanyBusinessUnitIds($companyBusinessUnitIds);
 
         $this->getFacade()->publish($customerReferences);
     }

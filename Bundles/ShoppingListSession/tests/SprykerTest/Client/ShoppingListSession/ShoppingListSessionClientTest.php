@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridge;
-use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface;
+use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientInterface;
 use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToShoppingListClientBridgeInterface;
 use Spryker\Client\ShoppingListSession\ShoppingListSessionClientInterface;
 use Spryker\Client\ShoppingListSession\ShoppingListSessionDependencyProvider;
@@ -166,9 +166,9 @@ class ShoppingListSessionClientTest extends Unit
     }
 
     /**
-     * @return \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientBridgeInterface
+     * @return \Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSessionClientInterface
      */
-    protected function getShoppingListSessionToSessionClientBridge(): ShoppingListSessionToSessionClientBridgeInterface
+    protected function getShoppingListSessionToSessionClientBridge(): ShoppingListSessionToSessionClientInterface
     {
         $this->sessionClient = new SessionClient();
         $this->sessionClient->setContainer(new Session(new MockArraySessionStorage()));
