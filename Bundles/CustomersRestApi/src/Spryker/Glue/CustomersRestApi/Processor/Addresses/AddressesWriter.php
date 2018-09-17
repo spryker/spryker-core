@@ -87,14 +87,13 @@ class AddressesWriter implements AddressesWriterInterface
 
         $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
 
-        if (count($addressesTransfer->getAddresses()) !== 1) {
-            $addressTransfer->setIsDefaultBilling($addressAttributesTransfer->getIsDefaultBilling());
-            $addressTransfer->setIsDefaultShipping($addressAttributesTransfer->getIsDefaultShipping());
-        } else {
-            $addressTransfer->setIsDefaultBilling(true);
-            $addressTransfer->setIsDefaultShipping(true);
-        }
-        $this->updateCustomerDefaultAddresses($addressTransfer, $customerResponseTransfer->getCustomerTransfer());
+        $addressTransfer = $this->setCustomersDefaultAddresses(
+            $addressTransfer,
+            $addressAttributesTransfer,
+            $addressesTransfer->getAddresses()->count() === 1
+        );
+
+        $this->saveCustomerDefaultAddresses($addressTransfer, $customerResponseTransfer->getCustomerTransfer());
 
         $restResource = $this
             ->addressesResourceMapper
@@ -144,7 +143,7 @@ class AddressesWriter implements AddressesWriterInterface
 
         $addressTransfer->fromArray($addressAttributesTransfer->modifiedToArray(), true);
 
-        $this->updateCustomerDefaultAddresses($addressTransfer, $customerResponseTransfer->getCustomerTransfer());
+        $this->saveCustomerDefaultAddresses($addressTransfer, $customerResponseTransfer->getCustomerTransfer());
         $addressTransfer = $this->customerClient->updateAddress($addressTransfer);
 
         if (!$addressTransfer->getUuid()) {
@@ -293,12 +292,12 @@ class AddressesWriter implements AddressesWriterInterface
      *
      * @return void
      */
-    protected function updateCustomerDefaultAddresses(
+    protected function saveCustomerDefaultAddresses(
         AddressTransfer $addressTransfer,
         CustomerTransfer $customerTransfer
     ): void {
-        $this->checkCustomerDefaultBillingAddressChanged($addressTransfer, $customerTransfer);
-        $this->checkCustomerDefaultShippingAddressChanged($addressTransfer, $customerTransfer);
+        $this->updateCustomerDefaultBillingAddress($addressTransfer, $customerTransfer);
+        $this->updateCustomerDefaultShippingAddress($addressTransfer, $customerTransfer);
 
         if ($customerTransfer->isPropertyModified(CustomerTransfer::DEFAULT_BILLING_ADDRESS)
             || $customerTransfer->isPropertyModified(CustomerTransfer::DEFAULT_SHIPPING_ADDRESS)) {
@@ -312,7 +311,7 @@ class AddressesWriter implements AddressesWriterInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function checkCustomerDefaultBillingAddressChanged(
+    protected function updateCustomerDefaultBillingAddress(
         AddressTransfer $addressTransfer,
         CustomerTransfer $customerTransfer
     ): CustomerTransfer {
@@ -337,7 +336,7 @@ class AddressesWriter implements AddressesWriterInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function checkCustomerDefaultShippingAddressChanged(
+    protected function updateCustomerDefaultShippingAddress(
         AddressTransfer $addressTransfer,
         CustomerTransfer $customerTransfer
     ): CustomerTransfer {
@@ -360,7 +359,7 @@ class AddressesWriter implements AddressesWriterInterface
      * @param \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer
      * @param string $uuid
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     protected function findAddressByUuid(AddressesTransfer $addressesTransfer, string $uuid): ?AddressTransfer
     {
@@ -371,5 +370,25 @@ class AddressesWriter implements AddressesWriterInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Generated\Shared\Transfer\RestAddressAttributesTransfer $addressAttributesTransfer
+     * @param bool $isFirstAddress
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function setCustomersDefaultAddresses(AddressTransfer $addressTransfer, RestAddressAttributesTransfer $addressAttributesTransfer, bool $isFirstAddress)
+    {
+        if (!$isFirstAddress) {
+            $addressTransfer->setIsDefaultBilling($addressAttributesTransfer->getIsDefaultBilling());
+            $addressTransfer->setIsDefaultShipping($addressAttributesTransfer->getIsDefaultShipping());
+        } else {
+            $addressTransfer->setIsDefaultBilling(true);
+            $addressTransfer->setIsDefaultShipping(true);
+        }
+
+        return $addressTransfer;
     }
 }

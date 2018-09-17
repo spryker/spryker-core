@@ -160,12 +160,16 @@ class CustomersWriter implements CustomersWriterInterface
             return $this->createCustomerNotFoundError($restResponse);
         }
 
-        if (!$this->assertPasswordsAreIdentical($passwordAttributesTransfer)) {
-            return $this->createPasswordsNotMatchError($restResponse);
+        if (!$this->isSameCustomerReference($restRequest)) {
+            return $this->createUnauthorizedError($restResponse);
         }
 
         if (!$this->assertPasswordNotEmpty($passwordAttributesTransfer)) {
             return $this->createPasswordNotValid($restResponse);
+        }
+
+        if (!$this->assertPasswordsAreIdentical($passwordAttributesTransfer)) {
+            return $this->createPasswordsNotMatchError($restResponse);
         }
 
         $customerTransfer->fromArray($passwordAttributesTransfer->toArray(), true);
