@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ItemByPriceCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
@@ -33,6 +35,8 @@ class ItemByPriceCollectorPlugin extends AbstractPlugin implements CollectorPlug
     /**
      * Name of field as used in query string
      *
+     * @api
+     *
      * @return string
      */
     public function getFieldName()
@@ -41,6 +45,8 @@ class ItemByPriceCollectorPlugin extends AbstractPlugin implements CollectorPlug
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function acceptedDataTypes()
