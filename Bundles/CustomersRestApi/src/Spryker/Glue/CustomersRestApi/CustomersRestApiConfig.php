@@ -54,4 +54,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_NOT_ACCEPTED_TERMS = '413';
     public const RESPONSE_DETAILS_NOT_ACCEPTED_TERMS = 'Terms and Conditions was not accepted.';
+
+    public const RESPONSE_CODE_NOT_VALID_GENDER = '414';
+    public const RESPONSE_DETAILS_NOT_VALID_GENDER = 'Gender is not valid.';
 }

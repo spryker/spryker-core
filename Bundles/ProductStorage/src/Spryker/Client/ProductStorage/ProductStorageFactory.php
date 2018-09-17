@@ -109,6 +109,6 @@ class ProductStorageFactory extends AbstractFactory
      */
     public function getProductConcreteRestrictionPlugins(): array
     {
-        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_RESTRICTION);
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_CONCRETE_RESTRICTION);
     }
 }
