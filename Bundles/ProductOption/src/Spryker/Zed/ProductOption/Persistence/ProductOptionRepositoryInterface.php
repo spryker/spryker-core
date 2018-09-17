@@ -10,6 +10,11 @@ namespace Spryker\Zed\ProductOption\Persistence;
 interface ProductOptionRepositoryInterface
 {
     /**
+     * @return int
+     */
+    public function getActiveProductOptionGroupsCount(): int;
+
+    /**
      * @param int $idProductOptionGroup
      * @param bool $isActive
      *

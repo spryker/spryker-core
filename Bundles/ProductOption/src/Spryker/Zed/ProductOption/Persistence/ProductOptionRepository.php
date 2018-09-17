@@ -17,6 +17,17 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductOptionRepository extends AbstractRepository implements ProductOptionRepositoryInterface
 {
     /**
+     * @return int
+     */
+    public function getActiveProductOptionGroupsCount(): int
+    {
+        return $this->getFactory()
+            ->createProductOptionGroupQuery()
+            ->filterByActive(true)
+            ->count();
+    }
+
+    /**
      * @param int $idProductOptionGroup
      * @param bool $isActive
      *
