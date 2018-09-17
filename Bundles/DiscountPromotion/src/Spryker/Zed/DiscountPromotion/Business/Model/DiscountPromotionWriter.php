@@ -132,6 +132,7 @@ class DiscountPromotionWriter implements DiscountPromotionWriterInterface
      */
     protected function removeCollectorQueryString(SpyDiscountPromotion $discountPromotionEntity)
     {
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscount|null $discountEntity */
         $discountEntity = $discountPromotionEntity->getDiscount();
         if (!$discountEntity) {
             return;
