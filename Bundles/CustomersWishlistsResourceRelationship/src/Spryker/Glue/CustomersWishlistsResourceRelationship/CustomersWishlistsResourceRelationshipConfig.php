@@ -11,4 +11,8 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class CustomersWishlistsResourceRelationshipConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig::RESOURCE_WISHLISTS
+     */
+    public const RESOURCE_WISHLISTS = 'wishlists';
 }

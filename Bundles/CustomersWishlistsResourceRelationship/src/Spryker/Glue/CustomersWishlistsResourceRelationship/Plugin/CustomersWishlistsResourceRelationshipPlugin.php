@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\CustomersWishlistsResourceRelationship\Plugin;
 
+use Spryker\Glue\CustomersWishlistsResourceRelationship\CustomersWishlistsResourceRelationshipConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 
 /**
  * @method \Spryker\Glue\CustomersWishlistsResourceRelationship\CustomersWishlistsResourceRelationshipFactory getFactory()
@@ -43,6 +43,6 @@ class CustomersWishlistsResourceRelationshipPlugin extends AbstractPlugin implem
      */
     public function getRelationshipResourceType(): string
     {
-        return WishlistsRestApiConfig::RESOURCE_WISHLISTS;
+        return CustomersWishlistsResourceRelationshipConfig::RESOURCE_WISHLISTS;
     }
 }
