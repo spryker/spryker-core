@@ -25,6 +25,13 @@ class CustomersWriter implements CustomersWriterInterface
     protected const ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED = 'customer.email.already.used';
     protected const ERROR_CUSTOMER_PASSWORD_INVALID = 'customer.password.invalid';
 
+    protected const CUSTOMERS_GENDER_ENUM_MALE = 'Male';
+    protected const CUSTOMERS_GENDER_ENUM_FEMALE = 'Female';
+    protected const CUSTOMERS_GENDERS_ENUM = [
+        self::CUSTOMERS_GENDER_ENUM_MALE,
+        self::CUSTOMERS_GENDER_ENUM_FEMALE,
+    ];
+
     /**
      * @var \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface
      */
@@ -108,6 +115,12 @@ class CustomersWriter implements CustomersWriterInterface
         $customerResponseTransfer->getCustomerTransfer()->fromArray(
             $this->getCustomerData($restCustomerTransfer)
         );
+
+        if ($customerResponseTransfer->getCustomerTransfer()->isPropertyModified(CustomerTransfer::GENDER) &&
+            !in_array($customerResponseTransfer->getCustomerTransfer()->getGender(), static::CUSTOMERS_GENDERS_ENUM)) {
+            return $this->createNotValidGenderError($restResponse);
+        }
+
         $customerResponseTransfer = $this->customerClient->updateCustomer($customerResponseTransfer->getCustomerTransfer());
 
         if (!$customerResponseTransfer->getIsSuccess()) {
@@ -375,6 +388,22 @@ class CustomersWriter implements CustomersWriterInterface
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_NOT_ACCEPTED_TERMS)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_NOT_ACCEPTED_TERMS);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createNotValidGenderError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_NOT_VALID_GENDER)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_NOT_VALID_GENDER
+                . ' Possible options are: ' . implode(', ', static::CUSTOMERS_GENDERS_ENUM));
 
         return $restResponse->addError($restErrorTransfer);
     }
