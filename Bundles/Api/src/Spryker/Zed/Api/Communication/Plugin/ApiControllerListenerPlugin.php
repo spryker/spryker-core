@@ -121,7 +121,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $queryData = $request->query->all();
         $requestTransfer->setQueryData($queryData);
 
-        $serverData = $this->getFactory()->createServerVariableFilterer()->filter($request->server->all());
+        $serverData = $request->server->all();
         $requestTransfer->setServerData($serverData);
 
         $headerData = $request->headers->all();
@@ -147,11 +147,13 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      */
     protected function logRequest(ApiRequestTransfer $requestTransfer)
     {
+        $requestTransferFiltered = $this->filterApiRequestTransfer($requestTransfer);
+
         $this->getLogger()->info(sprintf(
             'API request [%s %s]: %s',
             $requestTransfer->getRequestType(),
             $requestTransfer->getRequestUri(),
-            json_encode($requestTransfer->toArray())
+            json_encode($requestTransferFiltered->toArray())
         ));
     }
 
@@ -169,5 +171,19 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
             $responseTransfer->getCode(),
             json_encode($array)
         ));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $requestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ApiRequestTransfer
+     */
+    protected function filterApiRequestTransfer(ApiRequestTransfer $requestTransfer): ApiRequestTransfer
+    {
+        $requestTransferFiltered = $this->getFactory()
+            ->createRequestTransferFilterer()
+            ->filter(clone $requestTransfer);
+
+        return $requestTransferFiltered;
     }
 }

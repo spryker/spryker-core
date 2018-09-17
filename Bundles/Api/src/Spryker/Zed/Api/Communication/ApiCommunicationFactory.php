@@ -8,13 +8,11 @@
 namespace Spryker\Zed\Api\Communication;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use InvalidArgumentException;
 use Spryker\Zed\Api\ApiDependencyProvider;
 use Spryker\Zed\Api\Business\Exception\FormatterNotFoundException;
+use Spryker\Zed\Api\Communication\Filterer\RequestTransferFilterer;
 use Spryker\Zed\Api\Communication\Formatter\JsonFormatter;
 use Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerPlugin;
-use Spryker\Zed\Api\Communication\Plugin\ServerVariableFilterer;
-use Spryker\Zed\Api\Communication\Plugin\ServerVariableFilterStrategyInterface;
 use Spryker\Zed\Api\Communication\Transformer\Transformer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -74,30 +72,10 @@ class ApiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Communication\Plugin\ServerVariableFilterer
+     * @return \Spryker\Zed\Api\Communication\Filterer\RequestTransferFiltererInterface
      */
-    public function createServerVariableFilterer()
+    public function createRequestTransferFilterer()
     {
-        return new ServerVariableFilterer($this->createServerVariableFilterStrategy(), $this->getConfig());
-    }
-
-    /**
-     * @throws \InvalidArgumentException
-     *
-     * @return \Spryker\Zed\Api\Communication\Plugin\ServerVariableFilterStrategyInterface
-     */
-    public function createServerVariableFilterStrategy(): ServerVariableFilterStrategyInterface
-    {
-        $currentServerVariablesFilterStrategy = $this->getConfig()->getCurrentServerVariablesFilterStrategy();
-        $serverVariablesFilterStrategyFiltererMap = $this->getConfig()->getServerVariablesFilterStrategyFiltererMap();
-        if (!array_key_exists($currentServerVariablesFilterStrategy, $serverVariablesFilterStrategyFiltererMap)) {
-            throw new InvalidArgumentException(sprintf(
-                "%s is not a valid Server Variables Filter Strategy",
-                $currentServerVariablesFilterStrategy
-            ));
-        }
-        $serverVariablesFilterStrategy = $serverVariablesFilterStrategyFiltererMap[$currentServerVariablesFilterStrategy];
-
-        return (new $serverVariablesFilterStrategy());
+        return new RequestTransferFilterer($this->getConfig());
     }
 }

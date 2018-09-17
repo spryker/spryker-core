@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\Api;
 
-use Spryker\Zed\Api\Communication\Plugin\BlacklistServerVariableFilterStrategy;
-use Spryker\Zed\Api\Communication\Plugin\CallbackServerVariableFilterStrategy;
-use Spryker\Zed\Api\Communication\Plugin\WhitelistServerVariableFilterStrategy;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ApiConfig extends AbstractBundleConfig
@@ -39,10 +36,6 @@ class ApiConfig extends AbstractBundleConfig
     const HTTP_CODE_NOT_ALLOWED = 405;
     const HTTP_CODE_VALIDATION_ERRORS = 422;
     const HTTP_CODE_INTERNAL_ERROR = 500;
-
-    public const SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST = 'SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST';
-    public const SERVER_VARIABLE_FILTER_STRATEGY_BLACKLIST = 'SERVER_VARIABLE_FILTER_STRATEGY_BLACKLIST';
-    public const SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK = 'SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK';
 
     /**
      * @return int
@@ -139,52 +132,72 @@ class ApiConfig extends AbstractBundleConfig
     }
 
     /**
-     * Stores current strategy for filtering of Server Variable
-     *
-     * @return string
-     */
-    public function getCurrentServerVariablesFilterStrategy(): string
-    {
-        return static::SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST;
-    }
-
-    /**
-     * Defines set of available strategies for filtering of Server Variables
-     *
      * @return array
      */
-    public function getServerVariablesFilterStrategyFiltererMap(): array
+    public function getAllowedHeaderDataToBeLogged(): array
     {
         return [
-            self::SERVER_VARIABLE_FILTER_STRATEGY_WHITELIST => WhitelistServerVariableFilterStrategy::class,
-            self::SERVER_VARIABLE_FILTER_STRATEGY_BLACKLIST => BlacklistServerVariableFilterStrategy::class,
-            self::SERVER_VARIABLE_FILTER_STRATEGY_CALLBACK => CallbackServerVariableFilterStrategy::class,
+            'cookie',
+            'accept-language',
+            'accept-encoding',
+            'accept',
+            'user-agent',
+            'upgrade-insecure-requests',
+            'cache-control',
+            'connection',
+            'host',
+            'x-request-start',
+            'content-length',
+            'content-type',
+            'x-php-ob-level',
         ];
     }
 
     /**
      * @return array
      */
-    public function getServerVariablesWhitelist(): array
+    public function getAllowedServerDataToBeLogged(): array
     {
-        return ['REQUEST_URI'];
-    }
-
-    /**
-     * @return array
-     */
-    public function getServerVariablesBlacklist(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return callable
-     */
-    public function getServerVariablesCallback(): callable
-    {
-        return function ($serverVariables) {
-            return $serverVariables;
-        };
+        return [
+            'VM_DOMAIN',
+            'VM_PROJECT',
+            'USER',
+            'HOME',
+            'HTTP_COOKIE',
+            'HTTP_ACCEPT_LANGUAGE',
+            'HTTP_ACCEPT_ENCODING',
+            'HTTP_ACCEPT',
+            'HTTP_USER_AGENT',
+            'HTTP_UPGRADE_INSECURE_REQUESTS',
+            'HTTP_CACHE_CONTROL',
+            'HTTP_CONNECTION',
+            'HTTP_HOST',
+            'APPLICATION_STORE',
+            'APPLICATION_ENV',
+            'HTTP_X_REQUEST_START',
+            'HTTPS',
+            'REDIRECT_STATUS',
+            'SERVER_NAME',
+            'SERVER_PORT',
+            'SERVER_ADDR',
+            'REMOTE_PORT',
+            'REMOTE_ADDR',
+            'SERVER_SOFTWARE',
+            'GATEWAY_INTERFACE',
+            'SERVER_PROTOCOL',
+            'DOCUMENT_ROOT',
+            'DOCUMENT_URI',
+            'REQUEST_URI',
+            'SCRIPT_NAME',
+            'SCRIPT_FILENAME',
+            'CONTENT_LENGTH',
+            'CONTENT_TYPE',
+            'REQUEST_METHOD',
+            'QUERY_STRING',
+            'FCGI_ROLE',
+            'PHP_SELF',
+            'REQUEST_TIME_FLOAT',
+            'REQUEST_TIME',
+        ];
     }
 }
