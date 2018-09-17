@@ -94,6 +94,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     {
         $spyProductAbstractImageStorageEntities = $this->findProductAbstractImageStorageEntitiesByProductAbstractIds($productAbstractIds);
         foreach ($spyProductAbstractImageStorageEntities as $spyProductAbstractImageStorageLocalizedEntities) {
+            /** @var \Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorage $spyProductAbstractImageStorageLocalizedEntity */
             foreach ($spyProductAbstractImageStorageLocalizedEntities as $spyProductAbstractImageStorageLocalizedEntity) {
                 $spyProductAbstractImageStorageLocalizedEntity->delete();
             }

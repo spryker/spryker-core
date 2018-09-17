@@ -22,11 +22,13 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
 class PricePageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
-     * @var string[] Keys are store names, values are store ids.
+     * @var int[]|null Keys are store names, values are store ids.
      */
     protected $idStoreMapBuffer;
 
     /**
+     * @api
+     *
      * @param array $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *

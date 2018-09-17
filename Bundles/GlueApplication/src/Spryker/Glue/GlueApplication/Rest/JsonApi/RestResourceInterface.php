@@ -15,6 +15,7 @@ interface RestResourceInterface
     public const RESOURCE_ID = 'id';
     public const RESOURCE_ATTRIBUTES = 'attributes';
     public const RESOURCE_LINKS = 'links';
+    public const RESOURCE_LINKS_SELF = 'self';
     public const RESOURCE_RELATIONSHIPS = 'relationships';
 
     /**

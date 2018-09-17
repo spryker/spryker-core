@@ -29,7 +29,7 @@ class ProductBarcodeFacadeHelper extends Module
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param null|string $generatorPlugin
+     * @param string|null $generatorPlugin
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */

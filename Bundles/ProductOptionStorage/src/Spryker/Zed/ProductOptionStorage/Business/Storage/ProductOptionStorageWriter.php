@@ -26,6 +26,11 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     protected $productOptionFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @var \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface
      */
     protected $queryContainer;
@@ -33,12 +38,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     /**
      * @var bool
      */
-    protected $isSendingToQueue = true;
-
-    /**
-     * @var \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToStoreFacadeInterface
-     */
-    protected $storeFacade;
+    protected $isSendingToQueue;
 
     /**
      * @var \Generated\Shared\Transfer\StoreTransfer[]
