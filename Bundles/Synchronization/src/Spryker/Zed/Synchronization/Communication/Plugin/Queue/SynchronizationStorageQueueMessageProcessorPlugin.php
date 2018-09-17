@@ -18,6 +18,8 @@ use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
 class SynchronizationStorageQueueMessageProcessorPlugin extends AbstractPlugin implements QueueMessageProcessorPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
@@ -29,6 +31,8 @@ class SynchronizationStorageQueueMessageProcessorPlugin extends AbstractPlugin i
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getChunkSize()

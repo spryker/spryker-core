@@ -208,10 +208,11 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         }
 
         $collection = $this->buildQueryFromCriteria($query, $companyRoleCriteriaFilterTransfer->getFilter());
-        $collection = $this->getPaginatedCollection($collection, $companyRoleCriteriaFilterTransfer->getPagination());
+        /** @var \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole[] $spyCompanyRoleCollection */
+        $spyCompanyRoleCollection = $this->getPaginatedCollection($collection, $companyRoleCriteriaFilterTransfer->getPagination());
 
         $collectionTransfer = new CompanyRoleCollectionTransfer();
-        foreach ($collection as $spyCompanyRole) {
+        foreach ($spyCompanyRoleCollection as $spyCompanyRole) {
             $companyRoleTransfer = $this->prepareCompanyRoleTransfer($spyCompanyRole);
             $collectionTransfer->addRole($companyRoleTransfer);
         }
@@ -252,7 +253,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return mixed|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

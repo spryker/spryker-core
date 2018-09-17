@@ -187,7 +187,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
         foreach ($namespaces as $namespace) {
             $path = $pathToRoot . 'src' . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR;
 
-            foreach (DevelopmentConfig::APPLICATION_LAYERS as $layer) {
+            foreach (DevelopmentConfig::APPLICATIONS as $layer) {
                 $layerPath = $path . $layer . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
                 if ($pathSuffix) {
                     $layerPath .= $pathSuffix;
@@ -252,7 +252,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
     protected function resolveCorePaths($module)
     {
         $paths = [];
-        list ($namespace, $module) = explode('.', $module, 2);
+        [$namespace, $module] = explode('.', $module, 2);
 
         if ($module === 'all') {
             if ($namespace === static::NAMESPACE_SPRYKER_SHOP) {

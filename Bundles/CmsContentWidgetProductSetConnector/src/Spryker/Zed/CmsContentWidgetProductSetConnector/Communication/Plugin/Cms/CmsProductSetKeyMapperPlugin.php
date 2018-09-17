@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CmsProductSetKeyMapperPlugin extends AbstractPlugin implements CmsContentWidgetParameterMapperPluginInterface
 {
     /**
+     * @api
+     *
      * @param array $parameters
      *
      * @return array

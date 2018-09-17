@@ -72,7 +72,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
         if (strpos($host, ':')) {
             $parts = explode(':', $host);
             $host = $parts[0];
-            $this->port = $parts[1];
+            $this->port = (int)$parts[1];
         }
 
         $this->newRelicApi = $newRelicApi;
@@ -173,7 +173,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $key = $this->keyPrefix . $sessionId;
 
         $startTime = microtime(true);
-        $result = $this->connection->delete($key);
+        $this->connection->delete($key);
         $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
         return true;

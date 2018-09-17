@@ -274,7 +274,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $storeName,
         $isRefresh = false
     ) {
-        if ($isRefresh) {
+        if ($isRefresh && $productAbstractPageSearchEntity && $productAbstractPageSearchEntity->getStructuredData()) {
             $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransferFromJson($productAbstractPageSearchEntity->getStructuredData());
         } else {
             $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransfer($productAbstractLocalizedEntity);
@@ -361,7 +361,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $pairs = [];
         $productPayloadTransfers = $productPageLoadTransfer->getPayloadTransfers();
         foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
-            list($pairs, $mappedProductAbstractPageSearchEntities) = $this->pairProductAbstractLocalizedEntityWithProductAbstractPageSearchEntityByStoresAndLocale(
+            [$pairs, $mappedProductAbstractPageSearchEntities] = $this->pairProductAbstractLocalizedEntityWithProductAbstractPageSearchEntityByStoresAndLocale(
                 $productAbstractLocalizedEntity['fk_product_abstract'],
                 $productAbstractLocalizedEntity['Locale']['locale_name'],
                 $productPayloadTransfers[$productAbstractLocalizedEntity['fk_product_abstract']],
