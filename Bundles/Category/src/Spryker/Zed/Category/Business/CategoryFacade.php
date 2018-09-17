@@ -665,10 +665,10 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getCategoriesByAbstractProductId(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    public function getCategoriesByIdProductAbstract(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
         return $this->getFactory()
             ->createCategory()
-            ->getCategoryTransfersByAbstractProductId($idProductAbstract, $localeTransfer);
+            ->getCategoryTransfersByIdProductAbstract($idProductAbstract, $localeTransfer);
     }
 }

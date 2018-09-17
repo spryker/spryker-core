@@ -54,5 +54,5 @@ interface CategoryInterface
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getCategoryTransfersByAbstractProductId(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
+    public function getCategoryTransfersByIdProductAbstract(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 }

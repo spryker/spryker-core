@@ -150,9 +150,9 @@ class Category implements CategoryInterface
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getCategoryTransfersByAbstractProductId(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    public function getCategoryTransfersByIdProductAbstract(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
         return $this->categoryRepository
-            ->getCategoriesByAbstractProductId($idProductAbstract, $localeTransfer->getIdLocale());
+            ->getCategoriesByIdProductAbstract($idProductAbstract, $localeTransfer->getIdLocale());
     }
 }

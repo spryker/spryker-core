@@ -35,5 +35,5 @@ interface CategoryRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getCategoriesByAbstractProductId(int $idProductAbstract, int $idLocale): CategoryCollectionTransfer;
+    public function getCategoriesByIdProductAbstract(int $idProductAbstract, int $idLocale): CategoryCollectionTransfer;
 }

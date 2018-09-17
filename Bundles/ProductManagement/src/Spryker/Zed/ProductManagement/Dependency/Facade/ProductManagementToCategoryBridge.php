@@ -33,6 +33,6 @@ class ProductManagementToCategoryBridge implements ProductManagementToCategoryIn
      */
     public function getCategoriesByAbstractProductId(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
-        return $this->categoryFacade->getCategoriesByAbstractProductId($idProductAbstract, $localeTransfer);
+        return $this->categoryFacade->getCategoriesByIdProductAbstract($idProductAbstract, $localeTransfer);
     }
 }

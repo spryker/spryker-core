@@ -219,9 +219,9 @@ class Category implements BaseCategoryInterface
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getCategoryTransfersByAbstractProductId(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    public function getCategoryTransfersByIdProductAbstract(int $idProductAbstract, LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
-        return $this->category->getCategoryTransfersByAbstractProductId($idProductAbstract, $localeTransfer);
+        return $this->category->getCategoryTransfersByIdProductAbstract($idProductAbstract, $localeTransfer);
     }
 
     /**
