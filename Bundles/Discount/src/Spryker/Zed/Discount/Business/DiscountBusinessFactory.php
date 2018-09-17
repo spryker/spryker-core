@@ -76,7 +76,8 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->createDecisionRuleBuilder(),
             $this->createVoucherValidator(),
             $this->createDiscountEntityMapper(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getMessengerFacade()
         );
 
         $discount->setDiscountApplicableFilterPlugins($this->getDiscountApplicableFilterPlugins());
