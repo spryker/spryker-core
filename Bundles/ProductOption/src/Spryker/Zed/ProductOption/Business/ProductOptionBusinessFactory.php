@@ -28,6 +28,7 @@ use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface getRepository()
  */
 class ProductOptionBusinessFactory extends AbstractBusinessFactory
 {
@@ -55,7 +56,8 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
             $this->createTranslationSaver(),
             $this->createAbstractProductOptionSaver(),
             $this->createProductOptionValueSaver(),
-            $this->getEventFacade()
+            $this->getEventFacade(),
+            $this->getRepository()
         );
     }
 
