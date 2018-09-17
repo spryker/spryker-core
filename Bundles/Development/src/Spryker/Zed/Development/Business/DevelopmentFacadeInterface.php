@@ -371,7 +371,7 @@ interface DevelopmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     * @return array
      */
     public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
 
@@ -396,6 +396,8 @@ interface DevelopmentFacadeInterface
      * - Packages are not spryker modules.
      *
      * @api
+     *
+     * @internal
      *
      * @return \Generated\Shared\Transfer\PackageTransfer[]
      */

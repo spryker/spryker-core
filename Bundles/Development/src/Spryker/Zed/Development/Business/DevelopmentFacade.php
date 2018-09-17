@@ -467,7 +467,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     * @return array
      */
     public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
@@ -492,6 +492,8 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * {@inheritdoc}
      *
      * @api
+     *
+     * @internal
      *
      * @return \Generated\Shared\Transfer\PackageTransfer[]
      */
