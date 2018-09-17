@@ -230,12 +230,16 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $bundledProductAvailabilityEntity
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailability|null $bundledProductAvailabilityEntity
      *
      * @return bool
      */
-    protected function isBundledItemUnavailable(SpyAvailability $bundledProductAvailabilityEntity)
+    protected function isBundledItemUnavailable(?SpyAvailability $bundledProductAvailabilityEntity)
     {
+        if (!$bundledProductAvailabilityEntity) {
+            return false;
+        }
+
         return ($bundledProductAvailabilityEntity->getQuantity() === 0 && !$bundledProductAvailabilityEntity->getIsNeverOutOfStock());
     }
 
