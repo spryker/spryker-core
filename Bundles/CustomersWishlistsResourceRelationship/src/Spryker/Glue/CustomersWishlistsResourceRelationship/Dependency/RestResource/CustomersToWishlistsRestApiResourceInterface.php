@@ -9,12 +9,12 @@ namespace Spryker\Glue\CustomersWishlistsResourceRelationship\Dependency\RestRes
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CustomersToWishlistsRestApiInterface
+interface CustomersToWishlistsRestApiResourceInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findCustomerWishlists(RestRequestInterface $restRequest): array;
+    public function getCustomerWishlists(RestRequestInterface $restRequest): array;
 }

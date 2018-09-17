@@ -40,5 +40,5 @@ interface WishlistsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findCustomerWishlists(RestRequestInterface $restRequest): array;
+    public function getCustomerWishlists(RestRequestInterface $restRequest): array;
 }

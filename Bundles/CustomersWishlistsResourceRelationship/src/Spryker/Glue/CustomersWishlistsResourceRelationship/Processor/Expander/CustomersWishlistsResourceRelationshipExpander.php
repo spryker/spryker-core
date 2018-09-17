@@ -7,20 +7,20 @@
 
 namespace Spryker\Glue\CustomersWishlistsResourceRelationship\Processor\Expander;
 
-use Spryker\Glue\CustomersWishlistsResourceRelationship\Dependency\RestResource\CustomersToWishlistsRestApiInterface;
+use Spryker\Glue\CustomersWishlistsResourceRelationship\Dependency\RestResource\CustomersToWishlistsRestApiResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CustomersWishlistsResourceRelationshipExpander implements CustomersWishlistsResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\CustomersWishlistsResourceRelationship\Dependency\RestResource\CustomersToWishlistsRestApiInterface
+     * @var \Spryker\Glue\CustomersWishlistsResourceRelationship\Dependency\RestResource\CustomersToWishlistsRestApiResourceInterface
      */
     protected $wishlistsResource;
 
     /**
-     * @param \Spryker\Glue\CustomersWishlistsResourceRelationship\Dependency\RestResource\CustomersToWishlistsRestApiInterface $wishlistsResource
+     * @param \Spryker\Glue\CustomersWishlistsResourceRelationship\Dependency\RestResource\CustomersToWishlistsRestApiResourceInterface $wishlistsResource
      */
-    public function __construct(CustomersToWishlistsRestApiInterface $wishlistsResource)
+    public function __construct(CustomersToWishlistsRestApiResourceInterface $wishlistsResource)
     {
         $this->wishlistsResource = $wishlistsResource;
     }
@@ -35,7 +35,7 @@ class CustomersWishlistsResourceRelationshipExpander implements CustomersWishlis
     {
         foreach ($resources as $resource) {
             $wishlistsResources = $this->wishlistsResource
-                ->findCustomerWishlists($restRequest);
+                ->getCustomerWishlists($restRequest);
             foreach ($wishlistsResources as $wishlistsResource) {
                 $resource->addRelationship($wishlistsResource);
             }

@@ -9,7 +9,7 @@ namespace Spryker\Glue\CustomersWishlistsResourceRelationship\Dependency\RestRes
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class CustomersToWishlistsRestApiBridge implements CustomersToWishlistsRestApiInterface
+class CustomersToWishlistsRestApiResourceBridge implements CustomersToWishlistsRestApiResourceInterface
 {
     /**
      * @var \Spryker\Glue\WishlistsRestApi\WishlistsRestApiResourceInterface
@@ -29,8 +29,8 @@ class CustomersToWishlistsRestApiBridge implements CustomersToWishlistsRestApiIn
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findCustomerWishlists(RestRequestInterface $restRequest): array
+    public function getCustomerWishlists(RestRequestInterface $restRequest): array
     {
-        return $this->wishlistResource->findCustomerWishlists($restRequest);
+        return $this->wishlistResource->getCustomerWishlists($restRequest);
     }
 }

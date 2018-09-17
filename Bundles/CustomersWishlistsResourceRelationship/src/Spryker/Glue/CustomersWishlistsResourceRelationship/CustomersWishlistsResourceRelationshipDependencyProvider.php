@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\CustomersWishlistsResourceRelationship;
 
-use Spryker\Glue\CustomersWishlistsResourceRelationship\Dependency\RestResource\CustomersToWishlistsRestApiBridge;
+use Spryker\Glue\CustomersWishlistsResourceRelationship\Dependency\RestResource\CustomersToWishlistsRestApiResourceBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -23,7 +23,6 @@ class CustomersWishlistsResourceRelationshipDependencyProvider extends AbstractB
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-
         $container = $this->addWishlistsResource($container);
 
         return $container;
@@ -37,7 +36,7 @@ class CustomersWishlistsResourceRelationshipDependencyProvider extends AbstractB
     protected function addWishlistsResource(Container $container): Container
     {
         $container[static::RESOURCE_WISHLISTS] = function (Container $container) {
-            return new CustomersToWishlistsRestApiBridge(
+            return new CustomersToWishlistsRestApiResourceBridge(
                 $container->getLocator()->wishlistsRestApi()->resource()
             );
         };

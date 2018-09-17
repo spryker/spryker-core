@@ -24,8 +24,8 @@ class WishlistsRestApiResource extends AbstractRestResource implements Wishlists
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findCustomerWishlists(RestRequestInterface $restRequest): array
+    public function getCustomerWishlists(RestRequestInterface $restRequest): array
     {
-        return $this->getFactory()->createWishlistsReader()->findCustomerWishlists($restRequest);
+        return $this->getFactory()->createWishlistsReader()->getCustomerWishlists($restRequest);
     }
 }
