@@ -239,10 +239,10 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
      */
     protected function prepareDefaultsValidationGroups(array $validationGroups, FormInterface $form): array
     {
-        if ($form->get(static::FIELD_PRICE_SOURCE)->getData() === true &&
-            ($key = array_search(static::VALIDATION_GROUP_PRICE_SOURCE, $validationGroups, true)) !== false
-        ) {
-            unset($validationGroups[$key]);
+        $validationGroupsPriceSourceKey = array_search(static::VALIDATION_GROUP_PRICE_SOURCE, $validationGroups, true);
+
+        if ($form->get(static::FIELD_PRICE_SOURCE)->getData() === true && $validationGroupsPriceSourceKey !== false) {
+            unset($validationGroups[$validationGroupsPriceSourceKey]);
         }
 
         return $validationGroups;

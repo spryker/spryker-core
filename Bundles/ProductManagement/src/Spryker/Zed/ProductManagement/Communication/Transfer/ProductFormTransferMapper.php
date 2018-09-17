@@ -600,12 +600,14 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     protected function createMoneyValueTransfer(
         PriceProductTransfer $abstractProductPriceProductTransfer
     ): MoneyValueTransfer {
+        $moneyValueTransfer = $abstractProductPriceProductTransfer->getMoneyValue();
+
         return (new MoneyValueTransfer())
-            ->setCurrency($abstractProductPriceProductTransfer->getMoneyValue()->getCurrency())
-            ->setFkCurrency($abstractProductPriceProductTransfer->getMoneyValue()->getFkCurrency())
-            ->setFkStore($abstractProductPriceProductTransfer->getMoneyValue()->getFkStore())
-            ->setNetAmount($abstractProductPriceProductTransfer->getMoneyValue()->getNetAmount())
-            ->setGrossAmount($abstractProductPriceProductTransfer->getMoneyValue()->getGrossAmount());
+            ->setCurrency($moneyValueTransfer->getCurrency())
+            ->setFkCurrency($moneyValueTransfer->getFkCurrency())
+            ->setFkStore($moneyValueTransfer->getFkStore())
+            ->setNetAmount($moneyValueTransfer->getNetAmount())
+            ->setGrossAmount($moneyValueTransfer->getGrossAmount());
     }
 
     /**
