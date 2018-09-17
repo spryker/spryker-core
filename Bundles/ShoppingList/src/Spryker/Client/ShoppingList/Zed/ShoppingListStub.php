@@ -293,11 +293,11 @@ class ShoppingListStub implements ShoppingListStubInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function updateShareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
+    public function updateShoppingListSharedEntities(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\ShoppingListShareResponseTransfer $shoppingListResponseTransfer */
         $shoppingListResponseTransfer = $this->zedRequestClient->call(
-            '/shopping-list/gateway/update-share-shopping-list',
+            '/shopping-list/gateway/update-shopping-list-shared-entities',
             $shoppingListTransfer
         );
 

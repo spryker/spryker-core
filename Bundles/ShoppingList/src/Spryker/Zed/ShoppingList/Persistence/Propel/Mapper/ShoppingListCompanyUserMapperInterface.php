@@ -16,17 +16,25 @@ interface ShoppingListCompanyUserMapperInterface
 {
     /**
      * @param \Propel\Runtime\Collection\Collection|null $companyUserEntityCollection
+     * @param \ArrayObject $shoppingListCompanyUsers
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer[]|\ArrayObject
      */
-    public function mapCompanyUserEntitiesToCompanyUserTransfers(?Collection $companyUserEntityCollection): ArrayObject;
+    public function mapCompanyUserEntitiesToCompanyUserTransfers(
+        ?Collection $companyUserEntityCollection,
+        ArrayObject $shoppingListCompanyUsers
+    ): ArrayObject;
 
     /**
      * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser $shoppingListCompanyUser
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer
      */
-    public function mapCompanyUserEntityToCompanyUserTransfer(SpyShoppingListCompanyUser $shoppingListCompanyUser): ShoppingListCompanyUserTransfer;
+    public function mapCompanyUserEntityToCompanyUserTransfer(
+        SpyShoppingListCompanyUser $shoppingListCompanyUser,
+        ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
+    ): ShoppingListCompanyUserTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer

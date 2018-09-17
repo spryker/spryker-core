@@ -199,8 +199,8 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function updateShareShoppingListAction(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
+    public function updateShoppingListSharedEntitiesAction(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
     {
-        return $this->getFacade()->updateShareShoppingList($shoppingListTransfer);
+        return $this->getFacade()->updateShoppingListSharedEntities($shoppingListTransfer);
     }
 }

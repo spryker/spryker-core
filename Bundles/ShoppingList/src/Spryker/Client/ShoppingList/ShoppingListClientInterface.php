@@ -73,7 +73,7 @@ interface ShoppingListClientInterface
      * Specification:
      *  - Makes Zed request.
      *  - Remove all shopping list items.
-     *  - Get messages from zed request and put them to session.
+     *  - Get messages from Zed request and put them to session.
      *
      * @api
      *
@@ -244,6 +244,8 @@ interface ShoppingListClientInterface
      *
      * @api
      *
+     * @deprecated Use getShoppingListPermissionGroups() instead
+     *
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
      */
     public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer;
@@ -284,5 +286,5 @@ interface ShoppingListClientInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function updateShareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer;
+    public function updateShoppingListSharedEntities(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer;
 }

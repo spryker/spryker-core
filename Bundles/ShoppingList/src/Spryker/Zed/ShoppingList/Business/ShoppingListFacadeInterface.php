@@ -199,6 +199,8 @@ interface ShoppingListFacadeInterface
      *
      * @api
      *
+     * @deprecated Use getShoppingListPermissionGroups() instead
+     *
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
      */
     public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer;
@@ -247,7 +249,7 @@ interface ShoppingListFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function updateShareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer;
+    public function updateShoppingListSharedEntities(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer;
 
     /**
      * Specification:

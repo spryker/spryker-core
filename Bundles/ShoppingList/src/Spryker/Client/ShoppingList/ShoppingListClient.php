@@ -334,9 +334,9 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function updateShareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
+    public function updateShoppingListSharedEntities(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
     {
-        return $this->getZedStub()->updateShareShoppingList($shoppingListTransfer);
+        return $this->getZedStub()->updateShoppingListSharedEntities($shoppingListTransfer);
     }
 
     /**

@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\SpyShoppingListPermissionGroupEntityTransfer;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -150,12 +152,14 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
         $shoppingListCompanyBusinessUnitEntity = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
             ->filterByIdShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit())
-            ->findOneOrCreate();
+            ->findOne();
 
-        $shoppingListCompanyBusinessUnitEntity = $this->getFactory()->createShoppingListCompanyBusinessUnitMapper()
-            ->mapCompanyBusinessUnitTransferToCompanyBusinessUnitEntity($shoppingListCompanyBusinessUnitTransfer, $shoppingListCompanyBusinessUnitEntity);
+        if (!$shoppingListCompanyBusinessUnitEntity) {
+            $this->createShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
+            return;
+        }
 
-        $shoppingListCompanyBusinessUnitEntity->save();
+        $this->updateShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer, $shoppingListCompanyBusinessUnitEntity);
     }
 
     /**
@@ -169,12 +173,14 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
         $shoppingListCompanyUserEntity = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
             ->filterByIdShoppingListCompanyUser($shoppingListCompanyUserTransfer->getIdShoppingListCompanyUser())
-            ->findOneOrCreate();
+            ->findOne();
 
-        $shoppingListCompanyUserEntity = $this->getFactory()->createShoppingListCompanyUserMapper()
-            ->mapCompanyUserTransferToCompanyUserEntity($shoppingListCompanyUserTransfer, $shoppingListCompanyUserEntity);
+        if (!$shoppingListCompanyUserEntity) {
+            $this->createShoppingListCompanyUser($shoppingListCompanyUserTransfer);
+            return;
+        }
 
-        $shoppingListCompanyUserEntity->save();
+        $this->updateShoppingListCompanyUser($shoppingListCompanyUserTransfer, $shoppingListCompanyUserEntity);
     }
 
     /**
@@ -227,5 +233,81 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             ->createShoppingListCompanyBusinessUnitQuery()
             ->findOneByIdShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit())
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
+     *
+     * @return void
+     */
+    protected function createShoppingListCompanyBusinessUnit(
+        ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
+    ): void {
+        $shoppingListCompanyBusinessUnitEntity = $this->getFactory()
+            ->createShoppingListCompanyBusinessUnitMapper()
+            ->mapCompanyBusinessUnitTransferToCompanyBusinessUnitEntity(
+                $shoppingListCompanyBusinessUnitTransfer,
+                new SpyShoppingListCompanyBusinessUnit()
+            );
+
+        $shoppingListCompanyBusinessUnitEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit $shoppingListCompanyBusinessUnitEntity
+     *
+     * @return void
+     */
+    protected function updateShoppingListCompanyBusinessUnit(
+        ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer,
+        SpyShoppingListCompanyBusinessUnit $shoppingListCompanyBusinessUnitEntity
+    ): void {
+        $shoppingListCompanyBusinessUnitEntity = $this->getFactory()
+            ->createShoppingListCompanyBusinessUnitMapper()
+            ->mapCompanyBusinessUnitTransferToCompanyBusinessUnitEntity(
+                $shoppingListCompanyBusinessUnitTransfer,
+                $shoppingListCompanyBusinessUnitEntity
+            );
+
+        $shoppingListCompanyBusinessUnitEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
+     *
+     * @return void
+     */
+    protected function createShoppingListCompanyUser(
+        ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
+    ): void {
+        $shoppingListCompanyUserEntity = $this->getFactory()
+            ->createShoppingListCompanyUserMapper()
+            ->mapCompanyUserTransferToCompanyUserEntity(
+                $shoppingListCompanyUserTransfer,
+                new SpyShoppingListCompanyUser()
+            );
+
+        $shoppingListCompanyUserEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser $shoppingListCompanyUserEntity
+     *
+     * @return void
+     */
+    protected function updateShoppingListCompanyUser(
+        ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer,
+        SpyShoppingListCompanyUser $shoppingListCompanyUserEntity
+    ): void {
+        $shoppingListCompanyUserEntity = $this->getFactory()
+            ->createShoppingListCompanyUserMapper()
+            ->mapCompanyUserTransferToCompanyUserEntity(
+                $shoppingListCompanyUserTransfer,
+                $shoppingListCompanyUserEntity
+            );
+
+        $shoppingListCompanyUserEntity->save();
     }
 }

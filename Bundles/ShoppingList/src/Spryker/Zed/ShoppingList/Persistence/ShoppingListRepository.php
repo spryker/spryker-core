@@ -214,7 +214,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
 
         return $this->getFactory()
             ->createShoppingListPermissionGroupMapper()
-            ->mapShoppingListPermissionGroupEntitiesToShoppingListPermissionTransfers($permissionGroupEntityTransferCollection);
+            ->mapShoppingListPermissionGroupEntitiesToShoppingListPermissionTransfers($permissionGroupEntityTransferCollection, new ShoppingListPermissionGroupCollectionTransfer());
     }
 
     /**
@@ -385,7 +385,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
 
         return $this->getFactory()
             ->createShoppingListCompanyBusinessUnitMapper()
-            ->mapCompanyBusinessUnitEntitiesToCompanyBusinessUnitTransfers($shoppingListsCompanyBusinessUnits);
+            ->mapCompanyBusinessUnitEntitiesToCompanyBusinessUnitTransfers($shoppingListsCompanyBusinessUnits, new ArrayObject());
     }
 
     /**
@@ -402,7 +402,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
 
         return $this->getFactory()
             ->createShoppingListCompanyUserMapper()
-            ->mapCompanyUserEntitiesToCompanyUserTransfers($shoppingListsCompanyUsers);
+            ->mapCompanyUserEntitiesToCompanyUserTransfers($shoppingListsCompanyUsers, new ArrayObject());
     }
 
     /**

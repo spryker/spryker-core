@@ -16,20 +16,23 @@ class ShoppingListCompanyBusinessUnitMapper implements ShoppingListCompanyBusine
 {
     /**
      * @param \Propel\Runtime\Collection\Collection|null $companyBusinessUnitEntityTransferCollection
+     * @param \ArrayObject $shoppingListCompanyBusinessUnits
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer[]|\ArrayObject
      */
     public function mapCompanyBusinessUnitEntitiesToCompanyBusinessUnitTransfers(
-        ?Collection $companyBusinessUnitEntityTransferCollection
+        ?Collection $companyBusinessUnitEntityTransferCollection,
+        ArrayObject $shoppingListCompanyBusinessUnits
     ): ArrayObject {
-        $shoppingListCompanyBusinessUnits = new ArrayObject();
-
         if (!$companyBusinessUnitEntityTransferCollection) {
             return $shoppingListCompanyBusinessUnits;
         }
 
         foreach ($companyBusinessUnitEntityTransferCollection as $companyBusinessUnitEntity) {
-            $shoppingListCompanyBusinessUnits[] = $this->mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer($companyBusinessUnitEntity);
+            $shoppingListCompanyBusinessUnits[] = $this->mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer(
+                $companyBusinessUnitEntity,
+                new ShoppingListCompanyBusinessUnitTransfer()
+            );
         }
 
         return $shoppingListCompanyBusinessUnits;
@@ -37,13 +40,15 @@ class ShoppingListCompanyBusinessUnitMapper implements ShoppingListCompanyBusine
 
     /**
      * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit $shoppingListCompanyBusinessUnit
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer
      */
     public function mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer(
-        SpyShoppingListCompanyBusinessUnit $shoppingListCompanyBusinessUnit
+        SpyShoppingListCompanyBusinessUnit $shoppingListCompanyBusinessUnit,
+        ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
     ): ShoppingListCompanyBusinessUnitTransfer {
-        return (new ShoppingListCompanyBusinessUnitTransfer)
+        return $shoppingListCompanyBusinessUnitTransfer
             ->setIdShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnit->getIdShoppingListCompanyBusinessUnit())
             ->setIdShoppingList($shoppingListCompanyBusinessUnit->getFkShoppingList())
             ->setIdCompanyBusinessUnit($shoppingListCompanyBusinessUnit->getFkCompanyBusinessUnit())

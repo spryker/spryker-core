@@ -16,19 +16,20 @@ class ShoppingListCompanyUserMapper implements ShoppingListCompanyUserMapperInte
 {
     /**
      * @param \Propel\Runtime\Collection\Collection|null $companyUserEntityCollection
+     * @param \ArrayObject $shoppingListCompanyUsers
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer[]|\ArrayObject
      */
-    public function mapCompanyUserEntitiesToCompanyUserTransfers(?Collection $companyUserEntityCollection): ArrayObject
-    {
-        $shoppingListCompanyUsers = new ArrayObject();
-
+    public function mapCompanyUserEntitiesToCompanyUserTransfers(
+        ?Collection $companyUserEntityCollection,
+        ArrayObject $shoppingListCompanyUsers
+    ): ArrayObject {
         if (!$companyUserEntityCollection) {
             return $shoppingListCompanyUsers;
         }
 
         foreach ($companyUserEntityCollection as $companyUserEntityTransfer) {
-            $shoppingListCompanyUsers[] = $this->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntityTransfer);
+            $shoppingListCompanyUsers[] = $this->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntityTransfer, new ShoppingListCompanyUserTransfer());
         }
 
         return $shoppingListCompanyUsers;
@@ -36,12 +37,15 @@ class ShoppingListCompanyUserMapper implements ShoppingListCompanyUserMapperInte
 
     /**
      * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser $shoppingListCompanyUser
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer
      */
-    public function mapCompanyUserEntityToCompanyUserTransfer(SpyShoppingListCompanyUser $shoppingListCompanyUser): ShoppingListCompanyUserTransfer
-    {
-        return (new ShoppingListCompanyUserTransfer)
+    public function mapCompanyUserEntityToCompanyUserTransfer(
+        SpyShoppingListCompanyUser $shoppingListCompanyUser,
+        ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
+    ): ShoppingListCompanyUserTransfer {
+        return $shoppingListCompanyUserTransfer
             ->setIdShoppingListCompanyUser($shoppingListCompanyUser->getIdShoppingListCompanyUser())
             ->setIdShoppingList($shoppingListCompanyUser->getFkShoppingList())
             ->setIdCompanyUser($shoppingListCompanyUser->getFkCompanyUser())

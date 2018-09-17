@@ -13,10 +13,12 @@ interface ShoppingListPermissionGroupMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListPermissionGroupEntityTransfer[] $shoppingListPermissionGroupEntityTransferCollection
+     * @param \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer $shoppingListPermissionGroupCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
      */
     public function mapShoppingListPermissionGroupEntitiesToShoppingListPermissionTransfers(
-        array $shoppingListPermissionGroupEntityTransferCollection
+        array $shoppingListPermissionGroupEntityTransferCollection,
+        ShoppingListPermissionGroupCollectionTransfer $shoppingListPermissionGroupCollectionTransfer
     ): ShoppingListPermissionGroupCollectionTransfer;
 }

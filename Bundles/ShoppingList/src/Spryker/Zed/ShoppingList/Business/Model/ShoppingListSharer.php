@@ -25,11 +25,6 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     protected const CANNOT_RESHARE_SHOPPING_LIST = 'customer.account.shopping_list.share.share_shopping_list_fail';
 
     /**
-     * @var \Propel\Runtime\Connection\ConnectionInterface
-     */
-    protected $databaseConnection;
-
-    /**
      * @var \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface
      */
     protected $shoppingListEntityManager;
@@ -122,7 +117,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function updateShareShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
+    public function updateShoppingListSharedEntities(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListTransfer) {
             $this->executeUpdateShareShoppingListTransaction($shoppingListTransfer);
@@ -196,8 +191,11 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     ): void {
         $isExists = array_key_exists($shoppingListCompanyUserTransfer->getIdShoppingListCompanyUser(), $sharedShoppingListCompanyUserIds);
 
-        if (!$isExists && !$shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup() ||
-            $isExists && $sharedShoppingListCompanyUserIds[$shoppingListCompanyUserTransfer->getIdShoppingListCompanyUser()] ===
+        if (!$isExists && !$shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup()) {
+            return;
+        }
+
+        if ($isExists && $sharedShoppingListCompanyUserIds[$shoppingListCompanyUserTransfer->getIdShoppingListCompanyUser()] ===
             $shoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup()
         ) {
             return;
@@ -223,8 +221,11 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     ): void {
         $isExists = array_key_exists($shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit(), $sharedShoppingListCompanyBusinessUnitIds);
 
-        if (!$isExists && !$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup() ||
-            $isExists && $sharedShoppingListCompanyBusinessUnitIds[$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit()] ===
+        if (!$isExists && !$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()) {
+            return;
+        }
+
+        if ($isExists && $sharedShoppingListCompanyBusinessUnitIds[$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit()] ===
             $shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()
         ) {
             return;

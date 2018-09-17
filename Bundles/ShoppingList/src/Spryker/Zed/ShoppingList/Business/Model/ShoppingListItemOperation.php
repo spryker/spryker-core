@@ -119,19 +119,16 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
+
         if (!$shoppingListTransfer || !$this->checkWritePermission($shoppingListTransfer)) {
             return (new ShoppingListResponseTransfer())->setIsSuccess(false);
         }
 
-        $shoppingListItemCollectionTransfer = $this->shoppingListRepository
-            ->findShoppingListItemsByIdShoppingList($shoppingListTransfer->getIdShoppingList());
+        $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListTransfer) {
+            $this->executeDeleteShoppingListItemsTransaction($shoppingListTransfer);
+        });
 
-        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
-            $this->deleteShoppingListItem($shoppingListItemTransfer);
-        }
-
-        return (new ShoppingListResponseTransfer())
-            ->setIsSuccess(true);
+        return (new ShoppingListResponseTransfer())->setIsSuccess(true);
     }
 
     /**
@@ -197,6 +194,21 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     public function saveShoppingListItemWithoutPermissionsCheck(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         return $this->createOrUpdateShoppingListItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    protected function executeDeleteShoppingListItemsTransaction(ShoppingListTransfer $shoppingListTransfer): void
+    {
+        $shoppingListItemCollectionTransfer = $this->shoppingListRepository
+            ->findShoppingListItemsByIdShoppingList($shoppingListTransfer->getIdShoppingList());
+
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
+            $this->deleteShoppingListItem($shoppingListItemTransfer);
+        }
     }
 
     /**

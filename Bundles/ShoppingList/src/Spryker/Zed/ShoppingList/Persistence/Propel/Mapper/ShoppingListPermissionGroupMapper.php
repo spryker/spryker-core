@@ -14,17 +14,17 @@ class ShoppingListPermissionGroupMapper implements ShoppingListPermissionGroupMa
 {
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListPermissionGroupEntityTransfer[] $shoppingListPermissionGroupEntityTransferCollection
+     * @param \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer $shoppingListPermissionGroupCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
      */
     public function mapShoppingListPermissionGroupEntitiesToShoppingListPermissionTransfers(
-        array $shoppingListPermissionGroupEntityTransferCollection
+        array $shoppingListPermissionGroupEntityTransferCollection,
+        ShoppingListPermissionGroupCollectionTransfer $shoppingListPermissionGroupCollectionTransfer
     ): ShoppingListPermissionGroupCollectionTransfer {
-        $shoppingListPermissionGroupCollectionTransfer = new ShoppingListPermissionGroupCollectionTransfer();
-
         foreach ($shoppingListPermissionGroupEntityTransferCollection as $shoppingListPermissionGroupEntityTransfer) {
             $shoppingListPermissionGroupCollectionTransfer->addPermissionGroup(
-                (new ShoppingListPermissionGroupTransfer)->fromArray($shoppingListPermissionGroupEntityTransfer->modifiedToArray(), true)
+                (new ShoppingListPermissionGroupTransfer())->fromArray($shoppingListPermissionGroupEntityTransfer->modifiedToArray(), true)
             );
         }
 
