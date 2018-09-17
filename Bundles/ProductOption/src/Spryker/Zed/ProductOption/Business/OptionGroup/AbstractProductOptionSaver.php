@@ -110,6 +110,7 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
      */
     public function addProductAbstractToProductOptionGroup($abstractSku, $idProductOptionGroup)
     {
+        /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup|null $productOptionGroupEntity */
         $productOptionGroupEntity = $this->getOptionGroupById($idProductOptionGroup);
         if (!$productOptionGroupEntity) {
             throw new ProductOptionGroupNotFoundException(sprintf(
@@ -118,6 +119,7 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
             ));
         }
 
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract|null $productAbstractEntity */
         $productAbstractEntity = $this->getProductAbstractBySku($abstractSku);
         if (!$productAbstractEntity) {
             throw new AbstractProductNotFoundException(sprintf(

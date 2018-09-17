@@ -122,6 +122,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
      */
     public function toggleOptionActive($idProductOptionGroup, $isActive)
     {
+        /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup|null $productOptionGroupEntity */
         $productOptionGroupEntity = $this->getOptionGroupById($idProductOptionGroup);
 
         if (!$productOptionGroupEntity) {

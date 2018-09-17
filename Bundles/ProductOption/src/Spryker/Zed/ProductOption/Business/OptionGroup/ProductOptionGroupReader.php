@@ -67,6 +67,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
      */
     public function getProductOptionGroupById($idProductOptionGroup)
     {
+        /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup|null $productOptionGroupEntity */
         $productOptionGroupEntity = $this->queryProductGroupById($idProductOptionGroup);
 
         if (!$productOptionGroupEntity) {

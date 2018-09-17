@@ -43,6 +43,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      */
     public function getProductOption($idProductOptionValue)
     {
+        /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue|null $productOptionValueEntity */
         $productOptionValueEntity = $this->getOptionValueById($idProductOptionValue);
 
         if (!$productOptionValueEntity) {

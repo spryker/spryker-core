@@ -90,7 +90,7 @@ class ProductOptionGroupDataProvider
     protected function createTaxSetsList()
     {
         $taxSetCollection = $this->taxFacade->getTaxSets();
-        if (!$taxSetCollection) {
+        if (empty($taxSetCollection->getTaxSets())) {
             return [];
         }
 
