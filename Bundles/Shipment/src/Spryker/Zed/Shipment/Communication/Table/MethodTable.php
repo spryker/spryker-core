@@ -199,8 +199,8 @@ class MethodTable extends AbstractTable
     protected function getResult($method, $idShipmentMethod)
     {
         $methodPriceCollection = $method->getShipmentMethodPrices();
-        $grossMoneyTransferCollectionsGrouped = $this->getGrossPricesGroupedData($methodPriceCollection->getArrayCopy());
-        $netMoneyTransferCollectionsGrouped = $this->getNetPricesGroupedData($methodPriceCollection->getArrayCopy());
+        $grossMoneyTransferCollectionsGrouped = $this->getGrossPricesGroupedByStore($methodPriceCollection->getArrayCopy());
+        $netMoneyTransferCollectionsGrouped = $this->getNetPricesGroupedByStore($methodPriceCollection->getArrayCopy());
 
         return [
             SpyShipmentMethodTableMap::COL_IS_ACTIVE => '<span class="label '
@@ -255,7 +255,7 @@ class MethodTable extends AbstractTable
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer[][]
      */
-    protected function getGrossPricesGroupedData(array $methodPriceEntities): array
+    protected function getGrossPricesGroupedByStore(array $methodPriceEntities): array
     {
         $result = [];
         foreach ($methodPriceEntities as $methodPriceEntity) {
@@ -275,7 +275,7 @@ class MethodTable extends AbstractTable
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer[][]
      */
-    protected function getNetPricesGroupedData(array $methodPriceEntities): array
+    protected function getNetPricesGroupedByStore(array $methodPriceEntities): array
     {
         $result = [];
         foreach ($methodPriceEntities as $methodPriceEntity) {
