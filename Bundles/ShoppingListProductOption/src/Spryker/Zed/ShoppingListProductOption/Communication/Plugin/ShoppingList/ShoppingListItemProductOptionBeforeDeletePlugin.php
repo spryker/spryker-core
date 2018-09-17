@@ -9,16 +9,16 @@ namespace Spryker\Zed\ShoppingListProductOption\Communication\Plugin\ShoppingLis
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface;
+use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface;
 
 /**
  * @method \Spryker\Zed\ShoppingListProductOption\Business\ShoppingListProductOptionFacadeInterface getFacade()
  */
-class ShoppingListItemProductOptionPostSavePlugin extends AbstractPlugin implements ShoppingListItemPostSavePluginInterface
+class ShoppingListItemProductOptionBeforeDeletePlugin extends AbstractPlugin implements ShoppingListItemBeforeDeletePluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Saves product options to shopping list item.
+     * - Removes product options from list item before delete.
      *
      * @api
      *
@@ -29,6 +29,6 @@ class ShoppingListItemProductOptionPostSavePlugin extends AbstractPlugin impleme
     public function execute(ShoppingListItemTransfer $shoppingListItemTransfer): void
     {
         $this->getFacade()
-            ->saveShoppingListItemProductOptions($shoppingListItemTransfer);
+            ->removeShoppingListItemProductOptions($shoppingListItemTransfer);
     }
 }

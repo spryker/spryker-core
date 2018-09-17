@@ -9,11 +9,11 @@ namespace Spryker\Zed\ShoppingListExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
-interface ShoppingListItemPostSavePluginInterface
+interface ShoppingListItemBeforeDeletePluginInterface
 {
     /**
      * Specification:
-     * - This plugin executes after shopping list item saving.
+     * - This plugin executes before shopping list item deletion.
      *
      * @api
      *

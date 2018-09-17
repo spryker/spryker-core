@@ -17,4 +17,11 @@ interface ShoppingListProductOptionWriterInterface
      * @return void
      */
     public function saveShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return void
+     */
+    public function removeShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): void;
 }

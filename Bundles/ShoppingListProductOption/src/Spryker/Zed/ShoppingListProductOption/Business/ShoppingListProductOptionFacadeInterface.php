@@ -28,6 +28,18 @@ interface ShoppingListProductOptionFacadeInterface
 
     /**
      * Specification:
+     * - Removes existing shopping list product options.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return void
+     */
+    public function removeShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): void;
+
+    /**
+     * Specification:
      * - Finds shopping list product options for shopping list item.
      *
      * @api
