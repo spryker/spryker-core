@@ -75,6 +75,6 @@ class SoftMinimumThresholdWithFlexibleFeeStrategyPlugin extends AbstractSalesOrd
      */
     public function calculateFee(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer): ?int
     {
-        return (int)floor(($salesOrderThresholdValueTransfer->getFee() / 100) * $salesOrderThresholdValueTransfer->getValue());
+        return (int)ceil(($salesOrderThresholdValueTransfer->getFee() / 100) * $salesOrderThresholdValueTransfer->getValue());
     }
 }
