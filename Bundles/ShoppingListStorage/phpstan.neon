@@ -1,7 +1,4 @@
 parameters:
-    ignoreErrors:
-        - '#Call to an undefined method .+Criteria::.+\(\).#'
-
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
 services:
