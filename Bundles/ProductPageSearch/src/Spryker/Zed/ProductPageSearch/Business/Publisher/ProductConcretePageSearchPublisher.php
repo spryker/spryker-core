@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business\Publisher;
 
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -149,32 +150,78 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
         StoreTransfer $storeTransfer,
         array $localizedProductConcretePageSearchTransfers
     ): void {
-        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            $productConcretePageSearchTransfer = $localizedProductConcretePageSearchTransfers[$localizedAttribute->getLocale()->getLocaleName()] ?? new ProductConcretePageSearchTransfer();
-
-            if (!$productConcreteTransfer->getIsActive() && $productConcretePageSearchTransfer->getIdProductConcretePageSearch() !== null) {
-                $this->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
-            }
-
-            $productConcretePageSearchTransfer = $this->productPageSearchMapper->mapProductConcreteTransferToProductConcretePageSearchTransfer(
+        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
+            $this->syncProductConcretePageSearchPerLocale(
                 $productConcreteTransfer,
-                $productConcretePageSearchTransfer,
                 $storeTransfer,
-                $localizedAttribute
+                $localizedProductConcretePageSearchTransfers[$localizedAttributesTransfer->getLocale()->getLocaleName()] ?? new ProductConcretePageSearchTransfer(),
+                $localizedAttributesTransfer
             );
-
-            $productConcretePageSearchTransfer = $this->expandProductConcretePageSearchTransferWithPlugins($productConcreteTransfer, $productConcretePageSearchTransfer);
-
-            $productConcretePageSearchTransfer->setData(
-                $this->productPageSearchMapper->mapToSearchData($productConcretePageSearchTransfer)
-            );
-
-            $productConcretePageSearchTransfer->setStructuredData(
-                $this->getStructuredDataFromProductConcretePageSearchTransfer($productConcretePageSearchTransfer)
-            );
-
-            $this->productConcretePageSearchWriter->saveProductConcretePageSearch($productConcretePageSearchTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
+     *
+     * @return void
+     */
+    protected function syncProductConcretePageSearchPerLocale(
+        ProductConcreteTransfer $productConcreteTransfer,
+        StoreTransfer $storeTransfer,
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer,
+        LocalizedAttributesTransfer $localizedAttributesTransfer
+    ): void {
+        if (!$productConcreteTransfer->getIsActive() && $productConcretePageSearchTransfer->getIdProductConcretePageSearch() !== null) {
+            $this->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
+
+            return;
+        }
+
+        $this->mapProductConcretePageSearchTransfer(
+            $productConcreteTransfer,
+            $storeTransfer,
+            $productConcretePageSearchTransfer,
+            $localizedAttributesTransfer
+        );
+
+        $this->productConcretePageSearchWriter->saveProductConcretePageSearch($productConcretePageSearchTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
+     */
+    protected function mapProductConcretePageSearchTransfer(
+        ProductConcreteTransfer $productConcreteTransfer,
+        StoreTransfer $storeTransfer,
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer,
+        LocalizedAttributesTransfer $localizedAttributesTransfer
+    ): ProductConcretePageSearchTransfer {
+        $productConcretePageSearchTransfer = $this->productPageSearchMapper->mapProductConcreteTransferToProductConcretePageSearchTransfer(
+            $productConcreteTransfer,
+            $productConcretePageSearchTransfer,
+            $storeTransfer,
+            $localizedAttributesTransfer
+        );
+
+        $productConcretePageSearchTransfer = $this->expandProductConcretePageSearchTransferWithPlugins($productConcreteTransfer, $productConcretePageSearchTransfer);
+
+        $productConcretePageSearchTransfer->setData(
+            $this->productPageSearchMapper->mapToSearchData($productConcretePageSearchTransfer)
+        );
+
+        $productConcretePageSearchTransfer->setStructuredData(
+            $this->getStructuredDataFromProductConcretePageSearchTransfer($productConcretePageSearchTransfer)
+        );
+
+        return $productConcretePageSearchTransfer;
     }
 
     /**

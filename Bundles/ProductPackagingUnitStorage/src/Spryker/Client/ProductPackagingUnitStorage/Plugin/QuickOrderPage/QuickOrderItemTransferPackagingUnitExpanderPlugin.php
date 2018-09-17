@@ -22,7 +22,7 @@ class QuickOrderItemTransferPackagingUnitExpanderPlugin extends AbstractPlugin i
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function expand(ItemTransfer $itemTransfer): ItemTransfer
+    public function expandItemTransfer(ItemTransfer $itemTransfer): ItemTransfer
     {
         return $this->getClient()->expandItemTransferWithPackagingUnit($itemTransfer);
     }

@@ -22,5 +22,5 @@ interface QuickOrderItemTransferExpanderPluginInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function expand(ItemTransfer $itemTransfer): ItemTransfer;
+    public function expandItemTransfer(ItemTransfer $itemTransfer): ItemTransfer;
 }
