@@ -157,11 +157,11 @@ class ProductBusinessTester extends Actor
         $productConcreteTransfers = [];
 
         for ($i = 0; $i < 2; $i++) {
-            $productConcreteTransfer = new ProductConcreteTransfer();
-            $productConcreteTransfer->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
-            $productConcreteTransfer->setSku('concrete_sku_' . md5(uniqid()));
-            $productConcreteTransfer->setLocalizedAttributes(new ArrayObject([$this->createLocalizedAttributeTransfer()]));
-            $productConcreteTransfer->setIsActive(true);
+            $productConcreteTransfer = (new ProductConcreteTransfer())
+                ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
+                ->setSku('concrete_sku_' . md5(uniqid()))
+                ->setLocalizedAttributes(new ArrayObject([$this->createLocalizedAttributeTransfer()]))
+                ->setIsActive(true);
 
             $productConcreteTransfers[] = $productConcreteTransfer;
         }

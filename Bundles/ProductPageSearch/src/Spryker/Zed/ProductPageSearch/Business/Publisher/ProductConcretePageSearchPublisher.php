@@ -163,7 +163,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
                 $localizedAttribute
             );
 
-            $this->expandProductConcretePageSearchTransferWithPlugins($productConcreteTransfer, $productConcretePageSearchTransfer);
+            $productConcretePageSearchTransfer = $this->expandProductConcretePageSearchTransferWithPlugins($productConcreteTransfer, $productConcretePageSearchTransfer);
 
             $productConcretePageSearchTransfer->setData(
                 $this->productPageSearchMapper->mapToSearchData($productConcretePageSearchTransfer)
@@ -195,13 +195,15 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */
-    protected function expandProductConcretePageSearchTransferWithPlugins(ProductConcreteTransfer $productConcreteTransfer, ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): void
+    protected function expandProductConcretePageSearchTransferWithPlugins(ProductConcreteTransfer $productConcreteTransfer, ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): ProductConcretePageSearchTransfer
     {
         foreach ($this->pageDataExpanderPlugins as $pageDataExpanderPlugin) {
-            $pageDataExpanderPlugin->expand($productConcreteTransfer, $productConcretePageSearchTransfer);
+            $productConcretePageSearchTransfer = $pageDataExpanderPlugin->expand($productConcreteTransfer, $productConcretePageSearchTransfer);
         }
+
+        return $productConcretePageSearchTransfer;
     }
 
     /**
