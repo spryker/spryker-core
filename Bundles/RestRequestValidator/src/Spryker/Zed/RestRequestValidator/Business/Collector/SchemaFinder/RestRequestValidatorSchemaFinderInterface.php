@@ -18,4 +18,11 @@ interface RestRequestValidatorSchemaFinderInterface
      * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
      */
     public function findSchemas(StoreTransfer $storeTransfer): RestRequestValidatorToFinderAdapterInterface;
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return string[]
+     */
+    public function getPaths(StoreTransfer $storeTransfer): array;
 }

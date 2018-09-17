@@ -63,7 +63,7 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
      *
      * @return string[]
      */
-    protected function getPaths(StoreTransfer $storeTransfer): array
+    public function getPaths(StoreTransfer $storeTransfer): array
     {
         $paths = [];
         foreach ($this->config->getValidationSchemaPathPattern() as $pathPattern) {
