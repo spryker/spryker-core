@@ -25,7 +25,7 @@ class ProductReviewSearchQueryContainer extends AbstractQueryContainer implement
      *
      * @param array $productReviewIds
      *
-     * @return $this|\Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearchQuery
+     * @return \Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearchQuery
      */
     public function queryProductReviewSearchByIds(array $productReviewIds)
     {
