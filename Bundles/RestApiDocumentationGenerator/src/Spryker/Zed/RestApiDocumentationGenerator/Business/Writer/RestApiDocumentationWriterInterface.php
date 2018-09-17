@@ -10,10 +10,9 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Writer;
 interface RestApiDocumentationWriterInterface
 {
     /**
-     * @param array $paths
-     * @param array $schemas
+     * @param array $data
      *
      * @return void
      */
-    public function write(array $paths, array $schemas): void;
+    public function write(array $data): void;
 }

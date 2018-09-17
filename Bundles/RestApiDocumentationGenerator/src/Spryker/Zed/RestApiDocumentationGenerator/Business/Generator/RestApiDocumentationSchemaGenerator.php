@@ -23,7 +23,11 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     protected const KEY_PROPERTIES = 'properties';
     protected const KEY_REF = '$ref';
     protected const KEY_RELATIONSHIPS = 'relationships';
+    protected const KEY_SELF = 'self';
     protected const KEY_TYPE = 'type';
+
+    protected const SCHEMA_NAME_LINKS = 'RestLinks';
+    protected const SCHEMA_NAME_RELATIONSHIPS = 'RestRelationships';
 
     protected const VALUE_ARRAY = 'array';
     protected const VALUE_BOOLEAN = 'boolean';
@@ -40,15 +44,14 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
 
     protected const PATTERN_SCHEMA_REFERENCE = '#/components/schemas/%s';
 
-    protected const TRANSFER_NAME_PARTIAL_ATTRIBUTE = 'Attribute';
+    protected const TRANSFER_NAME_PARTIAL_ATTRIBUTES = 'Attributes';
     protected const TRANSFER_NAME_PARTIAL_TRANSFER = 'Transfer';
-    protected const SCHEMA_NAME_PARTIAL_REQUEST = 'Request';
 
-    protected const SCHEMA_NAME_PARTIAL_ATTRIBUTE = 'Attribute';
     protected const SCHEMA_NAME_PARTIAL_ATTRIBUTES = 'Attributes';
     protected const SCHEMA_NAME_PARTIAL_COLLECTION = 'Collection';
     protected const SCHEMA_NAME_PARTIAL_DATA = 'Data';
     protected const SCHEMA_NAME_PARTIAL_RELATIONSHIPS = 'Relationships';
+    protected const SCHEMA_NAME_PARTIAL_REQUEST = 'Request';
     protected const SCHEMA_NAME_PARTIAL_RESPONSE = 'Response';
 
     protected const KEY_REST_REQUEST_PARAMETER = 'rest_request_parameter';
@@ -149,7 +152,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
         $resourceRelationships = $this->getResourceRelationshipsForPlugin($plugin);
         $transfer = new $transferClassName;
 
-        return $this->addResourceResponseSchema($transferClassName, $resourceRelationships, $transfer);
+        return $this->addResponseSchema($transferClassName, $resourceRelationships, $transfer);
     }
 
     /**
@@ -169,7 +172,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
         $resourceRelationships = $this->getResourceRelationshipsForPlugin($plugin);
         $transfer = new $transferClassName;
 
-        return $this->addResourceResponseSchema($transferClassName, $resourceRelationships, $transfer);
+        return $this->addResponseSchema($transferClassName, $resourceRelationships, $transfer);
     }
 
     /**
@@ -215,21 +218,21 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
 
         $requestSchemaName = $this->createSchemaNameFromTransferClassName(
             $transferClassNamePartial,
-            static::TRANSFER_NAME_PARTIAL_ATTRIBUTE . static::TRANSFER_NAME_PARTIAL_TRANSFER,
+            static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
             static::SCHEMA_NAME_PARTIAL_REQUEST
         );
         $requestDataSchemaName = $this->createSchemaNameFromTransferClassName(
             $transferClassNamePartial,
-            static::TRANSFER_NAME_PARTIAL_ATTRIBUTE . static::TRANSFER_NAME_PARTIAL_TRANSFER,
+            static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
             static::SCHEMA_NAME_PARTIAL_REQUEST . static::SCHEMA_NAME_PARTIAL_DATA
         );
         $requestAttributesSchemaName = $this->createSchemaNameFromTransferClassName(
             $transferClassNamePartial,
-            static::TRANSFER_NAME_PARTIAL_ATTRIBUTE . static::TRANSFER_NAME_PARTIAL_TRANSFER,
+            static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
             static::SCHEMA_NAME_PARTIAL_REQUEST . static::SCHEMA_NAME_PARTIAL_ATTRIBUTES
         );
 
-        $this->addResourceBaseSchema($requestSchemaName, $requestDataSchemaName);
+        $this->addRequestBaseSchema($requestSchemaName, $requestDataSchemaName);
         $this->addRequestDataSchema($requestDataSchemaName, $requestAttributesSchemaName);
         $this->addRequestDataAttributesSchemaFromTransfer($transfer, $requestAttributesSchemaName);
 
@@ -243,18 +246,18 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      *
      * @return string
      */
-    protected function addResourceResponseSchema(string $transferClassName, array $resourceRelationships, AbstractTransfer $transfer): string
+    protected function addResponseSchema(string $transferClassName, array $resourceRelationships, AbstractTransfer $transfer): string
     {
         $transferClassNamePartial = $this->getTransferClassNamePartial($transferClassName);
 
         $responseSchemaName = $this->createSchemaNameFromTransferClassName(
             $transferClassNamePartial,
-            static::TRANSFER_NAME_PARTIAL_ATTRIBUTE . static::TRANSFER_NAME_PARTIAL_TRANSFER,
+            static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
             static::SCHEMA_NAME_PARTIAL_RESPONSE
         );
         $responseDataSchemaName = $this->createSchemaNameFromTransferClassName(
             $transferClassNamePartial,
-            static::TRANSFER_NAME_PARTIAL_ATTRIBUTE . static::TRANSFER_NAME_PARTIAL_TRANSFER,
+            static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
             static::SCHEMA_NAME_PARTIAL_RESPONSE . static::SCHEMA_NAME_PARTIAL_DATA
         );
         $responseAttributesSchemaName = $this->createSchemaNameFromTransferClassName(
@@ -284,12 +287,12 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
 
         $responseSchemaName = $this->createSchemaNameFromTransferClassName(
             $transferClassNamePartial,
-            static::TRANSFER_NAME_PARTIAL_ATTRIBUTE . static::TRANSFER_NAME_PARTIAL_TRANSFER,
+            static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
             static::SCHEMA_NAME_PARTIAL_COLLECTION . static::SCHEMA_NAME_PARTIAL_RESPONSE
         );
         $responseDataSchemaName = $this->createSchemaNameFromTransferClassName(
             $transferClassNamePartial,
-            static::TRANSFER_NAME_PARTIAL_ATTRIBUTE . static::TRANSFER_NAME_PARTIAL_TRANSFER,
+            static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
             static::SCHEMA_NAME_PARTIAL_COLLECTION . static::SCHEMA_NAME_PARTIAL_RESPONSE . static::SCHEMA_NAME_PARTIAL_DATA
         );
         $responseAttributesSchemaName = $this->createSchemaNameFromTransferClassName(
@@ -316,7 +319,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      */
     protected function addResponseSchemas(string $responseSchemaName, string $responseDataSchemaName, string $responseAttributesSchemaName, AbstractTransfer $transfer): void
     {
-        $this->addResourceBaseSchema($responseSchemaName, $responseDataSchemaName);
+        $this->addResponseBaseSchema($responseSchemaName, $responseDataSchemaName);
         $this->addResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName);
         $this->addResponseDataAttributesSchemaFromTransfer($transfer, $responseAttributesSchemaName);
     }
@@ -332,7 +335,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     {
         $resourceRelationshipsSchemaName = $this->createSchemaNameFromTransferClassName(
             $transferClassNamePartial,
-            static::TRANSFER_NAME_PARTIAL_ATTRIBUTE . static::TRANSFER_NAME_PARTIAL_TRANSFER,
+            static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
             static::SCHEMA_NAME_PARTIAL_RELATIONSHIPS
         );
         $this->addRelationshipsDataToResponseDataSchema($responseDataSchemaName, $resourceRelationshipsSchemaName, $resourceRelationships);
@@ -539,12 +542,32 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      *
      * @return void
      */
-    public function addResourceBaseSchema(string $schemaName, string $ref): void
+    public function addRequestBaseSchema(string $schemaName, string $ref): void
     {
         $this->schemas[$schemaName] = [
             static::KEY_PROPERTIES => [
                 static::KEY_DATA => [
                     static::KEY_REF => sprintf(static::PATTERN_SCHEMA_REFERENCE, $ref),
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @param string $schemaName
+     * @param string $ref
+     *
+     * @return void
+     */
+    public function addResponseBaseSchema(string $schemaName, string $ref): void
+    {
+        $this->schemas[$schemaName] = [
+            static::KEY_PROPERTIES => [
+                static::KEY_DATA => [
+                    static::KEY_REF => sprintf(static::PATTERN_SCHEMA_REFERENCE, $ref),
+                ],
+                static::KEY_LINKS => [
+                    static::KEY_REF => sprintf(static::PATTERN_SCHEMA_REFERENCE, static::SCHEMA_NAME_LINKS),
                 ],
             ],
         ];
@@ -614,7 +637,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
             $properties[$resourceRelationship] = [
                 static::KEY_TYPE => static::VALUE_ARRAY,
                 static::KEY_ITEMS => [
-                    static::KEY_REF => sprintf(static::PATTERN_SCHEMA_REFERENCE, static::SCHEMA_NAME_PARTIAL_RELATIONSHIPS),
+                    static::KEY_REF => sprintf(static::PATTERN_SCHEMA_REFERENCE, static::SCHEMA_NAME_RELATIONSHIPS),
                 ],
             ];
         }
@@ -647,31 +670,49 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     }
 
     /**
-     * TODO: improve this somehow
-     *
      * @return void
      */
     protected function addDefaultSchemas(): void
     {
-        $transferClassNameExploded = $this->getTransferClassNameExploded(RestErrorMessageTransfer::class);
-        $transferClassNamePartial = array_slice($transferClassNameExploded, -1)[0];
+        $this->addDefaultErrorMessageSchema();
+        $this->addDefaultLinksSchema();
+        $this->addDefaultRelationshipsSchema();
+    }
 
+    /**
+     * @return void
+     */
+    protected function addDefaultErrorMessageSchema(): void
+    {
+        $transferClassNamePartial = $this->getTransferClassNamePartial(RestErrorMessageTransfer::class);
         $this->restErrorSchemaName = $this->createSchemaNameFromTransferClassName(
             $transferClassNamePartial,
             static::TRANSFER_NAME_PARTIAL_TRANSFER,
             ''
         );
         $this->addResponseDataAttributesSchemaFromTransfer(new RestErrorMessageTransfer(), $this->restErrorSchemaName);
+    }
 
-        $this->schemas['RestLinks'] = [
+    /**
+     * @return void
+     */
+    protected function addDefaultLinksSchema(): void
+    {
+        $this->schemas[static::SCHEMA_NAME_LINKS] = [
             static::KEY_PROPERTIES => [
-                'self' => [
+                static::KEY_SELF => [
                     static::KEY_TYPE => static::VALUE_STRING,
                 ],
             ],
         ];
+    }
 
-        $this->schemas['RestRelationships'] = [
+    /**
+     * @return void
+     */
+    protected function addDefaultRelationshipsSchema(): void
+    {
+        $this->schemas[static::SCHEMA_NAME_RELATIONSHIPS] = [
             static::KEY_PROPERTIES => [
                 static::KEY_ID => [
                     static::KEY_TYPE => static::VALUE_STRING,

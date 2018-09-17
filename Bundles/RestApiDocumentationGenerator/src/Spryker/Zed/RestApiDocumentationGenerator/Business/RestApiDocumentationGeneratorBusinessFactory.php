@@ -34,9 +34,7 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
     public function createGenerator(): RestApiDocumentationGeneratorInterface
     {
         return new RestApiDocumentationGenerator(
-            $this->getResourceRoutesPluginsProviderPlugins(),
-            $this->createRestApiDocumentationSchemaGenerator(),
-            $this->createRestApiDocumentationPathsGenerator(),
+            $this->createPluginAnalyzer(),
             $this->createYamlRestApiDocumentationWriter()
         );
     }

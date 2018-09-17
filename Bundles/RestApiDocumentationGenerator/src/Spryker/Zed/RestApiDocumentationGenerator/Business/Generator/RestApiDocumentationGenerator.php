@@ -9,24 +9,15 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\PluginAnalyzerInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface;
 
 class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInterface
 {
     /**
-     * @var \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[]
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\PluginAnalyzerInterface
      */
-    protected $resourceRoutesPluginsProviderPlugins;
-
-    /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface
-     */
-    protected $restApiSchemaGenerator;
-
-    /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGeneratorInterface
-     */
-    protected $restApiPathGenerator;
+    protected $pluginAnalyzer;
 
     /**
      * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface
@@ -34,25 +25,12 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
     protected $restApiDocumentationWriter;
 
     /**
-     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\PluginAnalyzerInterface
-     */
-    protected $pluginAnalyzer;
-
-    /**
-     * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[] $resourceRoutesPluginsProviderPlugins
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface $restApiSchemaGenerator
-     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGeneratorInterface $restApiPathGenerator
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\PluginAnalyzerInterface $pluginAnalyzer
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface $restApiDocumentationWriter
      */
-    public function __construct(
-        array $resourceRoutesPluginsProviderPlugins,
-        RestApiDocumentationSchemaGeneratorInterface $restApiSchemaGenerator,
-        RestApiDocumentationPathGeneratorInterface $restApiPathGenerator,
-        RestApiDocumentationWriterInterface $restApiDocumentationWriter
-    ) {
-        $this->resourceRoutesPluginsProviderPlugins = $resourceRoutesPluginsProviderPlugins;
-        $this->restApiSchemaGenerator = $restApiSchemaGenerator;
-        $this->restApiPathGenerator = $restApiPathGenerator;
+    public function __construct(PluginAnalyzerInterface $pluginAnalyzer, RestApiDocumentationWriterInterface $restApiDocumentationWriter)
+    {
+        $this->pluginAnalyzer = $pluginAnalyzer;
         $this->restApiDocumentationWriter = $restApiDocumentationWriter;
     }
 
@@ -63,8 +41,7 @@ class RestApiDocumentationGenerator implements RestApiDocumentationGeneratorInte
     {
         $this->pluginAnalyzer->createRestApiDocumentationFromPlugins();
         $this->restApiDocumentationWriter->write(
-            $this->restApiPathGenerator->getPaths(),
-            $this->restApiSchemaGenerator->getSchemas()
+            $this->pluginAnalyzer->getRestApiDocumentationData()
         );
     }
 

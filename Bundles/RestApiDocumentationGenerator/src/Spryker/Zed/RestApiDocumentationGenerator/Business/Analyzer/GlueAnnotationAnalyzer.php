@@ -12,8 +12,7 @@ use Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\AnnotationExcep
 
 class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
 {
-    protected const REGEX_PATTERN_GLUE_ANNOTATION = '/@Glue\((.|\n)*?\)/';
-    protected const REGEX_PATTERN_DATA_BETWEEN_BRACKETS = '/\((.|\n|\r|\t)*?\)/';
+    protected const REGEX_PATTERN_GLUE_ANNOTATION = '/(?<=@Glue\(\n)(.|\n)*?(?=(\s\*\n)*?\))/';
     protected const REGEX_PATTERN_TRIM_SYMBOLS = '/[^\w|=|,|\.|\n]*/';
     protected const REGEX_PATTERN_ACTION_NAME = '/(\w)+Action/';
 
@@ -107,7 +106,7 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
                 continue;
             }
             if ($token[0] === T_STRING && preg_match(static::REGEX_PATTERN_ACTION_NAME, $token[1]) && $lastParsedParameters) {
-                $result[str_replace('Action', '', $token[1])] = $lastParsedParameters;
+                $result[strtoupper(str_replace('Action', '', $token[1]))] = $lastParsedParameters;
                 $lastParsedParameters = [];
             }
         }
@@ -131,16 +130,14 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
         }
 
         array_walk($matchesFiltered, function (&$match) {
-            preg_match(static::REGEX_PATTERN_DATA_BETWEEN_BRACKETS, $match, $matches);
-            $match = count($matches) ? $matches[0] : '';
             $match = trim(preg_replace(static::REGEX_PATTERN_TRIM_SYMBOLS, '', $match));
         });
 
         foreach ($matchesFiltered as $matchFiltered) {
-            $matchesExloded = explode(PHP_EOL, $matchFiltered);
-            $this->validateMultilineAnnotations($matchesExloded);
+            $matchesExploded = explode(PHP_EOL, $matchFiltered);
+            $this->validateMultilineAnnotations($matchesExploded);
 
-            foreach ($matchesExloded as $match) {
+            foreach ($matchesExploded as $match) {
                 [$parameterName, $parameterValue] = explode('=', $match);
                 $parameterValue = $this->filterParameter($parameterValue);
                 $parameters[$parameterName] = $parameterValue;
@@ -157,7 +154,7 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
      *
      * @return bool
      */
-    protected function validateMultilineAnnotations(array $annotationsExploded): bool
+    protected function validateMultilineAnnotations(array &$annotationsExploded): bool
     {
         if (count($annotationsExploded) <= 1) {
             return true;

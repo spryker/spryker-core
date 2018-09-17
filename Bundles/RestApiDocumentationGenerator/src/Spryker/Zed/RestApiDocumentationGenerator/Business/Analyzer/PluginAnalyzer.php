@@ -21,8 +21,10 @@ class PluginAnalyzer implements PluginAnalyzerInterface
     protected const KEY_NAME = 'name';
     protected const KEY_ID = 'id';
     protected const KEY_PARENT = 'parent';
+    protected const KEY_PATHS = 'paths';
+    protected const KEY_SCHEMAS = 'schemas';
 
-    protected const PATTERN_PATH_WITH_PARENT = '/%s/%s/%s';
+    protected const PATTERN_PATH_WITH_PARENT = '/%s/%s%s';
     protected const PATTERN_PATH_ID = '{%sId}';
 
     /**
@@ -82,12 +84,12 @@ class PluginAnalyzer implements PluginAnalyzerInterface
                 $resource = $plugin->getResourceType();
                 $collection = $plugin->configure(new ResourceRouteCollection());
                 $annotationParameters = $this->annotationsAnalyser->getParametersFromPlugin($plugin);
-                $resourcePath = $this->parseParentToPath($resource, $parents);
+                $resourcePath = $this->parseParentToPath('/' . $resource, $parents);
                 $errorSchema = $this->schemaGenerator->getRestErrorSchemaName();
                 $responseSchema = $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin);
-                $isProtected = $collection->get(Request::METHOD_GET)[static::KEY_IS_PROTECTED];
 
                 if ($collection->has(Request::METHOD_GET)) {
+                    $isProtected = $collection->get(Request::METHOD_GET)[static::KEY_IS_PROTECTED];
                     if ($this->isGetCollection($annotationParameters)) {
                         $collectionResponseSchema = $this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin);
                         $this->pathGenerator->addGetPath($resource, $resourcePath, $collectionResponseSchema, $errorSchema, $isProtected);
@@ -97,14 +99,17 @@ class PluginAnalyzer implements PluginAnalyzerInterface
                     }
                 }
                 if ($collection->has(Request::METHOD_POST)) {
+                    $isProtected = $collection->get(Request::METHOD_POST)[static::KEY_IS_PROTECTED];
                     $requestSchema = $this->schemaGenerator->addRequestSchemaForPlugin($plugin);
                     $this->pathGenerator->addPostPath($resource, $resourcePath, $requestSchema, $responseSchema, $errorSchema, $isProtected);
                 }
                 if ($collection->has(Request::METHOD_PATCH)) {
+                    $isProtected = $collection->get(Request::METHOD_PATCH)[static::KEY_IS_PROTECTED];
                     $requestSchema = $this->schemaGenerator->addRequestSchemaForPlugin($plugin);
                     $this->pathGenerator->addPatchPath($resource, $resourcePath, $requestSchema, $responseSchema, $errorSchema, $isProtected);
                 }
                 if ($collection->has(Request::METHOD_DELETE)) {
+                    $isProtected = $collection->get(Request::METHOD_DELETE)[static::KEY_IS_PROTECTED];
                     $this->pathGenerator->addDeletePath($resource, $resourcePath, $errorSchema, $isProtected);
                 }
             }
@@ -117,8 +122,8 @@ class PluginAnalyzer implements PluginAnalyzerInterface
     public function getRestApiDocumentationData(): array
     {
         return [
-            $this->pathGenerator->getPaths(),
-            $this->schemaGenerator->getSchemas(),
+            static::KEY_PATHS => $this->pathGenerator->getPaths(),
+            static::KEY_SCHEMAS => $this->schemaGenerator->getSchemas(),
         ];
     }
 
@@ -193,8 +198,8 @@ class PluginAnalyzer implements PluginAnalyzerInterface
     protected function isGetCollection(array $annotationParameters): bool
     {
         return $annotationParameters
-            && isset($annotationParameters[RestApiDocumentationGeneratorConfig::ANNOTATION_KEY_GET_COLLECTION])
-            && $annotationParameters[RestApiDocumentationGeneratorConfig::ANNOTATION_KEY_GET_COLLECTION];
+            && isset($annotationParameters[Request::METHOD_GET][RestApiDocumentationGeneratorConfig::ANNOTATION_KEY_GET_COLLECTION])
+            && $annotationParameters[Request::METHOD_GET][RestApiDocumentationGeneratorConfig::ANNOTATION_KEY_GET_COLLECTION];
     }
 
     /**
@@ -205,7 +210,7 @@ class PluginAnalyzer implements PluginAnalyzerInterface
     protected function isGetResource(array $annotationParameters): bool
     {
         return $annotationParameters
-            && isset($annotationParameters[RestApiDocumentationGeneratorConfig::ANNOTATION_KEY_GET_RESOURCE])
-            && $annotationParameters[RestApiDocumentationGeneratorConfig::ANNOTATION_KEY_GET_RESOURCE];
+            && isset($annotationParameters[Request::METHOD_GET][RestApiDocumentationGeneratorConfig::ANNOTATION_KEY_GET_RESOURCE])
+            && $annotationParameters[Request::METHOD_GET][RestApiDocumentationGeneratorConfig::ANNOTATION_KEY_GET_RESOURCE];
     }
 }

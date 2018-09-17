@@ -22,8 +22,8 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
     protected const METHOD_PATCH = 'patch';
     protected const METHOD_DELETE = 'delete';
 
-    protected const DESCRIPTION_DEFAULT_RESPONSE = 'Expected response to a bad request';
-    protected const DESCRIPTION_SUCCESSFUL_RESPONSE = 'Expected response to a valid request';
+    protected const DESCRIPTION_DEFAULT_RESPONSE = 'Expected response to a bad request.';
+    protected const DESCRIPTION_SUCCESSFUL_RESPONSE = 'Expected response to a valid request.';
 
     protected const KEY_APPLICATION_JSON = 'application/json';
     protected const KEY_BEARER_AUTH = 'BearerAuth';
@@ -119,8 +119,8 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
         $this->addPathDefaultInfo(static::METHOD_POST, $resource, $resourcePath, $summary, $isProtected);
         $this->addPathRequiredPathParameters(static::METHOD_POST, $resourcePath, $this->getIdParametersFromResourcePath($resourcePath));
         $this->addPathRequestBody(static::METHOD_POST, $resourcePath, $requestSchema);
-        $this->addPathCustomResponse(static::METHOD_GET, (string)Response::HTTP_CREATED, $resourcePath, static::DESCRIPTION_SUCCESSFUL_RESPONSE, $responseSchema);
-        $this->addPathDefaultResponse(static::METHOD_GET, $resourcePath, $errorSchema);
+        $this->addPathCustomResponse(static::METHOD_POST, (string)Response::HTTP_CREATED, $resourcePath, static::DESCRIPTION_SUCCESSFUL_RESPONSE, $responseSchema);
+        $this->addPathDefaultResponse(static::METHOD_POST, $resourcePath, $errorSchema);
     }
 
     /**
@@ -139,8 +139,8 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
         $this->addPathDefaultInfo(static::METHOD_PATCH, $resource, $resourcePath, $summary, $isProtected);
         $this->addPathRequiredPathParameters(static::METHOD_PATCH, $resourcePath, $this->getIdParametersFromResourcePath($resourcePath));
         $this->addPathRequestBody(static::METHOD_PATCH, $resourcePath, $requestSchema);
-        $this->addPathCustomResponse(static::METHOD_GET, (string)Response::HTTP_ACCEPTED, $resourcePath, static::DESCRIPTION_SUCCESSFUL_RESPONSE, $responseSchema);
-        $this->addPathDefaultResponse(static::METHOD_GET, $resourcePath, $errorSchema);
+        $this->addPathCustomResponse(static::METHOD_PATCH, (string)Response::HTTP_ACCEPTED, $resourcePath, static::DESCRIPTION_SUCCESSFUL_RESPONSE, $responseSchema);
+        $this->addPathDefaultResponse(static::METHOD_PATCH, $resourcePath, $errorSchema);
     }
 
     /**
@@ -173,7 +173,7 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
         $this->paths[$resourcePath][$method][self::KEY_SUMMARY] = $summary;
         $this->paths[$resourcePath][$method][self::KEY_TAGS] = [$resource];
         if ($isProtected) {
-            $this->paths[$resourcePath][$method][self::KEY_SECURITY] = [self::KEY_BEARER_AUTH => []];
+            $this->paths[$resourcePath][$method][self::KEY_SECURITY][] = [self::KEY_BEARER_AUTH => []];
         }
     }
 
@@ -194,7 +194,7 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
             $this->paths[$resourcePath][$method]['parameters'][] = [
                 static::KEY_NAME => $parameter,
                 static::KEY_IN => 'path',
-                static::KEY_DESCRIPTION => $this->getDescriptionFromIdParameter($resourcePath),
+                static::KEY_DESCRIPTION => $this->getDescriptionFromIdParameter($parameter),
                 static::KEY_REQUIRED => true,
                 static::KEY_SCHEMA => [
                     static::KEY_TYPE => 'string',

@@ -57,23 +57,22 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
     }
 
     /**
-     * @param array $paths
-     * @param array $schemas
+     * @param array $data
      *
      * @throws \Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\FileNotCreatedException
      *
      * @return void
      */
-    public function write(array $paths, array $schemas): void
+    public function write(array $data): void
     {
-        $data = $this->getDefaultDataStructure();
-        $data[static::KEY_PATHS] = $paths;
-        $data[static::KEY_COMPONENTS][static::KEY_SCHEMAS] = $schemas;
+        $dataStructure = $this->getDefaultDataStructure();
+        $dataStructure[static::KEY_PATHS] = $data[static::KEY_PATHS];
+        $dataStructure[static::KEY_COMPONENTS][static::KEY_SCHEMAS] = $data[static::KEY_SCHEMAS];
 
         $bytesWritten = file_put_contents(
             $this->resolveGeneratedFileName(),
             $this->yamlDumper->dump(
-                $data,
+                $dataStructure,
                 static::YAML_NESTING_LEVEL,
                 static::YAML_INDENT,
                 RestApiDocumentationGeneratorToSymfonyYamlAdapter::DUMP_EMPTY_ARRAY_AS_SEQUENCE
