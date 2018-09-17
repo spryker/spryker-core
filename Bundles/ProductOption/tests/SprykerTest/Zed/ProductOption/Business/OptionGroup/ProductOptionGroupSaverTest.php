@@ -17,8 +17,10 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInt
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
+use Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface;
 use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
 /**
@@ -127,6 +129,8 @@ class ProductOptionGroupSaverTest extends MockProvider
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface|null $translationSaverMock
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface|null $productOptionValueSaverMock
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface|null $abstractProductOptionSaver
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface|null $eventFacadeMock
+     * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface|null $productOptionRepositoryMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver
      */
@@ -135,7 +139,9 @@ class ProductOptionGroupSaverTest extends MockProvider
         ?ProductOptionToTouchFacadeInterface $touchFacadeMock = null,
         ?TranslationSaverInterface $translationSaverMock = null,
         ?ProductOptionValueSaverInterface $productOptionValueSaverMock = null,
-        ?AbstractProductOptionSaverInterface $abstractProductOptionSaver = null
+        ?AbstractProductOptionSaverInterface $abstractProductOptionSaver = null,
+        ?ProductOptionToEventFacadeInterface $eventFacadeMock = null,
+        ?ProductOptionRepositoryInterface $productOptionRepositoryMock = null
     ) {
 
         if (!$productOptionContainerMock) {
@@ -158,6 +164,14 @@ class ProductOptionGroupSaverTest extends MockProvider
             $abstractProductOptionSaver = $this->createAbstractOptionGroupSaverMock();
         }
 
+        if (!$eventFacadeMock) {
+            $eventFacadeMock = $this->createEventFacadeMock();
+        }
+
+        if (!$productOptionRepositoryMock) {
+            $productOptionRepositoryMock = $this->createProductOptionRepositoryMock();
+        }
+
         return $this->getMockBuilder(ProductOptionGroupSaver::class)
             ->setConstructorArgs([
                 $productOptionContainerMock,
@@ -165,6 +179,8 @@ class ProductOptionGroupSaverTest extends MockProvider
                 $translationSaverMock,
                 $abstractProductOptionSaver,
                 $productOptionValueSaverMock,
+                $eventFacadeMock,
+                $productOptionRepositoryMock,
             ])
             ->setMethods([
                 'getProductAbstractBySku',
@@ -173,6 +189,17 @@ class ProductOptionGroupSaverTest extends MockProvider
                 'createProductOptionGroupEntity',
             ])
             ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface
+     */
+    protected function createProductOptionRepositoryMock(): ProductOptionRepositoryInterface
+    {
+        $productOptionRepositoryMock = $this->getMockBuilder(ProductOptionRepositoryInterface::class)->getMock();
+        $productOptionRepositoryMock->method('findChangedProductOptionGroupProductAbstractIdIndexes')->willReturn([]);
+
+        return $productOptionRepositoryMock;
     }
 
     /**

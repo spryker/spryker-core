@@ -53,9 +53,9 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @return int
+     * @return bool
      */
-    protected function isLastActiveProductOptionGroup(): int
+    protected function isLastActiveProductOptionGroup(): bool
     {
         return $this->getRepository()->getActiveProductOptionGroupsCount() <= 1;
     }
