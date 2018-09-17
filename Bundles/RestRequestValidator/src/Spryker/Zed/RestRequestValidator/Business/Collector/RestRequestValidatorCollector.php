@@ -58,7 +58,7 @@ class RestRequestValidatorCollector implements RestRequestValidatorCollectorInte
         $resultingConfig = [];
 
         if (!$this->validationSchemaFinder->getPaths($storeTransfer)) {
-            return [];
+            return $resultingConfig;
         }
 
         foreach ($this->validationSchemaFinder->findSchemas($storeTransfer) as $moduleValidationSchema) {
