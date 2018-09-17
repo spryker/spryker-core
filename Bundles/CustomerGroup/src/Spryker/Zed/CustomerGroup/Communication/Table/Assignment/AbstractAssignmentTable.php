@@ -144,7 +144,7 @@ abstract class AbstractAssignmentTable extends AbstractTable
             '%s?%s=%s',
             $this->defaultUrl,
             static::PARAM_ID_CUSTOMER_GROUP,
-            (int)$this->idCustomerGroup
+            $this->idCustomerGroup
         ));
     }
 
@@ -189,7 +189,7 @@ abstract class AbstractAssignmentTable extends AbstractTable
     {
         $query = $this->getQuery();
 
-        /** @var \Orm\Zed\Customer\Persistence\SpyCustomer[] $customerEntities */
+        /** @var \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ObjectCollection $customerEntities */
         $customerEntities = $this->runQuery($query, $config, true);
         $rows = $this->buildResultData($customerEntities);
 
