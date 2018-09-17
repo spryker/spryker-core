@@ -344,4 +344,34 @@ class ShoppingListProductOptionFacadeTest extends Unit
         $this->assertCount(1, $actualResult->getProductOptions());
         $this->assertContains($productOptionTransfer, $actualResult->getProductOptions());
     }
+
+    /**
+     * @return void
+     */
+    public function testRemoveShoppingListItemProductOptions(): void
+    {
+        $shoppingListProductOption1 = (new SpyShoppingListProductOption())
+            ->setFkProductOptionValue($this->productOptionValueTransfer1->getIdProductOptionValue())
+            ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
+        $shoppingListProductOption1->save();
+
+        $shoppingListProductOption2 = (new SpyShoppingListProductOption())
+            ->setFkProductOptionValue($this->productOptionValueTransfer2->getIdProductOptionValue())
+            ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
+        $shoppingListProductOption2->save();
+
+        $this->tester
+            ->getFacade()
+            ->removeShoppingListItemProductOptions(
+                $this->shoppingListItemTransfer->getIdShoppingListItem()
+            );
+
+        $actualResult = $this->tester
+            ->getFacade()
+            ->getShoppingListItemProductOptionsByIdShoppingListItem(
+                $this->shoppingListItemTransfer->getIdShoppingListItem()
+            );
+
+        $this->assertEmpty($actualResult->getProductOptions());
+    }
 }

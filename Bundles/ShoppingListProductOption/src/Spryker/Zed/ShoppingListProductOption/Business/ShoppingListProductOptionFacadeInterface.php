@@ -32,11 +32,11 @@ interface ShoppingListProductOptionFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param int $idShoppingListItem
      *
      * @return void
      */
-    public function removeShoppingListItemProductOptions(ShoppingListItemTransfer $shoppingListItemTransfer): void;
+    public function removeShoppingListItemProductOptions(int $idShoppingListItem): void;
 
     /**
      * Specification:

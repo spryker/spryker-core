@@ -29,6 +29,6 @@ class ShoppingListItemProductOptionBeforeDeletePlugin extends AbstractPlugin imp
     public function execute(ShoppingListItemTransfer $shoppingListItemTransfer): void
     {
         $this->getFacade()
-            ->removeShoppingListItemProductOptions($shoppingListItemTransfer);
+            ->removeShoppingListItemProductOptions($shoppingListItemTransfer->getIdShoppingListItem());
     }
 }

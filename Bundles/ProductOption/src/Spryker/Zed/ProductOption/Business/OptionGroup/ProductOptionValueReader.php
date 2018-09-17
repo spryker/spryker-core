@@ -80,7 +80,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      */
     protected function hydrateProductOptionCollectionTransfer(array $productOptionValueEntities): ProductOptionCollectionTransfer
     {
-        $productOptionCollectionTransfer = new ProductOptionCollectionTransfer;
+        $productOptionCollectionTransfer = new ProductOptionCollectionTransfer();
         $productOptionTransfers = $this->hydrateProductOptionArray($productOptionValueEntities);
         $productOptionCollectionTransfer->setProductOptions(new ArrayObject($productOptionTransfers));
 

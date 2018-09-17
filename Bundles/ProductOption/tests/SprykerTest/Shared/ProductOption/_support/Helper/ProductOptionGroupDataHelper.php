@@ -91,7 +91,7 @@ class ProductOptionGroupDataHelper extends Module
         $idProductOptionGroup = $this->getProductOptionFacade()->saveProductOptionGroup($productOptionGroupTransfer);
         $productOptionGroupTransfer->setIdProductOptionGroup($idProductOptionGroup);
 
-        foreach ($overrideValues as list($overrideValue, $overridePrices)) {
+        foreach ($overrideValues as [$overrideValue, $overridePrices]) {
             $overrideValue = array_merge($overrideValue, [
                 ProductOptionValueTransfer::FK_PRODUCT_OPTION_GROUP => $idProductOptionGroup,
             ]);
