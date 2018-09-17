@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -37,26 +36,18 @@ class AddressesReader implements AddressesReaderInterface
     protected $addressesResourceMapper;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface
-     */
-    protected $customerReader;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface $addressesResourceMapper
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface $customersReader
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CustomersRestApiToCustomerClientInterface $customerClient,
-        AddressesResourceMapperInterface $addressesResourceMapper,
-        CustomersReaderInterface $customersReader
+        AddressesResourceMapperInterface $addressesResourceMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->customerClient = $customerClient;
         $this->addressesResourceMapper = $addressesResourceMapper;
-        $this->customerReader = $customersReader;
     }
 
     /**
@@ -69,22 +60,21 @@ class AddressesReader implements AddressesReaderInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
 
-        $customerResponseTransfer = $this
-            ->customerReader
-            ->findCustomerByReference($customerReference);
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
+        $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
         if (!$customerResponseTransfer->getHasCustomer()) {
-            $this->createCustomerNotFoundError($restResponse);
+            return $this->createCustomerNotFoundError($restResponse);
+        }
 
-            return $restResponse;
+        if (!$this->isSameCustomerReference($restRequest)) {
+            return $this->createUnauthorizedError($restResponse);
         }
 
         $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
 
         if (!count($addressesTransfer->getAddresses())) {
-            $this->createCustomerAddressesNotFoundError($restResponse);
-
-            return $restResponse;
+            return $this->createCustomerAddressesNotFoundError($restResponse);
         }
 
         if (!$restRequest->getResource()->getId()) {
@@ -99,15 +89,12 @@ class AddressesReader implements AddressesReaderInterface
                     $address,
                     $customerResponseTransfer->getCustomerTransfer()
                 );
-                $restResponse->addResource($addressesResource);
 
-                return $restResponse;
+                return $restResponse->addResource($addressesResource);
             }
         }
 
-        $this->createAddressNotFoundError($restResponse);
-
-        return $restResponse;
+        return $this->createAddressNotFoundError($restResponse);
     }
 
     /**
@@ -176,5 +163,30 @@ class AddressesReader implements AddressesReaderInterface
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
 
         return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createUnauthorizedError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED)
+            ->setStatus(Response::HTTP_FORBIDDEN)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function isSameCustomerReference(RestRequestInterface $restRequest): bool
+    {
+        return $restRequest->getUser()->getNaturalIdentifier() === $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
     }
 }

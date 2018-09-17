@@ -25,6 +25,13 @@ class CustomersWriter implements CustomersWriterInterface
     protected const ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED = 'customer.email.already.used';
     protected const ERROR_CUSTOMER_PASSWORD_INVALID = 'customer.password.invalid';
 
+    protected const CUSTOMERS_GENDER_ENUM_MALE = 'Male';
+    protected const CUSTOMERS_GENDER_ENUM_FEMALE = 'Female';
+    protected const CUSTOMERS_GENDERS_ENUM = [
+        self::CUSTOMERS_GENDER_ENUM_MALE,
+        self::CUSTOMERS_GENDER_ENUM_FEMALE,
+    ];
+
     /**
      * @var \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface
      */
@@ -36,11 +43,6 @@ class CustomersWriter implements CustomersWriterInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface
-     */
-    protected $customersReader;
-
-    /**
      * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface
      */
     protected $customersResourceMapper;
@@ -48,18 +50,15 @@ class CustomersWriter implements CustomersWriterInterface
     /**
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersReaderInterface $customersReader
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface $customersResourceMapper
      */
     public function __construct(
         CustomersRestApiToCustomerClientInterface $customerClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        CustomersReaderInterface $customersReader,
         CustomersResourceMapperInterface $customersResourceMapper
     ) {
         $this->customerClient = $customerClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->customersReader = $customersReader;
         $this->customersResourceMapper = $customersResourceMapper;
     }
 
@@ -68,20 +67,25 @@ class CustomersWriter implements CustomersWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function registerCustomer(RestCustomersAttributesTransfer $restCustomersAttributesTransfer): RestResponseInterface
-    {
-        $response = $this->restResourceBuilder->createRestResponse();
+    public function registerCustomer(
+        RestCustomersAttributesTransfer $restCustomersAttributesTransfer
+    ): RestResponseInterface {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $customerTransfer = $this->customersResourceMapper->mapCustomerAttributesToCustomerTransfer($restCustomersAttributesTransfer);
+        if (!$restCustomersAttributesTransfer->getAcceptedTerms()) {
+            return $this->createNotAcceptedTermsError($restResponse);
+        }
+
+        $customerTransfer = (new CustomerTransfer())->fromArray($restCustomersAttributesTransfer->toArray(), true);
         $customerResponseTransfer = $this->customerClient->registerCustomer($customerTransfer);
 
         if (!$customerResponseTransfer->getIsSuccess()) {
-            return $this->createErrorResponse($customerResponseTransfer, $response);
+            return $this->createErrorResponse($customerResponseTransfer, $restResponse);
         }
 
-        $restResource = $this->customersResourceMapper->mapCustomerToCustomersRestResource($customerResponseTransfer->getCustomerTransfer());
+        $restResource = $this->customersResourceMapper->mapCustomerTransferToRestResource($customerResponseTransfer->getCustomerTransfer());
 
-        return $response->addResource($restResource);
+        return $restResponse->addResource($restResource);
     }
 
     /**
@@ -101,22 +105,26 @@ class CustomersWriter implements CustomersWriterInterface
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
         if (!$customerResponseTransfer->getHasCustomer()) {
-            $this->createCustomerNotFoundError($restResponse);
-
-            return $restResponse;
+            return $this->createCustomerNotFoundError($restResponse);
         }
 
-        $customerTransfer = $this
-            ->customersResourceMapper
-            ->mapCustomerAttributesToCustomerTransfer($restCustomerTransfer);
-        $customerTransfer->setIdCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer());
+        if (!$this->isSameCustomerReference($restRequest)) {
+            return $this->createUnauthorizedError($restResponse);
+        }
 
-        $customerResponseTransfer = $this->customerClient->updateCustomer($customerTransfer);
+        $customerResponseTransfer->getCustomerTransfer()->fromArray(
+            $this->getCustomerData($restCustomerTransfer)
+        );
+
+        if ($customerResponseTransfer->getCustomerTransfer()->isPropertyModified(CustomerTransfer::GENDER) &&
+            !in_array($customerResponseTransfer->getCustomerTransfer()->getGender(), static::CUSTOMERS_GENDERS_ENUM)) {
+            return $this->createNotValidGenderError($restResponse);
+        }
+
+        $customerResponseTransfer = $this->customerClient->updateCustomer($customerResponseTransfer->getCustomerTransfer());
 
         if (!$customerResponseTransfer->getIsSuccess()) {
-            $this->createCustomerNotSavedError($restResponse);
-
-            return $restResponse;
+            return $this->createCustomerNotSavedError($restResponse);
         }
 
         $restResource = $this
@@ -132,8 +140,10 @@ class CustomersWriter implements CustomersWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function updateCustomerPassword(RestRequestInterface $restRequest, RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer): RestResponseInterface
-    {
+    public function updateCustomerPassword(
+        RestRequestInterface $restRequest,
+        RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer
+    ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $user = $restRequest->getUser();
@@ -141,11 +151,21 @@ class CustomersWriter implements CustomersWriterInterface
             return $this->createCustomerReferenceMissingError($restResponse);
         }
 
-        $customerResponseTransfer = $this->customersReader->findCustomerByReference($user->getNaturalIdentifier());
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference($user->getNaturalIdentifier());
+        $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
         $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
 
         if (!$customerTransfer) {
             return $this->createCustomerNotFoundError($restResponse);
+        }
+
+        if (!$this->isSameCustomerReference($restRequest)) {
+            return $this->createUnauthorizedError($restResponse);
+        }
+
+        if (!$this->assertPasswordNotEmpty($passwordAttributesTransfer)) {
+            return $this->createPasswordNotValid($restResponse);
         }
 
         if (!$this->assertPasswordsAreIdentical($passwordAttributesTransfer)) {
@@ -157,17 +177,14 @@ class CustomersWriter implements CustomersWriterInterface
         $customerResponseTransfer = $this->customerClient->updateCustomerPassword($customerTransfer);
         if (!$customerResponseTransfer->getIsSuccess()) {
             foreach ($customerResponseTransfer->getErrors() as $error) {
-                if ($error === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
-                    $restErrorTransfer = (new RestErrorMessageTransfer())
-                        ->setStatus(Response::HTTP_BAD_REQUEST)
-                        ->setCode(CustomersRestApiConfig::RESPONSE_CODE_INVALID_PASSWORD)
-                        ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_INVALID_PASSWORD);
-                } else {
-                    $restErrorTransfer = (new RestErrorMessageTransfer())
-                        ->setStatus(Response::HTTP_BAD_REQUEST)
-                        ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORD_CHANGE_FAILED)
-                        ->setDetail($error->getMessage());
+                if ($error->getMessage() === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
+                    return $this->createPasswordNotValid($restResponse);
                 }
+
+                $restErrorTransfer = (new RestErrorMessageTransfer())
+                    ->setStatus(Response::HTTP_BAD_REQUEST)
+                    ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORD_CHANGE_FAILED)
+                    ->setDetail($error->getMessage());
 
                 $restResponse->addError($restErrorTransfer);
             }
@@ -191,14 +208,20 @@ class CustomersWriter implements CustomersWriterInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
+        if (!$restRequest->getResource()->getId()) {
+            return $this->createCustomerReferenceMissingError($restResponse);
+        }
+
         $customerTransfer = (new CustomerTransfer())
             ->setCustomerReference($restRequest->getResource()->getId());
         $customerTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        if (!$customerTransfer) {
-            $this->createCustomerNotFoundError($restResponse);
+        if (!$customerTransfer->getHasCustomer()) {
+            return $this->createCustomerNotFoundError($restResponse);
+        }
 
-            return $restResponse;
+        if (!$this->isSameCustomerReference($restRequest)) {
+            return $this->createUnauthorizedError($restResponse);
         }
 
         $this->customerClient->anonymizeCustomer($customerTransfer->getCustomerTransfer());
@@ -214,6 +237,16 @@ class CustomersWriter implements CustomersWriterInterface
     protected function assertPasswordsAreIdentical(RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer): bool
     {
         return strcmp($passwordAttributesTransfer->getNewPassword(), $passwordAttributesTransfer->getConfirmPassword()) === 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer
+     *
+     * @return bool
+     */
+    protected function assertPasswordNotEmpty(RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer): bool
+    {
+        return mb_strlen($passwordAttributesTransfer->getNewPassword()) > 1;
     }
 
     /**
@@ -308,6 +341,21 @@ class CustomersWriter implements CustomersWriterInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
+    protected function createPasswordNotValid(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_INVALID_PASSWORD)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_INVALID_PASSWORD);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
     protected function createCustomerNotSavedError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
@@ -316,5 +364,87 @@ class CustomersWriter implements CustomersWriterInterface
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_FAILED_TO_SAVE);
 
         return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createUnauthorizedError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED)
+            ->setStatus(Response::HTTP_FORBIDDEN)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createNotAcceptedTermsError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_NOT_ACCEPTED_TERMS)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_NOT_ACCEPTED_TERMS);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createNotValidGenderError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_NOT_VALID_GENDER)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_NOT_VALID_GENDER
+                . ' Possible options are: ' . implode(', ', static::CUSTOMERS_GENDERS_ENUM));
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function isSameCustomerReference(RestRequestInterface $restRequest): bool
+    {
+        return $restRequest->getUser()->getNaturalIdentifier() === $restRequest->getResource()->getId();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $customerTransfer
+     *
+     * @return array
+     */
+    protected function getCustomerData(RestCustomersAttributesTransfer $customerTransfer): array
+    {
+        $customerData = $customerTransfer->modifiedToArray(true, true);
+
+        return $this->cleanUpCustomerAttributes($customerData);
+    }
+
+    /**
+     * @param array $customerAttributes
+     *
+     * @return array
+     */
+    protected function cleanUpCustomerAttributes(array $customerAttributes): array
+    {
+        unset($customerAttributes[RestCustomersAttributesTransfer::CREATED_AT]);
+        unset($customerAttributes[RestCustomersAttributesTransfer::UPDATED_AT]);
+        unset($customerAttributes[RestCustomersAttributesTransfer::REGISTERED]);
+
+        return $customerAttributes;
     }
 }

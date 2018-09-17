@@ -25,12 +25,5 @@ interface CustomersResourceMapperInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function mapCustomerToCustomersRestResource(CustomerTransfer $customerTransfer): RestResourceInterface;
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
     public function mapCustomerTransferToRestResource(CustomerTransfer $customerTransfer): RestResourceInterface;
 }

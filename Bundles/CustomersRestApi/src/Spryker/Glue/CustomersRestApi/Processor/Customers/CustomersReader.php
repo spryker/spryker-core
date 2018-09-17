@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
-use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
@@ -59,41 +58,27 @@ class CustomersReader implements CustomersReaderInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $customerReference = $restRequest->getUser()->getNaturalIdentifier();
-
-        if ($customerReference !== $restRequest->getResource()->getId()) {
-            $this->createErrorCustomerNotFound($restResponse);
-
-            return $restResponse;
+        if (!$restRequest->getResource()->getId()) {
+            return $this->createCustomerReferenceMissingError($restResponse);
         }
 
-        $customersResponseTransfer = $this->findCustomerByReference($customerReference);
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getResource()->getId());
+        $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        if (!$customersResponseTransfer->getHasCustomer()) {
-            $this->createErrorCustomerNotFound($restResponse);
+        if (!$customerResponseTransfer->getHasCustomer()) {
+            return $this->createCustomerNotFoundError($restResponse);
+        }
 
-            return $restResponse;
+        if (!$this->isSameCustomerReference($restRequest)) {
+            return $this->createUnauthorizedError($restResponse);
         }
 
         $customersResource = $this
             ->customersResourceMapper
-            ->mapCustomerTransferToRestResource($customersResponseTransfer->getCustomerTransfer());
+            ->mapCustomerTransferToRestResource($customerResponseTransfer->getCustomerTransfer());
         $restResponse->addResource($customersResource);
 
         return $restResponse;
-    }
-
-    /**
-     * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     */
-    public function findCustomerByReference(string $customerReference): CustomerResponseTransfer
-    {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setCustomerReference($customerReference);
-
-        return $this->customerClient->findCustomerByReference($customerTransfer);
     }
 
     /**
@@ -101,7 +86,7 @@ class CustomersReader implements CustomersReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createErrorCustomerNotFound(RestResponseInterface $restResponse): RestResponseInterface
+    protected function createCustomerNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
@@ -109,5 +94,45 @@ class CustomersReader implements CustomersReaderInterface
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
 
         return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createUnauthorizedError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED)
+            ->setStatus(Response::HTTP_FORBIDDEN)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createCustomerReferenceMissingError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_REFERENCE_MISSING)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_REFERENCE_MISSING);
+
+        return $restResponse->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function isSameCustomerReference(RestRequestInterface $restRequest): bool
+    {
+        return $restRequest->getUser()->getNaturalIdentifier() === $restRequest->getResource()->getId();
     }
 }

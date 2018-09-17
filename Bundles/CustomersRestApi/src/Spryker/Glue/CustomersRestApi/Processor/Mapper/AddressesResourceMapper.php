@@ -16,6 +16,9 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 class AddressesResourceMapper implements AddressesResourceMapperInterface
 {
+    protected const RESOURCE_LINKS_SELF = 'self';
+    protected const SELF_LINK_FORMAT = '%s/%s/%s/%s';
+
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
@@ -51,7 +54,7 @@ class AddressesResourceMapper implements AddressesResourceMapperInterface
             $restAddressAttributesTransfer
         );
 
-        $restResource->addLink('self', $this->createSelfLink($customerTransfer, $addressTransfer));
+        $restResource->addLink(static::RESOURCE_LINKS_SELF, $this->createSelfLink($customerTransfer, $addressTransfer));
 
         return $restResource;
     }
@@ -76,7 +79,7 @@ class AddressesResourceMapper implements AddressesResourceMapperInterface
     protected function createSelfLink(CustomerTransfer $customerTransfer, AddressTransfer $addressTransfer): string
     {
         return sprintf(
-            '%s/%s/%s/%s',
+            static::SELF_LINK_FORMAT,
             CustomersRestApiConfig::RESOURCE_CUSTOMERS,
             $customerTransfer->getCustomerReference(),
             CustomersRestApiConfig::RESOURCE_ADDRESSES,

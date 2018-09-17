@@ -63,7 +63,6 @@ class CustomersRestApiFactory extends AbstractFactory
         return new CustomersWriter(
             $this->getCustomerClient(),
             $this->getResourceBuilder(),
-            $this->createCustomerReader(),
             $this->createCustomersResourceMapper()
         );
     }
@@ -76,8 +75,7 @@ class CustomersRestApiFactory extends AbstractFactory
         return new AddressesReader(
             $this->getResourceBuilder(),
             $this->getCustomerClient(),
-            $this->createAddressResourceMapper(),
-            $this->createCustomerReader()
+            $this->createAddressResourceMapper()
         );
     }
 
@@ -100,8 +98,7 @@ class CustomersRestApiFactory extends AbstractFactory
         return new AddressesWriter(
             $this->getResourceBuilder(),
             $this->getCustomerClient(),
-            $this->createAddressResourceMapper(),
-            $this->createCustomerReader()
+            $this->createAddressResourceMapper()
         );
     }
 
