@@ -15,7 +15,7 @@ use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\Shopping
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListCompanyUserStorageListener;
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListItemStorageListener;
 use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListStorageListener;
-use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListStorageUnpublishListener;
+use Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener\ShoppingListStoragePublishListener;
 
 /**
  * @method \Spryker\Zed\ShoppingListStorage\Business\ShoppingListStorageFacade getFacade()
@@ -36,7 +36,7 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
     {
         $this->addShoppingListCreateListener($eventCollection);
         $this->addShoppingListUpdateListener($eventCollection);
-        $this->addShoppingListDeleteListener($eventCollection);
+        $this->addShoppingListPublishListener($eventCollection);
         $this->addShoppingListItemCreateListener($eventCollection);
         $this->addShoppingListItemDeleteListener($eventCollection);
         $this->addShoppingListCompanyUserCreateListener($eventCollection);
@@ -78,11 +78,11 @@ class ShoppingListStorageEventSubscriber extends AbstractPlugin implements Event
      *
      * @return void
      */
-    protected function addShoppingListDeleteListener(EventCollectionInterface $eventCollection): void
+    protected function addShoppingListPublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(
             ShoppingListEvents::SHOPPING_LIST_UNPUBLISH,
-            new ShoppingListStorageUnpublishListener()
+            new ShoppingListStoragePublishListener()
         );
     }
 
