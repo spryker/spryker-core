@@ -258,17 +258,20 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $bundledProductAvailabilityEntity
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailability|null $bundledProductAvailabilityEntity
      * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle $bundleItemEntity
      * @param int $bundleAvailabilityQuantity
      *
      * @return int
      */
     protected function calculateBundledItemQuantity(
-        SpyAvailability $bundledProductAvailabilityEntity,
+        ?SpyAvailability $bundledProductAvailabilityEntity,
         SpyProductBundle $bundleItemEntity,
         $bundleAvailabilityQuantity
     ) {
+        if (!$bundledProductAvailabilityEntity) {
+            return 0;
+        }
 
         $bundledItemQuantity = (int)floor($bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity());
         if ($this->isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)) {
