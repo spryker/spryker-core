@@ -9,6 +9,7 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Addresses;
 
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -62,15 +63,15 @@ class AddressesWriter implements AddressesWriterInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $customerTransfer = new CustomerTransfer();
-        $this->findCustomer($customerTransfer, $restRequest, $restResponse);
+        $customerResponseTransfer = $this->findCustomer($restRequest);
+        $this->validateCustomerResponseTransfer($customerResponseTransfer, $restRequest, $restResponse);
 
         if (count($restResponse->getErrors()) > 0) {
             return $restResponse;
         }
 
         $addressTransfer = $this->addressesResourceMapper->mapRestAddressAttributesTransferToAddressTransfer($addressAttributesTransfer);
-        $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
+        $addressTransfer->setFkCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer());
 
         $addressTransfer = $this->customerClient->createAddress($addressTransfer);
 
@@ -78,7 +79,7 @@ class AddressesWriter implements AddressesWriterInterface
             return $this->createErrorAddressNotSaved($restResponse);
         }
 
-        $addressesTransfer = $this->customerClient->getAddresses($customerTransfer);
+        $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
 
         $addressTransfer = $this->setCustomersDefaultAddresses(
             $addressTransfer,
@@ -86,13 +87,13 @@ class AddressesWriter implements AddressesWriterInterface
             $addressesTransfer->getAddresses()->count() === 1
         );
 
-        $this->saveCustomerDefaultAddresses($addressTransfer, $customerTransfer);
+        $this->saveCustomerDefaultAddresses($addressTransfer, $customerResponseTransfer->getCustomerTransfer());
 
         $restResource = $this
             ->addressesResourceMapper
             ->mapAddressTransferToRestResource(
                 $addressTransfer,
-                $customerTransfer
+                $customerResponseTransfer->getCustomerTransfer()
             );
 
         $restResponse->addResource($restResource);
@@ -114,14 +115,14 @@ class AddressesWriter implements AddressesWriterInterface
             return $this->createAddressUuidMissingError($restResponse);
         }
 
-        $customerTransfer = new CustomerTransfer();
-        $this->findCustomer($customerTransfer, $restRequest, $restResponse);
+        $customerResponseTransfer = $this->findCustomer($restRequest);
+        $this->validateCustomerResponseTransfer($customerResponseTransfer, $restRequest, $restResponse);
 
         if (count($restResponse->getErrors()) > 0) {
             return $restResponse;
         }
 
-        $addressesTransfer = $this->customerClient->getAddresses($customerTransfer);
+        $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
         $addressTransfer = $this->findAddressByUuid($addressesTransfer, $restRequest->getResource()->getId());
 
         if (!$addressTransfer) {
@@ -130,7 +131,7 @@ class AddressesWriter implements AddressesWriterInterface
 
         $addressTransfer->fromArray($addressAttributesTransfer->modifiedToArray(), true);
 
-        $this->saveCustomerDefaultAddresses($addressTransfer, $customerTransfer);
+        $this->saveCustomerDefaultAddresses($addressTransfer, $customerResponseTransfer->getCustomerTransfer());
         $addressTransfer = $this->customerClient->updateAddress($addressTransfer);
 
         if (!$addressTransfer->getUuid()) {
@@ -141,7 +142,7 @@ class AddressesWriter implements AddressesWriterInterface
             ->addressesResourceMapper
             ->mapAddressTransferToRestResource(
                 $addressTransfer,
-                $customerTransfer
+                $customerResponseTransfer->getCustomerTransfer()
             );
 
         $restResponse->addResource($restResource);
@@ -380,22 +381,30 @@ class AddressesWriter implements AddressesWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    protected function findCustomer(RestRequestInterface $restRequest): CustomerResponseTransfer
+    {
+        $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
+
+        return $this->customerClient->findCustomerByReference($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function findCustomer(
-        CustomerTransfer $customerTransfer,
+    protected function validateCustomerResponseTransfer(
+        CustomerResponseTransfer $customerResponseTransfer,
         RestRequestInterface $restRequest,
         RestResponseInterface $restResponse
     ): RestResponseInterface {
-        $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
-        $customerTransfer->setCustomerReference($customerReference);
-
-        $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
-
         if (!$customerResponseTransfer->getHasCustomer()) {
             return $this->createErrorCustomerNotFound($restResponse);
         }
@@ -403,8 +412,6 @@ class AddressesWriter implements AddressesWriterInterface
         if (!$this->isSameCustomerReference($restRequest)) {
             return $this->createUnauthorizedError($restResponse);
         }
-
-        $customerTransfer->fromArray($customerResponseTransfer->getCustomerTransfer()->toArray());
 
         return $restResponse;
     }
