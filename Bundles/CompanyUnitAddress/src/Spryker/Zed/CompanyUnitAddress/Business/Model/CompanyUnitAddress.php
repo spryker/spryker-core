@@ -245,7 +245,7 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
     ): void {
         $businessUnits = $companyUnitAddressTransfer->getCompanyBusinessUnits();
 
-        if (!$businessUnits || !$businessUnits->getCompanyBusinessUnits()) {
+        if (!$businessUnits) {
             return;
         }
 
