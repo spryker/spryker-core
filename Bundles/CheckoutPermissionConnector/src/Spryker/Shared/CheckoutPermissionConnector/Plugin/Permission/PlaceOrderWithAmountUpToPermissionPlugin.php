@@ -21,9 +21,9 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
     /**
      * {@inheritdoc}
      * - Returns true if provided cent amount is less than the provided expected value.
-     * - Returns true in case the cent amount is not provided.
+     * - Returns false in case the cent amount is not provided.
      * - Returns false in case the expected value amount is exceeded.
-     * - Returns false in case the expected value is not provided.
+     * - Returns true in case the expected value is not provided.
      *
      * @param array $configuration
      * @param int|null $centAmount
@@ -33,11 +33,11 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
     public function can(array $configuration, $centAmount = null): bool
     {
         if ($centAmount === null) {
-            return true;
+            return false;
         }
 
         if (!isset($configuration[static::FIELD_CENT_AMOUNT])) {
-            return false;
+            return true;
         }
 
         if ($configuration[static::FIELD_CENT_AMOUNT] <= (int)$centAmount) {
