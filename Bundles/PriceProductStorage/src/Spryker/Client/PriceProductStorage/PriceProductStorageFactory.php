@@ -11,6 +11,8 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToCurrencyClientInterface;
 use Spryker\Client\PriceProductStorage\Expander\ProductViewPriceExpander;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReader;
+use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolver;
+use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolverInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReader;
 use Spryker\Client\PriceProductStorage\Storage\PriceProductMapper;
 use Spryker\Client\PriceProductStorage\Storage\PriceProductMapperInterface;
@@ -55,6 +57,17 @@ class PriceProductStorageFactory extends AbstractFactory
             $this->createPriceProductMapper(),
             $this->getPriceDimensionPlugins(),
             $this->getPriceProductPricesExtractorPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolverInterface
+     */
+    public function createPriceConcreteResolver(): PriceConcreteResolverInterface
+    {
+        return new PriceConcreteResolver(
+            $this->createPriceAbstractStorageReader(),
+            $this->createPriceConcreteStorageReader()
         );
     }
 

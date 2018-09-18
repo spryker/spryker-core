@@ -12,13 +12,28 @@ interface ProductConcretePageSearchReaderInterface
     /**
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function findAllProductConcretePageSearchEntities(): array;
+    public function findAllProductConcretePageSearchTransfers(): array;
 
     /**
-     * @param int[] $ids
-     * @param bool $groupByStoreAndLocale
+     * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function findProductConcretePageSearchEntitiesByProductConcreteIds(array $ids, bool $groupByStoreAndLocale = false): array;
+    public function findProductConcretePageSearchTransfersByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
+     * Specification:
+     * - Returns array with following structure:
+     * - [
+     *     'DE' => [
+     *       'en_US' => \Generated\Shared\Transfer\ProductConcretePageSearchTransfer,
+     *       'de_DE' => \Generated\Shared\Transfer\ProductConcretePageSearchTransfer,
+     *     ]
+     *   ]
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return array
+     */
+    public function findProductConcretePageSearchTransfersByProductConcreteIdsGrouppedByStoreAndLocale(array $productConcreteIds): array;
 }

@@ -50,14 +50,8 @@
 
     <transfer name="ProductConcreteCriteriaFilter">
         <property name="searchString" type="string"/>
-        <property name="locale" type="Locale"/>
-        <property name="filter" type="Filter"/>
-    </transfer>
-
-    <transfer name="Filter">
-        <property name="searchFields" type="string[]"/>
         <property name="limit" type="int"/>
-        <property name="offset" type="int"/>
+        <property name="requestParams" type="array"/>
     </transfer>
 
     <transfer name="PageMap">

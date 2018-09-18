@@ -48,14 +48,14 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
      *
      * @api
      *
-     * @param int[] $ids
+     * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(array $ids = []): array
+    public function getData(array $productConcreteIds = []): array
     {
         $synchronizationDataTransfers = [];
-        $productConcretePageSearchTransfers = $this->findProductConcretePageSearchEntities($ids);
+        $productConcretePageSearchTransfers = $this->findProductConcretePageSearchTransfers($productConcreteIds);
 
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
@@ -104,16 +104,16 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
     }
 
     /**
-     * @param int[] $ids
+     * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    protected function findProductConcretePageSearchEntities(array $ids): array
+    protected function findProductConcretePageSearchTransfers(array $productConcreteIds): array
     {
-        if (empty($ids)) {
-            return $this->getFacade()->findAllProductConcretePageSearchEntities();
+        if (empty($productConcreteIds)) {
+            return $this->getFacade()->findAllProductConcretePageSearchTransfers();
         }
 
-        return $this->getFacade()->findProductConcretePageSearchEntitiesByProductConcreteIds($ids);
+        return $this->getFacade()->findProductConcretePageSearchTransfersByProductConcreteIds($productConcreteIds);
     }
 }

@@ -14,14 +14,14 @@ interface ProductConcretePageDataExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands the provided ProductConcretePageSearchTransfer object's data by reference.
+     * - Expands the provided ProductConcretePageSearchTransfer object and returns modified one.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */
-    public function expand(ProductConcreteTransfer $productConcreteTransfer, ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): void;
+    public function expand(ProductConcreteTransfer $productConcreteTransfer, ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): ProductConcretePageSearchTransfer;
 }

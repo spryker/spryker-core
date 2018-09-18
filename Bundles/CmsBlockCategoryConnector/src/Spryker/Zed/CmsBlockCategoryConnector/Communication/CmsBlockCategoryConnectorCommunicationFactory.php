@@ -63,7 +63,7 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
      */
     public function createCategoryType()
     {
-        return new CategoryType;
+        return new CategoryType();
     }
 
     /**
