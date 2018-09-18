@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Generated\Shared\Transfer\QueueSendMessageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use PHPUnit\Framework\SkippedTestError;
-use Spryker\Client\Search\SearchClient;
-use Spryker\Client\Storage\StorageClient;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Synchronization\AvailabilitySynchronizationDataPlugin;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Synchronization\CategoryPageSynchronizationDataPlugin;
@@ -323,8 +321,8 @@ class SynchronizationFacadeTest extends Unit
                     $this->assertEquals(json_encode($queueMessageBody['write']['value']), $value);
 
                     return true;
-                }
-                ));
+                })
+            );
 
         $storageClientMock
             ->expects($this->once())
@@ -654,8 +652,7 @@ class SynchronizationFacadeTest extends Unit
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @param SynchronizationConfig $config
+     * @param \Spryker\Zed\Synchronization\SynchronizationConfig|null $config
      *
      * @return void
      */

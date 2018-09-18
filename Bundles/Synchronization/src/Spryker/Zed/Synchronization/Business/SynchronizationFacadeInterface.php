@@ -10,13 +10,13 @@ namespace Spryker\Zed\Synchronization\Business;
 interface SynchronizationFacadeInterface
 {
     /**
+     * @api
+     *
      * @deprecated Use \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processStorageMessages instead.
      *
      * Specification:
      * - Writes json encoded data to storage
      * - Will not write if the data is outdated compare to storage timestamp
-     *
-     * @api
      *
      * @param array $data
      * @param string $queueName
@@ -26,13 +26,13 @@ interface SynchronizationFacadeInterface
     public function storageWrite(array $data, $queueName);
 
     /**
+     * @api
+     *
      * @deprecated Use \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processStorageMessages instead.
      *
      * Specification:
      * - Deletes all data keys from storage
      * - Will not delete if the data is outdated compare to storage timestamp
-     *
-     * @api
      *
      * @param array $data
      * @param string $queueName
@@ -42,13 +42,13 @@ interface SynchronizationFacadeInterface
     public function storageDelete(array $data, $queueName);
 
     /**
+     * @api
+     *
      * @deprecated Use \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processSearchMessages instead.
      *
      * Specification:
      * - Writes json encoded data to search
      * - Will not write if the data is outdated compare to search timestamp
-     *
-     * @api
      *
      * @param array $data
      * @param string $queueName
@@ -58,13 +58,13 @@ interface SynchronizationFacadeInterface
     public function searchWrite(array $data, $queueName);
 
     /**
+     * @api
+     *
      * @deprecated Use \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processSearchMessages instead.
      *
      * Specification:
      * - Deletes all data keys from search
      * - Will not delete if the data is outdated compare to search timestamp
-     *
-     * @api
      *
      * @param array $data
      * @param string $queueName

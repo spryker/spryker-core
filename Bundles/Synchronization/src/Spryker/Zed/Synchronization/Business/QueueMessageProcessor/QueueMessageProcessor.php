@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Synchronization\Business\QueueMessageProcessor;
 
 use Exception;
@@ -45,6 +50,8 @@ class QueueMessageProcessor implements QueueMessageProcessorInterface
     /**
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
      *
+     * @throws \Spryker\Zed\Synchronization\Business\Exception\SynchronizationIsNotDefinedException
+     *
      * @return array
      */
     public function processMessages(array $queueMessageTransfers): array
@@ -80,7 +87,6 @@ class QueueMessageProcessor implements QueueMessageProcessorInterface
 
         return $queueMessageTransfer;
     }
-
 
     /**
      * @param array $messageBody
