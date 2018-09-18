@@ -71,7 +71,7 @@ class CustomerReader implements CustomerReaderInterface
         if ($customerTransfer) {
             $customerResponseTransfer->setCustomerTransfer($customerTransfer);
             $customerResponseTransfer->setHasCustomer(true);
-            $customerResponseTransfer->setIsSuccess(false);
+            $customerResponseTransfer->setIsSuccess(true);
         }
 
         return $customerResponseTransfer;

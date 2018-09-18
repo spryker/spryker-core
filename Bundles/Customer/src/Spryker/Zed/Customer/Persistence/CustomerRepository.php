@@ -48,8 +48,7 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
      */
     public function findCustomerByReference(string $customerReference): ?CustomerTransfer
     {
-        $customerQuery = $this->getFactory()->createSpyCustomerQuery()->findByCustomerReference($customerReference);
-        $customerEntity = $customerQuery->getFirst();
+        $customerEntity = $this->getFactory()->createSpyCustomerQuery()->findOneByCustomerReference($customerReference);
 
         if ($customerEntity === null) {
             return null;
