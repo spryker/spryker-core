@@ -12,17 +12,18 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
+use Spryker\Glue\CustomersRestApi\Processor\CustomersRestApiErrorsTrait;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class AddressesWriter implements AddressesWriterInterface
 {
+    use CustomersRestApiErrorsTrait;
+
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
@@ -76,7 +77,7 @@ class AddressesWriter implements AddressesWriterInterface
         $addressTransfer = $this->customerClient->createAddress($addressTransfer);
 
         if (!$addressTransfer->getUuid()) {
-            return $this->createErrorAddressNotSaved($restResponse);
+            return $this->addAddressNotSavedError($restResponse);
         }
 
         $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
@@ -112,7 +113,7 @@ class AddressesWriter implements AddressesWriterInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$restRequest->getResource()->getId()) {
-            return $this->createAddressUuidMissingError($restResponse);
+            return $this->addAddressUuidMissingError($restResponse);
         }
 
         $customerResponseTransfer = $this->findCustomer($restRequest);
@@ -126,7 +127,7 @@ class AddressesWriter implements AddressesWriterInterface
         $addressTransfer = $this->findAddressByUuid($addressesTransfer, $restRequest->getResource()->getId());
 
         if (!$addressTransfer) {
-            return $this->createAddressNotFoundError($restResponse);
+            return $this->addAddressNotFoundError($restResponse);
         }
 
         $addressTransfer->fromArray($addressAttributesTransfer->modifiedToArray(), true);
@@ -135,7 +136,7 @@ class AddressesWriter implements AddressesWriterInterface
         $addressTransfer = $this->customerClient->updateAddress($addressTransfer);
 
         if (!$addressTransfer->getUuid()) {
-            return $this->createErrorAddressNotSaved($restResponse);
+            return $this->addAddressNotSavedError($restResponse);
         }
 
         $restResource = $this
@@ -162,105 +163,30 @@ class AddressesWriter implements AddressesWriterInterface
         $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
 
         if (!$restRequest->getResource()->getId()) {
-            return $this->createAddressUuidMissingError($restResponse);
+            return $this->addAddressUuidMissingError($restResponse);
         }
 
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
         if (!$customerResponseTransfer->getHasCustomer()) {
-            return $this->createErrorCustomerNotFound($restResponse);
+            return $this->addCustomerNotFoundError($restResponse);
         }
 
         if (!$this->isSameCustomerReference($restRequest)) {
-            return $this->createUnauthorizedError($restResponse);
+            return $this->addCustomerUnauthorizedError($restResponse);
         }
 
         $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
         $addressTransfer = $this->findAddressByUuid($addressesTransfer, $restRequest->getResource()->getId());
 
         if (!$addressTransfer) {
-            return $this->createAddressNotFoundError($restResponse);
+            return $this->addAddressNotFoundError($restResponse);
         }
 
         $this->customerClient->deleteAddress($addressTransfer);
 
         return $restResponse;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createErrorCustomerNotFound(RestResponseInterface $restResponse): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
-
-        return $restResponse->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createErrorAddressNotSaved(RestResponseInterface $restResponse): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ADDRESS_FAILED_TO_SAVE)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_ADDRESS_FAILED_TO_SAVE);
-
-        return $restResponse->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createAddressNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_NOT_FOUND)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_ADDRESS_NOT_FOUND);
-
-        return $restResponse->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createUnauthorizedError(RestResponseInterface $restResponse): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED)
-            ->setStatus(Response::HTTP_FORBIDDEN)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED);
-
-        return $restResponse->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createAddressUuidMissingError(RestResponseInterface $restResponse): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_UUID_MISSING)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_ADDRESS_UUID_MISSING);
-
-        return $restResponse->addError($restErrorTransfer);
     }
 
     /**
@@ -406,11 +332,11 @@ class AddressesWriter implements AddressesWriterInterface
         RestResponseInterface $restResponse
     ): RestResponseInterface {
         if (!$customerResponseTransfer->getHasCustomer()) {
-            return $this->createErrorCustomerNotFound($restResponse);
+            return $this->addCustomerNotFoundError($restResponse);
         }
 
         if (!$this->isSameCustomerReference($restRequest)) {
-            return $this->createUnauthorizedError($restResponse);
+            return $this->addCustomerUnauthorizedError($restResponse);
         }
 
         return $restResponse;
