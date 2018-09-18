@@ -57,9 +57,9 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
     /**
      * @param int|string $idProductAbstract
      *
-     * @return array
+     * @return array|null
      */
-    protected function getStorageData(int $idProductAbstract): array
+    protected function getStorageData(int $idProductAbstract)
     {
         if (ProductRelationStorageConfig::isCollectorCompatibilityMode()) {
             $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';

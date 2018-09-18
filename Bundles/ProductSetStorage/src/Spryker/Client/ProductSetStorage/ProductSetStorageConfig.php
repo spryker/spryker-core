@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductLabelStorage;
+namespace Spryker\Client\ProductSetStorage;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
 
-class ProductLabelStorageConfig extends AbstractBundleConfig
+class ProductSetStorageConfig extends AbstractBundleConfig
 {
     /**
      * To be able to work with data exported with collectors to redis, we need to bring this module into compatibility
-     * mode. If this is turned on the ProductLabelClient will be used instead.
+     * mode. If this is turned on the ProductSetClient will be used instead.
      *
      * @return bool
      */
