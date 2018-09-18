@@ -234,7 +234,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
             ->setId($shoppingListTransfer->getIdShoppingList())
             ->setEvent(ShoppingListEvents::SHOPPING_LIST_UNPUBLISH)
             ->setModifiedColumns([
-                 ShoppingListTransfer::CUSTOMER_REFERENCE => $shoppingListTransfer->getCustomerReference(),
+                 $shoppingListTransfer->getCustomerReference() => ShoppingListTransfer::CUSTOMER_REFERENCE,
             ]);
         $this->eventFacade->trigger(ShoppingListEvents::SHOPPING_LIST_UNPUBLISH, $eventTransfer);
     }
