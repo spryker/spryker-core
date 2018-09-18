@@ -45,7 +45,8 @@ class PermissionBusinessFactory extends AbstractBusinessFactory
     public function createPermissionFinder()
     {
         return new PermissionFinder(
-            $this->getPermissionPlugins()
+            $this->getPermissionPlugins(),
+            $this->getRepository()
         );
     }
 

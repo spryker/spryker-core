@@ -54,13 +54,13 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
 
         $availableCompanyRolePermissions = $this->getAvailableCompanyRolePermissions(
             $availablePermissions,
-            $companyRolePermissions
+            $companyRolePermissions,
+            $companyRoleTransfer
         );
 
         $permissions = new ArrayObject();
         foreach ($availableCompanyRolePermissions as $permissionTransfer) {
             $permissionData = $this->transformPermissionTransferToArray(
-                $companyRoleTransfer->getIdCompanyRole(),
                 $availableCompanyRolePermissions[$permissionTransfer->getKey()]
             );
 
@@ -72,20 +72,22 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
     }
 
     /**
-     * @param int $idCompanyRole
      * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
      * @return array
      */
     protected function transformPermissionTransferToArray(
-        int $idCompanyRole,
         PermissionTransfer $permissionTransfer
     ): array {
         $permissionData = $permissionTransfer->toArray(false, true);
 
         $permissionGlossaryKeyName = static::PERMISSION_KEY_GLOSSARY_PREFIX . $permissionData[PermissionTransfer::KEY];
         $permissionData[PermissionTransfer::KEY] = $permissionGlossaryKeyName;
-        $permissionData[CompanyRoleTransfer::ID_COMPANY_ROLE] = $idCompanyRole;
+
+        $idCompanyRole = $permissionTransfer->getIdCompanyRole();
+        if ($permissionTransfer->getIdCompanyRole()) {
+            $permissionData[CompanyRoleTransfer::ID_COMPANY_ROLE] = $idCompanyRole;
+        }
 
         return $permissionData;
     }
@@ -93,42 +95,48 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $availablePermissions
      * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $companyRolePermissions
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
      * @return \Generated\Shared\Transfer\PermissionTransfer[] Keys are permission keys
      */
     protected function getAvailableCompanyRolePermissions(
         ArrayObject $availablePermissions,
-        ArrayObject $companyRolePermissions
+        ArrayObject $companyRolePermissions,
+        CompanyRoleTransfer $companyRoleTransfer
     ): array {
         $availableCompanyRolePermissions = [];
 
-        foreach ($companyRolePermissions as $companyRolePermission) {
-            $availableCompanyRolePermission = $this->findAvailableCompanyRolePermission(
-                $companyRolePermission,
-                $availablePermissions
+        $companyRoleTransfer->requireIdCompanyRole();
+
+        foreach ($availablePermissions as $availablePermission) {
+            $assignedCompanyRolePermission = $this->findAssignedCompanyRolePermission(
+                $availablePermission,
+                $companyRolePermissions
             );
 
-            if ($availableCompanyRolePermission) {
-                $availableCompanyRolePermissions[$companyRolePermission->getKey()] = $availableCompanyRolePermission;
+            if ($assignedCompanyRolePermission) {
+                $availablePermission->setIdCompanyRole($companyRoleTransfer->getIdCompanyRole());
             }
+
+            $availableCompanyRolePermissions[$availablePermission->getKey()] = $availablePermission;
         }
 
         return $availableCompanyRolePermissions;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PermissionTransfer $companyRolePermission
-     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $availablePermissions
+     * @param \Generated\Shared\Transfer\PermissionTransfer $availablePermission
+     * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $companyRolePermissions
      *
      * @return \Generated\Shared\Transfer\PermissionTransfer|null
      */
-    protected function findAvailableCompanyRolePermission(
-        PermissionTransfer $companyRolePermission,
-        ArrayObject $availablePermissions
+    protected function findAssignedCompanyRolePermission(
+        PermissionTransfer $availablePermission,
+        ArrayObject $companyRolePermissions
     ): ?PermissionTransfer {
-        foreach ($availablePermissions as $availablePermission) {
-            if ($availablePermission->getKey() === $companyRolePermission->getKey()) {
-                return $availablePermission;
+        foreach ($companyRolePermissions as $companyRolePermission) {
+            if ($companyRolePermission->getKey() === $availablePermission->getKey()) {
+                return $companyRolePermission;
             }
         }
 
