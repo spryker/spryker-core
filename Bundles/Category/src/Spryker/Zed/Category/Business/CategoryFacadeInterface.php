@@ -481,7 +481,7 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Check exist a first level children by the category name except injected category
+     * - Checks if there is a category node on the same level with provided category by name
      *
      * @api
      *
@@ -490,7 +490,7 @@ interface CategoryFacadeInterface
      *
      * @return bool
      */
-    public function hasSameLevelCategoryByName(string $name, CategoryTransfer $categoryTransfer): bool;
+    public function sameLevelCategoryByNameExists(string $name, CategoryTransfer $categoryTransfer): bool;
 
     /**
      * Specification:

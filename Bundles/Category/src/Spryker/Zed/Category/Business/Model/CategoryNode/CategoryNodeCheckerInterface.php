@@ -25,5 +25,5 @@ interface CategoryNodeCheckerInterface
      *
      * @return bool
      */
-    public function hasSameLevelCategoryByName(string $name, CategoryTransfer $categoryTransfer): bool;
+    public function sameLevelCategoryByNameExists(string $name, CategoryTransfer $categoryTransfer): bool;
 }

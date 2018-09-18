@@ -649,11 +649,11 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return bool
      */
-    public function hasSameLevelCategoryByName(string $name, CategoryTransfer $categoryTransfer): bool
+    public function sameLevelCategoryByNameExists(string $name, CategoryTransfer $categoryTransfer): bool
     {
         return $this->getFactory()
             ->createCategoryNodeChecker()
-            ->hasSameLevelCategoryByName($name, $categoryTransfer);
+            ->sameLevelCategoryByNameExists($name, $categoryTransfer);
     }
 
     /**

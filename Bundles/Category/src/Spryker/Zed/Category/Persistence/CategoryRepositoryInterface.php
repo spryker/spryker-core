@@ -34,5 +34,5 @@ interface CategoryRepositoryInterface
      *
      * @return bool
      */
-    public function hasSameLevelCategoryByName(string $nodeName, CategoryTransfer $categoryTransfer): bool;
+    public function sameLevelCategoryByNameExists(string $nodeName, CategoryTransfer $categoryTransfer): bool;
 }
