@@ -460,13 +460,10 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves customer information with customer addresses and locale information by customer reference.
-     *
-     * @api
-     *
-     * Specification:
      *  - Finds customer by reference
      *  - Returns customer response transfer
+     *
+     * @api
      *
      * @param string $customerReference
      *
