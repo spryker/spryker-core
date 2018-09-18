@@ -7,4 +7,8 @@
         <property name="productOptions" type="ProductOption[]" singular="productOption" />
     </transfer>
 
+    <transfer name="ProductOptionValueStorage">
+        <property name="isSelected" type="bool"/>
+    </transfer>
+
 </transfers>

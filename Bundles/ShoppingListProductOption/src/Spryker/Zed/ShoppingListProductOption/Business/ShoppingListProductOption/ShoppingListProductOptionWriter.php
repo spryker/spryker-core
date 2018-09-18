@@ -42,6 +42,17 @@ class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriter
     }
 
     /**
+     * @param int $idShoppingListItem
+     *
+     * @return void
+     */
+    public function removeShoppingListItemProductOptions(int $idShoppingListItem): void
+    {
+        $this->shoppingListProductOptionEntityManager
+            ->removeShoppingListItemProductOptions($idShoppingListItem);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return void
@@ -50,8 +61,7 @@ class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriter
     {
         $shoppingListItemTransfer->requireIdShoppingListItem();
 
-        $this->shoppingListProductOptionEntityManager
-            ->removeShoppingListItemProductOptions($shoppingListItemTransfer->getIdShoppingListItem());
+        $this->removeShoppingListItemProductOptions($shoppingListItemTransfer->getIdShoppingListItem());
 
         foreach ($shoppingListItemTransfer->getProductOptions() as $productOptionTransfer) {
             $this->shoppingListProductOptionEntityManager

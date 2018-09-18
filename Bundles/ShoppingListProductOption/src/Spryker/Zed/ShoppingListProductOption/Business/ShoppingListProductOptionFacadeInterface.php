@@ -28,6 +28,18 @@ interface ShoppingListProductOptionFacadeInterface
 
     /**
      * Specification:
+     * - Removes existing shopping list product options.
+     *
+     * @api
+     *
+     * @param int $idShoppingListItem
+     *
+     * @return void
+     */
+    public function removeShoppingListItemProductOptions(int $idShoppingListItem): void;
+
+    /**
+     * Specification:
      * - Finds shopping list product options for shopping list item.
      *
      * @api
