@@ -11,12 +11,22 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductPageSearch\Business\Attribute\ProductPageAttribute;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapper;
 use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriter;
+use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReader;
+use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface;
+use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\ProductConcretePageSearchWriter;
+use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\ProductConcretePageSearchWriterInterface;
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductAbstractPagePublisher;
+use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPublisher;
+use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPublisherInterface;
+use Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapper as ProductPageSearchPersistenceMapper;
+use Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchEntityManagerInterface getEntityManager()
  */
 class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
 {
@@ -31,6 +41,53 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->createProductPageMapper(),
             $this->createProductPageWriter()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPublisherInterface
+     */
+    public function createProductConcretePageSearchPublisher(): ProductConcretePageSearchPublisherInterface
+    {
+        return new ProductConcretePageSearchPublisher(
+            $this->createProductConcretePageSearchReader(),
+            $this->createProductConcretePageSearchWriter(),
+            $this->getProductFacade(),
+            $this->createProductPageSearchPersistenceMapper(),
+            $this->getUtilEncoding(),
+            $this->getProductConcretePageDataExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface
+     */
+    public function createProductConcretePageSearchReader(): ProductConcretePageSearchReaderInterface
+    {
+        return new ProductConcretePageSearchReader($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\ProductConcretePageSearchWriterInterface
+     */
+    public function createProductConcretePageSearchWriter(): ProductConcretePageSearchWriterInterface
+    {
+        return new ProductConcretePageSearchWriter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Persistence\Mapper\ProductPageSearchMapperInterface
+     */
+    public function createProductPageSearchPersistenceMapper(): ProductPageSearchMapperInterface
+    {
+        return new ProductPageSearchPersistenceMapper($this->getSearchFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface[]
+     */
+    public function getProductConcretePageDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER);
     }
 
     /**

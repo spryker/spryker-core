@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuickOrderExtension\Dependency\Plugin;
+namespace Spryker\Client\QuickOrderExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ItemTransfer;
 
@@ -13,7 +13,7 @@ interface QuickOrderItemTransferExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands provided ItemTransfer with additional data or replaces existing one.
+     * - Expands provided ItemTransfer with additional data.
      * - Will be executed before adding items into cart.
      *
      * @api
@@ -22,5 +22,5 @@ interface QuickOrderItemTransferExpanderPluginInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function expand(ItemTransfer $itemTransfer): ItemTransfer;
+    public function expandItemTransfer(ItemTransfer $itemTransfer): ItemTransfer;
 }
