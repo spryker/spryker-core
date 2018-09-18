@@ -38,6 +38,14 @@ interface EventConstants
 
     /**
      * Specification:
+     * - Number of event messages for bulk operation
+     *
+     * @api
+     */
+    public const EVENT_CHUNK = 'EVENT_CHUNK';
+
+    /**
+     * Specification:
      * - Queue name as used when with asynchronous event handling
      *
      * @api

@@ -44,7 +44,7 @@ class EventConfig extends AbstractBundleConfig
      */
     public function getEventQueueMessageChunkSize()
     {
-        return static::DEFAULT_EVENT_MESSAGE_CHUNK_SIZE;
+        return $this->get(EventConstants::EVENT_CHUNK, 500);
     }
 
     /**
