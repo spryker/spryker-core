@@ -33,7 +33,7 @@ class WriteShoppingListPermissionPlugin extends AbstractPlugin implements Execut
      */
     public function can(array $configuration, $idShoppingList = null): bool
     {
-        if (!$idShoppingList) {
+        if (!$idShoppingList || !isset($configuration[ShoppingListConfig::PERMISSION_CONFIG_ID_SHOPPING_LIST_COLLECTION])) {
             return false;
         }
 
