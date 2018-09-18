@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\InfrastructuralPermissionPluginInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
-use Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface;
 
 class PermissionFinder implements PermissionFinderInterface
 {
@@ -23,18 +22,11 @@ class PermissionFinder implements PermissionFinderInterface
     protected $permissionPlugins = [];
 
     /**
-     * @var \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface
-     */
-    protected $permissionRepository;
-
-    /**
      * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[] $permissionPlugins
-     * @param \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface $permissionRepository
      */
-    public function __construct(array $permissionPlugins, PermissionRepositoryInterface $permissionRepository)
+    public function __construct(array $permissionPlugins)
     {
         $this->permissionPlugins = $this->indexPermissions($permissionPlugins);
-        $this->permissionRepository = $permissionRepository;
     }
 
     /**
@@ -81,7 +73,7 @@ class PermissionFinder implements PermissionFinderInterface
      */
     public function getRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer
     {
-        $availablePermissions = $this->permissionRepository->findAll()->getPermissions();
+        $availablePermissions = $this->getRegisteredPermissions();
 
         $nonInfrastructuralPermissions = new ArrayObject();
         foreach ($availablePermissions as $permissionTransfer) {
