@@ -59,7 +59,7 @@ trait CustomersRestApiValidatorsTrait
      */
     protected function assertPasswordsAreIdentical(RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer): bool
     {
-        return strcmp($passwordAttributesTransfer->getNewPassword(), $passwordAttributesTransfer->getConfirmPassword()) === 0;
+        return $passwordAttributesTransfer->getNewPassword() === $passwordAttributesTransfer->getConfirmPassword();
     }
 
     /**
