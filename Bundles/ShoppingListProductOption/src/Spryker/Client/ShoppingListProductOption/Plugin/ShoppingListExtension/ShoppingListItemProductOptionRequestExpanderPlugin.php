@@ -43,6 +43,8 @@ class ShoppingListItemProductOptionRequestExpanderPlugin implements ShoppingList
      */
     protected function getIdProductOptions(array $params): array
     {
+        $params[static::REQUEST_PARAM_PRODUCT_OPTION] = array_filter($params[static::REQUEST_PARAM_PRODUCT_OPTION]);
+
         if (isset($params[static::REQUEST_PARAM_PRODUCT_OPTION]) && is_array($params[static::REQUEST_PARAM_PRODUCT_OPTION])) {
             return $params[static::REQUEST_PARAM_PRODUCT_OPTION];
         }
