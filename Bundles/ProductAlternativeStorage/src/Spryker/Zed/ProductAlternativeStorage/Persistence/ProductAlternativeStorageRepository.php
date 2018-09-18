@@ -52,7 +52,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      */
     public function findProductSkuById($idProduct): string
     {
-        return $this->getFactory()
+        return (string)$this->getFactory()
             ->getProductPropelQuery()
             ->filterByIdProduct($idProduct)
             ->select([SpyProductTableMap::COL_SKU])
