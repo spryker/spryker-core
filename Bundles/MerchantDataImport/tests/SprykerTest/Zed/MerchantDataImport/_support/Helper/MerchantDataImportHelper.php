@@ -78,7 +78,7 @@ class MerchantDataImportHelper extends Module
     /**
      * @param string $key
      *
-     * @return \Orm\Zed\Merchant\Persistence\SpyMerchant
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchant|null
      */
     public function findMerchantByKey(string $key): SpyMerchant
     {
