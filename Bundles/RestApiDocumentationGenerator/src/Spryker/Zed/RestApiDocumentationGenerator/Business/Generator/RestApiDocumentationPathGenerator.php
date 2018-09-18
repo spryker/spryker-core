@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGeneratorInterface
 {
     protected const PATTERN_SCHEMA_REFERENCE = '#/components/schemas/%s';
-    protected const PATTERN_REGEX_RESOURCE_ID = '/(?<=\{).+?(?=\})/';
+    protected const PATTERN_REGEX_RESOURCE_ID = '/(?<=\{)[\w-_]+?(?=\})/';
     protected const PATTERN_DESCRIPTION_PARAMETER_ID = 'Id of %s.';
 
     protected const METHOD_GET = 'get';
@@ -22,6 +22,7 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
     protected const METHOD_PATCH = 'patch';
     protected const METHOD_DELETE = 'delete';
 
+    protected const DESCRIPTION_DEFAULT_REQUEST = 'Expected request body.';
     protected const DESCRIPTION_DEFAULT_RESPONSE = 'Expected response to a bad request.';
     protected const DESCRIPTION_SUCCESSFUL_RESPONSE = 'Expected response to a valid request.';
 
@@ -90,13 +91,13 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
      * @param string $resourcePath
      * @param string $responseSchema
      * @param string $errorSchema
+     * @param string $summary
      * @param bool $isProtected
      *
      * @return void
      */
-    public function addGetPath(string $resource, string $resourcePath, string $responseSchema, string $errorSchema, bool $isProtected): void
+    public function addGetPath(string $resource, string $resourcePath, string $responseSchema, string $errorSchema, string $summary, bool $isProtected): void
     {
-        $summary = 'Get ' . $resource;
         $this->addPathDefaultInfo(static::METHOD_GET, $resource, $resourcePath, $summary, $isProtected);
         $this->addPathRequiredPathParameters(static::METHOD_GET, $resourcePath, $this->getIdParametersFromResourcePath($resourcePath));
         $this->addPathCustomResponse(static::METHOD_GET, (string)Response::HTTP_OK, $resourcePath, static::DESCRIPTION_SUCCESSFUL_RESPONSE, $responseSchema);
@@ -109,13 +110,13 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
      * @param string $requestSchema
      * @param string $responseSchema
      * @param string $errorSchema
+     * @param string $summary
      * @param bool $isProtected
      *
      * @return void
      */
-    public function addPostPath(string $resource, string $resourcePath, string $requestSchema, string $responseSchema, string $errorSchema, bool $isProtected): void
+    public function addPostPath(string $resource, string $resourcePath, string $requestSchema, string $responseSchema, string $errorSchema, string $summary, bool $isProtected): void
     {
-        $summary = 'Add ' . $resource;
         $this->addPathDefaultInfo(static::METHOD_POST, $resource, $resourcePath, $summary, $isProtected);
         $this->addPathRequiredPathParameters(static::METHOD_POST, $resourcePath, $this->getIdParametersFromResourcePath($resourcePath));
         $this->addPathRequestBody(static::METHOD_POST, $resourcePath, $requestSchema);
@@ -129,13 +130,13 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
      * @param string $requestSchema
      * @param string $responseSchema
      * @param string $errorSchema
+     * @param string $summary
      * @param bool $isProtected
      *
      * @return void
      */
-    public function addPatchPath(string $resource, string $resourcePath, string $requestSchema, string $responseSchema, string $errorSchema, bool $isProtected): void
+    public function addPatchPath(string $resource, string $resourcePath, string $requestSchema, string $responseSchema, string $errorSchema, string $summary, bool $isProtected): void
     {
-        $summary = 'Update ' . $resource;
         $this->addPathDefaultInfo(static::METHOD_PATCH, $resource, $resourcePath, $summary, $isProtected);
         $this->addPathRequiredPathParameters(static::METHOD_PATCH, $resourcePath, $this->getIdParametersFromResourcePath($resourcePath));
         $this->addPathRequestBody(static::METHOD_PATCH, $resourcePath, $requestSchema);
@@ -147,16 +148,17 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
      * @param string $resource
      * @param string $resourcePath
      * @param string $errorSchema
+     * @param string $summary
      * @param bool $isProtected
      *
      * @return void
      */
-    public function addDeletePath(string $resource, string $resourcePath, string $errorSchema, bool $isProtected): void
+    public function addDeletePath(string $resource, string $resourcePath, string $errorSchema, string $summary, bool $isProtected): void
     {
-        $summary = 'Delete ' . $resource;
         $this->addPathDefaultInfo(static::METHOD_DELETE, $resource, $resourcePath, $summary, $isProtected);
         $this->addPathRequiredPathParameters(static::METHOD_DELETE, $resourcePath, $this->getIdParametersFromResourcePath($resourcePath));
         $this->addPathCustomResponseWithoutContent(static::METHOD_DELETE, (string)Response::HTTP_NO_CONTENT, $resourcePath, static::DESCRIPTION_SUCCESSFUL_RESPONSE);
+        $this->addPathDefaultResponse(static::METHOD_DELETE, $resourcePath, $errorSchema);
     }
 
     /**
@@ -225,7 +227,7 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
      */
     protected function addPathRequestBody(string $method, string $resourcePath, string $requestSchema): void
     {
-        $this->paths[$resourcePath][$method][self::KEY_REQUEST_BODY] = $this->getRequestResponse(self::KEY_DESCRIPTION, $requestSchema);
+        $this->paths[$resourcePath][$method][self::KEY_REQUEST_BODY] = $this->getRequestResponse(self::DESCRIPTION_DEFAULT_REQUEST, $requestSchema);
     }
 
     /**
@@ -316,8 +318,8 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
      */
     protected function getIdParametersFromResourcePath(string $resourcePath): array
     {
-        preg_match(static::PATTERN_REGEX_RESOURCE_ID, $resourcePath, $matches);
+        preg_match_all(static::PATTERN_REGEX_RESOURCE_ID, $resourcePath, $matches);
 
-        return $matches;
+        return $matches[0];
     }
 }

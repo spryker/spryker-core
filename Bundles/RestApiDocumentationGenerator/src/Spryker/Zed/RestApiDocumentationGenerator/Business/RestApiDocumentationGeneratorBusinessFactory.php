@@ -20,6 +20,7 @@ use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocument
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\RestApiDocumentationWriterInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Writer\YamlRestApiDocumentationWriter;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToYamlDumperInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorDependencyProvider;
 
@@ -88,7 +89,8 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
             $this->createRestApiDocumentationSchemaGenerator(),
             $this->getResourceRoutesPluginsProviderPlugins(),
             $this->getResourceRelationshipsCollectionProviderPlugin(),
-            $this->createGlueAnnotationAnalyzer()
+            $this->createGlueAnnotationAnalyzer(),
+            $this->getTextInflector()
         );
     }
 
@@ -114,5 +116,13 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
     public function getResourceRelationshipsCollectionProviderPlugin(): array
     {
         return $this->getProvidedDependency(RestApiDocumentationGeneratorDependencyProvider::PLUGIN_RESOURCE_RELATIONSHIPS_COLLECTION_PROVIDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface
+     */
+    public function getTextInflector(): RestApiDocumentationGeneratorToTextInflectorInterface
+    {
+        return $this->getProvidedDependency(RestApiDocumentationGeneratorDependencyProvider::TEXT_INFLECTOR);
     }
 }

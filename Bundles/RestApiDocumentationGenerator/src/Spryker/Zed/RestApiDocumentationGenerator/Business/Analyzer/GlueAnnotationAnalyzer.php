@@ -13,7 +13,7 @@ use Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\AnnotationExcep
 class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
 {
     protected const REGEX_PATTERN_GLUE_ANNOTATION = '/(?<=@Glue\(\n)(.|\n)*?(?=(\s\*\n)*?\))/';
-    protected const REGEX_PATTERN_TRIM_SYMBOLS = '/[^\w|=|,|\.|\n]*/';
+    protected const REGEX_PATTERN_TRIM_SYMBOLS = '/[^(\w\s)=,\.\n]*/';
     protected const REGEX_PATTERN_ACTION_NAME = '/(\w)+Action/';
 
     protected const NAMESPACE_PATTERN_CONTROLLER = '%s\Controller\%s';

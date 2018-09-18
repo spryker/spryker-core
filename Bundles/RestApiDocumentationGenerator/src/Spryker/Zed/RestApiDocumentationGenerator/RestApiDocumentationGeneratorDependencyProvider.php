@@ -9,6 +9,7 @@ namespace Spryker\Zed\RestApiDocumentationGenerator;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToDoctrineInflectorAdapter;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToSymfonyYamlAdapter;
 
 class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDependencyProvider
@@ -16,6 +17,7 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
     public const PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS = 'PLUGIN_RESOURCE_ROUTE_PLUGINS_PROVIDERS';
     public const PLUGIN_RESOURCE_RELATIONSHIPS_COLLECTION_PROVIDER = 'PLUGIN_RESOURCE_RELATIONSHIPS_COLLECTION_PROVIDER';
     public const YAML_DUMPER = 'YAML_DUMPER';
+    public const TEXT_INFLECTOR = 'TEXT_INFLECTOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -25,6 +27,7 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addYamlDumper($container);
+        $container = $this->addTextInflector($container);
         $container = $this->addResourceRoutePluginsProviderPlugins($container);
         $container = $this->addResourceRelationshipsCollectionProviderPlugin($container);
 
@@ -40,6 +43,20 @@ class RestApiDocumentationGeneratorDependencyProvider extends AbstractBundleDepe
     {
         $container[static::YAML_DUMPER] = function () {
             return new RestApiDocumentationGeneratorToSymfonyYamlAdapter();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTextInflector(Container $container): Container
+    {
+        $container[static::TEXT_INFLECTOR] = function () {
+            return new RestApiDocumentationGeneratorToDoctrineInflectorAdapter();
         };
 
         return $container;

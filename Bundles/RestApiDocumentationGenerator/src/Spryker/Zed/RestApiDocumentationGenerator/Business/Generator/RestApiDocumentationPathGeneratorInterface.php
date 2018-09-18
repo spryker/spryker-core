@@ -14,11 +14,12 @@ interface RestApiDocumentationPathGeneratorInterface
      * @param string $resourcePath
      * @param string $responseSchema
      * @param string $errorSchema
+     * @param string $summary
      * @param bool $isProtected
      *
      * @return void
      */
-    public function addGetPath(string $resource, string $resourcePath, string $responseSchema, string $errorSchema, bool $isProtected): void;
+    public function addGetPath(string $resource, string $resourcePath, string $responseSchema, string $errorSchema, string $summary, bool $isProtected): void;
 
     /**
      * @param string $resource
@@ -26,11 +27,12 @@ interface RestApiDocumentationPathGeneratorInterface
      * @param string $requestSchema
      * @param string $responseSchema
      * @param string $errorSchema
+     * @param string $summary
      * @param bool $isProtected
      *
      * @return void
      */
-    public function addPostPath(string $resource, string $resourcePath, string $requestSchema, string $responseSchema, string $errorSchema, bool $isProtected): void;
+    public function addPostPath(string $resource, string $resourcePath, string $requestSchema, string $responseSchema, string $errorSchema, string $summary, bool $isProtected): void;
 
     /**
      * @param string $resource
@@ -38,21 +40,23 @@ interface RestApiDocumentationPathGeneratorInterface
      * @param string $requestSchema
      * @param string $responseSchema
      * @param string $errorSchema
+     * @param string $summary
      * @param bool $isProtected
      *
      * @return void
      */
-    public function addPatchPath(string $resource, string $resourcePath, string $requestSchema, string $responseSchema, string $errorSchema, bool $isProtected): void;
+    public function addPatchPath(string $resource, string $resourcePath, string $requestSchema, string $responseSchema, string $errorSchema, string $summary, bool $isProtected): void;
 
     /**
      * @param string $resource
      * @param string $resourcePath
      * @param string $errorSchema
+     * @param string $summary
      * @param bool $isProtected
      *
      * @return void
      */
-    public function addDeletePath(string $resource, string $resourcePath, string $errorSchema, bool $isProtected): void;
+    public function addDeletePath(string $resource, string $resourcePath, string $errorSchema, string $summary, bool $isProtected): void;
 
     /**
      * @return array

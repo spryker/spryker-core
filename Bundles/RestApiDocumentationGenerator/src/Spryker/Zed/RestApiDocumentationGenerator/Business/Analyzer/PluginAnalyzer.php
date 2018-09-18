@@ -12,6 +12,7 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGeneratorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfig;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -26,6 +27,12 @@ class PluginAnalyzer implements PluginAnalyzerInterface
 
     protected const PATTERN_PATH_WITH_PARENT = '/%s/%s%s';
     protected const PATTERN_PATH_ID = '{%sId}';
+
+    protected const PATTERN_SUMMARY_GET_RESOURCE = 'Get %s';
+    protected const PATTERN_SUMMARY_GET_COLLECTION = 'Get collection of %s';
+    protected const PATTERN_SUMMARY_POST_RESOURCE = 'Add %s';
+    protected const PATTERN_SUMMARY_PATCH_RESOURCE = 'Update %s';
+    protected const PATTERN_SUMMARY_DELETE_RESOURCE = 'Delete %s';
 
     /**
      * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGeneratorInterface
@@ -53,24 +60,32 @@ class PluginAnalyzer implements PluginAnalyzerInterface
     protected $annotationsAnalyser;
 
     /**
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface
+     */
+    protected $textInflector;
+
+    /**
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGeneratorInterface $pathGenerator
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface $schemaGenerator
      * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[] $resourceRoutesPluginsProviderPlugins
      * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[] $resourceRelationshipCollectionPlugins
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\GlueAnnotationAnalyzerInterface $annotationsAnalyser
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface $textInflector
      */
     public function __construct(
         RestApiDocumentationPathGeneratorInterface $pathGenerator,
         RestApiDocumentationSchemaGeneratorInterface $schemaGenerator,
         array $resourceRoutesPluginsProviderPlugins,
         array $resourceRelationshipCollectionPlugins,
-        GlueAnnotationAnalyzerInterface $annotationsAnalyser
+        GlueAnnotationAnalyzerInterface $annotationsAnalyser,
+        RestApiDocumentationGeneratorToTextInflectorInterface $textInflector
     ) {
         $this->pathGenerator = $pathGenerator;
         $this->schemaGenerator = $schemaGenerator;
         $this->resourceRoutesPluginsProviderPlugins = $resourceRoutesPluginsProviderPlugins;
         $this->resourceRelationshipCollectionPlugins = $resourceRelationshipCollectionPlugins;
         $this->annotationsAnalyser = $annotationsAnalyser;
+        $this->textInflector = $textInflector;
     }
 
     /**
@@ -91,26 +106,33 @@ class PluginAnalyzer implements PluginAnalyzerInterface
                 if ($collection->has(Request::METHOD_GET)) {
                     $isProtected = $collection->get(Request::METHOD_GET)[static::KEY_IS_PROTECTED];
                     if ($this->isGetCollection($annotationParameters)) {
+                        $summary = $this->getSummary($annotationParameters, Request::METHOD_GET, static::PATTERN_SUMMARY_GET_COLLECTION, $resource);
                         $collectionResponseSchema = $this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin);
-                        $this->pathGenerator->addGetPath($resource, $resourcePath, $collectionResponseSchema, $errorSchema, $isProtected);
+                        $this->pathGenerator->addGetPath($resource, $resourcePath, $collectionResponseSchema, $errorSchema, $summary, $isProtected);
                     }
                     if ($this->isGetResource($annotationParameters)) {
-                        $this->pathGenerator->addGetPath($resource, $resourcePath, $responseSchema, $errorSchema, $isProtected);
+                        $summary = $this->getSummary($annotationParameters, Request::METHOD_GET, static::PATTERN_SUMMARY_GET_RESOURCE, $resource);
+                        $this->pathGenerator->addGetPath($resource, $resourcePath, $responseSchema, $errorSchema, $summary, $isProtected);
                     }
                 }
                 if ($collection->has(Request::METHOD_POST)) {
+                    $summary = $this->getSummary($annotationParameters, Request::METHOD_POST, static::PATTERN_SUMMARY_POST_RESOURCE, $resource);
                     $isProtected = $collection->get(Request::METHOD_POST)[static::KEY_IS_PROTECTED];
                     $requestSchema = $this->schemaGenerator->addRequestSchemaForPlugin($plugin);
-                    $this->pathGenerator->addPostPath($resource, $resourcePath, $requestSchema, $responseSchema, $errorSchema, $isProtected);
+                    $this->pathGenerator->addPostPath($resource, $resourcePath, $requestSchema, $responseSchema, $errorSchema, $summary, $isProtected);
                 }
                 if ($collection->has(Request::METHOD_PATCH)) {
+                    $summary = $this->getSummary($annotationParameters, Request::METHOD_PATCH, static::PATTERN_SUMMARY_PATCH_RESOURCE, $resource);
                     $isProtected = $collection->get(Request::METHOD_PATCH)[static::KEY_IS_PROTECTED];
                     $requestSchema = $this->schemaGenerator->addRequestSchemaForPlugin($plugin);
-                    $this->pathGenerator->addPatchPath($resource, $resourcePath, $requestSchema, $responseSchema, $errorSchema, $isProtected);
+                    $resourcePathWithId = $resourcePath . '/' . $this->getResourceIdFromResourceType($resource);
+                    $this->pathGenerator->addPatchPath($resource, $resourcePathWithId, $requestSchema, $responseSchema, $errorSchema, $summary, $isProtected);
                 }
                 if ($collection->has(Request::METHOD_DELETE)) {
+                    $summary = $this->getSummary($annotationParameters, Request::METHOD_DELETE, static::PATTERN_SUMMARY_DELETE_RESOURCE, $resource);
                     $isProtected = $collection->get(Request::METHOD_DELETE)[static::KEY_IS_PROTECTED];
-                    $this->pathGenerator->addDeletePath($resource, $resourcePath, $errorSchema, $isProtected);
+                    $resourcePathWithId = $resourcePath . '/' . $this->getResourceIdFromResourceType($resource);
+                    $this->pathGenerator->addDeletePath($resource, $resourcePathWithId, $errorSchema, $summary, $isProtected);
                 }
             }
         }
@@ -163,10 +185,10 @@ class PluginAnalyzer implements PluginAnalyzerInterface
         $resourceTypeExploded = explode('-', $resourceType);
         $resourceTypeCamelCased = array_map(function ($key, $value) {
             if ($key === 0) {
-                return $value;
+                return $this->textInflector->singularize($value);
             }
 
-            return ucfirst($value);
+            return ucfirst($this->textInflector->singularize($value));
         }, array_keys($resourceTypeExploded), $resourceTypeExploded);
 
         return sprintf(static::PATTERN_PATH_ID, implode('', $resourceTypeCamelCased));
@@ -212,5 +234,18 @@ class PluginAnalyzer implements PluginAnalyzerInterface
         return $annotationParameters
             && isset($annotationParameters[Request::METHOD_GET][RestApiDocumentationGeneratorConfig::ANNOTATION_KEY_GET_RESOURCE])
             && $annotationParameters[Request::METHOD_GET][RestApiDocumentationGeneratorConfig::ANNOTATION_KEY_GET_RESOURCE];
+    }
+
+    /**
+     * @param array $annotationParameters
+     * @param string $method
+     * @param string $defaultSummaryPattern
+     * @param string $resource
+     *
+     * @return string
+     */
+    protected function getSummary(array $annotationParameters, string $method, string $defaultSummaryPattern, string $resource): string
+    {
+        return $annotationParameters[$method]['summary'] ?? sprintf($defaultSummaryPattern, str_replace('-', ' ', $resource));
     }
 }
