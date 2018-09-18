@@ -62,4 +62,66 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
             ->createProductAbstractPagePublisher()
             ->unpublish($productAbstractIds);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return void
+     */
+    public function publishConcreteProducts(array $productConcreteIds): void
+    {
+        $this->getFactory()
+            ->createProductConcretePageSearchPublisher()
+            ->publish($productConcreteIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return void
+     */
+    public function unpublishConcreteProducts(array $productConcreteIds): void
+    {
+        $this->getFactory()
+            ->createProductConcretePageSearchPublisher()
+            ->unpublish($productConcreteIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function findProductConcretePageSearchTransfersByProductConcreteIds(array $productConcreteIds = []): array
+    {
+        return $this->getFactory()
+            ->createProductConcretePageSearchReader()
+            ->findProductConcretePageSearchTransfersByProductConcreteIds($productConcreteIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function findAllProductConcretePageSearchTransfers(): array
+    {
+        return $this->getFactory()
+            ->createProductConcretePageSearchReader()
+            ->findAllProductConcretePageSearchTransfers();
+    }
 }

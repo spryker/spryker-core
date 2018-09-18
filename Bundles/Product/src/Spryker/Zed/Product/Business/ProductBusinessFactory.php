@@ -29,6 +29,8 @@ use Spryker\Zed\Product\Business\Product\Plugin\ProductConcreteReadObserverPlugi
 use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductConcreteActivator;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
+use Spryker\Zed\Product\Business\Product\ProductConcreteReader\ProductConcreteReader;
+use Spryker\Zed\Product\Business\Product\ProductConcreteReader\ProductConcreteReaderInterface;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusChecker;
@@ -295,6 +297,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createProductAbstractStoreRelationReader()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\ProductConcreteReader\ProductConcreteReaderInterface
+     */
+    public function createProductConcreteReader(): ProductConcreteReaderInterface
+    {
+        return new ProductConcreteReader($this->getRepository());
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPageSearch\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
 /**
@@ -81,6 +82,14 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface[]
+     */
+    public function getProductConcretePageMapExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToCategoryInterface
      */
     public function getCategoryFacade()
@@ -94,6 +103,14 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreFacade()
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface
+     */
+    public function getProductFacade(): ProductPageSearchToProductInterface
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_PRODUCT);
     }
 
     /**

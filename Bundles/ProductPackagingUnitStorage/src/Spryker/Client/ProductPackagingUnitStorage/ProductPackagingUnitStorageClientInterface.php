@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductPackagingUnitStorage;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
 use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
 
@@ -36,4 +37,16 @@ interface ProductPackagingUnitStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer|null
      */
     public function findProductConcretePackagingById(int $idProductAbstract, int $idProduct): ?ProductConcretePackagingStorageTransfer;
+
+    /**
+     * Specification:
+     * - Expands ItemTransfer with packaging unit data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function expandItemTransferWithPackagingUnit(ItemTransfer $itemTransfer): ItemTransfer;
 }

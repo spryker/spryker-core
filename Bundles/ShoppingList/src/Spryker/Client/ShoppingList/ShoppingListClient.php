@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ShoppingList;
 
+use Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
@@ -102,6 +103,25 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
         $this->updatePermissions();
 
         return $shoppingListItemTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function addItems(ShoppingListAddItemsRequestTransfer $shoppingListAddItemsRequestTransfer): ShoppingListResponseTransfer
+    {
+        $shoppingListResponseTransfer = $this->getZedStub()->addItems($shoppingListAddItemsRequestTransfer);
+
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
+        $this->updatePermissions();
+
+        return $shoppingListResponseTransfer;
     }
 
     /**
