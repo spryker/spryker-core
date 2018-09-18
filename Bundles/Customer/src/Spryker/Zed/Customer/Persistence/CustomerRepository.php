@@ -9,6 +9,7 @@ namespace Spryker\Zed\Customer\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
@@ -38,6 +39,26 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
         $this->hydrateCustomerListWithCustomers($customerCollectionTransfer, $customerQuery->find()->getData());
 
         return $customerCollectionTransfer;
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerByReference(string $customerReference): ?CustomerTransfer
+    {
+        $customerQuery = $this->getFactory()->createSpyCustomerQuery()->findByCustomerReference($customerReference);
+        $customerEntity = $customerQuery->getFirst();
+
+        if ($customerEntity === null) {
+            return null;
+        }
+
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->fromArray($customerEntity->toArray(), true);
+
+        return $customerTransfer;
     }
 
     /**

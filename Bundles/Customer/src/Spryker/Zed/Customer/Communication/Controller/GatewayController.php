@@ -305,15 +305,6 @@ class GatewayController extends AbstractGatewayController
      */
     public function findCustomerByReferenceAction(CustomerTransfer $customerTransfer): CustomerResponseTransfer
     {
-        $customerTransfer = $this->getFacade()->findByReference($customerTransfer->getCustomerReference());
-        $customerResponseTransfer = new CustomerResponseTransfer();
-
-        if ($customerTransfer !== null) {
-            $customerResponseTransfer->setCustomerTransfer($customerTransfer);
-            $customerResponseTransfer->setIsSuccess(true);
-            $customerResponseTransfer->setHasCustomer(true);
-        }
-
-        return $customerResponseTransfer;
+        return $this->getFacade()->findCustomerByReference($customerTransfer->getCustomerReference());
     }
 }
