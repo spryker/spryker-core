@@ -137,7 +137,7 @@ class TouchFacadeTest extends Unit
     /**
      * @param int $itemId
      *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouch
+     * @return \Orm\Zed\Touch\Persistence\SpyTouch|null
      */
     protected function getTouchEntityByItemId($itemId)
     {
