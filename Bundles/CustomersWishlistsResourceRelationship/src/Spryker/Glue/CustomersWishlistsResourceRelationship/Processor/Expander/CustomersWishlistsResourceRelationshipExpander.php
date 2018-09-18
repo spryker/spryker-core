@@ -33,6 +33,10 @@ class CustomersWishlistsResourceRelationshipExpander implements CustomersWishlis
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
+        if (!$restRequest->getUser()) {
+            return;
+        }
+
         foreach ($resources as $resource) {
             $wishlistsResources = $this->wishlistsResource
                 ->getCustomerWishlists($restRequest);
