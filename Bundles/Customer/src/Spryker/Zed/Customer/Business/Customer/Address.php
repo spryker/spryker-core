@@ -283,7 +283,7 @@ class Address implements AddressInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $entities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Customer\Persistence\SpyCustomerAddress[] $entities
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
@@ -291,7 +291,7 @@ class Address implements AddressInterface
     {
         $addressTransferCollection = new AddressesTransfer();
 
-        foreach ($entities->getData() as $entity) {
+        foreach ($entities as $entity) {
             $addressTransfer = $this->entityToAddressTransfer($entity);
 
             $countryTransfer = new CountryTransfer();

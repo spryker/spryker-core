@@ -935,6 +935,18 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetAddressesHasCountry()
+    {
+        $customerTransfer = $this->createCustomerWithAddressAndCountry();
+
+        $addressesTransfer = $this->customerFacade->getAddresses($customerTransfer);
+        $addressTransfer = $addressesTransfer->getAddresses()[0];
+        $this->assertEquals(self::TESTER_FK_COUNTRY_GERMANY, $addressTransfer->getCountry()->getIdCountry());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param string $errorMessage
      *
@@ -968,17 +980,5 @@ class CustomerFacadeTest extends Unit
         $this->assertNotNull($addressTransfer);
 
         return $this->getTestCustomerTransfer($customerTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetAddressesHasCountry()
-    {
-        $customerTransfer = $this->createCustomerWithAddressAndCountry();
-
-        $addressesTransfer = $this->customerFacade->getAddresses($customerTransfer);
-        $addressTransfer = $addressesTransfer->getAddresses()[0];
-        $this->assertEquals(self::TESTER_FK_COUNTRY_GERMANY, $addressTransfer->getCountry()->getIdCountry());
     }
 }

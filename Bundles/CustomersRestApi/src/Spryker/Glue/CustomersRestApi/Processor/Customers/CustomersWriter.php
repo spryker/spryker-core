@@ -184,16 +184,13 @@ class CustomersWriter implements CustomersWriterInterface
         $customerTransfer->fromArray($passwordAttributesTransfer->toArray(), true);
 
         $customerResponseTransfer = $this->customerClient->updateCustomerPassword($customerTransfer);
-        if (!$customerResponseTransfer->getIsSuccess()) {
-            foreach ($customerResponseTransfer->getErrors() as $error) {
-                if ($error->getMessage() === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
-                    return $this->addPasswordNotValidError($restResponse);
-                }
 
-                $this->addPasswordChangeError($restResponse, $error->getMessage());
+        foreach ($customerResponseTransfer->getErrors() as $error) {
+            if ($error->getMessage() === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
+                return $this->addPasswordNotValidError($restResponse);
             }
 
-            return $restResponse;
+            return $this->addPasswordChangeError($restResponse, $error->getMessage());
         }
 
         $restResource = $this->restResourceBuilder->createRestResource(
