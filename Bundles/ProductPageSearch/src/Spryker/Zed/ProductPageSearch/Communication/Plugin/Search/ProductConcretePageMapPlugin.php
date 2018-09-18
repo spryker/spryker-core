@@ -56,9 +56,19 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
             ->addCompletionTerms($pageMapTransfer, $data[ProductConcretePageSearchTransfer::SKU])
             ->addStringSort($pageMapTransfer, ProductConcretePageSearchTransfer::NAME, $data[ProductConcretePageSearchTransfer::NAME]);
 
-        $this->expandProductPageMap($pageMapTransfer, $pageMapBuilder, $data, $locale);
+        $pageMapTransfer = $this->expandProductPageMap($pageMapTransfer, $pageMapBuilder, $data, $locale);
 
         return $pageMapTransfer;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME;
     }
 
     /**
@@ -76,13 +86,5 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
         }
 
         return $pageMapTransfer;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME;
     }
 }

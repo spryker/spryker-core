@@ -10,9 +10,14 @@ namespace Spryker\Zed\Product\Business\Product\ProductConcreteReader;
 interface ProductConcreteReaderInterface
 {
     /**
-     * @param int[] $ids
+     * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function findConcreteProductsByIds(array $ids): array;
+    public function findProductConcretesByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function findAllProductConcretes(): array;
 }

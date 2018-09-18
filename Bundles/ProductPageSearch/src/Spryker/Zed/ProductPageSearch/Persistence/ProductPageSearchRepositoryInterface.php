@@ -14,5 +14,5 @@ interface ProductPageSearchRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function findProductConcretePageSearchEntities(array $productConcreteIds = []): array;
+    public function findProductConcretePageSearchTransfers(array $productConcreteIds = []): array;
 }

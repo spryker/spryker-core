@@ -259,6 +259,6 @@ class PageMapBuilder implements PageMapBuilderInterface
             $value = [$value];
         }
 
-        return array_filter($value);
+        return array_values(array_filter($value));
     }
 }

@@ -110,7 +110,14 @@
     <transfer name="Organization">
         <property name="name" type="string"/>
         <property name="nameDashed" type="string"/>
-        <property name="organization" type="Organization"/>
+    </transfer>
+
+    <transfer name="ComposerJsonValidationRequest">
+        <property name="module" type="Module"/>
+    </transfer>
+
+    <transfer name="ComposerJsonValidationResponse">
+        <property name="validationMessages" type="ValidationMessage[]" singular="validationMessage"/>
     </transfer>
 
 </transfers>

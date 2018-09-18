@@ -15,7 +15,7 @@ interface ProductConcretePageMapExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands the provided PageMap transfer object's data by reference.
+     * - Expands the provided PageMap transfer object and returns modified one.
      *
      * @api
      *
@@ -24,7 +24,7 @@ interface ProductConcretePageMapExpanderPluginInterface
      * @param array $productData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expand(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): void;
+    public function expand(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer;
 }

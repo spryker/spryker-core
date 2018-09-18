@@ -11,7 +11,6 @@ use Elastica\ResultSet;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\Search\ProductConcretePageMapPlugin;
 
 /**
  * @method \Spryker\Client\ProductPageSearch\ProductPageSearchFactory getFactory()
@@ -19,6 +18,7 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\Search\ProductConcretePag
 class ProductConcretePageSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
     public const NAME = 'ProductConcretePageSearchResultFormatter';
+    public const KEY_ID_PRODUCT = 'id_product';
 
     /**
      * @api
@@ -58,7 +58,7 @@ class ProductConcretePageSearchResultFormatterPlugin extends AbstractElasticsear
     {
         $productConcretePageSearchTransfer = new ProductConcretePageSearchTransfer();
         $productConcretePageSearchTransfer->fromArray($data, true);
-        $productConcretePageSearchTransfer->setFkProduct($data[ProductConcretePageMapPlugin::KEY_ID_PRODUCT]);
+        $productConcretePageSearchTransfer->setFkProduct($data[static::KEY_ID_PRODUCT]);
 
         return $productConcretePageSearchTransfer;
     }

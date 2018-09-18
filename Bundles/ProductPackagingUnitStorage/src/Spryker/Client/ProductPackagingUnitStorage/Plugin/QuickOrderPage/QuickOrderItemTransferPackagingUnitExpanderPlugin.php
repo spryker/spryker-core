@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductPackagingUnitStorage\Plugin\QuickOrderPage;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface;
+use Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderItemTransferExpanderPluginInterface;
 
 /**
  * @method \Spryker\Client\ProductPackagingUnitStorage\ProductPackagingUnitStorageClientInterface getClient()
@@ -22,7 +22,7 @@ class QuickOrderItemTransferPackagingUnitExpanderPlugin extends AbstractPlugin i
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function expand(ItemTransfer $itemTransfer): ItemTransfer
+    public function expandItemTransfer(ItemTransfer $itemTransfer): ItemTransfer
     {
         return $this->getClient()->expandItemTransferWithPackagingUnit($itemTransfer);
     }

@@ -54,7 +54,7 @@ class ProductConcretePageSearchProductAbstractListener extends AbstractProductCo
                 $productConcreteIds,
                 $this->getFactory()
                     ->getProductFacade()
-                    ->findProductConcreteIdsByAbstractProductId($idProductAbstract)
+                    ->findProductConcreteIdsByIdProductAbstract($idProductAbstract)
             );
         }
 

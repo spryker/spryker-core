@@ -14,14 +14,13 @@ use Elastica\Query\Match;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
-use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
-use Spryker\Shared\Search\SearchConstants;
 
-class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements QueryInterface
+/**
+ * @method \Spryker\Client\ProductPageSearch\ProductPageSearchFactory getFactory()S
+ */
+class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements ProductConcretePageSearchQueryPluginInterface
 {
     /**
      * @var \Elastica\Query
@@ -34,26 +33,9 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Que
     protected $searchString;
 
     /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer|null
+     * @var int
      */
-    protected $locale;
-
-    /**
-     * @var \Generated\Shared\Transfer\FilterTransfer|null
-     */
-    protected $filter;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
-     */
-    public function __construct(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
-    {
-        $this->searchString = $productConcreteCriteriaFilterTransfer->getSearchString();
-        $this->locale = $productConcreteCriteriaFilterTransfer->getLocale();
-        $this->filter = $productConcreteCriteriaFilterTransfer->getFilter();
-
-        $this->query = $this->createSearchQuery();
-    }
+    protected $limit;
 
     /**
      * @return \Elastica\Query
@@ -64,33 +46,46 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Que
     }
 
     /**
-     * @return \Elastica\Query
+     * @param string $searchString
+     *
+     * @return void
      */
-    protected function createSearchQuery(): Query
+    public function setSearchString($searchString)
     {
-        $query = new Query();
-
-        $query = $this->addFulltextSearchToQuery($query);
-
-        $this->setSource($query)
-            ->setLimit($query)
-            ->setOffset($query);
-
-        return $query;
+        $this->searchString = $searchString;
     }
 
     /**
-     * @param \Elastica\Query $baseQuery
+     * @param int $limit
      *
+     * @return void
+     */
+    public function setLimit(int $limit): void
+    {
+        $this->limit = $limit;
+    }
+
+    /**
      * @return \Elastica\Query
      */
-    protected function addFulltextSearchToQuery(Query $baseQuery): Query
+    public function buildQuery(): Query
+    {
+        $this->query = new Query();
+        $this->addFulltextSearchToQuery();
+        $this->setQuerySource();
+        $this->setQueryLimit();
+
+        return $this->query;
+    }
+
+    /**
+     * @return void
+     */
+    protected function addFulltextSearchToQuery(): void
     {
         $matchQuery = $this->createFulltextSearchQuery();
         $boolQuery = $this->createBoolQuery($matchQuery);
-        $baseQuery->setQuery($boolQuery);
-
-        return $baseQuery;
+        $this->query->setQuery($boolQuery);
     }
 
     /**
@@ -98,11 +93,13 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Que
      */
     protected function createFulltextSearchQuery(): AbstractQuery
     {
-        if ($this->searchString === null || !strlen($this->searchString) || !$this->filter || !$this->filter->getSearchFields()) {
+        if ($this->searchString === null || !strlen($this->searchString)) {
             return new MatchAll();
         }
 
-        $fields = $this->getSearchFields();
+        $fields = [
+            PageIndexMap::FULL_TEXT_BOOSTED . '^' . $this->getFullTextBoostedBoostingValue(),
+        ];
 
         $matchQuery = (new MultiMatch())
             ->setFields($fields)
@@ -121,8 +118,7 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Que
     {
         $boolQuery = new BoolQuery();
         $boolQuery->addMust($matchQuery);
-        $this->setTypeFilter($boolQuery);
-        $this->setLocaleFilter($boolQuery);
+        $boolQuery = $this->setTypeFilter($boolQuery);
 
         return $boolQuery;
     }
@@ -130,84 +126,42 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Que
     /**
      * @param \Elastica\Query\BoolQuery $boolQuery
      *
-     * @return void
+     * @return \Elastica\Query\BoolQuery
      */
-    protected function setTypeFilter(BoolQuery $boolQuery): void
+    protected function setTypeFilter(BoolQuery $boolQuery): BoolQuery
     {
         $typeFilter = new Match();
         $typeFilter->setField(PageIndexMap::TYPE, ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME);
         $boolQuery->addMust($typeFilter);
+
+        return $boolQuery;
     }
 
     /**
-     * @param \Elastica\Query\BoolQuery $boolQuery
-     *
      * @return void
      */
-    protected function setLocaleFilter(BoolQuery $boolQuery): void
+    protected function setQueryLimit(): void
     {
-        if ($this->locale && $this->locale->getLocaleName()) {
-            $typeFilter = new Match();
-            $typeFilter->setField(PageIndexMap::LOCALE, $this->locale->getLocaleName());
-            $boolQuery->addMust($typeFilter);
+        if ($this->limit) {
+            $this->query->setSize($this->limit);
         }
     }
 
     /**
-     * @param \Elastica\Query $query
-     *
-     * @return $this
+     * @return void
      */
-    protected function setLimit(Query $query): QueryInterface
+    protected function setQuerySource(): void
     {
-        if ($this->filter && $this->filter->getLimit()) {
-            $query->setSize($this->filter->getLimit());
-        }
-
-        return $this;
+        $this->query->setSource([PageIndexMap::SEARCH_RESULT_DATA]);
     }
 
     /**
-     * @param \Elastica\Query $query
-     *
-     * @return $this
+     * @return int
      */
-    protected function setOffset(Query $query): QueryInterface
+    protected function getFullTextBoostedBoostingValue(): int
     {
-        if ($this->filter && $this->filter->getOffset()) {
-            $query->setFrom($this->filter->getOffset());
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param \Elastica\Query $query
-     *
-     * @return $this
-     */
-    protected function setSource(Query $query): QueryInterface
-    {
-        $query->setSource([PageIndexMap::SEARCH_RESULT_DATA]);
-
-        return $this;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getSearchFields(): array
-    {
-        if (!$this->filter || !$this->filter->getSearchFields()) {
-            return [];
-        }
-
-        foreach ($this->filter->getSearchFields() as &$searchField) {
-            if ($searchField === PageIndexMap::FULL_TEXT_BOOSTED) {
-                $searchField = PageIndexMap::FULL_TEXT_BOOSTED . '^' . Config::get(SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE);
-            }
-        }
-
-        return $this->filter->getSearchFields();
+        return $this->getFactory()
+            ->getProductPageSearchConfig()
+            ->getFullTextBoostedBoostingValue();
     }
 }

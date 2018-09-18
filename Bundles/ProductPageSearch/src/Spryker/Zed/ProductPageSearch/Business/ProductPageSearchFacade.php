@@ -48,6 +48,8 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -80,8 +82,6 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     /**
      * {@inheritdoc}
      *
-     * @
-     *
      * @api
      *
      * @param int[] $productConcreteIds
@@ -100,15 +100,15 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
-     * @param int[] $ids
+     * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function findProductConcretePageSearchEntitiesByProductConcreteIds(array $ids = []): array
+    public function findProductConcretePageSearchTransfersByProductConcreteIds(array $productConcreteIds = []): array
     {
         return $this->getFactory()
             ->createProductConcretePageSearchReader()
-            ->findProductConcretePageSearchEntitiesByProductConcreteIds($ids);
+            ->findProductConcretePageSearchTransfersByProductConcreteIds($productConcreteIds);
     }
 
     /**
@@ -118,10 +118,10 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function findAllProductConcretePageSearchEntities(): array
+    public function findAllProductConcretePageSearchTransfers(): array
     {
         return $this->getFactory()
             ->createProductConcretePageSearchReader()
-            ->findAllProductConcretePageSearchEntities();
+            ->findAllProductConcretePageSearchTransfers();
     }
 }

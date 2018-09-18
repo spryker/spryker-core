@@ -204,7 +204,7 @@ class GlueControllerFilterPluginTest extends Unit
             self::TESTS_POST_DATA
         );
 
-        $request->attributes->add($this->attributes);
+        $request->attributes->add($this->attributes + [RequestConstantsInterface::ATTRIBUTE_ID => '1']);
 
         $response = $this->createGlueControllerListenerPlugin()
             ->filter(

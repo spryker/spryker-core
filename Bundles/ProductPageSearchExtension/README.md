@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-page-search-extension.svg)](https://travis-ci.org/spryker/product-page-search-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-page-search-extension/badge.svg)](https://coveralls.io/github/spryker/product-page-search-extension)
 
-{{ADD DESCRIPTION HERE}}
+Provides interfaces for plugins to extend ProductPageSearch module.
 
 ## Installation
 

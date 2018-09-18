@@ -114,23 +114,98 @@ class ModuleFinder implements ModuleFinderInterface
      */
     protected function getModuleTransfer(SplFileInfo $directoryInfo): ModuleTransfer
     {
-        $composerJsonAsArray = $this->getComposerJsonAsArray($directoryInfo);
-        $organizationName = $this->getOrganizationNameFromComposer($composerJsonAsArray);
+        if ($this->existComposerJson($directoryInfo)) {
+            return $this->buildModuleTransferFromComposerJsonInformation($directoryInfo);
+        }
 
+        return $this->buildModuleTransferFromDirectoryInformation($directoryInfo);
+    }
+
+    /**
+     * @param \Symfony\Component\Finder\SplFileInfo $directoryInfo
+     *
+     * @return bool
+     */
+    protected function existComposerJson(SplFileInfo $directoryInfo): bool
+    {
+        $pathToComposerJson = sprintf('%s/composer.json', $directoryInfo->getPathname());
+
+        return file_exists($pathToComposerJson);
+    }
+
+    /**
+     * @param \Symfony\Component\Finder\SplFileInfo $directoryInfo
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer
+     */
+    protected function buildModuleTransferFromDirectoryInformation(SplFileInfo $directoryInfo): ModuleTransfer
+    {
+        $organizationNameDashed = $this->getOrganizationNameFromDirectory($directoryInfo);
+        $organizationName = $this->camelCase($organizationNameDashed);
+
+        $moduleName = $this->camelCase($this->getModuleNameFromDirectory($directoryInfo));
+        $moduleNameDashed = $this->dasherize($moduleName);
+
+        $organizationTransfer = $this->buildOrganizationTransfer($organizationName, $organizationNameDashed);
+        $moduleTransfer = $this->buildModuleTransfer($moduleName, $moduleNameDashed, $directoryInfo);
+        $moduleTransfer->setOrganization($organizationTransfer);
+
+        return $moduleTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\Finder\SplFileInfo $directoryInfo
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer
+     */
+    protected function buildModuleTransferFromComposerJsonInformation(SplFileInfo $directoryInfo): ModuleTransfer
+    {
+        $composerJsonAsArray = $this->getComposerJsonAsArray($directoryInfo);
+
+        $organizationNameDashed = $this->getOrganizationNameFromComposer($composerJsonAsArray);
+        $organizationName = $this->camelCase($organizationNameDashed);
+
+        $moduleNameDashed = $this->getModuleNameFromComposer($composerJsonAsArray);
+        $moduleName = $this->camelCase($moduleNameDashed);
+
+        $organizationTransfer = $this->buildOrganizationTransfer($organizationName, $organizationNameDashed);
+        $moduleTransfer = $this->buildModuleTransfer($moduleName, $moduleNameDashed, $directoryInfo);
+        $moduleTransfer->setOrganization($organizationTransfer);
+
+        return $moduleTransfer;
+    }
+
+    /**
+     * @param string $organizationName
+     * @param string $organizationNameDashed
+     *
+     * @return \Generated\Shared\Transfer\OrganizationTransfer
+     */
+    protected function buildOrganizationTransfer(string $organizationName, string $organizationNameDashed): OrganizationTransfer
+    {
         $organizationTransfer = new OrganizationTransfer();
         $organizationTransfer
-            ->setName($this->camelCase($organizationName))
-            ->setNameDashed($organizationName);
+            ->setName($organizationName)
+            ->setNameDashed($organizationNameDashed);
 
-        $moduleName = $this->getModuleNameFromComposer($composerJsonAsArray);
+        return $organizationTransfer;
+    }
+
+    /**
+     * @param string $moduleName
+     * @param string $moduleNameDashed
+     * @param \Symfony\Component\Finder\SplFileInfo $directoryInfo
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer
+     */
+    protected function buildModuleTransfer(string $moduleName, string $moduleNameDashed, SplFileInfo $directoryInfo): ModuleTransfer
+    {
         $moduleTransfer = new ModuleTransfer();
         $moduleTransfer
-            ->setName($this->camelCase($moduleName))
-            ->setNameDashed($moduleName)
+            ->setName($moduleName)
+            ->setNameDashed($moduleNameDashed)
             ->setRootDirectory($directoryInfo->getRealPath())
             ->setIsStandalone(false);
-
-        $moduleTransfer->setOrganization($organizationTransfer);
 
         return $moduleTransfer;
     }
@@ -163,6 +238,21 @@ class ModuleFinder implements ModuleFinderInterface
     }
 
     /**
+     * @param \Symfony\Component\Finder\SplFileInfo $directoryInfo
+     *
+     * @return string
+     */
+    protected function getOrganizationNameFromDirectory(SplFileInfo $directoryInfo): string
+    {
+        $pathFragments = explode(DIRECTORY_SEPARATOR, $directoryInfo->getRealPath());
+        $vendorPosition = array_search('vendor', $pathFragments);
+
+        $organizationName = $pathFragments[$vendorPosition + 1];
+
+        return $organizationName;
+    }
+
+    /**
      * @param array $composerJsonAsArray
      *
      * @return string
@@ -173,6 +263,16 @@ class ModuleFinder implements ModuleFinderInterface
         $moduleName = $nameFragments[1];
 
         return $moduleName;
+    }
+
+    /**
+     * @param \Symfony\Component\Finder\SplFileInfo $directoryInfo
+     *
+     * @return string
+     */
+    protected function getModuleNameFromDirectory(SplFileInfo $directoryInfo): string
+    {
+        return $directoryInfo->getRelativePathname();
     }
 
     /**

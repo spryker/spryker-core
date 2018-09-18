@@ -8,19 +8,19 @@
 namespace Spryker\Client\ProductReview\Zed;
 
 use Generated\Shared\Transfer\ProductReviewRequestTransfer;
-use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestBridge;
+use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestInterface;
 
 class ProductReviewStub implements ProductReviewStubInterface
 {
     /**
-     * @var \Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestBridge
+     * @var \Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestInterface
      */
     protected $zedRequestClient;
 
     /**
-     * @param \Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestBridge $zedRequestClient
+     * @param \Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestInterface $zedRequestClient
      */
-    public function __construct(ProductReviewToZedRequestBridge $zedRequestClient)
+    public function __construct(ProductReviewToZedRequestInterface $zedRequestClient)
     {
         $this->zedRequestClient = $zedRequestClient;
     }

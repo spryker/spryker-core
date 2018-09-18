@@ -179,7 +179,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductPageSearchToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
         };
 
-        $container[self::FACADE_SEARCH] = function (Container $container) {
+        $container[static::FACADE_SEARCH] = function (Container $container) {
             return new ProductPageSearchToSearchBridge($container->getLocator()->search()->facade());
         };
 

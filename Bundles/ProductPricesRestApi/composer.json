@@ -1,0 +1,36 @@
+{
+  "name": "spryker/product-prices-rest-api",
+  "description": "ProductPricesRestApi module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/glue-application": "^1.1.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/kernel": "^3.22.0",
+    "spryker/price": "^5.0.0",
+    "spryker/price-product": "^2.0.0",
+    "spryker/price-product-storage": "^2.2.0",
+    "spryker/product-storage": "^1.2.0",
+    "spryker/products-rest-api": "^2.0.0",
+    "spryker/symfony": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

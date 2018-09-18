@@ -3,19 +3,19 @@
   "description": "ProductPageSearchExtension module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/search": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/search": "If you want to use expander plugins"
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

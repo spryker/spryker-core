@@ -85,11 +85,11 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
             true
         );
 
-        $productConcretePageSearchTransfer->setFkProduct($productConcreteTransfer->getIdProductConcrete());
-        $productConcretePageSearchTransfer->setType(ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME);
-        $productConcretePageSearchTransfer->setStore($storeTransfer->getName());
-        $productConcretePageSearchTransfer->setLocale($localizedAttributesTransfer->getLocale()->getLocaleName());
-        $productConcretePageSearchTransfer->setName($localizedAttributesTransfer->getName());
+        $productConcretePageSearchTransfer->setFkProduct($productConcreteTransfer->getIdProductConcrete())
+            ->setType(ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME)
+            ->setStore($storeTransfer->getName())
+            ->setLocale($localizedAttributesTransfer->getLocale()->getLocaleName())
+            ->setName($localizedAttributesTransfer->getName());
 
         return $productConcretePageSearchTransfer;
     }

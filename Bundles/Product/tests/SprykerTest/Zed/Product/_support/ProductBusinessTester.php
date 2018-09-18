@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
@@ -82,9 +83,9 @@ class ProductBusinessTester extends Actor
     }
 
     /**
-     * @return void
+     * @return int[]
      */
-    protected function insertProducts(): void
+    protected function insertProducts(): array
     {
         $productConcreteIds = [];
         $productFacade = $this->getProductFacade();
@@ -99,6 +100,14 @@ class ProductBusinessTester extends Actor
         }
 
         return $productConcreteIds;
+    }
+
+    /**
+     * @return int
+     */
+    public function getProductConcreteDatabaseEntriesCount(): int
+    {
+        return (new SpyProductQuery())->count();
     }
 
     /**
@@ -148,11 +157,11 @@ class ProductBusinessTester extends Actor
         $productConcreteTransfers = [];
 
         for ($i = 0; $i < 2; $i++) {
-            $productConcreteTransfer = new ProductConcreteTransfer();
-            $productConcreteTransfer->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract());
-            $productConcreteTransfer->setSku('concrete_sku_' . md5(uniqid()));
-            $productConcreteTransfer->setLocalizedAttributes(new ArrayObject([$this->createLocalizedAttributeTransfer()]));
-            $productConcreteTransfer->setIsActive(true);
+            $productConcreteTransfer = (new ProductConcreteTransfer())
+                ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
+                ->setSku('concrete_sku_' . md5(uniqid()))
+                ->setLocalizedAttributes(new ArrayObject([$this->createLocalizedAttributeTransfer()]))
+                ->setIsActive(true);
 
             $productConcreteTransfers[] = $productConcreteTransfer;
         }
