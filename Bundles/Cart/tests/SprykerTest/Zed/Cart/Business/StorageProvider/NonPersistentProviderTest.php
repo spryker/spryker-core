@@ -367,7 +367,7 @@ class NonPersistentProviderTest extends Unit
      * @param string $itemId
      * @param int $itemQuantity
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer|\Generated\Shared\Transfer\ItemTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function createItem($itemId, $itemQuantity)
     {

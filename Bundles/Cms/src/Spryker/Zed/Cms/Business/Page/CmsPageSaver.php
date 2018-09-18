@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -238,7 +239,7 @@ class CmsPageSaver implements CmsPageSaverInterface
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage|null
      */
     protected function getCmsPageEntity(CmsPageTransfer $cmsPageTransfer)
     {
@@ -266,7 +267,7 @@ class CmsPageSaver implements CmsPageSaverInterface
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
-     * @return array
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[]
      */
     protected function createCmsPageLocalizedAttributesList(SpyCmsPage $cmsPageEntity)
     {
@@ -332,7 +333,7 @@ class CmsPageSaver implements CmsPageSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[] $cmsPageLocalizedAttributesList
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[] $cmsPageLocalizedAttributesList
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
      * @return void

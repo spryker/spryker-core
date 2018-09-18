@@ -74,9 +74,6 @@ class DiscontinueProductFormDataProvider
      */
     protected function getLocalizedNotes(ProductDiscontinuedTransfer $productDiscontinuedTransfer): array
     {
-        if ($productDiscontinuedTransfer->getProductDiscontinuedNotes() === null) {
-            return [];
-        }
         $indexedProductDiscontinuedNoteTransfers = $this->indexProductDiscontinuedNotes((array)$productDiscontinuedTransfer->getProductDiscontinuedNotes());
         foreach ($this->localeFacade->getAvailableLocales() as $localeName) {
             $idLocale = $this->localeFacade->getLocale($localeName)->getIdLocale();
