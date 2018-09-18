@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToProductBundleClientInterface;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapperInterface;
@@ -28,11 +27,6 @@ class OrdersReader implements OrdersReaderInterface
     protected $salesClient;
 
     /**
-     * @var \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToProductBundleClientInterface
-     */
-    protected $productBundleClient;
-
-    /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
@@ -44,18 +38,15 @@ class OrdersReader implements OrdersReaderInterface
 
     /**
      * @param \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface $salesClient
-     * @param \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToProductBundleClientInterface $productBundleClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapperInterface $ordersResourceMapper
      */
     public function __construct(
         OrdersRestApiToSalesClientInterface $salesClient,
-        OrdersRestApiToProductBundleClientInterface $productBundleClient,
         RestResourceBuilderInterface $restResourceBuilder,
         OrdersResourceMapperInterface $ordersResourceMapper
     ) {
         $this->salesClient = $salesClient;
-        $this->productBundleClient = $productBundleClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->ordersResourceMapper = $ordersResourceMapper;
     }
@@ -87,10 +78,7 @@ class OrdersReader implements OrdersReaderInterface
             );
 
         foreach ($orderListTransfer->getOrders() as $orderTransfer) {
-            $ordersRestAttributesTransfer = $this->ordersResourceMapper->mapOrderToOrdersRestAttributes(
-                $orderTransfer,
-                $this->getTransformedBundleItems($orderTransfer)
-            );
+            $ordersRestAttributesTransfer = $this->ordersResourceMapper->mapOrderToOrdersRestAttributes($orderTransfer);
             $restResource = $this->restResourceBuilder->createRestResource(
                 OrdersRestApiConfig::RESOURCE_ORDERS,
                 $orderTransfer->getOrderReference(),
@@ -123,10 +111,7 @@ class OrdersReader implements OrdersReaderInterface
             return $this->createOrderNotFoundErrorResponse($response);
         }
 
-        $ordersRestAttributesTransfer = $this->ordersResourceMapper->mapOrderToOrdersRestAttributes(
-            $orderTransfer,
-            $this->getTransformedBundleItems($orderTransfer)
-        );
+        $ordersRestAttributesTransfer = $this->ordersResourceMapper->mapOrderToOrdersRestAttributes($orderTransfer);
         $restResource = $this->restResourceBuilder->createRestResource(
             OrdersRestApiConfig::RESOURCE_ORDERS,
             $orderReference,
@@ -162,20 +147,5 @@ class OrdersReader implements OrdersReaderInterface
         return (new PaginationTransfer())
             ->setPage($offset)
             ->setMaxPerPage($limit);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderItemsTransfer[]
-     */
-    protected function getTransformedBundleItems(OrderTransfer $orderTransfer): array
-    {
-        $items = $this->productBundleClient->getGroupedBundleItems(
-            $orderTransfer->getItems(),
-            $orderTransfer->getBundleItems()
-        );
-
-        return $this->ordersResourceMapper->mapTransformedBundleItems($orderTransfer, $items);
     }
 }

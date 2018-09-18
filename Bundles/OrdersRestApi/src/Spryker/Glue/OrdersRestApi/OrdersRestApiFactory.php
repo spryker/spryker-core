@@ -8,7 +8,6 @@
 namespace Spryker\Glue\OrdersRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToProductBundleClientInterface;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapper;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapperInterface;
@@ -18,29 +17,12 @@ use Spryker\Glue\OrdersRestApi\Processor\Orders\OrdersReaderInterface;
 class OrdersRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface
-     */
-    public function getSalesClient(): OrdersRestApiToSalesClientInterface
-    {
-        return $this->getProvidedDependency(OrdersRestApiDependencyProvider::CLIENT_SALES);
-    }
-
-    /**
-     * @return \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToProductBundleClientInterface
-     */
-    public function getProductBundleClient(): OrdersRestApiToProductBundleClientInterface
-    {
-        return $this->getProvidedDependency(OrdersRestApiDependencyProvider::CLIENT_PRODUCT_BUNDLE);
-    }
-
-    /**
      * @return \Spryker\Glue\OrdersRestApi\Processor\Orders\OrdersReaderInterface
      */
     public function createOrdersReader(): OrdersReaderInterface
     {
         return new OrdersReader(
             $this->getSalesClient(),
-            $this->getProductBundleClient(),
             $this->getResourceBuilder(),
             $this->createOrdersResourceMapper()
         );
@@ -52,5 +34,13 @@ class OrdersRestApiFactory extends AbstractFactory
     public function createOrdersResourceMapper(): OrdersResourceMapperInterface
     {
         return new OrdersResourceMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface
+     */
+    public function getSalesClient(): OrdersRestApiToSalesClientInterface
+    {
+        return $this->getProvidedDependency(OrdersRestApiDependencyProvider::CLIENT_SALES);
     }
 }
