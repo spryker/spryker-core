@@ -154,12 +154,12 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             ->filterByIdShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit())
             ->findOne();
 
-        if (!$shoppingListCompanyBusinessUnitEntity) {
-            $this->createShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
+        if ($shoppingListCompanyBusinessUnitEntity !== null) {
+            $this->updateShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer, $shoppingListCompanyBusinessUnitEntity);
             return;
         }
 
-        $this->updateShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer, $shoppingListCompanyBusinessUnitEntity);
+        $this->createShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
     }
 
     /**
@@ -175,12 +175,12 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             ->filterByIdShoppingListCompanyUser($shoppingListCompanyUserTransfer->getIdShoppingListCompanyUser())
             ->findOne();
 
-        if (!$shoppingListCompanyUserEntity) {
-            $this->createShoppingListCompanyUser($shoppingListCompanyUserTransfer);
+        if ($shoppingListCompanyUserEntity !== null) {
+            $this->updateShoppingListCompanyUser($shoppingListCompanyUserTransfer, $shoppingListCompanyUserEntity);
             return;
         }
 
-        $this->updateShoppingListCompanyUser($shoppingListCompanyUserTransfer, $shoppingListCompanyUserEntity);
+        $this->createShoppingListCompanyUser($shoppingListCompanyUserTransfer);
     }
 
     /**

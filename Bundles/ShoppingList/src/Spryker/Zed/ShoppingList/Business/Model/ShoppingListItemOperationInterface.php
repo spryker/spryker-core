@@ -9,7 +9,6 @@ namespace Spryker\Zed\ShoppingList\Business\Model;
 
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
-use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
 interface ShoppingListItemOperationInterface
@@ -24,9 +23,9 @@ interface ShoppingListItemOperationInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     * @return void
      */
-    public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
+    public function deleteShoppingListItems(ShoppingListTransfer $shoppingListTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
