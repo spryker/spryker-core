@@ -26,7 +26,7 @@ interface ProductConcretePageSearchReaderInterface
      * - Returns array with following structure:
      * - [
      *     'DE' => [
-     *       'en_US' =>  \Generated\Shared\Transfer\ProductConcretePageSearchTransfer,
+     *       'en_US' => \Generated\Shared\Transfer\ProductConcretePageSearchTransfer,
      *       'de_DE' => \Generated\Shared\Transfer\ProductConcretePageSearchTransfer,
      *     ]
      *   ]

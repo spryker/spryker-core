@@ -13,6 +13,9 @@ use Spryker\Client\ProductPageSearch\Plugin\Elasticsearch\Query\ProductConcreteP
 use Spryker\Client\ProductPageSearch\ProductConcreteReader\ProductConcreteReader;
 use Spryker\Client\ProductPageSearch\ProductConcreteReader\ProductConcreteReaderInterface;
 
+/**
+ * @method \Spryker\Client\ProductPageSearch\ProductPageSearchConfig getConfig()
+ */
 class ProductPageSearchFactory extends AbstractFactory
 {
     /**
@@ -58,5 +61,13 @@ class ProductPageSearchFactory extends AbstractFactory
     public function getProductConcretePageSearchQueryExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_CONCRETE_PAGE_SEARCH_QUERY_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductPageSearch\ProductPageSearchConfig
+     */
+    public function getProductPageSearchConfig(): ProductPageSearchConfig
+    {
+        return $this->getConfig();
     }
 }

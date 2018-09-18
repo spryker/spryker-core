@@ -15,10 +15,11 @@ use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
-use Spryker\Shared\Search\SearchConstants;
 
+/**
+ * @method \Spryker\Client\ProductPageSearch\ProductPageSearchFactory getFactory()S
+ */
 class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements ProductConcretePageSearchQueryPluginInterface
 {
     /**
@@ -97,7 +98,7 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Pro
         }
 
         $fields = [
-            PageIndexMap::FULL_TEXT_BOOSTED . '^' . Config::get(SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE),
+            PageIndexMap::FULL_TEXT_BOOSTED . '^' . $this->getFullTextBoostedBoostingValue(),
         ];
 
         $matchQuery = (new MultiMatch())
@@ -152,5 +153,15 @@ class ProductConcretePageSearchQueryPlugin extends AbstractPlugin implements Pro
     protected function setQuerySource(): void
     {
         $this->query->setSource([PageIndexMap::SEARCH_RESULT_DATA]);
+    }
+
+    /**
+     * @return int
+     */
+    protected function getFullTextBoostedBoostingValue(): int
+    {
+        return $this->getFactory()
+            ->getProductPageSearchConfig()
+            ->getFullTextBoostedBoostingValue();
     }
 }
