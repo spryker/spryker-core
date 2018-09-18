@@ -126,7 +126,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsGlossaryForm(CmsFacade $cmsFacade, array $formData = [], array $formOptions = [])
     {
-        return $this->getFormFactory()->create(CmsGlossaryForm::class, $formData, $formOptions);
+        return $this->getCmsGlossaryForm($formData, $formOptions);
     }
 
     /**
