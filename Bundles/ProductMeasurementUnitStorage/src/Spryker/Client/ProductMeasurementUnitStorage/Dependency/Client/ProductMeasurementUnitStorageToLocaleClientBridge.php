@@ -15,7 +15,7 @@ class ProductMeasurementUnitStorageToLocaleClientBridge implements ProductMeasur
     protected $localeClient;
 
     /**
-     * @param \Spryker\Client\Locale\LocaleClientInterface $localeClient \
+     * @param \Spryker\Client\Locale\LocaleClientInterface $localeClient
      */
     public function __construct($localeClient)
     {
