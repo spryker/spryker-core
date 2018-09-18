@@ -44,14 +44,10 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
     {
         parent::configure();
 
-        $parentDescription = $this->getDescription();
-
         $this
             ->setName(static::COMMAND_NAME)
             ->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-run the command, changed composer.json will not be saved.')
-            ->setDescription('
-Fix dependency violations in composer.json.
-' . $parentDescription);
+            ->setDescription('Fix dependency violations in composer.json.');
     }
 
     /**

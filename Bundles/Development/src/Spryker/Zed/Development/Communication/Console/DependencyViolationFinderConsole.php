@@ -40,15 +40,11 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
     {
         parent::configure();
 
-        $parentDescription = $this->getDescription();
-
         $this
             ->setName(static::COMMAND_NAME)
             ->addOption(static::OPTION_DEPENDENCY_TYPE, static::OPTION_DEPENDENCY_TYPE_SHORT, InputOption::VALUE_REQUIRED, 'Runs only one specific dependency type check.')
             ->addOption(static::OPTION_STOP_ON_VIOLATION, static::OPTION_STOP_ON_VIOLATION_SHORT, InputOption::VALUE_NONE, 'Stop execution when a violation was found.')
-            ->setDescription('
-Find dependency violations in the modules.
-' . $parentDescription);
+            ->setDescription('Find dependency violations in the modules.');
 
         $this->setAliases(['dev:dependency:find-violations']);
     }

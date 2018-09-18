@@ -39,7 +39,7 @@ class AbstractCoreModuleAwareConsole extends Console
 
         $this
             ->addArgument(static::ARGUMENT_MODULE, InputArgument::OPTIONAL, 'Module(s) to execute. Organization.Module or Organization.Application.Module can be used. You can also make a wildcard search by prefix or suffix parts with asterisk (*)')
-            ->setDescription('
+            ->setHelp('
 For whitespace search you can prefix or suffix all module relevant parts with the asterisk (*)
 
 You can use the following search patterns:
