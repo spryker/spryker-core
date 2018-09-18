@@ -22,6 +22,8 @@ class NopaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheck
     const ERROR_CODE_NOPAYMENT_NOT_ALLOWED = 403;
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *

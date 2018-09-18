@@ -18,6 +18,8 @@ use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInt
 class ShoppingListPermissionStoragePlugin extends AbstractPlugin implements PermissionStoragePluginInterface
 {
     /**
+     * @api
+     *
      * @param int|string $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer

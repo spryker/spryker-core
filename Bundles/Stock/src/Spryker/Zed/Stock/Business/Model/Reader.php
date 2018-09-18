@@ -76,7 +76,7 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getStockTypes()
     {
@@ -466,7 +466,7 @@ class Reader implements ReaderInterface
     /**
      * @param \Traversable|\Orm\Zed\Stock\Persistence\SpyStock[] $stockCollection
      *
-     * @return array
+     * @return string[]
      */
     protected function mapStockNames(Traversable $stockCollection)
     {

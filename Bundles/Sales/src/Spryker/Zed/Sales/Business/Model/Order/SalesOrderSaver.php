@@ -411,10 +411,6 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      */
     protected function getSaveOrderTransfer(SaveOrderTransfer $saveOrderTransfer)
     {
-        if ($saveOrderTransfer === null) {
-            $saveOrderTransfer = $this->createSaveOrderTransfer();
-        }
-
         return $saveOrderTransfer;
     }
 
