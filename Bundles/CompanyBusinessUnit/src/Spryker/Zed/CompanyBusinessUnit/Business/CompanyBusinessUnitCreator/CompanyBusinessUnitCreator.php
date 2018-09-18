@@ -10,12 +10,15 @@ namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
+use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitConfig;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CompanyBusinessUnitCreator implements CompanyBusinessUnitCreatorInterface
 {
+    protected const MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS = 'message.business_unit.create';
+
     use TransactionTrait;
 
     /**
@@ -49,7 +52,8 @@ class CompanyBusinessUnitCreator implements CompanyBusinessUnitCreatorInterface
     {
         $companyBusinessUnitResponseTransfer = (new CompanyBusinessUnitResponseTransfer())
             ->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer)
-            ->setIsSuccessful(true);
+            ->setIsSuccessful(true)
+            ->addMessage((new ResponseMessageTransfer())->setText(static::MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS));
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyBusinessUnitResponseTransfer) {
             return $this->executeCreateTransaction($companyBusinessUnitResponseTransfer);
