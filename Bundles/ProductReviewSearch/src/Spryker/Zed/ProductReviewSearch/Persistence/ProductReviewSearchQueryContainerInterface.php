@@ -34,7 +34,7 @@ interface ProductReviewSearchQueryContainerInterface extends QueryContainerInter
      *
      * @param int $idAbstractProduct
      *
-     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */
     public function queryProductReviewRatingByIdAbstractProduct($idAbstractProduct);
 }
