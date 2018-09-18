@@ -102,7 +102,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      *
      * @return bool
      */
-    public function sameLevelCategoryByNameExists(string $nodeName, CategoryTransfer $categoryTransfer): bool
+    public function checkSameLevelCategoryByNameExists(string $nodeName, CategoryTransfer $categoryTransfer): bool
     {
         return $this->getFactory()->createCategoryNodeQuery()
             ->setIgnoreCase(true)

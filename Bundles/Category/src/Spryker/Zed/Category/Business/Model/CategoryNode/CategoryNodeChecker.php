@@ -63,8 +63,8 @@ class CategoryNodeChecker implements CategoryNodeCheckerInterface
      *
      * @return bool
      */
-    public function sameLevelCategoryByNameExists(string $name, CategoryTransfer $categoryTransfer): bool
+    public function checkSameLevelCategoryByNameExists(string $name, CategoryTransfer $categoryTransfer): bool
     {
-        return $this->categoryRepository->sameLevelCategoryByNameExists($name, $categoryTransfer);
+        return $this->categoryRepository->checkSameLevelCategoryByNameExists($name, $categoryTransfer);
     }
 }
