@@ -10,7 +10,7 @@ namespace Spryker\Shared\CheckoutPermissionConnector\Plugin\Permission;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
 /**
- * For Client PermissionDependencyProvider::getPermissionPlugins() registration
+ * For Zed & Client PermissionDependencyProvider::getPermissionPlugins() registration
  */
 class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPluginInterface
 {
@@ -24,7 +24,6 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
      * - Returns true in case the cent amount is not provided.
      * - Returns false in case the expected value amount is exceeded.
      * - Returns false in case the expected value is not provided.
-     * - Has tests, that cover all cases mentioned above.
      *
      * @param array $configuration
      * @param int|null $centAmount
@@ -34,11 +33,11 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
     public function can(array $configuration, $centAmount = null): bool
     {
         if ($centAmount === null) {
-            return false;
+            return true;
         }
 
         if (!isset($configuration[static::FIELD_CENT_AMOUNT])) {
-            return true;
+            return false;
         }
 
         if ($configuration[static::FIELD_CENT_AMOUNT] <= (int)$centAmount) {

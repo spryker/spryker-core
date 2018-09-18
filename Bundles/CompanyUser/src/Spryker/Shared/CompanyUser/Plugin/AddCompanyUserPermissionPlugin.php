@@ -10,7 +10,7 @@ namespace Spryker\Shared\CompanyUser\Plugin;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 
 /**
- * For Client PermissionDependencyProvider::getPermissionPlugins() registration
+ * For Zed & Client PermissionDependencyProvider::getPermissionPlugins() registration
  */
 class AddCompanyUserPermissionPlugin implements PermissionPluginInterface
 {
