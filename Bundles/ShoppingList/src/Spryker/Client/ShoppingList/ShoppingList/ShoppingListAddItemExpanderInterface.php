@@ -17,5 +17,5 @@ interface ShoppingListAddItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function expandItemAdd(ShoppingListItemTransfer $shoppingListItemTransfer, array $params = []): ShoppingListItemTransfer;
+    public function expandItemAdd(ShoppingListItemTransfer $shoppingListItemTransfer, array $params): ShoppingListItemTransfer;
 }

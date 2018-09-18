@@ -30,10 +30,10 @@ class ShoppingListAddItemExpander implements ShoppingListAddItemExpanderInterfac
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function expandItemAdd(ShoppingListItemTransfer $shoppingListItemTransfer, array $params = []): ShoppingListItemTransfer
+    public function expandItemAdd(ShoppingListItemTransfer $shoppingListItemTransfer, array $params): ShoppingListItemTransfer
     {
         foreach ($this->shoppingListItemExpanderPlugins as $shoppingListItemExpanderPlugin) {
-            $shoppingListItemExpanderPlugin->expand($shoppingListItemTransfer, $params);
+            $shoppingListItemTransfer = $shoppingListItemExpanderPlugin->expand($shoppingListItemTransfer, $params);
         }
 
         return $shoppingListItemTransfer;
