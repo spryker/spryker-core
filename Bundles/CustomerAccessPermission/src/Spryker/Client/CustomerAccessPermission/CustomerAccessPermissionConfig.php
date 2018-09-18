@@ -31,8 +31,6 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
     protected const CONTENT_TYPE_PERMISSION_ACCESS = [
         'add-to-cart' => '|^(/en|/de)?/cart(?!/add)',
         'order-place-submit' => '|^(/en|/de)?/checkout',
-        'wishlist' => '|^(/en|/de)?/wishlist',
-        'shopping-list' => '|^(/en|/de)?/shopping-list',
     ];
 
     protected const MESSAGE_PLUGIN_NOT_FOUND_EXCEPTION = 'Plugin not found';
