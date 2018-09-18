@@ -20,27 +20,27 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @deprecated scalarField is deprecated.
      */
-    const SCALAR_FIELD = 'scalarField';
+    public const SCALAR_FIELD = 'scalarField';
 
     /**
      * @deprecated arrayField is deprecated.
      */
-    const ARRAY_FIELD = 'arrayField';
+    public const ARRAY_FIELD = 'arrayField';
 
     /**
      * @deprecated transferField is deprecated.
      */
-    const TRANSFER_FIELD = 'transferField';
+    public const TRANSFER_FIELD = 'transferField';
 
     /**
      * @deprecated transferCollectionField is deprecated.
      */
-    const TRANSFER_COLLECTION_FIELD = 'transferCollectionField';
+    public const TRANSFER_COLLECTION_FIELD = 'transferCollectionField';
 
     /**
      * @deprecated Deprecated on project level.
      */
-    const PROJECT_LEVEL_DEPRECATED_FIELD = 'projectLevelDeprecatedField';
+    public const PROJECT_LEVEL_DEPRECATED_FIELD = 'projectLevelDeprecatedField';
 
     /**
      * @var string|null
@@ -58,7 +58,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     protected $transferField;
 
     /**
-     * @var \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]|null
+     * @var \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]
      */
     protected $transferCollectionField;
 
@@ -296,7 +296,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @deprecated transferCollectionField is deprecated.
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]|null
+     * @return \ArrayObject|\Generated\Shared\Transfer\DeprecatedFooBarTransfer[]
      */
     public function getTransferCollectionField()
     {
