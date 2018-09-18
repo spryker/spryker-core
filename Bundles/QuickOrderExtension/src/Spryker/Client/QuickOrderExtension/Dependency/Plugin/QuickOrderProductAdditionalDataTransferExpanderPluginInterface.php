@@ -22,5 +22,5 @@ interface QuickOrderProductAdditionalDataTransferExpanderPluginInterface
      *
      * @return \Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer
      */
-    public function expand(QuickOrderProductAdditionalDataTransfer $quickOrderProductAdditionalDataTransfer): QuickOrderProductAdditionalDataTransfer;
+    public function expandQuickOrderProductAdditionalDataTransfer(QuickOrderProductAdditionalDataTransfer $quickOrderProductAdditionalDataTransfer): QuickOrderProductAdditionalDataTransfer;
 }
