@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductMeasurementUnitStorage\Plugin\QuickOrderPage;
 
 use Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderProductAdditionalDataTransferExpanderPluginInterface;
+use Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderProductAdditionalDataTransferExpanderPluginInterface;
 
 /**
  * @method \Spryker\Client\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageClientInterface getClient()
@@ -20,16 +20,16 @@ class QuickOrderProductAdditionalDataTransferMeasurementUnitExpanderPlugin exten
     /**
      * @param \Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer $quickOrderProductAdditionalDataTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer
      */
-    public function expand(QuickOrderProductAdditionalDataTransfer $quickOrderProductAdditionalDataTransfer): void
+    public function expand(QuickOrderProductAdditionalDataTransfer $quickOrderProductAdditionalDataTransfer): QuickOrderProductAdditionalDataTransfer
     {
         $productMeasurementUnitTransfer = $this->getClient()->findProductMeasurementBaseUnitByIdProduct(
             $quickOrderProductAdditionalDataTransfer->getIdProductConcrete()
         );
 
         if ($productMeasurementUnitTransfer === null) {
-            return;
+            return $quickOrderProductAdditionalDataTransfer;
         }
 
         $translatedName = $this->getFactory()
@@ -41,5 +41,7 @@ class QuickOrderProductAdditionalDataTransferMeasurementUnitExpanderPlugin exten
 
         $productMeasurementUnitTransfer->setName($translatedName);
         $quickOrderProductAdditionalDataTransfer->setBaseMeasurementUnit($productMeasurementUnitTransfer);
+
+        return $quickOrderProductAdditionalDataTransfer;
     }
 }
