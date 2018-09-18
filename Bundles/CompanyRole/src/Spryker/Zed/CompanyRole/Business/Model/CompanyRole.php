@@ -114,7 +114,7 @@ class CompanyRole implements CompanyRoleInterface
         $companyResponseTransfer->requireCompanyTransfer();
         $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
 
-        $availablePermissions = $this->permissionFacade->getRegisteredNonInfrastructuralPermissions();
+        $availablePermissions = $this->permissionFacade->findMergedRegisteredNonInfrastructuralPermissions();
 
         foreach ($companyRoles as $companyRoleTransfer) {
             $companyRoleResponseTransfer = $this->createCompanyRoleWithAssignedPermissions(

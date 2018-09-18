@@ -31,5 +31,5 @@ interface PermissionFinderInterface
     /**
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer;
+    public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer;
 }

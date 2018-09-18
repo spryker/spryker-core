@@ -80,10 +80,10 @@ class PermissionFacade extends AbstractFacade implements PermissionFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer
+    public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer
     {
         return $this->getFactory()
             ->createPermissionFinder()
-            ->getRegisteredNonInfrastructuralPermissions();
+            ->findMergedRegisteredNonInfrastructuralPermissions();
     }
 }

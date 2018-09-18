@@ -67,12 +67,11 @@ interface PermissionFacadeInterface
 
     /**
      * Specification:
-     * - Finds registered permissions and filters non-infrastructural ones
-     * - Returns filtered permission collection transfer
+     * - Finds permissions registered either in Zed or Client dependency provider and removes non-infrastructural ones.
      *
      * @api
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer;
+    public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer;
 }

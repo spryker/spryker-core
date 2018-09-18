@@ -67,10 +67,10 @@ class PermissionClient extends AbstractClient implements PermissionClientInterfa
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer
+    public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer
     {
         return $this->getFactory()
             ->createZedPermissionStub()
-            ->getRegisteredNonInfrastructuralPermissions();
+            ->findMergedRegisteredNonInfrastructuralPermissions();
     }
 }

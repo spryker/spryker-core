@@ -176,11 +176,11 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findFilteredCompanyRolePermissionsByIdCompanyRole(
+    public function findNonInfrastructuralCompanyRolePermissionsByIdCompanyRole(
         CompanyRoleTransfer $companyRoleTransfer
     ): PermissionCollectionTransfer {
         return $this->getFactory()
             ->createCompanyRolePermissionsHandler()
-            ->findFilteredCompanyRolePermissionsByIdCompanyRole($companyRoleTransfer);
+            ->findNonInfrastructuralCompanyRolePermissionsByIdCompanyRole($companyRoleTransfer);
     }
 }

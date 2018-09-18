@@ -31,14 +31,14 @@ class PermissionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetRegisteredNonInfrastructuralPermissionsDoesNotReturnInfrastructuralPermissions(): void
+    public function testFindMergedRegisteredNonInfrastructuralPermissionsDoesNotReturnInfrastructuralPermissions(): void
     {
         $availablePermissions = $this->getPermissionFacade()
             ->findAll()
             ->getPermissions();
 
         $registeredNonInfrastructuralPermissions = $this->getPermissionFacade()
-            ->getRegisteredNonInfrastructuralPermissions()
+            ->findMergedRegisteredNonInfrastructuralPermissions()
             ->getPermissions();
 
         $this->assertCount(

@@ -135,9 +135,7 @@ interface CompanyRoleClientInterface
 
     /**
      * Specification:
-     * - Retrieves company roles permissions, filtering infrastructural ones.
-     * - Sends Zed request to find all company role permissions.
-     * - Sends Zed request to find all available permissions.
+     * - Retrieves non-infrastructural company role permissions.
      *
      * @api
      *
@@ -145,7 +143,7 @@ interface CompanyRoleClientInterface
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findFilteredCompanyRolePermissionsByIdCompanyRole(
+    public function findNonInfrastructuralCompanyRolePermissionsByIdCompanyRole(
         CompanyRoleTransfer $companyRoleTransfer
     ): PermissionCollectionTransfer;
 }

@@ -26,8 +26,8 @@ class GatewayController extends AbstractGatewayController
     /**
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getRegisteredNonInfrastructuralPermissionsAction(): PermissionCollectionTransfer
+    public function findMergedRegisteredNonInfrastructuralPermissionsAction(): PermissionCollectionTransfer
     {
-        return $this->getFacade()->getRegisteredNonInfrastructuralPermissions();
+        return $this->getFacade()->findMergedRegisteredNonInfrastructuralPermissions();
     }
 }

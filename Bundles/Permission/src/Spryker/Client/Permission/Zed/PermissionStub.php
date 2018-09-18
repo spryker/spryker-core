@@ -42,11 +42,11 @@ class PermissionStub implements PermissionStubInterface
     /**
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer
+    public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer */
         $permissionCollectionTransfer = $this->zedRequestClient->call(
-            '/permission/gateway/get-registered-non-infrastructural-permissions',
+            '/permission/gateway/find-merged-registered-non-infrastructural-permissions',
             new PermissionCollectionTransfer()
         );
 

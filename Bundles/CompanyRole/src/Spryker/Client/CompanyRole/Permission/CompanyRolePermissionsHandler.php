@@ -45,10 +45,10 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findFilteredCompanyRolePermissionsByIdCompanyRole(
+    public function findNonInfrastructuralCompanyRolePermissionsByIdCompanyRole(
         CompanyRoleTransfer $companyRoleTransfer
     ): PermissionCollectionTransfer {
-        $availablePermissions = $this->permissionClient->getRegisteredNonInfrastructuralPermissions()->getPermissions();
+        $availablePermissions = $this->permissionClient->findMergedRegisteredNonInfrastructuralPermissions()->getPermissions();
         $companyRolePermissions = $this->companyRoleStub->findCompanyRolePermissions($companyRoleTransfer)
             ->getPermissions();
 

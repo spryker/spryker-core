@@ -53,12 +53,11 @@ interface PermissionClientInterface
 
     /**
      * Specification:
-     * - Retrieves registered permissions from Zed and filters non-infrastructural ones
-     * - Returns filtered permission collection transfer
+     * - Finds permission plugin stack registered either in Zed or Client dependency provider.
      *
      * @api
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer;
+    public function findMergedRegisteredNonInfrastructuralPermissions(): PermissionCollectionTransfer;
 }

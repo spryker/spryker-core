@@ -46,7 +46,8 @@ class PermissionBusinessFactory extends AbstractBusinessFactory
     {
         return new PermissionFinder(
             $this->getPermissionPlugins(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getPermissionClient()
         );
     }
 
