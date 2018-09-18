@@ -23,6 +23,7 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     protected const CUSTOMER_REFERENCE_FIELD = 'customer_reference';
     protected const COMPANY_USER_REFERENCES_NAME = 'companyUserReferences';
     protected const COMPANY_BUSINESS_UNIT_REFERENCES_NAME = 'companyBusinessUnitReferences';
+    protected const COMPANY_BUSINESS_UNIT_COMPANY_USER_ALIAS = 'companyBusinessUnitCompanyUser';
 
     /**
      * @module ShoppingList
@@ -35,7 +36,6 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     {
         $shoppingListQuery = $this->getFactory()
             ->getShoppingListPropelQuery();
-        $shoppingListQuery->distinct();
         $this->addCompanyUserCustomerReferences($shoppingListQuery);
         $this->addCompanyBusinessUnitCustomerReferences($shoppingListQuery);
         $customerReferencesArray = $shoppingListQuery->filterByIdShoppingList_In($shoppingListIds)
@@ -99,7 +99,7 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     protected function addCompanyUserCustomerReferences(SpyShoppingListQuery $shoppingListQuery): void
     {
         $shoppingListQuery
-            ->useSpyShoppingListCompanyUserQuery()
+            ->useSpyShoppingListCompanyUserQuery(null, Criteria::LEFT_JOIN)
                 ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)
                     ->joinCustomer(static::COMPANY_USER_CUSTOMER_ALIAS, Criteria::LEFT_JOIN)
                     ->withColumn(static::COMPANY_USER_CUSTOMER_ALIAS . '.' . static::CUSTOMER_REFERENCE_FIELD, static::COMPANY_USER_REFERENCES_NAME)
@@ -115,9 +115,9 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     protected function addCompanyBusinessUnitCustomerReferences(SpyShoppingListQuery $shoppingListQuery): void
     {
         $shoppingListQuery
-            ->useSpyShoppingListCompanyBusinessUnitQuery()
+            ->useSpyShoppingListCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
                 ->useSpyCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
-                    ->useCompanyUserQuery(null, Criteria::LEFT_JOIN)
+                    ->useCompanyUserQuery(static::COMPANY_BUSINESS_UNIT_COMPANY_USER_ALIAS, Criteria::LEFT_JOIN)
                         ->joinCustomer(static::COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS, Criteria::LEFT_JOIN)
                         ->withColumn(static::COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS . '.' . static::CUSTOMER_REFERENCE_FIELD, static::COMPANY_BUSINESS_UNIT_REFERENCES_NAME)
                     ->endUse()
