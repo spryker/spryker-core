@@ -249,7 +249,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     /**
      * @param int $idCmsPage
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage|null
      */
     protected function getCmsPageEntity($idCmsPage)
     {
