@@ -32,7 +32,9 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
         );
         $entityTransfer = $this->save($entityTransfer);
 
-        if (!$entityTransfer->getFkParentCompanyBusinessUnit()) {
+        if ($companyBusinessUnitTransfer->isPropertyModified(CompanyBusinessUnitTransfer::FK_PARENT_COMPANY_BUSINESS_UNIT) &&
+            $companyBusinessUnitTransfer->getFkParentCompanyBusinessUnit() === null
+        ) {
             $this->clearParentBusinessUnitByCompanyBusinessUnitId($entityTransfer->getIdCompanyBusinessUnit());
         }
 
