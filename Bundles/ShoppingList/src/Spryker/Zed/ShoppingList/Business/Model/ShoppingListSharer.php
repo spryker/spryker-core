@@ -123,7 +123,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
             $this->executeUpdateShareShoppingListTransaction($shoppingListTransfer);
         });
 
-        return (new ShoppingListShareResponseTransfer)->setIsSuccess(true);
+        return (new ShoppingListShareResponseTransfer())->setIsSuccess(true);
     }
 
     /**
