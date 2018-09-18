@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -79,7 +80,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      */
     protected function hydrateProductOptionCollectionTransfer(array $productOptionValueEntities): ProductOptionCollectionTransfer
     {
-        $productOptionCollectionTransfer = new ProductOptionCollectionTransfer;
+        $productOptionCollectionTransfer = new ProductOptionCollectionTransfer();
         $productOptionTransfers = $this->hydrateProductOptionArray($productOptionValueEntities);
         $productOptionCollectionTransfer->setProductOptions(new ArrayObject($productOptionTransfers));
 

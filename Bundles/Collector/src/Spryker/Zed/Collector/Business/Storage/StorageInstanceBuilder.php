@@ -57,7 +57,10 @@ class StorageInstanceBuilder
      */
     public static function getStorageReadWriteInstance($debug = false)
     {
-        return static::getStorageInstance(static::ADAPTER_READ_WRITE, $debug);
+        /** @var \Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadWriteInterface $interface */
+        $interface = static::getStorageInstance(static::ADAPTER_READ_WRITE, $debug);
+
+        return $interface;
     }
 
     /**

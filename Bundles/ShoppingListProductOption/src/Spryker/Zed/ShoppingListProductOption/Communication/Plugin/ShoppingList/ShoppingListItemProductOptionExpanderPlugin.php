@@ -17,7 +17,6 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterf
 class ShoppingListItemProductOptionExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
-     *
      * {@inheritdoc}
      * - Adds a product options to shopping list item.
      *

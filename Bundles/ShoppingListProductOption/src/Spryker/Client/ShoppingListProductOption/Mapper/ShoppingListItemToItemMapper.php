@@ -71,9 +71,7 @@ class ShoppingListItemToItemMapper implements ShoppingListItemToItemMapperInterf
         }
 
         $mappingFunction = function (ProductOptionTransfer $productOptionTransfer) {
-            /** @var \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer */
-            $productOptionValueTransfer = $productOptionTransfer->getValue();
-            return $productOptionValueTransfer->getIdProductOptionValue();
+            return $productOptionTransfer->getIdProductOptionValue();
         };
 
         $quoteItemProductOptions = array_map($mappingFunction, $itemTransfer->getProductOptions()->getArrayCopy());

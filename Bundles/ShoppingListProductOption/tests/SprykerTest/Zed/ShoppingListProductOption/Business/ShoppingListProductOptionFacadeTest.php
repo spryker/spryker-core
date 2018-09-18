@@ -329,7 +329,9 @@ class ShoppingListProductOptionFacadeTest extends Unit
     {
         // Prepare
         $shoppingListItemTransfer = new ShoppingListItemTransfer();
-        $productOptionTransfer = (new ProductOptionTransfer())->setValue($this->productOptionValueTransfer1);
+        $productOptionTransfer = (new ProductOptionTransfer())
+            ->setIdProductOptionValue($this->productOptionValueTransfer1->getIdProductOptionValue())
+            ->setValue($this->productOptionValueTransfer1->getValue());
         $itemTransfer = (new ItemTransfer())->addProductOption($productOptionTransfer);
 
         // Action
@@ -341,5 +343,35 @@ class ShoppingListProductOptionFacadeTest extends Unit
         // Assert
         $this->assertCount(1, $actualResult->getProductOptions());
         $this->assertContains($productOptionTransfer, $actualResult->getProductOptions());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveShoppingListItemProductOptions(): void
+    {
+        $shoppingListProductOption1 = (new SpyShoppingListProductOption())
+            ->setFkProductOptionValue($this->productOptionValueTransfer1->getIdProductOptionValue())
+            ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
+        $shoppingListProductOption1->save();
+
+        $shoppingListProductOption2 = (new SpyShoppingListProductOption())
+            ->setFkProductOptionValue($this->productOptionValueTransfer2->getIdProductOptionValue())
+            ->setFkShoppingListItem($this->shoppingListItemTransfer->getIdShoppingListItem());
+        $shoppingListProductOption2->save();
+
+        $this->tester
+            ->getFacade()
+            ->removeShoppingListItemProductOptions(
+                $this->shoppingListItemTransfer->getIdShoppingListItem()
+            );
+
+        $actualResult = $this->tester
+            ->getFacade()
+            ->getShoppingListItemProductOptionsByIdShoppingListItem(
+                $this->shoppingListItemTransfer->getIdShoppingListItem()
+            );
+
+        $this->assertEmpty($actualResult->getProductOptions());
     }
 }

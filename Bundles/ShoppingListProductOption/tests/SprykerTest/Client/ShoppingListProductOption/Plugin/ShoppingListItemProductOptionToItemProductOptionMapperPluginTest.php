@@ -10,6 +10,7 @@ namespace SprykerTest\Client\ShoppingListProductOption\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Client\Kernel\Container;
@@ -46,7 +47,8 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
         foreach ($productOptionGroupTransfer->getProductOptionValues() as $productOptionValueTransfer) {
             $productOptionTransfer = (new ProductOptionTransfer())
                 ->setGroupName($productOptionGroupTransfer->getName())
-                ->setValue($productOptionValueTransfer);
+                ->setIdProductOptionValue($productOptionValueTransfer->getIdProductOptionValue())
+                ->setValue($productOptionValueTransfer->getValue());
 
             $shoppingListItemTransfer->addProductOption($productOptionTransfer);
         }
@@ -74,7 +76,12 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
         // Assert
         $this->assertCount(1, $actualResult->getProductOptions());
         foreach ($actualResult->getProductOptions() as $productOptionTransfer) {
-            $this->assertContains($productOptionTransfer->getValue(), $productOptionGroupTransfer->getProductOptionValues());
+            $this->assertContains(
+                $productOptionTransfer->getValue(),
+                array_map(function (ProductOptionValueTransfer $productOptionValueTransfer) {
+                    return $productOptionValueTransfer->getValue();
+                }, $productOptionGroupTransfer->getProductOptionValues()->getArrayCopy())
+            );
         }
     }
 
@@ -94,7 +101,7 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
         foreach ($productOptionGroupTransfer->getProductOptionValues() as $productOptionValueTransfer) {
             $productOptionTransfer = (new ProductOptionTransfer())
                 ->setGroupName($productOptionGroupTransfer->getName())
-                ->setValue($productOptionValueTransfer);
+                ->setValue($productOptionValueTransfer->getValue());
 
             $shoppingListItemTransfer->addProductOption($productOptionTransfer);
             $itemTransferInCart->addProductOption($productOptionTransfer);
@@ -123,7 +130,12 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
         $this->assertCount(1, $actualResult->getProductOptions());
         $this->assertSame($actualResult->getGroupKey(), $groupKey);
         foreach ($actualResult->getProductOptions() as $productOptionTransfer) {
-            $this->assertContains($productOptionTransfer->getValue(), $productOptionGroupTransfer->getProductOptionValues());
+            $this->assertContains(
+                $productOptionTransfer->getValue(),
+                array_map(function (ProductOptionValueTransfer $productOptionValueTransfer) {
+                    return $productOptionValueTransfer->getValue();
+                }, $productOptionGroupTransfer->getProductOptionValues()->getArrayCopy())
+            );
         }
     }
 
