@@ -22,19 +22,21 @@ trait WidgetContainerAwareTrait
     /**
      * @param string[] $widgetClassNames
      *
-     * @return void
+     * @return $this
      */
     protected function addWidgets(array $widgetClassNames)
     {
         foreach ($widgetClassNames as $widgetClassName) {
             $this->addWidget($widgetClassName);
         }
+
+        return $this;
     }
 
     /**
      * @param string $widgetClassName
      *
-     * @return void
+     * @return $this
      */
     protected function addWidget(string $widgetClassName)
     {
@@ -43,6 +45,8 @@ trait WidgetContainerAwareTrait
         $widgetName = $this->getUniqueWidgetName($widgetClassName);
 
         $this->widgets[$widgetName] = $widgetClassName;
+
+        return $this;
     }
 
     /**
