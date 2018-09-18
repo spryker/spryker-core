@@ -22,6 +22,7 @@ class Worker implements WorkerInterface
     const PROCESS_BUSY = 'busy';
     const PROCESS_NEW = 'new';
     const PROCESSES_INSTANCES = 'processes';
+    const RETRY_INTERVAL_SECONDS = 5;
 
     /**
      * @var \Spryker\Zed\Queue\Business\Process\ProcessManagerInterface
@@ -122,7 +123,7 @@ class Worker implements WorkerInterface
                 $this->start($command, ++$round, $pendingProcesses);
             }
 
-            sleep(5);
+            sleep(static::RETRY_INTERVAL_SECONDS);
             $this->waitForPendingProcesses($processes, $command, $round, $delayIntervalSeconds);
         }
     }
@@ -218,7 +219,7 @@ class Worker implements WorkerInterface
         $adapterConfiguration = $this->queueConfig->getQueueAdapterConfiguration();
 
         if (empty($adapterConfiguration) || !array_key_exists($queueName, $adapterConfiguration)) {
-            $adapterConfiguration = $this->getMaxQueueWorkerDefault($queueName);
+            $adapterConfiguration = $this->getQueueAdapterDefaultConfiguration($queueName);
         }
 
         $queueAdapterConfiguration = $adapterConfiguration[$queueName];
@@ -235,7 +236,7 @@ class Worker implements WorkerInterface
      *
      * @return array
      */
-    protected function getMaxQueueWorkerDefault($queueName)
+    protected function getQueueAdapterDefaultConfiguration(string $queueName): array
     {
         $adapterConfiguration = $this->queueConfig->getDefaultQueueAdapterConfiguration();
 

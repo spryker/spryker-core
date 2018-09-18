@@ -135,7 +135,7 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getDefaultQueueAdapterConfiguration()
+    public function getDefaultQueueAdapterConfiguration(): array
     {
         return $this->get(QueueConstants::QUEUE_ADAPTER_CONFIGURATION_DEFAULT, []);
     }
@@ -143,7 +143,7 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function getIsWorkerLoopEnabled()
+    public function getIsWorkerLoopEnabled(): bool
     {
         return $this->get(QueueConstants::QUEUE_WORKER_LOOP, false);
     }
