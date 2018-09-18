@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
-use Spryker\Glue\CustomersRestApi\Processor\CustomersRestApiErrorsTrait;
+use Spryker\Glue\CustomersRestApi\Processor\CustomersRestApiValidatorsTrait;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -22,7 +22,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class AddressesWriter implements AddressesWriterInterface
 {
-    use CustomersRestApiErrorsTrait;
+    use CustomersRestApiValidatorsTrait;
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -65,7 +65,11 @@ class AddressesWriter implements AddressesWriterInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $customerResponseTransfer = $this->findCustomer($restRequest);
-        $restResponse = $this->validateCustomerResponseTransfer($customerResponseTransfer, $restRequest, $restResponse);
+        $restResponse = $this->validateCustomerResponseTransfer(
+            $customerResponseTransfer,
+            $restRequest,
+            $restResponse
+        );
 
         if (count($restResponse->getErrors()) > 0) {
             return $restResponse;
@@ -117,7 +121,11 @@ class AddressesWriter implements AddressesWriterInterface
         }
 
         $customerResponseTransfer = $this->findCustomer($restRequest);
-        $restResponse = $this->validateCustomerResponseTransfer($customerResponseTransfer, $restRequest, $restResponse);
+        $restResponse = $this->validateCustomerResponseTransfer(
+            $customerResponseTransfer,
+            $restRequest,
+            $restResponse
+        );
 
         if (count($restResponse->getErrors()) > 0) {
             return $restResponse;
@@ -160,21 +168,19 @@ class AddressesWriter implements AddressesWriterInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
-
         if (!$restRequest->getResource()->getId()) {
             return $this->addAddressUuidMissingError($restResponse);
         }
 
-        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
-        $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
+        $customerResponseTransfer = $this->findCustomer($restRequest);
+        $restResponse = $this->validateCustomerResponseTransfer(
+            $customerResponseTransfer,
+            $restRequest,
+            $restResponse
+        );
 
-        if (!$customerResponseTransfer->getHasCustomer()) {
-            return $this->addCustomerNotFoundError($restResponse);
-        }
-
-        if (!$this->isSameCustomerReference($restRequest)) {
-            return $this->addCustomerUnauthorizedError($restResponse);
+        if (count($restResponse->getErrors()) > 0) {
+            return $restResponse;
         }
 
         $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
@@ -187,17 +193,6 @@ class AddressesWriter implements AddressesWriterInterface
         $this->customerClient->deleteAddress($addressTransfer);
 
         return $restResponse;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return bool
-     */
-    protected function isSameCustomerReference(RestRequestInterface $restRequest): bool
-    {
-        return $restRequest->getUser()->getNaturalIdentifier()
-            === $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
     }
 
     /**
@@ -317,28 +312,5 @@ class AddressesWriter implements AddressesWriterInterface
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
 
         return $this->customerClient->findCustomerByReference($customerTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function validateCustomerResponseTransfer(
-        CustomerResponseTransfer $customerResponseTransfer,
-        RestRequestInterface $restRequest,
-        RestResponseInterface $restResponse
-    ): RestResponseInterface {
-        if (!$customerResponseTransfer->getHasCustomer()) {
-            return $this->addCustomerNotFoundError($restResponse);
-        }
-
-        if (!$this->isSameCustomerReference($restRequest)) {
-            return $this->addCustomerUnauthorizedError($restResponse);
-        }
-
-        return $restResponse;
     }
 }

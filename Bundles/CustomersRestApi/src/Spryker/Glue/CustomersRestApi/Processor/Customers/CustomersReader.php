@@ -9,7 +9,7 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
-use Spryker\Glue\CustomersRestApi\Processor\CustomersRestApiErrorsTrait;
+use Spryker\Glue\CustomersRestApi\Processor\CustomersRestApiValidatorsTrait;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -17,7 +17,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CustomersReader implements CustomersReaderInterface
 {
-    use CustomersRestApiErrorsTrait;
+    use CustomersRestApiValidatorsTrait;
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -65,12 +65,14 @@ class CustomersReader implements CustomersReaderInterface
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getResource()->getId());
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        if (!$customerResponseTransfer->getHasCustomer()) {
-            return $this->addCustomerNotFoundError($restResponse);
-        }
+        $restResponse = $this->validateCustomerResponseTransfer(
+            $customerResponseTransfer,
+            $restRequest,
+            $restResponse
+        );
 
-        if (!$this->isSameCustomerReference($restRequest)) {
-            return $this->addCustomerUnauthorizedError($restResponse);
+        if (count($restResponse->getErrors()) > 0) {
+            return $restResponse;
         }
 
         $customersResource = $this
@@ -79,15 +81,5 @@ class CustomersReader implements CustomersReaderInterface
         $restResponse->addResource($customersResource);
 
         return $restResponse;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return bool
-     */
-    protected function isSameCustomerReference(RestRequestInterface $restRequest): bool
-    {
-        return $restRequest->getUser()->getNaturalIdentifier() === $restRequest->getResource()->getId();
     }
 }

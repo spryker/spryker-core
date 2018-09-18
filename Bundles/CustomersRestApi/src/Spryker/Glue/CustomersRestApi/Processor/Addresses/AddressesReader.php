@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
-use Spryker\Glue\CustomersRestApi\Processor\CustomersRestApiErrorsTrait;
+use Spryker\Glue\CustomersRestApi\Processor\CustomersRestApiValidatorsTrait;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -19,7 +19,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class AddressesReader implements AddressesReaderInterface
 {
-    use CustomersRestApiErrorsTrait;
+    use CustomersRestApiValidatorsTrait;
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -64,12 +64,14 @@ class AddressesReader implements AddressesReaderInterface
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        if (!$customerResponseTransfer->getHasCustomer()) {
-            return $this->addCustomerNotFoundError($restResponse);
-        }
+        $restResponse = $this->validateCustomerResponseTransfer(
+            $customerResponseTransfer,
+            $restRequest,
+            $restResponse
+        );
 
-        if (!$this->isSameCustomerReference($restRequest)) {
-            return $this->addCustomerUnauthorizedError($restResponse);
+        if (count($restResponse->getErrors()) > 0) {
+            return $restResponse;
         }
 
         $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
@@ -119,15 +121,5 @@ class AddressesReader implements AddressesReaderInterface
             $restResponse->addResource($addressesResource);
         }
         return $restResponse;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return bool
-     */
-    protected function isSameCustomerReference(RestRequestInterface $restRequest): bool
-    {
-        return $restRequest->getUser()->getNaturalIdentifier() === $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
     }
 }
