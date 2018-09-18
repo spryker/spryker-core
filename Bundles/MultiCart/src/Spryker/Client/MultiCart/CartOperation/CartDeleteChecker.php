@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\MultiCart\CartOperation;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\MultiCart\Storage\MultiCartStorageInterface;
 
 class CartDeleteChecker implements CartDeleteCheckerInterface
@@ -27,31 +25,10 @@ class CartDeleteChecker implements CartDeleteCheckerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $currentQuoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
      * @return bool
      */
-    public function isDeleteCartAllowed(QuoteTransfer $currentQuoteTransfer, CustomerTransfer $customerTransfer): bool
+    public function isQuoteDeletable(): bool
     {
-        $ownedQuoteNumber = 0;
-        foreach ($this->multiCartStorage->getQuoteCollection()->getQuotes() as $quoteTransfer) {
-            if ($this->isQuoteOwner($quoteTransfer, $customerTransfer)) {
-                $ownedQuoteNumber++;
-            }
-        }
-
-        return $ownedQuoteNumber > 1 || (!$this->isQuoteOwner($currentQuoteTransfer, $customerTransfer) && $ownedQuoteNumber > 0);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteOwner(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
-    {
-        return strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
+        return $this->multiCartStorage->getQuoteCollection()->getQuotes()->count() > 1;
     }
 }

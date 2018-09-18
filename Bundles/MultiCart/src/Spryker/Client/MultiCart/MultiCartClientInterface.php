@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\MultiCart;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -163,14 +162,12 @@ interface MultiCartClientInterface
 
     /**
      * Specification:
-     * - Сhecks the possibility of removing the quote.
+     * - Сhecks the possibility of removing the quote
+     * - If customer has more one quote - returns TRUE
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $currentQuoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
      * @return bool
      */
-    public function isDeleteCartAllowed(QuoteTransfer $currentQuoteTransfer, CustomerTransfer $customerTransfer): bool;
+    public function isQuoteDeletable(): bool;
 }

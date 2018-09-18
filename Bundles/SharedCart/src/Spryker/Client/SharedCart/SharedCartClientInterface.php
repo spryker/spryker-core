@@ -93,4 +93,18 @@ interface SharedCartClientInterface
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
     public function getShareDetailsByIdQuoteAction(QuoteTransfer $quoteTransfer): ShareDetailCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Сhecks the possibility of removing the quote.
+     * - If customer isn't owner of quote but has permission for write this quote - return TRUE
+     * - If customer has another quote where he is owner - return TRUE
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteDeletable(QuoteTransfer $quoteTransfer): bool;
 }

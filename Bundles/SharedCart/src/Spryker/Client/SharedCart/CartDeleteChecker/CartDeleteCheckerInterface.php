@@ -5,12 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MultiCart\CartOperation;
+namespace Spryker\Client\SharedCart\CartDeleteChecker;
+
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartDeleteCheckerInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return bool
      */
-    public function isQuoteDeletable(): bool;
+    public function isQuoteDeletable(QuoteTransfer $quoteTransfer): bool;
 }

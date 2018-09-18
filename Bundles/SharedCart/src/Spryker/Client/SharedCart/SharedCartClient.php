@@ -109,4 +109,20 @@ class SharedCartClient extends AbstractClient implements SharedCartClientInterfa
             ->createZedSharedCartStub()
             ->getShareDetailsByIdQuoteAction($quoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteDeletable(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createCartDeleteChecker()
+            ->isQuoteDeletable($quoteTransfer);
+    }
 }
