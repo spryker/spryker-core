@@ -12,5 +12,5 @@ restricted-company-1_Admin,Admin,restricted-company-1,true
 restricted-company-2_Admin,Admin,restricted-company-2,true
 Ottom_Admin,Admin,Ottom_ltd,
 Ottom_Buyer,Buyer,Ottom_ltd,true
-Rif_Admin,Admin,27_Rif_Group,
-Rif_Buyer,Buyer,27_Rif_Group,true
+Spryker_Admin,Admin,spryker_systems,
+Spryker_Buyer,Buyer,spryker_systems,true
