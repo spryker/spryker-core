@@ -8,16 +8,15 @@
 namespace Spryker\Zed\DataImport\Business\Model\Publisher;
 
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
 
 class DataImporterPublisher implements DataImporterPublisherInterface
 {
     const CHUNK_SIZE = 20000;
 
     /**
-     * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface
+     * @var \Spryker\Zed\Event\Business\EventFacadeInterface
      */
-    protected $eventFacade;
+    protected static $eventFacade;
 
     /**
      * @var array
@@ -30,20 +29,12 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     protected static $triggeredEventIds = [];
 
     /**
-     * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface $eventFacade
-     */
-    public function __construct(DataImportToEventFacadeInterface $eventFacade)
-    {
-        $this->eventFacade = $eventFacade;
-    }
-
-    /**
      * @param string $eventName
      * @param int $entityId
      *
      * @return void
      */
-    public function addEvent($eventName, $entityId): void
+    public static function addEvent($eventName, $entityId): void
     {
         if (isset(static::$triggeredEventIds[$eventName][$entityId])) {
             return;
@@ -52,7 +43,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
         static::$importedEntityEvents[$eventName][$entityId] = true;
 
         if (count(static::$importedEntityEvents, COUNT_RECURSIVE) >= static::CHUNK_SIZE) {
-            $this->triggerEvents();
+            static::triggerEvents();
         }
     }
 
@@ -73,7 +64,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
      *
      * @return void
      */
-    public function triggerEvents($flushChunkSize = self::FLUSH_CHUNK_SIZE): void
+    public static function triggerEvents($flushChunkSize = self::FLUSH_CHUNK_SIZE): void
     {
         $uniqueEvents = static::$importedEntityEvents;
         foreach ($uniqueEvents as $eventName => $ids) {
@@ -83,7 +74,8 @@ class DataImporterPublisher implements DataImporterPublisherInterface
                 static::$triggeredEventIds[$eventName][$key] = true;
             }
 
-            $this->eventFacade->triggerBulk($eventName, $events);
+            static::loadEventFacade();
+            static::$eventFacade->triggerBulk($eventName, $events);
         }
 
         static::$importedEntityEvents = [];
@@ -109,5 +101,18 @@ class DataImporterPublisher implements DataImporterPublisherInterface
         }
 
         return $uniqueArray;
+    }
+
+    /**
+     * Added here for keeping the BC, needs to inject this from outside
+     *
+     * @return void
+     */
+    protected static function loadEventFacade()
+    {
+        if (!static::$eventFacade) {
+            $locatorClassName = '\Spryker\Zed\Kernel\Locator';
+            static::$eventFacade = $locatorClassName::getInstance()->event()->facade();
+        }
     }
 }

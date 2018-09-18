@@ -8,25 +8,16 @@
 namespace Spryker\Zed\DataImport\Business\Model\DataImportStep;
 
 use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
-use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
 
 /**
  * @SuppressWarnings(PHPMD.NumberOfChildren)
  */
-class PublishAwareStep extends DataImporterPublisher implements DataImportStepAfterExecuteInterface
+class PublishAwareStep implements DataImportStepAfterExecuteInterface
 {
     /**
      * @var array
      */
     protected $entityEvents = [];
-
-    /**
-     * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface $eventFacade
-     */
-    public function __construct(DataImportToEventFacadeInterface $eventFacade)
-    {
-        parent::__construct($eventFacade);
-    }
 
     /**
      * @return void
@@ -35,7 +26,7 @@ class PublishAwareStep extends DataImporterPublisher implements DataImportStepAf
     {
         foreach ($this->entityEvents as $eventName => $ids) {
             foreach ($ids as $id) {
-                $this->addEvent($eventName, $id);
+                DataImporterPublisher::addEvent($eventName, $id);
             }
         }
         $this->entityEvents = [];
