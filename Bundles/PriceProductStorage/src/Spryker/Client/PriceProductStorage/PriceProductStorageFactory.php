@@ -10,6 +10,8 @@ namespace Spryker\Client\PriceProductStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToCurrencyClientInterface;
 use Spryker\Client\PriceProductStorage\Expander\ProductViewPriceExpander;
+use Spryker\Client\PriceProductStorage\QuickOrderProductPriceTransferPriceExpander\QuickOrderProductPriceTransferPriceExpander;
+use Spryker\Client\PriceProductStorage\QuickOrderProductPriceTransferPriceExpander\QuickOrderProductPriceTransferPriceExpanderInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReader;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolver;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolverInterface;
@@ -68,6 +70,17 @@ class PriceProductStorageFactory extends AbstractFactory
         return new PriceConcreteResolver(
             $this->createPriceAbstractStorageReader(),
             $this->createPriceConcreteStorageReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\QuickOrderProductPriceTransferPriceExpander\QuickOrderProductPriceTransferPriceExpanderInterface
+     */
+    public function createQuickOrderProductPriceTransferPriceExpander(): QuickOrderProductPriceTransferPriceExpanderInterface
+    {
+        return new QuickOrderProductPriceTransferPriceExpander(
+            $this->getPriceProductClient(),
+            $this->getCurrencyClient()
         );
     }
 

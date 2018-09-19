@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\PriceProductStorage\Plugin\QuickOrderPage;
 
-use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderProductPriceTransferExpanderPluginInterface;
@@ -16,9 +15,15 @@ use Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderProductPriceTran
  * @method \Spryker\Client\PriceProductStorage\PriceProductStorageFactory getFactory()
  * @method \Spryker\Client\PriceProductStorage\PriceProductStorageClientInterface getClient()
  */
-class QuickOrderProductPriceTransferExpanderPlugin extends AbstractPlugin implements QuickOrderProductPriceTransferExpanderPluginInterface
+class QuickOrderProductPriceTransferPriceExpanderPlugin extends AbstractPlugin implements QuickOrderProductPriceTransferExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Provides total price calculated depending on quantity.
+     * - Volume prices will be used if present.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
      *
      * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
@@ -29,24 +34,12 @@ class QuickOrderProductPriceTransferExpanderPlugin extends AbstractPlugin implem
             return $quickOrderProductPriceTransfer;
         }
 
-        $priceProductConcreteTransfers = $this->getClient()->getPriceProductConcreteTransfers(
+        $priceProductTransfers = $this->getClient()->getPriceProductConcreteTransfers(
             $quickOrderProductPriceTransfer->getIdProductConcrete()
         );
 
-        $priceProductFilterTransfer = new PriceProductFilterTransfer();
-        $priceProductFilterTransfer->setQuantity($quickOrderProductPriceTransfer->getQuantity());
-
-        $currentProductPriceTransfer = $this->getFactory()
-            ->getPriceProductClient()
-            ->resolveProductPriceTransferByPriceProductFilter($priceProductConcreteTransfers, $priceProductFilterTransfer);
-
-        $quickOrderProductPriceTransfer->setCurrentProductPrice($currentProductPriceTransfer);
-        $quickOrderProductPriceTransfer->setTotal($currentProductPriceTransfer->getPrice() * $quickOrderProductPriceTransfer->getQuantity());
-
-        $quickOrderProductPriceTransfer->setCurrency(
-            $this->getFactory()->getCurrencyClient()->getCurrent()
-        );
-
-        return $quickOrderProductPriceTransfer;
+        return $this->getFactory()
+            ->createQuickOrderProductPriceTransferPriceExpander()
+            ->expandQuickOrderProductPriceTransferWithPrice($quickOrderProductPriceTransfer, $priceProductTransfers);
     }
 }
