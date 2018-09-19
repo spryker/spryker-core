@@ -125,16 +125,37 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     protected function getAvailableAttributes(array $attributes, array $nonRestrictedAttributeVariants): array
     {
         $availableAttributes = [];
+
         foreach ($attributes as $attributeKey => $attributeValues) {
-            foreach ($attributeValues as $attributeValue) {
-                $attributeKeyValue = $this->getAttributeKeyValue($attributeKey, $attributeValue);
-                if ($this->isAttributeKeyValueAvailable($attributeKeyValue, $nonRestrictedAttributeVariants)) {
-                    $availableAttributes[$attributeKey][] = $attributeValue;
-                }
-            }
+            $availableAttributes[$attributeKey] = $this->getAvailableAttributeValues($attributeKey, $attributeValues, $nonRestrictedAttributeVariants);
         }
 
         return $availableAttributes;
+    }
+
+    /**
+     * @param string $attributeKey
+     * @param array $attributeValues
+     * @param array $nonRestrictedAttributeVariants
+     *
+     * @return array
+     */
+    protected function getAvailableAttributeValues(
+        string $attributeKey,
+        array $attributeValues,
+        array $nonRestrictedAttributeVariants
+    ): array {
+        $availableAttributeValues = [];
+
+        foreach ($attributeValues as $attributeValue) {
+            $attributeKeyValue = $this->getAttributeKeyValue($attributeKey, $attributeValue);
+
+            if ($this->isAttributeKeyValueAvailable($attributeKeyValue, $nonRestrictedAttributeVariants)) {
+                $availableAttributeValues[] = $attributeValue;
+            }
+        }
+
+        return $availableAttributeValues;
     }
 
     /**
