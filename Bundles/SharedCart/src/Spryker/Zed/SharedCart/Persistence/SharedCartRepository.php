@@ -10,10 +10,12 @@ namespace Spryker\Zed\SharedCart\Persistence;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
 use Orm\Zed\SharedCart\Persistence\Map\SpyQuoteCompanyUserTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Spryker\Shared\SharedCart\SharedCartConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -109,7 +111,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param string $customerReference
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[]
      */
     public function findShareInformationCustomer($customerReference): array
     {
@@ -161,6 +163,46 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             ->select([SpyQuoteCompanyUserTableMap::COL_ID_QUOTE_COMPANY_USER])
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return int[]
+     */
+    public function findAllCompanyUserQuotePermissionGroupIdIndexes(int $idQuote): array
+    {
+        $storedQuotePermissionGroupIdIndexes = $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByFkQuote($idQuote)
+            ->select([
+                SpyQuoteCompanyUserTableMap::COL_ID_QUOTE_COMPANY_USER,
+                SpyQuoteCompanyUserTableMap::COL_FK_QUOTE_PERMISSION_GROUP,
+            ])
+            ->find()
+            ->toArray();
+
+        $mappedQuotePermissionGroupIdIndexes = $this->mapStoredQuotePermissionGroupIdIndexesToAssociativeArray(
+            $storedQuotePermissionGroupIdIndexes
+        );
+
+        return $mappedQuotePermissionGroupIdIndexes;
+    }
+
+    /**
+     * @param array $storedQuotePermissionGroupIdIndexes
+     *
+     * @return int[]
+     */
+    protected function mapStoredQuotePermissionGroupIdIndexesToAssociativeArray(array $storedQuotePermissionGroupIdIndexes): array
+    {
+        $mappedQuotePermissionGroupIdIndexes = [];
+        foreach ($storedQuotePermissionGroupIdIndexes as $storedQuotePermissionGroupIdIndex) {
+            $idQuoteCompanyUser = $storedQuotePermissionGroupIdIndex[SpyQuoteCompanyUserTableMap::COL_ID_QUOTE_COMPANY_USER];
+            $mappedQuotePermissionGroupIdIndexes[$idQuoteCompanyUser] = $storedQuotePermissionGroupIdIndex[SpyQuoteCompanyUserTableMap::COL_FK_QUOTE_PERMISSION_GROUP];
+        }
+
+        return $mappedQuotePermissionGroupIdIndexes;
     }
 
     /**
@@ -248,5 +290,30 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             ->createQuoteCompanyUserQuery()
             ->filterByFkQuote($idQuote)
             ->filterByFkCompanyUser($idCompanyUser)->count();
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
+     */
+    public function findShareDetailsByQuoteId(int $idQuote): ShareDetailCollectionTransfer
+    {
+        $quoteCompanyUserEntities = $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByFkQuote($idQuote)
+            ->joinWithSpyCompanyUser()
+            ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)
+                ->joinWithCustomer()
+            ->endUse()
+            ->find();
+
+        if (!$quoteCompanyUserEntities) {
+            return new ShareDetailCollectionTransfer();
+        }
+
+        return $this->getFactory()
+            ->createQuoteShareDetailMapper()
+            ->mapShareDetailCollection($quoteCompanyUserEntities, $this->findQuotePermissionGroupList(new QuotePermissionGroupCriteriaFilterTransfer()));
     }
 }

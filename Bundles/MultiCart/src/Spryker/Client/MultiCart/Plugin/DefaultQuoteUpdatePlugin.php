@@ -33,13 +33,9 @@ class DefaultQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePlug
             return $quoteResponseTransfer;
         }
         $defaultQuoteTransfer = $this->getDefaultQuote($quoteResponseTransfer->getCustomerQuotes());
-        if ($defaultQuoteTransfer) {
-            $defaultQuoteTransfer = $this->updateSessionQuote($defaultQuoteTransfer);
-            $this->getFactory()->getQuoteClient()->setQuote($defaultQuoteTransfer);
-            $quoteResponseTransfer->setQuoteTransfer($defaultQuoteTransfer);
-
-            return $quoteResponseTransfer;
-        }
+        $defaultQuoteTransfer = $this->updateSessionQuote($defaultQuoteTransfer);
+        $this->getFactory()->getQuoteClient()->setQuote($defaultQuoteTransfer);
+        $quoteResponseTransfer->setQuoteTransfer($defaultQuoteTransfer);
 
         return $quoteResponseTransfer;
     }
