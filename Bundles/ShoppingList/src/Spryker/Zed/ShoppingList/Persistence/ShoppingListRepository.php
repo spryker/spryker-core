@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\ShoppingList\Persistence;
 
-use ArrayObject;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
@@ -374,35 +375,47 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
      */
-    public function getShoppingListCompanyBusinessUnitsByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ArrayObject
+    public function getShoppingListCompanyBusinessUnitsByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer
     {
         $shoppingListsCompanyBusinessUnits = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
             ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
             ->find();
 
-        return $this->getFactory()
-            ->createShoppingListCompanyBusinessUnitMapper()
-            ->mapCompanyBusinessUnitEntitiesToCompanyBusinessUnitTransfers($shoppingListsCompanyBusinessUnits, new ArrayObject());
+        $shoppingListCompanyBusinessUnitCollection = new ShoppingListCompanyBusinessUnitCollectionTransfer();
+
+        if ($shoppingListsCompanyBusinessUnits !== null) {
+            return $this->getFactory()
+                ->createShoppingListCompanyBusinessUnitMapper()
+                ->mapCompanyBusinessUnitEntitiesToShoppingListCompanyBusinessUnitCollection($shoppingListsCompanyBusinessUnits, $shoppingListCompanyBusinessUnitCollection);
+        }
+
+        return $shoppingListCompanyBusinessUnitCollection;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
      */
-    public function getShoppingListCompanyUsersByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ArrayObject
+    public function getShoppingListCompanyUsersByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyUserCollectionTransfer
     {
         $shoppingListsCompanyUsers = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
             ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
             ->find();
 
-        return $this->getFactory()
-            ->createShoppingListCompanyUserMapper()
-            ->mapCompanyUserEntitiesToCompanyUserTransfers($shoppingListsCompanyUsers, new ArrayObject());
+        $shoppingListCompanyUserCollection = new ShoppingListCompanyUserCollectionTransfer();
+
+        if ($shoppingListsCompanyUsers !== null) {
+            return $this->getFactory()
+                ->createShoppingListCompanyUserMapper()
+                ->mapCompanyUserEntitiesToShoppingListCompanyUserCollection($shoppingListsCompanyUsers, $shoppingListCompanyUserCollection);
+        }
+
+        return $shoppingListCompanyUserCollection;
     }
 
     /**

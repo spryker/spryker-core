@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShoppingList\Persistence\Propel\Mapper;
 
-use ArrayObject;
+use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit;
 use Propel\Runtime\Collection\Collection;
@@ -15,27 +15,23 @@ use Propel\Runtime\Collection\Collection;
 class ShoppingListCompanyBusinessUnitMapper implements ShoppingListCompanyBusinessUnitMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\Collection|null $companyBusinessUnitEntityTransferCollection
-     * @param \ArrayObject $shoppingListCompanyBusinessUnits
+     * @param \Propel\Runtime\Collection\Collection $companyBusinessUnitEntityCollection
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer $shoppingListCompanyBusinessUnitCollection
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
      */
-    public function mapCompanyBusinessUnitEntitiesToCompanyBusinessUnitTransfers(
-        ?Collection $companyBusinessUnitEntityTransferCollection,
-        ArrayObject $shoppingListCompanyBusinessUnits
-    ): ArrayObject {
-        if (!$companyBusinessUnitEntityTransferCollection) {
-            return $shoppingListCompanyBusinessUnits;
-        }
+    public function mapCompanyBusinessUnitEntitiesToShoppingListCompanyBusinessUnitCollection(
+        Collection $companyBusinessUnitEntityCollection,
+        ShoppingListCompanyBusinessUnitCollectionTransfer $shoppingListCompanyBusinessUnitCollection
+    ): ShoppingListCompanyBusinessUnitCollectionTransfer {
 
-        foreach ($companyBusinessUnitEntityTransferCollection as $companyBusinessUnitEntity) {
-            $shoppingListCompanyBusinessUnits[] = $this->mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer(
-                $companyBusinessUnitEntity,
-                new ShoppingListCompanyBusinessUnitTransfer()
+        foreach ($companyBusinessUnitEntityCollection as $companyBusinessUnitEntity) {
+            $shoppingListCompanyBusinessUnitCollection->addShoppingListCompanyBusinessUnit(
+                $this->mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer($companyBusinessUnitEntity, new ShoppingListCompanyBusinessUnitTransfer())
             );
         }
 
-        return $shoppingListCompanyBusinessUnits;
+        return $shoppingListCompanyBusinessUnitCollection;
     }
 
     /**
@@ -48,6 +44,7 @@ class ShoppingListCompanyBusinessUnitMapper implements ShoppingListCompanyBusine
         SpyShoppingListCompanyBusinessUnit $shoppingListCompanyBusinessUnit,
         ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
     ): ShoppingListCompanyBusinessUnitTransfer {
+
         return $shoppingListCompanyBusinessUnitTransfer
             ->setIdShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnit->getIdShoppingListCompanyBusinessUnit())
             ->setIdShoppingList($shoppingListCompanyBusinessUnit->getFkShoppingList())

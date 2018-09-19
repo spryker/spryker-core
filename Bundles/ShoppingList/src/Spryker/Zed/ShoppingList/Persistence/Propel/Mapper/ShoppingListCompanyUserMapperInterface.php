@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShoppingList\Persistence\Propel\Mapper;
 
-use ArrayObject;
+use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser;
 use Propel\Runtime\Collection\Collection;
@@ -15,15 +15,15 @@ use Propel\Runtime\Collection\Collection;
 interface ShoppingListCompanyUserMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\Collection|null $companyUserEntityCollection
-     * @param \ArrayObject $shoppingListCompanyUsers
+     * @param \Propel\Runtime\Collection\Collection $companyUserEntityCollection
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer $shoppingListCompanyUserCollection
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
      */
-    public function mapCompanyUserEntitiesToCompanyUserTransfers(
-        ?Collection $companyUserEntityCollection,
-        ArrayObject $shoppingListCompanyUsers
-    ): ArrayObject;
+    public function mapCompanyUserEntitiesToShoppingListCompanyUserCollection(
+        Collection $companyUserEntityCollection,
+        ShoppingListCompanyUserCollectionTransfer $shoppingListCompanyUserCollection
+    ): ShoppingListCompanyUserCollectionTransfer;
 
     /**
      * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser $shoppingListCompanyUser

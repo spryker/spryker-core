@@ -148,7 +148,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         $sharedShoppingListCompanyUsers = $this->shoppingListRepository
             ->getShoppingListCompanyUsersByShoppingListId($shoppingListTransfer);
 
-        foreach ($sharedShoppingListCompanyUsers as $sharedShoppingListCompanyUserTransfer) {
+        foreach ($sharedShoppingListCompanyUsers->getShoppingListCompanyUsers() as $sharedShoppingListCompanyUserTransfer) {
             $sharedShoppingListCompanyUserIds[$sharedShoppingListCompanyUserTransfer->getIdShoppingListCompanyUser()] =
                 $sharedShoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup();
         }
@@ -169,7 +169,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         $sharedShoppingListCompanyBusinessUnits = $this->shoppingListRepository
             ->getShoppingListCompanyBusinessUnitsByShoppingListId($shoppingListTransfer);
 
-        foreach ($sharedShoppingListCompanyBusinessUnits as $sharedShoppingListCompanyBusinessUnitTransfer) {
+        foreach ($sharedShoppingListCompanyBusinessUnits->getShoppingListCompanyBusinessUnits() as $sharedShoppingListCompanyBusinessUnitTransfer) {
             $sharedShoppingListCompanyBusinessUnitIds[$sharedShoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit()] =
                 $sharedShoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup();
         }

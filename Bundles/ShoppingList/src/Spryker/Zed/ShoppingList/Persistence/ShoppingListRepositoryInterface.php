@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\ShoppingList\Persistence;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
@@ -150,14 +151,14 @@ interface ShoppingListRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer
      */
-    public function getShoppingListCompanyBusinessUnitsByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ArrayObject;
+    public function getShoppingListCompanyBusinessUnitsByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyBusinessUnitCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer
      */
-    public function getShoppingListCompanyUsersByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ArrayObject;
+    public function getShoppingListCompanyUsersByShoppingListId(ShoppingListTransfer $shoppingListTransfer): ShoppingListCompanyUserCollectionTransfer;
 }

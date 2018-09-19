@@ -80,10 +80,12 @@ class ShoppingListReader implements ShoppingListReaderInterface
         }
 
         $shoppingListCompanyBusinessUnits = $this->shoppingListRepository
-            ->getShoppingListCompanyBusinessUnitsByShoppingListId($shoppingListTransfer);
+            ->getShoppingListCompanyBusinessUnitsByShoppingListId($shoppingListTransfer)
+            ->getShoppingListCompanyBusinessUnits();
 
         $shoppingListCompanyUsers = $this->shoppingListRepository
-            ->getShoppingListCompanyUsersByShoppingListId($shoppingListTransfer);
+            ->getShoppingListCompanyUsersByShoppingListId($shoppingListTransfer)
+            ->getShoppingListCompanyUsers();
 
         $shoppingListTransfer
             ->setSharedCompanyUsers($shoppingListCompanyUsers)
