@@ -937,6 +937,22 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testFindCustomerByReference()
+    {
+        // Assign
+        $customerTransfer = $this->createTestCustomer();
+
+        // Act
+        $customerResponseTransfer = $this->customerFacade->findCustomerByReference($customerTransfer->getCustomerReference());
+
+        // Assert
+        $this->assertTrue($customerResponseTransfer->getIsSuccess());
+        $this->assertEquals($customerTransfer->getCustomerReference(), $customerResponseTransfer->getCustomerTransfer()->getCustomerReference());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetAddressesHasCountry()
     {
         $customerTransfer = $this->createCustomerWithAddressAndCountry();
