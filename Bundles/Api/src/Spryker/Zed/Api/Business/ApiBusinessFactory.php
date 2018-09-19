@@ -341,7 +341,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Filter\ApiRequestTransferFilter
+     * @return \Spryker\Zed\Api\Business\Model\Filter\ApiRequestTransferFilterInterface
      */
     public function createRequestTransferFilter()
     {

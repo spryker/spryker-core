@@ -17,7 +17,7 @@ abstract class ApiRequestTransferFilterAbstractPlugin extends AbstractPlugin imp
      *
      * @return array
      */
-    protected function doFilter(array $data, $allowedKeys): array
+    protected function doFilter(array $data, array $allowedKeys): array
     {
         return array_intersect_key($data, array_flip($allowedKeys));
     }
