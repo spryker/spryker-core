@@ -56,6 +56,16 @@ class ProductStorageListenerTest extends Unit
     protected $tester;
 
     /**
+     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected $productConcreteTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected $productAbstractTransfer;
+
+    /**
      * @throws \PHPUnit\Framework\SkippedTestError
      *
      * @return void
@@ -72,6 +82,16 @@ class ProductStorageListenerTest extends Unit
         if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
+
+        $this->productConcreteTransfer = $this->tester->haveProduct();
+        $this->productAbstractTransfer = $this->tester->getProductFacade()->findProductAbstractById(
+            $this->productConcreteTransfer->getFkProductAbstract()
+        );
+
+        $localizedAttributes = $this->tester->generateLocalizedAttributes();
+
+        $this->tester->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer, $localizedAttributes);
+        $this->tester->addLocalizedAttributesToProductConcrete($this->productConcreteTransfer, $localizedAttributes);
     }
 
     /**

@@ -7,11 +7,9 @@
 
 namespace SprykerTest\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener;
 
-use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
@@ -75,7 +73,8 @@ class ProductLabelStorageListenerTest extends Unit
         $this->productAbstractTransfer = $this->tester->haveProductAbstract();
         $this->productLabelTransfer = $this->tester->haveProductLabel();
 
-        $this->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer);
+        $localizedAttributes = $this->tester->generateLocalizedAttributes();
+        $this->tester->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer, $localizedAttributes);
         $this->addLocalizedAttributesToProductLabel($this->productLabelTransfer);
 
         $this->tester->haveProductLabelToAbstractProductRelation(
@@ -204,20 +203,6 @@ class ProductLabelStorageListenerTest extends Unit
         ]);
 
         return $builder->build();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
-    protected function addLocalizedAttributesToProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
-    {
-        $productAbstractTransfer->setLocalizedAttributes(
-            new ArrayObject($this->tester->generateLocalizedAttributes())
-        );
-
-        $this->tester->getProductFacade()->saveProductAbstract($this->productAbstractTransfer);
     }
 
     /**

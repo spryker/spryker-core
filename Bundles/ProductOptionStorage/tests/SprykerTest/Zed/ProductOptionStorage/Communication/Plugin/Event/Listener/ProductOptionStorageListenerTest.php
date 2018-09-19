@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener;
 
-use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
@@ -100,7 +99,9 @@ class ProductOptionStorageListenerTest extends Unit
 
         $this->productAbstractTransfer = $this->tester->haveProductAbstract();
 
-        $this->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer);
+        $localizedAttributes = $this->tester->generateLocalizedAttributes();
+
+        $this->tester->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer, $localizedAttributes);
 
         $this->assignOptionGroupToProductAbstract($this->productOptionGroupTransfer, $this->productAbstractTransfer);
     }
@@ -263,20 +264,6 @@ class ProductOptionStorageListenerTest extends Unit
         $this->assertNotNull($spyProductAbstractOptionStorage);
         $data = $spyProductAbstractOptionStorage->getData();
         $this->assertSame(1, count($data['product_option_groups']));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
-    protected function addLocalizedAttributesToProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
-    {
-        $productAbstractTransfer->setLocalizedAttributes(
-            new ArrayObject($this->tester->generateLocalizedAttributes())
-        );
-
-        $this->tester->getProductFacade()->saveProductAbstract($productAbstractTransfer);
     }
 
     /**

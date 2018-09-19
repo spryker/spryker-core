@@ -7,10 +7,8 @@
 
 namespace SprykerTest\Zed\ProductRelationStorage\Communication\Plugin\Event\Listener;
 
-use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorageQuery;
@@ -72,8 +70,9 @@ class ProductRelationStorageListenerTest extends Unit
         $this->productAbstractTransfer = $this->tester->haveProductAbstract();
         $this->productAbstractTransferRelated = $this->tester->haveProductAbstract();
 
-        $this->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer);
-        $this->addLocalizedAttributesToProductAbstract($this->productAbstractTransferRelated);
+        $localizedAttributes = $this->tester->generateLocalizedAttributes();
+        $this->tester->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer, $localizedAttributes);
+        $this->tester->addLocalizedAttributesToProductAbstract($this->productAbstractTransferRelated, $localizedAttributes);
 
         $this->tester->haveProductRelation(
             $this->productAbstractTransfer->getSku(),
@@ -180,19 +179,5 @@ class ProductRelationStorageListenerTest extends Unit
         $this->assertNotNull($productAbstractRelationStorage);
         $data = $productAbstractRelationStorage->getData();
         $this->assertSame(1, count($data['product_relations']));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
-    protected function addLocalizedAttributesToProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
-    {
-        $productAbstractTransfer->setLocalizedAttributes(
-            new ArrayObject($this->tester->generateLocalizedAttributes())
-        );
-
-        $this->tester->getProductFacade()->saveProductAbstract($productAbstractTransfer);
     }
 }

@@ -7,11 +7,8 @@
 
 namespace SprykerTest\Zed\ProductImageStorage\Communication\Plugin\Event\Listener;
 
-use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
@@ -89,8 +86,10 @@ class ProductImageStorageListenerTest extends Unit
         $this->productAbstractTransfer = $this->tester->haveProductAbstract();
         $this->productConcreteTransfer = $this->tester->haveProduct();
 
-        $this->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer);
-        $this->addLocalizedAttributesToProductConcrete($this->productConcreteTransfer);
+        $localizedAttributes = $this->tester->generateLocalizedAttributes();
+
+        $this->tester->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer, $localizedAttributes);
+        $this->tester->addLocalizedAttributesToProductConcrete($this->productConcreteTransfer, $localizedAttributes);
 
         $this->productImageSetTransfer = $this->tester->haveProductImageSet([
             ProductImageSetTransfer::ID_PRODUCT_ABSTRACT => $this->productAbstractTransfer->getIdProductAbstract(),
@@ -322,33 +321,5 @@ class ProductImageStorageListenerTest extends Unit
         $this->assertNotNull($productConcreteImageStorage);
         $data = $productConcreteImageStorage->getData();
         $this->assertSame(ProductImageDataHelper::NAME, $data['image_sets'][0]['name']);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
-    protected function addLocalizedAttributesToProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
-    {
-        $productAbstractTransfer->setLocalizedAttributes(
-            new ArrayObject($this->tester->generateLocalizedAttributes())
-        );
-
-        $this->tester->getProductFacade()->saveProductAbstract($productAbstractTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    protected function addLocalizedAttributesToProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
-    {
-        $productConcreteTransfer->setLocalizedAttributes(
-            new ArrayObject($this->tester->generateLocalizedAttributes())
-        );
-
-        $this->tester->getProductFacade()->saveProductConcrete($productConcreteTransfer);
     }
 }

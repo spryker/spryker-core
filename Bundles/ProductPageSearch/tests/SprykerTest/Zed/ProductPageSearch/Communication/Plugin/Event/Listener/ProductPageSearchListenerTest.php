@@ -7,12 +7,10 @@
 
 namespace SprykerTest\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
-use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
@@ -128,9 +126,11 @@ class ProductPageSearchListenerTest extends Unit
             $this->productConcreteTransfer->getFkProductAbstract()
         );
 
-        $this->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer);
+        $localizedAttributes = $this->tester->generateLocalizedAttributes();
+
+        $this->tester->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer, $localizedAttributes);
         $this->addStoreRelationToProductAbstracts($this->productAbstractTransfer);
-        $this->addLocalizedAttributesToProductConcrete($this->productConcreteTransfer);
+        $this->tester->addLocalizedAttributesToProductConcrete($this->productConcreteTransfer, $localizedAttributes);
 
         $locale = $this->getLocaleFacade()->getCurrentLocale();
         $this->categoryTransfer = $this->tester->haveLocalizedCategory(['locale' => $locale]);
@@ -581,34 +581,6 @@ class ProductPageSearchListenerTest extends Unit
         $data = $productPageSearchEntity->getStructuredData();
         $encodedData = json_decode($data, true);
         $this->assertSame($urlCollectionEntity->getLast()->getUrl(), $encodedData['url']);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
-    protected function addLocalizedAttributesToProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
-    {
-        $productAbstractTransfer->setLocalizedAttributes(
-            new ArrayObject($this->tester->generateLocalizedAttributes())
-        );
-
-        $this->tester->getProductFacade()->saveProductAbstract($productAbstractTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    protected function addLocalizedAttributesToProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
-    {
-        $productConcreteTransfer->setLocalizedAttributes(
-            new ArrayObject($this->tester->generateLocalizedAttributes())
-        );
-
-        $this->tester->getProductFacade()->saveProductConcrete($productConcreteTransfer);
     }
 
     /**
