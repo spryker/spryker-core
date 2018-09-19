@@ -20,10 +20,9 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
 
     /**
      * {@inheritdoc}
-     * - Returns true if provided cent amount is less than the provided expected value.
-     * - Returns false in case the cent amount is not provided.
-     * - Returns false in case the expected value amount is exceeded.
-     * - Returns true in case the expected value is not provided.
+     * - Checks if customer is allowed to place order with cent amount up to some value, provided in configuration.
+     * - Returns false, if customer cent amount is not provided.
+     * - Returns true, if configuration does not have cent amount set.
      *
      * @param array $configuration
      * @param int|null $centAmount
