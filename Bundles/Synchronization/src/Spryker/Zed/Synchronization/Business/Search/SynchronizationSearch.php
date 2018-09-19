@@ -134,4 +134,59 @@ class SynchronizationSearch implements SynchronizationInterface
 
         return $data;
     }
+
+    /**
+     * @param array $data
+     *
+     * @return void
+     */
+    public function writeBulk(array $data): void
+    {
+        $typeName = $this->getParam($data, static::TYPE);
+        $indexName = $this->getParam($data, static::INDEX);
+        $dataSets = $this->prepareBulkDataSets($data);
+
+        if ($dataSets === []) {
+            return;
+        }
+
+        $this->searchClient->write($dataSets, $typeName, $indexName);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return void
+     */
+    public function deleteBulk(array $data): void
+    {
+        $typeName = $this->getParam($data, static::TYPE);
+        $indexName = $this->getParam($data, static::INDEX);
+        $dataSets = $this->prepareBulkDataSets($data);
+
+        if ($dataSets === []) {
+            return;
+        }
+
+        $this->searchClient->delete($dataSets, $typeName, $indexName);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function prepareBulkDataSets(array $data): array
+    {
+        $dataSets = [];
+        foreach ($data as $datum) {
+            $key = $datum[static::KEY];
+            $value = $datum[static::VALUE];
+
+            unset($value['_timestamp']);
+            $dataSets[$key] = $value;
+        }
+
+        return $dataSets;
+    }
 }
