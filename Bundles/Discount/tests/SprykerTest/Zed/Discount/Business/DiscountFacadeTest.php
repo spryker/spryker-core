@@ -47,7 +47,7 @@ use Spryker\Zed\Kernel\Container;
 class DiscountFacadeTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\Discount\BusinessTester
+     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
      */
     protected $tester;
 

@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Discount\Business\Calculator;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -16,11 +17,13 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
@@ -45,6 +48,11 @@ class DiscountTest extends Unit
      * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $storeFacadeMock;
+
+    /**
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $messengerFacadeMock;
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -79,6 +87,10 @@ class DiscountTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->messengerFacadeMock = $this->getMockBuilder(DiscountToMessengerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->discountQueryContainerMock = $this->getMockBuilder(DiscountQueryContainerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -96,23 +108,18 @@ class DiscountTest extends Unit
             ->getMock();
 
         $this->discountMock = $this->getMockBuilder(Discount::class)
-            ->setConstructorArgs(
-                [
-                    $this->discountQueryContainerMock,
-                    $this->calculatorMock,
-                    $specificationBuilderMock,
-                    $voucherValidatorMock,
-                    $this->discountEntityMapperMock,
-                    $this->storeFacadeMock,
-                ]
-            )
-            ->setMethods(
-                [
-                    'isDiscountApplicable',
-                    'hydrateDiscountTransfer',
-                ]
-            )
-            ->getMock();
+            ->setConstructorArgs([
+                $this->discountQueryContainerMock,
+                $this->calculatorMock,
+                $specificationBuilderMock,
+                $voucherValidatorMock,
+                $this->discountEntityMapperMock,
+                $this->storeFacadeMock,
+                $this->messengerFacadeMock,
+            ])->setMethods([
+                'isDiscountApplicable',
+                'hydrateDiscountTransfer',
+            ])->getMock();
     }
 
     /**
@@ -130,6 +137,7 @@ class DiscountTest extends Unit
         // Assign
         $expectedDiscount = (new DiscountTransfer())
             ->setIdDiscount(5);
+
         $collectedDiscount = (new CollectedDiscountTransfer())
             ->setDiscount($expectedDiscount);
 
@@ -149,6 +157,7 @@ class DiscountTest extends Unit
         $discountQueryMock = $this->getMockBuilder(SpyDiscountQuery::class)
             ->disableOriginalConstructor()
             ->getMock();
+
         $discountQueryMock->expects($this->any())
             ->method('find')
             ->willReturn(new ObjectCollection([(new SpyDiscount())]));
@@ -164,6 +173,7 @@ class DiscountTest extends Unit
         $this->discountMock->expects($this->any())
             ->method('isDiscountApplicable')
             ->willReturn(true);
+
         $this->discountMock->expects($this->any())
             ->method('hydrateDiscountTransfer')
             ->willReturn($expectedDiscount);
@@ -173,6 +183,70 @@ class DiscountTest extends Unit
 
         // Assert
         $this->assertEquals([$expectedDiscount], $actualResult->getCartRuleDiscounts()->getArrayCopy());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateDiscountsWithNonApplicableButValidVoucherShouldAddErrorMessage(): void
+    {
+        // Assign
+        $expectedVoucherDiscount = (new DiscountTransfer())
+            ->setVoucherCode('code')
+            ->setDecisionRuleQueryString(
+                'day-of-week = "' . (new DateTime('yesterday'))->format('l') . '"'
+            )->setIdDiscount(5);
+
+        $collectedDiscount = (new CollectedDiscountTransfer())
+            ->setDiscount($expectedVoucherDiscount);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setStore($this->getCurrentStore())
+            ->setUsedNotAppliedVoucherCodes([])
+            ->setVoucherDiscounts(new ArrayObject([]));
+
+        $this->calculatorMock->expects($this->any())
+            ->method('calculate')
+            ->willReturn([]);
+
+        $this->storeFacadeMock->expects($this->any())
+            ->method('getStoreByName')
+            ->willReturn($this->getCurrentStore());
+
+        $discountQueryMock = $this->getMockBuilder(SpyDiscountQuery::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $discountQueryMock->expects($this->any())
+            ->method('find')
+            ->willReturn(new ObjectCollection([(new SpyDiscount())->setDiscountType(DiscountConstants::TYPE_VOUCHER)]));
+
+        $this->discountQueryContainerMock->expects($this->any())
+            ->method('queryActiveCartRulesForStore')
+            ->willReturn($discountQueryMock);
+
+        $this->discountEntityMapperMock->expects($this->any())
+            ->method('mapFromEntity')
+            ->willReturn($expectedVoucherDiscount);
+
+        $this->discountMock->expects($this->any())
+            ->method('isDiscountApplicable')
+            ->willReturn(false);
+
+        $this->discountMock->expects($this->any())
+            ->method('hydrateDiscountTransfer')
+            ->willReturn($expectedVoucherDiscount);
+
+        $this->messengerFacadeMock
+            ->expects($this->once())
+            ->method('addErrorMessage');
+
+        // Act
+        $actualResult = $this->discountMock->calculate($quoteTransfer);
+
+        // Assert
+        $this->assertCount(0, $actualResult->getVoucherDiscounts());
+        $this->assertCount(1, $actualResult->getUsedNotAppliedVoucherCodes());
     }
 
     /**
