@@ -44,7 +44,7 @@ class ProductImageDataHelper extends Module
         ];
 
         $productImageTransfer = (new ProductImageBuilder())
-            ->seed($productImageSeed + $productImageOverride)
+            ->seed($productImageOverride + $productImageSeed)
             ->build();
 
         $productImageTransfer->setExternalUrlLarge(static::URL_SMALL)
@@ -57,7 +57,7 @@ class ProductImageDataHelper extends Module
         ];
 
         $productImageSetTransfer = (new ProductImageSetBuilder())
-            ->seed($productImageSetSeed + $productImageSetOverride)
+            ->seed($productImageSetOverride + $productImageSetSeed)
             ->build();
 
         $productImageSetTransfer = $productImageFacade->saveProductImageSet($productImageSetTransfer);
