@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\OrdersRestApi\Processor\Mapper;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OrderItemsRestAttributesTransfer;
 use Generated\Shared\Transfer\OrdersRestAttributesTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -24,10 +23,8 @@ class OrdersResourceMapper implements OrdersResourceMapperInterface
         $ordersRestAttributesTransfer = (new OrdersRestAttributesTransfer())->fromArray($orderTransfer->toArray(), true);
         $ordersRestAttributesTransfer->getTotals()->setTaxTotal($orderTransfer->getTotals()->getTaxTotal()->getAmount());
 
-        $ordersRestAttributesTransfer->setItems(new ArrayObject());
-
         foreach ($orderTransfer->getItems() as $orderItem) {
-            $ordersRestAttributesTransfer->addItems(
+            $ordersRestAttributesTransfer->addItem(
                 (new OrderItemsRestAttributesTransfer())->fromArray($orderItem->toArray(), true)
             );
         }

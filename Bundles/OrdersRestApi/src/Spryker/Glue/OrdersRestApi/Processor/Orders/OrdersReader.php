@@ -154,6 +154,7 @@ class OrdersReader implements OrdersReaderInterface
             $orderReference,
             $ordersRestAttributesTransfer
         );
+
         return $response->addResource($restResource);
     }
 
