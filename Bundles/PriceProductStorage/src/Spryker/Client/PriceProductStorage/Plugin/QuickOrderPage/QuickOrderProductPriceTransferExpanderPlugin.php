@@ -26,7 +26,7 @@ class QuickOrderProductPriceTransferExpanderPlugin extends AbstractPlugin implem
     public function expandQuickOrderProductPriceTransfer(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): QuickOrderProductPriceTransfer
     {
         if ($quickOrderProductPriceTransfer->getIdProductConcrete() === null) {
-            return;
+            return $quickOrderProductPriceTransfer;
         }
 
         $priceProductConcreteTransfers = $this->getClient()->getPriceProductConcreteTransfers(
