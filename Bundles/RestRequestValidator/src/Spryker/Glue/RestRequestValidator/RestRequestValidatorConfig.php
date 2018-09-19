@@ -18,7 +18,7 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_CLASS_NOT_FOUND = 'Class "%s" not found. Have you forgotten to add you custom validator namespace?';
     public const EXCEPTION_MESSAGE_CACHE_FILE_NO_FOUND = 'Validation cache is enabled, but there is no cache file.';
 
-    protected const SYMFONY_COMPONENT_VALIDATOR_CONSTRAINTS_NAMESPACE = '\\Symfony\\Component\\Validator\\Constraints\\';
+    protected const SYMFONY_COMPONENT_VALIDATOR_CONSTRAINTS_NAMESPACE = 'Symfony\\Component\\Validator\\Constraints\\';
     protected const REST_REQUEST_VALIDATOR_CONSTRAINTS_NAMESPACE = 'Spryker\\Glue\\RestRequestValidator\\Constraints\\';
     protected const ALLOW_EXTRA_FIELDS = 'allowExtraFields';
     protected const ALLOW_EXTRA_FIELDS_VALUE = true;
