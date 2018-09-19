@@ -67,7 +67,6 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
      */
     public function getProductOptionGroupById($idProductOptionGroup)
     {
-        /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup|null $productOptionGroupEntity */
         $productOptionGroupEntity = $this->queryProductGroupById($idProductOptionGroup);
 
         if (!$productOptionGroupEntity) {
@@ -217,7 +216,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     /**
      * @param int $idProductOptionGroup
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup|null
      */
     protected function queryProductGroupById($idProductOptionGroup)
     {

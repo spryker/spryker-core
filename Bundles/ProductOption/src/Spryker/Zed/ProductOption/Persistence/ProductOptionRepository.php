@@ -24,7 +24,7 @@ class ProductOptionRepository extends AbstractRepository implements ProductOptio
      */
     public function findChangedProductOptionGroupProductAbstractIdIndexes(int $idProductOptionGroup, bool $isActive): array
     {
-        $productOptionGroupEntity = $this->getFactory()
+        $productOptionGroupProductAbstractIdIndexes = $this->getFactory()
             ->createProductOptionGroupQuery()
             ->filterByIdProductOptionGroup($idProductOptionGroup)
             ->filterByActive($isActive, Criteria::NOT_EQUAL)
@@ -33,6 +33,6 @@ class ProductOptionRepository extends AbstractRepository implements ProductOptio
             ->find()
             ->toArray();
 
-        return $productOptionGroupEntity;
+        return $productOptionGroupProductAbstractIdIndexes;
     }
 }
