@@ -39,7 +39,7 @@ class ShoppingListItemProductOptionRequestExpanderPlugin implements ShoppingList
     /**
      * @param array $params
      *
-     * @return int[]
+     * @return array
      */
     protected function getIdProductOptions(array $params): array
     {

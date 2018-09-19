@@ -73,7 +73,7 @@ class ShoppingListFactory extends AbstractFactory
     public function createShoppingListAddItemExpander(): ShoppingListAddItemExpanderInterface
     {
         return new ShoppingListAddItemExpander(
-            $this->getShoppingListItemExpanderPlugins()
+            $this->getAddItemShoppingListItemExpanderPlugins()
         );
     }
 
@@ -128,9 +128,9 @@ class ShoppingListFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemExpanderPluginInterface[]
      */
-    public function getShoppingListItemExpanderPlugins(): array
+    public function getAddItemShoppingListItemExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ADD_ITEM_EXPANDER);
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_EXPANDER);
     }
 
     /**

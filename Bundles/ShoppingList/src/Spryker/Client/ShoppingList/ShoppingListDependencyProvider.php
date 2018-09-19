@@ -25,7 +25,7 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
-    public const PLUGINS_ADD_ITEM_EXPANDER = 'PLUGINS_ADD_ITEM_EXPANDER';
+    public const PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_EXPANDER = 'PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_EXPANDER';
     public const PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER = 'PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER';
 
     /**
@@ -42,7 +42,7 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
         $container = $this->addPriceProductClient($container);
         $container = $this->addMessengerClient($container);
 
-        $container = $this->addShoppingListItemExpanderPlugins($container);
+        $container = $this->addAddItemShoppingListItemExpanderPlugins($container);
         $container = $this->addShoppingListItemToItemMapperPlugins($container);
 
         return $container;
@@ -137,10 +137,10 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addShoppingListItemExpanderPlugins(Container $container): Container
+    protected function addAddItemShoppingListItemExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ADD_ITEM_EXPANDER] = function () {
-            return $this->getShoppingListItemExpanderPlugins();
+        $container[static::PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_EXPANDER] = function () {
+            return $this->getAddItemShoppingListItemExpanderPlugins();
         };
 
         return $container;
@@ -163,7 +163,7 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
     /**
      * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemExpanderPluginInterface[]
      */
-    protected function getShoppingListItemExpanderPlugins(): array
+    protected function getAddItemShoppingListItemExpanderPlugins(): array
     {
         return [];
     }
