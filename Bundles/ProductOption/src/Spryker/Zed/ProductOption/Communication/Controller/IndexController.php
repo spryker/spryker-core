@@ -15,12 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
- * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface getRepository()
  */
 class IndexController extends AbstractController
 {
-    protected const ERROR_MESSAGE_YOU_CANNOT_DEACTIVATE_LAST_PRODUCT_OPTION = 'You cannot deactivate last product option.';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -31,12 +28,6 @@ class IndexController extends AbstractController
         $idDiscount = $this->castId($request->query->get(BaseOptionController::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
         $isActive = $request->query->get(BaseOptionController::URL_PARAM_ACTIVE);
         $redirectUrl = $request->query->get(BaseOptionController::URL_PARAM_REDIRECT_URL);
-
-        if (!$isActive && $this->isLastActiveProductOptionGroup()) {
-            $this->addErrorMessage(static::ERROR_MESSAGE_YOU_CANNOT_DEACTIVATE_LAST_PRODUCT_OPTION);
-
-            return $this->redirectResponse($redirectUrl);
-        }
 
         $isChanged = $this->getFacade()->toggleOptionActive($idDiscount, (bool)$isActive);
 
@@ -50,13 +41,5 @@ class IndexController extends AbstractController
         }
 
         return new RedirectResponse($redirectUrl);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isLastActiveProductOptionGroup(): bool
-    {
-        return $this->getRepository()->getActiveProductOptionGroupsCount() <= 1;
     }
 }
