@@ -5,13 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Synchronization\Business\QueueMessageProcessor;
+namespace Spryker\Zed\Synchronization\Business\Message;
 
 use Exception;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
-use Spryker\Zed\Synchronization\Business\Exception\SynchronizationIsNotDefinedException;
 use Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface;
-use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
 
 class QueueMessageProcessor implements QueueMessageProcessorInterface
 {
@@ -24,42 +22,27 @@ class QueueMessageProcessor implements QueueMessageProcessorInterface
     protected $synchronization;
 
     /**
-     * @var \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface
+     * @var \Spryker\Zed\Synchronization\Business\Message\QueueMessageHelperInterface
      */
-    protected $utilEncodingService;
-
-    /**
-     * @param \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface $utilEncodingService
-     */
-    public function __construct(
-        SynchronizationToUtilEncodingServiceInterface $utilEncodingService
-    ) {
-        $this->utilEncodingService = $utilEncodingService;
-    }
+    protected $queueMessageHelper;
 
     /**
      * @param \Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface $synchronization
-     *
-     * @return void
+     * @param \Spryker\Zed\Synchronization\Business\Message\QueueMessageHelperInterface $queueMessageHelper
      */
-    public function setSynchronization(SynchronizationInterface $synchronization): void
+    public function __construct(SynchronizationInterface $synchronization, QueueMessageHelperInterface $queueMessageHelper)
     {
         $this->synchronization = $synchronization;
+        $this->queueMessageHelper = $queueMessageHelper;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
      *
-     * @throws \Spryker\Zed\Synchronization\Business\Exception\SynchronizationIsNotDefinedException
-     *
      * @return array
      */
     public function processMessages(array $queueMessageTransfers): array
     {
-        if ($this->synchronization === null) {
-            throw new SynchronizationIsNotDefinedException('Please define synchronization model by calling setSynchronization method.');
-        }
-
         foreach ($queueMessageTransfers as $key => $queueMessageTransfer) {
             $queueMessageTransfers[$key] = $this->processMessage($queueMessageTransfer);
         }
@@ -75,14 +58,14 @@ class QueueMessageProcessor implements QueueMessageProcessorInterface
     protected function processMessage(QueueReceiveMessageTransfer $queueMessageTransfer): QueueReceiveMessageTransfer
     {
         try {
-            $messageBody = $this->utilEncodingService->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
+            $messageBody = $this->queueMessageHelper->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
 
             $this->processMessageWriteType($messageBody, $queueMessageTransfer->getQueueName());
             $this->processMessageDeleteType($messageBody, $queueMessageTransfer->getQueueName());
 
             $queueMessageTransfer->setAcknowledge(true);
         } catch (Exception $exception) {
-            $this->markMessageAsFailed($queueMessageTransfer, $exception->getMessage());
+            $this->queueMessageHelper->markMessageAsFailed($queueMessageTransfer, $exception->getMessage());
         }
 
         return $queueMessageTransfer;
@@ -116,32 +99,5 @@ class QueueMessageProcessor implements QueueMessageProcessorInterface
         }
 
         $this->synchronization->delete($messageBody[static::DELETE_TYPE], $queueName);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
-     * @param string $errorMessage
-     *
-     * @return void
-     */
-    protected function markMessageAsFailed(QueueReceiveMessageTransfer $queueMessageTransfer, string $errorMessage = '')
-    {
-        $this->setMessageError($queueMessageTransfer, $errorMessage);
-        $queueMessageTransfer->setAcknowledge(false);
-        $queueMessageTransfer->setReject(true);
-        $queueMessageTransfer->setHasError(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
-     * @param string $errorMessage
-     *
-     * @return void
-     */
-    protected function setMessageError(QueueReceiveMessageTransfer $queueMessageTransfer, string $errorMessage = '')
-    {
-        $queueMessageBody = $this->utilEncodingService->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
-        $queueMessageBody['errorMessage'] = $errorMessage;
-        $queueMessageTransfer->getQueueMessage()->setBody($this->utilEncodingService->encodeJson($queueMessageBody));
     }
 }

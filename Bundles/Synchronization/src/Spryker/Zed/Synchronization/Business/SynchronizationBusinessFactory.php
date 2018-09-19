@@ -11,12 +11,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolver;
 use Spryker\Zed\Synchronization\Business\Export\QueryContainerExporter;
 use Spryker\Zed\Synchronization\Business\Export\RepositoryExporter;
+use Spryker\Zed\Synchronization\Business\Message\BulkQueueMessageProcessor;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreator;
-use Spryker\Zed\Synchronization\Business\QueueMessageManager\QueueMessageManager;
-use Spryker\Zed\Synchronization\Business\QueueMessageManager\QueueMessageManagerInterface;
-use Spryker\Zed\Synchronization\Business\QueueMessageProcessor\BulkQueueMessageProcessor;
-use Spryker\Zed\Synchronization\Business\QueueMessageProcessor\QueueMessageProcessor;
-use Spryker\Zed\Synchronization\Business\QueueMessageProcessor\QueueMessageProcessorInterface;
+use Spryker\Zed\Synchronization\Business\Message\QueueMessageHelper;
+use Spryker\Zed\Synchronization\Business\Message\QueueMessageHelperInterface;
+use Spryker\Zed\Synchronization\Business\Message\QueueMessageProcessorInterface;
 use Spryker\Zed\Synchronization\Business\Search\SynchronizationSearch;
 use Spryker\Zed\Synchronization\Business\Storage\SynchronizationStorage;
 use Spryker\Zed\Synchronization\Business\Validation\OutdatedValidator;
@@ -87,47 +86,33 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Synchronization\Business\QueueMessageManager\QueueMessageManagerInterface
+     * @return \Spryker\Zed\Synchronization\Business\Message\QueueMessageProcessorInterface
      */
-    public function createSearchQueueMessageManager(): QueueMessageManagerInterface
-    {
-        return new QueueMessageManager(
-            $this->getConfig(),
-            $this->createPlainQueueMessageProcessor(),
-            $this->createBulkQueueMessageProcessor(),
-            $this->createSearchManager()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Synchronization\Business\QueueMessageManager\QueueMessageManagerInterface
-     */
-    public function createStorageQueueMessageManager(): QueueMessageManagerInterface
-    {
-        return new QueueMessageManager(
-            $this->getConfig(),
-            $this->createPlainQueueMessageProcessor(),
-            $this->createBulkQueueMessageProcessor(),
-            $this->createStorageManager()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Synchronization\Business\QueueMessageProcessor\QueueMessageProcessorInterface
-     */
-    public function createPlainQueueMessageProcessor(): QueueMessageProcessorInterface
-    {
-        return new QueueMessageProcessor(
-            $this->getUtilEncodingService()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Synchronization\Business\QueueMessageProcessor\QueueMessageProcessorInterface
-     */
-    public function createBulkQueueMessageProcessor(): QueueMessageProcessorInterface
+    public function createSearchQueueMessageProcessor(): QueueMessageProcessorInterface
     {
         return new BulkQueueMessageProcessor(
+            $this->createSearchManager(),
+            $this->createQueueMessageHelper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Synchronization\Business\Message\QueueMessageProcessorInterface
+     */
+    public function createStorageQueueMessageProcessor(): QueueMessageProcessorInterface
+    {
+        return new BulkQueueMessageProcessor(
+            $this->createStorageManager(),
+            $this->createQueueMessageHelper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Synchronization\Business\Message\QueueMessageHelperInterface
+     */
+    public function createQueueMessageHelper(): QueueMessageHelperInterface
+    {
+        return new QueueMessageHelper(
             $this->getUtilEncodingService()
         );
     }

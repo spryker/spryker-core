@@ -86,7 +86,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     public function processSearchMessages(array $queueMessageTransfers): array
     {
         return $this->getFactory()
-            ->createSearchQueueMessageManager()
+            ->createSearchQueueMessageProcessor()
             ->processMessages($queueMessageTransfers);
     }
 
@@ -102,7 +102,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     public function processStorageMessages(array $queueMessageTransfers): array
     {
         return $this->getFactory()
-            ->createStorageQueueMessageManager()
+            ->createStorageQueueMessageProcessor()
             ->processMessages($queueMessageTransfers);
     }
 

@@ -57,14 +57,6 @@ class SynchronizationConfig extends AbstractBundleConfig
      */
     public function getSyncExportChunkSize()
     {
-        return $this->get(SynchronizationConstants::EXPORT_MESSAGE_CHUNK_SIZE, 10);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isBulkModeEnabled(): bool
-    {
-        return $this->get(SynchronizationConstants::IS_BULK_MODE_ENABLED, true);
+        return $this->get(SynchronizationConstants::EXPORT_MESSAGE_CHUNK_SIZE, 100);
     }
 }
