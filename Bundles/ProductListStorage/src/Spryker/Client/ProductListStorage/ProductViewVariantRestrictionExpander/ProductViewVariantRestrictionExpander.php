@@ -104,10 +104,10 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     protected function getNonRestrictedAttributeVariants(int $nonRestrictedProductConcreteId, array $attributeVariants): array
     {
         $nonRestrictedAttributeVariants = [];
-        $iterator = $this->getRecursiveIterator($attributeVariants);
+        $iterator = $this->createRecursiveIterator($attributeVariants);
 
         foreach ($iterator as $attributeVariantKey => $attributeVariantValue) {
-            if ($this->isNonRestrictedAttributeVariant($attributeVariantValue, $nonRestrictedProductConcreteId)) {
+            if (is_array($attributeVariantValue) && $this->isNonRestrictedAttributeVariant($attributeVariantValue, $nonRestrictedProductConcreteId)) {
                 $variantPath = $this->buildVariantPath($iterator, $attributeVariantKey, $attributeVariantValue);
                 $nonRestrictedAttributeVariants = array_merge_recursive($nonRestrictedAttributeVariants, $variantPath);
             }
@@ -128,13 +128,24 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
         foreach ($attributes as $attributeKey => $attributeValues) {
             foreach ($attributeValues as $attributeValue) {
                 $attributeKeyValue = $this->getAttributeKeyValue($attributeKey, $attributeValue);
-                if (array_key_exists($attributeKeyValue, $nonRestrictedAttributeVariants)) {
+                if ($this->isAttributeKeyValueAvailable($attributeKeyValue, $nonRestrictedAttributeVariants)) {
                     $availableAttributes[$attributeKey][] = $attributeValue;
                 }
             }
         }
 
         return $availableAttributes;
+    }
+
+    /**
+     * @param string $attributeKeyValue
+     * @param array $nonRestrictedAttributeVariants
+     *
+     * @return bool
+     */
+    protected function isAttributeKeyValueAvailable(string $attributeKeyValue, array $nonRestrictedAttributeVariants): bool
+    {
+        return array_key_exists($attributeKeyValue, $nonRestrictedAttributeVariants);
     }
 
     /**
@@ -160,16 +171,15 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     }
 
     /**
-     * @param array|int $attributeVariantValue
+     * @param array $attributeVariantValue
      * @param int $nonRestrictedProductId
      *
      * @return bool
      */
-    protected function isNonRestrictedAttributeVariant($attributeVariantValue, int $nonRestrictedProductId): bool
+    protected function isNonRestrictedAttributeVariant(array $attributeVariantValue, int $nonRestrictedProductId): bool
     {
-        return is_array($attributeVariantValue)
-            && array_key_exists(self::ID_PRODUCT_CONCRETE, $attributeVariantValue)
-            && $attributeVariantValue[self::ID_PRODUCT_CONCRETE] === $nonRestrictedProductId;
+        return array_key_exists(static::ID_PRODUCT_CONCRETE, $attributeVariantValue)
+            && $attributeVariantValue[static::ID_PRODUCT_CONCRETE] === $nonRestrictedProductId;
     }
 
     /**
@@ -177,7 +187,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
      *
      * @return \RecursiveIteratorIterator
      */
-    protected function getRecursiveIterator(array $attributeVariants): RecursiveIteratorIterator
+    protected function createRecursiveIterator(array $attributeVariants): RecursiveIteratorIterator
     {
         return new RecursiveIteratorIterator(
             new RecursiveArrayIterator($attributeVariants),
