@@ -15,7 +15,7 @@ use Spryker\Client\ProductListStorage\ProductConcreteRestriction\ProductConcrete
 
 class ProductViewVariantRestrictionExpander implements ProductViewVariantRestrictionExpanderInterface
 {
-    protected const PATTERN_ATTRIBUTE_KEY_VALUE_KEY = '%s:%s';
+    protected const PATTERN_ATTRIBUTE_KEY_VALUE = '%s:%s';
     protected const ID_PRODUCT_CONCRETE = 'id_product_concrete';
 
     /**
@@ -204,7 +204,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     protected function getAttributeKeyValue(string $attributeKey, string $attributeValue): string
     {
         return sprintf(
-            static::PATTERN_ATTRIBUTE_KEY_VALUE_KEY,
+            static::PATTERN_ATTRIBUTE_KEY_VALUE,
             $attributeKey,
             $attributeValue
         );
