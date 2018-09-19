@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Synchronization\Business\Message;
 
-use Exception;
 use Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface;
+use Throwable;
 
 class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
 {
@@ -85,7 +85,7 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
             try {
                 $this->synchronization->writeBulk($messageBodies);
                 $markedMessageTransfers = $this->markEachMessageChunkAsAcknowledged($queueMessageTransfers);
-            } catch (Exception $exception) {
+            } catch (Throwable $exception) {
                 $markedMessageTransfers = $this->markEachMessageChunkAsFailed($queueMessageTransfers, $exception->getMessage());
             }
 
@@ -111,7 +111,7 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
             try {
                 $this->synchronization->deleteBulk($messageBodies);
                 $markedMessageTransfers = $this->markEachMessageChunkAsAcknowledged($queueMessageTransfers);
-            } catch (Exception $exception) {
+            } catch (Throwable $exception) {
                 $markedMessageTransfers = $this->markEachMessageChunkAsFailed($queueMessageTransfers, $exception->getMessage());
             }
 

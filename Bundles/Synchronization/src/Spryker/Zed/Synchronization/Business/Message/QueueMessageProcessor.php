@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Synchronization\Business\Message;
 
-use Exception;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface;
+use Throwable;
 
 class QueueMessageProcessor implements QueueMessageProcessorInterface
 {
@@ -64,7 +64,7 @@ class QueueMessageProcessor implements QueueMessageProcessorInterface
             $this->processMessageDeleteType($messageBody, $queueMessageTransfer->getQueueName());
 
             $queueMessageTransfer->setAcknowledge(true);
-        } catch (Exception $exception) {
+        } catch (Throwable $exception) {
             $this->queueMessageHelper->markMessageAsFailed($queueMessageTransfer, $exception->getMessage());
         }
 
