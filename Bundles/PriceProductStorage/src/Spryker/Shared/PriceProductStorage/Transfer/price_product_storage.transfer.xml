@@ -16,4 +16,13 @@
     <transfer name="MoneyValue">
         <property name="priceData" type="string" />
     </transfer>
+
+    <transfer name="QuickOrderProductPrice">
+        <property name="idProductConcrete" type="int" />
+        <property name="total" type="string" />
+        <property name="quantity" type="int" />
+        <property name="currentProductPrice" type="CurrentProductPrice" />
+        <property name="currency" type="Currency" />
+    </transfer>
+
 </transfers>

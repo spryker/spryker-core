@@ -21,9 +21,9 @@ class QuickOrderProductPriceTransferExpanderPlugin extends AbstractPlugin implem
     /**
      * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
      */
-    public function expand(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): void
+    public function expandQuickOrderProductPriceTransfer(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): QuickOrderProductPriceTransfer
     {
         if ($quickOrderProductPriceTransfer->getIdProductConcrete() === null) {
             return;
@@ -46,5 +46,7 @@ class QuickOrderProductPriceTransferExpanderPlugin extends AbstractPlugin implem
         $quickOrderProductPriceTransfer->setCurrency(
             $this->getFactory()->getCurrencyClient()->getCurrent()
         );
+
+        return $quickOrderProductPriceTransfer;
     }
 }

@@ -19,7 +19,7 @@ interface QuickOrderProductPriceTransferExpanderPluginInterface
      *
      * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
      */
-    public function expand(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): void;
+    public function expandQuickOrderProductPriceTransfer(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): QuickOrderProductPriceTransfer;
 }
