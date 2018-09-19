@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface;
 use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductLabelStorage\ProductLabelStorageConfig;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig as SharedProductLabelStorageConfig;
 
 class LabelDictionary implements LabelDictionaryInterface
@@ -54,13 +55,6 @@ class LabelDictionary implements LabelDictionaryInterface
      */
     public function findLabel($dictionaryKey, $localeName)
     {
-        if (ProductLabelStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
-            /** @var \Spryker\Client\ProductLabel\ProductLabelClientInterface $productLabelClient */
-            $productLabelClient = $clientLocatorClassName::getInstance()->productLabel()->client();
-//            $collectorData = $productLabelClient->findLabelByLocalizedName();
-        }
-
         $dictionary = $this->getDictionary($localeName);
 
         if (!array_key_exists($dictionaryKey, $dictionary)) {
@@ -115,8 +109,7 @@ class LabelDictionary implements LabelDictionaryInterface
     {
         $productLabelDictionaryStorageTransfer = new ProductLabelDictionaryStorageTransfer();
 
-        $storageKey = $this->getStorageKey($localeName);
-        $productLabelDictionaryStorageData = $this->storageClient->get($storageKey);
+        $productLabelDictionaryStorageData = $this->getStorageData($localeName);
 
         if (!$productLabelDictionaryStorageData) {
             return $productLabelDictionaryStorageTransfer;
@@ -125,6 +118,35 @@ class LabelDictionary implements LabelDictionaryInterface
         $productLabelDictionaryStorageTransfer->fromArray($productLabelDictionaryStorageData, true);
 
         return $productLabelDictionaryStorageTransfer;
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    protected function getStorageData(string $localeName)
+    {
+        if (ProductLabelStorageConfig::isCollectorCompatibilityMode()) {
+            $productLabelConstantsClassName = '\Spryker\Shared\ProductLabel\ProductLabelConstants';
+            $collectorStorageKey = sprintf(
+                '%s.%s.resource.product_label_dictionary.%s',
+                strtolower(Store::getInstance()->getStoreName()),
+                strtolower($localeName),
+                $productLabelConstantsClassName::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER
+            );
+            $collectorData = $this->storageClient->get($collectorStorageKey);
+            $formatted = [
+                'items' => $collectorData,
+            ];
+
+            return $formatted;
+        }
+
+        $storageKey = $this->getStorageKey($localeName);
+        $productLabelDictionaryStorageData = $this->storageClient->get($storageKey);
+
+        return $productLabelDictionaryStorageData;
     }
 
     /**
