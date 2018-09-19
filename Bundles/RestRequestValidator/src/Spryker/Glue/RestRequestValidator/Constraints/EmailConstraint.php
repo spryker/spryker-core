@@ -14,5 +14,5 @@ class EmailConstraint extends Constraint
     /**
      * @var string
      */
-    public $message = 'email validation error.';
+    public $message = 'Email validation error.';
 }

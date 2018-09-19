@@ -2,7 +2,6 @@ access-tokens:
   post:
     username:
       - NotBlank
-      - Email
       - EmailConstraint
     password:
       - NotBlank
