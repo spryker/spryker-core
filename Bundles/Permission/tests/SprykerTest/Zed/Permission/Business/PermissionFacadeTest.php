@@ -34,36 +34,28 @@ class PermissionFacadeTest extends Unit
     public function testFindMergedRegisteredNonInfrastructuralPermissionsDoesNotReturnInfrastructuralPermissions(): void
     {
         // Act
-        $availablePermissions = $this->getPermissionFacade()
-            ->findAll()
-            ->getPermissions();
-
         $registeredNonInfrastructuralPermissions = $this->getPermissionFacade()
             ->findMergedRegisteredNonInfrastructuralPermissions()
             ->getPermissions();
 
         // Assert
-        $this->assertCount(
-            $this->getNonInfrastructuralPermissionsCount($availablePermissions),
-            $registeredNonInfrastructuralPermissions
-        );
+        $this->assertFalse($this->hasInfrastructuralPermissions($registeredNonInfrastructuralPermissions));
     }
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\PermissionTransfer[] $availablePermissions
      *
-     * @return int
+     * @return bool
      */
-    protected function getNonInfrastructuralPermissionsCount(ArrayObject $availablePermissions): int
+    protected function hasInfrastructuralPermissions(ArrayObject $availablePermissions): bool
     {
-        $nonInfrastructuralPermissionsCount = 0;
         foreach ($availablePermissions as $availablePermission) {
             if (!$availablePermission->getIsInfrastructural()) {
-                $nonInfrastructuralPermissionsCount++;
+                return true;
             }
         }
 
-        return $nonInfrastructuralPermissionsCount;
+        return false;
     }
 
     /**
