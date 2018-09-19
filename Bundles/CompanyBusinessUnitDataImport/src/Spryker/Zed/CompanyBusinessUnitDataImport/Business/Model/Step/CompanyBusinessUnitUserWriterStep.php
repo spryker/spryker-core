@@ -33,7 +33,7 @@ class CompanyBusinessUnitUserWriterStep implements DataImportStepInterface
     {
         $idCompanyBusinessUnit = $this->getIdCompanyBusinessUnitByKey($dataSet[CompanyBusinessUnitUserDataSet::COLUMN_BUSINESS_UNIT_KEY]);
 
-        $companyUserEntity = SpyCompanyUserQuery::create()
+        $companyUserEntity = $this->createCompanyUserQuery()
             ->findOneByKey($dataSet[CompanyBusinessUnitUserDataSet::COLUMN_COMPANY_USER_KEY]);
 
         if ($companyUserEntity === null) {
@@ -55,7 +55,7 @@ class CompanyBusinessUnitUserWriterStep implements DataImportStepInterface
     protected function getIdCompanyBusinessUnitByKey(string $companyBusinessUnitKey): int
     {
         if (!isset($this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey])) {
-            $idCompanyBusinessUnit = $this->getCompanyBusinessUnitQuery()
+            $idCompanyBusinessUnit = $this->createCompanyBusinessUnitQuery()
                 ->filterByKey($companyBusinessUnitKey)
                 ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
                 ->findOne();
@@ -73,8 +73,16 @@ class CompanyBusinessUnitUserWriterStep implements DataImportStepInterface
     /**
      * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
      */
-    protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
+    protected function createCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
     {
         return SpyCompanyBusinessUnitQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
+     */
+    protected function createCompanyUserQuery(): SpyCompanyUserQuery
+    {
+        return SpyCompanyUserQuery::create();
     }
 }

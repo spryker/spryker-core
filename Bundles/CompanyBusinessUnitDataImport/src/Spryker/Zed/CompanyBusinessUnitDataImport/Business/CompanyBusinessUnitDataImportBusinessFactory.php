@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyBusinessUnitDataImport\Business;
 
 use Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\CompanyBusinessUnitWriterStep;
+use Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\Step\BusinessUnitKeyToAddressKeyStep;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\Step\CompanyBusinessUnitUserWriterStep;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\Step\CompanyKeyToIdCompanyStep;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\Step\ParentBusinessUnitKeyToIdCompanyBusinessUnitStep;
@@ -45,6 +46,21 @@ class CompanyBusinessUnitDataImportBusinessFactory extends DataImportBusinessFac
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker->addStep(new CompanyBusinessUnitUserWriterStep());
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     */
+    public function createCompanyBusinessUnitAddressDataImport()
+    {
+        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCompanyBusinessUnitAddressDataImporterConfiguration());
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        $dataSetStepBroker->addStep(new BusinessUnitKeyToAddressKeyStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
