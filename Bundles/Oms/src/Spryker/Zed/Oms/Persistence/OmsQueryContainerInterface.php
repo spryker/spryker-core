@@ -208,7 +208,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * @param string $sku
      * @param string $storeName
      *
-     * @return $this|\Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
      */
     public function queryOmsProductReservationStoreBySkuForStore($sku, $storeName);
 
