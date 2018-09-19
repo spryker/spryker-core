@@ -16,9 +16,9 @@ class QuoteCleaner implements QuoteCleanerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function cleanUp(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function cleanUpItemGroupKeyPrefix(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $skuCounts = array_count_values($this->getItemSkus($quoteTransfer));
+        $skuCounts = $this->getItemSkuCounts($quoteTransfer);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($skuCounts[$itemTransfer->getSku()] === 1 && $itemTransfer->getGroupKeyPrefix()) {
@@ -34,14 +34,18 @@ class QuoteCleaner implements QuoteCleanerInterface
      *
      * @return array
      */
-    protected function getItemSkus(QuoteTransfer $quoteTransfer): array
+    protected function getItemSkuCounts(QuoteTransfer $quoteTransfer): array
     {
-        $skus = [];
+        $skuCounts = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $skus[] = $itemTransfer->getSku();
+            if (!isset($skuCounts[$itemTransfer->getSku()])) {
+                $skuCounts[$itemTransfer->getSku()] = 0;
+            }
+
+            $skuCounts[$itemTransfer->getSku()]++;
         }
 
-        return $skus;
+        return $skuCounts;
     }
 }

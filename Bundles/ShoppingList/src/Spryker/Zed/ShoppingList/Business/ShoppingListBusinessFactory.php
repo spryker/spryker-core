@@ -14,8 +14,6 @@ use Spryker\Zed\ShoppingList\Business\Model\QuoteToShoppingListConverter;
 use Spryker\Zed\ShoppingList\Business\Model\QuoteToShoppingListConverterInterface;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperation;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface;
-use Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemPluginExecutor;
-use Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemPluginExecutorInterface;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListReader;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListReaderInterface;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolver;
@@ -24,6 +22,8 @@ use Spryker\Zed\ShoppingList\Business\Model\ShoppingListSharer;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListSharerInterface;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriter;
 use Spryker\Zed\ShoppingList\Business\Model\ShoppingListWriterInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutor;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPermissionFacadeInterface;
@@ -97,7 +97,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemPluginExecutorInterface
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface
      */
     public function createShoppingListItemPluginExecutor(): ShoppingListItemPluginExecutorInterface
     {
@@ -117,7 +117,6 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteToShoppingListConverter(
             $this->createShoppingListResolver(),
-            $this->getEntityManager(),
             $this->getPersistentCartFacade(),
             $this->createShoppingListItemOperation(),
             $this->getQuoteItemExpanderPlugins(),

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShoppingList\Business\Model;
+namespace Spryker\Zed\ShoppingList\Business\ShoppingListItem;
 
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 

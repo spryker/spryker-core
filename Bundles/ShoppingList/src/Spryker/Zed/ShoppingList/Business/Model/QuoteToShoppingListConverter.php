@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface;
-use Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface;
 
 class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterface
 {
@@ -29,11 +28,6 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
      * @var \Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface
      */
     protected $shoppingListResolver;
-
-    /**
-     * @var \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface
-     */
-    protected $shoppingListEntityManager;
 
     /**
      * @var \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface
@@ -52,7 +46,6 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
 
     /**
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface $shoppingListResolver
-     * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface $shoppingListItemOperation
      * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface[] $quoteItemExpanderPlugins
@@ -60,7 +53,6 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
      */
     public function __construct(
         ShoppingListResolverInterface $shoppingListResolver,
-        ShoppingListEntityManagerInterface $shoppingListEntityManager,
         ShoppingListToPersistentCartFacadeInterface $persistentCartFacade,
         ShoppingListItemOperationInterface $shoppingListItemOperation,
         array $quoteItemExpanderPlugins,
@@ -68,7 +60,6 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->shoppingListResolver = $shoppingListResolver;
-        $this->shoppingListEntityManager = $shoppingListEntityManager;
         $this->shoppingListItemOperation = $shoppingListItemOperation;
         $this->quoteItemExpanderPlugins = $quoteItemExpanderPlugins;
         $this->itemToShoppingListItemMapperPlugins = $itemToShoppingListItemMapperPlugins;

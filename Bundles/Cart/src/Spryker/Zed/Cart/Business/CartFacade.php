@@ -97,6 +97,6 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
      */
     public function cleanUpItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFactory()->createQuoteCleaner()->cleanUp($quoteTransfer);
+        return $this->getFactory()->createQuoteCleaner()->cleanUpItemGroupKeyPrefix($quoteTransfer);
     }
 }

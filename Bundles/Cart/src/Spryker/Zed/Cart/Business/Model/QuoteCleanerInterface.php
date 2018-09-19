@@ -16,5 +16,5 @@ interface QuoteCleanerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function cleanUp(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function cleanUpItemGroupKeyPrefix(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }
