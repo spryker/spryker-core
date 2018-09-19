@@ -85,7 +85,7 @@ class ProductCategoryFilterUpdater implements ProductCategoryFilterUpdaterInterf
     /**
      * @param int $categoryId
      *
-     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilter
+     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilter|null
      */
     protected function getProductCategoryFilterEntityByCategoryId($categoryId)
     {

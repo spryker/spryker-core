@@ -14,7 +14,7 @@ interface CategoriesRestApiToCategoryStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories(string $locale);
+    public function getCategories($locale);
 
     /**
      * @param int $idCategoryNode
