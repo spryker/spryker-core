@@ -18,11 +18,4 @@ interface OrdersReaderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function getOrdersAttributes(RestRequestInterface $restRequest): RestResponseInterface;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function getOrdersDetailsResourceAttributes(RestRequestInterface $restRequest): RestResponseInterface;
 }

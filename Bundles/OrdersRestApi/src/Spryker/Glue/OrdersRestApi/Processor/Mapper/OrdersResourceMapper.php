@@ -19,7 +19,7 @@ class OrdersResourceMapper implements OrdersResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\OrdersRestAttributesTransfer
      */
-    public function mapOrderToOrdersRestAttributes(OrderTransfer $orderTransfer): OrdersRestAttributesTransfer
+    public function mapOrderTransferToOrdersRestAttributesTransfer(OrderTransfer $orderTransfer): OrdersRestAttributesTransfer
     {
         $ordersRestAttributesTransfer = (new OrdersRestAttributesTransfer())->fromArray($orderTransfer->toArray(), true);
         $ordersRestAttributesTransfer->getTotals()->setTaxTotal($orderTransfer->getTotals()->getTaxTotal()->getAmount());

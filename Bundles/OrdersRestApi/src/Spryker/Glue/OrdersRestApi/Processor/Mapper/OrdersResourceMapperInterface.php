@@ -17,5 +17,5 @@ interface OrdersResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\OrdersRestAttributesTransfer
      */
-    public function mapOrderToOrdersRestAttributes(OrderTransfer $orderTransfer): OrdersRestAttributesTransfer;
+    public function mapOrderTransferToOrdersRestAttributesTransfer(OrderTransfer $orderTransfer): OrdersRestAttributesTransfer;
 }

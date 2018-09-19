@@ -7,8 +7,8 @@
         <property name="createdAt" type="string"/>
         <property name="totals" type="OrderRestTotalsAttributes"/>
         <property name="currencyIsoCode" type="string"/>
-        <property name="items" type="OrderItemsRestAttributes[]"/>
-        <property name="expenses" type="OrderRestExpensesAttributes[]"/>
+        <property name="items" type="OrderItemsRestAttributes[]" singular="item"/>
+        <property name="expenses" type="OrderRestExpensesAttributes[]" singular="expense"/>
     </transfer>
 
     <transfer name="OrderItemsRestAttributes">
