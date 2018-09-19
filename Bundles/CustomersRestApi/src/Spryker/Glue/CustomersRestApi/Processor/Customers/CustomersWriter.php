@@ -84,7 +84,7 @@ class CustomersWriter implements CustomersWriterInterface
                 if ($error->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED) {
                     return $this->addCustomerAlreadyExistsError($restResponse);
                 }
-                return $this->addCustomerCantRegisterCustomerMessageError($restResponse, $error->getMessage());
+                return $this->addCustomerCantRegisterMessageError($restResponse, $error->getMessage());
             }
         }
 
@@ -251,9 +251,11 @@ class CustomersWriter implements CustomersWriterInterface
      */
     protected function cleanUpCustomerAttributes(array $customerAttributes): array
     {
-        unset($customerAttributes[RestCustomersAttributesTransfer::CREATED_AT]);
-        unset($customerAttributes[RestCustomersAttributesTransfer::UPDATED_AT]);
-        unset($customerAttributes[RestCustomersAttributesTransfer::REGISTERED]);
+        unset(
+            $customerAttributes[RestCustomersAttributesTransfer::CREATED_AT],
+            $customerAttributes[RestCustomersAttributesTransfer::UPDATED_AT],
+            $customerAttributes[RestCustomersAttributesTransfer::REGISTERED]
+        );
 
         return $customerAttributes;
     }

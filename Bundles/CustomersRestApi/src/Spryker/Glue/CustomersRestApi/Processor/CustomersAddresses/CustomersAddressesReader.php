@@ -44,8 +44,7 @@ class CustomersAddressesReader implements CustomersAddressesReaderInterface
      */
     public function getAddressesByCustomerReference(string $customerReference, RestResourceInterface $restResource): RestResourceInterface
     {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setCustomerReference($customerReference);
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
         if (!$customerResponseTransfer->getHasCustomer()) {

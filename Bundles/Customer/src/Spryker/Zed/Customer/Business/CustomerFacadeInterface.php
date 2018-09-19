@@ -460,8 +460,8 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     *  - Finds customer by reference
-     *  - Returns customer response transfer
+     *  - Finds customer by reference.
+     *  - Returns customer response transfer.
      *
      * @api
      *

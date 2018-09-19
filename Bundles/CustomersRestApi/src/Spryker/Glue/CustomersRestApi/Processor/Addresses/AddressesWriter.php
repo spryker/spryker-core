@@ -293,10 +293,12 @@ class AddressesWriter implements AddressesWriterInterface
         if (!$isFirstAddress) {
             $addressTransfer->setIsDefaultBilling($addressAttributesTransfer->getIsDefaultBilling());
             $addressTransfer->setIsDefaultShipping($addressAttributesTransfer->getIsDefaultShipping());
-        } else {
-            $addressTransfer->setIsDefaultBilling(true);
-            $addressTransfer->setIsDefaultShipping(true);
+
+            return $addressTransfer;
         }
+
+        $addressTransfer->setIsDefaultBilling(true);
+        $addressTransfer->setIsDefaultShipping(true);
 
         return $addressTransfer;
     }

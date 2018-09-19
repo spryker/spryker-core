@@ -35,7 +35,7 @@ trait CustomersRestApiErrorsTrait
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addCustomerCantRegisterCustomerMessageError(RestResponseInterface $restResponse, string $errorMessage): RestResponseInterface
+    protected function addCustomerCantRegisterMessageError(RestResponseInterface $restResponse, string $errorMessage): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER)
