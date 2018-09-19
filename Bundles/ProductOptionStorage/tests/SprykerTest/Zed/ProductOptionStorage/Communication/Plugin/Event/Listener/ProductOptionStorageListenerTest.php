@@ -163,7 +163,7 @@ class ProductOptionStorageListenerTest extends Unit
         $productOptionGroupStorageListener->setFacade($this->getProductOptionStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($this->productAbstractTransfer->getIdProductAbstract()),
+            (new EventEntityTransfer())->setId($this->productOptionGroupTransfer->getIdProductOptionGroup()),
         ];
         $productOptionGroupStorageListener->handleBulk($eventTransfers, ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_GROUP_UPDATE);
 
