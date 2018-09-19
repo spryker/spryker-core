@@ -16,6 +16,8 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
 
 /**
@@ -194,6 +196,7 @@ class GlobalThresholdType extends AbstractType
             'label' => 'Enter fixed fee',
             'required' => false,
             'constraints' => [
+                $this->createNotBlankConstraint($options),
                 $this->createMoneyConstraint($options),
             ],
         ]);
@@ -213,7 +216,8 @@ class GlobalThresholdType extends AbstractType
             'label' => 'Enter flexible fee (percentage)',
             'required' => false,
             'constraints' => [
-                $this->createMoneyConstraint($options),
+                $this->createNotBlankConstraint($options),
+                $this->createRangeConstraint($options, 0, 100),
             ],
         ]);
 
@@ -255,6 +259,38 @@ class GlobalThresholdType extends AbstractType
             ]);
 
         return $this;
+    }
+
+    /**
+     * @param array $options
+     * @param int $min
+     * @param int $max
+     *
+     * @return \Symfony\Component\Validator\Constraints\Range
+     */
+    protected function createRangeConstraint(array $options, int $min, int $max): Range
+    {
+        $validationGroup = $this->getValidationGroup($options);
+
+        return new Range([
+            'min' => $min,
+            'max' => $max,
+            'groups' => $validationGroup,
+        ]);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(array $options): NotBlank
+    {
+        $validationGroup = $this->getValidationGroup($options);
+
+        return new NotBlank([
+            'groups' => $validationGroup,
+        ]);
     }
 
     /**
@@ -302,7 +338,6 @@ class GlobalThresholdType extends AbstractType
             foreach ([
                          static::FIELD_HARD_THRESHOLD,
                          static::FIELD_SOFT_THRESHOLD,
-                         static::FIELD_SOFT_FLEXIBLE_FEE,
                          static::FIELD_SOFT_FIXED_FEE,
                      ] as $fieldName) {
                 $data = $this->convertMoneyValue(
@@ -329,7 +364,6 @@ class GlobalThresholdType extends AbstractType
             foreach ([
                          static::FIELD_HARD_THRESHOLD,
                          static::FIELD_SOFT_THRESHOLD,
-                         static::FIELD_SOFT_FLEXIBLE_FEE,
                          static::FIELD_SOFT_FIXED_FEE,
                      ] as $fieldName) {
                 $data = $this->convertMoneyValue(
