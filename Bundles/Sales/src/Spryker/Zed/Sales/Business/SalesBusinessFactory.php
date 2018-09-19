@@ -28,6 +28,7 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
+ * @method \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface getRepository()
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
  */
 class SalesBusinessFactory extends AbstractBusinessFactory
@@ -109,7 +110,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderReader(
             $this->getQueryContainer(),
-            $this->createOrderHydrator()
+            $this->createOrderHydrator(),
+            $this->getRepository()
         );
     }
 
