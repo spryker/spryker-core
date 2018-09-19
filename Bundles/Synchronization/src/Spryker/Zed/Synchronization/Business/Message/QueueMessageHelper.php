@@ -29,14 +29,17 @@ class QueueMessageHelper implements QueueMessageHelperInterface
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
      * @param string $errorMessage
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
-    public function markMessageAsFailed(QueueReceiveMessageTransfer $queueMessageTransfer, string $errorMessage = ''): void
+    public function markMessageAsFailed(QueueReceiveMessageTransfer $queueMessageTransfer, string $errorMessage = ''): QueueReceiveMessageTransfer
     {
         $this->setMessageError($queueMessageTransfer, $errorMessage);
+
         $queueMessageTransfer->setAcknowledge(false);
         $queueMessageTransfer->setReject(true);
         $queueMessageTransfer->setHasError(true);
+
+        return $queueMessageTransfer;
     }
 
     /**
@@ -45,7 +48,7 @@ class QueueMessageHelper implements QueueMessageHelperInterface
      *
      * @return void
      */
-    public function setMessageError(QueueReceiveMessageTransfer $queueMessageTransfer, string $errorMessage = ''): void
+    protected function setMessageError(QueueReceiveMessageTransfer $queueMessageTransfer, string $errorMessage = ''): void
     {
         $queueMessageBody = $this->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
         $queueMessageBody['errorMessage'] = $errorMessage;

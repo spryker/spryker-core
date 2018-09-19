@@ -13,8 +13,8 @@ use Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterfac
 
 class QueueMessageProcessor implements QueueMessageProcessorInterface
 {
-    protected const WRITE_TYPE = 'write';
-    protected const DELETE_TYPE = 'delete';
+    protected const TYPE_WRITE = 'write';
+    protected const TYPE_DELETE = 'delete';
 
     /**
      * @var \Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface
@@ -79,11 +79,11 @@ class QueueMessageProcessor implements QueueMessageProcessorInterface
      */
     protected function processMessageWriteType(array $messageBody, string $queueName): void
     {
-        if (!isset($messageBody[static::WRITE_TYPE])) {
+        if (!isset($messageBody[static::TYPE_WRITE])) {
             return;
         }
 
-        $this->synchronization->write($messageBody[static::WRITE_TYPE], $queueName);
+        $this->synchronization->write($messageBody[static::TYPE_WRITE], $queueName);
     }
 
     /**
@@ -94,10 +94,10 @@ class QueueMessageProcessor implements QueueMessageProcessorInterface
      */
     protected function processMessageDeleteType(array $messageBody, string $queueName): void
     {
-        if (!isset($messageBody[static::DELETE_TYPE])) {
+        if (!isset($messageBody[static::TYPE_DELETE])) {
             return;
         }
 
-        $this->synchronization->delete($messageBody[static::DELETE_TYPE], $queueName);
+        $this->synchronization->delete($messageBody[static::TYPE_DELETE], $queueName);
     }
 }

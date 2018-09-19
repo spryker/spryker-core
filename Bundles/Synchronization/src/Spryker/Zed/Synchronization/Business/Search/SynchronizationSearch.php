@@ -137,15 +137,14 @@ class SynchronizationSearch implements SynchronizationInterface
 
     /**
      * @param array $data
-     * @param string $queueName
      *
      * @return void
      */
-    public function writeBulk(array $data, string $queueName): void
+    public function writeBulk(array $data): void
     {
         $typeName = $this->getParam($data, static::TYPE);
         $indexName = $this->getParam($data, static::INDEX);
-        $dataSets = $this->prepareBulkDataSets($data, $queueName);
+        $dataSets = $this->prepareBulkDataSets($data);
 
         if ($dataSets === []) {
             return;
@@ -156,15 +155,14 @@ class SynchronizationSearch implements SynchronizationInterface
 
     /**
      * @param array $data
-     * @param string $queueName
      *
      * @return void
      */
-    public function deleteBulk(array $data, string $queueName): void
+    public function deleteBulk(array $data): void
     {
         $typeName = $this->getParam($data, static::TYPE);
         $indexName = $this->getParam($data, static::INDEX);
-        $dataSets = $this->prepareBulkDataSets($data, $queueName);
+        $dataSets = $this->prepareBulkDataSets($data);
 
         if ($dataSets === []) {
             return;
@@ -175,21 +173,15 @@ class SynchronizationSearch implements SynchronizationInterface
 
     /**
      * @param array $data
-     * @param string $queueName
      *
      * @return array
      */
-    protected function prepareBulkDataSets(array $data, string $queueName): array
+    protected function prepareBulkDataSets(array $data): array
     {
         $dataSets = [];
         foreach ($data as $datum) {
             $key = $datum[static::KEY];
             $value = $datum[static::VALUE];
-
-            $existingEntry = $this->read($key);
-            if ($existingEntry !== null && $this->outdatedValidator->isInvalid($queueName, $value, $existingEntry)) {
-                continue;
-            }
 
             unset($value['_timestamp']);
             $dataSets[$key] = $value;

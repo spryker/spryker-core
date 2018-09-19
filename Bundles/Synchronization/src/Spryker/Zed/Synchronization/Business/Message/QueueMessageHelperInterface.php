@@ -15,17 +15,9 @@ interface QueueMessageHelperInterface
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
      * @param string $errorMessage
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
-    public function markMessageAsFailed(QueueReceiveMessageTransfer $queueMessageTransfer, string $errorMessage = ''): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
-     * @param string $errorMessage
-     *
-     * @return void
-     */
-    public function setMessageError(QueueReceiveMessageTransfer $queueMessageTransfer, string $errorMessage = ''): void;
+    public function markMessageAsFailed(QueueReceiveMessageTransfer $queueMessageTransfer, string $errorMessage = ''): QueueReceiveMessageTransfer;
 
     /**
      * @param string $jsonValue

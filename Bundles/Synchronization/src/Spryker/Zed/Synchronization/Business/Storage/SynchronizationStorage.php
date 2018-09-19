@@ -128,20 +128,15 @@ class SynchronizationStorage implements SynchronizationInterface
 
     /**
      * @param array $data
-     * @param string $queueName
      *
      * @return void
      */
-    public function writeBulk(array $data, string $queueName): void
+    public function writeBulk(array $data): void
     {
         $storageWriteMessages = [];
         foreach ($data as $message) {
             $key = $message['key'];
             $value = $message['value'];
-
-            if ($this->isInvalid($queueName, $message)) {
-                continue;
-            }
 
             $storageWriteMessages[$key] = $value;
         }
@@ -155,22 +150,15 @@ class SynchronizationStorage implements SynchronizationInterface
 
     /**
      * @param array $data
-     * @param string $queueName
      *
      * @return void
      */
-    public function deleteBulk(array $data, string $queueName): void
+    public function deleteBulk(array $data): void
     {
         $keysToDelete = [];
 
         foreach ($data as $message) {
-            $key = $message[static::KEY];
-
-            if ($this->isInvalid($queueName, $message)) {
-                continue;
-            }
-
-            $keysToDelete[] = $key;
+            $keysToDelete[] = $message[static::KEY];
         }
 
         if ($keysToDelete === []) {
@@ -178,24 +166,5 @@ class SynchronizationStorage implements SynchronizationInterface
         }
 
         $this->storageClient->deleteMulti($keysToDelete);
-    }
-
-    /**
-     * @param string $queueName
-     * @param array $message
-     *
-     * @return bool
-     */
-    protected function isInvalid(string $queueName, array $message)
-    {
-        $key = $message[static::KEY];
-        $value = $message[static::VALUE];
-        $existingEntry = $this->get($key);
-
-        if ($existingEntry !== null && $this->outdatedValidator->isInvalid($queueName, $value, $existingEntry)) {
-            return true;
-        }
-
-        return false;
     }
 }
