@@ -88,7 +88,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
         return $this->getFactory()
-            ->createShoppingListItemOperation()
+            ->createShoppingListWriter()
             ->clearShoppingList($shoppingListTransfer);
     }
 
