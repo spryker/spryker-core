@@ -13,6 +13,8 @@ use Spryker\Shared\PriceProduct\PriceProductConfig;
 
 class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStrategyInterface
 {
+    protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
@@ -24,6 +26,10 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
         $minPriceProductTransfer = null;
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
+            if ($priceProductTransfer->getPriceTypeName() !== $priceProductFilterTransfer->getPriceTypeName()) {
+                continue;
+            }
+
             if ($minPriceProductTransfer === null) {
                 $minPriceProductTransfer = $priceProductTransfer;
             }
@@ -46,10 +52,18 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
     protected function isMinGreaterThan(PriceProductTransfer $minPriceProductTransfer, PriceProductTransfer $priceProductTransfer, string $priceMode)
     {
         if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
+            if ($priceProductTransfer->getMoneyValue()->getGrossAmount() === null) {
+                return false;
+            }
+
             if ($minPriceProductTransfer->getMoneyValue()->getGrossAmount() > $priceProductTransfer->getMoneyValue()->getGrossAmount()) {
                 return true;
             }
 
+            return false;
+        }
+
+        if ($priceProductTransfer->getMoneyValue()->getNetAmount() === null) {
             return false;
         }
 

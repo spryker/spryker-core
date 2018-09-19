@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductLabel;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToPriceProductBridge;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToProductBridge;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchBridge;
 
@@ -16,6 +17,7 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
 
     const PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS = 'PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS';
 
@@ -30,6 +32,20 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductFacade($container);
 
         $container = $this->addProductLabelRelationUpdaterPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+            return new ProductLabelToPriceProductBridge($container->getLocator()->priceProduct()->facade());
+        };
 
         return $container;
     }
