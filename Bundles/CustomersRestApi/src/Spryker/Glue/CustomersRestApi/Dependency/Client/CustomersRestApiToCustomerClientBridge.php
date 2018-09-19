@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -51,7 +52,7 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
-    public function getAddresses(CustomerTransfer $customerTransfer)
+    public function getAddresses(CustomerTransfer $customerTransfer): AddressesTransfer
     {
         return $this->customerClient->getAddresses($customerTransfer);
     }
@@ -61,7 +62,7 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function createAddress(AddressTransfer $addressTransfer)
+    public function createAddress(AddressTransfer $addressTransfer): AddressTransfer
     {
         return $this->customerClient->createAddress($addressTransfer);
     }
@@ -71,7 +72,7 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function updateCustomerPassword(CustomerTransfer $customerTransfer)
+    public function updateCustomerPassword(CustomerTransfer $customerTransfer): CustomerResponseTransfer
     {
         return $this->customerClient->updateCustomerPassword($customerTransfer);
     }
@@ -81,7 +82,7 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function deleteAddress(AddressTransfer $addressTransfer)
+    public function deleteAddress(AddressTransfer $addressTransfer): AddressTransfer
     {
         return $this->customerClient->deleteAddress($addressTransfer);
     }
@@ -91,7 +92,7 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function updateCustomer(CustomerTransfer $customerTransfer)
+    public function updateCustomer(CustomerTransfer $customerTransfer): CustomerResponseTransfer
     {
         return $this->customerClient->updateCustomer($customerTransfer);
     }
@@ -101,7 +102,7 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function anonymizeCustomer(CustomerTransfer $customerTransfer)
+    public function anonymizeCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         return $this->customerClient->anonymizeCustomer($customerTransfer);
     }
@@ -111,7 +112,7 @@ class CustomersRestApiToCustomerClientBridge implements CustomersRestApiToCustom
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function updateAddress(AddressTransfer $addressTransfer)
+    public function updateAddress(AddressTransfer $addressTransfer): AddressTransfer
     {
         return $this->customerClient->updateAddress($addressTransfer);
     }
