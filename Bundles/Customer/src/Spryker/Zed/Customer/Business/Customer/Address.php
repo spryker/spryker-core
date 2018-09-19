@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -293,15 +294,30 @@ class Address implements AddressInterface
 
         foreach ($entities as $entity) {
             $addressTransfer = $this->entityToAddressTransfer($entity);
-
-            $countryTransfer = new CountryTransfer();
-            $countryTransfer->fromArray($entity->getCountry()->toArray());
-            $addressTransfer->setCountry($countryTransfer);
+            $addressTransfer = $this->addCountryToAddressTransfer($entity->getCountry(), $addressTransfer);
 
             $addressTransferCollection->addAddress($addressTransfer);
         }
 
         return $addressTransferCollection;
+    }
+
+    /**
+     * @param \Orm\Zed\Country\Persistence\SpyCountry $entity
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function addCountryToAddressTransfer(
+        SpyCountry $entity,
+        AddressTransfer $addressTransfer
+    ): AddressTransfer {
+        $countryTransfer = new CountryTransfer();
+        $countryTransfer->fromArray($entity->toArray());
+
+        $addressTransfer->setCountry($countryTransfer);
+
+        return $addressTransfer;
     }
 
     /**
