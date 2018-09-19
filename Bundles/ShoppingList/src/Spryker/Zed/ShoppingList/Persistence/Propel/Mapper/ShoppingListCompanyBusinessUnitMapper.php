@@ -24,7 +24,6 @@ class ShoppingListCompanyBusinessUnitMapper implements ShoppingListCompanyBusine
         Collection $companyBusinessUnitEntityCollection,
         ShoppingListCompanyBusinessUnitCollectionTransfer $shoppingListCompanyBusinessUnitCollection
     ): ShoppingListCompanyBusinessUnitCollectionTransfer {
-
         foreach ($companyBusinessUnitEntityCollection as $companyBusinessUnitEntity) {
             $shoppingListCompanyBusinessUnitCollection->addShoppingListCompanyBusinessUnit(
                 $this->mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer($companyBusinessUnitEntity, new ShoppingListCompanyBusinessUnitTransfer())
@@ -44,7 +43,6 @@ class ShoppingListCompanyBusinessUnitMapper implements ShoppingListCompanyBusine
         SpyShoppingListCompanyBusinessUnit $shoppingListCompanyBusinessUnit,
         ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer
     ): ShoppingListCompanyBusinessUnitTransfer {
-
         return $shoppingListCompanyBusinessUnitTransfer
             ->setIdShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnit->getIdShoppingListCompanyBusinessUnit())
             ->setIdShoppingList($shoppingListCompanyBusinessUnit->getFkShoppingList())

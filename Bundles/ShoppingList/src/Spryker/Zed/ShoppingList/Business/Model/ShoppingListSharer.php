@@ -120,7 +120,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     public function updateShoppingListSharedEntities(ShoppingListTransfer $shoppingListTransfer): ShoppingListShareResponseTransfer
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListTransfer) {
-            $this->executeUpdateShareShoppingListTransaction($shoppingListTransfer);
+            $this->executeUpdateShoppingListSharedEntitiesTransaction($shoppingListTransfer);
         });
 
         return (new ShoppingListShareResponseTransfer())->setIsSuccess(true);
@@ -131,10 +131,10 @@ class ShoppingListSharer implements ShoppingListSharerInterface
      *
      * @return void
      */
-    protected function executeUpdateShareShoppingListTransaction(ShoppingListTransfer $shoppingListTransfer): void
+    protected function executeUpdateShoppingListSharedEntitiesTransaction(ShoppingListTransfer $shoppingListTransfer): void
     {
-        $this->updateShareShoppingListCompanyUsers($shoppingListTransfer);
-        $this->updateShareShoppingListCompanyBusinessUnits($shoppingListTransfer);
+        $this->updateShoppingListCompanyUsers($shoppingListTransfer);
+        $this->updateShoppingListCompanyBusinessUnits($shoppingListTransfer);
     }
 
     /**
@@ -142,13 +142,13 @@ class ShoppingListSharer implements ShoppingListSharerInterface
      *
      * @return void
      */
-    protected function updateShareShoppingListCompanyUsers(ShoppingListTransfer $shoppingListTransfer): void
+    protected function updateShoppingListCompanyUsers(ShoppingListTransfer $shoppingListTransfer): void
     {
         $sharedShoppingListCompanyUserIds = [];
-        $sharedShoppingListCompanyUsers = $this->shoppingListRepository
+        $shoppingListCompanyUserCollectionTransfer = $this->shoppingListRepository
             ->getShoppingListCompanyUsersByShoppingListId($shoppingListTransfer);
 
-        foreach ($sharedShoppingListCompanyUsers->getShoppingListCompanyUsers() as $sharedShoppingListCompanyUserTransfer) {
+        foreach ($shoppingListCompanyUserCollectionTransfer->getShoppingListCompanyUsers() as $sharedShoppingListCompanyUserTransfer) {
             $sharedShoppingListCompanyUserIds[$sharedShoppingListCompanyUserTransfer->getIdShoppingListCompanyUser()] =
                 $sharedShoppingListCompanyUserTransfer->getIdShoppingListPermissionGroup();
         }
@@ -163,13 +163,13 @@ class ShoppingListSharer implements ShoppingListSharerInterface
      *
      * @return void
      */
-    protected function updateShareShoppingListCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer): void
+    protected function updateShoppingListCompanyBusinessUnits(ShoppingListTransfer $shoppingListTransfer): void
     {
         $sharedShoppingListCompanyBusinessUnitIds = [];
-        $sharedShoppingListCompanyBusinessUnits = $this->shoppingListRepository
+        $shoppingListCompanyBusinessUnitCollectionTransfer = $this->shoppingListRepository
             ->getShoppingListCompanyBusinessUnitsByShoppingListId($shoppingListTransfer);
 
-        foreach ($sharedShoppingListCompanyBusinessUnits->getShoppingListCompanyBusinessUnits() as $sharedShoppingListCompanyBusinessUnitTransfer) {
+        foreach ($shoppingListCompanyBusinessUnitCollectionTransfer->getShoppingListCompanyBusinessUnits() as $sharedShoppingListCompanyBusinessUnitTransfer) {
             $sharedShoppingListCompanyBusinessUnitIds[$sharedShoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit()] =
                 $sharedShoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup();
         }
