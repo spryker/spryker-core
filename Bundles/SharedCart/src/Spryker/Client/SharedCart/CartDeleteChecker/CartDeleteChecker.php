@@ -53,7 +53,11 @@ class CartDeleteChecker implements CartDeleteCheckerInterface
             return $this->can(WriteSharedCartPermissionPlugin::KEY, $currentQuote->getIdQuote());
         }
         foreach ($this->multiCartClient->getQuoteCollection()->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getIdQuote() !== $currentQuote->getIdQuote() && $this->isQuoteOwner($quoteTransfer, $customerTransfer)) {
+            if ($quoteTransfer->getIdQuote() === $currentQuote->getIdQuote()) {
+                continue;
+            }
+
+            if ($this->isQuoteOwner($quoteTransfer, $customerTransfer)) {
                 return true;
             }
         }
