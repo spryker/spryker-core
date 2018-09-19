@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CustomersRestApi\Processor;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -70,5 +71,50 @@ trait CustomersRestApiValidatorsTrait
     protected function assertPasswordNotEmpty(RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer): bool
     {
         return mb_strlen($passwordAttributesTransfer->getNewPassword()) > 1;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function validateCustomerGender(CustomerResponseTransfer $customerResponseTransfer, RestResponseInterface $restResponse): RestResponseInterface
+    {
+        if (count($restResponse->getErrors()) > 0) {
+            return $restResponse;
+        }
+
+        if ($customerResponseTransfer->getCustomerTransfer()->isPropertyModified(CustomerTransfer::GENDER) &&
+            !in_array($customerResponseTransfer->getCustomerTransfer()->getGender(), static::CUSTOMERS_GENDERS_ENUM)) {
+            return $this->addNotValidGenderError($restResponse);
+        }
+
+        return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function validatePassword(
+        RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer,
+        RestResponseInterface $restResponse
+    ): RestResponseInterface {
+        if (count($restResponse->getErrors()) > 0) {
+            return $restResponse;
+        }
+
+        if (!$this->assertPasswordNotEmpty($passwordAttributesTransfer)) {
+            return $this->addPasswordNotValidError($restResponse);
+        }
+
+        if (!$this->assertPasswordsAreIdentical($passwordAttributesTransfer)) {
+            return $this->addPasswordsNotMatchError($restResponse);
+        }
+
+        return $restResponse;
     }
 }

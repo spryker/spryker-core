@@ -115,17 +115,14 @@ class CustomersWriter implements CustomersWriterInterface
             $restResponse
         );
 
-        if (count($restResponse->getErrors()) > 0) {
-            return $restResponse;
-        }
-
         $customerResponseTransfer->getCustomerTransfer()->fromArray(
             $this->getCustomerData($restCustomerAttributesTransfer)
         );
 
-        if ($customerResponseTransfer->getCustomerTransfer()->isPropertyModified(CustomerTransfer::GENDER) &&
-            !in_array($customerResponseTransfer->getCustomerTransfer()->getGender(), static::CUSTOMERS_GENDERS_ENUM)) {
-            return $this->addNotValidGenderError($restResponse);
+        $restResponse = $this->validateCustomerGender($customerResponseTransfer, $restResponse);
+
+        if (count($restResponse->getErrors()) > 0) {
+            return $restResponse;
         }
 
         $customerResponseTransfer = $this->customerClient->updateCustomer($customerResponseTransfer->getCustomerTransfer());
@@ -154,9 +151,6 @@ class CustomersWriter implements CustomersWriterInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $user = $restRequest->getUser();
-        if (!$user) {
-            return $this->addCustomerReferenceMissingError($restResponse);
-        }
 
         $customerTransfer = (new CustomerTransfer())
             ->setCustomerReference($user->getNaturalIdentifier());
@@ -168,16 +162,10 @@ class CustomersWriter implements CustomersWriterInterface
             $restResponse
         );
 
+        $restResponse = $this->validatePassword($passwordAttributesTransfer, $restResponse);
+
         if (count($restResponse->getErrors()) > 0) {
             return $restResponse;
-        }
-
-        if (!$this->assertPasswordNotEmpty($passwordAttributesTransfer)) {
-            return $this->addPasswordNotValidError($restResponse);
-        }
-
-        if (!$this->assertPasswordsAreIdentical($passwordAttributesTransfer)) {
-            return $this->addPasswordsNotMatchError($restResponse);
         }
 
         $customerTransfer = $customerResponseTransfer->getCustomerTransfer();

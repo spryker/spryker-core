@@ -78,15 +78,7 @@ class ResourceRouter implements ResourceRouterInterface
             $httpRequest
         );
 
-        if (!$route) {
-            return $this->createResourceNotFoundRoute();
-        }
-
-        if (!$this->isParentValid($route, $resources)) {
-            return $this->createResourceNotFoundRoute();
-        }
-
-        if ($httpRequest->getMethod() === Request::METHOD_POST && isset($resourceType['id'])) {
+        if (!$this->isValidRoute($route, $resources, $httpRequest)) {
             return $this->createResourceNotFoundRoute();
         }
 
@@ -233,5 +225,25 @@ class ResourceRouter implements ResourceRouterInterface
         }
 
         return $route[RequestConstantsInterface::ATTRIBUTE_TYPE] === $resources[0][RequestConstantsInterface::ATTRIBUTE_TYPE];
+    }
+
+    /**
+     * @param array $route
+     * @param array $resources
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
+     *
+     * @return bool
+     */
+    protected function isValidRoute(array $route, array $resources, Request $httpRequest): bool
+    {
+        if (!$route || !$this->isParentValid($route, $resources)) {
+            return false;
+        }
+
+        if ($httpRequest->getMethod() === Request::METHOD_POST && isset($this->getMainResource($resources)['id'])) {
+            return false;
+        }
+
+        return true;
     }
 }

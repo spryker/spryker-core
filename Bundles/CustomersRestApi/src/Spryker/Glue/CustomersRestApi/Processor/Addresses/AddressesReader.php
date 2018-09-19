@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\Addresses;
 
 use Generated\Shared\Transfer\AddressesTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
@@ -86,18 +87,18 @@ class AddressesReader implements AddressesReaderInterface
             return $restResponse;
         }
 
-        foreach ($addressesTransfer->getAddresses() as $address) {
-            if ($address->getUuid() === $restRequest->getResource()->getId()) {
-                $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource(
-                    $address,
-                    $customerResponseTransfer->getCustomerTransfer()
-                );
+        $addressTransfer = $this->findAddressByUuid($addressesTransfer, $restRequest->getResource()->getId());
 
-                return $restResponse->addResource($addressesResource);
-            }
+        if (!$addressTransfer) {
+            return $this->addAddressNotFoundError($restResponse);
         }
 
-        return $this->addAddressNotFoundError($restResponse);
+        $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource(
+            $addressTransfer,
+            $customerResponseTransfer->getCustomerTransfer()
+        );
+
+        return $restResponse->addResource($addressesResource);
     }
 
     /**
@@ -121,5 +122,22 @@ class AddressesReader implements AddressesReaderInterface
             $restResponse->addResource($addressesResource);
         }
         return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    protected function findAddressByUuid(AddressesTransfer $addressesTransfer, string $uuid): ?AddressTransfer
+    {
+        foreach ($addressesTransfer->getAddresses() as $address) {
+            if ($address->getUuid() === $uuid) {
+                return $address;
+            }
+        }
+
+        return null;
     }
 }
