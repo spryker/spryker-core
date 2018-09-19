@@ -10,7 +10,6 @@ namespace Spryker\Zed\Api\Communication;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\ApiDependencyProvider;
 use Spryker\Zed\Api\Business\Exception\FormatterNotFoundException;
-use Spryker\Zed\Api\Communication\Filterer\RequestTransferFilterer;
 use Spryker\Zed\Api\Communication\Formatter\JsonFormatter;
 use Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerPlugin;
 use Spryker\Zed\Api\Communication\Transformer\Transformer;
@@ -69,13 +68,5 @@ class ApiCommunicationFactory extends AbstractCommunicationFactory
     public function createControllerListener()
     {
         return new ApiControllerListenerPlugin();
-    }
-
-    /**
-     * @return \Spryker\Zed\Api\Communication\Filterer\RequestTransferFiltererInterface
-     */
-    public function createRequestTransferFilterer()
-    {
-        return new RequestTransferFilterer($this->getConfig());
     }
 }

@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Communication\Filterer;
+namespace Spryker\Zed\Api\Business\Model\Filter;
 
 use Generated\Shared\Transfer\ApiRequestTransfer;
 
-interface RequestTransferFiltererInterface
+interface ApiRequestTransferFilterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $requestTransfer
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
-    public function filter(ApiRequestTransfer $requestTransfer): ApiRequestTransfer;
+    public function filter(ApiRequestTransfer $apiRequestTransfer): ApiRequestTransfer;
 }
