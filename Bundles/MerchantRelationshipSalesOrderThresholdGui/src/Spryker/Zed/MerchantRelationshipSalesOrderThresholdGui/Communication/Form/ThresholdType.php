@@ -17,7 +17,6 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -213,7 +212,6 @@ class ThresholdType extends AbstractType
             'label' => 'Enter fixed fee',
             'required' => false,
             'constraints' => [
-                $this->createNotBlankConstraint($options),
                 $this->createMoneyConstraint($options),
             ],
         ]);
@@ -233,7 +231,6 @@ class ThresholdType extends AbstractType
             'label' => 'Enter flexible fee',
             'required' => false,
             'constraints' => [
-                $this->createNotBlankConstraint($options),
                 $this->createRangeConstraint($options, 0, 100),
             ],
         ]);
@@ -292,20 +289,6 @@ class ThresholdType extends AbstractType
         return new Range([
             'min' => $min,
             'max' => $max,
-            'groups' => $validationGroup,
-        ]);
-    }
-
-    /**
-     * @param array $options
-     *
-     * @return \Symfony\Component\Validator\Constraints\NotBlank
-     */
-    protected function createNotBlankConstraint(array $options): NotBlank
-    {
-        $validationGroup = $this->getValidationGroup($options);
-
-        return new NotBlank([
             'groups' => $validationGroup,
         ]);
     }
