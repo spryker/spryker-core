@@ -115,13 +115,11 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
 
         if (!$shoppingListTransfer) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
-            return (new ShoppingListResponseTransfer())->setIsSuccess(false);
+            return $this->createShoppingListErrorResponseTransfer(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
         }
 
         if (!$this->checkWritePermission($shoppingListTransfer)) {
-            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED);
-            return (new ShoppingListResponseTransfer())->setIsSuccess(false);
+            return $this->createShoppingListErrorResponseTransfer(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED);
         }
 
         return $this->getTransactionHandler()->handleTransaction(
@@ -134,13 +132,15 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     /**
      * @param string $message
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
-    protected function addErrorMessage(string $message): void
+    protected function createShoppingListErrorResponseTransfer(string $message): ShoppingListResponseTransfer
     {
-        $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue($message);
-        $this->messengerFacade->addErrorMessage($messageTransfer);
+        $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
+        $shoppingListResponseTransfer->addError($message);
+        $shoppingListResponseTransfer->setIsSuccess(false);
+
+        return $shoppingListResponseTransfer;
     }
 
     /**

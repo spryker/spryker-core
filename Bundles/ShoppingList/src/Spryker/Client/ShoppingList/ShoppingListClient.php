@@ -151,11 +151,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      */
     public function getShoppingListOverviewWithoutProductDetails(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer
     {
-        $shoppingListOverviewResponseTransfer = $this->getZedStub()->getShoppingListOverview($shoppingListOverviewRequestTransfer);
-
-        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
-
-        return $shoppingListOverviewResponseTransfer;
+        return $this->getZedStub()->getShoppingListOverview($shoppingListOverviewRequestTransfer);
     }
 
     /**
