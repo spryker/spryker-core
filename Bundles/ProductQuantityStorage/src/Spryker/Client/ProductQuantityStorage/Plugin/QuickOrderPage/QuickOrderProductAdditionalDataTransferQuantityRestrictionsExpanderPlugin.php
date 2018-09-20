@@ -12,26 +12,22 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderProductAdditionalDataTransferExpanderPluginInterface;
 
 /**
- * @method \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageClient getClient()
+ * @method \Spryker\Client\ProductQuantityStorage\ProductQuantityStorageClientInterface getClient()
  */
 class QuickOrderProductAdditionalDataTransferQuantityRestrictionsExpanderPlugin extends AbstractPlugin implements QuickOrderProductAdditionalDataTransferExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Expands QuickOrderProductAdditionalDataTransfer with quantity restrictions data for given product.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer $quickOrderProductAdditionalDataTransfer
      *
      * @return \Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer
      */
     public function expandQuickOrderProductAdditionalDataTransfer(QuickOrderProductAdditionalDataTransfer $quickOrderProductAdditionalDataTransfer): QuickOrderProductAdditionalDataTransfer
     {
-        $productQuantityStorageTransfer = $this->getClient()
-            ->findProductQuantityStorage(
-                $quickOrderProductAdditionalDataTransfer->getIdProductConcrete()
-            );
-
-        if ($productQuantityStorageTransfer !== null) {
-            $quickOrderProductAdditionalDataTransfer->setProductQuantityStorage($productQuantityStorageTransfer);
-        }
-
-        return $quickOrderProductAdditionalDataTransfer;
+        return $this->getClient()->expandQuickOrderProductAdditionalDataTransferWithQuantityRestrictions($quickOrderProductAdditionalDataTransfer);
     }
 }

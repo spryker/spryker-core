@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductQuantityStorage;
 
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
+use Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer;
 
 interface ProductQuantityStorageClientInterface
 {
@@ -23,4 +24,16 @@ interface ProductQuantityStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
      */
     public function findProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer;
+
+    /**
+     * Specification:
+     * - Expands QuickOrderProductAdditionalDataTransfer with quantity restrictions data if exists.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer $quickOrderProductAdditionalDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer
+     */
+    public function expandQuickOrderProductAdditionalDataTransferWithQuantityRestrictions(QuickOrderProductAdditionalDataTransfer $quickOrderProductAdditionalDataTransfer): QuickOrderProductAdditionalDataTransfer;
 }
