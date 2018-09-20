@@ -23,6 +23,7 @@ class ProductLabelSearchRepository extends AbstractRepository implements Product
     {
         $query = $this->getFactory()
             ->getPropelProductLabelQuery()
+            ->filterByIsActive(true)
             ->innerJoinWithSpyProductLabelProductAbstract()
             ->useSpyProductLabelProductAbstractQuery()
                 ->filterByFkProductAbstract_In($productAbstractIds)

@@ -191,7 +191,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
 
         $productImageSets = $this->repository->getProductImageSetsByFkProductInOrFkAbstractProductIn($productFks, $productAbstractFks);
 
-        list($productImageSetsIndexedByFkProductAbstract, $productImageSetsIndexedByFkProduct)
+        [$productImageSetsIndexedByFkProductAbstract, $productImageSetsIndexedByFkProduct]
             = $this->indexImageSetsByProductAbstractAndProduct($productImageSets);
 
         $combinedImageSets = [];

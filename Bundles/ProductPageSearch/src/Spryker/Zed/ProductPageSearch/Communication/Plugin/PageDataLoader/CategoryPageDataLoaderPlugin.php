@@ -19,6 +19,8 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoad
 class CategoryPageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
@@ -32,6 +34,8 @@ class CategoryPageDataLoaderPlugin extends AbstractPlugin implements ProductPage
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getProductPageType()

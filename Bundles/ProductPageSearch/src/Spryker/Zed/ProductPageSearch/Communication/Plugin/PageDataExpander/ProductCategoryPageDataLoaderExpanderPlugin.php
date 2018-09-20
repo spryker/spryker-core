@@ -34,6 +34,8 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
     protected static $categoryName;
 
     /**
+     * @api
+     *
      * @param array $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *
