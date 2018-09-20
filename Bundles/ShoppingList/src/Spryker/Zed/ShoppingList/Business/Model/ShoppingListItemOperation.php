@@ -151,7 +151,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             return $shoppingListItemTransfer;
         }
 
-        return $this->createOrUpdateShoppingListItem($shoppingListItemTransfer);
+        return $this->saveShoppingListItemTransfer($shoppingListItemTransfer);
     }
 
     /**
@@ -161,7 +161,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      */
     public function saveShoppingListItemWithoutPermissionsCheck(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        return $this->createOrUpdateShoppingListItem($shoppingListItemTransfer);
+        return $this->saveShoppingListItemTransfer($shoppingListItemTransfer);
     }
 
     /**
@@ -183,10 +183,10 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    protected function createOrUpdateShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    protected function saveShoppingListItemTransfer(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfer) {
-            return $this->createOrUpdateShoppingListItemTransaction($shoppingListItemTransfer);
+            return $this->saveShoppingListItemTransaction($shoppingListItemTransfer);
         });
     }
 
@@ -195,7 +195,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    protected function createOrUpdateShoppingListItemTransaction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    protected function saveShoppingListItemTransaction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         $shoppingListItemTransfer = $this->shoppingListEntityManager->saveShoppingListItem($shoppingListItemTransfer);
         $this->pluginExecutor->executePostSavePlugins($shoppingListItemTransfer);

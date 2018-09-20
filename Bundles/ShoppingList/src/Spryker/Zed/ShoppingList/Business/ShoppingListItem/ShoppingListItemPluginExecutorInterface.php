@@ -14,16 +14,16 @@ interface ShoppingListItemPluginExecutorInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function executeBeforeDeletePlugins(ShoppingListItemTransfer $shoppingListItemTransfer): void;
+    public function executeBeforeDeletePlugins(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function executePostSavePlugins(ShoppingListItemTransfer $shoppingListItemTransfer): void;
+    public function executePostSavePlugins(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer

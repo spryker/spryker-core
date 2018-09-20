@@ -24,17 +24,10 @@ class ShoppingListItemNotePostSavePlugin extends AbstractPlugin implements Shopp
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function execute(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function execute(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        $shoppingListItemNote = $shoppingListItemTransfer->getShoppingListItemNote();
-
-        if (!$shoppingListItemNote) {
-            return;
-        }
-
-        $shoppingListItemNote->setFkShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
-        $this->getFacade()->saveShoppingListItemNote($shoppingListItemNote);
+        return $this->getFacade()->saveShoppingListItemNoteForShoppingListItem($shoppingListItemTransfer);
     }
 }

@@ -81,7 +81,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
         }
 
         $shoppingListItemCollectionTransfer = $this->shoppingListRepository->findShoppingListItemsByIdShoppingList($shoppingListTransfer->getIdShoppingList());
-        $this->expandProducts($shoppingListItemCollectionTransfer);
+        $shoppingListItemCollectionTransfer = $this->expandProducts($shoppingListItemCollectionTransfer);
         $shoppingListTransfer->setItems($shoppingListItemCollectionTransfer->getItems());
 
         return $shoppingListTransfer;
@@ -293,15 +293,18 @@ class ShoppingListReader implements ShoppingListReaderInterface
             return $shoppingListItemCollectionTransfer;
         }
 
+        $expandedShoppingListItemCollection = new ShoppingListItemCollectionTransfer();
         $productConcreteTransfers = $this->productFacade->findProductConcretesBySkus($shoppingListItemsSkus);
         $keyedProductConcreteTransfers = $this->getKeyedProductConcreteTransfers($productConcreteTransfers);
         $shoppingListItems = $this->mapProductConcreteIdToShoppingListItem($shoppingListItemCollectionTransfer->getItems(), $keyedProductConcreteTransfers);
 
-        foreach ($shoppingListItems as $item) {
-            $this->pluginExecutor->executeItemExpanderPlugins($item);
+        foreach ($shoppingListItems as $shoppingListItem) {
+            $expandedShoppingListItemCollection->addItem(
+                $this->pluginExecutor->executeItemExpanderPlugins($shoppingListItem)
+            );
         }
 
-        return $shoppingListItemCollectionTransfer;
+        return $expandedShoppingListItemCollection;
     }
 
     /**

@@ -62,25 +62,29 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function executeBeforeDeletePlugins(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function executeBeforeDeletePlugins(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         foreach ($this->beforeDeletePlugins as $beforeDeletePlugin) {
-            $beforeDeletePlugin->execute($shoppingListItemTransfer);
+            $shoppingListItemTransfer = $beforeDeletePlugin->execute($shoppingListItemTransfer);
         }
+
+        return $shoppingListItemTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function executePostSavePlugins(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function executePostSavePlugins(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         foreach ($this->postSavePlugins as $postSavePlugin) {
-            $postSavePlugin->execute($shoppingListItemTransfer);
+            $shoppingListItemTransfer = $postSavePlugin->execute($shoppingListItemTransfer);
         }
+
+        return $shoppingListItemTransfer;
     }
 
     /**

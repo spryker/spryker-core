@@ -38,16 +38,15 @@ class ShoppingListNoteEntityManager extends AbstractEntityManager implements Sho
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
+     * @param int $idShoppingListItemNote
      *
      * @return void
      */
-    public function deleteShoppingListItemNoteById(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void
+    public function deleteShoppingListItemNoteById(int $idShoppingListItemNote): void
     {
-        $shoppingListItemNoteTransfer->requireIdShoppingListItemNote();
         $this->getFactory()
             ->createShoppingListItemNoteQuery()
-            ->filterByIdShoppingListItemNote($shoppingListItemNoteTransfer->getIdShoppingListItemNote())
+            ->filterByIdShoppingListItemNote($idShoppingListItemNote)
             ->delete();
     }
 }

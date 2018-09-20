@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
@@ -296,9 +297,20 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     protected function executeDeleteShoppingListItemsTransaction(ShoppingListTransfer $shoppingListTransfer): void
     {
         foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
-            $this->pluginExecutor->executeBeforeDeletePlugins($shoppingListItemTransfer);
+            $this->deleteShoppingListItem($shoppingListItemTransfer);
         }
+    }
 
-        $this->shoppingListEntityManager->deleteShoppingListItems($shoppingListTransfer);
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return void
+     */
+    protected function deleteShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    {
+        $shoppingListItemTransfer->requireIdShoppingListItem();
+
+        $shoppingListItemTransfer = $this->pluginExecutor->executeBeforeDeletePlugins($shoppingListItemTransfer);
+        $this->shoppingListEntityManager->deleteShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
     }
 }

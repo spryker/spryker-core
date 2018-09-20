@@ -27,19 +27,7 @@ interface ShoppingListNoteFacadeInterface
 
     /**
      * Specification:
-     *  - Saves note to shopping list item.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer|null
-     */
-    public function saveShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): ?ShoppingListItemNoteTransfer;
-
-    /**
-     * Specification:
-     *  - Deletes note from shopping list item.
+     *  - Deletes note from shopping list item by id.
      *
      * @api
      *
@@ -48,6 +36,18 @@ interface ShoppingListNoteFacadeInterface
      * @return void
      */
     public function deleteShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void;
+
+    /**
+     * Specification:
+     * - Creates, updates or deletes note for shopping list item.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function saveShoppingListItemNoteForShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 
     /**
      * Specification:

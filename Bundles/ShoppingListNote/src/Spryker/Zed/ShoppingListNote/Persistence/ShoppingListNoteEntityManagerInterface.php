@@ -19,9 +19,9 @@ interface ShoppingListNoteEntityManagerInterface
     public function saveShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): ShoppingListItemNoteTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
+     * @param int $idShoppingListItemNote
      *
      * @return void
      */
-    public function deleteShoppingListItemNoteById(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void;
+    public function deleteShoppingListItemNoteById(int $idShoppingListItemNote): void;
 }
