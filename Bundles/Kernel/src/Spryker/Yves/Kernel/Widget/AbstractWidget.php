@@ -79,7 +79,7 @@ abstract class AbstractWidget implements WidgetInterface
     }
 
     /**
-     * @param mixed $offset
+     * @param string $offset
      *
      * @return bool
      */
@@ -89,7 +89,7 @@ abstract class AbstractWidget implements WidgetInterface
     }
 
     /**
-     * @param mixed $offset
+     * @param string $offset
      *
      * @return mixed
      */
@@ -99,7 +99,7 @@ abstract class AbstractWidget implements WidgetInterface
     }
 
     /**
-     * @param mixed $offset
+     * @param string $offset
      * @param mixed $value
      *
      * @throws \Spryker\Yves\Kernel\Exception\ReadOnlyException
@@ -112,7 +112,7 @@ abstract class AbstractWidget implements WidgetInterface
     }
 
     /**
-     * @param mixed $offset
+     * @param string $offset
      *
      * @throws \Spryker\Yves\Kernel\Exception\ReadOnlyException
      *
