@@ -60,10 +60,10 @@ class PropelConfig extends AbstractBundleConfig
      */
     public function getPropelSchemaPathPatterns()
     {
-        return array_merge(
+        return array_unique(array_merge(
             $this->getCorePropelSchemaPathPatterns(),
             $this->getProjectPropelSchemaPathPatterns()
-        );
+        ));
     }
 
     /**
@@ -71,7 +71,7 @@ class PropelConfig extends AbstractBundleConfig
      */
     public function getCorePropelSchemaPathPatterns()
     {
-        return [];
+        return [APPLICATION_VENDOR_DIR . '/*/*/src/*/Zed/*/Persistence/Propel/Schema/'];
     }
 
     /**
@@ -79,17 +79,7 @@ class PropelConfig extends AbstractBundleConfig
      */
     public function getProjectPropelSchemaPathPatterns()
     {
-        return glob($this->get(PropelConstants::SCHEMA_FILE_PATH_PATTERN, $this->getSchemaPathPattern()));
-    }
-
-    /**
-     * @deprecated Only needed for BC reasons. Use PropelConstants::SCHEMA_FILE_PATH_PATTERN to define the path instead.
-     *
-     * @return string
-     */
-    private function getSchemaPathPattern()
-    {
-        return APPLICATION_VENDOR_DIR . '/*/*/src/*/Zed/*/Persistence/Propel/Schema/';
+        return [APPLICATION_SOURCE_DIR . '/*/Zed/*/Persistence/Propel/Schema/'];
     }
 
     /**

@@ -118,13 +118,4 @@ interface PropelConstants
      * @api
      */
     const USE_SUDO_TO_MANAGE_DATABASE = 'USE_SUDO_TO_MANAGE_DATABASE';
-
-    /**
-     * Specification:
-     * - Pattern for schema files path.
-     * - Path is used with glob to find path.
-     *
-     * @api
-     */
-    const SCHEMA_FILE_PATH_PATTERN = 'SCHEMA_FILE_PATH_PATTERN';
 }
