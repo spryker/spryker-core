@@ -9,7 +9,7 @@ namespace Spryker\Client\PriceProductStorage\Plugin\QuickOrderPage;
 
 use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderProductPriceTransferExpanderPluginInterface;
+use Spryker\Client\QuickOrderExtension\Dependency\Plugin\QuickOrderProductPriceTransferExpanderPluginInterface;
 
 /**
  * @method \Spryker\Client\PriceProductStorage\PriceProductStorageClientInterface getClient()
