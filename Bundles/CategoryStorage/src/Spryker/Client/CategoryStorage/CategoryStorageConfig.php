@@ -19,6 +19,6 @@ class CategoryStorageConfig extends AbstractBundleConfig
      */
     public static function isCollectorCompatibilityMode(): bool
     {
-        return false;
+        return true;
     }
 }
