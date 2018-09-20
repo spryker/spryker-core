@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 trait ClientResolverAwareTrait
 {
     /**
-     * @var \Spryker\Client\Kernel\AbstractClient
+     * @var \Spryker\Client\Kernel\AbstractClient|null
      */
     private $client;
 

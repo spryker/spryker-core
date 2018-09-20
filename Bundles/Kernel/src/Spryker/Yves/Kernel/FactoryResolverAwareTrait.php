@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 trait FactoryResolverAwareTrait
 {
     /**
-     * @var \Spryker\Yves\Kernel\FactoryInterface
+     * @var \Spryker\Yves\Kernel\FactoryInterface|null
      */
     private $factory;
 
