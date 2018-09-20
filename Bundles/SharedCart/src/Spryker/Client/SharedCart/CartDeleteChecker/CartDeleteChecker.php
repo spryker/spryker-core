@@ -9,9 +9,9 @@ namespace Spryker\Client\SharedCart\CartDeleteChecker;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Customer\CustomerClientInterface;
 use Spryker\Client\Kernel\PermissionAwareTrait;
-use Spryker\Client\MultiCart\MultiCartClientInterface;
+use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface;
+use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface;
 use Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin;
 
 class CartDeleteChecker implements CartDeleteCheckerInterface
@@ -29,12 +29,12 @@ class CartDeleteChecker implements CartDeleteCheckerInterface
     protected $customerClient;
 
     /**
-     * @param \Spryker\Client\MultiCart\MultiCartClientInterface $multiCartClient
-     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
+     * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface $multiCartClient
+     * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface $customerClient
      */
     public function __construct(
-        MultiCartClientInterface $multiCartClient,
-        CustomerClientInterface $customerClient
+        SharedCartToMultiCartClientInterface $multiCartClient,
+        SharedCartToCustomerClientInterface $customerClient
     ) {
         $this->multiCartClient = $multiCartClient;
         $this->customerClient = $customerClient;
