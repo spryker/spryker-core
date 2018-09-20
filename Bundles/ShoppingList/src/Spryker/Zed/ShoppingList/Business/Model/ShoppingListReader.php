@@ -181,7 +181,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
             $shoppingListItemIds[] = $shoppingListItemTransfer->getIdShoppingListItem();
         }
 
-        return $this->shoppingListRepository->findShoppingListItemsByIds($shoppingListItemIds);
+        $shoppingListItemCollectionTransfer = $this->shoppingListRepository->findShoppingListItemsByIds($shoppingListItemIds);
+        $shoppingListItemCollectionTransfer = $this->expandProducts($shoppingListItemCollectionTransfer);
+
+        return $shoppingListItemCollectionTransfer;
     }
 
     /**
