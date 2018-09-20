@@ -79,6 +79,7 @@ class PriceProductStorageFactory extends AbstractFactory
     public function createQuickOrderProductPriceTransferPriceExpander(): QuickOrderProductPriceTransferPriceExpanderInterface
     {
         return new QuickOrderProductPriceTransferPriceExpander(
+            $this->createPriceConcreteStorageReader(),
             $this->getPriceProductClient(),
             $this->getCurrencyClient()
         );

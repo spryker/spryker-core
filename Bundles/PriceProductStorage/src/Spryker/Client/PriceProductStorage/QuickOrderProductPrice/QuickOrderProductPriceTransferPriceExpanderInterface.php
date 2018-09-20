@@ -13,9 +13,8 @@ interface QuickOrderProductPriceTransferPriceExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
      */
-    public function expandQuickOrderProductPriceTransferWithPrice(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer, array $priceProductTransfers): QuickOrderProductPriceTransfer;
+    public function expandQuickOrderProductPriceTransferWithPrice(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): QuickOrderProductPriceTransfer;
 }

@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Zed\QuickOrderExtension\Dependency\Plugin\QuickOrderProductPriceTransferExpanderPluginInterface;
 
 /**
- * @method \Spryker\Client\PriceProductStorage\PriceProductStorageFactory getFactory()
  * @method \Spryker\Client\PriceProductStorage\PriceProductStorageClientInterface getClient()
  */
 class QuickOrderProductPriceTransferPriceExpanderPlugin extends AbstractPlugin implements QuickOrderProductPriceTransferExpanderPluginInterface
@@ -30,16 +29,6 @@ class QuickOrderProductPriceTransferPriceExpanderPlugin extends AbstractPlugin i
      */
     public function expandQuickOrderProductPriceTransfer(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): QuickOrderProductPriceTransfer
     {
-        if ($quickOrderProductPriceTransfer->getIdProductConcrete() === null) {
-            return $quickOrderProductPriceTransfer;
-        }
-
-        $priceProductTransfers = $this->getClient()->getPriceProductConcreteTransfers(
-            $quickOrderProductPriceTransfer->getIdProductConcrete()
-        );
-
-        return $this->getFactory()
-            ->createQuickOrderProductPriceTransferPriceExpander()
-            ->expandQuickOrderProductPriceTransferWithPrice($quickOrderProductPriceTransfer, $priceProductTransfers);
+        return $this->getClient()->expandQuickOrderProductPriceTransferWithPrice($quickOrderProductPriceTransfer);
     }
 }
