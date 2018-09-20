@@ -228,13 +228,13 @@ class ResourceRouter implements ResourceRouterInterface
     }
 
     /**
-     * @param array $route
+     * @param array|null $route
      * @param array $resources
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
      * @return bool
      */
-    protected function isValidRoute(array $route, array $resources, Request $httpRequest): bool
+    protected function isValidRoute(?array $route, array $resources, Request $httpRequest): bool
     {
         if (!$route || !$this->isParentValid($route, $resources)) {
             return false;

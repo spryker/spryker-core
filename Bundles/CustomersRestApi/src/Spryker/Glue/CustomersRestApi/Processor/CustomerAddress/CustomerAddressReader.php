@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CustomersRestApi\Processor\CustomersAddresses;
+namespace Spryker\Glue\CustomersRestApi\Processor\CustomerAddress;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-class CustomersAddressesReader implements CustomersAddressesReaderInterface
+class CustomerAddressReader implements CustomerAddressReaderInterface
 {
     /**
      * @var \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface
@@ -20,17 +20,17 @@ class CustomersAddressesReader implements CustomersAddressesReaderInterface
     protected $customerClient;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface
      */
     protected $addressesResourceMapper;
 
     /**
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface $addressesResourceMapper
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface $addressesResourceMapper
      */
     public function __construct(
         CustomersRestApiToCustomerClientInterface $customerClient,
-        AddressesResourceMapperInterface $addressesResourceMapper
+        AddressResourceMapperInterface $addressesResourceMapper
     ) {
         $this->customerClient = $customerClient;
         $this->addressesResourceMapper = $addressesResourceMapper;

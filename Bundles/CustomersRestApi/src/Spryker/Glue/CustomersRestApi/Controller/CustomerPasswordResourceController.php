@@ -26,7 +26,7 @@ class CustomerPasswordResourceController extends AbstractController
     public function patchAction(RestRequestInterface $restRequest, RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCustomersWriter()
+            ->createCustomerWriter()
             ->updateCustomerPassword($restRequest, $passwordAttributesTransfer);
     }
 }

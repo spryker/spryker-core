@@ -38,7 +38,7 @@ class CustomersResourceController extends AbstractController
     public function postAction(RestRequestInterface $restRequest, RestCustomersAttributesTransfer $restCustomersAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCustomersWriter()
+            ->createCustomerWriter()
             ->registerCustomer($restCustomersAttributesTransfer);
     }
 
@@ -51,7 +51,7 @@ class CustomersResourceController extends AbstractController
     public function patchAction(RestRequestInterface $restRequest, RestCustomersAttributesTransfer $customerTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCustomersWriter()
+            ->createCustomerWriter()
             ->updateCustomer($restRequest, $customerTransfer);
     }
 
@@ -63,7 +63,7 @@ class CustomersResourceController extends AbstractController
     public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCustomersWriter()
+            ->createCustomerWriter()
             ->anonymizeCustomer($restRequest);
     }
 }

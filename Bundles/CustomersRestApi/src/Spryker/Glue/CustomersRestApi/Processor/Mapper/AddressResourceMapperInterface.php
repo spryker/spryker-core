@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-interface AddressesResourceMapperInterface
+interface AddressResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer

@@ -5,23 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CustomersRestApi\Processor\Addresses;
+namespace Spryker\Glue\CustomersRestApi\Processor\Address;
 
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
-use Spryker\Glue\CustomersRestApi\Processor\CustomersRestApiValidatorsTrait;
-use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorsInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class AddressesReader implements AddressesReaderInterface
+class AddressReader implements AddressReaderInterface
 {
-    use CustomersRestApiValidatorsTrait;
-
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
@@ -33,23 +32,39 @@ class AddressesReader implements AddressesReaderInterface
     protected $customerClient;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface
      */
     protected $addressesResourceMapper;
 
     /**
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface
+     */
+    protected $restApiErrors;
+
+    /**
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorsInterface
+     */
+    protected $restApiValidators;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressesResourceMapperInterface $addressesResourceMapper
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface $addressesResourceMapper
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface $restApiErrors
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorsInterface $restApiValidators
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CustomersRestApiToCustomerClientInterface $customerClient,
-        AddressesResourceMapperInterface $addressesResourceMapper
+        AddressResourceMapperInterface $addressesResourceMapper,
+        RestApiErrorsInterface $restApiErrors,
+        RestApiValidatorsInterface $restApiValidators
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->customerClient = $customerClient;
         $this->addressesResourceMapper = $addressesResourceMapper;
+        $this->restApiErrors = $restApiErrors;
+        $this->restApiValidators = $restApiValidators;
     }
 
     /**
@@ -65,7 +80,7 @@ class AddressesReader implements AddressesReaderInterface
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        $restResponse = $this->validateCustomerResponseTransfer(
+        $restResponse = $this->restApiValidators->validateCustomerResponseTransfer(
             $customerResponseTransfer,
             $restRequest,
             $restResponse
@@ -78,7 +93,7 @@ class AddressesReader implements AddressesReaderInterface
         $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
 
         if (!count($addressesTransfer->getAddresses())) {
-            return $this->addCustomerAddressesNotFoundError($restResponse);
+            return $this->restApiErrors->addCustomerAddressesNotFoundError($restResponse);
         }
 
         if (!$restRequest->getResource()->getId()) {
@@ -90,7 +105,7 @@ class AddressesReader implements AddressesReaderInterface
         $addressTransfer = $this->findAddressByUuid($addressesTransfer, $restRequest->getResource()->getId());
 
         if (!$addressTransfer) {
-            return $this->addAddressNotFoundError($restResponse);
+            return $this->restApiErrors->addAddressNotFoundError($restResponse);
         }
 
         $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource(

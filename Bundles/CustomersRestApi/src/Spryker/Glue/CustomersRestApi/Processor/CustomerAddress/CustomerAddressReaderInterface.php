@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CustomersRestApi\Processor\CustomersAddresses;
+namespace Spryker\Glue\CustomersRestApi\Processor\CustomerAddress;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-interface CustomersAddressesReaderInterface
+interface CustomerAddressReaderInterface
 {
     /**
      * @param string $customerReference

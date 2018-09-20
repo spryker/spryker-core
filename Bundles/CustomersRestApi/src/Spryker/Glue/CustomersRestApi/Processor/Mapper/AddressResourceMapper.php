@@ -14,7 +14,7 @@ use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-class AddressesResourceMapper implements AddressesResourceMapperInterface
+class AddressResourceMapper implements AddressResourceMapperInterface
 {
     protected const RESOURCE_LINKS_SELF = 'self';
     protected const SELF_LINK_FORMAT = '%s/%s/%s/%s';

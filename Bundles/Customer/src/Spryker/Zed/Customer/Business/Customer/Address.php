@@ -276,9 +276,7 @@ class Address implements AddressInterface
         $addressTransfer->fromArray($entity->toArray(), true);
         $addressTransfer->setIso2Code($entity->getCountry()->getIso2Code());
 
-        $countryTransfer = new CountryTransfer();
-        $countryTransfer->fromArray($entity->getCountry()->toArray());
-        $addressTransfer->setCountry($countryTransfer);
+        $addressTransfer = $this->addCountryToAddressTransfer($entity->getCountry(), $addressTransfer);
 
         return $addressTransfer;
     }
@@ -294,8 +292,6 @@ class Address implements AddressInterface
 
         foreach ($entities as $entity) {
             $addressTransfer = $this->entityToAddressTransfer($entity);
-            $addressTransfer = $this->addCountryToAddressTransfer($entity->getCountry(), $addressTransfer);
-
             $addressTransferCollection->addAddress($addressTransfer);
         }
 

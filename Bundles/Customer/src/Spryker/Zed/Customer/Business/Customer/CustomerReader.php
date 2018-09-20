@@ -66,12 +66,14 @@ class CustomerReader implements CustomerReaderInterface
     {
         $customerTransfer = $this->customerRepository->findCustomerByReference($customerReference);
 
-        $customerResponseTransfer = new CustomerResponseTransfer();
+        $customerResponseTransfer = (new CustomerResponseTransfer())
+            ->setIsSuccess(false)
+            ->setHasCustomer(false);
 
         if ($customerTransfer) {
-            $customerResponseTransfer->setCustomerTransfer($customerTransfer);
-            $customerResponseTransfer->setHasCustomer(true);
-            $customerResponseTransfer->setIsSuccess(true);
+            $customerResponseTransfer->setCustomerTransfer($customerTransfer)
+                ->setHasCustomer(true)
+                ->setIsSuccess(true);
         }
 
         return $customerResponseTransfer;

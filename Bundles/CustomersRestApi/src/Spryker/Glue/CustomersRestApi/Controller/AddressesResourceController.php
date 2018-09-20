@@ -25,7 +25,7 @@ class AddressesResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createAddressesReader()
+            ->createAddressReader()
             ->getAddressesByAddressUuid($restRequest);
     }
 
@@ -38,7 +38,7 @@ class AddressesResourceController extends AbstractController
     public function postAction(RestRequestInterface $restRequest, RestAddressAttributesTransfer $restAddressAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createAddressesWriter()
+            ->createAddressWriter()
             ->createAddress($restRequest, $restAddressAttributesTransfer);
     }
 
@@ -51,7 +51,7 @@ class AddressesResourceController extends AbstractController
     public function patchAction(RestRequestInterface $restRequest, RestAddressAttributesTransfer $restAddressAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createAddressesWriter()
+            ->createAddressWriter()
             ->updateAddress($restRequest, $restAddressAttributesTransfer);
     }
 
@@ -63,7 +63,7 @@ class AddressesResourceController extends AbstractController
     public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createAddressesWriter()
+            ->createAddressWriter()
             ->deleteAddress($restRequest);
     }
 }

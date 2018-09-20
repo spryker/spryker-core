@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CustomersRestApi\Processor;
+namespace Spryker\Glue\CustomersRestApi\Processor\Validation;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-trait CustomersRestApiErrorsTrait
+class RestApiErrors implements RestApiErrorsInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addCustomerAlreadyExistsError(RestResponseInterface $restResponse): RestResponseInterface
+    public function addCustomerAlreadyExistsError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_EXISTS)
@@ -35,7 +35,7 @@ trait CustomersRestApiErrorsTrait
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addCustomerCantRegisterMessageError(RestResponseInterface $restResponse, string $errorMessage): RestResponseInterface
+    public function addCustomerCantRegisterMessageError(RestResponseInterface $restResponse, string $errorMessage): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER)
@@ -50,7 +50,7 @@ trait CustomersRestApiErrorsTrait
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addCustomerNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
+    public function addCustomerNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
@@ -65,7 +65,7 @@ trait CustomersRestApiErrorsTrait
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addCustomerAddressesNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
+    public function addCustomerAddressesNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ADDRESSES_NOT_FOUND)
@@ -80,7 +80,7 @@ trait CustomersRestApiErrorsTrait
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addAddressNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
+    public function addAddressNotFoundError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_NOT_FOUND)
@@ -95,7 +95,7 @@ trait CustomersRestApiErrorsTrait
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addCustomerReferenceMissingError(RestResponseInterface $restResponse): RestResponseInterface
+    public function addCustomerReferenceMissingError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_REFERENCE_MISSING)
@@ -110,7 +110,7 @@ trait CustomersRestApiErrorsTrait
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addPasswordsNotMatchError(RestResponseInterface $restResponse): RestResponseInterface
+    public function addPasswordsNotMatchError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORDS_DONT_MATCH)
@@ -126,7 +126,7 @@ trait CustomersRestApiErrorsTrait
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addPasswordChangeError(RestResponseInterface $restResponse, string $errorMessage): RestResponseInterface
+    public function addPasswordChangeError(RestResponseInterface $restResponse, string $errorMessage): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_PASSWORD_CHANGE_FAILED)
@@ -141,7 +141,7 @@ trait CustomersRestApiErrorsTrait
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addPasswordNotValidError(RestResponseInterface $restResponse): RestResponseInterface
+    public function addPasswordNotValidError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_INVALID_PASSWORD)
@@ -156,7 +156,7 @@ trait CustomersRestApiErrorsTrait
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addAddressNotSavedError(RestResponseInterface $restResponse): RestResponseInterface
+    public function addAddressNotSavedError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ADDRESS_FAILED_TO_SAVE)
@@ -171,7 +171,7 @@ trait CustomersRestApiErrorsTrait
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addCustomerNotSavedError(RestResponseInterface $restResponse): RestResponseInterface
+    public function addCustomerNotSavedError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_FAILED_TO_SAVE)
@@ -186,7 +186,7 @@ trait CustomersRestApiErrorsTrait
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addCustomerUnauthorizedError(RestResponseInterface $restResponse): RestResponseInterface
+    public function addCustomerUnauthorizedError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED)
@@ -201,7 +201,7 @@ trait CustomersRestApiErrorsTrait
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addAddressUuidMissingError(RestResponseInterface $restResponse): RestResponseInterface
+    public function addAddressUuidMissingError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_ADDRESS_UUID_MISSING)
@@ -216,7 +216,7 @@ trait CustomersRestApiErrorsTrait
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addNotAcceptedTermsError(RestResponseInterface $restResponse): RestResponseInterface
+    public function addNotAcceptedTermsError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_NOT_ACCEPTED_TERMS)
@@ -231,13 +231,13 @@ trait CustomersRestApiErrorsTrait
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addNotValidGenderError(RestResponseInterface $restResponse): RestResponseInterface
+    public function addNotValidGenderError(RestResponseInterface $restResponse): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_NOT_VALID_GENDER)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_NOT_VALID_GENDER
-                . ' Possible options are: ' . implode(', ', static::CUSTOMERS_GENDERS_ENUM));
+                . ' Possible options are: ' . implode(', ', RestApiValidators::CUSTOMERS_GENDERS_ENUM));
 
         return $restResponse->addError($restErrorTransfer);
     }
