@@ -59,7 +59,7 @@ class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      */
     public function getController(): string
     {
-        return 'customers-resource';
+        return 'customer-resource';
     }
 
     /**

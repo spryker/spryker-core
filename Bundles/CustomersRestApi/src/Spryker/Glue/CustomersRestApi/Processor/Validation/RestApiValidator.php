@@ -15,7 +15,7 @@ use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class RestApiValidators implements RestApiValidatorsInterface
+class RestApiValidator implements RestApiValidatorInterface
 {
     protected const CUSTOMERS_GENDER_ENUM_MALE = 'Male';
     protected const CUSTOMERS_GENDER_ENUM_FEMALE = 'Female';
@@ -26,14 +26,14 @@ class RestApiValidators implements RestApiValidatorsInterface
     ];
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface
      */
     protected $apiErrors;
 
     /**
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface $apiErrors
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface $apiErrors
      */
-    public function __construct(RestApiErrorsInterface $apiErrors)
+    public function __construct(RestApiErrorInterface $apiErrors)
     {
         $this->apiErrors = $apiErrors;
     }

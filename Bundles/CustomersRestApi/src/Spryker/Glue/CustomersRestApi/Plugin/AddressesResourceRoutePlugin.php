@@ -57,7 +57,7 @@ class AddressesResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      */
     public function getController(): string
     {
-        return 'addresses-resource';
+        return 'address-resource';
     }
 
     /**

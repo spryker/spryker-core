@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorsInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -40,34 +40,34 @@ class CustomerWriter implements CustomerWriterInterface
     protected $customersResourceMapper;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface
      */
-    protected $restApiErrors;
+    protected $restApiError;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorsInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface
      */
-    protected $restApiValidators;
+    protected $restApiValidator;
 
     /**
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface $customersResourceMapper
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface $restApiErrors
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorsInterface $restApiValidators
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface $restApiError
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface $restApiValidator
      */
     public function __construct(
         CustomersRestApiToCustomerClientInterface $customerClient,
         RestResourceBuilderInterface $restResourceBuilder,
         CustomerResourceMapperInterface $customersResourceMapper,
-        RestApiErrorsInterface $restApiErrors,
-        RestApiValidatorsInterface $restApiValidators
+        RestApiErrorInterface $restApiError,
+        RestApiValidatorInterface $restApiValidator
     ) {
         $this->customerClient = $customerClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->customersResourceMapper = $customersResourceMapper;
-        $this->restApiErrors = $restApiErrors;
-        $this->restApiValidators = $restApiValidators;
+        $this->restApiError = $restApiError;
+        $this->restApiValidator = $restApiValidator;
     }
 
     /**
@@ -81,7 +81,7 @@ class CustomerWriter implements CustomerWriterInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$restCustomersAttributesTransfer->getAcceptedTerms()) {
-            return $this->restApiErrors->addNotAcceptedTermsError($restResponse);
+            return $this->restApiError->addNotAcceptedTermsError($restResponse);
         }
 
         $customerTransfer = (new CustomerTransfer())->fromArray($restCustomersAttributesTransfer->toArray(), true);
@@ -90,9 +90,9 @@ class CustomerWriter implements CustomerWriterInterface
         if (!$customerResponseTransfer->getIsSuccess()) {
             foreach ($customerResponseTransfer->getErrors() as $error) {
                 if ($error->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED) {
-                    return $this->restApiErrors->addCustomerAlreadyExistsError($restResponse);
+                    return $this->restApiError->addCustomerAlreadyExistsError($restResponse);
                 }
-                return $this->restApiErrors->addCustomerCantRegisterMessageError($restResponse, $error->getMessage());
+                return $this->restApiError->addCustomerCantRegisterMessageError($restResponse, $error->getMessage());
             }
         }
 
@@ -117,13 +117,13 @@ class CustomerWriter implements CustomerWriterInterface
             ->setCustomerReference($restRequest->getResource()->getId());
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        $restResponse = $this->restApiValidators->validateCustomerResponseTransfer(
+        $restResponse = $this->restApiValidator->validateCustomerResponseTransfer(
             $customerResponseTransfer,
             $restRequest,
             $restResponse
         );
 
-        $restResponse = $this->restApiValidators->validateCustomerGender($restCustomerAttributesTransfer, $restResponse);
+        $restResponse = $this->restApiValidator->validateCustomerGender($restCustomerAttributesTransfer, $restResponse);
 
         if (count($restResponse->getErrors()) > 0) {
             return $restResponse;
@@ -136,7 +136,7 @@ class CustomerWriter implements CustomerWriterInterface
         $customerResponseTransfer = $this->customerClient->updateCustomer($customerResponseTransfer->getCustomerTransfer());
 
         if (!$customerResponseTransfer->getIsSuccess()) {
-            return $this->restApiErrors->addCustomerNotSavedError($restResponse);
+            return $this->restApiError->addCustomerNotSavedError($restResponse);
         }
 
         $restResource = $this
@@ -164,13 +164,13 @@ class CustomerWriter implements CustomerWriterInterface
             ->setCustomerReference($user->getNaturalIdentifier());
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        $restResponse = $this->restApiValidators->validateCustomerResponseTransfer(
+        $restResponse = $this->restApiValidator->validateCustomerResponseTransfer(
             $customerResponseTransfer,
             $restRequest,
             $restResponse
         );
 
-        $restResponse = $this->restApiValidators->validatePassword($passwordAttributesTransfer, $restResponse);
+        $restResponse = $this->restApiValidator->validatePassword($passwordAttributesTransfer, $restResponse);
 
         if (count($restResponse->getErrors()) > 0) {
             return $restResponse;
@@ -183,10 +183,10 @@ class CustomerWriter implements CustomerWriterInterface
 
         foreach ($customerResponseTransfer->getErrors() as $error) {
             if ($error->getMessage() === static::ERROR_CUSTOMER_PASSWORD_INVALID) {
-                return $this->restApiErrors->addPasswordNotValidError($restResponse);
+                return $this->restApiError->addPasswordNotValidError($restResponse);
             }
 
-            return $this->restApiErrors->addPasswordChangeError($restResponse, $error->getMessage());
+            return $this->restApiError->addPasswordChangeError($restResponse, $error->getMessage());
         }
 
         $restResource = $this->restResourceBuilder->createRestResource(
@@ -206,14 +206,14 @@ class CustomerWriter implements CustomerWriterInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$restRequest->getResource()->getId()) {
-            return $this->restApiErrors->addCustomerReferenceMissingError($restResponse);
+            return $this->restApiError->addCustomerReferenceMissingError($restResponse);
         }
 
         $customerTransfer = (new CustomerTransfer())
             ->setCustomerReference($restRequest->getResource()->getId());
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        $restResponse = $this->restApiValidators->validateCustomerResponseTransfer(
+        $restResponse = $this->restApiValidator->validateCustomerResponseTransfer(
             $customerResponseTransfer,
             $restRequest,
             $restResponse
@@ -241,6 +241,9 @@ class CustomerWriter implements CustomerWriterInterface
     }
 
     /**
+     * Unsetting data, which should be updated by the system itself,
+     * in other words, shouldn't be updated by the customer
+     *
      * @param array $customerAttributes
      *
      * @return array

@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorsInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -37,34 +37,34 @@ class AddressReader implements AddressReaderInterface
     protected $addressesResourceMapper;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface
      */
-    protected $restApiErrors;
+    protected $restApiError;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorsInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface
      */
-    protected $restApiValidators;
+    protected $restApiValidator;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface $addressesResourceMapper
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface $restApiErrors
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorsInterface $restApiValidators
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface $restApiError
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface $restApiValidator
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CustomersRestApiToCustomerClientInterface $customerClient,
         AddressResourceMapperInterface $addressesResourceMapper,
-        RestApiErrorsInterface $restApiErrors,
-        RestApiValidatorsInterface $restApiValidators
+        RestApiErrorInterface $restApiError,
+        RestApiValidatorInterface $restApiValidator
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->customerClient = $customerClient;
         $this->addressesResourceMapper = $addressesResourceMapper;
-        $this->restApiErrors = $restApiErrors;
-        $this->restApiValidators = $restApiValidators;
+        $this->restApiError = $restApiError;
+        $this->restApiValidator = $restApiValidator;
     }
 
     /**
@@ -80,7 +80,7 @@ class AddressReader implements AddressReaderInterface
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
         $customerResponseTransfer = $this->customerClient->findCustomerByReference($customerTransfer);
 
-        $restResponse = $this->restApiValidators->validateCustomerResponseTransfer(
+        $restResponse = $this->restApiValidator->validateCustomerResponseTransfer(
             $customerResponseTransfer,
             $restRequest,
             $restResponse
@@ -93,7 +93,7 @@ class AddressReader implements AddressReaderInterface
         $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
 
         if (!count($addressesTransfer->getAddresses())) {
-            return $this->restApiErrors->addCustomerAddressesNotFoundError($restResponse);
+            return $this->restApiError->addCustomerAddressesNotFoundError($restResponse);
         }
 
         if (!$restRequest->getResource()->getId()) {
@@ -105,7 +105,7 @@ class AddressReader implements AddressReaderInterface
         $addressTransfer = $this->findAddressByUuid($addressesTransfer, $restRequest->getResource()->getId());
 
         if (!$addressTransfer) {
-            return $this->restApiErrors->addAddressNotFoundError($restResponse);
+            return $this->restApiError->addAddressNotFoundError($restResponse);
         }
 
         $addressesResource = $this->addressesResourceMapper->mapAddressTransferToRestResource(

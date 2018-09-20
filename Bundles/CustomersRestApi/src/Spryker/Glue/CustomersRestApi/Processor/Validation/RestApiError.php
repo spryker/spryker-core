@@ -12,7 +12,7 @@ use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class RestApiErrors implements RestApiErrorsInterface
+class RestApiError implements RestApiErrorInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
@@ -237,7 +237,7 @@ class RestApiErrors implements RestApiErrorsInterface
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_NOT_VALID_GENDER)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_NOT_VALID_GENDER
-                . ' Possible options are: ' . implode(', ', RestApiValidators::CUSTOMERS_GENDERS_ENUM));
+                . ' Possible options are: ' . implode(', ', RestApiValidator::CUSTOMERS_GENDERS_ENUM));
 
         return $restResponse->addError($restErrorTransfer);
     }
