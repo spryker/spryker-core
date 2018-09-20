@@ -37,7 +37,6 @@ class CustomerExpander implements CustomerExpanderInterface
      */
     public function expandCustomerTransferWithProductListIds(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        /** @var \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer */
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
 
         if ($companyUserTransfer
