@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShoppingList\Business\Model;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
@@ -20,6 +21,7 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Shared\ShoppingList\ShoppingListConfig;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface;
+use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 
@@ -48,21 +50,31 @@ class ShoppingListReader implements ShoppingListReaderInterface
     protected $companyUserFacade;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface
+     */
+    protected $messengerFacade;
+
+    protected const GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND = 'shopping_list.not_found';
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface $customerFacade
-     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
+     * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface $messengerFacade
+     * @param array $itemExpanderPlugins
      */
     public function __construct(
         ShoppingListRepositoryInterface $shoppingListRepository,
         ShoppingListToProductFacadeInterface $productFacade,
         ShoppingListToCompanyUserFacadeInterface $customerFacade,
+        ShoppingListToMessengerFacadeInterface $messengerFacade,
         array $itemExpanderPlugins
     ) {
         $this->shoppingListRepository = $shoppingListRepository;
         $this->itemExpanderPlugins = $itemExpanderPlugins;
         $this->productFacade = $productFacade;
         $this->companyUserFacade = $customerFacade;
+        $this->messengerFacade = $messengerFacade;
     }
 
     /**
@@ -73,11 +85,28 @@ class ShoppingListReader implements ShoppingListReaderInterface
     public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
-        if (!$this->checkReadPermission($shoppingListTransfer)) {
+
+        if (!$shoppingListTransfer) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
+        }
+
+        if (!$shoppingListTransfer || !$this->checkReadPermission($shoppingListTransfer)) {
             return new ShoppingListTransfer();
         }
 
         return $shoppingListTransfer;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return void
+     */
+    protected function addErrorMessage(string $message): void
+    {
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue($message);
+        $this->messengerFacade->addErrorMessage($messageTransfer);
     }
 
     /**
@@ -92,14 +121,15 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $shoppingListOverviewRequestTransfer->requireShoppingList();
         $shoppingListOverviewRequestTransfer->getShoppingList()->requireIdShoppingList();
 
-        $shoppingListOverviewResponseTransfer = (new ShoppingListOverviewResponseTransfer())
-            ->setShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
+        $shoppingListOverviewResponseTransfer = new ShoppingListOverviewResponseTransfer();
 
         $shoppingListTransfer = $this->getShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
 
         if (!$shoppingListTransfer->getIdShoppingList()) {
             return $shoppingListOverviewResponseTransfer;
         }
+
+        $shoppingListOverviewResponseTransfer->setShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
 
         $shoppingListOverviewRequestTransfer->setShoppingList($shoppingListTransfer);
         $shoppingListOverviewResponseTransfer = $this->shoppingListRepository->findShoppingListPaginatedItems($shoppingListOverviewRequestTransfer);

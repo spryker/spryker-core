@@ -28,6 +28,8 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     protected const CANNOT_UPDATE_SHOPPING_LIST = 'customer.account.shopping_list.error.cannot_update';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CREATE_SUCCESS = 'customer.account.shopping_list.create.success';
     protected const GLOSSARY_PARAM_NAME = '%name%';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED = 'customer.account.shopping_list.delete.failed';
+    protected const GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND = 'shopping_list.not_found';
 
     /**
      * @var \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface
@@ -112,7 +114,13 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     {
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
 
-        if (!$shoppingListTransfer || !$this->checkWritePermission($shoppingListTransfer)) {
+        if (!$shoppingListTransfer) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND);
+            return (new ShoppingListResponseTransfer())->setIsSuccess(false);
+        }
+
+        if (!$this->checkWritePermission($shoppingListTransfer)) {
+            $this->addErrorMessage(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_DELETE_FAILED);
             return (new ShoppingListResponseTransfer())->setIsSuccess(false);
         }
 
@@ -121,6 +129,18 @@ class ShoppingListWriter implements ShoppingListWriterInterface
                 return $this->executeRemoveShoppingListTransaction($shoppingListTransfer);
             }
         );
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return void
+     */
+    protected function addErrorMessage(string $message): void
+    {
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue($message);
+        $this->messengerFacade->addErrorMessage($messageTransfer);
     }
 
     /**
