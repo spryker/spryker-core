@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductStorage\QuickOrderProductPriceTransferPriceExpander;
+namespace Spryker\Client\PriceProductStorage\QuickOrderProductPrice;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;

@@ -10,8 +10,8 @@ namespace Spryker\Client\PriceProductStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToCurrencyClientInterface;
 use Spryker\Client\PriceProductStorage\Expander\ProductViewPriceExpander;
-use Spryker\Client\PriceProductStorage\QuickOrderProductPriceTransferPriceExpander\QuickOrderProductPriceTransferPriceExpander;
-use Spryker\Client\PriceProductStorage\QuickOrderProductPriceTransferPriceExpander\QuickOrderProductPriceTransferPriceExpanderInterface;
+use Spryker\Client\PriceProductStorage\QuickOrderProductPrice\QuickOrderProductPriceTransferPriceExpander;
+use Spryker\Client\PriceProductStorage\QuickOrderProductPrice\QuickOrderProductPriceTransferPriceExpanderInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReader;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolver;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolverInterface;
@@ -74,7 +74,7 @@ class PriceProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorage\QuickOrderProductPriceTransferPriceExpander\QuickOrderProductPriceTransferPriceExpanderInterface
+     * @return \Spryker\Client\PriceProductStorage\QuickOrderProductPrice\QuickOrderProductPriceTransferPriceExpanderInterface
      */
     public function createQuickOrderProductPriceTransferPriceExpander(): QuickOrderProductPriceTransferPriceExpanderInterface
     {
