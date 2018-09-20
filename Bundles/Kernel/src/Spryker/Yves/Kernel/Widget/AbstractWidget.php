@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Kernel\Widget;
 
+use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Yves\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Yves\Kernel\ClientResolverAwareTrait;
 use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
@@ -82,7 +83,7 @@ abstract class AbstractWidget implements WidgetInterface
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->parameters[$offset]) || array_key_exists($offset, $this->parameters);
     }
@@ -105,7 +106,7 @@ abstract class AbstractWidget implements WidgetInterface
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         throw new ReadOnlyException('This is a read only object.');
     }
@@ -117,7 +118,7 @@ abstract class AbstractWidget implements WidgetInterface
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new ReadOnlyException('This is a read only object.');
     }
@@ -125,7 +126,7 @@ abstract class AbstractWidget implements WidgetInterface
     /**
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
-    protected function getApplication()
+    protected function getApplication(): Application
     {
         return (new Pimple())->getApplication();
     }
@@ -133,7 +134,7 @@ abstract class AbstractWidget implements WidgetInterface
     /**
      * @return string
      */
-    protected function getLocale()
+    protected function getLocale(): string
     {
         return $this->getApplication()['locale'];
     }

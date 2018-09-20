@@ -24,7 +24,7 @@ trait WidgetContainerAwareTrait
      *
      * @return $this
      */
-    protected function addWidgets(array $widgetClassNames)
+    protected function addWidgets(array $widgetClassNames): self
     {
         foreach ($widgetClassNames as $widgetClassName) {
             $this->addWidget($widgetClassName);
@@ -38,7 +38,7 @@ trait WidgetContainerAwareTrait
      *
      * @return $this
      */
-    protected function addWidget(string $widgetClassName)
+    protected function addWidget(string $widgetClassName): self
     {
         $this->assertClassIsWidget($widgetClassName);
 
@@ -56,7 +56,7 @@ trait WidgetContainerAwareTrait
      *
      * @return void
      */
-    protected function assertClassIsWidget(string $widgetClassName)
+    protected function assertClassIsWidget(string $widgetClassName): void
     {
         if (is_subclass_of($widgetClassName, WidgetInterface::class)) {
             return;
@@ -85,7 +85,7 @@ trait WidgetContainerAwareTrait
     {
         $widgetName = $widgetClassName::getName();
 
-        if (array_key_exists($widgetName, $this->widgets)) {
+        if (isset($this->widgets[$widgetName])) {
             throw new UniqueWidgetNameException(sprintf(
                 'Name "%s" of widget %s must be unique in its scope of registered widgets.',
                 $widgetName,

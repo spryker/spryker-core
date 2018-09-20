@@ -7,18 +7,15 @@
 
 namespace Spryker\Yves\Kernel\Widget;
 
-/**
- * @deprecated Use \Spryker\Yves\Kernel\Widget\WidgetFactoryInterface instead.
- */
-interface WidgetPluginFactoryInterface
+use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
+
+interface WidgetAbstractFactoryInterface
 {
     /**
      * @param string $widgetClassName
      * @param array $arguments
      *
-     * @throws \Exception
-     *
-     * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface
+     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface
      */
-    public function build(string $widgetClassName, array $arguments = []);
+    public function create(string $widgetClassName, array $arguments): WidgetInterface;
 }

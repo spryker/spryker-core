@@ -7,9 +7,12 @@
 
 namespace Spryker\Yves\Kernel\Widget;
 
-use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
-use Spryker\Yves\Kernel\Exception\InvalidWidgetException;
+use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
+use Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException;
 
+/**
+ * @deprecated Use \Spryker\Yves\Kernel\Widget\WidgetAbstractFactory instead.
+ */
 class WidgetFactory implements WidgetFactoryInterface
 {
     /**
@@ -21,9 +24,9 @@ class WidgetFactory implements WidgetFactoryInterface
      * @param string $widgetClassName
      * @param array $arguments
      *
-     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface
+     * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface
      */
-    public function build(string $widgetClassName, array $arguments): WidgetInterface
+    public function build(string $widgetClassName, array $arguments = [])
     {
         $cacheKey = $this->generateCacheKey($widgetClassName, $arguments);
         $widget = $this->getCachedWidget($cacheKey);
@@ -31,9 +34,11 @@ class WidgetFactory implements WidgetFactoryInterface
             return $widget;
         }
 
-        $this->assertClassIsWidget($widgetClassName);
+        $this->assertClassIsWidgetPlugin($widgetClassName);
+        $this->assertInitializeExists($widgetClassName);
 
-        $widget = new $widgetClassName(...$arguments);
+        $widget = new $widgetClassName();
+        call_user_func_array([$widget, 'initialize'], $arguments);
 
         $this->cacheWidget($cacheKey, $widget);
 
@@ -43,17 +48,34 @@ class WidgetFactory implements WidgetFactoryInterface
     /**
      * @param string $widgetClassName
      *
-     * @throws \Spryker\Yves\Kernel\Exception\InvalidWidgetException
+     * @throws \Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException
      *
      * @return void
      */
-    protected function assertClassIsWidget(string $widgetClassName)
+    protected function assertClassIsWidgetPlugin(string $widgetClassName)
     {
-        if (!is_subclass_of($widgetClassName, WidgetInterface::class)) {
-            throw new InvalidWidgetException(sprintf(
-                'Invalid widget %s. This class needs to implement %s.',
+        if (!is_subclass_of($widgetClassName, WidgetPluginInterface::class)) {
+            throw new InvalidWidgetPluginException(sprintf(
+                'Invalid widget plugin %s. This class needs to implement %s.',
                 $widgetClassName,
-                WidgetInterface::class
+                WidgetPluginInterface::class
+            ));
+        }
+    }
+
+    /**
+     * @param string $widgetClassName
+     *
+     * @throws \Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException
+     *
+     * @return void
+     */
+    protected function assertInitializeExists(string $widgetClassName)
+    {
+        if (!method_exists($widgetClassName, 'initialize')) {
+            throw new InvalidWidgetPluginException(sprintf(
+                'Widget %s needs to define and implement custom initialize() method with its custom widget input parameters.',
+                $widgetClassName
             ));
         }
     }
@@ -72,20 +94,20 @@ class WidgetFactory implements WidgetFactoryInterface
     /**
      * @param string $cacheKey
      *
-     * @return \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface|null
+     * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface|null
      */
-    protected function getCachedWidget(string $cacheKey): ?WidgetInterface
+    protected function getCachedWidget(string $cacheKey)
     {
         return static::$widgetCache[$cacheKey] ?? null;
     }
 
     /**
      * @param string $cacheKey
-     * @param \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface $widget
+     * @param \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface $widget
      *
      * @return void
      */
-    protected function cacheWidget(string $cacheKey, WidgetInterface $widget)
+    protected function cacheWidget(string $cacheKey, WidgetPluginInterface $widget)
     {
         static::$widgetCache[$cacheKey] = $widget;
     }
