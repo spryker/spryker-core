@@ -27,7 +27,7 @@ class CompanyBusinessUnitDataImportFacade extends AbstractFacade implements Comp
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->createCompanyBusinessUnitDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()->getCompanyBusinessUnitDataImport()->import($dataImporterConfigurationTransfer);
     }
 
     /**
@@ -41,7 +41,7 @@ class CompanyBusinessUnitDataImportFacade extends AbstractFacade implements Comp
      */
     public function importBusinessUnitUser(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->createCompanyBusinessUnitUserDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()->getCompanyBusinessUnitUserDataImport()->import($dataImporterConfigurationTransfer);
     }
 
     /**
@@ -55,6 +55,6 @@ class CompanyBusinessUnitDataImportFacade extends AbstractFacade implements Comp
      */
     public function importBusinessUnitAddresses(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFactory()->createCompanyBusinessUnitAddressDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()->getCompanyBusinessUnitAddressDataImport()->import($dataImporterConfigurationTransfer);
     }
 }

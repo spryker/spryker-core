@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\CompanyBusinessUnitDataImport\Communication\Plugin;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Communication\Plugin\CompanyBusinessUnitDataImportPlugin;
@@ -26,6 +27,9 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
 {
     protected const COMPANY_KEY = 'spryker';
 
+    protected const COMPANY_BUSINESS_UNIT_KEY = 'spryker-business-unit';
+    protected const COMPANY_CHILD_BUSINESS_UNIT_KEY = 'child-spryker-business-unit';
+
     protected const IMPORT_COMPANY_BUSINESS_UNIT_CSV = 'import/company_business_unit.csv';
     protected const IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_COMPANY_CSV = 'import/company_business_unit_with_invalid_company.csv';
     protected const IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_PARENT_CSV = 'import/company_business_unit_with_invalid_parent.csv';
@@ -42,11 +46,16 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
     {
         $this->tester->ensureDatabaseTableIsEmpty();
         $this->tester->haveCompany([CompanyTransfer::KEY => static::COMPANY_KEY]);
+        $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY,
+        ]);
+        $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::KEY => static::COMPANY_CHILD_BUSINESS_UNIT_KEY,
+        ]);
 
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
             static::IMPORT_COMPANY_BUSINESS_UNIT_CSV
         );
-        $dataImportConfigurationTransfer->setThrowException(true);
 
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
         $dataImporterReportTransfer = $companyBusinessUnitDataImportPlugin->import($dataImportConfigurationTransfer);
@@ -85,6 +94,12 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
     {
         $this->tester->ensureDatabaseTableIsEmpty();
         $this->tester->haveActiveCompany([CompanyTransfer::KEY => static::COMPANY_KEY]);
+        $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::KEY => static::COMPANY_BUSINESS_UNIT_KEY,
+        ]);
+        $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::KEY => static::COMPANY_CHILD_BUSINESS_UNIT_KEY,
+        ]);
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
             static::IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_PARENT_CSV
         );
