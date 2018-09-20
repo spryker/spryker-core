@@ -32,7 +32,6 @@ interface CompanyUnitAddressFacadeInterface
     /**
      * Specification:
      * - Creates a company unit address
-     * - Sets a list addresses assignment for company business unit
      *
      * @api
      *
