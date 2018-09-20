@@ -113,7 +113,7 @@ class Discount implements DiscountInterface
 
         $this->addDiscountsToQuote($quoteTransfer, $collectedDiscounts);
         $this->addNonApplicableDiscountsToQuote($quoteTransfer, $nonApplicableDiscounts);
-        $this->addMessagesForNonApplicableDiscounts($nonApplicableDiscounts);
+        $this->addMessagesForNonApplicableVoucherDiscounts($nonApplicableDiscounts);
 
         return $quoteTransfer;
     }
@@ -199,7 +199,7 @@ class Discount implements DiscountInterface
             }
 
             if ($this->isVoucherDiscountEntity($discountEntity)) {
-                $uniqueVoucherDiscounts[$discountEntity->getIdDiscount()] = $discountEntity;
+                $uniqueVoucherDiscounts[$discountEntity->getIdDiscount()] = $discountEntity->getIdDiscount();
             }
 
             $applicableDiscounts[] = $this->hydrateDiscountTransfer($discountEntity, $quoteTransfer);
@@ -339,28 +339,17 @@ class Discount implements DiscountInterface
      *
      * @return void
      */
-    protected function addMessagesForNonApplicableDiscounts(array $discountTransfers): void
+    protected function addMessagesForNonApplicableVoucherDiscounts(array $discountTransfers): void
     {
         foreach ($discountTransfers as $discountTransfer) {
-            // Add the message for the voucher discounts only
             if (!$discountTransfer->getVoucherCode()) {
                 continue;
             }
 
-            $this->addErrorMessage(static::MESSAGE_DISCOUNT_NOT_APPLICABLE);
+            $this->messengerFacade->addErrorMessage(
+                $this->createMessageTransfer(static::MESSAGE_DISCOUNT_NOT_APPLICABLE)
+            );
         }
-    }
-
-    /**
-     * @param string $message
-     *
-     * @return void
-     */
-    protected function addErrorMessage(string $message): void
-    {
-        $this->messengerFacade->addErrorMessage(
-            $this->createMessageTransfer($message)
-        );
     }
 
     /**
