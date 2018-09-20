@@ -20,4 +20,9 @@
         <property name="store" type="Store" />
         <property name="currency" type="Currency" />
     </transfer>
+
+    <transfer name="Item">
+        <property name="priceProduct" type="PriceProduct" />
+    </transfer>
+
 </transfers>
