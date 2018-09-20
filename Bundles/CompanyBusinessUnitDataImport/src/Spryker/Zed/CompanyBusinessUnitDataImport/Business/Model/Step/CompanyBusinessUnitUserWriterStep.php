@@ -29,7 +29,7 @@ class CompanyBusinessUnitUserWriterStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $idCompanyBusinessUnit = $this->getIdCompanyBusinessUnitByKey($dataSet[CompanyBusinessUnitUserDataSet::COLUMN_BUSINESS_UNIT_KEY]);
 
@@ -54,18 +54,20 @@ class CompanyBusinessUnitUserWriterStep implements DataImportStepInterface
      */
     protected function getIdCompanyBusinessUnitByKey(string $companyBusinessUnitKey): int
     {
-        if (!isset($this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey])) {
-            $idCompanyBusinessUnit = $this->createCompanyBusinessUnitQuery()
-                ->filterByKey($companyBusinessUnitKey)
-                ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
-                ->findOne();
-
-            if (!$idCompanyBusinessUnit) {
-                throw new EntityNotFoundException(sprintf('Could not find company business unit by key "%s"', $companyBusinessUnitKey));
-            }
-
-            $this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey] = $idCompanyBusinessUnit;
+        if (isset($this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey])) {
+            return $this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey];
         }
+
+        $idCompanyBusinessUnit = $this->createCompanyBusinessUnitQuery()
+            ->filterByKey($companyBusinessUnitKey)
+            ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
+            ->findOne();
+
+        if (!$idCompanyBusinessUnit) {
+            throw new EntityNotFoundException(sprintf('Could not find company business unit by key "%s"', $companyBusinessUnitKey));
+        }
+
+        $this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey] = $idCompanyBusinessUnit;
 
         return $this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey];
     }

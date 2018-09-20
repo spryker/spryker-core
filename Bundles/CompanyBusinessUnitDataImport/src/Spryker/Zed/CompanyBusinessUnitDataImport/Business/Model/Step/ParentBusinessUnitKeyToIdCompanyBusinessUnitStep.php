@@ -24,34 +24,52 @@ class ParentBusinessUnitKeyToIdCompanyBusinessUnitStep implements DataImportStep
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
-     *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $companyBusinessUnitKey = $dataSet[CompanyBusinessUnitDataSet::PARENT_BUSINESS_UNIT_KEY];
         if (!$companyBusinessUnitKey) {
             return;
         }
-        if (!isset($this->idCompanyBusinessUnitCache[$companyBusinessUnitKey])) {
-            $idCompany = $dataSet[CompanyBusinessUnitDataSet::ID_COMPANY];
-            $companyBusinessUnitQuery = SpyCompanyBusinessUnitQuery::create();
-            $idCompanyBusinessUnit = $companyBusinessUnitQuery
-                ->filterByFkCompany($idCompany)
-                ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
-                ->findOneByKey($companyBusinessUnitKey);
 
-            if (!$idCompanyBusinessUnit) {
-                throw new EntityNotFoundException(sprintf(
-                    'Could not find company business unit by key "%s"',
-                    $companyBusinessUnitKey
-                ));
-            }
+        $idCompanyBusinessUnit = $this->getIdCompanyBusinessUnitByKey($companyBusinessUnitKey);
 
-            $this->idCompanyBusinessUnitCache[$companyBusinessUnitKey] = $idCompanyBusinessUnit;
+        $dataSet[CompanyBusinessUnitDataSet::FK_PARENT_BUSINESS_UNIT] = $idCompanyBusinessUnit;
+    }
+
+    /**
+     * @param string $companyBusinessUnitKey
+     *
+     * @throws \Pyz\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return int
+     */
+    protected function getIdCompanyBusinessUnitByKey(string $companyBusinessUnitKey): int
+    {
+        if (isset($this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey])) {
+            return $this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey];
         }
 
-        $dataSet[CompanyBusinessUnitDataSet::FK_PARENT_BUSINESS_UNIT] = $this->idCompanyBusinessUnitCache[$companyBusinessUnitKey];
+        $idCompanyBusinessUnit = $this->createCompanyBusinessUnitQuery()
+            ->filterByKey($companyBusinessUnitKey)
+            ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
+            ->findOne();
+
+        if (!$idCompanyBusinessUnit) {
+            throw new EntityNotFoundException(sprintf('Could not find company business unit by key "%s"', $companyBusinessUnitKey));
+        }
+
+        $this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey] = $idCompanyBusinessUnit;
+
+        return $this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey];
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
+     */
+    protected function createCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
+    {
+        return SpyCompanyBusinessUnitQuery::create();
     }
 }

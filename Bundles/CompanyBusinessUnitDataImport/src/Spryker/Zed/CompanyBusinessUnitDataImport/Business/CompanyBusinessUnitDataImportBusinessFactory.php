@@ -13,6 +13,7 @@ use Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\Step\CompanyBusines
 use Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\Step\CompanyKeyToIdCompanyStep;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Business\Model\Step\ParentBusinessUnitKeyToIdCompanyBusinessUnitStep;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportConfig getConfig()
@@ -22,7 +23,7 @@ class CompanyBusinessUnitDataImportBusinessFactory extends DataImportBusinessFac
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createCompanyBusinessUnitDataImport()
+    public function createCompanyBusinessUnitDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCompanyBusinessUnitDataImporterConfiguration());
 
@@ -40,7 +41,7 @@ class CompanyBusinessUnitDataImportBusinessFactory extends DataImportBusinessFac
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createCompanyBusinessUnitUserDataImport()
+    public function createCompanyBusinessUnitUserDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCompanyBusinessUnitUserDataImporterConfiguration());
 
@@ -55,7 +56,7 @@ class CompanyBusinessUnitDataImportBusinessFactory extends DataImportBusinessFac
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createCompanyBusinessUnitAddressDataImport()
+    public function createCompanyBusinessUnitAddressDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCompanyBusinessUnitAddressDataImporterConfiguration());
 

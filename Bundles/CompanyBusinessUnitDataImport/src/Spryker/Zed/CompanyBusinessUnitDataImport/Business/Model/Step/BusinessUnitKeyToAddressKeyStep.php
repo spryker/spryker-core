@@ -34,7 +34,7 @@ class BusinessUnitKeyToAddressKeyStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $idCompanyBusinessUnit = $this->getIdCompanyBusinessUnitByKey($dataSet[CompanyBusinessUnitAddressDataSet::COLUMN_BUSINESS_UNIT_KEY]);
         $idCompanyUnitAddress = $this->getIdCompanyUnitAddressByKey($dataSet[CompanyBusinessUnitAddressDataSet::COLUMN_ADDRESS_KEY]);
@@ -55,18 +55,20 @@ class BusinessUnitKeyToAddressKeyStep implements DataImportStepInterface
      */
     protected function getIdCompanyBusinessUnitByKey(string $companyBusinessUnitKey): int
     {
-        if (!isset($this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey])) {
-            $idCompanyBusinessUnit = $this->createCompanyBusinessUnitQuery()
-                ->filterByKey($companyBusinessUnitKey)
-                ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
-                ->findOne();
-
-            if (!$idCompanyBusinessUnit) {
-                throw new EntityNotFoundException(sprintf('Could not find company business unit by key "%s"', $companyBusinessUnitKey));
-            }
-
-            $this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey] = $idCompanyBusinessUnit;
+        if (isset($this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey])) {
+            return $this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey];
         }
+
+        $idCompanyBusinessUnit = $this->createCompanyBusinessUnitQuery()
+            ->filterByKey($companyBusinessUnitKey)
+            ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
+            ->findOne();
+
+        if (!$idCompanyBusinessUnit) {
+            throw new EntityNotFoundException(sprintf('Could not find company business unit by key "%s"', $companyBusinessUnitKey));
+        }
+
+        $this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey] = $idCompanyBusinessUnit;
 
         return $this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey];
     }
@@ -80,18 +82,20 @@ class BusinessUnitKeyToAddressKeyStep implements DataImportStepInterface
      */
     protected function getIdCompanyUnitAddressByKey(string $companyAddressKey): int
     {
-        if (!isset($this->idCompanyUnitAddressListCache[$companyAddressKey])) {
-            $idCompanyUnitAddress = $this->createCompanyUnitAddressQuery()
-                ->filterByKey($companyAddressKey)
-                ->select(SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS)
-                ->findOne();
-
-            if (!$idCompanyUnitAddress) {
-                throw new EntityNotFoundException(sprintf('Could not find company address by key "%s"', $companyAddressKey));
-            }
-
-            $this->idCompanyUnitAddressListCache[$companyAddressKey] = $idCompanyUnitAddress;
+        if (isset($this->idCompanyUnitAddressListCache[$companyAddressKey])) {
+            return $this->idCompanyUnitAddressListCache[$companyAddressKey];
         }
+
+        $idCompanyUnitAddress = $this->createCompanyUnitAddressQuery()
+            ->filterByKey($companyAddressKey)
+            ->select(SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS)
+            ->findOne();
+
+        if (!$idCompanyUnitAddress) {
+            throw new EntityNotFoundException(sprintf('Could not find company address by key "%s"', $companyAddressKey));
+        }
+
+        $this->idCompanyUnitAddressListCache[$companyAddressKey] = $idCompanyUnitAddress;
 
         return $this->idCompanyUnitAddressListCache[$companyAddressKey];
     }

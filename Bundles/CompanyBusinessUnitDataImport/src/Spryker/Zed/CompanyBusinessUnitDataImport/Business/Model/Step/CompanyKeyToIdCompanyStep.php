@@ -26,7 +26,7 @@ class CompanyKeyToIdCompanyStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $dataSet[CompanyBusinessUnitDataSet::ID_COMPANY] = $this->getIdCompanyByKey($dataSet[CompanyBusinessUnitDataSet::COMPANY_KEY]);
     }
@@ -40,18 +40,20 @@ class CompanyKeyToIdCompanyStep implements DataImportStepInterface
      */
     protected function getIdCompanyByKey(string $companyKey): int
     {
-        if (!isset($this->idCompanyListCache[$companyKey])) {
-            $idCompany = $this->createCompanyQuery()
-                ->filterByKey($companyKey)
-                ->select(SpyCompanyTableMap::COL_ID_COMPANY)
-                ->findOne();
-
-            if (!$idCompany) {
-                throw new EntityNotFoundException(sprintf('Could not find company by key "%s"', $companyKey));
-            }
-
-            $this->idCompanyListCache[$companyKey] = $idCompany;
+        if (isset($this->idCompanyListCache[$companyKey])) {
+            return $this->idCompanyListCache[$companyKey];
         }
+
+        $idCompany = $this->createCompanyQuery()
+            ->filterByKey($companyKey)
+            ->select(SpyCompanyTableMap::COL_ID_COMPANY)
+            ->findOne();
+
+        if (!$idCompany) {
+            throw new EntityNotFoundException(sprintf('Could not find company by key "%s"', $companyKey));
+        }
+
+        $this->idCompanyListCache[$companyKey] = $idCompany;
 
         return $this->idCompanyListCache[$companyKey];
     }
