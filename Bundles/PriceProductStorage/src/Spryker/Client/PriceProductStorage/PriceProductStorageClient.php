@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\PriceProductStorage;
 
+use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -61,5 +62,21 @@ class PriceProductStorageClient extends AbstractClient implements PriceProductSt
         return $this->getFactory()
             ->createPriceConcreteResolver()
             ->resolvePriceProductConcrete($idProductConcrete, $idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
+     */
+    public function expandQuickOrderProductPriceTransferWithPrice(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): QuickOrderProductPriceTransfer
+    {
+        return $this->getFactory()
+            ->createQuickOrderProductPriceTransferPriceExpander()
+            ->expandQuickOrderProductPriceTransferWithPrice($quickOrderProductPriceTransfer);
     }
 }
