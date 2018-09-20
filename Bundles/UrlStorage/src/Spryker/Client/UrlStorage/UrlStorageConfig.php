@@ -19,6 +19,6 @@ class UrlStorageConfig extends AbstractBundleConfig
      */
     public static function isCollectorCompatibilityMode()
     {
-        return false;
+        return true;
     }
 }
