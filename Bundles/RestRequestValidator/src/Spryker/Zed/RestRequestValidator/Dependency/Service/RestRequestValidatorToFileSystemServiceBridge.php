@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
 
-class RestRequestValidatorToFileSystemBridge implements RestRequestValidatorToFileSystemInterface
+class RestRequestValidatorToFileSystemServiceBridge implements RestRequestValidatorToFileSystemServiceInterface
 {
     /**
      * @var \Spryker\Service\FileSystem\FileSystemServiceInterface

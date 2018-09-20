@@ -61,6 +61,7 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     {
         return [
             static::ALLOW_EXTRA_FIELDS => static::ALLOW_EXTRA_FIELDS_VALUE,
-            static::GROUPS => static::GROUPS_VALUE];
+            static::GROUPS => static::GROUPS_VALUE,
+        ];
     }
 }

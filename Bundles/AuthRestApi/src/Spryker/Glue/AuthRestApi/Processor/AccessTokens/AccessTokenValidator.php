@@ -48,7 +48,7 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
         $authorizationToken = $request->headers->get('Authorization');
         if (!$authorizationToken) {
             return (new RestErrorCollectionTransfer())
-                ->addRestErrors(
+                ->addRestError(
                     $this->createErrorMessageTransfer(
                         'Missing access token.',
                         Response::HTTP_FORBIDDEN,
@@ -61,7 +61,7 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
 
         if (!$authAccessTokenValidationResponseTransfer->getIsValid()) {
             return (new RestErrorCollectionTransfer())
-                ->addRestErrors(
+                ->addRestError(
                     $this->createErrorMessageTransfer(
                         'Invalid access token.',
                         Response::HTTP_UNAUTHORIZED,

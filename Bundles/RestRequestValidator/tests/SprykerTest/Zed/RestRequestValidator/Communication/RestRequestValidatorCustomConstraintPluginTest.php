@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\RestRequestValidator\Communication;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapter;
@@ -129,9 +130,9 @@ class RestRequestValidatorCustomConstraintPluginTest extends Unit
     }
 
     /**
-     * @return \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createMockConfig(): RestRequestValidatorConfig
+    protected function createMockConfig(): MockObject
     {
         $mockConfig = $this->createPartialMock(
             RestRequestValidatorConfig::class,
@@ -160,9 +161,9 @@ class RestRequestValidatorCustomConstraintPluginTest extends Unit
     /**
      * @param string $storeName
      *
-     * @return \Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createMockStoreClient(string $storeName): RestRequestValidatorToStoreClientInterface
+    protected function createMockStoreClient(string $storeName): MockObject
     {
         $mockStoreClient = $this->createPartialMock(
             RestRequestValidatorToStoreClientInterface::class,
@@ -183,9 +184,7 @@ class RestRequestValidatorCustomConstraintPluginTest extends Unit
      */
     protected function createMockRestRequest(): RestRequest
     {
-        $mockRestRequest = new RestRequest();
-
-        return $mockRestRequest;
+        return new RestRequest();
     }
 
     /**

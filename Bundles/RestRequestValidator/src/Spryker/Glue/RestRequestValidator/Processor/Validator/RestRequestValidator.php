@@ -120,7 +120,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
     {
         $restErrorCollection = new RestErrorCollectionTransfer();
         foreach ($validationResult as $validationError) {
-            $restErrorCollection->addRestErrors(
+            $restErrorCollection->addRestError(
                 (new RestErrorMessageTransfer())
                     ->setCode(RestRequestValidatorConfig::RESPONSE_CODE_REQUEST_INVALID)
                     ->setStatus(Response::HTTP_BAD_REQUEST)

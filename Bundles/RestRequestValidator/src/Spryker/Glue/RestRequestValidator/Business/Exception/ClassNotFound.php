@@ -9,6 +9,6 @@ namespace Spryker\Glue\RestRequestValidator\Business\Exception;
 
 use Exception;
 
-class ClassDoesNotExist extends Exception
+class ClassNotFound extends Exception
 {
 }

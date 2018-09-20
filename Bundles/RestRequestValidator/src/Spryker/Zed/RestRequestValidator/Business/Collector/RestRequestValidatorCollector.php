@@ -63,7 +63,7 @@ class RestRequestValidatorCollector implements RestRequestValidatorCollectorInte
 
         foreach ($this->validationSchemaFinder->findSchemas($storeTransfer) as $moduleValidationSchema) {
             if (!$this->filesystem->exists($moduleValidationSchema->getPathname())) {
-                throw new SchemaFileNotFound(sprintf(RestRequestValidatorConfig::EXCEPTION_MESSAGE_SCHEMA_FILE_NO_FOUND, $moduleValidationSchema));
+                throw new SchemaFileNotFound(sprintf(RestRequestValidatorConfig::EXCEPTION_MESSAGE_SCHEMA_FILE_NOT_FOUND, $moduleValidationSchema));
             }
             $parsedConfiguration = $this->yaml->parseFile($moduleValidationSchema->getPathname());
             foreach ($parsedConfiguration as $resourceName => $resourceValidatorConfiguration) {
