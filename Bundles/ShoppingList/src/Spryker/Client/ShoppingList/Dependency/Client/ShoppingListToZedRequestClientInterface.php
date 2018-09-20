@@ -17,6 +17,11 @@ interface ShoppingListToZedRequestClientInterface
     public function getLastResponseErrorMessages();
 
     /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getAllResponsesErrorMessages(): array;
+
+    /**
      * @param string $url
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
      * @param array|int|null $requestOptions
@@ -26,7 +31,14 @@ interface ShoppingListToZedRequestClientInterface
     public function call($url, TransferInterface $object, $requestOptions = null): TransferInterface;
 
     /**
+     * @deprecated Use ShoppingListToZedRequestClientInterface::addFlashMessagesFromZedRequestHistory() instead
+     *
      * @return void
      */
     public function addFlashMessagesFromLastZedRequest();
+
+    /**
+     * @return void
+     */
+    public function addAllResponseMessagesToMessenger();
 }

@@ -29,4 +29,12 @@ class CurrencyToZedRequestClientBridge implements CurrencyToZedRequestClientInte
     {
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
     }
+
+    /**
+     * @return void
+     */
+    public function addAllResponseMessagesToMessenger(): void
+    {
+        $this->zedRequestClient->addAllResponseMessagesToMessenger();
+    }
 }

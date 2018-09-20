@@ -8,7 +8,7 @@
 namespace Spryker\Yves\Currency\Dependency;
 
 /**
- * @deprecated use client instead
+ * @deprecated Use client instead
  */
 interface CurrencyPostChangePluginInterface
 {

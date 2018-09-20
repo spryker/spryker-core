@@ -29,30 +29,21 @@ interface OfferToZedRequestClientInterface
     public function call($url, TransferInterface $object, $requestOptions = null);
 
     /**
-     * Specification:
-     * - Returns an array of MessageTransfers containing info messages for the last response.
-     *
-     * @api
+     * @deprecated will be removed, not used in module.
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseInfoMessages();
 
     /**
-     * Specification:
-     * - Returns an array of MessageTransfers containing error messages for the last response.
-     *
-     * @api
+     * @deprecated will be removed, not used in module.
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseErrorMessages();
 
     /**
-     * Specification:
-     * - Returns an array of MessageTransfers containing success messages for the last response.
-     *
-     * @api
+     * @deprecated will be removed, not used in module.
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */

@@ -18,4 +18,18 @@ interface CurrencyToZedRequestClientInterface
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseSuccessMessages();
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getAllResponsesErrorMessages(): array;
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getAllResponsesSuccessMessages(): array;
 }

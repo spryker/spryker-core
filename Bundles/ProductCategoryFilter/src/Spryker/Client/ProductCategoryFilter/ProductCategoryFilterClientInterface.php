@@ -15,7 +15,7 @@ interface ProductCategoryFilterClientInterface
      *
      * @api
      *
-     * @deprecated use updateCategoryFacets()
+     * @deprecated Use updateCategoryFacets()
      *
      * @param array $facets
      * @param array $productCategoryFilters

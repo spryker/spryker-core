@@ -30,7 +30,6 @@ class Messenger implements MessengerInterface
         AbstractZedClientInterface $zedClient,
         ZedRequestToMessengerClientInterface $messengerClient
     ) {
-
         $this->zedClient = $zedClient;
         $this->messengerClient = $messengerClient;
     }
@@ -109,5 +108,75 @@ class Messenger implements MessengerInterface
         foreach ($this->getLastResponseInfoMessages() as $infoMessage) {
             $this->messengerClient->addInfoMessage($infoMessage->getValue());
         }
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getAllResponsesInfoMessages(): array
+    {
+        $statusMessages = $this->zedClient->getStatusMessages();
+
+        return $statusMessages->getInfoMessages()->getArrayCopy();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getAllResponsesErrorMessages(): array
+    {
+        $statusMessages = $this->zedClient->getStatusMessages();
+
+        return $statusMessages->getErrorMessages()->getArrayCopy();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getAllResponsesSuccessMessages(): array
+    {
+        $statusMessages = $this->zedClient->getStatusMessages();
+
+        return $statusMessages->getSuccessMessages()->getArrayCopy();
+    }
+
+   /**
+    * @return void
+    */
+    protected function addAllResponseErrorMessagesToMessenger(): void
+    {
+        foreach ($this->getAllResponsesErrorMessages() as $errorMessage) {
+            $this->messengerClient->addErrorMessage($errorMessage->getValue());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function addAllResponseSuccessMessagesToMessenger(): void
+    {
+        foreach ($this->getAllResponsesSuccessMessages() as $successMessage) {
+            $this->messengerClient->addSuccessMessage($successMessage->getValue());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function addAllResponseInfoMessagesToMessenger(): void
+    {
+        foreach ($this->getAllResponsesInfoMessages() as $infoMessage) {
+            $this->messengerClient->addInfoMessage($infoMessage->getValue());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function addAllResponseMessagesToMessenger(): void
+    {
+        $this->addAllResponseErrorMessagesToMessenger();
+        $this->addAllResponseSuccessMessagesToMessenger();
+        $this->addAllResponseInfoMessagesToMessenger();
     }
 }

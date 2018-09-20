@@ -33,7 +33,7 @@ class CmsConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated use getTemplateRealPaths() instead
+     * @deprecated Use getTemplateRealPaths() instead
      *
      * @param string $templateRelativePath
      *

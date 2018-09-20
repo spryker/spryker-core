@@ -94,7 +94,7 @@ interface SearchFacadeInterface
     /**
      * @api
      *
-     * @deprecated use SearchFacade::transformPageMapToDocumentByMapperName() instead
+     * @deprecated Use SearchFacade::transformPageMapToDocumentByMapperName() instead
      *
      * Specification:
      * - Transforms a raw data array into an Elasticsearch "page" mapping type document

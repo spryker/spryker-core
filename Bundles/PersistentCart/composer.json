@@ -13,7 +13,7 @@
     "spryker/persistent-cart-extension": "^1.0.0",
     "spryker/price-extension": "^1.0.0",
     "spryker/quote": "^2.0.0",
-    "spryker/zed-request": "^3.0.0"
+    "spryker/zed-request": "^3.5.0"
   },
   "require-dev": {
     "spryker/propel": "*",

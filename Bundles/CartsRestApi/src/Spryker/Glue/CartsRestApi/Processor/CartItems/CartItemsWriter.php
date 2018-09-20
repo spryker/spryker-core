@@ -93,6 +93,7 @@ class CartItemsWriter implements CartItemsWriterInterface
         if ($idQuote === null) {
             return $this->createQuoteIdMissingError();
         }
+
         $quoteResponseTransfer = $this->cartsReader->getQuoteTransferByUuid($idQuote, $restRequest);
         if (!$quoteResponseTransfer->getIsSuccessful() || $quoteResponseTransfer->getQuoteTransfer() === null) {
             return $this->createQuoteNotFoundError($idQuote);
@@ -103,7 +104,7 @@ class CartItemsWriter implements CartItemsWriterInterface
             $this->prepareItemTransfer($restCartItemsAttributesTransfer)
         );
 
-        $errors = $this->zedRequestClient->getLastResponseErrorMessages();
+        $errors = $this->zedRequestClient->getAllResponsesErrorMessages();
         if (count($errors) > 0) {
             return $this->returnWithError($errors, $restResponse);
         }
@@ -146,7 +147,7 @@ class CartItemsWriter implements CartItemsWriterInterface
             $restCartItemsAttributesTransfer->getQuantity()
         );
 
-        $errors = $this->zedRequestClient->getLastResponseErrorMessages();
+        $errors = $this->zedRequestClient->getAllResponsesErrorMessages();
         if (count($errors) > 0) {
             return $this->returnWithError($errors, $restResponse);
         }

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
 class FacetUpdaterByProductCategoryFilters implements FacetUpdaterInterface
 {
     /**
-     * @deprecated use updateFromTransfer()
+     * @deprecated Use updateFromTransfer()
      *
      * @param \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[] $facets
      * @param array $updateCriteria

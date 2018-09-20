@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Client\Currency\CurrencyFactory getFactory()
  *
- * @deprecated use CurrencyClient instead
+ * @deprecated Use CurrencyClient instead
  */
 class CurrencyPlugin extends AbstractPlugin implements CurrencyPluginInterface
 {

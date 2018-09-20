@@ -89,6 +89,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     /**
      * {@inheritdoc}
      *
+     *
      * @api
      *
      * @return void
@@ -98,6 +99,62 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
         $this->getFactory()
             ->createMessenger()
             ->addFlashMessagesFromLastZedRequest();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getAllResponsesInfoMessages(): array
+    {
+        return $this->getFactory()
+            ->createMessenger()
+            ->getAllResponsesInfoMessages();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getAllResponsesErrorMessages(): array
+    {
+        return $this->getFactory()
+            ->createMessenger()
+            ->getAllResponsesErrorMessages();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getAllResponsesSuccessMessages(): array
+    {
+        return $this->getFactory()
+            ->createMessenger()
+            ->getAllResponsesSuccessMessages();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function addAllResponseMessagesToMessenger(): void
+    {
+        $this->getFactory()
+            ->createMessenger()
+            ->addAllResponseMessagesToMessenger();
     }
 
     /**

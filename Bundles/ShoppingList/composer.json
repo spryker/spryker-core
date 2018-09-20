@@ -19,7 +19,7 @@
     "spryker/product": "^6.6.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/shopping-list-extension": "^1.2.0",
-    "spryker/zed-request": "^3.0.0"
+    "spryker/zed-request": "^3.5.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
