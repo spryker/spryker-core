@@ -45,6 +45,10 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
      */
     public function getAvailabilityAbstractAsStorageTransfer($idProductAbstract)
     {
+        if (AvailabilityStorageConfig::isCollectorCompatibilityMode()) {
+            return $this->getAvailabilityFromCollectorData($idProductAbstract);
+        }
+
         $spyAvailabilityAbstractTransfer = $this->getAvailabilityAbstract($idProductAbstract);
         $storageAvailabilityTransfer = new StorageAvailabilityTransfer();
 
@@ -68,9 +72,6 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
      */
     public function getAvailabilityAbstract($idProductAbstract)
     {
-        if (AvailabilityStorageConfig::isCollectorCompatibilityMode()) {
-            return $this->getAvailabilityAbstractFromCollectorData($idProductAbstract);
-        }
         $key = $this->generateKey($idProductAbstract);
         $availability = $this->storageClient->get($key);
 
@@ -85,26 +86,25 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
-    protected function getAvailabilityAbstractFromCollectorData($idProductAbstract)
+    protected function getAvailabilityFromCollectorData($idProductAbstract): StorageAvailabilityTransfer
     {
-        $key = $this->generateKey($idProductAbstract);
-        $availability = $this->storageClient->get($key);
-
         $clientLocatorClassName = '\Spryker\Client\Kernel\Locator';
         /** @var \Spryker\Client\Availability\AvailabilityClientInterface $availabilityClient */
         $availabilityClient = $clientLocatorClassName::getInstance()->availability()->client();
         $availabilityData = $availabilityClient->findProductAvailabilityByIdProductAbstract($idProductAbstract);
 
-        // TODO needs to be finalized, data matching seems a bit tricky here up to not doable
-
-        $spyAvailabilityAbstractEntityTransfer = new SpyAvailabilityAbstractEntityTransfer();
+        $storageAvailabilityTransfer = new StorageAvailabilityTransfer();
         if ($availabilityData === null) {
-            return $spyAvailabilityAbstractEntityTransfer;
+            return $storageAvailabilityTransfer;
         }
 
-        return $spyAvailabilityAbstractEntityTransfer->fromArray($availability, true);
+        $storageAvailabilityTransfer
+            ->setIsAbstractProductAvailable($availabilityData['isAbstractProductAvailable'])
+            ->setConcreteProductAvailableItems($availabilityData['concreteProductAvailableItems']);
+
+        return $storageAvailabilityTransfer;
     }
 
     /**
