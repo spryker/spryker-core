@@ -7,56 +7,64 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 
+use Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer;
+use Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer;
+
 interface RestApiDocumentationPathGeneratorInterface
 {
     /**
-     * @param string $resource
-     * @param string $resourcePath
-     * @param string $responseSchema
-     * @param string $errorSchema
-     * @param string $summary
-     * @param bool $isProtected
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer
      *
      * @return void
      */
-    public function addGetPath(string $resource, string $resourcePath, string $responseSchema, string $errorSchema, string $summary, bool $isProtected): void;
+    public function addGetPath(
+        RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer,
+        RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer,
+        RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer
+    ): void;
 
     /**
-     * @param string $resource
-     * @param string $resourcePath
-     * @param string $requestSchema
-     * @param string $responseSchema
-     * @param string $errorSchema
-     * @param string $summary
-     * @param bool $isProtected
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $requestSchemaDataTransfer
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer
      *
      * @return void
      */
-    public function addPostPath(string $resource, string $resourcePath, string $requestSchema, string $responseSchema, string $errorSchema, string $summary, bool $isProtected): void;
+    public function addPostPath(
+        RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer,
+        RestApiDocumentationPathSchemaDataTransfer $requestSchemaDataTransfer,
+        RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer,
+        RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer
+    ): void;
 
     /**
-     * @param string $resource
-     * @param string $resourcePath
-     * @param string $requestSchema
-     * @param string $responseSchema
-     * @param string $errorSchema
-     * @param string $summary
-     * @param bool $isProtected
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $requestSchemaDataTransfer
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer
      *
      * @return void
      */
-    public function addPatchPath(string $resource, string $resourcePath, string $requestSchema, string $responseSchema, string $errorSchema, string $summary, bool $isProtected): void;
+    public function addPatchPath(
+        RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer,
+        RestApiDocumentationPathSchemaDataTransfer $requestSchemaDataTransfer,
+        RestApiDocumentationPathSchemaDataTransfer $responseSchemaDataTransfer,
+        RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer
+    ): void;
 
     /**
-     * @param string $resource
-     * @param string $resourcePath
-     * @param string $errorSchema
-     * @param string $summary
-     * @param bool $isProtected
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer
      *
      * @return void
      */
-    public function addDeletePath(string $resource, string $resourcePath, string $errorSchema, string $summary, bool $isProtected): void;
+    public function addDeletePath(
+        RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer,
+        RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer
+    ): void;
 
     /**
      * @return array

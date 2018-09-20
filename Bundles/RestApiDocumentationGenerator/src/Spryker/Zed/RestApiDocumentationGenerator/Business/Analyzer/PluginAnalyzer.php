@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer;
 
+use Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer;
+use Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer;
 use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRouteCollection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
+use Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGeneratorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToTextInflectorInterface;
@@ -95,47 +98,167 @@ class PluginAnalyzer implements PluginAnalyzerInterface
     {
         foreach ($this->resourceRoutesPluginsProviderPlugins as $resourceRoutesPluginsProviderPlugin) {
             foreach ($resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins() as $plugin) {
-                $parents = $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins());
-                $resource = $plugin->getResourceType();
-                $collection = $plugin->configure(new ResourceRouteCollection());
                 $annotationParameters = $this->annotationsAnalyser->getParametersFromPlugin($plugin);
-                $resourcePath = $this->parseParentToPath('/' . $resource, $parents);
-                $errorSchema = $this->schemaGenerator->getRestErrorSchemaName();
-                $responseSchema = $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin);
-
-                if ($collection->has(Request::METHOD_GET)) {
-                    $isProtected = $collection->get(Request::METHOD_GET)[static::KEY_IS_PROTECTED];
-                    if ($this->isGetCollection($annotationParameters)) {
-                        $summary = $this->getSummary($annotationParameters, Request::METHOD_GET, static::PATTERN_SUMMARY_GET_COLLECTION, $resource);
-                        $collectionResponseSchema = $this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin);
-                        $this->pathGenerator->addGetPath($resource, $resourcePath, $collectionResponseSchema, $errorSchema, $summary, $isProtected);
-                    }
-                    if ($this->isGetResource($annotationParameters)) {
-                        $summary = $this->getSummary($annotationParameters, Request::METHOD_GET, static::PATTERN_SUMMARY_GET_RESOURCE, $resource);
-                        $this->pathGenerator->addGetPath($resource, $resourcePath, $responseSchema, $errorSchema, $summary, $isProtected);
-                    }
-                }
-                if ($collection->has(Request::METHOD_POST)) {
-                    $summary = $this->getSummary($annotationParameters, Request::METHOD_POST, static::PATTERN_SUMMARY_POST_RESOURCE, $resource);
-                    $isProtected = $collection->get(Request::METHOD_POST)[static::KEY_IS_PROTECTED];
-                    $requestSchema = $this->schemaGenerator->addRequestSchemaForPlugin($plugin);
-                    $this->pathGenerator->addPostPath($resource, $resourcePath, $requestSchema, $responseSchema, $errorSchema, $summary, $isProtected);
-                }
-                if ($collection->has(Request::METHOD_PATCH)) {
-                    $summary = $this->getSummary($annotationParameters, Request::METHOD_PATCH, static::PATTERN_SUMMARY_PATCH_RESOURCE, $resource);
-                    $isProtected = $collection->get(Request::METHOD_PATCH)[static::KEY_IS_PROTECTED];
-                    $requestSchema = $this->schemaGenerator->addRequestSchemaForPlugin($plugin);
-                    $resourcePathWithId = $resourcePath . '/' . $this->getResourceIdFromResourceType($resource);
-                    $this->pathGenerator->addPatchPath($resource, $resourcePathWithId, $requestSchema, $responseSchema, $errorSchema, $summary, $isProtected);
-                }
-                if ($collection->has(Request::METHOD_DELETE)) {
-                    $summary = $this->getSummary($annotationParameters, Request::METHOD_DELETE, static::PATTERN_SUMMARY_DELETE_RESOURCE, $resource);
-                    $isProtected = $collection->get(Request::METHOD_DELETE)[static::KEY_IS_PROTECTED];
-                    $resourcePathWithId = $resourcePath . '/' . $this->getResourceIdFromResourceType($resource);
-                    $this->pathGenerator->addDeletePath($resource, $resourcePathWithId, $errorSchema, $summary, $isProtected);
-                }
+                $this->handleGetResourcePath($plugin, $resourceRoutesPluginsProviderPlugin, $annotationParameters);
+                $this->handlePostResourcePath($plugin, $resourceRoutesPluginsProviderPlugin, $annotationParameters);
+                $this->handlePatchResourcePath($plugin, $resourceRoutesPluginsProviderPlugin, $annotationParameters);
+                $this->handleDeleteResourcePath($plugin, $resourceRoutesPluginsProviderPlugin, $annotationParameters);
             }
         }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface $resourceRoutesPluginsProviderPlugin
+     * @param array $annotationParameters
+     *
+     * @return void
+     */
+    protected function handleGetResourcePath(ResourceRoutePluginInterface $plugin, ResourceRoutePluginsProviderPluginInterface $resourceRoutesPluginsProviderPlugin, array $annotationParameters): void
+    {
+        $collection = $plugin->configure(new ResourceRouteCollection());
+        if (!$collection->has(Request::METHOD_GET)) {
+            return;
+        }
+        $resourcePath = $this->parseParentToPath(
+            '/' . $plugin->getResourceType(),
+            $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins())
+        );
+
+        $pathDataTransfer = new RestApiDocumentationPathMethodDataTransfer();
+        $pathDataTransfer->setResource($plugin->getResourceType());
+        $pathDataTransfer->setPath($resourcePath);
+
+        $errorSchema = $this->schemaGenerator->getRestErrorSchemaData();
+        $responseSchema = $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin);
+
+        $pathDataTransfer->setIsProtected($collection->get(Request::METHOD_GET)[static::KEY_IS_PROTECTED]);
+        $pathDataTransfer->setSummary(
+            $this->getSummary($annotationParameters, Request::METHOD_GET, static::PATTERN_SUMMARY_GET_COLLECTION, $pathDataTransfer->getResource())
+        );
+        $pathDataTransfer->setHeaders($this->getMethodHeadersFromAnnotations($annotationParameters, Request::METHOD_GET));
+        $this->addResponsesToPathData($pathDataTransfer, $errorSchema, $this->getMethodResponsesFromAnnotations($annotationParameters, Request::METHOD_GET));
+
+        if ($this->isGetCollection($annotationParameters)) {
+            $pathDataTransfer->setSummary($this->getSummary($annotationParameters, Request::METHOD_GET, static::PATTERN_SUMMARY_GET_COLLECTION, $pathDataTransfer->getResource()));
+            $collectionResponseSchema = $this->schemaGenerator->addResponseCollectionSchemaForPlugin($plugin);
+            $this->pathGenerator->addGetPath($pathDataTransfer, $collectionResponseSchema, $errorSchema);
+        }
+        if ($this->isGetResource($annotationParameters)) {
+            $pathDataTransfer->setPath($resourcePath . '/' . $this->getResourceIdFromResourceType($pathDataTransfer->getResource()));
+            $pathDataTransfer->setSummary($this->getSummary($annotationParameters, Request::METHOD_GET, static::PATTERN_SUMMARY_GET_RESOURCE, $pathDataTransfer->getResource()));
+            $this->pathGenerator->addGetPath($pathDataTransfer, $responseSchema, $errorSchema);
+        }
+        if (!$this->isGetResource($annotationParameters) && !$this->isGetCollection($annotationParameters)) {
+            $pathDataTransfer->setSummary($this->getSummary($annotationParameters, Request::METHOD_GET, static::PATTERN_SUMMARY_GET_RESOURCE, $pathDataTransfer->getResource()));
+            $this->pathGenerator->addGetPath($pathDataTransfer, $responseSchema, $errorSchema);
+        }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface $resourceRoutesPluginsProviderPlugin
+     * @param array $annotationParameters
+     *
+     * @return void
+     */
+    protected function handlePostResourcePath(ResourceRoutePluginInterface $plugin, ResourceRoutePluginsProviderPluginInterface $resourceRoutesPluginsProviderPlugin, array $annotationParameters): void
+    {
+        $collection = $plugin->configure(new ResourceRouteCollection());
+        if (!$collection->has(Request::METHOD_POST)) {
+            return;
+        }
+
+        $resourcePath = $this->parseParentToPath(
+            '/' . $plugin->getResourceType(),
+            $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins())
+        );
+
+        $errorSchema = $this->schemaGenerator->getRestErrorSchemaData();
+        $responseSchema = $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin);
+        $requestSchema = $this->schemaGenerator->addRequestSchemaForPlugin($plugin);
+
+        $pathDataTransfer = new RestApiDocumentationPathMethodDataTransfer();
+        $pathDataTransfer->setResource($plugin->getResourceType());
+        $pathDataTransfer->setPath($resourcePath);
+        $pathDataTransfer->setIsProtected($collection->get(Request::METHOD_POST)[static::KEY_IS_PROTECTED]);
+        $pathDataTransfer->setSummary(
+            $this->getSummary($annotationParameters, Request::METHOD_POST, static::PATTERN_SUMMARY_POST_RESOURCE, $pathDataTransfer->getResource())
+        );
+        $pathDataTransfer->setHeaders($this->getMethodHeadersFromAnnotations($annotationParameters, Request::METHOD_POST));
+        $this->addResponsesToPathData($pathDataTransfer, $errorSchema, $this->getMethodResponsesFromAnnotations($annotationParameters, Request::METHOD_POST));
+
+        $this->pathGenerator->addPostPath($pathDataTransfer, $requestSchema, $responseSchema, $errorSchema);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface $resourceRoutesPluginsProviderPlugin
+     * @param array $annotationParameters
+     *
+     * @return void
+     */
+    protected function handlePatchResourcePath(ResourceRoutePluginInterface $plugin, ResourceRoutePluginsProviderPluginInterface $resourceRoutesPluginsProviderPlugin, array $annotationParameters): void
+    {
+        $collection = $plugin->configure(new ResourceRouteCollection());
+        if (!$collection->has(Request::METHOD_PATCH)) {
+            return;
+        }
+
+        $resourcePath = $this->parseParentToPath(
+            '/' . $plugin->getResourceType(),
+            $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins())
+        );
+
+        $errorSchema = $this->schemaGenerator->getRestErrorSchemaData();
+        $responseSchema = $this->schemaGenerator->addResponseResourceSchemaForPlugin($plugin);
+        $requestSchema = $this->schemaGenerator->addRequestSchemaForPlugin($plugin);
+
+        $pathDataTransfer = new RestApiDocumentationPathMethodDataTransfer();
+        $pathDataTransfer->setResource($plugin->getResourceType());
+        $pathDataTransfer->setPath($resourcePath . '/' . $this->getResourceIdFromResourceType($pathDataTransfer->getResource()));
+        $pathDataTransfer->setIsProtected($collection->get(Request::METHOD_PATCH)[static::KEY_IS_PROTECTED]);
+        $pathDataTransfer->setSummary(
+            $this->getSummary($annotationParameters, Request::METHOD_PATCH, static::PATTERN_SUMMARY_PATCH_RESOURCE, $pathDataTransfer->getResource())
+        );
+        $pathDataTransfer->setHeaders($this->getMethodHeadersFromAnnotations($annotationParameters, Request::METHOD_PATCH));
+        $this->addResponsesToPathData($pathDataTransfer, $errorSchema, $this->getMethodResponsesFromAnnotations($annotationParameters, Request::METHOD_PATCH));
+
+        $this->pathGenerator->addPatchPath($pathDataTransfer, $requestSchema, $responseSchema, $errorSchema);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
+     * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface $resourceRoutesPluginsProviderPlugin
+     * @param array $annotationParameters
+     *
+     * @return void
+     */
+    protected function handleDeleteResourcePath(ResourceRoutePluginInterface $plugin, ResourceRoutePluginsProviderPluginInterface $resourceRoutesPluginsProviderPlugin, array $annotationParameters): void
+    {
+        $collection = $plugin->configure(new ResourceRouteCollection());
+        if (!$collection->has(Request::METHOD_DELETE)) {
+            return;
+        }
+
+        $resourcePath = $this->parseParentToPath(
+            '/' . $plugin->getResourceType(),
+            $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins())
+        );
+
+        $errorSchema = $this->schemaGenerator->getRestErrorSchemaData();
+
+        $pathDataTransfer = new RestApiDocumentationPathMethodDataTransfer();
+        $pathDataTransfer->setResource($plugin->getResourceType());
+        $pathDataTransfer->setPath($resourcePath . '/' . $this->getResourceIdFromResourceType($pathDataTransfer->getResource()));
+        $pathDataTransfer->setIsProtected($collection->get(Request::METHOD_DELETE)[static::KEY_IS_PROTECTED]);
+        $pathDataTransfer->setSummary(
+            $this->getSummary($annotationParameters, Request::METHOD_DELETE, static::PATTERN_SUMMARY_DELETE_RESOURCE, $pathDataTransfer->getResource())
+        );
+        $pathDataTransfer->setHeaders($this->getMethodHeadersFromAnnotations($annotationParameters, Request::METHOD_DELETE));
+        $this->addResponsesToPathData($pathDataTransfer, $errorSchema, $this->getMethodResponsesFromAnnotations($annotationParameters, Request::METHOD_DELETE));
+
+        $this->pathGenerator->addDeletePath($pathDataTransfer, $errorSchema);
     }
 
     /**
@@ -237,6 +360,46 @@ class PluginAnalyzer implements PluginAnalyzerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer
+     * @param array $responses
+     *
+     * @return void
+     */
+    protected function addResponsesToPathData(RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer, RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer, array $responses): void
+    {
+        foreach ($responses as $code => $description) {
+            $responseSchemaDataTransfer = clone $errorSchemaDataTransfer;
+            $responseSchemaDataTransfer->setCode($code);
+            $responseSchemaDataTransfer->setDescription($description);
+
+            $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
+        }
+    }
+
+    /**
+     * @param array $annotationParameters
+     * @param string $method
+     *
+     * @return array
+     */
+    protected function getMethodHeadersFromAnnotations(array $annotationParameters, string $method): array
+    {
+        return $annotationParameters[$method]['headers'] ?? [];
+    }
+
+    /**
+     * @param array $annotationParameters
+     * @param string $method
+     *
+     * @return array
+     */
+    protected function getMethodResponsesFromAnnotations(array $annotationParameters, string $method): array
+    {
+        return $annotationParameters[$method]['responses'] ?? [];
+    }
+
+    /**
      * @param array $annotationParameters
      * @param string $method
      * @param string $defaultSummaryPattern
@@ -246,6 +409,7 @@ class PluginAnalyzer implements PluginAnalyzerInterface
      */
     protected function getSummary(array $annotationParameters, string $method, string $defaultSummaryPattern, string $resource): string
     {
-        return $annotationParameters[$method]['summary'] ?? sprintf($defaultSummaryPattern, str_replace('-', ' ', $resource));
+        return $annotationParameters[$method]['summary']
+            ?? sprintf($defaultSummaryPattern, str_replace('-', ' ', $resource));
     }
 }

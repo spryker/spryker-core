@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 
+use Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 
 interface RestApiDocumentationSchemaGeneratorInterface
@@ -14,28 +15,28 @@ interface RestApiDocumentationSchemaGeneratorInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
      */
-    public function addRequestSchemaForPlugin(ResourceRoutePluginInterface $plugin): string;
+    public function addRequestSchemaForPlugin(ResourceRoutePluginInterface $plugin): RestApiDocumentationPathSchemaDataTransfer;
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
      */
-    public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin): string;
+    public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin): RestApiDocumentationPathSchemaDataTransfer;
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
      */
-    public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin): string;
+    public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin): RestApiDocumentationPathSchemaDataTransfer;
 
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
      */
-    public function getRestErrorSchemaName(): string;
+    public function getRestErrorSchemaData(): RestApiDocumentationPathSchemaDataTransfer;
 
     /**
      * @return array

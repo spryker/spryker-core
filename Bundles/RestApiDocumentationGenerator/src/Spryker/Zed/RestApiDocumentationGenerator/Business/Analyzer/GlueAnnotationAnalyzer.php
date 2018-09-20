@@ -8,22 +8,23 @@
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer;
 
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\AnnotationException;
 
 class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
 {
-    protected const REGEX_PATTERN_GLUE_ANNOTATION = '/(?<=@Glue\(\n)(.|\n)*?(?=(\s\*\n)*?\))/';
-    protected const REGEX_PATTERN_TRIM_SYMBOLS = '/[^(\w\s)=,\.\n]*/';
-    protected const REGEX_PATTERN_ACTION_NAME = '/(\w)+Action/';
+    protected const PATTERN_REGEX_GLUE_ANNOTATION = '/(?<=@Glue\(\n)(.|\n)*?(?=(\s\*\n)*?\))/';
+    protected const PATTERN_REGEX_TRIM_SYMBOLS = '/[^(\w\s),{,},\-,=,\.\n]*/';
+    protected const PATTERN_REGEX_TRIM_MULTI_SPACES = '/ {2,}/';
+    protected const PATTERN_REGEX_MULTI_LINE_ANNOTATION = '/(?<=\w=\{\n)(.|\n)+?(?=\n\})/';
+    protected const PATTERN_REGEX_ACTION_NAME = '/(\w)+Action/';
 
-    protected const NAMESPACE_PATTERN_CONTROLLER = '%s\Controller\%s';
+    protected const PATTERN_NAMESPACE_CONTROLLER = '%s\Controller\%s';
 
-    protected const ERROR_MESSAGE_COMMA_MISSED_PATTERN = 'Line must end with "," in multiline annotation. Found in  %s';
+    protected const PATTERN_ERROR_MESSAGE_COMMA_MISSED = 'Line must end with "," in multiline annotation. Found in  %s';
 
-    protected const FINDER_PATTERN_PLACEHOLDER_MODULE = '%module%';
-    protected const FINDER_PATTERN_PLACEHOLDER_CONTROLLER = '%controller%';
-    protected const FINDER_PATTERN_PROJECT_CONTROLLER = APPLICATION_SOURCE_DIR . '/' . self::FINDER_PATTERN_PLACEHOLDER_MODULE . '/Glue/' . self::FINDER_PATTERN_PLACEHOLDER_MODULE . '/Controller/' . self::FINDER_PATTERN_PLACEHOLDER_CONTROLLER . '.php';
-    protected const FINDER_PATTERN_PRODUCT_CONTROLLER = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . self::FINDER_PATTERN_PLACEHOLDER_MODULE . '/src/Spryker/Glue/' . self::FINDER_PATTERN_PLACEHOLDER_MODULE . '/Controller/' . self::FINDER_PATTERN_PLACEHOLDER_CONTROLLER . '.php';
+    protected const PATTERN_FINDER_PLACEHOLDER_MODULE = '%module%';
+    protected const PATTERN_FINDER_PLACEHOLDER_CONTROLLER = '%controller%';
+    protected const PATTERN_FINDER_PROJECT_CONTROLLER = APPLICATION_SOURCE_DIR . '/' . self::PATTERN_FINDER_PLACEHOLDER_MODULE . '/Glue/' . self::PATTERN_FINDER_PLACEHOLDER_MODULE . '/Controller/' . self::PATTERN_FINDER_PLACEHOLDER_CONTROLLER . '.php';
+    protected const PATTERN_FINDER_PRODUCT_CONTROLLER = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . self::PATTERN_FINDER_PLACEHOLDER_MODULE . '/src/Spryker/Glue/' . self::PATTERN_FINDER_PLACEHOLDER_MODULE . '/Controller/' . self::PATTERN_FINDER_PLACEHOLDER_CONTROLLER . '.php';
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
@@ -58,7 +59,7 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
         $substr = substr($pluginClass, 0, strpos($pluginClass, '\Plugin\\'));
 
         return sprintf(
-            static::NAMESPACE_PATTERN_CONTROLLER,
+            static::PATTERN_NAMESPACE_CONTROLLER,
             $substr,
             $controllerClass
         );
@@ -78,14 +79,14 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
 
         return [
             str_replace(
-                [static::FINDER_PATTERN_PLACEHOLDER_MODULE, static::FINDER_PATTERN_PLACEHOLDER_CONTROLLER],
+                [static::PATTERN_FINDER_PLACEHOLDER_MODULE, static::PATTERN_FINDER_PLACEHOLDER_CONTROLLER],
                 [$module, $controller],
-                static::FINDER_PATTERN_PRODUCT_CONTROLLER
+                static::PATTERN_FINDER_PRODUCT_CONTROLLER
             ),
             str_replace(
-                [static::FINDER_PATTERN_PLACEHOLDER_MODULE, static::FINDER_PATTERN_PLACEHOLDER_CONTROLLER],
+                [static::PATTERN_FINDER_PLACEHOLDER_MODULE, static::PATTERN_FINDER_PLACEHOLDER_CONTROLLER],
                 [$module, $controller],
-                static::FINDER_PATTERN_PROJECT_CONTROLLER
+                static::PATTERN_FINDER_PROJECT_CONTROLLER
             ),
         ];
     }
@@ -105,7 +106,7 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
                 $lastParsedParameters = $this->getParametersFromDocComment($token[1]);
                 continue;
             }
-            if ($token[0] === T_STRING && preg_match(static::REGEX_PATTERN_ACTION_NAME, $token[1]) && $lastParsedParameters) {
+            if ($token[0] === T_STRING && preg_match(static::PATTERN_REGEX_ACTION_NAME, $token[1]) && $lastParsedParameters) {
                 $result[strtoupper(str_replace('Action', '', $token[1]))] = $lastParsedParameters;
                 $lastParsedParameters = [];
             }
@@ -122,27 +123,23 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
     protected function getParametersFromDocComment(string $comment): ?array
     {
         $parameters = [];
-        preg_match(static::REGEX_PATTERN_GLUE_ANNOTATION, $comment, $matches);
-        $matches = array_map('trim', $matches);
+        preg_match_all(static::PATTERN_REGEX_GLUE_ANNOTATION, $comment, $matches);
+        $matches = array_map('trim', $matches[0]);
         $matchesFiltered = array_filter($matches, 'strlen');
         if (!$matchesFiltered) {
             return null;
         }
 
         array_walk($matchesFiltered, function (&$match) {
-            $match = trim(preg_replace(static::REGEX_PATTERN_TRIM_SYMBOLS, '', $match));
+            $match = preg_replace(static::PATTERN_REGEX_TRIM_SYMBOLS, '', $match);
+            $match = preg_replace(static::PATTERN_REGEX_TRIM_MULTI_SPACES, '', $match);
+            $match = trim($match);
+            if (preg_match_all(static::PATTERN_REGEX_MULTI_LINE_ANNOTATION, $match, $matches, PREG_OFFSET_CAPTURE)) {
+                $match = $this->convertMultiLineAnnotationToSingleLine($match, $matches[0]);
+            }
         });
 
-        foreach ($matchesFiltered as $matchFiltered) {
-            $matchesExploded = explode(PHP_EOL, $matchFiltered);
-            $this->validateMultilineAnnotations($matchesExploded);
-
-            foreach ($matchesExploded as $match) {
-                [$parameterName, $parameterValue] = explode('=', $match);
-                $parameterValue = $this->filterParameter($parameterValue);
-                $parameters[$parameterName] = $parameterValue;
-            }
-        }
+        $parameters += $this->getParametersFromAnnotations($matchesFiltered);
 
         return $parameters;
     }
@@ -150,25 +147,18 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
     /**
      * @param array $annotationsExploded
      *
-     * @throws \Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\AnnotationException
-     *
-     * @return bool
+     * @return void
      */
-    protected function validateMultilineAnnotations(array &$annotationsExploded): bool
+    protected function filterMultiLineAnnotations(array &$annotationsExploded): void
     {
         if (count($annotationsExploded) <= 1) {
-            return true;
+            return;
         }
 
-        foreach ($annotationsExploded as $key => &$value) {
-            if (substr($value, -1) !== ',' && $key !== count($annotationsExploded) - 1) {
-                throw new AnnotationException(sprintf(static::ERROR_MESSAGE_COMMA_MISSED_PATTERN, $value));
-            }
-            $value = str_replace(',', '', $value);
+        foreach ($annotationsExploded as &$value) {
+            $value = trim($value, ", \t\n\r\0\x0B");
         }
         unset($value);
-
-        return true;
     }
 
     /**
@@ -190,6 +180,78 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
             return filter_var($parameter, FILTER_VALIDATE_FLOAT);
         }
 
-        return $parameter;
+        return trim($parameter, ", \t\n\r\0\x0B");
+    }
+
+    /**
+     * @param string $string
+     * @param string[] $matches
+     *
+     * @return string
+     */
+    protected function convertMultiLineAnnotationToSingleLine(string $string, array $matches): string
+    {
+        foreach ($matches as $key => $match) {
+            $replacement = implode('|', explode(PHP_EOL, $match[0]));
+            $position = (int)$match[1] - strlen(PHP_EOL) * (2 * $key + 1);
+            $length = strlen($match[0]) + 2 * strlen(PHP_EOL);
+            $string = substr_replace($string, $replacement, $position, $length);
+        }
+
+        return $string;
+    }
+
+    /**
+     * @param array $annotations
+     *
+     * @return array
+     */
+    protected function getParametersFromAnnotations(array $annotations): array
+    {
+        $parameters = [];
+        foreach ($annotations as $annotation) {
+            $annotationExploded = explode(PHP_EOL, $annotation);
+            $this->filterMultiLineAnnotations($annotationExploded);
+
+            foreach ($annotationExploded as $annotationParameter) {
+                if (preg_match('/\w*={.*}/', $annotationParameter)) {
+                    $parameters += $this->getArrayParameterFromAnnotation($annotationParameter);
+                    continue;
+                }
+
+                [$parameterName, $parameterValue] = explode('=', $annotationParameter);
+                $parameterValue = $this->filterParameter($parameterValue);
+                $parameters[$parameterName] = $parameterValue;
+            }
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * @param string $annotationParameter
+     *
+     * @return array
+     */
+    protected function getArrayParameterFromAnnotation(string $annotationParameter): array
+    {
+        $parameters = [];
+        [$parameterName, $parameterValues] = preg_split('/(?<=\w)*(=)(?=\{)/', $annotationParameter);
+        $parameterValues = trim($parameterValues, '{}|,');
+
+        $parameterValues = explode('|', $parameterValues);
+        foreach ($parameterValues as $parameterValue) {
+            if (preg_match('/\d*=./', $parameterValue)) {
+                [$code, $description] = explode('=', $parameterValue);
+                $parameters[$parameterName] = [$code => $this->filterParameter($description)];
+                continue;
+            }
+            $parameterValue = $this->filterParameter($parameterValue);
+            if (!isset($parameters[$parameterName]) || !in_array($parameterValue, $parameters[$parameterName], true)) {
+                $parameters[$parameterName][] = $parameterValue;
+            }
+        }
+
+        return $parameters;
     }
 }

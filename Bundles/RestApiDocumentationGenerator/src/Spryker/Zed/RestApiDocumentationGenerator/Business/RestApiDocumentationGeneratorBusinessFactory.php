@@ -53,11 +53,7 @@ class RestApiDocumentationGeneratorBusinessFactory extends AbstractBusinessFacto
      */
     public function createRestApiDocumentationPathsGenerator(): RestApiDocumentationPathGeneratorInterface
     {
-        return new RestApiDocumentationPathGenerator(
-            $this->getConfig(),
-            $this->createRestApiDocumentationSchemaGenerator(),
-            $this->createGlueAnnotationAnalyzer()
-        );
+        return new RestApiDocumentationPathGenerator();
     }
 
     /**

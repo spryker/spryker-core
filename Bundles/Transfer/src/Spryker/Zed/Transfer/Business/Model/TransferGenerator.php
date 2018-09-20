@@ -48,9 +48,6 @@ class TransferGenerator implements TransferGeneratorInterface
         $definitions = $this->definitionBuilder->getDefinitions();
 
         foreach ($definitions as $classDefinition) {
-            if ($classDefinition->getName() === 'RestWishlistsAttributesTransfer') {
-                $i = 1;
-            }
             $fileName = $this->generator->generate($classDefinition);
 
             $this->messenger->info(sprintf('<info>%s</info> was generated', $fileName));
