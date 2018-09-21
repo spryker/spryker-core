@@ -125,4 +125,23 @@ class SharedCartClient extends AbstractClient implements SharedCartClientInterfa
             ->createCartDeleteChecker()
             ->isQuoteDeletable($quoteTransfer);
     }
+
+    /**
+     * Specification:
+     *  - Sends Zed Request to get share detail collection by quote id.
+     *  - Filters quote share detail from share details by company user id.
+     *  - Sends Zed request to update quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function dismissSharedCart(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartSharer()
+            ->dismissSharedCart($shareCartRequestTransfer);
+    }
 }

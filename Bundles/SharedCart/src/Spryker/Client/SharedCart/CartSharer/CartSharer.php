@@ -89,6 +89,8 @@ class CartSharer implements CartSharerInterface
     }
 
     /**
+     * @deprecated Please use CartSharerInterface::updateQuotePermissions() instead
+     *
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -101,6 +103,26 @@ class CartSharer implements CartSharerInterface
             ->setShareDetails(
                 $this->filterShareCartToRemove(
                     $quoteTransfer->getShareDetails(),
+                    $shareCartRequestTransfer
+                )
+            );
+
+        return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function dismissSharedCart(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer
+    {
+        $quoteTransfer = $this->getQuote($shareCartRequestTransfer->getIdQuote());
+        $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequest($quoteTransfer);
+        $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()
+            ->setShareDetails(
+                $this->filterShareCartToRemove(
+                    $this->sharedCartStub->getShareDetailsByIdQuoteAction($quoteTransfer)->getShareDetails(),
                     $shareCartRequestTransfer
                 )
             );
@@ -241,9 +263,7 @@ class CartSharer implements CartSharerInterface
     {
         $filteredShareDetailTransferList = new ArrayObject();
         foreach ($shareDetailTransferList as $shareDetailTransfer) {
-            if ($shareDetailTransfer->getIdCompanyUser() === $shareCartRequestTransfer->getIdCompanyUser()
-                && $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup() === $shareCartRequestTransfer->getIdQuotePermissionGroup()
-            ) {
+            if ($shareDetailTransfer->getIdCompanyUser() === $shareCartRequestTransfer->getIdCompanyUser()) {
                 continue;
             }
             $filteredShareDetailTransferList->append($shareDetailTransfer);
