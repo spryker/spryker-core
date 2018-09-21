@@ -15,19 +15,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 class CustomersResourceMapper implements CustomersResourceMapperInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
-    {
-        $this->restResourceBuilder = $restResourceBuilder;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
