@@ -180,6 +180,23 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeBulk(array $searchDocumentTransfers): bool
+    {
+        return $this
+            ->getFactory()
+            ->createWriter()
+            ->writeBulk($searchDocumentTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param array $dataSet
      * @param string|null $typeName
      * @param string|null $indexName

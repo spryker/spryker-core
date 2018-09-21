@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Synchronization\Business\Search;
 
 use Elastica\Exception\NotFoundException;
+use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface;
 use Spryker\Zed\Synchronization\Business\Validation\OutdatedValidatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface;
@@ -142,15 +143,40 @@ class SynchronizationSearch implements SynchronizationInterface
      */
     public function writeBulk(array $data): void
     {
-        $typeName = $this->getParam($data, static::TYPE);
-        $indexName = $this->getParam($data, static::INDEX);
-        $dataSets = $this->prepareBulkDataSets($data);
+        $dataSets = $this->prepareSearchDocumentTransfers($data);
 
         if ($dataSets === []) {
             return;
         }
 
-        $this->searchClient->write($dataSets, $typeName, $indexName);
+        $this->searchClient->writeBulk($dataSets);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\SearchDocumentTransfer[]
+     */
+    protected function prepareSearchDocumentTransfers(array $data): array
+    {
+        $searchDocumentTransfers = [];
+        foreach ($data as $datum) {
+            $typeName = $this->getParam($datum, static::TYPE);
+            $indexName = $this->getParam($datum, static::INDEX);
+            $key = $datum[static::KEY];
+            $value = $datum[static::VALUE];
+            unset($value['_timestamp']);
+
+            $searchDocumentTransfer = new SearchDocumentTransfer();
+            $searchDocumentTransfer->setType($typeName);
+            $searchDocumentTransfer->setIndex($indexName);
+            $searchDocumentTransfer->setId($key);
+            $searchDocumentTransfer->setData($value);
+
+            $searchDocumentTransfers[] = $searchDocumentTransfer;
+        }
+
+        return $searchDocumentTransfers;
     }
 
     /**
@@ -162,7 +188,7 @@ class SynchronizationSearch implements SynchronizationInterface
     {
         $typeName = $this->getParam($data, static::TYPE);
         $indexName = $this->getParam($data, static::INDEX);
-        $dataSets = $this->prepareBulkDataSets($data);
+        $dataSets = $this->prepareDeleteBulkDataSets($data);
 
         if ($dataSets === []) {
             return;
@@ -176,7 +202,7 @@ class SynchronizationSearch implements SynchronizationInterface
      *
      * @return array
      */
-    protected function prepareBulkDataSets(array $data): array
+    protected function prepareDeleteBulkDataSets(array $data): array
     {
         $dataSets = [];
         foreach ($data as $datum) {

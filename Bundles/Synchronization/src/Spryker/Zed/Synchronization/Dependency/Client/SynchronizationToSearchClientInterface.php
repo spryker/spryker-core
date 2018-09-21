@@ -28,6 +28,13 @@ interface SynchronizationToSearchClientInterface
     public function write(array $dataSet, $typeName = null, $indexName = null);
 
     /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeBulk(array $searchDocumentTransfers): bool;
+
+    /**
      * @param array $dataSet
      * @param string|null $typeName
      * @param string|null $indexName

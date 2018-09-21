@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Elastica\Exception\NotFoundException;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Generated\Shared\Transfer\QueueSendMessageTransfer;
+use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use PHPUnit\Framework\SkippedTestError;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
@@ -119,9 +120,13 @@ class SynchronizationFacadeTest extends Unit
 
         $searchClientBridgeMock
             ->expects($this->once())
-            ->method('write')
+            ->method('writeBulk')
             ->with($this->callback(function (array $data) use ($queueMessageBody) {
-                $this->assertEquals([$queueMessageBody['write']['key'] => $queueMessageBody['write']['value']], $data);
+                $searchDocumentTransfer = new SearchDocumentTransfer();
+                $searchDocumentTransfer->setId($queueMessageBody['write']['key']);
+                $searchDocumentTransfer->setData($queueMessageBody['write']['value']);
+
+                $this->assertEquals($searchDocumentTransfer->toArray(), $data[0]->toArray());
 
                 return true;
             }));
@@ -474,6 +479,7 @@ class SynchronizationFacadeTest extends Unit
             ->disableOriginalConstructor()
             ->setMethods([
                 'write',
+                'writeBulk',
                 'read',
                 'delete',
             ])

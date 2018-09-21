@@ -130,6 +130,18 @@ interface SearchClientInterface
 
     /**
      * Specification:
+     * - Writes data into an external search service in bulk mode.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeBulk(array $searchDocumentTransfers): bool;
+
+    /**
+     * Specification:
      * - Deletes data from an external search service (e.g Elasticsearch)
      *
      * @api
