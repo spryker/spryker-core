@@ -7,16 +7,16 @@
 
 namespace SprykerTest\Zed\RestRequestValidator\Communication\Stub\Constraint;
 
-use Spryker\Zed\Currency\Persistence\CurrencyQueryContainer;
-use SprykerTest\Zed\RestRequestValidator\Communication\Stub\RestRequestValidatorToCurrencyQueryContainerBridge;
+use Spryker\Zed\Currency\Business\CurrencyFacade;
+use SprykerTest\Zed\RestRequestValidator\Communication\Stub\RestRequestValidatorToCurrencyFacadeBridge;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class Currency extends SymfonyConstraint
 {
     /**
-     * @var \SprykerTest\Zed\RestRequestValidator\Communication\Stub\RestRequestValidatorToCurrencyQueryContainerInterface
+     * @var \SprykerTest\Zed\RestRequestValidator\Communication\Stub\RestRequestValidatorToCurrencyFacadeInterface
      */
-    protected $currencyQueryContainer;
+    protected $currencyFacade;
 
     /**
      * @param array|null $options
@@ -25,16 +25,16 @@ class Currency extends SymfonyConstraint
     {
         parent::__construct($options);
 
-        $this->currencyQueryContainer =
-            new RestRequestValidatorToCurrencyQueryContainerBridge(new CurrencyQueryContainer());
+        $this->currencyFacade =
+            new RestRequestValidatorToCurrencyFacadeBridge(new CurrencyFacade());
     }
 
     /**
-     * @return \SprykerTest\Zed\RestRequestValidator\Communication\Stub\RestRequestValidatorToCurrencyQueryContainerInterface
+     * @return \SprykerTest\Zed\RestRequestValidator\Communication\Stub\RestRequestValidatorToCurrencyFacadeInterface
      */
-    public function getCurrencyQueryContainer()
+    public function getCurrencyFacade()
     {
-        return $this->currencyQueryContainer;
+        return $this->currencyFacade;
     }
 
     /**

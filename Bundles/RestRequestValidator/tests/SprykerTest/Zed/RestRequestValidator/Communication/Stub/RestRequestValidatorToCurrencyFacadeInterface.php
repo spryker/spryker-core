@@ -7,12 +7,12 @@
 
 namespace SprykerTest\Zed\RestRequestValidator\Communication\Stub;
 
-interface RestRequestValidatorToCurrencyQueryContainerInterface
+interface RestRequestValidatorToCurrencyFacadeInterface
 {
     /**
      * @param string $isoCode
      *
-     * @return \Orm\Zed\Currency\Persistence\SpyCurrencyQuery
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function queryCurrencyByIsoCode(string $isoCode);
+    public function fromIsoCode($isoCode);
 }

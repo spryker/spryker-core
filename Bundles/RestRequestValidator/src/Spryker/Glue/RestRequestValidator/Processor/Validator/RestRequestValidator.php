@@ -11,9 +11,7 @@ use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidatorInterface;
-use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapterInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToValidationAdapterInterface;
-use Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface;
 use Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,11 +20,6 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class RestRequestValidator implements RestRequestValidatorInterface
 {
-    /**
-     * @var \Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface
-     */
-    protected $configReader;
-
     /**
      * @var \Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface
      */
@@ -43,28 +36,17 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected $validationAdapter;
 
     /**
-     * @var \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapterInterface
-     */
-    protected $constraintCollectionAdapter;
-
-    /**
-     * @param \Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface $configReader
      * @param \Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface $constraintResolver
      * @param \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToValidationAdapterInterface $validationAdapter
-     * @param \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapterInterface $constraintCollectionAdapter
      * @param \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig $config
      */
     public function __construct(
-        RestRequestValidatorConfigReaderInterface $configReader,
         RestRequestValidatorConstraintResolverInterface $constraintResolver,
         RestRequestValidatorToValidationAdapterInterface $validationAdapter,
-        RestRequestValidatorToConstraintCollectionAdapterInterface $constraintCollectionAdapter,
         RestRequestValidatorConfig $config
     ) {
-        $this->configReader = $configReader;
         $this->constraintResolver = $constraintResolver;
         $this->validationAdapter = $validationAdapter;
-        $this->constraintCollectionAdapter = $constraintCollectionAdapter;
         $this->config = $config;
     }
 
@@ -79,7 +61,8 @@ class RestRequestValidator implements RestRequestValidatorInterface
         if (!$restRequest->getResource()->getAttributes() || !$this->isSubjectByMethod($restRequest)) {
             return null;
         }
-        $validationConfig = $this->configReader->findValidationConfiguration($restRequest);
+
+        $validationConfig = $this->constraintResolver->initializeConstraintCollection($restRequest);
         $validationResult = $this->applyValidationToRequest($restRequest, $validationConfig);
         if (!$validationResult->getRestErrors()->count()) {
             return null;
@@ -90,26 +73,22 @@ class RestRequestValidator implements RestRequestValidatorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param array|null $validationConfig
+     * @param \Symfony\Component\Validator\Constraints\Collection|null $constraintCollection
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
      */
-    protected function applyValidationToRequest(RestRequestInterface $restRequest, $validationConfig = null): RestErrorCollectionTransfer
+    protected function applyValidationToRequest(RestRequestInterface $restRequest, $constraintCollection = null): RestErrorCollectionTransfer
     {
-        if ($validationConfig === null) {
+        if ($constraintCollection === null) {
             return $this->handleNoCacheFileError((new RestErrorCollectionTransfer()));
         }
 
         $validator = $this->validationAdapter->createValidator();
-        $initializedConstraintCollection = $this->constraintResolver->initializeConstraintCollection($validationConfig);
-        $constraints = $this->constraintCollectionAdapter->createCollection(
-            ['fields' => $initializedConstraintCollection] + $this->getDefaultValidationConfig()
-        );
         $fieldsToValidate = $this->getFieldsForValidation($restRequest);
 
         $violations = $validator->validate(
             $fieldsToValidate,
-            $constraints
+            $constraintCollection
         );
 
         return $this->formatResult($violations);
@@ -161,14 +140,6 @@ class RestRequestValidator implements RestRequestValidatorInterface
     }
 
     /**
-     * @return array
-     */
-    protected function getDefaultValidationConfig(): array
-    {
-        return $this->config->getDefaultValidationConfig();
-    }
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return bool
@@ -176,15 +147,5 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function isSubjectByMethod(RestRequestInterface $restRequest): bool
     {
         return in_array($restRequest->getMetadata()->getMethod(), $this->config->getAvailableMethods());
-    }
-
-    /**
-     * @param string $dir
-     *
-     * @return bool
-     */
-    protected function isDirEmpty($dir): bool
-    {
-        return !is_readable($dir);
     }
 }

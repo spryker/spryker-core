@@ -7,10 +7,14 @@
 
 namespace Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint;
 
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\RestRequestValidator\Business\Exception\ClassNotFound;
+use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapterInterface;
+use Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface;
 use Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Collection;
 
 class RestRequestValidatorConstraintResolver implements RestRequestValidatorConstraintResolverInterface
 {
@@ -22,20 +26,63 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     protected $config;
 
     /**
+     * @var \Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface
+     */
+    protected $configReader;
+
+    /**
+     * @var \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapterInterface
+     */
+    protected $constraintCollectionAdapter;
+
+    /**
+     * @param \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapterInterface $constraintCollectionAdapter
+     * @param \Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface $configReader
      * @param \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig $config
      */
-    public function __construct(RestRequestValidatorConfig $config)
-    {
+    public function __construct(
+        RestRequestValidatorToConstraintCollectionAdapterInterface $constraintCollectionAdapter,
+        RestRequestValidatorConfigReaderInterface $configReader,
+        RestRequestValidatorConfig $config
+    ) {
+        $this->constraintCollectionAdapter = $constraintCollectionAdapter;
+        $this->configReader = $configReader;
         $this->config = $config;
     }
 
     /**
-     * @param array $validationConfig
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array
+     * @return \Symfony\Component\Validator\Constraints\Collection|null
      */
-    public function initializeConstraintCollection(array $validationConfig): array
+    public function initializeConstraintCollection(RestRequestInterface $restRequest): ?Collection
     {
+        $initializedConstraintCollection = $this->initializeConstraintFromConfig($restRequest);
+
+        if ($initializedConstraintCollection === null) {
+            return null;
+        }
+
+        $constraints = $this->constraintCollectionAdapter->createCollection(
+            ['fields' => $initializedConstraintCollection] + $this->getDefaultValidationConfig()
+        );
+
+        return $constraints;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return array|null
+     */
+    protected function initializeConstraintFromConfig(RestRequestInterface $restRequest): ?array
+    {
+        $validationConfig = $this->configReader->findValidationConfiguration($restRequest);
+
+        if ($validationConfig === null) {
+            return null;
+        }
+
         $configResult = [];
         foreach ($validationConfig as $fieldName => $validators) {
             if ($validators !== null) {
@@ -99,5 +146,13 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
             sprintf(RestRequestValidatorConfig::EXCEPTION_MESSAGE_CLASS_NOT_FOUND, $className),
             Response::HTTP_NOT_FOUND
         );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultValidationConfig(): array
+    {
+        return $this->config->getDefaultValidationConfig();
     }
 }

@@ -20,6 +20,7 @@ use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorTo
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapter;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReader;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolver;
+use Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\RestRequestValidator;
 use Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig;
 use SprykerTest\Zed\RestRequestValidator\Communication\Stub\EndpointTransfer;
@@ -61,7 +62,7 @@ class RestRequestValidatorPluginsTest extends Unit
      */
     public function testValidateWillPassOnCorrectRequest(): void
     {
-        $mockRestRequestValidator = $this->createMockRestRequestValidator(static::STORE_NAME_DE);
+        $mockRestRequestValidator = $this->createMockRestRequestValidator();
         $mockRestRequest = $this->createMockRestRequestWithData(static::CORRECT_ENDPOINT_DATA);
 
         $errorTransfer = $mockRestRequestValidator->validate(
@@ -77,7 +78,7 @@ class RestRequestValidatorPluginsTest extends Unit
      */
     public function testValidateWillPassOnIncorrectRequest(): void
     {
-        $mockRestRequestValidator = $this->createMockRestRequestValidator(static::STORE_NAME_AT);
+        $mockRestRequestValidator = $this->createMockRestRequestValidator();
         $mockRestRequest = $this->createMockRestRequestWithData(static::INCORRECT_ENDPOINT_DATA);
 
         $errorTransfer = $mockRestRequestValidator->validate(
@@ -100,7 +101,7 @@ class RestRequestValidatorPluginsTest extends Unit
     {
         $this->expectException(ClassNotFound::class);
 
-        $mockRestRequestValidator = $this->createMockRestRequestValidatorWithWrongConstraint(static::STORE_NAME_DE);
+        $mockRestRequestValidator = $this->createMockRestRequestValidatorWithWrongConstraint();
         $mockRestRequest = $this->createMockRestRequestWithData(static::CORRECT_ENDPOINT_DATA);
 
         $mockRestRequestValidator->validate(
@@ -114,7 +115,7 @@ class RestRequestValidatorPluginsTest extends Unit
      */
     public function testValidateWillThrowOnNotFoundConstraint(): void
     {
-        $mockRestRequestValidator = $this->createMockRestRequestValidator(static::STORE_NAME_DE);
+        $mockRestRequestValidator = $this->createMockRestRequestValidator();
 
         $mockRestRequestObject = $this->createMockRestRequest();
         $mockRestRequest = $mockRestRequestObject->createRestRequest(Request::METHOD_GET);
@@ -270,19 +271,15 @@ class RestRequestValidatorPluginsTest extends Unit
     }
 
     /**
-     * @param string $storeName
-     *
      * @return \Spryker\Glue\RestRequestValidator\Processor\Validator\RestRequestValidator
      */
-    protected function createMockRestRequestValidator(string $storeName): RestRequestValidator
+    protected function createMockRestRequestValidator(): RestRequestValidator
     {
         $mockConfig = $this->createMockConfig();
 
         $restRequestValidatorPlugin = new RestRequestValidator(
-            $this->createMockConfigReader($storeName, $mockConfig),
-            new RestRequestValidatorConstraintResolver($mockConfig),
+            $this->createMockConfigResolver($mockConfig),
             new RestRequestValidatorToValidationAdapter(),
-            new RestRequestValidatorToConstraintCollectionAdapter(),
             $mockConfig
         );
 
@@ -290,22 +287,32 @@ class RestRequestValidatorPluginsTest extends Unit
     }
 
     /**
-     * @param string $storeName
-     *
      * @return \Spryker\Glue\RestRequestValidator\Processor\Validator\RestRequestValidator
      */
-    protected function createMockRestRequestValidatorWithWrongConstraint(string $storeName): RestRequestValidator
+    protected function createMockRestRequestValidatorWithWrongConstraint(): RestRequestValidator
     {
         $mockConfig = $this->createMockConfigWithWrongConstraint();
 
         $restRequestValidatorPlugin = new RestRequestValidator(
-            $this->createMockConfigReader($storeName, $mockConfig),
-            new RestRequestValidatorConstraintResolver($mockConfig),
+            $this->createMockConfigResolver($mockConfig),
             new RestRequestValidatorToValidationAdapter(),
-            new RestRequestValidatorToConstraintCollectionAdapter(),
             $mockConfig
         );
 
         return $restRequestValidatorPlugin;
+    }
+
+    /**
+     * @param \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig $mockConfig
+     *
+     * @return \Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface
+     */
+    protected function createMockConfigResolver(RestRequestValidatorConfig $mockConfig): RestRequestValidatorConstraintResolverInterface
+    {
+        return new RestRequestValidatorConstraintResolver(
+            new RestRequestValidatorToConstraintCollectionAdapter(),
+            $this->createMockConfigReader(static::STORE_NAME_DE, $mockConfig),
+            $mockConfig
+        );
     }
 }
