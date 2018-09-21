@@ -15,7 +15,6 @@ use Spryker\Zed\ProductListSearch\ProductListSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
- * @method \Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepositoryInterface getRepository()
  */
 class ProductListSearchCommunicationFactory extends AbstractCommunicationFactory
 {

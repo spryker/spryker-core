@@ -15,6 +15,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoad
 /**
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductListSearch\Communication\ProductListSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepositoryInterface getRepository()
  */
 class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
 {
@@ -98,8 +99,7 @@ class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageD
      */
     protected function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array
     {
-        return $this->getFactory()
-            ->getRepository()
+        return $this->getRepository()
             ->getProductConcreteCountByProductAbstractIds($productAbstractIds);
     }
 
@@ -110,8 +110,7 @@ class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageD
      */
     protected function getProductList(array $productAbstractIds): array
     {
-        return $this->getFactory()
-            ->getRepository()
+        return $this->getRepository()
             ->getProductList($productAbstractIds);
     }
 
@@ -122,8 +121,7 @@ class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageD
      */
     protected function getCategoryProductList(array $productAbstractIds): array
     {
-        return $this->getFactory()
-            ->getRepository()
+        return $this->getRepository()
             ->getCategoryProductList($productAbstractIds);
     }
 
