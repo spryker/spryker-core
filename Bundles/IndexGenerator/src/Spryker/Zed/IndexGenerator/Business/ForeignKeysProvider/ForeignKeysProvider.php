@@ -69,7 +69,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
             }
             $foreignKeyTableTransfer = $this->processTableXmlElement($tableXmlElement);
 
-            if ($foreignKeyTableTransfer->getColumns() !== null && count($foreignKeyTableTransfer->getColumns()) > 0) {
+            if (count($foreignKeyTableTransfer->getColumns()) > 0) {
                 $foreignKeyFileTransfer->addForeignKeyTable($foreignKeyTableTransfer);
             }
         }
