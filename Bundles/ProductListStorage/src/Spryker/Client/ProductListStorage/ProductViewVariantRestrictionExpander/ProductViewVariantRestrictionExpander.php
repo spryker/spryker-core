@@ -37,7 +37,6 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
      */
     public function expandProductVariantData(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
-        /** @var \Generated\Shared\Transfer\AttributeMapStorageTransfer|null $attributeMapStorageTransfer */
         $attributeMapStorageTransfer = $productViewTransfer->getAttributeMap();
         if (!$attributeMapStorageTransfer) {
             return $productViewTransfer;
