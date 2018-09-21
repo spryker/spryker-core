@@ -11,9 +11,15 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuickOrderProductPriceTransfer;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToCurrencyClientInterface;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface;
+use Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface;
 
 class QuickOrderProductPriceTransferPriceExpander implements QuickOrderProductPriceTransferPriceExpanderInterface
 {
+    /**
+     * @var \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface
+     */
+    protected $priceConcreteStorageReader;
+
     /**
      * @var \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface
      */
@@ -25,25 +31,35 @@ class QuickOrderProductPriceTransferPriceExpander implements QuickOrderProductPr
     protected $currencyClient;
 
     /**
+     * @param \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface $priceConcreteStorageReader
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface $priceProductClient
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToCurrencyClientInterface $currencyClient
      */
     public function __construct(
+        PriceConcreteStorageReaderInterface $priceConcreteStorageReader,
         PriceProductStorageToPriceProductInterface $priceProductClient,
         PriceProductStorageToCurrencyClientInterface $currencyClient
     ) {
+        $this->priceConcreteStorageReader = $priceConcreteStorageReader;
         $this->priceProductClient = $priceProductClient;
         $this->currencyClient = $currencyClient;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\QuickOrderProductPriceTransfer
      */
-    public function expandQuickOrderProductPriceTransferWithPrice(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer, array $priceProductTransfers): QuickOrderProductPriceTransfer
+    public function expandQuickOrderProductPriceTransferWithPrice(QuickOrderProductPriceTransfer $quickOrderProductPriceTransfer): QuickOrderProductPriceTransfer
     {
+        if ($quickOrderProductPriceTransfer->getIdProductConcrete() === null) {
+            return $quickOrderProductPriceTransfer;
+        }
+
+        $priceProductTransfers = $this->priceConcreteStorageReader->findPriceProductConcreteTransfers(
+            $quickOrderProductPriceTransfer->getIdProductConcrete()
+        );
+
         $priceProductFilterTransfer = new PriceProductFilterTransfer();
         $priceProductFilterTransfer->setQuantity($quickOrderProductPriceTransfer->getQuantity());
 

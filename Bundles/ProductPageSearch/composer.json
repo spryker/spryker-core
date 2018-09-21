@@ -12,6 +12,7 @@
     "spryker/product": "^5.5.0 || ^6.0.0",
     "spryker/product-category": "^4.5.0",
     "spryker/product-image": "^3.5.0",
+    "spryker/product-page-search-extension": "^1.0.0",
     "spryker/product-search": "^5.4.0",
     "spryker/propel-orm": "^1.5.0",
     "spryker/search": "^7.0.0 || ^8.0.0",
@@ -24,12 +25,14 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
+    "spryker/elastica": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/propel-query-builder": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/elastica": "If you want to use Elasticsearch plugins, minimum required version: 4.0.0",
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
   },
   "autoload": {
