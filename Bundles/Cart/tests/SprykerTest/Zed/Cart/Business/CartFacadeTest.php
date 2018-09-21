@@ -202,6 +202,53 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItem(): void
+    {
+        // Arrange
+        $quoteTransfer = new QuoteTransfer();
+        $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setQuantity(3)
+            ->setUnitGrossPrice(1)
+            ->setGroupKeyPrefix(uniqid('', true));
+
+        $quoteTransfer->addItem($cartItem);
+
+        // Act
+        $this->cartFacade->cleanUpItems($quoteTransfer);
+
+        // Assert
+        $this->assertNull($quoteTransfer->getItems()[0]->getGroupKeyPrefix());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCleanUpItemsRemoveKeyGroupPrefixFromQuoteItemIfMoreThanOne(): void
+    {
+        // Arrange
+        $quoteTransfer = new QuoteTransfer();
+        $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setQuantity(3)
+            ->setUnitGrossPrice(1)
+            ->setGroupKeyPrefix(uniqid('', true));
+
+        $newItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setQuantity(1)
+            ->setUnitGrossPrice(1);
+
+        $quoteTransfer->addItem($cartItem);
+        $quoteTransfer->addItem($newItem);
+
+        // Act
+        $this->cartFacade->cleanUpItems($quoteTransfer);
+
+        // Assert
+        $this->assertNotNull($quoteTransfer->getItems()[0]->getGroupKeyPrefix());
+    }
+
+    /**
+     * @return void
+     */
     protected function setTestData()
     {
         $defaultPriceType = SpyPriceTypeQuery::create()->filterByName(self::PRICE_TYPE_DEFAULT)->findOneOrCreate();

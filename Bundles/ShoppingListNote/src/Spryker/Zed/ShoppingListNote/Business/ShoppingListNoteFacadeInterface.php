@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListNote\Business;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
@@ -26,15 +27,27 @@ interface ShoppingListNoteFacadeInterface
 
     /**
      * Specification:
-     *  - Saves note to shopping list item.
+     *  - Deletes note from shopping list item by id.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer|null
+     * @return void
      */
-    public function saveShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): ?ShoppingListItemNoteTransfer;
+    public function deleteShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void;
+
+    /**
+     * Specification:
+     * - Creates, updates or deletes note for shopping list item.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function saveShoppingListItemNoteForShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 
     /**
      * Specification:
@@ -47,4 +60,17 @@ interface ShoppingListNoteFacadeInterface
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function expandShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * Specification:
+     * - Copies the item cart note to shopping list item note if not empty.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function mapItemCartNoteToShoppingListItemNote(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 }

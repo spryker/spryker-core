@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListNote\Business;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -35,13 +36,29 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function saveShoppingListItemNoteForShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    {
+        return $this->getFactory()
+            ->createShoppingListNoteWriter()
+            ->saveShoppingListItemNoteForShoppingListItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer|null
+     * @return void
      */
-    public function saveShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): ?ShoppingListItemNoteTransfer
+    public function deleteShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void
     {
-        return $this->getFactory()->createShoppingListNoteWriter()->saveShoppingListItemNote($shoppingListItemNoteTransfer);
+        $this->getFactory()->createShoppingListNoteWriter()->deleteShoppingListItemNoteById($shoppingListItemNoteTransfer);
     }
 
     /**
@@ -56,5 +73,22 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
     public function expandShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         return $this->getFactory()->createShoppingListItemExpander()->expandItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function mapItemCartNoteToShoppingListItemNote(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    {
+        return $this->getFactory()
+            ->createItemToShoppingListItemMapper()
+            ->mapItemCartNoteToShoppingListItemNote($itemTransfer, $shoppingListItemTransfer);
     }
 }

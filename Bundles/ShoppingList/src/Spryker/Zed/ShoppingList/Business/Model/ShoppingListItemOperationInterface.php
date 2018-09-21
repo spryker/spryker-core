@@ -24,13 +24,6 @@ interface ShoppingListItemOperationInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function deleteShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
     public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer;
 
     /**

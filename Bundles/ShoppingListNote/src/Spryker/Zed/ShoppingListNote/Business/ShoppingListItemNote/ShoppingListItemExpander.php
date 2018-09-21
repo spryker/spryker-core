@@ -33,7 +33,8 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     {
         $shoppingListItemNoteTransfer = $this->shoppingLisItemNoteReader
             ->getShoppingListItemNoteByIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
-        $shoppingListItemTransfer->setNote($shoppingListItemNoteTransfer);
+
+        $shoppingListItemTransfer->setShoppingListItemNote($shoppingListItemNoteTransfer);
 
         return $shoppingListItemTransfer;
     }

@@ -175,17 +175,17 @@ class ConcreteManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testGetProductConcretesBySkusShouldReturnNull()
+    public function testGetProductConcretesBySkusShouldReturnEmptyArray()
     {
         $fakeNonExistSku = '101001101001';
 
         $this->setupDefaultProducts();
 
-        $productConcreteTransfers = $this->productFacade->findProductConcretesBySkus(
-            [$fakeNonExistSku]
-        );
+        $productConcreteTransfers = $this->productFacade->findProductConcretesBySkus([
+            $fakeNonExistSku,
+        ]);
 
-        $this->assertNull($productConcreteTransfers);
+        $this->assertEmpty($productConcreteTransfers);
     }
 
     /**

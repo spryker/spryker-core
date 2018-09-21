@@ -8,20 +8,21 @@
 namespace Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote;
 
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
 interface ShoppingListItemNoteWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer|null
-     */
-    public function saveShoppingListItemNote(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): ?ShoppingListItemNoteTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
-     *
      * @return void
      */
     public function deleteShoppingListItemNoteById(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function saveShoppingListItemNoteForShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 }
