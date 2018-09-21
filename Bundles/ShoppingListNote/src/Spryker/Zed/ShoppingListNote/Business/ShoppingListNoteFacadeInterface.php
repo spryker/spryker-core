@@ -39,7 +39,7 @@ interface ShoppingListNoteFacadeInterface
 
     /**
      * Specification:
-     * - Creates, updates or deletes note for shopping list item.
+     * - Saves current state of shopping list item note, if the note is empty, it gets deleted.
      *
      * @api
      *
