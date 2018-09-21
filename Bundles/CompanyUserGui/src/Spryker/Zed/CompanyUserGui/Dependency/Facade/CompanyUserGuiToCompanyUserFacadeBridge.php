@@ -44,4 +44,24 @@ class CompanyUserGuiToCompanyUserFacadeBridge implements CompanyUserGuiToCompany
     {
         return $this->companyUserFacade->delete($companyUserTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function enableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        return $this->companyUserFacade->enableCompanyUser($companyUserTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        return $this->companyUserFacade->disableCompanyUser($companyUserTransfer);
+    }
 }
