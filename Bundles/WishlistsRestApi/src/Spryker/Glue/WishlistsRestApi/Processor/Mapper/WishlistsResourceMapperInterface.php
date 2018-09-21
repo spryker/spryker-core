@@ -8,25 +8,16 @@
 namespace Spryker\Glue\WishlistsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestWishlistsAttributesTransfer;
-use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 interface WishlistsResourceMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistsTransfer
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\RestWishlistsAttributesTransfer
      */
-    public function mapWishlistTransferToRestResource(WishlistTransfer $wishlistsTransfer): RestResourceInterface;
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    public function mapWishlistOverviewResponseTransferToRestResource(WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer): RestResourceInterface;
+    public function mapWishlistTransferToRestWishlistsAttributes(WishlistTransfer $wishlistTransfer): RestWishlistsAttributesTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer

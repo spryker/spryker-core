@@ -30,7 +30,8 @@ class WishlistsRestApiFactory extends AbstractFactory
         return new WishlistsReader(
             $this->getWishlistClient(),
             $this->getResourceBuilder(),
-            $this->createWishlistsResourceMapper()
+            $this->createWishlistsResourceMapper(),
+            $this->createWishlistItemsResourceMapper()
         );
     }
 
@@ -43,6 +44,7 @@ class WishlistsRestApiFactory extends AbstractFactory
             $this->getWishlistClient(),
             $this->getResourceBuilder(),
             $this->createWishlistsResourceMapper(),
+            $this->createWishlistItemsResourceMapper(),
             $this->createWishlistsReader()
         );
     }
@@ -73,10 +75,7 @@ class WishlistsRestApiFactory extends AbstractFactory
      */
     public function createWishlistsResourceMapper(): WishlistsResourceMapperInterface
     {
-        return new WishlistsResourceMapper(
-            $this->createWishlistItemsResourceMapper(),
-            $this->getResourceBuilder()
-        );
+        return new WishlistsResourceMapper();
     }
 
     /**
@@ -84,6 +83,6 @@ class WishlistsRestApiFactory extends AbstractFactory
      */
     public function createWishlistItemsResourceMapper(): WishlistItemsResourceMapperInterface
     {
-        return new WishlistItemsResourceMapper($this->getResourceBuilder());
+        return new WishlistItemsResourceMapper();
     }
 }
