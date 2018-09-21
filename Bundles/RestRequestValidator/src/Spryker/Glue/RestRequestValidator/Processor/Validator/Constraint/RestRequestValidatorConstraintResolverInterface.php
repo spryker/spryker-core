@@ -7,12 +7,15 @@
 
 namespace Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint;
 
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Symfony\Component\Validator\Constraints\Collection;
+
 interface RestRequestValidatorConstraintResolverInterface
 {
     /**
-     * @param array $validationConfig
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array
+     * @return \Symfony\Component\Validator\Constraints\Collection
      */
-    public function initializeConstraintCollection(array $validationConfig): array;
+    public function initializeConstraintCollection(RestRequestInterface $restRequest): Collection;
 }

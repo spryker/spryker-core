@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\RestRequestValidator\Communication;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapter;
@@ -18,8 +18,10 @@ use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorTo
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapter;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReader;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolver;
+use Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface;
 use Spryker\Glue\RestRequestValidator\Processor\Validator\RestRequestValidator;
 use Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig;
+use Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException;
 use SprykerTest\Zed\RestRequestValidator\Communication\Stub\CustomEndpointTransfer;
 use SprykerTest\Zed\RestRequestValidator\Communication\Stub\RestRequest;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,10 +67,8 @@ class RestRequestValidatorCustomConstraintPluginTest extends Unit
         $mockConfig = $this->createMockConfig();
 
         $this->restRequestValidatorPlugin = new RestRequestValidator(
-            $this->createMockConfigReader($mockConfig),
-            new RestRequestValidatorConstraintResolver($mockConfig),
+            $this->createMockConfigResolver($mockConfig),
             new RestRequestValidatorToValidationAdapter(),
-            new RestRequestValidatorToConstraintCollectionAdapter(),
             $mockConfig
         );
     }
@@ -93,19 +93,14 @@ class RestRequestValidatorCustomConstraintPluginTest extends Unit
      */
     public function testValidateWillPassOnIncorrectRequest(): void
     {
+        $this->expectException(CurrencyNotFoundException::class);
+
         $mockRestRequest = $this->createMockRestRequestWithData(static::INCORRECT_ENDPOINT_DATA);
 
-        $errorTransfer = $this->restRequestValidatorPlugin->validate(
+        $this->restRequestValidatorPlugin->validate(
             new Request(),
             $mockRestRequest
         );
-
-        $this->assertNotNull($errorTransfer);
-        $this->assertCount(1, $errorTransfer->getRestErrors());
-        $errorTransfer = $errorTransfer->getRestErrors()->offsetGet(0);
-        $this->assertInstanceOf(RestErrorMessageTransfer::class, $errorTransfer);
-        $this->assertNotEmpty($errorTransfer->getDetail());
-        $this->assertNotEmpty($errorTransfer->getCode());
     }
 
     /**
@@ -129,9 +124,9 @@ class RestRequestValidatorCustomConstraintPluginTest extends Unit
     }
 
     /**
-     * @return \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createMockConfig(): RestRequestValidatorConfig
+    protected function createMockConfig(): MockObject
     {
         $mockConfig = $this->createPartialMock(
             RestRequestValidatorConfig::class,
@@ -160,9 +155,9 @@ class RestRequestValidatorCustomConstraintPluginTest extends Unit
     /**
      * @param string $storeName
      *
-     * @return \Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createMockStoreClient(string $storeName): RestRequestValidatorToStoreClientInterface
+    protected function createMockStoreClient(string $storeName): MockObject
     {
         $mockStoreClient = $this->createPartialMock(
             RestRequestValidatorToStoreClientInterface::class,
@@ -183,9 +178,7 @@ class RestRequestValidatorCustomConstraintPluginTest extends Unit
      */
     protected function createMockRestRequest(): RestRequest
     {
-        $mockRestRequest = new RestRequest();
-
-        return $mockRestRequest;
+        return new RestRequest();
     }
 
     /**
@@ -220,5 +213,19 @@ class RestRequestValidatorCustomConstraintPluginTest extends Unit
         );
 
         return $mockRestRequest;
+    }
+
+    /**
+     * @param \Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig $mockConfig
+     *
+     * @return \Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequestValidatorConstraintResolverInterface
+     */
+    protected function createMockConfigResolver(RestRequestValidatorConfig $mockConfig): RestRequestValidatorConstraintResolverInterface
+    {
+        return new RestRequestValidatorConstraintResolver(
+            new RestRequestValidatorToConstraintCollectionAdapter(),
+            $this->createMockConfigReader($mockConfig),
+            $mockConfig
+        );
     }
 }
