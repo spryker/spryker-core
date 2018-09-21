@@ -12,7 +12,6 @@ use DOMDocument;
 use DOMElement;
 use Generated\Shared\Transfer\ForeignKeyFileTransfer;
 use Generated\Shared\Transfer\ForeignKeyTableTransfer;
-use Spryker\Zed\IndexGenerator\Business\Exception\IndexGeneratorException;
 use Spryker\Zed\IndexGenerator\Business\ForeignKeysProvider\ForeignKeysProviderInterface;
 use Spryker\Zed\IndexGenerator\IndexGeneratorConfig;
 use Spryker\Zed\Propel\PropelConfig;
@@ -98,16 +97,11 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
     /**
      * @param \Generated\Shared\Transfer\ForeignKeyFileTransfer $foreignKeyFileTransfer
      *
-     * @throws \Spryker\Zed\IndexGenerator\Business\Exception\IndexGeneratorException
-     *
      * @return \ArrayObject|\Generated\Shared\Transfer\ForeignKeyTableTransfer[]
      */
     protected function getForeignKeyTableTransferCollection(ForeignKeyFileTransfer $foreignKeyFileTransfer): ArrayObject
     {
         $foreignKeyTableTransferCollection = $foreignKeyFileTransfer->getForeignKeyTables();
-        if ($foreignKeyTableTransferCollection === null) {
-            throw new IndexGeneratorException('No foreign key table found!');
-        }
 
         return $foreignKeyTableTransferCollection;
     }
