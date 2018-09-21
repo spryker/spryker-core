@@ -8,7 +8,7 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Generated\Shared\Transfer\RestCustomersResponseAttributesTransfer;
 
 interface CustomersResourceMapperInterface
 {
@@ -22,7 +22,7 @@ interface CustomersResourceMapperInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Generated\Shared\Transfer\RestCustomersResponseAttributesTransfer
      */
-    public function mapCustomerToCustomersRestResource(CustomerTransfer $customerTransfer): RestResourceInterface;
+    public function mapCustomerToRestCustomersResponseAttributesTransfer(CustomerTransfer $customerTransfer): RestCustomersResponseAttributesTransfer;
 }

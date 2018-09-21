@@ -66,7 +66,14 @@ class CustomersWriter implements CustomersWriterInterface
             return $this->createErrorResponse($customerResponseTransfer, $response);
         }
 
-        $restResource = $this->customersResourceMapper->mapCustomerToCustomersRestResource($customerResponseTransfer->getCustomerTransfer());
+        $restCustomersResponseAttributesTransfer = $this->customersResourceMapper
+            ->mapCustomerToRestCustomersResponseAttributesTransfer($customerResponseTransfer->getCustomerTransfer());
+
+        $restResource = $this->restResourceBuilder->createRestResource(
+            CustomersRestApiConfig::RESOURCE_CUSTOMERS,
+            $customerResponseTransfer->getCustomerTransfer()->getCustomerReference(),
+            $restCustomersResponseAttributesTransfer
+        );
 
         return $response->addResource($restResource);
     }
