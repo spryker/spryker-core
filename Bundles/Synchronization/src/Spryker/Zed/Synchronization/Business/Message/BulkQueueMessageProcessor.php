@@ -96,7 +96,7 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $deleteMessagesByQueue
+     * @param array $deleteMessagesByQueue
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */

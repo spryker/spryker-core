@@ -34,16 +34,6 @@ class CategoryPageDataLoaderPlugin extends AbstractPlugin implements ProductPage
     }
 
     /**
-     * @api
-     *
-     * @return string
-     */
-    public function getProductPageType()
-    {
-        return 'category';
-    }
-
-    /**
      * @param array $productAbstractIds
      * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
      *

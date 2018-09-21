@@ -29,9 +29,9 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
     protected static $categoryTree;
 
     /**
-     * @var string
+     * @var array
      */
-    protected static $categoryName;
+    protected static $categoryNames;
 
     /**
      * @api
@@ -167,11 +167,11 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
     protected function getName($idCategory, LocaleTransfer $localeTransfer)
     {
         $idLocale = $localeTransfer->getIdLocale();
-        if (static::$categoryName === null || !isset(static::$categoryName[$idLocale])) {
+        if (static::$categoryNames === null || !isset(static::$categoryNames[$idLocale])) {
             $this->loadNames($localeTransfer);
         }
 
-        return isset(static::$categoryName[$idLocale][$idCategory]) ? static::$categoryName[$idLocale][$idCategory] : null;
+        return isset(static::$categoryNames[$idLocale][$idCategory]) ? static::$categoryNames[$idLocale][$idCategory] : null;
     }
 
     /**
@@ -181,8 +181,8 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
      */
     protected function loadNames(LocaleTransfer $localeTransfer)
     {
-        if (!static::$categoryName) {
-            static::$categoryName = [];
+        if (!static::$categoryNames) {
+            static::$categoryNames = [];
         }
 
         $categoryAttributes = $this
@@ -194,7 +194,7 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
             ->find();
 
         foreach ($categoryAttributes as $categoryAttributeEntity) {
-            static::$categoryName[$localeTransfer->getIdLocale()][$categoryAttributeEntity->getFkCategory()] = $categoryAttributeEntity->getName();
+            static::$categoryNames[$localeTransfer->getIdLocale()][$categoryAttributeEntity->getFkCategory()] = $categoryAttributeEntity->getName();
         }
     }
 

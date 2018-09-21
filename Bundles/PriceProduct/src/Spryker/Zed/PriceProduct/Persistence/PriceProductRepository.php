@@ -102,7 +102,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]
      */
     public function findProductAbstractPricesByIdIn(array $productAbstractIds): ObjectCollection
     {

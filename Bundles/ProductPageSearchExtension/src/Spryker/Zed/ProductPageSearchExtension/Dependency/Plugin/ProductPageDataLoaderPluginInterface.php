@@ -19,11 +19,4 @@ interface ProductPageDataLoaderPluginInterface
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
     public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer);
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getProductPageType();
 }

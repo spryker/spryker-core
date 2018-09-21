@@ -34,16 +34,6 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @api
-     *
-     * @return string
-     */
-    public function getProductPageType()
-    {
-        return 'image';
-    }
-
-    /**
      * @param array $productAbstractIds
      * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
      *

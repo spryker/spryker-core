@@ -54,7 +54,7 @@ class ProductLabelDataLoaderPlugin extends AbstractPlugin implements ProductPage
     /**
      * @param \Generated\Shared\Transfer\SpyProductLabelEntityTransfer[] $productLabelEntityTransfers
      *
-     * @return \Generated\Shared\Transfer\SpyProductLabelEntityTransfer[][]
+     * @return array
      */
     protected function getProductLabelIdsByIdProductAbstractMap(array $productLabelEntityTransfers): array
     {
@@ -140,15 +140,5 @@ class ProductLabelDataLoaderPlugin extends AbstractPlugin implements ProductPage
         }
 
         return true;
-    }
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getProductPageType()
-    {
-        return 'label';
     }
 }

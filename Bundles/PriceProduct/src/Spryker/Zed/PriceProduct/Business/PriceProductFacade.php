@@ -416,7 +416,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @param int|array $productAbstractIds
+     * @param array|int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */

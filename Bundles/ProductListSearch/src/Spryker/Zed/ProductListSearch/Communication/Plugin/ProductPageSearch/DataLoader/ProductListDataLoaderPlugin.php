@@ -8,15 +8,8 @@
 namespace Spryker\Zed\ProductListSearch\Communication\Plugin\ProductPageSearch\DataLoader;
 
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
-use Orm\Zed\ProductList\Persistence\Map\SpyProductListCategoryTableMap;
-use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
-use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
-use Orm\Zed\ProductList\Persistence\SpyProductListCategoryQuery;
-use Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepository;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 
 /**
@@ -25,11 +18,6 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoad
  */
 class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
 {
-    protected const COL_CONCRETE_PRODUCT_COUNT = 'concrete_product_count';
-    protected const COL_ID_PRODUCT_ABSTRACT = 'col_id_product_abstract';
-    protected const COL_TYPE = 'col_type';
-    protected const COL_ID_PRODUCT_LIST = 'col_id_product_list';
-
     /**
      * @api
      *
@@ -67,9 +55,9 @@ class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageD
     {
         $mappedProductListIds = [];
         foreach ($totalProductListIds as $productList) {
-            $idProductAbstract = $productList[static::COL_ID_PRODUCT_ABSTRACT];
-            $type = $productList[static::COL_TYPE];
-            $idProductList = $productList[static::COL_ID_PRODUCT_LIST];
+            $idProductAbstract = $productList[ProductListSearchRepository::COL_ID_PRODUCT_ABSTRACT];
+            $type = $productList[ProductListSearchRepository::COL_TYPE];
+            $idProductList = $productList[ProductListSearchRepository::COL_ID_PRODUCT_LIST];
 
             $mappedProductListIds[$idProductAbstract][$type][] = $idProductList;
         }
@@ -86,9 +74,9 @@ class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageD
     protected function filterProductListIds(array $productListIds, $productConcreteCountByProductAbstractIds): array
     {
         return array_filter($productListIds, function (array $item) use ($productConcreteCountByProductAbstractIds) {
-            $idProductAbstract = $item[static::COL_ID_PRODUCT_ABSTRACT];
+            $idProductAbstract = $item[ProductListSearchRepository::COL_ID_PRODUCT_ABSTRACT];
 
-            return $this->isAllConcreteProductsInList($item, $productConcreteCountByProductAbstractIds[$idProductAbstract][static::COL_CONCRETE_PRODUCT_COUNT]);
+            return $this->isAllConcreteProductsInList($item, $productConcreteCountByProductAbstractIds[$idProductAbstract][ProductListSearchRepository::COL_CONCRETE_PRODUCT_COUNT]);
         });
     }
 
@@ -100,7 +88,7 @@ class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageD
      */
     protected function isAllConcreteProductsInList(array $item, int $totalProductConcreteCount): bool
     {
-        return $item[static::COL_CONCRETE_PRODUCT_COUNT] === $totalProductConcreteCount;
+        return $item[ProductListSearchRepository::COL_CONCRETE_PRODUCT_COUNT] === $totalProductConcreteCount;
     }
 
     /**
@@ -110,18 +98,9 @@ class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageD
      */
     protected function getProductConcreteCountByProductAbstractIds(array $productAbstractIds): array
     {
-        return SpyProductQuery::create()
-            ->addAsColumn(static::COL_CONCRETE_PRODUCT_COUNT, sprintf('COUNT(%s)', SpyProductTableMap::COL_ID_PRODUCT))
-            ->addAsColumn(static::COL_ID_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
-            ->select([
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-            ])
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->groupBy([
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-            ])
-            ->find()
-            ->toArray(static::COL_ID_PRODUCT_ABSTRACT);
+        return $this->getFactory()
+            ->getRepository()
+            ->getProductConcreteCountByProductAbstractIds($productAbstractIds);
     }
 
     /**
@@ -131,26 +110,9 @@ class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageD
      */
     protected function getProductList(array $productAbstractIds): array
     {
-        return SpyProductListProductConcreteQuery::create()
-            ->addAsColumn(static::COL_CONCRETE_PRODUCT_COUNT, sprintf('COUNT(%s)', SpyProductListProductConcreteTableMap::COL_FK_PRODUCT))
-            ->addAsColumn(static::COL_ID_PRODUCT_LIST, SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST)
-            ->addAsColumn(static::COL_ID_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
-            ->addAsColumn(static::COL_TYPE, SpyProductListTableMap::COL_TYPE)
-            ->select([
-                SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST,
-            ])
-            ->innerJoinWithSpyProduct()
-            ->useSpyProductQuery()
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->endUse()
-            ->innerJoinWithSpyProductList()
-            ->groupBy([
-                SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST,
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyProductListTableMap::COL_TYPE,
-            ])
-            ->find()
-            ->toArray();
+        return $this->getFactory()
+            ->getRepository()
+            ->getProductList($productAbstractIds);
     }
 
     /**
@@ -160,38 +122,9 @@ class ProductListDataLoaderPlugin extends AbstractPlugin implements ProductPageD
      */
     protected function getCategoryProductList(array $productAbstractIds): array
     {
-        return SpyProductListCategoryQuery::create()
-            ->select([
-                SpyProductListCategoryTableMap::COL_FK_PRODUCT_LIST,
-            ])
-            ->withColumn(SpyProductListTableMap::COL_TYPE, static::COL_TYPE)
-            ->withColumn(SpyProductListCategoryTableMap::COL_FK_PRODUCT_LIST, static::COL_ID_PRODUCT_LIST)
-            ->withColumn(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
-            ->innerJoinWithSpyCategory()
-            ->useSpyCategoryQuery()
-            ->innerJoinWithSpyProductCategory()
-            ->useSpyProductCategoryQuery()
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->endUse()
-            ->endUse()
-            ->innerJoinWithSpyProductList()
-            ->groupBy([
-                SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyProductListCategoryTableMap::COL_FK_PRODUCT_LIST,
-                SpyProductListTableMap::COL_TYPE,
-            ])
-            ->find()
-            ->toArray();
-    }
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getProductPageType()
-    {
-        return 'product-list';
+        return $this->getFactory()
+            ->getRepository()
+            ->getCategoryProductList($productAbstractIds);
     }
 
     /**

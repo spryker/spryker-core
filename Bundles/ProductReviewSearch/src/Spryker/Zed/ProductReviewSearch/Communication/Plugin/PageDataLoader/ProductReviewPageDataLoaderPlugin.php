@@ -52,14 +52,4 @@ class ProductReviewPageDataLoaderPlugin extends AbstractPlugin implements Produc
 
         return $payloadTransfers;
     }
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getProductPageType()
-    {
-        return 'review';
-    }
 }

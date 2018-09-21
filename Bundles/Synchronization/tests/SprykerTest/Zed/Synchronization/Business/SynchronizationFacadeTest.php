@@ -55,7 +55,6 @@ use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientI
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceBridge;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
-use Spryker\Zed\Synchronization\SynchronizationConfig;
 use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
 use Spryker\Zed\UrlStorage\Communication\Plugin\Synchronization\UrlRedirectSynchronizationDataPlugin;
 use Spryker\Zed\UrlStorage\Communication\Plugin\Synchronization\UrlSynchronizationDataPlugin;
@@ -85,7 +84,7 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testProcessSearchMessagesBulk(): void
+    public function testProcessSearchMessages(): void
     {
         $queueMessageBody = [
             'write' => [
@@ -138,12 +137,7 @@ class SynchronizationFacadeTest extends Unit
 
         $container[SynchronizationDependencyProvider::CLIENT_SEARCH] = $searchClientBridgeMock;
 
-        $configMock = $this->createMock(SynchronizationConfig::class);
-        $configMock
-            ->method('isBulkModeEnabled')
-            ->willReturn(true);
-
-        $this->prepareFacade($container, $configMock);
+        $this->prepareFacade($container);
 
         $this->synchronizationFacade->processSearchMessages([$queueMessageTransfer]);
     }
@@ -151,73 +145,7 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testProcessSearchMessagesPlain(): void
-    {
-        $queueMessageBody = [
-            'write' => [
-                'key' => 'test',
-                'value' => [
-                    'some' => 'data',
-                ],
-            ],
-            'delete' => [
-                'key' => 'test1',
-                'value' => [
-                    'some' => 'data',
-                ],
-            ],
-        ];
-
-        $queueMessage = new QueueSendMessageTransfer();
-        $queueMessage->setBody(json_encode($queueMessageBody));
-
-        $queueMessageTransfer = new QueueReceiveMessageTransfer();
-        $queueMessageTransfer->setQueueName('test');
-        $queueMessageTransfer->setQueueMessage($queueMessage);
-
-        $container = new Container();
-
-        $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = $this->createUtilEncodingServiceBridge();
-
-        $searchClientBridgeMock = $this->createSearchClientBridge();
-        $searchClientBridgeMock
-            ->method('read')
-            ->willReturn(new SynchronizationDataTransfer());
-
-        $searchClientBridgeMock
-            ->expects($this->once())
-            ->method('write')
-            ->with($this->callback(function (array $data) use ($queueMessageBody) {
-                $this->assertEquals([$queueMessageBody['write']['key'] => $queueMessageBody['write']['value']], $data);
-
-                return true;
-            }));
-
-        $searchClientBridgeMock
-            ->expects($this->once())
-            ->method('delete')
-            ->with($this->callback(function (array $data) use ($queueMessageBody) {
-                $this->assertEquals([$queueMessageBody['delete']['key'] => []], $data);
-
-                return true;
-            }));
-
-        $container[SynchronizationDependencyProvider::CLIENT_SEARCH] = $searchClientBridgeMock;
-
-        $configMock = $this->createMock(SynchronizationConfig::class);
-        $configMock
-            ->method('isBulkModeEnabled')
-            ->willReturn(false);
-
-        $this->prepareFacade($container, $configMock);
-
-        $this->synchronizationFacade->processSearchMessages([$queueMessageTransfer]);
-    }
-
-    /**
-     * @return void
-     */
-    public function testProcessStorageMessagesBulk(): void
+    public function testProcessStorageMessages(): void
     {
         $queueMessageBody = [
             'write' => [
@@ -266,81 +194,7 @@ class SynchronizationFacadeTest extends Unit
 
         $container[SynchronizationDependencyProvider::CLIENT_STORAGE] = $storageClientMock;
 
-        $configMock = $this->createMock(SynchronizationConfig::class);
-        $configMock
-            ->method('isBulkModeEnabled')
-            ->willReturn(true);
-
-        $this->prepareFacade($container, $configMock);
-
-        $this->synchronizationFacade->processStorageMessages([$queueMessageTransfer]);
-    }
-
-    /**
-     * @return void
-     */
-    public function testProcessStorageMessagesPlain(): void
-    {
-        $queueMessageBody = [
-            'write' => [
-                'key' => 'test',
-                'value' => [
-                    'some' => 'data',
-                ],
-            ],
-            'delete' => [
-                'key' => 'test1',
-                'value' => [
-                    'some' => 'data',
-                ],
-            ],
-        ];
-
-        $queueMessage = new QueueSendMessageTransfer();
-        $queueMessage->setBody(json_encode($queueMessageBody));
-
-        $queueMessageTransfer = new QueueReceiveMessageTransfer();
-        $queueMessageTransfer->setQueueName('test');
-        $queueMessageTransfer->setQueueMessage($queueMessage);
-
-        $container = new Container();
-
-        $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = $this->createUtilEncodingServiceBridge();
-
-        $storageClientMock = $this->createStorageClientBridge();
-        $storageClientMock
-            ->expects($this->once())
-            ->method('set')
-            ->with(
-                $this->callback(function ($key) use ($queueMessageBody) {
-                    $this->assertEquals($queueMessageBody['write']['key'], $key);
-
-                    return true;
-                }),
-                $this->callback(function ($value) use ($queueMessageBody) {
-                    $this->assertEquals(json_encode($queueMessageBody['write']['value']), $value);
-
-                    return true;
-                })
-            );
-
-        $storageClientMock
-            ->expects($this->once())
-            ->method('delete')
-            ->with($this->callback(function (string $data) use ($queueMessageBody) {
-                $this->assertEquals($queueMessageBody['delete']['key'], $data);
-
-                return true;
-            }));
-
-        $container[SynchronizationDependencyProvider::CLIENT_STORAGE] = $storageClientMock;
-
-        $configMock = $this->createMock(SynchronizationConfig::class);
-        $configMock
-            ->method('isBulkModeEnabled')
-            ->willReturn(false);
-
-        $this->prepareFacade($container, $configMock);
+        $this->prepareFacade($container);
 
         $this->synchronizationFacade->processStorageMessages([$queueMessageTransfer]);
     }
@@ -652,18 +506,13 @@ class SynchronizationFacadeTest extends Unit
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
-     * @param \Spryker\Zed\Synchronization\SynchronizationConfig|null $config
      *
      * @return void
      */
-    protected function prepareFacade($container, $config = null)
+    protected function prepareFacade($container)
     {
         $synchronizationBusinessFactory = new SynchronizationBusinessFactory();
         $synchronizationBusinessFactory->setContainer($container);
-
-        if ($config !== null) {
-            $synchronizationBusinessFactory->setConfig($config);
-        }
 
         $this->synchronizationFacade = new SynchronizationFacade();
         $this->synchronizationFacade->setFactory($synchronizationBusinessFactory);

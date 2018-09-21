@@ -111,14 +111,4 @@ class PricePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
 
         return $idStoreMap;
     }
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getProductPageType()
-    {
-        return 'price';
-    }
 }
