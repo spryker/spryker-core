@@ -19,20 +19,12 @@ class CustomerAccessDataProvider
     protected $customerAccessFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\CustomerAccessTransfer
-     */
-    protected $customerAccessTransfer;
-
-    /**
      * @param \Spryker\Zed\CustomerAccessGui\Dependency\Facade\CustomerAccessGuiToCustomerAccessFacadeInterface $customerAccessFacade
-     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      */
     public function __construct(
-        CustomerAccessGuiToCustomerAccessFacadeInterface $customerAccessFacade,
-        CustomerAccessTransfer $customerAccessTransfer
+        CustomerAccessGuiToCustomerAccessFacadeInterface $customerAccessFacade
     ) {
         $this->customerAccessFacade = $customerAccessFacade;
-        $this->customerAccessTransfer = $customerAccessTransfer;
     }
 
     /**
@@ -40,7 +32,7 @@ class CustomerAccessDataProvider
      */
     public function getData(): CustomerAccessTransfer
     {
-        return $this->customerAccessTransfer;
+        return $this->customerAccessFacade->getRestrictedContentTypes();
     }
 
     /**

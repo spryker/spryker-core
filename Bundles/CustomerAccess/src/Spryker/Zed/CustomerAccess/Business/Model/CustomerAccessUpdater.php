@@ -9,20 +9,23 @@ namespace Spryker\Zed\CustomerAccess\Business\Model;
 
 use Generated\Shared\Transfer\CustomerAccessTransfer;
 use Spryker\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CustomerAccessUpdater implements CustomerAccessUpdaterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface
      */
-    protected $entityManager;
+    protected $customerAccessEntityManager;
 
     /**
-     * @param \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface $customerAccessEntityManager
      */
-    public function __construct(CustomerAccessEntityManagerInterface $entityManager)
+    public function __construct(CustomerAccessEntityManagerInterface $customerAccessEntityManager)
     {
-        $this->entityManager = $entityManager;
+        $this->customerAccessEntityManager = $customerAccessEntityManager;
     }
 
     /**
@@ -32,6 +35,8 @@ class CustomerAccessUpdater implements CustomerAccessUpdaterInterface
      */
     public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer
     {
-        return $this->entityManager->updateUnauthenticatedCustomerAccess($customerAccessTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($customerAccessTransfer) {
+            return $this->customerAccessEntityManager->updateUnauthenticatedCustomerAccess($customerAccessTransfer);
+        });
     }
 }

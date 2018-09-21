@@ -18,19 +18,44 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 class CustomerAccessPermissionConfig extends AbstractBundleConfig
 {
     /**
+     * @uses \Spryker\Shared\CustomerAccess\CustomerAccessConfig::CONTENT_TYPE_PRICE
+     */
+    public const CONTENT_TYPE_PRICE = 'price';
+
+    /**
+     * @uses \Spryker\Shared\CustomerAccess\CustomerAccessConfig::CONTENT_TYPE_ORDER_PLACE_SUBMIT
+     */
+    public const CONTENT_TYPE_ORDER_PLACE_SUBMIT = 'order-place-submit';
+
+    /**
+     * @uses \Spryker\Shared\CustomerAccess\CustomerAccessConfig::CONTENT_TYPE_ADD_TO_CART
+     */
+    public const CONTENT_TYPE_ADD_TO_CART = 'add-to-cart';
+
+    /**
+     * @uses \Spryker\Shared\CustomerAccess\CustomerAccessConfig::CONTENT_TYPE_WISHLIST
+     */
+    public const CONTENT_TYPE_WISHLIST = 'wishlist';
+
+    /**
+     * @uses \Spryker\Shared\CustomerAccess\CustomerAccessConfig::CONTENT_TYPE_SHOPPING_LIST
+     */
+    public const CONTENT_TYPE_SHOPPING_LIST = 'shopping-list';
+
+    /**
      * Constant used to connect zed content type access settings with the content type permission plugin used in yves shop
      */
     protected const CONTENT_TYPE_PERMISSION_PLUGIN = [
-        'price' => SeePricePermissionPlugin::KEY,
-        'add-to-cart' => SeeAddToCartPermissionPlugin::KEY,
-        'order-place-submit' => SeeOrderPlaceSubmitPermissionPlugin::KEY,
-        'wishlist' => SeeWishlistPermissionPlugin::KEY,
-        'shopping-list' => SeeShoppingListPermissionPlugin::KEY,
+        self::CONTENT_TYPE_PRICE => SeePricePermissionPlugin::KEY,
+        self::CONTENT_TYPE_ADD_TO_CART => SeeAddToCartPermissionPlugin::KEY,
+        self::CONTENT_TYPE_ORDER_PLACE_SUBMIT => SeeOrderPlaceSubmitPermissionPlugin::KEY,
+        self::CONTENT_TYPE_WISHLIST => SeeWishlistPermissionPlugin::KEY,
+        self::CONTENT_TYPE_SHOPPING_LIST => SeeShoppingListPermissionPlugin::KEY,
     ];
 
     protected const CONTENT_TYPE_PERMISSION_ACCESS = [
-        'add-to-cart' => '|^(/en|/de)?/cart(?!/add)',
-        'order-place-submit' => '|^(/en|/de)?/checkout',
+        self::CONTENT_TYPE_ADD_TO_CART => '|^(/en|/de)?/cart(?!/add)',
+        self::CONTENT_TYPE_ORDER_PLACE_SUBMIT => '|^(/en|/de)?/checkout',
     ];
 
     protected const MESSAGE_PLUGIN_NOT_FOUND_EXCEPTION = 'Plugin not found';

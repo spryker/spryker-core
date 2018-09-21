@@ -24,18 +24,46 @@ use Generated\Shared\Transfer\CustomerAccessTransfer;
 class CustomerAccessFacadeTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\CustomerAccess\CustomerAccessBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
-    public function testGetContentTypesWithUnauthenticatedCustomerAccessReturnsCorrectCustomerAccessObject()
+    public function testGetUnrestrictedContentTypesReturnsCorrectCustomerAccessObject(): void
     {
         // Arrange
         $this->tester->haveCustomerAccess();
 
         // Act
-        $customerTransferAccess = $this->tester->getFacade()->getContentTypesWithUnauthenticatedCustomerAccess();
+        $customerTransferAccess = $this->tester->getFacade()->getUnrestrictedContentTypes();
 
         // Assert
         $this->assertInstanceOf(CustomerAccessTransfer::class, $customerTransferAccess);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetRestrictedContentTypesReturnsCorrectCustomerAccessObject(): void
+    {
+        // Arrange
+        $this->tester->haveCustomerAccess();
+
+        // Act
+        $customerTransferAccess = $this->tester->getFacade()->getRestrictedContentTypes();
+
+        // Assert
+        $this->assertInstanceOf(CustomerAccessTransfer::class, $customerTransferAccess);
+    }
+
+    /**
+     * @return void
+     */
+    public function testInstallNotFails(): void
+    {
+        $this->tester->getFacade()->install();
     }
 
     /**
@@ -67,7 +95,7 @@ class CustomerAccessFacadeTest extends Unit
         $contentTypes = $this->tester->getFacade()->getAllContentTypes();
 
         // Assert
-        foreach ($contentTypes as $contentType) {
+        foreach ($contentTypes->getContentTypeAccess() as $contentType) {
             $this->assertCustomerAccessTransferContainsContentTypeAccess($customerAccessTransfer, $contentType);
         }
     }
@@ -86,7 +114,7 @@ class CustomerAccessFacadeTest extends Unit
         $this->tester->getFacade()->updateUnauthenticatedCustomerAccess($customerAccessTransfer);
 
         /** @var \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransferFromDB */
-        $customerAccessTransferFromDB = $this->tester->getFacade()->getContentTypesWithUnauthenticatedCustomerAccess();
+        $customerAccessTransferFromDB = $this->tester->getFacade()->getUnrestrictedContentTypes();
 
         foreach ($customerAccessTransferFromDB->getContentTypeAccess() as $contentTypeAccess) {
             if ($contentTypeAccess->getContentType() === $removedContentTypeAccess->getContentType()) {
@@ -107,8 +135,8 @@ class CustomerAccessFacadeTest extends Unit
     protected function assertCustomerAccessTransferContainsContentTypeAccess(CustomerAccessTransfer $customerAccessTransfer, ContentTypeAccessTransfer $contentTypeAccessTransfer)
     {
         foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
-            if ($contentTypeAccess->getContentType() === $contentTypeAccessTransfer) {
-                $this->assertSame($contentTypeAccess, $contentTypeAccessTransfer);
+            if ($contentTypeAccess->getContentType() === $contentTypeAccessTransfer->getContentType()) {
+                $this->assertEquals($contentTypeAccess, $contentTypeAccessTransfer);
             }
         }
     }

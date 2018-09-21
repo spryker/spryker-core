@@ -9,7 +9,7 @@ namespace Spryker\Zed\CustomerAccess\Business\Model;
 
 use Generated\Shared\Transfer\CustomerAccessTransfer;
 
-interface CustomerAccessCreatorInterface
+interface CustomerAccessInterface
 {
     /**
      * @param string $contentType

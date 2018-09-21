@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Container;
 
 class CustomerAccessStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const QUERY_CUSTOMER_ACCESS = 'QUERY_CUSTOMER_ACCESS';
+    public const PROPEL_QUERY_CUSTOMER_ACCESS = 'QUERY_CUSTOMER_ACCESS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,7 +23,7 @@ class CustomerAccessStorageDependencyProvider extends AbstractBundleDependencyPr
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container = parent::providePersistenceLayerDependencies($container);
-        $container = $this->addCustomerAccessQuery($container);
+        $container = $this->addCustomerAccessPropelQuery($container);
 
         return $container;
     }
@@ -33,9 +33,9 @@ class CustomerAccessStorageDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCustomerAccessQuery(Container $container): Container
+    protected function addCustomerAccessPropelQuery(Container $container): Container
     {
-        $container[static::QUERY_CUSTOMER_ACCESS] = function (Container $container) {
+        $container[static::PROPEL_QUERY_CUSTOMER_ACCESS] = function (Container $container) {
             return SpyUnauthenticatedCustomerAccessQuery::create();
         };
 

@@ -34,9 +34,9 @@ class CustomerAccessFacade extends AbstractFacade implements CustomerAccessFacad
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function getContentTypesWithUnauthenticatedCustomerAccess(): CustomerAccessTransfer
+    public function getUnrestrictedContentTypes(): CustomerAccessTransfer
     {
-        return $this->getFactory()->createCustomerAccessReader()->getContentTypesWithUnauthenticatedCustomerAccess();
+        return $this->getFactory()->createCustomerAccessReader()->getUnrestrictedContentTypes();
     }
 
     /**

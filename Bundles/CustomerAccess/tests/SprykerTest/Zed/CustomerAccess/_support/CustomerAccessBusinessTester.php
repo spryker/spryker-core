@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CustomerAccess;
 
 use Codeception\Actor;
+use Spryker\Zed\CustomerAccess\Business\CustomerAccessFacadeInterface;
 
 /**
  * Inherited Methods
@@ -31,4 +32,12 @@ class CustomerAccessBusinessTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return \Spryker\Zed\CustomerAccess\Business\CustomerAccessFacadeInterface
+     */
+    public function getFacade(): CustomerAccessFacadeInterface
+    {
+        return $this->getLocator()->customerAccess()->facade();
+    }
 }

@@ -17,6 +17,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CustomerAccessInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * Specification:
+     *  - Fills table with restricted access to configured content types for unauthenticated customers.
+     *
      * @api
      *
      * @return void

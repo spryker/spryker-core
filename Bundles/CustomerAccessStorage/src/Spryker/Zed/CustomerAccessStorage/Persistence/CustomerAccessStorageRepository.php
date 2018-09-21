@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\CustomerAccessStorage\Persistence;
 
-use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -26,24 +24,8 @@ class CustomerAccessStorageRepository extends AbstractRepository implements Cust
             ->createPropelCustomerAccessQuery()
             ->find();
 
-        return $this->fillCustomerAccessTransferFromEntities($unauthenticatedCustomerAccess);
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $customerAccessEntities
-     *
-     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
-     */
-    protected function fillCustomerAccessTransferFromEntities(ObjectCollection $customerAccessEntities): CustomerAccessTransfer
-    {
-        $customerAccessTransfer = new CustomerAccessTransfer();
-
-        foreach ($customerAccessEntities as $customerAccessEntity) {
-            $customerAccessTransfer->addContentTypeAccess(
-                (new ContentTypeAccessTransfer())->fromArray($customerAccessEntity->toArray(), true)
-            );
-        }
-
-        return $customerAccessTransfer;
+        return $this->getFactory()
+            ->createCustomerAccessStorageMapper()
+            ->fillCustomerAccessTransferFromEntities($unauthenticatedCustomerAccess);
     }
 }

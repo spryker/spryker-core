@@ -10,19 +10,19 @@ namespace Spryker\Zed\CustomerAccess\Business\Model;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
 use Spryker\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface;
 
-class CustomerAccessCreator implements CustomerAccessCreatorInterface
+class CustomerAccess implements CustomerAccessInterface
 {
     /**
      * @var \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface
      */
-    protected $entityManager;
+    protected $customerAccessEntityManager;
 
     /**
-     * @param \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface $customerAccessEntityManager
      */
-    public function __construct(CustomerAccessEntityManagerInterface $entityManager)
+    public function __construct(CustomerAccessEntityManagerInterface $customerAccessEntityManager)
     {
-        $this->entityManager = $entityManager;
+        $this->customerAccessEntityManager = $customerAccessEntityManager;
     }
 
     /**
@@ -33,6 +33,6 @@ class CustomerAccessCreator implements CustomerAccessCreatorInterface
      */
     public function createCustomerAccess(string $contentType, bool $isRestricted): CustomerAccessTransfer
     {
-        return $this->entityManager->createCustomerAccess($contentType, $isRestricted);
+        return $this->customerAccessEntityManager->createCustomerAccess($contentType, $isRestricted);
     }
 }

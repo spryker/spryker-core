@@ -22,7 +22,7 @@ class CustomerAccessStorageEntityManager extends AbstractEntityManager implement
      */
     public function storeData(CustomerAccessTransfer $customerAccessTransfer): void
     {
-        $storageEntityTransfer = $this->getFactory()->createPropelCustomerAccessStorageQuery()->findOneOrCreate();
+        $storageEntityTransfer = $this->getFactory()->createCustomerAccessStorageQuery()->findOneOrCreate();
         $storageEntityTransfer->setData($customerAccessTransfer->toArray());
         $storageEntityTransfer->save();
     }

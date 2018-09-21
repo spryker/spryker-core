@@ -11,12 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CustomerAccessConfig extends AbstractBundleConfig
 {
-    public const CONTENT_TYPE_PRICE = 'price';
-    public const CONTENT_TYPE_ORDER_PLACE_SUBMIT = 'order-place-submit';
-    public const CONTENT_TYPE_ADD_TO_CART = 'add-to-cart';
-    public const CONTENT_TYPE_WISHLIST = 'wishlist';
-    public const CONTENT_TYPE_SHOPPING_LIST = 'shopping-list';
-
     /**
      * Gets list of content types for which admin will be able to define permissions
      *
@@ -28,11 +22,11 @@ class CustomerAccessConfig extends AbstractBundleConfig
     }
 
     /**
-     * Gets default content type access for install (all content types will be created with restricted access)
+     * Gets content type access for install (all content types will be created with restricted access)
      *
      * @return bool
      */
-    public function getContentTypeAccessForInstaller(): bool
+    public function getContentTypeAccess(): bool
     {
         return true;
     }

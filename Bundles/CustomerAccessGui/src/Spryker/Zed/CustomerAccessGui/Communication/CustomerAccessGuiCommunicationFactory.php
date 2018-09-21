@@ -27,22 +27,20 @@ class CustomerAccessGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
-     *
      * @return \Spryker\Zed\CustomerAccessGui\Communication\Form\DataProvider\CustomerAccessDataProvider
      */
-    public function createCustomerAccessDataProvider(CustomerAccessTransfer $customerAccessTransfer)
+    public function createCustomerAccessDataProvider()
     {
-        return new CustomerAccessDataProvider($this->getCustomerAccessFacade(), $customerAccessTransfer);
+        return new CustomerAccessDataProvider($this->getCustomerAccessFacade());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerAccessTransfer|null $customerAccessTransfer
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getCustomerAccessForm(?CustomerAccessTransfer $customerAccessTransfer, array $options)
+    public function getCustomerAccessForm(CustomerAccessTransfer $customerAccessTransfer, array $options)
     {
         return $this->getFormFactory()->create(
             CustomerAccessForm::class,

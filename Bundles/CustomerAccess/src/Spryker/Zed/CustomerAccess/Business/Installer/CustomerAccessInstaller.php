@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\CustomerAccess\Business\Installer;
 
-use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessCreatorInterface;
+use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessInterface;
 use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessReaderInterface;
 use Spryker\Zed\CustomerAccess\CustomerAccessConfig;
 
 class CustomerAccessInstaller implements CustomerAccessInstallerInterface
 {
     /**
-     * @var \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessCreatorInterface
+     * @var \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessInterface
      */
-    protected $customerAccessCreator;
+    protected $customerAccess;
 
     /**
      * @var \Spryker\Zed\CustomerAccess\CustomerAccessConfig
@@ -30,12 +30,12 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
 
     /**
      * @param \Spryker\Zed\CustomerAccess\CustomerAccessConfig $customerAccessConfig
-     * @param \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessCreatorInterface $customerAccessCreator
+     * @param \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessInterface $customerAccess
      * @param \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessReaderInterface $customerAccessReader
      */
-    public function __construct(CustomerAccessConfig $customerAccessConfig, CustomerAccessCreatorInterface $customerAccessCreator, CustomerAccessReaderInterface $customerAccessReader)
+    public function __construct(CustomerAccessConfig $customerAccessConfig, CustomerAccessInterface $customerAccess, CustomerAccessReaderInterface $customerAccessReader)
     {
-        $this->customerAccessCreator = $customerAccessCreator;
+        $this->customerAccess = $customerAccess;
         $this->customerAccessReader = $customerAccessReader;
         $this->customerAccessConfig = $customerAccessConfig;
     }
@@ -45,13 +45,13 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
      */
     public function install(): void
     {
-        $defaultContentAccess = $this->customerAccessConfig->getContentTypeAccessForInstaller();
+        $defaultContentAccess = $this->customerAccessConfig->getContentTypeAccess();
         foreach ($this->customerAccessConfig->getContentTypes() as $contentType) {
             if ($this->customerAccessReader->findCustomerAccessByContentType($contentType) !== null) {
                 continue;
             }
 
-            $this->customerAccessCreator->createCustomerAccess($contentType, $defaultContentAccess);
+            $this->customerAccess->createCustomerAccess($contentType, $defaultContentAccess);
         }
     }
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CustomerAccessStorage\Business\Model;
+namespace Spryker\Zed\CustomerAccessStorage\Business\CustomerAccessPublisher;
 
 interface CustomerAccessStorageInterface
 {

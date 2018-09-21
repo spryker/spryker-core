@@ -29,7 +29,7 @@ interface CustomerAccessFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function getContentTypesWithUnauthenticatedCustomerAccess(): CustomerAccessTransfer;
+    public function getUnrestrictedContentTypes(): CustomerAccessTransfer;
 
     /**
      * Specification:

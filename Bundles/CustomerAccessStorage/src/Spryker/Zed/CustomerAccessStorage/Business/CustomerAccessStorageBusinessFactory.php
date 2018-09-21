@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CustomerAccessStorage\Business;
 
-use Spryker\Zed\CustomerAccessStorage\Business\Model\CustomerAccessStorage;
+use Spryker\Zed\CustomerAccessStorage\Business\CustomerAccessPublisher\CustomerAccessStorage;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class CustomerAccessStorageBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\CustomerAccessStorage\Business\Model\CustomerAccessStorageInterface
+     * @return \Spryker\Zed\CustomerAccessStorage\Business\CustomerAccessPublisher\CustomerAccessStorageInterface
      */
     public function createCustomerAccessStorage()
     {

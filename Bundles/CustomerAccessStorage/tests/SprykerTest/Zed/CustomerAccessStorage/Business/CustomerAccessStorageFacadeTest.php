@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\CustomerAccess\Business;
+namespace SprykerTest\Zed\CustomerAccessStorage\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentTypeAccessTransfer;
@@ -19,7 +19,7 @@ use Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStoragePersisten
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group CustomerAccess
+ * @group CustomerAccessStorage
  * @group Business
  * @group Facade
  * @group CustomerAccessStorageFacadeTest
@@ -27,6 +27,11 @@ use Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStoragePersisten
  */
 class CustomerAccessStorageFacadeTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\CustomerAccessStorage\CustomerAccessStorageBusinessTester
+     */
+    protected $tester;
+
     /**
      * @return void
      */
@@ -68,7 +73,7 @@ class CustomerAccessStorageFacadeTest extends Unit
     protected function getUnauthenticatedCustomerAccessEntity(): SpyUnauthenticatedCustomerAccessStorage
     {
         $persistenceFactory = new CustomerAccessStoragePersistenceFactory();
-        $customerTransferStorageEntity = $persistenceFactory->createPropelCustomerAccessStorageQuery()
+        $customerTransferStorageEntity = $persistenceFactory->createCustomerAccessStorageQuery()
             ->lastCreatedFirst()
             ->findOne();
 

@@ -82,14 +82,22 @@ class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterfac
      */
     protected function readCustomerAccess(): void
     {
-        if (!$this->customerAccess) {
-            $unauthenticatedCustomerAccess = $this->storageClient->get($this->generateKey());
+        $unauthenticatedCustomerAccess = $this->storageClient->get($this->generateKey());
 
-            if ($unauthenticatedCustomerAccess === null) {
-                $unauthenticatedCustomerAccess = [];
-            }
-
-            $this->customerAccess = (new CustomerAccessTransfer())->fromArray($unauthenticatedCustomerAccess, true);
+        if ($unauthenticatedCustomerAccess === null) {
+            $unauthenticatedCustomerAccess = [];
         }
+
+        $this->customerAccess = $this->mapArrayToCustomerAccessTransfer($unauthenticatedCustomerAccess);
+    }
+
+    /**
+     * @param array $unauthenticatedCustomerAccess
+     *
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    protected function mapArrayToCustomerAccessTransfer(array $unauthenticatedCustomerAccess): CustomerAccessTransfer
+    {
+        return (new CustomerAccessTransfer())->fromArray($unauthenticatedCustomerAccess, true);
     }
 }

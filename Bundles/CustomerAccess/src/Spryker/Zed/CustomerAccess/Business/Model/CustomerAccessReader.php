@@ -39,9 +39,9 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
     /**
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function getContentTypesWithUnauthenticatedCustomerAccess(): CustomerAccessTransfer
+    public function getUnrestrictedContentTypes(): CustomerAccessTransfer
     {
-        return $this->customerAccessRepository->getContentTypesWithUnauthenticatedCustomerAccess();
+        return $this->customerAccessRepository->getUnrestrictedContentTypes();
     }
 
     /**

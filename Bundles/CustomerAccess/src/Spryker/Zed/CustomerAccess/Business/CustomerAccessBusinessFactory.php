@@ -9,8 +9,8 @@ namespace Spryker\Zed\CustomerAccess\Business;
 
 use Spryker\Zed\CustomerAccess\Business\Installer\CustomerAccessInstaller;
 use Spryker\Zed\CustomerAccess\Business\Installer\CustomerAccessInstallerInterface;
-use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessCreator;
-use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessCreatorInterface;
+use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccess;
+use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessInterface;
 use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessReader;
 use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessReaderInterface;
 use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessUpdater;
@@ -31,17 +31,17 @@ class CustomerAccessBusinessFactory extends AbstractBusinessFactory
     {
         return new CustomerAccessInstaller(
             $this->getConfig(),
-            $this->createCustomerAccessCreator(),
+            $this->createCustomerAccess(),
             $this->createCustomerAccessReader()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessCreatorInterface
+     * @return \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessInterface
      */
-    public function createCustomerAccessCreator(): CustomerAccessCreatorInterface
+    public function createCustomerAccess(): CustomerAccessInterface
     {
-        return new CustomerAccessCreator($this->getEntityManager());
+        return new CustomerAccess($this->getEntityManager());
     }
 
     /**

@@ -12,15 +12,12 @@ use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
 use Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 /**
  * @method \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessPersistenceFactory getFactory()
  */
 class CustomerAccessEntityManager extends AbstractEntityManager implements CustomerAccessEntityManagerInterface
 {
-    use TransactionTrait;
-
     /**
      * @param string $contentType
      * @param bool $isRestricted
@@ -29,16 +26,16 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
      */
     public function createCustomerAccess(string $contentType, bool $isRestricted): CustomerAccessTransfer
     {
-        $customerAccessEntity = $this->getFactory()->createPropelCustomerAccessQuery()
+        $customerAccessEntity = $this->getFactory()->customerAccessQuery()
             ->filterByContentType($contentType)
             ->findOneOrCreate();
 
         $customerAccessEntity->setIsRestricted($isRestricted);
         $customerAccessEntity->save();
 
-        return (new CustomerAccessTransfer())->addContentTypeAccess(
-            (new ContentTypeAccessTransfer())->fromArray($customerAccessEntity->toArray(), true)
-        );
+        return $this->getFactory()
+            ->createCustomerAccessMapper()
+            ->mapEntityToCustomerAccessTransfer($customerAccessEntity);
     }
 
     /**
@@ -48,10 +45,9 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
      */
     public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($customerAccessTransfer) {
-            $this->setAllContentTypesToAccessible();
-            return $this->setContentTypesToInaccessible($customerAccessTransfer);
-        });
+        $this->setAllContentTypesToAccessible();
+
+        return $this->setContentTypesToInaccessible($customerAccessTransfer);
     }
 
     /**
@@ -59,7 +55,7 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
      */
     protected function setAllContentTypesToAccessible(): void
     {
-        $customerAccessEntities = $this->getFactory()->createPropelCustomerAccessQuery()->find();
+        $customerAccessEntities = $this->getFactory()->customerAccessQuery()->find();
 
         foreach ($customerAccessEntities as $customerAccessEntity) {
             $customerAccessEntity->setIsRestricted(false);
@@ -76,12 +72,12 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
     {
         $updatedContentTypeAccessCollection = new ArrayObject();
         foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
-            $contentTypeAccessEntity = $this->getContentTypeAccessEntity($contentTypeAccess);
-            $contentTypeAccessEntity->setIsRestricted(true);
-            $contentTypeAccessEntity->save();
-
+            $customerAccessEntity = $this->getCustomerAccessEntityByContentType($contentTypeAccess);
+            $customerAccessEntity = $customerAccessEntity ? $customerAccessEntity : $this->createCustomerAccessEntity($contentTypeAccess);
+            $customerAccessEntity->setIsRestricted(true);
+            $customerAccessEntity->save();
             $updatedContentTypeAccessCollection->append(
-                (new ContentTypeAccessTransfer())->fromArray($contentTypeAccessEntity->toArray(), true)
+                $this->getFactory()->createCustomerAccessMapper()->mapCustomerAccessEntityToContentTypeAccessTransfer($customerAccessEntity)
             );
         }
         $customerAccessTransfer->setContentTypeAccess($updatedContentTypeAccessCollection);
@@ -92,12 +88,26 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
     /**
      * @param \Generated\Shared\Transfer\ContentTypeAccessTransfer $contentTypeAccessTransfer
      *
+     * @return \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess|null
+     */
+    protected function getCustomerAccessEntityByContentType(ContentTypeAccessTransfer $contentTypeAccessTransfer): ?SpyUnauthenticatedCustomerAccess
+    {
+        return $this->getFactory()
+            ->customerAccessQuery()
+            ->filterByContentType($contentTypeAccessTransfer->getContentType())
+            ->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ContentTypeAccessTransfer $contentTypeAccessTransfer
+     *
      * @return \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess
      */
-    protected function getContentTypeAccessEntity(ContentTypeAccessTransfer $contentTypeAccessTransfer): SpyUnauthenticatedCustomerAccess
+    protected function createCustomerAccessEntity(ContentTypeAccessTransfer $contentTypeAccessTransfer): SpyUnauthenticatedCustomerAccess
     {
-        return $this->getFactory()->createPropelCustomerAccessQuery()
-            ->filterByContentType($contentTypeAccessTransfer->getContentType())
-            ->findOneOrCreate();
+        $spyCustomerAccess = new SpyUnauthenticatedCustomerAccess();
+        $spyCustomerAccess->setContentType($contentTypeAccessTransfer->getContentType());
+
+        return $spyCustomerAccess;
     }
 }

@@ -22,7 +22,7 @@ interface CustomerAccessReaderInterface
     /**
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function getContentTypesWithUnauthenticatedCustomerAccess(): CustomerAccessTransfer;
+    public function getUnrestrictedContentTypes(): CustomerAccessTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer

@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CustomerAccessForm extends AbstractType
 {
     public const OPTION_CONTENT_TYPE_ACCESS = 'OPTION_CONTENT_TYPE_ACCESS';
-    protected const FIELD_CONTENT_TYPE_ACCESS = 'contentTypeAccess';
+    public const FIELD_CONTENT_TYPE_ACCESS = 'contentTypeAccess';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -64,13 +64,13 @@ class CustomerAccessForm extends AbstractType
 
         $builder
             ->get(static::FIELD_CONTENT_TYPE_ACCESS)
-            ->addModelTransformer(new CallbackTransformer(function ($customerAccess) {
+            ->addModelTransformer(new CallbackTransformer(function ($customerAccess): array {
                 if ($customerAccess) {
                     return (array)$customerAccess;
                 }
 
                 return [];
-            }, function ($customerAccess) {
+            }, function ($customerAccess): ArrayObject {
                 return new ArrayObject($customerAccess);
             }));
 
