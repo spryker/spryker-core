@@ -22,7 +22,9 @@ class AbstractProductsResourceMapper implements AbstractProductsResourceMapperIn
      */
     public function mapAbstractProductsDataToAbstractProductsRestAttributes(array $abstractProductData): AbstractProductsRestAttributesTransfer
     {
-        return $this->changeIdsToSkus((new AbstractProductsRestAttributesTransfer())->fromArray($abstractProductData, true));
+        $restAbstractProductsAttributesTransfer = (new AbstractProductsRestAttributesTransfer())->fromArray($abstractProductData, true);
+
+        return $this->changeIdsToSkus($restAbstractProductsAttributesTransfer);
     }
 
     /**
