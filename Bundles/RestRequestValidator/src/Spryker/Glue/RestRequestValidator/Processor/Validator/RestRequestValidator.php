@@ -79,7 +79,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
         if (!$restRequest->getResource()->getAttributes() || !$this->isSubjectByMethod($restRequest)) {
             return null;
         }
-        $validationConfig = $this->configReader->getValidationConfiguration($restRequest);
+        $validationConfig = $this->configReader->findValidationConfiguration($restRequest);
         $validationResult = $this->applyValidationToRequest($restRequest, $validationConfig);
         if (!$validationResult->getRestErrors()->count()) {
             return null;
@@ -90,12 +90,16 @@ class RestRequestValidator implements RestRequestValidatorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param array $validationConfig
+     * @param array|null $validationConfig
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
      */
-    protected function applyValidationToRequest(RestRequestInterface $restRequest, array $validationConfig): RestErrorCollectionTransfer
+    protected function applyValidationToRequest(RestRequestInterface $restRequest, $validationConfig = null): RestErrorCollectionTransfer
     {
+        if ($validationConfig === null) {
+            return $this->handleNoCacheFileError((new RestErrorCollectionTransfer()));
+        }
+
         $validator = $this->validationAdapter->createValidator();
         $initializedConstraintCollection = $this->constraintResolver->initializeConstraintCollection($validationConfig);
         $constraints = $this->constraintCollectionAdapter->createCollection(
@@ -132,6 +136,21 @@ class RestRequestValidator implements RestRequestValidatorInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $restErrorCollection
+     *
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer RestErrorCollectionTransfer
+     */
+    protected function handleNoCacheFileError(RestErrorCollectionTransfer $restErrorCollection): RestErrorCollectionTransfer
+    {
+        return $restErrorCollection->addRestError(
+            (new RestErrorMessageTransfer())
+                ->setCode(RestRequestValidatorConfig::RESPONSE_CODE_CACHE_FILE_NOT_FOUND)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(RestRequestValidatorConfig::EXCEPTION_MESSAGE_CACHE_FILE_NOT_FOUND)
+        );
+    }
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return array
@@ -157,5 +176,15 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function isSubjectByMethod(RestRequestInterface $restRequest): bool
     {
         return in_array($restRequest->getMetadata()->getMethod(), $this->config->getAvailableMethods());
+    }
+
+    /**
+     * @param string $dir
+     *
+     * @return bool
+     */
+    protected function isDirEmpty($dir): bool
+    {
+        return !is_readable($dir);
     }
 }

@@ -14,7 +14,7 @@ interface RestRequestValidatorConfigReaderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array
+     * @return array|null
      */
-    public function getValidationConfiguration(RestRequestInterface $restRequest): array;
+    public function findValidationConfiguration(RestRequestInterface $restRequest): ?array;
 }
