@@ -63,8 +63,8 @@ function AttributeManager() {
                 q: key,
             },
             success: function(data) {
-                data.filter(function(value) {
-                    return (value == key);
+                data = data.filter(function(value) {
+                    return (value.key == key);
                 });
                 if (data.length > 0) {
                     hasAttribute = true;
