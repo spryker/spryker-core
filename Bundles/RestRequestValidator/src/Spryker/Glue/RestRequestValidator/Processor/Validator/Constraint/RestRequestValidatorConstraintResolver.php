@@ -59,7 +59,7 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     {
         $initializedConstraintCollection = $this->initializeConstraintFromConfig($restRequest);
 
-        if ($initializedConstraintCollection === null) {
+        if (!$initializedConstraintCollection) {
             return null;
         }
 
@@ -79,7 +79,7 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     {
         $validationConfig = $this->configReader->findValidationConfiguration($restRequest);
 
-        if ($validationConfig === null) {
+        if (!$validationConfig) {
             return null;
         }
 
