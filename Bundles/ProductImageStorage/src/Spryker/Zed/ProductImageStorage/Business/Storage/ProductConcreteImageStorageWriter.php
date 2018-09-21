@@ -166,11 +166,11 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSetEntityTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSetEntityTransfers
      *
      * @return \ArrayObject
      */
-    protected function generateProductImageSetStorageTransfers(array $productImageSetEntityTransfers): ArrayObject
+    protected function generateProductImageSetStorageTransfers(ArrayObject $productImageSetEntityTransfers): ArrayObject
     {
         $productImageSetStorageTransfers = new ArrayObject();
 

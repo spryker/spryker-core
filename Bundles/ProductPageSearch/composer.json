@@ -8,6 +8,7 @@
     "spryker/category": "^4.3.0",
     "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.21.0",
+    "spryker/price": "^5.3.0",
     "spryker/price-product": "^1.1.0 || ^2.1.0",
     "spryker/product": "^5.5.0 || ^6.0.0",
     "spryker/product-category": "^4.5.0",
@@ -20,8 +21,7 @@
     "spryker/synchronization-extension": "^1.0.0",
     "spryker/url": "^3.3.0",
     "spryker/util-encoding": "^2.0.0",
-    "spryker/util-sanitize": "^2.1.0",
-    "spryker/price": "^5.3.0"
+    "spryker/util-sanitize": "^2.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

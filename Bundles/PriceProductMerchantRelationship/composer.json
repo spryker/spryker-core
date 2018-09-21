@@ -16,7 +16,10 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/customer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/merchant": "*",
+    "spryker/propel": "*",
+    "spryker/company-business-unit": "*"
   },
   "suggest": {
     "spryker/customer": "If you want to use prices per customer functionality"
@@ -24,6 +27,11 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
