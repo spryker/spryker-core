@@ -19,12 +19,12 @@ class CartDeleteChecker implements CartDeleteCheckerInterface
     use PermissionAwareTrait;
 
     /**
-     * @var \Spryker\Client\MultiCart\MultiCartClientInterface
+     * @var \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface
      */
     protected $multiCartClient;
 
     /**
-     * @var \Spryker\Client\Customer\CustomerClientInterface
+     * @var \Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface
      */
     protected $customerClient;
 
