@@ -11,6 +11,14 @@
                 <bundle>company-role-gui</bundle>
                 <controller>list-company-role</controller>
                 <action>index</action>
+                <pages>
+                    <delete-company-role>
+                        <label>Delete company role</label>
+                        <title>Delete company role</title>
+                        <bundle>company-role-gui</bundle>
+                        <controller>delete-company-role</controller>
+                    </delete-company-role>
+                </pages>
             </company-role-gui>
         </pages>
     </company-gui>
