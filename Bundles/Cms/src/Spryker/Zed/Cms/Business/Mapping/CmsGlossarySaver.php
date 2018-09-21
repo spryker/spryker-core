@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -288,7 +289,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     /**
      * @param string $translationKey
      *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey|null
      */
     protected function findGlossaryKeyEntityByTranslationKey($translationKey)
     {
@@ -300,7 +301,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     /**
      * @param int $idMapping
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping|null
      */
     protected function findGlossaryKeyMappingEntityById($idMapping)
     {

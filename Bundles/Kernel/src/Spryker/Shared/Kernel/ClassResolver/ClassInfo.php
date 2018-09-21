@@ -16,17 +16,17 @@ class ClassInfo
     const KEY_LAYER = 3;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $callerClassName;
 
     /**
      * @var string[]
      */
-    protected $callerClassParts;
+    protected $callerClassParts = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     * @var \Spryker\Shared\Kernel\ClassResolver\BundleNameResolver|null
      */
     protected $bundleNameResolver;
 
@@ -67,7 +67,7 @@ class ClassInfo
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getCallerClassName()
     {
