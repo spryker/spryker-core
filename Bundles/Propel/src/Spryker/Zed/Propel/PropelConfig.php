@@ -56,6 +56,8 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * First load the core file if present and then override it with the one from project
+     *
      * @return array
      */
     public function getPropelSchemaPathPatterns()
