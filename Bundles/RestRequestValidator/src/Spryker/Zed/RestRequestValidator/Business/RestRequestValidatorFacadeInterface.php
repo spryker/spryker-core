@@ -11,8 +11,9 @@ interface RestRequestValidatorFacadeInterface
 {
     /**
      * Specification:
-     * - collects the validation rules declarations from all the modules
-     * - stores the rules in the cache.
+     * - Collects the validation rules declarations from all the modules.
+     * - Stores the rules in the cache.
+     * - Removes outdated validation rules cache file.
      *
      * @api
      *

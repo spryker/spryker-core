@@ -57,10 +57,12 @@ class RestRequestValidatorMerger implements RestRequestValidatorMergerInterface
     {
         if (!array_key_exists($actionName, $resultingConfiguration)) {
             $resultingConfiguration[$actionName] = $fieldsConfig;
-        } else {
-            foreach ($fieldsConfig as $fieldName => $validatorsList) {
-                $resultingConfiguration[$actionName][$fieldName] = $validatorsList;
-            }
+
+            return $resultingConfiguration;
+        }
+
+        foreach ($fieldsConfig as $fieldName => $validatorsList) {
+            $resultingConfiguration[$actionName][$fieldName] = $validatorsList;
         }
 
         return $resultingConfiguration;

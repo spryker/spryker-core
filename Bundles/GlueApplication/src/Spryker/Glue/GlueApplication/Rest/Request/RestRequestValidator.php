@@ -58,7 +58,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
             $restErrorMessageTransfer = new RestErrorMessageTransfer();
             $restErrorMessageTransfer->setDetail('Post data missing.');
 
-            return (new RestErrorCollectionTransfer())->addRestErrors($restErrorMessageTransfer);
+            return (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
         }
 
         return null;

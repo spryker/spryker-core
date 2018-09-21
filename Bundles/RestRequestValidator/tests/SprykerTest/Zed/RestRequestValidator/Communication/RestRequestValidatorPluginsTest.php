@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\RestRequestValidator\Business\Exception\ClassDoesNotExist;
+use Spryker\Glue\RestRequestValidator\Business\Exception\ClassNotFound;
 use Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapter;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapter;
@@ -99,7 +99,7 @@ class RestRequestValidatorPluginsTest extends Unit
      */
     public function testValidateWillPassByGetRequest(): void
     {
-        $this->expectException(ClassDoesNotExist::class);
+        $this->expectException(ClassNotFound::class);
 
         $mockRestRequestValidator = $this->createMockRestRequestValidatorWithWrongConstraint();
         $mockRestRequest = $this->createMockRestRequestWithData(static::CORRECT_ENDPOINT_DATA);

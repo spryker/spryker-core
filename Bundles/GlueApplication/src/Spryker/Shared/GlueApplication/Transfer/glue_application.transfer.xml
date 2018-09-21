@@ -19,7 +19,7 @@
     </transfer>
 
     <transfer name="RestErrorCollection">
-        <property name="restErrors" type="RestErrorMessage[]"/>
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
     </transfer>
 
     <transfer name="RestVersion">

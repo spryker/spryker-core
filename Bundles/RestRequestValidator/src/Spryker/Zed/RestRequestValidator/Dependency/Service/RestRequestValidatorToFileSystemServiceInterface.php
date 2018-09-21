@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
 
-interface RestRequestValidatorToFileSystemInterface
+interface RestRequestValidatorToFileSystemServiceInterface
 {
     /**
      * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
