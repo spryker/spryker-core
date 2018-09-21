@@ -14,6 +14,7 @@ class CompanyBusinessUnitDataImportConfig extends DataImportConfig
 {
     const IMPORT_TYPE_COMPANY_BUSINESS_UNIT = 'company-business-unit';
     const IMPORT_TYPE_COMPANY_BUSINESS_UNIT_USER = 'company-business-unit-user';
+    const IMPORT_TYPE_COMPANY_BUSINESS_UNIT_ADDRESS = 'company-business-unit-address';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
@@ -29,6 +30,14 @@ class CompanyBusinessUnitDataImportConfig extends DataImportConfig
     public function getCompanyBusinessUnitUserDataImporterConfiguration(): DataImporterConfigurationTransfer
     {
         return $this->buildImporterConfiguration(implode(DIRECTORY_SEPARATOR, [$this->getModuleDataImportDirectory(), 'company_business_unit_user.csv']), static::IMPORT_TYPE_COMPANY_BUSINESS_UNIT_USER);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    public function getCompanyBusinessUnitAddressDataImporterConfiguration(): DataImporterConfigurationTransfer
+    {
+        return $this->buildImporterConfiguration(implode(DIRECTORY_SEPARATOR, [$this->getModuleDataImportDirectory(), 'company_business_unit_address.csv']), static::IMPORT_TYPE_COMPANY_BUSINESS_UNIT_ADDRESS);
     }
 
     /**

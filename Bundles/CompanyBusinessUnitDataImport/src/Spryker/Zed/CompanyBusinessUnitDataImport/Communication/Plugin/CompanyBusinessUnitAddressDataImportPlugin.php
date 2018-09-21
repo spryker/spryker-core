@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitDataImport\Business\CompanyBusinessUnitDataImportFacadeInterface getFacade()
  */
-class CompanyBusinessUnitUserDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
+class CompanyBusinessUnitAddressDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -29,7 +29,7 @@ class CompanyBusinessUnitUserDataImportPlugin extends AbstractPlugin implements 
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFacade()->importBusinessUnitUser($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importBusinessUnitAddresses($dataImporterConfigurationTransfer);
     }
 
     /**
@@ -41,6 +41,6 @@ class CompanyBusinessUnitUserDataImportPlugin extends AbstractPlugin implements 
      */
     public function getImportType(): string
     {
-        return CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT_USER;
+        return CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT_ADDRESS;
     }
 }
