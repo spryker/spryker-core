@@ -15,11 +15,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company-business-unit": "*",
     "spryker/customer": "*",
-    "spryker/testify": "*",
     "spryker/merchant": "*",
     "spryker/propel": "*",
-    "spryker/company-business-unit": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/customer": "If you want to use prices per customer functionality"

@@ -45,7 +45,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     protected $categoryCacheCollection;
 
     /**
-     * @var array
+     * @var array|null
      */
     protected static $categoryTree;
 

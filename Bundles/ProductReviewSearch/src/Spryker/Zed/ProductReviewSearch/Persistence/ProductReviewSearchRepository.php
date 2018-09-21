@@ -18,7 +18,7 @@ class ProductReviewSearchRepository extends AbstractRepository implements Produc
 {
     protected const FIELD_FK_PRODUCT_ABSTRACT = ProductPayloadTransfer::ID_PRODUCT_ABSTRACT;
     protected const FIELD_AVERAGE_RATING = ProductPayloadTransfer::AVERAGE_RATING;
-    protected const FIELD_COUNT = ProductPayloadTransfer::REVIEW_COUNT;
+    protected const FIELD_REVIEW_COUNT = ProductPayloadTransfer::REVIEW_COUNT;
 
     /**
      * @param array $abstractProductIds
@@ -33,8 +33,8 @@ class ProductReviewSearchRepository extends AbstractRepository implements Produc
             ->filterByStatus(SpyProductReviewTableMap::COL_STATUS_APPROVED)
             ->withColumn(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_FK_PRODUCT_ABSTRACT)
             ->withColumn(sprintf('AVG(%s)', SpyProductReviewTableMap::COL_RATING), static::FIELD_AVERAGE_RATING)
-            ->withColumn(sprintf('COUNT(%s)', SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT), static::FIELD_COUNT)
-            ->select([static::FIELD_FK_PRODUCT_ABSTRACT, static::FIELD_AVERAGE_RATING, static::FIELD_COUNT])
+            ->withColumn(sprintf('COUNT(%s)', SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT), static::FIELD_REVIEW_COUNT)
+            ->select([static::FIELD_FK_PRODUCT_ABSTRACT, static::FIELD_AVERAGE_RATING, static::FIELD_REVIEW_COUNT])
             ->groupBy(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->find()
             ->toArray(static::FIELD_FK_PRODUCT_ABSTRACT);

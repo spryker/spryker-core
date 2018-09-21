@@ -382,7 +382,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
             ->queryProductAttributeKey()
             ->find();
 
-        if (empty($superAttributes->getData())) {
+        if ($superAttributes->getData() === []) {
             $this->superAttributeKeyBuffer[] = null;
 
             return;
