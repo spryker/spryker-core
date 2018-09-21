@@ -9,7 +9,6 @@ namespace Spryker\Zed\SprykGui\Business;
 
 use Generated\Shared\Transfer\AccessibleTransferCollection;
 use Generated\Shared\Transfer\ClassInformationTransfer;
-use Generated\Shared\Transfer\ModuleCollectionTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationCollectionTransfer;
 
@@ -70,9 +69,9 @@ interface SprykGuiFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ModuleCollectionTransfer
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    public function getModules(): ModuleCollectionTransfer;
+    public function getModules(): array;
 
     /**
      * Specification

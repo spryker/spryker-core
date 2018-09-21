@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SprykGui\Business\Finder\Module;
+namespace Spryker\Zed\SprykGui\Dependency\Facade;
 
-interface ModuleFinderInterface
+interface SprykGuiToDevelopmentFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     * @return array
      */
-    public function findModules(): array;
+    public function getModules(): array;
 }

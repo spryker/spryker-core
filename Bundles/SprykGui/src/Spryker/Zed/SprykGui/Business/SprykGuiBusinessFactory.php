@@ -33,6 +33,7 @@ use Spryker\Zed\SprykGui\Business\PhpInternal\Type\Type;
 use Spryker\Zed\SprykGui\Business\PhpInternal\Type\TypeInterface;
 use Spryker\Zed\SprykGui\Business\Spryk\Spryk;
 use Spryker\Zed\SprykGui\Business\Spryk\SprykInterface;
+use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToDevelopmentFacadeInterface;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
 use Spryker\Zed\SprykGui\SprykGuiDependencyProvider;
 
@@ -85,7 +86,15 @@ class SprykGuiBusinessFactory extends AbstractBusinessFactory
      */
     public function createModuleFinder(): ModuleFinderInterface
     {
-        return new ModuleFinder();
+        return new ModuleFinder($this->getDevelopmentFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToDevelopmentFacadeInterface
+     */
+    public function getDevelopmentFacade(): SprykGuiToDevelopmentFacadeInterface
+    {
+        return $this->getProvidedDependency(SprykGuiDependencyProvider::DEVELOPMENT_FACADE);
     }
 
     /**

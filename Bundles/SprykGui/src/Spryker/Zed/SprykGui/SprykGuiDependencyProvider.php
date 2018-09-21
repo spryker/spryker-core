@@ -11,11 +11,13 @@ use Spryker\Spryk\SprykFacade;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToDevelopmentFacadeBridge;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeBridge;
 
 class SprykGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SPRYK_FACADE = 'spryk facade';
+    public const DEVELOPMENT_FACADE = 'development facade';
     public const PLUGIN_GRAPH = 'graph plugin';
 
     /**
@@ -38,6 +40,7 @@ class SprykGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addSprykFacade($container);
+        $container = $this->addDevelopmentFacade($container);
         $container = $this->addGraphPlugin($container);
 
         return $container;
@@ -56,6 +59,24 @@ class SprykGuiDependencyProvider extends AbstractBundleDependencyProvider
             );
 
             return $sprykGuiToSprykFacadeBridge;
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDevelopmentFacade(Container $container): Container
+    {
+        $container[static::DEVELOPMENT_FACADE] = function () use ($container) {
+            $sprykGuiToDevelopmentFacadeBridge = new SprykGuiToDevelopmentFacadeBridge(
+                $container->getLocator()->development()->facade()
+            );
+
+            return $sprykGuiToDevelopmentFacadeBridge;
         };
 
         return $container;

@@ -57,10 +57,10 @@ class SprykMainForm extends AbstractType
             return;
         }
 
-        $moduleCollectionTransfer = $this->getFacade()->getModules();
+        $moduleTransferCollection = $this->getFacade()->getModules();
 
         $builder->add(static::MODULE, ChoiceType::class, [
-            'choices' => $moduleCollectionTransfer->getModules(),
+            'choices' => $moduleTransferCollection,
             'choice_label' => function (ModuleTransfer $moduleTransfer) {
                 return $moduleTransfer->getName();
             },
