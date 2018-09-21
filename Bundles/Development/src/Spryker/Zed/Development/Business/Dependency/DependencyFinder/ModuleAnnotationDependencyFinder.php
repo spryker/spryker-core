@@ -79,7 +79,7 @@ class ModuleAnnotationDependencyFinder implements DependencyFinderInterface
      */
     public function findDependencies(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
     {
-        if (preg_match_all('/@module\s([a-z-A-Z]*)/', $context->getFileInfo()->getContents(), $matches, PREG_SET_ORDER) !== false) {
+        if (preg_match_all('/@module\s([a-zA-Z]+)/', $context->getFileInfo()->getContents(), $matches, PREG_SET_ORDER) !== false) {
             foreach ($matches as $match) {
                 $dependencyContainer->addDependency($match[1], $this->getType());
             }
