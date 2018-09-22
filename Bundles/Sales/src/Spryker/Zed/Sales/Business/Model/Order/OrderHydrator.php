@@ -120,11 +120,19 @@ class OrderHydrator implements OrderHydratorInterface
             );
         }
 
+        return $this->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateOrderTransferFromPersistenceBySalesOrder(SpySalesOrder $orderEntity): OrderTransfer
+    {
         $this->queryContainer->fillOrderItemsWithLatestStates($orderEntity->getItems());
 
-        $orderTransfer = $this->createOrderTransfer($orderEntity);
-
-        return $orderTransfer;
+        return $this->createOrderTransfer($orderEntity);
     }
 
     /**

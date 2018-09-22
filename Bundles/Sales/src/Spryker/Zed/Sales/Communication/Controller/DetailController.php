@@ -10,7 +10,6 @@ namespace Spryker\Zed\Sales\Communication\Controller;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,10 +30,14 @@ class DetailController extends AbstractController
     {
         $idSalesOrder = $this->castId($request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER));
 
-        try {
-            $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
-        } catch (InvalidSalesOrderException $exception) {
-            $this->addErrorMessage($exception->getMessage());
+        $orderTransfer = $this->getFacade()->findOrderByIdSalesOrder($idSalesOrder);
+
+        if ($orderTransfer === null) {
+            $this->addErrorMessage(sprintf(
+                'Sales order #%d not found.',
+                $idSalesOrder
+            ));
+
             return $this->redirectResponse(Url::generate('/sales')->build());
         }
 
