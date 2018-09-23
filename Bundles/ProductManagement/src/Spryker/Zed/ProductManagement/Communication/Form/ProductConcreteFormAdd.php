@@ -116,11 +116,9 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
      */
     protected function addSkuAutogenerateCheckboxField(FormBuilderInterface $builder)
     {
-        if ($builder->getOption(static::OPTION_SUPER_ATTRIBUTES)) {
-            $builder->add(static::FIELD_SKU_AUTOGENERATE_CHECKBOX, CheckboxType::class, [
-                'label' => 'Autogenerate SKU',
-            ]);
-        }
+        $builder->add(static::FIELD_SKU_AUTOGENERATE_CHECKBOX, CheckboxType::class, [
+            'label' => 'Autogenerate SKU',
+        ]);
 
         return $this;
     }
@@ -209,9 +207,11 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
         $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById($idProductAbstract);
 
         $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setAttributes(
-            $this->getNonEmptyTransformedSubmittedSuperAttributes($formData[static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES])
-        );
+        if (isset($formData[static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES])) {
+            $productConcreteTransfer->setAttributes(
+                $this->getNonEmptyTransformedSubmittedSuperAttributes($formData[static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES])
+            );
+        }
 
         return $this->getFactory()->getProductFacade()->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
     }
