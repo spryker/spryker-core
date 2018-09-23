@@ -137,20 +137,6 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param int $idProductConcrete
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function findProductConcretePricesWithoutProductAbstractPrices(
-        int $idProductConcrete,
-        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ): array {
-        return $this->priceProductConcreteReader
-            ->findProductConcretePricesById($idProductConcrete, $priceProductCriteriaTransfer);
-    }
-
-    /**
      * @param string $sku
      * @param string|null $priceTypeName
      *
@@ -253,7 +239,9 @@ class Reader implements ReaderInterface
         array $concretePriceProductTransfers
     ) {
         $priceProductTransfers = [];
-        foreach ($abstractPriceProductTransfers as $abstractKey => $priceProductAbstractTransfer) {
+        foreach ($abstractPriceProductTransfers as $priceProductAbstractTransfer) {
+            $abstractKey = $this->getPriceProductCommonKey($priceProductAbstractTransfer);
+
             $priceProductTransfers = $this->mergeConcreteProduct(
                 $concretePriceProductTransfers,
                 $abstractKey,
@@ -302,7 +290,9 @@ class Reader implements ReaderInterface
         PriceProductTransfer $priceProductAbstractTransfer,
         array $priceProductTransfers
     ) {
-        foreach ($concretePriceProductTransfers as $concreteKey => $priceProductConcreteTransfer) {
+        foreach ($concretePriceProductTransfers as $priceProductConcreteTransfer) {
+            $concreteKey = $this->getPriceProductCommonKey($priceProductConcreteTransfer);
+
             if ($abstractKey !== $concreteKey) {
                 continue;
             }
@@ -409,6 +399,20 @@ class Reader implements ReaderInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return string
+     */
+    protected function getPriceProductCommonKey(PriceProductTransfer $priceProductTransfer): string
+    {
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        return $moneyValueTransfer->getFkStore() .
+            $moneyValueTransfer->getFkCurrency() .
+            $priceProductTransfer->getFkPriceType();
     }
 
     /**

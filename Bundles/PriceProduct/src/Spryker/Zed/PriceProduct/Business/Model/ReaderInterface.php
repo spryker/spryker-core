@@ -50,17 +50,6 @@ interface ReaderInterface
     ): array;
 
     /**
-     * @param int $idProductConcrete
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function findProductConcretePricesWithoutProductAbstractPrices(
-        int $idProductConcrete,
-        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ): array;
-
-    /**
      * @param string $sku
      * @param string|null $priceTypeName
      *

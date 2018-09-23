@@ -298,23 +298,6 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
-     * - Reads concrete product prices from database.
-     * - Extracts additional prices array from price data
-     *
-     * @api
-     *
-     * @param int $idProductConcrete
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function findProductConcretePricesWithoutProductAbstractPrices(
-        int $idProductConcrete,
-        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ): array;
-
-    /**
-     * Specification:
      * - Reads the persisted price for the given abstract product id for the given price type.
      * - If price type is not provided, then the default price type will be used.
      * - Returns a hydrated PriceProductTransfer if the price exists, null otherwise.
