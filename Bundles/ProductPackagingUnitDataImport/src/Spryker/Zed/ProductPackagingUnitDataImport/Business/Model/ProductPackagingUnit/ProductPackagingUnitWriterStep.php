@@ -147,6 +147,14 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
             $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] = null;
         }
 
+        if ($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] <= 0 &&
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN] <= 0 &&
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MAX] <= 0 &&
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] <= 0
+        ) {
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] = 1;
+        }
+
         return $dataSet;
     }
 
@@ -158,12 +166,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected function persistAmount(DataSetInterface $dataSet, SpyProductPackagingUnit $productPackagingUnitEntity): void
     {
-        $haveAmount = $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] > 1 ||
-            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN] > 0 ||
-            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MAX] > 0 ||
-            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] > 0;
-
-        if (!$haveAmount || $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT]) {
+        if ($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_LEAD_PRODUCT]) {
             return;
         }
 
