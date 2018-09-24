@@ -24,7 +24,7 @@ abstract class AbstractRouter implements RouterInterface
     /**
      * @var bool|null
      */
-    private $sslEnabled;
+    protected $sslEnabled;
 
     /**
      * @var \Symfony\Component\Routing\RequestContext|null
