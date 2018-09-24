@@ -79,10 +79,6 @@ class DevelopmentFacadeTest extends Unit
     {
         return [
             ['Spryker', 'Development', 1],
-            ['Spryke*', 'Development', 1],
-            ['*pryker', 'Development', 1],
-            ['Spryker', 'Developmen*', 2],
-            ['Spryker', '*evelopment', 1],
         ];
     }
 

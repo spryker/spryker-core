@@ -123,4 +123,16 @@ interface CompanyBusinessUnitFacadeInterface
     public function assignDefaultBusinessUnitToCompanyUser(
         CompanyUserResponseTransfer $companyUserResponseTransfer
     ): CompanyUserResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns customer references of company users related to business units.
+     *
+     * @api
+     *
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
 }

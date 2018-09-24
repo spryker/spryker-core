@@ -237,6 +237,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      */
     public function queryAttributeValues(array $attributes = [], $isSuper = null)
     {
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery $query */
         $query = $this->queryProductAttributeKey()
             ->useSpyProductManagementAttributeQuery(null, Criteria::LEFT_JOIN)
                 ->useSpyProductManagementAttributeValueQuery(null, Criteria::LEFT_JOIN)
