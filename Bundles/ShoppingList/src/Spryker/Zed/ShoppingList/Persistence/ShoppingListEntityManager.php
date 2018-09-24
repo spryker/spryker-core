@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\SpyShoppingListPermissionGroupEntityTransfer;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnitBlacklist;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -332,12 +333,15 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
      */
     public function deleteCompanyBusinessUnitBlacklistByShoppingListId(int $idShoppingList): void
     {
-        $this->getFactory()
+        $shoppingListCompanyBusinessUnitBlacklistEntities = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitBlacklistPropelQuery()
-            ->useSpyShoppingListCompanyBusinessUnitQuery()
+            ->useSpyShoppingListCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkShoppingList($idShoppingList)
             ->endUse()
-            ->delete();
+            ->find();
+        foreach ($shoppingListCompanyBusinessUnitBlacklistEntities as $shoppingListCompanyBusinessUnitBlacklistEntity) {
+            $shoppingListCompanyBusinessUnitBlacklistEntity->delete();
+        }
     }
 
     /**
@@ -347,11 +351,14 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
      */
     public function deleteCompanyBusinessUnitBlacklistByBusinessUnitId(int $idCompanyBusinessUnit): void
     {
-        $this->getFactory()
+        $shoppingListCompanyBusinessUnitBlacklistEntities = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitBlacklistPropelQuery()
-            ->useSpyShoppingListCompanyBusinessUnitQuery()
+            ->useSpyShoppingListCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->endUse()
-            ->delete();
+            ->find();
+        foreach ($shoppingListCompanyBusinessUnitBlacklistEntities as $shoppingListCompanyBusinessUnitBlacklistEntity) {
+            $shoppingListCompanyBusinessUnitBlacklistEntity->delete();
+        }
     }
 }

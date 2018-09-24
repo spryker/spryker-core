@@ -229,12 +229,15 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $companyUserPermissionCollectionTransfer = new PermissionCollectionTransfer();
 
         $companyUserOwnShoppingListIds = $this->findCompanyUserShoppingListIds($companyUserTransfer);
+        $companyBusinessUnitSharedShoppingListIds = $this->shoppingListRepository->findCompanyBusinessUnitSharedShoppingListsIds($companyUserTransfer->getFkCompanyBusinessUnit());
+        $companyBusinessUnitBlacklistedShoppingListIds = $this->shoppingListRepository->getBlacklistedShoppingListsIdsByIdCompanyUser($companyUserTransfer->getIdCompanyUser());
+        $companyBusinessUnitSharedShoppingListIds = array_diff($companyBusinessUnitSharedShoppingListIds, $companyBusinessUnitBlacklistedShoppingListIds);
 
         $companyUserPermissionCollectionTransfer = $this->addReadPermissionToPermissionCollectionTransfer(
             $companyUserPermissionCollectionTransfer,
             array_merge(
                 $this->shoppingListRepository->findCompanyUserSharedShoppingListsIds($companyUserTransfer->getIdCompanyUser()),
-                $this->shoppingListRepository->findCompanyBusinessUnitSharedShoppingListsIds($companyUserTransfer->getFkCompanyBusinessUnit()),
+                $companyBusinessUnitSharedShoppingListIds,
                 $companyUserOwnShoppingListIds
             )
         );
@@ -247,6 +250,8 @@ class ShoppingListReader implements ShoppingListReaderInterface
             $companyUserTransfer->getFkCompanyBusinessUnit(),
             ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS
         );
+        $companyBusinessUnitBlacklistedShoppingListIds = $this->shoppingListRepository->getBlacklistedShoppingListsIdsByIdCompanyUser($companyUserTransfer->getIdCompanyUser());
+        $companyBusinessUnitSharedShoppingListIds = array_diff($companyBusinessUnitSharedShoppingListIds, $companyBusinessUnitBlacklistedShoppingListIds);
 
         $companyUserPermissionCollectionTransfer = $this->addWritePermissionToPermissionCollectionTransfer(
             $companyUserPermissionCollectionTransfer,
