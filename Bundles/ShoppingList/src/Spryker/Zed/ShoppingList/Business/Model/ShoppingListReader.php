@@ -47,13 +47,11 @@ class ShoppingListReader implements ShoppingListReaderInterface
      */
     protected $companyUserFacade;
 
-    protected const GLOSSARY_KEY_SHOPPING_LIST_NOT_FOUND = 'shopping_list.not_found';
-
     /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface $customerFacade
-     * @param array $itemExpanderPlugins
+     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
      */
     public function __construct(
         ShoppingListRepositoryInterface $shoppingListRepository,
@@ -76,7 +74,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
     {
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
 
-        if (!$this->checkReadPermission($shoppingListTransfer)) {
+        if ($shoppingListTransfer === null || !$this->checkReadPermission($shoppingListTransfer)) {
             return new ShoppingListTransfer();
         }
 
@@ -95,15 +93,16 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $shoppingListOverviewRequestTransfer->requireShoppingList();
         $shoppingListOverviewRequestTransfer->getShoppingList()->requireIdShoppingList();
 
-        $shoppingListOverviewResponseTransfer = new ShoppingListOverviewResponseTransfer();
+        $shoppingListOverviewResponseTransfer = (new ShoppingListOverviewResponseTransfer())
+            ->setShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
 
         $shoppingListTransfer = $this->getShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
 
         if (!$shoppingListTransfer->getIdShoppingList()) {
+            $shoppingListOverviewResponseTransfer->setIsSuccess(false);
+
             return $shoppingListOverviewResponseTransfer;
         }
-
-        $shoppingListOverviewResponseTransfer->setShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
 
         $shoppingListOverviewRequestTransfer->setShoppingList($shoppingListTransfer);
         $shoppingListOverviewResponseTransfer = $this->shoppingListRepository->findShoppingListPaginatedItems($shoppingListOverviewRequestTransfer);
@@ -117,6 +116,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
         $shoppingListOverviewResponseTransfer->setShoppingList($shoppingListTransfer);
         $shoppingListOverviewResponseTransfer->setShoppingLists($this->getCustomerShoppingListCollection($customerTransfer));
+        $shoppingListOverviewResponseTransfer->setIsSuccess(true);
 
         return $shoppingListOverviewResponseTransfer;
     }
@@ -316,13 +316,13 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer|null $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return bool
      */
-    protected function checkReadPermission(?ShoppingListTransfer $shoppingListTransfer): bool
+    protected function checkReadPermission(ShoppingListTransfer $shoppingListTransfer): bool
     {
-        if (!$shoppingListTransfer || !$shoppingListTransfer->getIdCompanyUser()) {
+        if (!$shoppingListTransfer->getIdCompanyUser()) {
             return false;
         }
 
