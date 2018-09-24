@@ -82,7 +82,7 @@ class ExtensionDependencyFinder extends AbstractFileDependencyFinder
      */
     protected function hasExtensionModule(string $moduleExtensionKey): bool
     {
-        $moduleTransferCollection = $this->moduleFinder->find();
+        $moduleTransferCollection = $this->moduleFinder->getModules();
 
         return isset($moduleTransferCollection[$moduleExtensionKey]);
     }

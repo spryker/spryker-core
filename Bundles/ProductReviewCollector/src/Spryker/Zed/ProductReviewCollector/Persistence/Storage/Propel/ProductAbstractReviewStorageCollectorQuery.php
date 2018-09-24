@@ -44,6 +44,7 @@ class ProductAbstractReviewStorageCollectorQuery extends AbstractPropelCollector
     protected function getApprovedReviewStatus()
     {
         $productReviewStatusValueSet = SpyProductReviewTableMap::getValueSet(SpyProductReviewTableMap::COL_STATUS);
+        /** @var int $convertedStatus */
         $convertedStatus = array_search(SpyProductReviewTableMap::COL_STATUS_APPROVED, $productReviewStatusValueSet);
 
         return $convertedStatus;
