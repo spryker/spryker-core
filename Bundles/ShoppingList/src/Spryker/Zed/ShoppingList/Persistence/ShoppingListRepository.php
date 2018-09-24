@@ -292,7 +292,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param string $customerReference
      *
-     * @return $this|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery
+     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery
      */
     protected function createCustomerShoppingListQuery(string $customerReference)
     {
