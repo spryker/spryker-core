@@ -14,6 +14,9 @@ class GlueControllerFinder implements GlueControllerFinderInterface
 {
     protected const PATTERN_CONTROLLER_NAMESPACE = '%s\Controller\%s';
     protected const PATTERN_CONTROLLER_FILENAME = '%s.php';
+    protected const PATTERN_PLUGIN = '\Plugin\\';
+
+    protected const CONTROLLER_SUFFIX = 'Controller';
 
     /**
      * @var \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFinderInterface
@@ -62,9 +65,9 @@ class GlueControllerFinder implements GlueControllerFinderInterface
      */
     protected function getPluginControllerClass(ResourceRoutePluginInterface $plugin): string
     {
-        $controllerClass = implode('', array_map('ucfirst', explode('-', $plugin->getController()))) . 'Controller';
+        $controllerClass = implode('', array_map('ucfirst', explode('-', $plugin->getController()))) . static::CONTROLLER_SUFFIX;
         $pluginClass = get_class($plugin);
-        $moduleNamespace = substr($pluginClass, 0, strpos($pluginClass, '\Plugin\\'));
+        $moduleNamespace = substr($pluginClass, 0, strpos($pluginClass, static::PATTERN_PLUGIN));
 
         return sprintf(
             static::PATTERN_CONTROLLER_NAMESPACE,

@@ -117,21 +117,9 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
      */
     protected function resolveGeneratedFileName(): string
     {
-        $targetDirectory = $this->restApiDocumentationGeneratorConfig->getTargetDirectory();
-        if (substr($targetDirectory, -1) !== DIRECTORY_SEPARATOR) {
-            $targetDirectory .= DIRECTORY_SEPARATOR;
-        }
-
-        if (!is_dir($targetDirectory)) {
-            $this->filesystem->mkdir($targetDirectory);
-        }
-
-        $fileName = $this->restApiDocumentationGeneratorConfig->getGeneratedFileName();
-
-        if (substr_compare($fileName, static::GENERATED_FILE_POSTFIX, -strlen(static::GENERATED_FILE_POSTFIX)) === 0) {
-            return $fileName;
-        }
-
-        return $targetDirectory . $fileName . static::GENERATED_FILE_POSTFIX;
+        return $this->restApiDocumentationGeneratorConfig->getTargetDirectory()
+            . DIRECTORY_SEPARATOR
+            . $this->restApiDocumentationGeneratorConfig->getGeneratedFileName()
+            . static::GENERATED_FILE_POSTFIX;
     }
 }

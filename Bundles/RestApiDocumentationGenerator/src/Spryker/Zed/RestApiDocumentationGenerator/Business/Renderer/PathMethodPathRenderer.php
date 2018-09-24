@@ -162,7 +162,7 @@ class PathMethodPathRenderer implements PathRendererInterface
     {
         preg_match_all(static::PATTERN_REGEX_RESOURCE_ID, $resourcePath, $matches);
 
-        return $matches[0];
+        return $matches[0] ?? [];
     }
 
     /**

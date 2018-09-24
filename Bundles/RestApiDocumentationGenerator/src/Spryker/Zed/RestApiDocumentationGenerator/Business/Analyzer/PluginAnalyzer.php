@@ -288,19 +288,18 @@ class PluginAnalyzer implements PluginAnalyzerInterface
      */
     protected function getParentResource(ResourceRoutePluginInterface $plugin, array $pluginsStack): ?array
     {
-        if ($plugin instanceof ResourceWithParentPluginInterface) {
-            $parent = [];
-            foreach ($pluginsStack as $parentPlugin) {
-                if ($plugin->getParentResourceType() === $parentPlugin->getResourceType()) {
-                    $parent = [
-                        static::KEY_NAME => $parentPlugin->getResourceType(),
-                        static::KEY_ID => $this->getResourceIdFromResourceType($parentPlugin->getResourceType()),
-                        static::KEY_PARENT => $this->getParentResource($parentPlugin, $pluginsStack),
-                    ];
-                    break;
-                }
+        if (!$plugin instanceof ResourceWithParentPluginInterface) {
+            return null;
+        }
+
+        foreach ($pluginsStack as $parentPlugin) {
+            if ($plugin->getParentResourceType() === $parentPlugin->getResourceType()) {
+                return [
+                    static::KEY_NAME => $parentPlugin->getResourceType(),
+                    static::KEY_ID => $this->getResourceIdFromResourceType($parentPlugin->getResourceType()),
+                    static::KEY_PARENT => $this->getParentResource($parentPlugin, $pluginsStack),
+                ];
             }
-            return $parent;
         }
 
         return null;
@@ -314,15 +313,11 @@ class PluginAnalyzer implements PluginAnalyzerInterface
     protected function getResourceIdFromResourceType(string $resourceType): string
     {
         $resourceTypeExploded = explode('-', $resourceType);
-        $resourceTypeCamelCased = array_map(function ($key, $value) {
-            if ($key === 0) {
-                return $this->textInflector->singularize($value);
-            }
-
+        $resourceTypeCamelCased = array_map(function ($value) {
             return ucfirst($this->textInflector->singularize($value));
-        }, array_keys($resourceTypeExploded), $resourceTypeExploded);
+        }, $resourceTypeExploded);
 
-        return sprintf(static::PATTERN_PATH_ID, implode('', $resourceTypeCamelCased));
+        return sprintf(static::PATTERN_PATH_ID, lcfirst(implode('', $resourceTypeCamelCased)));
     }
 
     /**

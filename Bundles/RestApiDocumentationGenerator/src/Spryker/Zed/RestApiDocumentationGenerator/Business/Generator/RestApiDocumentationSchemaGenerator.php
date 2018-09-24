@@ -109,21 +109,6 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     }
 
     /**
-     * @param string $transferClassName
-     *
-     * @return void
-     */
-    public function addRequestSchemaFromTransferClassName(string $transferClassName): void
-    {
-        if (!$this->isTransferValid($transferClassName)) {
-            return;
-        }
-
-        $transfer = new $transferClassName;
-        $this->addRequestSchema($transferClassName, $transfer);
-    }
-
-    /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
      * @throws \Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\InvalidTransferClassException
@@ -137,8 +122,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
             throw new InvalidTransferClassException(sprintf(static::MESSAGE_INVALID_TRANSFER_CLASS, get_class($plugin)));
         }
 
-        $transfer = new $transferClassName;
-        return $this->addRequestSchema($transferClassName, $transfer);
+        return $this->addRequestSchema($transferClassName);
     }
 
     /**
@@ -156,9 +140,8 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
         }
 
         $resourceRelationships = $this->getResourceRelationshipsForPlugin($plugin);
-        $transfer = new $transferClassName;
 
-        return $this->addResponseSchema($transferClassName, $resourceRelationships, $transfer);
+        return $this->addResponseSchema($transferClassName, $resourceRelationships);
     }
 
     /**
@@ -176,9 +159,8 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
         }
 
         $resourceRelationships = $this->getResourceRelationshipsForPlugin($plugin);
-        $transfer = new $transferClassName;
 
-        return $this->addResponseSchema($transferClassName, $resourceRelationships, $transfer);
+        return $this->addCollectionResponseSchema($transferClassName, $resourceRelationships);
     }
 
     /**
@@ -215,12 +197,12 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
 
     /**
      * @param string $transferClassName
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
      *
      * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
      */
-    protected function addRequestSchema(string $transferClassName, AbstractTransfer $transfer): RestApiDocumentationPathSchemaDataTransfer
+    protected function addRequestSchema(string $transferClassName): RestApiDocumentationPathSchemaDataTransfer
     {
+        $transfer = new $transferClassName;
         $transferClassNamePartial = $this->getTransferClassNamePartial($transferClassName);
 
         $requestSchemaName = $this->createSchemaNameFromTransferClassName(
@@ -249,12 +231,12 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     /**
      * @param string $transferClassName
      * @param array $resourceRelationships
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
      *
      * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
      */
-    protected function addResponseSchema(string $transferClassName, array $resourceRelationships, AbstractTransfer $transfer): RestApiDocumentationPathSchemaDataTransfer
+    protected function addResponseSchema(string $transferClassName, array $resourceRelationships): RestApiDocumentationPathSchemaDataTransfer
     {
+        $transfer = new $transferClassName;
         $transferClassNamePartial = $this->getTransferClassNamePartial($transferClassName);
 
         $responseSchemaName = $this->createSchemaNameFromTransferClassName(
@@ -284,12 +266,12 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     /**
      * @param string $transferClassName
      * @param array $resourceRelationships
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
      *
      * @return \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
      */
-    protected function addCollectionResponseSchema(string $transferClassName, array $resourceRelationships, AbstractTransfer $transfer): RestApiDocumentationPathSchemaDataTransfer
+    protected function addCollectionResponseSchema(string $transferClassName, array $resourceRelationships): RestApiDocumentationPathSchemaDataTransfer
     {
+        $transfer = new $transferClassName;
         $transferClassNamePartial = $this->getTransferClassNamePartial($transferClassName);
 
         $responseSchemaName = $this->createSchemaNameFromTransferClassName(
@@ -308,7 +290,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
             ''
         );
 
-        $this->addResponseSchemas($responseSchemaName, $responseDataSchemaName, $responseAttributesSchemaName, $transfer);
+        $this->addCollectionResponseSchemas($responseSchemaName, $responseDataSchemaName, $responseAttributesSchemaName, $transfer);
         if ($resourceRelationships) {
             $this->addRelationshipSchemas($responseDataSchemaName, $resourceRelationships, $transferClassNamePartial);
         }
@@ -327,6 +309,21 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     protected function addResponseSchemas(string $responseSchemaName, string $responseDataSchemaName, string $responseAttributesSchemaName, AbstractTransfer $transfer): void
     {
         $this->addResponseBaseSchema($responseSchemaName, $responseDataSchemaName);
+        $this->addResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName);
+        $this->addResponseDataAttributesSchemaFromTransfer($transfer, $responseAttributesSchemaName);
+    }
+
+    /**
+     * @param string $responseSchemaName
+     * @param string $responseDataSchemaName
+     * @param string $responseAttributesSchemaName
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
+     *
+     * @return void
+     */
+    protected function addCollectionResponseSchemas(string $responseSchemaName, string $responseDataSchemaName, string $responseAttributesSchemaName, AbstractTransfer $transfer): void
+    {
+        $this->addCollectionResponseBaseSchema($responseSchemaName, $responseDataSchemaName);
         $this->addResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName);
         $this->addResponseDataAttributesSchemaFromTransfer($transfer, $responseAttributesSchemaName);
     }
@@ -509,7 +506,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      *
      * @return void
      */
-    public function addRequestBaseSchema(string $schemaName, string $ref): void
+    protected function addRequestBaseSchema(string $schemaName, string $ref): void
     {
         $schemaData = $this->createSchemaData($schemaName);
         $schemaData->addProperty($this->createReferenceProperty(static::KEY_DATA, sprintf(static::PATTERN_SCHEMA_REFERENCE, $ref)));
@@ -523,7 +520,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      *
      * @return void
      */
-    public function addRequestDataSchema(string $schemaName, string $ref): void
+    protected function addRequestDataSchema(string $schemaName, string $ref): void
     {
         $schemaData = $this->createSchemaData($schemaName);
         $schemaData->addProperty($this->createTypeProperty(static::KEY_TYPE, static::VALUE_STRING));
@@ -538,7 +535,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      *
      * @return void
      */
-    public function addResponseBaseSchema(string $schemaName, string $ref): void
+    protected function addResponseBaseSchema(string $schemaName, string $ref): void
     {
         $schemaData = $this->createSchemaData($schemaName);
         $schemaData->addProperty($this->createReferenceProperty(static::KEY_DATA, sprintf(static::PATTERN_SCHEMA_REFERENCE, $ref)));
@@ -553,7 +550,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      *
      * @return void
      */
-    public function addResponseDataSchema(string $schemaName, string $ref): void
+    protected function addResponseDataSchema(string $schemaName, string $ref): void
     {
         $schemaData = $this->createSchemaData($schemaName);
         $schemaData->addProperty($this->createTypeProperty(static::KEY_TYPE, static::VALUE_STRING));
@@ -570,7 +567,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      *
      * @return void
      */
-    public function addCollectionBaseSchema(string $schemaName, string $ref): void
+    protected function addCollectionResponseBaseSchema(string $schemaName, string $ref): void
     {
         $schemaData = $this->createSchemaData($schemaName);
         $schemaData->addProperty($this->createArrayOfObjectsProperty(static::KEY_DATA, sprintf(static::PATTERN_SCHEMA_REFERENCE, $ref)));
