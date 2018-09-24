@@ -59,7 +59,8 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->getRepository(),
             $this->getConfig(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
+            $this->createShoppingListItemOperation()
         );
     }
 
