@@ -11,6 +11,24 @@
                 <bundle>company-user-gui</bundle>
                 <controller>list-company-user</controller>
                 <action>index</action>
+                <pages>
+                    <delete-company-user>
+                        <label>Delete Company User</label>
+                        <title>Delete Company User</title>
+                        <bundle>company-user-gui</bundle>
+                        <controller>delete-company-user</controller>
+                        <action>delete</action>
+                        <visible>0</visible>
+                    </delete-company-user>
+                    <confirm-delete-company-user>
+                        <label>Confirm Delete Company User</label>
+                        <title>Confirm Delete Company User</title>
+                        <bundle>company-user-gui</bundle>
+                        <controller>delete-company-user</controller>
+                        <action>confirm-delete</action>
+                        <visible>0</visible>
+                    </confirm-delete-company-user>
+                </pages>
             </company-user-gui>
         </pages>
     </company-gui>
