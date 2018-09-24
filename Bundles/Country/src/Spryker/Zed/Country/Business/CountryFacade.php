@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Country\Business;
 
+use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -106,5 +107,21 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
             ->getPreferredCountryByName($countryName);
 
         return $countryTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CountryCollectionTransfer $countryCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
+     */
+    public function findCountriesByIso2Codes(CountryCollectionTransfer $countryCollectionTransfer): CountryCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createCountryReader()
+            ->findCountriesByIso2Codes($countryCollectionTransfer);
     }
 }

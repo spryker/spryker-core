@@ -8,15 +8,16 @@
 namespace Spryker\Zed\Development\Business\Dependency\DependencyContainer;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 
 interface DependencyContainerInterface
 {
     /**
-     * @param string $module
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    public function initialize(string $module): self;
+    public function initialize(ModuleTransfer $moduleTransfer): self;
 
     /**
      * @param string $module

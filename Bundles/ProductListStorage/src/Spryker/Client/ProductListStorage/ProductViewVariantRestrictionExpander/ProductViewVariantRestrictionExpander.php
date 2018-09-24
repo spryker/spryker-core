@@ -37,7 +37,6 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
      */
     public function expandProductVariantData(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
-        /** @var \Generated\Shared\Transfer\AttributeMapStorageTransfer|null $attributeMapStorageTransfer */
         $attributeMapStorageTransfer = $productViewTransfer->getAttributeMap();
         if (!$attributeMapStorageTransfer) {
             return $productViewTransfer;
@@ -113,10 +112,10 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
      * @param string $attributeValueKey
      * @param array $attributeVariants
      *
-     * @return null|int
+     * @return int|null
      */
     protected function findIdProductConcreteByAttributeValueKey(string $attributeValueKey, array $attributeVariants): ?int
     {
-        return $attributeVariants[$attributeValueKey][static::ID_PRODUCT_CONCRETE] ?: null;
+        return $attributeVariants[$attributeValueKey][static::ID_PRODUCT_CONCRETE] ?? null;
     }
 }

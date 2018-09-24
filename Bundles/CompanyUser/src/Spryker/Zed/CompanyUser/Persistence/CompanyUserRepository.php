@@ -22,6 +22,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CompanyUserRepository extends AbstractRepository implements CompanyUserRepositoryInterface
 {
     /**
+     * @see \Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap::COL_CUSTOMER_REFERENCE
+     */
+    protected const COL_CUSTOMER_REFERENCE = 'spy_customer.customer_reference';
+
+    /**
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
@@ -89,11 +94,12 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
         }
 
         $collection = $this->buildQueryFromCriteria($queryCompanyUser, $criteriaFilterTransfer->getFilter());
-        $collection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
+        /** @var \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[] $companyUserCollection */
+        $companyUserCollection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
 
         $collectionTransfer = $this->getFactory()
             ->createCompanyUserMapper()
-            ->mapCompanyUserCollection($collection);
+            ->mapCompanyUserCollection($companyUserCollection);
 
         $collectionTransfer->setPagination($criteriaFilterTransfer->getPagination());
 
@@ -125,10 +131,28 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
+     * @module Customer
+     *
+     * @param int[] $companyUserIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array
+    {
+        return $this->getFactory()
+            ->createCompanyUserQuery()
+            ->joinCustomer()
+            ->filterByIdCompanyUser_In($companyUserIds)
+            ->select(static::COL_CUSTOMER_REFERENCE)
+            ->find()
+            ->toArray();
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return mixed|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

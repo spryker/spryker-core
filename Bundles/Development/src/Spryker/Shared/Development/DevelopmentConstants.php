@@ -17,7 +17,7 @@ interface DevelopmentConstants
     const COMPOSER_BRANCH_ALIAS = 'COMPOSER_BRANCH_ALIAS';
 
     /**
-     * @see \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACE
+     * @see \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACES
      */
     const PROJECT_NAMESPACES = 'PROJECT_NAMESPACES';
 
@@ -25,4 +25,12 @@ interface DevelopmentConstants
      * @see \Spryker\Shared\Kernel\KernelConstants::CORE_NAMESPACES
      */
     const CORE_NAMESPACES = 'CORE_NAMESPACES';
+
+    /**
+     * Specification:
+     * - Sets the permission mode for generated directories.
+     *
+     * @api
+     */
+    const DIRECTORY_PERMISSION = 'DEVELOPMENT:DIRECTORY_PERMISSION';
 }
