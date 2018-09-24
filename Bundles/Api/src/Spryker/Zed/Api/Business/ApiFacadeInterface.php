@@ -32,6 +32,10 @@ interface ApiFacadeInterface
     public function validate($resourceName, ApiDataTransfer $apiDataTransfer);
 
     /**
+     * Specification:
+     * - Applies configured ApiRequestTransferFilterAbstractPluginInterface plugins on ApiRequestTransfer,
+     *   Returns filtered ApiRequestTransfer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer

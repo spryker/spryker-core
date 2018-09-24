@@ -46,6 +46,8 @@ class ApiFacade extends AbstractFacade implements ApiFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
