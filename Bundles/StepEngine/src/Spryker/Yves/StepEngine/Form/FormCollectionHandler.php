@@ -17,12 +17,17 @@ use Symfony\Component\HttpFoundation\Request;
 class FormCollectionHandler implements FormCollectionHandlerInterface
 {
     /**
+     * @var \Symfony\Component\Form\FormTypeInterface[]|string[]
+     */
+    protected $formTypes;
+
+    /**
      * @var \Symfony\Component\Form\FormFactoryInterface
      */
     protected $formFactory;
 
     /**
-     * @var \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
+     * @var \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface|null
      */
     protected $dataProvider;
 
@@ -30,11 +35,6 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
      * @var \Symfony\Component\Form\FormInterface[]
      */
     protected $forms = [];
-
-    /**
-     * @var \Symfony\Component\Form\FormTypeInterface[]|string[]
-     */
-    protected $formTypes;
 
     /**
      * @param \Symfony\Component\Form\FormTypeInterface[]|string[] $formTypes
@@ -52,7 +52,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface[]
      */
@@ -67,7 +67,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return bool
      */
@@ -84,7 +84,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @throws \Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest
      *
@@ -104,7 +104,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return void
      */
@@ -118,9 +118,9 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function getFormData(AbstractTransfer $dataTransfer)
     {
@@ -132,9 +132,9 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
-     * @return \Symfony\Component\Form\FormTypeInterface[]
+     * @return \Symfony\Component\Form\FormInterface[]
      */
     protected function createForms(AbstractTransfer $dataTransfer)
     {
@@ -148,7 +148,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
 
     /**
      * @param \Symfony\Component\Form\FormTypeInterface|string $formType
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
