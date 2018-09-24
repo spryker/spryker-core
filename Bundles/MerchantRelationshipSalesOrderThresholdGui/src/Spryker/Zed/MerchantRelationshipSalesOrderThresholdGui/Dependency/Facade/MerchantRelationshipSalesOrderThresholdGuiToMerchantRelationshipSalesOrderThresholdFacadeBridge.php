@@ -38,6 +38,17 @@ class MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipSalesOrder
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+     *
+     * @return bool
+     */
+    public function deleteMerchantRelationshipSalesOrderThreshold(
+        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+    ): bool {
+        return $this->merchantRelationshipSalesOrderThresholdFacade->deleteMerchantRelationshipSalesOrderThreshold($merchantRelationshipSalesOrderThresholdTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      * @param int[] $merchantRelationshipIds

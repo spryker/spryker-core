@@ -22,6 +22,7 @@ class HardThresholdFormMapper extends AbstractThresholdFormMapper implements Thr
      */
     public function map(array $data, MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): MerchantRelationshipSalesOrderThresholdTransfer
     {
+        $merchantRelationshipSalesOrderThresholdTransfer->setIdMerchantRelationshipSalesOrderThreshold($data[ThresholdType::FIELD_ID_MERCHANT_RELATIONSHIP_THRESHOLD_HARD]);
         $merchantRelationshipSalesOrderThresholdTransfer = $this->setStoreAndCurrencyToSalesOrderThresholdTransfer($data, $merchantRelationshipSalesOrderThresholdTransfer);
         $merchantRelationshipSalesOrderThresholdTransfer = $this->setLocalizedMessagesToSalesOrderThresholdTransfer(
             $data,
@@ -29,7 +30,9 @@ class HardThresholdFormMapper extends AbstractThresholdFormMapper implements Thr
             ThresholdType::PREFIX_HARD
         );
 
-        $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->setThreshold($data[ThresholdType::FIELD_HARD_THRESHOLD]);
+        $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()
+            ->setThreshold($data[ThresholdType::FIELD_HARD_THRESHOLD]);
+
         $salesOrderThresholdTypeTransfer = (new SalesOrderThresholdTypeTransfer())
             ->setKey(MerchantRelationshipSalesOrderThresholdGuiConfig::HARD_TYPE_STRATEGY)
             ->setThresholdGroup(MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_HARD);

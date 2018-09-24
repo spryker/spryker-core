@@ -10,9 +10,9 @@ require('../../scss/main.scss');
 
 var softThresholdStrategyToggle = function() {
     var softStrategy = $('input[name="threshold[softStrategy]"]:checked').val();
-    var softValueBlock = $('#threshold_softThreshold').parent();
-    var softFixedFeeBlock = $('#threshold_softFixedFee').parent();
-    var softFlexibleFeeBlock = $('#threshold_softFlexibleFee').parent();
+    var softValueBlock = $('#threshold_softThreshold').parents('.form-group');
+    var softFixedFeeBlock = $('#threshold_softFixedFee').parents('.form-group');
+    var softFlexibleFeeBlock = $('#threshold_softFlexibleFee').parents('.form-group');
 
     switch (softStrategy) {
         case 'soft-minimum-threshold':
@@ -33,6 +33,11 @@ var softThresholdStrategyToggle = function() {
             softFlexibleFeeBlock.removeClass('hidden');
 
             break;
+
+        default:
+            softValueBlock.addClass('hidden');
+            softFixedFeeBlock.addClass('hidden');
+            softFlexibleFeeBlock.addClass('hidden');
     }
 };
 

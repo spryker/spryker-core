@@ -59,6 +59,25 @@ class MerchantRelationshipSalesOrderThresholdFacade extends AbstractFacade imple
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer
+     */
+    public function deleteMerchantRelationshipSalesOrderThreshold(
+        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+    ): bool {
+        return $this->getFactory()
+            ->createMerchantRelationshipThresholdWriter()
+            ->deleteMerchantRelationshipSalesOrderThreshold(
+                $merchantRelationshipSalesOrderThresholdTransfer
+            );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      * @param int[] $merchantRelationshipIds

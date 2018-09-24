@@ -77,7 +77,14 @@ class ThresholdDataProvider
     ): array {
         $salesOrderThresholdTransfers = $this->getSalesOrderThresholdTransfers($storeTransfer, $currencyTransfer, $idMerchantRelationship);
 
-        $data = [];
+        $data = [
+            ThresholdType::FIELD_ID_MERCHANT_RELATIONSHIP_THRESHOLD_HARD => null,
+            ThresholdType::FIELD_ID_MERCHANT_RELATIONSHIP_THRESHOLD_SOFT => null,
+            ThresholdType::FIELD_SOFT_THRESHOLD => null,
+            ThresholdType::FIELD_HARD_THRESHOLD => null,
+            ThresholdType::FIELD_SOFT_FIXED_FEE => null,
+            ThresholdType::FIELD_SOFT_FLEXIBLE_FEE => null,
+        ];
         foreach ($salesOrderThresholdTransfers as $salesOrderThresholdTransfer) {
             if ($this->thresholdDataProviderResolver
                 ->hasThresholdDataProviderByStrategyKey(
@@ -90,6 +97,7 @@ class ThresholdDataProvider
             }
         }
 
+        $data[ThresholdType::FIELD_CURRENCY] = $currencyTransfer->getCode();
         $data[ThresholdType::FIELD_STORE_CURRENCY] = $this->formatStoreCurrencyRowValue(
             $storeTransfer,
             $currencyTransfer

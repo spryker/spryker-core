@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
 use Spryker\Shared\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\ThresholdType;
 
-class SoftThresholdFixedFeeFormMapper extends AbstractThresholdFormMapper implements ThresholdFormMapperInterface
+class SoftThresholdFixedFeeFormMapper extends AbstractSoftThresholdFormMapper implements ThresholdFormMapperInterface
 {
     /**
      * @param array $data
@@ -22,6 +22,7 @@ class SoftThresholdFixedFeeFormMapper extends AbstractThresholdFormMapper implem
      */
     public function map(array $data, MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): MerchantRelationshipSalesOrderThresholdTransfer
     {
+        $merchantRelationshipSalesOrderThresholdTransfer = $this->setSoftIdMerchantRelationshipSalesOrderThreshold($merchantRelationshipSalesOrderThresholdTransfer, $data);
         $merchantRelationshipSalesOrderThresholdTransfer = $this->setStoreAndCurrencyToSalesOrderThresholdTransfer($data, $merchantRelationshipSalesOrderThresholdTransfer);
         $merchantRelationshipSalesOrderThresholdTransfer = $this->setLocalizedMessagesToSalesOrderThresholdTransfer(
             $data,
@@ -29,8 +30,9 @@ class SoftThresholdFixedFeeFormMapper extends AbstractThresholdFormMapper implem
             ThresholdType::PREFIX_SOFT
         );
 
-        $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->setThreshold($data[ThresholdType::FIELD_SOFT_THRESHOLD]);
-        $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->setFee($data[ThresholdType::FIELD_SOFT_FIXED_FEE]);
+        $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()
+            ->setThreshold($data[ThresholdType::FIELD_SOFT_THRESHOLD])
+            ->setFee($data[ThresholdType::FIELD_SOFT_FIXED_FEE]);
 
         $salesOrderThresholdTypeTransfer = (new SalesOrderThresholdTypeTransfer())
             ->setKey(MerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FIXED)

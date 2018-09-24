@@ -48,6 +48,23 @@ interface MerchantRelationshipSalesOrderThresholdFacadeInterface
 
     /**
      * Specification:
+     * - Deletes merchant relationship specific sales order threshold by MerchantRelationshipSalesOrderThresholdTransfer::idMerchantRelationshipSalesOrderThreshold.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+     *
+     * @throws \Spryker\Zed\SalesOrderThreshold\Business\Strategy\Exception\SalesOrderThresholdTypeNotFoundException
+     * @throws \Spryker\Zed\SalesOrderThreshold\Business\Strategy\Exception\SalesOrderThresholdInvalidArgumentException
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer
+     */
+    public function deleteMerchantRelationshipSalesOrderThreshold(
+        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+    ): bool;
+
+    /**
+     * Specification:
      * - Gets array of MerchantRelationshipSalesOrderThresholdTransfer for merchant relationships, store and currency.
      * - Adds localized messages based on store locales for every merchant relationships
      *

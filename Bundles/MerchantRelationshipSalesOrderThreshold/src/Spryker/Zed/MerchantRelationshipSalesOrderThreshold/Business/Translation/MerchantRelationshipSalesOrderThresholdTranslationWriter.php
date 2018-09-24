@@ -47,6 +47,23 @@ class MerchantRelationshipSalesOrderThresholdTranslationWriter implements Mercha
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+     *
+     * @return void
+     */
+    public function deleteLocalizedMessages(MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): void
+    {
+        foreach ($merchantRelationshipSalesOrderThresholdTransfer->getLocalizedMessages() as $localizedMessageTransfer) {
+            $localizedMessageTransfer->setMessage(null);
+        }
+
+        $this->saveLocalizedMessages($merchantRelationshipSalesOrderThresholdTransfer);
+        $this->glossaryFacade->deleteKey(
+            $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()
+        );
+    }
+
+    /**
      * @param \Traversable|\Generated\Shared\Transfer\SalesOrderThresholdLocalizedMessageTransfer[] $salesOrderThresholdLocalizedMessageTransfers
      *
      * @return string[]

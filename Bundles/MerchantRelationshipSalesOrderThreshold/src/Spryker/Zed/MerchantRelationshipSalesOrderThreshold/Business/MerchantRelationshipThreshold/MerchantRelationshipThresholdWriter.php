@@ -12,6 +12,7 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation\Mer
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation\MerchantRelationshipSalesOrderThresholdTranslationWriterInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Dependency\Facade\MerchantRelationshipSalesOrderThresholdToSalesOrderThresholdFacadeInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdEntityManagerInterface;
+use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdRepository;
 
 class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresholdWriterInterface
 {
@@ -26,6 +27,11 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
     protected $merchantRelationshipSalesOrderThresholdEntityManager;
 
     /**
+     * @var \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdRepository
+     */
+    protected $merchantRelationshipSalesOrderThresholdRepository;
+
+    /**
      * @var \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation\MerchantRelationshipSalesOrderThresholdGlossaryKeyGeneratorInterface
      */
     protected $glossaryKeyGenerator;
@@ -38,17 +44,20 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
     /**
      * @param \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Dependency\Facade\MerchantRelationshipSalesOrderThresholdToSalesOrderThresholdFacadeInterface $salesOrderThresholdFacade
      * @param \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdEntityManagerInterface $merchantRelationshipSalesOrderThresholdEntityManager
+     * @param \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdRepository $merchantRelationshipSalesOrderThresholdRepository
      * @param \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation\MerchantRelationshipSalesOrderThresholdGlossaryKeyGeneratorInterface $glossaryKeyGenerator
      * @param \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation\MerchantRelationshipSalesOrderThresholdTranslationWriterInterface $translationWriter
      */
     public function __construct(
         MerchantRelationshipSalesOrderThresholdToSalesOrderThresholdFacadeInterface $salesOrderThresholdFacade,
         MerchantRelationshipSalesOrderThresholdEntityManagerInterface $merchantRelationshipSalesOrderThresholdEntityManager,
+        MerchantRelationshipSalesOrderThresholdRepository $merchantRelationshipSalesOrderThresholdRepository,
         MerchantRelationshipSalesOrderThresholdGlossaryKeyGeneratorInterface $glossaryKeyGenerator,
         MerchantRelationshipSalesOrderThresholdTranslationWriterInterface $translationWriter
     ) {
         $this->salesOrderThresholdFacade = $salesOrderThresholdFacade;
         $this->merchantRelationshipSalesOrderThresholdEntityManager = $merchantRelationshipSalesOrderThresholdEntityManager;
+        $this->merchantRelationshipSalesOrderThresholdRepository = $merchantRelationshipSalesOrderThresholdRepository;
         $this->glossaryKeyGenerator = $glossaryKeyGenerator;
         $this->translationWriter = $translationWriter;
     }
@@ -70,6 +79,32 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
         $this->translationWriter->saveLocalizedMessages($merchantRelationshipSalesOrderThresholdTransfer);
 
         return $merchantRelationshipSalesOrderThresholdTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+     *
+     * @return bool
+     */
+    public function deleteMerchantRelationshipSalesOrderThreshold(
+        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+    ): bool {
+        $merchantRelationshipSalesOrderThresholdTransfer->requireIdMerchantRelationshipSalesOrderThreshold();
+        $merchantRelationshipSalesOrderThresholdTransfer = $this->merchantRelationshipSalesOrderThresholdRepository
+            ->findMerchantRelationshipSalesOrderThreshold($merchantRelationshipSalesOrderThresholdTransfer);
+
+        if (!$merchantRelationshipSalesOrderThresholdTransfer) {
+            return false;
+        }
+
+        $idDeleted = $this->merchantRelationshipSalesOrderThresholdEntityManager
+            ->deleteMerchantRelationshipSalesOrderThreshold($merchantRelationshipSalesOrderThresholdTransfer);
+
+        if ($idDeleted) {
+            $this->translationWriter->deleteLocalizedMessages($merchantRelationshipSalesOrderThresholdTransfer);
+        }
+
+        return $idDeleted;
     }
 
     /**
