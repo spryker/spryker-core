@@ -63,11 +63,10 @@ class GeneralSalesOrderThresholdDataSourceStrategyPlugin extends AbstractPlugin 
     protected function assertRequiredAttributes(SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer): void
     {
         $salesOrderThresholdQuoteTransfer
-            ->requireThresholdItems()
             ->requireOriginalQuote()
             ->getOriginalQuote()
-            ->requireStore()
-            ->requireCurrency();
+                ->requireStore()
+                ->requireCurrency();
     }
 
     /**

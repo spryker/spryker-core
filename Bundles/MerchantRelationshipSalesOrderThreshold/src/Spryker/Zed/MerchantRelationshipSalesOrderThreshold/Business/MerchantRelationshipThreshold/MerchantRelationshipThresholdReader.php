@@ -81,11 +81,10 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     protected function assertRequiredAttributes(SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer): void
     {
         $salesOrderThresholdQuoteTransfer
-            ->requireThresholdItems()
             ->requireOriginalQuote()
             ->getOriginalQuote()
-            ->requireStore()
-            ->requireCurrency();
+                ->requireStore()
+                ->requireCurrency();
     }
 
     /**
