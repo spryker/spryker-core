@@ -239,9 +239,7 @@ class Reader implements ReaderInterface
         array $concretePriceProductTransfers
     ) {
         $priceProductTransfers = [];
-        foreach ($abstractPriceProductTransfers as $priceProductAbstractTransfer) {
-            $abstractKey = $this->getPriceProductCommonKey($priceProductAbstractTransfer);
-
+        foreach ($abstractPriceProductTransfers as $abstractKey => $priceProductAbstractTransfer) {
             $priceProductTransfers = $this->mergeConcreteProduct(
                 $concretePriceProductTransfers,
                 $abstractKey,
@@ -290,9 +288,7 @@ class Reader implements ReaderInterface
         PriceProductTransfer $priceProductAbstractTransfer,
         array $priceProductTransfers
     ) {
-        foreach ($concretePriceProductTransfers as $priceProductConcreteTransfer) {
-            $concreteKey = $this->getPriceProductCommonKey($priceProductConcreteTransfer);
-
+        foreach ($concretePriceProductTransfers as $concreteKey => $priceProductConcreteTransfer) {
             if ($abstractKey !== $concreteKey) {
                 continue;
             }
@@ -399,20 +395,6 @@ class Reader implements ReaderInterface
         }
 
         return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return string
-     */
-    protected function getPriceProductCommonKey(PriceProductTransfer $priceProductTransfer): string
-    {
-        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-
-        return $moneyValueTransfer->getFkStore() .
-            $moneyValueTransfer->getFkCurrency() .
-            $priceProductTransfer->getFkPriceType();
     }
 
     /**
