@@ -61,7 +61,7 @@ abstract class AbstractPlaceOrderStep extends AbstractBaseStep implements StepWi
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */

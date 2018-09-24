@@ -168,7 +168,7 @@ class StepEngine implements StepEngineInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface|null $formCollection
      *
      * @return array

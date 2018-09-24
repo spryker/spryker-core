@@ -140,7 +140,7 @@ class StepCollection implements StepCollectionInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $dataTransfer
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
@@ -167,7 +167,7 @@ class StepCollection implements StepCollectionInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $step
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $dataTransfer
      *
      * @return bool
      */
@@ -234,7 +234,7 @@ class StepCollection implements StepCollectionInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $dataTransfer
      *
      * @return string
      */
