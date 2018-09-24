@@ -158,6 +158,11 @@ class ShoppingListReader implements ShoppingListReaderInterface
             $businessUnitSharedShoppingLists = $this->shoppingListRepository->findCompanyBusinessUnitSharedShoppingLists(
                 $customerTransfer->getCompanyUserTransfer()->getFkCompanyBusinessUnit()
             );
+
+            $businessUnitSharedShoppingLists = $this->filterBlacklistedShoppingLists(
+                $businessUnitSharedShoppingLists,
+                $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()
+            );
         }
 
         return $this->mergeShoppingListCollections($customerOwnShoppingLists, $customerSharedShoppingLists, $businessUnitSharedShoppingLists);
@@ -384,5 +389,23 @@ class ShoppingListReader implements ShoppingListReaderInterface
         }
 
         return $companyUserOwnShoppingListIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $businessUnitSharedShoppingLists
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    protected function filterBlacklistedShoppingLists(ShoppingListCollectionTransfer $businessUnitSharedShoppingLists, int $idCompanyUser): ShoppingListCollectionTransfer
+    {
+        $blacklistedShoppingListsIds = $this->shoppingListRepository->getBlacklistedShoppingListsIdsByIdCompanyUser($idCompanyUser);
+        foreach ($businessUnitSharedShoppingLists->getShoppingLists() as $index => $shoppingListTransfer) {
+            if (in_array($shoppingListTransfer->getIdShoppingList(), $blacklistedShoppingListsIds, true)) {
+                $businessUnitSharedShoppingLists->getShoppingLists()->offsetUnset($index);
+            }
+        }
+
+        return $businessUnitSharedShoppingLists;
     }
 }

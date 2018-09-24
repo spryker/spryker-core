@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingList\Persistence;
 
 use Orm\Zed\Permission\Persistence\SpyPermissionQuery;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnitBlacklistQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnitQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUserQuery;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListItemQuery;
@@ -85,6 +86,14 @@ class ShoppingListPersistenceFactory extends AbstractPersistenceFactory
     public function createShoppingListCompanyUserQuery(): SpyShoppingListCompanyUserQuery
     {
         return SpyShoppingListCompanyUserQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnitBlacklistQuery
+     */
+    public function createShoppingListCompanyBusinessUnitBlacklistPropelQuery(): SpyShoppingListCompanyBusinessUnitBlacklistQuery
+    {
+        return SpyShoppingListCompanyBusinessUnitBlacklistQuery::create();
     }
 
     /**

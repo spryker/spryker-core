@@ -10,6 +10,7 @@ namespace Spryker\Zed\ShoppingList\Business;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListDismissRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
@@ -126,6 +127,7 @@ interface ShoppingListFacadeInterface
     /**
      * Specification:
      *  - Get shopping list collection by customer.
+     *  - Shopping lists blacklisted for customer will be hidden.
      *
      * @api
      *
@@ -253,7 +255,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Find company user shopping list permissions.
+     *  - Finds company user shopping list permissions.
      *
      * @api
      *
@@ -262,4 +264,18 @@ interface ShoppingListFacadeInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findCompanyUserPermissions(int $idCompanyUser): PermissionCollectionTransfer;
+
+    /**
+     * Specification:
+     *  - Returns success if at least one of next actions was executed:
+     *      - Removes shopping list to company user relation if exists.
+     *      - Adds shopping list to company user blacklist if company user business unit has access to shopping list.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer;
 }

@@ -9,8 +9,10 @@ namespace Spryker\Zed\ShoppingList\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitBlacklistTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
@@ -435,5 +437,65 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->filterByCustomerReference($customerReference)
             ->orderByIdShoppingList()
             ->leftJoinWithSpyShoppingListItem();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyUserTransfer|null
+     */
+    public function findShoppingListCompanyUser(ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer): ?ShoppingListCompanyUserTransfer
+    {
+        $shoppingListsCompanyUserEntity = $this->getFactory()
+            ->createShoppingListCompanyUserQuery()
+            ->filterByFkShoppingList($shoppingListCompanyUserTransfer->getIdShoppingList())
+            ->filterByFkCompanyUser($shoppingListCompanyUserTransfer->getIdCompanyUser())
+            ->findOne();
+
+        if ($shoppingListsCompanyUserEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createShoppingListCompanyUserMapper()
+            ->mapCompanyUserEntityToCompanyUserTransfer($shoppingListsCompanyUserEntity, $shoppingListCompanyUserTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitBlacklistTransfer $shoppingListCompanyBusinessUnitBlacklistTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitBlacklistTransfer|null
+     */
+    public function findShoppingListCompanyBusinessUnitBlackList(
+        ShoppingListCompanyBusinessUnitBlacklistTransfer $shoppingListCompanyBusinessUnitBlacklistTransfer
+    ): ?ShoppingListCompanyBusinessUnitBlacklistTransfer {
+        $shoppingListCompanyBusinessUnitBlacklistEntity = $this->getFactory()
+            ->createShoppingListCompanyBusinessUnitBlacklistPropelQuery()
+            ->filterByFkCompanyUser($shoppingListCompanyBusinessUnitBlacklistTransfer->getFkCompanyUser())
+            ->filterByFkShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitBlacklistTransfer->getFkShoppingListCompanyBusinessUnit())
+            ->findOne();
+
+        if ($shoppingListCompanyBusinessUnitBlacklistEntity === null) {
+            return null;
+        }
+
+        return $shoppingListCompanyBusinessUnitBlacklistTransfer->fromArray($shoppingListCompanyBusinessUnitBlacklistEntity->toArray());
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return int[]
+     */
+    public function getBlacklistedShoppingListsIdsByIdCompanyUser(int $idCompanyUser): array
+    {
+        return $this->getFactory()
+            ->createShoppingListCompanyBusinessUnitBlacklistPropelQuery()
+            ->useSpyShoppingListCompanyBusinessUnitQuery()
+                ->leftJoinSpyShoppingList()
+            ->endUse()
+            ->select([SpyShoppingListTableMap::COL_ID_SHOPPING_LIST])
+            ->findByFkCompanyUser($idCompanyUser)
+            ->toArray();
     }
 }

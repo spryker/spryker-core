@@ -8,12 +8,14 @@
 namespace Spryker\Zed\ShoppingList\Persistence;
 
 use Generated\Shared\Transfer\PermissionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitBlacklistTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\SpyShoppingListPermissionGroupEntityTransfer;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnitBlacklist;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -309,5 +311,47 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
             );
 
         $shoppingListCompanyUserEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitBlacklistTransfer $shoppingListCompanyBusinessUnitBlacklistTransfer
+     *
+     * @return void
+     */
+    public function createShoppingListCompanyBusinessUnitBlacklist(ShoppingListCompanyBusinessUnitBlacklistTransfer $shoppingListCompanyBusinessUnitBlacklistTransfer): void
+    {
+        $shoppingListCompanyBusinessUnitBlacklistEntity = new SpyShoppingListCompanyBusinessUnitBlacklist();
+        $shoppingListCompanyBusinessUnitBlacklistEntity->fromArray($shoppingListCompanyBusinessUnitBlacklistTransfer->modifiedToArray());
+        $shoppingListCompanyBusinessUnitBlacklistEntity->save();
+    }
+
+    /**
+     * @param int $idShoppingList
+     *
+     * @return void
+     */
+    public function deleteCompanyBusinessUnitBlacklistByShoppingListId(int $idShoppingList): void
+    {
+        $this->getFactory()
+            ->createShoppingListCompanyBusinessUnitBlacklistPropelQuery()
+            ->useSpyShoppingListCompanyBusinessUnitQuery()
+                ->filterByFkShoppingList($idShoppingList)
+            ->endUse()
+            ->delete();
+    }
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return void
+     */
+    public function deleteCompanyBusinessUnitBlacklistByBusinessUnitId(int $idCompanyBusinessUnit): void
+    {
+        $this->getFactory()
+            ->createShoppingListCompanyBusinessUnitBlacklistPropelQuery()
+            ->useSpyShoppingListCompanyBusinessUnitQuery()
+                ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->endUse()
+            ->delete();
     }
 }
