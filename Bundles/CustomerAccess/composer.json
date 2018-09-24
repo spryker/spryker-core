@@ -5,13 +5,13 @@
   "require": {
     "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
-    "spryker/propel-orm": "*"
+    "spryker/propel-orm": "^1.5.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
-    "spryker/testify": "*",
-    "spryker/propel": "*"
+    "spryker/propel": "^3.0.0",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/installer": "If the installer for the customer access will be used, InstallerPluginInterface is needed"
