@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Cms\Communication;
 
-use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
@@ -17,7 +16,6 @@ use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageLocalizedAttributesFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
-use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
 use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -27,17 +25,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CmsCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\Cms\Communication\Table\CmsPageTable
-     */
-    public function createCmsPageTable()
-    {
-        $pageQuery = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndUrls();
-
-        return new CmsPageTable($pageQuery);
-    }
-
     /**
      * @return \Spryker\Zed\Cms\Communication\Table\CmsRedirectTable
      */
@@ -71,7 +58,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsPageForm(array $formData = [], array $formOptions = [])
+    public function getCmsPageForm(array $formData = [], array $formOptions = [])
     {
         return $this->getFormFactory()->create(CmsPageForm::class, $formData, $formOptions);
     }
@@ -102,7 +89,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsRedirectForm(array $formData = [], array $formOptions = [])
+    public function getCmsRedirectForm(array $formData = [], array $formOptions = [])
     {
         return $this->getFormFactory()->create(CmsRedirectForm::class, $formData, $formOptions);
     }
@@ -113,20 +100,6 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsRedirectFormDataProvider()
     {
         return new CmsRedirectFormDataProvider($this->getQueryContainer());
-    }
-
-    /**
-     * @deprecated Use getCmsGlossaryForm() instead.
-     *
-     * @param \Spryker\Zed\Cms\Business\CmsFacade $cmsFacade
-     * @param array $formData
-     * @param array $formOptions
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createCmsGlossaryForm(CmsFacade $cmsFacade, array $formData = [], array $formOptions = [])
-    {
-        return $this->getCmsGlossaryForm($formData, $formOptions);
     }
 
     /**

@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
 interface CmsClientInterface
 {
     /**
+     * Specification:
+     * - Retrieves CMS block by name.
+     *
      * @api
      *
      * @deprecated Use CMS Block module instead

@@ -64,7 +64,7 @@ class RedirectController extends AbstractController
     {
         $dataProvider = $this->getFactory()->createCmsRedirectFormDataProvider();
         $form = $this->getFactory()
-            ->createCmsRedirectForm(
+            ->getCmsRedirectForm(
                 $dataProvider->getData()
             )
             ->handleRequest($request);
@@ -106,7 +106,7 @@ class RedirectController extends AbstractController
 
         $dataProvider = $this->getFactory()->createCmsRedirectFormDataProvider();
         $form = $this->getFactory()
-            ->createCmsRedirectForm(
+            ->getCmsRedirectForm(
                 $dataProvider->getData($idUrl)
             )
             ->handleRequest($request);

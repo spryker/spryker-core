@@ -16,7 +16,7 @@ use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
-use Spryker\Zed\Cms\Communication\Table\CmsPageTable;
+use Spryker\Zed\Cms\Communication\Table\CmsTableConstants;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,7 +46,7 @@ class GlossaryController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idPage = $this->castId($request->get(CmsPageTable::REQUEST_ID_PAGE));
+        $idPage = $this->castId($request->get(CmsTableConstants::REQUEST_ID_PAGE));
         $idForm = (int)$request->get(self::ID_FORM);
         $type = CmsConstants::RESOURCE_TYPE_PAGE;
 
@@ -87,7 +87,7 @@ class GlossaryController extends AbstractController
      *
      * @return int|null
      */
-    public function getLocaleByCmsPage(SpyCmsPage $cmsPage)
+    protected function getLocaleByCmsPage(SpyCmsPage $cmsPage)
     {
         $fkLocale = null;
         $url = $cmsPage->getSpyUrls()->getFirst();
@@ -113,7 +113,7 @@ class GlossaryController extends AbstractController
         }
 
         $idMapping = $this->castId($request->request->get(CmsGlossaryTable::REQUEST_ID_MAPPING));
-        $idPage = $this->castId($request->request->get(CmsPageTable::REQUEST_ID_PAGE));
+        $idPage = $this->castId($request->request->get(CmsTableConstants::REQUEST_ID_PAGE));
 
         $mappingGlossary = $this->getQueryContainer()
             ->queryGlossaryKeyMappingById($idMapping)
@@ -123,7 +123,7 @@ class GlossaryController extends AbstractController
         $this->getFacade()
             ->deletePageKeyMapping($pageTransfer, $mappingGlossary->getPlaceholder());
 
-        $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage;
+        $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsTableConstants::REQUEST_ID_PAGE . '=' . $idPage;
 
         return $this->redirectResponse($redirectUrl);
     }

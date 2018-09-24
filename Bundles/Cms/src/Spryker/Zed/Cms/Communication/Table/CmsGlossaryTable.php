@@ -86,7 +86,7 @@ class CmsGlossaryTable extends AbstractTable
             CmsQueryContainer::TRANS => SpyGlossaryTranslationTableMap::COL_VALUE,
         ]);
 
-        $config->setUrl('table?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $this->idPage);
+        $config->setUrl('table?' . CmsTableConstants::REQUEST_ID_PAGE . '=' . $this->idPage);
 
         return $config;
     }
@@ -137,13 +137,13 @@ class CmsGlossaryTable extends AbstractTable
 
         $buttons[] = $this->generateEditButton(
             Url::generate(self::URL_CMS_GLOSSARY_EDIT, [
-                CmsPageTable::REQUEST_ID_PAGE => $this->idPage,
+                CmsTableConstants::REQUEST_ID_PAGE => $this->idPage,
                 self::REQUEST_ID_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
             ]),
             'Edit'
         );
         $buttons[] = $this->generateRemoveButton(self::URL_CMS_GLOSSARY_DELETE, 'Delete', [
-            CmsPageTable::REQUEST_ID_PAGE => $this->idPage,
+            CmsTableConstants::REQUEST_ID_PAGE => $this->idPage,
             self::REQUEST_ID_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
         ]);
 
@@ -158,7 +158,7 @@ class CmsGlossaryTable extends AbstractTable
     protected function buildPlaceholderLinks($placeholder)
     {
         $url = Url::generate('/cms/glossary/add', [
-            CmsPageTable::REQUEST_ID_PAGE => $this->idPage,
+            CmsTableConstants::REQUEST_ID_PAGE => $this->idPage,
             'placeholder' => $placeholder,
         ]);
         return '<a href="' . $url . '" class="btn btn-xs btn-white">Add Glossary</a>';
