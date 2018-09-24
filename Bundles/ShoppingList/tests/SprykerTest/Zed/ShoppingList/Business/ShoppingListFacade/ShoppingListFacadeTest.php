@@ -609,7 +609,6 @@ class ShoppingListFacadeTest extends Unit
         $this->assertSame(0, $shoppingListItemResponseTransfer->getItems()->count(), 'Shared company user with read only permission can not add item to shopping list.');
     }
 
-
     /**
      * @return void
      */
@@ -626,7 +625,7 @@ class ShoppingListFacadeTest extends Unit
 
         // Act
         $shoppingListShareResponseTransfer = $this->tester->getFacade()->dismissShoppingListSharing(
-            (new ShoppingListDismissRequestTransfer)
+            (new ShoppingListDismissRequestTransfer())
                 ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
                 ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
         );
@@ -656,7 +655,7 @@ class ShoppingListFacadeTest extends Unit
 
         // Act
         $shoppingListShareResponseTransfer = $this->tester->getFacade()->dismissShoppingListSharing(
-            (new ShoppingListDismissRequestTransfer)
+            (new ShoppingListDismissRequestTransfer())
                 ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
                 ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
         );
