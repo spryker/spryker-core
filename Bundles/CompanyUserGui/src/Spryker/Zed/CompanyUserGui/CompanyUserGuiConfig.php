@@ -12,7 +12,12 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CompanyUserGuiConfig extends AbstractBundleConfig
 {
     /**
-     * @see CompanyUserStatusController::enableCompanyUserAction()
+     * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\EditCompanyUserController::indexAction()
+     */
+    public const URL_EDIT_COMPANY_USER = '/company-user-gui/edit-company-user';
+
+    /**
+     * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\CompanyUserStatusController::enableCompanyUserAction()
      */
     public const URL_ENABLE_COMPANY_USER = '/company-user-gui/company-user-status/enable-company-user';
 
