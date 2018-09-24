@@ -17,7 +17,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface;
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrderReader implements OrderReaderInterface
@@ -143,11 +143,11 @@ class OrderReader implements OrderReaderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
      * @param string $orderReference
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $ordersRestAttributesTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ordersRestAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createRestResource(RestResponseInterface $response, string $orderReference, TransferInterface $ordersRestAttributesTransfer): RestResponseInterface
+    protected function createRestResource(RestResponseInterface $response, string $orderReference, AbstractTransfer $ordersRestAttributesTransfer): RestResponseInterface
     {
         $restResource = $this->restResourceBuilder->createRestResource(
             OrdersRestApiConfig::RESOURCE_ORDERS,
