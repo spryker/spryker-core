@@ -10,7 +10,8 @@
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/testify": "*",
-    "spryker/propel-orm": "^1.0.0"
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/propel": "*"
   },
   "suggest": {
     "spryker/installer": "If the installer for the customer access will be used, InstallerPluginInterface is needed"
