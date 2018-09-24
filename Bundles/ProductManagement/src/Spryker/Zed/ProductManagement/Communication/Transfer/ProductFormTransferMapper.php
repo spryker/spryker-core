@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductManagement\Communication\Transfer;
 use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -595,24 +594,6 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $abstractProductPriceProductTransfer
      *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer
-     */
-    protected function createMoneyValueTransfer(
-        PriceProductTransfer $abstractProductPriceProductTransfer
-    ): MoneyValueTransfer {
-        $moneyValueTransfer = $abstractProductPriceProductTransfer->getMoneyValue();
-
-        return (new MoneyValueTransfer())
-            ->setCurrency($moneyValueTransfer->getCurrency())
-            ->setFkCurrency($moneyValueTransfer->getFkCurrency())
-            ->setFkStore($moneyValueTransfer->getFkStore())
-            ->setNetAmount($moneyValueTransfer->getNetAmount())
-            ->setGrossAmount($moneyValueTransfer->getGrossAmount());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $abstractProductPriceProductTransfer
-     *
      * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
      */
     protected function createPriceDimensionTransfer(
@@ -641,6 +622,6 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             ->setFkPriceType($abstractProductPriceProductTransfer->getFkPriceType())
             ->setPriceType($abstractProductPriceProductTransfer->getPriceType())
             ->setPriceDimension($this->createPriceDimensionTransfer($abstractProductPriceProductTransfer))
-            ->setMoneyValue($this->createMoneyValueTransfer($abstractProductPriceProductTransfer));
+            ->setMoneyValue($abstractProductPriceProductTransfer->getMoneyValue());
     }
 }
