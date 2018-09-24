@@ -74,7 +74,10 @@ class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
      */
     public function getAnnotationsSourceDirectories(): array
     {
-        return array_merge($this->getCoreAnnotationsSourceDirectoryGlobPatterns(), $this->getApplicationAnnotationsSourceDirectoryGlobPattern());
+        return array_merge(
+            $this->getCoreAnnotationsSourceDirectoryGlobPatterns(),
+            $this->getApplicationAnnotationsSourceDirectoryGlobPattern()
+        );
     }
 
     /**

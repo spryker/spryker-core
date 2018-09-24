@@ -13,7 +13,7 @@ interface ResourceRelationshipCollectionProviderPluginInterface
 {
     /**
      * Specification:
-     *  - Returns an array of GLUE Resource Relationship plugins
+     *  - Returns an array of Glue Resource Relationship plugins
      *
      * @api
      *

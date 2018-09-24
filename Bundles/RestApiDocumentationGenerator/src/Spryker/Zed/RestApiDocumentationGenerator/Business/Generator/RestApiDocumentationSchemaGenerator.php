@@ -15,8 +15,7 @@ use ReflectionClass;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\InvalidTransferClassException;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SchemaRenderer;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\ComponentValidator;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SchemaRendererInterface;
 
 class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaGeneratorInterface
 {
@@ -81,11 +80,13 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
 
     /**
      * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[] $resourceRelationshipCollectionPlugins
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SchemaRendererInterface $schemaRenderer
      */
-    public function __construct(array $resourceRelationshipCollectionPlugins)
+    public function __construct(array $resourceRelationshipCollectionPlugins, SchemaRendererInterface $schemaRenderer)
     {
         $this->resourceRelationshipCollectionPlugins = $resourceRelationshipCollectionPlugins;
-        $this->schemaRenderer = new SchemaRenderer(new ComponentValidator());
+        $this->schemaRenderer = $schemaRenderer;
+
         $this->addDefaultSchemas();
     }
 

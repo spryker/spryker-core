@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Writer;
 
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\FileNotCreatedException;
+use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFilesystemInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToSymfonyYamlAdapter;
 use Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToYamlDumperInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfig;
@@ -45,21 +45,27 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
     protected $yamlDumper;
 
     /**
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFilesystemInterface
+     */
+    protected $filesystem;
+
+    /**
      * @param \Spryker\Zed\RestApiDocumentationGenerator\RestApiDocumentationGeneratorConfig $restApiDocumentationGeneratorConfig
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToYamlDumperInterface $yamlDumper
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Dependency\External\RestApiDocumentationGeneratorToFilesystemInterface $filesystem
      */
     public function __construct(
         RestApiDocumentationGeneratorConfig $restApiDocumentationGeneratorConfig,
-        RestApiDocumentationGeneratorToYamlDumperInterface $yamlDumper
+        RestApiDocumentationGeneratorToYamlDumperInterface $yamlDumper,
+        RestApiDocumentationGeneratorToFilesystemInterface $filesystem
     ) {
         $this->restApiDocumentationGeneratorConfig = $restApiDocumentationGeneratorConfig;
         $this->yamlDumper = $yamlDumper;
+        $this->filesystem = $filesystem;
     }
 
     /**
      * @param array $data
-     *
-     * @throws \Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\FileNotCreatedException
      *
      * @return void
      */
@@ -69,18 +75,15 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
         $dataStructure[static::KEY_PATHS] = $data[static::KEY_PATHS];
         $dataStructure[static::KEY_COMPONENTS][static::KEY_SCHEMAS] = $data[static::KEY_SCHEMAS];
 
-        $bytesWritten = file_put_contents(
-            $this->resolveGeneratedFileName(),
-            $this->yamlDumper->dump(
-                $dataStructure,
-                static::YAML_NESTING_LEVEL,
-                static::YAML_INDENT,
-                RestApiDocumentationGeneratorToSymfonyYamlAdapter::DUMP_EMPTY_ARRAY_AS_SEQUENCE
-            )
+        $fileName = $this->resolveGeneratedFileName();
+        $yaml = $this->yamlDumper->dump(
+            $dataStructure,
+            static::YAML_NESTING_LEVEL,
+            static::YAML_INDENT,
+            RestApiDocumentationGeneratorToSymfonyYamlAdapter::DUMP_EMPTY_ARRAY_AS_SEQUENCE
         );
-        if (!$bytesWritten) {
-            throw new FileNotCreatedException('Unable to create file, please check permissions and free space available on device.');
-        }
+
+        $this->filesystem->dumpFile($fileName, $yaml);
     }
 
     /**
@@ -110,8 +113,6 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
     }
 
     /**
-     * @throws \Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\FileNotCreatedException
-     *
      * @return string
      */
     protected function resolveGeneratedFileName(): string
@@ -121,8 +122,8 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
             $targetDirectory .= DIRECTORY_SEPARATOR;
         }
 
-        if (!is_dir($targetDirectory) && !mkdir($targetDirectory, static::TARGET_DIRECTORY_PERMISSIONS, true) && !is_dir($targetDirectory)) {
-            throw new FileNotCreatedException('Unable to create directory.');
+        if (!is_dir($targetDirectory)) {
+            $this->filesystem->mkdir($targetDirectory);
         }
 
         $fileName = $this->restApiDocumentationGeneratorConfig->getGeneratedFileName();

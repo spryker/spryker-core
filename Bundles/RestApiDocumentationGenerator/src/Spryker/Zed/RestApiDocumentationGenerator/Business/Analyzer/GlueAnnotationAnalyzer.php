@@ -8,6 +8,7 @@
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer;
 
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinderInterface;
 
 class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
 {
@@ -17,14 +18,20 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
     protected const PATTERN_REGEX_MULTI_LINE_ANNOTATION = '/(?<=\w=\{\n)(.|\n)+?(?=\n\})/';
     protected const PATTERN_REGEX_ACTION_NAME = '/(\w)+Action/';
 
-    protected const PATTERN_NAMESPACE_CONTROLLER = '%s\Controller\%s';
-
     protected const PATTERN_ERROR_MESSAGE_COMMA_MISSED = 'Line must end with "," in multiline annotation. Found in  %s';
 
-    protected const PATTERN_FINDER_PLACEHOLDER_MODULE = '%module%';
-    protected const PATTERN_FINDER_PLACEHOLDER_CONTROLLER = '%controller%';
-    protected const PATTERN_FINDER_PROJECT_CONTROLLER = APPLICATION_SOURCE_DIR . '/' . self::PATTERN_FINDER_PLACEHOLDER_MODULE . '/Glue/' . self::PATTERN_FINDER_PLACEHOLDER_MODULE . '/Controller/' . self::PATTERN_FINDER_PLACEHOLDER_CONTROLLER . '.php';
-    protected const PATTERN_FINDER_PRODUCT_CONTROLLER = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/' . self::PATTERN_FINDER_PLACEHOLDER_MODULE . '/src/Spryker/Glue/' . self::PATTERN_FINDER_PLACEHOLDER_MODULE . '/Controller/' . self::PATTERN_FINDER_PLACEHOLDER_CONTROLLER . '.php';
+    /**
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinderInterface
+     */
+    protected $finder;
+
+    /**
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinderInterface $finder
+     */
+    public function __construct(GlueControllerFinderInterface $finder)
+    {
+        $this->finder = $finder;
+    }
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
@@ -33,62 +40,19 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
      */
     public function getParametersFromPlugin(ResourceRoutePluginInterface $plugin): array
     {
-        $controller = $this->getPluginControllerClass($plugin);
-        $files = $this->getControllerSourceDirs($controller);
+        $controllerFiles = $this->finder->getGlueControllerFilesFromPlugin($plugin);
 
         $parameters = [];
-        foreach ($files as $file) {
-            if (file_exists($file)) {
-                $tokens = token_get_all(file_get_contents($file));
-                $parameters = $this->parseTokens($tokens);
-            }
+        foreach ($controllerFiles as $file) {
+            $tokens = token_get_all(file_get_contents($file));
+            $parameters[] = $this->parseTokens($tokens);
         }
 
-        return $parameters;
-    }
+        if (!$parameters) {
+            return [];
+        }
 
-    /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
-     *
-     * @return string
-     */
-    protected function getPluginControllerClass(ResourceRoutePluginInterface $plugin): string
-    {
-        $controllerClass = implode('', array_map('ucfirst', explode('-', $plugin->getController()))) . 'Controller';
-        $pluginClass = get_class($plugin);
-        $substr = substr($pluginClass, 0, strpos($pluginClass, '\Plugin\\'));
-
-        return sprintf(
-            static::PATTERN_NAMESPACE_CONTROLLER,
-            $substr,
-            $controllerClass
-        );
-    }
-
-    /**
-     * @param string $controllerClass
-     *
-     * @return array
-     */
-    protected function getControllerSourceDirs(string $controllerClass): array
-    {
-        $controllerClassExploded = explode('\\', $controllerClass);
-
-        $controller = array_slice($controllerClassExploded, -1)[0];
-        $module = array_slice($controllerClassExploded, -3)[0];
-
-        return [
-            str_replace(
-                [static::PATTERN_FINDER_PLACEHOLDER_MODULE, static::PATTERN_FINDER_PLACEHOLDER_CONTROLLER],
-                [$module, $controller],
-                static::PATTERN_FINDER_PRODUCT_CONTROLLER
-            ),
-            str_replace(
-                [static::PATTERN_FINDER_PLACEHOLDER_MODULE, static::PATTERN_FINDER_PLACEHOLDER_CONTROLLER],
-                [$module, $controller],
-                static::PATTERN_FINDER_PROJECT_CONTROLLER
-            ),
-        ];
+        return array_replace_recursive(...$parameters);
     }
 
     /**
@@ -243,7 +207,7 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
         foreach ($parameterValues as $parameterValue) {
             if (preg_match('/\d*=./', $parameterValue)) {
                 [$code, $description] = explode('=', $parameterValue);
-                $parameters[$parameterName] = [$code => $this->filterParameter($description)];
+                $parameters[$parameterName][$code] = $this->filterParameter($description);
                 continue;
             }
             $parameterValue = $this->filterParameter($parameterValue);

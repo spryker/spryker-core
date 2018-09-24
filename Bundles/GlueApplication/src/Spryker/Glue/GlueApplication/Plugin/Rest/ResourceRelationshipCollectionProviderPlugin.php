@@ -17,7 +17,7 @@ use Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\Resour
 class ResourceRelationshipCollectionProviderPlugin extends AbstractPlugin implements ResourceRelationshipCollectionProviderPluginInterface
 {
     /**
-     * * {@inheritdoc}
+     * {@inheritdoc}
      *
      * @api
      *

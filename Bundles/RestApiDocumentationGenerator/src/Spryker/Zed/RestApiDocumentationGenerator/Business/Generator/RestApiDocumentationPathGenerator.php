@@ -9,8 +9,7 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 
 use Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer;
 use Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\PathMethodPathRenderer;
-use Spryker\Zed\RestApiDocumentationGenerator\Business\Validator\ComponentValidator;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\PathRendererInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,8 +26,17 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
      */
     protected $paths = [];
 
-    public function __construct()
+    /**
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\PathRendererInterface
+     */
+    protected $pathMethodRenderer;
+
+    /**
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\PathRendererInterface $pathMethodRenderer
+     */
+    public function __construct(PathRendererInterface $pathMethodRenderer)
     {
+        $this->pathMethodRenderer = $pathMethodRenderer;
     }
 
     /**
@@ -61,8 +69,7 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
         $pathMethodDataTransfer->addResponseSchema($errorSchemaDataTransfer);
         $pathMethodDataTransfer->setMethod(strtolower(Request::METHOD_GET));
 
-        $pathRenderer = new PathMethodPathRenderer(new ComponentValidator());
-        $this->paths += $pathRenderer->render($pathMethodDataTransfer);
+        $this->addPath($pathMethodDataTransfer);
     }
 
     /**
@@ -92,8 +99,7 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
         $pathMethodDataTransfer->addResponseSchema($errorSchemaDataTransfer);
         $pathMethodDataTransfer->setMethod(strtolower(Request::METHOD_POST));
 
-        $pathRenderer = new PathMethodPathRenderer(new ComponentValidator());
-        $this->paths += $pathRenderer->render($pathMethodDataTransfer);
+        $this->addPath($pathMethodDataTransfer);
     }
 
     /**
@@ -123,8 +129,7 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
         $pathMethodDataTransfer->addResponseSchema($errorSchemaDataTransfer);
         $pathMethodDataTransfer->setMethod(strtolower(Request::METHOD_PATCH));
 
-        $pathRenderer = new PathMethodPathRenderer(new ComponentValidator());
-        $this->paths += $pathRenderer->render($pathMethodDataTransfer);
+        $this->addPath($pathMethodDataTransfer);
     }
 
     /**
@@ -148,7 +153,16 @@ class RestApiDocumentationPathGenerator implements RestApiDocumentationPathGener
         $pathMethodDataTransfer->addResponseSchema($errorSchemaDataTransfer);
         $pathMethodDataTransfer->setMethod(strtolower(Request::METHOD_DELETE));
 
-        $pathRenderer = new PathMethodPathRenderer(new ComponentValidator());
-        $this->paths += $pathRenderer->render($pathMethodDataTransfer);
+        $this->addPath($pathMethodDataTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer
+     *
+     * @return void
+     */
+    protected function addPath(RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer): void
+    {
+        $this->paths += $this->pathMethodRenderer->render($pathMethodDataTransfer);
     }
 }

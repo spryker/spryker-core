@@ -9,7 +9,7 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer;
 
 use Generated\Shared\Transfer\RestApiDocumentationPathMethodDataTransfer;
 use Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer;
-use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRouteCollection;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface;
@@ -48,6 +48,11 @@ class PluginAnalyzer implements PluginAnalyzerInterface
     protected $schemaGenerator;
 
     /**
+     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
+     */
+    protected $resourceRouteCollection;
+
+    /**
      * @var \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[]
      */
     protected $resourceRoutesPluginsProviderPlugins;
@@ -70,6 +75,7 @@ class PluginAnalyzer implements PluginAnalyzerInterface
     /**
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationPathGeneratorInterface $pathGenerator
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Generator\RestApiDocumentationSchemaGeneratorInterface $schemaGenerator
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
      * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[] $resourceRoutesPluginsProviderPlugins
      * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[] $resourceRelationshipCollectionPlugins
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer\GlueAnnotationAnalyzerInterface $annotationsAnalyser
@@ -78,6 +84,7 @@ class PluginAnalyzer implements PluginAnalyzerInterface
     public function __construct(
         RestApiDocumentationPathGeneratorInterface $pathGenerator,
         RestApiDocumentationSchemaGeneratorInterface $schemaGenerator,
+        ResourceRouteCollectionInterface $resourceRouteCollection,
         array $resourceRoutesPluginsProviderPlugins,
         array $resourceRelationshipCollectionPlugins,
         GlueAnnotationAnalyzerInterface $annotationsAnalyser,
@@ -85,6 +92,7 @@ class PluginAnalyzer implements PluginAnalyzerInterface
     ) {
         $this->pathGenerator = $pathGenerator;
         $this->schemaGenerator = $schemaGenerator;
+        $this->resourceRouteCollection = $resourceRouteCollection;
         $this->resourceRoutesPluginsProviderPlugins = $resourceRoutesPluginsProviderPlugins;
         $this->resourceRelationshipCollectionPlugins = $resourceRelationshipCollectionPlugins;
         $this->annotationsAnalyser = $annotationsAnalyser;
@@ -116,7 +124,7 @@ class PluginAnalyzer implements PluginAnalyzerInterface
      */
     protected function handleGetResourcePath(ResourceRoutePluginInterface $plugin, ResourceRoutePluginsProviderPluginInterface $resourceRoutesPluginsProviderPlugin, array $annotationParameters): void
     {
-        $collection = $plugin->configure(new ResourceRouteCollection());
+        $collection = $plugin->configure($this->resourceRouteCollection);
         if (!$collection->has(Request::METHOD_GET)) {
             return;
         }
@@ -164,7 +172,7 @@ class PluginAnalyzer implements PluginAnalyzerInterface
      */
     protected function handlePostResourcePath(ResourceRoutePluginInterface $plugin, ResourceRoutePluginsProviderPluginInterface $resourceRoutesPluginsProviderPlugin, array $annotationParameters): void
     {
-        $collection = $plugin->configure(new ResourceRouteCollection());
+        $collection = $plugin->configure($this->resourceRouteCollection);
         if (!$collection->has(Request::METHOD_POST)) {
             return;
         }
@@ -200,7 +208,7 @@ class PluginAnalyzer implements PluginAnalyzerInterface
      */
     protected function handlePatchResourcePath(ResourceRoutePluginInterface $plugin, ResourceRoutePluginsProviderPluginInterface $resourceRoutesPluginsProviderPlugin, array $annotationParameters): void
     {
-        $collection = $plugin->configure(new ResourceRouteCollection());
+        $collection = $plugin->configure($this->resourceRouteCollection);
         if (!$collection->has(Request::METHOD_PATCH)) {
             return;
         }
@@ -236,7 +244,7 @@ class PluginAnalyzer implements PluginAnalyzerInterface
      */
     protected function handleDeleteResourcePath(ResourceRoutePluginInterface $plugin, ResourceRoutePluginsProviderPluginInterface $resourceRoutesPluginsProviderPlugin, array $annotationParameters): void
     {
-        $collection = $plugin->configure(new ResourceRouteCollection());
+        $collection = $plugin->configure($this->resourceRouteCollection);
         if (!$collection->has(Request::METHOD_DELETE)) {
             return;
         }
@@ -366,8 +374,11 @@ class PluginAnalyzer implements PluginAnalyzerInterface
      *
      * @return void
      */
-    protected function addResponsesToPathData(RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer, RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer, array $responses): void
-    {
+    protected function addResponsesToPathData(
+        RestApiDocumentationPathMethodDataTransfer $pathMethodDataTransfer,
+        RestApiDocumentationPathSchemaDataTransfer $errorSchemaDataTransfer,
+        array $responses
+    ): void {
         foreach ($responses as $code => $description) {
             $responseSchemaDataTransfer = clone $errorSchemaDataTransfer;
             $responseSchemaDataTransfer->setCode($code);
