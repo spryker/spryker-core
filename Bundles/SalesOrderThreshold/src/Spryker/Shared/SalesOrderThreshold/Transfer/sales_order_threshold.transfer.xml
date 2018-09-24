@@ -25,6 +25,11 @@
         <property name="localizedMessages" type="SalesOrderThresholdLocalizedMessage[]" singular="localizedMessage" />
     </transfer>
 
+    <transfer name="SalesOrderThresholdQuote">
+        <property name="originalQuote" type="Quote" />
+        <property name="thresholdItems" type="Item[]" singular="item"/>
+    </transfer>
+
     <transfer name="SalesOrderThresholdLocalizedMessage">
         <property name="message" type="string" />
         <property name="localeCode" type="string" />
@@ -39,6 +44,7 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="totals" type="Totals" />
         <property name="priceMode" type="string" />
+        <property name="store" type="Store" />
         <property name="currency" type="Currency" />
     </transfer>
 

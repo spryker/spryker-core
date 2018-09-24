@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesOrderThreshold\Business\DataSource;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer;
 use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold\SalesOrderThresholdReaderInterface;
 
 class SalesOrderThresholdDataSourceStrategyResolver implements SalesOrderThresholdDataSourceStrategyResolverInterface
@@ -42,13 +43,26 @@ class SalesOrderThresholdDataSourceStrategyResolver implements SalesOrderThresho
     public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {
         $salesOrderThresholdTransfers = [];
+        $salesOrderThresholdQuoteTransfer = $this->createSalesOrderThresholdQuoteTransfer($quoteTransfer);
         foreach ($this->salesOrderThresholdDataSourceStrategyPlugins as $salesOrderThresholdDataSourceStrategyPlugin) {
             $salesOrderThresholdTransfers = array_merge(
                 $salesOrderThresholdTransfers,
-                $salesOrderThresholdDataSourceStrategyPlugin->findApplicableThresholds($quoteTransfer)
+                $salesOrderThresholdDataSourceStrategyPlugin->findApplicableThresholds($salesOrderThresholdQuoteTransfer)
             );
         }
 
         return $salesOrderThresholdTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer
+     */
+    protected function createSalesOrderThresholdQuoteTransfer(QuoteTransfer $quoteTransfer): SalesOrderThresholdQuoteTransfer
+    {
+        return (new SalesOrderThresholdQuoteTransfer())
+            ->setOriginalQuote(clone $quoteTransfer)
+            ->setThresholdItems(clone $quoteTransfer->getItems());
     }
 }

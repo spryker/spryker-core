@@ -8,17 +8,17 @@
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipThreshold;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface MerchantRelationshipThresholdReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
      */
-    public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array;
+    public function findApplicableThresholds(SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer

@@ -8,7 +8,9 @@
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipThreshold;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation\MerchantRelationshipSalesOrderThresholdTranslationReaderInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdRepositoryInterface;
@@ -38,29 +40,52 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
      */
-    public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
+    public function findApplicableThresholds(SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer): array
     {
-        $customerMerchantRelationships = $this->getCustomerMerchantRelationships($quoteTransfer);
+        $this->assertRequiredAttributes($salesOrderThresholdQuoteTransfer);
+        $customerMerchantRelationships = $this->getCustomerMerchantRelationships($salesOrderThresholdQuoteTransfer->getOriginalQuote());
+
         if (empty($customerMerchantRelationships)) {
             return [];
         }
 
-        $itemMerchantRelationshipSubTotals = $this->getItemsMerchantRelationshipSubTotals($quoteTransfer);
+        $itemMerchantRelationshipSubTotals = $this->getItemsMerchantRelationshipSubTotals($salesOrderThresholdQuoteTransfer);
+
+        if (empty($itemMerchantRelationshipSubTotals)) {
+            return [];
+        }
 
         $cartMerchantRelationshipIds = $this->getCartMerchantRelationshipIds($customerMerchantRelationships, $itemMerchantRelationshipSubTotals);
 
         $merchantRelationshipSalesOrderThresholdTransfers = $this->merchantRelationshipSalesOrderThresholdRepository
             ->getMerchantRelationshipSalesOrderThresholds(
-                $quoteTransfer->getStore(),
-                $quoteTransfer->getCurrency(),
+                $salesOrderThresholdQuoteTransfer->getOriginalQuote()->getStore(),
+                $salesOrderThresholdQuoteTransfer->getOriginalQuote()->getCurrency(),
                 $cartMerchantRelationshipIds
             );
 
+        $this->filterOutThresholdItems($salesOrderThresholdQuoteTransfer, $merchantRelationshipSalesOrderThresholdTransfers);
+
         return $this->getSalesOrderThresholdTransfers($merchantRelationshipSalesOrderThresholdTransfers, $itemMerchantRelationshipSubTotals);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer
+     *
+     * @return void
+     */
+    protected function assertRequiredAttributes(SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer): void
+    {
+        $salesOrderThresholdQuoteTransfer
+            ->requireThresholdItems()
+            ->requireOriginalQuote()
+            ->getOriginalQuote()
+            ->requireStore()
+            ->requireCurrency();
     }
 
     /**
@@ -116,15 +141,15 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer
      *
      * @return int[]
      */
-    protected function getItemsMerchantRelationshipSubTotals(QuoteTransfer $quoteTransfer): array
+    protected function getItemsMerchantRelationshipSubTotals(SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer): array
     {
         $itemMerchantRelationshipSubTotals = [];
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getPriceProduct() || !$itemTransfer->getPriceProduct()->getPriceDimension()) {
+        foreach ($salesOrderThresholdQuoteTransfer->getThresholdItems() as $key => $itemTransfer) {
+            if (!$this->isMerchantRelationshipItem($itemTransfer)) {
                 continue;
             }
 
@@ -134,6 +159,18 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
         }
 
         return $itemMerchantRelationshipSubTotals;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isMerchantRelationshipItem(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getPriceProduct() &&
+            $itemTransfer->getPriceProduct()->getPriceDimension() &&
+            $itemTransfer->getPriceProduct()->getPriceDimension()->getIdMerchantRelationship();
     }
 
     /**
@@ -152,6 +189,33 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
         }
 
         return $cartMerchantRelationshipIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer[] $merchantRelationshipSalesOrderThresholdTransfers
+     *
+     * @return void
+     */
+    protected function filterOutThresholdItems(
+        SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer,
+        array $merchantRelationshipSalesOrderThresholdTransfers
+    ): void {
+        $thresholdMerchantRelationshipIds = [];
+        foreach ($merchantRelationshipSalesOrderThresholdTransfers as $merchantRelationshipSalesOrderThresholdTransfer) {
+            $idMerchantRelationship = $merchantRelationshipSalesOrderThresholdTransfer->getMerchantRelationship()->getIdMerchantRelationship();
+            $thresholdMerchantRelationshipIds[$idMerchantRelationship] = $idMerchantRelationship;
+        }
+
+        $salesOrderThresholdQuoteTransfer->getThresholdItems()->exchangeArray(
+            array_filter(
+                $salesOrderThresholdQuoteTransfer->getThresholdItems()->getArrayCopy(),
+                function (ItemTransfer $itemTransfer) use ($thresholdMerchantRelationshipIds) {
+                    return !$this->isMerchantRelationshipItem($itemTransfer) ||
+                        !isset($thresholdMerchantRelationshipIds[$itemTransfer->getPriceProduct()->getPriceDimension()->getIdMerchantRelationship()]);
+                }
+            )
+        );
     }
 
     /**

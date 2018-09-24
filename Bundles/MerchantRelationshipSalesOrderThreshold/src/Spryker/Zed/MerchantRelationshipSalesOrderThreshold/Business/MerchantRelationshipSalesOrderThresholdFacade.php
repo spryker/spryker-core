@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -24,15 +24,15 @@ class MerchantRelationshipSalesOrderThresholdFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
      */
-    public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
+    public function findApplicableThresholds(SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer): array
     {
         return $this->getFactory()
             ->createMerchantRelationshipThresholdReader()
-            ->findApplicableThresholds($quoteTransfer);
+            ->findApplicableThresholds($salesOrderThresholdQuoteTransfer);
     }
 
     /**
