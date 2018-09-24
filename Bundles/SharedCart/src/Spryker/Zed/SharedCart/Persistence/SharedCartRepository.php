@@ -99,12 +99,14 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      */
     public function findQuotesByIdCompanyUser(int $idCompanyUser): array
     {
+        /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $quoteQuery */
         $quoteQuery = $this->getFactory()->createQuoteQuery()
             ->joinWithSpyStore()
             ->useSpyQuoteCompanyUserQuery()
                 ->filterByFkCompanyUser($idCompanyUser)
             ->endUse()
             ->addAsColumn('is_default', SpyQuoteCompanyUserTableMap::COL_IS_DEFAULT);
+
         return $this->buildQueryFromCriteria($quoteQuery)->find();
     }
 

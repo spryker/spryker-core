@@ -46,7 +46,6 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
             return false;
         }
 
-        /** @var \Generated\Shared\Transfer\CustomerProductListCollectionTransfer|null $customerProductListCollectionTransfer */
         $customerProductListCollectionTransfer = $customer->getCustomerProductListCollection();
         if (!$customerProductListCollectionTransfer) {
             return false;

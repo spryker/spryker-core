@@ -54,4 +54,11 @@ interface CompanyUserRepositoryInterface
      * @return int
      */
     public function countActiveCompanyUsersByIdCustomer(int $idCustomer): int;
+
+    /**
+     * @param int[] $companyUserIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
 }
