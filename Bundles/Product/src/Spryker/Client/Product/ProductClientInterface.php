@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Product;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+
 interface ProductClientInterface
 {
     /**
@@ -98,4 +100,16 @@ interface ProductClientInterface
      * @return \Generated\Shared\Transfer\StorageProductTransfer[]
      */
     public function getProductConcreteCollection(array $idProductConcreteCollection);
+
+    /**
+     * Specification
+     * - Finds concrete product ID by given SKU.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function findProductConcreteIdBySku(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }
