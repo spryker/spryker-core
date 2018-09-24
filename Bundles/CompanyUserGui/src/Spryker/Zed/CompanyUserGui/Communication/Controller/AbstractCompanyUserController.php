@@ -7,17 +7,13 @@
 
 namespace Spryker\Zed\CompanyUserGui\Communication\Controller;
 
+use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AbstractCompanyUserController extends AbstractController
 {
     protected const PARAMETER_ID_COMPANY_USER = 'id-company-user';
-
-    /**
-     * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\ListCompanyUserController::indexAction()
-     */
-    protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
     /**
      * @param string $errorMessage
@@ -28,6 +24,6 @@ class AbstractCompanyUserController extends AbstractController
     {
         $this->addErrorMessage($errorMessage);
 
-        return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+        return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
     }
 }

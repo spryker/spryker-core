@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyUserGui\Communication\Controller;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -66,6 +67,6 @@ class DeleteCompanyUserController extends AbstractCompanyUserController
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_DELETE);
 
-        return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+        return $this->redirectResponse(CompanyUserGuiConfig::URL_REDIRECT_COMPANY_USER_PAGE);
     }
 }
