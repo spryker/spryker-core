@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 use Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException;
 
 /**
- * @deprecated Use \Spryker\Yves\Kernel\Widget\WidgetAbstractFactory instead.
+ * @deprecated Use \SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetFactory instead.
  */
 class WidgetFactory implements WidgetFactoryInterface
 {
