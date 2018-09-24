@@ -28,6 +28,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
         return new ProductAbstractPagePublisher(
             $this->getQueryContainer(),
             $this->getProductPageDataExpanderPlugins(),
+            $this->getProductPageDataLoaderPlugins(),
             $this->createProductPageMapper(),
             $this->createProductPageWriter()
         );
@@ -96,5 +97,13 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     protected function getProductPageDataExpanderPlugins()
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface[]
+     */
+    protected function getProductPageDataLoaderPlugins()
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_LOADER);
     }
 }

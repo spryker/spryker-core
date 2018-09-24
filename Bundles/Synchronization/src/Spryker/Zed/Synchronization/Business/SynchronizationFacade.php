@@ -75,6 +75,38 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function processSearchMessages(array $queueMessageTransfers): array
+    {
+        return $this->getFactory()
+            ->createSearchQueueMessageProcessor()
+            ->processMessages($queueMessageTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function processStorageMessages(array $queueMessageTransfers): array
+    {
+        return $this->getFactory()
+            ->createStorageQueueMessageProcessor()
+            ->processMessages($queueMessageTransfers);
+    }
+
+    /**
      * @api
      *
      * @param string[] $resources
