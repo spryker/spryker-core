@@ -134,6 +134,19 @@ class Writer implements WriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function deleteBulk(array $searchDocumentTransfers): bool
+    {
+        $documents = $this->mapTransferToDocuments($searchDocumentTransfers);
+        $response = $this->client->deleteDocuments($documents);
+
+        return $response->isOk();
+    }
+
+    /**
      * @return string
      */
     public function getName()

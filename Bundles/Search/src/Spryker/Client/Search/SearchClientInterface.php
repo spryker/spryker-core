@@ -153,4 +153,16 @@ interface SearchClientInterface
      * @return bool
      */
     public function delete(array $dataSet, $typeName = null, $indexName = null);
+
+    /**
+     * Specification:
+     * - Deletes data from an external search service (e.g Elasticsearch) in bulk mode.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function deleteBulk(array $searchDocumentTransfers): bool;
 }

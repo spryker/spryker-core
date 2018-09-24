@@ -186,15 +186,13 @@ class SynchronizationSearch implements SynchronizationInterface
      */
     public function deleteBulk(array $data): void
     {
-        $typeName = $this->getParam($data, static::TYPE);
-        $indexName = $this->getParam($data, static::INDEX);
-        $dataSets = $this->prepareDeleteBulkDataSets($data);
+        $searchDocumentTransfers = $this->prepareSearchDocumentTransfers($data);
 
-        if ($dataSets === []) {
+        if ($searchDocumentTransfers === []) {
             return;
         }
 
-        $this->searchClient->delete($dataSets, $typeName, $indexName);
+        $this->searchClient->deleteBulk($searchDocumentTransfers);
     }
 
     /**

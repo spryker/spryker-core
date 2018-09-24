@@ -133,9 +133,13 @@ class SynchronizationFacadeTest extends Unit
 
         $searchClientBridgeMock
             ->expects($this->once())
-            ->method('delete')
+            ->method('deleteBulk')
             ->with($this->callback(function (array $data) use ($queueMessageBody) {
-                $this->assertEquals([$queueMessageBody['delete']['key'] => $queueMessageBody['delete']['value']], $data);
+                $searchDocumentTransfer = new SearchDocumentTransfer();
+                $searchDocumentTransfer->setId($queueMessageBody['delete']['key']);
+                $searchDocumentTransfer->setData($queueMessageBody['delete']['value']);
+
+                $this->assertEquals($searchDocumentTransfer->toArray(), $data[0]->toArray());
 
                 return true;
             }));
@@ -482,6 +486,7 @@ class SynchronizationFacadeTest extends Unit
                 'writeBulk',
                 'read',
                 'delete',
+                'deleteBulk',
             ])
             ->getMock();
     }

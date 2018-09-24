@@ -67,4 +67,14 @@ class SynchronizationToSearchClientBridge implements SynchronizationToSearchClie
     {
         return $this->searchClient->delete($dataSet, $typeName, $indexName);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function deleteBulk(array $searchDocumentTransfers): bool
+    {
+        return $this->searchClient->deleteBulk($searchDocumentTransfers);
+    }
 }

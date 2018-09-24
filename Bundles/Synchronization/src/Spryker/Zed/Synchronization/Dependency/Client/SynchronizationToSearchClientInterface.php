@@ -42,4 +42,11 @@ interface SynchronizationToSearchClientInterface
      * @return bool
      */
     public function delete(array $dataSet, $typeName = null, $indexName = null);
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function deleteBulk(array $searchDocumentTransfers): bool;
 }

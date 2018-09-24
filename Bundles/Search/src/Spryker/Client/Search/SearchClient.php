@@ -210,4 +210,21 @@ class SearchClient extends AbstractClient implements SearchClientInterface
             ->createWriter()
             ->delete($dataSet, $typeName, $indexName);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function deleteBulk(array $searchDocumentTransfers): bool
+    {
+        return $this
+            ->getFactory()
+            ->createWriter()
+            ->deleteBulk($searchDocumentTransfers);
+    }
 }
