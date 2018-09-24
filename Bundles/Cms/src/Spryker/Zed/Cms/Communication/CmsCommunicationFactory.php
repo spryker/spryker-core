@@ -9,10 +9,8 @@ namespace Spryker\Zed\Cms\Communication;
 
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
-use Spryker\Zed\Cms\Communication\Form\CmsPageForm;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsGlossaryFormDataProvider;
-use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageLocalizedAttributesFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
@@ -50,29 +48,6 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
             ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $fkLocale);
 
         return new CmsGlossaryTable($glossaryQuery, $idPage, $placeholders, $searchArray);
-    }
-
-    /**
-     * @param array $formData
-     * @param array $formOptions
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getCmsPageForm(array $formData = [], array $formOptions = [])
-    {
-        return $this->getFormFactory()->create(CmsPageForm::class, $formData, $formOptions);
-    }
-
-    /**
-     * @return \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageFormDataProvider
-     */
-    public function createCmsPageFormDataProvider()
-    {
-        return new CmsPageFormDataProvider(
-            $this->getQueryContainer(),
-            $this->getLocaleFacade(),
-            $this->createCmsPageLocalizedAttributesFormDataProvider()
-        );
     }
 
     /**
