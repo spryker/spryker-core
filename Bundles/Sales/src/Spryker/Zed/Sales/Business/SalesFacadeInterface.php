@@ -160,7 +160,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Returns the order for the given sales oder id.
+     * - Returns the order for the given sales order id.
      *
      * @api
      *
@@ -172,7 +172,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Returns the order for the given sales oder id.
+     * - Returns the order for the given sales order id.
      *
      * @api
      *
