@@ -20,6 +20,8 @@ class OrderResourceMapper implements OrderResourceMapperInterface
      */
     public function mapOrderTransferToOrdersRestAttributesTransfer(OrderTransfer $orderTransfer): OrdersRestAttributesTransfer
     {
+        $orderTransfer->requireTotals();
+
         $ordersRestAttributesTransfer = (new OrdersRestAttributesTransfer())->fromArray($orderTransfer->toArray(), true);
         $ordersRestAttributesTransfer->getTotals()->setTaxTotal($orderTransfer->getTotals()->getTaxTotal()->getAmount());
 
@@ -33,6 +35,8 @@ class OrderResourceMapper implements OrderResourceMapperInterface
      */
     public function mapOrderTransferToOrderDetailsRestAttributesTransfer(OrderTransfer $orderTransfer): OrderDetailsRestAttributesTransfer
     {
+        $orderTransfer->requireTotals();
+
         $orderDetailsRestAttributesTransfer = (new OrderDetailsRestAttributesTransfer())->fromArray($orderTransfer->toArray(), true);
         $orderDetailsRestAttributesTransfer->getTotals()->setTaxTotal($orderTransfer->getTotals()->getTaxTotal()->getAmount());
 
