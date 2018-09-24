@@ -17,7 +17,7 @@ interface DevelopmentConstants
     const COMPOSER_BRANCH_ALIAS = 'COMPOSER_BRANCH_ALIAS';
 
     /**
-     * @see \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACE
+     * @see \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACES
      */
     const PROJECT_NAMESPACES = 'PROJECT_NAMESPACES';
 
