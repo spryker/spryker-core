@@ -132,7 +132,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity
      * @param array $categories
      * @param \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage|null $spyProductAbstractCategoryStorageEntity
      *
@@ -162,7 +162,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity
      * @param array $categories
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer
