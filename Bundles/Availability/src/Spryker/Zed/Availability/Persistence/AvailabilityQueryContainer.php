@@ -44,7 +44,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      *
      * @param string $sku
      *
-     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery
      */
     public function querySpyAvailabilityBySku($sku)
     {
@@ -59,7 +59,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      * @param string $sku
      * @param int $idStore
      *
-     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery
      */
     public function queryAvailabilityBySkuAndIdStore($sku, $idStore)
     {
@@ -105,7 +105,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      * @param int $idAvailabilityAbstract
      * @param int $idStore
      *
-     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery
      */
     public function querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract, $idStore)
     {

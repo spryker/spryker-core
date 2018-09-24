@@ -32,12 +32,12 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     protected $forms = [];
 
     /**
-     * @var mixed[]
+     * @var \Symfony\Component\Form\FormTypeInterface[]|string[]
      */
     protected $formTypes;
 
     /**
-     * @param \Symfony\Component\Form\FormTypeInterface[] $formTypes
+     * @param \Symfony\Component\Form\FormTypeInterface[]|string[] $formTypes
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface|null $dataProvider
      */
@@ -134,7 +134,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return array
+     * @return \Symfony\Component\Form\FormTypeInterface[]
      */
     protected function createForms(AbstractTransfer $dataTransfer)
     {
