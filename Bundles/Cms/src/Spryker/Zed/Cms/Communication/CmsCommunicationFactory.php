@@ -11,7 +11,6 @@ use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsGlossaryFormDataProvider;
-use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageLocalizedAttributesFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
@@ -48,14 +47,6 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
             ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $fkLocale);
 
         return new CmsGlossaryTable($glossaryQuery, $idPage, $placeholders, $searchArray);
-    }
-
-    /**
-     * @return \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsPageLocalizedAttributesFormDataProvider
-     */
-    public function createCmsPageLocalizedAttributesFormDataProvider()
-    {
-        return new CmsPageLocalizedAttributesFormDataProvider($this->getQueryContainer());
     }
 
     /**
