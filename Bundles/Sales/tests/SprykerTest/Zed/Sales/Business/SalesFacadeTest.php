@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Sales\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\OrderBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -191,6 +192,6 @@ class SalesFacadeTest extends Unit
      */
     protected function createOrderTransferWithParams(array $data): OrderTransfer
     {
-        return (new OrderTransfer())->fromArray($data, true);
+        return (new OrderBuilder())->build()->fromArray($data);
     }
 }

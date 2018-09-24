@@ -67,7 +67,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer
     {
         return $this->getFactory()
-            ->createOrderReader()
+            ->createOrderRepositoryReader()
             ->getCustomerOrderByOrderReference($orderTransfer);
     }
 

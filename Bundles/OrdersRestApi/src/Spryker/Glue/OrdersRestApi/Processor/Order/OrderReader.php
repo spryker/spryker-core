@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\OrdersRestApi\Processor\Orders;
+namespace Spryker\Glue\OrdersRestApi\Processor\Order;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrdersRestAttributesTransfer;
@@ -17,10 +17,10 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
-use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapperInterface;
+use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class OrdersReader implements OrdersReaderInterface
+class OrderReader implements OrderReaderInterface
 {
     /**
      * @var \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface
@@ -33,19 +33,19 @@ class OrdersReader implements OrdersReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapperInterface
+     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface
      */
     protected $ordersResourceMapper;
 
     /**
      * @param \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface $salesClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapperInterface $ordersResourceMapper
+     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface $ordersResourceMapper
      */
     public function __construct(
         OrdersRestApiToSalesClientInterface $salesClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        OrdersResourceMapperInterface $ordersResourceMapper
+        OrderResourceMapperInterface $ordersResourceMapper
     ) {
         $this->salesClient = $salesClient;
         $this->restResourceBuilder = $restResourceBuilder;

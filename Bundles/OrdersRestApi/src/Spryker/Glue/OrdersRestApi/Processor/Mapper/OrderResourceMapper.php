@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderItemsRestAttributesTransfer;
 use Generated\Shared\Transfer\OrdersRestAttributesTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
-class OrdersResourceMapper implements OrdersResourceMapperInterface
+class OrderResourceMapper implements OrderResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

@@ -9,19 +9,19 @@ namespace Spryker\Glue\OrdersRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
-use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapper;
-use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapperInterface;
-use Spryker\Glue\OrdersRestApi\Processor\Orders\OrdersReader;
-use Spryker\Glue\OrdersRestApi\Processor\Orders\OrdersReaderInterface;
+use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapper;
+use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface;
+use Spryker\Glue\OrdersRestApi\Processor\Order\OrderReader;
+use Spryker\Glue\OrdersRestApi\Processor\Order\OrderReaderInterface;
 
 class OrdersRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\OrdersRestApi\Processor\Orders\OrdersReaderInterface
+     * @return \Spryker\Glue\OrdersRestApi\Processor\Order\OrderReaderInterface
      */
-    public function createOrdersReader(): OrdersReaderInterface
+    public function createOrdersReader(): OrderReaderInterface
     {
-        return new OrdersReader(
+        return new OrderReader(
             $this->getSalesClient(),
             $this->getResourceBuilder(),
             $this->createOrdersResourceMapper()
@@ -29,11 +29,11 @@ class OrdersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrdersResourceMapperInterface
+     * @return \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface
      */
-    public function createOrdersResourceMapper(): OrdersResourceMapperInterface
+    public function createOrdersResourceMapper(): OrderResourceMapperInterface
     {
-        return new OrdersResourceMapper();
+        return new OrderResourceMapper();
     }
 
     /**
