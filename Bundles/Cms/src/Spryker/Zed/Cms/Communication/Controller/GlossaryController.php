@@ -336,8 +336,7 @@ class GlossaryController extends AbstractController
 
         $dataProvider = $this->getFactory()->createCmsGlossaryFormDataProvider();
         $form = $this->getFactory()
-            ->createCmsGlossaryForm(
-                $this->getFacade(),
+            ->getCmsGlossaryForm(
                 $dataProvider->getData($idPage, $idMapping, $placeholder, $fkLocale)
             )
             ->handleRequest($request);

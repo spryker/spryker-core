@@ -81,7 +81,7 @@ class UrlRedirectOverwriteObserver implements UrlCreatorBeforeSaveObserverInterf
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirect
+     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirect|null
      */
     protected function findUrlRedirectEntity(UrlTransfer $urlTransfer)
     {
