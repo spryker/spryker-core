@@ -174,7 +174,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
     protected function getIndexedColumnNames(SimpleXMLElement $tableXmlElement): array
     {
         $indexedColumnNames = [];
-        $indexColumnXmlElements = $tableXmlElement->xpath('index/index-column');
+        $indexColumnXmlElements = $tableXmlElement->xpath('index/index-column | column[@primaryKey="true"]');
 
         if ($indexColumnXmlElements === false) {
             return $indexedColumnNames;

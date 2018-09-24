@@ -9,6 +9,7 @@ namespace Spryker\Zed\Propel\Business\Model;
 
 use ArrayObject;
 use DOMDocument;
+use DOMElement;
 use DOMNodeList;
 use SimpleXMLElement;
 use Spryker\Service\UtilText\UtilTextService;
@@ -177,8 +178,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
         $dom->loadXML($xml->asXML());
-
-        $dom = $this->ensureElementHierarchy($dom);
+        $this->ensureElementHierarchy($dom);
 
         $callback = function ($matches) {
             $multiplier = (strlen($matches[1]) / 2) * 4;
@@ -279,9 +279,21 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     /**
      * @param \DOMDocument $dom
      *
-     * @return \DOMDocument
+     * @return void
      */
-    protected function ensureElementHierarchy(DOMDocument $dom): DOMDocument
+    protected function ensureElementHierarchy(DOMDocument $dom): void
+    {
+        foreach ($dom->getElementsByTagName('table') as $tableDomElement) {
+            $this->ensureTableElementHierarchy($tableDomElement);
+        }
+    }
+
+    /**
+     * @param \DOMElement $tableDomElement
+     *
+     * @return void
+     */
+    protected function ensureTableElementHierarchy(DOMElement $tableDomElement): void
     {
         $elementHierarchy = ['unique', 'foreign-key'];
 
@@ -289,23 +301,21 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
             $elementHierarchy = $this->config->getTableElementHierarchy();
         }
 
-        $nodesToOrder = $this->getNodesToOrder($dom, $elementHierarchy);
+        $nodesToOrder = $this->getNodesToOrder($tableDomElement, $elementHierarchy);
 
         foreach ($nodesToOrder as $node) {
             $node['parent']->removeChild($node['item']);
             $node['parent']->appendChild($node['item']);
         }
-
-        return $dom;
     }
 
     /**
-     * @param \DOMDocument $dom
+     * @param \DOMElement $dom
      * @param array $elementHierarchy
      *
      * @return array
      */
-    protected function getNodesToOrder(DOMDocument $dom, array $elementHierarchy): array
+    protected function getNodesToOrder(DOMElement $dom, array $elementHierarchy): array
     {
         $nodesToOrder = [];
         foreach ($elementHierarchy as $tagName) {
