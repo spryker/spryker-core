@@ -11,6 +11,8 @@ use ArrayObject;
 use Generated\Shared\Transfer\OrderCollectionTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\SalesReclamation\Persistence\Propel\Mapper\SalesReclamationMapperInterface;
 

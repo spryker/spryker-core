@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\SalesReclamationGui;
 
+use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesFacadeBridge;
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesReclamationFacadeBridge;
-use Spryker\Zed\SalesReclamationGui\Dependency\QueryContainer\SalesReclamationGuiToSalesReclamationQueryContainerBridge;
 use Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceBridge;
 
 class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProvider
@@ -19,7 +19,7 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_SALES_RECLAMATION = 'FACADE_SALES_RECLAMATION';
     public const FACADE_SALES = 'FACADE_SALES';
 
-    public const QUERY_CONTAINER_SALES_RECLAMATION = 'QUERY_CONTAINER_SALES_RECLAMATION';
+    public const QUERY_SALES_RECLAMATION = 'QUERY_SALES_RECLAMATION';
 
     public const SERVICE_DATETIME = 'SERVICE_DATETIME';
 
@@ -32,7 +32,7 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $this->addSalesFacade($container);
         $this->addSalesReclamationFacade($container);
-        $this->addSalesReclamationQueryContainer($container);
+        $this->addSalesReclamationQuery($container);
         $this->addDateTimeService($container);
 
         return $container;
@@ -73,10 +73,10 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesReclamationQueryContainer(Container $container): Container
+    protected function addSalesReclamationQuery(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_SALES_RECLAMATION] = function (Container $container) {
-            return new SalesReclamationGuiToSalesReclamationQueryContainerBridge($container->getLocator()->salesReclamation()->queryContainer());
+        $container[static::QUERY_SALES_RECLAMATION] = function (Container $container) {
+            return SpySalesReclamationQuery::create();
         };
 
         return $container;

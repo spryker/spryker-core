@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesReclamationGui\Communication;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\FormDataProviderInterface;
 use Spryker\Zed\SalesReclamationGui\Communication\Form\ReclamationDataProvider;
@@ -15,7 +16,6 @@ use Spryker\Zed\SalesReclamationGui\Communication\Form\ReclamationType;
 use Spryker\Zed\SalesReclamationGui\Communication\Table\ReclamationTable;
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesFacadeInterface;
 use Spryker\Zed\SalesReclamationGui\Dependency\Facade\SalesReclamationGuiToSalesReclamationFacadeInterface;
-use Spryker\Zed\SalesReclamationGui\Dependency\QueryContainer\SalesReclamationGuiToSalesReclamationQueryContainerInterface;
 use Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
@@ -43,11 +43,11 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\SalesReclamationGui\Dependency\QueryContainer\SalesReclamationGuiToSalesReclamationQueryContainerInterface
+     * @return \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery
      */
-    public function getSalesReclamationQueryContainer(): SalesReclamationGuiToSalesReclamationQueryContainerInterface
+    public function getSalesReclamationQuery(): SpySalesReclamationQuery
     {
-        return $this->getProvidedDependency(SalesReclamationGuiDependencyProvider::QUERY_CONTAINER_SALES_RECLAMATION);
+        return $this->getProvidedDependency(SalesReclamationGuiDependencyProvider::QUERY_SALES_RECLAMATION);
     }
 
     /**
@@ -56,7 +56,7 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createReclamationTable(): ReclamationTable
     {
         return new ReclamationTable(
-            $this->getSalesReclamationQueryContainer(),
+            $this->getSalesReclamationQuery(),
             $this->getDateTimeService()
         );
     }

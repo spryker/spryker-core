@@ -9,22 +9,22 @@ namespace Spryker\Zed\SalesReclamation\Business\Order;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface;
+use Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface;
 
 class ReclamationSaver implements ReclamationSaverInterface
 {
     /**
-     * @var \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface
+     * @var \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface
      */
-    protected $queryContainer;
+    protected $salesFacade;
 
     /**
-     * @param \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface $salesFacade
      */
     public function __construct(
-        SalesReclamationQueryContainerInterface $queryContainer
+        SalesReclamationToSalesFacadeInterface $salesFacade
     ) {
-        $this->queryContainer = $queryContainer;
+        $this->salesFacade = $salesFacade;
     }
 
     /**
@@ -39,13 +39,6 @@ class ReclamationSaver implements ReclamationSaverInterface
             return;
         }
 
-        $saveOrderTransfer->requireIdSalesOrder();
-
-        $spySalesOrder = $this->queryContainer
-            ->querySalesOrderById($saveOrderTransfer->getIdSalesOrder())
-            ->findOne();
-
-        $spySalesOrder->setFkSalesReclamation($quoteTransfer->getReclamationId());
-        $spySalesOrder->save();
+        //TODO save order with added reclamation id
     }
 }

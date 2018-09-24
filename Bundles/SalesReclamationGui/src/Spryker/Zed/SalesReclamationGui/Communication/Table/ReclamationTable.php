@@ -8,10 +8,10 @@
 namespace Spryker\Zed\SalesReclamationGui\Communication\Table;
 
 use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
+use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\SalesReclamationGui\Dependency\QueryContainer\SalesReclamationGuiToSalesReclamationQueryContainerInterface;
 use Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReclamationGui\SalesReclamationGuiConfig;
 
@@ -22,9 +22,9 @@ class ReclamationTable extends AbstractTable
     public const URL_RECLAMATION_CLOSE = '/sales-reclamation-gui/detail/close';
 
     /**
-     * @var \Spryker\Zed\SalesReclamationGui\Dependency\QueryContainer\SalesReclamationGuiToSalesReclamationQueryContainerInterface
+     * @var \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery
      */
-    protected $reclamationQueryContainer;
+    protected $reclamationQuery;
 
     /**
      * @var \Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceInterface
@@ -32,14 +32,14 @@ class ReclamationTable extends AbstractTable
     protected $dateTimeService;
 
     /**
-     * @param \Spryker\Zed\SalesReclamationGui\Dependency\QueryContainer\SalesReclamationGuiToSalesReclamationQueryContainerInterface $reclamationQueryContainer
+     * @param \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery $reclamationQuery
      * @param \Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceInterface $dateTimeService
      */
     public function __construct(
-        SalesReclamationGuiToSalesReclamationQueryContainerInterface $reclamationQueryContainer,
+        SpySalesReclamationQuery $reclamationQuery,
         SalesReclamationGuiToUtilDateTimeServiceInterface $dateTimeService
     ) {
-        $this->reclamationQueryContainer = $reclamationQueryContainer;
+        $this->reclamationQuery = $reclamationQuery;
         $this->dateTimeService = $dateTimeService;
     }
 
@@ -85,8 +85,7 @@ class ReclamationTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        $query = $this->reclamationQueryContainer->queryReclamations();
-        $queryResults = $this->runQuery($query, $config);
+        $queryResults = $this->runQuery($this->reclamationQuery, $config);
 
         return $this->formatQueryData($queryResults);
     }

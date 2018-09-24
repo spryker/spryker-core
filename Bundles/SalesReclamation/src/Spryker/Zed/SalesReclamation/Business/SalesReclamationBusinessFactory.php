@@ -25,7 +25,6 @@ use Spryker\Zed\SalesReclamation\SalesReclamationDependencyProvider;
  * @method \Spryker\Zed\SalesReclamation\SalesReclamationConfig getConfig()
  * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface getRepository()
- * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface getQueryContainer()
  */
 class SalesReclamationBusinessFactory extends AbstractBusinessFactory
 {
@@ -76,7 +75,7 @@ class SalesReclamationBusinessFactory extends AbstractBusinessFactory
     public function createReclamationOrderSaver(): ReclamationSaverInterface
     {
         return new ReclamationSaver(
-            $this->getQueryContainer()
+            $this->getSalesFacade()
         );
     }
 
