@@ -5,6 +5,10 @@
     {% endfilter %}
 </div>
 
+{% if form.price_source is defined %}
+    {{ form_row(form.price_source, { 'id': 'price-source-checkbox' }) }}
+{% endif %}
+
 {{ include('@ProductManagement/_partials/product_price_collection.twig', {moneyValueFormViewCollection: form.prices}) }}
 
 

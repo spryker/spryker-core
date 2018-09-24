@@ -29,6 +29,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -74,6 +75,7 @@ class ProductFormAdd extends AbstractType
     const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
     const VALIDATION_GROUP_SEO = 'validation_group_seo';
     const VALIDATION_GROUP_IMAGE_SET = 'validation_group_image';
+    protected const VALIDATION_GROUP_PRICE_SOURCE = 'validation_group_price_source';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -115,7 +117,9 @@ class ProductFormAdd extends AbstractType
         $resolver->setDefaults([
             'constraints' => new Valid(),
             'required' => false,
-            'validation_groups' => function () use ($validationGroups) {
+            'validation_groups' => function (FormInterface $form) use ($validationGroups) {
+                $validationGroups = $this->prepareDefaultsValidationGroups($validationGroups, $form);
+
                 return $validationGroups;
             },
             'compound' => true,
@@ -138,6 +142,7 @@ class ProductFormAdd extends AbstractType
             static::VALIDATION_GROUP_ATTRIBUTE_SUPER,
             static::VALIDATION_GROUP_SEO,
             static::VALIDATION_GROUP_IMAGE_SET,
+            static::VALIDATION_GROUP_PRICE_SOURCE,
         ];
     }
 
@@ -486,7 +491,9 @@ class ProductFormAdd extends AbstractType
                 ],
                 'entry_type' => ProductMoneyType::class,
                 'constraints' => [
-                    new ProductMoneyNotBlank(),
+                    new ProductMoneyNotBlank([
+                        'groups' => [self::VALIDATION_GROUP_PRICE_SOURCE],
+                    ]),
                 ],
             ]
         );
@@ -677,5 +684,16 @@ class ProductFormAdd extends AbstractType
                 return $value;
             }
         );
+    }
+
+    /**
+     * @param array $validationGroups
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return array
+     */
+    protected function prepareDefaultsValidationGroups(array $validationGroups, FormInterface $form): array
+    {
+        return $validationGroups;
     }
 }

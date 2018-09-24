@@ -10,6 +10,7 @@ require('./main');
 $(document).on('ready', function () {
     $('.super-attribute-checkbox-input').on('change', handleSuperAttributeCheckboxChange);
     $('#sku-autogenerate-checkbox-input').on('change', handleSkuAutogenerateCheckboxChange);
+    $('#price-source-checkbox').on('change', handlePriceSourceCheckboxChange);
 
     initialize();
 });
@@ -20,6 +21,7 @@ function initialize() {
     });
 
     $('#sku-autogenerate-checkbox-input').trigger('change');
+    $('#price-source-checkbox').trigger('change');
 }
 
 function handleSuperAttributeCheckboxChange(e) {
@@ -37,4 +39,8 @@ function handleSuperAttributeCheckboxChange(e) {
 
 function handleSkuAutogenerateCheckboxChange(e) {
     $('#sku-input').prop('disabled', $(e.target).is(':checked'));
+}
+
+function handlePriceSourceCheckboxChange(e) {
+    $('#price-table-collection').toggle(!$(e.target).is(':checked'));
 }
