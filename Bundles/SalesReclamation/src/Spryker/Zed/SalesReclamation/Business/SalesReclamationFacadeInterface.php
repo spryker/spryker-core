@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\SalesReclamation\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
+use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
@@ -27,6 +29,30 @@ interface SalesReclamationFacadeInterface
      * @return null|\Generated\Shared\Transfer\ReclamationTransfer
      */
     public function createReclamation(ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer): ?ReclamationTransfer;
+
+    /**
+     * Specification:
+     * - Update existing sales reclamation entity.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
+     */
+    public function updateReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer;
+
+    /**
+     * Specification:
+     * - Update existing sales reclamation item entity.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
+     */
+    public function updateReclamationItem(ReclamationTransfer $reclamationItemTransfer): ReclamationItemTransfer;
 
     /**
      * Specification:
@@ -56,6 +82,9 @@ interface SalesReclamationFacadeInterface
     public function hydrateReclamationByOrder(OrderTransfer $orderTransfer): ReclamationTransfer;
 
     /**
+     * Specification:
+     * - Get sales order entity by id and save it with reclamation id value.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -64,4 +93,36 @@ interface SalesReclamationFacadeInterface
      * @return void
      */
     public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
+
+    /**
+     * Specification:
+     * - Fetch all reclamations which contain at least one reclamation item.
+     *
+     * @api
+     *
+     * @return \ArrayObject|null
+     */
+    public function getReclamations(): ?ArrayObject;
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer|null
+     */
+    public function getReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ?ReclamationItemTransfer;
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationTransfer|null
+     */
+    public function getReclamationById(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
 }

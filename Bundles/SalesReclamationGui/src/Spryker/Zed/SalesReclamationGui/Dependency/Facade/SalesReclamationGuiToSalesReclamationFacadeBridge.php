@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\SalesReclamationGui\Dependency\Facade;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
+use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
@@ -36,6 +38,26 @@ class SalesReclamationGuiToSalesReclamationFacadeBridge implements SalesReclamat
     public function createReclamation(ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer): ?ReclamationTransfer
     {
         return $this->salesReclamationFacade->createReclamation($reclamationCreateRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
+     */
+    public function updateReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
+    {
+        return $this->salesReclamationFacade->updateReclamation($reclamationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
+     */
+    public function updateReclamationItem(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer
+    {
+        return $this->salesReclamationFacade->updateReclamationItem($reclamationItemTransfer);
     }
 
     /**
@@ -67,5 +89,33 @@ class SalesReclamationGuiToSalesReclamationFacadeBridge implements SalesReclamat
     public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         $this->salesReclamationFacade->saveOrderReclamation($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * @return \ArrayObject|null
+     */
+    public function getReclamations(): ?ArrayObject
+    {
+        return $this->salesReclamationFacade->getReclamations();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer|null
+     */
+    public function getReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ?ReclamationItemTransfer
+    {
+        return $this->salesReclamationFacade->getReclamationItemById($reclamationItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer|null
+     */
+    public function getReclamationById(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
+    {
+        return $this->salesReclamationFacade->getReclamationById($reclamationTransfer);
     }
 }

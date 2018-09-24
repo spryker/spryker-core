@@ -18,4 +18,11 @@ interface ReclamationWriterInterface
      * @return null|\Generated\Shared\Transfer\ReclamationTransfer
      */
     public function createReclamation(ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer): ?ReclamationTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
+     */
+    public function updateReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer;
 }

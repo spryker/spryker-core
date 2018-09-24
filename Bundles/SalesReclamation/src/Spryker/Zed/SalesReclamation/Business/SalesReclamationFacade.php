@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\SalesReclamation\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
+use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -31,8 +33,40 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
     public function createReclamation(ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer): ?ReclamationTransfer
     {
         return $this->getFactory()
-            ->createReclamationCreator()
+            ->createReclamationWriter()
             ->createReclamation($reclamationCreateRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
+     */
+    public function updateReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
+    {
+        return $this->getFactory()
+            ->createReclamationWriter()
+            ->updateReclamation($reclamationTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
+     */
+    public function updateReclamationItem(ReclamationTransfer $reclamationItemTransfer): ReclamationItemTransfer
+    {
+        return $this->getFactory()
+            ->createReclamationItemWriter()
+            ->updateReclamationItem($reclamationItemTransfer);
     }
 
     /**
@@ -68,6 +102,8 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -80,5 +116,45 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
         $this->getFactory()
             ->createReclamationOrderSaver()
             ->saveOrder($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \ArrayObject|null
+     */
+    public function getReclamations(): ?ArrayObject
+    {
+        return $this->getFactory()->createReclamationReader()->findReclamations();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer|null
+     */
+    public function getReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ?ReclamationItemTransfer
+    {
+        return $this->getFactory()->getRepository()->findReclamationItemById($reclamationItemTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationTransfer|null
+     */
+    public function getReclamationById(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
+    {
+        return $this->getFactory()->getRepository()->findReclamationById($reclamationTransfer);
     }
 }

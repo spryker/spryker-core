@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\SalesReclamation\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderCollectionTransfer;
+use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 
 /**
@@ -24,6 +26,13 @@ interface SalesReclamationRepositoryInterface
     public function findReclamationById(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer|null
+     */
+    public function findReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ?ReclamationItemTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
@@ -31,4 +40,9 @@ interface SalesReclamationRepositoryInterface
      * @return \Generated\Shared\Transfer\OrderCollectionTransfer
      */
     public function findCreatedOrdersByReclamationId(ReclamationTransfer $reclamationTransfer): ?OrderCollectionTransfer;
+
+    /**
+     * @return \ArrayObject|null
+     */
+    public function findReclamations(): ?ArrayObject;
 }

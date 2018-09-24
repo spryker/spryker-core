@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SalesReclamationGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
-use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap;
 use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -56,12 +56,14 @@ class DetailController extends AbstractController
     {
         $idReclamation = $this->castId($request->get(SalesReclamationGuiConfig::PARAM_ID_RECLAMATION));
 
-        $reclamation = $this->getFactory()
-            ->getSalesReclamationQueryContainer()
-            ->queryReclamations()
-            ->findOneByIdSalesReclamation($idReclamation);
+        $reclamationTransfer = new ReclamationTransfer();
+        $reclamationTransfer->setIdSalesReclamation($idReclamation);
 
-        if (!$reclamation->getIdSalesReclamation()) {
+        $reclamationTransfer = $this->getFactory()
+            ->getSalesReclamationFacade()
+            ->getReclamationById($reclamationTransfer);
+
+        if (!$reclamationTransfer->getIdSalesReclamation()) {
             $this->addErrorMessage(sprintf('Reclamation with id %s not exists', $idReclamation));
 
             return $this->redirectResponse(
@@ -71,8 +73,10 @@ class DetailController extends AbstractController
             );
         }
 
-        $reclamation->setState(SpySalesReclamationTableMap::COL_STATE_CLOSE);
-        $reclamation->save();
+        $reclamationTransfer->setState(SpySalesReclamationTableMap::COL_STATE_CLOSE);
+        $this->getFactory()
+            ->getSalesReclamationFacade()
+            ->updateReclamation($reclamationTransfer);
 
         $this->addSuccessMessage(sprintf('Reclamation with id %s closed', $idReclamation));
 
@@ -93,12 +97,14 @@ class DetailController extends AbstractController
         $idReclamation = $this->castId($request->get(SalesReclamationGuiConfig::PARAM_ID_RECLAMATION));
         $idReclamationItem = $this->castId($request->get(SalesReclamationGuiConfig::PARAM_ID_RECLAMATION_ITEM));
 
-        $reclamationItem = $this->getFactory()
-            ->getSalesReclamationQueryContainer()
-            ->queryReclamationItems()
-            ->findOneByIdSalesReclamationItem($idReclamationItem);
+        $reclamationItemTransfer = new ReclamationItemTransfer();
+        $reclamationItemTransfer->setIdSalesReclamationItem($idReclamationItem);
 
-        if (!$reclamationItem->getIdSalesReclamationItem()) {
+        $reclamationItemTransfer = $this->getFactory()
+            ->getSalesReclamationFacade()
+            ->getReclamationItemById($reclamationItemTransfer);
+
+        if (!$reclamationItemTransfer->getIdSalesReclamationItem()) {
             $this->addErrorMessage(sprintf('Reclamation item with id %s not exists', $idReclamationItem));
 
             return $this->redirectResponse(
@@ -107,7 +113,8 @@ class DetailController extends AbstractController
                 )->build()
             );
         }
-        if ($reclamationItem->getFkSalesReclamation() !== $idReclamation) {
+
+        if ($reclamationItemTransfer->getFkSalesReclamation() !== $idReclamation) {
             $this->addErrorMessage(sprintf(
                 'Reclamation with id %s not own this item %s',
                 $idReclamation,
@@ -121,8 +128,9 @@ class DetailController extends AbstractController
             );
         }
 
-        $reclamationItem->setState(SpySalesReclamationItemTableMap::COL_STATE_REFUNDED);
-        $reclamationItem->save();
+        $this->getFactory()
+            ->getSalesReclamationFacade()
+            ->updateReclamationItem($reclamationItemTransfer);
 
         $this->addSuccessMessage('Reclamation item refunded');
 

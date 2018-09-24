@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReclamation\Persistence;
 
+use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 
 /**
@@ -20,6 +21,13 @@ interface SalesReclamationEntityManagerInterface
      * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
     public function saveReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
+     */
+    public function saveReclamationItem(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer

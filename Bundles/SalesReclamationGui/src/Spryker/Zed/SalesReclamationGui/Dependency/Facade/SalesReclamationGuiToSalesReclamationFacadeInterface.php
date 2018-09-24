@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\SalesReclamationGui\Dependency\Facade;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
+use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
@@ -21,6 +23,20 @@ interface SalesReclamationGuiToSalesReclamationFacadeInterface
      * @return \Generated\Shared\Transfer\ReclamationTransfer|null
      */
     public function createReclamation(ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer): ?ReclamationTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
+     */
+    public function updateReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
+     */
+    public function updateReclamationItem(ReclamationItemTransfer $reclamationItemTransfer): ReclamationItemTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -43,4 +59,23 @@ interface SalesReclamationGuiToSalesReclamationFacadeInterface
      * @return void
      */
     public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
+
+    /**
+     * @return \ArrayObject|null
+     */
+    public function getReclamations(): ?ArrayObject;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationItemTransfer $reclamationItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer|null
+     */
+    public function getReclamationItemById(ReclamationItemTransfer $reclamationItemTransfer): ?ReclamationItemTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer|null
+     */
+    public function getReclamationById(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
 }

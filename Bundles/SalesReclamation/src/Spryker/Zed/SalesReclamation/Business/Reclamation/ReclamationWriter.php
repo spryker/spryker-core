@@ -83,6 +83,18 @@ class ReclamationWriter implements ReclamationWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
+     */
+    public function updateReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
+    {
+        $reclamationTransfer->requireIdSalesReclamation();
+
+        return $this->salesReclamationEntityManager->saveReclamation($reclamationTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationItemTransfer
