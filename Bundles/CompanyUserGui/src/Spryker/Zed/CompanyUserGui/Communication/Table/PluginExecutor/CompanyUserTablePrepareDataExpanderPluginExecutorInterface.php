@@ -14,5 +14,5 @@ interface CompanyUserTablePrepareDataExpanderPluginExecutorInterface
      *
      * @return array
      */
-    public function executeCompanyUserTablePrepareDataExpanderPlugins(array $companyUserDataItem): array;
+    public function executePrepareDataExpanderPlugins(array $companyUserDataItem): array;
 }

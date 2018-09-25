@@ -90,9 +90,7 @@ class CompanyUserTable extends AbstractTable
             static::COL_COMPANY_USER_ACTIONS,
         ]);
 
-        $config = $this->companyUserTableConfigExpanderPluginExecutor->executeCompanyUserTableConfigExpanderPlugins(
-            $config
-        );
+        $config = $this->companyUserTableConfigExpanderPluginExecutor->executeConfigExpanderPlugins($config);
 
         return $config;
     }
@@ -119,7 +117,7 @@ class CompanyUserTable extends AbstractTable
                 static::COL_COMPANY_USER_ACTIONS => $this->buildLinks($companyUserDataItem),
             ];
 
-            $companyUserDataTableRow += $this->companyUserTablePrepareDataExpanderPluginExecutor->executeCompanyUserTablePrepareDataExpanderPlugins(
+            $companyUserDataTableRow += $this->companyUserTablePrepareDataExpanderPluginExecutor->executePrepareDataExpanderPlugins(
                 $companyUserDataItem
             );
 

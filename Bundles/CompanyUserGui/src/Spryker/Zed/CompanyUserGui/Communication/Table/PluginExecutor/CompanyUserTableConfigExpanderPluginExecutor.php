@@ -29,10 +29,10 @@ class CompanyUserTableConfigExpanderPluginExecutor implements CompanyUserTableCo
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    public function executeCompanyUserTableConfigExpanderPlugins(TableConfiguration $config): TableConfiguration
+    public function executeConfigExpanderPlugins(TableConfiguration $config): TableConfiguration
     {
         foreach ($this->companyUserTableConfigExpanderPlugins as $companyUserTableConfigExpanderPlugin) {
-            $config = $companyUserTableConfigExpanderPlugin->execute($config);
+            $config = $companyUserTableConfigExpanderPlugin->expandConfig($config);
         }
 
         return $config;

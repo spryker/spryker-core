@@ -16,5 +16,5 @@ interface CompanyUserTableConfigExpanderPluginExecutorInterface
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    public function executeCompanyUserTableConfigExpanderPlugins(TableConfiguration $config): TableConfiguration;
+    public function executeConfigExpanderPlugins(TableConfiguration $config): TableConfiguration;
 }

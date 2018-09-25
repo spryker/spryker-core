@@ -27,10 +27,10 @@ class CompanyUserTablePrepareDataExpanderPluginExecutor implements CompanyUserTa
      *
      * @return array
      */
-    public function executeCompanyUserTablePrepareDataExpanderPlugins(array $companyUserDataItem): array
+    public function executePrepareDataExpanderPlugins(array $companyUserDataItem): array
     {
         foreach ($this->companyUserTablePrepareDataExpanderPlugins as $companyUserTablePrepareDataExpanderPlugin) {
-            $companyUserDataItem = $companyUserTablePrepareDataExpanderPlugin->execute($companyUserDataItem);
+            $companyUserDataItem = $companyUserTablePrepareDataExpanderPlugin->expandDataItem($companyUserDataItem);
         }
 
         return $companyUserDataItem;
