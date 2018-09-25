@@ -7,18 +7,21 @@
 
 namespace Spryker\Yves\Kernel\Widget;
 
-use ArrayAccess;
-use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
+use Spryker\Shared\Kernel\Communication\Application;
+use Spryker\Yves\Kernel\BundleConfigResolverAwareTrait;
+use Spryker\Yves\Kernel\ClientResolverAwareTrait;
+use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
 use Spryker\Yves\Kernel\Exception\MissingWidgetPluginException;
 use Spryker\Yves\Kernel\Exception\ReadOnlyException;
+use Spryker\Yves\Kernel\FactoryResolverAwareTrait;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 
-/**
- * @deprecated Use \Spryker\Yves\Kernel\Widget\AbstractWidget instead.
- */
-abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPluginInterface, ArrayAccess
+abstract class AbstractWidget implements WidgetInterface
 {
     use WidgetContainerAwareTrait;
+    use FactoryResolverAwareTrait;
+    use ClientResolverAwareTrait;
+    use BundleConfigResolverAwareTrait;
 
     /**
      * @var array
@@ -60,7 +63,7 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
      *
      * @return $this
      */
-    protected function addParameter(string $name, $value)
+    protected function addParameter(string $name, $value): self
     {
         $this->parameters[$name] = $value;
 
@@ -68,17 +71,25 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
     }
 
     /**
-     * @param mixed $offset
+     * @return array
+     */
+    public function getParameters(): array
+    {
+        return $this->parameters;
+    }
+
+    /**
+     * @param string $offset
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->parameters[$offset]) || array_key_exists($offset, $this->parameters);
     }
 
     /**
-     * @param mixed $offset
+     * @param string $offset
      *
      * @return mixed
      */
@@ -88,27 +99,43 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
     }
 
     /**
-     * @param mixed $offset
+     * @param string $offset
      * @param mixed $value
      *
      * @throws \Spryker\Yves\Kernel\Exception\ReadOnlyException
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         throw new ReadOnlyException('This is a read only object.');
     }
 
     /**
-     * @param mixed $offset
+     * @param string $offset
      *
      * @throws \Spryker\Yves\Kernel\Exception\ReadOnlyException
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new ReadOnlyException('This is a read only object.');
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Communication\Application
+     */
+    protected function getApplication(): Application
+    {
+        return (new Pimple())->getApplication();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLocale(): string
+    {
+        return $this->getApplication()['locale'];
     }
 }
