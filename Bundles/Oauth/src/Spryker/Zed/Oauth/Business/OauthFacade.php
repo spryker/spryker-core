@@ -78,4 +78,32 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     {
         return $this->getFactory()->createOauthClientWriter()->save($oauthClientTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthClientTransfer|null
+     */
+    public function findClientByIdentifier(OauthClientTransfer $oauthClientTransfer): ?OauthClientTransfer
+    {
+        return $this->getFactory()->createOauthClientReader()->findClientByIdentifier($oauthClientTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthScopeTransfer $oauthScopeTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer|null
+     */
+    public function findScopeByIdentifier(OauthScopeTransfer $oauthScopeTransfer): ?OauthScopeTransfer
+    {
+        return $this->getFactory()->createOauthScopeReader()->findScopeByIdentifier($oauthScopeTransfer);
+    }
 }

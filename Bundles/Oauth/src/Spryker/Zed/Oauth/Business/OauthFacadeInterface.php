@@ -70,4 +70,28 @@ interface OauthFacadeInterface
      * @return \Generated\Shared\Transfer\OauthClientTransfer
      */
     public function saveClient(OauthClientTransfer $oauthClientTransfer): OauthClientTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves a oauth scope using the identifier within the provided transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthScopeTransfer $oauthScopeTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer|null
+     */
+    public function findScopeByIdentifier(OauthScopeTransfer $oauthScopeTransfer): ?OauthScopeTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves a oauth client using the identifier within the provided transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthClientTransfer|null
+     */
+    public function findClientByIdentifier(OauthClientTransfer $oauthClientTransfer): ?OauthClientTransfer;
 }

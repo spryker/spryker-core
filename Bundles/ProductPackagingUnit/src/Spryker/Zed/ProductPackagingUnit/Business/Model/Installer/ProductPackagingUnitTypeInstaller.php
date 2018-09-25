@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Installer;
 
+use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitEntityManagerInterface;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig;
 
@@ -26,15 +28,23 @@ class ProductPackagingUnitTypeInstaller implements ProductPackagingUnitTypeInsta
     protected $config;
 
     /**
+     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeReaderInterface
+     */
+    protected $reader;
+
+    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitEntityManagerInterface $entityManager
      * @param \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig $config
+     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeReaderInterface $reader
      */
     public function __construct(
         ProductPackagingUnitEntityManagerInterface $entityManager,
-        ProductPackagingUnitConfig $config
+        ProductPackagingUnitConfig $config,
+        ProductPackagingUnitTypeReaderInterface $reader
     ) {
         $this->entityManager = $entityManager;
         $this->config = $config;
+        $this->reader = $reader;
     }
 
     /**
@@ -55,7 +65,20 @@ class ProductPackagingUnitTypeInstaller implements ProductPackagingUnitTypeInsta
         $productInfrastructuralPackagingUnitTypes = $this->config->getInfrastructuralPackagingUnitTypes();
 
         foreach ($productInfrastructuralPackagingUnitTypes as $productInfrastructuralPackagingUnitTypeTransfer) {
-            $this->entityManager->saveProductPackagingUnitType($productInfrastructuralPackagingUnitTypeTransfer);
+            if (!$this->isExistProductPackagingUnitType($productInfrastructuralPackagingUnitTypeTransfer)) {
+                $this->entityManager->saveProductPackagingUnitType($productInfrastructuralPackagingUnitTypeTransfer);
+            }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return bool
+     */
+    protected function isExistProductPackagingUnitType(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): bool {
+        return $this->reader->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer) !== null;
     }
 }

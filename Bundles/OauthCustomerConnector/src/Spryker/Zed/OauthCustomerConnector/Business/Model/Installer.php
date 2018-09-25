@@ -44,7 +44,10 @@ class Installer implements InstallerInterface
         foreach ($this->oauthCustomerConnectorConfig->getCustomerScopes() as $scope) {
             $oauthScopeTransfer = new OauthScopeTransfer();
             $oauthScopeTransfer->setIdentifier($scope);
-            $this->oauthFacade->saveScope($oauthScopeTransfer);
+
+            if (!$this->isExistOauthScope($oauthScopeTransfer)) {
+                $this->oauthFacade->saveScope($oauthScopeTransfer);
+            }
         }
 
         $oauthClientTransfer = new OauthClientTransfer();
@@ -52,12 +55,34 @@ class Installer implements InstallerInterface
             $this->oauthCustomerConnectorConfig->getClientId()
         );
 
-        $oauthClientTransfer->setSecret(
-            password_hash($this->oauthCustomerConnectorConfig->getClientSecret(), PASSWORD_BCRYPT)
-        );
-        $oauthClientTransfer->setIsConfidential(true);
-        $oauthClientTransfer->setName('Customer client');
+        if (!$this->isExistOauthClient($oauthClientTransfer)) {
+            $oauthClientTransfer->setSecret(
+                password_hash($this->oauthCustomerConnectorConfig->getClientSecret(), PASSWORD_BCRYPT)
+            );
+            $oauthClientTransfer->setIsConfidential(true);
+            $oauthClientTransfer->setName('Customer client');
 
-        $this->oauthFacade->saveClient($oauthClientTransfer);
+            $this->oauthFacade->saveClient($oauthClientTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthScopeTransfer $oauthScopeTransfer
+     *
+     * @return bool
+     */
+    protected function isExistOauthScope(OauthScopeTransfer $oauthScopeTransfer): bool
+    {
+        return $this->oauthFacade->findScopeByIdentifier($oauthScopeTransfer) !== null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
+     *
+     * @return bool
+     */
+    protected function isExistOauthClient(OauthClientTransfer $oauthClientTransfer): bool
+    {
+        return $this->oauthFacade->findClientByIdentifier($oauthClientTransfer) !== null;
     }
 }
