@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 
 interface SalesReclamationFacadeInterface
 {
@@ -83,16 +84,19 @@ interface SalesReclamationFacadeInterface
 
     /**
      * Specification:
-     * - Get sales order entity by id and save it with reclamation id value.
+     * - TODO
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
+    public function expandSalesOrderEntity(
+        SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer,
+        QuoteTransfer $quoteTransfer
+    ): SpySalesOrderEntityTransfer;
 
     /**
      * Specification:

@@ -81,17 +81,6 @@ class SalesReclamationGuiToSalesReclamationFacadeBridge implements SalesReclamat
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     *
-     * @return void
-     */
-    public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
-    {
-        $this->salesReclamationFacade->saveOrderReclamation($quoteTransfer, $saveOrderTransfer);
-    }
-
-    /**
      * @return \ArrayObject|null
      */
     public function getReclamations(): ?ArrayObject

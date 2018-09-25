@@ -74,6 +74,7 @@ class ReclamationWriter implements ReclamationWriterInterface
         $orderItemsTransfer = $reclamationCreateRequestTransfer->getOrderItems();
         foreach ($orderItemsTransfer as $orderItemTransfer) {
             $reclamationItemTransfer = $this->addReclamationItem($orderItemTransfer);
+            $reclamationItemTransfer->setFkSalesReclamation($reclamationTransfer->getIdSalesReclamation());
             $reclamationTransfer->addReclamationItem($reclamationItemTransfer);
         }
 

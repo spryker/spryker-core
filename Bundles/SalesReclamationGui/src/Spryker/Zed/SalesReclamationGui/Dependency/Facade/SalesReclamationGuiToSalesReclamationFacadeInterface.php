@@ -53,14 +53,6 @@ interface SalesReclamationGuiToSalesReclamationFacadeInterface
     public function hydrateReclamationByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     *
-     * @return void
-     */
-    public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
-
-    /**
      * @return \ArrayObject|null
      */
     public function getReclamations(): ?ArrayObject;

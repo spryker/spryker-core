@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -102,20 +103,23 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
     }
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - TODO
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
-    {
-        $this->getFactory()
-            ->createReclamationOrderSaver()
-            ->saveOrder($quoteTransfer, $saveOrderTransfer);
+    public function expandSalesOrderEntity(
+        SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer,
+        QuoteTransfer $quoteTransfer
+    ): SpySalesOrderEntityTransfer {
+        return $this->getFactory()
+            ->createReclamationOrderExpander()
+            ->expandSalesOrderEntity($spySalesOrderEntityTransfer, $quoteTransfer);
     }
 
     /**
