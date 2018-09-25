@@ -20,13 +20,11 @@ use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
@@ -157,10 +155,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         try {
             $response = $this->sendRequest($request, $requestTransfer, $requestOptions);
         } catch (GuzzleRequestException $e) {
-            $symfonyRequest = SymfonyRequest::createFromGlobals();
-            $hostName = $symfonyRequest->server->get(static::SERVER_HTTP_HOST);
-            $configuredHostName = $request->getUri()->getHost();
-            $message = sprintf(static::HOST_NAME_ERROR, $hostName, $configuredHostName, Store::getInstance()->getStoreName());
+            $message = '';
             $response = $e->getResponse();
             if ($response) {
                 $message .= PHP_EOL . PHP_EOL . $response->getBody();
