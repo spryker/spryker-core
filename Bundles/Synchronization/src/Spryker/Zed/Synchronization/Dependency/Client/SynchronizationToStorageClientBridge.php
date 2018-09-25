@@ -53,4 +53,24 @@ class SynchronizationToStorageClientBridge implements SynchronizationToStorageCl
     {
         $this->storageClient->delete($key);
     }
+
+    /**
+     * @param array $items
+     *
+     * @return void
+     */
+    public function setMulti(array $items)
+    {
+        $this->storageClient->setMulti($items);
+    }
+
+    /**
+     * @param array $keys
+     *
+     * @return void
+     */
+    public function deleteMulti(array $keys)
+    {
+        $this->storageClient->deleteMulti($keys);
+    }
 }

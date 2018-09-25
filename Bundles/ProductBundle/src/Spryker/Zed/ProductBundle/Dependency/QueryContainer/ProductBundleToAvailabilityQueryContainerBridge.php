@@ -26,7 +26,7 @@ class ProductBundleToAvailabilityQueryContainerBridge implements ProductBundleTo
      * @param string $sku
      * @param int $idStore
      *
-     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery
      */
     public function querySpyAvailabilityBySku($sku, $idStore)
     {

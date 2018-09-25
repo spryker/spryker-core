@@ -1,0 +1,25 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Plugins used in Projects DependencyProvider' } %}
+        {% block widget_content %}
+            <div class="spy-layout sparse">
+                <p><a href="/development/dependency-provider-plugin-usage/all/">List all used plugins</a> | <a href="/development/dependency-provider-plugin-usage/download-csv/">Download CSV</a></p>
+            </div>
+
+            <div class="spy-layout sparse">
+                <table class="table-condensed table-hover table-striped">
+                    {% for organizationModuleKey, modules in projectModules %}
+                    {% set organizationModuleFragments = organizationModuleKey | split('.') %}
+                    <tr>
+                        <td>{{ organizationModuleKey }}</td>
+                        <td><a href="/development/dependency-provider-plugin-usage/details?organization={{ organizationModuleFragments[0] }}&module={{ organizationModuleFragments[1] }}">show all used plugins</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

@@ -22,7 +22,7 @@ interface ProductBundlePriceCalculationInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem $salesOrderItemEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
      * @param \Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
      *
      * @return array
