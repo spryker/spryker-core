@@ -9,7 +9,7 @@ require('ZedGui');
 
 const parentField = require('./parent-field');
 
-$(document).ready( function () {
+window.onload = function() {
     parentField.initialize();
-});
+};
 

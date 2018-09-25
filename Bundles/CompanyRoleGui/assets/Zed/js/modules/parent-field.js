@@ -14,7 +14,7 @@ const companyFieldPath = 'select#company-user_fk_company';
  * @see \Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleChoiceFormType
  * @type {string}
  */
-const roleFieldPath = 'company-role_company_role_collection';
+const roleFieldPath = 'company-user_company_role_collection';
 /**
  * @see \Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleFormDataProvider::OPTION_ATTRIBUTE_DATA
  * @type {string}
