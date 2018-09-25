@@ -55,24 +55,32 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     protected $messengerFacade;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface
+     */
+    protected $shoppingListItemOperation;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\ShoppingListConfig $shoppingListConfig
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface $messengerFacade
+     * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface $shoppingListItemOperation
      */
     public function __construct(
         ShoppingListEntityManagerInterface $shoppingListEntityManager,
         ShoppingListToProductFacadeInterface $productFacade,
         ShoppingListRepositoryInterface $shoppingListRepository,
         ShoppingListConfig $shoppingListConfig,
-        ShoppingListToMessengerFacadeInterface $messengerFacade
+        ShoppingListToMessengerFacadeInterface $messengerFacade,
+        ShoppingListItemOperationInterface $shoppingListItemOperation
     ) {
         $this->shoppingListEntityManager = $shoppingListEntityManager;
         $this->productFacade = $productFacade;
         $this->shoppingListRepository = $shoppingListRepository;
         $this->shoppingListConfig = $shoppingListConfig;
         $this->messengerFacade = $messengerFacade;
+        $this->shoppingListItemOperation = $shoppingListItemOperation;
     }
 
     /**
@@ -130,7 +138,29 @@ class ShoppingListWriter implements ShoppingListWriterInterface
      */
     public function saveShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
-        return $this->shoppingListEntityManager->saveShoppingList($shoppingListTransfer);
+        return $this->getTransactionHandler()->handleTransaction(
+            function () use ($shoppingListTransfer) {
+                return $this->executeSaveShoppingListTransaction($shoppingListTransfer);
+            }
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function clearShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
+
+        if (!$shoppingListTransfer || !$this->checkWritePermission($shoppingListTransfer)) {
+            return (new ShoppingListResponseTransfer())->setIsSuccess(false);
+        }
+
+        $this->shoppingListItemOperation->deleteShoppingListItems($shoppingListTransfer);
+
+        return (new ShoppingListResponseTransfer())->setIsSuccess(true);
     }
 
     /**
@@ -201,11 +231,31 @@ class ShoppingListWriter implements ShoppingListWriterInterface
      */
     protected function executeRemoveShoppingListTransaction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        $this->shoppingListEntityManager->deleteShoppingListItems($shoppingListTransfer);
+        $this->shoppingListItemOperation->deleteShoppingListItems($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListCompanyUsers($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnits($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListByName($shoppingListTransfer);
 
         return (new ShoppingListResponseTransfer())->setIsSuccess(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function executeSaveShoppingListTransaction(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
+    {
+        $shoppingListTransfer = $this->shoppingListEntityManager->saveShoppingList($shoppingListTransfer);
+
+        if (!$shoppingListTransfer->getItems()->count()) {
+            return $shoppingListTransfer;
+        }
+
+        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
+            $this->shoppingListItemOperation->saveShoppingListItemWithoutPermissionsCheck($shoppingListItemTransfer);
+        }
+
+        return $shoppingListTransfer;
     }
 }
