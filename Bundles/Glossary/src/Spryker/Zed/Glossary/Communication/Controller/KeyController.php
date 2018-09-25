@@ -72,7 +72,7 @@ class KeyController extends AbstractController
             ->queryByKey($term)->find();
 
         $result = [];
-        if ($keys) {
+        if ($keys->count()) {
             $keys = $keys->toArray(null, false, TableMap::TYPE_COLNAME);
 
             foreach ($keys as $value) {
