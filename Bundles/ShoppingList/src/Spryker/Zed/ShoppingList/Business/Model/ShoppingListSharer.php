@@ -189,7 +189,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer,
         array $sharedShoppingListCompanyUserIds
     ): void {
-        if (!$this->checkBeforeUpdateShippingListCompanyUser($shoppingListCompanyUserTransfer, $sharedShoppingListCompanyUserIds)) {
+        if (!$this->checkExistingBeforeUpdateCompanyUser($shoppingListCompanyUserTransfer, $sharedShoppingListCompanyUserIds)) {
             return;
         }
 
@@ -207,7 +207,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
      *
      * @return bool
      */
-    protected function checkBeforeUpdateShippingListCompanyUser(
+    protected function checkExistingBeforeUpdateCompanyUser(
         ShoppingListCompanyUserTransfer $shoppingListCompanyUserTransfer,
         array $sharedShoppingListCompanyUserIds
     ): bool {
@@ -236,7 +236,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer,
         array $sharedShoppingListCompanyBusinessUnitIds
     ): void {
-        if (!$this->checkBeforeUpdateShippingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer, $sharedShoppingListCompanyBusinessUnitIds)) {
+        if (!$this->checkExistingBeforeUpdateCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer, $sharedShoppingListCompanyBusinessUnitIds)) {
             return;
         }
 
@@ -254,7 +254,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
      *
      * @return bool
      */
-    protected function checkBeforeUpdateShippingListCompanyBusinessUnit(
+    protected function checkExistingBeforeUpdateCompanyBusinessUnit(
         ShoppingListCompanyBusinessUnitTransfer $shoppingListCompanyBusinessUnitTransfer,
         array $sharedShoppingListCompanyBusinessUnitIds
     ): bool {
