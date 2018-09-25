@@ -9,8 +9,6 @@ namespace SprykerTest\Zed\Company\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyBuilder;
-use Generated\Shared\DataBuilder\CompanyResponseBuilder;
-use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -48,16 +46,6 @@ class CompanyHelper extends Module
         $companyTransfer->setIdCompany(null);
 
         return $this->getLocator()->company()->facade()->create($companyTransfer)->getCompanyTransfer();
-    }
-
-    /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
-     */
-    public function haveCompanyResponse(array $seedData = []): CompanyResponseTransfer
-    {
-        return (new CompanyResponseBuilder($seedData))->build();
     }
 
     /**

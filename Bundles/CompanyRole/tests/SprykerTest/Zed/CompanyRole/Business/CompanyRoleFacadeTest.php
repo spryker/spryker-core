@@ -74,10 +74,9 @@ class CompanyRoleFacadeTest extends Test
     {
         // Prepare
         $companyTransfer = $this->tester->haveCompany();
-        $companyResponseTransfer = $this->tester->haveCompanyResponse([
-            CompanyResponseTransfer::COMPANY_TRANSFER => $companyTransfer,
-            CompanyResponseTransfer::IS_SUCCESSFUL => true,
-        ]);
+        $companyResponseTransfer = (new CompanyResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setCompanyTransfer($companyTransfer);
 
         // Action
         $companyResponseTransfer = $this->getFacade()->createByCompany($companyResponseTransfer);
