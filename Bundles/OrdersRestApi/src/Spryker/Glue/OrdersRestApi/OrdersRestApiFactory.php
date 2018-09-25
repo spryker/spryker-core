@@ -19,19 +19,19 @@ class OrdersRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\OrdersRestApi\Processor\Order\OrderReaderInterface
      */
-    public function createOrdersReader(): OrderReaderInterface
+    public function createOrderReader(): OrderReaderInterface
     {
         return new OrderReader(
             $this->getSalesClient(),
             $this->getResourceBuilder(),
-            $this->createOrdersResourceMapper()
+            $this->createOrderResourceMapper()
         );
     }
 
     /**
      * @return \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface
      */
-    public function createOrdersResourceMapper(): OrderResourceMapperInterface
+    public function createOrderResourceMapper(): OrderResourceMapperInterface
     {
         return new OrderResourceMapper();
     }
