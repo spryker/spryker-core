@@ -25,8 +25,6 @@ class CompanyRoleChoiceFormType extends AbstractType
 
     public const FIELD_COMPANY_ROLE_COLLECTION = 'company_role_collection';
 
-    protected const TEMPLATE_PATH = '@CompanyRoleGui/Presentation/CompanyRole/index.twig';
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -70,6 +68,7 @@ class CompanyRoleChoiceFormType extends AbstractType
             'label' => 'Roles',
             'multiple' => true,
             'constraints' => $this->createCompanyRoleCollectionConstraints(),
+            'attr' => ['template_path' => $this->getTemplatePath()],
         ]);
 
         $callbackTransformer = new CallbackTransformer(
@@ -136,5 +135,13 @@ class CompanyRoleChoiceFormType extends AbstractType
 
             return $companyRoleCollectionTransfer;
         };
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplatePath(): string
+    {
+        return '@CompanyRoleGui/CompanyUser/company_role.twig';
     }
 }

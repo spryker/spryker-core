@@ -9,7 +9,7 @@
  * @see \Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleChoiceFormType
  * @type {string}
  */
-const companyFieldPath = 'select#company-role_fk_company';
+const companyFieldPath = 'select#company-user_fk_company';
 /**
  * @see \Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleChoiceFormType
  * @type {string}
