@@ -51,7 +51,7 @@ interface SharedCartRepositoryInterface
     /**
      * @param int $idQuote
      *
-     * @return \Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer[]
+     * @return int[]
      */
     public function findQuoteCompanyUserIdCollection(int $idQuote): array;
 

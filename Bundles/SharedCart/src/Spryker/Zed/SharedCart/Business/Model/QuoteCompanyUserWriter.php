@@ -189,7 +189,7 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShareDetailTransfer[] $shareDetailTransferCollection
-     * @param array $currentQuoteCompanyUserIdCollection
+     * @param int[] $currentQuoteCompanyUserIdCollection
      *
      * @return void
      */

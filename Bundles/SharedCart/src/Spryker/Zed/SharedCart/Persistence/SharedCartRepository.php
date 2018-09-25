@@ -155,7 +155,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param int $idQuote
      *
-     * @return array
+     * @return int[]
      */
     public function findQuoteCompanyUserIdCollection(int $idQuote): array
     {
@@ -301,18 +301,15 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      */
     public function findShareDetailsByQuoteId(int $idQuote): ShareDetailCollectionTransfer
     {
-        $quoteCompanyUserEntities = $this->getFactory()
-            ->createQuoteCompanyUserQuery()
-            ->filterByFkQuote($idQuote)
+        $quoteCompanyUserQuery = $this->getFactory()
+            ->createQuoteCompanyUserQuery();
+        $quoteCompanyUserQuery->filterByFkQuote($idQuote)
             ->joinWithSpyCompanyUser()
             ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)
                 ->joinWithCustomer()
-            ->endUse()
+            ->endUse();
+        $quoteCompanyUserEntities = $quoteCompanyUserQuery
             ->find();
-
-        if (!$quoteCompanyUserEntities) {
-            return new ShareDetailCollectionTransfer();
-        }
 
         return $this->getFactory()
             ->createQuoteShareDetailMapper()
