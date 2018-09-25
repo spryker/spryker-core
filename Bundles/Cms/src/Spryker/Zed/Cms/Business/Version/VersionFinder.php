@@ -88,7 +88,7 @@ class VersionFinder implements VersionFinderInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsVersion $cmsVersionEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsVersion|null $cmsVersionEntity
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */

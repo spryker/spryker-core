@@ -126,4 +126,11 @@
         <property name="sortConfigs" type="SortConfig[]" singular="sortConfig" />
     </transfer>
 
+    <transfer name="SearchDocument">
+        <property name="id" type="string"/>
+        <property name="data" type="array"/>
+        <property name="type" type="string"/>
+        <property name="index" type="string"/>
+    </transfer>
+
 </transfers>

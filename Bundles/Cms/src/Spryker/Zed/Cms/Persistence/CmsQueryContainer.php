@@ -104,7 +104,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     /**
      * @api
      *
-     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPagesWithTemplates()
     {
@@ -460,7 +460,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @param string $categoryName
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Category\Persistence\Base\SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryNodeByCategoryName($categoryName, $idLocale)
     {
