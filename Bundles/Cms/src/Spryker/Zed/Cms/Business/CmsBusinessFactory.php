@@ -72,7 +72,6 @@ class CmsBusinessFactory extends AbstractBusinessFactory
         return new PageManager(
             $this->getQueryContainer(),
             $this->createTemplateManager(),
-            null,
             $this->getGlossaryFacade(),
             $this->getTouchFacade(),
             $this->getUrlFacade()

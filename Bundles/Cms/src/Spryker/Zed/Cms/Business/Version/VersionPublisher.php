@@ -12,11 +12,11 @@ use Orm\Zed\Cms\Persistence\SpyCmsVersion;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class VersionPublisher implements VersionPublisherInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use TransactionTrait;
 
     /**
      * @var \Spryker\Zed\Cms\Business\Version\VersionGeneratorInterface
@@ -106,7 +106,7 @@ class VersionPublisher implements VersionPublisherInterface
      */
     protected function saveAndTouchCmsVersion(string $data, int $idCmsPage, string $versionName, int $versionNumber): CmsVersionTransfer
     {
-        return $this->handleDatabaseTransaction(function () use ($data, $idCmsPage, $versionName, $versionNumber) {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($data, $idCmsPage, $versionName, $versionNumber) {
             return $this->executeSaveAndTouchCmsVersionTransaction($data, $idCmsPage, $versionName, $versionNumber);
         });
     }

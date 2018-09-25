@@ -11,11 +11,11 @@ use Generated\Shared\Transfer\CmsVersionTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class VersionRollback implements VersionRollbackInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use TransactionTrait;
 
     /**
      * @var \Spryker\Zed\Cms\Business\Version\VersionPublisherInterface
@@ -91,7 +91,7 @@ class VersionRollback implements VersionRollbackInterface
      */
     protected function migrateVersions(SpyCmsVersion $originVersionEntity, SpyCmsVersion $targetVersionEntity, int $idCmsPage, int $version): CmsVersionTransfer
     {
-        return $this->handleDatabaseTransaction(function () use ($originVersionEntity, $targetVersionEntity, $idCmsPage, $version) {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($originVersionEntity, $targetVersionEntity, $idCmsPage, $version) {
             return $this->executeMigrateVersion($originVersionEntity, $targetVersionEntity, $idCmsPage, $version);
         });
     }

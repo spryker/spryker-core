@@ -7,9 +7,7 @@
 
 namespace Spryker\Client\Cms;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
-use Spryker\Client\Cms\Storage\CmsBlockStorageInterface;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -17,32 +15,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CmsClient extends AbstractClient implements CmsClientInterface
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @deprecated Use CMS Block module instead
-     *
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return array
-     */
-    public function findBlockByName(CmsBlockTransfer $cmsBlockTransfer): array
-    {
-        return $this->createCmsBlockFinder()->getBlockByName($cmsBlockTransfer);
-    }
-
-    /**
-     * @deprecated Use CMS Block module instead
-     *
-     * @return \Spryker\Client\Cms\Storage\CmsBlockStorageInterface
-     */
-    private function createCmsBlockFinder(): CmsBlockStorageInterface
-    {
-        return $this->getFactory()->createCmsBlockFinder();
-    }
-
     /**
      * {@inheritdoc}
      *

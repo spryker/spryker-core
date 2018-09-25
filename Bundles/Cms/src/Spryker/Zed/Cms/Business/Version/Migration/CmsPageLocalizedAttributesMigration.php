@@ -11,11 +11,11 @@ use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CmsPageLocalizedAttributesMigration implements MigrationInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use TransactionTrait;
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
@@ -45,7 +45,7 @@ class CmsPageLocalizedAttributesMigration implements MigrationInterface
      */
     public function migrate(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer): void
     {
-        $this->handleDatabaseTransaction(function () use ($originVersionDataTransfer, $targetVersionDataTransfer) {
+        $this->getTransactionHandler()->handleTransaction(function () use ($originVersionDataTransfer, $targetVersionDataTransfer) {
             $this->executeMigrateTransaction($originVersionDataTransfer, $targetVersionDataTransfer);
         });
     }

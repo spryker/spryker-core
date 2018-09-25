@@ -23,16 +23,6 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 class CmsGlossaryReader implements CmsGlossaryReaderInterface
 {
     /**
-     * @deprecated Use CmsConfig::getPlaceholderPattern()
-     */
-    const CMS_PLACEHOLDER_PATTERN = '';
-
-    /**
-     * @deprecated Use CmsConfig::getPlaceholderValuePattern()
-     */
-    const CMS_PLACEHOLDER_VALUE_PATTERN = '';
-
-    /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
@@ -93,7 +83,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      */
     protected function getPlaceholderPattern(): string
     {
-        return static::CMS_PLACEHOLDER_PATTERN ?: $this->cmsConfig->getPlaceholderPattern();
+        return $this->cmsConfig->getPlaceholderPattern();
     }
 
     /**
@@ -101,7 +91,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      */
     protected function getPlaceholderValuePattern(): string
     {
-        return static::CMS_PLACEHOLDER_VALUE_PATTERN ?: $this->cmsConfig->getPlaceholderValuePattern();
+        return $this->cmsConfig->getPlaceholderValuePattern();
     }
 
     /**

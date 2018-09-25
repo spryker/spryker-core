@@ -37,13 +37,6 @@ class PageManager implements PageManagerInterface
     protected $templateManager;
 
     /**
-     * @deprecated
-     *
-     * @var mixed
-     */
-    protected $blockManager;
-
-    /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
      */
     protected $glossaryFacade;
@@ -61,16 +54,14 @@ class PageManager implements PageManagerInterface
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface $templateManager
-     * @param mixed $blockManager @deprecated
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface $glossaryFacade
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface $urlFacade
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, $blockManager, CmsToGlossaryInterface $glossaryFacade, CmsToTouchInterface $touchFacade, CmsToUrlInterface $urlFacade)
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, CmsToGlossaryInterface $glossaryFacade, CmsToTouchInterface $touchFacade, CmsToUrlInterface $urlFacade)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->templateManager = $templateManager;
-        $this->blockManager = $blockManager;
         $this->glossaryFacade = $glossaryFacade;
         $this->touchFacade = $touchFacade;
         $this->urlFacade = $urlFacade;

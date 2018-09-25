@@ -33,18 +33,6 @@ class CmsConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated use getTemplateRealPaths() instead
-     *
-     * @param string $templateRelativePath
-     *
-     * @return string
-     */
-    public function getTemplateRealPath(string $templateRelativePath): string
-    {
-        return $this->getAbsolutePath($templateRelativePath, 'Yves');
-    }
-
-    /**
      * @param string $templateRelativePath
      *
      * @return array

@@ -88,19 +88,6 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated use getTemplateRealPaths instead
-     *
-     * @param string $templateRelativePath
-     *
-     * @return string
-     */
-    public function getTemplateRealPath($templateRelativePath)
-    {
-        return $this->getConfig()
-            ->getTemplateRealPath($templateRelativePath);
-    }
-
-    /**
      * @param string $templateRelativePath
      *
      * @return array
