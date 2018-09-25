@@ -18,29 +18,29 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_URL = 'facade_url';
-    const FACADE_LOCALE = 'facade_locale';
-    const FACADE_GLOSSARY = 'facade glossary';
-    const FACADE_TOUCH = 'facade_touch';
-    const QUERY_CONTAINER_URL = 'url_query_container';
-    const QUERY_CONTAINER_GLOSSARY = 'glossary_query_container';
-    const QUERY_CONTAINER_CATEGORY = 'category query container';
-    const QUERY_CONTAINER_LOCALE = 'locale query container';
+    public const FACADE_URL = 'facade_url';
+    public const FACADE_LOCALE = 'facade_locale';
+    public const FACADE_GLOSSARY = 'facade glossary';
+    public const FACADE_TOUCH = 'facade_touch';
+    public const QUERY_CONTAINER_URL = 'url_query_container';
+    public const QUERY_CONTAINER_GLOSSARY = 'glossary_query_container';
+    public const QUERY_CONTAINER_CATEGORY = 'category query container';
+    public const QUERY_CONTAINER_LOCALE = 'locale query container';
 
-    const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
-    const PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS = 'cms version post save plugins';
-    const PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS = 'cms version transfer expander plugins';
-    const PLUGINS_CMS_PAGE_DATA_EXPANDER = 'PLUGINS_CMS_PAGE_DATA_EXPANDER';
-    const PLUGINS_CMS_PAGE_POST_ACTIVATOR = 'PLUGINS_CMS_PAGE_POST_ACTIVATOR';
+    public const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
+    public const PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS = 'cms version post save plugins';
+    public const PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS = 'cms version transfer expander plugins';
+    public const PLUGINS_CMS_PAGE_DATA_EXPANDER = 'PLUGINS_CMS_PAGE_DATA_EXPANDER';
+    public const PLUGINS_CMS_PAGE_POST_ACTIVATOR = 'PLUGINS_CMS_PAGE_POST_ACTIVATOR';
 
-    const SERVICE_UTIL_ENCODING = 'util encoding service';
+    public const SERVICE_UTIL_ENCODING = 'util encoding service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $this->addUrlFacade($container);
         $this->addLocaleFacade($container);
@@ -54,7 +54,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $this->addPropelPluginConnection($container);
         $this->addTouchFacade($container);
@@ -75,7 +75,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function providePersistenceLayerDependencies(Container $container)
+    public function providePersistenceLayerDependencies(Container $container): Container
     {
         $this->addUrlQueryContainer($container);
         $this->addGlossaryQueryContainer($container);
@@ -90,7 +90,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addUrlFacade(Container $container)
+    protected function addUrlFacade(Container $container): void
     {
         $container[self::FACADE_URL] = function (Container $container) {
             return new CmsToUrlBridge($container->getLocator()->url()->facade());
@@ -102,7 +102,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addLocaleFacade(Container $container)
+    protected function addLocaleFacade(Container $container): void
     {
         $container[self::FACADE_LOCALE] = function (Container $container) {
             return new CmsToLocaleBridge($container->getLocator()->locale()->facade());
@@ -114,7 +114,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addGlossaryFacade(Container $container)
+    protected function addGlossaryFacade(Container $container): void
     {
         $container[self::FACADE_GLOSSARY] = function (Container $container) {
             return new CmsToGlossaryBridge($container->getLocator()->glossary()->facade());
@@ -126,7 +126,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addTouchFacade(Container $container)
+    protected function addTouchFacade(Container $container): void
     {
         $container[self::FACADE_TOUCH] = function (Container $container) {
             return new CmsToTouchBridge($container->getLocator()->touch()->facade());
@@ -138,7 +138,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addPropelPluginConnection(Container $container)
+    protected function addPropelPluginConnection(Container $container): void
     {
         $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
             return Propel::getConnection();
@@ -150,7 +150,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addUtilEncodingService(Container $container)
+    protected function addUtilEncodingService(Container $container): void
     {
         $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new CmsToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
@@ -162,7 +162,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addCmsVersionPostSavePlugins(Container $container)
+    protected function addCmsVersionPostSavePlugins(Container $container): void
     {
         $container[self::PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS] = function (Container $container) {
             return $this->getPostSavePlugins($container);
@@ -174,7 +174,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addCmsVersionTransferExpanderPlugins(Container $container)
+    protected function addCmsVersionTransferExpanderPlugins(Container $container): void
     {
         $container[self::PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS] = function (Container $container) {
             return $this->getTransferExpanderPlugins($container);
@@ -186,7 +186,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addCmsPagePostActivatorPlugins(Container $container)
+    protected function addCmsPagePostActivatorPlugins(Container $container): void
     {
         $container[self::PLUGINS_CMS_PAGE_POST_ACTIVATOR] = function (Container $container) {
             return $this->getCmsPagePostActivatorPlugins();
@@ -198,7 +198,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addCmsPageDataExpanderPlugins(Container $container)
+    protected function addCmsPageDataExpanderPlugins(Container $container): void
     {
         $container[static::PLUGINS_CMS_PAGE_DATA_EXPANDER] = function (Container $container) {
             return $this->getCmsPageDataExpanderPlugins();
@@ -210,7 +210,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionPostSavePluginInterface[]
      */
-    protected function getPostSavePlugins(Container $container)
+    protected function getPostSavePlugins(Container $container): array
     {
         return [];
     }
@@ -220,7 +220,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionTransferExpanderPluginInterface[]
      */
-    protected function getTransferExpanderPlugins(Container $container)
+    protected function getTransferExpanderPlugins(Container $container): array
     {
         return [];
     }
@@ -228,7 +228,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
      */
-    protected function getCmsPageDataExpanderPlugins()
+    protected function getCmsPageDataExpanderPlugins(): array
     {
         return [];
     }
@@ -236,7 +236,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface[]
      */
-    protected function getCmsPagePostActivatorPlugins()
+    protected function getCmsPagePostActivatorPlugins(): array
     {
         return [];
     }
@@ -246,7 +246,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addLocaleQueryContainer(Container $container)
+    protected function addLocaleQueryContainer(Container $container): void
     {
         $container[self::QUERY_CONTAINER_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->queryContainer();
@@ -258,7 +258,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addCategoryQueryContainer(Container $container)
+    protected function addCategoryQueryContainer(Container $container): void
     {
         $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
             return $container->getLocator()->category()->queryContainer();
@@ -270,7 +270,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addUrlQueryContainer(Container $container)
+    protected function addUrlQueryContainer(Container $container): void
     {
         $container[self::QUERY_CONTAINER_URL] = function (Container $container) {
             return $container->getLocator()->url()->queryContainer();
@@ -282,7 +282,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addGlossaryQueryContainer(Container $container)
+    protected function addGlossaryQueryContainer(Container $container): void
     {
         $container[self::QUERY_CONTAINER_GLOSSARY] = function (Container $container) {
             return $container->getLocator()->glossary()->queryContainer();

@@ -30,7 +30,7 @@ class CmsStub implements CmsStubInterface
      *
      * @return \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer
      */
-    public function getFlattenedLocaleCmsPageData(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer)
+    public function getFlattenedLocaleCmsPageData(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer): FlattenedLocaleCmsPageDataRequestTransfer
     {
         /** @var \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer */
         $flattenedLocaleCmsPageDataRequestTransfer = $this->zedRequestClient->call('/cms/gateway/get-flattened-locale-cms-page-data', $flattenedLocaleCmsPageDataRequestTransfer);

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 
 class CmsToGlossaryBridge implements CmsToGlossaryInterface
 {
@@ -31,7 +32,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      *
      * @return string
      */
-    public function translateByKeyId($idKey, array $data = [])
+    public function translateByKeyId(int $idKey, array $data = []): string
     {
         return $this->glossaryFacade->translateByKeyId($idKey, $data);
     }
@@ -43,7 +44,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslationForCurrentLocale($keyName, $value, $isActive = true)
+    public function createTranslationForCurrentLocale(string $keyName, string $value, bool $isActive = true): TranslationTransfer
     {
         return $this->glossaryFacade->createTranslationForCurrentLocale($keyName, $value, $isActive);
     }
@@ -56,7 +57,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
+    public function createTranslation(string $keyName, LocaleTransfer $locale, string $value, bool $isActive = true): TranslationTransfer
     {
         return $this->glossaryFacade->createTranslation($keyName, $locale, $value, $isActive);
     }
@@ -69,7 +70,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
+    public function createAndTouchTranslation(string $keyName, LocaleTransfer $locale, string $value, bool $isActive = true): TranslationTransfer
     {
         return $this->glossaryFacade->createAndTouchTranslation($keyName, $locale, $value, $isActive);
     }
@@ -79,7 +80,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      *
      * @return int
      */
-    public function createKey($keyName)
+    public function createKey(string $keyName): int
     {
         return $this->glossaryFacade->createKey($keyName);
     }
@@ -89,7 +90,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      *
      * @return bool
      */
-    public function hasKey($keyName)
+    public function hasKey(string $keyName): bool
     {
         return $this->glossaryFacade->hasKey($keyName);
     }
@@ -99,7 +100,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      *
      * @return int
      */
-    public function getKeyIdentifier($keyName)
+    public function getKeyIdentifier(string $keyName): int
     {
         return $this->glossaryFacade->getKeyIdentifier($keyName);
     }
@@ -109,7 +110,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      *
      * @return void
      */
-    public function touchCurrentTranslationForKeyId($idKey)
+    public function touchCurrentTranslationForKeyId(int $idKey): void
     {
         $this->glossaryFacade->touchCurrentTranslationForKeyId($idKey);
     }
@@ -119,7 +120,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      *
      * @return int
      */
-    public function getOrCreateKey($keyName)
+    public function getOrCreateKey(string $keyName): int
     {
         return $this->glossaryFacade->getOrCreateKey($keyName);
     }
@@ -129,7 +130,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      *
      * @return bool
      */
-    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer)
+    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer): bool
     {
         return $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
     }
@@ -140,7 +141,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      *
      * @return void
      */
-    public function touchTranslationForKeyId($idKey, ?LocaleTransfer $localeTransfer = null)
+    public function touchTranslationForKeyId(int $idKey, ?LocaleTransfer $localeTransfer = null): void
     {
         $this->glossaryFacade->touchTranslationForKeyId($idKey, $localeTransfer);
     }
@@ -150,7 +151,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      *
      * @return void
      */
-    public function deleteTranslationsByFkKeys(array $idKeys)
+    public function deleteTranslationsByFkKeys(array $idKeys): void
     {
         $this->glossaryFacade->deleteTranslationsByFkKeys($idKeys);
     }
@@ -160,7 +161,7 @@ class CmsToGlossaryBridge implements CmsToGlossaryInterface
      *
      * @return void
      */
-    public function deleteKeys(array $idKeys)
+    public function deleteKeys(array $idKeys): void
     {
         $this->glossaryFacade->deleteKeys($idKeys);
     }

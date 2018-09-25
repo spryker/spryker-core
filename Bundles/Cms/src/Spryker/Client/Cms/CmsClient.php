@@ -9,6 +9,7 @@ namespace Spryker\Client\Cms;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
+use Spryker\Client\Cms\Storage\CmsBlockStorageInterface;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -27,7 +28,7 @@ class CmsClient extends AbstractClient implements CmsClientInterface
      *
      * @return array
      */
-    public function findBlockByName(CmsBlockTransfer $cmsBlockTransfer)
+    public function findBlockByName(CmsBlockTransfer $cmsBlockTransfer): array
     {
         return $this->createCmsBlockFinder()->getBlockByName($cmsBlockTransfer);
     }
@@ -37,7 +38,7 @@ class CmsClient extends AbstractClient implements CmsClientInterface
      *
      * @return \Spryker\Client\Cms\Storage\CmsBlockStorageInterface
      */
-    private function createCmsBlockFinder()
+    private function createCmsBlockFinder(): CmsBlockStorageInterface
     {
         return $this->getFactory()->createCmsBlockFinder();
     }
@@ -51,7 +52,7 @@ class CmsClient extends AbstractClient implements CmsClientInterface
      *
      * @return \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer
      */
-    public function getFlattenedLocaleCmsPageData(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer)
+    public function getFlattenedLocaleCmsPageData(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer): FlattenedLocaleCmsPageDataRequestTransfer
     {
         return $this->getFactory()->createCmsStub()->getFlattenedLocaleCmsPageData($flattenedLocaleCmsPageDataRequestTransfer);
     }

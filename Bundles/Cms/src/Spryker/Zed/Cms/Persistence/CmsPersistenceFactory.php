@@ -15,6 +15,7 @@ use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 
 /**
  * @method \Spryker\Zed\Cms\CmsConfig getConfig()
@@ -25,7 +26,7 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
-    public function createCmsTemplateQuery()
+    public function createCmsTemplateQuery(): SpyCmsTemplateQuery
     {
         return SpyCmsTemplateQuery::create();
     }
@@ -33,7 +34,7 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    public function createCmsPageQuery()
+    public function createCmsPageQuery(): SpyCmsPageQuery
     {
         return SpyCmsPageQuery::create();
     }
@@ -41,7 +42,7 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
-    public function createCmsGlossaryKeyMappingQuery()
+    public function createCmsGlossaryKeyMappingQuery(): SpyCmsGlossaryKeyMappingQuery
     {
         return SpyCmsGlossaryKeyMappingQuery::create();
     }
@@ -49,7 +50,7 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
      */
-    public function createLocaleQuery()
+    public function createLocaleQuery(): LocaleQueryContainerInterface
     {
         return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_LOCALE);
     }
@@ -57,7 +58,7 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
      */
-    public function createCmsPageLocalizedAttributesQuery()
+    public function createCmsPageLocalizedAttributesQuery(): SpyCmsPageLocalizedAttributesQuery
     {
         return SpyCmsPageLocalizedAttributesQuery::create();
     }
@@ -65,7 +66,7 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
-    public function createSpyCmsVersionQuery()
+    public function createSpyCmsVersionQuery(): SpyCmsVersionQuery
     {
         return SpyCmsVersionQuery::create();
     }
@@ -73,7 +74,7 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    public function createUrlQuery()
+    public function createUrlQuery(): SpyUrlQuery
     {
         return SpyUrlQuery::create();
     }

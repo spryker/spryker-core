@@ -12,17 +12,17 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class LocaleCmsPageDataExpander implements LocaleCmsPageDataExpanderInterface
 {
-    const PARAM_URL = 'url';
-    const PARAM_VALID_FROM = 'valid_from';
-    const PARAM_VALID_TO = 'valid_to';
-    const PARAM_IS_ACTIVE = 'is_active';
-    const PARAM_ID = 'id';
-    const PARAM_TEMPLATE = 'template';
-    const PARAM_PLACEHOLDERS = 'placeholders';
-    const PARAM_NAME = 'name';
-    const PARAM_META_TITLE = 'meta_title';
-    const PARAM_META_KEYWORDS = 'meta_keywords';
-    const PARAM_META_DESCRIPTION = 'meta_description';
+    public const PARAM_URL = 'url';
+    public const PARAM_VALID_FROM = 'valid_from';
+    public const PARAM_VALID_TO = 'valid_to';
+    public const PARAM_IS_ACTIVE = 'is_active';
+    public const PARAM_ID = 'id';
+    public const PARAM_TEMPLATE = 'template';
+    public const PARAM_PLACEHOLDERS = 'placeholders';
+    public const PARAM_NAME = 'name';
+    public const PARAM_META_TITLE = 'meta_title';
+    public const PARAM_META_KEYWORDS = 'meta_keywords';
+    public const PARAM_META_DESCRIPTION = 'meta_description';
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
@@ -43,7 +43,7 @@ class LocaleCmsPageDataExpander implements LocaleCmsPageDataExpanderInterface
      *
      * @return array
      */
-    public function calculateFlattenedLocaleCmsPageData(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, LocaleTransfer $localeTransfer)
+    public function calculateFlattenedLocaleCmsPageData(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer, LocaleTransfer $localeTransfer): array
     {
         return $this->expand($this->flattenLocaleCmsPageDataTransfer($localeCmsPageDataTransfer), $localeTransfer);
     }
@@ -54,10 +54,14 @@ class LocaleCmsPageDataExpander implements LocaleCmsPageDataExpanderInterface
      *
      * @return array
      */
-    protected function expand(array $cmsPageData, LocaleTransfer $localeTransfer)
+    protected function expand(array $cmsPageData, LocaleTransfer $localeTransfer): array
     {
         foreach ($this->cmsPageDataExpanderPlugins as $cmsPageDataExpanderPlugin) {
             $cmsPageData = $cmsPageDataExpanderPlugin->expand($cmsPageData, $localeTransfer);
+        }
+
+        if (!$cmsPageData) {
+            return [];
         }
 
         return $cmsPageData;
@@ -68,7 +72,7 @@ class LocaleCmsPageDataExpander implements LocaleCmsPageDataExpanderInterface
      *
      * @return array
      */
-    protected function flattenLocaleCmsPageDataTransfer(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer)
+    protected function flattenLocaleCmsPageDataTransfer(LocaleCmsPageDataTransfer $localeCmsPageDataTransfer): array
     {
         return [
             static::PARAM_URL => $localeCmsPageDataTransfer->getUrl(),

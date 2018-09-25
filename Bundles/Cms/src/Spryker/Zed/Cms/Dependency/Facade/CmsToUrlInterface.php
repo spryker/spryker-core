@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
+use Generated\Shared\Transfer\UrlRedirectValidationResponseTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 
 interface CmsToUrlInterface
@@ -21,68 +22,68 @@ interface CmsToUrlInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($urlTransfer, ?LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null);
+    public function createUrl($urlTransfer, ?LocaleTransfer $localeTransfer = null, ?string $resourceType = null, ?int $idResource = null): UrlTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function updateUrl(UrlTransfer $urlTransfer);
+    public function updateUrl(UrlTransfer $urlTransfer): UrlTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function activateUrl(UrlTransfer $urlTransfer);
+    public function activateUrl(UrlTransfer $urlTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function deactivateUrl(UrlTransfer $urlTransfer);
+    public function deactivateUrl(UrlTransfer $urlTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
      *
      * @return bool
      */
-    public function hasUrl($urlTransfer);
+    public function hasUrl($urlTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return bool
      */
-    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer);
+    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer): bool;
 
     /**
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer|\Generated\Shared\Transfer\RedirectTransfer $urlRedirectTransfer Deprecated: RedirectTransfer format is accepted for BC reasons only.
      *
      * @return void
      */
-    public function deleteUrlRedirect($urlRedirectTransfer);
+    public function deleteUrlRedirect($urlRedirectTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
      *
      * @return \Generated\Shared\Transfer\UrlRedirectTransfer
      */
-    public function createUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
+    public function createUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer): UrlRedirectTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
      *
      * @return \Generated\Shared\Transfer\UrlRedirectTransfer
      */
-    public function updateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
+    public function updateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer): UrlRedirectTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
      *
      * @return \Generated\Shared\Transfer\UrlRedirectValidationResponseTransfer
      */
-    public function validateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
+    public function validateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer): UrlRedirectValidationResponseTransfer;
 }

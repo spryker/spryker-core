@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Cms\Business\Version;
 
+use Generated\Shared\Transfer\CmsVersionTransfer;
+
 interface VersionRollbackInterface
 {
     /**
@@ -17,7 +19,7 @@ interface VersionRollbackInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function rollback($idCmsPage, $version);
+    public function rollback(int $idCmsPage, int $version): CmsVersionTransfer;
 
     /**
      * @param int $idCmsPage
@@ -26,5 +28,5 @@ interface VersionRollbackInterface
      *
      * @return void
      */
-    public function revert($idCmsPage);
+    public function revert(int $idCmsPage): void;
 }

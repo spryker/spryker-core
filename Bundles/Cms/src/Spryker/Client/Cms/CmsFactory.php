@@ -9,8 +9,10 @@ namespace Spryker\Client\Cms;
 
 use Spryker\Client\Cms\KeyBuilder\CmsBlockKeyBuilder;
 use Spryker\Client\Cms\Storage\CmsBlockStorage;
+use Spryker\Client\Cms\Storage\CmsBlockStorageInterface;
 use Spryker\Client\Cms\Zed\CmsStub;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Storage\StorageClientInterface;
 
 class CmsFactory extends AbstractFactory
 {
@@ -19,7 +21,7 @@ class CmsFactory extends AbstractFactory
      *
      * @return \Spryker\Client\Cms\Storage\CmsBlockStorageInterface
      */
-    public function createCmsBlockFinder()
+    public function createCmsBlockFinder(): CmsBlockStorageInterface
     {
         return new CmsBlockStorage(
             $this->getStorage(),
@@ -30,7 +32,7 @@ class CmsFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Storage\StorageClientInterface
      */
-    protected function getStorage()
+    protected function getStorage(): StorageClientInterface
     {
         return $this->getProvidedDependency(CmsDependencyProvider::KV_STORAGE);
     }
@@ -48,7 +50,7 @@ class CmsFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Cms\Zed\CmsStub
      */
-    public function createCmsStub()
+    public function createCmsStub(): CmsStub
     {
         return new CmsStub($this->getProvidedDependency(CmsDependencyProvider::CLIENT_ZED_REQUEST));
     }

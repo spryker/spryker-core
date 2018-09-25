@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cms\Business\Version;
 
+use Generated\Shared\Transfer\CmsVersionTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
@@ -48,7 +49,6 @@ class VersionRollback implements VersionRollbackInterface
         VersionMigrationInterface $versionMigration,
         CmsQueryContainerInterface $queryContainer
     ) {
-
         $this->versionPublisher = $versionPublisher;
         $this->versionGenerator = $versionGenerator;
         $this->versionMigration = $versionMigration;
@@ -61,9 +61,9 @@ class VersionRollback implements VersionRollbackInterface
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
      *
-     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function rollback($idCmsPage, $version)
+    public function rollback(int $idCmsPage, int $version): CmsVersionTransfer
     {
         $originVersionEntity = $this->queryContainer->queryCmsVersionByIdPage($idCmsPage)->findOne();
         $targetVersionEntity = $this->queryContainer->queryCmsVersionByIdPageAndVersion($idCmsPage, $version)->findOne();
@@ -89,7 +89,7 @@ class VersionRollback implements VersionRollbackInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    protected function migrateVersions(SpyCmsVersion $originVersionEntity, SpyCmsVersion $targetVersionEntity, $idCmsPage, $version)
+    protected function migrateVersions(SpyCmsVersion $originVersionEntity, SpyCmsVersion $targetVersionEntity, int $idCmsPage, int $version): CmsVersionTransfer
     {
         return $this->handleDatabaseTransaction(function () use ($originVersionEntity, $targetVersionEntity, $idCmsPage, $version) {
             return $this->executeMigrateVersion($originVersionEntity, $targetVersionEntity, $idCmsPage, $version);
@@ -104,7 +104,7 @@ class VersionRollback implements VersionRollbackInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function executeMigrateVersion(SpyCmsVersion $originVersionEntity, SpyCmsVersion $targetVersionEntity, $idCmsPage, $version)
+    public function executeMigrateVersion(SpyCmsVersion $originVersionEntity, SpyCmsVersion $targetVersionEntity, int $idCmsPage, int $version): CmsVersionTransfer
     {
         $this->versionMigration->migrate($originVersionEntity->getData(), $targetVersionEntity->getData());
 
@@ -125,7 +125,7 @@ class VersionRollback implements VersionRollbackInterface
      *
      * @return void
      */
-    public function revert($idCmsPage)
+    public function revert(int $idCmsPage): void
     {
         $versionEntity = $this->queryContainer->queryCmsVersionByIdPage($idCmsPage)->findOne();
 

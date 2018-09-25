@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Cms\Business\Version;
 
+use Generated\Shared\Transfer\CmsVersionTransfer;
+
 interface VersionPublisherInterface
 {
     /**
@@ -17,5 +19,5 @@ interface VersionPublisherInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function publishWithVersion($idCmsPage, $versionName = null);
+    public function publishWithVersion(int $idCmsPage, ?string $versionName = null): CmsVersionTransfer;
 }

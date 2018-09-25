@@ -18,7 +18,7 @@ class CmsBlockKeyBuilder extends SharedResourceKeyBuilder
     /**
      * @return string
      */
-    protected function getResourceType()
+    protected function getResourceType(): string
     {
         return CmsConstants::RESOURCE_TYPE_BLOCK;
     }

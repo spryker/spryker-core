@@ -50,7 +50,7 @@ class CmsGlossaryKeyMappingMigration implements MigrationInterface
      *
      * @return void
      */
-    public function migrate(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer)
+    public function migrate(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer): void
     {
         $this->handleDatabaseTransaction(function () use ($originVersionDataTransfer, $targetVersionDataTransfer) {
             $this->executeMigrateTransaction($originVersionDataTransfer, $targetVersionDataTransfer);
@@ -63,7 +63,7 @@ class CmsGlossaryKeyMappingMigration implements MigrationInterface
      *
      * @return void
      */
-    protected function executeMigrateTransaction(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer)
+    protected function executeMigrateTransaction(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer): void
     {
         $this->cmsGlossarySaver->deleteCmsGlossary($originVersionDataTransfer->getCmsPage()->getFkPage());
         $this->cmsGlossarySaver->saveCmsGlossary($targetVersionDataTransfer->getCmsGlossary());

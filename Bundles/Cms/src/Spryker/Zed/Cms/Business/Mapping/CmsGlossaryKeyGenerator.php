@@ -11,9 +11,9 @@ use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 
 class CmsGlossaryKeyGenerator implements CmsGlossaryKeyGeneratorInterface
 {
-    const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
-    const ID_CMS_PAGE = 'idCmsPage';
-    const UNIQUE_ID = 'uniqueId';
+    public const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
+    public const ID_CMS_PAGE = 'idCmsPage';
+    public const UNIQUE_ID = 'uniqueId';
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
@@ -29,14 +29,14 @@ class CmsGlossaryKeyGenerator implements CmsGlossaryKeyGeneratorInterface
     }
 
     /**
-     * @param int $idCmsPage
+     * @param int|null $idCmsPage
      * @param string $templateName
      * @param string $placeholder
      * @param bool $autoIncrement
      *
      * @return string
      */
-    public function generateGlossaryKeyName($idCmsPage, $templateName, $placeholder, $autoIncrement = true)
+    public function generateGlossaryKeyName(?int $idCmsPage, string $templateName, string $placeholder, bool $autoIncrement = true): string
     {
         $keyName = static::GENERATED_GLOSSARY_KEY_PREFIX . '.';
         $keyName .= str_replace([' ', '.'], '-', $templateName) . '.';

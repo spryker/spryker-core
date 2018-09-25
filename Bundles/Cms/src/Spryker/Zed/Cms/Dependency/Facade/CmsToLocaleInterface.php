@@ -7,22 +7,24 @@
 
 namespace Spryker\Zed\Cms\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface CmsToLocaleInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): LocaleTransfer;
 
     /**
      * @return array
      */
-    public function getAvailableLocales();
+    public function getAvailableLocales(): array;
 
     /**
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName);
+    public function getLocale(string $localeName): LocaleTransfer;
 }

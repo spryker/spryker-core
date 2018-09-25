@@ -37,7 +37,7 @@ class DataExtractor implements DataExtractorInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
-    public function extractCmsVersionDataTransfer($data)
+    public function extractCmsVersionDataTransfer(string $data): CmsVersionDataTransfer
     {
         $cmsDataArray = $this->utilEncoding->decodeJson($data, true);
 
@@ -50,7 +50,7 @@ class DataExtractor implements DataExtractorInterface
      *
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */
-    public function extractLocaleCmsPageDataTransfer(CmsVersionDataTransfer $cmsVersionDataTransfer, LocaleTransfer $localeTransfer)
+    public function extractLocaleCmsPageDataTransfer(CmsVersionDataTransfer $cmsVersionDataTransfer, LocaleTransfer $localeTransfer): LocaleCmsPageDataTransfer
     {
         $cmsMetaAttributeTransfer = $this->extractMetaAttributeByLocales($cmsVersionDataTransfer->getCmsPage(), $localeTransfer->getLocaleName());
         $cmsPageAttributeTransfer = $this->extractPageAttributeByLocale($cmsVersionDataTransfer->getCmsPage(), $localeTransfer->getLocaleName());
@@ -69,11 +69,11 @@ class DataExtractor implements DataExtractorInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
-     * @param string $localeName
+     * @param string|null $localeName
      *
      * @return array
      */
-    protected function extractPlaceholdersByLocale(CmsGlossaryTransfer $cmsGlossaryTransfer, $localeName)
+    protected function extractPlaceholdersByLocale(CmsGlossaryTransfer $cmsGlossaryTransfer, ?string $localeName): array
     {
         $placeholders = [];
         foreach ($cmsGlossaryTransfer->getGlossaryAttributes() as $glossaryAttribute) {
@@ -87,11 +87,11 @@ class DataExtractor implements DataExtractorInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     * @param string $localeName
+     * @param string|null $localeName
      *
      * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer
      */
-    protected function extractPageAttributeByLocale(CmsPageTransfer $cmsPageTransfer, $localeName)
+    protected function extractPageAttributeByLocale(CmsPageTransfer $cmsPageTransfer, ?string $localeName): CmsPageAttributesTransfer
     {
         foreach ($cmsPageTransfer->getPageAttributes() as $pageAttribute) {
             if ($pageAttribute->getLocaleName() === $localeName) {
@@ -104,11 +104,11 @@ class DataExtractor implements DataExtractorInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     * @param string $localeName
+     * @param string|null $localeName
      *
      * @return \Generated\Shared\Transfer\CmsPageMetaAttributesTransfer
      */
-    protected function extractMetaAttributeByLocales(CmsPageTransfer $cmsPageTransfer, $localeName)
+    protected function extractMetaAttributeByLocales(CmsPageTransfer $cmsPageTransfer, ?string $localeName): CmsPageMetaAttributesTransfer
     {
         foreach ($cmsPageTransfer->getMetaAttributes() as $metaAttribute) {
             if ($metaAttribute->getLocaleName() === $localeName) {
@@ -125,7 +125,7 @@ class DataExtractor implements DataExtractorInterface
      *
      * @return string
      */
-    protected function extractTranslationByLocales(ArrayObject $translations, $localeName)
+    protected function extractTranslationByLocales(ArrayObject $translations, string $localeName): ?string
     {
         foreach ($translations as $translation) {
             if ($translation->getLocaleName() === $localeName) {

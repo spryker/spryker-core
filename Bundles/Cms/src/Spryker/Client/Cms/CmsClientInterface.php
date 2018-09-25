@@ -24,7 +24,7 @@ interface CmsClientInterface
      *
      * @return array
      */
-    public function findBlockByName(CmsBlockTransfer $cmsBlockTransfer);
+    public function findBlockByName(CmsBlockTransfer $cmsBlockTransfer): array;
 
     /**
      * Specification:
@@ -39,5 +39,5 @@ interface CmsClientInterface
      *
      * @return \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer
      */
-    public function getFlattenedLocaleCmsPageData(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer);
+    public function getFlattenedLocaleCmsPageData(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer): FlattenedLocaleCmsPageDataRequestTransfer;
 }

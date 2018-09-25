@@ -42,7 +42,7 @@ class PageRemover implements PageRemoverInterface
      *
      * @return void
      */
-    public function delete($idCmsPage)
+    public function delete(int $idCmsPage): void
     {
         $this->cmsQueryContainer->getConnection()->beginTransaction();
 
@@ -66,7 +66,7 @@ class PageRemover implements PageRemoverInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage|null
      */
-    protected function findCmsPageEntity($idCmsPage)
+    protected function findCmsPageEntity(int $idCmsPage): ?SpyCmsPage
     {
         $cmsPageEntity = $this
             ->cmsQueryContainer
@@ -81,7 +81,7 @@ class PageRemover implements PageRemoverInterface
      *
      * @return void
      */
-    protected function deletePageWithRelations(SpyCmsPage $cmsPageEntity)
+    protected function deletePageWithRelations(SpyCmsPage $cmsPageEntity): void
     {
         $cmsPageEntity->getSpyUrls()->delete();
 
@@ -95,7 +95,7 @@ class PageRemover implements PageRemoverInterface
      *
      * @return void
      */
-    protected function touchDeletedPage($idCmsPage)
+    protected function touchDeletedPage(int $idCmsPage): void
     {
         $this->touchFacade->touchDeleted(CmsConstants::RESOURCE_TYPE_PAGE, $idCmsPage);
     }

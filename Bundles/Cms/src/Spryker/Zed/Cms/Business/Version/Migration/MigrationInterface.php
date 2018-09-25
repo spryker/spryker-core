@@ -20,5 +20,5 @@ interface MigrationInterface
     public function migrate(
         CmsVersionDataTransfer $originVersionDataTransfer,
         CmsVersionDataTransfer $targetVersionDataTransfer
-    );
+    ): void;
 }

@@ -19,5 +19,5 @@ interface CmsBlockStorageInterface
      *
      * @return array
      */
-    public function getBlockByName(CmsBlockTransfer $cmsBlockTransfer);
+    public function getBlockByName(CmsBlockTransfer $cmsBlockTransfer): array;
 }

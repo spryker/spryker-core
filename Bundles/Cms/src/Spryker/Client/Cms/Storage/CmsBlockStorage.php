@@ -41,7 +41,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      *
      * @return array
      */
-    public function getBlockByName(CmsBlockTransfer $cmsBlockTransfer)
+    public function getBlockByName(CmsBlockTransfer $cmsBlockTransfer): array
     {
         $blockName = $cmsBlockTransfer->getName() . '-' . $cmsBlockTransfer->getType() . '-' . $cmsBlockTransfer->getValue();
 

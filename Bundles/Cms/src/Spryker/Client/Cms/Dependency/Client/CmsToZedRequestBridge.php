@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Client\Cms\Dependency\Client;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
@@ -30,7 +31,7 @@ class CmsToZedRequestBridge implements CmsToZedRequestInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, $timeoutInSeconds = null)
+    public function call(string $url, TransferInterface $object, $timeoutInSeconds = null): TransferInterface
     {
         return $this->zedRequestClient->call($url, $object, $timeoutInSeconds);
     }

@@ -11,12 +11,12 @@ interface CmsToTouchInterface
 {
     /**
      * @param string $itemType
-     * @param int $itemId
+     * @param int|null $itemId
      * @param bool $keyChange
      *
      * @return bool
      */
-    public function touchActive($itemType, $itemId, $keyChange = false);
+    public function touchActive(string $itemType, ?int $itemId, bool $keyChange = false): bool;
 
     /**
      * @param string $itemType
@@ -24,7 +24,7 @@ interface CmsToTouchInterface
      *
      * @return bool
      */
-    public function touchInactive($itemType, $itemId);
+    public function touchInactive(string $itemType, int $itemId): bool;
 
     /**
      * @param string $itemType
@@ -32,5 +32,5 @@ interface CmsToTouchInterface
      *
      * @return bool
      */
-    public function touchDeleted($itemType, $itemId);
+    public function touchDeleted(string $itemType, int $itemId): bool;
 }

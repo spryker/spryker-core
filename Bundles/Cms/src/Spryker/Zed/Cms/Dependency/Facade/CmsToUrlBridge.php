@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
+use Generated\Shared\Transfer\UrlRedirectValidationResponseTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 
 class CmsToUrlBridge implements CmsToUrlInterface
@@ -34,7 +35,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($urlTransfer, ?LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null)
+    public function createUrl($urlTransfer, ?LocaleTransfer $localeTransfer = null, ?string $resourceType = null, ?int $idResource = null): UrlTransfer
     {
         return $this->urlFacade->createUrl($urlTransfer, $localeTransfer, $resourceType, $idResource);
     }
@@ -44,7 +45,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function updateUrl(UrlTransfer $urlTransfer)
+    public function updateUrl(UrlTransfer $urlTransfer): UrlTransfer
     {
         return $this->urlFacade->updateUrl($urlTransfer);
     }
@@ -54,7 +55,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
      *
      * @return void
      */
-    public function activateUrl(UrlTransfer $urlTransfer)
+    public function activateUrl(UrlTransfer $urlTransfer): void
     {
         $this->urlFacade->activateUrl($urlTransfer);
     }
@@ -64,7 +65,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
      *
      * @return void
      */
-    public function deactivateUrl(UrlTransfer $urlTransfer)
+    public function deactivateUrl(UrlTransfer $urlTransfer): void
     {
         $this->urlFacade->deactivateUrl($urlTransfer);
     }
@@ -74,7 +75,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
      *
      * @return bool
      */
-    public function hasUrl($urlTransfer)
+    public function hasUrl($urlTransfer): bool
     {
         return $this->urlFacade->hasUrl($urlTransfer);
     }
@@ -84,7 +85,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
      *
      * @return bool
      */
-    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer)
+    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer): bool
     {
         return $this->urlFacade->hasUrlOrRedirectedUrl($urlTransfer);
     }
@@ -94,7 +95,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
      *
      * @return void
      */
-    public function deleteUrlRedirect($urlRedirectTransfer)
+    public function deleteUrlRedirect($urlRedirectTransfer): void
     {
         $this->urlFacade->deleteUrlRedirect($urlRedirectTransfer);
     }
@@ -104,7 +105,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
      *
      * @return \Generated\Shared\Transfer\UrlRedirectTransfer
      */
-    public function createUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    public function createUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer): UrlRedirectTransfer
     {
         return $this->urlFacade->createUrlRedirect($urlRedirectTransfer);
     }
@@ -114,7 +115,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
      *
      * @return \Generated\Shared\Transfer\UrlRedirectTransfer
      */
-    public function updateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    public function updateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer): UrlRedirectTransfer
     {
         return $this->urlFacade->updateUrlRedirect($urlRedirectTransfer);
     }
@@ -124,7 +125,7 @@ class CmsToUrlBridge implements CmsToUrlInterface
      *
      * @return \Generated\Shared\Transfer\UrlRedirectValidationResponseTransfer
      */
-    public function validateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
+    public function validateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer): UrlRedirectValidationResponseTransfer
     {
         return $this->urlFacade->validateUrlRedirect($urlRedirectTransfer);
     }

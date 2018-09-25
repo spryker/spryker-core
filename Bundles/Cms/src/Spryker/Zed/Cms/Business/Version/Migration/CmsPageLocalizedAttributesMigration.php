@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cms\Business\Version\Migration;
 
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
+use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -42,7 +43,7 @@ class CmsPageLocalizedAttributesMigration implements MigrationInterface
      *
      * @return void
      */
-    public function migrate(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer)
+    public function migrate(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer): void
     {
         $this->handleDatabaseTransaction(function () use ($originVersionDataTransfer, $targetVersionDataTransfer) {
             $this->executeMigrateTransaction($originVersionDataTransfer, $targetVersionDataTransfer);
@@ -55,7 +56,7 @@ class CmsPageLocalizedAttributesMigration implements MigrationInterface
      *
      * @return void
      */
-    protected function executeMigrateTransaction(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer)
+    protected function executeMigrateTransaction(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer): void
     {
         $this->migratePageAttributes($originVersionDataTransfer, $targetVersionDataTransfer);
         $this->migrateMetaAttributes($originVersionDataTransfer, $targetVersionDataTransfer);
@@ -67,7 +68,7 @@ class CmsPageLocalizedAttributesMigration implements MigrationInterface
      *
      * @return void
      */
-    protected function migratePageAttributes(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer)
+    protected function migratePageAttributes(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer): void
     {
         foreach ($targetVersionDataTransfer->getCmsPage()->getPageAttributes() as $pageAttributesTransfer) {
             $cmsLocalizedAttributeEntity = $this->findOrCreatePageLocalizedAttribute(
@@ -86,7 +87,7 @@ class CmsPageLocalizedAttributesMigration implements MigrationInterface
      *
      * @return void
      */
-    protected function migrateMetaAttributes(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer)
+    protected function migrateMetaAttributes(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer): void
     {
         foreach ($targetVersionDataTransfer->getCmsPage()->getMetaAttributes() as $metaAttributesTransfer) {
             $cmsLocalizedAttributeEntity = $this->findOrCreatePageLocalizedAttribute(
@@ -107,7 +108,7 @@ class CmsPageLocalizedAttributesMigration implements MigrationInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
      */
-    protected function findOrCreatePageLocalizedAttribute($idCmsPage, $localeName)
+    protected function findOrCreatePageLocalizedAttribute(int $idCmsPage, string $localeName): SpyCmsPageLocalizedAttributes
     {
         $localeTransfer = $this->localeFacade->getLocale($localeName);
 
