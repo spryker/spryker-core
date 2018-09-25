@@ -57,7 +57,7 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $modulesToValidate = $this->getModulesToCheckForViolations($input);
+        $modulesToValidate = $this->getModulesToExecute($input);
 
         if (!$this->canRun($modulesToValidate)) {
             return static::CODE_ERROR;
@@ -71,28 +71,10 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
             if (!$this->isNamespacedModuleName($index)) {
                 continue;
             }
-            if ($moduleTransfer->getIsStandalone()) {
-                $this->notifyStandaloneModuleExecution($output, $moduleTransfer);
-                continue;
-            }
             $this->validateModule($moduleTransfer, $output, $dependencyType);
         }
 
         return $this->endValidation();
-    }
-
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
-     *
-     * @return void
-     */
-    protected function notifyStandaloneModuleExecution(OutputInterface $output, ModuleTransfer $moduleTransfer): void
-    {
-        if ($output->isVerbose()) {
-            $output->writeln(sprintf('<fg=yellow>%s</> is a standalone module and will be skipped.', $moduleTransfer->getName()));
-            $output->writeln('');
-        }
     }
 
     /**

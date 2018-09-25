@@ -43,7 +43,7 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
     /**
      * @param array $parameters , parameters can be (quote => QuoteTransfer, or array of abstract product ids [1,2,3])
      *
-     * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
      */
     public function buildTemplateData(array $parameters)
     {
@@ -85,23 +85,6 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StorageProductRelationsTransfer[] $upSellingProducts
-     * @param \Generated\Shared\Transfer\StorageProductRelationsTransfer[] $compareWithProducts
-     *
-     * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer[]
-     */
-    protected function findNotIncludedAbstractProducts(array $upSellingProducts, array $compareWithProducts)
-    {
-        return array_udiff(
-            $compareWithProducts,
-            $upSellingProducts,
-            function (StorageProductAbstractRelationTransfer $a, StorageProductAbstractRelationTransfer $b) {
-                return strcasecmp($a->getSku(), $b->getSku());
-            }
-        );
-    }
-
-    /**
      * @param array $productRelationCollection
      *
      * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer|null
@@ -112,6 +95,23 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
             return null;
         }
         return $productRelationCollection[$this->getAcceptedType()];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[] $upSellingProducts
+     * @param \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[] $compareWithProducts
+     *
+     * @return \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
+     */
+    protected function findNotIncludedAbstractProducts(array $upSellingProducts, array $compareWithProducts)
+    {
+        return array_udiff(
+            $compareWithProducts,
+            $upSellingProducts,
+            function (StorageProductAbstractRelationTransfer $a, StorageProductAbstractRelationTransfer $b) {
+                return strcasecmp($a->getSku(), $b->getSku());
+            }
+        );
     }
 
     /**

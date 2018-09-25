@@ -119,7 +119,8 @@ class CartUpdater implements CartUpdaterInterface
             $this->customerClient->getCustomer()
         );
         $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequest($quoteTransfer);
-        $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->setItems(new ArrayObject());
+        $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->setItems(new ArrayObject())
+            ->setTotals(null);
 
         return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
     }
