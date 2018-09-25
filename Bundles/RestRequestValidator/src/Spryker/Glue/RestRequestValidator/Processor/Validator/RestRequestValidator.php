@@ -16,6 +16,7 @@ use Spryker\Glue\RestRequestValidator\Processor\Validator\Constraint\RestRequest
 use Spryker\Glue\RestRequestValidator\RestRequestValidatorConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class RestRequestValidator implements RestRequestValidatorInterface
@@ -77,7 +78,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
      */
-    protected function applyValidationToRequest(RestRequestInterface $restRequest, $constraintCollection = null): RestErrorCollectionTransfer
+    protected function applyValidationToRequest(RestRequestInterface $restRequest, ?Collection $constraintCollection): RestErrorCollectionTransfer
     {
         if ($constraintCollection === null) {
             return $this->handleNoCacheFileError((new RestErrorCollectionTransfer()));
