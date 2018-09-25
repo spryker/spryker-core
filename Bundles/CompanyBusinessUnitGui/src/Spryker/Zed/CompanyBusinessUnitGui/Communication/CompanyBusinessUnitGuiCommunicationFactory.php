@@ -74,7 +74,7 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     /**
      * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
      */
-    protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
+    public function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
     {
         return $this->getProvidedDependency(CompanyBusinessUnitGuiDependencyProvider::PROPEL_QUERY_COMPANY_BUSINESS_UNIT);
     }
