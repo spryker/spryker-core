@@ -16,8 +16,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CompanyRoleCompanyUserTableConfigExpanderPlugin extends AbstractPlugin implements CompanyUserTableConfigExpanderPluginInterface
 {
-    public const COL_COMPANY_ROLE_NAME = 'company_role_name';
+    public const COL_COMPANY_ROLE_NAMES = 'company_role_names';
 
+    protected const TITLE_COMPANY_ROLE_NAME = 'Roles';
     protected const TABLE_POSITION_COL_COMPANY_ROLE_NAME = 3;
 
     /**
@@ -36,14 +37,14 @@ class CompanyRoleCompanyUserTableConfigExpanderPlugin extends AbstractPlugin imp
         $configHeader = $this->addArrayItemToArrayPosition(
             $configHeader,
             [
-                static::COL_COMPANY_ROLE_NAME => 'Company Role',
+                static::COL_COMPANY_ROLE_NAMES => static::TITLE_COMPANY_ROLE_NAME,
             ],
             static::TABLE_POSITION_COL_COMPANY_ROLE_NAME
         );
         $config->setHeader($configHeader);
 
         $configSearchable = $config->getSearchable();
-        $configSearchable[] = static::COL_COMPANY_ROLE_NAME;
+        $configSearchable[] = static::COL_COMPANY_ROLE_NAMES;
 
         return $config;
     }
