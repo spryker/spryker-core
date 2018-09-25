@@ -8,8 +8,8 @@
 namespace Spryker\Zed\CompanyRoleGui\Communication\Form;
 
 use Closure;
-use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,6 +24,8 @@ class CompanyRoleChoiceFormType extends AbstractType
     public const OPTION_ATTRIBUTES_ROLES_CHOICES = 'company_role_attributes';
 
     public const FIELD_COMPANY_ROLE_COLLECTION = 'company_role_collection';
+
+    protected const TEMPLATE_PATH = '@CompanyRoleGui/CompanyUser/company_role.twig';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -60,15 +62,17 @@ class CompanyRoleChoiceFormType extends AbstractType
     protected function addCompanyRoleCollectionField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_COMPANY_ROLE_COLLECTION, ChoiceType::class, [
-            'choices_as_values' => true,
             'choices' => $options[static::OPTION_VALUES_ROLES_CHOICES],
             'choice_attr' => $options[static::OPTION_ATTRIBUTES_ROLES_CHOICES],
+            'constraints' => $this->createCompanyRoleCollectionConstraints(),
+            'choices_as_values' => true,
+            'label' => false,
             'expanded' => true,
             'required' => true,
-            'label' => 'Roles',
             'multiple' => true,
-            'constraints' => $this->createCompanyRoleCollectionConstraints(),
-            'attr' => ['template_path' => $this->getTemplatePath()],
+            'attr' => [
+                'template_path' => $this->getTemplatePath(),
+            ],
         ]);
 
         $callbackTransformer = new CallbackTransformer(
@@ -92,7 +96,7 @@ class CompanyRoleChoiceFormType extends AbstractType
         $companyRoleCollectionConstraints[] = new Callback([
             'callback' => function (CompanyRoleCollectionTransfer $companyRoleCollectionTransfer, ExecutionContextInterface $context) {
                 if (!$companyRoleCollectionTransfer->getRoles()->count()) {
-                    $context->addViolation('пидорас');
+                    $context->addViolation('At least one role must be assigned to a user.');
                 }
             },
         ]);
@@ -142,6 +146,6 @@ class CompanyRoleChoiceFormType extends AbstractType
      */
     public function getTemplatePath(): string
     {
-        return '@CompanyRoleGui/CompanyUser/company_role.twig';
+        return static::TEMPLATE_PATH;
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserGui\Communication;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserEditForm;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserForm;
@@ -22,23 +23,23 @@ use Symfony\Component\Form\FormInterface;
 class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @param array|null $data
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getCompanyUserForm($data = null, array $options = []): FormInterface
+    public function getCompanyUserForm(?CompanyUserTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(CompanyUserForm::class, $data, $options);
     }
 
     /**
-     * @param array|null $data
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getCompanyUserEditForm($data = null, array $options = []): FormInterface
+    public function getCompanyUserEditForm(?CompanyUserTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(CompanyUserEditForm::class, $data, $options);
     }

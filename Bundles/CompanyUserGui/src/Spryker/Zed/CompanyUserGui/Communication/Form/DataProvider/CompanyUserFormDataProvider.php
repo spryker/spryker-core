@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserCustomerForm;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserForm;
-use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeInterface;
+use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToLocaleFacadeInterface;
 
 class CompanyUserFormDataProvider
@@ -54,7 +54,7 @@ class CompanyUserFormDataProvider
      */
     public function getData(?int $idCompanyUser = null): CompanyUserTransfer
     {
-        return $this->findCompanyUserTransfer($idCompanyUser);
+        return $this->getCompanyUserTransfer($idCompanyUser);
     }
 
     /**
@@ -76,7 +76,7 @@ class CompanyUserFormDataProvider
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    protected function findCompanyUserTransfer(?int $idCompanyUser = null): CompanyUserTransfer
+    protected function getCompanyUserTransfer(?int $idCompanyUser = null): CompanyUserTransfer
     {
         $companyUserTransfer = new CompanyUserTransfer();
 
