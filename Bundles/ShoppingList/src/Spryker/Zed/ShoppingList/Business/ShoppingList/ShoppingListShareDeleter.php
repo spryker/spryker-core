@@ -146,12 +146,12 @@ class ShoppingListShareDeleter implements ShoppingListShareDeleterInterface
      * @param \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer $shoppingListCompanyBusinessUnitCollectionTransfer
      * @param int $idCompanyBusinessUnit
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer|mixed|null
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer|null
      */
     protected function findShoppingListCompanyBusinessUnitByIdBusinessUnit(
         ShoppingListCompanyBusinessUnitCollectionTransfer $shoppingListCompanyBusinessUnitCollectionTransfer,
         int $idCompanyBusinessUnit
-    ) {
+    ): ?ShoppingListCompanyBusinessUnitTransfer {
         foreach ($shoppingListCompanyBusinessUnitCollectionTransfer->getShoppingListCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
             if ($companyBusinessUnitTransfer->getIdCompanyBusinessUnit() === $idCompanyBusinessUnit) {
                 return $companyBusinessUnitTransfer;
@@ -164,9 +164,9 @@ class ShoppingListShareDeleter implements ShoppingListShareDeleterInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer|mixed|null
+     * @return \Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer|null
      */
-    protected function findShoppingListBusinessUnit(ShoppingListDismissRequestTransfer $shoppingListDismissRequest)
+    protected function findShoppingListBusinessUnit(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ?ShoppingListCompanyBusinessUnitTransfer
     {
         $companyUserTransfer = $this->companyUserFacade->getCompanyUserById($shoppingListDismissRequest->getIdCompanyUser());
         $shoppingListCompanyBusinessUnitCollectionTransfer = $this->shoppingListRepository->getShoppingListCompanyBusinessUnitsByShoppingListId(
