@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
 use Spryker\Shared\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
 
-class GlobalSoftThresholdFlexibleFeeFormMapper extends AbstractGlobalThresholdFormMapper implements GlobalThresholdFormMapperInterface
+class GlobalSoftThresholdFlexibleFeeFormMapper extends AbstractSoftGlobalThresholdFormMapper implements GlobalThresholdFormMapperInterface
 {
     /**
      * @param array $data
@@ -22,6 +22,7 @@ class GlobalSoftThresholdFlexibleFeeFormMapper extends AbstractGlobalThresholdFo
      */
     public function map(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): SalesOrderThresholdTransfer
     {
+        $salesOrderThresholdTransfer = $this->setSoftIdSalesOrderThreshold($salesOrderThresholdTransfer, $data);
         $salesOrderThresholdTransfer = $this->setStoreAndCurrencyToSalesOrderThresholdTransfer($data, $salesOrderThresholdTransfer);
         $salesOrderThresholdTransfer = $this->setLocalizedMessagesToSalesOrderThresholdTransfer(
             $data,
@@ -29,8 +30,9 @@ class GlobalSoftThresholdFlexibleFeeFormMapper extends AbstractGlobalThresholdFo
             GlobalThresholdType::PREFIX_SOFT
         );
 
-        $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->setThreshold($data[GlobalThresholdType::FIELD_SOFT_THRESHOLD]);
-        $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->setFee($data[GlobalThresholdType::FIELD_SOFT_FLEXIBLE_FEE]);
+        $salesOrderThresholdTransfer->getSalesOrderThresholdValue()
+            ->setThreshold($data[GlobalThresholdType::FIELD_SOFT_THRESHOLD])
+            ->setFee($data[GlobalThresholdType::FIELD_SOFT_FLEXIBLE_FEE]);
 
         $salesOrderThresholdTypeTransfer = (new SalesOrderThresholdTypeTransfer())
             ->setKey(SalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE)

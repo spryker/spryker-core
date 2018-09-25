@@ -31,7 +31,7 @@ interface SalesOrderThresholdFacadeInterface
 
     /**
      * Specification:
-     * - Sets store sales order threshold
+     * - Sets sales order threshold.
      *
      * @api
      *
@@ -44,6 +44,22 @@ interface SalesOrderThresholdFacadeInterface
     public function saveSalesOrderThreshold(
         SalesOrderThresholdTransfer $salesOrderThresholdTransfer
     ): SalesOrderThresholdTransfer;
+
+    /**
+     * Specification:
+     * - Deletes sales order threshold by SalesOrderThresholdTransfer::idSalesOrderThreshold.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     *
+     * @throws \Spryker\Zed\SalesOrderThreshold\Business\Strategy\Exception\SalesOrderThresholdTypeNotFoundException
+     *
+     * @return bool
+     */
+    public function deleteSalesOrderThreshold(
+        SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+    ): bool;
 
     /**
      * Specification:

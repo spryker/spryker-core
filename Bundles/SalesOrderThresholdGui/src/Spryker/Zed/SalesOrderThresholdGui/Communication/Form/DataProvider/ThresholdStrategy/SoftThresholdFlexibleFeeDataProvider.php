@@ -22,6 +22,7 @@ class SoftThresholdFlexibleFeeDataProvider implements ThresholdStrategyDataProvi
      */
     public function getData(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): array
     {
+        $data[GlobalThresholdType::FIELD_ID_THRESHOLD_SOFT] = $salesOrderThresholdTransfer->getIdSalesOrderThreshold();
         $data[GlobalThresholdType::FIELD_SOFT_THRESHOLD] = $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getThreshold();
         $data[GlobalThresholdType::FIELD_SOFT_FLEXIBLE_FEE] = $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getFee();
         $data[GlobalThresholdType::FIELD_SOFT_STRATEGY] = SalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE;

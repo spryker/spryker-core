@@ -12,6 +12,7 @@ use Spryker\Zed\SalesOrderThreshold\Business\Strategy\Resolver\SalesOrderThresho
 use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdGlossaryKeyGeneratorInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTranslationWriterInterface;
 use Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdEntityManagerInterface;
+use Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdRepositoryInterface;
 
 class SalesOrderThresholdWriter implements SalesOrderThresholdWriterInterface
 {
@@ -26,6 +27,11 @@ class SalesOrderThresholdWriter implements SalesOrderThresholdWriterInterface
     protected $salesOrderThresholdEntityManager;
 
     /**
+     * @var \Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdRepositoryInterface
+     */
+    protected $salesOrderThresholdRepository;
+
+    /**
      * @var \Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdGlossaryKeyGeneratorInterface
      */
     protected $glossaryKeyGenerator;
@@ -38,17 +44,20 @@ class SalesOrderThresholdWriter implements SalesOrderThresholdWriterInterface
     /**
      * @param \Spryker\Zed\SalesOrderThreshold\Business\Strategy\Resolver\SalesOrderThresholdStrategyResolverInterface $salesOrderThresholdStrategyResolver
      * @param \Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdEntityManagerInterface $salesOrderThresholdEntityManager
+     * @param \Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdRepositoryInterface $salesOrderThresholdRepository
      * @param \Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdGlossaryKeyGeneratorInterface $glossaryKeyGenerator
      * @param \Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTranslationWriterInterface $translationWriter
      */
     public function __construct(
         SalesOrderThresholdStrategyResolverInterface $salesOrderThresholdStrategyResolver,
         SalesOrderThresholdEntityManagerInterface $salesOrderThresholdEntityManager,
+        SalesOrderThresholdRepositoryInterface $salesOrderThresholdRepository,
         SalesOrderThresholdGlossaryKeyGeneratorInterface $glossaryKeyGenerator,
         SalesOrderThresholdTranslationWriterInterface $translationWriter
     ) {
         $this->salesOrderThresholdStrategyResolver = $salesOrderThresholdStrategyResolver;
         $this->salesOrderThresholdEntityManager = $salesOrderThresholdEntityManager;
+        $this->salesOrderThresholdRepository = $salesOrderThresholdRepository;
         $this->glossaryKeyGenerator = $glossaryKeyGenerator;
         $this->translationWriter = $translationWriter;
     }
@@ -92,5 +101,31 @@ class SalesOrderThresholdWriter implements SalesOrderThresholdWriterInterface
         $this->translationWriter->saveLocalizedMessages($salesOrderThresholdTransfer);
 
         return $salesOrderThresholdTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     *
+     * @return bool
+     */
+    public function deleteSalesOrderThreshold(
+        SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+    ): bool {
+        $salesOrderThresholdTransfer->requireIdSalesOrderThreshold();
+        $salesOrderThresholdTransfer = $this->salesOrderThresholdRepository
+            ->findSalesOrderThreshold($salesOrderThresholdTransfer);
+
+        if (!$salesOrderThresholdTransfer) {
+            return false;
+        }
+
+        $idDeleted = $this->salesOrderThresholdEntityManager
+            ->deleteSalesOrderThreshold($salesOrderThresholdTransfer);
+
+        if ($idDeleted) {
+            $this->translationWriter->deleteLocalizedMessages($salesOrderThresholdTransfer);
+        }
+
+        return $idDeleted;
     }
 }

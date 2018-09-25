@@ -22,6 +22,7 @@ class GlobalHardThresholdFormMapper extends AbstractGlobalThresholdFormMapper im
      */
     public function map(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): SalesOrderThresholdTransfer
     {
+        $salesOrderThresholdTransfer->setIdSalesOrderThreshold($data[GlobalThresholdType::FIELD_ID_THRESHOLD_HARD]);
         $salesOrderThresholdTransfer = $this->setStoreAndCurrencyToSalesOrderThresholdTransfer($data, $salesOrderThresholdTransfer);
         $salesOrderThresholdTransfer = $this->setLocalizedMessagesToSalesOrderThresholdTransfer(
             $data,
@@ -29,7 +30,9 @@ class GlobalHardThresholdFormMapper extends AbstractGlobalThresholdFormMapper im
             GlobalThresholdType::PREFIX_HARD
         );
 
-        $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->setThreshold($data[GlobalThresholdType::FIELD_HARD_THRESHOLD]);
+        $salesOrderThresholdTransfer->getSalesOrderThresholdValue()
+            ->setThreshold($data[GlobalThresholdType::FIELD_HARD_THRESHOLD]);
+
         $salesOrderThresholdTypeTransfer = (new SalesOrderThresholdTypeTransfer())
             ->setKey(SalesOrderThresholdGuiConfig::HARD_TYPE_STRATEGY)
             ->setThresholdGroup(SalesOrderThresholdGuiConfig::GROUP_HARD);

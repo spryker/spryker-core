@@ -29,6 +29,13 @@ interface SalesOrderThresholdToGlossaryFacadeInterface
     public function getTranslation($keyName, LocaleTransfer $locale);
 
     /**
+     * @param string $keyName
+     *
+     * @return bool
+     */
+    public function deleteKey($keyName);
+
+    /**
      * @param \Generated\Shared\Transfer\KeyTranslationTransfer $keyTranslationTransfer
      *
      * @return bool

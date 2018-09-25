@@ -10,7 +10,8 @@ namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -30,8 +31,11 @@ class GlobalThresholdType extends AbstractType
     public const PREFIX_SOFT = 'soft';
 
     public const FIELD_STORE_CURRENCY = 'storeCurrency';
+    public const FIELD_CURRENCY = 'currency';
+    public const FIELD_ID_THRESHOLD_HARD = 'idThresholdHard';
     public const FIELD_HARD_THRESHOLD = 'hardThreshold';
 
+    public const FIELD_ID_THRESHOLD_SOFT = 'idThresholdSoft';
     public const FIELD_SOFT_STRATEGY = 'softStrategy';
     public const FIELD_SOFT_THRESHOLD = 'softThreshold';
     public const FIELD_SOFT_FIXED_FEE = 'softFixedFee';
@@ -135,8 +139,9 @@ class GlobalThresholdType extends AbstractType
      */
     protected function addHardValueField(FormBuilderInterface $builder, array $options): self
     {
-        $builder->add(static::FIELD_HARD_THRESHOLD, TextType::class, [
+        $builder->add(static::FIELD_HARD_THRESHOLD, MoneyType::class, [
             'label' => 'Enter minimum order value',
+            'currency' => $options['data'][static::FIELD_CURRENCY],
             'required' => false,
             'constraints' => [
                 $this->createMoneyConstraint($options),
@@ -156,7 +161,7 @@ class GlobalThresholdType extends AbstractType
     {
         $builder->add(static::FIELD_SOFT_STRATEGY, ChoiceType::class, [
             'label' => false,
-            'required' => true,
+            'required' => false,
             'expanded' => true,
             'choices' => $options[static::OPTION_SOFT_TYPES_ARRAY],
         ]);
@@ -172,8 +177,9 @@ class GlobalThresholdType extends AbstractType
      */
     protected function addSoftValueField(FormBuilderInterface $builder, array $options): self
     {
-        $builder->add(static::FIELD_SOFT_THRESHOLD, TextType::class, [
+        $builder->add(static::FIELD_SOFT_THRESHOLD, MoneyType::class, [
             'label' => 'Enter minimum order value',
+            'currency' => $options['data'][static::FIELD_CURRENCY],
             'required' => false,
             'constraints' => [
                 $this->createMoneyConstraint($options),
@@ -191,8 +197,9 @@ class GlobalThresholdType extends AbstractType
      */
     protected function addSoftFixedFeeField(FormBuilderInterface $builder, array $options): self
     {
-        $builder->add(static::FIELD_SOFT_FIXED_FEE, TextType::class, [
+        $builder->add(static::FIELD_SOFT_FIXED_FEE, MoneyType::class, [
             'label' => 'Enter fixed fee',
+            'currency' => $options['data'][static::FIELD_CURRENCY],
             'required' => false,
             'constraints' => [
                 $this->createMoneyConstraint($options),
@@ -210,8 +217,9 @@ class GlobalThresholdType extends AbstractType
      */
     protected function addSoftFlexibleFeeField(FormBuilderInterface $builder, array $options): self
     {
-        $builder->add(static::FIELD_SOFT_FLEXIBLE_FEE, TextType::class, [
-            'label' => 'Enter flexible fee (percentage)',
+        $builder->add(static::FIELD_SOFT_FLEXIBLE_FEE, PercentType::class, [
+            'label' => 'Enter flexible fee',
+            'type' => 'integer',
             'required' => false,
             'constraints' => [
                 $this->createRangeConstraint($options, 0, 100),

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesOrderThreshold\Persistence;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
@@ -34,6 +35,15 @@ interface SalesOrderThresholdRepositoryInterface
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $orderThresholdTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer|null
+     */
+    public function findSalesOrderThreshold(
+        SalesOrderThresholdTransfer $orderThresholdTypeTransfer
+    ): ?SalesOrderThresholdTransfer;
 
     /**
      * @return int|null

@@ -10,22 +10,34 @@ require('../../scss/main.scss');
 
 var softThresholdStrategyToggle = function() {
     var softStrategy = $('input[name="global-threshold[softStrategy]"]:checked').val();
-    var softValueBlock = $('#global-threshold_softThreshold').parent();
-    var softFixedFeeBlock = $('#global-threshold_softFixedFee').parent();
-    var softFlexibleFeeBlock = $('#global-threshold_softFlexibleFee').parent();
+    var softValueBlock = $('#global-threshold_softThreshold').parents('.form-group');
+    var softFixedFeeBlock = $('#global-threshold_softFixedFee').parents('.form-group');
+    var softFlexibleFeeBlock = $('#global-threshold_softFlexibleFee').parents('.form-group');
 
-    if (softStrategy == 'soft-minimum-threshold') {
-        softValueBlock.removeClass('hidden');
-        softFixedFeeBlock.addClass('hidden');
-        softFlexibleFeeBlock.addClass('hidden');
-    } else if (softStrategy == 'soft-minimum-threshold-fixed-fee') {
-        softValueBlock.removeClass('hidden');
-        softFixedFeeBlock.removeClass('hidden');
-        softFlexibleFeeBlock.addClass('hidden');
-    } else if (softStrategy == 'soft-minimum-threshold-flexible-fee') {
-        softValueBlock.removeClass('hidden');
-        softFixedFeeBlock.addClass('hidden');
-        softFlexibleFeeBlock.removeClass('hidden');
+    switch (softStrategy) {
+        case 'soft-minimum-threshold':
+            softValueBlock.removeClass('hidden');
+            softFixedFeeBlock.addClass('hidden');
+            softFlexibleFeeBlock.addClass('hidden');
+
+            break;
+        case 'soft-minimum-threshold-fixed-fee':
+            softValueBlock.removeClass('hidden');
+            softFixedFeeBlock.removeClass('hidden');
+            softFlexibleFeeBlock.addClass('hidden');
+
+            break;
+        case 'soft-minimum-threshold-flexible-fee':
+            softValueBlock.removeClass('hidden');
+            softFixedFeeBlock.addClass('hidden');
+            softFlexibleFeeBlock.removeClass('hidden');
+
+            break;
+
+        default:
+            softValueBlock.addClass('hidden');
+            softFixedFeeBlock.addClass('hidden');
+            softFlexibleFeeBlock.addClass('hidden');
     }
 };
 

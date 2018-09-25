@@ -29,6 +29,15 @@ interface SalesOrderThresholdEntityManagerInterface
     ): SalesOrderThresholdTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     *
+     * @return bool
+     */
+    public function deleteSalesOrderThreshold(
+        SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+    ): bool;
+
+    /**
      * @param int $idTaxSet
      *
      * @return void
