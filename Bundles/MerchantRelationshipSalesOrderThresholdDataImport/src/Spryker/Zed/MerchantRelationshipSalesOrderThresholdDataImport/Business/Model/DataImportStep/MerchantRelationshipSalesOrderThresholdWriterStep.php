@@ -105,7 +105,8 @@ class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportSte
                 $storeTransfer,
                 $currencyTransfer,
                 (int)$dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_THRESHOLD],
-                (int)$dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_FEE]
+                (int)$dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_FEE],
+                $dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_MESSAGE_GLOSSARY_KEY]
             );
 
             $this->merchantRelationshipSalesOrderThresholdFacade->saveMerchantRelationshipSalesOrderThreshold(
@@ -121,6 +122,7 @@ class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportSte
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      * @param int $thresholdValue
      * @param int|null $fee
+     * @param string|null $glossaryKey
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer
      */
@@ -130,7 +132,8 @@ class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportSte
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer,
         int $thresholdValue,
-        ?int $fee = null
+        ?int $fee = null,
+        ?string $glossaryKey = null
     ): MerchantRelationshipSalesOrderThresholdTransfer {
         return (new MerchantRelationshipSalesOrderThresholdTransfer())
             ->setMerchantRelationship($merchantRelationshipTransfer)
@@ -140,6 +143,7 @@ class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportSte
                 (new SalesOrderThresholdValueTransfer())
                     ->setThreshold($thresholdValue)
                     ->setFee($fee)
+                    ->setMessageGlossaryKey($glossaryKey)
                     ->setSalesOrderThresholdType(
                         (new SalesOrderThresholdTypeTransfer())
                             ->setKey($salesOrderThresholdTypeKey)

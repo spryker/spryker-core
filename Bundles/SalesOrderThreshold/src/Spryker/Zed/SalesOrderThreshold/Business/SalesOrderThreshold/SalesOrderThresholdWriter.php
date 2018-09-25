@@ -95,7 +95,9 @@ class SalesOrderThresholdWriter implements SalesOrderThresholdWriterInterface
                 );
         }
 
-        $this->glossaryKeyGenerator->assignMessageGlossaryKey($salesOrderThresholdTransfer);
+        if (!$salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()) {
+            $this->glossaryKeyGenerator->assignMessageGlossaryKey($salesOrderThresholdTransfer);
+        }
         $this->salesOrderThresholdEntityManager->saveSalesOrderThreshold($salesOrderThresholdTransfer);
 
         $this->translationWriter->saveLocalizedMessages($salesOrderThresholdTransfer);

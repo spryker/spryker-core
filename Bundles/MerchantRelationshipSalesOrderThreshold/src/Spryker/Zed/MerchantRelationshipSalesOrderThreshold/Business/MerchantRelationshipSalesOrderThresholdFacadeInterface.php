@@ -32,6 +32,9 @@ interface MerchantRelationshipSalesOrderThresholdFacadeInterface
     /**
      * Specification:
      * - Saves merchant relationship specific sales order threshold.
+     * - If the threshold type wasn't configured, it will throw and exception.
+     * - Generates a glossary key for the threshold message if it wasn't provided.
+     * - Saves the message translations too.
      *
      * @api
      *

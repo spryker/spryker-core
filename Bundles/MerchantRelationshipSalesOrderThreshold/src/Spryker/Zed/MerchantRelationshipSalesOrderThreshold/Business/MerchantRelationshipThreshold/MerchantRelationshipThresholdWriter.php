@@ -72,7 +72,9 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
     ): MerchantRelationshipSalesOrderThresholdTransfer {
         $this->hydrateSalesOrderThresholdType($merchantRelationshipSalesOrderThresholdTransfer);
 
-        $this->glossaryKeyGenerator->assignMessageGlossaryKey($merchantRelationshipSalesOrderThresholdTransfer);
+        if (!$merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()) {
+            $this->glossaryKeyGenerator->assignMessageGlossaryKey($merchantRelationshipSalesOrderThresholdTransfer);
+        }
         $this->merchantRelationshipSalesOrderThresholdEntityManager
             ->saveMerchantRelationshipSalesOrderThreshold($merchantRelationshipSalesOrderThresholdTransfer);
 
