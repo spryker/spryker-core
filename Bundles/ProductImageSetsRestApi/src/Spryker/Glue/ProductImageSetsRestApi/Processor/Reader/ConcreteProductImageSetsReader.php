@@ -123,7 +123,7 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
             );
 
         if (!$productImageConcreteStorageTransfers) {
-            return null;
+            $productImageConcreteStorageTransfers = [];
         }
 
         return $this->buildProductImageSetsResource($sku, $productImageConcreteStorageTransfers);
