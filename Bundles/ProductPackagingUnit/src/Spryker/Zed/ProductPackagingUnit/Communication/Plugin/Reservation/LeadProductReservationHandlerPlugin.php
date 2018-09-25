@@ -18,6 +18,8 @@ class LeadProductReservationHandlerPlugin extends AbstractPlugin implements Rese
 {
     /**
      * {@inheritdoc}
+     * - Updates the lead product's reservation for the provided product packaging unit SKU.
+     * - Updates the lead product's availability for the provided product packaging unit SKU.
      *
      * @api
      *
