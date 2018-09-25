@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Wishlist\Business\Model;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
@@ -273,6 +274,12 @@ class Writer implements WriterInterface
         $this->assertWishlistItemUpdateRequest($wishlistItemTransfer);
 
         if (!$this->preAddItemCheck($wishlistItemTransfer) || ($this->productFacade && !$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSku()))) {
+            return $wishlistItemTransfer;
+        }
+
+        $productConcreteTransfer = (new ProductConcreteTransfer())->setSku($wishlistItemTransfer->getSku());
+
+        if ($this->productFacade && !$this->productFacade->isProductConcreteActive($productConcreteTransfer)) {
             return $wishlistItemTransfer;
         }
 
