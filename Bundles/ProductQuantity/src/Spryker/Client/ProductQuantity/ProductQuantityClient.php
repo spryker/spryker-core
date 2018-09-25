@@ -17,6 +17,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductQuantityClient extends AbstractClient implements ProductQuantityClientInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $quantity

@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\ProductQuantityValidationResponseTransfer;
 interface ProductQuantityClientInterface
 {
     /**
+     * Specification:
+     * - Validates given product quantity against its quantity restrictions.
+     *
      * @api
      *
      * @param int $quantity
