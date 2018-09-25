@@ -42,4 +42,9 @@ interface RestApiDocumentationSchemaGeneratorInterface
      * @return array
      */
     public function getSchemas(): array;
+
+    /**
+     * @return array
+     */
+    public function getSecuritySchemes(): array;
 }

@@ -10,12 +10,14 @@ namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Generator;
 use Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer;
 use Generated\Shared\Transfer\RestApiDocumentationSchemaDataTransfer;
 use Generated\Shared\Transfer\RestApiDocumentationSchemaPropertyTransfer;
+use Generated\Shared\Transfer\RestApiDocumentationSecuritySchemeTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use ReflectionClass;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Exception\InvalidTransferClassException;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SchemaRendererInterface;
+use Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SecuritySchemeRenderer;
 
 class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaGeneratorInterface
 {
@@ -46,6 +48,7 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     protected const TRANSFER_NAME_PARTIAL_TRANSFER = 'Transfer';
 
     protected const SCHEMA_NAME_LINKS = 'RestLinks';
+    protected const SCHEMA_NAME_BEARER_AUTH = 'BearerAuth';
     protected const SCHEMA_NAME_PARTIAL_ATTRIBUTES = 'Attributes';
     protected const SCHEMA_NAME_PARTIAL_COLLECTION = 'Collection';
     protected const SCHEMA_NAME_PARTIAL_DATA = 'Data';
@@ -64,6 +67,11 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     protected $schemas = [];
 
     /**
+     * @var array
+     */
+    protected $securitySchemes = [];
+
+    /**
      * @var \Generated\Shared\Transfer\RestApiDocumentationPathSchemaDataTransfer
      */
     protected $restErrorSchemaReference;
@@ -79,15 +87,26 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     protected $schemaRenderer;
 
     /**
+     * @var \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SecuritySchemeRenderer
+     */
+    protected $securitySchemeRenderer;
+
+    /**
      * @param \Spryker\Glue\RestApiDocumentationGeneratorExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[] $resourceRelationshipCollectionPlugins
      * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SchemaRendererInterface $schemaRenderer
+     * @param \Spryker\Zed\RestApiDocumentationGenerator\Business\Renderer\SecuritySchemeRenderer $securitySchemeRenderer
      */
-    public function __construct(array $resourceRelationshipCollectionPlugins, SchemaRendererInterface $schemaRenderer)
-    {
+    public function __construct(
+        array $resourceRelationshipCollectionPlugins,
+        SchemaRendererInterface $schemaRenderer,
+        SecuritySchemeRenderer $securitySchemeRenderer
+    ) {
         $this->resourceRelationshipCollectionPlugins = $resourceRelationshipCollectionPlugins;
         $this->schemaRenderer = $schemaRenderer;
+        $this->securitySchemeRenderer = $securitySchemeRenderer;
 
         $this->addDefaultSchemas();
+        $this->addDefaultSecuritySchemes();
     }
 
     /**
@@ -98,6 +117,16 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
         ksort($this->schemas);
 
         return $this->schemas;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSecuritySchemes(): array
+    {
+        ksort($this->securitySchemes);
+
+        return $this->securitySchemes;
     }
 
     /**
@@ -477,9 +506,8 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
      */
     protected function formatTransferClassToSchemaType(string $transferClassName): string
     {
-        $transferClassNameExploded = $this->getTransferClassNameExploded($transferClassName);
         $schemaName = $this->createSchemaNameFromTransferClassName(
-            array_slice($transferClassNameExploded, -1)[0],
+            $this->getTransferClassNamePartial($transferClassName),
             static::TRANSFER_NAME_PARTIAL_TRANSFER,
             ''
         );
@@ -630,6 +658,24 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     /**
      * @return void
      */
+    protected function addDefaultSecuritySchemes(): void
+    {
+        $this->addDefaultBearerAuthSecurityScheme();
+    }
+
+    /**
+     * @return void
+     */
+    protected function addDefaultBearerAuthSecurityScheme(): void
+    {
+        $bearerAuthSchema = $this->createSecurityScheme(static::SCHEMA_NAME_BEARER_AUTH, 'http', 'bearer');
+
+        $this->addSecurityScheme($bearerAuthSchema);
+    }
+
+    /**
+     * @return void
+     */
     protected function addDefaultErrorMessageSchema(): void
     {
         $transferClassNamePartial = $this->getTransferClassNamePartial(RestErrorMessageTransfer::class);
@@ -752,6 +798,23 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     }
 
     /**
+     * @param string $name
+     * @param string $type
+     * @param string $scheme
+     *
+     * @return \Generated\Shared\Transfer\RestApiDocumentationSecuritySchemeTransfer
+     */
+    protected function createSecurityScheme(string $name, string $type, string $scheme): RestApiDocumentationSecuritySchemeTransfer
+    {
+        $securityScheme = new RestApiDocumentationSecuritySchemeTransfer;
+        $securityScheme->setName($name);
+        $securityScheme->setType($type);
+        $securityScheme->setScheme($scheme);
+
+        return $securityScheme;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\RestApiDocumentationSchemaDataTransfer $schemaData
      *
      * @return void
@@ -759,5 +822,15 @@ class RestApiDocumentationSchemaGenerator implements RestApiDocumentationSchemaG
     protected function addSchemaData(RestApiDocumentationSchemaDataTransfer $schemaData): void
     {
         $this->schemas = array_replace_recursive($this->schemas, $this->schemaRenderer->render($schemaData));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestApiDocumentationSecuritySchemeTransfer $securityScheme
+     *
+     * @return void
+     */
+    protected function addSecurityScheme(RestApiDocumentationSecuritySchemeTransfer $securityScheme): void
+    {
+        $this->securitySchemes = array_replace_recursive($this->securitySchemes, $this->securitySchemeRenderer->render($securityScheme));
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\RestApiDocumentationGenerator\Business\Analyzer;
 
+use Generated\Shared\Transfer\RestApiDocumentationPathAnnotationsTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Zed\RestApiDocumentationGenerator\Business\Finder\GlueControllerFinderInterface;
 
@@ -36,12 +37,13 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\RestApiDocumentationPathAnnotationsTransfer
      */
-    public function getParametersFromPlugin(ResourceRoutePluginInterface $plugin): array
+    public function getParametersFromPlugin(ResourceRoutePluginInterface $plugin): RestApiDocumentationPathAnnotationsTransfer
     {
         $controllerFiles = $this->finder->getGlueControllerFilesFromPlugin($plugin);
 
+        $pathAnnotations = new RestApiDocumentationPathAnnotationsTransfer();
         $parameters = [];
         foreach ($controllerFiles as $file) {
             $tokens = token_get_all(file_get_contents($file));
@@ -49,10 +51,11 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
         }
 
         if (!$parameters) {
-            return [];
+            return $pathAnnotations;
         }
+        $pathAnnotations = $pathAnnotations->fromArray(array_replace_recursive(...$parameters), true);
 
-        return array_replace_recursive(...$parameters);
+        return $pathAnnotations;
     }
 
     /**
@@ -70,8 +73,8 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
                 $lastParsedParameters = $this->getParametersFromDocComment($token[1]);
                 continue;
             }
-            if ($token[0] === T_STRING && preg_match(static::PATTERN_REGEX_ACTION_NAME, $token[1]) && $lastParsedParameters) {
-                $result[strtoupper(str_replace('Action', '', $token[1]))] = $lastParsedParameters;
+            if ($lastParsedParameters && $token[0] === T_STRING && preg_match(static::PATTERN_REGEX_ACTION_NAME, $token[1])) {
+                $result[strtolower(str_replace('Action', '', $token[1]))] = $lastParsedParameters;
                 $lastParsedParameters = [];
             }
         }

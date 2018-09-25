@@ -30,6 +30,7 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
     protected const KEY_PATHS = 'paths';
     protected const KEY_COMPONENTS = 'components';
     protected const KEY_SCHEMAS = 'schemas';
+    protected const KEY_SECURITY_SCHEMES = 'securitySchemes';
 
     protected const YAML_NESTING_LEVEL = 9;
     protected const YAML_INDENT = 4;
@@ -74,6 +75,7 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
         $dataStructure = $this->getDefaultDataStructure();
         $dataStructure[static::KEY_PATHS] = $data[static::KEY_PATHS];
         $dataStructure[static::KEY_COMPONENTS][static::KEY_SCHEMAS] = $data[static::KEY_SCHEMAS];
+        $dataStructure[static::KEY_COMPONENTS][static::KEY_SECURITY_SCHEMES] = $data[static::KEY_SECURITY_SCHEMES];
 
         $fileName = $this->resolveGeneratedFileName();
         $yaml = $this->yamlDumper->dump(
@@ -107,6 +109,7 @@ class YamlRestApiDocumentationWriter implements RestApiDocumentationWriterInterf
             ],
             static::KEY_PATHS => [],
             static::KEY_COMPONENTS => [
+                static::KEY_SECURITY_SCHEMES => [],
                 static::KEY_SCHEMAS => [],
             ],
         ];

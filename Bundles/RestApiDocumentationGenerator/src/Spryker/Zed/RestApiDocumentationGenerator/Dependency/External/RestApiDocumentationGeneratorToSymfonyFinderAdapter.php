@@ -18,7 +18,15 @@ class RestApiDocumentationGeneratorToSymfonyFinderAdapter implements RestApiDocu
 
     public function __construct()
     {
-        $this->finder = new Finder();
+        $this->finder = Finder::create();
+    }
+
+    /**
+     * @return void
+     */
+    public function __clone()
+    {
+        $this->finder = Finder::create();
     }
 
     /**

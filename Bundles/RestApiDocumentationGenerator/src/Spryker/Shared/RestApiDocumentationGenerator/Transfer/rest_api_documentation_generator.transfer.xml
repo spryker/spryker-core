@@ -34,4 +34,25 @@
         <property name="itemsType" type="string" />
     </transfer>
 
+    <transfer name="RestApiDocumentationSecurityScheme">
+        <property name="name" type="string" />
+        <property name="type" type="string" />
+        <property name="scheme" type="string" />
+    </transfer>
+
+    <transfer name="RestApiDocumentationPathAnnotations">
+        <property name="get" type="RestApiDocumentationAnnotation" />
+        <property name="post" type="RestApiDocumentationAnnotation" />
+        <property name="patch" type="RestApiDocumentationAnnotation" />
+        <property name="delete" type="RestApiDocumentationAnnotation" />
+    </transfer>
+
+    <transfer name="RestApiDocumentationAnnotation">
+        <property name="getResource" type="bool" />
+        <property name="getCollection" type="bool" />
+        <property name="summary" type="string" />
+        <property name="headers" singular="header" type="string[]" />
+        <property name="responses" singular="response" type="array" />
+    </transfer>
+
 </transfers>

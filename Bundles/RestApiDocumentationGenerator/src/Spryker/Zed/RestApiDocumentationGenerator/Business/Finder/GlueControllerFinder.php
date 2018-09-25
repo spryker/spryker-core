@@ -53,9 +53,10 @@ class GlueControllerFinder implements GlueControllerFinderInterface
             return [];
         }
 
-        $this->finder->in($existingDirectories)->name(sprintf(static::PATTERN_CONTROLLER_FILENAME, end($controllerNamespaceExploded)));
+        $finder = clone $this->finder;
+        $finder->in($existingDirectories)->name(sprintf(static::PATTERN_CONTROLLER_FILENAME, end($controllerNamespaceExploded)));
 
-        return iterator_to_array($this->finder);
+        return iterator_to_array($finder);
     }
 
     /**

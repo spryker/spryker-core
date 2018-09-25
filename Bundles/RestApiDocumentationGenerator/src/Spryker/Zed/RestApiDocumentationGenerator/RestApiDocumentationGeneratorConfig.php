@@ -20,6 +20,9 @@ class RestApiDocumentationGeneratorConfig extends AbstractBundleConfig
 
     public const ANNOTATION_KEY_GET_COLLECTION = 'getCollection';
     public const ANNOTATION_KEY_GET_RESOURCE = 'getResource';
+    public const ANNOTATION_KEY_HEADERS = 'headers';
+    public const ANNOTATION_KEY_RESPONSES = 'responses';
+    public const ANNOTATION_KEY_SUMMARY = 'summary';
 
     /**
      * @return string
