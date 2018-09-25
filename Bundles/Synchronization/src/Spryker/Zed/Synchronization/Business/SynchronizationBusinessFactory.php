@@ -11,7 +11,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolver;
 use Spryker\Zed\Synchronization\Business\Export\QueryContainerExporter;
 use Spryker\Zed\Synchronization\Business\Export\RepositoryExporter;
+use Spryker\Zed\Synchronization\Business\Message\BulkQueueMessageProcessor;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreator;
+use Spryker\Zed\Synchronization\Business\Message\QueueMessageHelper;
+use Spryker\Zed\Synchronization\Business\Message\QueueMessageHelperInterface;
+use Spryker\Zed\Synchronization\Business\Message\QueueMessageProcessorInterface;
 use Spryker\Zed\Synchronization\Business\Search\SynchronizationSearch;
 use Spryker\Zed\Synchronization\Business\Storage\SynchronizationStorage;
 use Spryker\Zed\Synchronization\Business\Validation\OutdatedValidator;
@@ -78,6 +82,38 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
             $this->getSynchronizationDataPlugins(),
             $this->createQueryContainerExporter(),
             $this->createRepositoryExporter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Synchronization\Business\Message\QueueMessageProcessorInterface
+     */
+    public function createSearchQueueMessageProcessor(): QueueMessageProcessorInterface
+    {
+        return new BulkQueueMessageProcessor(
+            $this->createSearchManager(),
+            $this->createQueueMessageHelper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Synchronization\Business\Message\QueueMessageProcessorInterface
+     */
+    public function createStorageQueueMessageProcessor(): QueueMessageProcessorInterface
+    {
+        return new BulkQueueMessageProcessor(
+            $this->createStorageManager(),
+            $this->createQueueMessageHelper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Synchronization\Business\Message\QueueMessageHelperInterface
+     */
+    public function createQueueMessageHelper(): QueueMessageHelperInterface
+    {
+        return new QueueMessageHelper(
+            $this->getUtilEncodingService()
         );
     }
 

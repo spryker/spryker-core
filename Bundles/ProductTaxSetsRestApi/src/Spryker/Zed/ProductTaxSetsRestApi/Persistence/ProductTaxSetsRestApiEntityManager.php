@@ -33,6 +33,6 @@ class ProductTaxSetsRestApiEntityManager extends AbstractEntityManager implement
             foreach ($taxSetEntities as $taxSetEntity) {
                 $taxSetEntity->save();
             }
-        } while ($taxSetEntities);
+        } while ($taxSetEntities->count());
     }
 }
