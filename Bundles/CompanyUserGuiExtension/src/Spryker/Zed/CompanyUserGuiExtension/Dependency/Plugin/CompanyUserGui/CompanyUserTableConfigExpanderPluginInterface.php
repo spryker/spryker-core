@@ -12,7 +12,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 interface CompanyUserTableConfigExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * Specification:
      * - This plugin interface allows you to expand config options of company user table in Zed.
      *
      * @api
