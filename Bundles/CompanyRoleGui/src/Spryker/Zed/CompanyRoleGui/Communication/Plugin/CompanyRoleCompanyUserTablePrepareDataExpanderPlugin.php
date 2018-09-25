@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Communication\Plugin;
 
-use Orm\Zed\CompanyRole\Persistence\Map\SpyCompanyRoleTableMap;
-use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui\CompanyUserTablePrepareDataExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -19,27 +19,30 @@ class CompanyRoleCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugi
 {
     /**
      * {@inheritdoc}
-     * - This plugin allows you to extend data rows of company user table with company roles.
+     * - This plugin allows you to extend data rows of company user table with company role names.
      *
      * @api
      *
-     * @param array $companyUserDataItem
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return array
      */
-    public function expandDataItem(array $companyUserDataItem): array
+    public function expandDataItem(CompanyUserTransfer $companyUserTransfer): array
     {
-        $companyRoleName = $this->getFactory()
-            ->getPropelCompanyRoleToCompanyUserQuery()
-            ->filterByFkCompanyUser($companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER])
-            ->joinCompanyRole()
-            ->select(SpyCompanyRoleTableMap::COL_NAME)
-            ->findOne();
+        $companyRoles = (array)$this->getFactory()->getCompanyRoleFacade()->getCompanyRoleCollection(
+            (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+        )
+        ->getRoles();
 
-        $companyUserDataItem += [
-            CompanyRoleCompanyUserTableConfigExpanderPlugin::COL_COMPANY_ROLE_NAME => $companyRoleName,
+        $companyUserRoleNames = [];
+        if (count($companyRoles) > 0) {
+            foreach ($companyRoles as $companyRole) {
+                $companyUserRoleNames[] = '<p>' . $companyRole->getName() . '</p>';
+            }
+        }
+
+        return [
+            CompanyRoleCompanyUserTableConfigExpanderPlugin::COL_COMPANY_ROLE_NAMES => $companyUserRoleNames,
         ];
-
-        return $companyUserDataItem;
     }
 }

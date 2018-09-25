@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Communication;
 
-use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleToCompanyUserQuery;
 use Spryker\Zed\CompanyRoleGui\CompanyRoleGuiDependencyProvider;
+use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleToCompanyUserQuery
+     * @return \Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface
      */
-    public function getPropelCompanyRoleToCompanyUserQuery(): SpyCompanyRoleToCompanyUserQuery
+    public function getCompanyRoleFacade(): CompanyRoleGuiToCompanyRoleFacadeInterface
     {
-        return $this->getProvidedDependency(CompanyRoleGuiDependencyProvider::PROPEL_COMPANY_ROLE_TO_COMPANY_USER_QUERY);
+        return $this->getProvidedDependency(CompanyRoleGuiDependencyProvider::FACADE_COMPANY_ROLE);
     }
 }

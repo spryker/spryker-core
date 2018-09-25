@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\CompanyRoleGui;
 
-use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleToCompanyUserQuery;
+use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PROPEL_COMPANY_ROLE_TO_COMPANY_USER_QUERY = 'PROPEL_COMPANY_ROLE_TO_COMPANY_USER_QUERY';
+    public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,7 +23,7 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-        $container = $this->addPropelCompanyRoleToCompanyUserQuery($container);
+        $container = $this->addCompanyRoleFacade($container);
 
         return $container;
     }
@@ -33,10 +33,12 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPropelCompanyRoleToCompanyUserQuery(Container $container): Container
+    protected function addCompanyRoleFacade(Container $container): Container
     {
-        $container[static::PROPEL_COMPANY_ROLE_TO_COMPANY_USER_QUERY] = function (Container $container) {
-            return SpyCompanyRoleToCompanyUserQuery::create();
+        $container[static::FACADE_COMPANY_ROLE] = function (Container $container) {
+            return new CompanyRoleGuiToCompanyRoleFacadeBridge(
+                $container->getLocator()->companyRole()->facade()
+            );
         };
 
         return $container;
