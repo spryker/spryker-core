@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
+
 class CompanyUserTablePrepareDataExpanderPluginExecutor implements CompanyUserTablePrepareDataExpanderPluginExecutorInterface
 {
     /**
@@ -23,16 +25,17 @@ class CompanyUserTablePrepareDataExpanderPluginExecutor implements CompanyUserTa
     }
 
     /**
-     * @param array $companyUserDataItem
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return array
      */
-    public function executePrepareDataExpanderPlugins(array $companyUserDataItem): array
+    public function executePrepareDataExpanderPlugins(CompanyUserTransfer $companyUserTransfer): array
     {
+        $expandedCompanyUserData = [];
         foreach ($this->companyUserTablePrepareDataExpanderPlugins as $companyUserTablePrepareDataExpanderPlugin) {
-            $companyUserDataItem = $companyUserTablePrepareDataExpanderPlugin->expandDataItem($companyUserDataItem);
+            $expandedCompanyUserData += $companyUserTablePrepareDataExpanderPlugin->expandDataItem($companyUserTransfer);
         }
 
-        return $companyUserDataItem;
+        return $expandedCompanyUserData;
     }
 }
