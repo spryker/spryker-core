@@ -74,12 +74,16 @@ class RestRequestValidator implements RestRequestValidatorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Symfony\Component\Validator\Constraints\Collection $constraintCollection
+     * @param \Symfony\Component\Validator\Constraints\Collection|null $constraintCollection
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
      */
-    protected function applyValidationToRequest(RestRequestInterface $restRequest, Collection $constraintCollection): RestErrorCollectionTransfer
+    protected function applyValidationToRequest(RestRequestInterface $restRequest, ?Collection $constraintCollection): RestErrorCollectionTransfer
     {
+        if ($constraintCollection === null) {
+            return $this->handleNoCacheFileError((new RestErrorCollectionTransfer()));
+        }
+
         $validator = $this->validationAdapter->createValidator();
         $fieldsToValidate = $this->getFieldsForValidation($restRequest);
 
@@ -109,6 +113,21 @@ class RestRequestValidator implements RestRequestValidatorInterface
         }
 
         return $restErrorCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $restErrorCollection
+     *
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer RestErrorCollectionTransfer
+     */
+    protected function handleNoCacheFileError(RestErrorCollectionTransfer $restErrorCollection): RestErrorCollectionTransfer
+    {
+        return $restErrorCollection->addRestError(
+            (new RestErrorMessageTransfer())
+                ->setCode(RestRequestValidatorConfig::RESPONSE_CODE_CACHE_FILE_NOT_FOUND)
+                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setDetail(RestRequestValidatorConfig::EXCEPTION_MESSAGE_CACHE_FILE_NOT_FOUND)
+        );
     }
 
     /**

@@ -15,7 +15,7 @@ interface RestRequestValidatorConstraintResolverInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Symfony\Component\Validator\Constraints\Collection
+     * @return \Symfony\Component\Validator\Constraints\Collection|null
      */
-    public function initializeConstraintCollection(RestRequestInterface $restRequest): Collection;
+    public function initializeConstraintCollection(RestRequestInterface $restRequest): ?Collection;
 }

@@ -53,11 +53,16 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Symfony\Component\Validator\Constraints\Collection
+     * @return \Symfony\Component\Validator\Constraints\Collection|null
      */
-    public function initializeConstraintCollection(RestRequestInterface $restRequest): Collection
+    public function initializeConstraintCollection(RestRequestInterface $restRequest): ?Collection
     {
         $initializedConstraintCollection = $this->initializeConstraintFromConfig($restRequest);
+
+        if (!$initializedConstraintCollection) {
+            return null;
+        }
+
         $constraints = $this->constraintCollectionAdapter->createCollection(
             ['fields' => $initializedConstraintCollection] + $this->getDefaultValidationConfig()
         );
@@ -68,11 +73,16 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array
+     * @return array|null
      */
-    protected function initializeConstraintFromConfig(RestRequestInterface $restRequest): array
+    protected function initializeConstraintFromConfig(RestRequestInterface $restRequest): ?array
     {
-        $validationConfig = $this->configReader->getValidationConfiguration($restRequest);
+        $validationConfig = $this->configReader->findValidationConfiguration($restRequest);
+
+        if (!$validationConfig) {
+            return null;
+        }
+
         $configResult = [];
         foreach ($validationConfig as $fieldName => $validators) {
             if ($validators !== null) {

@@ -8,7 +8,6 @@
 namespace Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\RestRequestValidator\Business\Exception\CacheFileNotFound;
 use Spryker\Glue\RestRequestValidator\Dependency\Client\RestRequestValidatorToStoreClientInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
 use Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapterInterface;
@@ -58,14 +57,12 @@ class RestRequestValidatorConfigReader implements RestRequestValidatorConfigRead
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @throws \Spryker\Glue\RestRequestValidator\Business\Exception\CacheFileNotFound
-     *
-     * @return array
+     * @return array|null
      */
-    public function getValidationConfiguration(RestRequestInterface $restRequest): array
+    public function findValidationConfiguration(RestRequestInterface $restRequest): ?array
     {
         if (!$this->filesystem->exists($this->getValidationConfigPath())) {
-            throw new CacheFileNotFound(RestRequestValidatorConfig::EXCEPTION_MESSAGE_CACHE_FILE_NO_FOUND);
+            return null;
         }
 
         $configuration = $this->yaml->parseFile($this->getValidationConfigPath());
