@@ -16,14 +16,18 @@ use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
+use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface;
 use Spryker\Client\SharedCart\Exception\CartNotFoundException;
+use Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin;
 use Spryker\Client\SharedCart\Zed\SharedCartStubInterface;
 
 class CartSharer implements CartSharerInterface
 {
+    use PermissionAwareTrait;
+
     public const GLOSSARY_KEY_SHARED_CART_SHARE_ERROR_ALREADY_EXIST = 'shared_cart.share.error.already_exist';
 
     /**
@@ -117,6 +121,9 @@ class CartSharer implements CartSharerInterface
      */
     public function dismissSharedCart(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer
     {
+        if (!$this->can(ReadSharedCartPermissionPlugin::KEY, $shareCartRequestTransfer->getIdQuote())) {
+            return (new QuoteResponseTransfer())->setIsSuccessful(false);
+        }
         $quoteTransfer = $this->getQuote($shareCartRequestTransfer->getIdQuote());
         $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequest($quoteTransfer);
         $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()
