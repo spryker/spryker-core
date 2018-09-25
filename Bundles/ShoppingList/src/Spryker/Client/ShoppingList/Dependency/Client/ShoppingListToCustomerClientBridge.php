@@ -61,8 +61,8 @@ class ShoppingListToCustomerClientBridge implements ShoppingListToCustomerClient
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function reloadCustomerTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
+    public function getCustomerByEmail(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        return $this->customerClient->reloadCustomerTransfer($customerTransfer);
+        return $this->customerClient->getCustomerByEmail($customerTransfer);
     }
 }

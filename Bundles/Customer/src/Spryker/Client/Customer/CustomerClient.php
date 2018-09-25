@@ -462,22 +462,4 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
             ->createSessionCustomerSession()
             ->markCustomerAsDirty();
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    public function reloadCustomerTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
-    {
-        $customerTransfer = $this->getFactory()
-            ->createZedCustomerStub()
-            ->get($customerTransfer);
-
-        return $customerTransfer;
-    }
 }
