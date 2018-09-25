@@ -6,6 +6,7 @@
     <transfer name="OrderRestAttributes">
         <property name="createdAt" type="string"/>
         <property name="totals" type="OrderRestTotalsAttributes"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="OrderDetailsRestAttributes">
