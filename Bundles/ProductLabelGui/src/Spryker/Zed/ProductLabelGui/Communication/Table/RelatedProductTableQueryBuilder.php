@@ -121,7 +121,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
@@ -139,7 +139,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
@@ -164,7 +164,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      *
      * @return void
      */
@@ -181,7 +181,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      * @param int|null $idProductLabel
      *
      * @return void
@@ -207,7 +207,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
      *
      * @return void
      */

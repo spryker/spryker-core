@@ -100,6 +100,22 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     }
 
     /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]
+     */
+    public function findProductAbstractPricesByIdIn(array $productAbstractIds): ObjectCollection
+    {
+        $priceProductStoreQuery = $this->createBasePriceProductStoreQuery(new PriceProductCriteriaTransfer())
+            ->innerJoinWithPriceProduct()
+            ->usePriceProductQuery()
+                ->filterByFkProductAbstract_In($productAbstractIds)
+            ->endUse();
+
+        return $priceProductStoreQuery->find();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
@@ -109,6 +125,24 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         return $this->getFactory()
             ->createDefaultPriceQueryExpander()
             ->buildDefaultPriceDimensionQueryCriteria($priceProductCriteriaTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
+     */
+    public function findOrphanPriceProductStoreEntities(): array
+    {
+        $priceProductStoreQuery = $this->getFactory()
+            ->createPriceProductStoreQuery();
+
+        $this->getFactory()
+            ->createPriceProductDimensionQueryExpander()
+            ->expandPriceProductStoreQueryWithPriceDimensionForDelete(
+                $priceProductStoreQuery,
+                new PriceProductCriteriaTransfer()
+            );
+
+        return $this->buildQueryFromCriteria($priceProductStoreQuery)->find();
     }
 
     /**
