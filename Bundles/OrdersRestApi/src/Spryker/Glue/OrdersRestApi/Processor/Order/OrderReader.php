@@ -8,7 +8,6 @@
 namespace Spryker\Glue\OrdersRestApi\Processor\Order;
 
 use Generated\Shared\Transfer\OrderListTransfer;
-use Generated\Shared\Transfer\OrdersRestAttributesTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -18,6 +17,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrderReader implements OrderReaderInterface
@@ -120,9 +120,9 @@ class OrderReader implements OrderReaderInterface
             return $this->createOrderNotFoundErrorResponse($response);
         }
 
-        $ordersRestAttributesTransfer = $this->ordersResourceMapper->mapOrderTransferToOrdersRestAttributesTransfer($orderTransfer);
+        $orderDetailsRestAttributesTransfer = $this->ordersResourceMapper->mapOrderTransferToOrderDetailsRestAttributesTransfer($orderTransfer);
 
-        return $this->createRestResource($response, $orderTransfer->getOrderReference(), $ordersRestAttributesTransfer);
+        return $this->createRestResource($response, $orderTransfer->getOrderReference(), $orderDetailsRestAttributesTransfer);
     }
 
     /**
@@ -143,11 +143,11 @@ class OrderReader implements OrderReaderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $response
      * @param string $orderReference
-     * @param \Generated\Shared\Transfer\OrdersRestAttributesTransfer $ordersRestAttributesTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $ordersRestAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createRestResource(RestResponseInterface $response, string $orderReference, OrdersRestAttributesTransfer $ordersRestAttributesTransfer): RestResponseInterface
+    protected function createRestResource(RestResponseInterface $response, string $orderReference, AbstractTransfer $ordersRestAttributesTransfer): RestResponseInterface
     {
         $restResource = $this->restResourceBuilder->createRestResource(
             OrdersRestApiConfig::RESOURCE_ORDERS,
