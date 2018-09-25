@@ -62,7 +62,7 @@ class StepCollection implements StepCollectionInterface
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return bool
      */
@@ -82,7 +82,7 @@ class StepCollection implements StepCollectionInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
      */
@@ -100,7 +100,7 @@ class StepCollection implements StepCollectionInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
@@ -140,7 +140,7 @@ class StepCollection implements StepCollectionInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $dataTransfer
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
@@ -167,7 +167,7 @@ class StepCollection implements StepCollectionInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $step
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $dataTransfer
      *
      * @return bool
      */
@@ -192,7 +192,7 @@ class StepCollection implements StepCollectionInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return string
      */
@@ -209,7 +209,7 @@ class StepCollection implements StepCollectionInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return string
      */
@@ -234,7 +234,7 @@ class StepCollection implements StepCollectionInterface
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $dataTransfer
      *
      * @return string
      */
@@ -252,6 +252,7 @@ class StepCollection implements StepCollectionInterface
      */
     public function getEscapeUrl(StepInterface $currentStep)
     {
+        /** @var string|null $route */
         $route = $currentStep->getEscapeRoute();
         if ($route === null) {
             $route = $this->getPreviousStep($currentStep)->getStepRoute();
