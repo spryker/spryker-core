@@ -10,12 +10,10 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/company-user": "*",
     "spryker/gui": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/company-user": "If you want to use CompanyRoleGui plugins for CompanyUserTable: ^1.4.0",
     "spryker/gui": "If you want to use CompanyRoleGui plugins for CompanyUserTable: ^3.13.1"
   },
   "autoload": {
