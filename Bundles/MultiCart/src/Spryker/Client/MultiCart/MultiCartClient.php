@@ -88,9 +88,15 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
      */
     public function findQuoteById(int $idQuote): ?QuoteTransfer
     {
-        return $this->getFactory()
+        $quoteTransfer = $this->getFactory()
             ->createMultiCartStorage()
             ->findQuoteById($idQuote);
+
+        if ($quoteTransfer !== null) {
+            $quoteTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
+        }
+
+        return $quoteTransfer;
     }
 
     /**

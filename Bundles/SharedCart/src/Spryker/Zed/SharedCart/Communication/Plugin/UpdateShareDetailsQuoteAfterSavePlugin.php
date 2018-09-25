@@ -18,6 +18,9 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 class UpdateShareDetailsQuoteAfterSavePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Saves quote share details on quote save.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -26,9 +29,7 @@ class UpdateShareDetailsQuoteAfterSavePlugin extends AbstractPlugin implements Q
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if (!$quoteTransfer->isPropertyModified(QuoteTransfer::SHARE_DETAILS)
-            || strcmp($quoteTransfer->getCustomer()->getCustomerReference(), $quoteTransfer->getCustomerReference()) !== 0
-        ) {
+        if (!$quoteTransfer->isPropertyModified(QuoteTransfer::SHARE_DETAILS)) {
             return $quoteTransfer;
         }
 
