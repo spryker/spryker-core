@@ -3,10 +3,20 @@
   "description": "CompanyRoleGui module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker/company-role": "^1.0.1",
+    "spryker/company-user-gui-extension": "^1.0.0",
+    "spryker/kernel": "^3.23.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company-user": "*",
+    "spryker/gui": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/company-user": "If you want to use CompanyRoleGui plugins for CompanyUserTable: ^1.4.0",
+    "spryker/gui": "If you want to use CompanyRoleGui plugins for CompanyUserTable: ^3.13.1"
   },
   "autoload": {
     "psr-4": {
