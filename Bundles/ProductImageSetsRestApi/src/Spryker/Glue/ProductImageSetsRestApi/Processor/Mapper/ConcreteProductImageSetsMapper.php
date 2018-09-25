@@ -21,6 +21,8 @@ class ConcreteProductImageSetsMapper implements ConcreteProductImageSetsMapperIn
         array $productImageSetStorageTransfers
     ): RestProductImageSetsAttributesTransfer {
         $restProductImageSetsAttributesTransfer = new RestProductImageSetsAttributesTransfer();
+
+        $productImageSetStorageTransfers = $this->filterProductImageSetStorageTransfers($productImageSetStorageTransfers);
         foreach ($productImageSetStorageTransfers as $productImageSetStorageTransfer) {
             $restProductImageSet = (new RestProductImageSetTransfer())->fromArray(
                 $productImageSetStorageTransfer->toArray(),
@@ -30,5 +32,15 @@ class ConcreteProductImageSetsMapper implements ConcreteProductImageSetsMapperIn
         }
 
         return $restProductImageSetsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageSetStorageTransfer[] $productImageSetStorageTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetStorageTransfer[]
+     */
+    protected function filterProductImageSetStorageTransfers(array $productImageSetStorageTransfers): array
+    {
+        return array_unique($productImageSetStorageTransfers, SORT_REGULAR);
     }
 }
