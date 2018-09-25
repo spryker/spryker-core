@@ -98,8 +98,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @api
-     *
      * @param int[] $idsCategory
      * @param int $idLocale
      *
