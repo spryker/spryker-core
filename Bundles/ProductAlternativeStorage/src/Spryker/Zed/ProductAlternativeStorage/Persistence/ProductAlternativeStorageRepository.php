@@ -31,16 +31,17 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
         if (!$productIds) {
             return [];
         }
+
         $productAlternativeStorageEntities = $this->getFactory()
             ->createProductAlternativeStoragePropelQuery()
             ->filterByFkProduct_In($productIds)
             ->find();
 
-        if ($productAlternativeStorageEntities) {
-            return $productAlternativeStorageEntities->getArrayCopy();
+        if (!$productAlternativeStorageEntities->count()) {
+            return [];
         }
 
-        return [];
+        return $productAlternativeStorageEntities->getArrayCopy();
     }
 
     /**
@@ -52,7 +53,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      */
     public function findProductSkuById($idProduct): string
     {
-        return $this->getFactory()
+        return (string)$this->getFactory()
             ->getProductPropelQuery()
             ->filterByIdProduct($idProduct)
             ->select([SpyProductTableMap::COL_SKU])

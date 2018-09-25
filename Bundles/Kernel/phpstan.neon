@@ -9,6 +9,8 @@ parameters:
         - '#Access to undefined constant .+ActiveRecordInterface::TABLE_MAP.#'
         - '#Method .+Abstract.+::resolveBundleConfig\(\) should return .+AbstractBundleConfig but returns Spryker\\Shared\\Kernel\\AbstractBundleConfig#'
         - '#Call to function method\_exists\(\) with string and .+ will always evaluate to false\.#'
+        - '#Parameter \#1 $var of function count expects array|Countable, object given#'
+        - '#Parameter \#2 $default of method .+Console::ask\(\) expects string|null, bool given#'
 
 services:
     -

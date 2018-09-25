@@ -33,7 +33,7 @@ class ProductImageTransferMapper implements ProductImageTransferMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetEntityCollection
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetEntityCollection
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
