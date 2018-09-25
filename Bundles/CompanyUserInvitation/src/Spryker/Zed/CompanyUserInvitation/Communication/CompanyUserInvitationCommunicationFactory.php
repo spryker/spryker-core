@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\CompanyUserInvitation\CompanyUserInvitationConfig getConfig()
+ * @method \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationEntityManagerInterface getEntityManager()
  */
 class CompanyUserInvitationCommunicationFactory extends AbstractCommunicationFactory
 {

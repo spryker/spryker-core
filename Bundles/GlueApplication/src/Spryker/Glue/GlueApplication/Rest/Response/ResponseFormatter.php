@@ -109,7 +109,7 @@ class ResponseFormatter implements ResponseFormatterInterface
 
             $responseStatus = $responseErrorTransfer->getStatus();
 
-            $response[RestResponseInterface::RESPONSE_ERRORS][] = $responseErrorTransfer->toArray();
+            $response[RestResponseInterface::RESPONSE_ERRORS][] = $responseErrorTransfer->modifiedToArray();
         }
         return new Response(
             $encoder->encode($response),

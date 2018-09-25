@@ -8,6 +8,8 @@
         <property name="sort" type="RestCatalogSearchSortAttributes"/>
         <property name="pagination" type="RestCatalogSearchPaginationAttributes"/>
         <property name="products" type="RestCatalogSearchProductsAttributes[]"/>
+        <property name="valueFacets" type="RestFacetSearchResultAttributes[]" singular="valueFacet"/>
+        <property name="rangeFacets" type="RestRangeSearchResultAttributes[]" singular="rangeFacet"/>
         <property name="spellingSuggestion" type="string"/>
     </transfer>
 
@@ -37,12 +39,40 @@
         <property name="externalUrlLarge" type="string"/>
     </transfer>
 
+    <transfer name="RestRangeSearchResultAttributes">
+        <property name="name" type="string" />
+        <property name="min" type="float" />
+        <property name="max" type="float" />
+        <property name="activeMin" type="float" />
+        <property name="activeMax" type="float" />
+        <property name="docCount" type="int" />
+    </transfer>
+
+    <transfer name="RestFacetSearchResultAttributes">
+        <property name="name" type="string" />
+        <property name="docCount" type="int" />
+        <property name="values" type="array" singular="value" />
+        <property name="activeValue" type="string" />
+    </transfer>
+
     <transfer name="RestCatalogSearchSuggestionsAttributes">
         <property name="currency" type="string"/>
         <property name="completion" type="string[]"/>
         <property name="products" type="array"/>
         <property name="categories" type="array"/>
         <property name="cmsPages" type="array"/>
+    </transfer>
+
+    <transfer name="RestPriceProductAttributes">
+        <property name="priceTypeName" type="string"/>
+        <property name="grossAmount" type="int"/>
+        <property name="netAmount" type="int"/>
+    </transfer>
+
+    <transfer name="PriceModeConfiguration">
+        <property name="currentPriceMode" type="string"/>
+        <property name="grossModeIdentifier" type="string"/>
+        <property name="netModeIdentifier" type="string"/>
     </transfer>
 
 </transfers>

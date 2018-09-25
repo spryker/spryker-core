@@ -363,16 +363,24 @@ class Service implements ServiceInterface
         return $result;
     }
 
-    /**a
-     *
+    /**
      * @param array $keys
      *
      * @return void
      */
     public function deleteMulti(array $keys)
     {
-        $this->client->del($keys);
-        $this->addMultiDeleteAccessStats($keys);
+        if (count($keys) === 0) {
+            return;
+        }
+
+        $transformedKeys = [];
+        foreach ($keys as $key) {
+            $transformedKeys[] = $this->getKeyName($key);
+        }
+
+        $this->client->del($transformedKeys);
+        $this->addMultiDeleteAccessStats($transformedKeys);
     }
 
     /**

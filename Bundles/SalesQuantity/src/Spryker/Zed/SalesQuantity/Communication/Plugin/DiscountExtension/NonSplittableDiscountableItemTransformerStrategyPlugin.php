@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -28,7 +29,6 @@ class NonSplittableDiscountableItemTransformerStrategyPlugin extends AbstractPlu
      */
     public function isApplicable(DiscountableItemTransfer $discountableItemTransfer): bool
     {
-        /** @var \Generated\Shared\Transfer\ItemTransfer|null $originalItem */
         $originalItem = $discountableItemTransfer->getOriginalItem();
 
         if (!$originalItem) {

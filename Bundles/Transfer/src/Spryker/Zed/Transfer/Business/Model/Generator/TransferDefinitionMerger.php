@@ -167,8 +167,8 @@ class TransferDefinitionMerger implements MergerInterface
     }
 
     /**
-     * @param string $deprecated1
-     * @param string $deprecated2
+     * @param string|null $deprecated1
+     * @param string|null $deprecated2
      *
      * @return string|null
      */

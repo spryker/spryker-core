@@ -25,7 +25,7 @@ class ProductReviewSearchQueryContainer extends AbstractQueryContainer implement
      *
      * @param array $productReviewIds
      *
-     * @return $this|\Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearchQuery
+     * @return \Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearchQuery
      */
     public function queryProductReviewSearchByIds(array $productReviewIds)
     {
@@ -55,7 +55,7 @@ class ProductReviewSearchQueryContainer extends AbstractQueryContainer implement
      *
      * @param int $idAbstractProduct
      *
-     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */
     public function queryProductReviewRatingByIdAbstractProduct($idAbstractProduct)
     {

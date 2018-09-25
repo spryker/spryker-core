@@ -19,7 +19,7 @@ class DataContainer implements DataContainerInterface
     protected $quoteClient;
 
     /**
-     * @var \Generated\Shared\Transfer\QuoteTransfer
+     * @var \Generated\Shared\Transfer\QuoteTransfer|null
      */
     protected $quoteTransfer;
 

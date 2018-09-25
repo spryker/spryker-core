@@ -103,6 +103,7 @@ class Writer implements WriterInterface
             $excludeIdProductImageSet[] = $productImageSetTransfer->getIdProductImageSet();
         }
 
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $missingProductImageSets */
         $missingProductImageSets = $this->productImageQueryContainer
             ->queryImageSetByProductId($productConcreteTransfer->getIdProductConcrete(), $excludeIdProductImageSet)
             ->find()

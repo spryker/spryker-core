@@ -92,9 +92,9 @@ class RateTable extends AbstractTable
         $query = $this->taxRateQuery
             ->leftJoinCountry(SpyCountryTableMap::TABLE_NAME);
 
+        /** @var \Orm\Zed\Tax\Persistence\SpyTaxRate[] $queryResult */
         $queryResult = $this->runQuery($query, $config, true);
 
-        /** @var \Orm\Zed\Tax\Persistence\SpyTaxRate $taxRateEntity */
         foreach ($queryResult as $taxRateEntity) {
             $result[] = [
                 SpyTaxRateTableMap::COL_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
@@ -180,8 +180,11 @@ class RateTable extends AbstractTable
     protected function getCountryName(SpyTaxRate $taxRateEntity)
     {
         $countryName = self::COUNTRY_NOT_AVAILABLE;
-        if ($taxRateEntity->getCountry()) {
-            $countryName = $taxRateEntity->getCountry()->getName();
+
+        /** @var \Orm\Zed\Country\Persistence\SpyCountry|null $countryEntity */
+        $countryEntity = $taxRateEntity->getCountry();
+        if ($countryEntity) {
+            $countryName = $countryEntity->getName();
         }
 
         return $countryName;

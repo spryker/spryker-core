@@ -126,7 +126,7 @@ class ProductRuleTable extends AbstractProductTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        if (!$this->showResultsWithoutCriteria && !count((array)$this->productRelationTransfer->getQuerySet()->getRules())) {
+        if (!$this->showResultsWithoutCriteria && !$this->productRelationTransfer->getQuerySet()->getRules()->getArrayCopy()) {
             return [];
         }
 
