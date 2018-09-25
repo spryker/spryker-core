@@ -40,7 +40,7 @@ class RestRequestValidatorFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\RestRequestValidator\Processor\Validator\Configuration\RestRequestValidatorConfigReaderInterface
      */
-    protected function createRestRequestConfigurationReader(): RestRequestValidatorConfigReaderInterface
+    public function createRestRequestConfigurationReader(): RestRequestValidatorConfigReaderInterface
     {
         return new RestRequestValidatorConfigReader(
             $this->getFilesystemAdapter(),
@@ -89,7 +89,7 @@ class RestRequestValidatorFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\RestRequestValidator\Dependency\External\RestRequestValidatorToConstraintCollectionAdapterInterface
      */
-    protected function getConstraintCollectionAdapter(): RestRequestValidatorToConstraintCollectionAdapterInterface
+    public function getConstraintCollectionAdapter(): RestRequestValidatorToConstraintCollectionAdapterInterface
     {
         return $this->getProvidedDependency(RestRequestValidatorDependencyProvider::ADAPTER_CONSTRAINT_COLLECTION);
     }
