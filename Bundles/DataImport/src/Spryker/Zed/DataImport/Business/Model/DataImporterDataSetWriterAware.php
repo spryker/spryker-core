@@ -9,8 +9,6 @@ namespace Spryker\Zed\DataImport\Business\Model;
 
 use Exception;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
-use Spryker\Shared\ErrorHandler\ErrorLogger;
-use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
 
@@ -36,7 +34,6 @@ class DataImporterDataSetWriterAware extends DataImporter implements DataImporte
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\DataImportException
      * @throws \Exception
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -47,31 +44,9 @@ class DataImporterDataSetWriterAware extends DataImporter implements DataImporte
             throw new Exception('Writer is not defined.');
         }
 
-        $dataReader = $this->getDataReader($dataImporterConfigurationTransfer);
-        $dataImporterReportTransfer = $this->prepareDataImportReport($dataReader);
-
-        $this->beforeImport();
-
         $start = microtime(true);
-
-        foreach ($dataReader as $dataSet) {
-            try {
-                $this->importDataSet($dataSet);
-                $dataImporterReportTransfer->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + 1);
-            } catch (Exception $dataImportException) {
-                if ($dataImporterConfigurationTransfer && $dataImporterConfigurationTransfer->getThrowException()) {
-                    throw new DataImportException($this->buildExceptionMessage($dataImportException, $dataImporterReportTransfer->getImportedDataSetCount() + 1), 0, $dataImportException);
-                }
-
-                ErrorLogger::getInstance()->log($dataImportException);
-                $dataImporterReportTransfer->setIsSuccess(false);
-            }
-
-            unset($dataSet);
-        }
-
+        $dataImporterReportTransfer = $this->importByDataImporterConfiguration($dataImporterConfigurationTransfer);
         $this->dataSetWriter->flush();
-
         $dataImporterReportTransfer->setImportTime(microtime(true) - $start);
 
         $this->afterImport();

@@ -111,18 +111,32 @@ class DataImporter implements
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
+    {
+        $start = microtime(true);
+        $dataImporterReportTransfer = $this->importByDataImporterConfiguration($dataImporterConfigurationTransfer);
+        $dataImporterReportTransfer->setImportTime(microtime(true) - $start);
+
+        $this->afterImport();
+
+        return $dataImporterReportTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
      * @throws \Spryker\Zed\DataImport\Business\Exception\DataImportException
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
+    protected function importByDataImporterConfiguration(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         $dataReader = $this->getDataReader($dataImporterConfigurationTransfer);
         $dataImporterReportTransfer = $this->prepareDataImportReport($dataReader);
 
         $this->beforeImport();
-
-        $start = microtime(true);
 
         foreach ($dataReader as $dataSet) {
             try {
@@ -139,10 +153,6 @@ class DataImporter implements
 
             unset($dataSet);
         }
-
-        $dataImporterReportTransfer->setImportTime(microtime(true) - $start);
-
-        $this->afterImport();
 
         return $dataImporterReportTransfer;
     }
