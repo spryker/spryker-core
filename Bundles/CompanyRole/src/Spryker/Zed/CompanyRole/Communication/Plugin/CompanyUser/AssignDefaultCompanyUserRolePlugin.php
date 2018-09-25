@@ -39,38 +39,28 @@ class AssignDefaultCompanyUserRolePlugin extends AbstractPlugin implements Compa
      */
     protected function assignDefaultRoleToCompanyUser(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
-        $this->assertRequiredProperties($companyUserResponseTransfer);
+        if (!$companyUserResponseTransfer->getCompanyUser() || $companyUserResponseTransfer->getCompanyUser()->getFkCompany()) {
+            return $companyUserResponseTransfer->setIsSuccessful(false);
+        }
 
         $defaultCompanyRoleTransfer = $this->getFacade()->findDefaultCompanyRoleByIdCompany(
             $companyUserResponseTransfer->getCompanyUser()->getFkCompany()
         );
 
         if (!$defaultCompanyRoleTransfer) {
-            return $companyUserResponseTransfer;
+            return $companyUserResponseTransfer->setIsSuccessful(false);
         }
 
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
-        $companyUserTransfer->setCompanyRoleCollection(
-            (new CompanyRoleCollectionTransfer())
-                ->addRole($defaultCompanyRoleTransfer)
-        );
+
+        if (!$companyUserTransfer->getCompanyRoleCollection()) {
+            $companyUserTransfer->setCompanyRoleCollection(new CompanyRoleCollectionTransfer());
+        }
+
+        $companyUserTransfer->getCompanyRoleCollection()->addRole($defaultCompanyRoleTransfer);
 
         $this->getFacade()->saveCompanyUser($companyUserTransfer);
-        $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
 
         return $companyUserResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
-     *
-     * @return void
-     */
-    protected function assertRequiredProperties(CompanyUserResponseTransfer $companyUserResponseTransfer): void
-    {
-        $companyUserResponseTransfer
-            ->requireCompanyUser()
-            ->getCompanyUser()
-                ->requireFkCompany();
     }
 }
