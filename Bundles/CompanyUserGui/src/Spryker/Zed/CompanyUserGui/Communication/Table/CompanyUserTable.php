@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserGui\Communication\Table;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
@@ -109,22 +110,63 @@ class CompanyUserTable extends AbstractTable
 
         $companyUserDataTableRows = [];
         foreach ($companyUserDataItems as $companyUserDataItem) {
-            $companyUserDataTableRow = [
-                static::COL_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
-                static::COL_COMPANY_USER_NAME => $companyUserDataItem[static::COL_COMPANY_USER_NAME],
-                static::COL_COMPANY_NAME => $companyUserDataItem[static::COL_COMPANY_NAME],
-                static::COL_COMPANY_USER_STATUS => $this->generateCompanyUserStatusLabel($companyUserDataItem),
-                static::COL_COMPANY_USER_ACTIONS => $this->buildLinks($companyUserDataItem),
-            ];
+            $companyUserDataTableRow = $this->mapCompanyUserTransferToCompanyUserTableDataRow($companyUserDataItem);
 
             $companyUserDataTableRow += $this->companyUserTablePrepareDataExpanderPluginExecutor->executePrepareDataExpanderPlugins(
-                $companyUserDataItem
+                $this->mapCompanyUserDataItemToCompanyUserTransfer($companyUserDataItem)
             );
 
             $companyUserDataTableRows[] = $companyUserDataTableRow;
         }
 
         return $companyUserDataTableRows;
+    }
+
+    /**
+     * @param array $companyUserDataItem
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    protected function mapCompanyUserDataItemToCompanyUserTransfer(array $companyUserDataItem): CompanyUserTransfer
+    {
+        return (new CompanyUserTransfer())
+            ->fromArray(
+                $this->normalizeCompanyUserDataItemArrayKeys($companyUserDataItem),
+                true
+            );
+    }
+
+    /**
+     * @param array $companyUserData
+     *
+     * @return array
+     */
+    protected function normalizeCompanyUserDataItemArrayKeys(array $companyUserData): array
+    {
+        $processedCompanyUserData = [];
+        foreach ($companyUserData as $key => $value) {
+            $processedCompanyUserData += [
+                str_replace(SpyCompanyUserTableMap::TABLE_NAME . '.', '', $key) => $value,
+            ];
+        }
+
+        return $processedCompanyUserData;
+    }
+
+    /**
+     * @param array $companyUserDataItem
+     *
+     * @return array
+     */
+    protected function mapCompanyUserTransferToCompanyUserTableDataRow(array $companyUserDataItem): array
+    {
+        return [
+            static::COL_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+            static::COL_COMPANY_USER_NAME => $companyUserDataItem[static::COL_COMPANY_USER_NAME],
+            static::COL_COMPANY_NAME => $companyUserDataItem[static::COL_COMPANY_NAME],
+            static::COL_COMPANY_USER_STATUS => $this->generateCompanyUserStatusLabel($companyUserDataItem),
+            static::COL_COMPANY_USER_ACTIONS => $this->buildLinks($companyUserDataItem),
+        ];
     }
 
     /**
@@ -136,7 +178,10 @@ class CompanyUserTable extends AbstractTable
     {
         $query = $companyUserQuery
             ->joinCustomer()
-            ->withColumn('CONCAT(' . SpyCustomerTableMap::COL_FIRST_NAME . ', \' \', ' . SpyCustomerTableMap::COL_LAST_NAME . ')', static::COL_COMPANY_USER_NAME)
+            ->withColumn(
+                'CONCAT(' . SpyCustomerTableMap::COL_FIRST_NAME . ', \' \', ' . SpyCustomerTableMap::COL_LAST_NAME . ')',
+                static::COL_COMPANY_USER_NAME
+            )
             ->joinCompany()
             ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY_NAME);
 
