@@ -27,7 +27,7 @@ use Spryker\Zed\ProductManagement\Communication\Tabs\ProductConcreteFormEditTabs
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormAddTabs;
 use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormEditTabs;
 use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapper;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCategoryInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductCategoryInterface;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
@@ -540,10 +540,10 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCategoryInterface
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductCategoryInterface
      */
-    public function getCategoryFacade(): ProductManagementToCategoryInterface
+    public function getProductCategoryFacade(): ProductManagementToProductCategoryInterface
     {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_CATEGORY);
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT_CATEGORY);
     }
 }

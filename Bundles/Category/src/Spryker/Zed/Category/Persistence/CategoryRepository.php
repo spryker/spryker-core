@@ -101,17 +101,14 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     /**
      * @api
      *
-     * @param int $idProductAbstract
+     * @param int[] $idsCategory
      * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getCategoriesByAbstractProductId(int $idProductAbstract, int $idLocale): CategoryCollectionTransfer
+    public function findCategoryTransferCollectionByCategoryIds(array $idsCategory, int $idLocale): CategoryCollectionTransfer
     {
-        $spyCategoryCollection = $this->queryCategoriesByAbstractProductId(
-            $idProductAbstract,
-            $idLocale
-        )->find();
+        $spyCategoryCollection = $this->queryCategoryCollectionByCategoryIds($idsCategory, $idLocale)->find();
 
         return $this->getFactory()
             ->createCategoryMapper()
@@ -119,30 +116,25 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param int[] $idsCategory
      * @param int $idLocale
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
-    protected function queryCategoriesByAbstractProductId(int $idProductAbstract, int $idLocale): SpyCategoryQuery
+    protected function queryCategoryCollectionByCategoryIds(array $idsCategory, int $idLocale): SpyCategoryQuery
     {
         return $this->getFactory()->createCategoryQuery()
             ->joinAttribute()
             ->innerJoinNode()
-            ->addJoin(
-                SpyCategoryTableMap::COL_ID_CATEGORY,
-                SpyProductCategoryTableMap::COL_FK_CATEGORY,
-                Criteria::INNER_JOIN
-            )
             ->addAnd(
                 SpyCategoryAttributeTableMap::COL_FK_LOCALE,
                 $idLocale,
                 Criteria::EQUAL
             )
             ->addAnd(
-                SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
-                $idProductAbstract,
-                Criteria::EQUAL
+                SpyCategoryTableMap::COL_ID_CATEGORY,
+                $idsCategory,
+                Criteria::IN
             )
             ->withColumn(SpyCategoryTableMap::COL_ID_CATEGORY, 'id_category')
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')

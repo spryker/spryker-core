@@ -28,12 +28,10 @@ interface CategoryRepositoryInterface
     public function getNodePath(int $idCategoryNode, LocaleTransfer $localeTransfer);
 
     /**
-     * @api
-     *
-     * @param int $idProductAbstract
+     * @param int[] $idsCategory
      * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getCategoriesByIdProductAbstract(int $idProductAbstract, int $idLocale): CategoryCollectionTransfer;
+    public function findCategoryTransferCollectionByCategoryIds(array $idsCategory, int $idLocale): CategoryCollectionTransfer;
 }

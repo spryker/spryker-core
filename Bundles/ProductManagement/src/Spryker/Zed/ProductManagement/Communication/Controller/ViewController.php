@@ -83,8 +83,8 @@ class ViewController extends AddController
             ->isGiftCardByProductAbstractTransfer($productAbstractTransfer);
 
         $categoryCollectionTransfer = $this->getFactory()
-            ->getCategoryFacade()
-            ->getCategoriesByAbstractProductId($idProductAbstract, $localeProvider->getCurrentLocale());
+            ->getProductCategoryFacade()
+            ->getCategoryTransferCollectionByIdProductAbstract($idProductAbstract, $localeProvider->getCurrentLocale());
 
         return $this->viewResponse([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
