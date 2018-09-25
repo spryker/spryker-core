@@ -129,7 +129,7 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
             $restErrorTransfer = (new RestErrorMessageTransfer())
                 ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_NO_ITEM_WITH_PROVIDED_ID)
                 ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_NO_ITEM_WITH_PROVIDED_ID);
+                ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_NO_ITEM_WITH_PROVIDED_SKU);
 
             return $restResponse->addError($restErrorTransfer);
         }
