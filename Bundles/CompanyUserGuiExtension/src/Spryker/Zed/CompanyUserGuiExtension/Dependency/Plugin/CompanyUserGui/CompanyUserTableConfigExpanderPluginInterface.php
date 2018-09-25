@@ -12,8 +12,8 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 interface CompanyUserTableConfigExpanderPluginInterface
 {
     /**
-     * Specification:
-     * - This plugin interface allows you to extend existing config options of company user table in Zed.
+     * {@inheritdoc}
+     * - This plugin interface allows you to expand config options of company user table in Zed.
      *
      * @api
      *
@@ -21,5 +21,5 @@ interface CompanyUserTableConfigExpanderPluginInterface
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    public function execute(TableConfiguration $config): TableConfiguration;
+    public function expandConfig(TableConfiguration $config): TableConfiguration;
 }
