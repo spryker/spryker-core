@@ -17,8 +17,8 @@ use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryBridge;
 use Spryker\Zed\Mail\Dependency\Mailer\MailToMailerBridge;
 use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererBridge;
 use Swift_Mailer;
-use Swift_MailTransport;
 use Swift_Message;
+use Swift_SmtpTransport;
 
 class MailDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -148,9 +148,9 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     protected function addMailer(Container $container)
     {
         $container[static::MAILER] = function () {
-            $message = Swift_Message::newInstance();
-            $transport = Swift_MailTransport::newInstance();
-            $mailer = Swift_Mailer::newInstance($transport);
+            $message = new Swift_Message();
+            $transport = new Swift_SmtpTransport();
+            $mailer = new Swift_Mailer($transport);
 
             $mailerBridge = new MailToMailerBridge($message, $mailer);
 
