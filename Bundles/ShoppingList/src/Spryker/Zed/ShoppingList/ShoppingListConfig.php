@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShoppingList;
 
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
+use Spryker\Client\ShoppingList\Plugin\WriteShoppingListPermissionPlugin;
 use Spryker\Shared\ShoppingList\ShoppingListConfig as SharedConfig;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ReadShoppingListPermissionPlugin;
@@ -32,6 +33,7 @@ class ShoppingListConfig extends AbstractBundleConfig
     {
         return [
             $this->getReadOnlyPermissionGroup(),
+            $this->getFullAccessPermissionGroup(),
         ];
     }
 
@@ -46,5 +48,19 @@ class ShoppingListConfig extends AbstractBundleConfig
             ->addPermission((new PermissionTransfer())->setKey(ReadShoppingListPermissionPlugin::KEY));
 
         return $readOnlyShoppingListPermissionGroupTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
+     */
+    protected function getFullAccessPermissionGroup(): ShoppingListPermissionGroupTransfer
+    {
+        $fullAccessQuotePermissionGroupTransfer = new ShoppingListPermissionGroupTransfer();
+        $fullAccessQuotePermissionGroupTransfer
+            ->setName(SharedConfig::PERMISSION_GROUP_FULL_ACCESS)
+            ->addPermission((new PermissionTransfer())->setKey(ReadShoppingListPermissionPlugin::KEY))
+            ->addPermission((new PermissionTransfer())->setKey(WriteShoppingListPermissionPlugin::KEY));
+
+        return $fullAccessQuotePermissionGroupTransfer;
     }
 }
