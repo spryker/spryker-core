@@ -251,7 +251,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      */
     protected function parseDeclaredDependenciesForBundle(ModuleTransfer $moduleTransfer): array
     {
-        $dependencyJsonFilePath = sprintf('%s/dependency.json', $moduleTransfer->getRootDirectory());
+        $dependencyJsonFilePath = sprintf('%s/dependency.json', $moduleTransfer->getPath());
 
         if (!file_exists($dependencyJsonFilePath)) {
             return [];
@@ -287,7 +287,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     {
         $composerDependencies = new ComposerDependencyCollectionTransfer();
 
-        $composerJsonFilePath = sprintf('%s/composer.json', $moduleTransfer->getRootDirectory());
+        $composerJsonFilePath = sprintf('%s/composer.json', $moduleTransfer->getPath());
 
         if (!file_exists($composerJsonFilePath)) {
             return $composerDependencies;

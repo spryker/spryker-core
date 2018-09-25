@@ -153,4 +153,19 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
             ->createCompanyBusinessUnitAssigner()
             ->assignDefaultBusinessUnitToCompanyUser($companyUserResponseTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $companyBusinessUnitIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
+    {
+        return $this->getRepository()
+            ->getCustomerReferencesByCompanyBusinessUnitIds($companyBusinessUnitIds);
+    }
 }
