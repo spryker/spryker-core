@@ -180,8 +180,11 @@ class RateTable extends AbstractTable
     protected function getCountryName(SpyTaxRate $taxRateEntity)
     {
         $countryName = self::COUNTRY_NOT_AVAILABLE;
-        if ($taxRateEntity->getCountry()) {
-            $countryName = $taxRateEntity->getCountry()->getName();
+
+        /** @var \Orm\Zed\Country\Persistence\SpyCountry|null $countryEntity */
+        $countryEntity = $taxRateEntity->getCountry();
+        if ($countryEntity) {
+            $countryName = $countryEntity->getName();
         }
 
         return $countryName;

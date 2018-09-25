@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Development\Business\Dependency;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\OrganizationTransfer;
 use Symfony\Component\Finder\Finder;
 use Zend\Filter\FilterChain;
 use Zend\Filter\Word\DashToCamelCase;
@@ -45,7 +47,14 @@ class Manager implements ManagerInterface
 
         $incomingDependencies = [];
         foreach ($allForeignModules as $foreignModule) {
-            $moduleDependencyCollectionTransfer = $this->moduleParser->parseOutgoingDependencies($foreignModule);
+            $organizationTransfer = new OrganizationTransfer();
+            $organizationTransfer->setName('Spryker');
+            $moduleTransfer = new ModuleTransfer();
+            $moduleTransfer
+                ->setName($moduleName)
+                ->setOrganization($organizationTransfer);
+
+            $moduleDependencyCollectionTransfer = $this->moduleParser->parseOutgoingDependencies($moduleTransfer);
             $dependencyModule = $this->findDependencyTo($moduleName, $moduleDependencyCollectionTransfer);
 
             if ($dependencyModule) {

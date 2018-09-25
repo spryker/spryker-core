@@ -389,6 +389,31 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
+     * - Reads abstract product prices from database.
+     * - Expands each price transfer via array of PriceProductDimensionExpanderStrategyPluginInterface.
+     *
+     * @api
+     *
+     * @param array $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn(array $idProductAbstract): array;
+
+    /**
+     * Specification:
+     * - Builds price criteria object from filter.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
+     */
+    public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductCriteriaTransfer;
+
+    /**
+     * Specification:
      * - Reads abstract and concrete product prices from database.
      * - Concrete prices overwrites abstracts for matching price types.
      *

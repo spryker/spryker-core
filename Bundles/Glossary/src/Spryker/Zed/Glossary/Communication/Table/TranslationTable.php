@@ -31,7 +31,7 @@ class TranslationTable extends AbstractTable
     protected $glossaryKeyQuery;
 
     /**
-     * @var \Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery
+     * @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     protected $subGlossaryQuery;
 
