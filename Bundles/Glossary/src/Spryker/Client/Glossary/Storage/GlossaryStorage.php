@@ -84,7 +84,7 @@ class GlossaryStorage implements GlossaryStorageInterface
 
     /**
      * @param string $keyName
-     * @param string $translation
+     * @param string|null $translation
      *
      * @return void
      */
