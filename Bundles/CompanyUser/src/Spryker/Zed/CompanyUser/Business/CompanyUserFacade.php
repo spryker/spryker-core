@@ -177,4 +177,19 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
         return $this->getRepository()
             ->countActiveCompanyUsersByIdCustomer($customerTransfer->getIdCustomer());
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $companyUserIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array
+    {
+        return $this->getRepository()
+            ->getCustomerReferencesByCompanyUserIds($companyUserIds);
+    }
 }

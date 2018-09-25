@@ -309,7 +309,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     /**
      * @param int $idNode
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode|null
      */
     public function getNodeById($idNode)
     {
@@ -324,7 +324,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      * @param int $idCategory
      * @param int $idParentNode
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode|null
      */
     public function getNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
     {

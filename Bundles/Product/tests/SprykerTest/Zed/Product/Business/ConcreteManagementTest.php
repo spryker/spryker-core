@@ -378,7 +378,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
     /**
      * @param int $idProductConcrete
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     * @return \Orm\Zed\Product\Persistence\SpyProduct|null
      */
     protected function getProductConcreteEntityById($idProductConcrete)
     {
@@ -392,7 +392,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
      * @param string $touchType
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouch
+     * @return \Orm\Zed\Touch\Persistence\SpyTouch|null
      */
     protected function getProductTouchEntity($touchType, $idProductAbstract)
     {
