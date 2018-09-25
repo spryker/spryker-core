@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyUserGui\Communication\Form;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 
 /**
@@ -20,6 +21,16 @@ class CustomerCompanyAttachForm extends AbstractType
     public const FIELD_COMPANY = 'fkCompany';
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setRequired(static::FIELD_COMPANY);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param string[] $options
      *
@@ -27,7 +38,8 @@ class CustomerCompanyAttachForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addCompany($builder);
+        $this->addCompany($builder)
+            ->addPluginForms($builder);
     }
 
     /**
@@ -71,5 +83,19 @@ class CustomerCompanyAttachForm extends AbstractType
     public function getName()
     {
         return $this->getBlockPrefix();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addPluginForms(FormBuilderInterface $builder)
+    {
+        foreach ($this->getFactory()->getCustomerCompanyAttachFormPlugins() as $formPlugin) {
+            $formPlugin->buildForm($builder);
+        }
+
+        return $this;
     }
 }

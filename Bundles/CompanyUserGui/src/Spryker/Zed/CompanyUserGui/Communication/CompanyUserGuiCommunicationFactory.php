@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\CompanyUserGui\Communication;
 
+use Spryker\Zed\CompanyUserGui\Communication\Form\CustomerCompanyAttachForm;
 use Spryker\Zed\CompanyUserGui\Communication\Form\DataProvider\CustomerCompanyAttachFormDataProvider;
 use Spryker\Zed\CompanyUserGui\CompanyUserGuiDependencyProvider;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Symfony\Component\Form\FormInterface;
 
 class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -40,5 +42,24 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCompanyUserFacade(),
             $this->getCompanyFacade()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer|array|null $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCustomerCompanyAttachForm($data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(CustomerCompanyAttachForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CustomerCompanyAttachFormExpanderPluginInterface[]
+     */
+    public function getCustomerCompanyAttachFormPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PLUGINS_CUSTOMER_COMPANY_ATTACH_FORM_EXPANDER);
     }
 }
