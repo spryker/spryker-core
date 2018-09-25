@@ -31,7 +31,9 @@ class CompanyRoleEntityManager extends AbstractEntityManager implements CompanyR
             ->createCompanyRoleMapper()
             ->mapCompanyRoleTransferToEntity($companyRoleTransfer, new SpyCompanyRole());
 
-        $this->cleanupDefaultRoles($spyCompanyRole);
+        if ($spyCompanyRole->getIsDefault()) {
+            $this->cleanupCompanyDefaultRoles($spyCompanyRole);
+        }
 
         $spyCompanyRole->save();
 
@@ -162,17 +164,16 @@ class CompanyRoleEntityManager extends AbstractEntityManager implements CompanyR
      *
      * @return void
      */
-    protected function cleanupDefaultRoles(SpyCompanyRole $spyCompanyRole): void
+    protected function cleanupCompanyDefaultRoles(SpyCompanyRole $spyCompanyRole): void
     {
-        $isDefault = $spyCompanyRole->getIsDefault();
+        $updateQuery = $this->getFactory()
+            ->createCompanyRoleQuery()
+            ->filterByFkCompany($spyCompanyRole->getFkCompany());
 
-        if ($isDefault === true) {
-            $query = $this->getFactory()->createCompanyRoleQuery();
-            if ($spyCompanyRole->getIdCompanyRole() !== null) {
-                $query->filterByIdCompanyRole($spyCompanyRole->getIdCompanyRole(), Criteria::NOT_EQUAL);
-            }
-
-            $query->update(['IsDefault' => false]);
+        if ($spyCompanyRole->getIdCompanyRole() !== null) {
+            $updateQuery->filterByIdCompanyRole($spyCompanyRole->getIdCompanyRole(), Criteria::NOT_EQUAL);
         }
+
+        $updateQuery->update(['IsDefault' => false]);
     }
 }
