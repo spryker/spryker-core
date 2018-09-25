@@ -25,7 +25,7 @@ class CategoryReader implements CategoryReaderInterface
     protected $categoryFacade;
 
     /**
-     * @param \Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface $category
+     * @param \Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface $categoryRepository
      * @param \Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface $categoryFacade
      */
     public function __construct(

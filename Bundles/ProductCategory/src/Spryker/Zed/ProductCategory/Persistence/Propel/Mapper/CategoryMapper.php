@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductCategory\Persistence\Propel\Mapper;
 
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class CategoryMapper implements CategoryMapperInterface
@@ -20,7 +19,7 @@ class CategoryMapper implements CategoryMapperInterface
     public function getIdsCategoryList(ObjectCollection $spyProductCategoryCollection): array
     {
         $idsCategory = [];
-        /** @var SpyProductCategory $spyProductCategory */
+        /** @var \Orm\Zed\ProductCategory\Persistence\SpyProductCategory $spyProductCategory */
         foreach ($spyProductCategoryCollection as $spyProductCategory) {
             $idsCategory[] = $spyProductCategory->getFkCategory();
         }

@@ -103,7 +103,6 @@ interface ProductCategoryFacadeInterface
      */
     public function updateAllProductMappingsForUpdatedCategory(CategoryTransfer $categoryTransfer);
 
-
     /**
      * Specification:
      * - Returns all categories that are assigned to the given abstract product.

@@ -14,7 +14,6 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
-use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
