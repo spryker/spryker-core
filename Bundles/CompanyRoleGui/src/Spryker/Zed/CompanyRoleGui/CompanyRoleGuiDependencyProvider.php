@@ -7,8 +7,40 @@
 
 namespace Spryker\Zed\CompanyRoleGui;
 
+use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addCompanyRoleFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyRoleFacade(Container $container): Container
+    {
+        $container[static::FACADE_COMPANY_ROLE] = function (Container $container) {
+            return new CompanyRoleGuiToCompanyRoleFacadeBridge(
+                $container->getLocator()->companyRole()->facade()
+            );
+        };
+
+        return $container;
+    }
 }
