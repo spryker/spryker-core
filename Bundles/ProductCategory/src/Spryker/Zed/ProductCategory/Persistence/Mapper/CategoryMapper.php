@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCategory\Persistence\Propel\Mapper;
+namespace Spryker\Zed\ProductCategory\Persistence\Mapper;
 
 use Propel\Runtime\Collection\ObjectCollection;
 

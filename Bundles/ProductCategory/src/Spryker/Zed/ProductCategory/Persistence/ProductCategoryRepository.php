@@ -17,8 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductCategoryRepository extends AbstractRepository implements ProductCategoryRepositoryInterface
 {
-    protected const COL_CATEGORY_NAME = 'name';
-
     /**
      * @param int $idProductAbstract
      *

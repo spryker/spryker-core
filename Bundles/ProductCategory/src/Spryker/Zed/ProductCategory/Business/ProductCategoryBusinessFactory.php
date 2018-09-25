@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductCategory\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCategory\Business\Manager\ProductCategoryManager;
 use Spryker\Zed\ProductCategory\Business\Model\CategoryReader;
+use Spryker\Zed\ProductCategory\Business\Model\CategoryReaderInterface;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 /**
@@ -59,7 +60,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductCategory\Business\Model\CategoryReaderInterface
      */
-    public function createCategoryReader()
+    public function createCategoryReader(): CategoryReaderInterface
     {
         return new CategoryReader(
             $this->getRepository(),

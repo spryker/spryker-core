@@ -18,28 +18,28 @@ interface CategoryInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function read($idCategory);
+    public function read(int $idCategory): CategoryTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */
-    public function create(CategoryTransfer $categoryTransfer);
+    public function create(CategoryTransfer $categoryTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer);
+    public function update(CategoryTransfer $categoryTransfer): void;
 
     /**
      * @param int $idCategory
      *
      * @return void
      */
-    public function delete($idCategory);
+    public function delete(int $idCategory): void;
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer

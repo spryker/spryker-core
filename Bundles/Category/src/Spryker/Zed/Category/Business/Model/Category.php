@@ -105,7 +105,7 @@ class Category implements BaseCategoryInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function read($idCategory)
+    public function read(int $idCategory): CategoryTransfer
     {
         $categoryTransfer = new CategoryTransfer();
 
@@ -122,7 +122,7 @@ class Category implements BaseCategoryInterface
      *
      * @return void
      */
-    public function create(CategoryTransfer $categoryTransfer)
+    public function create(CategoryTransfer $categoryTransfer): void
     {
         $this->queryContainer->getConnection()->beginTransaction();
 
@@ -145,7 +145,7 @@ class Category implements BaseCategoryInterface
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer)
+    public function update(CategoryTransfer $categoryTransfer): void
     {
         $this->queryContainer->getConnection()->beginTransaction();
 
@@ -169,7 +169,7 @@ class Category implements BaseCategoryInterface
      *
      * @return void
      */
-    protected function runUpdatePlugins(CategoryTransfer $categoryTransfer)
+    protected function runUpdatePlugins(CategoryTransfer $categoryTransfer): void
     {
         foreach ($this->updatePlugins as $updatePlugin) {
             $updatePlugin->update($categoryTransfer);
@@ -181,7 +181,7 @@ class Category implements BaseCategoryInterface
      *
      * @return void
      */
-    public function delete($idCategory)
+    public function delete(int $idCategory): void
     {
         $this->queryContainer->getConnection()->beginTransaction();
 
@@ -229,7 +229,7 @@ class Category implements BaseCategoryInterface
      *
      * @return void
      */
-    protected function runDeletePlugins($idCategory)
+    protected function runDeletePlugins(int $idCategory): void
     {
         foreach ($this->deletePlugins as $deletePlugin) {
             $deletePlugin->delete($idCategory);
@@ -242,7 +242,7 @@ class Category implements BaseCategoryInterface
      *
      * @return void
      */
-    protected function triggerEvent($eventName, CategoryTransfer $categoryTransfer)
+    protected function triggerEvent(string $eventName, CategoryTransfer $categoryTransfer): void
     {
         if ($this->eventFacade === null) {
             return;
@@ -256,7 +256,7 @@ class Category implements BaseCategoryInterface
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    protected function createCategoryTransfer($idCategory)
+    protected function createCategoryTransfer(int $idCategory): CategoryTransfer
     {
         $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setIdCategory($idCategory);
