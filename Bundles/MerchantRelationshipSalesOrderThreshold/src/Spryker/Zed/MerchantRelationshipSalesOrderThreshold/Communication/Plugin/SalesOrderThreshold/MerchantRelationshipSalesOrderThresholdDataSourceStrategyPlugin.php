@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Communication\Plugin\SalesOrderThreshold;
 
-use Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdDataSourceStrategyPluginInterface;
 
@@ -22,13 +22,12 @@ class MerchantRelationshipSalesOrderThresholdDataSourceStrategyPlugin extends Ab
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
      */
-    public function findApplicableThresholds(SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer): array
+    public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {
-        return $this->getFacade()
-            ->findApplicableThresholds($salesOrderThresholdQuoteTransfer);
+        return $this->getFacade()->findApplicableThresholds($quoteTransfer);
     }
 }

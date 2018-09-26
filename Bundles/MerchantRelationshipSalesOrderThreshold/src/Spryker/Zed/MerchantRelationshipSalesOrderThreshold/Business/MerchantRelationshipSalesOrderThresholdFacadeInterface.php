@@ -9,25 +9,24 @@ namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
-use Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface MerchantRelationshipSalesOrderThresholdFacadeInterface
 {
     /**
      * Specification:
-     * - Finds the applicable thresholds for a given SalesOrderThresholdQuoteTransfer.
+     * - Finds the applicable thresholds for a given quote.
      * - Based on quote the customer and the respective merchant relationships.
-     * - Count the items with merchant relationship thresholds removeing them from SalesOrderThresholdQuoteTransfer::thresholdItems
      * - Also prepares the sales order threshold objects to be provided for the sales order threshold strategies.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
      */
-    public function findApplicableThresholds(SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer): array;
+    public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array;
 
     /**
      * Specification:

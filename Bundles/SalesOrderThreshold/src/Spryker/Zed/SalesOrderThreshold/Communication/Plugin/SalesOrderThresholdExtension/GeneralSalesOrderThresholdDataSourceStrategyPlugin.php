@@ -7,12 +7,11 @@
 
 namespace Spryker\Zed\SalesOrderThreshold\Communication\Plugin\SalesOrderThresholdExtension;
 
-use Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdDataSourceStrategyPluginInterface;
-use Traversable;
 
 /**
  * @method \Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface getFacade()
@@ -24,18 +23,15 @@ class GeneralSalesOrderThresholdDataSourceStrategyPlugin extends AbstractPlugin 
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
      */
-    public function findApplicableThresholds(SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer): array
+    public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {
-        $this->assertRequiredAttributes($salesOrderThresholdQuoteTransfer);
+        $this->assertRequiredAttributes($quoteTransfer);
 
-        $itemsSubTotal = $this->getThresholdItemsSubtotal(
-            $salesOrderThresholdQuoteTransfer->getThresholdItems(),
-            $salesOrderThresholdQuoteTransfer->getOriginalQuote()->getPriceMode()
-        );
+        $itemsSubTotal = $this->getThresholdItemsSubtotal($quoteTransfer);
 
         if (!$itemsSubTotal) {
             return [];
@@ -43,8 +39,8 @@ class GeneralSalesOrderThresholdDataSourceStrategyPlugin extends AbstractPlugin 
 
         $salesOrderThresholdTransfers = $this->getFacade()
             ->getSalesOrderThresholds(
-                $salesOrderThresholdQuoteTransfer->getOriginalQuote()->getStore(),
-                $salesOrderThresholdQuoteTransfer->getOriginalQuote()->getCurrency()
+                $quoteTransfer->getStore(),
+                $quoteTransfer->getCurrency()
             );
 
         return array_map(function (SalesOrderThresholdTransfer $salesOrderThresholdTransfer) use ($itemsSubTotal) {
@@ -56,30 +52,25 @@ class GeneralSalesOrderThresholdDataSourceStrategyPlugin extends AbstractPlugin 
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
-    protected function assertRequiredAttributes(SalesOrderThresholdQuoteTransfer $salesOrderThresholdQuoteTransfer): void
+    protected function assertRequiredAttributes(QuoteTransfer $quoteTransfer): void
     {
-        $salesOrderThresholdQuoteTransfer
-            ->requireOriginalQuote()
-            ->getOriginalQuote()
-                ->requireStore()
-                ->requireCurrency();
+        $quoteTransfer->requireStore()->requireCurrency();
     }
 
     /**
-     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     * @param string $quotePriceMode
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int
      */
-    protected function getThresholdItemsSubtotal(Traversable $itemTransfers, string $quotePriceMode): int
+    protected function getThresholdItemsSubtotal(QuoteTransfer $quoteTransfer): int
     {
         $itemsSubTotal = 0;
-        foreach ($itemTransfers as $itemTransfer) {
-            if ($quotePriceMode === SalesOrderThresholdConfig::PRICE_MODE_NET) {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($quoteTransfer->getPriceMode() === SalesOrderThresholdConfig::PRICE_MODE_NET) {
                 $itemsSubTotal += ($itemTransfer->getUnitNetPrice() * $itemTransfer->getQuantity());
                 continue;
             }
