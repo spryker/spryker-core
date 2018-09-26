@@ -499,7 +499,7 @@ class BridgeBuilder
 
         $targetBridgeInterface = new ReflectionClass($path);
 
-        return $this->addMethodsToTemplate(
+        return $this->addMethodsToInterfaceTemplate(
             $targetBridgeInterface,
             $bridgeBuilderDataTransfer->getMethods(),
             $this->getInterfaceMethodTemplateContent(),
@@ -531,6 +531,82 @@ class BridgeBuilder
 
             $returnStatementReplacement = static::FUNCTION_RETURN;
             $returnMethodTypeHint = $this->getMethodTypeHintForFunction($methodReturnType);
+
+            if ($methodReturnType === 'void') {
+                $returnStatementReplacement = '';
+            }
+
+            $useStatements = array_merge($useStatements, $this->getParameterTypes($method));
+
+            if (is_array($returnMethodTypeHint)) {
+                $useStatements = array_merge($useStatements, [$returnMethodTypeHint[static::FQCN] => true]);
+                $returnMethodTypeHint = $returnMethodTypeHint[static::TYPE_HINT];
+            }
+
+            $replacements = [
+                '{docBlock}' => $docComment,
+                '{methodName}' => $methodName,
+                '{returnStatement}' => $returnStatementReplacement,
+                '{returnMethodTypeHint}' => $returnMethodTypeHint,
+                '{parameters}' => $this->getParameters($method),
+                '{parametersWithoutTypes}' => $this->getParameterNames($method),
+            ];
+
+            $methods .=
+                str_replace(
+                    array_keys($replacements),
+                    array_values($replacements),
+                    $methodTemplate
+                )
+                . PHP_EOL . PHP_EOL . str_repeat(' ', 4);
+        }
+
+        $useStatements = array_keys($useStatements);
+        sort($useStatements);
+        $useStatements = array_reduce($useStatements, function ($prevUseStatement, $useStatement) {
+            return $prevUseStatement . PHP_EOL . 'use ' . $useStatement . ';';
+        }, '');
+
+        return str_replace(
+            [
+                '{methods}',
+                '{useStatements}',
+            ],
+            [
+                rtrim($methods, PHP_EOL . PHP_EOL . str_repeat(' ', 4)),
+                $useStatements,
+            ],
+            $templateContent
+        );
+    }
+
+    /**
+     * @param \ReflectionClass $reflectionClass
+     * @param array $methodNames
+     * @param string $methodTemplate
+     * @param string $templateContent
+     *
+     * @return string
+     */
+    protected function addMethodsToInterfaceTemplate(ReflectionClass $reflectionClass, array $methodNames, string $methodTemplate, string $templateContent): string
+    {
+        $methods = '';
+        $useStatements = [];
+
+        foreach (array_unique($methodNames) as $methodName) {
+            if (empty($methodName)) {
+                continue;
+            }
+            $method = $reflectionClass->getMethod($methodName);
+
+            $docComment = $this->cleanMethodDocBlock($method->getDocComment());
+            $methodReturnType = $this->getMethodReturnTypeFromDocComment($docComment);
+
+            $returnStatementReplacement = static::FUNCTION_RETURN;
+            $returnMethodTypeHint = '';
+            if ((string)$method->getReturnType()) {
+                $returnMethodTypeHint = $this->getMethodTypeHintForFunction($methodReturnType);
+            }
 
             if ($methodReturnType === 'void') {
                 $returnStatementReplacement = '';
@@ -713,7 +789,7 @@ class BridgeBuilder
                 ];
             }
 
-            return static::NON_NULLABLE_RETURN_TYPE_HINT . $methodReturnType;
+            return static::NON_NULLABLE_RETURN_TYPE_HINT . $this->arrayReturnTypeFix($methodReturnType);
         }
 
         $nullReturnTypeIndex = array_search('null', $methodReturnParts, true);
@@ -740,6 +816,16 @@ class BridgeBuilder
             ];
         }
 
-        return static::NULLABLE_RETURN_TYPE_HINT . $methodTypeHint;
+        return static::NULLABLE_RETURN_TYPE_HINT . $this->arrayReturnTypeFix($methodTypeHint);
+    }
+
+    /**
+     * @param string $returnType
+     *
+     * @return string
+     */
+    protected function arrayReturnTypeFix(string $returnType): string
+    {
+        return (strpos($returnType, '[]') === false) ? $returnType : 'array';
     }
 }

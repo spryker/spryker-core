@@ -17,17 +17,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CreditCardSubForm extends AbstractSubForm
 {
-    const PAYMENT_METHOD = 'credit_card';
+    public const PAYMENT_METHOD = 'credit_card';
 
-    const FIELD_CARD_TYPE = 'card_type';
-    const FIELD_CARD_NUMBER = 'card_number';
-    const FIELD_NAME_ON_CARD = 'name_on_card';
-    const FIELD_CARD_EXPIRES_MONTH = 'card_expires_month';
-    const FIELD_CARD_EXPIRES_YEAR = 'card_expires_year';
-    const FIELD_CARD_SECURITY_CODE = 'card_security_code';
+    public const FIELD_CARD_TYPE = 'card_type';
+    public const FIELD_CARD_NUMBER = 'card_number';
+    public const FIELD_NAME_ON_CARD = 'name_on_card';
+    public const FIELD_CARD_EXPIRES_MONTH = 'card_expires_month';
+    public const FIELD_CARD_EXPIRES_YEAR = 'card_expires_year';
+    public const FIELD_CARD_SECURITY_CODE = 'card_security_code';
 
-    const OPTION_CARD_EXPIRES_CHOICES_MONTH = 'month choices';
-    const OPTION_CARD_EXPIRES_CHOICES_YEAR = 'year choices';
+    public const OPTION_CARD_EXPIRES_CHOICES_MONTH = 'month choices';
+    public const OPTION_CARD_EXPIRES_CHOICES_YEAR = 'year choices';
 
     /**
      * @return string

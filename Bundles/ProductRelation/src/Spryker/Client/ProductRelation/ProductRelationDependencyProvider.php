@@ -15,9 +15,9 @@ use Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToStorageBri
 
 class ProductRelationDependencyProvider extends AbstractDependencyProvider
 {
-    const KV_STORAGE = 'kv storage';
-    const CLIENT_LOCALE = 'locale client';
-    const CLIENT_PRICE_PRODUCT = 'price product client';
+    public const KV_STORAGE = 'kv storage';
+    public const CLIENT_LOCALE = 'locale client';
+    public const CLIENT_PRICE_PRODUCT = 'price product client';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

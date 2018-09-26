@@ -27,7 +27,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractDatabaseCollector extends AbstractCollector implements DatabaseCollectorInterface
 {
-    const ID_TOUCH = 'idTouch';
+    public const ID_TOUCH = 'idTouch';
 
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery

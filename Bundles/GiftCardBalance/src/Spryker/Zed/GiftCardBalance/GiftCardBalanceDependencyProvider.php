@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Container;
 
 class GiftCardBalanceDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_MONEY = 'FACADE_MONEY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

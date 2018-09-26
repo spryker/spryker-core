@@ -9,7 +9,7 @@ namespace Spryker\Zed\Maintenance\Business\Model\Maintenance;
 
 class MaintenanceMarkerFile implements MaintenanceInterface
 {
-    const MAINTENANCE_FILE = 'maintenance.marker';
+    public const MAINTENANCE_FILE = 'maintenance.marker';
 
     /**
      * @var string

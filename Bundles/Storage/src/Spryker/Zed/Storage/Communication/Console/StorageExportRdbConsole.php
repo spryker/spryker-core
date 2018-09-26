@@ -17,10 +17,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class StorageExportRdbConsole extends Console
 {
-    const COMMAND_NAME = 'storage:redis:export';
-    const DESCRIPTION = 'This command will export the rdb file.';
+    public const COMMAND_NAME = 'storage:redis:export';
+    public const DESCRIPTION = 'This command will export the rdb file.';
 
-    const ARGUMENT_DESTINATION = 'destination';
+    public const ARGUMENT_DESTINATION = 'destination';
 
     /**
      * @return void

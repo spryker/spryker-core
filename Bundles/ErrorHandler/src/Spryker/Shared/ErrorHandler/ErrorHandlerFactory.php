@@ -14,10 +14,10 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 
 class ErrorHandlerFactory
 {
-    const APPLICATION_ZED = 'ZED';
-    const APPLICATION_GLUE = 'GLUE';
-    const SAPI_CLI = 'cli';
-    const SAPI_PHPDBG = 'phpdbg';
+    public const APPLICATION_ZED = 'ZED';
+    public const APPLICATION_GLUE = 'GLUE';
+    public const SAPI_CLI = 'cli';
+    public const SAPI_PHPDBG = 'phpdbg';
 
     /**
      * @var string

@@ -23,13 +23,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class RuleForm extends AbstractType
 {
-    const OPTION_TYPE = 'option_type';
+    public const OPTION_TYPE = 'option_type';
 
-    const FIELD_BUNDLE = 'bundle';
-    const FIELD_CONTROLLER = 'controller';
-    const FIELD_ACTION = 'action';
-    const FIELD_TYPE = 'type';
-    const FIELD_FK_ACL_ROLE = 'fk_acl_role';
+    public const FIELD_BUNDLE = 'bundle';
+    public const FIELD_CONTROLLER = 'controller';
+    public const FIELD_ACTION = 'action';
+    public const FIELD_TYPE = 'type';
+    public const FIELD_FK_ACL_ROLE = 'fk_acl_role';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

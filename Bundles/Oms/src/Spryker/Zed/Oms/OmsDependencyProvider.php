@@ -22,22 +22,22 @@ use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextBridge;
 
 class OmsDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CONDITION_PLUGINS = 'CONDITION_PLUGINS';
-    const COMMAND_PLUGINS = 'COMMAND_PLUGINS';
+    public const CONDITION_PLUGINS = 'CONDITION_PLUGINS';
+    public const COMMAND_PLUGINS = 'COMMAND_PLUGINS';
 
-    const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+    public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
-    const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
-    const PLUGINS_RESERVATION = 'PLUGIN_RESERVATION';
-    const PLUGINS_RESERVATION_EXPORT = 'PLUGINS_RESERVATION_EXPORT';
+    public const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
+    public const PLUGINS_RESERVATION = 'PLUGIN_RESERVATION';
+    public const PLUGINS_RESERVATION_EXPORT = 'PLUGINS_RESERVATION_EXPORT';
 
-    const FACADE_MAIL = 'FACADE_MAIL';
-    const FACADE_SALES = 'FACADE_SALES';
+    public const FACADE_MAIL = 'FACADE_MAIL';
+    public const FACADE_SALES = 'FACADE_SALES';
 
-    const FACADE_STORE = 'FACADE_STORE';
-    const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    const SERVICE_UTIL_NETWORK = 'SERVICE_UTIL_NETWORK';
+    public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const SERVICE_UTIL_NETWORK = 'SERVICE_UTIL_NETWORK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

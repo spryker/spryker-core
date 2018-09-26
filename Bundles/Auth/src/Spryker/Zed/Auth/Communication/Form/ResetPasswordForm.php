@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints\Required;
  */
 class ResetPasswordForm extends AbstractType
 {
-    const FIELD_PASSWORD = 'password';
+    public const FIELD_PASSWORD = 'password';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

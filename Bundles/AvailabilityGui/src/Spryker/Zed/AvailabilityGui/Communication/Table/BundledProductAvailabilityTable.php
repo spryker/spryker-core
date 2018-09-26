@@ -22,15 +22,15 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class BundledProductAvailabilityTable extends AbstractTable
 {
-    const URL_PARAM_ID_PRODUCT_BUNDLE = 'id-product';
-    const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
-    const URL_PARAM_SKU = 'sku';
-    const URL_PARAM_ID_PRODUCT = 'id-product';
-    const URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT = 'id-product-bundle-abstract';
-    const URL_PARAM_ID_STORE = 'id-store';
+    public const URL_PARAM_ID_PRODUCT_BUNDLE = 'id-product';
+    public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
+    public const URL_PARAM_SKU = 'sku';
+    public const URL_PARAM_ID_PRODUCT = 'id-product';
+    public const URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT = 'id-product-bundle-abstract';
+    public const URL_PARAM_ID_STORE = 'id-store';
 
-    const COL_BUNDLED_ITEMS = 'bundledItems';
-    const TABLE_COL_ACTION = 'Actions';
+    public const COL_BUNDLED_ITEMS = 'bundledItems';
+    public const TABLE_COL_ACTION = 'Actions';
 
     /**
      * @var int

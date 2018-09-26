@@ -20,12 +20,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class GraphController extends AbstractController
 {
-    const URL_PARAM_PROCESS = 'process';
-    const URL_PARAM_FORMAT = 'format';
-    const URL_PARAM_FONT_SIZE = 'font';
-    const URL_PARAM_HIGHLIGHT_STATE = 'highlight-state';
-    const URL_PARAM_STATE_MACHINE = 'state-machine';
-    const URL_STATE_MACHINE_LIST = '/state-machine/list';
+    public const URL_PARAM_PROCESS = 'process';
+    public const URL_PARAM_FORMAT = 'format';
+    public const URL_PARAM_FONT_SIZE = 'font';
+    public const URL_PARAM_HIGHLIGHT_STATE = 'highlight-state';
+    public const URL_PARAM_STATE_MACHINE = 'state-machine';
+    public const URL_STATE_MACHINE_LIST = '/state-machine/list';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
