@@ -126,7 +126,7 @@ class GlossaryController extends AbstractController
         $this->getFacade()
             ->deletePageKeyMapping($pageTransfer, $mappingGlossary->getPlaceholder());
 
-        $redirectUrl = static::REDIRECT_ADDRESS . http_build_query([CmsTableConstants::REQUEST_ID_PAGE => $idPage]);
+        $redirectUrl = static::REDIRECT_ADDRESS . '?' . http_build_query([CmsTableConstants::REQUEST_ID_PAGE => $idPage]);
 
         return $this->redirectResponse($redirectUrl);
     }
