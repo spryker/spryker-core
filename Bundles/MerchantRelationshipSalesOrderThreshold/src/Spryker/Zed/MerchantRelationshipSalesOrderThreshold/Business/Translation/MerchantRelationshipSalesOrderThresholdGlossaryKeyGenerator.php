@@ -8,11 +8,13 @@
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation;
 
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 class MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator implements MerchantRelationshipSalesOrderThresholdGlossaryKeyGeneratorInterface
 {
     protected const SALES_ORDER_THRESHOLD_GLOSSARY_PREFIX = 'merchant-relationship-threshold';
     protected const SALES_ORDER_THRESHOLD_GLOSSARY_MESSAGE = 'message';
+    protected const MERCHANT_RELATIONSHIP_IDENTIFIER_PREFIX = 'mr-';
 
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
@@ -38,6 +40,9 @@ class MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator implements Mer
      */
     protected function generateMessageGlossaryKey(MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): string
     {
+        $merchantRelationshipSalesOrderThresholdTransfer->getMerchantRelationship()
+            ->requireIdMerchantRelationship();
+
         return strtolower(implode(
             '.',
             [
@@ -45,10 +50,20 @@ class MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator implements Mer
                 $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup(),
                 $merchantRelationshipSalesOrderThresholdTransfer->getStore()->getName(),
                 $merchantRelationshipSalesOrderThresholdTransfer->getCurrency()->getCode(),
-                $merchantRelationshipSalesOrderThresholdTransfer->getMerchantRelationship()->getMerchantRelationshipKey(),
+                $this->getMerchantRelationshipIdentifier($merchantRelationshipSalesOrderThresholdTransfer->getMerchantRelationship()),
                 static::SALES_ORDER_THRESHOLD_GLOSSARY_MESSAGE,
             ]
         ));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return string
+     */
+    protected function getMerchantRelationshipIdentifier(MerchantRelationshipTransfer $merchantRelationshipTransfer): string
+    {
+        return sprintf('%s%d', static::MERCHANT_RELATIONSHIP_IDENTIFIER_PREFIX, $merchantRelationshipTransfer->getIdMerchantRelationship());
     }
 
     /**
