@@ -142,4 +142,16 @@ interface CompanyUserFacadeInterface
      * @return int
      */
     public function countActiveCompanyUsersByIdCustomer(CustomerTransfer $customerTransfer): int;
+
+    /**
+     * Specification:
+     * - Returns customer references of customers related to company users;
+     *
+     * @api
+     *
+     * @param int[] $companyUserIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
 }

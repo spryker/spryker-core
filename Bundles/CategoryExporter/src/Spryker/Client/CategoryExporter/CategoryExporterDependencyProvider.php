@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\Container;
 
 class CategoryExporterDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_STORAGE = 'storage client';
+    public const CLIENT_STORAGE = 'storage client';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

@@ -14,7 +14,7 @@ use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
 
 class Store
 {
-    const APPLICATION_ZED = 'ZED';
+    public const APPLICATION_ZED = 'ZED';
 
     /**
      * @var \Spryker\Shared\Kernel\Store|null

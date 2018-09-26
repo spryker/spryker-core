@@ -20,7 +20,7 @@ use Twig_Environment;
  */
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const TWIG_LOADER_YVES = 'twig.loader.yves';
+    public const TWIG_LOADER_YVES = 'twig.loader.yves';
 
     /**
      * @param \Silex\Application $app

@@ -21,10 +21,10 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class BundledProductForm extends AbstractType
 {
-    const FIELD_QUANTITY = 'quantity';
-    const FIELD_ID_PRODUCT_CONCRETE = 'id_product_concrete';
-    const FIELD_SKU = 'sku';
-    const NUMERIC_PATTERN = '/\d+/';
+    public const FIELD_QUANTITY = 'quantity';
+    public const FIELD_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    public const FIELD_SKU = 'sku';
+    public const NUMERIC_PATTERN = '/\d+/';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

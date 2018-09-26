@@ -15,16 +15,16 @@ use Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface
 
 class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterface
 {
-    const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
-    const COL_FK_PRODUCT = 'fk_product';
-    const CONCRETE_DESCRIPTION = 'description';
-    const ABSTRACT_DESCRIPTION = 'abstract_description';
-    const ABSTRACT_ATTRIBUTES = 'abstract_attributes';
-    const CONCRETE_ATTRIBUTES = 'attributes';
+    public const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+    public const COL_FK_PRODUCT = 'fk_product';
+    public const CONCRETE_DESCRIPTION = 'description';
+    public const ABSTRACT_DESCRIPTION = 'abstract_description';
+    public const ABSTRACT_ATTRIBUTES = 'abstract_attributes';
+    public const CONCRETE_ATTRIBUTES = 'attributes';
 
-    const PRODUCT_CONCRETE_LOCALIZED_ENTITY = 'PRODUCT_CONCRETE_LOCALIZED_ENTITY';
-    const PRODUCT_CONCRETE_STORAGE_ENTITY = 'PRODUCT_CONCRETE_STORAGE_ENTITY';
-    const LOCALE_NAME = 'LOCALE_NAME';
+    public const PRODUCT_CONCRETE_LOCALIZED_ENTITY = 'PRODUCT_CONCRETE_LOCALIZED_ENTITY';
+    public const PRODUCT_CONCRETE_STORAGE_ENTITY = 'PRODUCT_CONCRETE_STORAGE_ENTITY';
+    public const LOCALE_NAME = 'LOCALE_NAME';
 
     /**
      * @var \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface
@@ -345,6 +345,12 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         $superAttributes = $this->queryContainer
             ->queryProductAttributeKey()
             ->find();
+
+        if (empty($superAttributes->getData())) {
+            $this->superAttributeKeyBuffer[] = null;
+
+            return;
+        }
 
         foreach ($superAttributes as $attribute) {
             $this->superAttributeKeyBuffer[$attribute->getKey()] = true;

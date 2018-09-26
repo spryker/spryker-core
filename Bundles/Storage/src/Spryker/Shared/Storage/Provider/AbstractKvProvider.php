@@ -20,16 +20,16 @@ abstract class AbstractKvProvider extends AbstractClientProvider
     /**
      * @deprecated Not used.
      */
-    const METHOD_PREFIX = 'createClient';
+    public const METHOD_PREFIX = 'createClient';
 
-    const KV_ADAPTER_REDIS = 'redis';
+    public const KV_ADAPTER_REDIS = 'redis';
 
     /**
      * Default Redis database number
      *
      * @const int
      */
-    const DEFAULT_REDIS_DATABASE = 0;
+    public const DEFAULT_REDIS_DATABASE = 0;
 
     /**
      * @var string

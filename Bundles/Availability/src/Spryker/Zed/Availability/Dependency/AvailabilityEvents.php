@@ -15,7 +15,7 @@ interface AvailabilityEvents
      *
      * @api
      */
-    const AVAILABILITY_ABSTRACT_PUBLISH = 'Entity.spy_availability_abstract.publish';
+    public const AVAILABILITY_ABSTRACT_PUBLISH = 'Entity.spy_availability_abstract.publish';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface AvailabilityEvents
      *
      * @api
      */
-    const AVAILABILITY_ABSTRACT_UNPUBLISH = 'Entity.spy_availability_abstract.unpublish';
+    public const AVAILABILITY_ABSTRACT_UNPUBLISH = 'Entity.spy_availability_abstract.unpublish';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ interface AvailabilityEvents
      *
      * @api
      */
-    const ENTITY_SPY_AVAILABILITY_ABSTRACT_CREATE = 'Entity.spy_availability_abstract.create';
+    public const ENTITY_SPY_AVAILABILITY_ABSTRACT_CREATE = 'Entity.spy_availability_abstract.create';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ interface AvailabilityEvents
      *
      * @api
      */
-    const ENTITY_SPY_AVAILABILITY_ABSTRACT_UPDATE = 'Entity.spy_availability_abstract.update';
+    public const ENTITY_SPY_AVAILABILITY_ABSTRACT_UPDATE = 'Entity.spy_availability_abstract.update';
 
     /**
      * Specification
@@ -47,7 +47,7 @@ interface AvailabilityEvents
      *
      * @api
      */
-    const ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE = 'Entity.spy_availability_abstract.delete';
+    public const ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE = 'Entity.spy_availability_abstract.delete';
 
     /**
      * Specification
@@ -55,5 +55,5 @@ interface AvailabilityEvents
      *
      * @api
      */
-    const ENTITY_SPY_AVAILABILITY_UPDATE = 'Entity.spy_availability.update';
+    public const ENTITY_SPY_AVAILABILITY_UPDATE = 'Entity.spy_availability.update';
 }

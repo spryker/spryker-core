@@ -75,7 +75,7 @@ class AutoloadUpdaterTest extends Unit
         $composerJson = $this->getComposerJson();
         $composerJson['autoload-dev']['psr-4']['invalidNamespace'] = 'validDirectory/';
 
-        $updatedJson = $updatedJson = $this->updateJsonForTests($composerJson);
+        $updatedJson = $this->updateJsonForTests($composerJson);
 
         $this->assertSame($this->getComposerJson()['autoload-dev'], $updatedJson['autoload-dev']);
     }

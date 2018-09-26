@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class KeyController extends AbstractController
 {
-    const TERM = 'term';
+    public const TERM = 'term';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -72,7 +72,7 @@ class KeyController extends AbstractController
             ->queryByKey($term)->find();
 
         $result = [];
-        if ($keys) {
+        if ($keys->count()) {
             $keys = $keys->toArray(null, false, TableMap::TYPE_COLNAME);
 
             foreach ($keys as $value) {

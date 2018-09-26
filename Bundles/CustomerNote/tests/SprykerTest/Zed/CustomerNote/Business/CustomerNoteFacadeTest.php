@@ -26,7 +26,7 @@ use Spryker\Zed\Kernel\Container;
  */
 class CustomerNoteFacadeTest extends Unit
 {
-    const NOTES_COUNT = 10;
+    public const NOTES_COUNT = 10;
 
     /**
      * @var \SprykerTest\Zed\CustomerNote\CustomerNoteBusinessTester

@@ -31,13 +31,13 @@ use Spryker\Zed\Kernel\Container;
  */
 class CartFacadeTest extends Unit
 {
-    const PRICE_TYPE_DEFAULT = 'DEFAULT';
-    const DUMMY_1_SKU_ABSTRACT_PRODUCT = 'ABSTRACT1';
-    const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';
-    const DUMMY_1_PRICE = 99;
-    const DUMMY_2_SKU_ABSTRACT_PRODUCT = 'ABSTRACT2';
-    const DUMMY_2_SKU_CONCRETE_PRODUCT = 'CONCRETE2';
-    const DUMMY_2_PRICE = 100;
+    public const PRICE_TYPE_DEFAULT = 'DEFAULT';
+    public const DUMMY_1_SKU_ABSTRACT_PRODUCT = 'ABSTRACT1';
+    public const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';
+    public const DUMMY_1_PRICE = 99;
+    public const DUMMY_2_SKU_ABSTRACT_PRODUCT = 'ABSTRACT2';
+    public const DUMMY_2_SKU_CONCRETE_PRODUCT = 'CONCRETE2';
+    public const DUMMY_2_PRICE = 100;
 
     /**
      * @var \Spryker\Zed\Cart\Business\CartFacadeInterface

@@ -79,9 +79,11 @@ class TaxReader implements TaxReaderInterface
         $taxRateTransfer = new TaxRateTransfer();
         $taxRateTransfer->fromArray($taxRateEntity->toArray());
 
-        if ($taxRateEntity->getCountry()) {
+        /** @var \Orm\Zed\Country\Persistence\SpyCountry|null $countryEntity */
+        $countryEntity = $taxRateEntity->getCountry();
+        if ($countryEntity) {
             $countryTransfer = new CountryTransfer();
-            $countryTransfer->fromArray($taxRateEntity->getCountry()->toArray(), true);
+            $countryTransfer->fromArray($countryEntity->toArray(), true);
             $taxRateTransfer->setCountry($countryTransfer);
         }
 
@@ -139,9 +141,11 @@ class TaxReader implements TaxReaderInterface
             $taxRateTransfer = new TaxRateTransfer();
             $taxRateTransfer->fromArray($taxRateEntity->toArray());
 
-            if ($taxRateEntity->getCountry()) {
+            /** @var \Orm\Zed\Country\Persistence\SpyCountry|null $countryEntity */
+            $countryEntity = $taxRateEntity->getCountry();
+            if ($countryEntity) {
                 $countryTransfer = new CountryTransfer();
-                $countryTransfer->fromArray($taxRateEntity->getCountry()->toArray(), true);
+                $countryTransfer->fromArray($countryEntity->toArray(), true);
                 $taxRateTransfer->setCountry($countryTransfer);
             }
 

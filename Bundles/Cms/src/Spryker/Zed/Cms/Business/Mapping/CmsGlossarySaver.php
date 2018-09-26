@@ -22,7 +22,7 @@ use Throwable;
 
 class CmsGlossarySaver implements CmsGlossarySaverInterface
 {
-    const DEFAULT_TRANSLATION = '';
+    public const DEFAULT_TRANSLATION = '';
 
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
@@ -289,7 +289,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     /**
      * @param string $translationKey
      *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey|null
      */
     protected function findGlossaryKeyEntityByTranslationKey($translationKey)
     {
@@ -301,7 +301,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     /**
      * @param int $idMapping
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping|null
      */
     protected function findGlossaryKeyMappingEntityById($idMapping)
     {

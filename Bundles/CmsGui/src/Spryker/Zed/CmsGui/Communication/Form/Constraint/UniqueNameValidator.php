@@ -97,7 +97,7 @@ class UniqueNameValidator extends ConstraintValidator
      * @param int $idCmsPage
      * @param \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueName $constraint
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes|null
      */
     protected function findCmsPageLocalizedAttributesByNameAndId($name, $idCmsPage, UniqueName $constraint)
     {

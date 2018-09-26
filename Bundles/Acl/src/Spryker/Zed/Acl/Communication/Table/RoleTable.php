@@ -17,10 +17,10 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RoleTable extends AbstractTable
 {
-    const ACTION = 'Action';
-    const PARAM_ID_ROLE = 'id-role';
-    const UPDATE_ROLE_URL = '/acl/role/update';
-    const DELETE_ROLE_URL = '/acl/role/delete';
+    public const ACTION = 'Action';
+    public const PARAM_ID_ROLE = 'id-role';
+    public const UPDATE_ROLE_URL = '/acl/role/update';
+    public const DELETE_ROLE_URL = '/acl/role/delete';
 
     /**
      * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface

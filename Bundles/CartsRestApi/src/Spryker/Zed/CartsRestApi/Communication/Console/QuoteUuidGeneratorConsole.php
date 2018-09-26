@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class QuoteUuidGeneratorConsole extends Console
 {
-    const COMMAND_NAME = 'quote:uuid:generate';
-    const COMMAND_DESCRIPTION = 'Generates UUIDs for the existing quote records that do not have one.';
+    public const COMMAND_NAME = 'quote:uuid:generate';
+    public const COMMAND_DESCRIPTION = 'Generates UUIDs for the existing quote records that do not have one.';
 
     /**
      * @return void
