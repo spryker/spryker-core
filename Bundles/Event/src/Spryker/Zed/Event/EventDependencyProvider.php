@@ -16,12 +16,12 @@ use Spryker\Zed\Kernel\Container;
 
 class EventDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const EVENT_LISTENERS = 'event_listeners';
-    const EVENT_SUBSCRIBERS = 'event subscribers';
+    public const EVENT_LISTENERS = 'event_listeners';
+    public const EVENT_SUBSCRIBERS = 'event subscribers';
 
-    const CLIENT_QUEUE = 'client queue';
+    public const CLIENT_QUEUE = 'client queue';
 
-    const SERVICE_UTIL_ENCODING = 'service util encoding';
+    public const SERVICE_UTIL_ENCODING = 'service util encoding';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

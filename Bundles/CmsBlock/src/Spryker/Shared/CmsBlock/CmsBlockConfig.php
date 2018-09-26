@@ -15,5 +15,5 @@ class CmsBlockConfig
      *
      * @api
      */
-    const RESOURCE_TYPE_CMS_BLOCK = 'cms-block';
+    public const RESOURCE_TYPE_CMS_BLOCK = 'cms-block';
 }

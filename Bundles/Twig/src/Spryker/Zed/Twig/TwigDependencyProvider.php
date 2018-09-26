@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Container;
 
 class TwigDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SERVICE_UTIL_TEXT = 'util text service';
+    public const SERVICE_UTIL_TEXT = 'util text service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

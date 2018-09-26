@@ -16,13 +16,13 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RootNodeTable extends AbstractTable
 {
-    const TABLE_IDENTIFIER = 'root-node-table';
+    public const TABLE_IDENTIFIER = 'root-node-table';
 
-    const ID_CATEGORY_NODE = 'id_category_node';
-    const LOCALE_NAME = 'locale_name';
-    const COL_ACTIONS = 'actions';
-    const URL_CATEGORY_RE_SORT = '/category/re-sort';
-    const URL_PRODUCT_CATEGORY_ADD = '/category/create';
+    public const ID_CATEGORY_NODE = 'id_category_node';
+    public const LOCALE_NAME = 'locale_name';
+    public const COL_ACTIONS = 'actions';
+    public const URL_CATEGORY_RE_SORT = '/category/re-sort';
+    public const URL_PRODUCT_CATEGORY_ADD = '/category/create';
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface

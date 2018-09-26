@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class FacadeResolver extends AbstractClassResolver
 {
-    const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Business\\%2$sFacade';
+    public const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Business\\%2$sFacade';
 
     /**
      * @param object|string $callerClass

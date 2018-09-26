@@ -11,7 +11,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class Greater extends AbstractOperator
 {
-    const TYPE = 'greater';
+    public const TYPE = 'greater';
 
     /**
      * @return string

@@ -15,8 +15,8 @@ use Spryker\Yves\ProductRelation\Sorting\RelationSorterInterface;
 
 class UpSellingDataProvider implements ProductRelationDataProviderInterface
 {
-    const PARAMETER_ABSTRACT_PRODUCT_IDS = 'abstractProductIds';
-    const PARAMETER_QUOTE_TRANSFER = 'quote';
+    public const PARAMETER_ABSTRACT_PRODUCT_IDS = 'abstractProductIds';
+    public const PARAMETER_QUOTE_TRANSFER = 'quote';
 
     /**
      * @var \Spryker\Client\ProductRelation\ProductRelationClientInterface

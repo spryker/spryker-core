@@ -11,7 +11,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class CategoryDataImportConfig extends DataImportConfig
 {
-    const IMPORT_TYPE_CATEGORY = 'category';
+    public const IMPORT_TYPE_CATEGORY = 'category';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer

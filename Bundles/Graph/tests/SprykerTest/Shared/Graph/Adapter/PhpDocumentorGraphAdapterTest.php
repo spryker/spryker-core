@@ -21,12 +21,12 @@ use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
  */
 class PhpDocumentorGraphAdapterTest extends Unit
 {
-    const GRAPH_NAME = 'graph name';
-    const NODE_A = 'node A';
-    const NODE_B = 'node B';
-    const GROUP_NAME = 'group name';
-    const CLUSTER_NAME = 'cluster name';
-    const ATTRIBUTES = ['attribute' => 'value', 'html attribute' => '<h1>Html Value</h1>'];
+    public const GRAPH_NAME = 'graph name';
+    public const NODE_A = 'node A';
+    public const NODE_B = 'node B';
+    public const GROUP_NAME = 'group name';
+    public const CLUSTER_NAME = 'cluster name';
+    public const ATTRIBUTES = ['attribute' => 'value', 'html attribute' => '<h1>Html Value</h1>'];
 
     /**
      * @return void
