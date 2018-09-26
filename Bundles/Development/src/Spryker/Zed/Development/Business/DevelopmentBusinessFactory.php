@@ -38,6 +38,7 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ExtensionDepend
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ExternalDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\InternalDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\LocatorDependencyFinder;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ModuleAnnotationDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\PersistenceDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TravisDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder;
@@ -319,6 +320,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createTravisDependencyFinder(),
             $this->createComposerScriptDependencyFinder(),
             $this->createCodeceptionDependencyFinder(),
+            $this->createModuleAnnotationDependencyFinder(),
         ]);
     }
 
@@ -422,6 +424,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createCodeceptionDependencyFinder(): DependencyFinderInterface
     {
         return new CodeceptionDependencyFinder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface
+     */
+    public function createModuleAnnotationDependencyFinder(): DependencyFinderInterface
+    {
+        return new ModuleAnnotationDependencyFinder();
     }
 
     /**
