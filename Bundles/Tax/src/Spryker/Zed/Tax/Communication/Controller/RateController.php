@@ -62,7 +62,7 @@ class RateController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function editAction(Request $request)
     {
@@ -112,7 +112,7 @@ class RateController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function viewAction(Request $request)
     {
