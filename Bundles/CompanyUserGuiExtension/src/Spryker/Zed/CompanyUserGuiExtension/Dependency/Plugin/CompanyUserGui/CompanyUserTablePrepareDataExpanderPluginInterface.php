@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
-
 interface CompanyUserTablePrepareDataExpanderPluginInterface
 {
     /**
@@ -17,9 +15,9 @@ interface CompanyUserTablePrepareDataExpanderPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserDataItem
+     * @param array $companyUserDataItem
      *
      * @return array
      */
-    public function expandDataItem(CompanyUserTransfer $companyUserDataItem): array;
+    public function expandDataItem(array $companyUserDataItem): array;
 }

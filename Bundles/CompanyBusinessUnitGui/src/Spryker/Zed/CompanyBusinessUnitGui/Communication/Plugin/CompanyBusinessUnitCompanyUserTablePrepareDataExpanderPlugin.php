@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserGui\CompanyUserTablePrepareDataExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -17,22 +16,26 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CompanyBusinessUnitCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugin implements CompanyUserTablePrepareDataExpanderPluginInterface
 {
+    protected const COL_ID_COMPANY_USER = 'spy_company_user.id_company_user';
+
     /**
      * {@inheritdoc}
      * - This plugin allows you to extend data rows of company user table with company business unit data.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param array $companyUserDataItem
      *
      * @return array
      */
-    public function expandDataItem(CompanyUserTransfer $companyUserTransfer): array
+    public function expandDataItem(array $companyUserDataItem): array
     {
+        $idCompanyUser = $companyUserDataItem[static::COL_ID_COMPANY_USER];
+
         $companyBusinessUnits = (array)$this->getFactory()
             ->getCompanyBusinessUnitFacade()
             ->getCompanyBusinessUnitCollection(
-                (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+                (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompanyUser($idCompanyUser)
             )
             ->getCompanyBusinessUnits();
 
