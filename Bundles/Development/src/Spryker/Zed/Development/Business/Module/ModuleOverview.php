@@ -38,72 +38,101 @@ class ModuleOverview implements ModuleOverviewInterface
      */
     public function getOverview(): array
     {
-        $moduleOverview = [];
-        $moduleOverview = $this->addProjectModules($moduleOverview);
-        $moduleOverview = $this->addOperatingSystemModules($moduleOverview);
+        $moduleOverviewTransferCollection = [];
+        $moduleOverviewTransferCollection = $this->addProjectModules($moduleOverviewTransferCollection);
+        $moduleOverviewTransferCollection = $this->addOperatingSystemModules($moduleOverviewTransferCollection);
 
-        ksort($moduleOverview);
+        ksort($moduleOverviewTransferCollection);
 
-        return $moduleOverview;
+        return $moduleOverviewTransferCollection;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ModuleOverviewTransfer[] $moduleOverview
+     * @param \Generated\Shared\Transfer\ModuleOverviewTransfer[] $moduleOverviewTransferCollection
      *
      * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
      */
-    protected function addProjectModules(array $moduleOverview): array
+    protected function addProjectModules(array $moduleOverviewTransferCollection): array
     {
         $projectModules = $this->projectModuleFinder->getProjectModules();
 
         foreach (array_keys($projectModules) as $moduleKey) {
-            $moduleKeyFragments = explode('.', $moduleKey);
-            $moduleName = $moduleKeyFragments[1];
-            if (isset($moduleOverview[$moduleName])) {
-                $moduleOverviewTransfer = $moduleOverview[$moduleName];
-                $moduleOverviewTransfer->setIsProjectModule(true);
+            $moduleName = $this->getModuleNameFromModuleKey($moduleKey);
+            $moduleOverviewTransfer = $this->getModuleOverviewTransfer(
+                $moduleOverviewTransferCollection,
+                $this->getModuleNameFromModuleKey($moduleKey)
+            );
 
-                continue;
-            }
+            $moduleOverviewTransfer->setIsProjectModule(true);
 
-            $moduleOverviewTransfer = new ModuleOverviewTransfer();
-            $moduleOverviewTransfer
-                ->setModuleName($moduleName)
-                ->setIsProjectModule(true);
-
-            $moduleOverview[$moduleName] = $moduleOverviewTransfer;
+            $moduleOverviewTransferCollection[$moduleName] = $moduleOverviewTransfer;
         }
 
-        return $moduleOverview;
+        return $moduleOverviewTransferCollection;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ModuleOverviewTransfer[] $moduleOverview
+     * @param \Generated\Shared\Transfer\ModuleOverviewTransfer[] $moduleOverviewTransferCollection
      *
      * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
      */
-    protected function addOperatingSystemModules(array $moduleOverview): array
+    protected function addOperatingSystemModules(array $moduleOverviewTransferCollection): array
     {
         $operatingSystemModules = $this->operatingSystemModuleFinder->getModules();
 
         foreach (array_keys($operatingSystemModules) as $moduleKey) {
-            $moduleKeyFragments = explode('.', $moduleKey);
-            $moduleName = $moduleKeyFragments[1];
-            if (isset($moduleOverview[$moduleName])) {
-                $moduleOverviewTransfer = $moduleOverview[$moduleName];
-                $moduleOverviewTransfer->setIsOperatingSystemModule(true);
+            $moduleName = $this->getModuleNameFromModuleKey($moduleKey);
+            $moduleOverviewTransfer = $this->getModuleOverviewTransfer(
+                $moduleOverviewTransferCollection,
+                $this->getModuleNameFromModuleKey($moduleKey)
+            );
 
-                continue;
-            }
+            $moduleOverviewTransfer->setIsOperatingSystemModule(true);
 
-            $moduleOverviewTransfer = new ModuleOverviewTransfer();
-            $moduleOverviewTransfer
-                ->setModuleName($moduleName)
-                ->setIsOperatingSystemModule(true);
-
-            $moduleOverview[$moduleName] = $moduleOverviewTransfer;
+            $moduleOverviewTransferCollection[$moduleName] = $moduleOverviewTransfer;
         }
 
-        return $moduleOverview;
+        return $moduleOverviewTransferCollection;
+    }
+
+    /**
+     * @param string $moduleKey
+     *
+     * @return string
+     */
+    protected function getModuleNameFromModuleKey(string $moduleKey): string
+    {
+        $moduleKeyFragments = explode('.', $moduleKey);
+
+        return array_pop($moduleKeyFragments);
+    }
+
+    /**
+     * @param array $moduleOverviewTransferCollection
+     * @param string $moduleName
+     *
+     * @return \Generated\Shared\Transfer\ModuleOverviewTransfer
+     */
+    protected function getModuleOverviewTransfer(array $moduleOverviewTransferCollection, string $moduleName): ModuleOverviewTransfer
+    {
+        if (isset($moduleOverviewTransferCollection[$moduleName])) {
+            return $moduleOverviewTransferCollection[$moduleName];
+        }
+
+        return $this->createModuleTransfer($moduleName);
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return \Generated\Shared\Transfer\ModuleOverviewTransfer
+     */
+    protected function createModuleTransfer(string $moduleName): ModuleOverviewTransfer
+    {
+        $moduleOverviewTransfer = new ModuleOverviewTransfer();
+        $moduleOverviewTransfer
+            ->setModuleName($moduleName);
+
+        return $moduleOverviewTransfer;
     }
 }

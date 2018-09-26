@@ -53,7 +53,7 @@ class ClassNameChoiceType extends AbstractType
             'choices' => function (Options $options) {
                 $moduleTransfer = $this->getModuleTransfer($options);
                 $classInformationTransferCollection = $this->getFacade()
-                    ->loadChoicesByChoiceLoaderName($options[static::CHOICE_LOADER], $moduleTransfer);
+                    ->loadChoices($options[static::CHOICE_LOADER], $moduleTransfer);
 
                 if (count($classInformationTransferCollection) === 0) {
                     return [];

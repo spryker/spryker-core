@@ -158,6 +158,8 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $choiceLoaderName
@@ -165,7 +167,7 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
      *
      * @return array
      */
-    public function loadChoicesByChoiceLoaderName(string $choiceLoaderName, ModuleTransfer $moduleTransfer): array
+    public function loadChoices(string $choiceLoaderName, ModuleTransfer $moduleTransfer): array
     {
         return $this->getFactory()->createChoiceLoader()->loadChoices($choiceLoaderName, $moduleTransfer);
     }

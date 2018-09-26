@@ -405,7 +405,7 @@ interface DevelopmentFacadeInterface
 
     /**
      * Specification:
-     * - Returns a list of all module used.
+     * - Returns a list of all modules.
      *
      * @api
      *

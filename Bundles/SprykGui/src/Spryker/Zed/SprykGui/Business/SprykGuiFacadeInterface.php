@@ -137,14 +137,15 @@ interface SprykGuiFacadeInterface
 
     /**
      * Specification:
-     * - Loads elements for a choice field type by a choiceLoader name.
+     * - Finds attached choiceLoader by passed choiceLoader name.
+     * - Loads elements for a choice field type with found ChoiceLoaderInterface.
      *
      * @api
      *
      * @param string $choiceLoaderName
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
-     * @return mixed
+     * @return array
      */
-    public function loadChoicesByChoiceLoaderName(string $choiceLoaderName, ModuleTransfer $moduleTransfer): array;
+    public function loadChoices(string $choiceLoaderName, ModuleTransfer $moduleTransfer): array;
 }
