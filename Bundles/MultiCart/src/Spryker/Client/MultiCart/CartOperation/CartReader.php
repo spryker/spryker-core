@@ -9,19 +9,19 @@ namespace Spryker\Client\MultiCart\CartOperation;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Spryker\Client\MultiCart\Zed\MultiCartZedStub;
+use Spryker\Client\MultiCart\Zed\MultiCartZedStubInterface;
 
 class CartReader implements CartReaderInterface
 {
     /**
-     * @var \Spryker\Client\MultiCart\Zed\MultiCartZedStub
+     * @var \Spryker\Client\MultiCart\Zed\MultiCartZedStubInterface
      */
     protected $multiCartZedStub;
 
     /**
-     * @param \Spryker\Client\MultiCart\Zed\MultiCartZedStub $multiCartZedStub
+     * @param \Spryker\Client\MultiCart\Zed\MultiCartZedStubInterface $multiCartZedStub
      */
-    public function __construct(MultiCartZedStub $multiCartZedStub)
+    public function __construct(MultiCartZedStubInterface $multiCartZedStub)
     {
         $this->multiCartZedStub = $multiCartZedStub;
     }

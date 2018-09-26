@@ -377,6 +377,8 @@ class Console extends SymfonyCommand
     }
 
     /**
+     * @deprecated Not used anymore.
+     *
      * @param string $question
      *
      * @return bool
@@ -396,6 +398,8 @@ class Console extends SymfonyCommand
      * The question will be asked until the user answers by yes, or no.
      * If he answers nothing, it will use the default value. If he answers abort,
      * it will throw a RuntimeException.
+     *
+     * @deprecated Not used anymore.
      *
      * @param \Symfony\Component\Console\Output\OutputInterface $output An Output instance
      * @param string $question The question to ask
