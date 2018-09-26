@@ -11,13 +11,13 @@ use Generated\Shared\Transfer\CompanyCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleCreateOrUpdateForm;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleEditForm;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToGlossaryFacadeInterface;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToPermissionFacadeInterface;
 
-class CompanyRoleCreateOrUpdateFormDataProvider implements CompanyRoleCreateOrUpdateFormDataProviderInterface
+class CompanyRoleEditFormDataProvider implements CompanyRoleEditFormDataProviderInterface
 {
     protected const GLOSSARY_KEY_PREFIX_PERMISSION_NAME = 'permission.name.';
 
@@ -87,8 +87,8 @@ class CompanyRoleCreateOrUpdateFormDataProvider implements CompanyRoleCreateOrUp
         );
 
         return [
-            CompanyRoleCreateOrUpdateForm::OPTION_COMPANIES => $availableCompanies,
-            CompanyRoleCreateOrUpdateForm::OPTION_COMPANY_ROLE_PERMISSIONS => $availablePermissions,
+            CompanyRoleEditForm::OPTION_COMPANIES => $availableCompanies,
+            CompanyRoleEditForm::OPTION_COMPANY_ROLE_PERMISSIONS => $availablePermissions,
         ];
     }
 
@@ -104,7 +104,7 @@ class CompanyRoleCreateOrUpdateFormDataProvider implements CompanyRoleCreateOrUp
         $preparedCompanies = [];
         foreach ($companyTransfers as $companyTransfer) {
             $preparedCompanies += [
-                $companyTransfer->getName() => $companyTransfer->getIdCompany(),
+                $companyTransfer->getIdCompany() => $companyTransfer->getName(),
             ];
         }
 
@@ -125,7 +125,7 @@ class CompanyRoleCreateOrUpdateFormDataProvider implements CompanyRoleCreateOrUp
             $permissionName = $this->getPermissionVerboseName($permissionTransfer);
 
             $preparedPermissions += [
-                $permissionName => $permissionTransfer->getIdPermission(),
+                $permissionTransfer->getIdPermission() => $permissionName,
             ];
         }
 

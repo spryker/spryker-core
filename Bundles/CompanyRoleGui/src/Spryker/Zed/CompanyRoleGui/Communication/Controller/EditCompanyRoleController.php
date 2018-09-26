@@ -28,11 +28,11 @@ class EditCompanyRoleController extends AbstractController
     public function indexAction(Request $request)
     {
         $companyRoleForm = $this->getFactory()
-            ->createCompanyRoleCreateOrUpdateForm()
+            ->createCompanyRoleEditForm()
             ->handleRequest($request);
 
         $viewData = [
-            'companyRoleForm' => $companyRoleForm->createView(),
+            'companyRoleEditForm' => $companyRoleForm->createView(),
         ];
 
         if ($companyRoleForm->isSubmitted() && $companyRoleForm->isValid()) {

@@ -13,16 +13,16 @@
                 <action>index</action>
                 <pages>
                     <create-company-role>
-                        <label>Create company role</label>
-                        <title>Create company role</title>
+                        <label>Create role</label>
+                        <title>Create role</title>
                         <bundle>company-role-gui</bundle>
                         <controller>create-company-role</controller>
                         <action>index</action>
                         <visible>0</visible>
                     </create-company-role>
                     <edit-company-role>
-                        <label>Edit company role</label>
-                        <title>Edit company role</title>
+                        <label>Edit Role</label>
+                        <title>Edit Role</title>
                         <bundle>company-role-gui</bundle>
                         <controller>edit-company-role</controller>
                         <action>index</action>

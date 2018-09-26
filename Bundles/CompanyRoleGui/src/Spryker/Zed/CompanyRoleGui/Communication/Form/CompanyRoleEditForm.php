@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CompanyRoleCreateOrUpdateForm extends AbstractType
+class CompanyRoleEditForm extends AbstractType
 {
     public const OPTION_COMPANIES = 'companies';
     public const OPTION_COMPANY_ROLE_PERMISSIONS = 'companyRolePermissions';
@@ -38,6 +38,7 @@ class CompanyRoleCreateOrUpdateForm extends AbstractType
             ->setRequired(static::OPTION_COMPANY_ROLE_PERMISSIONS)
             ->setDefaults([
                 'data_class' => CompanyRoleTransfer::class,
+                'label' => false,
             ]);
     }
 
@@ -95,7 +96,6 @@ class CompanyRoleCreateOrUpdateForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
-            'placeholder' => 'Enter company role name',
             'label' => 'Name',
         ]);
 

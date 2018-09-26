@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 
-interface CompanyRoleCreateOrUpdateFormDataProviderInterface
+interface CompanyRoleEditFormDataProviderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer|null $companyRoleTransfer
