@@ -9,12 +9,12 @@ namespace Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleChoiceFormType;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleChoiceFormType;
 use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface;
 
-class CompanyRoleFormDataProvider
+class CompanyUserRoleFormDataProvider
 {
-    protected const OPTION_ATTRIBUTE_DATA = 'data-id-company';
+    protected const OPTION_ATTRIBUTE_DATA = 'data-id_company';
 
     /**
      * @var \Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFacadeInterface
@@ -47,8 +47,8 @@ class CompanyRoleFormDataProvider
         [$choicesValues, $choicesAttributes] = $this->prepareCompanyRoleAttributeMap();
 
         return [
-            CompanyRoleChoiceFormType::OPTION_VALUES_ROLES_CHOICES => $choicesValues,
-            CompanyRoleChoiceFormType::OPTION_ATTRIBUTES_ROLES_CHOICES => $choicesAttributes,
+            CompanyUserRoleChoiceFormType::OPTION_VALUES_ROLES_CHOICES => $choicesValues,
+            CompanyUserRoleChoiceFormType::OPTION_ATTRIBUTES_ROLES_CHOICES => $choicesAttributes,
         ];
     }
 

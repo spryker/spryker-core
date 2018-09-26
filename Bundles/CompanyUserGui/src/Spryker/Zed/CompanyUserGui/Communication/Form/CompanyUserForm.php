@@ -44,7 +44,6 @@ class CompanyUserForm extends AbstractType
         $resolver->setDefined(static::OPTION_COMPANY_CHOICES);
         $resolver->setDefined(CompanyUserCustomerForm::OPTION_SALUTATION_CHOICES);
         $resolver->setDefined(CompanyUserCustomerForm::OPTION_GENDER_CHOICES);
-        $resolver->setDefined(CompanyUserCustomerForm::OPTION_LOCALE_CHOICES);
         $resolver->setDefaults([
             'data_class' => CompanyUserTransfer::class,
         ]);
@@ -81,7 +80,6 @@ class CompanyUserForm extends AbstractType
                 'label' => false,
                 CompanyUserCustomerForm::OPTION_GENDER_CHOICES => $options[CompanyUserCustomerForm::OPTION_GENDER_CHOICES],
                 CompanyUserCustomerForm::OPTION_SALUTATION_CHOICES => $options[CompanyUserCustomerForm::OPTION_SALUTATION_CHOICES],
-                CompanyUserCustomerForm::OPTION_LOCALE_CHOICES => $options[CompanyUserCustomerForm::OPTION_LOCALE_CHOICES],
             ]
         );
 
@@ -110,7 +108,7 @@ class CompanyUserForm extends AbstractType
     {
         $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
             'label' => 'Company',
-            'placeholder' => 'Select one',
+            'placeholder' => 'Company name',
             'choices' => $choices,
             'choices_as_values' => true,
             'constraints' => [

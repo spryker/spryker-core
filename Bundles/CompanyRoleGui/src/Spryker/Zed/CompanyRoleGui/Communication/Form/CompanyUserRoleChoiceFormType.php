@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class CompanyRoleChoiceFormType extends AbstractType
+class CompanyUserRoleChoiceFormType extends AbstractType
 {
     public const OPTION_VALUES_ROLES_CHOICES = 'company_role_choices';
     public const OPTION_ATTRIBUTES_ROLES_CHOICES = 'company_role_attributes';

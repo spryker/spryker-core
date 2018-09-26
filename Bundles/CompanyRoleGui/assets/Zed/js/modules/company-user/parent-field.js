@@ -19,7 +19,7 @@ const roleFieldPath = 'company-user_company_role_collection';
  * @see \Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider\CompanyRoleFormDataProvider::OPTION_ATTRIBUTE_DATA
  * @type {string}
  */
-const attributeIdCompany = 'id-company';
+const attributeIdCompany = 'id_company';
 
 function initialize() {
 

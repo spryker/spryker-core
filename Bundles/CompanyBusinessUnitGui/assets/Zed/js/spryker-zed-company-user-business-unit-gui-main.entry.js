@@ -5,4 +5,4 @@
 
 'use strict';
 
-require('./modules/main');
+require('./modules/company-user/main');

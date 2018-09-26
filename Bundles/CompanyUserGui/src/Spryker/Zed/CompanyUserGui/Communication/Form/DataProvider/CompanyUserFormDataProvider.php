@@ -13,7 +13,6 @@ use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserCustomerForm;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserForm;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeInterface;
-use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToLocaleFacadeInterface;
 
 class CompanyUserFormDataProvider
 {
@@ -28,23 +27,15 @@ class CompanyUserFormDataProvider
     protected $companyFacade;
 
     /**
-     * @var \Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToLocaleFacadeInterface
-     */
-    protected $localeFacade;
-
-    /**
      * @param \Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeInterface $companyUserFacade
      * @param \Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeInterface $companyFacade
-     * @param \Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         CompanyUserGuiToCompanyUserFacadeInterface $companyUserFacade,
-        CompanyUserGuiToCompanyFacadeInterface $companyFacade,
-        CompanyUserGuiToLocaleFacadeInterface $localeFacade
+        CompanyUserGuiToCompanyFacadeInterface $companyFacade
     ) {
         $this->companyUserFacade = $companyUserFacade;
         $this->companyFacade = $companyFacade;
-        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -67,7 +58,6 @@ class CompanyUserFormDataProvider
             CompanyUserForm::OPTION_COMPANY_CHOICES => $this->prepareCompanyChoices(),
             CompanyUserCustomerForm::OPTION_SALUTATION_CHOICES => $this->getSalutationChoices(),
             CompanyUserCustomerForm::OPTION_GENDER_CHOICES => $this->getGenderChoices(),
-            CompanyUserCustomerForm::OPTION_LOCALE_CHOICES => $this->getLocaleChoices(),
         ];
     }
 
@@ -121,13 +111,5 @@ class CompanyUserFormDataProvider
         $genderSet = SpyCustomerTableMap::getValueSet(SpyCustomerTableMap::COL_GENDER);
 
         return array_combine($genderSet, $genderSet);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getLocaleChoices()
-    {
-        return $this->localeFacade->getAvailableLocales();
     }
 }

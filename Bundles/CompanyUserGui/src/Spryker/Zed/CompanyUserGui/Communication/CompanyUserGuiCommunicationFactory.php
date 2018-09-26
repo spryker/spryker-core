@@ -15,7 +15,6 @@ use Spryker\Zed\CompanyUserGui\CompanyUserGuiDependencyProvider;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeInterface;
-use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToLocaleFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -50,8 +49,7 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CompanyUserFormDataProvider(
             $this->getCompanyUserFacade(),
-            $this->getCompanyFacade(),
-            $this->getLocaleFacade()
+            $this->getCompanyFacade()
         );
     }
 
@@ -77,14 +75,6 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCustomerFacade(): CompanyUserGuiToCustomerFacadeInterface
     {
         return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::FACADE_CUSTOMER);
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToLocaleFacadeInterface
-     */
-    public function getLocaleFacade(): CompanyUserGuiToLocaleFacadeInterface
-    {
-        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::FACADE_LOCALE);
     }
 
     /**

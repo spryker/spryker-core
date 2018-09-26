@@ -10,7 +10,6 @@ namespace Spryker\Zed\CompanyUserGui\Communication\Form;
 use DateTime;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -32,19 +31,16 @@ class CompanyUserCustomerForm extends AbstractType
 {
     const OPTION_SALUTATION_CHOICES = 'salutation_choices';
     const OPTION_GENDER_CHOICES = 'gender_choices';
-    const OPTION_LOCALE_CHOICES = 'locale_choices';
 
     const FIELD_EMAIL = 'email';
     const FIELD_SALUTATION = 'salutation';
     const FIELD_FIRST_NAME = 'first_name';
     const FIELD_LAST_NAME = 'last_name';
     const FIELD_GENDER = 'gender';
-    const FIELD_SEND_PASSWORD_TOKEN = 'send_password_token';
     const FIELD_ID_CUSTOMER = 'id_customer';
     const FIELD_COMPANY = 'company';
     const FIELD_PHONE = 'phone';
     const FIELD_DATE_OF_BIRTH = 'date_of_birth';
-    const FIELD_LOCALE = 'locale';
 
     /**
      * @return string
@@ -63,7 +59,6 @@ class CompanyUserCustomerForm extends AbstractType
     {
         $resolver->setDefined(static::OPTION_SALUTATION_CHOICES);
         $resolver->setDefined(static::OPTION_GENDER_CHOICES);
-        $resolver->setDefined(static::OPTION_LOCALE_CHOICES);
     }
 
     /**
@@ -82,9 +77,7 @@ class CompanyUserCustomerForm extends AbstractType
             ->addLastNameField($builder)
             ->addGenderField($builder, $options[static::OPTION_GENDER_CHOICES])
             ->addDateOfBirthField($builder)
-            ->addPhoneField($builder)
-            ->addLocaleField($builder, $options[static::OPTION_LOCALE_CHOICES])
-            ->addSendPasswordField($builder);
+            ->addPhoneField($builder);
     }
 
     /**
@@ -190,21 +183,6 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSendPasswordField(FormBuilderInterface $builder)
-    {
-        $builder->add(self::FIELD_SEND_PASSWORD_TOKEN, CheckboxType::class, [
-            'label' => 'Send password token through email',
-            'required' => false,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
     protected function addPhoneField(FormBuilderInterface $builder)
     {
         $phoneConstraints = [
@@ -216,29 +194,6 @@ class CompanyUserCustomerForm extends AbstractType
             'required' => false,
             'constraints' => $phoneConstraints,
         ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
-     *
-     * @return $this
-     */
-    protected function addLocaleField(FormBuilderInterface $builder, array $choices)
-    {
-        $builder->add(static::FIELD_LOCALE, ChoiceType::class, [
-            'label' => 'Locale',
-            'placeholder' => 'Select one',
-            'choices' => array_flip($choices),
-            'choices_as_values' => true,
-            'required' => false,
-
-        ]);
-
-        $builder->get(static::FIELD_LOCALE)
-            ->addModelTransformer($this->createLocaleModelTransformer());
 
         return $this;
     }
@@ -314,25 +269,6 @@ class CompanyUserCustomerForm extends AbstractType
             },
             function ($dateAsObject) {
                 return $dateAsObject;
-            }
-        );
-    }
-
-    /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
-    protected function createLocaleModelTransformer()
-    {
-        return new CallbackTransformer(
-            function ($localeAsObject) {
-                if ($localeAsObject !== null) {
-                    return $localeAsObject->getIdLocale();
-                }
-            },
-            function ($localeAsInt) {
-                if ($localeAsInt !== null) {
-                    return $this->getFactory()->getLocaleFacade()->getLocaleById($localeAsInt);
-                }
             }
         );
     }

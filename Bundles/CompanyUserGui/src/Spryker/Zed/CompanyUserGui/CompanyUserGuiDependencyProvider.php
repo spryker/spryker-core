@@ -10,7 +10,6 @@ namespace Spryker\Zed\CompanyUserGui;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeBridge;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeBridge;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeBridge;
-use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToLocaleFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -20,7 +19,6 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_COMPANY = 'FACADE_COMPANY';
     public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
-    public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const COMPANY_USER_FORM_EXPANDER_PLUGINS = 'COMPANY_USER_FORM_EXPANDER_PLUGINS';
     public const COMPANY_USER_EDIT_FORM_EXPANDER_PLUGINS = 'COMPANY_USER_EDIT_FORM_EXPANDER_PLUGINS';
 
@@ -34,7 +32,6 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addCompanyFacade($container);
-        $container = $this->addLocaleFacade($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addCompanyUserFormExpanderPlugins($container);
         $container = $this->addCompanyUserEditFormExpanderPlugins($container);
@@ -84,22 +81,6 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_CUSTOMER] = function (Container $container) {
             return new CompanyUserGuiToCustomerFacadeBridge(
                 $container->getLocator()->customer()->facade()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addLocaleFacade(Container $container): Container
-    {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
-            return new CompanyUserGuiToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
             );
         };
 

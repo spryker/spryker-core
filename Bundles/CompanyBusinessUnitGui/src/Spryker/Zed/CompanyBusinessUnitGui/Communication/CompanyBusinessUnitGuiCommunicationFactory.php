@@ -10,7 +10,9 @@ namespace Spryker\Zed\CompanyBusinessUnitGui\Communication;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitEditForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyUserBusinessUnitChoiceFormType;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyUserBusinessUnitFormDataProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Table\CompanyBusinessUnitTable;
 use Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiDependencyProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface;
@@ -61,6 +63,22 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
             $this->getCompanyBusinessUnitFacade(),
             $this->getCompanyFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyUserBusinessUnitChoiceFormType
+     */
+    public function createCompanyUserBusinessUnitChoiceFormType(): CompanyUserBusinessUnitChoiceFormType
+    {
+        return new CompanyUserBusinessUnitChoiceFormType();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyUserBusinessUnitFormDataProvider
+     */
+    public function createCompanyUserBusinessUnitChoiceFormDataProvider(): CompanyUserBusinessUnitFormDataProvider
+    {
+        return new CompanyUserBusinessUnitFormDataProvider($this->getCompanyBusinessUnitFacade());
     }
 
     /**

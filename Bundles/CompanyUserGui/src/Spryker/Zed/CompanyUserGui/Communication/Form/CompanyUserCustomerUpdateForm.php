@@ -27,14 +27,4 @@ class CompanyUserCustomerUpdateForm extends CompanyUserCustomerForm
 
         return $this;
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addSendPasswordField(FormBuilderInterface $builder)
-    {
-        return $this;
-    }
 }
