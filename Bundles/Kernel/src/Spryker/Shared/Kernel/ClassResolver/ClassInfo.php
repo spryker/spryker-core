@@ -9,11 +9,11 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 
 class ClassInfo
 {
-    const TEST_NAMESPACE_SUFFIX = 'Test';
-    const KEY_NAMESPACE = 0;
-    const KEY_APPLICATION = 1;
-    const KEY_BUNDLE = 2;
-    const KEY_LAYER = 3;
+    public const TEST_NAMESPACE_SUFFIX = 'Test';
+    public const KEY_NAMESPACE = 0;
+    public const KEY_APPLICATION = 1;
+    public const KEY_BUNDLE = 2;
+    public const KEY_LAYER = 3;
 
     /**
      * @var string|null

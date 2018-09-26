@@ -17,5 +17,5 @@ interface DataImportConstants
      * - Root path to the import files.
      * - Can be used to have a small set of import data for e.g. testing or development.
      */
-    const IMPORT_FILE_ROOT_PATH = 'IMPORT_FILE_ROOT_PATH';
+    public const IMPORT_FILE_ROOT_PATH = 'IMPORT_FILE_ROOT_PATH';
 }

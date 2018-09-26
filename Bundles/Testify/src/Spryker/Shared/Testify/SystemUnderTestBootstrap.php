@@ -22,11 +22,11 @@ use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvide
 
 class SystemUnderTestBootstrap
 {
-    const APPLICATION_ZED = 'Zed';
-    const APPLICATION_YVES = 'Yves';
-    const APPLICATION_SHARED = 'Shared';
-    const APPLICATION_CLIENT = 'Client';
-    const TEST_ENVIRONMENT = 'devtest';
+    public const APPLICATION_ZED = 'Zed';
+    public const APPLICATION_YVES = 'Yves';
+    public const APPLICATION_SHARED = 'Shared';
+    public const APPLICATION_CLIENT = 'Client';
+    public const TEST_ENVIRONMENT = 'devtest';
 
     /**
      * @var \Spryker\Shared\Testify\SystemUnderTestBootstrap|null

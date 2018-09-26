@@ -19,7 +19,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class AvailabilityStorageQueryContainer extends AbstractQueryContainer implements AvailabilityStorageQueryContainerInterface
 {
-    const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
      * @api

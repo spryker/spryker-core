@@ -21,7 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ArgumentCollectionType extends AbstractType
 {
-    const ARGUMENT_CHOICES = 'argumentChoices';
+    public const ARGUMENT_CHOICES = 'argumentChoices';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

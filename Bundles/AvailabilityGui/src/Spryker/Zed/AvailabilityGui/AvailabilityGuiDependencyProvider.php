@@ -19,14 +19,14 @@ use Spryker\Zed\Kernel\Container;
 
 class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_LOCALE = 'locale facade';
-    const FACADE_STOCK = 'stock facade';
-    const FACADE_AVAILABILITY = 'availability facade';
-    const FACADE_STORE = 'store facade';
-    const FACADE_OMS = 'oms facade';
+    public const FACADE_LOCALE = 'locale facade';
+    public const FACADE_STOCK = 'stock facade';
+    public const FACADE_AVAILABILITY = 'availability facade';
+    public const FACADE_STORE = 'store facade';
+    public const FACADE_OMS = 'oms facade';
 
-    const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
-    const QUERY_CONTAINER_PRODUCT_BUNDLE = 'product bundle query container';
+    public const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
+    public const QUERY_CONTAINER_PRODUCT_BUNDLE = 'product bundle query container';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

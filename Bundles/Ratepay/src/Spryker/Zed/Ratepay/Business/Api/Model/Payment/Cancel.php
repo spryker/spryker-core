@@ -17,12 +17,12 @@ class Cancel extends Base
     /**
      * @const Method operation.
      */
-    const OPERATION = Constants::REQUEST_MODEL_PAYMENT_CHANGE;
+    public const OPERATION = Constants::REQUEST_MODEL_PAYMENT_CHANGE;
 
     /**
      * @const Method operation subtype.
      */
-    const OPERATION_SUBTYPE = 'cancellation';
+    public const OPERATION_SUBTYPE = 'cancellation';
 
     /**
      * @var \Spryker\Zed\Ratepay\Business\Api\Builder\ShoppingBasket

@@ -31,7 +31,7 @@ class UserTest extends Unit
     /**
      * @const string
      */
-    const USERNAME = 'test@test.com';
+    public const USERNAME = 'test@test.com';
 
     /**
      * @var \SprykerTest\Zed\User\BusinessTester

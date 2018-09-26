@@ -16,15 +16,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AttributeController extends AbstractController
 {
-    const PARAM_ID = 'id';
-    const PARAM_SEARCH_TEXT = 'q';
-    const PARAM_TERM = 'term';
-    const PARAM_LOCALE_CODE = 'locale_code';
+    public const PARAM_ID = 'id';
+    public const PARAM_SEARCH_TEXT = 'q';
+    public const PARAM_TERM = 'term';
+    public const PARAM_LOCALE_CODE = 'locale_code';
 
-    const MESSAGE_ATTRIBUTE_CREATE_SUCCESS = 'Product attribute was created successfully.';
-    const MESSAGE_ATTRIBUTE_CREATE_ERROR = 'Product attribute was not created.';
-    const MESSAGE_ATTRIBUTE_UPDATE_SUCCESS = 'Product attribute was updated successfully.';
-    const MESSAGE_TRANSLATION_UPDATE_SUCCESS = 'Translation was updated successfully.';
+    public const MESSAGE_ATTRIBUTE_CREATE_SUCCESS = 'Product attribute was created successfully.';
+    public const MESSAGE_ATTRIBUTE_CREATE_ERROR = 'Product attribute was not created.';
+    public const MESSAGE_ATTRIBUTE_UPDATE_SUCCESS = 'Product attribute was updated successfully.';
+    public const MESSAGE_TRANSLATION_UPDATE_SUCCESS = 'Translation was updated successfully.';
 
     /**
      * @return array

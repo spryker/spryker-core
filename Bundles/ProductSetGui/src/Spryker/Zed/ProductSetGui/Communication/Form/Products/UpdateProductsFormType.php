@@ -20,10 +20,10 @@ use Symfony\Component\Form\FormEvents;
  */
 class UpdateProductsFormType extends AbstractType
 {
-    const FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS = 'assign_id_product_abstracts';
-    const FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS = 'deassign_id_product_abstracts';
-    const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
-    const FIELD_PRODUCT_POSITION = 'product_position';
+    public const FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS = 'assign_id_product_abstracts';
+    public const FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS = 'deassign_id_product_abstracts';
+    public const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
+    public const FIELD_PRODUCT_POSITION = 'product_position';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

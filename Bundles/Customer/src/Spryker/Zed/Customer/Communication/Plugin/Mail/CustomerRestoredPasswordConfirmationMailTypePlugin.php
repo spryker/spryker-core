@@ -17,7 +17,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  */
 class CustomerRestoredPasswordConfirmationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    const MAIL_TYPE = 'customer restored password confirmation';
+    public const MAIL_TYPE = 'customer restored password confirmation';
 
     /**
      * @api

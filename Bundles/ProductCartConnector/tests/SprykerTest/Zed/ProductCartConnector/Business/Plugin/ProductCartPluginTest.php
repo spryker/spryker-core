@@ -31,12 +31,12 @@ use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
  */
 class ProductCartPluginTest extends Unit
 {
-    const SKU_PRODUCT_ABSTRACT = 'Product abstract sku';
-    const SKU_PRODUCT_CONCRETE = 'Product concrete sku';
-    const TAX_SET_NAME = 'Sales Tax';
-    const TAX_RATE_NAME = 'VAT';
-    const TAX_RATE_PERCENTAGE = 10;
-    const PRODUCT_CONCRETE_NAME = 'Product concrete name';
+    public const SKU_PRODUCT_ABSTRACT = 'Product abstract sku';
+    public const SKU_PRODUCT_CONCRETE = 'Product concrete sku';
+    public const TAX_SET_NAME = 'Sales Tax';
+    public const TAX_RATE_NAME = 'VAT';
+    public const TAX_RATE_PERCENTAGE = 10;
+    public const PRODUCT_CONCRETE_NAME = 'Product concrete name';
 
     /**
      * @var \Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade

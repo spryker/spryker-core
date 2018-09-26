@@ -16,12 +16,12 @@ use Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyBridge;
 
 class QuoteDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_SESSION = 'session client';
+    public const CLIENT_SESSION = 'session client';
 
-    const CURRENCY_PLUGIN = 'currency plugin';
-    const QUOTE_TRANSFER_EXPANDER_PLUGINS = 'QUOTE_TRANSFER_EXPANDER_PLUGINS';
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const SERVICE_ZED = 'SERVICE_ZED';
+    public const CURRENCY_PLUGIN = 'currency plugin';
+    public const QUOTE_TRANSFER_EXPANDER_PLUGINS = 'QUOTE_TRANSFER_EXPANDER_PLUGINS';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const SERVICE_ZED = 'SERVICE_ZED';
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
 
     /**

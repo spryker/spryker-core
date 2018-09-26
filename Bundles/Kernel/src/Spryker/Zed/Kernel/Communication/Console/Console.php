@@ -27,8 +27,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Console extends SymfonyCommand
 {
-    const CODE_SUCCESS = 0;
-    const CODE_ERROR = 1;
+    public const CODE_SUCCESS = 0;
+    public const CODE_ERROR = 1;
 
     use RepositoryResolverAwareTrait;
 
