@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/multi-cart-data-import.svg)](https://travis-ci.org/spryker/multi-cart-data-import)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/multi-cart-data-import/badge.svg)](https://coveralls.io/github/spryker/multi-cart-data-import)
 
-{{ADD DESCRIPTION HERE}}
+Module for importing quotes from .csv file.
 
 ## Installation
 
