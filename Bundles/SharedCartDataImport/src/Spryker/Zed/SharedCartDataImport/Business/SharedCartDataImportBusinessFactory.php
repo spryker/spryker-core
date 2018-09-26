@@ -17,6 +17,8 @@ use Spryker\Zed\SharedCartDataImport\Business\SharedCartImportStep\SharedCartWri
 
 /**
  * @method \Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig getConfig()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataImporter getCsvDataImporterFromConfig(\Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
  */
 class SharedCartDataImportBusinessFactory extends DataImportBusinessFactory
 {
@@ -25,12 +27,10 @@ class SharedCartDataImportBusinessFactory extends DataImportBusinessFactory
      */
     public function createSharedCartDataImport(): DataImporterInterface
     {
-        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->getSharedCartDataImporterConfiguration()
         );
 
-        /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker->addStep($this->createAddLocalesStep())
             ->addStep($this->createQuoteKeyToIdQuoteStep())

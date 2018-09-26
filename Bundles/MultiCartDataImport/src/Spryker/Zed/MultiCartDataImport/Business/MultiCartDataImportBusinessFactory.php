@@ -16,6 +16,8 @@ use Spryker\Zed\MultiCartDataImport\Business\CartImportStep\StoreToIdStoreStep;
 
 /**
  * @method \Spryker\Zed\MultiCartDataImport\MultiCartDataImportConfig getConfig()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataImporter getCsvDataImporterFromConfig(\Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
  */
 class MultiCartDataImportBusinessFactory extends DataImportBusinessFactory
 {
@@ -24,12 +26,10 @@ class MultiCartDataImportBusinessFactory extends DataImportBusinessFactory
      */
     public function createCartDataImport(): DataImporterInterface
     {
-        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->getMultiCartDataImporterConfiguration()
         );
 
-        /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker->addStep($this->createAddLocalesStep())
             ->addStep($this->createCustomerReferenceValidationStep())
