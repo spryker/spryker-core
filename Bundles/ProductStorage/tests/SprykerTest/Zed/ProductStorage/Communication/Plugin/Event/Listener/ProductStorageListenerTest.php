@@ -312,7 +312,7 @@ class ProductStorageListenerTest extends Unit
         $afterCount = SpyProductConcreteStorageQuery::create()->count();
         $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES, $afterCount);
         $spyProductConcreteStorage = SpyProductConcreteStorageQuery::create()
-            ->orderByIdProductConcreteStorage()
+            ->orderByIdProductConcreteStorage('DESC')
             ->findOneByFkProduct(1);
         $this->assertNotNull($spyProductConcreteStorage);
         $data = $spyProductConcreteStorage->getData();
