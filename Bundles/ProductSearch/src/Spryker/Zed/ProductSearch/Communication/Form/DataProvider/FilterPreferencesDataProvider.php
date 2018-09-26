@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductSearch\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\ProductSearch\Code\KeyBuilder\GlossaryKeyBuilderInterface;
+use Spryker\Zed\ProductSearch\Communication\Exception\ProductAttributeKeyNotFoundException;
 use Spryker\Zed\ProductSearch\Communication\Form\AttributeTranslationForm;
 use Spryker\Zed\ProductSearch\Communication\Form\FilterPreferencesForm;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToGlossaryInterface;
@@ -67,6 +68,8 @@ class FilterPreferencesDataProvider
     /**
      * @param int|null $idProductSearchAttribute
      *
+     * @throws \Spryker\Zed\ProductSearch\Communication\Exception\ProductAttributeKeyNotFoundException
+     *
      * @return array
      */
     public function getData($idProductSearchAttribute = null)
@@ -78,6 +81,10 @@ class FilterPreferencesDataProvider
         }
 
         $productSearchAttributeEntity = $this->getProductSearchAttributeEntity($idProductSearchAttribute);
+
+        if ($productSearchAttributeEntity === null) {
+            throw new ProductAttributeKeyNotFoundException(sprintf('Attribute with id %s doesn\'t exist', $idProductSearchAttribute));
+        }
 
         $attributeKey = $productSearchAttributeEntity->getSpyProductAttributeKey()->getKey();
 

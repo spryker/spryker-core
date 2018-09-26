@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductSearch\Communication\Form\DataProvider;
 
+use Spryker\Zed\ProductSearch\Communication\Exception\ProductAttributeKeyNotFoundException;
 use Spryker\Zed\ProductSearch\Communication\Form\SearchPreferencesForm;
 use Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
@@ -29,6 +30,8 @@ class SearchPreferencesDataProvider
     /**
      * @param int|null $idProductAttributeKey
      *
+     * @throws \Spryker\Zed\ProductSearch\Communication\Exception\ProductAttributeKeyNotFoundException
+     *
      * @return array
      */
     public function getData($idProductAttributeKey = null)
@@ -42,7 +45,9 @@ class SearchPreferencesDataProvider
             ->querySearchPreferencesTable()
             ->filterByIdProductAttributeKey($idProductAttributeKey)
             ->findOne();
-
+        if ($productAttributeKeyEntity === null) {
+            throw new ProductAttributeKeyNotFoundException(sprintf('Attribute with id %s doesn\'t exist', $idProductAttributeKey));
+        }
         return [
             SearchPreferencesForm::FIELD_ID_PRODUCT_ATTRIBUTE_KEY => $idProductAttributeKey,
             SearchPreferencesForm::FIELD_KEY => $productAttributeKeyEntity->getKey(),

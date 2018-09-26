@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Business\Exception\DiscountNotFoundException;
 use Spryker\Zed\Gui\Communication\Table\TableParameters;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -71,8 +72,14 @@ class IndexController extends AbstractController
     {
         $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
 
-        $discountConfiguratorTransfer = $this->getFacade()
-            ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+        try {
+            $discountConfiguratorTransfer = $this->getFacade()
+                ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+        } catch (DiscountNotFoundException $exception) {
+            $this->addErrorMessage(sprintf('Discount with id %s doesn\'t exist', $idDiscount));
+
+            return $this->redirectResponse('/discount/index/list');
+        }
 
         $discountForm = $this->getFactory()->getDiscountForm($idDiscount);
         $discountForm->setData($discountConfiguratorTransfer);
@@ -136,8 +143,14 @@ class IndexController extends AbstractController
     {
         $idDiscount = $this->castId($request->query->get(static::URL_PARAM_ID_DISCOUNT));
 
-        $discountConfiguratorTransfer = $this->getFacade()
-            ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+        try {
+            $discountConfiguratorTransfer = $this->getFacade()
+                ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+        } catch (DiscountNotFoundException $exception) {
+            $this->addErrorMessage(sprintf('Discount with id %s doesn\'t exist', $idDiscount));
+
+            return $this->redirectResponse('/discount/index/list');
+        }
 
         $voucherCodesTable = $this->renderVoucherCodeTable($request, $discountConfiguratorTransfer);
 

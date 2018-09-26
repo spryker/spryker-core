@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Glossary\Communication\Controller;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
+use Spryker\Zed\Glossary\Communication\Exception\GlossaryNotFoundException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -30,14 +31,20 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $idGlossaryKey = $this->castId($request->query->get(static::URL_PARAMETER_GLOSSARY_KEY));
-        $formData = $this
-            ->getFactory()
-            ->createTranslationDataProvider()
-            ->getData(
-                $idGlossaryKey,
-                $this->getFactory()->getEnabledLocales()
-            );
 
+        try {
+            $formData = $this
+                ->getFactory()
+                ->createTranslationDataProvider()
+                ->getData(
+                    $idGlossaryKey,
+                    $this->getFactory()->getEnabledLocales()
+                );
+        } catch (GlossaryNotFoundException $exception) {
+            $this->addErrorMessage(sprintf('Glossary with id %s doesn\'t exist', $idGlossaryKey));
+
+            return $this->redirectResponse('/glossary');
+        }
         $glossaryForm = $this
             ->getFactory()
             ->getTranslationUpdateForm($formData);

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Glossary\Communication\Form\DataProvider;
 
 use Propel\Runtime\Map\TableMap;
+use Spryker\Zed\Glossary\Communication\Exception\GlossaryNotFoundException;
 use Spryker\Zed\Glossary\Communication\Form\TranslationForm;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
@@ -68,10 +69,17 @@ class TranslationFormDataProvider
     /**
      * @param int $fkGlossaryKey
      *
+     * @throws \Spryker\Zed\Glossary\Communication\Exception\GlossaryNotFoundException
+     *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey
      */
     protected function getGlossaryKey($fkGlossaryKey)
     {
-        return $this->glossaryQueryContainer->queryKeys()->findOneByIdGlossaryKey($fkGlossaryKey);
+        $glossaryEntity = $this->glossaryQueryContainer->queryKeys()->findOneByIdGlossaryKey($fkGlossaryKey);
+        if ($glossaryEntity === null) {
+            throw new GlossaryNotFoundException(sprintf('Glossary with id %s doesn\'t exist', $fkGlossaryKey));
+        }
+
+        return $glossaryEntity;
     }
 }

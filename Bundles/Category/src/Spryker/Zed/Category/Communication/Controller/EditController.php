@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
+use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +31,13 @@ class EditController extends AbstractController
     {
         $this->getFacade()->syncCategoryTemplate();
 
-        $form = $this->getFactory()->createCategoryEditForm();
+        try {
+            $form = $this->getFactory()->createCategoryEditForm();
+        } catch (MissingCategoryException $exception) {
+            $this->addErrorMessage(sprintf('Category with id %s doesn\'t exist', $request->get('id-category')));
+
+            return $this->redirectResponse('/category/root');
+        }
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Business\Exception\DiscountNotFoundException;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterface
@@ -59,6 +60,8 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     /**
      * @param int $idDiscount
      *
+     * @throws \Spryker\Zed\Discount\Business\Exception\DiscountNotFoundException
+     *
      * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
     public function getByIdDiscount($idDiscount)
@@ -68,6 +71,9 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
             ->find()
             ->getFirst();
 
+        if ($discountEntity === null) {
+            throw new DiscountNotFoundException(sprintf('Discount with id %s doesn\'t exist', $idDiscount));
+        }
         $discountConfigurator = $this->createDiscountConfiguratorTransfer();
 
         $discountGeneralTransfer = $this->hydrateGeneralDiscount($discountEntity);

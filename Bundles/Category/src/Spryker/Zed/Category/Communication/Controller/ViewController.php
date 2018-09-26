@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Communication\Controller;
 
+use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -28,8 +29,14 @@ class ViewController extends AbstractController
     {
         $idCategory = $request->query->getInt(static::QUERY_PARAM_ID_CATEGORY);
 
-        $categoryTransfer = $this->getFacade()
-            ->read($idCategory);
+        try {
+            $categoryTransfer = $this->getFacade()
+                ->read($idCategory);
+        } catch (MissingCategoryException $exception) {
+            $this->addErrorMessage(sprintf('Category with id %s doesn\'t exist', $idCategory));
+
+            return $this->redirectResponse('/category/root');
+        }
 
         $localeTransfer = $this->getFactory()->getCurrentLocale();
         $readPlugins = $this->getFactory()

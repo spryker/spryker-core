@@ -33,6 +33,12 @@ class UpdateController extends AbstractController
             )
             ->handleRequest($request);
 
+        if ($navigationForm->getData() === null) {
+            $this->addErrorMessage(sprintf('Navigation with id %s doesn\'t exist', $idNavigation));
+
+            return $this->redirectResponse('/navigation-gui');
+        }
+
         if ($navigationForm->isSubmitted() && $navigationForm->isValid()) {
             $navigationTransfer = $navigationForm->getData();
             $this->getFactory()

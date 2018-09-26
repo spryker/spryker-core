@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsGui\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
+use Spryker\Zed\CmsGui\Communication\Exception\CmsPageNotFoundException;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -46,9 +47,15 @@ class EditPageController extends AbstractController
         $cmsPageFormTypeDataProvider = $this->getFactory()
             ->createCmsPageFormTypeDataProvider();
 
-        $pageForm = $this->getFactory()
-            ->createCmsPageForm($cmsPageFormTypeDataProvider, $idCmsPage)
-            ->handleRequest($request);
+        try {
+            $pageForm = $this->getFactory()
+                ->createCmsPageForm($cmsPageFormTypeDataProvider, $idCmsPage)
+                ->handleRequest($request);
+        } catch (CmsPageNotFoundException $exception) {
+            $this->addErrorMessage(sprintf('Cms page with id %s doesn\'t exist', $idCmsPage));
+
+            return $this->redirectResponse('/cms-gui//list-page');
+        }
 
         if ($pageForm->isSubmitted()) {
             $isUpdated = $this->updateCmsPage($pageForm);
