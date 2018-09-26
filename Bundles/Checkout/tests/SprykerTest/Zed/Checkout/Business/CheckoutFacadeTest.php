@@ -168,8 +168,8 @@ class CheckoutFacadeTest extends Unit
         $salesFacade = $this->tester->getLocator()->sales()->facade();
         $order = $salesFacade->getOrderByIdSalesOrder($result->getSaveOrder()->getIdSalesOrder());
         $this->assertEquals(2, $order->getItems()->count());
-        $this->assertEquals($product1->getSku(), $order->getItems()[1]->getSku());
-        $this->assertEquals($product2->getSku(), $order->getItems()[0]->getSku());
+        $this->assertEquals($product1->getSku(), $order->getItems()[0]->getSku());
+        $this->assertEquals($product2->getSku(), $order->getItems()[1]->getSku());
     }
 
     /**

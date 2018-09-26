@@ -188,7 +188,9 @@ class OrderHydrator implements OrderHydratorInterface
      */
     public function hydrateOrderItemsToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
-        foreach ($orderEntity->getItems() as $orderItemEntity) {
+        $criteria = new Criteria();
+        $criteria->addAscendingOrderByColumn(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM);
+        foreach ($orderEntity->getItems($criteria) as $orderItemEntity) {
             $itemTransfer = $this->hydrateOrderItemTransfer($orderItemEntity);
             $orderTransfer->addItem($itemTransfer);
         }
