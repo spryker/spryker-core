@@ -159,4 +159,15 @@
         <property name="module" type="Module"/>
     </transfer>
 
+
+    <transfer name="ModuleOverview">
+        <property name="moduleName" type="string"/>
+        <property name="isOperatingSystemModule" type="bool"/>
+        <property name="isProjectModule" type="bool"/>
+        <property name="operatingSystemModuleOrganization" type="string"/>
+        <property name="projectModuleOrganization" type="string"/>
+    </transfer>
+
+
+
 </transfers>

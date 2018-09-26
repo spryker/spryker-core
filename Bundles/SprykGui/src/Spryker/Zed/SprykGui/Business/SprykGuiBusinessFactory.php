@@ -22,8 +22,6 @@ use Spryker\Zed\SprykGui\Business\Finder\Module\ModuleFinder;
 use Spryker\Zed\SprykGui\Business\Finder\Module\ModuleFinderInterface;
 use Spryker\Zed\SprykGui\Business\Finder\Organization\OrganizationFinder;
 use Spryker\Zed\SprykGui\Business\Finder\Organization\OrganizationFinderInterface;
-use Spryker\Zed\SprykGui\Business\Finder\Zed\Business\BusinessModelFinder;
-use Spryker\Zed\SprykGui\Business\Finder\Zed\Business\BusinessModelFinderInterface;
 use Spryker\Zed\SprykGui\Business\Graph\GraphBuilder;
 use Spryker\Zed\SprykGui\Business\Graph\GraphBuilderInterface;
 use Spryker\Zed\SprykGui\Business\Option\Argument\ArgumentOptionBuilder;
@@ -112,14 +110,6 @@ class SprykGuiBusinessFactory extends AbstractBusinessFactory
     public function createFactoryInformationFinder(): FactoryInfoFinderInterface
     {
         return new FactoryInfoFinder();
-    }
-
-    /**
-     * @return \Spryker\Zed\SprykGui\Business\Finder\Zed\Business\BusinessModelFinderInterface
-     */
-    public function createZedBusinessModelFinder(): BusinessModelFinderInterface
-    {
-        return new BusinessModelFinder();
     }
 
     /**
