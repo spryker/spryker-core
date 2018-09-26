@@ -32,6 +32,8 @@ class OauthScopeReader implements OauthScopeReaderInterface
      */
     public function findScopeByIdentifier(OauthScopeTransfer $oauthScopeTransfer): ?OauthScopeTransfer
     {
+        $oauthScopeTransfer->requireIdentifier();
+
         $oauthScopeIdentifier = $oauthScopeTransfer->getIdentifier();
 
         $entityTransfer = $this->repository->findScopeByIdentifier($oauthScopeIdentifier);

@@ -32,6 +32,8 @@ class OauthClientReader implements OauthClientReaderInterface
      */
     public function findClientByIdentifier(OauthClientTransfer $oauthClientTransfer): ?OauthClientTransfer
     {
+        $oauthClientTransfer->requireIdentifier();
+
         $oauthClientIdentifier = $oauthClientTransfer->getIdentifier();
 
         $entityTransfer = $this->repository->findClientByIdentifier($oauthClientIdentifier);
