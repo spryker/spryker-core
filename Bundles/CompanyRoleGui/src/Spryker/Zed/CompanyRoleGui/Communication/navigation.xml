@@ -14,7 +14,7 @@
                 <pages>
                     <create-company-role>
                         <label>Create company role</label>
-                        <title>Create company role</title
+                        <title>Create company role</title>
                         <bundle>company-role-gui</bundle>
                         <controller>create-company-role</controller>
                         <action>index</action>
@@ -22,7 +22,7 @@
                     </create-company-role>
                     <edit-company-role>
                         <label>Edit company role</label>
-                        <title>Edit company role</title
+                        <title>Edit company role</title>
                         <bundle>company-role-gui</bundle>
                         <controller>edit-company-role</controller>
                         <action>index</action>
