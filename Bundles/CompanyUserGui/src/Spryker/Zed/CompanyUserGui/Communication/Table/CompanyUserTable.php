@@ -152,8 +152,7 @@ class CompanyUserTable extends AbstractTable
             );
 
         /** @var \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $query */
-        $query = $query
-            ->joinCompany()
+        $query = $query->joinCompany()
             ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY_NAME);
 
         return $query;
