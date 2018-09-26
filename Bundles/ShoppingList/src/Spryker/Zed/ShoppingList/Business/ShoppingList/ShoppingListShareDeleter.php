@@ -152,9 +152,9 @@ class ShoppingListShareDeleter implements ShoppingListShareDeleterInterface
         ShoppingListCompanyBusinessUnitCollectionTransfer $shoppingListCompanyBusinessUnitCollectionTransfer,
         int $idCompanyBusinessUnit
     ): ?ShoppingListCompanyBusinessUnitTransfer {
-        foreach ($shoppingListCompanyBusinessUnitCollectionTransfer->getShoppingListCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
-            if ($companyBusinessUnitTransfer->getIdCompanyBusinessUnit() === $idCompanyBusinessUnit) {
-                return $companyBusinessUnitTransfer;
+        foreach ($shoppingListCompanyBusinessUnitCollectionTransfer->getShoppingListCompanyBusinessUnits() as $shoppingListCompanyBusinessUnitTransfer) {
+            if ($shoppingListCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit() === $idCompanyBusinessUnit) {
+                return $shoppingListCompanyBusinessUnitTransfer;
             }
         }
 
