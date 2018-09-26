@@ -11,6 +11,24 @@
                 <bundle>company-role-gui</bundle>
                 <controller>list-company-role</controller>
                 <action>index</action>
+                <pages>
+                    <create-company-role>
+                        <label>Create company role</label>
+                        <title>Create company role</title
+                        <bundle>company-role-gui</bundle>
+                        <controller>create-company-role</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </create-company-role>
+                    <edit-company-role>
+                        <label>Edit company role</label>
+                        <title>Edit company role</title
+                        <bundle>company-role-gui</bundle>
+                        <controller>edit-company-role</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </edit-company-role>
+                </pages>
             </company-role-gui>
         </pages>
     </company-gui>
