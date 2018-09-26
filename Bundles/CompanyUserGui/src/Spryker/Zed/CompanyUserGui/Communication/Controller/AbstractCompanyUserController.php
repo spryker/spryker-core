@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AbstractCompanyUserController extends AbstractController
 {
-    protected const PARAMETER_ID_COMPANY_USER = 'id-company-user';
+    protected const PARAM_ID_COMPANY_USER = 'id-company-user';
 
     /**
      * @param string $errorMessage

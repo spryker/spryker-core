@@ -26,7 +26,7 @@ class DeleteCompanyUserController extends AbstractCompanyUserController
      */
     public function deleteAction(Request $request)
     {
-        $idCompanyUser = $request->query->getInt(static::PARAMETER_ID_COMPANY_USER);
+        $idCompanyUser = $request->query->getInt(static::PARAM_ID_COMPANY_USER);
 
         $companyUserTransfer = $this->getFactory()
             ->getCompanyUserFacade()
@@ -49,7 +49,7 @@ class DeleteCompanyUserController extends AbstractCompanyUserController
      */
     public function confirmDeleteAction(Request $request)
     {
-        $idCompanyUser = $request->query->getInt(static::PARAMETER_ID_COMPANY_USER);
+        $idCompanyUser = $request->query->getInt(static::PARAM_ID_COMPANY_USER);
         if (!$idCompanyUser) {
             return $this->redirectToCompanyUserListWithErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_DELETE);
         }

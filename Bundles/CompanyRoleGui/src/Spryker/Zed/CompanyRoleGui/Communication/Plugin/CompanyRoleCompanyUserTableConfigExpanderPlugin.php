@@ -18,8 +18,8 @@ class CompanyRoleCompanyUserTableConfigExpanderPlugin extends AbstractPlugin imp
 {
     public const COL_COMPANY_ROLE_NAMES = 'company_role_names';
 
-    protected const TITLE_COMPANY_ROLE_NAME = 'Roles';
-    protected const TABLE_POSITION_COL_COMPANY_ROLE_NAME = 3;
+    protected const TITLE_COMPANY_ROLE_NAMES = 'Roles';
+    protected const TABLE_POSITION_COL_COMPANY_ROLE_NAMES = 3;
 
     /**
      * {@inheritdoc}
@@ -37,9 +37,9 @@ class CompanyRoleCompanyUserTableConfigExpanderPlugin extends AbstractPlugin imp
         $configHeader = $this->addArrayItemToArrayPosition(
             $configHeader,
             [
-                static::COL_COMPANY_ROLE_NAMES => static::TITLE_COMPANY_ROLE_NAME,
+                static::COL_COMPANY_ROLE_NAMES => static::TITLE_COMPANY_ROLE_NAMES,
             ],
-            static::TABLE_POSITION_COL_COMPANY_ROLE_NAME
+            static::TABLE_POSITION_COL_COMPANY_ROLE_NAMES
         );
         $config->setHeader($configHeader);
 

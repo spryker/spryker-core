@@ -130,10 +130,7 @@ class CompanyUserTable extends AbstractTable
     protected function mapCompanyUserDataItemToCompanyUserTransfer(array $companyUserDataItem): CompanyUserTransfer
     {
         return (new CompanyUserTransfer())
-            ->fromArray(
-                $this->normalizeCompanyUserDataItemArrayKeys($companyUserDataItem),
-                true
-            );
+            ->fromArray($this->normalizeCompanyUserDataItemArrayKeys($companyUserDataItem), true);
     }
 
     /**
@@ -143,14 +140,14 @@ class CompanyUserTable extends AbstractTable
      */
     protected function normalizeCompanyUserDataItemArrayKeys(array $companyUserData): array
     {
-        $processedCompanyUserData = [];
+        $normalizedCompanyUserData = [];
         foreach ($companyUserData as $key => $value) {
-            $processedCompanyUserData += [
+            $normalizedCompanyUserData += [
                 str_replace(SpyCompanyUserTableMap::TABLE_NAME . '.', '', $key) => $value,
             ];
         }
 
-        return $processedCompanyUserData;
+        return $normalizedCompanyUserData;
     }
 
     /**
