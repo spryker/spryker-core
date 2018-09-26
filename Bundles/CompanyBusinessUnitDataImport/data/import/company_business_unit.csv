@@ -21,13 +21,13 @@ Ottom_ltd,Supplier_Department,Supplier deparment,Supplier_Department@ottom.com,4
 Ottom_ltd,Ottom_store_Berlin,Ottom store Berlin,Ottom_store_Berlin@ottom.com,4908892452,"","","",Sales_Department
 Ottom_ltd,Ottom_store_Oslo,Ottom store Oslo,Ottom_store_Oslo@ottom.com,4708892453,"","","",Sales_Department
 Ottom_ltd,Ottom_store_London,Ottom store London,Ottom_store_London@ottom.com,4408892454,"","","",Sales_Department
-27_Rif_Group,27_Rif_HQ,Spryker Systems GmbH,HQ@spryker.com,4902890001,"","","",""
-27_Rif_Group,27_Rif_Barcelona,Spryker Systems Barcelona,Barcelona@spryker.com,3490284322,"","","",27_Rif_HQ
-27_Rif_Group,27_Rif_Zurich,Spryker Systems Zurich,Zurich@spryker.com,4102890118,"","","",27_Rif_HQ
-27_Rif_Group,27_Rif_Zurich_restaurant,Spryker Systems Zurich Sales,Zurich_sales@spryker.com,4102890119,"","","",27_Rif_Zurich
-27_Rif_Group,27_Rif_Zurich_bakery,Spryker Systems Zurich Support,Zurich_support@spryker.com,4102890120,"","","",27_Rif_Zurich
-27_Rif_Group,27_Rif_Berlin,Spryker Systems Berlin,Berlin@spryker.com,4902890021,"","","",27_Rif_HQ
-27_Rif_Group,27_Rif_HR department,Spryker Systems HR department,HR@spryker.com,4902890031,"","","",27_Rif_HQ
+spryker_systems,spryker_systems_HQ,Spryker Systems GmbH,HQ@spryker.com,4902890001,"","","",""
+spryker_systems,spryker_systems_Barcelona,Spryker Systems Barcelona,Barcelona@spryker.com,3490284322,"","","",spryker_systems_HQ
+spryker_systems,spryker_systems_Zurich,Spryker Systems Zurich,Zurich@spryker.com,4102890118,"","","",spryker_systems_HQ
+spryker_systems,spryker_systems_Zurich_Sales,Spryker Systems Zurich Sales,Zurich_sales@spryker.com,4102890119,"","","",spryker_systems_Zurich
+spryker_systems,spryker_systems_Zurich_Support,Spryker Systems Zurich Support,Zurich_support@spryker.com,4102890120,"","","",spryker_systems_Zurich
+spryker_systems,spryker_systems_Berlin,Spryker Systems Berlin,Berlin@spryker.com,4902890021,"","","",spryker_systems_HQ
+spryker_systems,spryker_systems_HR,Spryker Systems HR department,HR@spryker.com,4902890031,"","","",spryker_systems_HQ
 restricted-company-1,BU-IT-no-tablets,IT no tablets,notablets@spryker.com,1234567890,"","","",""
 restricted-company-1,BU-IT-no-ASUS,IT no ASUS,noasus@spryker.com,1234567890,"","","",""
 restricted-company-1,BU-IT-only-wearables,IT wearables,wearables@spryker.com,1234567890,"","","",""
