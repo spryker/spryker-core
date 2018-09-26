@@ -19,7 +19,7 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
     /**
      * Default values for undefined packaging units.
      */
-    protected const PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES = [
+    public const PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES = [
         ProductPackagingUnitAmountTransfer::DEFAULT_AMOUNT => 1,
         ProductPackagingUnitAmountTransfer::IS_VARIABLE => false,
     ];
