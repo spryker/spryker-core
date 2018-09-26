@@ -11,12 +11,10 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Product\Dependency\Client\ProductToLocaleBridge;
 use Spryker\Client\Product\Dependency\Client\ProductToStorageBridge;
-use Spryker\Client\Product\Dependency\Client\ProductToZedRequestClientBridge;
 use Spryker\Client\Product\Dependency\Service\ProductToUtilEncodingBridge;
 
 class ProductDependencyProvider extends AbstractDependencyProvider
 {
-    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     const CLIENT_LOCALE = 'client locale';
     const KV_STORAGE = 'kv storage';
     const SERVICE_ENCODING = 'util encoding';
@@ -31,7 +29,6 @@ class ProductDependencyProvider extends AbstractDependencyProvider
         $container = $this->addStorageClient($container);
         $container = $this->addLocaleClient($container);
         $container = $this->addUtilEncodingService($container);
-        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -73,22 +70,6 @@ class ProductDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::SERVICE_ENCODING] = function (Container $container) {
             return new ProductToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addZedRequestClient(Container $container): Container
-    {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
-            return new ProductToZedRequestClientBridge(
-                $container->getLocator()->zedRequest()->client()
-            );
         };
 
         return $container;

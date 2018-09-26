@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Product;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -138,21 +137,5 @@ class ProductClient extends AbstractClient implements ProductClientInterface
         $productStorage = $this->getFactory()->createProductConcreteStorage($locale);
 
         return $productStorage->getProductConcreteCollection($idProductConcreteCollection);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function findProductConcreteIdBySku(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
-    {
-        return $this->getFactory()
-            ->createZedStub()
-            ->findProductConcreteIdBySku($productConcreteTransfer);
     }
 }

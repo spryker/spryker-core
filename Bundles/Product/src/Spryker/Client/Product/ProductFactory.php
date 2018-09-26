@@ -8,15 +8,12 @@
 namespace Spryker\Client\Product;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Product\Dependency\Client\ProductToZedRequestClientInterface;
 use Spryker\Client\Product\KeyBuilder\AttributeMapResourceKeyBuilder;
 use Spryker\Client\Product\KeyBuilder\ProductAbstractResourceKeyBuilder;
 use Spryker\Client\Product\KeyBuilder\ProductConcreteResourceKeyBuilder;
 use Spryker\Client\Product\Storage\AttributeMapStorage;
 use Spryker\Client\Product\Storage\ProductAbstractStorage;
 use Spryker\Client\Product\Storage\ProductConcreteStorage;
-use Spryker\Client\Product\Zed\ProductStub;
-use Spryker\Client\Product\Zed\ProductStubInterface;
 
 class ProductFactory extends AbstractFactory
 {
@@ -109,21 +106,5 @@ class ProductFactory extends AbstractFactory
     public function getLocaleClient()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::CLIENT_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Client\Product\Zed\ProductStubInterface
-     */
-    public function createZedStub(): ProductStubInterface
-    {
-        return new ProductStub($this->getZedRequestClient());
-    }
-
-    /**
-     * @return \Spryker\Client\Product\Dependency\Client\ProductToZedRequestClientInterface
-     */
-    public function getZedRequestClient(): ProductToZedRequestClientInterface
-    {
-        return $this->getProvidedDependency(ProductDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }
