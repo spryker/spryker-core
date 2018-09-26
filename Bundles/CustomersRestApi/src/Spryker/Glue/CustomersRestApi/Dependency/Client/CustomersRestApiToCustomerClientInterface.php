@@ -37,9 +37,16 @@ interface CustomersRestApiToCustomerClientInterface
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function createAddress(AddressTransfer $addressTransfer);
+    public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -68,11 +75,4 @@ interface CustomersRestApiToCustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function anonymizeCustomer(CustomerTransfer $customerTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    public function updateAddress(AddressTransfer $addressTransfer);
 }

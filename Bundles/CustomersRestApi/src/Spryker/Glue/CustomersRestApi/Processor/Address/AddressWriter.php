@@ -7,12 +7,7 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\Address;
 
-use Generated\Shared\Transfer\AddressesTransfer;
-use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CustomerResponseTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
-use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface;
@@ -49,8 +44,14 @@ class AddressWriter implements AddressWriterInterface
     protected $restApiValidators;
 
     /**
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Address\AddressReaderInterface
+     */
+    protected $addressReader;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Address\AddressReaderInterface $addressReader
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface $addressesResourceMapper
      * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface $restApiErrors
      * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorsInterface $restApiValidators
@@ -58,12 +59,14 @@ class AddressWriter implements AddressWriterInterface
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CustomersRestApiToCustomerClientInterface $customerClient,
+        AddressReaderInterface $addressReader,
         AddressResourceMapperInterface $addressesResourceMapper,
         RestApiErrorsInterface $restApiErrors,
         RestApiValidatorsInterface $restApiValidators
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->customerClient = $customerClient;
+        $this->addressReader = $addressReader;
         $this->addressesResourceMapper = $addressesResourceMapper;
         $this->restApiErrors = $restApiErrors;
         $this->restApiValidators = $restApiValidators;
@@ -79,41 +82,25 @@ class AddressWriter implements AddressWriterInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $customerResponseTransfer = $this->findCustomer($restRequest);
-        $restResponse = $this->restApiValidators->validateCustomerResponseTransfer(
-            $customerResponseTransfer,
-            $restRequest,
-            $restResponse
-        );
-
-        if (count($restResponse->getErrors()) > 0) {
-            return $restResponse;
+        if (!$this->restApiValidators->isSameCustomerReference($restRequest)) {
+            return $this->restApiErrors->addCustomerUnauthorizedError($restResponse);
         }
 
         $addressTransfer = $this->addressesResourceMapper->mapRestAddressAttributesTransferToAddressTransfer($addressAttributesTransfer);
-        $addressTransfer->setFkCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer());
+        $addressTransfer->setFkCustomer($restRequest->getUser()->getSurrogateIdentifier());
 
-        $addressTransfer = $this->customerClient->createAddress($addressTransfer);
+        $customerTransfer = $this->customerClient->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer);
+        $addressesTransfer = $customerTransfer->getAddresses();
 
-        if (!$addressTransfer->getUuid()) {
+        if (!$addressesTransfer->getAddresses()->count()) {
             return $this->restApiErrors->addAddressNotSavedError($restResponse);
         }
-
-        $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
-
-        $addressTransfer = $this->setCustomersDefaultAddresses(
-            $addressTransfer,
-            $addressAttributesTransfer,
-            $addressesTransfer->getAddresses()->count() === 1
-        );
-
-        $this->saveCustomerDefaultAddresses($addressTransfer, $customerResponseTransfer->getCustomerTransfer());
 
         $restResource = $this
             ->addressesResourceMapper
             ->mapAddressTransferToRestResource(
-                $addressTransfer,
-                $customerResponseTransfer->getCustomerTransfer()
+                $addressesTransfer->getAddresses()[0],
+                $customerTransfer
             );
 
         $restResponse->addResource($restResource);
@@ -135,19 +122,11 @@ class AddressWriter implements AddressWriterInterface
             return $this->restApiErrors->addAddressUuidMissingError($restResponse);
         }
 
-        $customerResponseTransfer = $this->findCustomer($restRequest);
-        $restResponse = $this->restApiValidators->validateCustomerResponseTransfer(
-            $customerResponseTransfer,
-            $restRequest,
-            $restResponse
-        );
-
-        if (count($restResponse->getErrors()) > 0) {
-            return $restResponse;
+        if (!$this->restApiValidators->isSameCustomerReference($restRequest)) {
+            return $this->restApiErrors->addCustomerUnauthorizedError($restResponse);
         }
 
-        $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
-        $addressTransfer = $this->findAddressByUuid($addressesTransfer, $restRequest->getResource()->getId());
+        $addressTransfer = $this->addressReader->findAddressByUuid($restRequest, $restRequest->getResource()->getId());
 
         if (!$addressTransfer) {
             return $this->restApiErrors->addAddressNotFoundError($restResponse);
@@ -155,18 +134,20 @@ class AddressWriter implements AddressWriterInterface
 
         $addressTransfer->fromArray($addressAttributesTransfer->modifiedToArray(), true);
 
-        $this->saveCustomerDefaultAddresses($addressTransfer, $customerResponseTransfer->getCustomerTransfer());
-        $addressTransfer = $this->customerClient->updateAddress($addressTransfer);
+        $customerTransfer = $this->customerClient->updateAddressAndCustomerDefaultAddresses($addressTransfer);
 
-        if (!$addressTransfer->getUuid()) {
-            return $this->restApiErrors->addAddressNotSavedError($restResponse);
+        $updatedAddressTransfer = null;
+        foreach ($customerTransfer->getAddresses()->getAddresses() as $addressTransfer) {
+            if ($addressTransfer->getUuid() === $restRequest->getResource()->getId()) {
+                $updatedAddressTransfer = $addressTransfer;
+            }
         }
 
         $restResource = $this
             ->addressesResourceMapper
             ->mapAddressTransferToRestResource(
-                $addressTransfer,
-                $customerResponseTransfer->getCustomerTransfer()
+                $updatedAddressTransfer,
+                $customerTransfer
             );
 
         $restResponse->addResource($restResource);
@@ -187,19 +168,11 @@ class AddressWriter implements AddressWriterInterface
             return $this->restApiErrors->addAddressUuidMissingError($restResponse);
         }
 
-        $customerResponseTransfer = $this->findCustomer($restRequest);
-        $restResponse = $this->restApiValidators->validateCustomerResponseTransfer(
-            $customerResponseTransfer,
-            $restRequest,
-            $restResponse
-        );
-
-        if (count($restResponse->getErrors()) > 0) {
-            return $restResponse;
+        if (!$this->restApiValidators->isSameCustomerReference($restRequest)) {
+            return $this->restApiErrors->addCustomerUnauthorizedError($restResponse);
         }
 
-        $addressesTransfer = $this->customerClient->getAddresses($customerResponseTransfer->getCustomerTransfer());
-        $addressTransfer = $this->findAddressByUuid($addressesTransfer, $restRequest->getResource()->getId());
+        $addressTransfer = $this->addressReader->findAddressByUuid($restRequest, $restRequest->getResource()->getId());
 
         if (!$addressTransfer) {
             return $this->restApiErrors->addAddressNotFoundError($restResponse);
@@ -208,126 +181,5 @@ class AddressWriter implements AddressWriterInterface
         $this->customerClient->deleteAddress($addressTransfer);
 
         return $restResponse;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
-    protected function saveCustomerDefaultAddresses(
-        AddressTransfer $addressTransfer,
-        CustomerTransfer $customerTransfer
-    ): void {
-        $this->updateCustomerDefaultBillingAddress($addressTransfer, $customerTransfer);
-        $this->updateCustomerDefaultShippingAddress($addressTransfer, $customerTransfer);
-
-        if ($customerTransfer->isPropertyModified(CustomerTransfer::DEFAULT_BILLING_ADDRESS)
-            || $customerTransfer->isPropertyModified(CustomerTransfer::DEFAULT_SHIPPING_ADDRESS)) {
-            $this->customerClient->updateCustomer($customerTransfer);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function updateCustomerDefaultBillingAddress(
-        AddressTransfer $addressTransfer,
-        CustomerTransfer $customerTransfer
-    ): CustomerTransfer {
-        if ($customerTransfer->getDefaultBillingAddress() === $addressTransfer->getIdCustomerAddress()
-            && $addressTransfer->getIsDefaultBilling() === false
-        ) {
-            $customerTransfer->setDefaultBillingAddress(null);
-        }
-
-        if ($addressTransfer->getIsDefaultBilling() === true
-            && $customerTransfer->getDefaultBillingAddress() !== $addressTransfer->getIdCustomerAddress()
-        ) {
-            $customerTransfer->setDefaultBillingAddress($addressTransfer->getIdCustomerAddress());
-        }
-
-        return $customerTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function updateCustomerDefaultShippingAddress(
-        AddressTransfer $addressTransfer,
-        CustomerTransfer $customerTransfer
-    ): CustomerTransfer {
-        if ($customerTransfer->getDefaultShippingAddress() === $addressTransfer->getIdCustomerAddress()
-            && $addressTransfer->getIsDefaultShipping() === false
-        ) {
-            $customerTransfer->setDefaultShippingAddress(null);
-        }
-
-        if ($addressTransfer->getIsDefaultShipping() === true
-            && $customerTransfer->getDefaultShippingAddress() !== $addressTransfer->getIdCustomerAddress()
-        ) {
-            $customerTransfer->setDefaultShippingAddress($addressTransfer->getIdCustomerAddress());
-        }
-
-        return $customerTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer
-     * @param string $uuid
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer|null
-     */
-    protected function findAddressByUuid(AddressesTransfer $addressesTransfer, string $uuid): ?AddressTransfer
-    {
-        foreach ($addressesTransfer->getAddresses() as $address) {
-            if ($address->getUuid() === $uuid) {
-                return $address;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     * @param \Generated\Shared\Transfer\RestAddressAttributesTransfer $addressAttributesTransfer
-     * @param bool $isFirstAddress
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    protected function setCustomersDefaultAddresses(AddressTransfer $addressTransfer, RestAddressAttributesTransfer $addressAttributesTransfer, bool $isFirstAddress)
-    {
-        if (!$isFirstAddress) {
-            $addressTransfer->setIsDefaultBilling($addressAttributesTransfer->getIsDefaultBilling());
-            $addressTransfer->setIsDefaultShipping($addressAttributesTransfer->getIsDefaultShipping());
-
-            return $addressTransfer;
-        }
-
-        $addressTransfer->setIsDefaultBilling(true);
-        $addressTransfer->setIsDefaultShipping(true);
-
-        return $addressTransfer;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     */
-    protected function findCustomer(RestRequestInterface $restRequest): CustomerResponseTransfer
-    {
-        $customerReference = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS)->getId();
-        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
-
-        return $this->customerClient->findCustomerByReference($customerTransfer);
     }
 }

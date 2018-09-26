@@ -111,7 +111,7 @@ class RestApiValidators implements RestApiValidatorsInterface
      *
      * @return bool
      */
-    protected function isSameCustomerReference(RestRequestInterface $restRequest): bool
+    public function isSameCustomerReference(RestRequestInterface $restRequest): bool
     {
         $customerResource = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS) ?? $restRequest->getResource();
 

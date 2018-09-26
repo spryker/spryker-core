@@ -68,6 +68,7 @@ class CustomersRestApiFactory extends AbstractFactory
     {
         return new CustomerWriter(
             $this->getCustomerClient(),
+            $this->createCustomerReader(),
             $this->getResourceBuilder(),
             $this->createCustomersResourceMapper(),
             $this->createRestApiErrors(),
@@ -108,6 +109,7 @@ class CustomersRestApiFactory extends AbstractFactory
         return new AddressWriter(
             $this->getResourceBuilder(),
             $this->getCustomerClient(),
+            $this->createAddressReader(),
             $this->createAddressResourceMapper(),
             $this->createRestApiErrors(),
             $this->createRestApiValidators()

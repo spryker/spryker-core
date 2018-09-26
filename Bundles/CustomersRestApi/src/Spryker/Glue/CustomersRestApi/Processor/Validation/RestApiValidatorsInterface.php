@@ -49,4 +49,11 @@ interface RestApiValidatorsInterface
         RestCustomerPasswordAttributesTransfer $passwordAttributesTransfer,
         RestResponseInterface $restResponse
     ): RestResponseInterface;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    public function isSameCustomerReference(RestRequestInterface $restRequest): bool;
 }

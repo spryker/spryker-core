@@ -102,7 +102,7 @@ class AddressReader implements AddressReaderInterface
             return $restResponse;
         }
 
-        $addressTransfer = $this->findAddressByUuid($addressesTransfer, $restRequest->getResource()->getId());
+        $addressTransfer = $this->findAddressByUuid($restRequest, $restRequest->getResource()->getId());
 
         if (!$addressTransfer) {
             return $this->restApiErrors->addAddressNotFoundError($restResponse);
@@ -140,13 +140,16 @@ class AddressReader implements AddressReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param string $uuid
      *
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
-    protected function findAddressByUuid(AddressesTransfer $addressesTransfer, string $uuid): ?AddressTransfer
+    public function findAddressByUuid(RestRequestInterface $restRequest, string $uuid): ?AddressTransfer
     {
+        $customerTransfer = (new CustomerTransfer())->setIdCustomer($restRequest->getUser()->getSurrogateIdentifier());
+        $addressesTransfer = $this->customerClient->getAddresses($customerTransfer);
+
         foreach ($addressesTransfer->getAddresses() as $address) {
             if ($address->getUuid() === $uuid) {
                 return $address;
