@@ -446,14 +446,14 @@ class Reader implements ReaderInterface
      */
     protected function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string
     {
-        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-        $priceTypeTransfer = $priceProductTransfer->getPriceType();
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        $priceTypeTransfer = $priceProductTransfer->requirePriceType()->getPriceType();
 
         return implode(
             '-',
             [
                 $moneyValueTransfer->getFkStore(),
-                $moneyValueTransfer->getCurrency()->getIdCurrency(),
+                $moneyValueTransfer->getFkCurrency(),
                 $priceTypeTransfer->getName(),
                 $priceTypeTransfer->getPriceModeConfiguration(),
             ]
