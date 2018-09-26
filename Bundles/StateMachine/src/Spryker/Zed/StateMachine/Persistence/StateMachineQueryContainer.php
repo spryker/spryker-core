@@ -131,7 +131,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
               ->filterByName($processName)
             ->endUse()
             ->joinProcess()
-            ->filterByName($states, Criteria::IN);
+            ->filterByName($states, Criteria::IN)
+            ->orderByIdStateMachineItemState();
     }
 
     /**
