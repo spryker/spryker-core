@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -26,8 +27,8 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class QueryContainerMethodBuilderTest extends Unit
 {
-    const BASE_DIRECTORY = '/foo/bar/baz/*/src/';
-    const BUNDLE_DIRECTORY = '/foo/bar/baz/FooBundle/src/Spryker/FooApplication/';
+    public const BASE_DIRECTORY = '/foo/bar/baz/*/src/';
+    public const BUNDLE_DIRECTORY = '/foo/bar/baz/FooBundle/src/Spryker/FooApplication/';
 
     /**
      * @return void

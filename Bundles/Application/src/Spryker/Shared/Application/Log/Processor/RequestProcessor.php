@@ -16,18 +16,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RequestProcessor
 {
-    const EXTRA = 'request';
-    const CONTEXT_KEY = 'request';
+    public const EXTRA = 'request';
+    public const CONTEXT_KEY = 'request';
 
-    const REQUEST_PARAMS = 'request_params';
-    const REQUEST_ID = 'requestId';
-    const SESSION_ID = 'sessionId';
-    const USERNAME = 'username';
-    const REQUEST_TYPE = 'type';
+    public const REQUEST_PARAMS = 'request_params';
+    public const REQUEST_ID = 'requestId';
+    public const SESSION_ID = 'sessionId';
+    public const USERNAME = 'username';
+    public const REQUEST_TYPE = 'type';
 
-    const RECORD_CONTEXT = 'context';
-    const SESSION_KEY_USER = 'user:currentUser';
-    const RECORD_EXTRA = 'extra';
+    public const RECORD_CONTEXT = 'context';
+    public const SESSION_KEY_USER = 'user:currentUser';
+    public const RECORD_EXTRA = 'extra';
 
     /**
      * @var \Spryker\Shared\Log\Sanitizer\SanitizerInterface

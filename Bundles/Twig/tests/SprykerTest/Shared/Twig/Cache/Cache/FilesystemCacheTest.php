@@ -25,14 +25,14 @@ use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
  */
 class FilesystemCacheTest extends Unit
 {
-    const EXISTING_CACHE_KEY = 'key';
-    const EXISTING_CACHE_VALUE = 'value';
+    public const EXISTING_CACHE_KEY = 'key';
+    public const EXISTING_CACHE_VALUE = 'value';
 
-    const NEW_CACHE_KEY = 'new key';
-    const NEW_CACHE_VALUE = 'new value';
+    public const NEW_CACHE_KEY = 'new key';
+    public const NEW_CACHE_VALUE = 'new value';
 
-    const NOT_EXISTING_CACHE_KEY = 'not existing key';
-    const INVALID_CACHE_KEY = 'invalid value';
+    public const NOT_EXISTING_CACHE_KEY = 'not existing key';
+    public const INVALID_CACHE_KEY = 'invalid value';
 
     /**
      * @return void

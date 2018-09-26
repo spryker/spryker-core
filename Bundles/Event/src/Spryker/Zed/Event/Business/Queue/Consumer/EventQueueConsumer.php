@@ -18,8 +18,8 @@ use Throwable;
 
 class EventQueueConsumer implements EventQueueConsumerInterface
 {
-    const EVENT_TRANSFERS = 'eventTransfers';
-    const EVENT_MESSAGES = 'eventMessages';
+    public const EVENT_TRANSFERS = 'eventTransfers';
+    public const EVENT_MESSAGES = 'eventMessages';
     /**
      * @var \Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */
@@ -195,7 +195,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function createEventTransfer($transferClass)
     {
-        return new $transferClass;
+        return new $transferClass();
     }
 
     /**
@@ -205,7 +205,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function createEventListener($listenerClass)
     {
-        return new $listenerClass;
+        return new $listenerClass();
     }
 
     /**

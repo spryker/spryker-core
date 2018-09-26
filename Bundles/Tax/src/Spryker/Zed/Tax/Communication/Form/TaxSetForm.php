@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -27,9 +28,9 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class TaxSetForm extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_TAX_RATES = 'taxRates';
-    const FIELD_ID_TAX_SET = 'idTaxSet';
+    public const FIELD_NAME = 'name';
+    public const FIELD_TAX_RATES = 'taxRates';
+    public const FIELD_ID_TAX_SET = 'idTaxSet';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

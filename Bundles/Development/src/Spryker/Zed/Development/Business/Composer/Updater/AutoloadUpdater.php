@@ -12,20 +12,20 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class AutoloadUpdater implements UpdaterInterface
 {
-    const AUTOLOAD_KEY = 'autoload';
-    const AUTOLOAD_DEV_KEY = 'autoload-dev';
+    public const AUTOLOAD_KEY = 'autoload';
+    public const AUTOLOAD_DEV_KEY = 'autoload-dev';
 
-    const BASE_TESTS_DIRECTORY = 'tests';
-    const BASE_SRC_DIRECTORY = 'src';
-    const BASE_SUPPORT_DIRECTORY = '_support';
-    const BASE_HELPER_DIRECTORY = 'Helper';
+    public const BASE_TESTS_DIRECTORY = 'tests';
+    public const BASE_SRC_DIRECTORY = 'src';
+    public const BASE_SUPPORT_DIRECTORY = '_support';
+    public const BASE_HELPER_DIRECTORY = 'Helper';
 
-    const SPRYKER_TEST_NAMESPACE = 'SprykerTest';
-    const SPRYKER_NAMESPACE = 'Spryker';
-    const SPRYKER_SHOP_NAMESPACE = 'SprykerShop';
+    public const SPRYKER_TEST_NAMESPACE = 'SprykerTest';
+    public const SPRYKER_NAMESPACE = 'Spryker';
+    public const SPRYKER_SHOP_NAMESPACE = 'SprykerShop';
 
-    const PSR_0 = 'psr-0';
-    const PSR_4 = 'psr-4';
+    public const PSR_0 = 'psr-0';
+    public const PSR_4 = 'psr-4';
 
     /**
      * @var array

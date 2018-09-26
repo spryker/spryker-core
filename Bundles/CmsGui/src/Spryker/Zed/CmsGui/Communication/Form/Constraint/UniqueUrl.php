@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -10,8 +11,8 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueUrl extends SymfonyConstraint
 {
-    const OPTION_URL_FACADE = 'urlFacade';
-    const OPTION_CMS_FACADE = 'cmsFacade';
+    public const OPTION_URL_FACADE = 'urlFacade';
+    public const OPTION_CMS_FACADE = 'cmsFacade';
 
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToUrlInterface

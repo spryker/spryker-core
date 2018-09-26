@@ -17,11 +17,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductReviewGuiQueryContainer extends AbstractQueryContainer implements ProductReviewGuiQueryContainerInterface
 {
-    const FIELD_PRODUCT_NAME = 'product_name';
-    const FIELD_ID_CUSTOMER = 'id_customer';
-    const FIELD_CUSTOMER_FIRST_NAME = 'first_name';
-    const FIELD_CUSTOMER_LAST_NAME = 'last_name';
-    const FIELD_CREATED = 'created';
+    public const FIELD_PRODUCT_NAME = 'product_name';
+    public const FIELD_ID_CUSTOMER = 'id_customer';
+    public const FIELD_CUSTOMER_FIRST_NAME = 'first_name';
+    public const FIELD_CUSTOMER_LAST_NAME = 'last_name';
+    public const FIELD_CREATED = 'created';
 
     /**
      * @api

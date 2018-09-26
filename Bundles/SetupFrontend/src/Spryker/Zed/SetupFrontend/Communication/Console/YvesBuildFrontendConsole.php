@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class YvesBuildFrontendConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:yves:build';
-    const DESCRIPTION = 'This command will build Yves frontend.';
+    public const COMMAND_NAME = 'frontend:yves:build';
+    public const DESCRIPTION = 'This command will build Yves frontend.';
 
     /**
      * @return void

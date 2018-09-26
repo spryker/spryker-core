@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -23,8 +24,8 @@ use SprykerTest\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock
  */
 class YvesControllerProviderTest extends Unit
 {
-    const METHOD_REQUIRE_HTTP = 'requireHttp';
-    const METHOD_REQUIRE_HTTPS = 'requireHttps';
+    public const METHOD_REQUIRE_HTTP = 'requireHttp';
+    public const METHOD_REQUIRE_HTTPS = 'requireHttps';
 
     /**
      * @return void

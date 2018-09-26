@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -14,7 +15,7 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class CalendarWeekDecisionRule implements DecisionRuleInterface
 {
-    const DATE_FORMAT = 'W';
+    public const DATE_FORMAT = 'W';
 
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
