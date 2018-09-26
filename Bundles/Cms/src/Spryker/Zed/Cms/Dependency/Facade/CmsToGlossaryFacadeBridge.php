@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\TranslationTransfer;
 
 class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
 {
@@ -32,7 +31,7 @@ class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
      *
      * @return string
      */
-    public function translateByKeyId(int $idKey, array $data = []): string
+    public function translateByKeyId($idKey, array $data = [])
     {
         return $this->glossaryFacade->translateByKeyId($idKey, $data);
     }
@@ -44,7 +43,7 @@ class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslationForCurrentLocale(string $keyName, string $value, bool $isActive = true): TranslationTransfer
+    public function createTranslationForCurrentLocale($keyName, $value, $isActive = true)
     {
         return $this->glossaryFacade->createTranslationForCurrentLocale($keyName, $value, $isActive);
     }
@@ -57,7 +56,7 @@ class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation(string $keyName, LocaleTransfer $locale, string $value, bool $isActive = true): TranslationTransfer
+    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
         return $this->glossaryFacade->createTranslation($keyName, $locale, $value, $isActive);
     }
@@ -70,7 +69,7 @@ class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createAndTouchTranslation(string $keyName, LocaleTransfer $locale, string $value, bool $isActive = true): TranslationTransfer
+    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
         return $this->glossaryFacade->createAndTouchTranslation($keyName, $locale, $value, $isActive);
     }
@@ -80,7 +79,7 @@ class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
      *
      * @return int
      */
-    public function createKey(string $keyName): int
+    public function createKey($keyName)
     {
         return $this->glossaryFacade->createKey($keyName);
     }
@@ -90,7 +89,7 @@ class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
      *
      * @return bool
      */
-    public function hasKey(string $keyName): bool
+    public function hasKey($keyName)
     {
         return $this->glossaryFacade->hasKey($keyName);
     }
@@ -100,7 +99,7 @@ class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
      *
      * @return int
      */
-    public function getKeyIdentifier(string $keyName): int
+    public function getKeyIdentifier($keyName)
     {
         return $this->glossaryFacade->getKeyIdentifier($keyName);
     }
@@ -110,7 +109,7 @@ class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
      *
      * @return void
      */
-    public function touchCurrentTranslationForKeyId(int $idKey): void
+    public function touchCurrentTranslationForKeyId($idKey)
     {
         $this->glossaryFacade->touchCurrentTranslationForKeyId($idKey);
     }
@@ -120,7 +119,7 @@ class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
      *
      * @return int
      */
-    public function getOrCreateKey(string $keyName): int
+    public function getOrCreateKey($keyName)
     {
         return $this->glossaryFacade->getOrCreateKey($keyName);
     }
@@ -130,7 +129,7 @@ class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
      *
      * @return bool
      */
-    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer): bool
+    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer)
     {
         return $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
     }
@@ -141,7 +140,7 @@ class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
      *
      * @return void
      */
-    public function touchTranslationForKeyId(int $idKey, ?LocaleTransfer $localeTransfer = null): void
+    public function touchTranslationForKeyId($idKey, ?LocaleTransfer $localeTransfer = null)
     {
         $this->glossaryFacade->touchTranslationForKeyId($idKey, $localeTransfer);
     }
@@ -151,7 +150,7 @@ class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
      *
      * @return void
      */
-    public function deleteTranslationsByFkKeys(array $idKeys): void
+    public function deleteTranslationsByFkKeys(array $idKeys)
     {
         $this->glossaryFacade->deleteTranslationsByFkKeys($idKeys);
     }
@@ -161,7 +160,7 @@ class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
      *
      * @return void
      */
-    public function deleteKeys(array $idKeys): void
+    public function deleteKeys(array $idKeys)
     {
         $this->glossaryFacade->deleteKeys($idKeys);
     }

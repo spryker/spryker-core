@@ -191,15 +191,15 @@ class CmsPageSaver implements CmsPageSaverInterface
      * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      * @param int $idCmsPage
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer
+     * @return void
      */
-    protected function createPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer, int $idCmsPage): UrlTransfer
+    protected function createPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer, int $idCmsPage): void
     {
         $url = $this->cmsPageUrlBuilder->buildPageUrl($cmsPageAttributesTransfer);
 
         $urlTransfer = $this->createUrlTransfer($cmsPageAttributesTransfer, $idCmsPage, $url);
 
-        return $this->urlFacade->createUrl($urlTransfer);
+        $this->urlFacade->createUrl($urlTransfer);
     }
 
     /**
@@ -402,12 +402,12 @@ class CmsPageSaver implements CmsPageSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
-     * @param int|null $idCmsPage
+     * @param int $idCmsPage
      * @param string $url
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    protected function createUrlTransfer(CmsPageAttributesTransfer $cmsPageAttributesTransfer, ?int $idCmsPage, string $url): UrlTransfer
+    protected function createUrlTransfer(CmsPageAttributesTransfer $cmsPageAttributesTransfer, int $idCmsPage, string $url): UrlTransfer
     {
         $urlTransfer = new UrlTransfer();
         $urlTransfer->setUrl($url);

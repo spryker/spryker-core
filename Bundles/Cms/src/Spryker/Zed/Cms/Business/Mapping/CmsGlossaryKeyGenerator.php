@@ -11,9 +11,9 @@ use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
 
 class CmsGlossaryKeyGenerator implements CmsGlossaryKeyGeneratorInterface
 {
-    public const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
-    public const ID_CMS_PAGE = 'idCmsPage';
-    public const UNIQUE_ID = 'uniqueId';
+    protected const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
+    protected const ID_CMS_PAGE = 'idCmsPage';
+    protected const UNIQUE_ID = 'uniqueId';
 
     /**
      * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface

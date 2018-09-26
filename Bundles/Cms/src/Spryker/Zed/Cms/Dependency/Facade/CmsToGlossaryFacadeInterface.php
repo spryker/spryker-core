@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\TranslationTransfer;
 
 interface CmsToGlossaryFacadeInterface
 {
@@ -21,7 +20,7 @@ interface CmsToGlossaryFacadeInterface
      *
      * @return string
      */
-    public function translateByKeyId(int $idKey, array $data = []): string;
+    public function translateByKeyId($idKey, array $data = []);
 
     /**
      * @param string $keyName
@@ -34,21 +33,7 @@ interface CmsToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslationForCurrentLocale(string $keyName, string $value, bool $isActive = true): TranslationTransfer;
-
-    /**
-     * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param string $value
-     * @param bool $isActive
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
-     *
-     * @return \Generated\Shared\Transfer\TranslationTransfer
-     */
-    public function createTranslation(string $keyName, LocaleTransfer $locale, string $value, bool $isActive = true): TranslationTransfer;
+    public function createTranslationForCurrentLocale($keyName, $value, $isActive = true);
 
     /**
      * @param string $keyName
@@ -62,7 +47,21 @@ interface CmsToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createAndTouchTranslation(string $keyName, LocaleTransfer $locale, string $value, bool $isActive = true): TranslationTransfer;
+    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param string $value
+     * @param bool $isActive
+     *
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
 
     /**
      * @param string $keyName
@@ -71,28 +70,28 @@ interface CmsToGlossaryFacadeInterface
      *
      * @return int
      */
-    public function createKey(string $keyName): int;
+    public function createKey($keyName);
 
     /**
      * @param string $keyName
      *
      * @return bool
      */
-    public function hasKey(string $keyName): bool;
+    public function hasKey($keyName);
 
     /**
      * @param string $keyName
      *
      * @return int
      */
-    public function getKeyIdentifier(string $keyName): int;
+    public function getKeyIdentifier($keyName);
 
     /**
      * @param int $idKey
      *
      * @return void
      */
-    public function touchCurrentTranslationForKeyId(int $idKey): void;
+    public function touchCurrentTranslationForKeyId($idKey);
 
     /**
      * @param int $idKey
@@ -100,33 +99,33 @@ interface CmsToGlossaryFacadeInterface
      *
      * @return void
      */
-    public function touchTranslationForKeyId(int $idKey, ?LocaleTransfer $localeTransfer = null): void;
+    public function touchTranslationForKeyId($idKey, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param string $keyName
      *
      * @return int
      */
-    public function getOrCreateKey(string $keyName): int;
+    public function getOrCreateKey($keyName);
 
     /**
      * @param \Generated\Shared\Transfer\KeyTranslationTransfer $keyTranslationTransfer
      *
      * @return bool
      */
-    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer): bool;
+    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer);
 
     /**
      * @param array $idKeys
      *
-     * @return void
+     * @return bool
      */
-    public function deleteTranslationsByFkKeys(array $idKeys): void;
+    public function deleteTranslationsByFkKeys(array $idKeys);
 
     /**
      * @param array $idKeys
      *
-     * @return void
+     * @return bool
      */
-    public function deleteKeys(array $idKeys): void;
+    public function deleteKeys(array $idKeys);
 }

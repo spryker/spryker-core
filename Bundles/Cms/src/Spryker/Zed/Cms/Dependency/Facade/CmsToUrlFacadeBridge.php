@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
-use Generated\Shared\Transfer\UrlRedirectValidationResponseTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 
 class CmsToUrlFacadeBridge implements CmsToUrlFacadeInterface
@@ -35,7 +34,7 @@ class CmsToUrlFacadeBridge implements CmsToUrlFacadeInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($urlTransfer, ?LocaleTransfer $localeTransfer = null, ?string $resourceType = null, ?int $idResource = null): UrlTransfer
+    public function createUrl($urlTransfer, ?LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null)
     {
         return $this->urlFacade->createUrl($urlTransfer, $localeTransfer, $resourceType, $idResource);
     }
@@ -45,7 +44,7 @@ class CmsToUrlFacadeBridge implements CmsToUrlFacadeInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function updateUrl(UrlTransfer $urlTransfer): UrlTransfer
+    public function updateUrl(UrlTransfer $urlTransfer)
     {
         return $this->urlFacade->updateUrl($urlTransfer);
     }
@@ -55,7 +54,7 @@ class CmsToUrlFacadeBridge implements CmsToUrlFacadeInterface
      *
      * @return void
      */
-    public function activateUrl(UrlTransfer $urlTransfer): void
+    public function activateUrl(UrlTransfer $urlTransfer)
     {
         $this->urlFacade->activateUrl($urlTransfer);
     }
@@ -65,7 +64,7 @@ class CmsToUrlFacadeBridge implements CmsToUrlFacadeInterface
      *
      * @return void
      */
-    public function deactivateUrl(UrlTransfer $urlTransfer): void
+    public function deactivateUrl(UrlTransfer $urlTransfer)
     {
         $this->urlFacade->deactivateUrl($urlTransfer);
     }
@@ -75,7 +74,7 @@ class CmsToUrlFacadeBridge implements CmsToUrlFacadeInterface
      *
      * @return bool
      */
-    public function hasUrl($urlTransfer): bool
+    public function hasUrl($urlTransfer)
     {
         return $this->urlFacade->hasUrl($urlTransfer);
     }
@@ -85,7 +84,7 @@ class CmsToUrlFacadeBridge implements CmsToUrlFacadeInterface
      *
      * @return bool
      */
-    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer): bool
+    public function hasUrlOrRedirectedUrl(UrlTransfer $urlTransfer)
     {
         return $this->urlFacade->hasUrlOrRedirectedUrl($urlTransfer);
     }
@@ -95,7 +94,7 @@ class CmsToUrlFacadeBridge implements CmsToUrlFacadeInterface
      *
      * @return void
      */
-    public function deleteUrlRedirect($urlRedirectTransfer): void
+    public function deleteUrlRedirect($urlRedirectTransfer)
     {
         $this->urlFacade->deleteUrlRedirect($urlRedirectTransfer);
     }
@@ -105,7 +104,7 @@ class CmsToUrlFacadeBridge implements CmsToUrlFacadeInterface
      *
      * @return \Generated\Shared\Transfer\UrlRedirectTransfer
      */
-    public function createUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer): UrlRedirectTransfer
+    public function createUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
         return $this->urlFacade->createUrlRedirect($urlRedirectTransfer);
     }
@@ -115,7 +114,7 @@ class CmsToUrlFacadeBridge implements CmsToUrlFacadeInterface
      *
      * @return \Generated\Shared\Transfer\UrlRedirectTransfer
      */
-    public function updateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer): UrlRedirectTransfer
+    public function updateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
         return $this->urlFacade->updateUrlRedirect($urlRedirectTransfer);
     }
@@ -125,7 +124,7 @@ class CmsToUrlFacadeBridge implements CmsToUrlFacadeInterface
      *
      * @return \Generated\Shared\Transfer\UrlRedirectValidationResponseTransfer
      */
-    public function validateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer): UrlRedirectValidationResponseTransfer
+    public function validateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
         return $this->urlFacade->validateUrlRedirect($urlRedirectTransfer);
     }

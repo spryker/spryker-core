@@ -16,7 +16,7 @@ interface CmsToTouchFacadeInterface
      *
      * @return bool
      */
-    public function touchActive(string $itemType, int $itemId, bool $keyChange = false): bool;
+    public function touchActive($itemType, $itemId, $keyChange = false);
 
     /**
      * @param string $itemType
@@ -24,7 +24,7 @@ interface CmsToTouchFacadeInterface
      *
      * @return bool
      */
-    public function touchInactive(string $itemType, int $itemId): bool;
+    public function touchInactive($itemType, $itemId);
 
     /**
      * @param string $itemType
@@ -32,5 +32,5 @@ interface CmsToTouchFacadeInterface
      *
      * @return bool
      */
-    public function touchDeleted(string $itemType, int $itemId): bool;
+    public function touchDeleted($itemType, $itemId);
 }

@@ -291,10 +291,6 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     {
         $templateFileContent = file_get_contents($templateFile);
 
-        if (!$templateFileContent) {
-            return '';
-        }
-
         return $templateFileContent;
     }
 

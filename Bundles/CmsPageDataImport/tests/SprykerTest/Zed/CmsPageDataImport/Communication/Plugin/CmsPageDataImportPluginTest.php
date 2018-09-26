@@ -36,8 +36,6 @@ class CmsPageDataImportPluginTest extends Unit
      */
     public function testImportImportsCmsPage(): void
     {
-        $this->tester->ensureDatabaseTableCmsPageIsEmpty();
-
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/cms_page.csv');
 

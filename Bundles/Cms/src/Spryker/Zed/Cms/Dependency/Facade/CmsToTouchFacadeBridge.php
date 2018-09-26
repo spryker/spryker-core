@@ -29,7 +29,7 @@ class CmsToTouchFacadeBridge implements CmsToTouchFacadeInterface
      *
      * @return bool
      */
-    public function touchActive(string $itemType, int $itemId, bool $keyChange = false): bool
+    public function touchActive($itemType, $itemId, $keyChange = false)
     {
         return $this->touchFacade->touchActive($itemType, $itemId, $keyChange);
     }
@@ -40,7 +40,7 @@ class CmsToTouchFacadeBridge implements CmsToTouchFacadeInterface
      *
      * @return bool
      */
-    public function touchInactive(string $itemType, int $itemId): bool
+    public function touchInactive($itemType, $itemId)
     {
         return $this->touchFacade->touchInactive($itemType, $itemId);
     }
@@ -51,7 +51,7 @@ class CmsToTouchFacadeBridge implements CmsToTouchFacadeInterface
      *
      * @return bool
      */
-    public function touchDeleted(string $itemType, int $itemId): bool
+    public function touchDeleted($itemType, $itemId)
     {
         return $this->touchFacade->touchDeleted($itemType, $itemId);
     }

@@ -100,6 +100,7 @@ class CmsPageSaverTest extends CmsMocks
         $cmsPageAttributesTransfer->setUrl('/en/english');
         $cmsPageAttributesTransfer->setName('english name');
         $cmsPageAttributesTransfer->setFkLocale(1);
+        $cmsPageAttributesTransfer->setIdCmsPage(1);
 
         $cmsPageTransfer->addPageAttribute($cmsPageAttributesTransfer);
 

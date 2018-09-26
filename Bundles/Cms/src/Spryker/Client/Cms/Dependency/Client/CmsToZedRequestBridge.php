@@ -31,7 +31,7 @@ class CmsToZedRequestBridge implements CmsToZedRequestInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call(string $url, TransferInterface $object, ?int $timeoutInSeconds = null): TransferInterface
+    public function call($url, TransferInterface $object, $timeoutInSeconds = null)
     {
         return $this->zedRequestClient->call($url, $object, $timeoutInSeconds);
     }
