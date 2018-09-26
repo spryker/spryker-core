@@ -338,7 +338,7 @@ class CacheDataProvider
                     } else {
                         // When there are unused keys within the limit, the result contains the rest of the unused keys after removing the over limit ones
                         $inLimitUnusedKeysSize = $thirdDataset - self::OVER_LIMIT_SIZE;
-                        $key = $key = 'kv:key' . ($i + $thirdDataset - $inLimitUnusedKeysSize + 1);
+                        $key = 'kv:key' . ($i + $thirdDataset - $inLimitUnusedKeysSize + 1);
                         $value = $i < $inLimitUnusedKeysSize ? StorageClient::KEY_INIT :
                             ($i < $inLimitUnusedKeysSize + $thirdDataset ? StorageClient::KEY_USED : StorageClient::KEY_NEW);
                     }

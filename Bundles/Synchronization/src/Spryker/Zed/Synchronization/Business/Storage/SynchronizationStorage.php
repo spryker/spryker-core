@@ -125,4 +125,46 @@ class SynchronizationStorage implements SynchronizationInterface
     {
         return $this->utilEncodingService->encodeJson($value);
     }
+
+    /**
+     * @param array $data
+     *
+     * @return void
+     */
+    public function writeBulk(array $data): void
+    {
+        $storageWriteMessages = [];
+        foreach ($data as $message) {
+            $key = $message['key'];
+            $value = $message['value'];
+
+            $storageWriteMessages[$key] = $value;
+        }
+
+        if ($storageWriteMessages === []) {
+            return;
+        }
+
+        $this->storageClient->setMulti($storageWriteMessages);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return void
+     */
+    public function deleteBulk(array $data): void
+    {
+        $keysToDelete = [];
+
+        foreach ($data as $message) {
+            $keysToDelete[] = $message[static::KEY];
+        }
+
+        if ($keysToDelete === []) {
+            return;
+        }
+
+        $this->storageClient->deleteMulti($keysToDelete);
+    }
 }
