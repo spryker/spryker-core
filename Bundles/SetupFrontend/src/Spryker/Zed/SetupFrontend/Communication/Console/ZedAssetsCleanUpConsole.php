@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ZedAssetsCleanUpConsole extends Console
 {
-    const COMMAND_NAME = 'frontend:zed:cleanup-assets';
-    const DESCRIPTION = 'This command will remove all Zed assets.';
+    public const COMMAND_NAME = 'frontend:zed:cleanup-assets';
+    public const DESCRIPTION = 'This command will remove all Zed assets.';
 
     /**
      * @return void

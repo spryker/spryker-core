@@ -31,13 +31,13 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CmsRedirectForm extends AbstractType
 {
-    const FIELD_ID_URL_REDIRECT = 'id_url_redirect';
-    const FIELD_FROM_URL = 'from_url';
-    const FIELD_TO_URL = 'to_url';
-    const FIELD_STATUS = 'status';
+    public const FIELD_ID_URL_REDIRECT = 'id_url_redirect';
+    public const FIELD_FROM_URL = 'from_url';
+    public const FIELD_TO_URL = 'to_url';
+    public const FIELD_STATUS = 'status';
 
-    const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
-    const MAX_COUNT_CHARACTERS_REDIRECT_URL = 255;
+    public const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
+    public const MAX_COUNT_CHARACTERS_REDIRECT_URL = 255;
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

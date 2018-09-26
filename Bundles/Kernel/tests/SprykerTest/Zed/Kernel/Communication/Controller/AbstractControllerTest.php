@@ -23,7 +23,7 @@ use SprykerTest\Zed\Kernel\Communication\Controller\Fixtures\MockController;
  */
 class AbstractControllerTest extends Unit
 {
-    const EXPECTED_INTERNAL_TYPE = 'int';
+    public const EXPECTED_INTERNAL_TYPE = 'int';
 
     /**
      * @dataProvider getTestData()

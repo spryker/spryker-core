@@ -19,7 +19,7 @@ class CompanyBusinessUnitWriterStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $companyBusinessUnitEntity = SpyCompanyBusinessUnitQuery::create()
             ->filterByKey($dataSet[CompanyBusinessUnitDataSet::BUSINESS_UNIT_KEY])
