@@ -14,6 +14,7 @@ interface CustomerTransferExpanderPluginInterface
     /**
      * Specification
      * - Expands the provided customer transfer object's data and returns the modified object.
+     * - Expanders only work correctly when all the necessary data is filled in the CustomerTransfer
      *
      * @api
      *
