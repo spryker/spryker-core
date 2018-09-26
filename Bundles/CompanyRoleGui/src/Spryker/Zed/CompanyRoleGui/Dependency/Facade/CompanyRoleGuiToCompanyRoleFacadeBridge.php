@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 
 class CompanyRoleGuiToCompanyRoleFacadeBridge implements CompanyRoleGuiToCompanyRoleFacadeInterface
@@ -32,5 +33,25 @@ class CompanyRoleGuiToCompanyRoleFacadeBridge implements CompanyRoleGuiToCompany
     public function getCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer
     {
         return $this->companyRoleFacade->getCompanyRoleById($companyRoleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function create(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
+    {
+        return $this->companyRoleFacade->create($companyRoleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return void
+     */
+    public function update(CompanyRoleTransfer $companyRoleTransfer): void
+    {
+        $this->companyRoleFacade->update($companyRoleTransfer);
     }
 }
