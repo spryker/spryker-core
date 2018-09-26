@@ -29,10 +29,10 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class GlossaryController extends AbstractController
 {
-    const REDIRECT_ADDRESS = '/cms/glossary';
-    const SEARCH_LIMIT = 10;
-    const ID_FORM = 'id-form';
-    const TYPE = 'type';
+    public const REDIRECT_ADDRESS = '/cms/glossary';
+    public const SEARCH_LIMIT = 10;
+    public const ID_FORM = 'id-form';
+    public const TYPE = 'type';
 
     /**
      * @var string

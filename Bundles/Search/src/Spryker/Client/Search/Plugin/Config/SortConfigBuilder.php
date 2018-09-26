@@ -13,10 +13,10 @@ use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
 
 class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInterface
 {
-    const DIRECTION_ASC = 'asc';
-    const DIRECTION_DESC = 'desc';
+    public const DIRECTION_ASC = 'asc';
+    public const DIRECTION_DESC = 'desc';
 
-    const DEFAULT_SORT_PARAM_KEY = 'sort';
+    public const DEFAULT_SORT_PARAM_KEY = 'sort';
 
     /**
      * @var \Generated\Shared\Transfer\SortConfigTransfer[]

@@ -12,8 +12,8 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class UseStatement extends AbstractDependencyFinder
 {
-    const LAYER_DEFAULT = 'Default';
-    const BUNDLE = 'bundle';
+    public const LAYER_DEFAULT = 'Default';
+    public const BUNDLE = 'bundle';
 
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo

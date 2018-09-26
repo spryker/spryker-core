@@ -14,8 +14,8 @@ use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncoding
 
 class SynchronizationStorage implements SynchronizationInterface
 {
-    const KEY = 'key';
-    const VALUE = 'value';
+    public const KEY = 'key';
+    public const VALUE = 'value';
 
     /**
      * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface

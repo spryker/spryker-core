@@ -9,7 +9,7 @@ namespace Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue;
 
 class RedisRead extends Redis implements ReadInterface
 {
-    const KV_PREFIX = 'kv:';
+    public const KV_PREFIX = 'kv:';
 
     /**
      * @param string $key

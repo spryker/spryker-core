@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\Locator\LocatorInterface;
 
 class BundleProxy
 {
-    const LOCATOR_MATCHER_SUFFIX = 'Matcher';
+    public const LOCATOR_MATCHER_SUFFIX = 'Matcher';
 
     /**
      * @var string

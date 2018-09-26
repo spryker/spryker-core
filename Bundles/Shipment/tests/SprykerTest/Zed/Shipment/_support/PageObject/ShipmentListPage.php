@@ -9,10 +9,10 @@ namespace SprykerTest\Zed\Shipment\PageObject;
 
 class ShipmentListPage
 {
-    const URL = '/shipment';
+    public const URL = '/shipment';
 
-    const SELECTOR_TABLE = 'dataTables_wrapper';
+    public const SELECTOR_TABLE = 'dataTables_wrapper';
 
-    const BUTTON_ADD_CARRIER = '//div[@class="title-action"]/a[1]';
-    const BUTTON_ADD_METHOD = '//div[@class="title-action"]/a[2]';
+    public const BUTTON_ADD_CARRIER = '//div[@class="title-action"]/a[1]';
+    public const BUTTON_ADD_METHOD = '//div[@class="title-action"]/a[2]';
 }

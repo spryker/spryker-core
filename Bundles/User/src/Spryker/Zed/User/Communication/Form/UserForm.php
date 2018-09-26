@@ -29,15 +29,15 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class UserForm extends AbstractType
 {
-    const OPTION_GROUP_CHOICES = 'group_choices';
-    const GROUP_UNIQUE_USERNAME_CHECK = 'unique_email_check';
+    public const OPTION_GROUP_CHOICES = 'group_choices';
+    public const GROUP_UNIQUE_USERNAME_CHECK = 'unique_email_check';
 
-    const FIELD_USERNAME = 'username';
-    const FIELD_GROUP = 'group';
-    const FIELD_FIRST_NAME = 'first_name';
-    const FIELD_LAST_NAME = 'last_name';
-    const FIELD_PASSWORD = 'password';
-    const FIELD_STATUS = 'status';
+    public const FIELD_USERNAME = 'username';
+    public const FIELD_GROUP = 'group';
+    public const FIELD_FIRST_NAME = 'first_name';
+    public const FIELD_LAST_NAME = 'last_name';
+    public const FIELD_PASSWORD = 'password';
+    public const FIELD_STATUS = 'status';
 
     /**
      * @return string

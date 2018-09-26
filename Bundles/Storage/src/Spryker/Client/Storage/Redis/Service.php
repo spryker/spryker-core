@@ -12,7 +12,7 @@ use Predis\ClientInterface;
 
 class Service implements ServiceInterface
 {
-    const KV_PREFIX = 'kv:';
+    public const KV_PREFIX = 'kv:';
 
     /**
      * @var \Predis\ClientInterface

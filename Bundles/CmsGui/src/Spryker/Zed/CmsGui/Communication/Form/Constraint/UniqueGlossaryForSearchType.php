@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueGlossaryForSearchType extends SymfonyConstraint
 {
-    const OPTION_GLOSSARY_FACADE = 'glossaryFacade';
-    const OPTION_SEARCH_TYPE = 1;
+    public const OPTION_GLOSSARY_FACADE = 'glossaryFacade';
+    public const OPTION_SEARCH_TYPE = 1;
 
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsGlossaryFacadeInterface

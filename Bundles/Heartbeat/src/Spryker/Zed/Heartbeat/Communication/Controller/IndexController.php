@@ -15,10 +15,10 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class IndexController extends AbstractController
 {
-    const SYSTEM_UP = 'UP';
-    const SYSTEM_DOWN = 'DOWN';
-    const SYSTEM_STATUS = 'status';
-    const STATUS_REPORT = 'report';
+    public const SYSTEM_UP = 'UP';
+    public const SYSTEM_DOWN = 'DOWN';
+    public const SYSTEM_STATUS = 'status';
+    public const STATUS_REPORT = 'report';
 
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
