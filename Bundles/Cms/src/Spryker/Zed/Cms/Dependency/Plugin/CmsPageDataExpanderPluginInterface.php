@@ -7,20 +7,11 @@
 
 namespace Spryker\Zed\Cms\Dependency\Plugin;
 
-use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface as ExtensionCmsPageDataExpanderPluginInterface;
 
-interface CmsPageDataExpanderPluginInterface
+/**
+ * @deprecated Use \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface instead.
+ */
+interface CmsPageDataExpanderPluginInterface extends ExtensionCmsPageDataExpanderPluginInterface
 {
-    /**
-     * Specification:
-     * - Expands provided CMS page data.
-     *
-     * @api
-     *
-     * @param array $cmsPageData
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function expand(array $cmsPageData, LocaleTransfer $localeTransfer);
 }
