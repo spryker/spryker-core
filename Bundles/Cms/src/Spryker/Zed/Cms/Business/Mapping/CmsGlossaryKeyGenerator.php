@@ -29,14 +29,14 @@ class CmsGlossaryKeyGenerator implements CmsGlossaryKeyGeneratorInterface
     }
 
     /**
-     * @param int|null $idCmsPage
+     * @param int $idCmsPage
      * @param string $templateName
      * @param string $placeholder
      * @param bool $autoIncrement
      *
      * @return string
      */
-    public function generateGlossaryKeyName(?int $idCmsPage, string $templateName, string $placeholder, bool $autoIncrement = true): string
+    public function generateGlossaryKeyName(int $idCmsPage, string $templateName, string $placeholder, bool $autoIncrement = true): string
     {
         $keyName = static::GENERATED_GLOSSARY_KEY_PREFIX . '.';
         $keyName .= str_replace([' ', '.'], '-', $templateName) . '.';

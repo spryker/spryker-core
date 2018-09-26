@@ -42,6 +42,7 @@ class CmsPageActivatorTest extends CmsMocks
 
         $cmsPageActivatorMock->method('countNumberOfGlossaryKeysForIdCmsPage')->willReturn(5);
 
+        $cmsPageEntityMock->setIdCmsPage(1);
         $cmsPageActivatorMock->activate(1);
 
         $this->assertTrue($cmsPageEntityMock->getIsActive());
@@ -62,6 +63,7 @@ class CmsPageActivatorTest extends CmsMocks
 
         $cmsPageActivatorMock = $this->createCmsPageActivateMock($cmsPageEntityMock, null, $touchFacadeMock);
 
+        $cmsPageEntityMock->setIdCmsPage(1);
         $cmsPageActivatorMock->deactivate(1);
 
         $this->assertFalse($cmsPageEntityMock->getIsActive());

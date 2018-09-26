@@ -31,20 +31,20 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CmsRedirectForm extends AbstractType
 {
-    const FIELD_ID_URL_REDIRECT = 'id_url_redirect';
-    const FIELD_FROM_URL = 'from_url';
-    const FIELD_TO_URL = 'to_url';
-    const FIELD_STATUS = 'status';
+    public const FIELD_ID_URL_REDIRECT = 'id_url_redirect';
+    public const FIELD_FROM_URL = 'from_url';
+    public const FIELD_TO_URL = 'to_url';
+    public const FIELD_STATUS = 'status';
 
-    const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
-    const MAX_COUNT_CHARACTERS_REDIRECT_URL = 255;
+    protected const GROUP_UNIQUE_URL_CHECK = 'unique_url_check';
+    protected const MAX_COUNT_CHARACTERS_REDIRECT_URL = 255;
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
@@ -65,7 +65,7 @@ class CmsRedirectForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addIdRedirectField($builder)
@@ -152,7 +152,7 @@ class CmsRedirectForm extends AbstractType
     /**
      * @return array
      */
-    protected function getUrlConstraints()
+    protected function getUrlConstraints(): array
     {
         $urlConstraints = $this->getMandatoryConstraints();
 
@@ -174,7 +174,7 @@ class CmsRedirectForm extends AbstractType
     /**
      * @return array
      */
-    protected function getMandatoryConstraints()
+    protected function getMandatoryConstraints(): array
     {
         return [
             $this->createRequiredConstraint(),
@@ -193,7 +193,7 @@ class CmsRedirectForm extends AbstractType
     /**
      * @return \Symfony\Component\Validator\Constraints\NotBlank
      */
-    protected function createNotBlankConstraint()
+    protected function createNotBlankConstraint(): NotBlank
     {
         return new NotBlank();
     }
@@ -201,7 +201,7 @@ class CmsRedirectForm extends AbstractType
     /**
      * @return \Symfony\Component\Validator\Constraints\Required
      */
-    protected function createRequiredConstraint()
+    protected function createRequiredConstraint(): Required
     {
         return new Required();
     }
@@ -211,7 +211,7 @@ class CmsRedirectForm extends AbstractType
      *
      * @return \Symfony\Component\Validator\Constraints\Length
      */
-    protected function createLengthConstraint($max)
+    protected function createLengthConstraint($max): Length
     {
         return new Length(['max' => $max]);
     }
@@ -222,7 +222,7 @@ class CmsRedirectForm extends AbstractType
      *
      * @return void
      */
-    public function validateUrlRedirectLoop($toUrl, ExecutionContextInterface $context)
+    public function validateUrlRedirectLoop($toUrl, ExecutionContextInterface $context): void
     {
         $fromUrl = $context->getRoot()->get(static::FIELD_FROM_URL)->getData();
 
@@ -243,7 +243,7 @@ class CmsRedirectForm extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'cms_redirect';
     }
@@ -253,7 +253,7 @@ class CmsRedirectForm extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getBlockPrefix();
     }

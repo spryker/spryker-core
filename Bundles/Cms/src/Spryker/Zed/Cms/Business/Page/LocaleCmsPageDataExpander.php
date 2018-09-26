@@ -60,10 +60,6 @@ class LocaleCmsPageDataExpander implements LocaleCmsPageDataExpanderInterface
             $cmsPageData = $cmsPageDataExpanderPlugin->expand($cmsPageData, $localeTransfer);
         }
 
-        if (!$cmsPageData) {
-            return [];
-        }
-
         return $cmsPageData;
     }
 

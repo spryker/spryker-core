@@ -151,6 +151,7 @@ class CmsGlossarySaverTest extends CmsMocks
         $cmsGlossaryAttributeTransfer = new CmsGlossaryAttributesTransfer();
         $cmsGlossaryAttributeTransfer->setPlaceholder('title');
         $cmsGlossaryAttributeTransfer->setTemplateName('template');
+        $cmsGlossaryAttributeTransfer->setFkPage(1);
 
         $cmsPlaceholderTransfer = new CmsPlaceholderTranslationTransfer();
         $cmsPlaceholderTransfer->setFkLocale(1);

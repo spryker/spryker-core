@@ -19,10 +19,10 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsGlossaryTable extends AbstractTable
 {
-    const ACTIONS = 'Actions';
-    const REQUEST_ID_MAPPING = 'id-mapping';
-    const URL_CMS_GLOSSARY_EDIT = '/cms/glossary/edit';
-    const URL_CMS_GLOSSARY_DELETE = '/cms/glossary/delete';
+    public const ACTIONS = 'Actions';
+    public const REQUEST_ID_MAPPING = 'id-mapping';
+    public const URL_CMS_GLOSSARY_EDIT = '/cms/glossary/edit';
+    public const URL_CMS_GLOSSARY_DELETE = '/cms/glossary/delete';
 
     /**
      * @var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
@@ -50,7 +50,7 @@ class CmsGlossaryTable extends AbstractTable
      * @param array $placeholders
      * @param array $searchArray
      */
-    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryQuery, $idPage, array $placeholders = [], array $searchArray = [])
+    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryQuery, int $idPage, array $placeholders = [], array $searchArray = [])
     {
         $this->glossaryQuery = $glossaryQuery;
         $this->idPage = $idPage;
@@ -63,7 +63,7 @@ class CmsGlossaryTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setHeader([
             SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING => 'Id',
@@ -96,7 +96,7 @@ class CmsGlossaryTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         if (!empty($this->searchArray['value'])) {
             $this->placeholders = $this->findPlaceholders($this->searchArray);
@@ -131,7 +131,7 @@ class CmsGlossaryTable extends AbstractTable
      *
      * @return array
      */
-    protected function buildLinks(array $item)
+    protected function buildLinks(array $item): array
     {
         $buttons = [];
 
@@ -155,7 +155,7 @@ class CmsGlossaryTable extends AbstractTable
      *
      * @return string
      */
-    protected function buildPlaceholderLinks($placeholder)
+    protected function buildPlaceholderLinks(string $placeholder): string
     {
         $url = Url::generate('/cms/glossary/add', [
             CmsTableConstants::REQUEST_ID_PAGE => $this->idPage,
@@ -170,7 +170,7 @@ class CmsGlossaryTable extends AbstractTable
      *
      * @return array
      */
-    protected function addExtractedPlaceholders(array $mappedPlaceholders, array $results)
+    protected function addExtractedPlaceholders(array $mappedPlaceholders, array $results): array
     {
         foreach ($this->placeholders as $place) {
             if (!in_array($place, $mappedPlaceholders)) {
@@ -192,7 +192,7 @@ class CmsGlossaryTable extends AbstractTable
      *
      * @return array
      */
-    protected function findPlaceholders(array $searchItems)
+    protected function findPlaceholders(array $searchItems): array
     {
         $foundPlaceholders = [];
         foreach ($this->placeholders as $place) {

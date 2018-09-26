@@ -24,12 +24,12 @@ class CmsToTouchBridge implements CmsToTouchInterface
 
     /**
      * @param string $itemType
-     * @param int|null $itemId
+     * @param int $itemId
      * @param bool $keyChange
      *
      * @return bool
      */
-    public function touchActive(string $itemType, ?int $itemId, bool $keyChange = false): bool
+    public function touchActive(string $itemType, int $itemId, bool $keyChange = false): bool
     {
         return $this->touchFacade->touchActive($itemType, $itemId, $keyChange);
     }

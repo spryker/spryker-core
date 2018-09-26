@@ -6,10 +6,10 @@
     "php": ">=7.1",
     "spryker/cms": "^6.5.0",
     "spryker/data-import": "^1.3.0",
-    "spryker/glossary": "*",
+    "spryker/glossary": "^3.3.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/store": "*",
-    "spryker/url": "*"
+    "spryker/store": "^1.8.0",
+    "spryker/url": "^3.3.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -90,6 +90,8 @@ class CmsPageSaverTest extends CmsMocks
             ->method('getCmsPageEntity')
             ->willReturn($cmsPageEntityMock);
 
+        $cmsPageEntityMock->setIdCmsPage(1);
+
         $cmsPageTransfer = new CmsPageTransfer();
         $cmsPageTransfer->setIsSearchable(false);
 

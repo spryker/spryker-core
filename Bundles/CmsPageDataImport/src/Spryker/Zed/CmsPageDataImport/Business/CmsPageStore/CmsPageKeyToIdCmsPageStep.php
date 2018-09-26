@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsPageDataImport\Business\CmsPageStore;
 
-use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use Spryker\Zed\CmsPageDataImport\Business\DataSet\CmsPageStoreDataSet;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
@@ -33,15 +32,14 @@ class CmsPageKeyToIdCmsPageStep implements DataImportStepInterface
         $cmsPageKey = $dataSet[CmsPageStoreDataSet::KEY_PAGE_NAME];
         if (!isset($this->idCmsPageCache[$cmsPageKey])) {
             $cmsPageQuery = new SpyCmsPageQuery();
-            $idCmsPage = $cmsPageQuery
-                ->select(SpyCmsPageTableMap::COL_ID_CMS_PAGE)
+            $cmsPageEntity = $cmsPageQuery
                 ->findOneByPageKey($cmsPageKey);
 
-            if (!$idCmsPage) {
+            if (!$cmsPageEntity) {
                 throw new EntityNotFoundException(sprintf('Could not find cms page by page key "%s"', $cmsPageKey));
             }
 
-            $this->idCmsPageCache[$cmsPageKey] = $idCmsPage;
+            $this->idCmsPageCache[$cmsPageKey] = $cmsPageEntity->getIdCmsPage();
         }
 
         $dataSet[CmsPageStoreDataSet::ID_CMS_PAGE] = $this->idCmsPageCache[$cmsPageKey];

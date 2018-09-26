@@ -14,7 +14,11 @@ use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsGlossaryFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
@@ -25,7 +29,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Cms\Communication\Table\CmsRedirectTable
      */
-    public function createCmsRedirectTable()
+    public function createCmsRedirectTable(): CmsRedirectTable
     {
         $urlQuery = $this->getQueryContainer()
             ->queryUrlsWithRedirect();
@@ -41,7 +45,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable
      */
-    public function createCmsGlossaryTable($idPage, $fkLocale, array $placeholders = [], array $searchArray = [])
+    public function createCmsGlossaryTable(int $idPage, int $fkLocale, array $placeholders = [], array $searchArray = []): CmsGlossaryTable
     {
         $glossaryQuery = $this->getQueryContainer()
             ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $fkLocale);
@@ -55,7 +59,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getCmsRedirectForm(array $formData = [], array $formOptions = [])
+    public function getCmsRedirectForm(array $formData = [], array $formOptions = []): FormInterface
     {
         return $this->getFormFactory()->create(CmsRedirectForm::class, $formData, $formOptions);
     }
@@ -63,7 +67,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider
      */
-    public function createCmsRedirectFormDataProvider()
+    public function createCmsRedirectFormDataProvider(): CmsRedirectFormDataProvider
     {
         return new CmsRedirectFormDataProvider($this->getQueryContainer());
     }
@@ -74,7 +78,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getCmsGlossaryForm(array $formData = [], array $formOptions = [])
+    public function getCmsGlossaryForm(array $formData = [], array $formOptions = []): FormInterface
     {
         return $this->getFormFactory()->create(CmsGlossaryForm::class, $formData, $formOptions);
     }
@@ -82,7 +86,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Cms\Communication\Form\DataProvider\CmsGlossaryFormDataProvider
      */
-    public function createCmsGlossaryFormDataProvider()
+    public function createCmsGlossaryFormDataProvider(): CmsGlossaryFormDataProvider
     {
         return new CmsGlossaryFormDataProvider($this->getQueryContainer());
     }
@@ -92,7 +96,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return array
      */
-    public function getTemplateRealPaths($templateRelativePath)
+    public function getTemplateRealPaths(string $templateRelativePath): array
     {
         return $this->getConfig()
             ->getTemplateRealPaths($templateRelativePath);
@@ -101,7 +105,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
      */
-    public function getLocaleFacade()
+    public function getLocaleFacade(): CmsToLocaleInterface
     {
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
     }
@@ -109,7 +113,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
      */
-    public function getUrlFacade()
+    public function getUrlFacade(): CmsToUrlInterface
     {
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
     }
@@ -117,7 +121,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
      */
-    public function getGlossaryFacade()
+    public function getGlossaryFacade(): CmsToGlossaryInterface
     {
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
     }

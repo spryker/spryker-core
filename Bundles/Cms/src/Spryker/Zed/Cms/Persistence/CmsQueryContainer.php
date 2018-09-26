@@ -40,27 +40,27 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
  */
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {
-    const TEMPLATE_NAME = 'template_name';
-    const TEMPLATE_PATH = 'template_path';
-    const CATEGORY_NODE_ID = 'categoryNodeId';
-    const CATEGORY_NAME = 'categoryName';
-    const ID_URL = 'id_url';
-    const URL = 'url';
-    const TO_URL = 'toUrl';
-    const TRANS = 'trans';
-    const KEY = 'keyname';
-    const LABEL = 'label';
-    const VALUE = 'value';
-    const IS_ACTIVE = 'is_active';
-    const CMS_URLS = 'cmsUrls';
-    const CMS_VERSION_COUNT = 'cmsVersionCount';
-    const ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE = 'aliasCmsPageLocalizedAttribute';
-    const ALIAS_CMS_PAGE_TEMPLATE = 'aliasCmsPageTemplate';
-    const ALIAS_CMS_GLOSSARY_KEY_MAPPING = 'aliasCmsGlossaryKeyMapping';
-    const ALIAS_GLOSSARY_KEY = 'aliasGlossaryKey';
-    const ALIAS_TRANSLATION = 'aliasTranslation';
-    const ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE = 'aliasLocaleForLocalizedAttribute';
-    const ALIAS_LOCALE_FOR_TRANSLATION = 'aliasLocaleForTranslation';
+    public const TEMPLATE_NAME = 'template_name';
+    public const TEMPLATE_PATH = 'template_path';
+    public const CATEGORY_NODE_ID = 'categoryNodeId';
+    public const CATEGORY_NAME = 'categoryName';
+    public const ID_URL = 'id_url';
+    public const URL = 'url';
+    public const TO_URL = 'toUrl';
+    public const TRANS = 'trans';
+    public const KEY = 'keyname';
+    public const LABEL = 'label';
+    public const VALUE = 'value';
+    public const IS_ACTIVE = 'is_active';
+    public const CMS_URLS = 'cmsUrls';
+    public const CMS_VERSION_COUNT = 'cmsVersionCount';
+    public const ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE = 'aliasCmsPageLocalizedAttribute';
+    public const ALIAS_CMS_PAGE_TEMPLATE = 'aliasCmsPageTemplate';
+    public const ALIAS_CMS_GLOSSARY_KEY_MAPPING = 'aliasCmsGlossaryKeyMapping';
+    public const ALIAS_GLOSSARY_KEY = 'aliasGlossaryKey';
+    public const ALIAS_TRANSLATION = 'aliasTranslation';
+    public const ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE = 'aliasLocaleForLocalizedAttribute';
+    public const ALIAS_LOCALE_FOR_TRANSLATION = 'aliasLocaleForTranslation';
 
     /**
      * @api
@@ -140,7 +140,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->queryPages()
             ->useSpyCmsPageLocalizedAttributesQuery()
-            ->filterByFkLocale($idLocale)
+                ->filterByFkLocale($idLocale)
             ->endUse()
             ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, static::TEMPLATE_NAME)
             ->withColumn(SpyCmsPageLocalizedAttributesTableMap::COL_NAME, 'name')
@@ -322,9 +322,9 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::TRANS)
             ->filterByFkPage($idCmsPage)
             ->useGlossaryKeyQuery()
-            ->useSpyGlossaryTranslationQuery()
-            ->filterByFkLocale($fkLocale)
-            ->endUse()
+                ->useSpyGlossaryTranslationQuery()
+                    ->filterByFkLocale($fkLocale)
+                ->endUse()
             ->endUse();
 
         return $query;
@@ -393,7 +393,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->filterByIdCmsPage($idCmsPage)
             ->leftJoinCmsTemplate()
             ->useSpyUrlQuery()
-            ->leftJoinSpyLocale()
+                ->leftJoinSpyLocale()
             ->endUse()
             ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, static::TEMPLATE_NAME)
             ->withColumn(SpyUrlTableMap::COL_URL, static::URL)
@@ -445,7 +445,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         $query = $this->getGlossaryQueryContainer()
             ->queryByKey($key)
             ->useSpyGlossaryTranslationQuery(null, Criteria::LEFT_JOIN)
-            ->filterByFkLocale($localeId)
+                ->filterByFkLocale($localeId)
             ->endUse()
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::LABEL)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE);
@@ -482,13 +482,13 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         return $this->getCategoryQueryContainer()
             ->queryCategoryNode($idLocale)
             ->useCategoryQuery()
-            ->useAttributeQuery()
-            ->where('lower(' . SpyCategoryAttributeTableMap::COL_NAME . ') like ?', '%' . mb_strtolower($categoryName) . '%')
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
-            ->endUse()
+                ->useAttributeQuery()
+                    ->where('lower(' . SpyCategoryAttributeTableMap::COL_NAME . ') like ?', '%' . mb_strtolower($categoryName) . '%')
+                    ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
+                ->endUse()
             ->endUse()
             ->useSpyUrlQuery()
-            ->filterByFkLocale($idLocale)
+                ->filterByFkLocale($idLocale)
             ->endUse()
             ->withColumn(SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE, self::CATEGORY_NODE_ID)
             ->withColumn(SpyUrlTableMap::COL_URL, self::URL);
@@ -597,16 +597,16 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->filterByIdCmsPage($idPage)
             ->innerJoinCmsTemplate(self::ALIAS_CMS_PAGE_TEMPLATE)
             ->useSpyCmsGlossaryKeyMappingQuery(self::ALIAS_CMS_GLOSSARY_KEY_MAPPING, Criteria::LEFT_JOIN)
-            ->useGlossaryKeyQuery(self::ALIAS_GLOSSARY_KEY)
-            ->useSpyGlossaryTranslationQuery(self::ALIAS_TRANSLATION)
-            ->useLocaleQuery(self::ALIAS_LOCALE_FOR_TRANSLATION)
-            ->endUse()
-            ->endUse()
-            ->endUse()
+                ->useGlossaryKeyQuery(self::ALIAS_GLOSSARY_KEY)
+                    ->useSpyGlossaryTranslationQuery(self::ALIAS_TRANSLATION)
+                        ->useLocaleQuery(self::ALIAS_LOCALE_FOR_TRANSLATION)
+                        ->endUse()
+                    ->endUse()
+                ->endUse()
             ->endUse()
             ->useSpyCmsPageLocalizedAttributesQuery(self::ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE)
-            ->useLocaleQuery(self::ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE)
-            ->endUse()
+                ->useLocaleQuery(self::ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE)
+                ->endUse()
             ->endUse()
             ->with(self::ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE)
             ->with(self::ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE)

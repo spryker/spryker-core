@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsPageDataImport\Business\CmsPageStore;
 
-use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\CmsPageDataImport\Business\DataSet\CmsPageStoreDataSet;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
@@ -33,15 +32,14 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
         $storeName = $dataSet[CmsPageStoreDataSet::KEY_STORE_NAME];
         if (!isset($this->idStoreCache[$storeName])) {
             $storeQuery = new SpyStoreQuery();
-            $idStore = $storeQuery
-                ->select(SpyStoreTableMap::COL_ID_STORE)
+            $storeEntity = $storeQuery
                 ->findOneByName($storeName);
 
-            if (!$idStore) {
+            if (!$storeEntity) {
                 throw new EntityNotFoundException(sprintf('Could not find store by name "%s"', $storeName));
             }
 
-            $this->idStoreCache[$storeName] = $idStore;
+            $this->idStoreCache[$storeName] = $storeEntity->getIdStore();
         }
 
         $dataSet[CmsPageStoreDataSet::ID_STORE] = $this->idStoreCache[$storeName];

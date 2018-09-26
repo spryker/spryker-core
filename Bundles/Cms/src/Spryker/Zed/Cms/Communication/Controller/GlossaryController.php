@@ -32,10 +32,10 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class GlossaryController extends AbstractController
 {
-    public const REDIRECT_ADDRESS = '/cms/glossary';
-    public const SEARCH_LIMIT = 10;
-    public const ID_FORM = 'id-form';
-    public const TYPE = 'type';
+    protected const REDIRECT_ADDRESS = '/cms/glossary';
+    protected const SEARCH_LIMIT = 10;
+    protected const ID_FORM = 'id-form';
+    protected const TYPE = 'type';
 
     /**
      * @var string
@@ -126,7 +126,7 @@ class GlossaryController extends AbstractController
         $this->getFacade()
             ->deletePageKeyMapping($pageTransfer, $mappingGlossary->getPlaceholder());
 
-        $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsTableConstants::REQUEST_ID_PAGE . '=' . $idPage;
+        $redirectUrl = static::REDIRECT_ADDRESS . http_build_query([CmsTableConstants::REQUEST_ID_PAGE => $idPage]);
 
         return $this->redirectResponse($redirectUrl);
     }

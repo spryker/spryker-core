@@ -32,6 +32,8 @@ class CmsPageDataImportBusinessFactory extends DataImportBusinessFactory
             $this->getConfig()->getCmsPageDataImporterConfiguration()
         );
 
+        $cmsPageWriterStep = new CmsPageWriterStep($this->getCmsFacade());
+
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker(CmsPageWriterStep::BULK_SIZE);
         $dataSetStepBroker
             ->addStep($this->createAddLocalesStep())
@@ -46,7 +48,7 @@ class CmsPageDataImportBusinessFactory extends DataImportBusinessFactory
                 CmsPageDataSet::KEY_META_DESCRIPTION,
                 CmsPageDataSet::KEY_META_KEYWORDS,
             ]))
-            ->addStep(new CmsPageWriterStep($this->getCmsFacade()));
+            ->addStep($cmsPageWriterStep);
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 

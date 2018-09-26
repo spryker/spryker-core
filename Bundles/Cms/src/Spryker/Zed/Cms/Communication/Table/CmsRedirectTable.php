@@ -18,8 +18,8 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsRedirectTable extends AbstractTable
 {
-    const ACTIONS = 'Actions';
-    const REQUEST_ID_URL = 'id-url';
+    protected const ACTIONS = 'Actions';
+    protected const REQUEST_ID_URL = 'id-url';
 
     /**
      * @var \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -39,7 +39,7 @@ class CmsRedirectTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setHeader([
             SpyUrlTableMap::COL_ID_URL => 'ID',
@@ -71,7 +71,7 @@ class CmsRedirectTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $urlCollection = $this->getUrlCollection($config);
         $results = [];
@@ -104,7 +104,7 @@ class CmsRedirectTable extends AbstractTable
      *
      * @return string
      */
-    protected function buildLinks(SpyUrl $urlEntity)
+    protected function buildLinks(SpyUrl $urlEntity): string
     {
         $buttons[] = $this->generateEditButton(sprintf('/cms/redirect/edit?%s=%s', RedirectController::REQUEST_ID_URL, $urlEntity->getIdUrl()), 'Edit');
         $buttons[] = $this->generateRemoveButton('/cms/redirect/delete', 'Delete', [
