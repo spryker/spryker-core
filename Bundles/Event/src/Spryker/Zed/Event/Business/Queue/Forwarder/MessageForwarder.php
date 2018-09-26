@@ -9,8 +9,6 @@ namespace Spryker\Zed\Event\Business\Queue\Forwarder;
 
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Generated\Shared\Transfer\QueueSendMessageTransfer;
-use Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery;
-use Spryker\Shared\Event\EventConstants;
 use Spryker\Zed\Event\Dependency\Client\EventToQueueInterface;
 
 class MessageForwarder implements MessageForwarderInterface
@@ -27,12 +25,10 @@ class MessageForwarder implements MessageForwarderInterface
 
     /**
      * @param \Spryker\Zed\Event\Dependency\Client\EventToQueueInterface $queueClient
-     * @param \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery $queryContainer
      */
-    public function __construct(EventToQueueInterface $queueClient, SpyQueueProcessQuery $queryContainer)
+    public function __construct(EventToQueueInterface $queueClient)
     {
         $this->queueClient = $queueClient;
-        $this->queryContainer = $queryContainer;
     }
 
     /**
@@ -42,10 +38,6 @@ class MessageForwarder implements MessageForwarderInterface
      */
     public function forwardMessages(array $queueMessageTransfers): array
     {
-        if ($this->isEventQueueProcessRunning()) {
-            return $queueMessageTransfers;
-        }
-
         $responses = [];
 
         foreach ($queueMessageTransfers as $queueMessageTransfer) {
@@ -68,17 +60,5 @@ class MessageForwarder implements MessageForwarderInterface
         $queueSendMessageTransfer = new QueueSendMessageTransfer();
         $queueSendMessageTransfer->fromArray($queueMessageTransfer->getQueueMessage()->toArray(), true);
         $this->queueClient->sendMessage($queueMessageTransfer->getQueueName(), $queueSendMessageTransfer);
-    }
-
-    /**
-     * @module Queue
-     *
-     * @return bool
-     */
-    protected function isEventQueueProcessRunning(): bool
-    {
-        return $this->queryContainer
-                ->filterByQueueName(EventConstants::EVENT_QUEUE)
-                ->count() > 0;
     }
 }
