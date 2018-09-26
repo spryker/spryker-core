@@ -14,7 +14,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class UrlTable extends AbstractTable
 {
-    const TABLE_IDENTIFIER = 'url_table';
+    public const TABLE_IDENTIFIER = 'url_table';
 
     /**
      * @var \Orm\Zed\Url\Persistence\SpyUrlQuery

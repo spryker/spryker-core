@@ -22,7 +22,7 @@ use SprykerTest\Zed\Tax\TaxCommunicationTester;
  */
 class TaxSetCreateCest
 {
-    const TAX_RATE_NAME = 'Tax Rate Name';
+    public const TAX_RATE_NAME = 'Tax Rate Name';
 
     /**
      * @param \SprykerTest\Zed\Tax\TaxCommunicationTester $i

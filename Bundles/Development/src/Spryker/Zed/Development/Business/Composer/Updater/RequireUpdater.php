@@ -11,9 +11,9 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class RequireUpdater implements UpdaterInterface
 {
-    const KEY_REQUIRE = 'require';
-    const KEY_REQUIRE_PHP = 'php';
-    const PHP_MINIMUM = '>=7.1';
+    public const KEY_REQUIRE = 'require';
+    public const KEY_REQUIRE_PHP = 'php';
+    public const PHP_MINIMUM = '>=7.1';
 
     /**
      * @param array $composerJson

@@ -18,9 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QueryStringController extends AbstractController
 {
-    const URL_PARAM_TYPE = 'type';
-    const URL_PARAM_FIELD = 'field';
-    const URL_PARAM_QUERY_STRING = 'query-string';
+    public const URL_PARAM_TYPE = 'type';
+    public const URL_PARAM_FIELD = 'field';
+    public const URL_PARAM_QUERY_STRING = 'query-string';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

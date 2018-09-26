@@ -17,12 +17,12 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CustomerGroupTable extends AbstractTable
 {
-    const ACTIONS = 'Actions';
+    public const ACTIONS = 'Actions';
 
-    const COL_ID_CUSTOMER_GROUP = 'id_customer_group';
-    const COL_NAME = 'name';
-    const COL_DESCRIPTION = 'description';
-    const COL_CREATED_AT = 'created_at';
+    public const COL_ID_CUSTOMER_GROUP = 'id_customer_group';
+    public const COL_NAME = 'name';
+    public const COL_DESCRIPTION = 'description';
+    public const COL_CREATED_AT = 'created_at';
 
     /**
      * @var \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface

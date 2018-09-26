@@ -24,8 +24,8 @@ use SprykerTest\Yves\Kernel\Fixtures\ConcreteFactory;
  */
 class AbstractFactoryTest extends Unit
 {
-    const TEST_KEY = 'test';
-    const TEST_VALUE = 'value';
+    public const TEST_KEY = 'test';
+    public const TEST_VALUE = 'value';
 
     /**
      * @return void

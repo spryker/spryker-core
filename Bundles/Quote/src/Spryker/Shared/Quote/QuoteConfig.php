@@ -11,8 +11,8 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class QuoteConfig extends AbstractSharedConfig
 {
-    const STORAGE_STRATEGY_SESSION = 'session';
-    const STORAGE_STRATEGY_DATABASE = 'database';
+    public const STORAGE_STRATEGY_SESSION = 'session';
+    public const STORAGE_STRATEGY_DATABASE = 'database';
 
     /**
      * @return string

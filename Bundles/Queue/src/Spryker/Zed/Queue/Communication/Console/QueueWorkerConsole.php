@@ -16,10 +16,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class QueueWorkerConsole extends Console
 {
-    const COMMAND_NAME = 'queue:worker:start';
-    const DESCRIPTION = 'Start queue workers';
+    public const COMMAND_NAME = 'queue:worker:start';
+    public const DESCRIPTION = 'Start queue workers';
 
-    const QUEUE_RUNNER_COMMAND = APPLICATION_VENDOR_DIR . '/bin/console queue:task:start';
+    public const QUEUE_RUNNER_COMMAND = APPLICATION_VENDOR_DIR . '/bin/console queue:task:start';
 
     /**
      * @return void

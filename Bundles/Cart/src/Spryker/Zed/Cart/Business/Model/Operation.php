@@ -19,8 +19,8 @@ use Spryker\Zed\CartExtension\Dependency\Plugin\TerminationAwareCartPreCheckPlug
 
 class Operation implements OperationInterface
 {
-    const ADD_ITEMS_SUCCESS = 'cart.add.items.success';
-    const REMOVE_ITEMS_SUCCESS = 'cart.remove.items.success';
+    public const ADD_ITEMS_SUCCESS = 'cart.add.items.success';
+    public const REMOVE_ITEMS_SUCCESS = 'cart.remove.items.success';
 
     protected const TERMINATION_EVENT_NAME_ADD = 'add';
     protected const TERMINATION_EVENT_NAME_REMOVE = 'remove';
