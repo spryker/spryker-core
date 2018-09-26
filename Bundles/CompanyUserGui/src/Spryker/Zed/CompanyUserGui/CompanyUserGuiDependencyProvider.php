@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUserGui;
 
-use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeBridge;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeBridge;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeBridge;
@@ -17,7 +16,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
     public const FACADE_COMPANY = 'FACADE_COMPANY';
     public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
@@ -34,27 +32,12 @@ class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-        $container = $this->addCompanyUserQuery($container);
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addCompanyFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addCompanyUserFormExpanderPlugins($container);
         $container = $this->addCompanyUserEditFormExpanderPlugins($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCompanyUserQuery(Container $container): Container
-    {
-        $container[static::PROPEL_QUERY_COMPANY_USER] = function (Container $container) {
-            return SpyCompanyUserQuery::create();
-        };
 
         return $container;
     }

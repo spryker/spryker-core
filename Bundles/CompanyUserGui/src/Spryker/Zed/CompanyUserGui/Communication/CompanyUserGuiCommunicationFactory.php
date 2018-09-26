@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanyUserGui\Communication;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserEditForm;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserForm;
 use Spryker\Zed\CompanyUserGui\Communication\Form\DataProvider\CompanyUserFormDataProvider;
@@ -62,14 +61,6 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCompanyUserFacade(): CompanyUserGuiToCompanyUserFacadeInterface
     {
         return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::FACADE_COMPANY_USER);
-    }
-
-    /**
-     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
-     */
-    protected function getCompanyUserQuery(): SpyCompanyUserQuery
-    {
-        return $this->getProvidedDependency(CompanyUserGuiDependencyProvider::PROPEL_QUERY_COMPANY_USER);
     }
 
     /**

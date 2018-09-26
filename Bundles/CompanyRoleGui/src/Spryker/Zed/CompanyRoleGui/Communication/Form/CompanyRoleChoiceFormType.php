@@ -23,7 +23,7 @@ class CompanyRoleChoiceFormType extends AbstractType
     public const OPTION_VALUES_ROLES_CHOICES = 'company_role_choices';
     public const OPTION_ATTRIBUTES_ROLES_CHOICES = 'company_role_attributes';
 
-    public const FIELD_COMPANY_ROLE_COLLECTION = 'company_role_collection';
+    protected const FIELD_COMPANY_ROLE_COLLECTION = 'company_role_collection';
 
     protected const TEMPLATE_PATH = '@CompanyRoleGui/CompanyUser/company_role.twig';
 
