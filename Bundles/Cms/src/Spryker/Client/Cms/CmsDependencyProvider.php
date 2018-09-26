@@ -22,7 +22,7 @@ class CmsDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
-        $this->addZedRequestClient($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }

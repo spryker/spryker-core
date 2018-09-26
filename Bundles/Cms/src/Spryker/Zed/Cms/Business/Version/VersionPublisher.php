@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CmsVersionTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class VersionPublisher implements VersionPublisherInterface
@@ -34,7 +34,7 @@ class VersionPublisher implements VersionPublisherInterface
     protected $versionFinder;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface
      */
     protected $touchFacade;
 
@@ -47,14 +47,14 @@ class VersionPublisher implements VersionPublisherInterface
      * @param \Spryker\Zed\Cms\Business\Version\VersionGeneratorInterface $versionGenerator
      * @param \Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface $versionDataMapper
      * @param \Spryker\Zed\Cms\Business\Version\VersionFinderInterface $versionFinder
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface $touchFacade
      * @param \Spryker\Zed\Cms\Dependency\Plugin\CmsVersionPostSavePluginInterface[] $postSavePlugins
      */
     public function __construct(
         VersionGeneratorInterface $versionGenerator,
         VersionDataMapperInterface $versionDataMapper,
         VersionFinderInterface $versionFinder,
-        CmsToTouchInterface $touchFacade,
+        CmsToTouchFacadeInterface $touchFacade,
         array $postSavePlugins
     ) {
         $this->versionGenerator = $versionGenerator;

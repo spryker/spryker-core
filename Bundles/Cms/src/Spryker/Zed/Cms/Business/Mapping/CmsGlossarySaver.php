@@ -17,7 +17,7 @@ use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Throwable;
 
@@ -31,7 +31,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     protected $cmsQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface
      */
     protected $glossaryFacade;
 
@@ -42,12 +42,12 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
 
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface $cmsGlossaryKeyGenerator
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
-        CmsToGlossaryInterface $glossaryFacade,
+        CmsToGlossaryFacadeInterface $glossaryFacade,
         CmsGlossaryKeyGeneratorInterface $cmsGlossaryKeyGenerator
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;

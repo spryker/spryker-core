@@ -16,7 +16,7 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Spryker\Zed\Cms\Business\Exception\MissingPlaceholdersException;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 use Spryker\Zed\Cms\CmsConfig;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
@@ -28,7 +28,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     protected $cmsQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface
      */
     protected $localeFacade;
 
@@ -39,12 +39,12 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
 
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\Cms\CmsConfig $cmsConfig
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
-        CmsToLocaleInterface $localeFacade,
+        CmsToLocaleFacadeInterface $localeFacade,
         CmsConfig $cmsConfig
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;

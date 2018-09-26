@@ -50,10 +50,10 @@ use Spryker\Zed\Cms\Business\Version\VersionPublisherInterface;
 use Spryker\Zed\Cms\Business\Version\VersionRollback;
 use Spryker\Zed\Cms\Business\Version\VersionRollbackInterface;
 use Spryker\Zed\Cms\CmsDependencyProvider;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface;
 use Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder;
@@ -107,39 +107,39 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Symfony\Component\Finder\Finder
      */
-    protected function createFinder(): Finder
+    public function createFinder(): Finder
     {
         return new Finder();
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface
      */
-    protected function getGlossaryFacade(): CmsToGlossaryInterface
+    protected function getGlossaryFacade(): CmsToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface
      */
-    protected function getTouchFacade(): CmsToTouchInterface
+    protected function getTouchFacade(): CmsToTouchFacadeInterface
     {
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_TOUCH);
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface
      */
-    protected function getUrlFacade(): CmsToUrlInterface
+    protected function getUrlFacade(): CmsToUrlFacadeInterface
     {
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface
      */
-    protected function getLocaleFacade(): CmsToLocaleInterface
+    protected function getLocaleFacade(): CmsToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
     }
@@ -349,7 +349,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface[]
      */
-    public function getCmsPagePostActivatorPlugins(): array
+    protected function getCmsPagePostActivatorPlugins(): array
     {
         return $this->getProvidedDependency(CmsDependencyProvider::PLUGINS_CMS_PAGE_POST_ACTIVATOR);
     }
@@ -365,7 +365,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Cms\Business\Mapping\CmsGlossaryKeyGeneratorInterface
      */
-    protected function createCmsGlossaryKeyGenerator(): CmsGlossaryKeyGeneratorInterface
+    public function createCmsGlossaryKeyGenerator(): CmsGlossaryKeyGeneratorInterface
     {
         return new CmsGlossaryKeyGenerator($this->getGlossaryFacade());
     }

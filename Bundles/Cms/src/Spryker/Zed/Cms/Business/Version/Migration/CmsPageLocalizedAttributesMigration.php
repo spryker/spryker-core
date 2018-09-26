@@ -9,7 +9,7 @@ namespace Spryker\Zed\Cms\Business\Version\Migration;
 
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
@@ -18,7 +18,7 @@ class CmsPageLocalizedAttributesMigration implements MigrationInterface
     use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface
      */
     protected $localeFacade;
 
@@ -28,10 +28,10 @@ class CmsPageLocalizedAttributesMigration implements MigrationInterface
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $queryContainer
      */
-    public function __construct(CmsToLocaleInterface $localeFacade, CmsQueryContainerInterface $queryContainer)
+    public function __construct(CmsToLocaleFacadeInterface $localeFacade, CmsQueryContainerInterface $queryContainer)
     {
         $this->localeFacade = $localeFacade;
         $this->queryContainer = $queryContainer;

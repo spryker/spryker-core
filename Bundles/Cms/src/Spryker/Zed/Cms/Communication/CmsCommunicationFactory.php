@@ -14,9 +14,9 @@ use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsGlossaryFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -103,25 +103,25 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface
      */
-    public function getLocaleFacade(): CmsToLocaleInterface
+    public function getLocaleFacade(): CmsToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface
      */
-    public function getUrlFacade(): CmsToUrlInterface
+    public function getUrlFacade(): CmsToUrlFacadeInterface
     {
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
+     * @return \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface
      */
-    public function getGlossaryFacade(): CmsToGlossaryInterface
+    public function getGlossaryFacade(): CmsToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
     }

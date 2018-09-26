@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Cms\Business\Mapping;
 
-use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
 
 class CmsGlossaryKeyGenerator implements CmsGlossaryKeyGeneratorInterface
 {
@@ -16,14 +16,14 @@ class CmsGlossaryKeyGenerator implements CmsGlossaryKeyGeneratorInterface
     public const UNIQUE_ID = 'uniqueId';
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface $glossaryFacade
      */
-    public function __construct(CmsToGlossaryInterface $glossaryFacade)
+    public function __construct(CmsToGlossaryFacadeInterface $glossaryFacade)
     {
         $this->glossaryFacade = $glossaryFacade;
     }

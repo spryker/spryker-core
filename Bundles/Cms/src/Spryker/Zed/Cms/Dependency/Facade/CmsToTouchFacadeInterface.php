@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Cms\Dependency\Facade;
 
-interface CmsToTouchInterface
+interface CmsToTouchFacadeInterface
 {
     /**
      * @param string $itemType

@@ -19,10 +19,10 @@ use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
 use Spryker\Zed\Cms\CmsConfig;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 abstract class CmsMocks extends Unit
@@ -56,11 +56,11 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface
      */
     protected function createTouchFacadeMock()
     {
-        return $this->getMockBuilder(CmsToTouchInterface::class)
+        return $this->getMockBuilder(CmsToTouchFacadeInterface::class)
             ->getMock();
     }
 
@@ -85,11 +85,11 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToUrlInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface
      */
     protected function createUrlFacadeMock()
     {
-        return $this->getMockBuilder(CmsToUrlInterface::class)
+        return $this->getMockBuilder(CmsToUrlFacadeInterface::class)
             ->getMock();
     }
 
@@ -132,11 +132,11 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface
      */
     protected function createLocaleMock()
     {
-        return $this->getMockBuilder(CmsToLocaleInterface::class)
+        return $this->getMockBuilder(CmsToLocaleFacadeInterface::class)
             ->getMock();
     }
 
@@ -171,11 +171,11 @@ abstract class CmsMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface
      */
     protected function createGlossaryFacadeMock()
     {
-        return $this->getMockBuilder(CmsToGlossaryInterface::class)
+        return $this->getMockBuilder(CmsToGlossaryFacadeInterface::class)
            ->getMock();
     }
 

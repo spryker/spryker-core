@@ -17,7 +17,7 @@ use Spryker\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
 use Spryker\Zed\Cms\Business\Page\PageManagerInterface;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
@@ -25,7 +25,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     public const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface
      */
     protected $glossaryFacade;
 
@@ -50,14 +50,14 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     protected $connection;
 
     /**
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface $templateManager
      * @param \Spryker\Zed\Cms\Business\Page\PageManagerInterface $pageManager
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      */
     public function __construct(
-        CmsToGlossaryInterface $glossaryFacade,
+        CmsToGlossaryFacadeInterface $glossaryFacade,
         CmsQueryContainerInterface $cmsQueryContainer,
         TemplateManagerInterface $templateManager,
         PageManagerInterface $pageManager,

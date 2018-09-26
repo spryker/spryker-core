@@ -16,7 +16,7 @@ use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageSaver;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Spryker\Zed\Url\Business\UrlFacadeInterface;
 use SprykerTest\Zed\Cms\Business\CmsMocks;
@@ -112,7 +112,7 @@ class CmsPageSaverTest extends CmsMocks
 
     /**
      * @param \Spryker\Zed\Url\Business\UrlFacadeInterface|null $urlFacadeMock
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface|null $touchFacadeMock
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface|null $touchFacadeMock
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface|null $cmsQueryContainerMock
      * @param \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface|null $cmsPageUrlBuilderMock
      * @param \Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface|null $cmsGlossarySaverMock
@@ -122,7 +122,7 @@ class CmsPageSaverTest extends CmsMocks
      */
     protected function createCmsPageSaverMock(
         ?UrlFacadeInterface $urlFacadeMock = null,
-        ?CmsToTouchInterface $touchFacadeMock = null,
+        ?CmsToTouchFacadeInterface $touchFacadeMock = null,
         ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
         ?CmsPageUrlBuilderInterface $cmsPageUrlBuilderMock = null,
         ?CmsGlossarySaverInterface $cmsGlossarySaverMock = null,

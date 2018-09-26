@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Cms\Dependency\Facade;
 
-class CmsToTouchBridge implements CmsToTouchInterface
+class CmsToTouchFacadeBridge implements CmsToTouchFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 
-interface CmsToGlossaryInterface
+interface CmsToGlossaryFacadeInterface
 {
     /**
      * @param int $idKey

@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Cms;
 
 use Propel\Runtime\Propel;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryBridge;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleBridge;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchBridge;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlBridge;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeBridge;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeBridge;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeBridge;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeBridge;
 use Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -93,7 +93,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     protected function addUrlFacade(Container $container): void
     {
         $container[self::FACADE_URL] = function (Container $container) {
-            return new CmsToUrlBridge($container->getLocator()->url()->facade());
+            return new CmsToUrlFacadeBridge($container->getLocator()->url()->facade());
         };
     }
 
@@ -105,7 +105,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     protected function addLocaleFacade(Container $container): void
     {
         $container[self::FACADE_LOCALE] = function (Container $container) {
-            return new CmsToLocaleBridge($container->getLocator()->locale()->facade());
+            return new CmsToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         };
     }
 
@@ -117,7 +117,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     protected function addGlossaryFacade(Container $container): void
     {
         $container[self::FACADE_GLOSSARY] = function (Container $container) {
-            return new CmsToGlossaryBridge($container->getLocator()->glossary()->facade());
+            return new CmsToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
         };
     }
 
@@ -129,7 +129,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     protected function addTouchFacade(Container $container): void
     {
         $container[self::FACADE_TOUCH] = function (Container $container) {
-            return new CmsToTouchBridge($container->getLocator()->touch()->facade());
+            return new CmsToTouchFacadeBridge($container->getLocator()->touch()->facade());
         };
     }
 

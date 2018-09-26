@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 
-class CmsToGlossaryBridge implements CmsToGlossaryInterface
+class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
