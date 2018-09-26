@@ -14,8 +14,8 @@ use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
+use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToEventFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\ShoppingListEvents;
@@ -73,12 +73,12 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     /**
      * @var \Spryker\Zed\ShoppingList\Business\Model\ShoppingListReaderInterface
      */
-    private $shoppingListReader;
+    protected $shoppingListReader;
 
     /**
      * @var \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface
      */
-    private $pluginExecutor;
+    protected $pluginExecutor;
 
     /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
