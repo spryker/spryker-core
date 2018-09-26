@@ -15,6 +15,7 @@ use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockGlossaryKeyMappingTableMap;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping;
 use Spryker\Shared\CmsBlock\CmsBlockConfig;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockMappingAmbiguousException;
+use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException;
 use Spryker\Zed\CmsBlock\Business\Exception\MissingCmsBlockGlossaryKeyMapping;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryInterface;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchInterface;
@@ -143,14 +144,21 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     /**
      * @param int $idCmsBlock
      *
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException
+     *
      * @return bool
      */
     protected function isCmsBlockActive(int $idCmsBlock): bool
     {
-        return $this->cmsBlockQueryContainer
+        $cmsBlock = $this->cmsBlockQueryContainer
             ->queryCmsBlockById($idCmsBlock)
-            ->findOne()
-            ->getIsActive();
+            ->findOne();
+
+        if ($cmsBlock) {
+            return $cmsBlock->isActive();
+        }
+
+        throw new CmsBlockNotFoundException('CMS block not found');
     }
 
     /**
