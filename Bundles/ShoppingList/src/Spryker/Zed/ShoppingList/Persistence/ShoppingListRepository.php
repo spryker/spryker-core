@@ -487,7 +487,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return int[]
      */
-    public function getBlacklistedShoppingListsIdsByIdCompanyUser(int $idCompanyUser): array
+    public function getBlacklistedShoppingListIdsByIdCompanyUser(int $idCompanyUser): array
     {
         return $this->getFactory()
             ->createShoppingListCompanyBusinessUnitBlacklistPropelQuery()

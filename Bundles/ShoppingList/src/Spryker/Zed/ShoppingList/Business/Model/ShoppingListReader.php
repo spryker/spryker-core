@@ -230,7 +230,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
         $companyUserOwnShoppingListIds = $this->findCompanyUserShoppingListIds($companyUserTransfer);
         $companyBusinessUnitSharedShoppingListIds = $this->shoppingListRepository->findCompanyBusinessUnitSharedShoppingListsIds($companyUserTransfer->getFkCompanyBusinessUnit());
-        $companyBusinessUnitBlacklistedShoppingListIds = $this->shoppingListRepository->getBlacklistedShoppingListsIdsByIdCompanyUser($companyUserTransfer->getIdCompanyUser());
+        $companyBusinessUnitBlacklistedShoppingListIds = $this->shoppingListRepository->getBlacklistedShoppingListIdsByIdCompanyUser($companyUserTransfer->getIdCompanyUser());
         $companyBusinessUnitSharedShoppingListIds = array_diff($companyBusinessUnitSharedShoppingListIds, $companyBusinessUnitBlacklistedShoppingListIds);
 
         $companyUserPermissionCollectionTransfer = $this->addReadPermissionToPermissionCollectionTransfer(
@@ -250,7 +250,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
             $companyUserTransfer->getFkCompanyBusinessUnit(),
             ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS
         );
-        $companyBusinessUnitBlacklistedShoppingListIds = $this->shoppingListRepository->getBlacklistedShoppingListsIdsByIdCompanyUser($companyUserTransfer->getIdCompanyUser());
+        $companyBusinessUnitBlacklistedShoppingListIds = $this->shoppingListRepository->getBlacklistedShoppingListIdsByIdCompanyUser($companyUserTransfer->getIdCompanyUser());
         $companyBusinessUnitSharedShoppingListIds = array_diff($companyBusinessUnitSharedShoppingListIds, $companyBusinessUnitBlacklistedShoppingListIds);
 
         $companyUserPermissionCollectionTransfer = $this->addWritePermissionToPermissionCollectionTransfer(
@@ -404,7 +404,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
      */
     protected function filterBlacklistedShoppingLists(ShoppingListCollectionTransfer $businessUnitSharedShoppingLists, int $idCompanyUser): ShoppingListCollectionTransfer
     {
-        $blacklistedShoppingListsIds = $this->shoppingListRepository->getBlacklistedShoppingListsIdsByIdCompanyUser($idCompanyUser);
+        $blacklistedShoppingListsIds = $this->shoppingListRepository->getBlacklistedShoppingListIdsByIdCompanyUser($idCompanyUser);
         foreach ($businessUnitSharedShoppingLists->getShoppingLists() as $index => $shoppingListTransfer) {
             if (in_array($shoppingListTransfer->getIdShoppingList(), $blacklistedShoppingListsIds, true)) {
                 $businessUnitSharedShoppingLists->getShoppingLists()->offsetUnset($index);

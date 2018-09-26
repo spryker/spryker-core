@@ -185,5 +185,5 @@ interface ShoppingListRepositoryInterface
      *
      * @return int[]
      */
-    public function getBlacklistedShoppingListsIdsByIdCompanyUser(int $idCompanyUser): array;
+    public function getBlacklistedShoppingListIdsByIdCompanyUser(int $idCompanyUser): array;
 }
