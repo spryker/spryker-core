@@ -17,7 +17,7 @@ use Spryker\Zed\SharedCartDataImport\Business\DataSet\SharedCartDataSetInterface
 class QuotePermissionGroupNameToIdQuotePermissionGroupStep implements DataImportStepInterface
 {
     /**
-     * @var array
+     * @var int[]
      */
     protected $idPermissionGroupCache = [];
 

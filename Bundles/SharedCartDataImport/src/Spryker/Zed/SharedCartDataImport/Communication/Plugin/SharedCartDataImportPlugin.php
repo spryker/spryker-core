@@ -21,6 +21,11 @@ use Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig;
 class SharedCartDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *  - Call shared cart import.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -31,6 +36,10 @@ class SharedCartDataImportPlugin extends AbstractPlugin implements DataImportPlu
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getImportType(): string

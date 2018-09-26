@@ -1,4 +1,6 @@
 namespace: MultiCartDataImport
+include:
+    - tests/SprykerTest/Zed/MultiCartDataImport
 actor: Tester
 paths:
     tests: tests

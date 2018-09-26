@@ -20,6 +20,11 @@ use Spryker\Zed\MultiCartDataImport\MultiCartDataImportConfig;
 class MultiCartDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *  - Call quote import.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -30,6 +35,10 @@ class MultiCartDataImportPlugin extends AbstractPlugin implements DataImportPlug
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getImportType(): string

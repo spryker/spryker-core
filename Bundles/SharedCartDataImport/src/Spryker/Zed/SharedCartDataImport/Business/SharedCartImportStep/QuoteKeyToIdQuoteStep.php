@@ -17,7 +17,7 @@ use Spryker\Zed\SharedCartDataImport\Business\DataSet\SharedCartDataSetInterface
 class QuoteKeyToIdQuoteStep implements DataImportStepInterface
 {
     /**
-     * @var array
+     * @var int[]
      */
     protected $idQuoteCache = [];
 
@@ -28,7 +28,7 @@ class QuoteKeyToIdQuoteStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $quoteKey = $dataSet[SharedCartDataSetInterface::KEY_QUOTE];
         if (!isset($this->idQuoteCache[$quoteKey])) {

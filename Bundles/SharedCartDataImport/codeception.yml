@@ -1,4 +1,6 @@
 namespace: SharedCartDataImport
+include:
+    - tests/SprykerTest/Zed/SharedCartDataImport
 actor: Tester
 paths:
     tests: tests

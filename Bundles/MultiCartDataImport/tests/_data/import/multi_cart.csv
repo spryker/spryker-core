@@ -1,0 +1,2 @@
+key,name,customer_reference,store,is_default,quote_data
+quote-test,Test Cart,DE-test,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
