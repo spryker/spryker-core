@@ -37,7 +37,8 @@
     </transfer>
 
     <transfer name="ClassInformation">
-        <property name="name" type="string" />
+        <property name="fullyQualifiedClassName" type="string" />
+        <property name="className" type="string" />
         <property name="methods" type="MethodInformation[]" singular="method" />
     </transfer>
 

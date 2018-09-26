@@ -57,7 +57,7 @@ class FormDataNormalizer implements FormDataNormalizerInterface
             }
 
             if ($value instanceof ClassInformationTransfer) {
-                $value = $value->getName();
+                $value = $value->getFullyQualifiedClassName();
             }
 
             if ($value instanceof ArgumentCollectionTransfer) {
