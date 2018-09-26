@@ -19,7 +19,7 @@ class CleanUpItemsPreReloadPlugin extends AbstractPlugin implements PreReloadIte
 {
     /**
      * {@inheritdoc}
-     * - Clean ups quote items key group prefix.
+     * - Cleans up quote items key group prefix.
      *
      * @api
      *
