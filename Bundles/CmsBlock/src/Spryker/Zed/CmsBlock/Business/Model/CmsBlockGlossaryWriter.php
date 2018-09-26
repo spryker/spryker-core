@@ -154,11 +154,11 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
             ->queryCmsBlockById($idCmsBlock)
             ->findOne();
 
-        if ($cmsBlock) {
-            return $cmsBlock->isActive();
+        if (!$cmsBlock) {
+            throw new CmsBlockNotFoundException(sprintf('not found for id %s', $idCmsBlock));
         }
 
-        throw new CmsBlockNotFoundException('CMS block not found');
+        return $cmsBlock->isActive();
     }
 
     /**
