@@ -125,7 +125,7 @@ class CmsBlockTemplateManager implements CmsBlockTemplateManagerInterface
     /**
      * @param int $idCmsBlockTemplate
      *
-     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate|null
      */
     public function getTemplateById($idCmsBlockTemplate)
     {

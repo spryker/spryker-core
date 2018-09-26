@@ -10,8 +10,8 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Address;
 use Generated\Shared\Transfer\RestAddressAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface;
-use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorsInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -34,14 +34,14 @@ class AddressWriter implements AddressWriterInterface
     protected $addressesResourceMapper;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface
      */
-    protected $restApiErrors;
+    protected $restApiError;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorsInterface
+     * @var \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface
      */
-    protected $restApiValidators;
+    protected $restApiValidator;
 
     /**
      * @var \Spryker\Glue\CustomersRestApi\Processor\Address\AddressReaderInterface
@@ -53,23 +53,23 @@ class AddressWriter implements AddressWriterInterface
      * @param \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface $customerClient
      * @param \Spryker\Glue\CustomersRestApi\Processor\Address\AddressReaderInterface $addressReader
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\AddressResourceMapperInterface $addressesResourceMapper
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorsInterface $restApiErrors
-     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorsInterface $restApiValidators
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface $restApiError
+     * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface $restApiValidator
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CustomersRestApiToCustomerClientInterface $customerClient,
         AddressReaderInterface $addressReader,
         AddressResourceMapperInterface $addressesResourceMapper,
-        RestApiErrorsInterface $restApiErrors,
-        RestApiValidatorsInterface $restApiValidators
+        RestApiErrorInterface $restApiError,
+        RestApiValidatorInterface $restApiValidator
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->customerClient = $customerClient;
         $this->addressReader = $addressReader;
         $this->addressesResourceMapper = $addressesResourceMapper;
-        $this->restApiErrors = $restApiErrors;
-        $this->restApiValidators = $restApiValidators;
+        $this->restApiError = $restApiError;
+        $this->restApiValidator = $restApiValidator;
     }
 
     /**
@@ -82,8 +82,8 @@ class AddressWriter implements AddressWriterInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        if (!$this->restApiValidators->isSameCustomerReference($restRequest)) {
-            return $this->restApiErrors->addCustomerUnauthorizedError($restResponse);
+        if (!$this->restApiValidator->isSameCustomerReference($restRequest)) {
+            return $this->restApiError->addCustomerUnauthorizedError($restResponse);
         }
 
         $addressTransfer = $this->addressesResourceMapper->mapRestAddressAttributesTransferToAddressTransfer($addressAttributesTransfer);
@@ -93,7 +93,7 @@ class AddressWriter implements AddressWriterInterface
         $addressesTransfer = $customerTransfer->getAddresses();
 
         if (!$addressesTransfer->getAddresses()->count()) {
-            return $this->restApiErrors->addAddressNotSavedError($restResponse);
+            return $this->restApiError->addAddressNotSavedError($restResponse);
         }
 
         $restResource = $this
@@ -119,17 +119,17 @@ class AddressWriter implements AddressWriterInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$restRequest->getResource()->getId()) {
-            return $this->restApiErrors->addAddressUuidMissingError($restResponse);
+            return $this->restApiError->addAddressUuidMissingError($restResponse);
         }
 
-        if (!$this->restApiValidators->isSameCustomerReference($restRequest)) {
-            return $this->restApiErrors->addCustomerUnauthorizedError($restResponse);
+        if (!$this->restApiValidator->isSameCustomerReference($restRequest)) {
+            return $this->restApiError->addCustomerUnauthorizedError($restResponse);
         }
 
         $addressTransfer = $this->addressReader->findAddressByUuid($restRequest, $restRequest->getResource()->getId());
 
         if (!$addressTransfer) {
-            return $this->restApiErrors->addAddressNotFoundError($restResponse);
+            return $this->restApiError->addAddressNotFoundError($restResponse);
         }
 
         $addressTransfer->fromArray($addressAttributesTransfer->modifiedToArray(), true);
@@ -165,17 +165,17 @@ class AddressWriter implements AddressWriterInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         if (!$restRequest->getResource()->getId()) {
-            return $this->restApiErrors->addAddressUuidMissingError($restResponse);
+            return $this->restApiError->addAddressUuidMissingError($restResponse);
         }
 
-        if (!$this->restApiValidators->isSameCustomerReference($restRequest)) {
-            return $this->restApiErrors->addCustomerUnauthorizedError($restResponse);
+        if (!$this->restApiValidator->isSameCustomerReference($restRequest)) {
+            return $this->restApiError->addCustomerUnauthorizedError($restResponse);
         }
 
         $addressTransfer = $this->addressReader->findAddressByUuid($restRequest, $restRequest->getResource()->getId());
 
         if (!$addressTransfer) {
-            return $this->restApiErrors->addAddressNotFoundError($restResponse);
+            return $this->restApiError->addAddressNotFoundError($restResponse);
         }
 
         $this->customerClient->deleteAddress($addressTransfer);

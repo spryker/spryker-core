@@ -940,7 +940,7 @@ class CustomerFacadeTest extends Unit
     public function testFindCustomerByReference()
     {
         // Assign
-        $customerTransfer = $this->createTestCustomer();
+        $customerTransfer = $this->tester->haveCustomer();
 
         // Act
         $customerResponseTransfer = $this->customerFacade->findCustomerByReference($customerTransfer->getCustomerReference());

@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface RestApiValidatorsInterface
+interface RestApiValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer

@@ -45,7 +45,7 @@ class ComposerJsonValidatorConsole extends AbstractCoreModuleAwareConsole
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $modulesToValidate = $this->getModulesToCheckForViolations($input);
+        $modulesToValidate = $this->getModulesToExecute($input);
 
         if (!$this->canRun($modulesToValidate)) {
             return static::CODE_ERROR;

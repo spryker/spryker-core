@@ -9,7 +9,7 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Validation;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-interface RestApiErrorsInterface
+interface RestApiErrorInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse

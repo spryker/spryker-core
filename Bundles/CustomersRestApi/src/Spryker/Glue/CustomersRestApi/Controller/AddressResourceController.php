@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\CustomersRestApi\Controller;
 
-use Generated\Shared\Transfer\RestCustomersAttributesTransfer;
+use Generated\Shared\Transfer\RestAddressAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -15,7 +15,7 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\CustomersRestApi\CustomersRestApiFactory getFactory()
  */
-class CustomersResourceController extends AbstractController
+class AddressResourceController extends AbstractController
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -25,34 +25,34 @@ class CustomersResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCustomerReader()
-            ->getCustomerByCustomerReference($restRequest);
+            ->createAddressReader()
+            ->getAddressesByAddressUuid($restRequest);
     }
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestAddressAttributesTransfer $restAddressAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function postAction(RestRequestInterface $restRequest, RestCustomersAttributesTransfer $restCustomersAttributesTransfer): RestResponseInterface
+    public function postAction(RestRequestInterface $restRequest, RestAddressAttributesTransfer $restAddressAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCustomerWriter()
-            ->registerCustomer($restCustomersAttributesTransfer);
+            ->createAddressWriter()
+            ->createAddress($restRequest, $restAddressAttributesTransfer);
     }
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\RestAddressAttributesTransfer $restAddressAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function patchAction(RestRequestInterface $restRequest, RestCustomersAttributesTransfer $customerTransfer): RestResponseInterface
+    public function patchAction(RestRequestInterface $restRequest, RestAddressAttributesTransfer $restAddressAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCustomerWriter()
-            ->updateCustomer($restRequest, $customerTransfer);
+            ->createAddressWriter()
+            ->updateAddress($restRequest, $restAddressAttributesTransfer);
     }
 
     /**
@@ -63,7 +63,7 @@ class CustomersResourceController extends AbstractController
     public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createCustomerWriter()
-            ->anonymizeCustomer($restRequest);
+            ->createAddressWriter()
+            ->deleteAddress($restRequest);
     }
 }

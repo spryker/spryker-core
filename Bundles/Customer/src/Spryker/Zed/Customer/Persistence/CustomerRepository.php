@@ -54,10 +54,9 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
             return null;
         }
 
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->fromArray($customerEntity->toArray(), true);
-
-        return $customerTransfer;
+        return $this->getFactory()
+            ->createCustomerMapper()
+            ->mapCustomerEntityToCustomer($customerEntity->toArray());
     }
 
     /**
