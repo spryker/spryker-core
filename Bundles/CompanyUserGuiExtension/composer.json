@@ -10,6 +10,9 @@
     "spryker/symfony": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/symfony": "If you want to use Step handler plugin."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -24,8 +27,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/symfony": "ADD SUGGEST DESCRIPTION"
   }
 }
