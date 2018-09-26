@@ -25,19 +25,19 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class AvailabilityQueryContainer extends AbstractQueryContainer implements AvailabilityQueryContainerInterface
 {
-    const SUM_QUANTITY = 'sumQuantity';
-    const ABSTRACT_SKU = 'abstractSku';
-    const AVAILABILITY_QUANTITY = 'availabilityQuantity';
-    const STOCK_QUANTITY = 'stockQuantity';
-    const RESERVATION_QUANTITY = 'reservationQuantity';
-    const PRODUCT_NAME = 'productName';
-    const CONCRETE_SKU = 'concreteSku';
-    const CONCRETE_AVAILABILITY = 'concreteAvailability';
-    const CONCRETE_NAME = 'concreteName';
-    const ID_PRODUCT = 'idProduct';
-    const GROUP_CONCAT = "GROUP_CONCAT";
-    const CONCAT = "CONCAT";
-    const CONCRETE_NEVER_OUT_OF_STOCK_SET = 'concreteNeverOutOfStockSet';
+    public const SUM_QUANTITY = 'sumQuantity';
+    public const ABSTRACT_SKU = 'abstractSku';
+    public const AVAILABILITY_QUANTITY = 'availabilityQuantity';
+    public const STOCK_QUANTITY = 'stockQuantity';
+    public const RESERVATION_QUANTITY = 'reservationQuantity';
+    public const PRODUCT_NAME = 'productName';
+    public const CONCRETE_SKU = 'concreteSku';
+    public const CONCRETE_AVAILABILITY = 'concreteAvailability';
+    public const CONCRETE_NAME = 'concreteName';
+    public const ID_PRODUCT = 'idProduct';
+    public const GROUP_CONCAT = "GROUP_CONCAT";
+    public const CONCAT = "CONCAT";
+    public const CONCRETE_NEVER_OUT_OF_STOCK_SET = 'concreteNeverOutOfStockSet';
 
     /**
      * @api

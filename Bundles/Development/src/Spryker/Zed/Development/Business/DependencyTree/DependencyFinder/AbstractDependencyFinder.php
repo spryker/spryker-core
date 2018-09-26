@@ -14,10 +14,10 @@ use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractDependencyFinder
 {
-    const DEPENDS_LAYER = 'dependsLayer';
-    const LAYER_BUSINESS = 'Business';
-    const LAYER_PERSISTENCE = 'Persistence';
-    const LAYER_COMMUNICATION = 'Communication';
+    public const DEPENDS_LAYER = 'dependsLayer';
+    public const LAYER_BUSINESS = 'Business';
+    public const LAYER_PERSISTENCE = 'Persistence';
+    public const LAYER_COMMUNICATION = 'Communication';
 
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\AbstractDependencyTree

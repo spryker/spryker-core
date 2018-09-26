@@ -11,7 +11,7 @@ use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class ClientLocatorMatcher implements LocatorMatcherInterface
 {
-    const METHOD_PREFIX = 'client';
+    public const METHOD_PREFIX = 'client';
 
     /**
      * @api

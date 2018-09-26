@@ -14,10 +14,10 @@ use Spryker\Service\UtilText\UtilTextService;
  */
 class RequestDataCollector extends AbstractDataCollector
 {
-    const TYPE = 'request';
-    const FIELD_REQUEST_ID = 'request_id';
-    const FIELD_MICROTIME = 'microtime';
-    const FIELD_REQUEST_PARAMS = 'request_params';
+    public const TYPE = 'request';
+    public const FIELD_REQUEST_ID = 'request_id';
+    public const FIELD_MICROTIME = 'microtime';
+    public const FIELD_REQUEST_PARAMS = 'request_params';
 
     /**
      * @var string

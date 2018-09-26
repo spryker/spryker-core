@@ -27,7 +27,7 @@ use Spryker\Zed\Auth\Business\AuthFacade;
  */
 class AuthFacadeTest extends Unit
 {
-    const TEST_MAIL = 'username@example.com';
+    public const TEST_MAIL = 'username@example.com';
 
     /**
      * @var \Spryker\Zed\Auth\Business\AuthFacade

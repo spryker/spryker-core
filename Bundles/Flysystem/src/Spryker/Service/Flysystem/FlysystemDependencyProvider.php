@@ -12,8 +12,8 @@ use Spryker\Service\Kernel\Container;
 
 class FlysystemDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PLUGIN_COLLECTION_FLYSYSTEM = 'flysystem plugin collection';
-    const PLUGIN_COLLECTION_FILESYSTEM_BUILDER = 'filesystem builder plugin collection';
+    public const PLUGIN_COLLECTION_FLYSYSTEM = 'flysystem plugin collection';
+    public const PLUGIN_COLLECTION_FILESYSTEM_BUILDER = 'filesystem builder plugin collection';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container

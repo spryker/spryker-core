@@ -18,49 +18,49 @@ interface SearchConstants
      *
      * @api
      */
-    const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
+    public const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 
     /**
      * Elasticsearch connection host name. (Required)
      *
      * @api
      */
-    const ELASTICA_PARAMETER__HOST = 'ELASTICA_PARAMETER__HOST';
+    public const ELASTICA_PARAMETER__HOST = 'ELASTICA_PARAMETER__HOST';
 
     /**
      * Elasticsearch connection port number. (Required)
      *
      * @api
      */
-    const ELASTICA_PARAMETER__PORT = 'ELASTICA_PARAMETER__PORT';
+    public const ELASTICA_PARAMETER__PORT = 'ELASTICA_PARAMETER__PORT';
 
     /**
      * Elasticsearch connection transport name (i.e. "http"). (Required)
      *
      * @api
      */
-    const ELASTICA_PARAMETER__TRANSPORT = 'ELASTICA_PARAMETER__TRANSPORT';
+    public const ELASTICA_PARAMETER__TRANSPORT = 'ELASTICA_PARAMETER__TRANSPORT';
 
     /**
      * Elasticsearch connection index name. (Required)
      *
      * @api
      */
-    const ELASTICA_PARAMETER__INDEX_NAME = 'ELASTICA_PARAMETER__INDEX_NAME';
+    public const ELASTICA_PARAMETER__INDEX_NAME = 'ELASTICA_PARAMETER__INDEX_NAME';
 
     /**
      * Elasticsearch connection document type. (Required)
      *
      * @api
      */
-    const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
+    public const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
 
     /**
      * Elasticsearch connection authentication header parameters. (Optional)
      *
      * @api
      */
-    const ELASTICA_PARAMETER__AUTH_HEADER = 'ELASTICA_PARAMETER__AUTH_HEADER';
+    public const ELASTICA_PARAMETER__AUTH_HEADER = 'ELASTICA_PARAMETER__AUTH_HEADER';
 
     /**
      * Specification:
@@ -68,7 +68,7 @@ interface SearchConstants
      *
      * @api
      */
-    const ELASTICA_PARAMETER__EXTRA = 'ELASTICA_PARAMETER__EXTRA';
+    public const ELASTICA_PARAMETER__EXTRA = 'ELASTICA_PARAMETER__EXTRA';
 
     /**
      * Specification:
@@ -76,7 +76,7 @@ interface SearchConstants
      *
      * @api
      */
-    const SEARCH_INDEX_NAME_SUFFIX = 'SEARCH_INDEX_NAME_SUFFIX';
+    public const SEARCH_INDEX_NAME_SUFFIX = 'SEARCH_INDEX_NAME_SUFFIX';
 
     /**
      * Specification:
@@ -86,7 +86,7 @@ interface SearchConstants
      *
      * @api
      */
-    const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
+    public const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
 
     /**
      * Specification:
@@ -94,5 +94,5 @@ interface SearchConstants
      *
      * @api
      */
-    const DIRECTORY_PERMISSION = 'SEARCH:DIRECTORY_PERMISSION';
+    public const DIRECTORY_PERMISSION = 'SEARCH:DIRECTORY_PERMISSION';
 }

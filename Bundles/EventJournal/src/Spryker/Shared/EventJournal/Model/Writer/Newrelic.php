@@ -17,7 +17,7 @@ class Newrelic extends AbstractWriter
 {
     use NewRelicApiTrait;
 
-    const TYPE = 'newrelic';
+    public const TYPE = 'newrelic';
 
     /**
      * @param \Spryker\Shared\EventJournal\Model\EventInterface $event

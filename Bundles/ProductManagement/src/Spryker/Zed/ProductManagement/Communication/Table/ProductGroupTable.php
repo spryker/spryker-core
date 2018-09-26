@@ -21,12 +21,12 @@ use Spryker\Zed\ProductManagement\Communication\Controller\ViewController;
 
 class ProductGroupTable extends AbstractProductTable
 {
-    const COL_ID_PRODUCT_GROUP = 'id_product_group';
-    const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-    const COL_NAME = 'name';
-    const COL_SKU = 'sku';
-    const COL_STATUS = 'status';
-    const COL_ACTIONS = 'actions';
+    public const COL_ID_PRODUCT_GROUP = 'id_product_group';
+    public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const COL_NAME = 'name';
+    public const COL_SKU = 'sku';
+    public const COL_STATUS = 'status';
+    public const COL_ACTIONS = 'actions';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface

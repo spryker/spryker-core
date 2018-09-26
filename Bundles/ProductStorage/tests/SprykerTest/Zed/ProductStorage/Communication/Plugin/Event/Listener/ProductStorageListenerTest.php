@@ -48,8 +48,8 @@ use SprykerTest\Zed\ProductStorage\ProductStorageConfigMock;
  */
 class ProductStorageListenerTest extends Unit
 {
-    const NUMBER_OF_STORES = 3;
-    const NUMBER_OF_LOCALES = 2;
+    public const NUMBER_OF_STORES = 3;
+    public const NUMBER_OF_LOCALES = 2;
 
     /**
      * @var \SprykerTest\Zed\ProductStorage\ProductStorageCommunicationTester

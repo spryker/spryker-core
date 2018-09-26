@@ -14,8 +14,8 @@ use Spryker\Zed\Propel\Business\Exception\UnSupportedDatabaseEngineException;
 
 class PropelConfig extends AbstractBundleConfig
 {
-    const DB_ENGINE_MYSQL = 'mysql';
-    const DB_ENGINE_PGSQL = 'pgsql';
+    public const DB_ENGINE_MYSQL = 'mysql';
+    public const DB_ENGINE_PGSQL = 'pgsql';
 
     public const POSTGRES_INDEX_NAME_MAX_LENGTH = 63;
 

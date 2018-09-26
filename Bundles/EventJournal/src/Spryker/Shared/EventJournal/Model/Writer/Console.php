@@ -14,7 +14,7 @@ use Spryker\Shared\EventJournal\Model\EventInterface;
  */
 class Console extends AbstractWriter
 {
-    const TYPE = 'console';
+    public const TYPE = 'console';
 
     /**
      * @param \Spryker\Shared\EventJournal\Model\EventInterface $event

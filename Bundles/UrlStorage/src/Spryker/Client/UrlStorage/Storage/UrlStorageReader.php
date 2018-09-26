@@ -14,7 +14,7 @@ use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServ
 
 class UrlStorageReader implements UrlStorageReaderInterface
 {
-    const URL = 'url';
+    public const URL = 'url';
 
     /**
      * @var \Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface

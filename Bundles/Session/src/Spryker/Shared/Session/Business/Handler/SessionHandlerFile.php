@@ -12,9 +12,9 @@ use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 
 class SessionHandlerFile implements SessionHandlerInterface
 {
-    const METRIC_SESSION_DELETE_TIME = 'File/Session_delete_time';
-    const METRIC_SESSION_WRITE_TIME = 'File/Session_write_time';
-    const METRIC_SESSION_READ_TIME = 'File/Session_read_time';
+    public const METRIC_SESSION_DELETE_TIME = 'File/Session_delete_time';
+    public const METRIC_SESSION_WRITE_TIME = 'File/Session_write_time';
+    public const METRIC_SESSION_READ_TIME = 'File/Session_read_time';
 
     /**
      * @var string
