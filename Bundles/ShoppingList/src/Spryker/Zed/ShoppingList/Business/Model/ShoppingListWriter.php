@@ -233,6 +233,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     {
         $this->shoppingListItemOperation->deleteShoppingListItems($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListCompanyUsers($shoppingListTransfer);
+        $this->shoppingListEntityManager->deleteCompanyBusinessUnitBlacklistByShoppingListId($shoppingListTransfer->getIdShoppingList());
         $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnits($shoppingListTransfer);
         $this->shoppingListEntityManager->deleteShoppingListByName($shoppingListTransfer);
 

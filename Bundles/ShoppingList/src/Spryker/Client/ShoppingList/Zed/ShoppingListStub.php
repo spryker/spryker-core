@@ -9,6 +9,7 @@ namespace Spryker\Client\ShoppingList\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListDismissRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
@@ -310,5 +311,21 @@ class ShoppingListStub implements ShoppingListStubInterface
     public function getLastResponseErrorMessages(): array
     {
         return $this->zedRequestClient->getLastResponseErrorMessages();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListDismissRequestTransfer $shoppingListDismissRequest
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function dismissShoppingListSharing(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ShoppingListShareResponseTransfer $shoppingListShareResponseTransfer */
+        $shoppingListShareResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/dismiss-shopping-list-sharing',
+            $shoppingListDismissRequest
+        );
+
+        return $shoppingListShareResponseTransfer;
     }
 }

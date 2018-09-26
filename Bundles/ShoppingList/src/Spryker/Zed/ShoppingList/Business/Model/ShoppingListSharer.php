@@ -232,6 +232,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         }
 
         if (!$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()) {
+            $this->shoppingListEntityManager->deleteCompanyBusinessUnitBlacklistByBusinessUnitId($shoppingListCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit());
             $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitTransfer);
             return;
         }
