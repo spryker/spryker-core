@@ -21,9 +21,9 @@ use Spryker\Service\UtilEncoding\UtilEncodingService;
  */
 class UtilEncodingServiceTest extends Unit
 {
-    const JSON_ENCODED_VALUE = '{"1":"one","2":"two"}';
+    public const JSON_ENCODED_VALUE = '{"1":"one","2":"two"}';
 
-    const JSON_ENCODED_VALUE_PRETTY_PRINT = <<<JSON
+    public const JSON_ENCODED_VALUE_PRETTY_PRINT = <<<JSON
 {
     "1": "one",
     "2": "two"

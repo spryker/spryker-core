@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class InvoiceSubForm extends AbstractSubForm
 {
-    const PAYMENT_METHOD = 'invoice';
+    public const PAYMENT_METHOD = 'invoice';
 
     /**
      * @return string

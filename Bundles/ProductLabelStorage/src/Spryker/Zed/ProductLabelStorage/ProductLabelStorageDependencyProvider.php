@@ -15,9 +15,9 @@ use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorag
 
 class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
-    const QUERY_CONTAINER_PRODUCT_LABEL = 'QUERY_CONTAINER_PRODUCT_LABEL';
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    public const QUERY_CONTAINER_PRODUCT_LABEL = 'QUERY_CONTAINER_PRODUCT_LABEL';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

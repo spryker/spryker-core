@@ -26,9 +26,9 @@ abstract class SessionFactory
 {
     use NewRelicApiTrait;
 
-    const BUCKET_NAME_POSTFIX = 'sessions';
-    const PASSWORD = 'password';
-    const USER = 'user';
+    public const BUCKET_NAME_POSTFIX = 'sessions';
+    public const PASSWORD = 'password';
+    public const USER = 'user';
 
     /**
      * @param string $savePath e.g. '10.10.10.1:8091;10.10.10.2:8091'

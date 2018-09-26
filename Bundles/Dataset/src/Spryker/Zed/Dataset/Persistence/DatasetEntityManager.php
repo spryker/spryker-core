@@ -218,7 +218,10 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
      */
     protected function findDatasetById(int $idDataset): SpyDataset
     {
-        return $this->getFactory()->createDatasetQuery()->filterByIdDataset($idDataset)->findOne();
+        /** @var \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity */
+        $datasetEntity = $this->getFactory()->createDatasetQuery()->filterByIdDataset($idDataset)->findOne();
+
+        return $datasetEntity;
     }
 
     /**

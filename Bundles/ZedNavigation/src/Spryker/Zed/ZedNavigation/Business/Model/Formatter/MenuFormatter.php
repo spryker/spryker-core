@@ -14,22 +14,22 @@ use Spryker\Zed\ZedNavigation\Business\Model\Validator\UrlUniqueValidatorInterfa
 
 class MenuFormatter implements MenuFormatterInterface
 {
-    const VISIBLE = 'visible';
-    const URI = 'uri';
-    const ID = 'id';
-    const ATTRIBUTES = 'attributes';
-    const LABEL = 'label';
-    const PAGES = 'pages';
-    const CONTROLLER = 'controller';
-    const INDEX = 'index';
-    const ACTION = 'action';
-    const BUNDLE = 'bundle';
-    const CHILDREN = 'children';
-    const TITLE = 'title';
-    const ICON = 'icon';
-    const SHORTCUT = 'shortcut';
-    const IS_ACTIVE = 'is_active';
-    const CHILD_IS_ACTIVE = 'child_is_active';
+    public const VISIBLE = 'visible';
+    public const URI = 'uri';
+    public const ID = 'id';
+    public const ATTRIBUTES = 'attributes';
+    public const LABEL = 'label';
+    public const PAGES = 'pages';
+    public const CONTROLLER = 'controller';
+    public const INDEX = 'index';
+    public const ACTION = 'action';
+    public const BUNDLE = 'bundle';
+    public const CHILDREN = 'children';
+    public const TITLE = 'title';
+    public const ICON = 'icon';
+    public const SHORTCUT = 'shortcut';
+    public const IS_ACTIVE = 'is_active';
+    public const CHILD_IS_ACTIVE = 'child_is_active';
 
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Validator\UrlUniqueValidatorInterface

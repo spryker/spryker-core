@@ -198,11 +198,13 @@ class Finder implements FinderInterface
     }
 
     /**
+     * @deprecated Not in use anymore.
+     *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem|null
      */
     protected function countOrderItemsForSku(array $states, $sku, $returnTest = true)
     {
@@ -212,8 +214,6 @@ class Finder implements FinderInterface
     }
 
     /**
-     * FIXME core-121 refactor method
-     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return array

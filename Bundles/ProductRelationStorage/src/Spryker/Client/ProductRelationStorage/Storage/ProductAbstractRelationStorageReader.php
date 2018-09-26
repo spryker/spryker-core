@@ -55,7 +55,7 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param int|string $idProductAbstract
      *
      * @return string
      */

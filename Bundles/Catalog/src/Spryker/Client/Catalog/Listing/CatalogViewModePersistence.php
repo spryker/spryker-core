@@ -13,10 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CatalogViewModePersistence implements CatalogViewModePersistenceInterface
 {
-    const COOKIE_IDENTIFIER = 'catalog-view-mode';
+    public const COOKIE_IDENTIFIER = 'catalog-view-mode';
 
-    const VIEW_MODE_GRID = 'grid';
-    const VIEW_MODE_LIST = 'list';
+    public const VIEW_MODE_GRID = 'grid';
+    public const VIEW_MODE_LIST = 'list';
 
     /**
      * @var string
