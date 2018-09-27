@@ -47,6 +47,10 @@ class WishlistsResourceMapper implements WishlistsResourceMapperInterface
     {
         $restWishlistsAttributesTransfer = (new RestWishlistsAttributesTransfer())->fromArray($wishlistTransfer->toArray(), true);
 
+        if ($restWishlistsAttributesTransfer->getNumberOfItems() === null) {
+            $restWishlistsAttributesTransfer->setNumberOfItems(0);
+        }
+
         $wishlistsResource = $this->restResourceBuilder->createRestResource(
             WishlistsRestApiConfig::RESOURCE_WISHLISTS,
             $wishlistTransfer->getUuid(),

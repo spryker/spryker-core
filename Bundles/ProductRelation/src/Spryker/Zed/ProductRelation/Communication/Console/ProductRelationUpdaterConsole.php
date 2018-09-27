@@ -16,8 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductRelationUpdaterConsole extends Console
 {
-    const COMMAND_NAME = 'product-relation:update';
-    const COMMAND_DESCRIPTION = 'Updates all active product relations';
+    public const COMMAND_NAME = 'product-relation:update';
+    public const COMMAND_DESCRIPTION = 'Updates all active product relations';
 
     /**
      * @return void

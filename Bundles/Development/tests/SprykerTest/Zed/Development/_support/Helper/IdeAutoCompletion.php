@@ -12,7 +12,7 @@ use Codeception\TestInterface;
 
 class IdeAutoCompletion extends Module
 {
-    const TEST_TARGET_DIRECTORY = '/tmp/development-ide-auto-completion-test/';
+    public const TEST_TARGET_DIRECTORY = '/tmp/development-ide-auto-completion-test/';
 
     /**
      * @param \Codeception\TestInterface $test

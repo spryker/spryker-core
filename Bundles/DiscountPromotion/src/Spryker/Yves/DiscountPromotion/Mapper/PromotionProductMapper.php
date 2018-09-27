@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PromotionProductMapper implements PromotionProductMapperInterface
 {
-    const URL_PARAM_VARIANT_ATTRIBUTES = 'attributes';
+    public const URL_PARAM_VARIANT_ATTRIBUTES = 'attributes';
 
     /**
      * @var \Spryker\Yves\DiscountPromotion\Dependency\Client\DiscountPromotionToProductInterface

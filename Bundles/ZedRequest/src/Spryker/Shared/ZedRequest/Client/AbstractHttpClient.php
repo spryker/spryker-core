@@ -28,46 +28,46 @@ use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
-    const META_TRANSFER_ERROR =
+    public const META_TRANSFER_ERROR =
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
-    const HOST_NAME_ERROR =
+    public const HOST_NAME_ERROR =
         'Incorrect HOST_ZED config, expected `%s`, got `%s`. Set the URLs in your Shared/config_default_%s.php or env specific config files.';
 
-    const HEADER_USER_AGENT = 'User-Agent';
-    const HEADER_HOST_YVES = 'X-Yves-Host';
-    const HEADER_INTERNAL_REQUEST = 'X-Internal-Request';
-    const HEADER_HOST_ZED = 'X-Zed-Host';
+    public const HEADER_USER_AGENT = 'User-Agent';
+    public const HEADER_HOST_YVES = 'X-Yves-Host';
+    public const HEADER_INTERNAL_REQUEST = 'X-Internal-Request';
+    public const HEADER_HOST_ZED = 'X-Zed-Host';
     protected const SERVER_HTTP_HOST = 'HTTP_HOST';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
      */
-    const EVENT_FIELD_TRANSFER_DATA = 'transfer_data';
+    public const EVENT_FIELD_TRANSFER_DATA = 'transfer_data';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
      */
-    const EVENT_FIELD_TRANSFER_CLASS = 'transfer_class';
+    public const EVENT_FIELD_TRANSFER_CLASS = 'transfer_class';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
      */
-    const EVENT_FIELD_PATH_INFO = 'path_info';
+    public const EVENT_FIELD_PATH_INFO = 'path_info';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
      */
-    const EVENT_FIELD_SUB_TYPE = 'sub_type';
+    public const EVENT_FIELD_SUB_TYPE = 'sub_type';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
      */
-    const EVENT_NAME_TRANSFER_REQUEST = 'transfer_request';
+    public const EVENT_NAME_TRANSFER_REQUEST = 'transfer_request';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
      */
-    const EVENT_NAME_TRANSFER_RESPONSE = 'transfer_response';
+    public const EVENT_NAME_TRANSFER_RESPONSE = 'transfer_response';
 
     /**
      * @var bool

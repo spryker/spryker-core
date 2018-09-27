@@ -13,10 +13,10 @@ use Spryker\Client\ZedRequest\Dependency\Client\ZedRequestToMessengerClientBridg
 
 class ZedRequestDependencyProvider extends AbstractDependencyProvider
 {
-    const SERVICE_NETWORK = 'util network service';
-    const SERVICE_TEXT = 'util text service';
-    const META_DATA_PROVIDER_PLUGINS = 'META_DATA_PROVIDER_PLUGINS';
-    const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+    public const SERVICE_NETWORK = 'util network service';
+    public const SERVICE_TEXT = 'util text service';
+    public const META_DATA_PROVIDER_PLUGINS = 'META_DATA_PROVIDER_PLUGINS';
+    public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

@@ -14,9 +14,9 @@ use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorTo
 
 class SalesProductConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
-    const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

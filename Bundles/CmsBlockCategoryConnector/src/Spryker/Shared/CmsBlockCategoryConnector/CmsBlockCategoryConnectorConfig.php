@@ -17,18 +17,18 @@ class CmsBlockCategoryConnectorConfig extends AbstractBundleConfig
      * - Used to define a storage key
      * - Used in Yves to provide an option name for client
      */
-    const OPTION_NAME = 'category';
+    public const OPTION_NAME = 'category';
 
     /**
      * Specification:
      * - Used to define a storage key
      * - Used in Yves to provide an option name for client
      */
-    const OPTION_POSITION_NAME = 'category_position';
+    public const OPTION_POSITION_NAME = 'category_position';
 
     /**
      * Specification:
      * - Full name for storage key for CMS Block to Category relation
      */
-    const RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR = CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK . '.' . self::OPTION_NAME;
+    public const RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR = CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK . '.' . self::OPTION_NAME;
 }

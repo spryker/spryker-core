@@ -19,7 +19,7 @@ class Prepayment extends AbstractMethod
     /**
      * @const Payment method code.
      */
-    const METHOD = RatepayConstants::PREPAYMENT;
+    public const METHOD = RatepayConstants::PREPAYMENT;
 
     /**
      * @return string
