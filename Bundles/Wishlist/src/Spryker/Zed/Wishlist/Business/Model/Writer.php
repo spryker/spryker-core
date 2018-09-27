@@ -273,13 +273,15 @@ class Writer implements WriterInterface
     {
         $this->assertWishlistItemUpdateRequest($wishlistItemTransfer);
 
-        if (!$this->preAddItemCheck($wishlistItemTransfer) || ($this->productFacade && !$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSku()))) {
+        $productConcreteTransfer = (new ProductConcreteTransfer())->setSku($wishlistItemTransfer->getSku());
+
+        if ($this->productFacade
+            && (!$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSku())
+                || !$this->productFacade->isProductConcreteActive($productConcreteTransfer))) {
             return $wishlistItemTransfer;
         }
 
-        $productConcreteTransfer = (new ProductConcreteTransfer())->setSku($wishlistItemTransfer->getSku());
-
-        if ($this->productFacade && !$this->productFacade->isProductConcreteActive($productConcreteTransfer)) {
+        if (!$this->preAddItemCheck($wishlistItemTransfer)) {
             return $wishlistItemTransfer;
         }
 
