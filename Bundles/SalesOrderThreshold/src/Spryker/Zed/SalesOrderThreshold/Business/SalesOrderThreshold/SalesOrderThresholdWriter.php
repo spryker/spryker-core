@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThreshold;
 
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\SalesOrderThreshold\Business\Strategy\Resolver\SalesOrderThresholdStrategyResolverInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdGlossaryKeyGeneratorInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTranslationWriterInterface;
@@ -16,6 +17,8 @@ use Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdRepositoryInt
 
 class SalesOrderThresholdWriter implements SalesOrderThresholdWriterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\SalesOrderThreshold\Business\Strategy\Resolver\SalesOrderThresholdStrategyResolverInterface
      */
@@ -121,6 +124,19 @@ class SalesOrderThresholdWriter implements SalesOrderThresholdWriterInterface
             return false;
         }
 
+        return $this->getTransactionHandler()->handleTransaction(function () use ($salesOrderThresholdTransfer) {
+            return $this->executeDeleteSalesOrderThresholdTransaction($salesOrderThresholdTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     *
+     * @return bool
+     */
+    protected function executeDeleteSalesOrderThresholdTransaction(
+        SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+    ): bool {
         $idDeleted = $this->salesOrderThresholdEntityManager
             ->deleteSalesOrderThreshold($salesOrderThresholdTransfer);
 

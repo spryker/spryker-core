@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipThreshold;
 
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation\MerchantRelationshipSalesOrderThresholdGlossaryKeyGeneratorInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation\MerchantRelationshipSalesOrderThresholdTranslationWriterInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Dependency\Facade\MerchantRelationshipSalesOrderThresholdToSalesOrderThresholdFacadeInterface;
@@ -16,6 +17,8 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRela
 
 class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresholdWriterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Dependency\Facade\MerchantRelationshipSalesOrderThresholdToSalesOrderThresholdFacadeInterface
      */
@@ -99,6 +102,19 @@ class MerchantRelationshipThresholdWriter implements MerchantRelationshipThresho
             return false;
         }
 
+        return $this->getTransactionHandler()->handleTransaction(function () use ($merchantRelationshipSalesOrderThresholdTransfer) {
+            $this->executeDeleteMerchantRelationshipSalesOrderThresholdTransaction($merchantRelationshipSalesOrderThresholdTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+     *
+     * @return bool
+     */
+    protected function executeDeleteMerchantRelationshipSalesOrderThresholdTransaction(
+        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+    ): bool {
         $idDeleted = $this->merchantRelationshipSalesOrderThresholdEntityManager
             ->deleteMerchantRelationshipSalesOrderThreshold($merchantRelationshipSalesOrderThresholdTransfer);
 

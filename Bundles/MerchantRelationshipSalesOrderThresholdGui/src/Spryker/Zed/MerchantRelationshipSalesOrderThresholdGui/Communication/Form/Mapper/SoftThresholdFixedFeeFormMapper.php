@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
 use Spryker\Shared\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\ThresholdType;
 
-class SoftThresholdFixedFeeFormMapper extends AbstractSoftThresholdFormMapper implements ThresholdFormMapperInterface
+class SoftThresholdFixedFeeFormMapper extends AbstractThresholdFormMapper implements ThresholdFormMapperInterface
 {
     /**
      * @param array $data
@@ -22,7 +22,7 @@ class SoftThresholdFixedFeeFormMapper extends AbstractSoftThresholdFormMapper im
      */
     public function map(array $data, MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): MerchantRelationshipSalesOrderThresholdTransfer
     {
-        $merchantRelationshipSalesOrderThresholdTransfer = $this->setSoftIdMerchantRelationshipSalesOrderThreshold($merchantRelationshipSalesOrderThresholdTransfer, $data);
+        $merchantRelationshipSalesOrderThresholdTransfer->setIdMerchantRelationshipSalesOrderThreshold($data[ThresholdType::FIELD_ID_MERCHANT_RELATIONSHIP_THRESHOLD_SOFT]);
         $merchantRelationshipSalesOrderThresholdTransfer = $this->setStoreAndCurrencyToSalesOrderThresholdTransfer($data, $merchantRelationshipSalesOrderThresholdTransfer);
         $merchantRelationshipSalesOrderThresholdTransfer = $this->setLocalizedMessagesToSalesOrderThresholdTransfer(
             $data,
