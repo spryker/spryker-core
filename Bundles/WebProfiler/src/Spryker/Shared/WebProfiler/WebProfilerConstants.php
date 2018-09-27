@@ -16,5 +16,5 @@ interface WebProfilerConstants
      * Specification:
      * - Enable/disable web profiler.
      */
-    const ENABLE_WEB_PROFILER = 'WEBPROFILER:ENABLE_WEB_PROFILER';
+    public const ENABLE_WEB_PROFILER = 'WEBPROFILER:ENABLE_WEB_PROFILER';
 }

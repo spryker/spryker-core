@@ -10,6 +10,9 @@ namespace Spryker\Yves\Kernel\Widget;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 use Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException;
 
+/**
+ * @deprecated Use \SprykerShop\Yves\ShopApplication\Twig\Widget\WidgetFactory instead.
+ */
 class WidgetFactory implements WidgetFactoryInterface
 {
     /**

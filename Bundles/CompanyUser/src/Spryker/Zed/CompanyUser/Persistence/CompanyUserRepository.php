@@ -22,6 +22,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CompanyUserRepository extends AbstractRepository implements CompanyUserRepositoryInterface
 {
     /**
+     * @see \Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap::COL_CUSTOMER_REFERENCE
+     */
+    protected const COL_CUSTOMER_REFERENCE = 'spy_customer.customer_reference';
+
+    /**
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
@@ -124,6 +129,24 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
         return $this->getFactory()
             ->createCompanyUserMapper()
             ->mapEntityTransferToCompanyUserTransfer($entityTransfer);
+    }
+
+    /**
+     * @module Customer
+     *
+     * @param int[] $companyUserIds
+     *
+     * @return string[]
+     */
+    public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array
+    {
+        return $this->getFactory()
+            ->createCompanyUserQuery()
+            ->joinCustomer()
+            ->filterByIdCompanyUser_In($companyUserIds)
+            ->select(static::COL_CUSTOMER_REFERENCE)
+            ->find()
+            ->toArray();
     }
 
     /**

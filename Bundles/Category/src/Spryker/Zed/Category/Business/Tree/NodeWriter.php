@@ -17,7 +17,7 @@ class NodeWriter implements NodeWriterInterface
     /**
      * @deprecated This is not in use anymore
      */
-    const CATEGORY_URL_IDENTIFIER_LENGTH = 4;
+    public const CATEGORY_URL_IDENTIFIER_LENGTH = 4;
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface

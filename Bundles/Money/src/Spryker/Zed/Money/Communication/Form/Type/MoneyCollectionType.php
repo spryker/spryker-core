@@ -23,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MoneyCollectionType extends AbstractCollectionType
 {
-    const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
+    public const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

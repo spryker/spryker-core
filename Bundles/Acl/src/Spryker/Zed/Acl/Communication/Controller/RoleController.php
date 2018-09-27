@@ -24,9 +24,9 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class RoleController extends AbstractController
 {
-    const PARAM_ID_ROLE = 'id-role';
-    const ACL_ROLE_LIST_URL = '/acl/role/index';
-    const ROLE_UPDATE_URL = '/acl/role/update?id-role=%d';
+    public const PARAM_ID_ROLE = 'id-role';
+    public const ACL_ROLE_LIST_URL = '/acl/role/index';
+    public const ROLE_UPDATE_URL = '/acl/role/update?id-role=%d';
 
     /**
      * @return array

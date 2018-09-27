@@ -28,16 +28,16 @@ use Symfony\Component\Validator\Context\ExecutionContext;
  */
 class NavigationNodeFormType extends AbstractType
 {
-    const FIELD_NODE_TYPE = 'node_type';
-    const FIELD_NAVIGATION_NODE_LOCALIZED_ATTRIBUTES = 'navigation_node_localized_attributes';
-    const FIELD_IS_ACTIVE = 'is_active';
-    const FIELD_VALID_FROM = 'valid_from';
-    const FIELD_VALID_TO = 'valid_to';
+    public const FIELD_NODE_TYPE = 'node_type';
+    public const FIELD_NAVIGATION_NODE_LOCALIZED_ATTRIBUTES = 'navigation_node_localized_attributes';
+    public const FIELD_IS_ACTIVE = 'is_active';
+    public const FIELD_VALID_FROM = 'valid_from';
+    public const FIELD_VALID_TO = 'valid_to';
 
-    const NODE_TYPE_CATEGORY = 'category';
-    const NODE_TYPE_CMS_PAGE = 'cms_page';
-    const NODE_TYPE_LINK = 'link';
-    const NODE_TYPE_EXTERNAL_URL = 'external_url';
+    public const NODE_TYPE_CATEGORY = 'category';
+    public const NODE_TYPE_CMS_PAGE = 'cms_page';
+    public const NODE_TYPE_LINK = 'link';
+    public const NODE_TYPE_EXTERNAL_URL = 'external_url';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

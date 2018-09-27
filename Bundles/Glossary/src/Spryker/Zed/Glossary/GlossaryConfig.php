@@ -14,7 +14,7 @@ class GlossaryConfig extends AbstractBundleConfig
     /**
      * Used as `item_type` for touch mechanism.
      */
-    const RESOURCE_TYPE_TRANSLATION = 'translation';
+    public const RESOURCE_TYPE_TRANSLATION = 'translation';
 
     /**
      * @return array

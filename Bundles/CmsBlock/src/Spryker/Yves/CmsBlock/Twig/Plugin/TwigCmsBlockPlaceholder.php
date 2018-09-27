@@ -18,7 +18,7 @@ use Twig_SimpleFunction;
  */
 class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPluginInterface
 {
-    const CMS_BLOCK_PREFIX_KEY = 'generated.cms.cms-block';
+    public const CMS_BLOCK_PREFIX_KEY = 'generated.cms.cms-block';
 
     /**
      * @param \Silex\Application $application

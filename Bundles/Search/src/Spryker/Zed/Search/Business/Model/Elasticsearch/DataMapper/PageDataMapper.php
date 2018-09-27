@@ -18,10 +18,10 @@ use Zend\Filter\Word\UnderscoreToDash;
 
 class PageDataMapper implements PageDataMapperInterface
 {
-    const FACET_NAME = 'facet-name';
-    const FACET_VALUE = 'facet-value';
-    const ALL_PARENTS = 'all-parents';
-    const DIRECT_PARENTS = 'direct-parents';
+    public const FACET_NAME = 'facet-name';
+    public const FACET_VALUE = 'facet-value';
+    public const ALL_PARENTS = 'all-parents';
+    public const DIRECT_PARENTS = 'direct-parents';
 
     /**
      * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface

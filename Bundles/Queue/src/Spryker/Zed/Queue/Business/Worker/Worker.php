@@ -17,11 +17,11 @@ use Spryker\Zed\Queue\QueueConfig;
  */
 class Worker implements WorkerInterface
 {
-    const DEFAULT_MAX_QUEUE_WORKER = 1;
-    const SECOND_TO_MILLISECONDS = 1000;
-    const PROCESS_BUSY = 'busy';
-    const PROCESS_NEW = 'new';
-    const PROCESSES_INSTANCES = 'processes';
+    public const DEFAULT_MAX_QUEUE_WORKER = 1;
+    public const SECOND_TO_MILLISECONDS = 1000;
+    public const PROCESS_BUSY = 'busy';
+    public const PROCESS_NEW = 'new';
+    public const PROCESSES_INSTANCES = 'processes';
 
     /**
      * @var \Spryker\Zed\Queue\Business\Process\ProcessManagerInterface
