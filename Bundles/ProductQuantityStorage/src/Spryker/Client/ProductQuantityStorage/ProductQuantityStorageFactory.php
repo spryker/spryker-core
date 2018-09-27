@@ -10,8 +10,8 @@ namespace Spryker\Client\ProductQuantityStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageClientInterface;
 use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface;
-use Spryker\Client\ProductQuantityStorage\QuickOrderProductAdditionalData\QuickOrderProductAdditionalDataTransferExpander;
-use Spryker\Client\ProductQuantityStorage\QuickOrderProductAdditionalData\QuickOrderProductAdditionalDataTransferExpanderInterface;
+use Spryker\Client\ProductQuantityStorage\ProductConcreteExpander\ProductConcreteExpander;
+use Spryker\Client\ProductQuantityStorage\ProductConcreteExpander\ProductConcreteExpanderInterface;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReader;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
 
@@ -29,11 +29,11 @@ class ProductQuantityStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductQuantityStorage\QuickOrderProductAdditionalData\QuickOrderProductAdditionalDataTransferExpanderInterface
+     * @return \Spryker\Client\ProductQuantityStorage\ProductConcreteExpander\ProductConcreteExpanderInterface
      */
-    public function createQuickOrderProductAdditionalDataTransferExpander(): QuickOrderProductAdditionalDataTransferExpanderInterface
+    public function createProductConcreteExpander(): ProductConcreteExpanderInterface
     {
-        return new QuickOrderProductAdditionalDataTransferExpander(
+        return new ProductConcreteExpander(
             $this->createProductQuantityStorageReader()
         );
     }

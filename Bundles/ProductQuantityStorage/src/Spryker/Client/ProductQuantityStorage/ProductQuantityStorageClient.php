@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\ProductQuantityStorage;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
-use Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -37,14 +37,14 @@ class ProductQuantityStorageClient extends AbstractClient implements ProductQuan
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer $quickOrderProductAdditionalDataTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuickOrderProductAdditionalDataTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function expandQuickOrderProductAdditionalDataTransferWithQuantityRestrictions(QuickOrderProductAdditionalDataTransfer $quickOrderProductAdditionalDataTransfer): QuickOrderProductAdditionalDataTransfer
+    public function expandProductConcreteTransferWithQuantityRestrictions(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->getFactory()
-            ->createQuickOrderProductAdditionalDataTransferExpander()
-            ->expandQuickOrderProductAdditionalDataTransferWithQuantityRestrictions($quickOrderProductAdditionalDataTransfer);
+            ->createProductConcreteExpander()
+            ->expandProductConcreteTransferWithQuantityRestrictions($productConcreteTransfer);
     }
 }

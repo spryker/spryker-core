@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductMeasurementUnitStorage;
 
 use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -86,14 +87,14 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
      *
      * @api
      *
-     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function findProductMeasurementBaseUnitByIdProduct(int $idProduct): ?ProductMeasurementUnitTransfer
+    public function expandProductConcreteTransferWithMeasurementBaseUnit(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->getFactory()
-            ->createProductMeasurementBaseUnitReader()
-            ->findProductMeasurementBaseUnitByIdProduct($idProduct);
+            ->createProductConcreteExpander()
+            ->expandProductConcreteTransferWithMeasurementBaseUnit($productConcreteTransfer);
     }
 }

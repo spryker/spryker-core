@@ -12,6 +12,8 @@ use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasur
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToLocaleClientInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductMeasurementUnitStorage\ProductConcreteExpander\ProductConcreteExpander;
+use Spryker\Client\ProductMeasurementUnitStorage\ProductConcreteExpander\ProductConcreteExpanderInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductConcreteMeasurementUnitStorageReader;
 use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductConcreteMeasurementUnitStorageReaderInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductMeasurementBaseUnitReader;
@@ -77,6 +79,18 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
         return new ProductMeasurementSalesUnitReader(
             $this->createProductConcreteMeasurementUnitStorageReader(),
             $this->createProductMeasurementUnitReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductConcreteExpanderInterface
+     */
+    public function createProductConcreteExpander(): ProductConcreteExpanderInterface
+    {
+        return new ProductConcreteExpander(
+            $this->createProductMeasurementBaseUnitReader(),
+            $this->getGlossaryStorageClient(),
+            $this->getLocaleClient()
         );
     }
 
