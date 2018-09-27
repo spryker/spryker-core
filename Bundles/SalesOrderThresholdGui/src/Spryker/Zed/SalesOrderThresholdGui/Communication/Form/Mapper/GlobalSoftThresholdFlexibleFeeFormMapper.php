@@ -22,6 +22,7 @@ class GlobalSoftThresholdFlexibleFeeFormMapper extends AbstractGlobalThresholdFo
      */
     public function map(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): SalesOrderThresholdTransfer
     {
+        $salesOrderThresholdTransfer->setIdSalesOrderThreshold($data[GlobalThresholdType::FIELD_ID_THRESHOLD_SOFT]);
         $salesOrderThresholdTransfer = $this->setStoreAndCurrencyToSalesOrderThresholdTransfer($data, $salesOrderThresholdTransfer);
         $salesOrderThresholdTransfer = $this->setLocalizedMessagesToSalesOrderThresholdTransfer(
             $data,
@@ -29,8 +30,9 @@ class GlobalSoftThresholdFlexibleFeeFormMapper extends AbstractGlobalThresholdFo
             GlobalThresholdType::PREFIX_SOFT
         );
 
-        $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->setThreshold($data[GlobalThresholdType::FIELD_SOFT_THRESHOLD]);
-        $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->setFee($data[GlobalThresholdType::FIELD_SOFT_FLEXIBLE_FEE]);
+        $salesOrderThresholdTransfer->getSalesOrderThresholdValue()
+            ->setThreshold($data[GlobalThresholdType::FIELD_SOFT_THRESHOLD])
+            ->setFee($data[GlobalThresholdType::FIELD_SOFT_FLEXIBLE_FEE]);
 
         $salesOrderThresholdTypeTransfer = (new SalesOrderThresholdTypeTransfer())
             ->setKey(SalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FLEXIBLE)

@@ -18,6 +18,7 @@ class RemoveSalesOrderThresholdExpenseCalculatorPlugin extends AbstractPlugin im
 {
     /**
      * {@inheritdoc}
+     * - Removes all threshold expenses from CalculableObjectTransfer.
      *
      * @api
      *

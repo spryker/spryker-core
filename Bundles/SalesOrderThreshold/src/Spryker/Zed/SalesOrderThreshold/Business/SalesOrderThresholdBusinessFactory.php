@@ -94,6 +94,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
         return new SalesOrderThresholdWriter(
             $this->createSalesOrderThresholdStrategyResolver(),
             $this->getEntityManager(),
+            $this->getRepository(),
             $this->createSalesOrderThresholdGlossaryKeyGenerator(),
             $this->createSalesOrderThresholdTranslationWriter()
         );

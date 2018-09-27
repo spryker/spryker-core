@@ -21,6 +21,7 @@ class HardThresholdDataProvider implements ThresholdStrategyDataProviderInterfac
      */
     public function getData(array $data, SalesOrderThresholdTransfer $salesOrderThresholdTransfer): array
     {
+        $data[GlobalThresholdType::FIELD_ID_THRESHOLD_HARD] = $salesOrderThresholdTransfer->getIdSalesOrderThreshold();
         $data[GlobalThresholdType::FIELD_HARD_THRESHOLD] = $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getThreshold();
 
         foreach ($salesOrderThresholdTransfer->getLocalizedMessages() as $localizedMessage) {

@@ -23,6 +23,7 @@ class HardThresholdChecker implements HardThresholdCheckerInterface
 {
     protected const THRESHOLD_GLOSSARY_PARAMETER = '{{threshold}}';
     protected const THRESHOLD_EXPENSE_TYPE = 'THRESHOLD_EXPENSE_TYPE';
+    protected const CHECKOUT_ERROR_REDIRECT = '/checkout/summary';
 
     /**
      * @var \Spryker\Zed\SalesOrderThreshold\Business\DataSource\SalesOrderThresholdDataSourceStrategyResolverInterface
@@ -85,7 +86,15 @@ class HardThresholdChecker implements HardThresholdCheckerInterface
             $this->addErrorMessageToCheckoutResponse($checkoutResponseTransfer, $quoteTransfer->getCurrency(), $salesOrderThresholdValueTransfer);
         }
 
-        return $checkoutResponseTransfer->getErrors()->count() === 0;
+        if ($checkoutResponseTransfer->getErrors()->count() > 0) {
+            $checkoutResponseTransfer->setIsSuccess(false)
+                ->setIsExternalRedirect(true)
+                ->setRedirectUrl(static::CHECKOUT_ERROR_REDIRECT);
+
+            return false;
+        }
+
+        return true;
     }
 
     /**

@@ -16,7 +16,7 @@ interface MerchantRelationshipSalesOrderThresholdFacadeInterface
 {
     /**
      * Specification:
-     * - Finds the applicable thresholds for a given QuoteTransfer.
+     * - Finds the applicable thresholds for a given quote.
      * - Based on quote the customer and the respective merchant relationships.
      * - Also prepares the sales order threshold objects to be provided for the sales order threshold strategies.
      *
@@ -31,6 +31,9 @@ interface MerchantRelationshipSalesOrderThresholdFacadeInterface
     /**
      * Specification:
      * - Saves merchant relationship specific sales order threshold.
+     * - If the threshold type wasn't configured, it will throw and exception.
+     * - Generates a glossary key for the threshold message if it wasn't provided.
+     * - Saves the message translations too.
      *
      * @api
      *
@@ -44,6 +47,23 @@ interface MerchantRelationshipSalesOrderThresholdFacadeInterface
     public function saveMerchantRelationshipSalesOrderThreshold(
         MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
     ): MerchantRelationshipSalesOrderThresholdTransfer;
+
+    /**
+     * Specification:
+     * - Deletes merchant relationship specific sales order threshold by MerchantRelationshipSalesOrderThresholdTransfer::idMerchantRelationshipSalesOrderThreshold.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+     *
+     * @throws \Spryker\Zed\SalesOrderThreshold\Business\Strategy\Exception\SalesOrderThresholdTypeNotFoundException
+     * @throws \Spryker\Zed\SalesOrderThreshold\Business\Strategy\Exception\SalesOrderThresholdInvalidArgumentException
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer
+     */
+    public function deleteMerchantRelationshipSalesOrderThreshold(
+        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+    ): bool;
 
     /**
      * Specification:

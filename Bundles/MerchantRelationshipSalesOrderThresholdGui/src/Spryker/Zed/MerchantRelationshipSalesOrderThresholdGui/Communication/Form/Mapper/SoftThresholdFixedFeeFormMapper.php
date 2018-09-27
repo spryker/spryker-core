@@ -22,6 +22,7 @@ class SoftThresholdFixedFeeFormMapper extends AbstractThresholdFormMapper implem
      */
     public function map(array $data, MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): MerchantRelationshipSalesOrderThresholdTransfer
     {
+        $merchantRelationshipSalesOrderThresholdTransfer->setIdMerchantRelationshipSalesOrderThreshold($data[ThresholdType::FIELD_ID_MERCHANT_RELATIONSHIP_THRESHOLD_SOFT]);
         $merchantRelationshipSalesOrderThresholdTransfer = $this->setStoreAndCurrencyToSalesOrderThresholdTransfer($data, $merchantRelationshipSalesOrderThresholdTransfer);
         $merchantRelationshipSalesOrderThresholdTransfer = $this->setLocalizedMessagesToSalesOrderThresholdTransfer(
             $data,
@@ -29,8 +30,9 @@ class SoftThresholdFixedFeeFormMapper extends AbstractThresholdFormMapper implem
             ThresholdType::PREFIX_SOFT
         );
 
-        $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->setThreshold($data[ThresholdType::FIELD_SOFT_THRESHOLD]);
-        $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->setFee($data[ThresholdType::FIELD_SOFT_FIXED_FEE]);
+        $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()
+            ->setThreshold($data[ThresholdType::FIELD_SOFT_THRESHOLD])
+            ->setFee($data[ThresholdType::FIELD_SOFT_FIXED_FEE]);
 
         $salesOrderThresholdTypeTransfer = (new SalesOrderThresholdTypeTransfer())
             ->setKey(MerchantRelationshipSalesOrderThresholdGuiConfig::SOFT_TYPE_STRATEGY_FIXED)

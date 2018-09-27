@@ -19,6 +19,7 @@ class MerchantRelationshipSalesOrderThresholdDataSourceStrategyPlugin extends Ab
 {
     /**
      * {@inheritdoc}
+     * - Finds the applicable merchant relationship thresholds for the merchant relationship sub total.
      *
      * @api
      *
@@ -28,7 +29,6 @@ class MerchantRelationshipSalesOrderThresholdDataSourceStrategyPlugin extends Ab
      */
     public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {
-        return $this->getFacade()
-            ->findApplicableThresholds($quoteTransfer);
+        return $this->getFacade()->findApplicableThresholds($quoteTransfer);
     }
 }

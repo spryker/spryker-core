@@ -73,6 +73,7 @@ class MerchantRelationshipSalesOrderThresholdBusinessFactory extends AbstractBus
         return new MerchantRelationshipThresholdWriter(
             $this->getSalesOrderThresholdFacade(),
             $this->getEntityManager(),
+            $this->getRepository(),
             $this->createMerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator(),
             $this->createMerchantRelationshipSalesOrderThresholdTranslationWriter()
         );

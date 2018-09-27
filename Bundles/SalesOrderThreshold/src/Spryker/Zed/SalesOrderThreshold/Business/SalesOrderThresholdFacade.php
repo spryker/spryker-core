@@ -41,6 +41,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
 
     /**
      * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
@@ -59,6 +60,24 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
 
     /**
      * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     *
+     * @return bool
+     */
+    public function deleteSalesOrderThreshold(
+        SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+    ): bool {
+        return $this->getFactory()
+            ->createSalesOrderThresholdWriter()
+            ->deleteSalesOrderThreshold($salesOrderThresholdTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer
@@ -133,6 +152,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
 
     /**
      * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer

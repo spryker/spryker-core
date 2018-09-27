@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -38,31 +40,9 @@ class GlobalController extends AbstractController
         $globalThresholdForm->handleRequest($request);
 
         if ($globalThresholdForm->isSubmitted() && $globalThresholdForm->isValid()) {
-            $data = $globalThresholdForm->getData();
-            $hardSalesOrderThresholdTransfer = $this->getFactory()
-                ->createGlobalHardThresholdFormMapper()
-                ->map($data, $this->createSalesOrderThresholdTransfer());
-
-             $this->getFactory()
-                ->getSalesOrderThresholdFacade()
-                ->saveSalesOrderThreshold($hardSalesOrderThresholdTransfer);
-
-            if ($this->getFactory()->createGlobalSoftThresholdFormMapperResolver()->hasGlobalThresholdMapperByStrategyKey(
-                $data[GlobalThresholdType::FIELD_SOFT_STRATEGY]
-            )) {
-                $softSalesOrderThresholdTransfer = $this->getFactory()
-                    ->createGlobalSoftThresholdFormMapperResolver()->resolveGlobalThresholdMapperByStrategyKey($data[GlobalThresholdType::FIELD_SOFT_STRATEGY])
-                    ->map($data, $this->createSalesOrderThresholdTransfer());
-
-                $this->getFactory()
-                    ->getSalesOrderThresholdFacade()
-                    ->saveSalesOrderThreshold($softSalesOrderThresholdTransfer);
-            }
-
-            $this->addSuccessMessage(sprintf(
-                'The Global Threshold is saved successfully.'
-            ));
+            return $this->handleFormSubmission($request, $globalThresholdForm);
         }
+
         $localeCollection = $this->getFactory()
             ->getLocaleFacade()
             ->getLocaleCollection();
@@ -71,6 +51,68 @@ class GlobalController extends AbstractController
             'localeCollection' => $localeCollection,
             'globalThresholdForm' => $globalThresholdForm->createView(),
         ]);
+    }
+
+    /***
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Form\FormInterface $globalThresholdForm
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function handleFormSubmission(Request $request, FormInterface $globalThresholdForm): RedirectResponse
+    {
+        $data = $globalThresholdForm->getData();
+        $hardSalesOrderThresholdTransfer = $this->getFactory()
+            ->createGlobalHardThresholdFormMapper()
+            ->map($data, $this->createSalesOrderThresholdTransfer(
+                $data[GlobalThresholdType::FIELD_ID_THRESHOLD_HARD]
+            ));
+
+        $this->saveSalesOrderThreshold($hardSalesOrderThresholdTransfer);
+
+        $softSalesOrderThresholdTransfer = $this->createSalesOrderThresholdTransfer(
+            $data[GlobalThresholdType::FIELD_ID_THRESHOLD_SOFT]
+        );
+
+        if ($data[GlobalThresholdType::FIELD_SOFT_STRATEGY] &&
+            $this->getFactory()->createGlobalSoftThresholdFormMapperResolver()->hasGlobalThresholdMapperByStrategyKey(
+                $data[GlobalThresholdType::FIELD_SOFT_STRATEGY]
+            )) {
+            $softSalesOrderThresholdTransfer = $this->getFactory()
+                ->createGlobalSoftThresholdFormMapperResolver()
+                ->resolveGlobalThresholdMapperByStrategyKey($data[GlobalThresholdType::FIELD_SOFT_STRATEGY])
+                ->map($data, $softSalesOrderThresholdTransfer);
+        }
+
+        $this->saveSalesOrderThreshold($softSalesOrderThresholdTransfer);
+
+        $this->addSuccessMessage(sprintf(
+            'The Global Threshold is saved successfully.'
+        ));
+
+        return $this->redirectResponse($request->getRequestUri());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     *
+     * @return void
+     */
+    protected function saveSalesOrderThreshold(SalesOrderThresholdTransfer $salesOrderThresholdTransfer): void
+    {
+        if (empty($salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getThreshold())) {
+            if ($salesOrderThresholdTransfer->getIdSalesOrderThreshold()) {
+                $this->getFactory()
+                    ->getSalesOrderThresholdFacade()
+                    ->deleteSalesOrderThreshold($salesOrderThresholdTransfer);
+            }
+
+            return;
+        }
+
+        $this->getFactory()
+            ->getSalesOrderThresholdFacade()
+            ->saveSalesOrderThreshold($salesOrderThresholdTransfer);
     }
 
     /**
@@ -98,11 +140,14 @@ class GlobalController extends AbstractController
     }
 
     /**
+     * @param int|null $idSalesOrderThreshold
+     *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
      */
-    protected function createSalesOrderThresholdTransfer(): SalesOrderThresholdTransfer
+    protected function createSalesOrderThresholdTransfer(?int $idSalesOrderThreshold): SalesOrderThresholdTransfer
     {
         return (new SalesOrderThresholdTransfer())
+            ->setIdSalesOrderThreshold($idSalesOrderThreshold)
             ->setSalesOrderThresholdValue(new SalesOrderThresholdValueTransfer());
     }
 }

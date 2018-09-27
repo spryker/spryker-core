@@ -38,6 +38,17 @@ class SalesOrderThresholdGuiToSalesOrderThresholdFacadeBridge implements SalesOr
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     *
+     * @return bool
+     */
+    public function deleteSalesOrderThreshold(
+        SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+    ): bool {
+        return $this->salesOrderThresholdFacade->deleteSalesOrderThreshold($salesOrderThresholdTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *

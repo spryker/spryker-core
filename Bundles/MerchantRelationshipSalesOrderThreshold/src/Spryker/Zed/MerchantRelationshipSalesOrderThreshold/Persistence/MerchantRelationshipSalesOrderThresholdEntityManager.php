@@ -75,6 +75,29 @@ class MerchantRelationshipSalesOrderThresholdEntityManager extends AbstractEntit
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
      *
+     * @return bool
+     */
+    public function deleteMerchantRelationshipSalesOrderThreshold(
+        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+    ): bool {
+        $merchantRelationshipSalesOrderThresholdEntity = $this->getFactory()
+            ->createMerchantRelationshipSalesOrderThresholdQuery()
+            ->findOneByIdMerchantRelationshipSalesOrderThreshold(
+                $merchantRelationshipSalesOrderThresholdTransfer->getIdMerchantRelationshipSalesOrderThreshold()
+            );
+
+        if ($merchantRelationshipSalesOrderThresholdEntity) {
+            $merchantRelationshipSalesOrderThresholdEntity->delete();
+
+            return $merchantRelationshipSalesOrderThresholdEntity->isDeleted();
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+     *
      * @return void
      */
     protected function assertRequiredAttributes(MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): void

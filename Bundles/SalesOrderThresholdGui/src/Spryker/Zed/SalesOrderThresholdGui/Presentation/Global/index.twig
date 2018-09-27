@@ -59,6 +59,11 @@
 
 
             {{ form_widget(globalThresholdForm) }}
+
+            <div class="well well-sm">
+                {{ 'You can use the the placeholders <b>{{threshold}}</b> <b>{{fee}}</b>' | raw }}
+            </div>
+
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
 
             {{ form_end(globalThresholdForm) }}

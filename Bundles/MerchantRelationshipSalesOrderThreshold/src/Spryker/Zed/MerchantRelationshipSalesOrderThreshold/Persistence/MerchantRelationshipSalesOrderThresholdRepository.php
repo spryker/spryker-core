@@ -64,4 +64,30 @@ class MerchantRelationshipSalesOrderThresholdRepository extends AbstractReposito
 
         return $merchantRelationshipSalesOrderThresholdTransfers;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer|null
+     */
+    public function findMerchantRelationshipSalesOrderThreshold(
+        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+    ): ?MerchantRelationshipSalesOrderThresholdTransfer {
+        $merchantRelationshipSalesOrderThresholdEntity = $this->getFactory()
+            ->createMerchantRelationshipSalesOrderThresholdQuery()
+            ->findOneByIdMerchantRelationshipSalesOrderThreshold(
+                $merchantRelationshipSalesOrderThresholdTransfer->getIdMerchantRelationshipSalesOrderThreshold()
+            );
+
+        if (!$merchantRelationshipSalesOrderThresholdEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createMerchantRelationshipSalesOrderThresholdMapper()
+            ->mapMerchantRelationshipSalesOrderThresholdEntityToTransfer(
+                $merchantRelationshipSalesOrderThresholdEntity,
+                new MerchantRelationshipSalesOrderThresholdTransfer()
+            );
+    }
 }

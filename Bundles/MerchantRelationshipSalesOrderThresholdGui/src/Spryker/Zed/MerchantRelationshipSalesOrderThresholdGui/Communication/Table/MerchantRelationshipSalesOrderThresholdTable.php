@@ -70,6 +70,13 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
             static::COL_ID_MERCHANT_RELATIONSHIP,
         ]);
 
+        $config->setSearchable([
+            SpyCompanyTableMap::COL_NAME,
+            SpyMerchantTableMap::COL_NAME,
+            SpyCompanyBusinessUnitTableMap::COL_NAME,
+            SpyMerchantRelationshipTableMap::COL_MERCHANT_RELATIONSHIP_KEY,
+        ]);
+
         return $config;
     }
 

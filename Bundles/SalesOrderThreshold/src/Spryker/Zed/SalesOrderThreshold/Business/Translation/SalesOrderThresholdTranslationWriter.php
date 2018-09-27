@@ -47,6 +47,23 @@ class SalesOrderThresholdTranslationWriter implements SalesOrderThresholdTransla
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     *
+     * @return void
+     */
+    public function deleteLocalizedMessages(SalesOrderThresholdTransfer $salesOrderThresholdTransfer): void
+    {
+        foreach ($salesOrderThresholdTransfer->getLocalizedMessages() as $localizedMessageTransfer) {
+            $localizedMessageTransfer->setMessage(null);
+        }
+
+        $this->saveLocalizedMessages($salesOrderThresholdTransfer);
+        $this->glossaryFacade->deleteKey(
+            $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()
+        );
+    }
+
+    /**
      * @param \Traversable|\Generated\Shared\Transfer\SalesOrderThresholdLocalizedMessageTransfer[] $salesOrderThresholdLocalizedMessageTransfers
      *
      * @return string[]

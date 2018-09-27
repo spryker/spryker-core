@@ -17,4 +17,11 @@ interface MerchantRelationshipSalesOrderThresholdTranslationWriterInterface
      * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer
      */
     public function saveLocalizedMessages(MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): MerchantRelationshipSalesOrderThresholdTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+     *
+     * @return void
+     */
+    public function deleteLocalizedMessages(MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): void;
 }

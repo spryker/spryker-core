@@ -97,6 +97,29 @@ class SalesOrderThresholdEntityManager extends AbstractEntityManager implements 
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     *
+     * @return bool
+     */
+    public function deleteSalesOrderThreshold(
+        SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+    ): bool {
+        $salesOrderThresholdEntity = $this->getFactory()
+            ->createSalesOrderThresholdQuery()
+            ->findOneByIdSalesOrderThreshold(
+                $salesOrderThresholdTransfer->getIdSalesOrderThreshold()
+            );
+
+        if ($salesOrderThresholdEntity) {
+            $salesOrderThresholdEntity->delete();
+
+            return $salesOrderThresholdEntity->isDeleted();
+        }
+
+        return false;
+    }
+
+    /**
      * @param int $idTaxSet
      *
      * @return void

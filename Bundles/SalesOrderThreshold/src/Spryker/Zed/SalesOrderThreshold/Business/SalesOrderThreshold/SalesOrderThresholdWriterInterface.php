@@ -21,4 +21,13 @@ interface SalesOrderThresholdWriterInterface
     public function saveSalesOrderThreshold(
         SalesOrderThresholdTransfer $salesOrderThresholdTransfer
     ): SalesOrderThresholdTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     *
+     * @return bool
+     */
+    public function deleteSalesOrderThreshold(
+        SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+    ): bool;
 }

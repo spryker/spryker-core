@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesOrderThreshold\Business\ExpenseRemover;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
 
 class ExpenseRemover implements ExpenseRemoverInterface
@@ -19,11 +20,13 @@ class ExpenseRemover implements ExpenseRemoverInterface
      */
     public function removeSalesOrderThresholdExpenses(CalculableObjectTransfer $calculableObjectTransfer): void
     {
-        foreach ($calculableObjectTransfer->getExpenses() as $expenseOffset => $expenseTransfer) {
-            if ($expenseTransfer->getType() === SalesOrderThresholdConfig::THRESHOLD_EXPENSE_TYPE) {
-                $calculableObjectTransfer->getExpenses()->offsetUnset($expenseOffset);
-                continue;
-            }
-        }
+        $calculableObjectTransfer->getExpenses()->exchangeArray(
+            array_filter(
+                $calculableObjectTransfer->getExpenses()->getArrayCopy(),
+                function (ExpenseTransfer $expenseTransfer) {
+                    return $expenseTransfer->getType() !== SalesOrderThresholdConfig::THRESHOLD_EXPENSE_TYPE;
+                }
+            )
+        );
     }
 }

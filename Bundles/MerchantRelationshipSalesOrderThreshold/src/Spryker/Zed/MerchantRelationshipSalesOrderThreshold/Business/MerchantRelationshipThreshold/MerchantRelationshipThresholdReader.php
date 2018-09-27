@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipThreshold;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation\MerchantRelationshipSalesOrderThresholdTranslationReaderInterface;
@@ -44,12 +45,18 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
      */
     public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {
+        $this->assertRequiredAttributes($quoteTransfer);
         $customerMerchantRelationships = $this->getCustomerMerchantRelationships($quoteTransfer);
+
         if (empty($customerMerchantRelationships)) {
             return [];
         }
 
         $itemMerchantRelationshipSubTotals = $this->getItemsMerchantRelationshipSubTotals($quoteTransfer);
+
+        if (empty($itemMerchantRelationshipSubTotals)) {
+            return [];
+        }
 
         $cartMerchantRelationshipIds = $this->getCartMerchantRelationshipIds($customerMerchantRelationships, $itemMerchantRelationshipSubTotals);
 
@@ -61,6 +68,16 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
             );
 
         return $this->getSalesOrderThresholdTransfers($merchantRelationshipSalesOrderThresholdTransfers, $itemMerchantRelationshipSubTotals);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function assertRequiredAttributes(QuoteTransfer $quoteTransfer): void
+    {
+        $quoteTransfer->requireStore()->requireCurrency();
     }
 
     /**
@@ -123,8 +140,8 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     protected function getItemsMerchantRelationshipSubTotals(QuoteTransfer $quoteTransfer): array
     {
         $itemMerchantRelationshipSubTotals = [];
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getPriceProduct() || !$itemTransfer->getPriceProduct()->getPriceDimension()) {
+        foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
+            if (!$this->isMerchantRelationshipItem($itemTransfer)) {
                 continue;
             }
 
@@ -134,6 +151,18 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
         }
 
         return $itemMerchantRelationshipSubTotals;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isMerchantRelationshipItem(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getPriceProduct() &&
+            $itemTransfer->getPriceProduct()->getPriceDimension() &&
+            $itemTransfer->getPriceProduct()->getPriceDimension()->getIdMerchantRelationship();
     }
 
     /**

@@ -23,6 +23,15 @@ interface SalesOrderThresholdGuiToSalesOrderThresholdFacadeInterface
     ): SalesOrderThresholdTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     *
+     * @return bool
+     */
+    public function deleteSalesOrderThreshold(
+        SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+    ): bool;
+
+    /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *

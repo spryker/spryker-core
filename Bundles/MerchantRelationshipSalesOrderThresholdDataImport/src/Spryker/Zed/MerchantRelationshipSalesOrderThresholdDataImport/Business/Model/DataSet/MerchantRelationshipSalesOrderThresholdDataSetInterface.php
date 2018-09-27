@@ -15,4 +15,5 @@ interface MerchantRelationshipSalesOrderThresholdDataSetInterface
     public const COLUMN_SALES_ORDER_THRESHOLD_TYPE_KEY = 'threshold_type_key';
     public const COLUMN_THRESHOLD = 'threshold';
     public const COLUMN_FEE = 'fee';
+    public const COLUMN_MESSAGE_GLOSSARY_KEY = 'message_glossary_key';
 }

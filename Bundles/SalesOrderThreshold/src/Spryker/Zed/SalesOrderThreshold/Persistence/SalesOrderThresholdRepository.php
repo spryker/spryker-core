@@ -89,6 +89,32 @@ class SalesOrderThresholdRepository extends AbstractRepository implements SalesO
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer|null
+     */
+    public function findSalesOrderThreshold(
+        SalesOrderThresholdTransfer $salesOrderThresholdTransfer
+    ): ?SalesOrderThresholdTransfer {
+        $salesOrderThresholdEntity = $this->getFactory()
+            ->createSalesOrderThresholdQuery()
+            ->findOneByIdSalesOrderThreshold(
+                $salesOrderThresholdTransfer->getIdSalesOrderThreshold()
+            );
+
+        if (!$salesOrderThresholdEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createSalesOrderThresholdMapper()
+            ->mapSalesOrderThresholdEntityToTransfer(
+                $salesOrderThresholdEntity,
+                new SalesOrderThresholdTransfer()
+            );
+    }
+
+    /**
      * @return int|null
      */
     public function findSalesOrderThresholdTaxSetId(): ?int
