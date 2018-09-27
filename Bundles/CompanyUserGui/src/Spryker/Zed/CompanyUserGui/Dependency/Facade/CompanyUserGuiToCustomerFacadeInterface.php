@@ -14,5 +14,5 @@ interface CompanyUserGuiToCustomerFacadeInterface
      *
      * @return bool
      */
-    public function hasEmail(string $email): bool;
+    public function hasEmail($email);
 }

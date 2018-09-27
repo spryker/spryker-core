@@ -70,7 +70,7 @@ class CompanyUserForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCustomerSubForm(FormBuilderInterface $builder, array $options)
+    protected function addCustomerSubForm(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(
             CompanyUserTransfer::CUSTOMER,
@@ -124,10 +124,10 @@ class CompanyUserForm extends AbstractType
      *
      * @return $this
      */
-    protected function addPluginForms(FormBuilderInterface $builder): AbstractType
+    protected function addPluginForms(FormBuilderInterface $builder): self
     {
         foreach ($this->getFactory()->getCompanyUserFormPlugins() as $formPlugin) {
-            $formPlugin->buildForm($builder);
+            $builder = $formPlugin->buildForm($builder);
         }
 
         return $this;

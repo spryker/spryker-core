@@ -27,7 +27,7 @@ class CompanyUserGuiToCustomerFacadeBridge implements CompanyUserGuiToCustomerFa
      *
      * @return bool
      */
-    public function hasEmail(string $email): bool
+    public function hasEmail($email)
     {
         return $this->customerFacade->hasEmail($email);
     }

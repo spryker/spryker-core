@@ -25,13 +25,11 @@ class CompanyUserBusinessUnitChoiceFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return $this
+     * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): self
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addCompanyBusinessUnitCollectionField($builder, $options);
-
-        return $this;
     }
 
     /**

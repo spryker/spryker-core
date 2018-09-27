@@ -23,9 +23,9 @@ class CompanyUserRoleFieldPlugin extends AbstractPlugin implements CompanyUserFo
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return void
+     * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    public function buildForm(FormBuilderInterface $builder): void
+    public function buildForm(FormBuilderInterface $builder): FormBuilderInterface
     {
         $formType = $this->getFactory()
             ->createCompanyUserRoleChoiceFormType();
@@ -40,5 +40,7 @@ class CompanyUserRoleFieldPlugin extends AbstractPlugin implements CompanyUserFo
             $builder,
             $dataProvider->getOptions()
         );
+
+        return $builder;
     }
 }

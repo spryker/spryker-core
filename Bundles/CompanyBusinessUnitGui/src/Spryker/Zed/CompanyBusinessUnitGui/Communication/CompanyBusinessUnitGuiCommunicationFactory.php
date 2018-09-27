@@ -19,6 +19,7 @@ use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiT
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -66,9 +67,9 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyUserBusinessUnitChoiceFormType
+     * @return \Symfony\Component\Form\FormTypeInterface
      */
-    public function createCompanyUserBusinessUnitChoiceFormType(): CompanyUserBusinessUnitChoiceFormType
+    public function createCompanyUserBusinessUnitChoiceFormType(): FormTypeInterface
     {
         return new CompanyUserBusinessUnitChoiceFormType();
     }

@@ -13,13 +13,13 @@ interface CompanyUserFormExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Adds form parts to the main form builder
+     * - Adds form parts to the main form builder.
      *
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return void
+     * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    public function buildForm(FormBuilderInterface $builder): void;
+    public function buildForm(FormBuilderInterface $builder): FormBuilderInterface;
 }

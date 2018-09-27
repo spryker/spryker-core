@@ -17,9 +17,9 @@ class CompanyUserCustomerUpdateForm extends CompanyUserCustomerForm
      *
      * @return $this
      */
-    protected function addEmailField(FormBuilderInterface $builder)
+    protected function addEmailField(FormBuilderInterface $builder): CompanyUserCustomerForm
     {
-        $builder->add(self::FIELD_EMAIL, EmailType::class, [
+        $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'Email',
             'constraints' => $this->createEmailConstraints(),
             'disabled' => 'disabled',

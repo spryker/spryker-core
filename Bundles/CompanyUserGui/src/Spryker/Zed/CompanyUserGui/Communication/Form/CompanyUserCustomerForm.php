@@ -25,27 +25,29 @@ use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
+ * @see \Spryker\Zed\Customer\Communication\CustomerForm original customer form
+ *
  * @method \Spryker\Zed\CompanyUserGui\Communication\CompanyUserGuiCommunicationFactory getFactory()
  */
 class CompanyUserCustomerForm extends AbstractType
 {
-    const OPTION_SALUTATION_CHOICES = 'salutation_choices';
-    const OPTION_GENDER_CHOICES = 'gender_choices';
+    public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
+    public const OPTION_GENDER_CHOICES = 'gender_choices';
 
-    const FIELD_EMAIL = 'email';
-    const FIELD_SALUTATION = 'salutation';
-    const FIELD_FIRST_NAME = 'first_name';
-    const FIELD_LAST_NAME = 'last_name';
-    const FIELD_GENDER = 'gender';
-    const FIELD_ID_CUSTOMER = 'id_customer';
-    const FIELD_COMPANY = 'company';
-    const FIELD_PHONE = 'phone';
-    const FIELD_DATE_OF_BIRTH = 'date_of_birth';
+    protected const FIELD_EMAIL = 'email';
+    protected const FIELD_SALUTATION = 'salutation';
+    protected const FIELD_FIRST_NAME = 'first_name';
+    protected const FIELD_LAST_NAME = 'last_name';
+    protected const FIELD_GENDER = 'gender';
+    protected const FIELD_ID_CUSTOMER = 'id_customer';
+    protected const FIELD_COMPANY = 'company';
+    protected const FIELD_PHONE = 'phone';
+    protected const FIELD_DATE_OF_BIRTH = 'date_of_birth';
 
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'customer';
     }
@@ -55,7 +57,7 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefined(static::OPTION_SALUTATION_CHOICES);
         $resolver->setDefined(static::OPTION_GENDER_CHOICES);
@@ -67,7 +69,7 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addIdCustomerField($builder)
@@ -85,7 +87,7 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdCustomerField(FormBuilderInterface $builder)
+    protected function addIdCustomerField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_ID_CUSTOMER, HiddenType::class);
 
@@ -97,9 +99,9 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addEmailField(FormBuilderInterface $builder)
+    protected function addEmailField(FormBuilderInterface $builder): self
     {
-        $builder->add(self::FIELD_EMAIL, EmailType::class, [
+        $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'Email',
             'constraints' => $this->createEmailConstraints(),
         ]);
@@ -113,12 +115,12 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSalutationField(FormBuilderInterface $builder, array $choices)
+    protected function addSalutationField(FormBuilderInterface $builder, array $choices): self
     {
-        $builder->add(self::FIELD_SALUTATION, ChoiceType::class, [
+        $builder->add(static::FIELD_SALUTATION, ChoiceType::class, [
             'label' => 'Salutation',
             'placeholder' => 'Select one',
-            'choices' => array_flip($choices),
+            'choices' => $choices,
             'choices_as_values' => true,
             'required' => false,
         ]);
@@ -131,9 +133,9 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFirstNameField(FormBuilderInterface $builder)
+    protected function addFirstNameField(FormBuilderInterface $builder): self
     {
-        $builder->add(self::FIELD_FIRST_NAME, TextType::class, [
+        $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
             'label' => 'First Name',
             'constraints' => $this->getTextFieldConstraints(),
         ]);
@@ -146,9 +148,9 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addLastNameField(FormBuilderInterface $builder)
+    protected function addLastNameField(FormBuilderInterface $builder): self
     {
-        $builder->add(self::FIELD_LAST_NAME, TextType::class, [
+        $builder->add(static::FIELD_LAST_NAME, TextType::class, [
             'label' => 'Last Name',
             'constraints' => $this->getTextFieldConstraints(),
         ]);
@@ -162,12 +164,12 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addGenderField(FormBuilderInterface $builder, array $choices)
+    protected function addGenderField(FormBuilderInterface $builder, array $choices): self
     {
-        $builder->add(self::FIELD_GENDER, ChoiceType::class, [
+        $builder->add(static::FIELD_GENDER, ChoiceType::class, [
             'label' => 'Gender',
             'placeholder' => 'Select one',
-            'choices' => array_flip($choices),
+            'choices' => $choices,
             'choices_as_values' => true,
             'constraints' => [
                 new Required(),
@@ -183,7 +185,7 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addPhoneField(FormBuilderInterface $builder)
+    protected function addPhoneField(FormBuilderInterface $builder): self
     {
         $phoneConstraints = [
             new Length(['max' => 255]),
@@ -203,7 +205,7 @@ class CompanyUserCustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addDateOfBirthField(FormBuilderInterface $builder)
+    protected function addDateOfBirthField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_DATE_OF_BIRTH, DateType::class, [
             'label' => 'Date of birth',
@@ -223,7 +225,7 @@ class CompanyUserCustomerForm extends AbstractType
     /**
      * @return array
      */
-    protected function createEmailConstraints()
+    protected function createEmailConstraints(): array
     {
         $emailConstraints = [
             new NotBlank(),
@@ -247,7 +249,7 @@ class CompanyUserCustomerForm extends AbstractType
     /**
      * @return array
      */
-    protected function getTextFieldConstraints()
+    protected function getTextFieldConstraints(): array
     {
         return [
             new Required(),
@@ -259,7 +261,7 @@ class CompanyUserCustomerForm extends AbstractType
     /**
      * @return \Symfony\Component\Form\CallbackTransformer
      */
-    protected function createDateTimeModelTransformer()
+    protected function createDateTimeModelTransformer(): CallbackTransformer
     {
         return new CallbackTransformer(
             function ($dateAsString) {

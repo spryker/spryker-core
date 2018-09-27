@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanyUserGui\Communication\Form;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -23,7 +22,7 @@ class CompanyUserEditForm extends CompanyUserForm
      *
      * @return $this
      */
-    protected function addCustomerSubForm(FormBuilderInterface $builder, array $options)
+    protected function addCustomerSubForm(FormBuilderInterface $builder, array $options): CompanyUserForm
     {
         $builder->add(
             CompanyUserTransfer::CUSTOMER,
@@ -44,10 +43,10 @@ class CompanyUserEditForm extends CompanyUserForm
      *
      * @return $this
      */
-    protected function addPluginForms(FormBuilderInterface $builder): AbstractType
+    protected function addPluginForms(FormBuilderInterface $builder): CompanyUserForm
     {
         foreach ($this->getFactory()->getCompanyUserEditFormPlugins() as $formPlugin) {
-            $formPlugin->buildForm($builder);
+            $builder = $formPlugin->buildForm($builder);
         }
 
         return $this;

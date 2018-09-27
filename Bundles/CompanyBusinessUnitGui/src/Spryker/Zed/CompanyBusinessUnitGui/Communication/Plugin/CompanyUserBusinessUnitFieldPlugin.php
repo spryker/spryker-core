@@ -23,9 +23,9 @@ class CompanyUserBusinessUnitFieldPlugin extends AbstractPlugin implements Compa
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return void
+     * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    public function buildForm(FormBuilderInterface $builder): void
+    public function buildForm(FormBuilderInterface $builder): FormBuilderInterface
     {
         $formType = $this->getFactory()
             ->createCompanyUserBusinessUnitChoiceFormType();
@@ -40,5 +40,7 @@ class CompanyUserBusinessUnitFieldPlugin extends AbstractPlugin implements Compa
             $builder,
             $dataProvider->getOptions()
         );
+
+        return $builder;
     }
 }
