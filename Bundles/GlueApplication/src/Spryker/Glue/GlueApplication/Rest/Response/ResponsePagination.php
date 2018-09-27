@@ -7,6 +7,7 @@
 namespace Spryker\Glue\GlueApplication\Rest\Response;
 
 use Generated\Shared\Transfer\RestPageOffsetsTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -55,10 +56,10 @@ class ResponsePagination implements ResponsePaginationInterface
         }
 
         $offsetLinks = [
-            'next' => $domain . $pageOffsetsTransfer->getNextOffset() . $limit,
-            'prev' => $domain . $pageOffsetsTransfer->getPrevOffset() . $limit,
-            'last' => $domain . $pageOffsetsTransfer->getLastOffset() . $limit,
-            'first' => $domain . 0 . $limit,
+            RestLinkInterface::LINK_NEXT => $domain . $pageOffsetsTransfer->getNextOffset() . $limit,
+            RestLinkInterface::LINK_PREV => $domain . $pageOffsetsTransfer->getPrevOffset() . $limit,
+            RestLinkInterface::LINK_LAST => $domain . $pageOffsetsTransfer->getLastOffset() . $limit,
+            RestLinkInterface::LINK_FIRST => $domain . 0 . $limit,
         ];
 
         return array_merge(

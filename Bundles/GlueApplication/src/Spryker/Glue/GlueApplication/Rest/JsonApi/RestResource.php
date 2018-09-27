@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -21,9 +22,9 @@ class RestResource implements RestResourceInterface
     protected $type;
 
     /**
-     * @var array
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface[]
      */
-    protected $links = [];
+    protected $links;
 
     /**
      * @var array
@@ -86,16 +87,7 @@ class RestResource implements RestResourceInterface
      */
     public function addLink(string $name, string $resourceUri, array $meta = []): RestResourceInterface
     {
-        if (!$meta) {
-            $this->links[$name] = $resourceUri;
-
-            return $this;
-        }
-
-        $this->links[$name] = [
-            'href' => $resourceUri,
-            'meta' => $meta,
-        ];
+        $this->links[] = new RestLink($name, $resourceUri, $meta);
 
         return $this;
     }
@@ -107,7 +99,13 @@ class RestResource implements RestResourceInterface
      */
     public function hasLink(string $name): bool
     {
-        return isset($this->links[$name]);
+        foreach ($this->links as $link) {
+            if ($name === $link->getName()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -159,7 +157,9 @@ class RestResource implements RestResourceInterface
         }
 
         if ($this->links) {
-            $response[RestResourceInterface::RESOURCE_LINKS] = $this->links;
+            foreach ($this->links as $link) {
+                $response[RestResourceInterface::RESOURCE_LINKS][$link->getName()] = $link->toArray();
+            }
         }
 
         if (!$includeRelations) {

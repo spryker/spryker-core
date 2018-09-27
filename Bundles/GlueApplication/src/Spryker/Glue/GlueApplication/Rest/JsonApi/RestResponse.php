@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -11,9 +12,9 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 class RestResponse implements RestResponseInterface
 {
     /**
-     * @var array
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface[]
      */
-    protected $links = [];
+    protected $links;
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
@@ -78,7 +79,7 @@ class RestResponse implements RestResponseInterface
      */
     public function addLink(string $name, string $uri): RestResponseInterface
     {
-        $this->links[$name] = $uri;
+        $this->links[$name] = new RestLink($name, $uri);
 
         return $this;
     }
