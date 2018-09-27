@@ -15,6 +15,7 @@ use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageSaver;
 use Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface;
+use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriterInterface;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
@@ -118,6 +119,7 @@ class CmsPageSaverTest extends CmsMocks
      * @param \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface|null $cmsPageUrlBuilderMock
      * @param \Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface|null $cmsGlossarySaverMock
      * @param \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface|null $templateManagerMock
+     * @param \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriterInterface|null $cmsPageStoreRelationWriterMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageSaver
      */
@@ -127,9 +129,9 @@ class CmsPageSaverTest extends CmsMocks
         ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
         ?CmsPageUrlBuilderInterface $cmsPageUrlBuilderMock = null,
         ?CmsGlossarySaverInterface $cmsGlossarySaverMock = null,
-        ?TemplateManagerInterface $templateManagerMock = null
+        ?TemplateManagerInterface $templateManagerMock = null,
+        ?CmsPageStoreRelationWriterInterface $cmsPageStoreRelationWriterMock = null
     ) {
-
         if ($urlFacadeMock === null) {
             $urlFacadeMock = $this->createUrlFacadeMock();
         }
@@ -154,6 +156,10 @@ class CmsPageSaverTest extends CmsMocks
             $templateManagerMock = $this->createTemplateManagerMock();
         }
 
+        if ($cmsPageStoreRelationWriterMock === null) {
+            $cmsPageStoreRelationWriterMock = $this->createCmsPageStoreRelationWriterMock();
+        }
+
         $templateManagerMock->expects($this->any())
             ->method('getTemplateById')
             ->willReturn((new CmsTemplateTransfer())->setTemplatePath('template_path'));
@@ -166,6 +172,7 @@ class CmsPageSaverTest extends CmsMocks
                 $cmsPageUrlBuilderMock,
                 $cmsGlossarySaverMock,
                 $templateManagerMock,
+                $cmsPageStoreRelationWriterMock,
             ])
             ->setMethods([
                 'getCmsPageEntity',

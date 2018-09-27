@@ -10,6 +10,7 @@ namespace Spryker\Zed\Cms\Persistence;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsPageStoreQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
@@ -77,5 +78,13 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     public function createUrlQuery(): SpyUrlQuery
     {
         return SpyUrlQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageStoreQuery
+     */
+    public function createCmsPageStoreQuery(): SpyCmsPageStoreQuery
+    {
+        return SpyCmsPageStoreQuery::create();
     }
 }

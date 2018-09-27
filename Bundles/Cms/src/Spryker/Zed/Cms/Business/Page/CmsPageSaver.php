@@ -18,6 +18,7 @@ use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
+use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriterInterface;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface;
@@ -57,12 +58,18 @@ class CmsPageSaver implements CmsPageSaverInterface
     protected $templateManager;
 
     /**
+     * @var \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriterInterface
+     */
+    protected $cmsPageStoreRelationWriter;
+
+    /**
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToUrlFacadeInterface $urlFacade
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface $touchFacade
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface $cmsPageUrlBuilder
      * @param \Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface $cmsGlossarySaver
      * @param \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface $templateManager
+     * @param \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriterInterface $cmsPageStoreRelationWriter
      */
     public function __construct(
         CmsToUrlFacadeInterface $urlFacade,
@@ -70,7 +77,8 @@ class CmsPageSaver implements CmsPageSaverInterface
         CmsQueryContainerInterface $cmsQueryContainer,
         CmsPageUrlBuilderInterface $cmsPageUrlBuilder,
         CmsGlossarySaverInterface $cmsGlossarySaver,
-        TemplateManagerInterface $templateManager
+        TemplateManagerInterface $templateManager,
+        CmsPageStoreRelationWriterInterface $cmsPageStoreRelationWriter
     ) {
         $this->urlFacade = $urlFacade;
         $this->touchFacade = $touchFacade;
@@ -78,6 +86,7 @@ class CmsPageSaver implements CmsPageSaverInterface
         $this->cmsPageUrlBuilder = $cmsPageUrlBuilder;
         $this->cmsGlossarySaver = $cmsGlossarySaver;
         $this->templateManager = $templateManager;
+        $this->cmsPageStoreRelationWriter = $cmsPageStoreRelationWriter;
     }
 
     /**
@@ -99,6 +108,8 @@ class CmsPageSaver implements CmsPageSaverInterface
             $cmsPageEntity = $this->createCmsPageEntity();
             $cmsPageEntity = $this->mapCmsPageEntity($cmsPageTransfer, $cmsPageEntity);
             $cmsPageEntity->save();
+
+            $this->persistStoreRelation($cmsPageTransfer, $cmsPageEntity->getIdCmsPage());
 
             $localizedAttributeEntities = [];
             foreach ($cmsPageTransfer->getPageAttributes() as $cmsPageAttributesTransfer) {
@@ -152,6 +163,8 @@ class CmsPageSaver implements CmsPageSaverInterface
 
             $cmsPageEntity = $this->mapCmsPageEntity($cmsPageTransfer, $cmsPageEntity);
             $cmsPageEntity->save();
+
+            $this->persistStoreRelation($cmsPageTransfer, $cmsPageEntity->getIdCmsPage());
 
             $cmsPageLocalizedAttributesList = $this->createCmsPageLocalizedAttributesList($cmsPageEntity);
             $this->updateCmsPageLocalizedAttributes($cmsPageTransfer, $cmsPageLocalizedAttributesList, $cmsPageEntity);
@@ -431,5 +444,23 @@ class CmsPageSaver implements CmsPageSaverInterface
     protected function createCmsPageLocalizedAttributesEntity(): SpyCmsPageLocalizedAttributes
     {
         return new SpyCmsPageLocalizedAttributes();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     * @param int $idCmsPage
+     *
+     * @return void
+     */
+    protected function persistStoreRelation(CmsPageTransfer $cmsPageTransfer, int $idCmsPage): void
+    {
+        $storeRelationTransfer = $cmsPageTransfer->getStoreRelation();
+
+        if ($storeRelationTransfer === null) {
+            return;
+        }
+
+        $storeRelationTransfer->setIdEntity($idCmsPage);
+        $this->cmsPageStoreRelationWriter->update($storeRelationTransfer);
     }
 }

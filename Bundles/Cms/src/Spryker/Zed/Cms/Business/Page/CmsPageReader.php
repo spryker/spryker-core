@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Cms\Business\Page;
 
-use Generated\Shared\Transfer\CmsPageAttributesTransfer;
-use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes;
@@ -22,20 +20,20 @@ class CmsPageReader implements CmsPageReaderInterface
     protected $cmsQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface
+     * @var \Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface
      */
-    protected $cmsPageUrlBuilder;
+    protected $cmsPageMapper;
 
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
-     * @param \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilderInterface $cmsPageUrlBuilder
+     * @param \Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface $cmsPageMapper
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
-        CmsPageUrlBuilderInterface $cmsPageUrlBuilder
+        CmsPageMapperInterface $cmsPageMapper
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
-        $this->cmsPageUrlBuilder = $cmsPageUrlBuilder;
+        $this->cmsPageMapper = $cmsPageMapper;
     }
 
     /**
@@ -51,75 +49,24 @@ class CmsPageReader implements CmsPageReaderInterface
             return null;
         }
 
-        $cmsPageTransfer = $this->mapCmsPageTransfer($cmsPageEntity);
-        $urlLocaleMap = $this->createUrlLocaleMap($cmsPageEntity);
+        $cmsPageMapper = $this->cmsPageMapper;
+        $cmsPageTransfer = $cmsPageMapper->mapCmsPageTransfer($cmsPageEntity);
+        $urlLocaleMap = $cmsPageMapper->mapCmsPageUrlLocale($cmsPageEntity);
 
         foreach ($cmsPageEntity->getSpyCmsPageLocalizedAttributess() as $cmsPageLocalizedAttributesEntity) {
             $url = $this->getLocalizedUrl($urlLocaleMap, $cmsPageLocalizedAttributesEntity);
 
-            $cmsPageAttributesTransfer = $this->mapCmsLocalizedAttributesTransfer(
+            $cmsPageAttributesTransfer = $cmsPageMapper->mapCmsLocalizedAttributesTransfer(
                 $cmsPageLocalizedAttributesEntity,
                 $url
             );
             $cmsPageTransfer->addPageAttribute($cmsPageAttributesTransfer);
 
-            $cmsCmsPageMetaAttributes = $this->mapCmsPageMetaAttributes($cmsPageLocalizedAttributesEntity);
+            $cmsCmsPageMetaAttributes = $cmsPageMapper->mapCmsPageMetaAttributes($cmsPageLocalizedAttributesEntity);
             $cmsPageTransfer->addMetaAttribute($cmsCmsPageMetaAttributes);
         }
 
         return $cmsPageTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
-     *
-     * @return array
-     */
-    protected function createUrlLocaleMap(SpyCmsPage $cmsPageEntity): array
-    {
-        $urlLocaleMap = [];
-        foreach ($cmsPageEntity->getSpyUrls() as $urlEntity) {
-            $urlLocaleMap[$urlEntity->getFkLocale()] = $urlEntity->getUrl();
-        }
-        return $urlLocaleMap;
-    }
-
-    /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity
-     * @param string|null $url
-     *
-     * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer
-     */
-    protected function mapCmsLocalizedAttributesTransfer(
-        SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity,
-        ?string $url = null
-    ): CmsPageAttributesTransfer {
-        $localeEntity = $cmsPageLocalizedAttributesEntity->getLocale();
-        $cmsPageAttributesTransfer = new CmsPageAttributesTransfer();
-        $cmsPageAttributesTransfer->fromArray($cmsPageLocalizedAttributesEntity->toArray(), true);
-        $cmsPageAttributesTransfer->setIdCmsPage($cmsPageLocalizedAttributesEntity->getFkCmsPage());
-        $cmsPageAttributesTransfer->setLocaleName($localeEntity->getLocaleName());
-        $cmsPageAttributesTransfer->setUrl($url);
-        $cmsPageAttributesTransfer->setUrlPrefix(
-            $this->cmsPageUrlBuilder->getPageUrlPrefix($cmsPageAttributesTransfer)
-        );
-
-        return $cmsPageAttributesTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity
-     *
-     * @return \Generated\Shared\Transfer\CmsPageMetaAttributesTransfer
-     */
-    protected function mapCmsPageMetaAttributes(SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity): CmsPageMetaAttributesTransfer
-    {
-        $localeEntity = $cmsPageLocalizedAttributesEntity->getLocale();
-        $cmsCmsPageMetaAttributes = new CmsPageMetaAttributesTransfer();
-        $cmsCmsPageMetaAttributes->fromArray($cmsPageLocalizedAttributesEntity->toArray(), true);
-        $cmsCmsPageMetaAttributes->setLocaleName($localeEntity->getLocaleName());
-
-        return $cmsCmsPageMetaAttributes;
     }
 
     /**
@@ -134,21 +81,6 @@ class CmsPageReader implements CmsPageReaderInterface
             ->findOne();
 
         return $cmsPageEntity;
-    }
-
-    /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
-     *
-     * @return \Generated\Shared\Transfer\CmsPageTransfer
-     */
-    protected function mapCmsPageTransfer(SpyCmsPage $cmsPageEntity): CmsPageTransfer
-    {
-        $cmsPageTransfer = new CmsPageTransfer();
-        $cmsPageTransfer->setTemplateName($cmsPageEntity->getCmsTemplate()->getTemplateName());
-        $cmsPageTransfer->setFkPage($cmsPageEntity->getIdCmsPage());
-        $cmsPageTransfer->fromArray($cmsPageEntity->toArray(), true);
-
-        return $cmsPageTransfer;
     }
 
     /**

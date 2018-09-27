@@ -16,6 +16,7 @@ use Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsPageStoreQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
@@ -321,9 +322,9 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::KEY)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::TRANS)
             ->filterByFkPage($idCmsPage)
-            ->useGlossaryKeyQuery()
-                ->useSpyGlossaryTranslationQuery()
-                    ->filterByFkLocale($fkLocale)
+                ->useGlossaryKeyQuery()
+                    ->useSpyGlossaryTranslationQuery()
+                        ->filterByFkLocale($fkLocale)
                 ->endUse()
             ->endUse();
 
@@ -596,11 +597,11 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         return $this->getFactory()->createCmsPageQuery()
             ->filterByIdCmsPage($idPage)
             ->innerJoinCmsTemplate(self::ALIAS_CMS_PAGE_TEMPLATE)
-            ->useSpyCmsGlossaryKeyMappingQuery(self::ALIAS_CMS_GLOSSARY_KEY_MAPPING, Criteria::LEFT_JOIN)
-                ->useGlossaryKeyQuery(self::ALIAS_GLOSSARY_KEY)
-                    ->useSpyGlossaryTranslationQuery(self::ALIAS_TRANSLATION)
-                        ->useLocaleQuery(self::ALIAS_LOCALE_FOR_TRANSLATION)
-                        ->endUse()
+                ->useSpyCmsGlossaryKeyMappingQuery(self::ALIAS_CMS_GLOSSARY_KEY_MAPPING, Criteria::LEFT_JOIN)
+                    ->useGlossaryKeyQuery(self::ALIAS_GLOSSARY_KEY)
+                        ->useSpyGlossaryTranslationQuery(self::ALIAS_TRANSLATION)
+                            ->useLocaleQuery(self::ALIAS_LOCALE_FOR_TRANSLATION)
+                            ->endUse()
                     ->endUse()
                 ->endUse()
             ->endUse()
@@ -698,5 +699,39 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         $query->filterByFkResourcePage($idCmsPage);
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     * @param array $idStores
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageStoreQuery
+     */
+    public function queryCmsPageStoreByFkCmsPageAndFkStores(int $idCmsPage, array $idStores): SpyCmsPageStoreQuery
+    {
+        return $this->getFactory()
+            ->createCmsPageStoreQuery()
+            ->filterByFkCmsPage($idCmsPage)
+            ->filterByFkStore_In($idStores);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryCmsPageWithStoreRelationByFkCmsPage(int $idCmsPage): SpyCmsPageQuery
+    {
+        return $this
+            ->queryPages()
+            ->filterByIdCmsPage($idCmsPage)
+            ->leftJoinWithSpyCmsPageStore()
+                ->useSpyCmsPageStoreQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithSpyStore()
+            ->endUse();
     }
 }

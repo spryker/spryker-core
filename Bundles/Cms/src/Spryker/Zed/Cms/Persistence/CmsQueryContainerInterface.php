@@ -10,6 +10,7 @@ namespace Spryker\Zed\Cms\Persistence;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsPageStoreQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
@@ -333,4 +334,23 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlsWithRedirect(): SpyUrlQuery;
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     * @param array $idStores
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageStoreQuery
+     */
+    public function queryCmsPageStoreByFkCmsPageAndFkStores(int $idCmsPage, array $idStores): SpyCmsPageStoreQuery;
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryCmsPageWithStoreRelationByFkCmsPage(int $idCmsPage): SpyCmsPageQuery;
 }

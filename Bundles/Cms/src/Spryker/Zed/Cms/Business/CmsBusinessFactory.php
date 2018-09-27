@@ -19,6 +19,8 @@ use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
 use Spryker\Zed\Cms\Business\Mapping\GlossaryKeyMappingManagerInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageActivator;
 use Spryker\Zed\Cms\Business\Page\CmsPageActivatorInterface;
+use Spryker\Zed\Cms\Business\Page\CmsPageMapper;
+use Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageReader;
 use Spryker\Zed\Cms\Business\Page\CmsPageReaderInterface;
 use Spryker\Zed\Cms\Business\Page\CmsPageSaver;
@@ -31,6 +33,12 @@ use Spryker\Zed\Cms\Business\Page\PageManager;
 use Spryker\Zed\Cms\Business\Page\PageManagerInterface;
 use Spryker\Zed\Cms\Business\Page\PageRemover;
 use Spryker\Zed\Cms\Business\Page\PageRemoverInterface;
+use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapper;
+use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapperInterface;
+use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReader;
+use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface;
+use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriter;
+use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriterInterface;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
 use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapper;
@@ -166,7 +174,8 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createCmsUrlBuilder(),
             $this->createCmsGlossarySaver(),
-            $this->createTemplateManager()
+            $this->createTemplateManager(),
+            $this->createCmsPageStoreRelationWriter()
         );
     }
 
@@ -175,7 +184,10 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsPageReader(): CmsPageReaderInterface
     {
-        return new CmsPageReader($this->getQueryContainer(), $this->createCmsUrlBuilder());
+        return new CmsPageReader(
+            $this->getQueryContainer(),
+            $this->createCmsPageMapper()
+        );
     }
 
     /**
@@ -384,5 +396,46 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     public function createDataExtractor(): DataExtractorInterface
     {
         return new DataExtractor($this->getUtilEncodingService());
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationMapperInterface
+     */
+    public function createCmsPageStoreRelationMapper(): CmsPageStoreRelationMapperInterface
+    {
+        return new CmsPageStoreRelationMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface
+     */
+    public function createCmsPageMapper(): CmsPageMapperInterface
+    {
+        return new CmsPageMapper(
+            $this->createCmsUrlBuilder(),
+            $this->createCmsPageStoreRelationMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface
+     */
+    public function createCmsPageStoreRelationReader(): CmsPageStoreRelationReaderInterface
+    {
+        return new CmsPageStoreRelationReader(
+            $this->getQueryContainer(),
+            $this->createCmsPageStoreRelationMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriterInterface
+     */
+    public function createCmsPageStoreRelationWriter(): CmsPageStoreRelationWriterInterface
+    {
+        return new CmsPageStoreRelationWriter(
+            $this->getQueryContainer(),
+            $this->createCmsPageStoreRelationReader()
+        );
     }
 }
