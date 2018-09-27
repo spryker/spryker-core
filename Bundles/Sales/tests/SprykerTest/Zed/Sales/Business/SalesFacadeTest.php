@@ -29,8 +29,8 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  */
 class SalesFacadeTest extends Unit
 {
-    const DEFAULT_OMS_PROCESS_NAME = 'Test01';
-    const DEFAULT_ITEM_STATE = 'test';
+    public const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+    public const DEFAULT_ITEM_STATE = 'test';
 
     protected const ORDER_SEARCH_PARAMS = [
         'orderReference' => '123',

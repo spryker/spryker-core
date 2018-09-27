@@ -13,9 +13,9 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 
 class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CMS_CONTENT_WIDGET_PLUGINS = 'CMS CONTENT WIDGET PLUGINS';
+    public const CMS_CONTENT_WIDGET_PLUGINS = 'CMS CONTENT WIDGET PLUGINS';
 
-    const TWIG_ENVIRONMENT = 'TWIG ENVIRONMENT';
+    public const TWIG_ENVIRONMENT = 'TWIG ENVIRONMENT';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container

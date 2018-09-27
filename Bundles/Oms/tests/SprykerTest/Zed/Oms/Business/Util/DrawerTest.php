@@ -31,8 +31,8 @@ use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
  */
 class DrawerTest extends Unit
 {
-    const CONDITION_NAME = 'conditionName';
-    const COMMAND_NAME = 'commandName';
+    public const CONDITION_NAME = 'conditionName';
+    public const COMMAND_NAME = 'commandName';
 
     /**
      * @return void

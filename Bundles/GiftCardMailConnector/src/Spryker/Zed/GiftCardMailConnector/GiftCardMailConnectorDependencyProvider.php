@@ -16,10 +16,10 @@ use Spryker\Zed\Kernel\Container;
 
 class GiftCardMailConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_MAIL = 'FACADE_MAIL';
-    const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
-    const FACADE_GIFT_CARD = 'FACADE_GIFT_CARD';
-    const FACADE_SALES = 'FACADE_SALES';
+    public const FACADE_MAIL = 'FACADE_MAIL';
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    public const FACADE_GIFT_CARD = 'FACADE_GIFT_CARD';
+    public const FACADE_SALES = 'FACADE_SALES';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -27,7 +27,7 @@ use SprykerTest\Shared\ZedRequest\Client\Fixture\Transfer;
  */
 class AbstractHttpClientTest extends Unit
 {
-    const TRANSFER_VALUE = 'catface';
+    public const TRANSFER_VALUE = 'catface';
 
     /**
      * @return void

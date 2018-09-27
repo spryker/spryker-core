@@ -18,14 +18,14 @@ use Spryker\Zed\ProductCategory\Dependency\Service\ProductCategoryToUtilEncoding
 
 class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_LOCALE = 'locale facade';
-    const FACADE_PRODUCT = 'product facade';
-    const FACADE_CATEGORY = 'category facade';
-    const FACADE_EVENT = 'facade event';
+    public const FACADE_LOCALE = 'locale facade';
+    public const FACADE_PRODUCT = 'product facade';
+    public const FACADE_CATEGORY = 'category facade';
+    public const FACADE_EVENT = 'facade event';
 
-    const CATEGORY_QUERY_CONTAINER = 'category query container';
+    public const CATEGORY_QUERY_CONTAINER = 'category query container';
 
-    const SERVICE_UTIL_ENCODING = 'util encoding service';
+    public const SERVICE_UTIL_ENCODING = 'util encoding service';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

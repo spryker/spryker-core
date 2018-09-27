@@ -19,16 +19,16 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
 {
-    const ID = 'id';
-    const ID_CATEGORY = 'id_category';
-    const ID_PARENT = 'parent';
-    const TEXT = 'text';
-    const IS_ACTIVE = 'is_active';
-    const IS_MAIN = 'is_main';
-    const IS_CLICKABLE = 'is_clickable';
-    const IS_IN_MENU = 'is_in_menu';
-    const IS_SEARCHABLE = 'is_searchable';
-    const CATEGORY_TEMPLATE_NAME = 'category_template_name';
+    public const ID = 'id';
+    public const ID_CATEGORY = 'id_category';
+    public const ID_PARENT = 'parent';
+    public const TEXT = 'text';
+    public const IS_ACTIVE = 'is_active';
+    public const IS_MAIN = 'is_main';
+    public const IS_CLICKABLE = 'is_clickable';
+    public const IS_IN_MENU = 'is_in_menu';
+    public const IS_SEARCHABLE = 'is_searchable';
+    public const CATEGORY_TEMPLATE_NAME = 'category_template_name';
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface

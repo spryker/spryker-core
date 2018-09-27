@@ -28,9 +28,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductPageSearchQueryContainer extends AbstractQueryContainer implements ProductPageSearchQueryContainerInterface
 {
-    const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
-    const FK_CATEGORY = 'fkCategory';
-    const VIRT_COLUMN_ID_CATEGORY_NODE = 'id_category_node';
+    public const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+    public const FK_CATEGORY = 'fkCategory';
+    public const VIRT_COLUMN_ID_CATEGORY_NODE = 'id_category_node';
 
     /**
      * @api

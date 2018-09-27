@@ -17,7 +17,7 @@ use Propel\Generator\Model\PropelTypes;
 
 class QueryBuilder extends PropelQueryBuilder
 {
-    const ATTRIBUTE_CASE_INSENSITIVE = 'caseInsensitive';
+    public const ATTRIBUTE_CASE_INSENSITIVE = 'caseInsensitive';
 
     /**
      * @param \Propel\Generator\Model\Column $col
