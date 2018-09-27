@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToMultiCartClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
+use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -32,23 +32,23 @@ class CartsReader implements CartsReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToMultiCartClientInterface
+     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
      */
-    protected $multiCartClient;
+    protected $quoteCollectionReader;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
-     * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToMultiCartClientInterface $multiCartClient
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface $quoteCollectionReader
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CartsResourceMapperInterface $cartsResourceMapper,
-        CartsRestApiToMultiCartClientInterface $multiCartClient
+        QuoteCollectionReaderPluginInterface $quoteCollectionReader
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->cartsResourceMapper = $cartsResourceMapper;
-        $this->multiCartClient = $multiCartClient;
+        $this->quoteCollectionReader = $quoteCollectionReader;
     }
 
     /**
@@ -132,7 +132,7 @@ class CartsReader implements CartsReaderInterface
     {
         $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
         $quoteCriteriaFilterTransfer->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
-        $quoteCollectionTransfer = $this->multiCartClient->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
+        $quoteCollectionTransfer = $this->quoteCollectionReader->getQuoteCollectionByCriteria($quoteCriteriaFilterTransfer);
 
         return $quoteCollectionTransfer;
     }

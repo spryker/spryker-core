@@ -11,19 +11,8 @@ use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CartItemsWriterInterface
+interface CartItemUpdaterInterface
 {
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesResponseTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function addItem(
-        RestRequestInterface $restRequest,
-        RestCartItemsAttributesTransfer $restCartItemsAttributesResponseTransfer
-    ): RestResponseInterface;
-
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
@@ -33,14 +22,5 @@ interface CartItemsWriterInterface
     public function updateItemQuantity(
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
-    ): RestResponseInterface;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function deleteItem(
-        RestRequestInterface $restRequest
     ): RestResponseInterface;
 }
