@@ -22,9 +22,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class FilterPreferencesForm extends AbstractAttributeKeyForm
 {
-    const FIELD_ID_PRODUCT_SEARCH_ATTRIBUTE = 'id_product_search_attribute';
-    const FIELD_FILTER_TYPE = 'filter_type';
-    const FIELD_TRANSLATIONS = 'translations';
+    public const FIELD_ID_PRODUCT_SEARCH_ATTRIBUTE = 'id_product_search_attribute';
+    public const FIELD_FILTER_TYPE = 'filter_type';
+    public const FIELD_TRANSLATIONS = 'translations';
 
     /**
      * @return string The name of this type

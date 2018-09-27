@@ -13,9 +13,9 @@ use Spryker\Zed\ProductCategoryFilterCollector\Dependency\Facade\ProductCategory
 
 class ProductCategoryFilterCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
-    const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
-    const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
+    public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
+    public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

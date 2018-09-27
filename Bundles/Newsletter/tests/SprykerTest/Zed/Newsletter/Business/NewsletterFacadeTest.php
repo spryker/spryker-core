@@ -33,8 +33,8 @@ use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
  */
 class NewsletterFacadeTest extends Unit
 {
-    const TEST_TYPE1 = 'TEST_TYPE1';
-    const TEST_TYPE2 = 'TEST_TYPE2';
+    public const TEST_TYPE1 = 'TEST_TYPE1';
+    public const TEST_TYPE2 = 'TEST_TYPE2';
 
     /**
      * @var \Spryker\Zed\Newsletter\Business\NewsletterFacade

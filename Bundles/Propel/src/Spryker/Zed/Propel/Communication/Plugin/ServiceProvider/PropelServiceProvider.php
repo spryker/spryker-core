@@ -23,7 +23,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    const BUNDLE = 'Propel';
+    public const BUNDLE = 'Propel';
 
     /**
      * @param \Silex\Application $app

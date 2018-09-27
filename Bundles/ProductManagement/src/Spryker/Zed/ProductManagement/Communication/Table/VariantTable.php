@@ -21,18 +21,18 @@ use Spryker\Zed\ProductManagement\ProductManagementConfig;
 
 class VariantTable extends AbstractProductTable
 {
-    const TABLE_IDENTIFIER = 'product-variant-table';
+    public const TABLE_IDENTIFIER = 'product-variant-table';
 
-    const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-    const COL_ID_PRODUCT = 'id_product';
-    const COL_SKU = 'sku';
-    const COL_NAME = 'name';
-    const COL_STATUS = 'status';
-    const COL_ACTIONS = 'actions';
-    const COL_ID_PRODUCT_BUNDLE = 'idProductBundle';
-    const COL_IS_BUNDLE = 'is_bundle';
-    const COL_VALID_FROM = 'valid_from';
-    const COL_VALID_TO = 'valid_to';
+    public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const COL_ID_PRODUCT = 'id_product';
+    public const COL_SKU = 'sku';
+    public const COL_NAME = 'name';
+    public const COL_STATUS = 'status';
+    public const COL_ACTIONS = 'actions';
+    public const COL_ID_PRODUCT_BUNDLE = 'idProductBundle';
+    public const COL_IS_BUNDLE = 'is_bundle';
+    public const COL_VALID_FROM = 'valid_from';
+    public const COL_VALID_TO = 'valid_to';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface

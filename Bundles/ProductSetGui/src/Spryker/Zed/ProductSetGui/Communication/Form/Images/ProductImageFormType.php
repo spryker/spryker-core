@@ -21,15 +21,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductImageFormType extends AbstractType
 {
-    const FIELD_ID_PRODUCT_IMAGE = 'id_product_image';
-    const FIELD_IMAGE_SMALL = 'external_url_small';
-    const FIELD_IMAGE_LARGE = 'external_url_large';
-    const FIELD_SORT_ORDER = 'sort_order';
-    const FIELD_IMAGE_PREVIEW = 'image_preview';
-    const FIELD_IMAGE_PREVIEW_LARGE_URL = 'image_preview_large_url';
-    const FIELD_FK_IMAGE_SET_ID = 'fk_image_set_id';
+    public const FIELD_ID_PRODUCT_IMAGE = 'id_product_image';
+    public const FIELD_IMAGE_SMALL = 'external_url_small';
+    public const FIELD_IMAGE_LARGE = 'external_url_large';
+    public const FIELD_SORT_ORDER = 'sort_order';
+    public const FIELD_IMAGE_PREVIEW = 'image_preview';
+    public const FIELD_IMAGE_PREVIEW_LARGE_URL = 'image_preview_large_url';
+    public const FIELD_FK_IMAGE_SET_ID = 'fk_image_set_id';
 
-    const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
+    public const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
 
     /**
      * @return string

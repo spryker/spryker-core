@@ -29,8 +29,8 @@ use Twig_Environment;
  */
 class TwigRendererTest extends Unit
 {
-    const INDEX_OF_TEMPLATE_TEXT = 0;
-    const INDEX_OF_TEMPLATE_HTML = 1;
+    public const INDEX_OF_TEMPLATE_TEXT = 0;
+    public const INDEX_OF_TEMPLATE_HTML = 1;
 
     /**
      * @return void

@@ -13,13 +13,13 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class AvailableProductConcreteRelationTabs extends AbstractTabs
 {
-    const AVAILABLE_TAB_NAME = 'available_product';
-    const AVAILABLE_TAB_TITLE = 'Select Products to assign';
-    const AVAILABLE_TAB_TEMPLATE = '@ProductListGui/_partials/_tables/available-product-table.twig';
+    public const AVAILABLE_TAB_NAME = 'available_product';
+    public const AVAILABLE_TAB_TITLE = 'Select Products to assign';
+    public const AVAILABLE_TAB_TEMPLATE = '@ProductListGui/_partials/_tables/available-product-table.twig';
 
-    const ASSIGNED_TAB_NAME = 'assignment_product';
-    const ASSIGNED_TAB_TITLE = 'Products to be assigned';
-    const ASSIGNED_TAB_TEMPLATE = '@ProductListGui/_partials/_tables/assignment-product-table.twig';
+    public const ASSIGNED_TAB_NAME = 'assignment_product';
+    public const ASSIGNED_TAB_TITLE = 'Products to be assigned';
+    public const ASSIGNED_TAB_TEMPLATE = '@ProductListGui/_partials/_tables/assignment-product-table.twig';
 
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer

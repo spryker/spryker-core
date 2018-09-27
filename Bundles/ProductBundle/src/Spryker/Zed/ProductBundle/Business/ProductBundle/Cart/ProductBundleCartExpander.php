@@ -26,7 +26,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 {
-    const BUNDLE_IDENTIFIER_DELIMITER = '_';
+    public const BUNDLE_IDENTIFIER_DELIMITER = '_';
     protected const GROUP_KEY_DELIMITER = '_';
 
     /**
