@@ -174,6 +174,7 @@ interface ShoppingListFacadeInterface
     /**
      * Specification:
      *  - Push items from quote to shopping list.
+     *  - Finds shopping list by id if exists, else creates shopping list by name.
      *
      * @api
      *
