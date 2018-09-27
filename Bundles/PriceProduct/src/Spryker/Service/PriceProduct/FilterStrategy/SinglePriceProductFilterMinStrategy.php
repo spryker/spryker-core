@@ -13,8 +13,6 @@ use Spryker\Shared\PriceProduct\PriceProductConfig;
 
 class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStrategyInterface
 {
-    protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
-
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
