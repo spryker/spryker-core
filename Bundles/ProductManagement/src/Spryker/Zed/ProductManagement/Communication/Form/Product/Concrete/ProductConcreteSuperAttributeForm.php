@@ -21,7 +21,6 @@ class ProductConcreteSuperAttributeForm extends AbstractType
     public const FIELD_DROPDOWN = 'dropdown';
     public const FIELD_INPUT = 'input';
     public const FIELD_CHECKBOX = 'checkbox';
-
     public const OPTION_PRODUCT_MANAGEMENT_ATTRIBUTE_TRANSFER = 'OPTION_PRODUCT_MANAGEMENT_ATTRIBUTE_TRANSFER';
 
     /**

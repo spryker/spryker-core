@@ -15,6 +15,8 @@ use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeTranslator;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeValueWriter;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeWriter;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\Mapper\ProductAttributeTransferMapper;
+use Spryker\Zed\ProductAttribute\Business\Model\Attribute\SuperAttributeReader;
+use Spryker\Zed\ProductAttribute\Business\Model\Attribute\SuperAttributeReaderInterface;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapper;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttribute;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReader;
@@ -98,8 +100,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
         return new AttributeReader(
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createProductAttributeTransferGenerator(),
-            $this->getRepository()
+            $this->createProductAttributeTransferGenerator()
         );
     }
 
@@ -135,6 +136,14 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
             $this->getGlossaryFacade(),
             $this->createAttributeGlossaryKeyBuilder()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Business\Model\Attribute\SuperAttributeReaderInterface
+     */
+    public function createSuperAttributeReader(): SuperAttributeReaderInterface
+    {
+        return new SuperAttributeReader($this->getRepository());
     }
 
     /**

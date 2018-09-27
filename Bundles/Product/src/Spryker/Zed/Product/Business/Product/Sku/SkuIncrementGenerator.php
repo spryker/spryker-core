@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -24,11 +25,11 @@ class SkuIncrementGenerator implements SkuIncrementGeneratorInterface
     }
 
     /**
-     * @param string $idProductAbstract
+     * @param int $idProductAbstract
      *
      * @return string
      */
-    public function generateProductConcreteSkuIncrement(string $idProductAbstract): string
+    public function generateProductConcreteSkuIncrement(int $idProductAbstract): string
     {
         $productConcreteTransfers = $this->productConcreteManager->getConcreteProductsByAbstractProductId($idProductAbstract);
 

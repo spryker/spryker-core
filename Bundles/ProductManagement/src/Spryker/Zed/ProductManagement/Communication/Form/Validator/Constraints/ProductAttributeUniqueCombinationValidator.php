@@ -8,14 +8,14 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteSuperAttributeFormTrait;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ */
 class ProductAttributeUniqueCombinationValidator extends ConstraintValidator
 {
-    use ProductConcreteSuperAttributeFormTrait;
-
     /**
      * @param mixed $value
      * @param \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuUnique|\Symfony\Component\Validator\Constraint $constraint
@@ -39,7 +39,7 @@ class ProductAttributeUniqueCombinationValidator extends ConstraintValidator
      */
     protected function validateAttributeUniqueCombination($value, ProductAttributeUniqueCombination $constraint)
     {
-        $attributes = $this->getTransformedSubmittedSuperAttributes($value);
+        $attributes = $constraint->getConcreteSuperAttributeFilterHelper()->getTransformedSubmittedSuperAttributes($value);
         $concreteProducts = $constraint->getProductFacade()->getConcreteProductsByAbstractProductId($constraint->getIdProductAbstract());
 
         if (!$this->validateCombinationExistence($attributes, $this->getAttributeCombinationsFromConcreteProducts($concreteProducts))) {
@@ -72,7 +72,7 @@ class ProductAttributeUniqueCombinationValidator extends ConstraintValidator
         foreach ($existingProductAttributes as $comnbination) {
             if (!count(array_diff_assoc($submittedAttributes, $comnbination))) {
                 return false;
-            };
+            }
         }
 
         return true;

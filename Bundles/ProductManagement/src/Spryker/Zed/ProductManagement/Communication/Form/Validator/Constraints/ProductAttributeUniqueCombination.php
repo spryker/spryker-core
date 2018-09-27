@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints;
 
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Symfony\Component\Validator\Constraint;
 
@@ -28,16 +29,27 @@ class ProductAttributeUniqueCombination extends Constraint
     protected $productFacade;
 
     /**
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacace
+     * @var \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface
+     */
+    protected $productConcreteSuperAttributeFilterHelper;
+
+    /**
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFace
      * @param int $idProductAbstract
      * @param array $options
+     * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface $productConcreteSuperAttributeFilterHelper
      */
-    public function __construct(ProductManagementToProductInterface $productFacace, int $idProductAbstract, array $options = [])
-    {
+    public function __construct(
+        ProductManagementToProductInterface $productFace,
+        int $idProductAbstract,
+        array $options,
+        ProductConcreteSuperAttributeFilterHelperInterface $productConcreteSuperAttributeFilterHelper
+    ) {
         parent::__construct($options);
 
         $this->idProductAbstract = $idProductAbstract;
-        $this->productFacade = $productFacace;
+        $this->productFacade = $productFace;
+        $this->productConcreteSuperAttributeFilterHelper = $productConcreteSuperAttributeFilterHelper;
     }
 
     /**
@@ -54,5 +66,13 @@ class ProductAttributeUniqueCombination extends Constraint
     public function getProductFacade()
     {
         return $this->productFacade;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface
+     */
+    public function getConcreteSuperAttributeFilterHelper(): ProductConcreteSuperAttributeFilterHelperInterface
+    {
+        return $this->productConcreteSuperAttributeFilterHelper;
     }
 }

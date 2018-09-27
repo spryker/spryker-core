@@ -11,10 +11,8 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -83,89 +81,6 @@ class AddController extends AbstractController
             'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
             'productFormAddTabs' => $this->getFactory()->createProductFormAddTabs()->createView(),
             'type' => $type,
-        ]);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function variantAction(Request $request)
-    {
-        $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT
-        ));
-
-        $productAbstractTransfer = $this->getFactory()
-            ->getProductFacade()
-            ->findProductAbstractById($idProductAbstract);
-
-        if (!$productAbstractTransfer) {
-            $this->addErrorMessage(sprintf('The product [%s] does not exist.', $idProductAbstract));
-
-            return new RedirectResponse('/product-management');
-        }
-
-        $localeProvider = $this->getFactory()->createLocaleProvider();
-
-        $dataProvider = $this->getFactory()->createProductVariantFormAddDataProvider();
-        $form = $this
-            ->getFactory()
-            ->createProductVariantFormAdd(
-                $dataProvider->getData(),
-                $dataProvider->getOptions($idProductAbstract, ProductManagementConfig::PRODUCT_TYPE_REGULAR)
-            )
-            ->handleRequest($request);
-
-        $bundledProductTable = $this->getFactory()
-            ->createBundledProductTable();
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $productConcreteTransfer = $this->getFactory()
-                    ->createProductFormTransferGenerator()
-                    ->buildProductConcreteTransfer($productAbstractTransfer, $form);
-
-                $this->getFactory()
-                    ->getProductFacade()
-                    ->saveProduct($productAbstractTransfer, [$productConcreteTransfer]);
-
-                $type = $productConcreteTransfer->getProductBundle() === null ?
-                    ProductManagementConfig::PRODUCT_TYPE_REGULAR :
-                    ProductManagementConfig::PRODUCT_TYPE_BUNDLE;
-
-                $this->getFactory()
-                    ->getProductFacade()
-                    ->touchProductConcrete($productConcreteTransfer->getIdProductConcrete());
-
-                $this->addSuccessMessage(sprintf(
-                    'The product [%s] was saved successfully.',
-                    $productConcreteTransfer->getSku()
-                ));
-
-                return $this->redirectResponse(sprintf(
-                    '/product-management/edit/variant?%s=%d&%s=%d&type=%s',
-                    static::PARAM_ID_PRODUCT_ABSTRACT,
-                    $idProductAbstract,
-                    static::PARAM_ID_PRODUCT,
-                    $productConcreteTransfer->getIdProductConcrete(),
-                    $type
-                ));
-            } catch (ProductConcreteExistsException $exception) {
-                $this->addErrorMessage($exception->getMessage());
-            }
-        }
-
-        return $this->viewResponse([
-            'form' => $form->createView(),
-            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
-            'productAbstract' => $productAbstractTransfer,
-            'localeCollection' => $localeProvider->getLocaleCollection(),
-            'attributeLocaleCollection' => $localeProvider->getLocaleCollection(true),
-            'productConcreteFormAddTabs' => $this->getFactory()->createProductConcreteFormAddTabs()->createView(),
-            'bundledProductTable' => $bundledProductTable->render(),
-            'type' => ProductManagementConfig::PRODUCT_TYPE_REGULAR,
         ]);
     }
 

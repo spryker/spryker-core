@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints
 
 use Symfony\Component\Validator\Constraint;
 
-class ProductMoneyNotBlank extends Constraint
+class ProductPriceNotBlank extends Constraint
 {
     /**
      * @var string

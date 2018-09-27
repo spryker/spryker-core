@@ -28,17 +28,17 @@
 
     {{ form_start(form, { 'attr': {'class': 'kv_autocomplete_form'} }) }}
 
-        {{ form_errors(form) }}
+    {{ form_errors(form) }}
 
-        {{ tabs(productConcreteFormAddTabs, {
-            'form': form,
-            'currentLocale': currentLocale,
-            'localeCollection': localeCollection,
-            'attributeLocaleCollection': attributeLocaleCollection,
-            'submit_title': submit_title,
-            'idProductAbstract': productAbstract.idProductAbstract,
-            'bundledProductTable' : bundledProductTable
-        }) }}
+    {{ tabs(productConcreteFormAddTabs, {
+        'form': form,
+        'currentLocale': currentLocale,
+        'localeCollection': localeCollection,
+        'attributeLocaleCollection': attributeLocaleCollection,
+        'submit_title': submit_title,
+        'idProductAbstract': productAbstract.idProductAbstract,
+        'bundledProductTable' : bundledProductTable
+    }) }}
 
     {{ form_end(form) }}
 

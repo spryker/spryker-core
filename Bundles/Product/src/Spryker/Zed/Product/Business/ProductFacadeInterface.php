@@ -816,8 +816,8 @@ interface ProductFacadeInterface
     public function getProductConcreteSkusByConcreteIds(array $productIds): array;
 
     /**
-     * Specification
-     * - Returns generated SKU
+     * Specification:
+     * - Returns the generated SKU for new concrete product that build from the given attributes or incremented value within the abstract product.
      *
      * @api
      *

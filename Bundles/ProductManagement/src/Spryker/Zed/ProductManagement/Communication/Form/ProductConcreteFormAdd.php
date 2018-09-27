@@ -8,14 +8,10 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ProductConcreteSuperAttributeForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributesNotBlank;
-use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeType;
-use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeUniqueCombination;
+use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ProductConcreteSuperAttributeFormType;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuUnique;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -32,11 +28,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductConcreteFormAdd extends ProductConcreteFormEdit
 {
-    use ProductConcreteSuperAttributeFormTrait;
-
     public const FIELD_SKU_AUTOGENERATE_CHECKBOX = 'sku_autogenerate_checkbox';
     public const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES = 'form_product_concrete_super_attributes';
-    public const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES_LABEL = 'Super attributes';
+    public const CONTAINER_PRODUCT_CONCRETE_SUPER_ATTRIBUTES = 'container_product_concrete_super_attributes';
     public const OPTION_SUPER_ATTRIBUTES = 'option_super_attributes';
     public const OPTION_ID_PRODUCT_ABSTRACT = 'option_id_product_abstract';
     public const FIELD_PRICE_SOURCE = 'price_source';
@@ -146,46 +140,18 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
      */
     protected function addProductConcreteSuperAttributeForm(FormBuilderInterface $builder, array $options)
     {
-        $constraints = [];
-
-        if ($builder->getOption(static::OPTION_SUPER_ATTRIBUTES)) {
-            $constraints = [
-                new ProductAttributesNotBlank(),
-                new ProductAttributeUniqueCombination(
-                    $this->getFactory()->getProductFacade(),
-                    (int)$options[static::OPTION_ID_PRODUCT_ABSTRACT]
-                ),
-            ];
+        if (!$options[static::OPTION_SUPER_ATTRIBUTES]) {
+            return $this;
         }
 
         $builder->add(
-            static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES,
-            FormType::class,
+            static::CONTAINER_PRODUCT_CONCRETE_SUPER_ATTRIBUTES,
+            ProductConcreteSuperAttributeFormType::class,
             [
-                'compound' => true,
-                'label' => 'Super attributes',
-                'constraints' => $constraints,
+                static::OPTION_SUPER_ATTRIBUTES => $options[static::OPTION_SUPER_ATTRIBUTES],
+                static::OPTION_ID_PRODUCT_ABSTRACT => $options[static::OPTION_ID_PRODUCT_ABSTRACT],
             ]
         );
-
-        foreach ($options[static::OPTION_SUPER_ATTRIBUTES] as $productmanagementAttributeTransfer) {
-            $builder->get(static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES)
-                ->add(
-                    $productmanagementAttributeTransfer->getKey(),
-                    ProductConcreteSuperAttributeForm::class,
-                    [
-                        ProductConcreteSuperAttributeForm::OPTION_PRODUCT_MANAGEMENT_ATTRIBUTE_TRANSFER => $productmanagementAttributeTransfer,
-                        'label' => $productmanagementAttributeTransfer->getKey(),
-                        'error_bubbling' => false,
-                        'attr' => [
-                            'class' => 'super-attribute-inputs-group',
-                        ],
-                        'constraints' => [
-                            new ProductAttributeType($productmanagementAttributeTransfer),
-                        ],
-                    ]
-                );
-        }
 
         return $this;
     }
@@ -224,7 +190,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
     protected function getNonEmptyTransformedSubmittedSuperAttributes(array $submittedAttributes)
     {
         return array_filter(
-            $this->getTransformedSubmittedSuperAttributes($submittedAttributes),
+            $this->getFactory()->getProductConcreteSuperAttributeFilterHelper()->getTransformedSubmittedSuperAttributes($submittedAttributes),
             function ($submittedAttribute) {
                 return $submittedAttribute !== null && $submittedAttribute !== '';
             }

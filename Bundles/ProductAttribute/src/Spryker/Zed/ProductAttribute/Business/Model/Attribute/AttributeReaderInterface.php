@@ -56,11 +56,4 @@ interface AttributeReaderInterface
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     public function getProductAttributeCollection();
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
-     */
-    public function getUniqueSuperAttributesFromConcreteProducts(array $productConcreteTransfers): array;
 }

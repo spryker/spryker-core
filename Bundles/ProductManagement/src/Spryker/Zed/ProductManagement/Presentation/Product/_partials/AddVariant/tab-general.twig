@@ -12,9 +12,11 @@
     {{ form_row(form.sku_autogenerate_checkbox, { 'id': 'sku-autogenerate-checkbox-input' }) }}
 {% endif %}
 
-{% if form.form_product_concrete_super_attributes|length %}
-    {{ form_label(form.form_product_concrete_super_attributes) }}
-    {% for attributeForm in form.form_product_concrete_super_attributes %}
+
+
+{% if form.container_product_concrete_super_attributes is defined and form.container_product_concrete_super_attributes.form_product_concrete_super_attributes|length %}
+    {{ form_label(form.container_product_concrete_super_attributes.form_product_concrete_super_attributes) }}
+    {% for attributeForm in form.container_product_concrete_super_attributes.form_product_concrete_super_attributes %}
         {{ form_label(attributeForm) }}
         {{ form_widget(attributeForm) }}
         {% if attributeForm.vars.errors|length %}

@@ -289,41 +289,17 @@ class ProductConcreteFormAddDataProvider
      *
      * @return array
      */
-    protected function convertAbstractLocalizedAttributesToFormOptions(?ProductAbstractTransfer $productAbstractTransfer = null, ?LocaleTransfer $localeTransfer = null)
-    {
-        $values = [];
-        $productAttributeValues = [];
-
-        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
-            $isProductSpecificAttribute = false;
-            $id = $attributeTransfer->getIdProductManagementAttribute();
-            $isSuper = $attributeTransfer->getIsSuper();
-            $inputType = $attributeTransfer->getInputType();
-            $allowInput = $attributeTransfer->getAllowInput();
-            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
-            $checkboxDisabled = false;
-            $valueDisabled = true;
-
-            $values[$type] = [
-                static::FORM_FIELD_ID => $id,
-                static::FORM_FIELD_VALUE => $value,
-                static::FORM_FIELD_NAME => isset($value),
-                static::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
-                static::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
-                static::FORM_FIELD_SUPER => $isSuper,
-                static::FORM_FIELD_INPUT_TYPE => $inputType,
-                static::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
-                static::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
-                static::FORM_FIELD_ALLOW_INPUT => $allowInput,
-            ];
-        }
+    protected function convertAbstractLocalizedAttributesToFormOptions(
+        ?ProductAbstractTransfer $productAbstractTransfer = null,
+        ?LocaleTransfer $localeTransfer = null
+    ): array {
+        $values = $this->getAttributeTransferCollectionValues();
 
         if (!$productAbstractTransfer) {
             return $values;
         }
 
         $productAttributeValues = [];
-        $productAttributeKeys = [];
 
         if ($localeTransfer) {
             foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributeTransfer) {
@@ -339,42 +315,7 @@ class ProductConcreteFormAddDataProvider
 
         $productAttributeKeys = $this->productFacade->getCombinedAbstractAttributeKeys($productAbstractTransfer, $localeTransfer);
 
-        foreach ($productAttributeKeys as $type) {
-            $isDefined = $this->attributeTransferCollection->has($type);
-
-            if ($isDefined) {
-                continue;
-            }
-
-            $isProductSpecificAttribute = true;
-            $id = null;
-            $isSuper = false;
-            $inputType = static::DEFAULT_INPUT_TYPE;
-            $allowInput = false;
-            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
-            $shouldBeTextArea = mb_strlen($value) > 255;
-            $checkboxDisabled = true;
-            $valueDisabled = true;
-
-            if ($shouldBeTextArea) {
-                $inputType = static::TEXT_AREA_INPUT_TYPE;
-            }
-
-            $values[$type] = [
-                static::FORM_FIELD_ID => $id,
-                static::FORM_FIELD_VALUE => $value,
-                static::FORM_FIELD_NAME => isset($value),
-                static::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
-                static::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
-                static::FORM_FIELD_SUPER => $isSuper,
-                static::FORM_FIELD_INPUT_TYPE => $inputType,
-                static::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
-                static::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
-                static::FORM_FIELD_ALLOW_INPUT => $allowInput,
-            ];
-        }
-
-        return $values;
+        return $this->getproductAttributeKeysValues($values, $productAttributeKeys, $productAttributeValues);
     }
 
     /**
@@ -389,5 +330,71 @@ class ProductConcreteFormAddDataProvider
         }
 
         return $this->attributeTransferCollection->get($keyToLocalize)->getKey();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAttributeTransferCollectionValues(): array
+    {
+        $values = [];
+
+        foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
+            $values[$type] = [
+                static::FORM_FIELD_ID => $attributeTransfer->getIdProductManagementAttribute(),
+                static::FORM_FIELD_VALUE => null,
+                static::FORM_FIELD_NAME => false,
+                static::FORM_FIELD_PRODUCT_SPECIFIC => false,
+                static::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
+                static::FORM_FIELD_SUPER => $attributeTransfer->getIsSuper(),
+                static::FORM_FIELD_INPUT_TYPE => $attributeTransfer->getInputType(),
+                static::FORM_FIELD_VALUE_DISABLED => true,
+                static::FORM_FIELD_NAME_DISABLED => false,
+                static::FORM_FIELD_ALLOW_INPUT => $attributeTransfer->getAllowInput(),
+            ];
+        }
+
+        return $values;
+    }
+
+    /**
+     * @param array $values
+     * @param array $productAttributeKeys
+     * @param array $productAttributeValues
+     *
+     * @return array
+     */
+    protected function getproductAttributeKeysValues(array $values, array $productAttributeKeys, array $productAttributeValues): array
+    {
+        foreach ($productAttributeKeys as $type) {
+            $isDefined = $this->attributeTransferCollection->has($type);
+
+            if ($isDefined) {
+                continue;
+            }
+
+            $inputType = static::DEFAULT_INPUT_TYPE;
+            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+            $shouldBeTextArea = mb_strlen($value) > 255;
+
+            if ($shouldBeTextArea) {
+                $inputType = static::TEXT_AREA_INPUT_TYPE;
+            }
+
+            $values[$type] = [
+                static::FORM_FIELD_ID => null,
+                static::FORM_FIELD_VALUE => $value,
+                static::FORM_FIELD_NAME => isset($value),
+                static::FORM_FIELD_PRODUCT_SPECIFIC => true,
+                static::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
+                static::FORM_FIELD_SUPER => false,
+                static::FORM_FIELD_INPUT_TYPE => $inputType,
+                static::FORM_FIELD_VALUE_DISABLED => true,
+                static::FORM_FIELD_NAME_DISABLED => true,
+                static::FORM_FIELD_ALLOW_INPUT => false,
+            ];
+        }
+
+        return $values;
     }
 }

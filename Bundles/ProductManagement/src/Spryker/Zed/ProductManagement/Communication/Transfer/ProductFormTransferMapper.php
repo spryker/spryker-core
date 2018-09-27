@@ -31,8 +31,8 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
-use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteSuperAttributeFormTrait;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
@@ -40,8 +40,6 @@ use Symfony\Component\Form\FormInterface;
 
 class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 {
-    use ProductConcreteSuperAttributeFormTrait;
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -73,12 +71,18 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     protected $productFormTransferMapperExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface
+     */
+    protected $productConcreteSuperAttributeFilterHelperInterface;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface $utilTextService
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface[] $productFormTransferMapperExpanderPlugins
+     * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface $productConcreteSuperAttributeFilterHelperInterface
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -86,7 +90,8 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         ProductManagementToLocaleInterface $localeFacade,
         ProductManagementToUtilTextInterface $utilTextService,
         LocaleProvider $localeProvider,
-        array $productFormTransferMapperExpanderPlugins
+        array $productFormTransferMapperExpanderPlugins,
+        ProductConcreteSuperAttributeFilterHelperInterface $productConcreteSuperAttributeFilterHelperInterface
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
@@ -94,6 +99,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $this->utilTextService = $utilTextService;
         $this->localeProvider = $localeProvider;
         $this->productFormTransferMapperExpanderPlugins = $productFormTransferMapperExpanderPlugins;
+        $this->productConcreteSuperAttributeFilterHelperInterface = $productConcreteSuperAttributeFilterHelperInterface;
     }
 
     /**
@@ -477,10 +483,16 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
      *
      * @return array
      */
-    protected function getConcreteAttributes(array $formData, ?int $idProduct)
+    protected function getConcreteAttributes(array $formData, ?int $idProduct): array
     {
-        if ($idProduct === null) {
-            return $this->getTransformedSubmittedSuperAttributes($formData[ProductConcreteFormAdd::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES]);
+        if ($idProduct === null &&
+            isset($formData[ProductConcreteFormAdd::CONTAINER_PRODUCT_CONCRETE_SUPER_ATTRIBUTES][ProductConcreteFormAdd::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES])
+        ) {
+            return $this
+                ->productConcreteSuperAttributeFilterHelperInterface
+                ->getTransformedSubmittedSuperAttributes(
+                    $formData[ProductConcreteFormAdd::CONTAINER_PRODUCT_CONCRETE_SUPER_ATTRIBUTES][ProductConcreteFormAdd::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES]
+                );
         }
 
         $attributes = [];

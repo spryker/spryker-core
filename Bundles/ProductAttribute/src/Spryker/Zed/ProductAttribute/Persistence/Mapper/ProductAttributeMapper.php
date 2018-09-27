@@ -38,10 +38,12 @@ class ProductAttributeMapper implements ProductAttributeMapperInterface
      * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue $productManagementAttributeValueEntity
      * @param \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer $productManagementAttributeValueTransfer
      *
-     * @return $this
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer
      */
-    protected function mapProductManagementAttributeValueEntityToTransfer(SpyProductManagementAttributeValue $productManagementAttributeValueEntity, ProductManagementAttributeValueTransfer $productManagementAttributeValueTransfer)
-    {
+    protected function mapProductManagementAttributeValueEntityToTransfer(
+        SpyProductManagementAttributeValue $productManagementAttributeValueEntity,
+        ProductManagementAttributeValueTransfer $productManagementAttributeValueTransfer
+    ): ProductManagementAttributeValueTransfer {
         return $productManagementAttributeValueTransfer->fromArray(
             $productManagementAttributeValueEntity->toArray()
         );

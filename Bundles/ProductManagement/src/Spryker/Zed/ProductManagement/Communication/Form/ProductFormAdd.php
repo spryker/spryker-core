@@ -21,7 +21,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductMoneyNotBlank;
+use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductPriceNotBlank;
 use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuRegex;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -491,7 +491,7 @@ class ProductFormAdd extends AbstractType
                 ],
                 'entry_type' => ProductMoneyType::class,
                 'constraints' => [
-                    new ProductMoneyNotBlank([
+                    new ProductPriceNotBlank([
                         'groups' => [self::VALIDATION_GROUP_PRICE_SOURCE],
                     ]),
                 ],

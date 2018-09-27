@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Communication\Form;
+namespace Spryker\Zed\ProductManagement\Communication\Helper;
 
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ProductConcreteSuperAttributeForm;
 
-trait ProductConcreteSuperAttributeFormTrait
+class ProductConcreteSuperAttributeFilterHelper implements ProductConcreteSuperAttributeFilterHelperInterface
 {
     /**
      * @param array $submittedAttributes
      *
      * @return array
      */
-    protected function getTransformedSubmittedSuperAttributes(array $submittedAttributes)
+    public function getTransformedSubmittedSuperAttributes(array $submittedAttributes): array
     {
         $attributes = [];
 

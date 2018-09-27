@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductAttribute\Business\Model\Attribute;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\Mapper\ProductAttributeTransferMapperInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface;
 use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface;
-use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeRepositoryInterface;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
 class AttributeReader implements AttributeReaderInterface
@@ -31,26 +30,18 @@ class AttributeReader implements AttributeReaderInterface
     protected $productAttributeTransferMapper;
 
     /**
-     * @var \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeRepositoryInterface
-     */
-    protected $productAttributeRepository;
-
-    /**
      * @param \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductAttribute\Business\Model\Attribute\Mapper\ProductAttributeTransferMapperInterface $productAttributeTransferGenerator
-     * @param \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeRepositoryInterface $productAttributeRepository
      */
     public function __construct(
         ProductAttributeQueryContainerInterface $productManagementQueryContainer,
         ProductAttributeToLocaleInterface $localeFacade,
-        ProductAttributeTransferMapperInterface $productAttributeTransferGenerator,
-        ProductAttributeRepositoryInterface $productAttributeRepository
+        ProductAttributeTransferMapperInterface $productAttributeTransferGenerator
     ) {
         $this->productAttributeQueryContainer = $productManagementQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->productAttributeTransferMapper = $productAttributeTransferGenerator;
-        $this->productAttributeRepository = $productAttributeRepository;
     }
 
     /**
@@ -165,38 +156,5 @@ class AttributeReader implements AttributeReaderInterface
             ->find();
 
         return $this->productAttributeTransferMapper->convertProductAttributeCollection($collection);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
-     */
-    public function getUniqueSuperAttributesFromConcreteProducts(array $productConcreteTransfers): array
-    {
-        $uniqueTransaformedAttributes = $this->getUniqueTransformedAttributes($productConcreteTransfers);
-        $superAttributes = $this->productAttributeRepository->findSuperAttributesFromAttributesList(array_keys($uniqueTransaformedAttributes));
-
-        return $superAttributes;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
-     *
-     * @return array
-     */
-    protected function getUniqueTransformedAttributes(array $productConcreteTransfers): array
-    {
-        $uniqueTransformedAttributes = [];
-
-        foreach ($productConcreteTransfers as $productConcreteTransfer) {
-            foreach ($productConcreteTransfer->getAttributes() as $attributeKey => $attributeValue) {
-                if (!isset($uniqueTransformedAttributes[$attributeKey]) || !in_array($attributeValue, $uniqueTransformedAttributes[$attributeKey])) {
-                    $uniqueTransformedAttributes[$attributeKey][] = $attributeValue;
-                }
-            }
-        }
-
-        return $uniqueTransformedAttributes;
     }
 }

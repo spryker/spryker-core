@@ -8,8 +8,8 @@
 
 {{ form_row(form.sku) }}
 
-{% if form.form_product_concrete_super_attributes is defined %}
-    {{ form_row(form.form_product_concrete_super_attributes) }}
+{% if form.container_product_concrete_super_attributes.form_product_concrete_super_attributes is defined %}
+    {{ form_row(form.container_product_concrete_super_attributes.form_product_concrete_super_attributes) }}
 {% endif %}
 
 {% for localeTransfer in localeCollection %}

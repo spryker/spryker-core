@@ -12,7 +12,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyC
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class ProductMoneyNotBlankValidator extends ConstraintValidator
+class ProductPriceNotBlankValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value
@@ -26,16 +26,16 @@ class ProductMoneyNotBlankValidator extends ConstraintValidator
             return;
         }
 
-        $this->validateProductMoneyNotBlank($value, $constraint);
+        $this->validateProductPriceNotBlank($value, $constraint);
     }
 
     /**
      * @param mixed $value
-     * @param \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductMoneyNotBlank $constraint
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductPriceNotBlank $constraint
      *
      * @return void
      */
-    protected function validateProductMoneyNotBlank($value, ProductMoneyNotBlank $constraint)
+    protected function validateProductPriceNotBlank($value, ProductPriceNotBlank $constraint)
     {
         foreach ($this->getGrouppedPricesArray($value) as $priceGroup) {
             if ($this->validatePriceGroup($priceGroup)) {

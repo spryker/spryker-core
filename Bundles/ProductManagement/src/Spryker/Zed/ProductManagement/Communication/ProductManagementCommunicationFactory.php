@@ -18,6 +18,8 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelper;
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelper;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelper;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductValidity\ProductValidityActivityMessenger;
@@ -347,7 +349,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getLocaleFacade(),
             $this->getUtilTextService(),
             $this->createLocaleProvider(),
-            $this->getProductFormTransferMapperExpanderPlugins()
+            $this->getProductFormTransferMapperExpanderPlugins(),
+            $this->getProductConcreteSuperAttributeFilterHelper()
         );
     }
 
@@ -577,5 +580,13 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductConcreteFormEditTabsExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface
+     */
+    public function getProductConcreteSuperAttributeFilterHelper(): ProductConcreteSuperAttributeFilterHelperInterface
+    {
+        return new ProductConcreteSuperAttributeFilterHelper();
     }
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints;
 
-use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ProductConcreteSuperAttributeForm;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -15,7 +14,7 @@ class ProductAttributeTypeValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value
-     * @param \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuUnique|\Symfony\Component\Validator\Constraint $constraint
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeType $constraint
      *
      * @return void
      */
@@ -34,9 +33,9 @@ class ProductAttributeTypeValidator extends ConstraintValidator
      *
      * @return void
      */
-    protected function validateAttributeType($value, ProductAttributeType $constraint)
+    protected function validateAttributeType($value, Constraint $constraint)
     {
-        if (empty($value[ProductConcreteSuperAttributeForm::FIELD_CHECKBOX])) {
+        if (empty($value[$constraint->fields['checkbox']])) {
             return;
         }
 
@@ -49,10 +48,10 @@ class ProductAttributeTypeValidator extends ConstraintValidator
      *
      * @return void
      */
-    protected function validateNumberType($value, ProductAttributeType $constraint)
+    protected function validateNumberType($value, Constraint $constraint)
     {
-        if ($constraint->productManagementAttributeTransfer->getInputType() === ProductAttributeType::TYPE_NUMBER && !is_numeric($value[ProductConcreteSuperAttributeForm::FIELD_INPUT])) {
-            $this->buildViolation($constraint, ProductAttributeType::TYPE_NUMBER, $value[ProductConcreteSuperAttributeForm::FIELD_INPUT]);
+        if ($constraint->productManagementAttributeTransfer->getInputType() === $constraint->fields['type'] && !is_numeric($constraint->fields['input'])) {
+            $this->buildViolation($constraint, $constraint->fields['type'], $value[$constraint->fields['input']]);
         }
     }
 
@@ -63,10 +62,10 @@ class ProductAttributeTypeValidator extends ConstraintValidator
      *
      * @return void
      */
-    protected function buildViolation(ProductAttributeType $constraint, string $type, $value)
+    protected function buildViolation(Constraint $constraint, string $type, $value)
     {
         $this->context->buildViolation($constraint->message)
-            ->setParameter('{{ type }}', ProductAttributeType::TYPE_NUMBER)
+            ->setParameter('{{ type }}', $constraint->fields['type'])
             ->addViolation();
     }
 }
