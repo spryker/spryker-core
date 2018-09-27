@@ -18,7 +18,7 @@ class CreateCompanyUserController extends AbstractController
 {
     protected const PARAM_REDIRECT_URL = 'redirect-url';
     /**
-     * @see ListCompanyUserController::indexAction()
+     * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\ListCompanyUserController::indexAction()
      */
     protected const URL_USER_LIST = '/company-user-gui/list-company-user';
 

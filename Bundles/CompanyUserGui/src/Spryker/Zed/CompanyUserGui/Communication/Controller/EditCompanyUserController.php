@@ -16,13 +16,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditCompanyUserController extends AbstractController
 {
-    /**
-     * @see CompanyUserForm::FIELD_ID_COMPANY_USER
-     */
     protected const PARAM_ID_COMPANY_USER = 'id-company-user';
     protected const PARAM_REDIRECT_URL = 'redirect-url';
     /**
-     * @see ListCompanyUserController::indexAction()
+     * @see \Spryker\Zed\CompanyUserGui\Communication\Controller\ListCompanyUserController::indexAction()
      */
     protected const URL_USER_LIST = '/company-user-gui/list-company-user';
 
