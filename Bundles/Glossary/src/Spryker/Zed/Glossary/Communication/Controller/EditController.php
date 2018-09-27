@@ -17,10 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-    const FORM_UPDATE_TYPE = 'update';
-    const URL_PARAMETER_GLOSSARY_KEY = 'fk-glossary-key';
-    const MESSAGE_UPDATE_SUCCESS = 'Translation %d was updated successfully.';
-    const MESSAGE_UPDATE_ERROR = 'Glossary entry was not updated.';
+    public const FORM_UPDATE_TYPE = 'update';
+    public const URL_PARAMETER_GLOSSARY_KEY = 'fk-glossary-key';
+    public const MESSAGE_UPDATE_SUCCESS = 'Translation %d was updated successfully.';
+    public const MESSAGE_UPDATE_ERROR = 'Glossary entry was not updated.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

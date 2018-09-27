@@ -19,8 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class AutosuggestType extends AbstractType
 {
-    const URL = 'url';
-    const PLACEHOLDER = 'placeholder';
+    public const URL = 'url';
+    public const PLACEHOLDER = 'placeholder';
 
     public function __construct()
     {

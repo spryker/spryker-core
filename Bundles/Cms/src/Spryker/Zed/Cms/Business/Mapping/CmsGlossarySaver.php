@@ -22,7 +22,7 @@ use Throwable;
 
 class CmsGlossarySaver implements CmsGlossarySaverInterface
 {
-    const DEFAULT_TRANSLATION = '';
+    public const DEFAULT_TRANSLATION = '';
 
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface

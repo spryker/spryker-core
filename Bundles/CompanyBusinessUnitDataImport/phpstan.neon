@@ -1,9 +1,6 @@
 parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
-    ignoreErrors:
-    - '#Call to an undefined method .+Criteria::.+\(\).#'
-
 services:
     -
         class: PhpStan\DynamicType\FacadeDynamicTypeExtension

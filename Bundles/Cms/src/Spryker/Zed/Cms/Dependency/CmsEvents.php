@@ -15,7 +15,7 @@ interface CmsEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_PAGE_CREATE = 'Entity.spy_cms_page.create';
+    public const ENTITY_SPY_CMS_PAGE_CREATE = 'Entity.spy_cms_page.create';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface CmsEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_PAGE_UPDATE = 'Entity.spy_cms_page.update';
+    public const ENTITY_SPY_CMS_PAGE_UPDATE = 'Entity.spy_cms_page.update';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ interface CmsEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_PAGE_DELETE = 'Entity.spy_cms_page.delete';
+    public const ENTITY_SPY_CMS_PAGE_DELETE = 'Entity.spy_cms_page.delete';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ interface CmsEvents
      *
      * @api
      */
-    const CMS_VERSION_PUBLISH = 'Cms.version.publish';
+    public const CMS_VERSION_PUBLISH = 'Cms.version.publish';
 
     /**
      * Specification
@@ -47,7 +47,7 @@ interface CmsEvents
      *
      * @api
      */
-    const CMS_VERSION_UNPUBLISH = 'Cms.version.unpublish';
+    public const CMS_VERSION_UNPUBLISH = 'Cms.version.unpublish';
 
     /**
      * Specification
@@ -55,7 +55,7 @@ interface CmsEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_VERSION_CREATE = 'Entity.spy_cms_version.create';
+    public const ENTITY_SPY_CMS_VERSION_CREATE = 'Entity.spy_cms_version.create';
 
     /**
      * Specification
@@ -63,7 +63,7 @@ interface CmsEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_VERSION_UPDATE = 'Entity.spy_cms_version.update';
+    public const ENTITY_SPY_CMS_VERSION_UPDATE = 'Entity.spy_cms_version.update';
 
     /**
      * Specification
@@ -71,5 +71,5 @@ interface CmsEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_VERSION_DELETE = 'Entity.spy_cms_version.delete';
+    public const ENTITY_SPY_CMS_VERSION_DELETE = 'Entity.spy_cms_version.delete';
 }

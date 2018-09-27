@@ -11,15 +11,15 @@ use Generated\Shared\Transfer\ModuleDependencyTransfer;
 
 interface ValidationRuleInterface
 {
-    const ADD_REQUIRE = 'add-require';
-    const ADD_REQUIRE_DEV = 'add-require-dev';
-    const ADD_SUGGEST = 'add-suggest';
+    public const ADD_REQUIRE = 'add-require';
+    public const ADD_REQUIRE_DEV = 'add-require-dev';
+    public const ADD_SUGGEST = 'add-suggest';
 
-    const REMOVE_REQUIRE = 'remove-require';
-    const REMOVE_REQUIRE_DEV = 'remove-require-dev';
-    const REMOVE_SUGGEST = 'remove-suggest';
+    public const REMOVE_REQUIRE = 'remove-require';
+    public const REMOVE_REQUIRE_DEV = 'remove-require-dev';
+    public const REMOVE_SUGGEST = 'remove-suggest';
 
-    const MANUAL_FIX = 'manual-fix';
+    public const MANUAL_FIX = 'manual-fix';
 
     /**
      * @param \Generated\Shared\Transfer\ModuleDependencyTransfer $moduleDependencyTransfer

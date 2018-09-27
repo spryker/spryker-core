@@ -11,9 +11,9 @@ use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 
 class GuzzleBodyProcessor implements ProcessorInterface
 {
-    const EXTRA = 'guzzle-body';
-    const RECORD_CONTEXT = 'context';
-    const RECORD_EXTRA = 'extra';
+    public const EXTRA = 'guzzle-body';
+    public const RECORD_CONTEXT = 'context';
+    public const RECORD_EXTRA = 'extra';
 
     /**
      * @var \Spryker\Shared\Log\Sanitizer\SanitizerInterface

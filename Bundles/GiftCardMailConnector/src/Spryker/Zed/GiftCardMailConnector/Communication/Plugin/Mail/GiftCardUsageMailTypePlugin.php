@@ -17,7 +17,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  */
 class GiftCardUsageMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    const MAIL_TYPE = 'gift card usage mail';
+    public const MAIL_TYPE = 'gift card usage mail';
 
     /**
      * @api
