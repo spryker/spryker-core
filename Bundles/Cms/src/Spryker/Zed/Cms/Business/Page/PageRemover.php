@@ -10,7 +10,7 @@ namespace Spryker\Zed\Cms\Business\Page;
 use Exception;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class PageRemover implements PageRemoverInterface
@@ -21,15 +21,15 @@ class PageRemover implements PageRemoverInterface
     protected $cmsQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface
      */
     protected $touchFacade;
 
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface $touchFacade
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchInterface $touchFacade)
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchFacadeInterface $touchFacade)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -42,7 +42,7 @@ class PageRemover implements PageRemoverInterface
      *
      * @return void
      */
-    public function delete($idCmsPage)
+    public function delete(int $idCmsPage): void
     {
         $this->cmsQueryContainer->getConnection()->beginTransaction();
 
@@ -66,7 +66,7 @@ class PageRemover implements PageRemoverInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage|null
      */
-    protected function findCmsPageEntity($idCmsPage)
+    protected function findCmsPageEntity(int $idCmsPage): ?SpyCmsPage
     {
         $cmsPageEntity = $this
             ->cmsQueryContainer
@@ -81,7 +81,7 @@ class PageRemover implements PageRemoverInterface
      *
      * @return void
      */
-    protected function deletePageWithRelations(SpyCmsPage $cmsPageEntity)
+    protected function deletePageWithRelations(SpyCmsPage $cmsPageEntity): void
     {
         $cmsPageEntity->getSpyUrls()->delete();
 
@@ -95,7 +95,7 @@ class PageRemover implements PageRemoverInterface
      *
      * @return void
      */
-    protected function touchDeletedPage($idCmsPage)
+    protected function touchDeletedPage(int $idCmsPage): void
     {
         $this->touchFacade->touchDeleted(CmsConstants::RESOURCE_TYPE_PAGE, $idCmsPage);
     }

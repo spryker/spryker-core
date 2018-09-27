@@ -6,14 +6,6 @@
         <bundle>Cms</bundle>
         <icon>fa-files-o</icon>
         <pages>
-            <page>
-                <label>Pages</label>
-                <title>Pages</title>
-                <bundle>cms</bundle>
-                <controller>page</controller>
-                <action>index</action>
-                <icon>fa-file-o</icon>
-            </page>
             <redirects>
                 <label>Redirects</label>
                 <title>Redirects</title>

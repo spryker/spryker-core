@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Cms\Business\Page;
 
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Zed\Cms\Business\Page\CmsPageActivator;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use SprykerTest\Zed\Cms\Business\CmsMocks;
 
@@ -42,6 +42,7 @@ class CmsPageActivatorTest extends CmsMocks
 
         $cmsPageActivatorMock->method('countNumberOfGlossaryKeysForIdCmsPage')->willReturn(5);
 
+        $cmsPageEntityMock->setIdCmsPage(1);
         $cmsPageActivatorMock->activate(1);
 
         $this->assertTrue($cmsPageEntityMock->getIsActive());
@@ -62,6 +63,7 @@ class CmsPageActivatorTest extends CmsMocks
 
         $cmsPageActivatorMock = $this->createCmsPageActivateMock($cmsPageEntityMock, null, $touchFacadeMock);
 
+        $cmsPageEntityMock->setIdCmsPage(1);
         $cmsPageActivatorMock->deactivate(1);
 
         $this->assertFalse($cmsPageEntityMock->getIsActive());
@@ -70,14 +72,14 @@ class CmsPageActivatorTest extends CmsMocks
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface|null $cmsQueryContainerMock
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface|null $touchFacadeMock
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface|null $touchFacadeMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageActivator
      */
     protected function createCmsPageActivateMock(
         SpyCmsPage $cmsPageEntity,
         ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
-        ?CmsToTouchInterface $touchFacadeMock = null
+        ?CmsToTouchFacadeInterface $touchFacadeMock = null
     ) {
 
         if ($cmsQueryContainerMock === null) {

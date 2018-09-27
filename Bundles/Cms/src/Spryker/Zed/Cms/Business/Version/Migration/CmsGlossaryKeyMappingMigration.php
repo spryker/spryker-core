@@ -9,13 +9,13 @@ namespace Spryker\Zed\Cms\Business\Version\Migration;
 
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CmsGlossaryKeyMappingMigration implements MigrationInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use TransactionTrait;
 
     /**
      * @var \Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface
@@ -23,7 +23,7 @@ class CmsGlossaryKeyMappingMigration implements MigrationInterface
     protected $cmsGlossarySaver;
 
     /**
-     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface
+     * @var \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface
      */
     protected $localeFacade;
 
@@ -34,10 +34,10 @@ class CmsGlossaryKeyMappingMigration implements MigrationInterface
 
     /**
      * @param \Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaverInterface $cmsGlossarySaver
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $queryContainer
      */
-    public function __construct(CmsGlossarySaverInterface $cmsGlossarySaver, CmsToLocaleInterface $localeFacade, CmsQueryContainerInterface $queryContainer)
+    public function __construct(CmsGlossarySaverInterface $cmsGlossarySaver, CmsToLocaleFacadeInterface $localeFacade, CmsQueryContainerInterface $queryContainer)
     {
         $this->cmsGlossarySaver = $cmsGlossarySaver;
         $this->localeFacade = $localeFacade;
@@ -50,9 +50,9 @@ class CmsGlossaryKeyMappingMigration implements MigrationInterface
      *
      * @return void
      */
-    public function migrate(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer)
+    public function migrate(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer): void
     {
-        $this->handleDatabaseTransaction(function () use ($originVersionDataTransfer, $targetVersionDataTransfer) {
+        $this->getTransactionHandler()->handleTransaction(function () use ($originVersionDataTransfer, $targetVersionDataTransfer) {
             $this->executeMigrateTransaction($originVersionDataTransfer, $targetVersionDataTransfer);
         });
     }
@@ -63,7 +63,7 @@ class CmsGlossaryKeyMappingMigration implements MigrationInterface
      *
      * @return void
      */
-    protected function executeMigrateTransaction(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer)
+    protected function executeMigrateTransaction(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer): void
     {
         $this->cmsGlossarySaver->deleteCmsGlossary($originVersionDataTransfer->getCmsPage()->getFkPage());
         $this->cmsGlossarySaver->saveCmsGlossary($targetVersionDataTransfer->getCmsGlossary());

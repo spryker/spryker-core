@@ -19,28 +19,28 @@ interface TemplateManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    public function createTemplate($name, $path);
+    public function createTemplate(string $name, string $path): CmsTemplateTransfer;
 
     /**
      * @param string $path
      *
      * @return bool
      */
-    public function hasTemplatePath($path);
+    public function hasTemplatePath(string $path): bool;
 
     /**
      * @param int $id
      *
      * @return bool
      */
-    public function hasTemplateId($id);
+    public function hasTemplateId(int $id): bool;
 
     /**
      * @param \Generated\Shared\Transfer\CmsTemplateTransfer $cmsTemplate
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    public function saveTemplate(CmsTemplateTransfer $cmsTemplate);
+    public function saveTemplate(CmsTemplateTransfer $cmsTemplate): CmsTemplateTransfer;
 
     /**
      * @param int $idTemplate
@@ -49,7 +49,7 @@ interface TemplateManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    public function getTemplateById($idTemplate);
+    public function getTemplateById(int $idTemplate): CmsTemplateTransfer;
 
     /**
      * @param string $path
@@ -58,14 +58,14 @@ interface TemplateManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    public function getTemplateByPath($path);
+    public function getTemplateByPath(string $path): CmsTemplateTransfer;
 
     /**
      * @param string $cmsTemplateFolderPath
      *
      * @return bool
      */
-    public function syncTemplate($cmsTemplateFolderPath);
+    public function syncTemplate(string $cmsTemplateFolderPath): bool;
 
     /**
      * @param string $path
@@ -74,5 +74,5 @@ interface TemplateManagerInterface
      *
      * @return void
      */
-    public function checkTemplateFileExists($path);
+    public function checkTemplateFileExists(string $path): void;
 }

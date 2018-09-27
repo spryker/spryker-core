@@ -7,20 +7,11 @@
 
 namespace Spryker\Zed\Cms\Dependency\Plugin;
 
-use Generated\Shared\Transfer\CmsVersionTransfer;
+use Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionPostSavePluginInterface as ExtensionCmsVersionPostSavePluginInterface;
 
-interface CmsVersionPostSavePluginInterface
+/**
+ * @deprecated Use \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionPostSavePluginInterface instead.
+ */
+interface CmsVersionPostSavePluginInterface extends ExtensionCmsVersionPostSavePluginInterface
 {
-    /**
-     * Specification:
-     * - This plugin interface is used for post hook saving when the cms page
-     *   gets published
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsVersionTransfer
-     */
-    public function postSave(CmsVersionTransfer $cmsVersionTransfer);
 }

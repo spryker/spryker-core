@@ -43,7 +43,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return string
      */
-    public function mapToJsonData(CmsVersionDataTransfer $cmsVersionDataTransfer)
+    public function mapToJsonData(CmsVersionDataTransfer $cmsVersionDataTransfer): string
     {
         return $this->utilEncoding->encodeJson($cmsVersionDataTransfer->toArray());
     }
@@ -53,7 +53,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
-    public function mapToCmsVersionDataTransfer(SpyCmsPage $cmsPageEntity)
+    public function mapToCmsVersionDataTransfer(SpyCmsPage $cmsPageEntity): CmsVersionDataTransfer
     {
         $cmsVersionDataTransfer = new CmsVersionDataTransfer();
 
@@ -74,7 +74,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function mapToCmsVersionTransfer(SpyCmsVersion $cmsVersionEntity)
+    public function mapToCmsVersionTransfer(SpyCmsVersion $cmsVersionEntity): CmsVersionTransfer
     {
         $cmsVersionTransfer = new CmsVersionTransfer();
         $cmsVersionTransfer->fromArray($cmsVersionEntity->toArray(), true);
@@ -87,7 +87,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsTemplateTransfer
      */
-    public function mapToCmsTemplateData(SpyCmsPage $cmsPageEntity)
+    public function mapToCmsTemplateData(SpyCmsPage $cmsPageEntity): CmsTemplateTransfer
     {
         $cmsTemplateTransfer = new CmsTemplateTransfer();
         $cmsTemplateTransfer->fromArray($cmsPageEntity->getCmsTemplate()->toArray(), true);
@@ -100,7 +100,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
-    public function mapToCmsPageLocalizedAttributesData(SpyCmsPage $cmsPageEntity)
+    public function mapToCmsPageLocalizedAttributesData(SpyCmsPage $cmsPageEntity): CmsPageTransfer
     {
         $cmsPageTransfer = new CmsPageTransfer();
         $cmsPageTransfer->fromArray($cmsPageEntity->toArray(), true);
@@ -123,7 +123,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function mapToCmsGlossaryKeyMappingsData(SpyCmsPage $cmsPageEntity)
+    public function mapToCmsGlossaryKeyMappingsData(SpyCmsPage $cmsPageEntity): CmsGlossaryTransfer
     {
         $cmsGlossaryTransfer = new CmsGlossaryTransfer();
 
@@ -146,7 +146,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \ArrayObject
      */
-    protected function createCmsPlaceholderTranslationTransfers(SpyCmsGlossaryKeyMapping $spyCmsGlossaryKeyMapping)
+    protected function createCmsPlaceholderTranslationTransfers(SpyCmsGlossaryKeyMapping $spyCmsGlossaryKeyMapping): ArrayObject
     {
         $cmsGlossaryAttributeTransfers = new ArrayObject();
         foreach ($spyCmsGlossaryKeyMapping->getGlossaryKey()->getSpyGlossaryTranslationsJoinLocale() as $glossaryTranslation) {
@@ -165,7 +165,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer
      */
-    protected function createCmsPageAttributesTransfer(SpyCmsPageLocalizedAttributes $spyCmsPageLocalizedAttributes, $localeName)
+    protected function createCmsPageAttributesTransfer(SpyCmsPageLocalizedAttributes $spyCmsPageLocalizedAttributes, string $localeName): CmsPageAttributesTransfer
     {
         $pageAttributeTransfer = new CmsPageAttributesTransfer();
         $pageAttributeTransfer->setName($spyCmsPageLocalizedAttributes->getName());
@@ -180,7 +180,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageMetaAttributesTransfer
      */
-    protected function createCmsPageMetaAttributesTransfer(SpyCmsPageLocalizedAttributes $spyCmsPageLocalizedAttributes, $localeName)
+    protected function createCmsPageMetaAttributesTransfer(SpyCmsPageLocalizedAttributes $spyCmsPageLocalizedAttributes, string $localeName): CmsPageMetaAttributesTransfer
     {
         $pageMetaAttributeTransfer = new CmsPageMetaAttributesTransfer();
         $pageMetaAttributeTransfer->setLocaleName($localeName);

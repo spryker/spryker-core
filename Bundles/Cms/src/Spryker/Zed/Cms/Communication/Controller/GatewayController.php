@@ -20,7 +20,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer
      */
-    public function getFlattenedLocaleCmsPageDataAction(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer)
+    public function getFlattenedLocaleCmsPageDataAction(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer): FlattenedLocaleCmsPageDataRequestTransfer
     {
         $cmsVersionDataTransfer = $this->getFacade()
             ->getCmsVersionData($flattenedLocaleCmsPageDataRequestTransfer->getIdCmsPage());

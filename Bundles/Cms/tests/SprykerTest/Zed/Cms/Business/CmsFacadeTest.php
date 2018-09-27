@@ -399,7 +399,7 @@ class CmsFacadeTest extends Unit
         $this->tester->setDependency(CmsDependencyProvider::PLUGINS_CMS_PAGE_DATA_EXPANDER, [$expanderPlugin]);
 
         // Assert
-        $expanderPlugin->expects($this->once())->method('expand');
+        $expanderPlugin->expects($this->once())->method('expand')->willReturn([]);
 
         // Act
         $this->cmsFacade->calculateFlattenedLocaleCmsPageData($input, new LocaleTransfer());

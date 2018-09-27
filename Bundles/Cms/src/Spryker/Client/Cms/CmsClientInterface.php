@@ -7,22 +7,10 @@
 
 namespace Spryker\Client\Cms;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
 
 interface CmsClientInterface
 {
-    /**
-     * @api
-     *
-     * @deprecated Use CMS Block module instead
-     *
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return array
-     */
-    public function findBlockByName(CmsBlockTransfer $cmsBlockTransfer);
-
     /**
      * Specification:
      * - Retrieves CMS version data using provided data.
@@ -36,5 +24,5 @@ interface CmsClientInterface
      *
      * @return \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer
      */
-    public function getFlattenedLocaleCmsPageData(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer);
+    public function getFlattenedLocaleCmsPageData(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer): FlattenedLocaleCmsPageDataRequestTransfer;
 }

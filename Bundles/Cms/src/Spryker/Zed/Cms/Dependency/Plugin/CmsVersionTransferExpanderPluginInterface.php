@@ -7,21 +7,11 @@
 
 namespace Spryker\Zed\Cms\Dependency\Plugin;
 
-use Generated\Shared\Transfer\CmsVersionTransfer;
+use Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionTransferExpanderPluginInterface as ExtensionCmsVersionTransferExpanderPluginInterface;
 
-interface CmsVersionTransferExpanderPluginInterface
+/**
+ * @deprecated Use \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionTransferExpanderPluginInterface instead.
+ */
+interface CmsVersionTransferExpanderPluginInterface extends ExtensionCmsVersionTransferExpanderPluginInterface
 {
-    /**
-     * Specification:
-     * - This plugin interface is used for expanding additional information in
-     *   CmsVersionTransfer, this method will call when VersionFinder return a
-     *   Cms Version
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CmsVersionTransfer $cmsVersionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsVersionTransfer
-     */
-    public function expandTransfer(CmsVersionTransfer $cmsVersionTransfer);
 }

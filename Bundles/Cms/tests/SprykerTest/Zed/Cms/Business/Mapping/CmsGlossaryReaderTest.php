@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Cms\Business\Mapping;
 
 use Spryker\Zed\Cms\Business\Mapping\CmsGlossaryReader;
 use Spryker\Zed\Cms\CmsConfig;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
+use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use SprykerTest\Zed\Cms\Business\CmsMocks;
@@ -72,14 +72,14 @@ class CmsGlossaryReaderTest extends CmsMocks
 
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface|null $cmsQueryContainerMock
-     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface|null $localeFacadeMock
+     * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface|null $localeFacadeMock
      * @param \Spryker\Zed\Cms\CmsConfig|null $cmsConfigMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossaryReader
      */
     protected function createCmsGlossaryReaderMock(
         ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
-        ?CmsToLocaleInterface $localeFacadeMock = null,
+        ?CmsToLocaleFacadeInterface $localeFacadeMock = null,
         ?CmsConfig $cmsConfigMock = null
     ) {
         if ($cmsQueryContainerMock === null) {

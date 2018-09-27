@@ -29,28 +29,28 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CmsGlossaryForm extends AbstractType
 {
-    const FIELD_FK_PAGE = 'fkPage';
-    const FIELD_PLACEHOLDER = 'placeholder';
-    const FIELD_GLOSSARY_KEY = 'glossary_key';
-    const FIELD_ID_KEY_MAPPING = 'idCmsGlossaryKeyMapping';
-    const FIELD_TEMPLATE_NAME = 'templateName';
-    const FIELD_SEARCH_OPTION = 'search_option';
-    const FIELD_TRANSLATION = 'translation';
+    public const FIELD_FK_PAGE = 'fkPage';
+    public const FIELD_PLACEHOLDER = 'placeholder';
+    public const FIELD_GLOSSARY_KEY = 'glossary_key';
+    public const FIELD_ID_KEY_MAPPING = 'idCmsGlossaryKeyMapping';
+    public const FIELD_TEMPLATE_NAME = 'templateName';
+    public const FIELD_SEARCH_OPTION = 'search_option';
+    public const FIELD_TRANSLATION = 'translation';
 
-    const TYPE_GLOSSARY_NEW = 'New glossary';
-    const TYPE_GLOSSARY_FIND = 'Find glossary';
-    const TYPE_AUTO_GLOSSARY = 'Auto';
-    const TYPE_FULLTEXT_SEARCH = 'Full text';
+    protected const TYPE_GLOSSARY_NEW = 'New glossary';
+    protected const TYPE_GLOSSARY_FIND = 'Find glossary';
+    protected const TYPE_AUTO_GLOSSARY = 'Auto';
+    protected const TYPE_FULLTEXT_SEARCH = 'Full text';
 
-    const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
-    const FIELD_FK_LOCALE = 'fk_locale';
+    protected const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
+    public const FIELD_FK_LOCALE = 'fk_locale';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
@@ -71,7 +71,7 @@ class CmsGlossaryForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addFkPageField($builder)
@@ -204,7 +204,7 @@ class CmsGlossaryForm extends AbstractType
     /**
      * @return array
      */
-    protected function getPlaceholderConstants()
+    protected function getPlaceholderConstants(): array
     {
         $placeholderConstraints = [
             new Required(),
@@ -214,7 +214,7 @@ class CmsGlossaryForm extends AbstractType
 
         $placeholderConstraints[] = new Callback([
             'callback' => function ($placeholder, ExecutionContextInterface $context) {
-                    $formData = $context->getRoot()->getViewData();
+                $formData = $context->getRoot()->getViewData();
                 if ($this->getFacade()->hasPagePlaceholderMapping($formData[self::FIELD_FK_PAGE], $placeholder)) {
                     $context->addViolation('Placeholder has already mapped');
                 }
@@ -228,7 +228,7 @@ class CmsGlossaryForm extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'cms_glossary';
     }
@@ -238,7 +238,7 @@ class CmsGlossaryForm extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getBlockPrefix();
     }
