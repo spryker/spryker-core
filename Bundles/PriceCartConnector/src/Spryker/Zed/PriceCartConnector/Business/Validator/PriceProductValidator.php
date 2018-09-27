@@ -18,7 +18,7 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInte
 
 class PriceProductValidator implements PriceProductValidatorInterface
 {
-    const CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY = 'cart.pre.check.price.failed';
+    public const CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY = 'cart.pre.check.price.failed';
     /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface
      */

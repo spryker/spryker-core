@@ -22,10 +22,10 @@ use Symfony\Component\Validator\Constraints\Range;
  */
 class TaxRateForm extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_RATE = 'rate';
-    const FIELD_COUNTRY = 'fkCountry';
-    const FIELD_ID_TAX_RATE = 'idTaxRate';
+    public const FIELD_NAME = 'name';
+    public const FIELD_RATE = 'rate';
+    public const FIELD_COUNTRY = 'fkCountry';
+    public const FIELD_ID_TAX_RATE = 'idTaxRate';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

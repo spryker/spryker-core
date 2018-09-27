@@ -15,7 +15,7 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class MonthDecisionRule implements DecisionRuleInterface
 {
-    const DATE_FORMAT = 'n';
+    public const DATE_FORMAT = 'n';
 
     /**
      * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface

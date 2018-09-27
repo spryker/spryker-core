@@ -20,14 +20,14 @@ use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
 class ProductSetTable extends AbstractTable
 {
-    const TABLE_IDENTIFIER = 'product-set-table';
+    public const TABLE_IDENTIFIER = 'product-set-table';
 
-    const COL_ID_PRODUCT_SET = 'id_product_set';
-    const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
-    const COL_PRODUCT_COUNT = 'product_count';
-    const COL_WEIGHT = 'weight';
-    const COL_IS_ACTIVE = 'is_active';
-    const COL_ACTIONS = 'actions';
+    public const COL_ID_PRODUCT_SET = 'id_product_set';
+    public const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
+    public const COL_PRODUCT_COUNT = 'product_count';
+    public const COL_WEIGHT = 'weight';
+    public const COL_IS_ACTIVE = 'is_active';
+    public const COL_ACTIONS = 'actions';
 
     /**
      * @var \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface

@@ -43,8 +43,8 @@ use Spryker\Zed\Store\Business\StoreFacade;
  */
 class PriceProductFacadeTest extends Unit
 {
-    const EUR_ISO_CODE = 'EUR';
-    const USD_ISO_CODE = 'USD';
+    public const EUR_ISO_CODE = 'EUR';
+    public const USD_ISO_CODE = 'USD';
     /**
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
      */

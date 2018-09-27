@@ -17,7 +17,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
  */
 class CategoryAttributeTable extends AbstractTable
 {
-    const TABLE_IDENTIFIER = 'category_attribute_table';
+    public const TABLE_IDENTIFIER = 'category_attribute_table';
 
     /**
      * @var \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery

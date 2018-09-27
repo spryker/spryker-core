@@ -12,7 +12,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 class OrderPaymentInitMapper extends BaseMapper
 {
-    const NO_CUSTOMER_ID = 0;
+    public const NO_CUSTOMER_ID = 0;
 
     /**
      * @var \Orm\Zed\Sales\Persistence\SpySalesOrder

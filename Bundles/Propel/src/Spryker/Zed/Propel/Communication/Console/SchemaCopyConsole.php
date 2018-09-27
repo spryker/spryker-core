@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SchemaCopyConsole extends Console
 {
-    const COMMAND_NAME = 'propel:schema:copy';
+    public const COMMAND_NAME = 'propel:schema:copy';
 
     /**
      * @return void

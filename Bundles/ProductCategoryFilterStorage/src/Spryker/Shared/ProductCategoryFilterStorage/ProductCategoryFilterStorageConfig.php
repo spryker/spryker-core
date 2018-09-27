@@ -17,7 +17,7 @@ class ProductCategoryFilterStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_CATEGORY_FILTER_SYNC_STORAGE_QUEUE = 'sync.storage.category';
+    public const PRODUCT_CATEGORY_FILTER_SYNC_STORAGE_QUEUE = 'sync.storage.category';
 
     /**
      * Specification:
@@ -25,7 +25,7 @@ class ProductCategoryFilterStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_CATEGORY_FILTER_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.category.error';
+    public const PRODUCT_CATEGORY_FILTER_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.category.error';
 
     /**
      * Specification:
@@ -33,5 +33,5 @@ class ProductCategoryFilterStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_CATEGORY_FILTER_RESOURCE_NAME = 'product_category_filter';
+    public const PRODUCT_CATEGORY_FILTER_RESOURCE_NAME = 'product_category_filter';
 }

@@ -17,10 +17,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchRegisterSnapshotRepositoryConsole extends Console
 {
-    const COMMAND_NAME = 'search:snapshot:register-repository';
-    const DESCRIPTION = 'This command will register a snapshot repository';
+    public const COMMAND_NAME = 'search:snapshot:register-repository';
+    public const DESCRIPTION = 'This command will register a snapshot repository';
 
-    const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
+    public const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
 
     /**
      * @return void

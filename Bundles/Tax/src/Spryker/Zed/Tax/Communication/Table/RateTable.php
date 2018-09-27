@@ -18,9 +18,9 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RateTable extends AbstractTable
 {
-    const TABLE_COL_ACTIONS = 'Actions';
-    const URL_PARAM_ID_TAX_RATE = 'id-tax-rate';
-    const COUNTRY_NOT_AVAILABLE = 'N/A';
+    public const TABLE_COL_ACTIONS = 'Actions';
+    public const URL_PARAM_ID_TAX_RATE = 'id-tax-rate';
+    public const COUNTRY_NOT_AVAILABLE = 'N/A';
 
     /**
      * @var \Orm\Zed\Tax\Persistence\SpyTaxRateQuery

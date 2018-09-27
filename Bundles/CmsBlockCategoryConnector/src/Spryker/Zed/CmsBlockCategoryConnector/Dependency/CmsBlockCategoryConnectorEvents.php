@@ -15,7 +15,7 @@ interface CmsBlockCategoryConnectorEvents
      *
      * @api
      */
-    const CMS_BLOCK_CATEGORY_CONNECTOR_PUBLISH = 'CmsBlockCategory.connector.publish';
+    public const CMS_BLOCK_CATEGORY_CONNECTOR_PUBLISH = 'CmsBlockCategory.connector.publish';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface CmsBlockCategoryConnectorEvents
      *
      * @api
      */
-    const CMS_BLOCK_CATEGORY_CONNECTOR_UNPUBLISH = 'CmsBlockCategory.connector.unpublish';
+    public const CMS_BLOCK_CATEGORY_CONNECTOR_UNPUBLISH = 'CmsBlockCategory.connector.unpublish';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ interface CmsBlockCategoryConnectorEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_CREATE = 'Entity.spy_cms_block_category_connector.create';
+    public const ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_CREATE = 'Entity.spy_cms_block_category_connector.create';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ interface CmsBlockCategoryConnectorEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_UPDATE = 'Entity.spy_cms_block_category_connector.update';
+    public const ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_UPDATE = 'Entity.spy_cms_block_category_connector.update';
 
     /**
      * Specification
@@ -47,7 +47,7 @@ interface CmsBlockCategoryConnectorEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_DELETE = 'Entity.spy_cms_block_category_connector.delete';
+    public const ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_DELETE = 'Entity.spy_cms_block_category_connector.delete';
 
     /**
      * Specification
@@ -55,7 +55,7 @@ interface CmsBlockCategoryConnectorEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_CREATE = 'Entity.spy_cms_block_category_position.create';
+    public const ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_CREATE = 'Entity.spy_cms_block_category_position.create';
 
     /**
      * Specification
@@ -63,7 +63,7 @@ interface CmsBlockCategoryConnectorEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_UPDATE = 'Entity.spy_cms_block_category_position.update';
+    public const ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_UPDATE = 'Entity.spy_cms_block_category_position.update';
 
     /**
      * Specification
@@ -71,5 +71,5 @@ interface CmsBlockCategoryConnectorEvents
      *
      * @api
      */
-    const ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_DELETE = 'Entity.spy_cms_block_category_position.delete';
+    public const ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_DELETE = 'Entity.spy_cms_block_category_position.delete';
 }
