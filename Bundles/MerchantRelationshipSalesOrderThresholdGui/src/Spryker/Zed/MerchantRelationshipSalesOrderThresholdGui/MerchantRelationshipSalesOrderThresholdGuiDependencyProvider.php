@@ -42,6 +42,19 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
         $container = $this->addMoneyFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addMerchantRelationshipSalesOrderThresholdFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+
         $container = $this->addMerchantRelationshipPropelQuery($container);
         $container = $this->addMerchantRelationshipSalesOrderThresholdPropelQuery($container);
 

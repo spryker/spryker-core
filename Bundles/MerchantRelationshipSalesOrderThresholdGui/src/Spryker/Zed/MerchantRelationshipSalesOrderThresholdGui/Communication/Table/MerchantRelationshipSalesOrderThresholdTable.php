@@ -12,11 +12,11 @@ use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipTableMap;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
-use Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThresholdQuery;
 use Orm\Zed\SalesOrderThreshold\Persistence\Map\SpySalesOrderThresholdTypeTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Persistence\MerchantRelationshipSalesOrderThresholdGuiRepositoryInterface;
 
 class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
 {
@@ -33,25 +33,17 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
     protected const COL_ACTIONS = 'actions';
 
     /**
-     * @var \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
+     * @var \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Persistence\MerchantRelationshipSalesOrderThresholdGuiRepositoryInterface
      */
-    protected $propelMerchantRelationshipQuery;
+    protected $merchantRelationshipSalesOrderThresholdGuiRepository;
 
     /**
-     * @var \Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThresholdQuery
-     */
-    protected $propelMerchantRelationshipSalesOrderThresholdQuery;
-
-    /**
-     * @param \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery $propelMerchantRelationshipQuery
-     * @param \Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThresholdQuery $propelMerchantRelationshipSalesOrderThresholdQuery
+     * @param \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Persistence\MerchantRelationshipSalesOrderThresholdGuiRepositoryInterface $merchantRelationshipSalesOrderThresholdGuiRepository
      */
     public function __construct(
-        SpyMerchantRelationshipQuery $propelMerchantRelationshipQuery,
-        SpyMerchantRelationshipSalesOrderThresholdQuery $propelMerchantRelationshipSalesOrderThresholdQuery
+        MerchantRelationshipSalesOrderThresholdGuiRepositoryInterface $merchantRelationshipSalesOrderThresholdGuiRepository
     ) {
-        $this->propelMerchantRelationshipQuery = $propelMerchantRelationshipQuery;
-        $this->propelMerchantRelationshipSalesOrderThresholdQuery = $propelMerchantRelationshipSalesOrderThresholdQuery;
+        $this->merchantRelationshipSalesOrderThresholdGuiRepository = $merchantRelationshipSalesOrderThresholdGuiRepository;
     }
 
     /**
@@ -91,6 +83,7 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
         $queryResults = $this->runQuery($query, $config);
         $results = [];
 
+        $queryResults = $this->prepareMerchantRelationshipThresholdLabels($queryResults);
         foreach ($queryResults as $item) {
             $results[] = $this->prepareRowData($item);
         }
@@ -100,24 +93,15 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
     }
 
     /**
-     * @uses MerchantRelationship
-     * @uses CompanyBusinessUnit
-     * @uses Merchant
-     * @uses Company
-     *
      * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
      */
     protected function prepareQuery(): SpyMerchantRelationshipQuery
     {
-        $query = $this->propelMerchantRelationshipQuery
-            ->joinWithCompanyBusinessUnit()
-            ->joinWithMerchant()
-            ->joinWith('CompanyBusinessUnit.Company')
+        return $query = $this->merchantRelationshipSalesOrderThresholdGuiRepository
+            ->getMerchantRelationshipTableQuery()
             ->withColumn(SpyCompanyBusinessUnitTableMap::COL_NAME, static::COL_BUSINESS_UNIT_NAME)
             ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY_NAME)
             ->withColumn("CONCAT(" . SpyMerchantTableMap::COL_NAME . ", ' ', " . SpyMerchantRelationshipTableMap::COL_MERCHANT_RELATIONSHIP_KEY . ")", static::COL_MERCHANT_RELATIONSHIP_NAME);
-
-        return $query;
     }
 
     /**
@@ -153,7 +137,7 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
             static::COL_COMPANY_NAME => $item[static::COL_COMPANY_NAME],
             static::COL_BUSINESS_UNIT_NAME => $item[static::COL_BUSINESS_UNIT_NAME],
             static::COL_MERCHANT_RELATIONSHIP_NAME => $item[static::COL_MERCHANT_RELATIONSHIP_NAME],
-            static::COL_THRESHOLDS => $this->prepareMerchantRelationshipThresholds($item[static::COL_ID_MERCHANT_RELATIONSHIP]),
+            static::COL_THRESHOLDS => $item[static::COL_THRESHOLDS],
             static::COL_ACTIONS => $this->buildLinks($item),
         ];
 
@@ -179,32 +163,51 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
     }
 
     /**
-     * @uses SalesOrderThreshold
-     * @uses MerchantRelationshipSalesOrderThreshold
+     * @param array $queryResults
      *
-     * @param int $idMerchantRelationship
+     * @return array
+     */
+    protected function prepareMerchantRelationshipThresholdLabels(array $queryResults): array
+    {
+        $merchantRelationshipIds = array_column($queryResults, static::COL_ID_MERCHANT_RELATIONSHIP);
+
+        $thresholds = $this->merchantRelationshipSalesOrderThresholdGuiRepository
+            ->getMerchantRelationshipSalesOrderThresholdTableQuery($merchantRelationshipIds)
+            ->withColumn(SpySalesOrderThresholdTypeTableMap::COL_THRESHOLD_GROUP, static::COL_THRESHOLD_GROUP)
+            ->find();
+
+        $thresholdMerchantRelationshipMapping = [];
+        foreach ($thresholds as $threshold) {
+            $thresholdMerchantRelationshipMapping[$threshold->getFkMerchantRelationship()][] = $threshold->getVirtualColumn(static::COL_THRESHOLD_GROUP);
+        }
+
+        $results = [];
+        foreach ($queryResults as $row) {
+            $row[static::COL_THRESHOLDS] = '';
+
+            if (isset($thresholdMerchantRelationshipMapping[$row[static::COL_ID_MERCHANT_RELATIONSHIP]])) {
+                $row[static::COL_THRESHOLDS] = $this->formatThresholdsColumn(
+                    $thresholdMerchantRelationshipMapping[$row[static::COL_ID_MERCHANT_RELATIONSHIP]]
+                );
+            }
+
+            $results[] = $row;
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param string[] $thresholdGroups
      *
      * @return string
      */
-    protected function prepareMerchantRelationshipThresholds(int $idMerchantRelationship): string
+    protected function formatThresholdsColumn(array $thresholdGroups): string
     {
-        $query = clone $this->propelMerchantRelationshipSalesOrderThresholdQuery;
-        $thresholds = $query
-            ->joinWithSalesOrderThresholdType()
-            ->filterByFkMerchantRelationship($idMerchantRelationship)
-            ->withColumn(SpySalesOrderThresholdTypeTableMap::COL_THRESHOLD_GROUP, static::COL_THRESHOLD_GROUP)
-            ->find()
-            ->toArray();
+        $thresholdGroups = array_map(function (string $thresholdGroup) {
+            return "<span class='label label-info'>" . $thresholdGroup . "</span>";
+        }, $thresholdGroups);
 
-        if (empty($thresholds)) {
-            return '';
-        }
-
-        $resultThresholds = [];
-        foreach ($thresholds as $threshold) {
-            $resultThresholds[$threshold[static::COL_THRESHOLD_GROUP]] = "<span class='label label-info'>" . $threshold[static::COL_THRESHOLD_GROUP] . "</span>";
-        }
-
-        return implode(' ', $resultThresholds);
+        return implode(' ', $thresholdGroups);
     }
 }

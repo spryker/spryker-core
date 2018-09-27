@@ -9,8 +9,6 @@ namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
-use Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThresholdQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdDataProvider;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdStrategy\ThresholdDataProviderResolver;
@@ -33,6 +31,7 @@ use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig getConfig()
+ * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Persistence\MerchantRelationshipSalesOrderThresholdGuiRepositoryInterface getRepository()
  */
 class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -42,8 +41,7 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
     public function createMerchantRelationshipSalesOrderThresholdTable(): MerchantRelationshipSalesOrderThresholdTable
     {
         return new MerchantRelationshipSalesOrderThresholdTable(
-            $this->getMerchantRelationshipPropelQuery(),
-            $this->getMerchantRelationshipSalesOrderThresholdPropelQuery()
+            $this->getRepository()
         );
     }
 
@@ -122,22 +120,6 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
         return new ThresholdDataProviderResolver(
             $this->getConfig()
         );
-    }
-
-    /**
-     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
-     */
-    public function getMerchantRelationshipPropelQuery(): SpyMerchantRelationshipQuery
-    {
-        return $this->getProvidedDependency(MerchantRelationshipSalesOrderThresholdGuiDependencyProvider::PROPEL_QUERY_MERCHANT_RELATIONSHIP);
-    }
-
-    /**
-     * @return \Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThresholdQuery
-     */
-    public function getMerchantRelationshipSalesOrderThresholdPropelQuery(): SpyMerchantRelationshipSalesOrderThresholdQuery
-    {
-        return $this->getProvidedDependency(MerchantRelationshipSalesOrderThresholdGuiDependencyProvider::PROPEL_QUERY_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD);
     }
 
     /**
