@@ -18,6 +18,7 @@ class AddThresholdMessagesCartPreReloadItemsPlugin extends AbstractPlugin implem
 {
     /**
      * {@inheritdoc}
+     * - Adds the soft threshold messages to the messenger for the applicable thresholds.
      *
      * @api
      *

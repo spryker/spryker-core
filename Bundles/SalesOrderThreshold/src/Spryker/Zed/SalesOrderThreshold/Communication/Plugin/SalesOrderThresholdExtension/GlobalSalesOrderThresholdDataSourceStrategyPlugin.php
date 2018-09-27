@@ -20,6 +20,7 @@ class GlobalSalesOrderThresholdDataSourceStrategyPlugin extends AbstractPlugin i
 {
     /**
      * {@inheritdoc}
+     * - Finds the applicable global store and currency thresholds for the cart sub total.
      *
      * @api
      *
@@ -31,9 +32,9 @@ class GlobalSalesOrderThresholdDataSourceStrategyPlugin extends AbstractPlugin i
     {
         $this->assertRequiredAttributes($quoteTransfer);
 
-        $itemsSubTotal = $this->getThresholdItemsSubtotal($quoteTransfer);
+        $cartSubTotal = $this->getThresholdCartSubtotal($quoteTransfer);
 
-        if (!$itemsSubTotal) {
+        if (!$cartSubTotal) {
             return [];
         }
 
@@ -43,9 +44,9 @@ class GlobalSalesOrderThresholdDataSourceStrategyPlugin extends AbstractPlugin i
                 $quoteTransfer->getCurrency()
             );
 
-        return array_map(function (SalesOrderThresholdTransfer $salesOrderThresholdTransfer) use ($itemsSubTotal) {
+        return array_map(function (SalesOrderThresholdTransfer $salesOrderThresholdTransfer) use ($cartSubTotal) {
             $salesOrderThresholdTransfer = $salesOrderThresholdTransfer->getSalesOrderThresholdValue();
-            $salesOrderThresholdTransfer->setValue($itemsSubTotal);
+            $salesOrderThresholdTransfer->setValue($cartSubTotal);
 
             return $salesOrderThresholdTransfer;
         }, $salesOrderThresholdTransfers);
@@ -66,18 +67,18 @@ class GlobalSalesOrderThresholdDataSourceStrategyPlugin extends AbstractPlugin i
      *
      * @return int
      */
-    protected function getThresholdItemsSubtotal(QuoteTransfer $quoteTransfer): int
+    protected function getThresholdCartSubtotal(QuoteTransfer $quoteTransfer): int
     {
-        $itemsSubTotal = 0;
+        $cartSubTotal = 0;
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($quoteTransfer->getPriceMode() === SalesOrderThresholdConfig::PRICE_MODE_NET) {
-                $itemsSubTotal += ($itemTransfer->getUnitNetPrice() * $itemTransfer->getQuantity());
+                $cartSubTotal += ($itemTransfer->getUnitNetPrice() * $itemTransfer->getQuantity());
                 continue;
             }
 
-            $itemsSubTotal += ($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity());
+            $cartSubTotal += ($itemTransfer->getUnitGrossPrice() * $itemTransfer->getQuantity());
         }
 
-        return $itemsSubTotal;
+        return $cartSubTotal;
     }
 }

@@ -19,6 +19,7 @@ class MerchantRelationshipSalesOrderThresholdDataSourceStrategyPlugin extends Ab
 {
     /**
      * {@inheritdoc}
+     * - Finds the applicable merchant relationship thresholds for the merchant relationship sub total.
      *
      * @api
      *

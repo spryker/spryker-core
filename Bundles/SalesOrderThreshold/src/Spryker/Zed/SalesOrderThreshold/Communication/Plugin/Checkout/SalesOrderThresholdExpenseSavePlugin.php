@@ -19,6 +19,7 @@ class SalesOrderThresholdExpenseSavePlugin extends AbstractPlugin implements Che
 {
     /**
      * {@inheritdoc}
+     * - Persists the threshold expenses of the quote in the database.
      *
      * @api
      *

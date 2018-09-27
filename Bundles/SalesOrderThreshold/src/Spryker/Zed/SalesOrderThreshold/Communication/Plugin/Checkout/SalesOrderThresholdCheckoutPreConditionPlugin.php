@@ -19,6 +19,7 @@ class SalesOrderThresholdCheckoutPreConditionPlugin extends AbstractPlugin imple
 {
     /**
      * {@inheritdoc}
+     * - Checks the items in quote for the applicable hard thresholds.
      *
      * @api
      *

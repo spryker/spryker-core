@@ -18,6 +18,7 @@ class AddSalesOrderThresholdExpenseCalculatorPlugin extends AbstractPlugin imple
 {
     /**
      * {@inheritdoc}
+     * - Adds expenses for the applicable thresholds if there's any surcharge fees.
      *
      * @api
      *
