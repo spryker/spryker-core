@@ -46,7 +46,7 @@ class AddVariantController extends AbstractController
         $dataProvider = $this->getFactory()->createProductVariantFormAddDataProvider();
         $form = $this
             ->getFactory()
-            ->createProductVariantFormAdd(
+            ->getProductVariantFormAdd(
                 $dataProvider->getData(),
                 $dataProvider->getOptions($idProductAbstract, ProductManagementConfig::PRODUCT_TYPE_REGULAR)
             )

@@ -69,7 +69,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductVariantFormAdd(array $formData, array $formOptions = [])
+    public function getProductVariantFormAdd(array $formData, array $formOptions = [])
     {
         return $this->getFormFactory()->create(ProductConcreteFormAdd::class, $formData, $formOptions);
     }
@@ -350,7 +350,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getUtilTextService(),
             $this->createLocaleProvider(),
             $this->getProductFormTransferMapperExpanderPlugins(),
-            $this->getProductConcreteSuperAttributeFilterHelper()
+            $this->createProductConcreteSuperAttributeFilterHelper()
         );
     }
 
@@ -585,7 +585,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface
      */
-    public function getProductConcreteSuperAttributeFilterHelper(): ProductConcreteSuperAttributeFilterHelperInterface
+    public function createProductConcreteSuperAttributeFilterHelper(): ProductConcreteSuperAttributeFilterHelperInterface
     {
         return new ProductConcreteSuperAttributeFilterHelper();
     }

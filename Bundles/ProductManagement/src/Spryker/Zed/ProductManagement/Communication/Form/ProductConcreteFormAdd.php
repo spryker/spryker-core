@@ -190,7 +190,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
     protected function getNonEmptyTransformedSubmittedSuperAttributes(array $submittedAttributes)
     {
         return array_filter(
-            $this->getFactory()->getProductConcreteSuperAttributeFilterHelper()->getTransformedSubmittedSuperAttributes($submittedAttributes),
+            $this->getFactory()->createProductConcreteSuperAttributeFilterHelper()->getTransformedSubmittedSuperAttributes($submittedAttributes),
             function ($submittedAttribute) {
                 return $submittedAttribute !== null && $submittedAttribute !== '';
             }

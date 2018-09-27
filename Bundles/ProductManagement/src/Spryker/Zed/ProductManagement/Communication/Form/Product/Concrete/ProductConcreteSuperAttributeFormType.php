@@ -78,7 +78,7 @@ class ProductConcreteSuperAttributeFormType extends AbstractType
                 $this->getFactory()->getProductFacade(),
                 (int)$options[static::OPTION_ID_PRODUCT_ABSTRACT],
                 $options,
-                $this->getFactory()->getProductConcreteSuperAttributeFilterHelper()
+                $this->getFactory()->createProductConcreteSuperAttributeFilterHelper()
             ),
         ];
     }
