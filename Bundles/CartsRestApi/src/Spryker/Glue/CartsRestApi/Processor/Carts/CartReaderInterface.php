@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CartsReaderInterface
+interface CartReaderInterface
 {
     /**
      * @param string $uuidQuote

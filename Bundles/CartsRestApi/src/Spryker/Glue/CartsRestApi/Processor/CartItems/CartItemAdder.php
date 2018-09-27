@@ -14,7 +14,7 @@ use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCartClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface;
-use Spryker\Glue\CartsRestApi\Processor\Carts\CartsReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Carts\CartReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -43,7 +43,7 @@ class CartItemAdder implements CartItemAdderInterface
     protected $quoteClient;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Carts\CartsReaderInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Carts\CartReaderInterface
      */
     protected $cartsReader;
 
@@ -52,14 +52,14 @@ class CartItemAdder implements CartItemAdderInterface
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToZedRequestClientInterface $zedRequestClient
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToQuoteClientInterface $quoteClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Carts\CartsReaderInterface $cartsReader
+     * @param \Spryker\Glue\CartsRestApi\Processor\Carts\CartReaderInterface $cartsReader
      */
     public function __construct(
         CartsRestApiToCartClientInterface $cartClient,
         RestResourceBuilderInterface $restResourceBuilder,
         CartsRestApiToZedRequestClientInterface $zedRequestClient,
         CartsRestApiToQuoteClientInterface $quoteClient,
-        CartsReaderInterface $cartsReader
+        CartReaderInterface $cartsReader
     ) {
         $this->cartClient = $cartClient;
         $this->restResourceBuilder = $restResourceBuilder;

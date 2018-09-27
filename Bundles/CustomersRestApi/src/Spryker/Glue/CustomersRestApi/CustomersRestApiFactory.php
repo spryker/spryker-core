@@ -7,7 +7,6 @@
 namespace Spryker\Glue\CustomersRestApi;
 
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
-use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToSessionClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriter;
 use Spryker\Glue\CustomersRestApi\Processor\Customers\CustomersWriterInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomersResourceMapper;
@@ -44,13 +43,5 @@ class CustomersRestApiFactory extends AbstractFactory
         return new CustomersResourceMapper(
             $this->getResourceBuilder()
         );
-    }
-
-    /**
-     * @return \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToSessionClientInterface
-     */
-    public function getSessionClient(): CustomersRestApiToSessionClientInterface
-    {
-        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::CLIENT_SESSION);
     }
 }

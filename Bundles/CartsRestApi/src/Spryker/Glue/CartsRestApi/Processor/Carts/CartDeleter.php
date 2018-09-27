@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class CartDeleter implements CartDeleterInterface
 {
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Carts\CartsReaderInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Carts\CartReaderInterface
      */
     protected $cartsReader;
 
@@ -35,12 +35,12 @@ class CartDeleter implements CartDeleterInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface $persistentCartClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Carts\CartsReaderInterface $cartsReader
+     * @param \Spryker\Glue\CartsRestApi\Processor\Carts\CartReaderInterface $cartsReader
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CartsRestApiToPersistentCartClientInterface $persistentCartClient,
-        CartsReaderInterface $cartsReader
+        CartReaderInterface $cartsReader
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->persistentCartClient = $persistentCartClient;

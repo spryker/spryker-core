@@ -21,8 +21,8 @@ use Spryker\Glue\CartsRestApi\Processor\Carts\CartCreator;
 use Spryker\Glue\CartsRestApi\Processor\Carts\CartCreatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\Carts\CartDeleter;
 use Spryker\Glue\CartsRestApi\Processor\Carts\CartDeleterInterface;
-use Spryker\Glue\CartsRestApi\Processor\Carts\CartsReader;
-use Spryker\Glue\CartsRestApi\Processor\Carts\CartsReaderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Carts\CartReader;
+use Spryker\Glue\CartsRestApi\Processor\Carts\CartReaderInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapper;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapper;
@@ -33,11 +33,11 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class CartsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\Carts\CartsReaderInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\Carts\CartReaderInterface
      */
-    public function createCartsReader(): CartsReaderInterface
+    public function createCartsReader(): CartReaderInterface
     {
-        return new CartsReader(
+        return new CartReader(
             $this->getResourceBuilder(),
             $this->createCartsResourceMapper(),
             $this->getQuoteCollectionReaderPlugin()
