@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShoppingList\Business\ShoppingList;
 
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitBlacklistTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListDismissRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
@@ -87,8 +88,9 @@ class ShoppingListShareDeleter implements ShoppingListShareDeleterInterface
     protected function executeDismissShoppingListSharingTransaction(ShoppingListDismissRequestTransfer $shoppingListDismissRequest): ShoppingListShareResponseTransfer
     {
         $shoppingListShareResponseTransfer = new ShoppingListShareResponseTransfer();
+        $shoppingListShareResponseTransfer->setIsSuccess($this->deleteShoppingListCompanyUser($shoppingListDismissRequest));
         $shoppingListShareResponseTransfer->setIsSuccess(
-            $this->deleteShoppingListCompanyUser($shoppingListDismissRequest) || $this->createShoppingListCompanyBusinessUnitBlacklist($shoppingListDismissRequest)
+            $this->createShoppingListCompanyBusinessUnitBlacklist($shoppingListDismissRequest) || $shoppingListShareResponseTransfer->getIsSuccess()
         );
 
         return $shoppingListShareResponseTransfer;
