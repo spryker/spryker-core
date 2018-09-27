@@ -18,8 +18,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class EditController extends BaseProductRelationController
 {
-    const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
-    const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    public const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
+    public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

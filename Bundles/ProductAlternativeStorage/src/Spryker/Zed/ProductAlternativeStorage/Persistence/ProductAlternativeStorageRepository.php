@@ -31,16 +31,17 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
         if (!$productIds) {
             return [];
         }
+
         $productAlternativeStorageEntities = $this->getFactory()
             ->createProductAlternativeStoragePropelQuery()
             ->filterByFkProduct_In($productIds)
             ->find();
 
-        if ($productAlternativeStorageEntities) {
-            return $productAlternativeStorageEntities->getArrayCopy();
+        if (!$productAlternativeStorageEntities->count()) {
+            return [];
         }
 
-        return [];
+        return $productAlternativeStorageEntities->getArrayCopy();
     }
 
     /**

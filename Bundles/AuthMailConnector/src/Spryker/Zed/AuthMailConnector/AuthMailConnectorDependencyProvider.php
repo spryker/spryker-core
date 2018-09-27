@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Container;
 
 class AuthMailConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_MAIL = 'mail facade';
+    public const FACADE_MAIL = 'mail facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -17,11 +17,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DependencyTreeBuilderConsole extends Console
 {
-    const COMMAND_NAME = 'dev:dependency:build-tree';
+    public const COMMAND_NAME = 'dev:dependency:build-tree';
 
-    const OPTION_APPLICATION = 'application';
-    const OPTION_MODULE = 'module';
-    const OPTION_LAYER = 'layer';
+    public const OPTION_APPLICATION = 'application';
+    public const OPTION_MODULE = 'module';
+    public const OPTION_LAYER = 'layer';
 
     /**
      * @return void

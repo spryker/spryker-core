@@ -15,10 +15,10 @@ use Codeception\Module;
  */
 class Environment extends Module
 {
-    const MODE_ISOLATED = 'isolated';
+    public const MODE_ISOLATED = 'isolated';
 
-    const MODE_DEFAULT_ROOT = '../../../../..';
-    const MODE_ISOLATED_ROOT = 'vendor/spryker/testify';
+    public const MODE_DEFAULT_ROOT = '../../../../..';
+    public const MODE_ISOLATED_ROOT = 'vendor/spryker/testify';
 
     /**
      * @param \Codeception\Lib\ModuleContainer $moduleContainer

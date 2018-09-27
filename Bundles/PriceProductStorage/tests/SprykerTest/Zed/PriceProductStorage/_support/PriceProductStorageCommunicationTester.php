@@ -32,9 +32,9 @@ class PriceProductStorageCommunicationTester extends Actor
     * Define custom actions here
     */
 
-    const PARAM_PROJECT = 'PROJECT';
+    public const PARAM_PROJECT = 'PROJECT';
 
-    const PROJECT_SUITE = 'suite';
+    public const PROJECT_SUITE = 'suite';
 
     /**
      * @return bool

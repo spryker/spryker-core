@@ -15,13 +15,13 @@ use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToSearc
 
 class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
-    const FACADE_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
-    const FACADE_SEARCH = 'FACADE_SEARCH';
+    public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    public const FACADE_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
+    public const FACADE_SEARCH = 'FACADE_SEARCH';
 
-    const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
+    public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
-    const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
+    public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

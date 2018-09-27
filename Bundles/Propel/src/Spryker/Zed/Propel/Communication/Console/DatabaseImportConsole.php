@@ -17,10 +17,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DatabaseImportConsole extends Console
 {
-    const COMMAND_NAME = 'propel:database:import';
-    const COMMAND_DESCRIPTION = 'Import an existing backup file.';
+    public const COMMAND_NAME = 'propel:database:import';
+    public const COMMAND_DESCRIPTION = 'Import an existing backup file.';
 
-    const ARGUMENT_BACKUP_PATH = 'backup-path';
+    public const ARGUMENT_BACKUP_PATH = 'backup-path';
 
     /**
      * @return void

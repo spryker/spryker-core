@@ -13,9 +13,9 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class BranchAliasUpdater implements UpdaterInterface
 {
-    const KEY_EXTRA = 'extra';
-    const KEY_BRANCH_ALIAS = 'branch-alias';
-    const KEY_MASTER_BRANCH = 'dev-master';
+    public const KEY_EXTRA = 'extra';
+    public const KEY_BRANCH_ALIAS = 'branch-alias';
+    public const KEY_MASTER_BRANCH = 'dev-master';
 
     /**
      * @param array $composerJson

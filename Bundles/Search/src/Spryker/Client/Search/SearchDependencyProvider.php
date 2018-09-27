@@ -16,10 +16,10 @@ use Spryker\Shared\Kernel\Store;
 
 class SearchDependencyProvider extends AbstractDependencyProvider
 {
-    const SEARCH_CONFIG_BUILDER = 'search config builder';
-    const SEARCH_CONFIG_EXPANDER_PLUGINS = 'search config expander plugins';
-    const STORE = 'store';
-    const PLUGIN_MONEY = 'money plugin';
+    public const SEARCH_CONFIG_BUILDER = 'search config builder';
+    public const SEARCH_CONFIG_EXPANDER_PLUGINS = 'search config expander plugins';
+    public const STORE = 'store';
+    public const PLUGIN_MONEY = 'money plugin';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

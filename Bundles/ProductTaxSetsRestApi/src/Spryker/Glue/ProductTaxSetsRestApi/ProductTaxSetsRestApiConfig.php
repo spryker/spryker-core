@@ -11,6 +11,6 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class ProductTaxSetsRestApiConfig extends AbstractBundleConfig
 {
-    public const RESOURCE_TAX_SETS = 'tax-sets';
+    public const RESOURCE_TAX_SETS = 'product-tax-sets';
     public const RESPONSE_CODE_CANT_FIND_PRODUCT_TAX_SETS = '310';
 }

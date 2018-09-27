@@ -27,8 +27,8 @@ use Spryker\Zed\Kernel\Container;
 
 class GuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const GUI_TWIG_FUNCTIONS = 'gui_twig_functions';
-    const GUI_TWIG_FILTERS = 'gui_twig_filters';
+    public const GUI_TWIG_FUNCTIONS = 'gui_twig_functions';
+    public const GUI_TWIG_FILTERS = 'gui_twig_filters';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

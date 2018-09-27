@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabilityPreCheck implements ProductPackagingUnitCheckoutPreCheckInterface
 {
-    const CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY = 'product.unavailable';
+    public const CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY = 'product.unavailable';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

@@ -17,8 +17,8 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class SetTable extends AbstractTable
 {
-    const TABLE_COL_ACTIONS = 'Actions';
-    const URL_PARAM_ID_TAX_SET = 'id-tax-set';
+    public const TABLE_COL_ACTIONS = 'Actions';
+    public const URL_PARAM_ID_TAX_SET = 'id-tax-set';
 
     /**
      * @var \Orm\Zed\Tax\Persistence\SpyTaxSetQuery

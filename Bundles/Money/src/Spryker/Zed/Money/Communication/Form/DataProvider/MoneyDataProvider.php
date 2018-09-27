@@ -12,7 +12,7 @@ use Spryker\Zed\Money\Dependency\Facade\MoneyToStoreInterface;
 
 class MoneyDataProvider
 {
-    const DEFAULT_SCALE = 2;
+    public const DEFAULT_SCALE = 2;
 
     /**
      * @var \Generated\Shared\Transfer\StoreTransfer[]
