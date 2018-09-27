@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantRelationshipGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\MerchantRelationship\Business\Exception\MerchantRelationshipNotFoundException;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Table\MerchantRelationshipTableConstants;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,13 +33,13 @@ class EditMerchantRelationshipController extends AbstractController
         $idMerchantRelationship = $this->castId($request->get(MerchantRelationshipTableConstants::REQUEST_ID_MERCHANT_RELATIONSHIP));
 
         $dataProvider = $this->getFactory()->createMerchantRelationshipFormDataProvider();
-        try {
-            $merchantRelationshipTransfer = $dataProvider->getData($idMerchantRelationship);
-        } catch (MerchantRelationshipNotFoundException $exception) {
-            $this->addErrorMessage(sprintf('Merchant Relationship with id %s doesn\'t exists.', $idMerchantRelationship));
+        $merchantRelationshipTransfer = $dataProvider->getData($idMerchantRelationship);
 
-            return $this->redirectResponse('/merchant-relationship-gui/list-merchant-relationship');
+        if ($merchantRelationshipTransfer === null) {
+            $this->addErrorMessage(sprintf('Merchant Relationship with id %s doesn\'t exists.', $idMerchantRelationship));
+            return $this->redirectResponse(MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_LIST);
         }
+
         $idCompany = $this->getIdCompanyFromTransfer($merchantRelationshipTransfer);
         $merchantRelationshipForm = $this->getFactory()
             ->getMerchantRelationshipEditForm(
@@ -68,15 +67,12 @@ class EditMerchantRelationshipController extends AbstractController
     {
         $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL, MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_LIST);
         $merchantRelationshipTransfer = $merchantRelationshipForm->getData();
-        try {
-            $this->getFactory()
-                ->getMerchantRelationshipFacade()
-                ->updateMerchantRelationship($merchantRelationshipTransfer);
 
-            $this->addSuccessMessage(static::MESSAGE_MERCHANT_RELATIONSHIP_UPDATE_SUCCESS);
-        } catch (MerchantRelationshipNotFoundException $exception) {
-            $this->addErrorMessage(static::MESSAGE_MERCHANT_RELATIONSHIP_NOT_FOUND);
-        }
+        $this->getFactory()
+            ->getMerchantRelationshipFacade()
+            ->updateMerchantRelationship($merchantRelationshipTransfer);
+
+        $this->addSuccessMessage(static::MESSAGE_MERCHANT_RELATIONSHIP_UPDATE_SUCCESS);
 
         return $this->redirectResponse($redirectUrl);
     }

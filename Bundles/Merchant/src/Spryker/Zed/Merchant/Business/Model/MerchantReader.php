@@ -44,4 +44,16 @@ class MerchantReader implements MerchantReaderInterface
 
         return $merchantTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer
+    {
+        $merchantTransfer->requireIdMerchant();
+
+        return $this->repository->getMerchantById($merchantTransfer->getIdMerchant());
+    }
 }
