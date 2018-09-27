@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Mail;
 
+use Spryker\Shared\Mail\MailConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MailConfig extends AbstractBundleConfig
@@ -27,5 +28,21 @@ class MailConfig extends AbstractBundleConfig
     public function getSenderEmail()
     {
         return 'mail.sender.email';
+    }
+
+    /**
+     * @return string
+     */
+    public function getSmtpHost(): string
+    {
+        return $this->get(MailConstants::SMTP_HOST, 'localhost');
+    }
+
+    /**
+     * @return int
+     */
+    public function getSmtpPort(): int
+    {
+        return $this->get(MailConstants::SMTP_PORT, 25);
     }
 }

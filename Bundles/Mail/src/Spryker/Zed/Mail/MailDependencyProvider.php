@@ -18,8 +18,11 @@ use Spryker\Zed\Mail\Dependency\Mailer\MailToMailerBridge;
 use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererBridge;
 use Swift_Mailer;
 use Swift_Message;
-use Swift_SendmailTransport;
+use Swift_SmtpTransport;
 
+/**
+ * @method \Spryker\Zed\Mail\MailConfig getConfig()
+ */
 class MailDependencyProvider extends AbstractBundleDependencyProvider
 {
     const MAIL_PROVIDER_COLLECTION = 'mail provider collection';
@@ -149,7 +152,11 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::MAILER] = function () {
             $message = new Swift_Message();
-            $transport = new Swift_SendmailTransport();
+            $transport = new Swift_SmtpTransport(
+                $this->getConfig()->getSmtpHost(),
+                $this->getConfig()->getSmtpPort()
+            );
+
             $mailer = new Swift_Mailer($transport);
 
             $mailerBridge = new MailToMailerBridge($message, $mailer);
